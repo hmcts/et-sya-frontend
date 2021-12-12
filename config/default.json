@@ -6,5 +6,8 @@
   "appInsights": {
     "instrumentationKey": false,
     "roleName": "ET-SYA"
+  },
+  "featureFlags": {
+    "welsh": true
   }
 }
