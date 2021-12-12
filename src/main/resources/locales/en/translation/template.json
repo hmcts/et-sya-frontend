@@ -1,0 +1,13 @@
+{
+  "serviceName": "Employment Tribunals",
+  "guide": "Guide",
+  "termsAndConditions": "Terms and Conditions",
+  "cookiePolicy": "Cookies",
+  "contact": "Contact us",
+  "stage": "Beta",
+  "phaseBanner": {
+    "feedback": "Your feedback",
+    "additionalText": "helps us to improve this service.",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">Cymraeg</a>"
+  }
+}
