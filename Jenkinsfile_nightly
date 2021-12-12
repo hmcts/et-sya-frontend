@@ -9,7 +9,7 @@ pipelineTriggers([cron('H 05 * * *')])
 
 def type = "nodejs"
 def product = "rpe"
-def component = "expressjs-template"
+def component = "et-sya-frontend"
 
 withNightlyPipeline(type, product, component) {
 
