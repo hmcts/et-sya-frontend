@@ -8,6 +8,6 @@
     "roleName": "ET-SYA"
   },
   "featureFlags": {
-    "welsh": true
+    "welsh": "true"
   }
 }
