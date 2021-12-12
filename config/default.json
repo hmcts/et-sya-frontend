@@ -4,6 +4,7 @@
     "referrerPolicy": "origin"
   },
   "appInsights": {
-    "instrumentationKey": false
+    "instrumentationKey": false,
+    "roleName": "ET-SYA"
   }
 }
