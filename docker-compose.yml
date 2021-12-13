@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  et-sya-frontend:
+  sya:
     build:
       context: .
       args:

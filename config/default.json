@@ -5,7 +5,7 @@
   },
   "appInsights": {
     "instrumentationKey": false,
-    "roleName": "ET-SYA"
+    "roleName": "et-sya"
   },
   "featureFlags": {
     "welsh": "true"

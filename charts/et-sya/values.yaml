@@ -1,11 +1,11 @@
 nodejs:
   applicationPort: 3100
-  aadIdentityName: rpe
-  ingressHost: et-sya-frontend.{{ .Values.global.environment }}.platform.hmcts.net
-  image: 'hmctspublic.azurecr.io/rpe/et-sya-frontend:latest'
+  aadIdentityName: et
+  ingressHost: et-sya.{{ .Values.global.environment }}.platform.hmcts.net
+  image: 'hmctspublic.azurecr.io/et/sya:latest'
 #  Uncomment once the vault containing the app insights key has been set up
 #  keyVaults:
-#    rpe:
+#    et:
 #      secrets:
 #        - AppInsightsInstrumentationKey
   environment:
