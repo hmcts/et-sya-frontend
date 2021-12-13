@@ -7,7 +7,7 @@ import express from 'express';
 const resources = requireDir(module, '../../resources', {
   include: /locales/,
 }).locales as Resource;
-
+ 
 export class I18Next {
   constructor() {
     const options: InitOptions = {
@@ -23,7 +23,7 @@ export class I18Next {
   public enableFor(app: express.Express): void {
     app.use(i18nextMiddleware.handle(i18next));
     app.use((req: Request, res: Response, next: NextFunction) => {
-      Object.assign(res.locals, req.i18n.getDataByLanguage(req.language).translation.template);
+      Object.assign(res.locals, req.t('template', { returnObjects: true }));
       next();
     });
   }
