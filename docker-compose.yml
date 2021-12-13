@@ -2,7 +2,7 @@ version: '2'
 
 services:
   # TODO: change this name to match the name of your app
-  expressjs-template:
+  sya:
     build:
       context: .
       args:
