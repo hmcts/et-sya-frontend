@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 export const mockRequest = (data: any): Request => {
-  const t = (key: string, _params?: any): any => {
+  const t = (): any => {
     return data;
   };
 
