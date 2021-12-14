@@ -22,10 +22,10 @@
     "@azure/abort-controller" "^1.0.0"
     tslib "^2.2.0"
 
-"@azure/core-http@^2.2.0":
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/@azure/core-http/-/core-http-2.2.1.tgz"
-  integrity sha512-7ATnV3OGzCO2K9kMrh3NKUM8b4v+xasmlUhkNZz6uMbm+8XH/AexLkhRGsoo0GyKNlEGvyGEfytqTk0nUY2I4A==
+"@azure/core-http@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@azure/core-http/-/core-http-2.2.2.tgz#573798f087d808d39aa71fd7c52b8d7b89f440da"
+  integrity sha512-V1DdoO9V/sFimKpdWoNBgsE+QUjQgpXYnxrTdUp5RyhsTJjvEVn/HKmTQXIHuLUUo6IyIWj+B+Dg4VaXse9dIA==
   dependencies:
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-asynciterator-polyfill" "^1.0.0"
@@ -2251,12 +2251,12 @@ anymatch@^3.0.0, anymatch@^3.0.3, anymatch@~3.1.1, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-applicationinsights@^2.1.8:
-  version "2.1.8"
-  resolved "https://registry.npmjs.org/applicationinsights/-/applicationinsights-2.1.8.tgz"
-  integrity sha512-ehdYEKMkpm/1CPFX5UwvEUmI45U4v8EnPnvRIGC5hqkGDt7ARMfivwneK+ArbSabotUYWOYdvogmB8CrdJye/g==
+applicationinsights@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.0.tgz#286f00b60d6eada12f592231a2d1283fe67c9124"
+  integrity sha512-zb6b1wchJwnCH+PghmxDbygQtWW11lz8YsHbZ6o89kR8EbE/2lO9VwNCxMtU1H1f7RQbiIZuNEnFR7wb8Ah4qA==
   dependencies:
-    "@azure/core-http" "^2.2.0"
+    "@azure/core-http" "^2.2.2"
     "@opentelemetry/api" "^1.0.3"
     "@opentelemetry/core" "^0.23.0"
     "@opentelemetry/semantic-conventions" "^0.24.0"

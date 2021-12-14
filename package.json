@@ -39,7 +39,7 @@
     "@types/require-directory": "^2.1.1",
     "@types/serve-favicon": "^2.5.1",
     "@types/sinon": "^10.0.6",
-    "applicationinsights": "^2.1.8",
+    "applicationinsights": "^2.2.0",
     "awilix": "^6.0.0",
     "config": "^3.3.2",
     "cookie-parser": "^1.4.5",
