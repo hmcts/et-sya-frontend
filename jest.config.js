@@ -10,4 +10,6 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  modulePathIgnorePatterns: ["<rootDir>/src/test/unit/mocks"],
+  testEnvironment: "jsdom",
 }

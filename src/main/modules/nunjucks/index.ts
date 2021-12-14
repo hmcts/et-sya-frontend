@@ -1,3 +1,4 @@
+import config from 'config';
 import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
@@ -18,7 +19,7 @@ export class Nunjucks {
       'node_modules',
       'govuk-frontend',
     );
-    nunjucks.configure(
+    const nunEnv = nunjucks.configure(
       [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath],
       {
         autoescape: true,
@@ -27,8 +28,10 @@ export class Nunjucks {
       },
     );
 
+    nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
     app.use((req, res, next) => {
       res.locals.pagePath = req.path;
+      nunEnv.addGlobal('currentUrl', req.url);
       next();
     });
   }

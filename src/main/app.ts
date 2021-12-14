@@ -1,9 +1,7 @@
-import { glob } from 'glob';
-
 const { Logger } = require('@hmcts/nodejs-logging');
 
 import * as bodyParser from 'body-parser';
-import config = require('config');
+import config from 'config';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import { Helmet } from './modules/helmet';
@@ -13,7 +11,10 @@ import { HTTPError } from 'HttpError';
 import { Nunjucks } from './modules/nunjucks';
 import { PropertiesVolume } from './modules/properties-volume';
 import { AppInsights } from './modules/appinsights';
-const { setupDev } = require('./development');
+import setupDev from './development';
+import routes from './routes/routes';
+import { Container } from './modules/awilix';
+import { I18Next } from './modules/i18next';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -27,6 +28,8 @@ new PropertiesVolume().enableFor(app);
 new AppInsights().enable();
 new Nunjucks(developmentMode).enableFor(app);
 new Helmet(config.get('security')).enableFor(app);
+new Container().enableFor(app);
+new I18Next().enableFor(app);
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
@@ -41,9 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-glob.sync(__dirname + '/routes/**/*.+(ts|js)')
-  .map(filename => require(filename))
-  .forEach(route => route.default(app));
+routes(app);
 
 setupDev(app,developmentMode);
 // returning "not found" page for requests with paths not resolved by the router

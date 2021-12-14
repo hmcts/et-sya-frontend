@@ -2,3 +2,13 @@ options:
   max-warnings: 0
 files:
   include: 'src/**/*.scss'
+rules:
+  class-name-format:
+    - 0
+  placeholder-in-extend:
+    - 0
+  nesting-depth:
+    - 1
+    - max-depth: 4
+  no-vendor-prefixes:
+    - 0

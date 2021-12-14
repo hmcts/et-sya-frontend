@@ -1,10 +1,80 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/footer/macro.njk" import govukFooter %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
 {% endblock %}
 
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "#"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% set phaseBarHtml = '<a class="govuk-link" href="#" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
+
+  {% if welshEnabled %}
+      {% set queryStringConcat = "" %}
+
+      {% if "lng=" in currentUrl %}
+          {% set currentUrl = currentUrl | replace("?lng=en", "") | replace("&lng=en", "") | replace("?lng=cy", "") | replace("&lng=cy", "") %}
+      {% endif %}
+
+      {% if "?" not in currentUrl %}
+          {% set queryStringConcat = "?" %}
+      {% else %}
+          {% set queryStringConcat = "&" %}
+      {% endif %}
+
+      {% set languageFlag = "" %}
+      {% if i18n.language == "en" %}
+          {% set languageFlag = queryStringConcat + "lng=cy" %}
+      {% else %}
+          {% set languageFlag = queryStringConcat + "lng=en" %}
+      {% endif %}
+
+      {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
+  {% endif %}
+
+  {{ govukPhaseBanner({
+      tag: {
+          text: "beta"
+      },
+      html: phaseBarHtml
+  }) }}
+{% endblock %}
+
 {% block bodyEnd %}
   {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
   {% include "webpack/js.njk" %}
+{% endblock %}
+
+{% block footer %}
+{{ govukFooter({
+  meta: {
+    items: [
+      {
+          href: "/guide",
+          text: guide
+      },
+      {
+          href: "/terms-and-conditions",
+          text: termsAndConditions
+      },
+      {
+          href: "/cookies",
+          text: cookiePolicy
+      },
+      {
+          href: "/contact-us",
+          text: contact
+      }
+    ]
+  }
+}) }}
 {% endblock %}

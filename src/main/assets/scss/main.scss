@@ -1,1 +1,9 @@
 @import '~govuk-frontend';
+
+.govuk-phase-banner__text {
+  width: 100%;
+
+  .language {
+    float: right;
+  }
+}

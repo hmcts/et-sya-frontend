@@ -4,6 +4,10 @@
     "referrerPolicy": "origin"
   },
   "appInsights": {
-    "instrumentationKey": false
+    "instrumentationKey": false,
+    "roleName": "et-sya"
+  },
+  "featureFlags": {
+    "welsh": "true"
   }
 }
