@@ -1,0 +1,83 @@
+{% extends "template.njk" %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/"
+}) }}
+{% endblock %}
+{% block content %}
+  <main class="govuk-main-wrapper govuk-!-padding-top-4">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters ">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+        <p class="govuk-body ">{{ p1 }}</p>
+        <p class="govuk-body">{{ p2 }}</p>
+        <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">{{ detailsSummary1 }}</span>
+          </summary>
+          <div class="govuk-details__text">
+            {{ detailsText1.p }}
+            <ul>
+              <li>{{ detailsText1.li1 }}</li>
+              <li>{{ detailsText1.li2 }}
+              </li>
+              <li>{{ detailsText1.li3 }}</li>
+              <li>{{ detailsText1.li4 }}
+              </li>
+            </ul>
+          </div>
+        </details>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              {{ detailsSummary2 }}
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            {{ detailsText2|safe }}
+          </div>
+        </details>
+        <form action="/lip-or-representative" method="post">
+          {{ govukRadios({
+   idPrefix: "lip-or-representative",
+  name: "lip-or-representative",
+  items: [
+    {
+      value: "lip",
+      text: radio1
+    },
+    {
+      value: "representative",
+      text: radio2
+    }
+  ],
+        errorMessage: {
+        text: errorMessage
+      } if errorMessage
+}) }}
+          {{ govukButton({
+      text: "Continue",
+      preventDoubleClick: true
+    }) }}
+        </form>
+        <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              {{ contactUsTitle }}
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            {{ contactUsForHelp|safe }}
+          </div>
+        </details>
+      </div>
+    </div>
+  </main>
+{% endblock %}
