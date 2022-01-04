@@ -5,9 +5,9 @@ import { app } from '../../main/app';
 
 const expectedLegacyURL = 'https://employmenttribunals.service.gov.uk/apply';
 
-describe("GET /lip-or-representative", () => {
-  it("should return the lip or representative page", async () => {
-    const res = await request(app).get("/lip-or-representative");
+describe('GET /lip-or-representative', () => {
+  it('should return the lip or representative page', async () => {
+    const res = await request(app).get('/lip-or-representative');
     expect(res.type).to.equal('text/html');
     expect(res.status).to.equal(200);
   });

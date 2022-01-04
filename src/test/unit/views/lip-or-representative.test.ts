@@ -20,9 +20,9 @@ const expectedRadioLabel2 = 'I\'m making a claim for someone else and acting as 
 const detailsClass = 'govuk-details';
 const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
-const detailsSummary1 = 'Who can act as a representative?'
-const detailsSummary2 = 'How to find and get a representative?'
-const detailsSummary3 = 'Contact us for help'
+const detailsSummary1 = 'Who can act as a representative?';
+const detailsSummary2 = 'How to find and get a representative?';
+const detailsSummary3 = 'Contact us for help';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {

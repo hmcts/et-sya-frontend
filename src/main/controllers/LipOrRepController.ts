@@ -17,7 +17,7 @@ export default class LipOrRepController {
       const URL = 'https://employmenttribunals.service.gov.uk/apply';
       res.redirect(URL);
     } else {
-      const errorMessage = 'Select if you are representing yourself or if you are a representative making a claim for someone else.'
+      const errorMessage = 'Select if you are representing yourself or if you are a representative making a claim for someone else.';
       res.render('lip-or-representative', {
         errorMessage,
         ...(req.t('lip-or-representative', { returnObjects: true })),
