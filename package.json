@@ -17,7 +17,7 @@
     "test:a11y": "jest -c jest.a11y.config.js --maxWorkers 15",
     "sonar-scan": "sonar-scanner",
     "test:smoke": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && jest -c jest.smoke.config.js",
-    "test:functional": "echo 'TODO add functional tests' && exit 1",
+    "test:functional": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && jest -c jest.smoke.config.js",
     "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y"
   },
   "dependencies": {
@@ -70,7 +70,7 @@
     "@types/supertest": "^2.0.8",
     "@types/webpack-dev-middleware": "^3.7.0",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/eslint-plugin-tslint": "^2.19.2",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.9.0",
     "@typescript-eslint/parser": "^2.19.2",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
