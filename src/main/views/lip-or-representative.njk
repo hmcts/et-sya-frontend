@@ -12,7 +12,7 @@
 {% block content %}
   <main class="govuk-main-wrapper govuk-!-padding-top-4">
     <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
         <p class="govuk-body ">{{ p1 }}</p>
         <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
@@ -38,7 +38,14 @@
             </span>
           </summary>
           <div class="govuk-details__text">
-            {{ detailsText2|safe }}
+            <p class="govuk-body">{{ detailsText2.p1 }}</p>
+            <li>{{ detailsText2.li1 | safe }}</li>
+            <li>{{ detailsText2.li2 | safe }}</li>
+            <li>{{ detailsText2.li3 | safe }}</li>
+            <li>{{ detailsText2.li4 }}</li>
+            <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2 | safe }}</p>
+            <p class="govuk-body">{{ detailsText2.p3 | safe }}</p>
+            <p class="govuk-body">{{ detailsText2.p4 | safe }}</p>
           </div>
         </details>
         <form action="/lip-or-representative" method="post">
@@ -57,7 +64,7 @@
   ],
         errorMessage: {
         text: errorMessage
-      } if errorMessage
+      } if noRadioButtonSelectedError
 }) }}
           {{ govukButton({
       text: "Continue",

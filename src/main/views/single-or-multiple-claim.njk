@@ -1,8 +1,4 @@
 {% extends "template.njk" %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% block beforeContent %}
   {{ super() }}
@@ -12,66 +8,7 @@
 }) }}
 {% endblock %}
 {% block content %}
-    <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-          <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Are you making a claim on your own or with other people?</h1>
-          <details class="govuk-details govuk-!-margin-top-4 govuk-!-margin-bottom-8" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                'Single claims' versus 'Multiple claims'
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              You make a ‘Single’ claim if your dispute is only between you and any respondents who you think treated you (as an
-              individual) unlawfully.<br>
-                You make a ‘Multiple’ claim if your dispute is between more than 1 more person and any respondents and who you think
-                treated you all (as a group) unlawfully.<br>
-                  'Multiple’ claims tend to take longer to resolve and settle through the employment tribunal process.
-                </div>
-              </details>
-              <form action="" method="post">
-                {{ govukRadios({
-   idPrefix: "single-or-multiple-claim",
-  name: "single-or-multiple-claim",
-  items: [
-    {
-      value: "single",
-      text: "I'm making a claim on my own (known as a 'Single claim')"
-    },
-    {
-      value: "multiple",
-      text: "I'm making a claim with other people (known as a 'Multiple claim')"
-    }
-  ],
-        errorMessage: {
-        text: errorMessage
-      } if errorMessage
-}) }}
-                {{ govukButton({
-      text: "Continue",
-      preventDoubleClick: true
-    }) }}
-              </form>
-              <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">
-                    Contact us for help
-                  </span>
-                </summary>
-                <div class="govuk-details__text">
-                  Telephone: 0300 123 1024<br>
-                    Telephone: 0300 303 5176 (Welsh language)<br>
-                      Telephone: 0300 790 6234 (Scotland)<br>
-                        Textphone: 18001 0300 123 1024 (England and Wales)<br>
-                          Textphone: 18001 0300 790 6234 (Scotland)<br>
-                            Monday to Friday, 9am to 5pm<br>
-                              <br>
-                                <a href="#" class="govuk-link">Find out about call charges</a>
-                              </div>
-                            </details>
-                          </div>
-                        </div>
-                      </main>
-                   
-                  {% endblock %}
+  <main class="govuk-main-wrapper">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Are you making a claim on your own or with other people?</h1>
+  </main>
+{% endblock %}
