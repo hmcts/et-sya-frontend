@@ -22,8 +22,6 @@
     "p4":"Some people may also be able to get help to pay for legal advice through <a href=\"#\" class=\"govuk-link\">legal aid</a>."
   },
   "radio1": "I'm representing myself and making my own claim",
-  "radio2": "I'm making a claim for someone else and acting as their representative",
-  "contactUsTitle":"Contact us for help",
-  "contactUsForHelp":"Telephone: 0300 123 1024<br> Telephone: 0300 303 5176 (Welsh language)<br>Telephone: 0300 790 6234 (Scotland)<br>Textphone: 18001 0300 123 1024 (England and Wales)<br> Textphone: 18001 0300 790 6234 (Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"#\" class=\"govuk-link\">Find out about call charges</a>",
+  "radio2": "I'm making a claim for someone else and acting as their representative",  
   "errorMessage":"Select if you are representing yourself or if you are a representative making a claim for someone else."
 }
