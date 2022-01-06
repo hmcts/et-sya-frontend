@@ -5,6 +5,10 @@ const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
   app.get('/', app.locals.container.cradle.homeController.get);
+
+  app.get('/video-hearing', app.locals.container.cradle.videoHearingController.get);
+  app.post('/video-hearing', app.locals.container.cradle.videoHearingController.post);
+
   app.get(
     '/info',
     infoRequestHandler({

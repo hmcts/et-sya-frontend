@@ -1,0 +1,69 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/"
+}) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <p class="govuk-body ">{{ p1 }}</p>
+      <p class="govuk-body ">{{ p2 }}</p>
+      <p class="govuk-body ">{{ p3 }}</p>
+      <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ detailsSummary }}</span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">{{ detailsText.p1 }}</p>
+          <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">{{ detailsText.p2 }}
+          </p>
+          <ul class="govuk-!-margin-top-0 govuk-!-padding-top-0">
+            <li>{{ detailsText.li1 }}</li>
+            <li>{{ detailsText.li2 }}</li>
+          </ul>
+
+        </div>
+      </details>
+      <form action="/video-hearing" method="post">
+        {{ govukRadios({ 
+      classes: "govuk-radios--inline govuk-!-margin-bottom-6",
+      idPrefix: "video-hearing",
+      name: "video-hearing",
+      items: [
+        {
+          value: "yes",
+          text: radio1
+        },
+        {
+          value: "no",
+          text: radio2
+        }
+      ],
+      errorMessage: {
+        text: errorMessage
+        } if noRadioButtonSelectedError
+      }) }}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+        text: button1,
+        preventDoubleClick: true
+      }) }}
+        {{ govukButton({
+        text: button2,
+        classes: "govuk-button--secondary",
+        preventDoubleClick: true
+      }) }}
+      </div>
+
+      </form>
+    </div>
+  </div>
+{% endblock %}
