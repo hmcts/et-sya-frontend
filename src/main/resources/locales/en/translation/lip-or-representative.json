@@ -1,0 +1,27 @@
+{
+  "title": "LiP or Representative",
+  "h1": "Are you making your claim yourself or are you a ‘representative’ making a claim for someone else?",
+  "p1": "You can make a claim yourself or, as a ‘representative’, make a claim on someone else’s behalf.",
+  "detailsSummary1": "Who can act as a representative?",
+  "detailsText1": {
+    "p":"'Representatives’ can help someone make a claim and present their case at a hearing and include:",
+    "li1":"employment advisors – including those from Citizens Advice ",
+    "li2":"legal professionals – including lawyers and solicitors",
+    "li3":"private individuals – including family members and friends",
+    "li4":"trade association and trade union representatives "
+  },
+  "detailsSummary2":"How to find and get a representative?",
+  "detailsText2": {
+    "p1":"Use the following to find and get a legal representative:",
+    "li1":"<a href=\"#\" class=\"govuk-link\">Find a solicitor in England and Wales</a> – database of solicitors run by The Law Society",
+    "li2":"<a href=\"#\" class=\"govuk-link\">Find a solicitor in Scotland</a>– database of solicitors run The Law Society of Scotland",
+    "li3":"<a href=\"#\" class=\"govuk-link\">Free Representation Unit (FRU)</a> – charity providing legal advice, case preparation and advocacy for people not eligible for legal aid or who cannot afford lawyers",
+    "li4":"local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford lawyers.",
+    "p2":"A trade union may also be able to pay for a solicitor and free legal advice is available from <a href=\"#\" class=\"govuk-link\">Citizens Advice</a> or <a href=\"#\" class=\"govuk-link\">Citizens Advice Scotland</a>.",
+    "p3":"The <a href=\"#\" class=\"govuk-link\">Equality Advisory and Support Service</a> can help with discrimination claims.",
+    "p4":"Some people may also be able to get help to pay for legal advice through <a href=\"#\" class=\"govuk-link\">legal aid</a>."
+  },
+  "radio1": "I'm representing myself and making my own claim",
+  "radio2": "I'm making a claim for someone else and acting as their representative",  
+  "errorMessage":"Select if you are representing yourself or if you are a representative making a claim for someone else."
+}
