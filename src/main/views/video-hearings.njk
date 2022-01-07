@@ -1,0 +1,12 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/how-would-you-like-to-be-updated-about-your-claim"
+}) }}
+{% endblock %}
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ h1 }}</h1>
+{% endblock %}

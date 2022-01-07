@@ -1,0 +1,55 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/"
+}) }}
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <p class="govuk-body ">{{ p1 }}</p>
+      <form action="/how-would-you-like-to-be-updated-about-your-claim" method="post">
+        {{ govukRadios({ 
+      classes: "govuk-radios--inline",
+      idPrefix: "update-preference",
+      name: "update-preference",
+      items: [
+        {
+          value: "email",
+          text: radio1
+        },
+        {
+          value: "post",
+          text: radio2
+        }
+      ],
+      errorMessage: {
+        text: errorMessage
+        } if noRadioButtonSelectedError
+      }) }}
+        <div class="govuk-button-group">
+          {{ govukButton({
+        text: "Save and continue",
+        name: "saveButton",
+        value: "saveContinue",
+        preventDoubleClick: true
+      }) }}
+          {{ govukButton({
+        text: "Save for later",
+        name: "saveButton",
+        classes: "govuk-button--secondary",
+        value: "saveForLater",
+        preventDoubleClick: true
+      }) }}
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}
