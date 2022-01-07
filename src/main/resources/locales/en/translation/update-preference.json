@@ -1,0 +1,7 @@
+{
+    "title": "update-preference",
+    "h1": "How would you like to be updated about your claim?",
+    "radio1": "Email",
+    "radio2": "Post",  
+    "errorMessage":"Select if you would like to be updated by email or post"
+  }
