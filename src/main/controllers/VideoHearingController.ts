@@ -10,10 +10,10 @@ export default class VideoHearingController {
 
   public post(req: Request, res: Response): void {
     if (req.body['video-hearing'] === 'yes') {
-      res.redirect('/');
+      res.redirect('/steps-to-making-your-claim');
     }
     else if (req.body['video-hearing'] === 'no') { 
-      res.redirect('/');
+      res.redirect('/steps-to-making-your-claim');
     } else {
       res.render('video-hearing', {
         noRadioButtonSelectedError: true,

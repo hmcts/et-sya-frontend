@@ -8,9 +8,13 @@ export default function (app: Application): void {
   app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
+  
   app.get('/video-hearing', app.locals.container.cradle.videoHearingController.get);
   app.post('/video-hearing', app.locals.container.cradle.videoHearingController.post);
-  
+
+  app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
+  app.get('/your-claim-has-been-saved', app.locals.container.cradle.yourClaimHasBeenSavedController.get);
+
   app.get(
     '/info',
     infoRequestHandler({
