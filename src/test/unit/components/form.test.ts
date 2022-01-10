@@ -111,6 +111,7 @@ describe('Form', () => {
                   type: 'text',
                   label: 'Subfield',
                   validator: isFieldFilledIn,
+                  values: [],
                 },
                 checkboxes: {
                   type: 'checkboxes',
@@ -130,7 +131,7 @@ describe('Form', () => {
                 },
               },
             },
-            { label: (l) => l.yes, value: YesOrNo.YES },
+            { label: (l) => l.yes, value: YesOrNo.YES, name: YesOrNo.YES },
           ],
           validator: isFieldFilledIn,
         },
@@ -165,6 +166,7 @@ describe('Form', () => {
       const errors = subFieldForm.getErrors({
         field: YesOrNo.NO,
       } as unknown as Case);
+      
 
       expect(errors).toStrictEqual([
         {
@@ -246,7 +248,7 @@ describe('Form', () => {
     const mockFieldFnForm: FormContent = {
       fields: (userCase) => ({
         ...(userCase.dobDate
-          ? { customQuestion: { type: 'text', label: 'custom' } }
+          ? { customQuestion: { type: 'text', label: 'custom', name: 'custom' } }
           : {}),
       }),
       submit: {
@@ -268,6 +270,7 @@ describe('Form', () => {
         customQuestion: {
           label: 'custom',
           type: 'text',
+          name: 'custom',
         },
       },
     });
