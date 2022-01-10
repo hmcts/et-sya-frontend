@@ -9,5 +9,8 @@
   },
   "featureFlags": {
     "welsh": "true"
+  },
+  "session": {
+    "secret": "local"
   }
 }
