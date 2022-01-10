@@ -54,13 +54,16 @@
       <div class="govuk-button-group">
         {{ govukButton({
         text: button1,
-        preventDoubleClick: true
+        preventDoubleClick: true,
+        name:"saveAndContinue",
+        value:"saveAndContinue"
       }) }}
         {{ govukButton({
         text: button2,
         classes: "govuk-button--secondary",
         preventDoubleClick: true,
-        href:"/your-claim-has-been-saved"
+        name:"saveForLater",
+        value:"saveForLater"
       }) }}
       </div>
 
