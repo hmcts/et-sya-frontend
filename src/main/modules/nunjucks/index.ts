@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
 import { Form } from '../../components/form/form';
+import { FormInput } from '../../definitions/form';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -55,9 +56,10 @@ export class Nunjucks {
       return { text: errors[fieldName][fieldError.errorType] };
     });
 
-    nunEnv.addGlobal('formItems', function (items: any[], userAnswer: string | Record<string, string>) {
-      return items.map(i => ({
+    nunEnv.addGlobal('formItems', function (items: FormInput[], userAnswer: string | Record<string, string>) {
+      return items.map((i: FormInput) => ({
         id: i.id,
+        label: this.env.globals.getContent.call(this, i.label),
         text: this.env.globals.getContent.call(this, i.label),
         name: i.name,
         classes: i.classes,

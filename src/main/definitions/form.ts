@@ -46,7 +46,7 @@ export interface FormOptions {
 
 export interface FormInput {
   id?: string;
-  name?: string;
+  name: string;
   label: Label;
   hint?: Label;
   classes?: string;

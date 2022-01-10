@@ -6,7 +6,7 @@ export default class GenderDetailsController {
     const sessionErrors = req.session?.errors || [];
     const userCase = req.session?.userCase;
 
-    res.render('date-of-birth', {
+    res.render('gender-details', {
       ...req.t('common', { returnObjects: true }),
       ...req.t('gender-details', { returnObjects: true }),
       sessionErrors,

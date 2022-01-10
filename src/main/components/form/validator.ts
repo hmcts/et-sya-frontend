@@ -9,13 +9,13 @@ export const isFieldFilledIn: Validator = (value) => {
   }
 };
 
-export const atLeastOneFieldIsChecked: Validator = (fields) => {
+export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   if (!fields || (fields as []).length === 0) {
     return 'required';
   }
 };
 
-export const areDateFieldsFilledIn: DateValidator = (fields: any) => {
+export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefined) => {
   if (typeof fields !== 'object' || Object.keys(fields).length !== 3) {
     return 'required';
   }
@@ -35,11 +35,6 @@ export const isDateInputInvalid: DateValidator = (date: any) => {
 
   for (const [, value] of Object.entries(date)) {
     if (isNaN(+value)) {
-      return invalid;
-    }
-  }
-  for (const value in date) {
-    if (isNaN(+date[value])) {
       return invalid;
     }
   }
