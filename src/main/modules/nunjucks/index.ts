@@ -2,6 +2,7 @@ import config from 'config';
 import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
+import { Form } from '../../components/form/form';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -28,7 +29,63 @@ export class Nunjucks {
       },
     );
 
-    nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
+    nunEnv.addGlobal(
+      'welshEnabled',
+      process.env.FT_WELSH === 'true' ||
+        config.get('featureFlags.welsh') === 'true',
+    );
+
+    nunEnv.addGlobal('getContent', function (prop: any | string): string {
+      return typeof prop === 'function' ? prop(this.ctx) : prop;
+    });
+
+    nunEnv.addGlobal('getError', function (fieldName: string): { text?: string } | boolean {
+      const { form, sessionErrors, errors } = this.ctx;
+
+      const hasMoreThanTwoFields = new Form(form).getFieldNames().size >= 2;
+      if (!sessionErrors?.length || !hasMoreThanTwoFields) {
+        return false;
+      }
+
+      const fieldError = sessionErrors.find((error: any) => error.propertyName === fieldName);
+      if (!fieldError) {
+        return false;
+      }
+
+      return { text: errors[fieldName][fieldError.errorType] };
+    });
+
+    nunEnv.addGlobal('formItems', function (items: any[], userAnswer: string | Record<string, string>) {
+      return items.map(i => ({
+        id: i.id,
+        text: this.env.globals.getContent.call(this, i.label),
+        name: i.name,
+        classes: i.classes,
+        value: i.value ?? (userAnswer as any)?.[i.name as string] ?? (userAnswer as string),
+        attributes: i.attributes,
+        checked: i.selected ?? (userAnswer as any)?.[i.name as string]?.includes(i.value as string) ?? i.value === userAnswer,
+        hint: i.hint && {
+          html: this.env.globals.getContent.call(this, i.hint),
+        },
+        conditional: ((): { html: any | undefined } => {
+          if (i.conditionalText) {
+            return {
+              html: this.env.globals.getContent.call(this, i.conditionalText),
+            };
+          } else if (i.subFields) {
+            return {
+              html: nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
+                ...this.ctx,
+                form: { fields: i.subFields },
+              }),
+            };
+          } else {
+            return undefined;
+          }
+        })(),
+      }));
+    });
+
     app.use((req, res, next) => {
       res.locals.pagePath = req.path;
       nunEnv.addGlobal('currentUrl', req.url);
