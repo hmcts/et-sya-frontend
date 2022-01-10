@@ -1,22 +1,28 @@
 import { CaseDate } from 'definitions/case';
-import { areDateFieldsFilledIn, isDateInputInvalid, isFieldFilledIn, isFutureDate } from '../../../main/components/form/validator';
+import {
+  areDateFieldsFilledIn,
+  atLeastOneFieldIsChecked,
+  isDateInputInvalid,
+  isFieldFilledIn,
+  isFutureDate,
+} from '../../../main/components/form/validator';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
-    it('Should check if value exist', async () => {
+    it('Should check if value exist', () => {
       const isValid = isFieldFilledIn('Yes');
 
       expect(isValid).toStrictEqual(undefined);
     });
 
-    it('Should check if value does not exist', async () => {
+    it('Should check if value does not exist', () => {
       let value;
       const isValid = isFieldFilledIn(value);
 
       expect(isValid).toStrictEqual('required');
     });
 
-    it('Should check if value is only whitespaces', async () => {
+    it('Should check if value is only whitespaces', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
@@ -24,13 +30,13 @@ describe('Validation', () => {
   });
 
   describe('areFieldsFilledIn()', () => {
-    it('Should check if values in object exist', async () => {
+    it('Should check if values in object exist', () => {
       const isValid = areDateFieldsFilledIn({ day: '1', month: '1', year: '1' });
 
       expect(isValid).toStrictEqual(undefined);
     });
 
-    it('Should check if values in object does not exist', async () => {
+    it('Should check if values in object does not exist', () => {
       const isValid = areDateFieldsFilledIn({ day: '', month: '', year: '' });
 
       expect(isValid).toStrictEqual('required');
@@ -38,21 +44,25 @@ describe('Validation', () => {
   });
 
   describe('isFutureDate()', () => {
-    it('Should check if date entered is future date', async () => {
-      const dateObj = new Date();
-      const date = {
+    it.each([
+      { dateObj: new Date(), expected: undefined },
+      { dateObj: undefined, expected: undefined },
+    ])('Should check if date entered is future date when %o', ({ dateObj, expected }) => {
+      const date = dateObj ? {
         day: dateObj.getUTCDate().toString(),
         month: dateObj.getUTCMonth().toString(),
         year: (dateObj.getUTCFullYear() - 1).toString(),
-      };
+      } : undefined;
       let isValid = isFutureDate(date);
 
-      expect(isValid).toStrictEqual(undefined);
+      expect(isValid).toStrictEqual(expected);
 
-      date.year += '1';
-      isValid = isFutureDate(date);
+      if (date) {
+        date.year += '1';
+        isValid = isFutureDate(date);
 
-      expect(isValid).toStrictEqual('invalidDateInFuture');
+        expect(isValid).toStrictEqual('invalidDateInFuture');
+      }
     });
   });
 
@@ -61,17 +71,35 @@ describe('Validation', () => {
       { date: { day: 1, month: 1, year: 1970 }, expected: undefined },
       { date: { day: 31, month: 12, year: 2000 }, expected: undefined },
       { date: { day: 31, month: 12, year: 123 }, expected: 'invalidYear' },
-      { date: { day: 31, month: 12, year: 1800 }, expected: 'invalidDateTooFarInPast' },
+      {
+        date: { day: 31, month: 12, year: 1800 },
+        expected: 'invalidDateTooFarInPast',
+      },
       { date: { day: 1, month: 1, year: 1 }, expected: 'invalidYear' },
       { date: { day: -31, month: 12, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 31, month: -12, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 32, month: 12, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 31, month: 13, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 'no', month: '!%', year: 'way' }, expected: 'invalidDate' },
+      { date: undefined, expected: 'invalidDate' },
     ])('checks dates validity when %o', ({ date, expected }) => {
       const isValid = isDateInputInvalid(date as unknown as CaseDate);
 
       expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('atLeastOneFieldIsChecked()', () => {
+    test('Should check if value exist', () => {
+      const isValid = atLeastOneFieldIsChecked(['Yes']);
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    test('Should check if value does not exist', () => {
+      const isValid = atLeastOneFieldIsChecked([]);
+
+      expect(isValid).toStrictEqual('required');
     });
   });
 });
