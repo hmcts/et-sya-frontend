@@ -9,19 +9,19 @@ export default class VideoHearingController {
   }
 
   public post(req: Request, res: Response): void {    
-    if (req.body['video-hearing'] === 'yes' &&  req.body.saveAndContinue === 'saveAndContinue') {
+    if (req.body['video-hearing'] === 'yes' &&  req.body.saveButton === 'saveContinue') {
       res.redirect('/steps-to-making-your-claim');
     }
-    else if (req.body['video-hearing'] === 'no' && req.body.saveAndContinue === 'saveAndContinue') {
+    else if (req.body['video-hearing'] === 'no' && req.body.saveButton === 'saveContinue') {
       res.redirect('/steps-to-making-your-claim');
     }
-    else if (req.body['video-hearing'] === 'yes' && req.body.saveForLater === 'saveForLater') { 
+    else if (req.body['video-hearing'] === 'yes' && req.body.saveButton === 'saveForLater') { 
       res.redirect('/your-claim-has-been-saved');
     }
-    else if (req.body['video-hearing'] === 'no' && req.body.saveForLater === 'saveForLater') { 
+    else if (req.body['video-hearing'] === 'no' && req.body.saveButton === 'saveForLater') { 
       res.redirect('/your-claim-has-been-saved');
     }
-    else if ( req.body.saveForLater == 'saveForLater') { 
+    else if ( req.body.saveButton == 'saveForLater') { 
       res.redirect('/your-claim-has-been-saved');
     }
     else {

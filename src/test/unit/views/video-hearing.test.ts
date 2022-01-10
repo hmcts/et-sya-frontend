@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { app } from '../../../main/app';
 import request from 'supertest';
 
-const PAGE_URL = '/video-hearing';
+const PAGE_URL = '/would-you-want-to-take-part-in-video-hearings';
 const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
 const expectedTitle = 'Would you be able to take part in video hearings?';

@@ -31,7 +31,7 @@
 
         </div>
       </details>
-      <form action="/video-hearing" method="post">
+      <form action="/would-you-want-to-take-part-in-video-hearings" method="post">
         {{ govukRadios({ 
       classes: "govuk-radios--inline govuk-!-margin-bottom-6",
       idPrefix: "video-hearing",
@@ -55,14 +55,14 @@
         {{ govukButton({
         text: button1,
         preventDoubleClick: true,
-        name:"saveAndContinue",
-        value:"saveAndContinue"
+        name:"saveButton",
+        value:"saveContinue"
       }) }}
         {{ govukButton({
         text: button2,
         classes: "govuk-button--secondary",
         preventDoubleClick: true,
-        name:"saveForLater",
+        name:"saveButton",
         value:"saveForLater"
       }) }}
       </div>
