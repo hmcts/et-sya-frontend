@@ -1,0 +1,12 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/lip-or-representative"
+}) }}
+{% endblock %}
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Are you making a claim on your own or with other people?</h1>
+{% endblock %}

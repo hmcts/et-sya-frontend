@@ -7,6 +7,10 @@ const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
   app.get('/', app.locals.container.cradle.homeController.get);
+  app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
+  app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
+  app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
+  
   app.get(
     '/info',
     infoRequestHandler({
