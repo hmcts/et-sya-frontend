@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { FormContent, FormFields, FormOptions } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId } from 'definitions/case';
 
 export default class DobController {
   private readonly form: Form
@@ -30,13 +31,13 @@ export default class DobController {
         res.redirect(req.url);
       });
     } else {
-      res.redirect('/');
+      res.redirect('/gender-details');
     }
   }
 
   public get = (req: AppRequest, res: Response): void => {
     const sessionErrors = req.session?.errors || [];
-    const userCase = req.session.userCase;
+    const userCase = req.session?.userCase;
 
     this.assignUserCaseData(userCase, this.formContent);
     req.session.userCase = userCase;
@@ -50,25 +51,29 @@ export default class DobController {
     });
   }
 
-  private assignUserCaseData = (userCase: any, form: FormContent): void => {
-    if (userCase) {
-      Object.entries(form.fields).forEach(
-        ([name, field]: [string, FormOptions]) => {
-          if (userCase[name]) {
-            const fromCase = userCase[name];
-            const values = field.values;
-
-            ((form.fields as FormFields)[name] as FormOptions).values = values.map((v) => {
-              Object.keys(fromCase).forEach((key) => {
-                if (v.name === key) {
-                  v.value = fromCase[key];
-                }
-              });
-              return v;
-            });
-          }
-        },
-      );
+  private assignUserCaseData = (userCase: CaseWithId | undefined, form: FormContent): void => {
+    if (!userCase) {
+      userCase = <CaseWithId>{};
+      return;
     }
+
+    Object.entries(form.fields).forEach(
+      ([name, field]: [string, FormOptions]) => {
+        const caseName = (userCase as any)[name];
+        if (caseName) {
+          const fromCase = caseName;
+          const values = field.values;
+
+          ((form.fields as FormFields)[name] as FormOptions).values = values.map((v) => {
+            Object.keys(fromCase).forEach((key) => {
+              if (v.name === key) {
+                v.value = fromCase[key];
+              }
+            });
+            return v;
+          });
+        }
+      },
+    );
   }
 }

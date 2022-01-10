@@ -19,19 +19,19 @@ export const dobFormContent: FormContent = {
       hint: (l: AnyRecord): string => l.hint,
       values: [
         {
-          label: 'Day',
+          label: (l: AnyRecord): string => l.dateFormat.day,
           name: 'day',
           classes: 'govuk-input--width-2',
           attributes: { maxLength: 2 },
         },
         {
-          label: 'Month',
+          label: (l: AnyRecord): string => l.dateFormat.month,
           name: 'month',
           classes: 'govuk-input--width-2',
           attributes: { maxLength: 2 },
         },
         {
-          label: 'Year',
+          label: (l: AnyRecord): string => l.dateFormat.year,
           name: 'year',
           classes: 'govuk-input--width-4',
           attributes: { maxLength: 4 },
