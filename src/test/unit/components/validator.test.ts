@@ -47,23 +47,28 @@ describe('Validation', () => {
     it.each([
       { dateObj: new Date(), expected: undefined },
       { dateObj: undefined, expected: undefined },
-    ])('Should check if date entered is future date when %o', ({ dateObj, expected }) => {
-      const date = dateObj ? {
-        day: dateObj.getUTCDate().toString(),
-        month: dateObj.getUTCMonth().toString(),
-        year: (dateObj.getUTCFullYear() - 1).toString(),
-      } : undefined;
-      let isValid = isFutureDate(date);
+    ])(
+      'Should check if date entered is future date when %o',
+      ({ dateObj, expected }) => {
+        const date = dateObj
+          ? {
+            day: dateObj.getUTCDate().toString(),
+            month: dateObj.getUTCMonth().toString(),
+            year: (dateObj.getUTCFullYear() - 1).toString(),
+          }
+          : undefined;
+        let isValid = isFutureDate(date);
 
-      expect(isValid).toStrictEqual(expected);
+        expect(isValid).toStrictEqual(expected);
 
-      if (date) {
-        date.year += '1';
-        isValid = isFutureDate(date);
+        if (date) {
+          date.year += '1';
+          isValid = isFutureDate(date);
 
-        expect(isValid).toStrictEqual('invalidDateInFuture');
-      }
-    });
+          expect(isValid).toStrictEqual('invalidDateInFuture');
+        }
+      },
+    );
   });
 
   describe('isDateInputInvalid()', () => {
@@ -80,8 +85,13 @@ describe('Validation', () => {
       { date: { day: 31, month: -12, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 32, month: 12, year: 2000 }, expected: 'invalidDate' },
       { date: { day: 31, month: 13, year: 2000 }, expected: 'invalidDate' },
-      { date: { day: 'no', month: '!%', year: 'way' }, expected: 'invalidDate' },
+      {
+        date: { day: 'no', month: '!%', year: 'way' },
+        expected: 'invalidDate',
+      },
       { date: undefined, expected: 'invalidDate' },
+      { date: { day: 31, month: 11, year: 2000 }, expected: 'invalidDate' },
+      { date: { day: 29, month: 2, year: 2001 }, expected: 'invalidDate' },
     ])('checks dates validity when %o', ({ date, expected }) => {
       const isValid = isDateInputInvalid(date as unknown as CaseDate);
 
@@ -90,13 +100,13 @@ describe('Validation', () => {
   });
 
   describe('atLeastOneFieldIsChecked()', () => {
-    test('Should check if value exist', () => {
+    it('Should check if value exist', () => {
       const isValid = atLeastOneFieldIsChecked(['Yes']);
 
       expect(isValid).toStrictEqual(undefined);
     });
 
-    test('Should check if value does not exist', () => {
+    it('Should check if value does not exist', () => {
       const isValid = atLeastOneFieldIsChecked([]);
 
       expect(isValid).toStrictEqual('required');
