@@ -12,6 +12,7 @@ export default function (app: Application): void {
   app.get('/how-would-you-like-to-be-updated-about-your-claim', app.locals.container.cradle.updatePreferenceController.get);
   app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
+  app.get('/your-contact-details-disability', app.locals.container.cradle.disabilityController.get);
   
   app.get(
     '/info',

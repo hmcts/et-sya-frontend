@@ -1,0 +1,12 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/"
+}) }}
+{% endblock %}
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Do you have a disability where you'd need assistance at a future tribunal hearing or to be sent information in an accessible format?</h1>
+{% endblock %}
