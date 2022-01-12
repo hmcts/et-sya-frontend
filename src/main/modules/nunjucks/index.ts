@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as express from 'express';
 import * as nunjucks from 'nunjucks';
 import { Form } from '../../components/form/form';
-import { FormInput } from '../../definitions/form';
+import { FormFields, FormInput } from '../../definitions/form';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -40,7 +40,9 @@ export class Nunjucks {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
     });
 
-    nunEnv.addGlobal('getError', function (fieldName: string): { text?: string } | boolean {
+    nunEnv.addGlobal('getError', function (fieldName: string):
+      | { text?: string }
+      | boolean {
       const { form, sessionErrors, errors } = this.ctx;
 
       const hasMoreThanTwoFields = new Form(form).getFieldNames().size >= 2;
@@ -48,7 +50,9 @@ export class Nunjucks {
         return false;
       }
 
-      const fieldError = sessionErrors.find((error: any) => error.propertyName === fieldName);
+      const fieldError = sessionErrors.find(
+        (error: any) => error.propertyName === fieldName,
+      );
       if (!fieldError) {
         return false;
       }
@@ -56,37 +60,62 @@ export class Nunjucks {
       return { text: errors[fieldName][fieldError.errorType] };
     });
 
-    nunEnv.addGlobal('formItems', function (items: FormInput[], userAnswer: string | Record<string, string>) {
-      return items.map((i: FormInput) => ({
-        id: i.id,
-        label: this.env.globals.getContent.call(this, i.label),
-        text: this.env.globals.getContent.call(this, i.label),
-        name: i.name,
-        classes: i.classes,
-        value: i.value ?? (userAnswer as any)?.[i.name as string] ?? (userAnswer as string),
-        attributes: i.attributes,
-        checked: i.selected ?? (userAnswer as any)?.[i.name as string]?.includes(i.value as string) ?? i.value === userAnswer,
-        hint: i.hint && {
-          html: this.env.globals.getContent.call(this, i.hint),
-        },
-        conditional: ((): { html: any | undefined } => {
-          if (i.conditionalText) {
-            return {
-              html: this.env.globals.getContent.call(this, i.conditionalText),
-            };
-          } else if (i.subFields) {
-            return {
-              html: nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
-                ...this.ctx,
-                form: { fields: i.subFields },
-              }),
-            };
-          } else {
-            return undefined;
-          }
-        })(),
-      }));
+    nunEnv.addGlobal('getErrors', function (items: FormFields[]): { text?: string, href?: string }[] {
+      return Object.entries(items)
+        .flatMap(([fieldName]) =>
+          this.env.globals.getError.call(this, fieldName),
+        )
+        .filter((e) => e);
     });
+
+    nunEnv.addGlobal(
+      'formItems',
+      function (
+        items: FormInput[],
+        userAnswer: string | Record<string, string>,
+      ) {
+        return items.map((i: FormInput) => ({
+          id: i.id,
+          label: this.env.globals.getContent.call(this, i.label),
+          text: this.env.globals.getContent.call(this, i.label),
+          name: i.name,
+          classes: i.classes,
+          value:
+            i.value ??
+            (userAnswer as any)?.[i.name as string] ??
+            (userAnswer as string),
+          attributes: i.attributes,
+          checked:
+            i.selected ??
+            (userAnswer as any)?.[i.name as string]?.includes(
+              i.value as string,
+            ) ??
+            i.value === userAnswer,
+          hint: i.hint && {
+            html: this.env.globals.getContent.call(this, i.hint),
+          },
+          conditional: ((): { html: any | undefined } => {
+            if (i.conditionalText) {
+              return {
+                html: this.env.globals.getContent.call(this, i.conditionalText),
+              };
+            } else if (i.subFields) {
+              return {
+                html: nunEnv.render(
+                  `${__dirname}/../../views/form/fields.njk`,
+                  {
+                    ...this.ctx,
+                    form: { fields: i.subFields },
+                  },
+                ),
+              };
+            } else {
+              return undefined;
+            }
+          })(),
+        }));
+      },
+    );
 
     app.use((req, res, next) => {
       res.locals.pagePath = req.path;

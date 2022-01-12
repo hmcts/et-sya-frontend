@@ -6,6 +6,7 @@
   "required": "You have not answered the question. You need to select an answer before continuing.",
   "notAnswered": "You have not answered the question.",
   "errorSaving": "Sorry, we’re having technical problems saving your application. Please try again in a few minutes.",
+  "errorSummaryTitle": "There is a problem",
   "months": [
     "January",
     "February",
