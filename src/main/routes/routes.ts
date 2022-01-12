@@ -9,11 +9,6 @@ export default function (app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   
-  app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingController.get);
-  app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingController.post);
-
-  app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
-  app.get('/your-claim-has-been-saved', app.locals.container.cradle.yourClaimHasBeenSavedController.get);
 
   app.get(
     '/info',
@@ -27,7 +22,13 @@ export default function (app: Application): void {
       },
     }),
   );
-  
+
+  app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
+  app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.post);
+
+  app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
+  app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),

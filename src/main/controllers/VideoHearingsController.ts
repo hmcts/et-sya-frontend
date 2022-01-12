@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 export default class VideoHearingController {
 
   public get(req: Request, res: Response): void {
-    res.render('video-hearing', {
-      ...(req.t('video-hearing', { returnObjects: true })),
+    res.render('video-hearings', {
+      ...(req.t('video-hearings', { returnObjects: true })),
     });
   }
 
@@ -25,9 +25,9 @@ export default class VideoHearingController {
       res.redirect('/your-claim-has-been-saved');
     }
     else {
-      res.render('video-hearing', {
+      res.render('video-hearings', {
         noRadioButtonSelectedError: true,
-        ...(req.t('video-hearing', { returnObjects: true })),
+        ...(req.t('video-hearings', { returnObjects: true })),
       });
     }
   }

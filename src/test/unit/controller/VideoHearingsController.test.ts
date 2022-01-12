@@ -1,13 +1,13 @@
 import sinon from 'sinon';
 import { Response } from 'express';
-import VideoHearingController from '../../../main/controllers/VideoHearingController';
+import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
 import { mockRequest } from '../mocks/mockRequest';
 
-const videoHearingController = new VideoHearingController();
+const videoHearingsController = new VideoHearingsController();
 
 describe('Video Hearing Controller', () => {
   const t = {
-    'video-hearing': {},
+    'video-hearings': {},
   };
 
   it('should render the video hearing choice page', () => {
@@ -19,9 +19,9 @@ describe('Video Hearing Controller', () => {
     responseMock
       .expects('render')
       .once()
-      .withArgs('video-hearing', request.t('video-hearing', { returnObjects: true }));
+      .withArgs('video-hearings', request.t('video-hearings', { returnObjects: true }));
 
-    videoHearingController.get(request, response);
+    videoHearingsController.get(request, response);
     responseMock.verify();
   });
 
@@ -37,7 +37,7 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('/steps-to-making-your-claim');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
@@ -53,7 +53,7 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('/steps-to-making-your-claim');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
@@ -69,7 +69,7 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('/your-claim-has-been-saved');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
@@ -86,7 +86,7 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('/your-claim-has-been-saved');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
@@ -102,9 +102,9 @@ describe('Video Hearing Controller', () => {
     responseMock
       .expects('render')
       .once()
-      .withArgs('video-hearing');
+      .withArgs('video-hearings');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
@@ -120,7 +120,7 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('/your-claim-has-been-saved');
 
-    videoHearingController.post(request, response);
+    videoHearingsController.post(request, response);
     responseMock.verify();
   });
 
