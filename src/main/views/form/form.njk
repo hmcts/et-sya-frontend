@@ -1,16 +1,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 <form class="form" id="main-form" method="post" action="" novalidate="novalidate">
   <input type="hidden" name="_csrf" id="csrfToken" value="12345">
-
-  {{ 
-    govukErrorSummary({
-      titleText: errorSummaryTitle,
-      errorList: getErrors(form.fields)
-    }) if getErrors(form.fields).length > 0
-  }}
-
   {% block form_content %}
     {% include "./fields.njk" %}
   {% endblock %}

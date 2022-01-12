@@ -3,7 +3,10 @@
   "hint": "These details will be used to help progress your claim.<br><br>For example, 23 04 1981.",
   "errors": {
     "dobDate": {
-      "required": "You have not entered a date. Enter a date to continue.",
+      "required": "Enter your date of birth. For example, 23 04 1981",
+      "dayRequired": "Enter a day for your date of birth. For example, 23",
+      "monthRequired": "Enter a month for your date of birth. For example, 04",
+      "yearRequired": "Enter a year for your date of birth. For example, 1981",
       "invalidDate": "You have entered an invalid date. Enter the date using the following format: 23 04 1981.",
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 1981.",
       "invalidDateInFuture": "You have entered a date that is in the future. Enter a date that is in the past before continuing.",

@@ -56,11 +56,13 @@ export class Nunjucks {
       if (!fieldError) {
         return false;
       }
-
       return { text: errors[fieldName][fieldError.errorType] };
     });
 
-    nunEnv.addGlobal('getErrors', function (items: FormFields[]): { text?: string, href?: string }[] {
+    nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
+      text?: string
+      href?: string
+    }[] {
       return Object.entries(items)
         .flatMap(([fieldName]) =>
           this.env.globals.getError.call(this, fieldName),

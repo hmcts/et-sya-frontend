@@ -14,7 +14,7 @@ export const convertToDateObject: DateParser = (property, body) =>
       delete body[propertyName];
       return newDateObj;
     },
-    { year: '', month: '', day: '' },
+    { day: '', month: '', year: '' },
   );
 
 type CheckboxParser = (

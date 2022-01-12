@@ -16,19 +16,27 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
-export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefined) => {
-  if (typeof fields !== 'object' || Object.keys(fields).length !== 3) {
+export const areDateFieldsFilledIn: DateValidator = (
+  fields: CaseDate | undefined,
+) => {
+  if (
+    typeof fields !== 'object' ||
+    Object.keys(fields).length !== 3 ||
+    Object.values(fields).every((e) => e === null || e === '')
+  ) {
     return 'required';
   }
 
-  for (const [, field] of Object.entries(fields)) {
+  for (const [fieldName, field] of Object.entries(fields)) {
     if (!field) {
-      return 'required';
+      return `${fieldName}Required`;
     }
   }
 };
 
-export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) => {
+export const isDateInputInvalid: DateValidator = (
+  date: CaseDate | undefined,
+) => {
   const invalid = 'invalidDate';
   if (!date) {
     return invalid;
@@ -45,8 +53,9 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   const day = parseInt(date.day, 10) || 0;
 
   const jsDate = dayjs(new Date(year, month - 1, day));
-  const validDayInTheMonth = jsDate.year() == year && jsDate.month() + 1 == month && jsDate.date() == day;
-  
+  const validDayInTheMonth =
+    jsDate.year() == year && jsDate.month() + 1 == month && jsDate.date() == day;
+
   if (month < 1 || month > 12 || day < 1 || day > 31) {
     return invalid;
   }
