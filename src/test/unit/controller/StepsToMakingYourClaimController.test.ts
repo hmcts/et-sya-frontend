@@ -21,7 +21,7 @@ describe('Steps to Making your claim Controller', () => {
       .once()
       .withArgs('steps-to-making-your-claim', request.t('steps-to-making-your-claim', { returnObjects: true }));
 
-      stepsToMakingYourClaimController.get(request, response);
+    stepsToMakingYourClaimController.get(request, response);
     responseMock.verify();
   });
 });
