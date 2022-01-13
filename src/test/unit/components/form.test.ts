@@ -88,6 +88,7 @@ describe('Form', () => {
       },
       {
         propertyName: 'dateField',
+        fieldName: undefined,
         errorType: 'required',
       },
       {

@@ -10,9 +10,7 @@ import {
 import { AnyRecord } from 'definitions/util-types';
 import { setupCheckboxParser } from './parser';
 
-const WHITELISTED_FIELDS: string[] = [
-  '_csrf',
-];
+const WHITELISTED_FIELDS: string[] = ['_csrf'];
 
 export class Form {
   constructor(private readonly fields: FormFields) {}
@@ -27,7 +25,7 @@ export class Form {
     const fields = checkFields || this.fields;
 
     const parsedBody = Object.entries(fields)
-      .map(setupCheckboxParser(!!body.saveAndSignOut))
+      .map(setupCheckboxParser(!!body?.saveForLater))
       .filter(([, field]) => typeof field?.parser === 'function')
       .flatMap(([key, field]: any[]) => {
         const parsed = field.parser?.(body);
@@ -36,7 +34,8 @@ export class Form {
 
     let subFieldsParsedBody = {};
     for (const [, value] of Object.entries(fields)) {
-      (value as FormOptions)?.values?.filter((option: FormInput) => option.subFields !== undefined)
+      (value as FormOptions)?.values
+        ?.filter((option: FormInput) => option.subFields !== undefined)
         .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
         .map((subField: any) => this.getParsedBody(body, subField))
         .forEach((parsedSubField: CaseWithId) => {
@@ -69,11 +68,21 @@ export class Form {
     id: string,
     field: FormField,
   ): FormError[] {
-    const errorType = field.validator && field.validator((body as any)[id], body);
+    const errorType =
+      field.validator && field.validator((body as any)[id], body);
+    const errors: FormError[] = [];
 
-    const errors: FormError[] = errorType
-      ? [{ errorType, propertyName: id }]
-      : [];
+    if (errorType) {
+      if (typeof errorType === 'object') {
+        errors.push({
+          errorType: errorType.error,
+          propertyName: id,
+          fieldName: errorType.fieldName,
+        });
+      } else {
+        errors.push({ errorType: errorType as string, propertyName: id });
+      }
+    }
 
     // if there are checkboxes or options, check them for errors
     if (this.isFormOptions(field)) {

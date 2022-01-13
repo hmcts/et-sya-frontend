@@ -41,7 +41,7 @@ export class Nunjucks {
     });
 
     nunEnv.addGlobal('getError', function (fieldName: string):
-      | { text?: string }
+      | { text?: string; fieldName?: string }
       | boolean {
       const { form, sessionErrors, errors } = this.ctx;
 
@@ -56,7 +56,10 @@ export class Nunjucks {
       if (!fieldError) {
         return false;
       }
-      return { text: errors[fieldName][fieldError.errorType] };
+      return {
+        text: errors[fieldName][fieldError.errorType],
+        fieldName: fieldError['fieldName'],
+      };
     });
 
     nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
@@ -64,9 +67,21 @@ export class Nunjucks {
       href?: string
     }[] {
       return Object.entries(items)
-        .flatMap(([fieldName]) =>
-          this.env.globals.getError.call(this, fieldName),
-        )
+        .flatMap(([fieldName, field]) => {
+          const error = this.env.globals.getError.call(this, fieldName) as {
+            text?: string
+            fieldName?: string
+          };
+          if (error && error?.text) {
+            return {
+              text: error.text,
+              href: `#${field.id}${
+                error.fieldName ? '-' + error.fieldName : ''
+              }`,
+            };
+          }
+          return;
+        })
         .filter((e) => e);
     });
 

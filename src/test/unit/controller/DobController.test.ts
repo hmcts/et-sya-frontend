@@ -5,6 +5,8 @@ import { FormContent } from '../../../main/definitions/form';
 import { mockResponse } from '../mocks/mockResponse';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { areDateFieldsFilledIn } from '../../../main/components/form/validator';
+import { convertToDateObject } from '../../../main/components/form/parser';
+import { UnknownRecord } from '../../../main/definitions/util-types';
 
 describe('Dob Controller', () => {
   const t = {
@@ -18,27 +20,27 @@ describe('Dob Controller', () => {
         type: 'date',
         values: [
           {
-            label: 'Day',
+            label: 'day',
             name: 'day',
             classes: 'govuk-input--width-2',
             attributes: { maxLength: 2 },
-            value: '24',
           },
           {
-            label: 'Month',
+            label: 'month',
             name: 'month',
             classes: 'govuk-input--width-2',
             attributes: { maxLength: 2 },
-            value: '12',
           },
           {
-            label: 'Year',
+            label: 'year',
             name: 'year',
             classes: 'govuk-input--width-4',
             attributes: { maxLength: 4 },
-            value: '2000',
           },
         ],
+        parser: (body: UnknownRecord): any =>
+          convertToDateObject('dobDate', body),
+        validator: (value: any) => areDateFieldsFilledIn(value),
       },
     },
   } as unknown as FormContent;
@@ -66,53 +68,22 @@ describe('Dob Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'dobDate', errorType: 'required' }];
-    const body = { dobDate: 'field is required' };
-    const mockDobFormContent = {
-      fields: {
-        dobDate: {
-          type: 'date',
-          validator: (value: any) => areDateFieldsFilledIn(value),
-        },
-      },
-    } as unknown as FormContent;
+    const errors = [{ propertyName: 'dobDate', errorType: 'dayRequired', fieldName: 'day' }];
+    const body = { 'dobDate-day': '', 'dobDate-month': '11', 'dobDate-year': '2000' };
 
-    const controller = new DobController(mockDobFormContent);
+    const controller = new DobController(mockFormContent);
 
-    const req = mockRequest({ body });
+    const req = mockRequest( { body } );
     const res = mockResponse();
     controller.post(req, res);
 
     expect(req.session.userCase).toEqual({
       id: '1234',
-      dobDate: 'field is required',
-    });
-
-    expect(res.redirect).toBeCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
-  });
-
-  it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'dobDate', errorType: 'required' }];
-    const body = { dobDate: 'field is required' };
-    const mockDobFormContent = {
-      fields: {
-        dobDate: {
-          type: 'date',
-          validator: (value: any) => areDateFieldsFilledIn(value),
-        },
+      dobDate: {
+        day: '',
+        month: '11',
+        year: '2000',
       },
-    } as unknown as FormContent;
-
-    const controller = new DobController(mockDobFormContent);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      id: '1234',
-      dobDate: 'field is required',
     });
 
     expect(res.redirect).toBeCalledWith(req.path);

@@ -5,13 +5,13 @@ import {
   isFutureDate,
 } from '../../components/form/validator';
 import { CaseDate } from '../../definitions/case';
-import { FormContent } from '../../definitions/form';
+import { FormContent, InvalidField } from '../../definitions/form';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
 
 export const dobFormContent: FormContent = {
   fields: {
     dobDate: {
-      id: 'dob-id-1',
+      id: 'dob',
       type: 'date',
       classes: 'govuk-date-input',
       label: (l: AnyRecord): string => l.label,
@@ -39,7 +39,7 @@ export const dobFormContent: FormContent = {
       ],
       parser: (body: UnknownRecord): any =>
         convertToDateObject('dobDate', body),
-      validator: (value: CaseDate): string | void =>
+      validator: (value: CaseDate): string | void | InvalidField =>
         areDateFieldsFilledIn(value) ||
         isDateInputInvalid(value) ||
         isFutureDate(value),

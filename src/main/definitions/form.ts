@@ -6,7 +6,7 @@ type LanguageLookup = (lang: NeverRecord) => string
 type ValidationCheck = (
   value: string | string[] | CaseDate | undefined | Case,
   formData: any
-) => void | string
+) => void | string | InvalidField
 
 type Parser = (value: Record<string, unknown> | string[]) => void
 
@@ -64,4 +64,10 @@ export interface FormInput {
 export type FormError = {
   propertyName: string;
   errorType: string;
+  fieldName?: string;
+}
+
+export type InvalidField = {
+  error: string;
+  fieldName: string;
 }

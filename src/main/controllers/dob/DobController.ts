@@ -21,6 +21,7 @@ export default class DobController {
     Object.assign(req.session.userCase, formData);
 
     sessionErrors = this.form.getErrors(formData);
+    
     req.session.errors = sessionErrors;
 
     if (sessionErrors.length > 0) {

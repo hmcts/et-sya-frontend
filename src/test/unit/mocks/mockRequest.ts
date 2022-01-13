@@ -6,7 +6,7 @@ export const mockRequest = ({
   userCase,
   session,
   t,
-}: any): AppRequest => {
+}: { body: any, userCase: CaseWithId, session: any, t: () => any }): AppRequest => {
   const req = {
     t: () => t,
   } as unknown as AppRequest;
@@ -20,7 +20,7 @@ export const mockRequest = ({
       ...userCase,
     } as CaseWithId,
     ...session,
-    save: jest.fn(done => done()),
+    save: jest.fn((done) => done()),
     lang: 'en',
     errors: undefined,
   } as any;

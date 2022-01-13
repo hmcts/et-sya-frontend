@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
 import { CaseDate } from 'definitions/case';
+import { InvalidField } from 'definitions/form';
 
 export type Validator = (value: string | string[] | undefined) => void | string
-export type DateValidator = (value: CaseDate | undefined) => void | string
+export type DateValidator = (
+  value: CaseDate | undefined
+) => void | string | InvalidField
 
 export const isFieldFilledIn: Validator = (value) => {
   if (!value || (value as string).trim().length === 0) {
@@ -24,12 +27,18 @@ export const areDateFieldsFilledIn: DateValidator = (
     Object.keys(fields).length !== 3 ||
     Object.values(fields).every((e) => e === null || e === '')
   ) {
-    return 'required';
+    return {
+      error: 'required',
+      fieldName: fields ? Object.keys(fields)[0] : undefined,
+    };
   }
 
   for (const [fieldName, field] of Object.entries(fields)) {
     if (!field) {
-      return `${fieldName}Required`;
+      return {
+        error: `${fieldName}Required`,
+        fieldName: fieldName,
+      };
     }
   }
 };
@@ -42,9 +51,12 @@ export const isDateInputInvalid: DateValidator = (
     return invalid;
   }
 
-  for (const [, value] of Object.entries(date)) {
+  for (const [fieldName, value] of Object.entries(date)) {
     if (isNaN(+value)) {
-      return invalid;
+      return {
+        error: invalid,
+        fieldName,
+      };
     }
   }
 
@@ -52,23 +64,23 @@ export const isDateInputInvalid: DateValidator = (
   const month = parseInt(date.month, 10) || 0;
   const day = parseInt(date.day, 10) || 0;
 
-  const jsDate = dayjs(new Date(year, month - 1, day));
-  const validDayInTheMonth =
-    jsDate.year() == year && jsDate.month() + 1 == month && jsDate.date() == day;
-
   if (month < 1 || month > 12 || day < 1 || day > 31) {
-    return invalid;
+    return {
+      error: invalid,
+      fieldName:
+        month < 1 || month > 12 ? 'month' : day < 1 || day > 31 ? 'day' : '',
+    };
   }
 
   if (year < 1900) {
     if (year < 1000) {
-      return 'invalidYear';
+      return { error: 'invalidYear', fieldName: 'year' };
     }
-    return 'invalidDateTooFarInPast';
+    return { error: 'invalidDateTooFarInPast', fieldName: 'year' };
   }
 
-  if (!validDayInTheMonth) {
-    return invalid;
+  if (validateDayInTheMonth(date)) {
+    return { error: invalid, fieldName: validateDayInTheMonth(date) as string };
   }
 };
 
@@ -79,6 +91,20 @@ export const isFutureDate: DateValidator = (date) => {
 
   const enteredDate = new Date(+date.year, +date.month, +date.day);
   if (new Date() < enteredDate) {
-    return 'invalidDateInFuture';
+    return { error: 'invalidDateInFuture', fieldName: 'day' };
   }
+};
+
+export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
+  const year = parseInt(date.year, 10) || 0;
+  const month = parseInt(date.month, 10) || 0;
+  const day = parseInt(date.day, 10) || 0;
+
+  const jsDate = dayjs(new Date(year, month - 1, day));
+
+  const yearValid = jsDate.year() == year;
+  const monthValid = jsDate.month() + 1 == month;
+  const dayValid = jsDate.date() == day;
+
+  return !yearValid ? 'year' : !monthValid ? 'month' : !dayValid ? 'day' : false;
 };
