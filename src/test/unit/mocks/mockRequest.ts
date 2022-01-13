@@ -6,7 +6,7 @@ export const mockRequest = ({
   userCase,
   session,
   t,
-}: { body: any, userCase: CaseWithId, session: any, t: () => any }): AppRequest => {
+}: any): AppRequest => {
   const req = {
     t: () => t,
   } as unknown as AppRequest;
