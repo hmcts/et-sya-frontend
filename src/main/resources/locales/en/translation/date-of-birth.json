@@ -1,4 +1,5 @@
 {
+  "title": "Date of birth details",
   "h1": "What is your date of birth?",
   "hint": "These details will be used to help progress your claim.<br><br>For example, 23 04 1981.",
   "errors": {
