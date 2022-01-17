@@ -2,8 +2,9 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId } from '../../definitions/case';
 
-export default class DobController {
+export default class AddressDetailsController {
   private readonly form: Form
 
   constructor(private readonly formContent: FormContent) {
@@ -15,12 +16,11 @@ export default class DobController {
     const formData = this.form.getParsedBody(req.body, this.formContent.fields);
 
     if (!req.session.userCase) {
-      req.session.userCase = {} as any;
+      req.session.userCase = {} as CaseWithId;
     }
     Object.assign(req.session.userCase, formData);
 
     sessionErrors = this.form.getErrors(formData);
-    
     req.session.errors = sessionErrors;
 
     if (sessionErrors.length > 0) {
@@ -31,7 +31,9 @@ export default class DobController {
         res.redirect(req.url);
       });
     } else {
-      res.redirect('/gender-details');
+      // TODO(Tautvydas): change this route to a correct one
+      // once the next page exists.
+      res.redirect('/');
     }
   }
 
@@ -39,9 +41,9 @@ export default class DobController {
     const sessionErrors = req.session?.errors || [];
     const userCase = req.session?.userCase;
 
-    res.render('date-of-birth', {
+    res.render('address-details', {
       ...req.t('common', { returnObjects: true }),
-      ...req.t('date-of-birth', { returnObjects: true }),
+      ...req.t('address-details', { returnObjects: true }),
       form: this.formContent,
       sessionErrors,
       userCase,

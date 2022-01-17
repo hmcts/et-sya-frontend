@@ -4,14 +4,16 @@ import { infoRequestHandler } from '@hmcts/info-provider';
 import DobController from '../controllers/dob/DobController';
 import { dobFormContent } from '../controllers/dob/content';
 import GenderDetailsController from '../controllers/gender_details/GenderDetailsController';
+import AddressDetailsController from '../controllers/address_details/AddressDetailsController';
+import { addressDetailsContent } from '../controllers/address_details/content';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
-export default function (app: Application): void {
+export default function(app: Application): void {
   app.get('/', app.locals.container.cradle.homeController.get);
   app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
-  
+
   app.get(
     '/info',
     infoRequestHandler({
@@ -27,7 +29,9 @@ export default function (app: Application): void {
   app.get('/dob-details', new DobController(dobFormContent).get);
   app.post('/dob-details', new DobController(dobFormContent).post);
   app.get('/gender-details', new GenderDetailsController().get);
-  
+  app.get('/address-details', new AddressDetailsController(addressDetailsContent).get);
+  app.post('/address-details', new AddressDetailsController(addressDetailsContent).post);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),
