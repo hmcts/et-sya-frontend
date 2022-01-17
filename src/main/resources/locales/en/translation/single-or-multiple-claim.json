@@ -1,0 +1,9 @@
+{
+  "title": "Single or Multiple Claim",
+  "h1": "Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?",
+  "p1": "You make a ‘Single’ claim if your dispute is only between you and any respondents who you think treated you (as an individual) unlawfully.",
+  "p2": "You make a ‘Multiple’ claim if your dispute is between more than 1 more person and any respondents who you think treated you all (as a group) unlawfully.",
+  "radio1": "I’m making a ‘Single’ claim on my own",
+  "radio2": "I’m making a ‘Multiple’ claim alongside other people",  
+  "errorMessage":"Select an Option"
+}
