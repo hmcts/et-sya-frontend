@@ -1,0 +1,68 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{govukBackLink({
+        text: "Back",
+        href: "/"
+    })}}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <form action="/multiple-respondent-check" method="post" novalidate>
+
+              {{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: [
+    {
+      text: errorMessage,
+      href: "#more-than-one-respondent"
+    }
+  ]
+})
+if noRadioButtonSelectedError }}
+
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+        <p class="govuk-body ">{{ p1 }}</p>
+
+        {{ govukInsetText({
+  text:  p2 
+}) }}
+
+        {{ govukRadios({
+  idPrefix: "more-than-one-respondent",
+  name: "more-than-one-respondent", 
+  items: [
+    {
+      value: "yes",
+      text: radio1
+    },
+    {
+      value: "no",
+      text: radio2
+    }
+  ],
+  errorMessage: {
+        text: errorMessage
+        } if noRadioButtonSelectedError
+}) }}
+
+        {{ govukButton({
+        text: button1,
+        name: "continueButton",
+        value: "continue",
+        preventDoubleClick: true
+      }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

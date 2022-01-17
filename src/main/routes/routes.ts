@@ -8,6 +8,8 @@ export default function (app: Application): void {
   app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
+  app.get('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.get);
+  app.post('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.post);
   
   app.get(
     '/info',
