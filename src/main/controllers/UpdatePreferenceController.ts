@@ -23,7 +23,7 @@ export default class UpdatePreferenceController {
           ...(req.t('update-preference', { returnObjects: true })),
         });
       }
-    }
+    };
     updatePref();
   }
 
