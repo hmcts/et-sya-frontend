@@ -15,6 +15,8 @@ import setupDev from './development';
 import routes from './routes/routes';
 import { Container } from './modules/awilix';
 import { I18Next } from './modules/i18next';
+import { AppRequest } from './definitions/appRequest';
+import { Session } from './modules/session';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -30,6 +32,7 @@ new Nunjucks(developmentMode).enableFor(app);
 new Helmet(config.get('security')).enableFor(app);
 new Container().enableFor(app);
 new I18Next().enableFor(app);
+new Session().enableFor(app);
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
@@ -54,7 +57,7 @@ app.use((req, res) => {
 });
 
 // error handler
-app.use((err: HTTPError, req: express.Request, res: express.Response) => {
+app.use((err: HTTPError, req: AppRequest, res: express.Response) => {
   logger.error(`${err.stack || err}`);
 
   // set locals, only providing error in development
