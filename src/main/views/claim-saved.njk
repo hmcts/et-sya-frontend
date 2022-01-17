@@ -5,13 +5,13 @@
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-  text: "Back",
+  text: back,
   href: "/how-would-you-like-to-be-updated-about-your-claim"
 }) }}
 {% endblock %}
 {% block content %}
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ h1 }}</h1>
   {{ govukPanel({
-  titleText: "Your claim has been saved"
+  titleText: titleText
 }) }}
 {% endblock %}
