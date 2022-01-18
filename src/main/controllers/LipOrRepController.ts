@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { URLS } from '../definitions/constants';
 
 export default class LipOrRepController {
 
@@ -13,9 +14,7 @@ export default class LipOrRepController {
       res.redirect('/single-or-multiple-claim');
     }
     else if (req.body['lip-or-representative'] === 'representative') {
-      // redirect to legacy ET1 service
-      const URL = 'https://employmenttribunals.service.gov.uk/apply';
-      res.redirect(URL);
+      res.redirect(URLS.LEGACY_ET1);
     } else {
       res.render('lip-or-representative', {
         noRadioButtonSelectedError: true,
