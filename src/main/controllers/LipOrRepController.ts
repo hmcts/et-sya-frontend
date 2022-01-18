@@ -5,6 +5,7 @@ export default class LipOrRepController {
 
   public get(req: Request, res: Response): void {
     res.render('lip-or-representative', {
+      ...req.t('common', { returnObjects: true }),
       ...(req.t('lip-or-representative', { returnObjects: true })),
     });
   }
@@ -18,6 +19,7 @@ export default class LipOrRepController {
     } else {
       res.render('lip-or-representative', {
         noRadioButtonSelectedError: true,
+        ...req.t('common', { returnObjects: true }),
         ...(req.t('lip-or-representative', { returnObjects: true })),
       });
     }
