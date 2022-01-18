@@ -4,6 +4,7 @@ export default class VideoHearingController {
 
   public get(req: Request, res: Response): void {
     res.render('video-hearings', {
+      ...req.t('common', { returnObjects: true }),
       ...(req.t('video-hearings', { returnObjects: true })),
     });
   }
@@ -16,8 +17,9 @@ export default class VideoHearingController {
     req.body['video-hearing'] ? res.redirect('/steps-to-making-your-claim') :
       res.render('video-hearings', {
         noRadioButtonSelectedError: true,
+        ...req.t('common', { returnObjects: true }),
         ...(req.t('video-hearings', { returnObjects: true })),
-      })
+      });
   }
 
 
