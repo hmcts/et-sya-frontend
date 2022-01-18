@@ -1,11 +1,6 @@
 import * as os from 'os';
 import { Application } from 'express';
 import { infoRequestHandler } from '@hmcts/info-provider';
-import DobController from '../controllers/dob/DobController';
-import { dobFormContent } from '../controllers/dob/content';
-import GenderDetailsController from '../controllers/gender_details/GenderDetailsController';
-import AddressDetailsController from '../controllers/address_details/AddressDetailsController';
-import { addressDetailsContent } from '../controllers/address_details/content';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function(app: Application): void {
@@ -26,11 +21,11 @@ export default function(app: Application): void {
       },
     }),
   );
-  app.get('/dob-details', new DobController(dobFormContent).get);
-  app.post('/dob-details', new DobController(dobFormContent).post);
-  app.get('/gender-details', new GenderDetailsController().get);
-  app.get('/address-details', new AddressDetailsController(addressDetailsContent).get);
-  app.post('/address-details', new AddressDetailsController(addressDetailsContent).post);
+  app.get('/dob-details', app.locals.container.cradle.dobController.get);
+  app.post('/dob-details', app.locals.container.cradle.dobController.post);
+  app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
+  app.get('/address-details', app.locals.container.cradle.addressDetailsController.get);
+  app.post('/address-details', app.locals.container.cradle.addressDetailsController.post);
 
   const healthCheckConfig = {
     checks: {
