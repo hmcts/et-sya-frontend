@@ -1,0 +1,15 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/" + previousPage
+}) }}
+{% endblock %}
+{% block content %}
+        {{ govukPanel({
+        titleText: "Your claim has been saved"
+      }) }}
+{% endblock %}

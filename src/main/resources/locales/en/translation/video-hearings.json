@@ -1,0 +1,15 @@
+{
+    "h1": "Would you be able to take part in video hearings?",
+    "p1":"They’re not always guaranteed and held at the discretion of an employment judge.",
+    "p2":"They may also not always be possible or suitable depending on your type of claim.",
+    "p3":"If you're asked to take part in a video hearing, you’ll need a reliable internet connection.",
+    "detailsSummary": "What is a video hearing?",
+    "detailsText": {
+      "p1":"It’s a hearing carried out via a video call and you need to prepare for and treat them like a face-to-face hearing.",
+      "p2":"If you’re allowed to take part in one, you’ll be called before the hearing to check you:",
+      "li1":"have a reliable internet connection",
+      "li2":"know how to join the hearing"
+    },
+    "errorMessage":"Select an option"
+  }
+  
