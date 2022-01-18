@@ -6,7 +6,9 @@ import fs from 'fs';
 import path from 'path';
 
 const multipleRespondentJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/multiple-respondent-check.json'), 'utf-8');
+const commonJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'), 'utf-8');
 const multipleRespondentJson = JSON.parse(multipleRespondentJsonRaw);
+const commonJsonRawJson = JSON.parse(commonJsonRaw);
 
 const PAGE_URL = '/multiple-respondent-check';
 const titleClass = 'govuk-heading-xl';
@@ -17,13 +19,17 @@ const expectedP1 = multipleRespondentJson.p1;
 const expectedP2 = multipleRespondentJson.p2;
 
 const buttonClass = 'govuk-button';
+const backButtonClass = 'govuk-back-link';
 const radioClass = 'govuk-radios__item';
 const errorClass = 'govuk-error-message';
 const errorSummaryClass = 'govuk-error-summary__list';
+const errorSummaryTitleClass = 'govuk-error-summary__title';
 const expectedRadioLabel1 = multipleRespondentJson.radio1;
 const expectedRadioLabel2 = multipleRespondentJson.radio2;
-const expectedButtonText = multipleRespondentJson.button1;
+const expectedButtonText = commonJsonRawJson.continue;
+const expectedBackButtonText = commonJsonRawJson.back;
 const expectedErrorMessage = multipleRespondentJson.errorMessage;
+const errorSummaryTitle = commonJsonRawJson.errorSummaryTitle;
 
 let htmlRes: Document;
 describe('Multiple Respondent page', () => {
@@ -54,6 +60,11 @@ describe('Multiple Respondent page', () => {
         expect(button[0].innerHTML).contains(expectedButtonText, 'Could not find button with text ' + expectedButtonText);
     });
 
+    it('should display back button', () => {
+        const backButton = htmlRes.getElementsByClassName(backButtonClass);
+        expect(backButton[0].innerHTML).contains(expectedBackButtonText, 'Could not find button with text ' + expectedButtonText);
+    });
+
     it('should display 2 radio buttons', () => {
         const radioButtons = htmlRes.getElementsByClassName(radioClass);
         expect(radioButtons.length).equal(2, '2 radio buttons not found');
@@ -80,9 +91,14 @@ describe('Multiple Respondent page with error', () => {
     });
 
 
+    it('should display error summary title', () => {
+        const errorSummary = htmlRes.getElementsByClassName(errorSummaryTitleClass);
+        expect(errorSummary[0].innerHTML).contains(errorSummaryTitle, 'Could not find an error summary title');
+    });
+
     it('should display error summary', () => {
         const errorMessage = htmlRes.getElementsByClassName(errorSummaryClass);
-        expect(errorMessage[0].children[0].children[0].innerHTML).contains(expectedErrorMessage, 'Could not find an error message');
+        expect(errorMessage[0].children[0].children[0].innerHTML).contains(expectedErrorMessage, 'Could not find an error message summary');
     });
 
 });

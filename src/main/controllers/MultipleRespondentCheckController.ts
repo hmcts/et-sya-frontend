@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 export default class MultipleRespondentCheckController {
     public get(req: Request, res: Response): void {
         res.render('multiple-respondent-check', {
+            ...req.t('common', { returnObjects: true }),
             ...(req.t('multiple-respondent-check', { returnObjects: true }))
         });
     }
@@ -16,6 +17,7 @@ export default class MultipleRespondentCheckController {
         } else {
             res.render('multiple-respondent-check', {
                 noRadioButtonSelectedError: true,
+                ...req.t('common', { returnObjects: true }),
                 ...(req.t('multiple-respondent-check', { returnObjects: true })),
             });
         }
