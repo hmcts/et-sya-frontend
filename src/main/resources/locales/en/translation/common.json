@@ -1,0 +1,33 @@
+{
+  "back": "Back",
+  "continue": "Continue",
+  "saveForLater": "Save for later",
+  "submit": "Save and continue",
+  "required": "You have not answered the question. You need to select an answer before continuing.",
+  "notAnswered": "You have not answered the question.",
+  "errorSaving": "Sorry, we’re having technical problems saving your application. Please try again in a few minutes.",
+  "errorSummaryTitle": "There is a problem",
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "dateFormat": {
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "english": "English",
+  "welsh": "Welsh"
+}

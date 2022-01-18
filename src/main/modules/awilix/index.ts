@@ -8,16 +8,24 @@ const logger = Logger.getLogger('app');
 
 export class Container {
   public enableFor(app: Application): void {
-    const jsonObject: {[key: string]: any} = {};
+    const jsonObject: { [key: string]: any } = {};
 
-    const files = fs.readdirSync(path.join(__dirname, '../../controllers'));
-    files.forEach((f: string) => {
-      const controllerName = f.slice(0, -3);
-      const registerName = controllerName.charAt(0).toLowerCase() + controllerName.slice(1);
-      const clazz = require('../../controllers/' + controllerName);
-      jsonObject[registerName] = asClass(clazz.default);
+    const files = fs.readdirSync(path.join(__dirname, '../../controllers'), {
+      withFileTypes: true,
     });
+    files
+      .filter((f) => f.isFile())
+      .map((f: fs.Dirent) => f.name)
+      .forEach((f: string) => {
+        const controllerName = f.slice(0, -3);
+        const registerName =
+          controllerName.charAt(0).toLowerCase() + controllerName.slice(1);
+        const clazz = require('../../controllers/' + controllerName);
+        jsonObject[registerName] = asClass(clazz.default);
+      });
     jsonObject['logger'] = asValue(logger);
-    app.locals.container = createContainer({ injectionMode: InjectionMode.CLASSIC }).register(jsonObject);
+    app.locals.container = createContainer({
+      injectionMode: InjectionMode.CLASSIC,
+    }).register(jsonObject);
   }
 }

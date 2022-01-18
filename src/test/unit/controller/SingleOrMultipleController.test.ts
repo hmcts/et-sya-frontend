@@ -12,7 +12,7 @@ describe('Single or Multiple Claim Controller', () => {
 
   it('should render single or multiple claim page', () => {
     const response = ({ render: () => '' } as unknown) as Response;
-    const request = mockRequest(t);
+    const request = mockRequest({ t });
 
     const responseMock = sinon.mock(response);
 
