@@ -8,27 +8,17 @@ export default class VideoHearingController {
     });
   }
 
-  public post(req: Request, res: Response): void {    
-    if (req.body['video-hearing'] === 'yes' &&  req.body.saveButton === 'saveContinue') {
-      res.redirect('/steps-to-making-your-claim');
-    }
-    else if (req.body['video-hearing'] === 'no' && req.body.saveButton === 'saveContinue') {
-      res.redirect('/steps-to-making-your-claim');
-    }
-    else if (req.body['video-hearing'] === 'yes' && req.body.saveButton === 'saveForLater') { 
-      res.redirect('/your-claim-has-been-saved');
-    }
-    else if (req.body['video-hearing'] === 'no' && req.body.saveButton === 'saveForLater') { 
-      res.redirect('/your-claim-has-been-saved');
-    }
-    else if ( req.body.saveButton == 'saveForLater') { 
-      res.redirect('/your-claim-has-been-saved');
-    }
-    else {
+  public post(req: Request, res: Response): void {
+
+    if (req.body.saveButton === 'saveForLater') return res.redirect('/your-claim-has-been-saved');
+
+    // if answer is supplied move on to next page, otherwise re-render with error
+    req.body['video-hearing'] ? res.redirect('/steps-to-making-your-claim') :
       res.render('video-hearings', {
         noRadioButtonSelectedError: true,
         ...(req.t('video-hearings', { returnObjects: true })),
-      });
-    }
+      })
   }
+
+
 }

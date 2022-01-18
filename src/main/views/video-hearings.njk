@@ -3,7 +3,6 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
@@ -14,19 +13,19 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
+      
       {% if noRadioButtonSelectedError %}
-      {{ govukErrorSummary({
-  "titleText": "There is a problem",
-  "errorList": [
-    {
-      "text": errorMessage,
-      "href": "#video-hearing"
-    }
-  ]
-}) }}
-{% endif %}
+        {{ govukErrorSummary({
+        "titleText": "There is a problem",
+        "errorList": [
+          {
+            "text": errorMessage,
+            "href": "#video-hearing"
+          }
+        ]
+      }) }}
 
+      {% endif %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
       <p class="govuk-body ">{{ p1 }}</p>
       <p class="govuk-body ">{{ p2 }}</p>
@@ -43,7 +42,6 @@
             <li>{{ detailsText.li1 }}</li>
             <li>{{ detailsText.li2 }}</li>
           </ul>
-
         </div>
       </details>
       <form action="/would-you-want-to-take-part-in-video-hearings" method="post">
@@ -66,23 +64,21 @@
         text: errorMessage
         } if noRadioButtonSelectedError
       }) }}
-
-      <div class="govuk-button-group">
-        {{ govukButton({
+        <div class="govuk-button-group">
+          {{ govukButton({
         text: button1,
         preventDoubleClick: true,
         name:"saveButton",
         value:"saveContinue"
       }) }}
-        {{ govukButton({
+          {{ govukButton({
         text: button2,
         classes: "govuk-button--secondary",
         preventDoubleClick: true,
         name:"saveButton",
         value:"saveForLater"
       }) }}
-      </div>
-
+        </div>
       </form>
     </div>
   </div>
