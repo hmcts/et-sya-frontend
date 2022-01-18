@@ -6,7 +6,7 @@
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-  text: "Back",
+  text: back,
   href: "/"
 }) }}
 {% endblock %}
@@ -16,7 +16,7 @@
       
       {% if noRadioButtonSelectedError %}
         {{ govukErrorSummary({
-        "titleText": "There is a problem",
+        "titleText": errorSummaryTitle,
         "errorList": [
           {
             "text": errorMessage,
@@ -53,11 +53,11 @@
       items: [
         {
           value: "yes",
-          text: radio1
+          text: yes
         },
         {
           value: "no",
-          text: radio2
+          text: no
         }
       ],
       errorMessage: {
@@ -66,13 +66,13 @@
       }) }}
         <div class="govuk-button-group">
           {{ govukButton({
-        text: button1,
+        text: continue,
         preventDoubleClick: true,
         name:"saveButton",
         value:"saveContinue"
       }) }}
           {{ govukButton({
-        text: button2,
+        text: saveForLater,
         classes: "govuk-button--secondary",
         preventDoubleClick: true,
         name:"saveButton",

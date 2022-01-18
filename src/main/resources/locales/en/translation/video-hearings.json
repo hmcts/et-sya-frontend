@@ -10,10 +10,6 @@
       "li1":"have a reliable internet connection",
       "li2":"know how to join the hearing"
     },
-    "radio1":"Yes",
-    "radio2":"No",
-    "button1":"Save and continue",
-    "button2":"Save for later",
     "errorMessage":"Select yes if you would be able to take part in video hearings, otherwise select no."
   }
   
