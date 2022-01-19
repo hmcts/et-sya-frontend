@@ -1,9 +1,4 @@
 {
-<<<<<<< HEAD
-    "title": "video-hearings",
-    "h1": "Would you like to be able to take part in video hearings?"
-  }
-=======
     "h1": "Would you be able to take part in video hearings?",
     "p1":"They’re not always guaranteed and held at the discretion of an employment judge.",
     "p2":"They may also not always be possible or suitable depending on your type of claim.",
@@ -18,4 +13,3 @@
     "errorMessage":"Select an option"
   }
   
->>>>>>> master
