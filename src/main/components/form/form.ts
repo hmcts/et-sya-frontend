@@ -141,6 +141,10 @@ export class Form {
     return true;
   }
 
+  public getFormFields(): FormFields {
+    return this.fields;
+  }
+
   private isFormOptions(field: FormField): field is FormOptions {
     return (field as FormOptions).values !== undefined;
   }

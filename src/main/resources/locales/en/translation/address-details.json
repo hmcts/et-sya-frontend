@@ -1,0 +1,26 @@
+{
+  "title": "Address details",
+  "h1": "What is your contact or home address?",
+  "hint": "We'll send any correspondence to this address.",
+  "enterPostcode": "Enter a UK postcode",
+  "buildingStreet": "Building and street",
+  "town": "Town or city",
+  "county": "County",
+  "postcode": "Postcode",
+  "enterAddressManually": "I want to enter the address manually.",
+  "errors": {
+    "address1": {
+      "required": "You have not entered your building and street address. Enter a building and street for your contact or home address."
+    },
+    "addressCounty": {
+      "required": "You have not entered your county. Enter a county for your contact or home address."
+    },
+    "addressTown": {
+      "required": "You have not entered your town or city. Enter a town or city before continuing."
+    },
+    "addressPostcode": {
+      "required": "You have not entered your postcode. Enter a postcode for your contact or home address.",
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing."
+    }
+  }
+}
