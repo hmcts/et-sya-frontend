@@ -1,0 +1,13 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: "Back",
+  href: "/" + previousPage
+}) }}
+{% endblock %}
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Steps to making your claim</h1>
+
+{% endblock %}

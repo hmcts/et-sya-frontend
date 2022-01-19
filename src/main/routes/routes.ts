@@ -11,12 +11,17 @@ export default function (app: Application): void {
   app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
+<<<<<<< HEAD
   app.post('/how-would-you-like-to-be-updated-about-your-claim', app.locals.container.cradle.updatePreferenceController.post);
   app.get('/how-would-you-like-to-be-updated-about-your-claim', app.locals.container.cradle.updatePreferenceController.get);
   app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
   app.get('/your-contact-details-disability', app.locals.container.cradle.disabilityController.get);
+=======
+  app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
+>>>>>>> master
   
+
   app.get(
     '/info',
     infoRequestHandler({
@@ -29,6 +34,13 @@ export default function (app: Application): void {
       },
     }),
   );
+
+  app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
+  app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.post);
+
+  app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
+  app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
+
   app.get('/dob-details', new DobController(dobFormContent).get);
   app.post('/dob-details', new DobController(dobFormContent).post);
   app.get('/gender-details', new GenderDetailsController().get);

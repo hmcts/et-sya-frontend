@@ -2,9 +2,9 @@ import sinon from 'sinon';
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { URLS } from '../../../main/definitions/constants';
 
 const lipOrRepController = new LipOrRepController();
-const expectedLegacyURL = 'https://employmenttribunals.service.gov.uk/apply';
 
 describe('LiP or Representative Controller', () => {
   const t = {
@@ -52,7 +52,7 @@ describe('LiP or Representative Controller', () => {
     responseMock
       .expects('redirect')
       .once()
-      .withArgs(expectedLegacyURL);
+      .withArgs(URLS.LEGACY_ET1);
 
     lipOrRepController.post(request, response);
     responseMock.verify();
