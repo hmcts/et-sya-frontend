@@ -4,27 +4,20 @@ export default class UpdatePreferenceController {
 
   public get(req: Request, res: Response): void {
     res.render('update-preference', {
+      ...req.t('common', { returnObjects: true }),
       ...(req.t('update-preference', { returnObjects: true })),
     });
   }
 
   public post(req: Request, res: Response): void {
 
-    const updatePref = () => {
-      if ((req.body['update-preference'] === 'email' || req.body['update-preference'] === 'post') && req.body['saveButton'] === 'saveContinue') {
-        res.redirect('/would-you-want-to-take-part-in-video-hearings');
-      }
-      else if ((req.body['update-preference'] === 'email' || req.body['update-preference'] === 'post') && req.body['saveButton'] === 'saveForLater') {
-        res.redirect('/your-claim-has-been-saved');
-      }
-      else {
-        res.render('update-preference', {
-          noRadioButtonSelectedError: true,
-          ...(req.t('update-preference', { returnObjects: true })),
-        });
-      }
-    };
-    updatePref();
-  }
+    if (req.body.saveButton === 'saveForLater') return res.redirect('/your-claim-has-been-saved');
 
+    req.body['update-preference'] ? res.redirect('/would-you-want-to-take-part-in-video-hearings') :
+      res.render('update-preference', {
+        noRadioButtonSelectedError: true,
+        ...req.t('common', { returnObjects: true }),
+        ...(req.t('update-preference', { returnObjects: true })),
+      });
+  }
 }

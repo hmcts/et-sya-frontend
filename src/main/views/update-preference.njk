@@ -6,7 +6,7 @@
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-  text: "Back",
+  text: back,
   href: "/your-contact-details-disability"
 }) }}
 {% endblock %}
@@ -15,7 +15,7 @@
     <div class="govuk-grid-column-full">
       <form action="/how-would-you-like-to-be-updated-about-your-claim" method="post">
         {{ govukErrorSummary({
-  titleText: "There is a problem",
+  titleText: errorSummaryTitle,
   errorList: [
     {
       text: "Select if you would like to be updated by email or post",
