@@ -4,6 +4,8 @@ import { infoRequestHandler } from '@hmcts/info-provider';
 import DobController from '../controllers/dob/DobController';
 import { dobFormContent } from '../controllers/dob/content';
 import GenderDetailsController from '../controllers/gender_details/GenderDetailsController';
+import AcasMultipleController from '../controllers/acas_multiple/AcasMultipleController';
+import { acasFormContent } from '../controllers/acas_multiple/content';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
@@ -36,6 +38,8 @@ export default function (app: Application): void {
   app.get('/dob-details', new DobController(dobFormContent).get);
   app.post('/dob-details', new DobController(dobFormContent).post);
   app.get('/gender-details', new GenderDetailsController().get);
+  app.get('/do-you-have-an-acas-no-many-resps', new AcasMultipleController(acasFormContent).get);
+  app.post('/do-you-have-an-acas-no-many-resps', new AcasMultipleController(acasFormContent).post);
   
   const healthCheckConfig = {
     checks: {
