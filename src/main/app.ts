@@ -17,6 +17,7 @@ import { Container } from './modules/awilix';
 import { I18Next } from './modules/i18next';
 import { AppRequest } from './definitions/appRequest';
 import { Session } from './modules/session';
+import { Oidc } from './modules/oidc';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -33,6 +34,7 @@ new Helmet(config.get('security')).enableFor(app);
 new Container().enableFor(app);
 new I18Next().enableFor(app);
 new Session().enableFor(app);
+new Oidc().enableFor(app);
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
