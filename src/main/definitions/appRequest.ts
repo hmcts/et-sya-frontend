@@ -12,7 +12,7 @@ export interface AppSession extends Session {
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;
-  user: any;
+  user: UserDetails;
 }
 
 export interface UserDetails {

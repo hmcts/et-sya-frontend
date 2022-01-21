@@ -46,18 +46,18 @@ export const getUserDetails = async (
 };
 
 export interface IdTokenJwtPayload {
-  uid: string
-  sub: string
-  given_name: string
-  family_name: string
-  roles: string[]
+  uid: string;
+  sub: string;
+  given_name: string;
+  family_name: string;
+  roles: string[];
 }
 
 export interface IdamResponseData {
-  access_token: string
-  refresh_token: string
-  scope: string
-  id_token: string
-  token_type: string
-  expires_in: number
+  access_token: string;
+  refresh_token: string;
+  scope: string;
+  id_token: string;
+  token_type: string;
+  expires_in: number;
 }
