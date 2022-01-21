@@ -12,7 +12,7 @@ import {
 
 export class Oidc {
   public enableFor(app: Application): void {
-    const port = app.locals.ENV ? `:${config.get('port')}` : '';
+    const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string =>
       `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 

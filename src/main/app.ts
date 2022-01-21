@@ -24,6 +24,7 @@ const developmentMode = env === 'development';
 
 export const app = express();
 app.locals.ENV = env;
+app.locals.developmentMode = developmentMode;
 
 const logger = Logger.getLogger('app');
 
