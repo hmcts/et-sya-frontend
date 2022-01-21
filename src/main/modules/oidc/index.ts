@@ -14,7 +14,7 @@ export class Oidc {
   public enableFor(app: Application): void {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string =>
-      `${HTTPS_PROTOCOL}${res.locals.hort}${port}`;
+      `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
     app.get(LOGIN, (_, res) => {
       res.redirect(getRedirectUrl(serviceUrl(res), CALLBACK_URL));
