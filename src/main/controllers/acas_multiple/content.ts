@@ -18,6 +18,7 @@ export const acasFormContent: FormContent = {
         },
         {
           label: (l: AnyRecord): string => l.radio2,
+          name: 'radio2',
           value:'No',
           attributes: { maxLength: 2 },
         },
