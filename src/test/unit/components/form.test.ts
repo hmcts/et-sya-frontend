@@ -22,8 +22,8 @@ describe('Form', () => {
       field: {
         type: 'radios',
         values: [
-          { label: (l) => l.no, value: YesOrNo.YES },
-          { label: (l) => l.yes, value: YesOrNo.NO },
+          { label: (l) => l.yes, value: YesOrNo.YES },
+          { label: (l) => l.no, value: YesOrNo.NO },
         ],
         validator: jest.fn().mockImplementation(isFieldFilledIn),
       },

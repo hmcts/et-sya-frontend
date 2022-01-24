@@ -42,7 +42,7 @@ export const acasMultipleMockRequest = ({
   req.session = {
     userCase: {
       id: '1234',
-      acasButtons: { radio1: '', radio2: '' },
+      acasButtons: { yes: '', no: '' },
       ...userCase,
     } as CaseWithId,
     ...session,

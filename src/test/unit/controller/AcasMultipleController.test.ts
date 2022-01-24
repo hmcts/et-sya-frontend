@@ -4,7 +4,6 @@ import AcasMultipleController from '../../../main/controllers/acas_multiple/Acas
 import { FormContent } from '../../../main/definitions/form';
 import { mockResponse } from '../mocks/mockResponse';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { AnyRecord } from '../../../main/definitions/util-types';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 
 describe('Acas Multiple Controller', () => {
@@ -19,16 +18,14 @@ describe('Acas Multiple Controller', () => {
         classes: 'govuk-radios--inline',
         id: 'acas-multiple',
         type: 'radios',
-        label: (l: AnyRecord): string => l.label,
         values: [
           {
-            label: (l: AnyRecord): string => l.radio1,
-            name: 'radio1',
+            name: 'yes',
             value: 'Yes',
             attributes: { maxLength: 2 },
           },
           {
-            label: (l: AnyRecord): string => l.radio2,
+            name: 'no',
             value:'No',
             attributes: { maxLength: 2 },
           },
@@ -52,8 +49,8 @@ describe('Acas Multiple Controller', () => {
     responseMock.verify();
     expect(request.session.userCase).toEqual({
       acasButtons: {
-        radio1: '',
-        radio2: '',
+        yes: '',
+        no: '',
       },
       id: '1234',
     });
@@ -71,8 +68,8 @@ describe('Acas Multiple Controller', () => {
 
     expect(req.session.userCase).toEqual({
       acasButtons: {
-        radio1: '',
-        radio2: '',
+        yes: '',
+        no: '',
       },
       id: '1234',
     });
