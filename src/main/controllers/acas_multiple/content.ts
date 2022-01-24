@@ -1,7 +1,6 @@
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { isFieldFilledIn } from '../../components/form/validator';
-import { YesOrNo } from 'definitions/case';
 
 export const acasFormContent: FormContent = {
   fields: {
@@ -12,15 +11,15 @@ export const acasFormContent: FormContent = {
       label: (l: AnyRecord): string => l.label,
       values: [
         {
-          label: (l: AnyRecord): string => l.yes,
-          name: 'yes',
-          value: YesOrNo.YES,
+          label: (l: AnyRecord): string => l.radio1,
+          name: 'radio1',
+          value: 'Yes',
           attributes: { maxLength: 2 },
         },
         {
-          label: (l: AnyRecord): string => l.no,
-          name: 'no',
-          value: YesOrNo.NO,
+          label: (l: AnyRecord): string => l.radio2,
+          name: 'radio2',
+          value:'No',
           attributes: { maxLength: 2 },
         },
       ],
@@ -32,4 +31,3 @@ export const acasFormContent: FormContent = {
     classes: 'govuk-!-margin-right-2',
   },
 };
-

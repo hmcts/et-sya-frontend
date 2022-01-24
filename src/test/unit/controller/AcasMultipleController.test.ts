@@ -20,13 +20,13 @@ describe('Acas Multiple Controller', () => {
         type: 'radios',
         values: [
           {
-            name: 'yes',
-            value: 'Yes',
+            name: 'radio1',
+            value: '',
             attributes: { maxLength: 2 },
           },
           {
-            name: 'no',
-            value:'No',
+            name: 'radio1',
+            value:'',
             attributes: { maxLength: 2 },
           },
         ],
@@ -49,8 +49,8 @@ describe('Acas Multiple Controller', () => {
     responseMock.verify();
     expect(request.session.userCase).toEqual({
       acasButtons: {
-        yes: '',
-        no: '',
+        radio1: '',
+        radio2: '',
       },
       id: '1234',
     });
@@ -68,8 +68,8 @@ describe('Acas Multiple Controller', () => {
 
     expect(req.session.userCase).toEqual({
       acasButtons: {
-        yes: '',
-        no: '',
+        radio1: '',
+        radio2: '',
       },
       id: '1234',
     });
@@ -78,3 +78,5 @@ describe('Acas Multiple Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 });
+
+
