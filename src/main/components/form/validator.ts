@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { CaseDate } from 'definitions/case';
 import { InvalidField } from 'definitions/form';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
 export type Validator = (value: string | string[] | undefined) => void | string
 export type DateValidator = (
@@ -117,6 +118,21 @@ export const isInvalidPostcode: Validator = value => {
   }
 
   if (!(value as string).match(/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i)) {
+    return 'invalid';
+  }
+};
+
+export const isValidUKTelNumber: Validator = value => {
+  if (value == null || value == '') {
+    return;
+  }
+
+  try {
+    const phoneUtil = PhoneNumberUtil.getInstance();
+    if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(value as string, 'GB'), 'GB')) {
+      return 'invalid';
+    }
+  } catch (e) {
     return 'invalid';
   }
 };
