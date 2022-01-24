@@ -5,7 +5,7 @@
   "telNumber": "UK telephone number",
   "errors": {
     "telNumber": {
-      "invalid": "You have not entered a valid UK Telephone number. Enter a valid UK Telephone number before continuing."
+      "invalid": "Enter a valid UK telephone number."
     }
   }
 }

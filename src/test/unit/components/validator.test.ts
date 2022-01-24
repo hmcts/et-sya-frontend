@@ -5,7 +5,7 @@ import {
   isDateInputInvalid,
   isFieldFilledIn,
   isFutureDate,
-  isInvalidPostcode, 
+  isInvalidPostcode,
   isValidUKTelNumber,
 } from '../../../main/components/form/validator';
 
