@@ -5,6 +5,7 @@ import * as nunjucks from 'nunjucks';
 import { Form } from '../../components/form/form';
 import { FormFields, FormInput } from '../../definitions/form';
 
+
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
     this.developmentMode = developmentMode;
@@ -38,6 +39,10 @@ export class Nunjucks {
 
     nunEnv.addGlobal('getContent', function (prop: any | string): string {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
+    });
+
+    nunEnv.addGlobal('getContentSafe', function (prop: any | string): nunjucks.runtime.SafeString {       
+      return new nunjucks.runtime.SafeString(this.env.globals.getContent.call(this, prop));     
     });
 
     nunEnv.addGlobal('getError', function (fieldName: string):
@@ -93,8 +98,8 @@ export class Nunjucks {
       ) {
         return items.map((i: FormInput) => ({
           id: i.id,
-          label: this.env.globals.getContent.call(this, i.label),
-          text: this.env.globals.getContent.call(this, i.label),
+          label: this.env.globals.getContentSafe.call(this, i.label),
+          text: this.env.globals.getContentSafe.call(this, i.label),
           name: i.name,
           classes: i.classes,
           value:

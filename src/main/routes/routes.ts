@@ -3,7 +3,10 @@ import { Application } from 'express';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import DobController from '../controllers/dob/DobController';
 import { dobFormContent } from '../controllers/dob/content';
+import {returnToExistingContent} from '../controllers/return_to_existing_claim/content';
+
 import GenderDetailsController from '../controllers/gender_details/GenderDetailsController';
+import ReturnToExistingController from '../controllers/return_to_existing_claim/ReturnToExistingController';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
@@ -36,6 +39,10 @@ export default function (app: Application): void {
   app.get('/dob-details', new DobController(dobFormContent).get);
   app.post('/dob-details', new DobController(dobFormContent).post);
   app.get('/gender-details', new GenderDetailsController().get);
+  
+  app.get('/return-to-existing', new ReturnToExistingController(returnToExistingContent).get);
+  app.post('/return-to-existing', new ReturnToExistingController(returnToExistingContent).post);
+  
   
   const healthCheckConfig = {
     checks: {
