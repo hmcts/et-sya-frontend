@@ -3,7 +3,7 @@
     "pageTitle": "Make a claim to an employment tribunal",
     "serviceInfo": "Use this service to make claims to an employment tribunal when an employer, potential employer, trade union or person at work has treated another person unlawfully.",
     "infoTxt": "During the employment tribunal process the organisations or people you're making a claim against are known as ‘respondents’.",
-    "warningTxt1": "To make a claim you need to contact Acas and get an ‘Early conciliation certificate’ from them or give us a valid reason why you do not have one. <br><br>If you do not have a certificate or a reason you need to <a href=\"https://www.acas.org.uk/early-conciliation\" class=\"govuk-link\">contact Acas</a>.",
+    "warningTxt1": "To make a claim you need to contact Acas and get an ‘Early conciliation certificate’ from them or give us a valid reason why you do not have one. <br><br>If you do not have a certificate or a reason you need to <a href=\"https://www.acas.org.uk/early-conciliation\" class=\"govuk-link\" target=\"_blank\">contact Acas</a>.",
     "saveInfo": "You do not have to make your claim in one go. You can save and return to it at any time before you submit it.",
     "warningTxt2": "Claims usually have to be made within 3 months of employment ending or problems happening. If a claim is late, you must explain why. A judge will then decide what happens next.",
     "claimStartedTxt": "Have you already started a claim?",
