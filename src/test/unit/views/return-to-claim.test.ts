@@ -1,17 +1,14 @@
 import { expect } from 'chai';
 import { app } from '../../../main/app';
 import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
 const PAGE_URL = '/return-to-existing';
 const translationRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/return-to-existing.json'), 'utf-8');
 const returnToClaimJson = JSON.parse(translationRaw);
-
 const commonJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'), 'utf-8');
 const commonJsonRawJson = JSON.parse(commonJsonRaw);
-
 const titleClass = 'govuk-heading-xl';
 const radioClass = 'govuk-radios__item';
 const expectedTitle = returnToClaimJson.h1;
@@ -19,8 +16,6 @@ const buttonClass = 'govuk-button';
 const expectedRadioLabel1 = returnToClaimJson.optionText1;
 const expectedRadioLabel2 = returnToClaimJson.optionText2;
 const expectedButtonText = commonJsonRawJson.continue;
-
-
 
 let htmlRes: Document;
 describe('Return to existing claim page', () => {
@@ -50,5 +45,4 @@ describe('Return to existing claim page', () => {
     expect(radioButtons[0].innerHTML).contains(expectedRadioLabel1, 'Could not find the radio button with label ' + expectedRadioLabel1);
     expect(radioButtons[1].innerHTML).contains(expectedRadioLabel2, 'Could not find the radio button with label ' + expectedRadioLabel2);
   });
-
 });

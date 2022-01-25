@@ -3,8 +3,6 @@ import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 
-
-
 export default class ReturnToExistingController {
   private readonly form: Form;
 
@@ -21,8 +19,7 @@ export default class ReturnToExistingController {
     }
     Object.assign(req.session.userCase, formData);
 
-    sessionErrors = this.form.getErrors(formData);
-    
+    sessionErrors = this.form.getErrors(formData);    
     req.session.errors = sessionErrors;
 
     if (sessionErrors.length > 0) {
@@ -41,7 +38,6 @@ export default class ReturnToExistingController {
     const sessionErrors = req.session?.errors || [];
     const userCase = req.session?.userCase;
 
-   
     req.session.userCase = userCase;
 
     res.render('return-to-claim', {
@@ -51,7 +47,5 @@ export default class ReturnToExistingController {
       sessionErrors,
       userCase,     
     });
-  }
-
- 
+  } 
 }
