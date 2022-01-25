@@ -21,11 +21,13 @@ describe('Acas Multiple Controller', () => {
         values: [
           {
             name: 'radio1',
+            label: 'radio1',
             value: '',
             attributes: { maxLength: 2 },
           },
           {
             name: 'radio1',
+            label: 'radio2',
             value:'',
             attributes: { maxLength: 2 },
           },
