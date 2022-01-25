@@ -26,3 +26,29 @@ export const mockRequest = ({
   } as any;
   return req;
 };
+
+export const returnToExistingMockRequest = ({
+  body,
+  userCase,
+  session,
+  t,
+}: any): AppRequest => {
+  const req = {
+    t: () => t,
+  } as unknown as AppRequest;
+
+  req.t = jest.fn().mockReturnValue(req);
+  req.body = body;
+  req.session = {
+    userCase: {
+      id: '1234',
+      return_number_or_account: { have_return_number: '', have_account: '' },
+      ...userCase,
+    } as CaseWithId,
+    ...session,
+    save: jest.fn((done) => done()),
+    lang: 'en',
+    errors: undefined,
+  } as any;
+  return req;
+};

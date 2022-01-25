@@ -6,7 +6,7 @@ import { AnyRecord} from '../../definitions/util-types';
 export const returnToExistingContent: FormContent = {
   fields: {
     returnToExisting: {
-      id: 'return-number-or-account',
+      id: 'return_number_or_account',
       type: 'radios',
       classes: 'govuk-date-input',
       label: (l: AnyRecord): string => l.label,         

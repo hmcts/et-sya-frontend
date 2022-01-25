@@ -3,6 +3,8 @@ import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 
+
+
 export default class ReturnToExistingController {
   private readonly form: Form;
 
@@ -11,9 +13,15 @@ export default class ReturnToExistingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const formData = this.form.getParsedBody(req.body, this.formContent.fields);   
+    let sessionErrors = req.session?.errors || [];
+    const formData = this.form.getParsedBody(req.body, this.formContent.fields);
 
-    let sessionErrors = this.form.getErrors(formData);
+    if (!req.session.userCase) {
+      req.session.userCase = {} as any;
+    }
+    Object.assign(req.session.userCase, formData);
+
+    sessionErrors = this.form.getErrors(formData);
     
     req.session.errors = sessionErrors;
 
@@ -25,19 +33,25 @@ export default class ReturnToExistingController {
         res.redirect(req.url);
       });
     } else {
-      res.redirect('/');
+      res.redirect('/');      
     }
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    const sessionErrors = req.session?.errors || []; 
+    const sessionErrors = req.session?.errors || [];
+    const userCase = req.session?.userCase;
+
+   
+    req.session.userCase = userCase;
 
     res.render('return-to-claim', {
       ...req.t('common', { returnObjects: true }),
       ...req.t('return-to-existing', { returnObjects: true }),
       form: this.formContent,
       sessionErrors,
-     
+      userCase,     
     });
   }
+
+ 
 }
