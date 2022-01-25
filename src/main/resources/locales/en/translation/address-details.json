@@ -12,9 +12,6 @@
     "address1": {
       "required": "Enter a building and street."
     },
-    "addressCounty": {
-      "required": "Enter a county."
-    },
     "addressTown": {
       "required": "Enter a town or city."
     },
