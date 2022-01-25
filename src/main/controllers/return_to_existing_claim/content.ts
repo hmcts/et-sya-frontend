@@ -30,5 +30,5 @@ export const returnToExistingContent: FormContent = {
   submit: {
     text: (l: AnyRecord): string => l.continue,
     classes: 'govuk-!-margin-right-2',
-  }
-}
+  },
+};

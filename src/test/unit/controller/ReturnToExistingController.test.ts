@@ -1,23 +1,23 @@
-import ReturnToExistingController from "../../../main/controllers/return_to_existing_claim/ReturnToExistingController";
-import { AppRequest } from "../../../main/definitions/appRequest";
-import { FormContent } from "../../../main/definitions/form";
-import sinon from "sinon";
-import { mockRequest } from "../mocks/mockRequest";
-import { mockResponse } from "../mocks/mockResponse";
-import { isFieldFilledIn } from "../../../main/components/form/validator";
+import ReturnToExistingController from '../../../main/controllers/return_to_existing_claim/ReturnToExistingController';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { FormContent } from '../../../main/definitions/form';
+import sinon from 'sinon';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 
-describe("Return To Existing Controller", () => {
+describe('Return To Existing Controller', () => {
   const t = {
     'return-to-claim': {},
     common: {},
-  };
+  };  
   const userCase = {
     return_number_or_account:
     {
       have_return_number: '',
-      have_account: ''
-    }
-  }
+      have_account: '',
+    },
+  };
 
   const mockedFormContent = {
     fields: {
@@ -25,25 +25,25 @@ describe("Return To Existing Controller", () => {
         id: 'return_number_or_account',
         type: 'radios',
         classes: 'govuk-date-input',
-        label: "select",
+        label: 'select',
         labelHidden: true,
         values: [
           {
             name: 'have_return_number',
-            label: "I have a return number",
+            label: 'I have a return number',
             selected: false,
-            value: "Yes",
+            value: 'Yes',
           },
           {
             name: 'have_account',
-            label: "I have an account",
+            label: 'I have an account',
             selected: false,
-            value: "Yes",
+            value: 'Yes',
           },
         ],
         validator: isFieldFilledIn,
       },
-    }
+    },
   } as unknown as FormContent;
 
   it('should render the return to claim page', () => {
