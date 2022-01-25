@@ -11,6 +11,13 @@ describe("Return To Existing Controller", () => {
     'return-to-claim': {},
     common: {},
   };
+  const userCase = {
+    return_number_or_account:
+    {
+      have_return_number: '',
+      have_account: ''
+    }
+  }
 
   const mockedFormContent = {
     fields: {
@@ -57,7 +64,7 @@ describe("Return To Existing Controller", () => {
     const body = { 'returnToExisting': '' };
     const controller = new ReturnToExistingController(mockedFormContent);
 
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
 
     controller.post(req, res);
@@ -69,7 +76,7 @@ describe("Return To Existing Controller", () => {
     const body = { 'returnToExisting': 'Yes' };
     const controller = new ReturnToExistingController(mockedFormContent);
 
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
 
     controller.post(req, res);
