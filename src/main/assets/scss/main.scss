@@ -10,7 +10,8 @@
 
 // interupt the user with important information
 .govuk-panel--interruption {
-  background-color: govuk-colour("blue");
+  background-color: govuk-colour('blue');
+
   div,
   h1,
   h2,
@@ -25,25 +26,25 @@
   }
 
 .circle {
-  display: inline-block;
+  background: govuk-colour('black');
   border-radius: 50%;
-  background: govuk-colour("black");
-  color: govuk-colour("white");
-  font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
+  color: govuk-colour('white');
+  display: inline-block;
+  font-family: 'ntatabularnumbers', 'nta', Arial, sans-serif;
   font-size: 15px;
   font-weight: bold;
   text-align: center;
 }
 
 .circle-step {
-  min-width: 25px;
-  min-height: 25px;
-  line-height: 25px;
   float: left;
+  line-height: 25px;
   margin-right: 10px;
+  min-height: 25px;
+  min-width: 25px;
 }
 
 .circle-white {
-  color: govuk-colour("blue");
-  background: govuk-colour("white");
+  background: govuk-colour('white');
+  color: govuk-colour('blue');
 }
