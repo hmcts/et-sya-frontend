@@ -44,7 +44,6 @@ export default function(app: Application): void {
   app.get('/dob-details', new DobController(dobFormContent).get);
   app.post('/dob-details', new DobController(dobFormContent).post);
   app.get('/gender-details', new GenderDetailsController().get);
-  
   app.get('/return-to-existing', new ReturnToExistingController(returnToExistingContent).get);
   app.post('/return-to-existing', new ReturnToExistingController(returnToExistingContent).post);
   
