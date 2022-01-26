@@ -5,7 +5,7 @@
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-  text: "Back",
+  text: back,
   href: "/"
 }) }}
 {% endblock %}
@@ -36,7 +36,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
   {{ govukButton({
-        text: "Continue",
+        text: continue,
         href: "/lip-or-representative",
         preventDoubleClick: true
   }) }}
