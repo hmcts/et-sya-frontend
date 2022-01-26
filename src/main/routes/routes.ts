@@ -9,7 +9,7 @@ import GenderDetailsController from '../controllers/gender_details/GenderDetails
 import ReturnToExistingController from '../controllers/return_to_existing_claim/ReturnToExistingController';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
-export default function (app: Application): void {
+export default function(app: Application): void {
   app.get('/', app.locals.container.cradle.homeController.get);
   app.get('/lip-or-representative', app.locals.container.cradle.lipOrRepController.get);
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
@@ -29,6 +29,11 @@ export default function (app: Application): void {
       },
     }),
   );
+  app.get('/dob-details', app.locals.container.cradle.dobController.get);
+  app.post('/dob-details', app.locals.container.cradle.dobController.post);
+  app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
+  app.get('/address-details', app.locals.container.cradle.addressDetailsController.get);
+  app.post('/address-details', app.locals.container.cradle.addressDetailsController.post);
 
   app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
   app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.post);

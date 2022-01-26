@@ -4,11 +4,11 @@ import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-export default class ReturnToExistingController {
-  private readonly form: Form;
+export default class AddressDetailsController {
+  private readonly form: Form
 
-  constructor(private readonly formContent: FormContent) {
-    this.form = new Form(<FormFields>this.formContent.fields);
+  constructor(private readonly addressDetailsContent: FormContent) {
+    this.form = new Form(<FormFields>this.addressDetailsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -17,12 +17,12 @@ export default class ReturnToExistingController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
+    const content = getPageContent(req, this.addressDetailsContent, [
       'common',
-      'return-to-existing',
+      'address-details',
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('return-to-claim', {
+    res.render('address-details', {
       ...content,
     });
   }
