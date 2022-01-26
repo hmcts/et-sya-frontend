@@ -12,7 +12,12 @@ export interface CaseDate {
 }
 
 export interface Case {
-  dobDate: CaseDate
+  dobDate: CaseDate;
+  address1?: string;
+  address2?: string;
+  addressTown?: string;
+  addressCounty?: string;
+  addressPostcode?: string;
 }
 
 export interface CaseWithId extends Case {
