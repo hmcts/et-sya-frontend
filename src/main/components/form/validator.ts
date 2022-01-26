@@ -97,6 +97,7 @@ export const isFutureDate: DateValidator = (date) => {
 
 export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
   const year = parseInt(date.year, 10) || 0;
+
   const month = parseInt(date.month, 10) || 0;
   const day = parseInt(date.day, 10) || 0;
 
@@ -107,4 +108,15 @@ export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
   const dayValid = jsDate.date() == day;
 
   return !yearValid ? 'year' : !monthValid ? 'month' : !dayValid ? 'day' : false;
+};
+
+export const isInvalidPostcode: Validator = value => {
+  const fieldNotFilledIn = isFieldFilledIn(value);
+  if (fieldNotFilledIn) {
+    return fieldNotFilledIn;
+  }
+
+  if (!(value as string).match(/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i)) {
+    return 'invalid';
+  }
 };
