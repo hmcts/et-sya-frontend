@@ -27,28 +27,3 @@ export const mockRequest = ({
   return req;
 };
 
-export const acasMultipleMockRequest = ({
-  body,
-  userCase,
-  session,
-  t,
-}: any): AppRequest => {
-  const req = {
-    t: () => t,
-  } as unknown as AppRequest;
-
-  req.t = jest.fn().mockReturnValue(req);
-  req.body = body;
-  req.session = {
-    userCase: {
-      id: '1234',
-      acasButtons: { radio1: '', radio2: '' },
-      ...userCase,
-    } as CaseWithId,
-    ...session,
-    save: jest.fn((done) => done()),
-    lang: 'en',
-    errors: undefined,
-  } as any;
-  return req;
-};

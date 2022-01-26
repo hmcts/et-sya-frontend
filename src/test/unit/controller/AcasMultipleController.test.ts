@@ -1,7 +1,7 @@
 import sinon from 'sinon';
-import { acasMultipleMockRequest } from '../mocks/mockRequest';
 import AcasMultipleController from '../../../main/controllers/acas_multiple/AcasMultipleController';
 import { FormContent } from '../../../main/definitions/form';
+import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
@@ -11,10 +11,17 @@ describe('Acas Multiple Controller', () => {
     'acas-multiple': {},
     common: {},
   };
+  const userCase = {
+    acas_multiple:
+    {
+      radio1: '',
+      radio2: '',
+    },
+  };
 
   const mockFormContent = {
     fields: {
-      acasButtons: {
+      acasMultiple: {
         classes: 'govuk-radios--inline',
         id: 'acas-multiple',
         type: 'radios',
@@ -28,7 +35,7 @@ describe('Acas Multiple Controller', () => {
           {
             name: 'radio1',
             label: 'radio2',
-            value:'',
+            value: '',
             attributes: { maxLength: 2 },
           },
         ],
@@ -41,7 +48,7 @@ describe('Acas Multiple Controller', () => {
     const acasMultipleController = new AcasMultipleController(mockFormContent);
 
     const response = mockResponse();
-    const request = <AppRequest>acasMultipleMockRequest({ t });
+    const request = <AppRequest>mockRequest({ t });
 
     const responseMock = sinon.mock(response);
 
@@ -49,36 +56,19 @@ describe('Acas Multiple Controller', () => {
 
     acasMultipleController.get(request, response);
     responseMock.verify();
-    expect(request.session.userCase).toEqual({
-      acasButtons: {
-        radio1: '',
-        radio2: '',
-      },
-      id: '1234',
-    });
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'acasButtons', errorType: 'required' }];
+    const errors = [{ propertyName: 'acasMultiple', errorType: 'required' }];
     const body = { 'acas-multiple': '' };
 
     const controller = new AcasMultipleController(mockFormContent);
 
-    const req = acasMultipleMockRequest( { body } );
+    const req = mockRequest({ body, userCase });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      acasButtons: {
-        radio1: '',
-        radio2: '',
-      },
-      id: '1234',
-    });
 
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 });
-
-
