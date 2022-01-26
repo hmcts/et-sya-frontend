@@ -2303,11 +2303,7 @@ anymatch@^3.0.0, anymatch@^3.0.3, anymatch@~3.1.1, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-<<<<<<< HEAD
-applicationinsights@2.2.0:
-=======
 applicationinsights@^2.2.0:
->>>>>>> master
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.0.tgz#286f00b60d6eada12f592231a2d1283fe67c9124"
   integrity sha512-zb6b1wchJwnCH+PghmxDbygQtWW11lz8YsHbZ6o89kR8EbE/2lO9VwNCxMtU1H1f7RQbiIZuNEnFR7wb8Ah4qA==
