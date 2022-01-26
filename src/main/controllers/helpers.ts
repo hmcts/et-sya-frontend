@@ -61,7 +61,7 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
 
   if (!req.session.userCase) {
-    req.session.userCase = {} as any;
+    req.session.userCase = {} as CaseWithId;
   }
   Object.assign(req.session.userCase, formData);
 };
@@ -76,7 +76,7 @@ export const assignFormData = (
   }
 
   Object.entries(fields).forEach(([name, field]: [string, FormOptions]) => {
-    const caseName = (userCase as any)[name];
+    const caseName = (userCase as AnyRecord)[name];
     if (caseName) {
       field.values = field.values?.map((v) => {
         Object.keys(caseName).forEach((key) => {

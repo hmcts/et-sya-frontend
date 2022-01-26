@@ -35,6 +35,9 @@ export default function(app: Application): void {
   app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
 
+  app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleController.get);
+  app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleController.post);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),

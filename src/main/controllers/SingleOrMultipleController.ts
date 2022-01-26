@@ -11,7 +11,7 @@ export default class SingleOrMultipleController {
 
   public post(req: Request, res: Response): void {
     if (req.body['single-or-multiple'] === 'single') {
-      res.redirect('/');
+      res.redirect('/do-you-have-an-acas-single-resps');
     }
     else req.body['single-or-multiple'] === 'multiple' ?
       res.redirect(URLS.LEGACY_ET1):
