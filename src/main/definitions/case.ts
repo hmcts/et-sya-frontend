@@ -18,6 +18,7 @@ export interface Case {
   addressTown?: string;
   addressCounty?: string;
   addressPostcode?: string;
+  representingMyself?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {

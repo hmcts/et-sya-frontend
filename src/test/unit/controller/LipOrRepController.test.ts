@@ -1,68 +1,46 @@
 import sinon from 'sinon';
-import LipOrRepController from '../../../main/controllers/LipOrRepController';
+import LipOrRepController from '../../../main/controllers/litigation_in_person_or_representative/lipOrRepController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { URLS } from '../../../main/definitions/constants';
+import { FormContent } from '../../../main/definitions/form';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import { YesOrNo } from 'definitions/case';
 
-const lipOrRepController = new LipOrRepController();
-
-describe('LiP or Representative Controller', () => {
+describe('Litigation in Person or Representative Controller', () => {
   const t = {
-    'lip-or-representative': {},
+    'representingMyself': {},
+    common: {},
   };
 
+  const mockFormContent: FormContent = {
+    fields: {
+      representingMyself: {
+        type: 'radios',
+        values: [
+          {
+            value: YesOrNo.YES, 
+          },
+          {
+            value: YesOrNo.NO, 
+          },
+        ],
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
+    },
+    submit: {
+      text: 'continue',
+    },
+  } as unknown as FormContent;
+
+
+
   it('should render the \'representing myself (LiP) or using a representative choice\' page', () => {
+
+    const lipOrRepController = new LipOrRepController(mockFormContent);
     const response = mockResponse();
-    const request = mockRequest({ t });
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('lip-or-representative', request.t('lip-or-representative', { returnObjects: true }));
-
-    lipOrRepController.get(request, response);
-    responseMock.verify();
-  });
-
-  it('should render the Single or Multiple claims page when \'representing myself\' is selected', () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': 'lip' };
-    const request = mockRequest({ t, body });
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/single-or-multiple-claim');
-
-    lipOrRepController.post(request, response);
-    responseMock.verify();
-  });
-
-  it('should render the legacy ET1 service when the \'making a claim for someone else\' option is selected', () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': 'representative' };
-    const request = mockRequest({ t, body });
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs(URLS.LEGACY_ET1);
-
-    lipOrRepController.post(request, response);
-    responseMock.verify();
-  });
-
-  it('should render same page if nothing selected', () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': '' };
-    const request = mockRequest({ t, body });
-
+    const request = <AppRequest>mockRequest({ t });
     const responseMock = sinon.mock(response);
 
     responseMock
@@ -70,8 +48,45 @@ describe('LiP or Representative Controller', () => {
       .once()
       .withArgs('lip-or-representative');
 
-    lipOrRepController.post(request, response);
+    lipOrRepController.get(request, response);
     responseMock.verify();
+  });
+
+  it('should render the Single or Multiple claims page when \'representing myself\' is selected', () => {
+
+    const body = { representingMyself: YesOrNo.YES };
+    const controller = new LipOrRepController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith('/single-or-multiple-claim');
+
+  });
+
+  it('should render the legacy ET1 service when the \'making a claim for someone else\' option is selected', () => {
+    const body = { representingMyself: YesOrNo.NO };
+    const controller = new LipOrRepController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(URLS.LEGACY_ET1);
+  });
+
+  it('should render same page if errors are present when nothing is selected', () => {
+    const errors = [{ propertyName: 'representingMyself', errorType: 'required' }];
+    const body = { representingMyself: '' };
+    const controller = new LipOrRepController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 
 });
