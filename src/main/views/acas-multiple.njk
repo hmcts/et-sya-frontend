@@ -2,7 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
@@ -10,18 +10,11 @@
   href: "/"
 }) }}
 {% endblock %}
-{% block content %}
 
-  {{ govukErrorSummary({
-          titleText: errorSummaryTitle,
-          errorList: [
-            {
-              text: errorMessage,
-              href: "#acas-multiple"
-            }
-          ]
-        }) if getErrors(form.fields).length > 0
-        }}
+ {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

@@ -4,20 +4,20 @@ import { isFieldFilledIn } from '../../components/form/validator';
 
 export const acasFormContent: FormContent = {
   fields: {
-    acasButtons: {
+    acasMultiple: {
       classes: 'govuk-radios--inline',
       id: 'acas-multiple',
       type: 'radios',
       label: (l: AnyRecord): string => l.label,
       values: [
         {
-          label: (l: AnyRecord): string => l.radio1,
+          label: (l: AnyRecord): string => l.yes,
           name: 'radio1',
           value: 'Yes',
           attributes: { maxLength: 2 },
         },
         {
-          label: (l: AnyRecord): string => l.radio2,
+          label: (l: AnyRecord): string => l.no,
           name: 'radio2',
           value:'No',
           attributes: { maxLength: 2 },

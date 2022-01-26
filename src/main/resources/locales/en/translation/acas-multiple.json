@@ -10,12 +10,9 @@
       "p2":"‘Early conciliation’ is quicker than going to a tribunal (talks take place over the phone for up to 6 weeks) and involves a lot less paperwork.",
       "p3":"It’s free, confidential and can agree outcomes you cannot get from a claim. For example, a job reference. For further details <a href=\"https://www.acas.org.uk/\" class=\"govuk-link\">contact Acas</a>."
     },
-    "radio1": "Yes",
-    "radio2": "No",  
-    "errorMessage":"Select an option",
     "errors": {
-      "acasButtons": {
-        "required": "Select an option"
+      "acasMultiple": {
+        "required": "Select an Option"
       }
     }
   }
