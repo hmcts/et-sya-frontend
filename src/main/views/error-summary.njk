@@ -1,0 +1,10 @@
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block content %}
+{{ 
+  govukErrorSummary({
+    titleText: errorSummaryTitle,
+    errorList: getErrors(form.fields)
+  }) if getErrors(form.fields).length > 0
+}}
+{% endblock %}
