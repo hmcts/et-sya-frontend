@@ -5,6 +5,7 @@ import {
   isDateInputInvalid,
   isFieldFilledIn,
   isFutureDate,
+  isInvalidPostcode,
 } from '../../../main/components/form/validator';
 
 describe('Validation', () => {
@@ -140,6 +141,23 @@ describe('Validation', () => {
       const isValid = atLeastOneFieldIsChecked([]);
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isInvalidPostcode()', () => {
+    it.each([
+      { mockRef: '', expected: 'required' },
+      { mockRef: '1', expected: 'invalid' },
+      { mockRef: '12345', expected: 'invalid' },
+      { mockRef: '@£$£@$%', expected: 'invalid' },
+      { mockRef: 'not a postcode', expected: 'invalid' },
+      { mockRef: 'SW1A 1AA', expected: undefined },
+      { mockRef: 'SW1A1AA', expected: undefined },
+      { mockRef: 'sw1a1aa', expected: undefined },
+      { mockRef: 'sw1a 1aa', expected: undefined },
+      { mockRef: 'SW1A!1AA', expected: 'invalid' },
+    ])('validates the help with fees ref when %o', ({ mockRef, expected }) => {
+      expect(isInvalidPostcode(mockRef)).toEqual(expected);
     });
   });
 });
