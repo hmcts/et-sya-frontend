@@ -40,11 +40,7 @@
     "@types/require-directory": "^2.1.1",
     "@types/serve-favicon": "^2.5.1",
     "@types/sinon": "^10.0.6",
-<<<<<<< HEAD
-    "applicationinsights": "2.2.0",
-=======
     "applicationinsights": "^2.2.0",
->>>>>>> master
     "awilix": "^6.0.0",
     "axios": "^0.25.0",
     "config": "^3.3.2",
