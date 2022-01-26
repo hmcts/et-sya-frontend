@@ -49,7 +49,6 @@ export const addressDetailsContent: FormContent = {
       classes: 'govuk-label govuk-!-width-one-half',
       label: (l) => l.county,
       labelSize: null,
-      validator: isFieldFilledIn,
     },
     addressPostcode: {
       id: 'address-postcode',
