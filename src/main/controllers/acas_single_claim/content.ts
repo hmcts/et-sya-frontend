@@ -2,7 +2,7 @@ import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { isFieldFilledIn } from '../../components/form/validator';
 
-export const acasSingleFormContent: FormContent = {
+export const acasSingleClaimFormContent: FormContent = {
   fields: {
     acasSingle: {
       classes: 'govuk-radios--inline',

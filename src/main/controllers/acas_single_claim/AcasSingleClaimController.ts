@@ -9,11 +9,11 @@ import {
   setUserCase,
 } from '../helpers';
 
-export default class AcasSingleController {
+export default class AcasSingleClaimController {
   private readonly form: Form
 
-  constructor(private readonly acasSingleFormContent: FormContent) {
-    this.form = new Form(<FormFields>this.acasSingleFormContent.fields);
+  constructor(private readonly acasSingleClaimFormContent: FormContent) {
+    this.form = new Form(<FormFields>this.acasSingleClaimFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -22,12 +22,12 @@ export default class AcasSingleController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.acasSingleFormContent, [
+    const content = getPageContent(req, this.acasSingleClaimFormContent, [
       'common',
-      'acas-single',
+      'acas-single-claim',
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('acas-single', {
+    res.render('acas-single-claim', {
       ...content,
     });
   }
