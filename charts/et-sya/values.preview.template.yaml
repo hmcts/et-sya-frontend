@@ -2,3 +2,15 @@ nodejs:
   # Don't modify below here
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
+  keyVaults:
+    et:
+      resourceGroup: et
+      secrets:
+        - AppInsightsInstrumentationKey
+        - idam-secret
+
+idam-pr:
+  enabled: true
+  redirect_uris:
+    ET Citizen Submit Your Appeal:
+      - https://${SERVICE_FQDN}/oauth2/callback

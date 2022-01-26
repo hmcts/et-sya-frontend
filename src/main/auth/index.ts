@@ -1,0 +1,63 @@
+import axios from 'axios';
+import config from 'config';
+import { UserDetails } from '../definitions/appRequest';
+import jwtDecode from 'jwt-decode';
+
+export const getRedirectUrl = (
+  serviceUrl: string,
+  callbackUrlPage: string,
+): string => {
+  const clientID: string = config.get('services.idam.clientID');
+  const loginUrl: string = config.get('services.idam.authorizationURL');
+  const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
+
+  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}`;
+};
+
+export const getUserDetails = async (
+  serviceUrl: string,
+  rawCode: string,
+  callbackUrlPageLink: string,
+): Promise<UserDetails> => {
+  const id: string = config.get('services.idam.clientID');
+  const secret: string = config.get('services.idam.clientSecret');
+  const tokenUrl: string = config.get('services.idam.tokenURL');
+  const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
+  const code = encodeURIComponent(rawCode);
+  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  const response = await axios.post(tokenUrl,
+    data,
+    { headers },
+  );
+  const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
+
+  return {
+    accessToken: response.data.access_token,
+    id: jwt.uid,
+    email: jwt.sub,
+    givenName: jwt.given_name,
+    familyName: jwt.family_name,
+  };
+};
+
+export interface IdTokenJwtPayload {
+  uid: string;
+  sub: string;
+  given_name: string;
+  family_name: string;
+  roles: string[];
+}
+
+export interface IdamResponseData {
+  access_token: string;
+  refresh_token: string;
+  scope: string;
+  id_token: string;
+  token_type: string;
+  expires_in: number;
+}
