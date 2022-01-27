@@ -19,7 +19,7 @@ describe(`on POST ${PAGE_URL}`, () => {
     await request(app)
       .post(PAGE_URL)
       .send({
-        acasSingle: YesOrNo.YES,
+        isAcasSingle: YesOrNo.YES,
       })
       .expect((res) => {
         expect(res.status).to.equal(302);
@@ -31,7 +31,7 @@ describe(`on POST ${PAGE_URL}`, () => {
     await request(app)
       .post(PAGE_URL)
       .send({
-        acasSingle: undefined,
+        isAcasSingle: undefined,
       })
       .expect((res) => {
         expect(res.status).to.equal(302);

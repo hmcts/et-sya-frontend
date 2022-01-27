@@ -11,7 +11,7 @@
       "p3":"It's free, confidential and can agree outcomes you cannot get from a claim. For example, a job reference. For further details <a href=\"https://www.acas.org.uk/\" class=\"govuk-link\">contact Acas</a>."
     },
     "errors": {
-      "acasSingle": {
+      "isAcasSingle": {
         "required": "Select an option"
       }
     }

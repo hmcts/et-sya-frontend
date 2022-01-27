@@ -5,7 +5,7 @@ import { YesOrNo } from 'definitions/case';
 
 export const acasSingleClaimFormContent: FormContent = {
   fields: {
-    acasSingle: {
+    isAcasSingle: {
       classes: 'govuk-radios--inline',
       id: 'acas-single',
       type: 'radios',

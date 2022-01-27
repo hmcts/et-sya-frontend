@@ -15,7 +15,7 @@ describe('Acas single claim Controller', () => {
 
   const mockFormContent = {
     fields: {
-      acasSingle: {
+      isAcasSingle: {
         type: 'radios',
         id: 'radio1',
         name: YesOrNo.YES,
@@ -30,7 +30,7 @@ describe('Acas single claim Controller', () => {
     );
 
     const response = mockResponse();
-    const userCase = { acasSingle: YesOrNo.YES };
+    const userCase = { isAcasSingle: YesOrNo.YES };
     const request = <AppRequest>mockRequest({ t, userCase });
 
     const responseMock = sinon.mock(response);
@@ -43,8 +43,8 @@ describe('Acas single claim Controller', () => {
 
   describe('post()', () => {
     it('should redirect back to Acas Single Claim page when errors are present', () => {
-      const errors = [{ propertyName: 'acasSingle', errorType: 'required' }];
-      const body = { 'acasSingle': '' };
+      const errors = [{ propertyName: 'isAcasSingle', errorType: 'required' }];
+      const body = { 'isAcasSingle': '' };
 
       const controller = new AcasSingleClaimController(mockFormContent);
 
@@ -57,7 +57,7 @@ describe('Acas single claim Controller', () => {
     });
 
     it('should assign userCase from formData for Acas Single', () => {
-      const body = { 'acasSingle': YesOrNo.YES };
+      const body = { 'isAcasSingle': YesOrNo.YES };
 
       const controller = new AcasSingleClaimController(mockFormContent);
 
@@ -69,7 +69,7 @@ describe('Acas single claim Controller', () => {
 
       expect(res.redirect).toBeCalledWith('/');
       expect(req.session.userCase).toStrictEqual({
-        acasSingle: YesOrNo.YES,
+        isAcasSingle: YesOrNo.YES,
       });
     });
   });
