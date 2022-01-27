@@ -35,6 +35,9 @@ export default function(app: Application): void {
   app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
 
+  app.get('/how-would-you-like-to-be-updated-about-your-claim', app.locals.container.cradle.updatePreferenceController.get);
+  app.post('/how-would-you-like-to-be-updated-about-your-claim', app.locals.container.cradle.updatePreferenceController.post);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),
