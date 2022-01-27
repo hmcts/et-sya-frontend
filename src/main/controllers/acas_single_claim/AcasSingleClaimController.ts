@@ -4,10 +4,12 @@ import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 import {
   assignFormData,
+  conditionalRedirect,
   getPageContent,
   handleSessionErrors,
   setUserCase,
 } from '../helpers';
+import { YesOrNo } from 'definitions/case';
 
 export default class AcasSingleClaimController {
   private readonly form: Form
@@ -17,8 +19,11 @@ export default class AcasSingleClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    // TODO(Tautvydas): Change to the correct redirect url
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES) ? '/' : '/';
+    
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, '/');
+    handleSessionErrors(req, res, this.form, redirectUrl);
   }
 
   public get = (req: AppRequest, res: Response): void => {

@@ -5,6 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import {
   FormContent,
   FormError,
+  FormField,
   FormFields,
   FormInput,
   FormOptions,
@@ -90,8 +91,18 @@ export const assignFormData = (
         (value as FormOptions)?.values
           ?.filter((option: FormInput) => option.subFields !== undefined)
           .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
-          .forEach((subField: any) => assignFormData(caseName, subField));
+          .forEach((subField: Record<string, FormField>) => assignFormData(caseName, subField));
       }
     }
   });
+};
+
+export const conditionalRedirect = (
+  req: AppRequest,
+  formFields: FormFields,
+  condition: boolean | string,
+): boolean => {
+  return Object.entries(req.body)
+    .find(([k]) => Object.keys(formFields).some((ff) => ff === k))
+    .some((v) => v === condition);
 };
