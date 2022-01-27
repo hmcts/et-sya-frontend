@@ -1,6 +1,7 @@
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { isFieldFilledIn } from '../../components/form/validator';
+import { YesOrNo } from 'definitions/case';
 
 export const updatePrefFormContent: FormContent = {
   fields: {
@@ -13,13 +14,13 @@ export const updatePrefFormContent: FormContent = {
         {
           label: (l: AnyRecord): string => l.yes,
           name: 'radio1',
-          value: 'Yes',
+          value: YesOrNo.YES,
           attributes: { maxLength: 2 },
         },
         {
           label: (l: AnyRecord): string => l.no,
           name: 'radio2',
-          value: 'No',
+          value: YesOrNo.NO,
           attributes: { maxLength: 2 },
         },
       ],
