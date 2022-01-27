@@ -10,7 +10,7 @@ describe('Mutiple Response Controller Tests', () => {
   const t = {
     'multiple-respondent-check': {},
     common: {},
-  }
+  };
 
   const userCase = {
     more_than_one_respondent:
