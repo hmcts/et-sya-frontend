@@ -1,89 +1,89 @@
-import MultipleRespondentCheckController from "../../../main/controllers/MultipleRespondentCheckController";
-import sinon from "sinon";
-import { Response } from 'express';
-import { mockRequest } from "../mocks/mockRequest";
-
-const multipleResponseController = new MultipleRespondentCheckController();
-
+import MultipleRespondentCheckController from '../../../main/controllers/multiple_respondent/MultipleRespondentCheckController';
+import sinon from 'sinon';
+import { mockRequest } from '../mocks/mockRequest';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import { FormContent } from '../../../main/definitions/form';
+import { mockResponse } from '../mocks/mockResponse';
+import { AppRequest } from 'definitions/appRequest';
 
 describe('Mutiple Response Controller Tests', () => {
-    const t = {
-        "multiple-respondent-check": {},
+  const t = {
+    'multiple-respondent-check': {},
+    common: {},
+  }
 
-    }
+  const userCase = {
+    more_than_one_respondent:
+    {
+      radio_multiple: '',
+      radio_single: '',
+    },
+  };
 
-    it(`should render multiple respondent page`, () => {
-        const response = ({ render: () => '' } as unknown) as Response;
-        const request = mockRequest(t);
+  const mockedFormContent = {
+    fields: {
+      multipleRespondent: {
+        id: 'more_than_one_respondent',
+        type: 'radios',
+        classes: 'govuk-date-input',
+        label: 'select',
+        labelHidden: true,
+        values: [
+          {
+            name: 'radio_multiple',
+            label: 'I have a return number',
+            selected: false,
+            value: 'Yes',
+          },
+          {
+            name: 'radio_single',
+            label: 'I have an account',
+            selected: false,
+            value: 'No',
+          },
+        ],
+        validator: isFieldFilledIn,
+      },
+    },
+  } as unknown as FormContent;
 
-        const responseMock = sinon.mock(response);
+  it('should render multiple respondent page', () => {
+    const controller = new MultipleRespondentCheckController(mockedFormContent);
+    const response = mockResponse();
+    const request = <AppRequest>mockRequest({ t });
+    const responseMock = sinon.mock(response);
 
-        responseMock
-            .expects('render')
-            .once()
-            .withArgs('multiple-respondent-check', request.t('multiple-respondent-check', { returnObjects: true }));
+    responseMock.expects('render').once().withArgs('multiple-respondent-check');
 
-        multipleResponseController.get(request, response);
-        responseMock.verify();
+    controller.get(request, response);
 
+    responseMock.verify();
+  });
 
-    });
+  it('should redirect back to self if there are errors', () => {
+    const errors = [{ propertyName: 'multipleRespondent', errorType: 'required' }];
+    const body = { 'multipleRespondent': '' };
+    const controller = new MultipleRespondentCheckController(mockedFormContent);
 
-    it(`should redirect \ when yes is selected`, () => {
-        const response = { redirect: () => { return ''; } } as unknown as Response;
-        const request = mockRequest(t);
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
 
-        request.body = { 'more-than-one-respondent': 'yes' };
+    controller.post(req, res);
+    
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
 
-        const responseMock = sinon.mock(response);
+  it('should redirect to home if no errors', () => {
+    const body = { 'multipleRespondent': 'Yes' };
+    const controller = new MultipleRespondentCheckController(mockedFormContent);
 
-        responseMock
-            .expects('redirect')
-            .once()
-            .withArgs('/');
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
 
-        multipleResponseController.post(request, response);
-        responseMock.verify();
+    controller.post(req, res);
 
-
-    });
-
-
-    it(`should redirect \ when no is selected`, () => {
-        const response = { redirect: () => { return ''; } } as unknown as Response;
-        const request = mockRequest(t);
-
-        request.body = { 'more-than-one-respondent': 'no' };
-
-        const responseMock = sinon.mock(response);
-
-        responseMock
-            .expects('redirect')
-            .once()
-            .withArgs('/');
-
-        multipleResponseController.post(request, response);
-        responseMock.verify();
-
-
-    });
-
-    it(`should render same page if nothing selected`, () => {
-        const response = ({ render: () => '' } as unknown) as Response;
-        const request = mockRequest(t);
-        request.body = { 'more-than-one-respondent': '' };
-
-        const responseMock = sinon.mock(response);
-
-        responseMock
-            .expects('render')
-            .once()
-            .withArgs('multiple-respondent-check');
-
-        multipleResponseController.post(request, response);
-        responseMock.verify();
-
-
-    });
-
+    expect(res.redirect).toBeCalledWith('/');
+    expect(req.session.errors).toEqual([]);
+  });
 });

@@ -1,6 +1,8 @@
 import * as os from 'os';
 import { Application } from 'express';
 import { infoRequestHandler } from '@hmcts/info-provider';
+import MultipleRespondentCheckController from '../controllers/multiple_respondent/MultipleRespondentCheckController';
+import { multipleRespondentContent } from '../controllers/multiple_respondent/content';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function(app: Application): void {
@@ -9,8 +11,8 @@ export default function(app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
-  app.get('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.get);
-  app.post('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.post);
+  app.get('/multiple-respondent-check', new MultipleRespondentCheckController(multipleRespondentContent).get);
+  app.post('/multiple-respondent-check', new MultipleRespondentCheckController(multipleRespondentContent).post);
   
 
   app.get(
