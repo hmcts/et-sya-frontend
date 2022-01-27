@@ -1,6 +1,7 @@
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 import { isFieldFilledIn } from '../../components/form/validator';
+import { YesOrNo } from 'definitions/case';
 
 export const acasSingleClaimFormContent: FormContent = {
   fields: {
@@ -12,15 +13,11 @@ export const acasSingleClaimFormContent: FormContent = {
       values: [
         {
           label: (l: AnyRecord): string => l.yes,
-          name: 'radio1',
-          value: 'Yes',
-          attributes: { maxLength: 2 },
+          value: YesOrNo.YES,
         },
         {
           label: (l: AnyRecord): string => l.no,
-          name: 'radio2',
-          value: 'No',
-          attributes: { maxLength: 2 },
+          value: YesOrNo.NO,
         },
       ],
       validator: isFieldFilledIn,
