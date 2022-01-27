@@ -6,5 +6,5 @@
     "claimCheckListItem2": "Details of the 'respondents’ you’re making the claim against - including registered / head office addresses for organisations and work addresses for people",
     "claimCheckListItem3": "Claim details - including brief background details, dates and names of any people involved",
     "claimCheckListReminder": "Remember, if you do not have these ready to complete a claim – you can save and return to a claim at any time.",
-    "printLinkTxt": "<a href=\"javascript:window.print()\">Print this page </a> for your records"
+    "printLinkTxt": "<a class=\"govuk-link\" href=\"javascript:window.print()\">Print this page </a> for your records"
 }
