@@ -1,102 +1,42 @@
 import sinon from 'sinon';
-import { Response } from 'express';
-import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
+import VideoHearingsController from '../../../main/controllers/video_hearings/VideoHearingsController';
 import { mockRequest } from '../mocks/mockRequest';
-
-const videoHearingsController = new VideoHearingsController();
+import { mockResponse } from '../mocks/mockResponse';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { FormContent } from '../../../main/definitions/form';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import { YesOrNo } from 'definitions/case';
 
 describe('Video Hearing Controller', () => {
   const t = {
-    'video-hearings': {},
+    'representingMyself': {},
+    common: {},
   };
 
-  it('should render the video hearing choice page', () => {
-    const response = ({ render: () => '' } as unknown) as Response;
-    const request = mockRequest(t);
+  const mockFormContent: FormContent = {
+    fields: {
+      videoHearings: {
+        type: 'radios',
+        values: [
+          {
+            value: YesOrNo.YES, 
+          },
+          {
+            value: YesOrNo.NO, 
+          },
+        ],
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
+    },
+    submit: {
+      text: 'continue',
+    },
+  } as unknown as FormContent;
 
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('video-hearings', request.t('video-hearings', { returnObjects: true }));
-
-    videoHearingsController.get(request, response);
-    responseMock.verify();
-  });
-
-  it('should render the \'Steps to making your claim\' page when \'yes\' and the \'save and continue\' button are selected', () => {
-    const response = { redirect: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': 'yes', saveButton: 'saveContinue' };
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/steps-to-making-your-claim');
-
-    videoHearingsController.post(request, response);
-    responseMock.verify();
-  });
-
-  it('should render the \'Steps to making your claim\' page when \'no\' and the \'save and continue\' button are selected', () => {
-    const response = { redirect: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': 'no', saveButton: 'saveContinue' };
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/steps-to-making-your-claim');
-
-    videoHearingsController.post(request, response);
-    responseMock.verify();
-  });
-
-  it('should render the \'Your claim has been saved\' page when \'yes\' and the \'save for later\' button are selected', () => {
-    const response = { redirect: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': 'yes', saveButton: 'saveForLater' };
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/your-claim-has-been-saved');
-
-    videoHearingsController.post(request, response);
-    responseMock.verify();
-  });
-
-
-  it('should render the \'Your claim has been saved\' page when \'no\' and the \'save for later\' button are selected', () => {
-    const response = { redirect: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': 'no', saveButton: 'saveForLater' };
-
-    const responseMock = sinon.mock(response);
-
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/your-claim-has-been-saved');
-
-    videoHearingsController.post(request, response);
-    responseMock.verify();
-  });
-
-
-
-  it('should render same page if nothing selected and the \'save and continue\' button is selected', () => {
-    const response = { render: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': '', saveButton: 'saveContinue' };
-
+  it('should render the video hearings choice page', () => {
+    const controller = new VideoHearingsController(mockFormContent);
+    const response = mockResponse();
+    const request = <AppRequest>mockRequest({ t });
     const responseMock = sinon.mock(response);
 
     responseMock
@@ -104,24 +44,38 @@ describe('Video Hearing Controller', () => {
       .once()
       .withArgs('video-hearings');
 
-    videoHearingsController.post(request, response);
+    controller.get(request, response);
     responseMock.verify();
   });
 
-  it('should redirect to the \'Your claim has been saved\' page when a radio button is not selected and the \'save for later\' button is clicked', () => {
-    const response = { redirect: () => { return ''; } } as unknown as Response;
-    const request = mockRequest(t);
-    request.body = { 'video-hearing': '', saveButton: 'saveForLater' };
+  it('should render same page if errors are present', () => {
+    const errors = [{ propertyName: 'videoHearings', errorType: 'required' }];
+    const body = { videoHearings: '' };
+    const controller = new VideoHearingsController(mockFormContent);
 
-    const responseMock = sinon.mock(response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/your-claim-has-been-saved');
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
 
-    videoHearingsController.post(request, response);
-    responseMock.verify();
+  it('should add the videoHearings form value to the userCase', () => {
+    const body = { 'videoHearings': YesOrNo.NO };
+
+    const controller = new VideoHearingsController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith('/steps-to-making-your-claim');
+    expect(req.session.userCase).toStrictEqual({
+      videoHearings: YesOrNo.NO,
+    });
   });
 
 });

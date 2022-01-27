@@ -18,6 +18,7 @@ export interface Case {
   addressTown?: string;
   addressCounty?: string;
   addressPostcode?: string;
+  videoHearing?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {
