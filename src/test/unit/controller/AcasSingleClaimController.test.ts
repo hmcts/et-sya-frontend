@@ -67,7 +67,7 @@ describe('Acas single claim Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/');
+      expect(res.redirect).toBeCalledWith('/type-of-claim');
       expect(req.session.userCase).toStrictEqual({
         isAcasSingle: YesOrNo.YES,
       });
