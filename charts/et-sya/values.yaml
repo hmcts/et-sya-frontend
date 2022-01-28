@@ -1,11 +1,18 @@
 nodejs:
-  applicationPort: 3100
+  applicationPort: 3001
   aadIdentityName: et
   ingressHost: et-sya.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/et/sya:latest'
 #  Uncomment once the vault containing the app insights key has been set up
-#  keyVaults:
-#    et:
-#      secrets:
-#        - AppInsightsInstrumentationKey
+  keyVaults:
+    et:
+      resourceGroup: et
+      secrets:
+        - AppInsightsInstrumentationKey
+        - idam-secret
   environment:
+    IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
+    IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
+
+  idam-pr:
+    enable: false

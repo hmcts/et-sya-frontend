@@ -12,4 +12,13 @@ export interface AppSession extends Session {
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;
+  user: UserDetails;
+}
+
+export interface UserDetails {
+  accessToken: string;
+  id: string;
+  email: string;
+  givenName: string;
+  familyName: string;
 }

@@ -9,4 +9,4 @@ services:
         - https_proxy
         - no_proxy
     ports:
-      - 3100:3100
+      - 3001:3001
