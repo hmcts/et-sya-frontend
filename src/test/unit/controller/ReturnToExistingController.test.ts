@@ -5,18 +5,12 @@ import sinon from 'sinon';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
+import { YesOrNo } from '../../../main/definitions/case';
 
 describe('Return To Existing Controller', () => {
   const t = {
     'return-to-claim': {},
     common: {},
-  };  
-  const userCase = {
-    return_number_or_account:
-    {
-      have_return_number: '',
-      have_account: '',
-    },
   };
 
   const mockedFormContent = {
@@ -64,7 +58,7 @@ describe('Return To Existing Controller', () => {
     const body = { 'returnToExisting': '' };
     const controller = new ReturnToExistingController(mockedFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
 
     controller.post(req, res);
@@ -73,10 +67,10 @@ describe('Return To Existing Controller', () => {
   });
 
   it('should redirect to home if no errors', () => {
-    const body = { 'returnToExisting': 'Yes' };
+    const body = { 'returnToExisting': YesOrNo.YES };
     const controller = new ReturnToExistingController(mockedFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
 
     controller.post(req, res);

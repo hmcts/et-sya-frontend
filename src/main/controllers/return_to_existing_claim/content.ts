@@ -20,7 +20,7 @@ export const returnToExistingContent: FormContent = {
         {
           name: 'have_account',
           label: (l: AnyRecord): string => l.optionText2,
-          value: YesOrNo.YES,
+          value: YesOrNo.NO,
           selected: false,                   
         },
       ], 

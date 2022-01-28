@@ -1,12 +1,7 @@
 import * as os from 'os';
 import { Application } from 'express';
 import { infoRequestHandler } from '@hmcts/info-provider';
-import DobController from '../controllers/dob/DobController';
-import { dobFormContent } from '../controllers/dob/content';
-import {returnToExistingContent} from '../controllers/return_to_existing_claim/content';
 
-import GenderDetailsController from '../controllers/gender_details/GenderDetailsController';
-import ReturnToExistingController from '../controllers/return_to_existing_claim/ReturnToExistingController';
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function(app: Application): void {
@@ -17,7 +12,6 @@ export default function(app: Application): void {
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
   
-
   app.get(
     '/info',
     infoRequestHandler({
@@ -30,6 +24,7 @@ export default function(app: Application): void {
       },
     }),
   );
+  
   app.get('/dob-details', app.locals.container.cradle.dobController.get);
   app.post('/dob-details', app.locals.container.cradle.dobController.post);
   app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
@@ -41,14 +36,9 @@ export default function(app: Application): void {
 
   app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
-
-  app.get('/dob-details', new DobController(dobFormContent).get);
-  app.post('/dob-details', new DobController(dobFormContent).post);
-  app.get('/gender-details', new GenderDetailsController().get);
-  app.get('/return-to-existing', new ReturnToExistingController(returnToExistingContent).get);
-  app.post('/return-to-existing', new ReturnToExistingController(returnToExistingContent).post);
-  
-  
+  app.get('/return-to-existing', app.locals.container.cradle.returnToExistingController.get);
+  app.post('/return-to-existing', app.locals.container.cradle.returnToExistingController.post);
+    
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),

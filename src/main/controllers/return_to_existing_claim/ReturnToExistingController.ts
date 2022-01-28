@@ -7,8 +7,8 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class ReturnToExistingController {
   private readonly form: Form;
 
-  constructor(private readonly formContent: FormContent) {
-    this.form = new Form(<FormFields>this.formContent.fields);
+  constructor(private readonly returnToExistingContent: FormContent) {
+    this.form = new Form(<FormFields>this.returnToExistingContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -17,7 +17,7 @@ export default class ReturnToExistingController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
+    const content = getPageContent(req, this.returnToExistingContent, [
       'common',
       'return-to-existing',
     ]);
