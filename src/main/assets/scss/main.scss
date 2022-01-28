@@ -7,3 +7,44 @@
     float: right;
   }
 }
+
+// interupt the user with important information
+.govuk-panel--interruption {
+  background-color: govuk-colour('blue');
+
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  ul,
+  ol {
+    color: govuk-colour('white');
+    text-align: left;
+    }
+  }
+
+.circle {
+  background: govuk-colour('black');
+  border-radius: 50%;
+  color: govuk-colour('white');
+  display: inline-block;
+  font-family: 'ntatabularnumbers', 'nta', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.circle-step {
+  float: left;
+  line-height: 25px;
+  margin-right: 10px;
+  min-height: 25px;
+  min-width: 25px;
+}
+
+.circle-white {
+  background: govuk-colour('white');
+  color: govuk-colour('blue');
+}
