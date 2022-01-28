@@ -6,7 +6,7 @@
     "radio2": "No - I’m making a <span class=\"govuk-!-font-weight-bold\">claim against 1</span> single respondent",
     "button1": "Continue",
     "errors": {
-        "returnToExisting": {
+        "isMultipleRespondent": {
             "required": "Select an option"
         }
     }

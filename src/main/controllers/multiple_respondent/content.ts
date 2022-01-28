@@ -5,7 +5,7 @@ import { AnyRecord} from '../../definitions/util-types';
 
 export const multipleRespondentContent: FormContent = {
   fields: {
-    multipleRespondent: {
+    isMultipleRespondent: {
       id: 'more_than_one_respondent',
       type: 'radios',
       classes: 'govuk-date-input',

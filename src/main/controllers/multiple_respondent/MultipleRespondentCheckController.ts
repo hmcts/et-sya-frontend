@@ -7,8 +7,8 @@ import { Response } from 'express';
 export default class MultipleRespondentCheckController {
   private readonly form: Form;
 
-  constructor(private readonly formContent: FormContent) {
-    this.form = new Form(<FormFields>this.formContent.fields);
+  constructor(private readonly multipleRespondentContent: FormContent) {
+    this.form = new Form(<FormFields>this.multipleRespondentContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -17,7 +17,7 @@ export default class MultipleRespondentCheckController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.formContent, [
+    const content = getPageContent(req, this.multipleRespondentContent, [
       'common',
       'multiple-respondent-check',
     ]);
