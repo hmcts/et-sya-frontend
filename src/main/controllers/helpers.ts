@@ -102,7 +102,7 @@ export const conditionalRedirect = (
   formFields: FormFields,
   condition: boolean | string,
 ): boolean => {
-  return Object.entries(req.body)
-    .find(([k]) => Object.keys(formFields).some((ff) => ff === k))
-    .some((v) => v === condition);
+  const matchingValues = Object.entries(req.body)
+    .find(([k]) => Object.keys(formFields).some((ff) => ff === k));
+  return matchingValues ? matchingValues.some((v) => v === condition) : false;
 };
