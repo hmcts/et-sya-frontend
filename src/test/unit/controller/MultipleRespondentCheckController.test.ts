@@ -4,7 +4,8 @@ import { mockRequest } from '../mocks/mockRequest';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import { FormContent } from '../../../main/definitions/form';
 import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from 'definitions/appRequest';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
 
 describe('Mutiple Response Controller Tests', () => {
   const t = {
@@ -12,17 +13,9 @@ describe('Mutiple Response Controller Tests', () => {
     common: {},
   };
 
-  const userCase = {
-    more_than_one_respondent:
-    {
-      radio_multiple: '',
-      radio_single: '',
-    },
-  };
-
   const mockedFormContent = {
     fields: {
-      multipleRespondent: {
+      isMultipleRespondent: {
         id: 'more_than_one_respondent',
         type: 'radios',
         classes: 'govuk-date-input',
@@ -33,13 +26,13 @@ describe('Mutiple Response Controller Tests', () => {
             name: 'radio_multiple',
             label: 'I have a return number',
             selected: false,
-            value: 'Yes',
+            value: YesOrNo.YES,
           },
           {
             name: 'radio_single',
             label: 'I have an account',
             selected: false,
-            value: 'No',
+            value: YesOrNo.NO,
           },
         ],
         validator: isFieldFilledIn,
@@ -61,24 +54,24 @@ describe('Mutiple Response Controller Tests', () => {
   });
 
   it('should redirect back to self if there are errors', () => {
-    const errors = [{ propertyName: 'multipleRespondent', errorType: 'required' }];
-    const body = { 'multipleRespondent': '' };
+    const errors = [{ propertyName: 'isMultipleRespondent', errorType: 'required' }];
+    const body = { 'isMultipleRespondent': '' };
     const controller = new MultipleRespondentCheckController(mockedFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
 
     controller.post(req, res);
-    
+
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
   it('should redirect to home if no errors', () => {
-    const body = { 'multipleRespondent': 'Yes' };
+    const body = { 'isMultipleRespondent': YesOrNo.YES };
     const controller = new MultipleRespondentCheckController(mockedFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
 
     controller.post(req, res);

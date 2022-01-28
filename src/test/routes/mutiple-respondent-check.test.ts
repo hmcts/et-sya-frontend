@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { YesOrNo } from '../../main/definitions/case';
 import request from 'supertest';
 import { app } from '../../main/app';
 
@@ -14,7 +15,7 @@ describe('on POST /multiple-respondent-check', () => {
   test('should go back to home when an option has been selected', async () => {
     await request(app)
       .post('/multiple-respondent-check')
-      .send({ 'multipleRespondent': 'Yes' })
+      .send({ 'isMultipleRespondent': YesOrNo.YES })
       .expect((res) => {
         expect(res.status).to.equal(302);
         expect(res.header['location']).to.equal('/');
