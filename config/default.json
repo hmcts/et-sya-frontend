@@ -1,4 +1,5 @@
 {
+  "port": 3001,
   "useCSRFProtection": true,
   "security": {
     "referrerPolicy": "origin"
@@ -12,5 +13,13 @@
   },
   "session": {
     "secret": "local"
+  },
+  "services":{
+    "idam":{
+      "clientID": "et-sya",
+      "authorizationURL": "https://idam-web-public.aat.platform.hmcts.net/login",
+      "clientSecret": "TO BE PICKED UP FROM ENV",
+      "tokenURL": "https://idam-api.aat.platform.hmcts.net/o/token"
+    }
   }
 }

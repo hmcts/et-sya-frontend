@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const { Logger } = require('@hmcts/nodejs-logging');
+import config from 'config';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as path from 'path';
@@ -7,7 +8,7 @@ import { app } from './app';
 
 const logger = Logger.getLogger('server');
 
-const port: number = parseInt(process.env.PORT, 10) || 3100;
+const port: number = parseInt(process.env.PORT, 10) || config.get('port');
 
 if (app.locals.ENV === 'development') {
   const sslDirectory = path.join(__dirname, 'resources', 'localhost-ssl');

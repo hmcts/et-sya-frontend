@@ -1,0 +1,46 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: back,
+  href: "/"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-panel govuk-panel--interruption">
+  <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+  <div class="govuk-panel__body ">
+    <p class="govuk-body-m govuk-!-font-weight-bold">{{ claimCheckListTitle }}</p>
+      <ul class="govuk-list">
+        <li>
+          <span class="circle circle-step circle-white">1</span>
+          <p class="govuk-body-m govuk-!-font-weight-bold">{{ claimCheckListItem1 }}</p>
+        </li>
+
+        <li>
+          <span class="circle circle-step circle-white">2</span>
+          <p class="govuk-body-m govuk-!-font-weight-bold">{{ claimCheckListItem2 }}</p>
+        </li>
+        <li>
+          <span class="circle circle-step circle-white">3</span>
+          <p class="govuk-body-m govuk-!-font-weight-bold">{{ claimCheckListItem3 }}</p>
+        </li>
+      </ul>
+    <p class="govuk-body-m govuk-!-font-weight-bold">{{ claimCheckListReminder }}</p>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+  {{ govukButton({
+        text: continue,
+        href: "/lip-or-representative",
+        preventDoubleClick: true
+  }) }}
+  <p class="govuk-body ">{{ printLinkTxt | safe }}</p>
+  </div>
+</div>
+{% endblock %}
