@@ -15,7 +15,7 @@ const expectedTitle = newAccountJson.h1;
 
 
 let htmlRes: Document;
-describe('Checklist page', () => {
+describe('New Account Landing page', () => {
   beforeAll(async () => {
     await request(app).get(PAGE_URL).then(res => {
       htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -32,9 +32,10 @@ describe('Checklist page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Panel title does not exist');
   });
 
-  it('should display 2 paragraphs', () => {
+  it('should display 1 paragraph class', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(2,'2 paragraphs should exist');
+    expect(p.length).equal(1,'1 paragraph class should exist');
+
   });
 
   it('should display two buttons', () => {

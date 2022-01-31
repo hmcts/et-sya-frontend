@@ -11,27 +11,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div class="govuk-panel--informational">
-        <h1 class="govuk-panel__title">{{ h1 }}</h>
-          <p class="govuk-panel__body">{{ p1 }}</p>
-          <p class="govuk-panel__body">{{ p2 }}</p> 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-panel--informational">
+          <h1 class="govuk-panel__title">{{ h1 }}</h>
+            <div class="govuk-panel__body">
+                <p>{{ p1 }}</p>
+                <p>{{ p2 }}</p>
+            </div>   
+      </div>
+    </div> 
+  </div>
+
+  </div>
+
+{% endblock %} 
+
+{% block footer %}
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Continue",
+        href: "/steps-to-making-your-claim"
+      }) }}
+
+      {{ govukButton({
+        text: "Save for later",
+        classes: "govuk-button--secondary",
+        href: "/your-claim-has-been-saved"
+      }) }}
     </div>
-  </div> 
-</div>
+  </div>
+  {{ super() }}
+{% endblock %} 
 
-<div class="govuk-button-group">
-  {{ govukButton({
-    text: "Continue",
-    href: "/steps-to-making-your-claim"
-  }) }}
 
-  {{ govukButton({
-    text: "Save for later",
-    classes: "govuk-button--secondary",
-    href: "/your-claim-has-been-saved"
-  }) }}
-</div>
 
-{% endblock %}  
+
+

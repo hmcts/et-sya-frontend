@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import NewAccountLandingController from '../../../main/controllers/NewAccountLandingController';
+import NewAccountLandingController from '../../../main/controllers/NewAccountLanding/NewAccountLandingController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
