@@ -5,14 +5,14 @@ import request from 'supertest';
 import fs from 'fs';
 import path from 'path';
 
-const addressDetailsJSONRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/telephone-number.json'), 'utf-8');
-const adJSON = JSON.parse(addressDetailsJSONRaw);
+const telNumberJSONRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/telephone-number.json'), 'utf-8');
+const telNumberJSON = JSON.parse(telNumberJSONRaw);
 
 const PAGE_URL = '/telephone-number';
 const titleClass = 'govuk-heading-xl';
 const helperClass = 'govuk-label';
-const expectedTitle = adJSON.h1;
-const expectedHelperText = adJSON.hint;
+const expectedTitle = telNumberJSON.h1;
+const expectedHelperText = telNumberJSON.hint;
 const buttonClass = 'govuk-button';
 const inputs = '[class*="telephone-number"]';
 const expectedInputLabel = 'UK telephone number';
