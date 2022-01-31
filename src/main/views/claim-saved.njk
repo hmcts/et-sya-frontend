@@ -12,4 +12,8 @@
         {{ govukPanel({
         titleText: "Your claim has been saved"
       }) }}
+      {{ govukButton({
+        text: continueWithClaim,
+        preventDoubleClick: true
+      }) 
 {% endblock %}
