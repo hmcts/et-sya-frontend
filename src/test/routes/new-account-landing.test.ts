@@ -1,7 +1,5 @@
 import { expect } from 'chai';
 import request from 'supertest';
-
-
 import { app } from '../../main/app';
 
 describe('GET /new-account-landing', () => {
