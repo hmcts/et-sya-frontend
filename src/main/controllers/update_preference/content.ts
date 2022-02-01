@@ -6,7 +6,7 @@ import { YesOrNo } from 'definitions/case';
 export const updatePrefFormContent: FormContent = {
   fields: {
     updatePreference: {
-      classes: 'govuk-radios--inline',
+      classes: 'govuk-radios',
       id: 'update-preference',
       type: 'radios',
       label: (l: AnyRecord): string => l.label,
