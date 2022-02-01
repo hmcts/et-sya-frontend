@@ -19,7 +19,7 @@ describe('Contact Acas Controller', () => {
       'contact-acas',
       {
         ...request.t('contact-acas', { returnObjects: true }),
-        acasUrl: URLS.ACAS_EC_URL,
+        acasUrl: URLS.ACAS_EC,
       });
     checklistController.get(request, response);
     responseMock.verify();
