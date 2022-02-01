@@ -12,7 +12,7 @@ const PAGE_URL = '/how-would-you-like-to-be-updated-about-your-claim';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = updatePreferenceJson.h1;
 const buttonClass = 'govuk-button';
-const inputs = 'govuk-radios--inline';
+const inputs = 'govuk-radios';
 const expectedInputLabel = 'label';
 
 let htmlRes: Document;

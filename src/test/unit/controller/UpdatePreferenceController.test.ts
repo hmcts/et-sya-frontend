@@ -22,7 +22,7 @@ describe('Update Preference Controller', () => {
   const mockFormContent = {
     fields: {
       updatePreference: {
-        classes: 'govuk-radios--inline',
+        classes: 'govuk-radios',
         id: 'update-preference',
         type: 'radios',
         values: [
