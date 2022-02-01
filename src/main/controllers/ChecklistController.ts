@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-export default class HomeController {
+export default class ChecklistController {
   public get(req: Request, res: Response): void {
-    res.render('home', {
+    res.render('checklist', {
       ...req.t('common', { returnObjects: true }),
-      ...(req.t('home', { returnObjects: true })),
+      ...(req.t('checklist', { returnObjects: true })),
     });
   }
 }
