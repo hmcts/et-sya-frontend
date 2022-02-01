@@ -2,6 +2,7 @@ import sinon from 'sinon';
 import ContactAcasController from '../../../main/controllers/ContactAcasController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { URLS } from '../../../main/definitions/constants';
 
 const checklistController = new ContactAcasController();
 
@@ -14,7 +15,12 @@ describe('Contact Acas Controller', () => {
     const response = mockResponse();
     const request = mockRequest(t);
     const responseMock = sinon.mock(response);
-    responseMock.expects('render').once().withArgs('contact-acas', request.t('contact-acas', { returnObjects: true }));
+    responseMock.expects('render').once().withArgs(
+      'contact-acas',
+      {
+        ...request.t('contact-acas', { returnObjects: true }),
+        acasUrl: URLS.ACAS_EC_URL,
+      });
     checklistController.get(request, response);
     responseMock.verify();
   });
