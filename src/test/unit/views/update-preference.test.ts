@@ -28,9 +28,14 @@ describe('How would you like to be updated about your claim page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
   
-  it('should display continue button', () => {
+  it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+  });
+
+  it('should display save for later button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
   });
 
   it('should display radio buttons', () => {

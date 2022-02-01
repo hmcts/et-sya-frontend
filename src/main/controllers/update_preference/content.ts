@@ -28,7 +28,11 @@ export const updatePrefFormContent: FormContent = {
     },
   },
   submit: {
-    text: (l: AnyRecord): string => l.continue,
+    text: (l: AnyRecord): string => l.submit,
     classes: 'govuk-!-margin-right-2',
+  },
+  saveForLater: {
+    text: (l: AnyRecord): string => l.saveForLater,
+    classes: 'govuk-button--secondary',
   },
 };
