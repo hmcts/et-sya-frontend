@@ -45,17 +45,27 @@ export const handleSessionErrors = (
   const sessionErrors = getSessionErrors(req, form);
   req.session.errors = sessionErrors;
 
-  if (sessionErrors.length > 0) {
+  const { saveForLater } = req.body;
+
+  // if 'save and continue' and errors 
+  if (!saveForLater && sessionErrors.length) {
     req.session.save((err) => {
       if (err) {
         throw err;
       }
-      res.redirect(req.url);
+      return res.redirect(req.url);
     });
+    // if 'save and continue' without errors
+  } else if (!saveForLater && !sessionErrors.length) {
+    return res.redirect(redirectUrl);
+    //  save for later, only redirect?
   } else {
-    res.redirect(redirectUrl);
+    return res.redirect('your-claim-has-been-saved');
   }
 };
+
+
+
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());

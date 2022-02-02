@@ -12,7 +12,7 @@ export default class VideoHearingsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
+    setUserCase(req, this.form);  
     handleSessionErrors(req, res, this.form, '/steps-to-making-your-claim');
   }
 
