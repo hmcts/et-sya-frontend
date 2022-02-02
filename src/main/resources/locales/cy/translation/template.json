@@ -1,7 +1,7 @@
 {
-    "phaseBanner": {
-      "feedback": "Bydd eich adborth",
-      "additionalText": "yn ein helpu i wella’r gwasanaeth.",
-      "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
-    }
+  "phaseBanner": {
+    "feedback": "Bydd eich adborth",
+    "additionalText": "yn ein helpu i wella’r gwasanaeth.",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
+  }
 }
