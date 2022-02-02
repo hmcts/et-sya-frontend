@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import { app } from '../../main/app';
-import { URLS } from '../../main/definitions/constants';
+import { LEGACY_URLS  } from '../../main/definitions/constants';
 import { YesOrNo } from '../../main/definitions/case';
 
 describe('GET /single-or-multiple-claim', () => {
@@ -32,7 +32,7 @@ describe('on POST /single-or-multiple-claim', () => {
       .send({isASingleClaim: YesOrNo.NO})
       .expect((res) => {
         expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal(URLS.LEGACY_ET1);
+        expect(res.header['location']).to.equal(LEGACY_URLS.ET1);
       });
   });
 });

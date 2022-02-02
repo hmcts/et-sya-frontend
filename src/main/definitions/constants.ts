@@ -1,5 +1,7 @@
-export const URLS = {
-  LEGACY_ET1: 'https://employmenttribunals.service.gov.uk/en/apply/application-number',
+export const LEGACY_URLS = {
+  ET1: 'https://employmenttribunals.service.gov.uk/en/apply/application-number',
+  ET1_BASE: 'https://employmenttribunals.service.gov.uk/',
+  ET1_PATH: '/apply/application-number',
 } as const;
 
 export const CALLBACK_URL = '/oauth2/callback' as const;

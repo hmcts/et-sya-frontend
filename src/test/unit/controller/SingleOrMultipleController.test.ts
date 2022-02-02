@@ -3,7 +3,7 @@ import SingleOrMultipleController from '../../../main/controllers/single_or_mult
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { URLS } from '../../../main/definitions/constants';
+import { LEGACY_URLS  } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import { YesOrNo } from '../../../main/definitions/case';
@@ -69,7 +69,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(URLS.LEGACY_ET1);
+    expect(res.redirect).toBeCalledWith(LEGACY_URLS.ET1);
 
   });
 

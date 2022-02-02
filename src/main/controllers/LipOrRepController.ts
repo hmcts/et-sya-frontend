@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { URLS } from '../definitions/constants';
+import { LEGACY_URLS } from '../definitions/constants';
 
 export default class LipOrRepController {
 
@@ -14,7 +14,7 @@ export default class LipOrRepController {
       res.redirect('/single-or-multiple-claim');
     }
     else if (req.body['lip-or-representative'] === 'representative') {
-      res.redirect(URLS.LEGACY_ET1);
+      res.redirect(LEGACY_URLS.ET1);
     } else {
       res.render('lip-or-representative', {
         noRadioButtonSelectedError: true,

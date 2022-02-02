@@ -3,8 +3,8 @@ import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
-import { URLS } from '../../definitions/constants';
 import { YesOrNo } from '../../definitions/case';
+import  getLegacyUrl  from '../../utils/getLegacyUrlFromLng';
 
 export default class SingleOrMultipleController {
   private readonly form: Form
@@ -17,10 +17,10 @@ export default class SingleOrMultipleController {
     setUserCase(req, this.form);
     let redirectUrl = '/single-or-multiple-claim';
     if (req.body.isASingleClaim === YesOrNo.YES) {
-      // the redirect URL will need updated to the next page 
+      // this redirect URL below will need updated to the next page 
       redirectUrl = '/';
     } else if (req.body.isASingleClaim === YesOrNo.NO) {
-      redirectUrl = URLS.LEGACY_ET1;
+      redirectUrl = getLegacyUrl(req.language);
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
   }
