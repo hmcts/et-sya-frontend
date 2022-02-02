@@ -4,7 +4,6 @@ import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-
 export default class pastEmployerController {
   private readonly form: Form;
 

@@ -35,4 +35,4 @@ export const pastEmployerFormContent: FormContent = {
     text: (l: AnyRecord): string => l.saveForLater,
     classes: 'govuk-button--secondary',
   },
-}; 
+};
