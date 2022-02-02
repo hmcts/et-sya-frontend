@@ -1,0 +1,29 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink({
+    text: back,
+    href: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ heading }}</h1>      
+      </div>
+  </div>
+
+  {% block form %}
+    {% include "form/form.njk"%}
+  {% endblock %}
+
+{% endblock %} 
