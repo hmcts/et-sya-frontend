@@ -26,7 +26,11 @@
        {{ govukButton({
          text: buttonTxt,
          href: acasUrl,
-         preventDoubleClick: true
+         preventDoubleClick: true,
+         attributes: {
+           rel: "noreferrer noopener",
+           target: "_blank"
+         }
        }) }}
      </div>
    </div>
