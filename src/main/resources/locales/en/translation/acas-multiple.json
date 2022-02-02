@@ -8,7 +8,7 @@
     "detailsText": {
       "p1":"Making a claim can be time-consuming and difficult for everyone involved.",
       "p2":"‘Early conciliation’ is quicker than going to a tribunal (talks take place over the phone for up to 6 weeks) and involves a lot less paperwork.",
-      "p3":"It’s free, confidential and can agree outcomes you cannot get from a claim. For example, a job reference. For further details <a href=\"https://www.acas.org.uk/\" class=\"govuk-link\">contact Acas</a>."
+      "p3":"It’s free, confidential and can agree outcomes you cannot get from a claim. For example, a job reference. For further details <a href=\"https://www.acas.org.uk/\" class=\"govuk-link\" target=\"_blank\">contact Acas</a>."
     },
     "errors": {
       "acasMultiple": {
