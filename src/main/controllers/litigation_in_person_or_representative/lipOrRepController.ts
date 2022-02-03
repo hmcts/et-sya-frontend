@@ -3,7 +3,7 @@ import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
-import { URLS } from '../../definitions/constants';
+import  getLegacyUrl  from '../../utils/getLegacyUrlFromLng';
 import { YesOrNo } from '../../definitions/case';
 
 export default class LipOrRepController {
@@ -19,7 +19,7 @@ export default class LipOrRepController {
     if (req.body.representingMyself === YesOrNo.YES) {
       redirectUrl = '/single-or-multiple-claim';
     } else if (req.body.representingMyself === YesOrNo.NO) {
-      redirectUrl = URLS.LEGACY_ET1;
+      redirectUrl = getLegacyUrl(req.language);
     }    
     handleSessionErrors(req, res, this.form, redirectUrl);
   }

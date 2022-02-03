@@ -2,7 +2,7 @@ import sinon from 'sinon';
 import { Response } from 'express';
 import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
 import { mockRequest } from '../mocks/mockRequest';
-import { URLS } from '../../../main/definitions/constants';
+import { LEGACY_URLS } from '../../../main/definitions/constants';
 
 const singleOrMultipleController = new SingleOrMultipleController();
 
@@ -52,7 +52,7 @@ describe('Single or Multiple Claim Controller', () => {
     responseMock
       .expects('redirect')
       .once()
-      .withArgs(URLS.LEGACY_ET1);
+      .withArgs(LEGACY_URLS.ET1);
 
     singleOrMultipleController.post(request, response);
     responseMock.verify();

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { URLS } from '../definitions/constants';
+import { LEGACY_URLS } from '../definitions/constants';
 
 export default class SingleOrMultipleController {
   public get(req: Request, res: Response): void {
@@ -14,7 +14,7 @@ export default class SingleOrMultipleController {
       res.redirect('/do-you-have-an-acas-single-resps');
     }
     else req.body['single-or-multiple'] === 'multiple' ?
-      res.redirect(URLS.LEGACY_ET1):
+      res.redirect(LEGACY_URLS.ET1):
       res.render('single-or-multiple-claim', {
         noRadioButtonSelectedError: true,
         ...req.t('common', { returnObjects: true }),

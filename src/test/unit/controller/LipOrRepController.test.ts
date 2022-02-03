@@ -3,7 +3,7 @@ import LipOrRepController from '../../../main/controllers/litigation_in_person_o
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { URLS } from '../../../main/definitions/constants';
+import { LEGACY_URLS } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import { YesOrNo } from 'definitions/case';
@@ -73,7 +73,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(URLS.LEGACY_ET1);
+    expect(res.redirect).toBeCalledWith(LEGACY_URLS.ET1);
   });
 
   it('should render same page if errors are present when nothing is selected', () => {
