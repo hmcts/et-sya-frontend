@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../main/app';
@@ -8,7 +7,7 @@ describe('Steps to making your claim page', () => {
     test('should return steps to making your claim page', async () => {
       await request(app)
         .get('/steps-to-making-your-claim')
-        .expect((res) => expect(res.status).to.equal(200));
+        .expect(res => expect(res.status).toStrictEqual(200));
     });
   });
 });

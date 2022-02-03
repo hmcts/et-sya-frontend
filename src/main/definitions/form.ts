@@ -1,18 +1,18 @@
 import { Case, CaseDate } from './case';
-import { NeverRecord } from './util-types';
+import { AnyRecord, NeverRecord } from './util-types';
 
-type LanguageLookup = (lang: NeverRecord) => string
+type LanguageLookup = (lang: NeverRecord) => string;
 
 type ValidationCheck = (
   value: string | string[] | CaseDate | undefined | Case,
-  formData: any
-) => void | string | InvalidField
+  formData: AnyRecord
+) => void | string | InvalidField;
 
-type Parser = (value: Record<string, unknown> | string[]) => void
+export type Parser = (value: Record<string, unknown> | string[]) => void;
 
-type Label = string | LanguageLookup
+export type Label = string | LanguageLookup;
 
-type Warning = Label;
+export type Warning = Label;
 
 export interface SubmitButton {
   text: Label;
@@ -26,7 +26,7 @@ export interface FormContent {
   continue?: SubmitButton;
 }
 
-export type FormField = FormInput | FormOptions
+export type FormField = FormInput | FormOptions;
 export type FormFields = Record<string, FormField>;
 export type FormFieldsFn = (userCase: Partial<Case>) => FormFields;
 
@@ -65,9 +65,9 @@ export type FormError = {
   propertyName: string;
   errorType: string;
   fieldName?: string;
-}
+};
 
 export type InvalidField = {
   error: string;
   fieldName: string;
-}
+};

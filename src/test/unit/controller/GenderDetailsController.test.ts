@@ -1,6 +1,7 @@
-import sinon from 'sinon';
-import { mockRequest } from '../mocks/mockRequest';
+import { mock } from 'sinon';
+
 import GenderDetailsController from '../../../main/controllers/gender_details/GenderDetailsController';
+import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 const genderDetailsController = new GenderDetailsController();
@@ -15,7 +16,7 @@ describe('Gender Details Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
+    const responseMock = mock(response);
 
     responseMock.expects('render').once().withArgs('gender-details');
 

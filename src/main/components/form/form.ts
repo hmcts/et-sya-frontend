@@ -1,13 +1,7 @@
-import { Case, CaseWithId } from 'definitions/case';
-import {
-  FormContent,
-  FormError,
-  FormField,
-  FormFields,
-  FormInput,
-  FormOptions,
-} from 'definitions/form';
-import { AnyRecord } from 'definitions/util-types';
+import { Case, CaseWithId } from '../../definitions/case';
+import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
+
 import { setupCheckboxParser } from './parser';
 
 const WHITELISTED_FIELDS: string[] = ['_csrf'];
@@ -18,16 +12,13 @@ export class Form {
   /**
    * Pass the form body to any fields with a parser and return mutated body;
    */
-  public getParsedBody(
-    body: AnyRecord,
-    checkFields?: FormContent['fields'],
-  ): Partial<CaseWithId> {
+  public getParsedBody(body: AnyRecord, checkFields?: FormContent['fields']): Partial<CaseWithId> {
     const fields = checkFields || this.fields;
 
     const parsedBody = Object.entries(fields)
       .map(setupCheckboxParser(!!body?.saveForLater))
       .filter(([, field]) => typeof field?.parser === 'function')
-      .flatMap(([key, field]: any[]) => {
+      .flatMap(([key, field]: [string, FormField]) => {
         const parsed = field.parser?.(body);
         return Array.isArray(parsed) ? parsed : [[key, parsed]];
       });
@@ -37,14 +28,14 @@ export class Form {
       (value as FormOptions)?.values
         ?.filter((option: FormInput) => option.subFields !== undefined)
         .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
-        .map((subField: any) => this.getParsedBody(body, subField))
+        .map((subField: AnyRecord) => this.getParsedBody(body, subField))
         .forEach((parsedSubField: CaseWithId) => {
           subFieldsParsedBody = { ...subFieldsParsedBody, ...parsedSubField };
         });
     }
 
     const formFieldValues = Object.keys(body)
-      .filter((key) => WHITELISTED_FIELDS.includes(key) || (fields as any)[key])
+      .filter(key => WHITELISTED_FIELDS.includes(key) || (fields as AnyRecord)[key])
       .reduce((newBody, key) => ({ [key]: body[key], ...newBody }), {});
 
     return {
@@ -58,18 +49,13 @@ export class Form {
    * Pass the form body to any fields with a validator and return a list of errors
    */
   public getErrors(body: Partial<Case>): FormError[] {
-    return Object.entries(this.fields).flatMap((fieldWithId) => {
+    return Object.entries(this.fields).flatMap(fieldWithId => {
       return this.getErrorsFromField(body, ...fieldWithId);
     });
   }
 
-  private getErrorsFromField(
-    body: Partial<Case>,
-    id: string,
-    field: FormField,
-  ): FormError[] {
-    const errorType =
-      field.validator && field.validator((body as any)[id], body);
+  private getErrorsFromField(body: Partial<Case>, id: string, field: FormField): FormError[] {
+    const errorType = field.validator && field.validator((body as AnyRecord)[id], body);
     const errors: FormError[] = [];
 
     if (errorType) {
@@ -86,18 +72,14 @@ export class Form {
 
     // if there are checkboxes or options, check them for errors
     if (this.isFormOptions(field)) {
-      const valuesErrors = field.values.flatMap((value) =>
-        this.getErrorsFromField(body, value.name || id, value),
-      );
+      const valuesErrors = field.values.flatMap(value => this.getErrorsFromField(body, value.name || id, value));
 
       errors.push(...valuesErrors);
     }
     // if there are subfields and the current field is selected then check for errors in the subfields
-    else if (field.subFields && (body as any)[id] === field.value) {
+    else if (field.subFields && (body as AnyRecord)[id] === field.value) {
       const subFields = Object.entries(field.subFields);
-      const subFieldErrors = subFields.flatMap(([subId, subField]) =>
-        this.getErrorsFromField(body, subId, subField),
-      );
+      const subFieldErrors = subFields.flatMap(([subId, subField]) => this.getErrorsFromField(body, subId, subField));
 
       errors.push(...subFieldErrors);
     }
@@ -109,7 +91,7 @@ export class Form {
     const fields = this.fields;
     const fieldNames: Set<string> = new Set();
     for (const fieldKey in fields) {
-      const stepField = (fields as any)[fieldKey] as FormOptions;
+      const stepField = (fields as AnyRecord)[fieldKey] as FormOptions;
       if (stepField.values && stepField.type !== 'date') {
         for (const [, value] of Object.entries(stepField.values)) {
           if (value.name) {
@@ -131,7 +113,7 @@ export class Form {
     return fieldNames;
   }
 
-  public isComplete(body: Partial<any>): boolean {
+  public isComplete(body: Partial<AnyRecord>): boolean {
     for (const field of this.getFieldNames().values()) {
       if (body[field] === undefined || body[field] === null) {
         return false;
