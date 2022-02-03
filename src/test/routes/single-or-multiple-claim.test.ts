@@ -19,8 +19,7 @@ describe('on POST /single-or-multiple-claim', () => {
       .send({'single-or-multiple': 'single'})
       .expect((res) => {
         expect(res.status).to.equal(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).to.equal('/');
+        expect(res.header['location']).to.equal('/do-you-have-an-acas-single-resps');
       });
   });
 });
