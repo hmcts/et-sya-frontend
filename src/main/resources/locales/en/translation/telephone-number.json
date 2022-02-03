@@ -2,7 +2,7 @@
   "title": "Telephone number",
   "h1": "What is your telephone number?",
   "hint": "We'll use this to contact you if we have any questions about your claim.",
-  "telNumber": "UK telephone number",
+  "telNumber": "UK telephone number (optional)",
   "errors": {
     "telNumber": {
       "invalid": "Enter a valid UK telephone number."
