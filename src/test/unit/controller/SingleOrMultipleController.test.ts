@@ -36,7 +36,7 @@ describe('Single or Multiple Claim Controller', () => {
     responseMock
       .expects('redirect')
       .once()
-      .withArgs('/');
+      .withArgs('/do-you-have-an-acas-single-resps');
 
     singleOrMultipleController.post(request, response);
     responseMock.verify();

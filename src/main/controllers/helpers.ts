@@ -5,6 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import {
   FormContent,
   FormError,
+  FormField,
   FormFields,
   FormInput,
   FormOptions,
@@ -68,7 +69,7 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
 
   if (!req.session.userCase) {
-    req.session.userCase = {} as any;
+    req.session.userCase = {} as CaseWithId;
   }
   Object.assign(req.session.userCase, formData);
 };
@@ -83,7 +84,7 @@ export const assignFormData = (
   }
 
   Object.entries(fields).forEach(([name, field]: [string, FormOptions]) => {
-    const caseName = (userCase as any)[name];
+    const caseName = (userCase as AnyRecord)[name];
     if (caseName) {
       field.values = field.values?.map((v) => {
         Object.keys(caseName).forEach((key) => {
@@ -97,8 +98,18 @@ export const assignFormData = (
         (value as FormOptions)?.values
           ?.filter((option: FormInput) => option.subFields !== undefined)
           .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
-          .forEach((subField: any) => assignFormData(caseName, subField));
+          .forEach((subField: Record<string, FormField>) => assignFormData(caseName, subField));
       }
     }
   });
+};
+
+export const conditionalRedirect = (
+  req: AppRequest,
+  formFields: FormFields,
+  condition: boolean | string,
+): boolean => {
+  const matchingValues = Object.entries(req.body)
+    .find(([k]) => Object.keys(formFields).some((ff) => ff === k));
+  return matchingValues ? matchingValues.some((v) => v === condition) : false;
 };
