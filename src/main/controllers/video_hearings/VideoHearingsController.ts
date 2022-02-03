@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { FormContent, FormFields } from '../../definitions/form';
 import { AppRequest } from '../../definitions/appRequest';
+import { CLAIM_STEPS } from '../../definitions/constants';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
 export default class VideoHearingsController {
@@ -13,7 +14,7 @@ export default class VideoHearingsController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);  
-    handleSessionErrors(req, res, this.form, '/steps-to-making-your-claim');
+    handleSessionErrors(req, res, this.form, CLAIM_STEPS);
   }
 
   public get = (req: AppRequest, res: Response): void => {

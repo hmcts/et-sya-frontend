@@ -11,6 +11,7 @@ import {
 } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { cloneDeep } from 'lodash';
+import { CLAIM_SAVED } from '../definitions/constants';
 
 export const getPageContent = (
   req: AppRequest,
@@ -44,28 +45,23 @@ export const handleSessionErrors = (
 ): void => {
   const sessionErrors = getSessionErrors(req, form);
   req.session.errors = sessionErrors;
-
   const { saveForLater } = req.body;
+  const requiredErrExists = sessionErrors.some((err) =>  err.errorType === 'required');
 
-  // if 'save and continue' and errors 
-  if (!saveForLater && sessionErrors.length) {
+  if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
+    return res.redirect(CLAIM_SAVED);
+  }
+  if (sessionErrors.length) {
     req.session.save((err) => {
       if (err) {
         throw err;
       }
       return res.redirect(req.url);
     });
-    // if 'save and continue' without errors
-  } else if (!saveForLater && !sessionErrors.length) {
-    return res.redirect(redirectUrl);
-    //  save for later, only redirect?
   } else {
-    return res.redirect('your-claim-has-been-saved');
+    res.redirect(redirectUrl);
   }
 };
-
-
-
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());

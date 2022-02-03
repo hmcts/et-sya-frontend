@@ -11,3 +11,7 @@ export const LOGOUT = '/logout' as const;
 export const HOME = '/' as const;
 
 export const HTTPS_PROTOCOL = 'https://' as const;
+
+export const CLAIM_SAVED = 'your-claim-has-been-saved' as const;
+
+export const CLAIM_STEPS = '/steps-to-making-your-claim' as const;
