@@ -46,9 +46,10 @@ export const handleSessionErrors = (
   const sessionErrors = getSessionErrors(req, form);
   req.session.errors = sessionErrors;
   const { saveForLater } = req.body;
-  const requiredErrExists = sessionErrors.some((err) =>  err.errorType === 'required');
+  const requiredErrExists = sessionErrors.some((err) => err.errorType === 'required');
 
   if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
+    req.session.errors = [];
     return res.redirect(CLAIM_SAVED);
   }
   if (sessionErrors.length) {
