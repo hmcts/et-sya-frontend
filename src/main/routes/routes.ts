@@ -41,7 +41,6 @@ export default function (app: Application): void {
   app.post('/address-details', app.locals.container.cradle.addressDetailsController.post);
   app.get('/telephone-number', app.locals.container.cradle.telNumberController.get);
   app.post('/telephone-number', app.locals.container.cradle.telNumberController.post);
-  
   app.get('/present-employer', app.locals.container.cradle.presentEmployerController.get);
   app.post('/present-employer', app.locals.container.cradle.presentEmployerController.post);
 

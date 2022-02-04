@@ -1,7 +1,7 @@
+import { isFieldFilledIn } from '../../components/form/validator';
+import { YesOrNo } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { isFieldFilledIn } from '../../components/form/validator';
-import { YesOrNo } from 'definitions/case';
 
 export const presentEmployerFormContent: FormContent = {
   fields: {
@@ -12,14 +12,14 @@ export const presentEmployerFormContent: FormContent = {
       label: (l: AnyRecord): string => l.label,
       values: [
         {
-          label: "Yes - I'm working my notice period",
-          name: 'radio1',
+          label: (l: AnyRecord): string => l.yes,
+          name: 'radioYes',
           value: YesOrNo.YES,
           attributes: { maxLength: 2 },
         },
         {
-          label: "No - I'm no longer working for them",
-          name: 'radio2',
+          label: (l: AnyRecord): string => l.no,
+          name: 'radioNo',
           value: YesOrNo.NO,
           attributes: { maxLength: 2 },
         },
