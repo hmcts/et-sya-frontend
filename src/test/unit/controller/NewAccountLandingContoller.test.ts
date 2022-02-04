@@ -1,4 +1,3 @@
-import sinon from 'sinon';
 import NewAccountLandingController from '../../../main/controllers/NewAccountLanding/NewAccountLandingController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -12,10 +11,10 @@ describe('New Account Landing Controller', () => {
 
   it('should render the new account landing page', () => {
     const response = mockResponse();
-    const request = mockRequest(t);
-    const responseMock = sinon.mock(response);
-    responseMock.expects('render').once().withArgs('new-account-landing', request.t('new-account-landing', { returnObjects: true }));
+    const request = mockRequest({ t });
+
     newAccountLandingController.get(request, response);
-    responseMock.verify();
+
+    expect(response.render).toHaveBeenCalledWith('new-account-landing', expect.anything());
   });
 });

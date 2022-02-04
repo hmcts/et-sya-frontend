@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { URLS } from '../definitions/constants';
 
 export default class SingleOrMultipleController {
@@ -12,13 +13,14 @@ export default class SingleOrMultipleController {
   public post(req: Request, res: Response): void {
     if (req.body['single-or-multiple'] === 'single') {
       res.redirect('/do-you-have-an-acas-single-resps');
+    } else {
+      req.body['single-or-multiple'] === 'multiple'
+        ? res.redirect(URLS.LEGACY_ET1)
+        : res.render('single-or-multiple-claim', {
+            noRadioButtonSelectedError: true,
+            ...req.t('common', { returnObjects: true }),
+            ...req.t('single-or-multiple-claim', { returnObjects: true }),
+          });
     }
-    else req.body['single-or-multiple'] === 'multiple' ?
-      res.redirect(URLS.LEGACY_ET1):
-      res.render('single-or-multiple-claim', {
-        noRadioButtonSelectedError: true,
-        ...req.t('common', { returnObjects: true }),
-        ...req.t('single-or-multiple-claim', { returnObjects: true }),
-      });
   }
 }

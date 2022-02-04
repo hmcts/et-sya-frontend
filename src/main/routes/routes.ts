@@ -1,9 +1,11 @@
 import * as os from 'os';
-import { Application } from 'express';
+
 import { infoRequestHandler } from '@hmcts/info-provider';
+import { Application } from 'express';
+
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
-export default function(app: Application): void {
+export default function (app: Application): void {
   app.get('/', app.locals.container.cradle.homeController.get);
   app.get('/checklist', app.locals.container.cradle.checklistController.get);
   app.get('/new-account-landing', app.locals.container.cradle.newAccountLandingController.get);
@@ -20,9 +22,8 @@ export default function(app: Application): void {
         name: 'et-sya-frontend',
         uptime: process.uptime(),
       },
-      info: {
-      },
-    }),
+      info: {},
+    })
   );
   app.get('/dob-details', app.locals.container.cradle.dobController.get);
   app.post('/dob-details', app.locals.container.cradle.dobController.post);
