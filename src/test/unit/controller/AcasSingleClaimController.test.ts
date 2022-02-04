@@ -1,9 +1,7 @@
-import AcasSingleClaimController from '../../../main/controllers/acas_single_claim/AcasSingleClaimController';
-import sinon from 'sinon';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { FormContent } from '../../../main/definitions/form';
-import { YesOrNo } from 'definitions/case';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
+import AcasSingleClaimController from '../../../main/controllers/acas_single_claim/AcasSingleClaimController';
+import { YesOrNo } from '../../../main/definitions/case';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -19,32 +17,26 @@ describe('Acas single claim Controller', () => {
         type: 'radios',
         id: 'radio1',
         name: YesOrNo.YES,
-        validator: (value: any) => isFieldFilledIn(value),
+        validator: jest.fn(isFieldFilledIn),
       },
     },
   } as unknown as FormContent;
 
   it('should render the Acas Single Claim controller page', () => {
-    const acasSingleClaimController = new AcasSingleClaimController(
-      mockFormContent,
-    );
+    const acasSingleClaimController = new AcasSingleClaimController(mockFormContent);
 
     const response = mockResponse();
     const userCase = { isAcasSingle: YesOrNo.YES };
-    const request = <AppRequest>mockRequest({ t, userCase });
-
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('acas-single-claim');
+    const request = mockRequest({ t, userCase });
 
     acasSingleClaimController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('acas-single-claim', expect.anything());
   });
 
   describe('post()', () => {
     it('should redirect back to Acas Single Claim page when errors are present', () => {
       const errors = [{ propertyName: 'isAcasSingle', errorType: 'required' }];
-      const body = { 'isAcasSingle': '' };
+      const body = { isAcasSingle: '' };
 
       const controller = new AcasSingleClaimController(mockFormContent);
 
@@ -57,7 +49,7 @@ describe('Acas single claim Controller', () => {
     });
 
     it('should assign userCase from formData for Acas Single', () => {
-      const body = { 'isAcasSingle': YesOrNo.YES };
+      const body = { isAcasSingle: YesOrNo.YES };
 
       const controller = new AcasSingleClaimController(mockFormContent);
 

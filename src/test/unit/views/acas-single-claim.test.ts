@@ -1,16 +1,14 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
 const acasSingleClaimJSONRaw = fs.readFileSync(
-  path.resolve(
-    __dirname,
-    '../../../main/resources/locales/en/translation/acas-single-claim.json',
-  ),
-  'utf-8',
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/acas-single-claim.json'),
+  'utf-8'
 );
 const acasSingleJSON = JSON.parse(acasSingleClaimJSONRaw);
 
@@ -26,7 +24,7 @@ describe('Acas Single Claim page', () => {
   beforeAll(async () => {
     await request(app)
       .get(PAGE_URL)
-      .then((res) => {
+      .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
   });
@@ -46,8 +44,11 @@ describe('Acas Single Claim page', () => {
     expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
-  it('should display inputs with valid labels',  () => {
+  it('should display inputs with valid labels', () => {
     const radioButtons = htmlRes.getElementsByClassName(inputs);
-    expect(radioButtons[0].innerHTML).contains(expectedInputLabel, 'Could not find the radio button with label ' + expectedInputLabel);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedInputLabel,
+      'Could not find the radio button with label ' + expectedInputLabel
+    );
   });
 });

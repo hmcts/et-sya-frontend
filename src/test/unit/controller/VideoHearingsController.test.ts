@@ -9,7 +9,7 @@ import { YesOrNo } from 'definitions/case';
 
 describe('Video Hearing Controller', () => {
   const t = {
-    'representingMyself': {},
+    'video-hearings': {},
     common: {},
   };
 
@@ -73,9 +73,6 @@ describe('Video Hearing Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith('/steps-to-making-your-claim');
-    expect(req.session.userCase).toStrictEqual({
-      videoHearings: YesOrNo.NO,
-    });
+    expect(req.session.userCase).toStrictEqual({videoHearings: YesOrNo.NO});
   });
-
 });

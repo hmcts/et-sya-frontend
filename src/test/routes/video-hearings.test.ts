@@ -7,13 +7,13 @@ import { app } from '../../main/app';
 describe('GET /would-you-want-to-take-part-in-video-hearings', () => {
   it('should return the video hearing choice page', async () => {
     const res = await request(app).get('/would-you-want-to-take-part-in-video-hearings');
-    expect(res.type).to.equal('text/html');
-    expect(res.status).to.equal(200);
+    expect(res.type).toStrictEqual('text/html');
+    expect(res.status).toStrictEqual(200);
   });
 });
 
 describe('on POST /would-you-want-to-take-part-in-video-hearings', () => {
-  test('should return the steps to making a claim page when \'yes\' and \'save and continue\' are selected', async () => {
+  test("should return the steps to making a claim page when 'yes' and 'save and continue' are selected", async () => {
     await request(app)
       .post('/would-you-want-to-take-part-in-video-hearings')
       .send({ videoHearings: YesOrNo.YES })
@@ -22,10 +22,8 @@ describe('on POST /would-you-want-to-take-part-in-video-hearings', () => {
         expect(res.header['location']).to.equal('/steps-to-making-your-claim');
       });
   });
-});
 
-describe('on POST /would-you-want-to-take-part-in-video-hearings', () => {
-  test('should return the steps to making a claim page when \'no\' and \'save and continue\' are selected', async () => {
+  test("should return the steps to making a claim page when 'no' and 'save and continue' are selected", async () => {
     await request(app)
       .post('/would-you-want-to-take-part-in-video-hearings')
       .send({ videoHearings: YesOrNo.NO })
