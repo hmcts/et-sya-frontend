@@ -1,11 +1,12 @@
 import sinon from 'sinon';
+
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import VideoHearingsController from '../../../main/controllers/video_hearings/VideoHearingsController';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { FormContent } from '../../../main/definitions/form';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import { YesOrNo } from 'definitions/case';
 
 describe('Video Hearing Controller', () => {
   const t = {
@@ -19,10 +20,10 @@ describe('Video Hearing Controller', () => {
         type: 'radios',
         values: [
           {
-            value: YesOrNo.YES, 
+            value: YesOrNo.YES,
           },
           {
-            value: YesOrNo.NO, 
+            value: YesOrNo.NO,
           },
         ],
         validator: jest.fn().mockImplementation(isFieldFilledIn),
@@ -39,10 +40,7 @@ describe('Video Hearing Controller', () => {
     const request = <AppRequest>mockRequest({ t });
     const responseMock = sinon.mock(response);
 
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('video-hearings');
+    responseMock.expects('render').once().withArgs('video-hearings');
 
     controller.get(request, response);
     responseMock.verify();
@@ -62,7 +60,7 @@ describe('Video Hearing Controller', () => {
   });
 
   it('should add the videoHearings form value to the userCase', () => {
-    const body = { 'videoHearings': YesOrNo.NO };
+    const body = { videoHearings: YesOrNo.NO };
 
     const controller = new VideoHearingsController(mockFormContent);
 
@@ -73,6 +71,6 @@ describe('Video Hearing Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith('/steps-to-making-your-claim');
-    expect(req.session.userCase).toStrictEqual({videoHearings: YesOrNo.NO});
+    expect(req.session.userCase).toStrictEqual({ videoHearings: YesOrNo.NO });
   });
 });

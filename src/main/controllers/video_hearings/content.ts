@@ -11,11 +11,11 @@ export const videoHearingsContent: FormContent = {
       id: 'video-hearings',
       values: [
         {
-          label: (l) => l.yes,
+          label: l => l.yes,
           value: YesOrNo.YES,
         },
         {
-          label: (l) => l.no,
+          label: l => l.no,
           value: YesOrNo.NO,
         },
       ],

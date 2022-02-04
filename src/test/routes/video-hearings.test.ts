@@ -1,8 +1,7 @@
-import { expect } from 'chai';
-import { YesOrNo } from 'definitions/case';
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { YesOrNo } from '../../main/definitions/case';
 
 describe('GET /would-you-want-to-take-part-in-video-hearings', () => {
   it('should return the video hearing choice page', async () => {
@@ -17,9 +16,9 @@ describe('on POST /would-you-want-to-take-part-in-video-hearings', () => {
     await request(app)
       .post('/would-you-want-to-take-part-in-video-hearings')
       .send({ videoHearings: YesOrNo.YES })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal('/steps-to-making-your-claim');
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual('/steps-to-making-your-claim');
       });
   });
 
@@ -27,9 +26,9 @@ describe('on POST /would-you-want-to-take-part-in-video-hearings', () => {
     await request(app)
       .post('/would-you-want-to-take-part-in-video-hearings')
       .send({ videoHearings: YesOrNo.NO })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal('/steps-to-making-your-claim');
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual('/steps-to-making-your-claim');
       });
   });
 });
