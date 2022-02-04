@@ -16,11 +16,15 @@ export class Nunjucks {
   enableFor(app: express.Express): void {
     app.set('view engine', 'njk');
     const govUkFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', 'govuk-frontend');
-    const nunEnv = nunjucks.configure([path.join(__dirname, '..', '..', 'views'), govUkFrontendPath], {
-      autoescape: true,
-      watch: this.developmentMode,
-      express: app,
-    });
+    const hmctsFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', '@hmcts', 'frontend');
+    const nunEnv = nunjucks.configure(
+      [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, hmctsFrontendPath],
+      {
+        autoescape: true,
+        watch: app.locals.developmentMode,
+        express: app,
+      }
+    );
 
     nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 
