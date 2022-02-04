@@ -1,0 +1,8 @@
+{ 
+    "heading": "Are you still working for the organisation or person who dismissed you?",
+    "errors": {
+        "pastEmployer": {
+            "required": "Select an option"
+        }   
+    } 
+}
