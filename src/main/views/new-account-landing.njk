@@ -1,0 +1,41 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+    {{ govukBackLink({
+      text: back,
+      href: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-panel govuk-panel--interruption">
+        <h1 class="govuk-panel__title">{{ h1 }}</h1>
+          <p class="govuk-panel__body">{{ p1 }}</p>
+          <p class="govuk-panel__body">{{ p2 }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %} 
+
+{% block footer %}
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: continue,
+        href: "/steps-to-making-your-claim"
+      }) }}
+
+      {{ govukButton({
+        text: saveForLater,
+        classes: "govuk-button--secondary",
+        href: "/your-claim-has-been-saved"
+      }) }}
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %} 
