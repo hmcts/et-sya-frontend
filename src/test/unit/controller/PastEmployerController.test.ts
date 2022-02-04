@@ -1,22 +1,16 @@
-import sinon from 'sinon';
+import { mock } from 'sinon';
+
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import pastEmployerController from '../../../main/controllers/past_employer/PastEmployerController';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import pastEmployerController from '../../../main/controllers/past_employer/PastEmployerController';
 
 describe('Update Past Employer Controller', () => {
   const t = {
     'past-employer': {},
     common: {},
-  };
-  const userCase = {
-    past_employer:
-    {
-      radio1: '',
-      radio2: '',
-    },
   };
 
   const mockFormContent = {
@@ -50,7 +44,7 @@ describe('Update Past Employer Controller', () => {
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
+    const responseMock = mock(response);
 
     responseMock.expects('render').once().withArgs('past-employer');
 
@@ -64,11 +58,11 @@ describe('Update Past Employer Controller', () => {
 
     const controller = new pastEmployerController(mockFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
-}); 
+});

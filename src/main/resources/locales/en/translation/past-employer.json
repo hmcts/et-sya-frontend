@@ -1,8 +1,8 @@
-{ 
-    "heading": "Did you work for the organisation or person you’re making your claim against?",
-    "errors": {
-        "pastEmployer": {
-            "required": "Select an option"
-        }   
-    } 
+{
+  "heading": "Did you work for the organisation or person you’re making your claim against?",
+  "errors": {
+    "pastEmployer": {
+      "required": "Select an option"
+    }
+  }
 }
