@@ -1,8 +1,5 @@
-import sinon from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import VideoHearingsController from '../../../main/controllers/video_hearings/VideoHearingsController';
-import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
@@ -37,13 +34,9 @@ describe('Video Hearing Controller', () => {
   it('should render the video hearings choice page', () => {
     const controller = new VideoHearingsController(mockFormContent);
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t });
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('video-hearings');
-
+    const request = mockRequest({ t });
     controller.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('video-hearings', expect.anything());
   });
 
   it('should render same page if errors are present', () => {
