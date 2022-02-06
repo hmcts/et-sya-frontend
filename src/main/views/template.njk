@@ -15,6 +15,10 @@
   }) }}
 {% endblock %}
 
+{% block pageTitle %}
+  {{ title }} - {{ govUk }}
+{% endblock %}
+
 {% block beforeContent %}
   {% set phaseBarHtml = '<a class="govuk-link" href="#" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 

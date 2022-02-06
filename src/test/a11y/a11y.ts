@@ -1,8 +1,11 @@
+/* eslint-disable jest/no-done-callback */
 import { fail } from 'assert';
 
-const pa11y = require('pa11y');
 import * as supertest from 'supertest';
+
 import { app } from '../../main/app';
+
+const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
 
@@ -28,9 +31,7 @@ beforeAll((done /* call it or remove it*/) => {
 function ensurePageCallWillSucceed(url: string): Promise<void> {
   return agent.get(url).then((res: supertest.Response) => {
     if (res.redirect) {
-      throw new Error(
-        `Call to ${url} resulted in a redirect to ${res.get('Location')}`,
-      );
+      throw new Error(`Call to ${url} resulted in a redirect to ${res.get('Location')}`);
     }
     if (res.serverError) {
       throw new Error(`Call to ${url} resulted in internal server error`);

@@ -1,12 +1,10 @@
 import axios from 'axios';
 import config from 'config';
-import { UserDetails } from '../definitions/appRequest';
 import jwtDecode from 'jwt-decode';
 
-export const getRedirectUrl = (
-  serviceUrl: string,
-  callbackUrlPage: string,
-): string => {
+import { UserDetails } from '../definitions/appRequest';
+
+export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string): string => {
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
@@ -17,7 +15,7 @@ export const getRedirectUrl = (
 export const getUserDetails = async (
   serviceUrl: string,
   rawCode: string,
-  callbackUrlPageLink: string,
+  callbackUrlPageLink: string
 ): Promise<UserDetails> => {
   const id: string = config.get('services.idam.clientID');
   const secret: string = config.get('services.idam.clientSecret');
@@ -30,10 +28,7 @@ export const getUserDetails = async (
     'Content-Type': 'application/x-www-form-urlencoded',
   };
 
-  const response = await axios.post(tokenUrl,
-    data,
-    { headers },
-  );
+  const response = await axios.post(tokenUrl, data, { headers });
   const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
 
   return {

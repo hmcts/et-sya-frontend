@@ -1,11 +1,15 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
-const dobJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/date-of-birth.json'), 'utf-8');
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
+const dobJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/date-of-birth.json'),
+  'utf-8'
+);
 const dobJson = JSON.parse(dobJsonRaw);
 
 const PAGE_URL = '/dob-details';
@@ -20,16 +24,18 @@ const expectedInputLabel3 = 'Year';
 let htmlRes: Document;
 describe('Dob details page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
-  
+
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
@@ -45,10 +51,19 @@ describe('Dob details page', () => {
     expect(radioButtons.length).equal(3, `only ${radioButtons.length} found`);
   });
 
-  it('should display inputs with valid labels',  () => {
+  it('should display inputs with valid labels', () => {
     const radioButtons = htmlRes.getElementsByClassName(inputs);
-    expect(radioButtons[0].innerHTML).contains(expectedInputLabel1, 'Could not find the radio button with label ' + expectedInputLabel1);
-    expect(radioButtons[1].innerHTML).contains(expectedInputLabel2, 'Could not find the radio button with label ' + expectedInputLabel2);
-    expect(radioButtons[2].innerHTML).contains(expectedInputLabel3, 'Could not find the radio button with label ' + expectedInputLabel3);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedInputLabel1,
+      'Could not find the radio button with label ' + expectedInputLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedInputLabel2,
+      'Could not find the radio button with label ' + expectedInputLabel2
+    );
+    expect(radioButtons[2].innerHTML).contains(
+      expectedInputLabel3,
+      'Could not find the radio button with label ' + expectedInputLabel3
+    );
   });
 });

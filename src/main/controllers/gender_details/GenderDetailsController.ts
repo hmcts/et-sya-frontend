@@ -1,4 +1,5 @@
 import { Response } from 'express';
+
 import { AppRequest } from '../../definitions/appRequest';
 
 export default class GenderDetailsController {
@@ -12,5 +13,5 @@ export default class GenderDetailsController {
       sessionErrors,
       userCase,
     });
-  }
+  };
 }

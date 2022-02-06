@@ -17,7 +17,7 @@ export class Session {
           maxAge: cookieMaxAge,
         },
         rolling: true, // Renew the cookie for another 20 minutes on each request
-      }),
+      })
     );
   }
 }
