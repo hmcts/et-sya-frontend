@@ -20,6 +20,7 @@ export interface Case {
   addressPostcode?: string;
   isAcasSingle?: YesOrNo;
   validNoAcasReason?: YesOrNo;
+  returnToExisting: YesOrNo;
 }
 
 export interface CaseWithId extends Case {

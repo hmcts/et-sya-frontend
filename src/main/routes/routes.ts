@@ -13,7 +13,6 @@ export default function (app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
-
   app.get(
     '/info',
     infoRequestHandler({
@@ -25,6 +24,7 @@ export default function (app: Application): void {
       info: {},
     })
   );
+
   app.get('/dob-details', app.locals.container.cradle.dobController.get);
   app.post('/dob-details', app.locals.container.cradle.dobController.post);
   app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
@@ -36,6 +36,8 @@ export default function (app: Application): void {
 
   app.get('/steps-to-making-your-claim', app.locals.container.cradle.stepsToMakingYourClaimController.get);
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
+  app.get('/return-to-existing', app.locals.container.cradle.returnToExistingController.get);
+  app.post('/return-to-existing', app.locals.container.cradle.returnToExistingController.post);
 
   app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
   app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
