@@ -3,7 +3,6 @@ import * as os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
@@ -25,7 +24,7 @@ export default function (app: Application): void {
       info: {},
     })
   );
-  
+
   app.get('/dob-details', app.locals.container.cradle.dobController.get);
   app.post('/dob-details', app.locals.container.cradle.dobController.post);
   app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
@@ -39,7 +38,7 @@ export default function (app: Application): void {
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
   app.get('/return-to-existing', app.locals.container.cradle.returnToExistingController.get);
   app.post('/return-to-existing', app.locals.container.cradle.returnToExistingController.post);
-    
+
   app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
   app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
 
