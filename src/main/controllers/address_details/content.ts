@@ -1,9 +1,6 @@
-import { AnyRecord } from '../../definitions/util-types';
-import {
-  isFieldFilledIn,
-  isInvalidPostcode,
-} from '../../components/form/validator';
+import { isFieldFilledIn, isInvalidPostcode } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
 
 export const addressDetailsContent: FormContent = {
   fields: {
@@ -12,7 +9,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-line1',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: (l) => l.buildingStreet,
+      label: l => l.buildingStreet,
       labelSize: null,
       validator: isFieldFilledIn,
       attributes: {
@@ -24,7 +21,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-line2',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: (l) => l.line2Optional,
+      label: l => l.line2Optional,
       labelSize: null,
       attributes: {
         autocomplete: 'address-line2',
@@ -35,7 +32,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-town',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: (l) => l.town,
+      label: l => l.town,
       labelSize: null,
       attributes: {
         autocomplete: 'address-level2',
@@ -47,7 +44,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-county',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: (l) => l.county,
+      label: l => l.county,
       labelSize: null,
     },
     addressPostcode: {
@@ -55,7 +52,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-postcode',
       type: 'text',
       classes: 'govuk-label govuk-input--width-10',
-      label: (l) => l.postcode,
+      label: l => l.postcode,
       labelSize: null,
       attributes: {
         maxLength: 14,

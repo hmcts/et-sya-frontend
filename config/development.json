@@ -1,7 +1,7 @@
 {
   "port": 3001,
-  "services":{
-    "idam":{
+  "services": {
+    "idam": {
       "clientID": "et-sya",
       "authorizationURL": "http://localhost:3501/login",
       "clientSecret": "test1234",
