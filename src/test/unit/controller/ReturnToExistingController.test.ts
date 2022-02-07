@@ -1,11 +1,12 @@
+import sinon from 'sinon';
+
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import ReturnToExistingController from '../../../main/controllers/return_to_existing_claim/ReturnToExistingController';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
 import { FormContent } from '../../../main/definitions/form';
-import sinon from 'sinon';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import { YesOrNo } from '../../../main/definitions/case';
 
 describe('Return To Existing Controller', () => {
   const t = {
@@ -55,7 +56,7 @@ describe('Return To Existing Controller', () => {
 
   it('should redirect back to self if there are errors', () => {
     const errors = [{ propertyName: 'returnToExisting', errorType: 'required' }];
-    const body = { 'returnToExisting': '' };
+    const body = { returnToExisting: '' };
     const controller = new ReturnToExistingController(mockedFormContent);
 
     const req = mockRequest({ body });
@@ -67,7 +68,7 @@ describe('Return To Existing Controller', () => {
   });
 
   it('should redirect to home if no errors', () => {
-    const body = { 'returnToExisting': YesOrNo.YES };
+    const body = { returnToExisting: YesOrNo.YES };
     const controller = new ReturnToExistingController(mockedFormContent);
 
     const req = mockRequest({ body });

@@ -1,13 +1,21 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
 import fs from 'fs';
 import path from 'path';
 
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
 const PAGE_URL = '/return-to-existing';
-const translationRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/return-to-existing.json'), 'utf-8');
+const translationRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/return-to-existing.json'),
+  'utf-8'
+);
 const returnToClaimJson = JSON.parse(translationRaw);
-const commonJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'), 'utf-8');
+const commonJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'),
+  'utf-8'
+);
 const commonJsonRawJson = JSON.parse(commonJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const radioClass = 'govuk-radios__item';
@@ -20,9 +28,11 @@ const expectedButtonText = commonJsonRawJson.continue;
 let htmlRes: Document;
 describe('Return to existing claim page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
@@ -42,7 +52,13 @@ describe('Return to existing claim page', () => {
 
   it('should display radio buttons with valid text', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons[0].innerHTML).contains(expectedRadioLabel1, 'Could not find the radio button with label ' + expectedRadioLabel1);
-    expect(radioButtons[1].innerHTML).contains(expectedRadioLabel2, 'Could not find the radio button with label ' + expectedRadioLabel2);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedRadioLabel1,
+      'Could not find the radio button with label ' + expectedRadioLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedRadioLabel2,
+      'Could not find the radio button with label ' + expectedRadioLabel2
+    );
   });
 });
