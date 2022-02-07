@@ -14,7 +14,7 @@ export default class ValidNoAcasReasonController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    //TODO: set correct back link
+    // TODO(Angela): Add correct back link for multiple resp
     const pageBackLink =
       !!req.session && !!req.session.userCase && req.session.userCase.isAcasSingle === YesOrNo.YES
         ? '/do-you-have-an-acas-single-resps'
@@ -28,6 +28,7 @@ export default class ValidNoAcasReasonController {
   };
 
   public post = (req: AppRequest, res: Response): void => {
+    // TODO(Angela): Change to the correct redirect url
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? '/type-of-claim'
       : '/contact-acas';
