@@ -14,8 +14,9 @@ export default class AcasSingleClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    // TODO(Tautvydas): Change to the correct redirect url
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES) ? '/type-of-claim' : '/';
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      ? '/type-of-claim'
+      : '/do-you-have-a-valid-no-acas-reason';
 
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);

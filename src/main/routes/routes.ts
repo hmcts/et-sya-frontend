@@ -40,6 +40,9 @@ export default function (app: Application): void {
   app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
   app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
 
+  app.get('/do-you-have-a-valid-no-acas-reason', app.locals.container.cradle.validNoAcasReasonController.get);
+  app.post('/do-you-have-a-valid-no-acas-reason', app.locals.container.cradle.validNoAcasReasonController.post);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),
