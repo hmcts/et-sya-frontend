@@ -1,11 +1,15 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
-const telNumberJSONRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/telephone-number.json'), 'utf-8');
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
+const telNumberJSONRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/telephone-number.json'),
+  'utf-8'
+);
 const telNumberJSON = JSON.parse(telNumberJSONRaw);
 
 const PAGE_URL = '/telephone-number';
@@ -20,9 +24,11 @@ const expectedInputLabel = 'UK telephone number';
 let htmlRes: Document;
 describe('Telephone number page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
@@ -50,8 +56,11 @@ describe('Telephone number page', () => {
     expect(inputFields.length).equal(1, `only ${inputFields.length} found`);
   });
 
-  it('should display inputs with valid labels',  () => {
+  it('should display inputs with valid labels', () => {
     const inputFields = htmlRes.querySelectorAll(inputs);
-    expect(inputFields[0].innerHTML).contains(expectedInputLabel, `Could not find an input field with label ${expectedInputLabel}`);
+    expect(inputFields[0].innerHTML).contains(
+      expectedInputLabel,
+      `Could not find an input field with label ${expectedInputLabel}`
+    );
   });
 });

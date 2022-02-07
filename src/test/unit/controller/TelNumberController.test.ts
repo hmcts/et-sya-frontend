@@ -1,10 +1,11 @@
 import sinon from 'sinon';
-import { mockRequest } from '../mocks/mockRequest';
-import { FormContent } from '../../../main/definitions/form';
-import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
+
 import { isValidUKTelNumber } from '../../../main/components/form/validator';
 import TelNumberController from '../../../main/controllers/tel_number/TelNumberController';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { FormContent } from '../../../main/definitions/form';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Telephone number Controller', () => {
   const t = {
@@ -18,15 +19,13 @@ describe('Telephone number Controller', () => {
         type: 'tel',
         id: 'telephone-number',
         name: 'telephone-number',
-        validator: (value: any) => isValidUKTelNumber(value),
+        validator: (value: never) => isValidUKTelNumber(value),
       },
     },
   } as unknown as FormContent;
 
   it('should render the Address details controller page', () => {
-    const telNumberController = new TelNumberController(
-      mockFormContent,
-    );
+    const telNumberController = new TelNumberController(mockFormContent);
 
     const response = mockResponse();
     const userCase = { telNumber: '01234567890' };

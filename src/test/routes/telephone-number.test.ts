@@ -8,8 +8,8 @@ const PAGE_URL = '/telephone-number';
 describe(`GET ${PAGE_URL}`, () => {
   it('should return the telephone number page', async () => {
     const res = await request(app).get(PAGE_URL);
-    expect(res.type).to.equal('text/html');
-    expect(res.status).to.equal(200);
+    expect(res.type).equal('text/html');
+    expect(res.status).equal(200);
   });
 });
 
@@ -20,10 +20,10 @@ describe(`on POST ${PAGE_URL}`, () => {
       .send({
         telNumber: '01234567890',
       })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
+      .expect(res => {
+        expect(res.status).equal(302);
         // page to be implemented, this test will need updated
-        expect(res.header['location']).to.equal('/');
+        expect(res.header['location']).equal('/');
       });
   });
 });

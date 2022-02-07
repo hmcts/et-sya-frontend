@@ -1,10 +1,10 @@
+import { isValidUKTelNumber } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { isValidUKTelNumber } from '../../components/form/validator';
 
 export const telNumberContent: FormContent = {
   fields: {
-    telNumber : {
+    telNumber: {
       id: 'telephone-number',
       name: 'telephone-number',
       type: 'tel',

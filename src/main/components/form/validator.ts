@@ -117,7 +117,7 @@ export const isInvalidPostcode: Validator = value => {
 };
 
 export const isValidUKTelNumber: Validator = value => {
-  if (value == null || value == '') {
+  if (value === null || value === '') {
     return;
   }
 
