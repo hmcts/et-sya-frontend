@@ -18,6 +18,7 @@ export interface Case {
   addressTown?: string;
   addressCounty?: string;
   addressPostcode?: string;
+  IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
   returnToExisting: YesOrNo;
 }
