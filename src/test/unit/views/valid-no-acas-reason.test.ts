@@ -10,11 +10,11 @@ const validNoAcasReasonJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/valid-no-acas-reason.json'),
   'utf-8'
 );
-const alidNoAcasReasonJSON = JSON.parse(validNoAcasReasonJSONRaw);
+const validNoAcasReasonJSON = JSON.parse(validNoAcasReasonJSONRaw);
 
 const PAGE_URL = '/do-you-have-a-valid-no-acas-reason';
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = alidNoAcasReasonJSON.h1;
+const expectedTitle = validNoAcasReasonJSON.h1;
 const warningClass = 'govuk-warning-text';
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-radios--inline';
