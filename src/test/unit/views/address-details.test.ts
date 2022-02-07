@@ -1,11 +1,15 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
-const addressDetailsJSONRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/address-details.json'), 'utf-8');
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
+const addressDetailsJSONRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/address-details.json'),
+  'utf-8'
+);
 const adJSON = JSON.parse(addressDetailsJSONRaw);
 
 const PAGE_URL = '/address-details';
@@ -24,9 +28,11 @@ const expectedInputLabel5 = 'Postcode';
 let htmlRes: Document;
 describe('Address details page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
@@ -38,7 +44,7 @@ describe('Address details page', () => {
     const helper = htmlRes.getElementsByClassName(helperClass);
     expect(helper[0].innerHTML).contains(expectedHelperText, 'Could not find helper text');
   });
-  
+
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
@@ -54,12 +60,27 @@ describe('Address details page', () => {
     expect(inputFields.length).equal(5, `only ${inputFields.length} found`);
   });
 
-  it('should display inputs with valid labels',  () => {
+  it('should display inputs with valid labels', () => {
     const inputFields = htmlRes.querySelectorAll(inputs);
-    expect(inputFields[0].innerHTML).contains(expectedInputLabel1, `Could not find an input field with label ${expectedInputLabel1}`);
-    expect(inputFields[1].innerHTML).contains(expectedInputLabel2, `Could not find an input field with label ${expectedInputLabel2}`);
-    expect(inputFields[2].innerHTML).contains(expectedInputLabel3, `Could not find an input field with label ${expectedInputLabel3}`);
-    expect(inputFields[3].innerHTML).contains(expectedInputLabel4, `Could not find an input field with label ${expectedInputLabel4}`);
-    expect(inputFields[4].innerHTML).contains(expectedInputLabel5, `Could not find an input field with label ${expectedInputLabel5}`);
+    expect(inputFields[0].innerHTML).contains(
+      expectedInputLabel1,
+      `Could not find an input field with label ${expectedInputLabel1}`
+    );
+    expect(inputFields[1].innerHTML).contains(
+      expectedInputLabel2,
+      `Could not find an input field with label ${expectedInputLabel2}`
+    );
+    expect(inputFields[2].innerHTML).contains(
+      expectedInputLabel3,
+      `Could not find an input field with label ${expectedInputLabel3}`
+    );
+    expect(inputFields[3].innerHTML).contains(
+      expectedInputLabel4,
+      `Could not find an input field with label ${expectedInputLabel4}`
+    );
+    expect(inputFields[4].innerHTML).contains(
+      expectedInputLabel5,
+      `Could not find an input field with label ${expectedInputLabel5}`
+    );
   });
 });

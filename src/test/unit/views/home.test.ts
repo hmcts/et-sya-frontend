@@ -1,10 +1,15 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
 import fs from 'fs';
 import path from 'path';
 
-const homeJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/home.json'), 'utf-8');
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
+const homeJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/home.json'),
+  'utf-8'
+);
 const homeJson = JSON.parse(homeJsonRaw);
 const PAGE_URL = '/';
 const titleClass = 'govuk-heading-xl';
@@ -19,16 +24,18 @@ const expectedP2 = homeJson.saveInfo;
 let htmlRes: Document;
 describe('Onboarding (home) page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(exprectedTitle, 'Page title does not exist');
   });
-  
+
   it('should display firt paragraph', () => {
     const p = htmlRes.getElementsByClassName(pClass);
     expect(p[0].innerHTML).contains(expectedP1, 'P1 does not exist');

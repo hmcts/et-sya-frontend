@@ -2,7 +2,7 @@ import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
   Checked = 'checked',
-  Unchecked = ''
+  Unchecked = '',
 }
 
 export interface CaseDate {
@@ -18,6 +18,7 @@ export interface Case {
   addressTown?: string;
   addressCounty?: string;
   addressPostcode?: string;
+  isAcasSingle?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {
@@ -29,4 +30,4 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
-export type DateParser = (property: string, body: UnknownRecord) => CaseDate
+export type DateParser = (property: string, body: UnknownRecord) => CaseDate;

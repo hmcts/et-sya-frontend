@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../main/app';
@@ -8,8 +7,8 @@ const PAGE_URL = '/address-details';
 describe(`GET ${PAGE_URL}`, () => {
   it('should return the address details page', async () => {
     const res = await request(app).get(PAGE_URL);
-    expect(res.type).to.equal('text/html');
-    expect(res.status).to.equal(200);
+    expect(res.type).toStrictEqual('text/html');
+    expect(res.status).toStrictEqual(200);
   });
 });
 
@@ -24,9 +23,9 @@ describe(`on POST ${PAGE_URL}`, () => {
         address2: '',
         address1: '10 test street',
       })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal('/');
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual('/');
       });
   });
 });
