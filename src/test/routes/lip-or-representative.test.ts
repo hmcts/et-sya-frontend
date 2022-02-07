@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
-import { URLS } from '../../main/definitions/constants';
+import { LEGACY_URLS } from '../../main/definitions/constants';
 
 describe('GET /lip-or-representative', () => {
   it('should return the lip or representative page', async () => {
@@ -28,7 +28,7 @@ describe('on POST /lip-or-representative', () => {
       .send({ 'lip-or-representative': 'representative' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(URLS.LEGACY_ET1);
+        expect(res.header['location']).toStrictEqual(LEGACY_URLS.ET1);
       });
   });
 });

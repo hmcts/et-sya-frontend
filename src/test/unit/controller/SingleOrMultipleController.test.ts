@@ -1,51 +1,80 @@
-import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
-import { URLS } from '../../../main/definitions/constants';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import SingleOrMultipleController from '../../../main/controllers/single_or_multiple_claim/singleOrMultipleController';
+import { YesOrNo } from '../../../main/definitions/case';
+import { LEGACY_URLS } from '../../../main/definitions/constants';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-const singleOrMultipleController = new SingleOrMultipleController();
-
 describe('Single or Multiple Claim Controller', () => {
   const t = {
-    'single-or-multiple-claim': {},
+    isASingleClaim: {},
+    common: {},
   };
 
+  const mockFormContent: FormContent = {
+    fields: {
+      isASingleClaim: {
+        type: 'radios',
+        values: [
+          {
+            value: YesOrNo.YES,
+          },
+          {
+            value: YesOrNo.NO,
+          },
+        ],
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
+    },
+    submit: {
+      text: 'continue',
+    },
+  } as unknown as FormContent;
+
   it('should render single or multiple claim page', () => {
+    const controller = new SingleOrMultipleController(mockFormContent);
+
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    singleOrMultipleController.get(request, response);
+    controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('single-or-multiple-claim', expect.anything());
   });
 
   it("should render the next page when 'single' is selected", () => {
-    const response = mockResponse();
-    const body = { 'single-or-multiple': 'single' };
-    const request = mockRequest({ t, body });
+    const body = { isASingleClaim: YesOrNo.YES };
+    const controller = new SingleOrMultipleController(mockFormContent);
 
-    singleOrMultipleController.post(request, response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    expect(response.redirect).toHaveBeenCalledWith('/do-you-have-an-acas-single-resps');
+    expect(res.redirect).toBeCalledWith('/');
   });
 
-  it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
-    const response = mockResponse();
-    const body = { 'single-or-multiple': 'multiple' };
-    const request = mockRequest({ t, body });
+  it("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {
+    const body = { isASingleClaim: YesOrNo.NO };
+    const controller = new SingleOrMultipleController(mockFormContent);
 
-    singleOrMultipleController.post(request, response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    expect(response.redirect).toHaveBeenCalledWith(URLS.LEGACY_ET1);
+    expect(res.redirect).toBeCalledWith(LEGACY_URLS.ET1);
   });
 
   it('should render same page if nothing selected', () => {
-    const response = mockResponse();
-    const request = mockRequest({ t });
-    request.body = { 'single-or-multiple': '' };
+    const errors = [{ propertyName: 'isASingleClaim', errorType: 'required' }];
+    const body = { isASingleClaim: '' };
+    const controller = new SingleOrMultipleController(mockFormContent);
 
-    singleOrMultipleController.post(request, response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    expect(response.render).toHaveBeenCalledWith('single-or-multiple-claim', expect.anything());
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 });
