@@ -1,0 +1,18 @@
+{
+  "title": "Do you have an Acas no - single response",
+  "h1": "Do you have an 'Acas early conciliation certificate'?",
+  "p1": "To make a claim you usually need to get an Acas early conciliation certificate (or give a valid reason why you do not have one) for the respondent you're making your claim against.",
+  "p2": "Acas will have sent you certificates after you initially contacted them to try and settle your dispute through 'early conciliation'.",
+  "insetText": "The certificates include the details of the respondents you're making your claim against along with a number to identify them. You'll need to provide these later as part of your claim.",
+  "detailsSummary": "How can early conciliation help?",
+  "detailsText": {
+    "p1": "Making a claim can be time-consuming and difficult for everyone involved.",
+    "p2": "Early conciliation is quicker than going to a tribunal (talks take place over the phone for up to 6 weeks) and involves a lot less paperwork.",
+    "p3": "It's free, confidential and can agree outcomes you cannot get from a claim. For example, a job reference. For further details <a href=\"https://www.acas.org.uk/\" target=\"_blank\" class=\"govuk-link\">contact Acas</a>."
+  },
+  "errors": {
+    "isAcasSingle": {
+      "required": "Select an option"
+    }
+  }
+}

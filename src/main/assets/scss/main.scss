@@ -1,4 +1,5 @@
 @import '~govuk-frontend';
+@import '~@hmcts/frontend/all';
 
 .govuk-phase-banner__text {
   width: 100%;
@@ -11,6 +12,16 @@
 // interupt the user with important information
 .govuk-panel--interruption {
   background-color: govuk-colour('blue');
+  margin-bottom: govuk-spacing(3);
+  padding: govuk-spacing(6);
+
+  .govuk-panel__title {
+    @include govuk-font($size: 24, $weight: bold);
+  }
+
+  .govuk-panel__body {
+    @include govuk-font($size: 16, $weight: bold);
+  }
 
   div,
   h1,
@@ -22,8 +33,8 @@
   ol {
     color: govuk-colour('white');
     text-align: left;
-    }
   }
+}
 
 .circle {
   background: govuk-colour('black');

@@ -1,8 +1,9 @@
 import sinon from 'sinon';
+
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
+import { LEGACY_URLS } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { LEGACY_URLS } from '../../../main/definitions/constants';
 
 const lipOrRepController = new LipOrRepController();
 
@@ -11,7 +12,7 @@ describe('LiP or Representative Controller', () => {
     'lip-or-representative': {},
   };
 
-  it('should render the \'representing myself (LiP) or using a representative choice\' page', () => {
+  it("should render the 'representing myself (LiP) or using a representative choice' page", () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -26,33 +27,27 @@ describe('LiP or Representative Controller', () => {
     responseMock.verify();
   });
 
-  it('should render the Single or Multiple claims page when \'representing myself\' is selected', () => {
+  it("should render the Single or Multiple claims page when 'representing myself' is selected", () => {
     const response = mockResponse();
     const body = { 'lip-or-representative': 'lip' };
     const request = mockRequest({ t, body });
 
     const responseMock = sinon.mock(response);
 
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs('/single-or-multiple-claim');
+    responseMock.expects('redirect').once().withArgs('/single-or-multiple-claim');
 
     lipOrRepController.post(request, response);
     responseMock.verify();
   });
 
-  it('should render the legacy ET1 service when the \'making a claim for someone else\' option is selected', () => {
+  it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
     const response = mockResponse();
     const body = { 'lip-or-representative': 'representative' };
     const request = mockRequest({ t, body });
 
     const responseMock = sinon.mock(response);
 
-    responseMock
-      .expects('redirect')
-      .once()
-      .withArgs(LEGACY_URLS.ET1);
+    responseMock.expects('redirect').once().withArgs(LEGACY_URLS.ET1);
 
     lipOrRepController.post(request, response);
     responseMock.verify();
@@ -65,13 +60,9 @@ describe('LiP or Representative Controller', () => {
 
     const responseMock = sinon.mock(response);
 
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('lip-or-representative');
+    responseMock.expects('render').once().withArgs('lip-or-representative');
 
     lipOrRepController.post(request, response);
     responseMock.verify();
   });
-
 });
