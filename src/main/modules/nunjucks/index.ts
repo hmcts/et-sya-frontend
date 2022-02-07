@@ -32,9 +32,12 @@ export class Nunjucks {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
     });
 
-    nunEnv.addGlobal('getContentSafe', function (prop: any | string): nunjucks.runtime.SafeString {
-      return new nunjucks.runtime.SafeString(this.env.globals.getContent.call(this, prop));
-    });
+    nunEnv.addGlobal(
+      'getContentSafe',
+      function (prop: (param: string) => string | string): nunjucks.runtime.SafeString {
+        return new nunjucks.runtime.SafeString(this.env.globals.getContent.call(this, prop));
+      }
+    );
 
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
       const { form, sessionErrors, errors } = this.ctx;

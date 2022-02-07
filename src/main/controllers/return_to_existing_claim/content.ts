@@ -1,6 +1,5 @@
-import { YesOrNo } from 'definitions/case';
-
 import { isFieldFilledIn } from '../../components/form/validator';
+import { YesOrNo } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 

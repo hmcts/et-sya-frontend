@@ -1,8 +1,5 @@
-import sinon from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import ReturnToExistingController from '../../../main/controllers/return_to_existing_claim/ReturnToExistingController';
-import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
@@ -44,14 +41,11 @@ describe('Return To Existing Controller', () => {
   it('should render the return to claim page', () => {
     const controller = new ReturnToExistingController(mockedFormContent);
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t });
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('return-to-claim');
+    const request = mockRequest({ t });
 
     controller.get(request, response);
 
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('return-to-claim', expect.anything());
   });
 
   it('should redirect back to self if there are errors', () => {
