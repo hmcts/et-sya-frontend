@@ -1,7 +1,7 @@
 {
   "port": "PORT",
-  "services":{
-    "idam":{
+  "services": {
+    "idam": {
       "clientID": "IDAM_CLIENT_ID",
       "authorizationURL": "IDAM_WEB_URL",
       "clientSecret": "IDAM_CLIENT_SECRET",

@@ -1,11 +1,15 @@
-import { expect } from 'chai';
-import { app } from '../../../main/app';
-import request from 'supertest';
-
 import fs from 'fs';
 import path from 'path';
 
-const lipOrRepJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/lip-or-representative.json'), 'utf-8');
+import { expect } from 'chai';
+import request from 'supertest';
+
+import { app } from '../../../main/app';
+
+const lipOrRepJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/lip-or-representative.json'),
+  'utf-8'
+);
 const lipOrRepJson = JSON.parse(lipOrRepJsonRaw);
 
 const PAGE_URL = '/lip-or-representative';
@@ -27,16 +31,18 @@ const detailsSummary3 = 'Contact us for help';
 let htmlRes: Document;
 describe('LiP or Representative page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
-  
+
   it('should display firt paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
     expect(p1[0].innerHTML).contains(expectedP1, 'P1 does not exist');
@@ -52,10 +58,16 @@ describe('LiP or Representative page', () => {
     expect(radioButtons.length).equal(2, '2 radio buttons not found');
   });
 
-  it('should display radio buttons with valid text',  () => {
+  it('should display radio buttons with valid text', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons[0].innerHTML).contains(expectedRadioLabel1, 'Could not find the radio button with label ' + expectedRadioLabel1);
-    expect(radioButtons[1].innerHTML).contains(expectedRadioLabel2, 'Could not find the radio button with label ' + expectedRadioLabel2);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedRadioLabel1,
+      'Could not find the radio button with label ' + expectedRadioLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedRadioLabel2,
+      'Could not find the radio button with label ' + expectedRadioLabel2
+    );
   });
 
   it('should display 3 GDS details components', () => {
@@ -68,11 +80,19 @@ describe('LiP or Representative page', () => {
     expect(detailsTextComponents.length).equal(3, '3 detail text classes not found');
   });
 
-  it('should display details components with valid summary text',  () => {
+  it('should display details components with valid summary text', () => {
     const detailSummaries = htmlRes.getElementsByClassName(detailsSummaryTextClass);
-    expect(detailSummaries[0].innerHTML).contains(detailsSummary1, 'Could not find the details summary with text ' + detailsSummary1);
-    expect(detailSummaries[1].innerHTML).contains(detailsSummary2, 'Could not find the details summary with text ' + detailsSummary2);
-    expect(detailSummaries[2].innerHTML).contains(detailsSummary3, 'Could not find the details summary with text ' + detailsSummary3);
+    expect(detailSummaries[0].innerHTML).contains(
+      detailsSummary1,
+      'Could not find the details summary with text ' + detailsSummary1
+    );
+    expect(detailSummaries[1].innerHTML).contains(
+      detailsSummary2,
+      'Could not find the details summary with text ' + detailsSummary2
+    );
+    expect(detailSummaries[2].innerHTML).contains(
+      detailsSummary3,
+      'Could not find the details summary with text ' + detailsSummary3
+    );
   });
-
 });

@@ -9,9 +9,11 @@ const headingClass = 'govuk-heading-xl';
 let htmlRes: Document;
 describe('Not found page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display header', () => {
@@ -22,9 +24,11 @@ describe('Not found page', () => {
 
 describe('Not found page invalid url', () => {
   beforeAll(async () => {
-    await request(app).get('/not-a-real-page').then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get('/not-a-real-page')
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display header', () => {

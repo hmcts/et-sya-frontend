@@ -88,5 +88,4 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
-
 });

@@ -4,13 +4,13 @@
   "p1": "You can make a claim yourself or, as a ‘representative’, make a claim on someone else’s behalf.",
   "detailsSummary1": "Who can act as a representative?",
   "detailsText1": {
-    "p":"'Representatives’ can help someone make a claim and present their case at a hearing and include:",
-    "li1":"employment advisors – including those from Citizens Advice ",
-    "li2":"legal professionals – including lawyers and solicitors",
-    "li3":"private individuals – including family members and friends",
-    "li4":"trade association and trade union representatives "
+    "p": "'Representatives’ can help someone make a claim and present their case at a hearing and include:",
+    "li1": "employment advisors – including those from Citizens Advice ",
+    "li2": "legal professionals – including lawyers and solicitors",
+    "li3": "private individuals – including family members and friends",
+    "li4": "trade association and trade union representatives "
   },
-  "detailsSummary2":"How to find and get a representative?",
+  "detailsSummary2": "How to find and get a representative?",
   "detailsText2": {
     "p1":"Use the following to find and get a legal representative:",
     "li1":"<a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Find a solicitor in England and Wales</a> – database of solicitors run by The Law Society",
