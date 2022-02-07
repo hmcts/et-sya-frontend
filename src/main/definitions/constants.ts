@@ -1,7 +1,10 @@
-export const URLS = {
-  LEGACY_ET1: 'https://employmenttribunals.service.gov.uk/apply',
-  ACAS_EC: 'https://www.acas.org.uk/early-conciliation',
+export const LEGACY_URLS = {
+  ET1: 'https://employmenttribunals.service.gov.uk/en/apply/application-number',
+  ET1_BASE: 'https://employmenttribunals.service.gov.uk/',
+  ET1_PATH: '/apply/application-number',
 } as const;
+
+export const ACAS_EC_URL = 'https://www.acas.org.uk/early-conciliation' as const;
 
 export const CALLBACK_URL = '/oauth2/callback' as const;
 

@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import ContactAcasController from '../../../main/controllers/ContactAcasController';
-import { URLS } from '../../../main/definitions/constants';
+import { ACAS_EC_URL } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -21,7 +21,7 @@ describe('Contact Acas Controller', () => {
       .once()
       .withArgs('contact-acas', {
         ...request.t('contact-acas', { returnObjects: true }),
-        acasUrl: URLS.ACAS_EC,
+        acasUrl: ACAS_EC_URL,
       });
     checklistController.get(request, response);
     responseMock.verify();
