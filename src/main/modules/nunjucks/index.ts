@@ -32,6 +32,10 @@ export class Nunjucks {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
     });
 
+    nunEnv.addGlobal('getContentSafe', function (prop: any | string): nunjucks.runtime.SafeString {       
+      return new nunjucks.runtime.SafeString(this.env.globals.getContent.call(this, prop));     
+    });
+
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
       const { form, sessionErrors, errors } = this.ctx;
 
@@ -74,8 +78,8 @@ export class Nunjucks {
     nunEnv.addGlobal('formItems', function (items: FormInput[], userAnswer: string | Record<string, string>) {
       return items.map((i: FormInput) => ({
         id: i.id,
-        label: this.env.globals.getContent.call(this, i.label),
-        text: this.env.globals.getContent.call(this, i.label),
+        label: this.env.globals.getContentSafe.call(this, i.label),
+        text: this.env.globals.getContentSafe.call(this, i.label),
         name: i.name,
         classes: i.classes,
         value: i.value ?? (userAnswer as AnyRecord)?.[i.name as string] ?? (userAnswer as string),
