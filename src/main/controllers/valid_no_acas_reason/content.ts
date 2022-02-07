@@ -13,10 +13,12 @@ export const validNoAcasReasonFormContent: FormContent = {
       values: [
         {
           label: (l: AnyRecord): string => l.yes,
+          name: 'radio1',
           value: YesOrNo.YES,
         },
         {
           label: (l: AnyRecord): string => l.no,
+          name: 'radio2',
           value: YesOrNo.NO,
         },
       ],
