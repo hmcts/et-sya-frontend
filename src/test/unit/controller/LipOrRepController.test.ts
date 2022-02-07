@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { URLS } from '../../../main/definitions/constants';
+import { LEGACY_URLS } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -47,7 +47,7 @@ describe('LiP or Representative Controller', () => {
 
     const responseMock = sinon.mock(response);
 
-    responseMock.expects('redirect').once().withArgs(URLS.LEGACY_ET1);
+    responseMock.expects('redirect').once().withArgs(LEGACY_URLS.ET1);
 
     lipOrRepController.post(request, response);
     responseMock.verify();

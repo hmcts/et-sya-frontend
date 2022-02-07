@@ -5,5 +5,9 @@
   "p2": "You make a ‘Multiple’ claim if your dispute is between more than 1 more person and any respondents who you think treated you all (as a group) unlawfully.",
   "radio1": "I’m making a ‘Single’ claim on my own",
   "radio2": "I’m making a ‘Multiple’ claim alongside other people",
-  "errorMessage": "Select an Option"
+  "errors": {
+    "isASingleClaim": {
+      "required": "Select an Option"
+    }
+  }
 }
