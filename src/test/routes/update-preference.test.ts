@@ -15,8 +15,8 @@ describe('on POST /how-would-you-like-to-be-updated-about-your-claim', () => {
   test('should reload the current page when the Email radio button is selected', async () => {
     await request(app)
       .post('/how-would-you-like-to-be-updated-about-your-claim')
-      .send({'update-preference': 'Email'})
-      .expect((res) => {
+      .send({ 'update-preference': 'Email' })
+      .expect(res => {
         expect(res.status).to.equal(302);
         expect(res.header['location']).to.equal('/how-would-you-like-to-be-updated-about-your-claim');
       });
@@ -27,8 +27,8 @@ describe('on POST /how-would-you-like-to-be-updated-about-your-claim', () => {
   test('should reload the current page when the Post radio button is selected', async () => {
     await request(app)
       .post('/how-would-you-like-to-be-updated-about-your-claim')
-      .send({'acas-multiple': 'Post'})
-      .expect((res) => {
+      .send({ 'acas-multiple': 'Post' })
+      .expect(res => {
         expect(res.status).to.equal(302);
         expect(res.header['location']).to.equal('/how-would-you-like-to-be-updated-about-your-claim');
       });

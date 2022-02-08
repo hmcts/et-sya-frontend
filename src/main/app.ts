@@ -1,23 +1,26 @@
-const { Logger } = require('@hmcts/nodejs-logging');
+import * as path from 'path';
 
+// eslint-disable-next-line import/no-unresolved
+import { HTTPError } from 'HttpError';
 import * as bodyParser from 'body-parser';
 import config from 'config';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import { Helmet } from './modules/helmet';
-import * as path from 'path';
 import favicon from 'serve-favicon';
-import { HTTPError } from 'HttpError';
-import { Nunjucks } from './modules/nunjucks';
-import { PropertiesVolume } from './modules/properties-volume';
-import { AppInsights } from './modules/appinsights';
-import setupDev from './development';
-import routes from './routes/routes';
-import { Container } from './modules/awilix';
-import { I18Next } from './modules/i18next';
+
 import { AppRequest } from './definitions/appRequest';
-import { Session } from './modules/session';
+import setupDev from './development';
+import { AppInsights } from './modules/appinsights';
+import { Container } from './modules/awilix';
+import { Helmet } from './modules/helmet';
+import { I18Next } from './modules/i18next';
+import { Nunjucks } from './modules/nunjucks';
 import { Oidc } from './modules/oidc';
+import { PropertiesVolume } from './modules/properties-volume';
+import { Session } from './modules/session';
+import routes from './routes/routes';
+
+const { Logger } = require('@hmcts/nodejs-logging');
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -43,16 +46,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
-  res.setHeader(
-    'Cache-Control',
-    'no-cache, max-age=0, must-revalidate, no-store',
-  );
+  res.setHeader('Cache-Control', 'no-cache, max-age=0, must-revalidate, no-store');
   next();
 });
 
 routes(app);
 
-setupDev(app,developmentMode);
+setupDev(app, developmentMode);
 // returning "not found" page for requests with paths not resolved by the router
 app.use((req, res) => {
   res.status(404);

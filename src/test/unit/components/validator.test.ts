@@ -1,4 +1,3 @@
-import { CaseDate } from 'definitions/case';
 import {
   areDateFieldsFilledIn,
   atLeastOneFieldIsChecked,
@@ -7,6 +6,7 @@ import {
   isFutureDate,
   isInvalidPostcode,
 } from '../../../main/components/form/validator';
+import { CaseDate } from '../../../main/definitions/case';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
@@ -32,7 +32,11 @@ describe('Validation', () => {
 
   describe('areFieldsFilledIn()', () => {
     it('Should check if values in object exist', () => {
-      const isValid = areDateFieldsFilledIn({ day: '1', month: '1', year: '1' });
+      const isValid = areDateFieldsFilledIn({
+        day: '1',
+        month: '1',
+        year: '1',
+      });
 
       expect(isValid).toStrictEqual(undefined);
     });
@@ -51,31 +55,29 @@ describe('Validation', () => {
     it.each([
       { dateObj: new Date(), expected: undefined },
       { dateObj: undefined, expected: undefined },
-    ])(
-      'Should check if date entered is future date when %o',
-      ({ dateObj, expected }) => {
-        const date = dateObj
-          ? {
+    ])('Should check if date entered is future date when %o', ({ dateObj, expected }) => {
+      const date = dateObj
+        ? {
             day: dateObj.getUTCDate().toString(),
             month: dateObj.getUTCMonth().toString(),
             year: (dateObj.getUTCFullYear() - 1).toString(),
           }
-          : undefined;
-        let isValid = isFutureDate(date);
+        : undefined;
+      let isValid = isFutureDate(date);
 
-        expect(isValid).toStrictEqual(expected);
+      expect(isValid).toStrictEqual(expected);
 
-        if (date) {
-          date.year += '1';
-          isValid = isFutureDate(date);
+      if (date) {
+        date.year += '1';
+        isValid = isFutureDate(date);
 
-          expect(isValid).toStrictEqual({
-            error: 'invalidDateInFuture',
-            fieldName: 'day',
-          });
-        }
-      },
-    );
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(isValid).toStrictEqual({
+          error: 'invalidDateInFuture',
+          fieldName: 'day',
+        });
+      }
+    });
   });
 
   describe('isDateInputInvalid()', () => {

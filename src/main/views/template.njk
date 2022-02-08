@@ -15,6 +15,10 @@
   }) }}
 {% endblock %}
 
+{% block pageTitle %}
+  {{ title }} - {{ govUk }}
+{% endblock %}
+
 {% block beforeContent %}
   {% set phaseBarHtml = '<a class="govuk-link" href="#" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
@@ -55,18 +59,20 @@
 {% endblock %}
 
 {% block footer %}
-<div class="govuk-width-container">
-  <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">
-        {{ contactUsTitle }}
-      </span>
-    </summary>
-    <div class="govuk-details__text">
-      {{ contactUsForHelp|safe }}
-    </div>
-  </details>
-</div>
+{% if "/" !== currentUrl %}
+  <div class="govuk-width-container">
+    <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          {{ contactUsTitle }}
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        {{ contactUsForHelp|safe }}
+      </div>
+    </details>
+  </div>
+{% endif %}
 {{ govukFooter({
   meta: {
     items: [

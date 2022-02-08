@@ -1,22 +1,16 @@
 import sinon from 'sinon';
+
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import UpdatePreferenceController from '../../../main/controllers/update_preference/UpdatePreferenceController';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
 
 describe('Update Preference Controller', () => {
   const t = {
     'update-preference': {},
     common: {},
-  };
-  const userCase = {
-    update_preference:
-    {
-      radio1: '',
-      radio2: '',
-    },
   };
 
   const mockFormContent = {
@@ -64,7 +58,7 @@ describe('Update Preference Controller', () => {
 
     const controller = new UpdatePreferenceController(mockFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 

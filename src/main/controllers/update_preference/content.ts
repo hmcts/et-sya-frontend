@@ -1,7 +1,8 @@
+import { YesOrNo } from 'definitions/case';
+
+import { isFieldFilledIn } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { isFieldFilledIn } from '../../components/form/validator';
-import { YesOrNo } from 'definitions/case';
 
 export const updatePrefFormContent: FormContent = {
   fields: {

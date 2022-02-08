@@ -1,12 +1,11 @@
-import sinon from 'sinon';
-import { mockRequest } from '../mocks/mockRequest';
-import DobController from '../../../main/controllers/dob/DobController';
-import { FormContent } from '../../../main/definitions/form';
-import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { areDateFieldsFilledIn } from '../../../main/components/form/validator';
 import { convertToDateObject } from '../../../main/components/form/parser';
+import { areDateFieldsFilledIn } from '../../../main/components/form/validator';
+import DobController from '../../../main/controllers/dob/DobController';
+import { CaseDate } from '../../../main/definitions/case';
+import { FormContent } from '../../../main/definitions/form';
 import { UnknownRecord } from '../../../main/definitions/util-types';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Dob Controller', () => {
   const t = {
@@ -38,9 +37,8 @@ describe('Dob Controller', () => {
             attributes: { maxLength: 4 },
           },
         ],
-        parser: (body: UnknownRecord): any =>
-          convertToDateObject('dobDate', body),
-        validator: (value: any) => areDateFieldsFilledIn(value),
+        parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
+        validator: jest.fn(areDateFieldsFilledIn),
       },
     },
   } as unknown as FormContent;
@@ -49,14 +47,11 @@ describe('Dob Controller', () => {
     const dobController = new DobController(mockFormContent);
 
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t });
-
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('date-of-birth');
+    const request = mockRequest({ t });
 
     dobController.get(request, response);
-    responseMock.verify();
+
+    expect(response.render).toHaveBeenCalledWith('date-of-birth', expect.anything());
     expect(request.session.userCase).toEqual({
       dobDate: {
         day: '24',
@@ -69,11 +64,15 @@ describe('Dob Controller', () => {
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'dobDate', errorType: 'dayRequired', fieldName: 'day' }];
-    const body = { 'dobDate-day': '', 'dobDate-month': '11', 'dobDate-year': '2000' };
+    const body = {
+      'dobDate-day': '',
+      'dobDate-month': '11',
+      'dobDate-year': '2000',
+    };
 
     const controller = new DobController(mockFormContent);
 
-    const req = mockRequest( { body } );
+    const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 

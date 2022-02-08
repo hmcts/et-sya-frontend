@@ -3,7 +3,7 @@ nodejs:
   aadIdentityName: et
   ingressHost: et-sya.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/et/sya:latest'
-#  Uncomment once the vault containing the app insights key has been set up
+  #  Uncomment once the vault containing the app insights key has been set up
   keyVaults:
     et:
       resourceGroup: et
