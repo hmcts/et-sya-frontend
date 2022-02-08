@@ -13,9 +13,10 @@
         {{ govukPanel({
         titleText: "Your claim has been saved"
       }) }}
+      <p class="govuk-body ">{{ p1 }}</p>
       {{ govukButton({
         text: continueWithClaim,
-        href: "/return-to-existing"
+        href: "/return-to-existing",
         preventDoubleClick: true
-      }) 
+      }) }}
 {% endblock %}
