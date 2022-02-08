@@ -20,6 +20,7 @@ export interface Case {
   addressPostcode?: string;
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
+  telNumber?: string;
   returnToExisting: YesOrNo;
 }
 
