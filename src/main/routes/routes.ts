@@ -13,6 +13,8 @@ export default function (app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
+  app.get('/contact-acas', app.locals.container.cradle.contactAcasController.get);
+
   app.get(
     '/info',
     infoRequestHandler({
