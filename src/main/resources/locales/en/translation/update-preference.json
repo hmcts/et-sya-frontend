@@ -1,11 +1,11 @@
 {
-    "title": "How would you like to be updated about your claim?",
-    "h1": "How would you like to be updated about your claim?",
-    "yes": "Email",
-    "no": "Post",
-    "errors": {
-      "updatePreference": {
-        "required": "Select if you would like to be updated by email or post"
-      }
+  "title": "How would you like to be updated about your claim?",
+  "h1": "How would you like to be updated about your claim?",
+  "yes": "Email",
+  "no": "Post",
+  "errors": {
+    "updatePreference": {
+      "required": "Select if you would like to be updated by email or post"
     }
   }
+}
