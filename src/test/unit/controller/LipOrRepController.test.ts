@@ -1,16 +1,14 @@
-import sinon from 'sinon';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import LipOrRepController from '../../../main/controllers/litigation_in_person_or_representative/lipOrRepController';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
 import { LEGACY_URLS } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import { YesOrNo } from 'definitions/case';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Litigation in Person or Representative Controller', () => {
   const t = {
-    'representingMyself': {},
+    representingMyself: {},
     common: {},
   };
 
@@ -20,10 +18,10 @@ describe('Litigation in Person or Representative Controller', () => {
         type: 'radios',
         values: [
           {
-            value: YesOrNo.YES, 
+            value: YesOrNo.YES,
           },
           {
-            value: YesOrNo.NO, 
+            value: YesOrNo.NO,
           },
         ],
         validator: jest.fn().mockImplementation(isFieldFilledIn),
@@ -34,26 +32,17 @@ describe('Litigation in Person or Representative Controller', () => {
     },
   } as unknown as FormContent;
 
-
-
-  it('should render the \'representing myself (LiP) or using a representative choice\' page', () => {
-
-    const lipOrRepController = new LipOrRepController(mockFormContent);
+  it("should render the 'representing myself (LiP) or using a representative choice' page", () => {
+    const controller = new LipOrRepController(mockFormContent);
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t });
-    const responseMock = sinon.mock(response);
+    const request = mockRequest({ t });
 
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('lip-or-representative');
+    controller.get(request, response);
 
-    lipOrRepController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('lip-or-representative', expect.anything());
   });
 
-  it('should render the Single or Multiple claims page when \'representing myself\' is selected', () => {
-
+  it("should render the Single or Multiple claims page when 'representing myself' is selected", () => {
     const body = { representingMyself: YesOrNo.YES };
     const controller = new LipOrRepController(mockFormContent);
 
@@ -62,10 +51,9 @@ describe('Litigation in Person or Representative Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith('/single-or-multiple-claim');
-
   });
 
-  it('should render the legacy ET1 service when the \'making a claim for someone else\' option is selected', () => {
+  it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
     const body = { representingMyself: YesOrNo.NO };
     const controller = new LipOrRepController(mockFormContent);
 

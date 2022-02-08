@@ -1,10 +1,8 @@
-import { expect } from 'chai';
-import { YesOrNo } from 'definitions/case';
 import request from 'supertest';
 
 import { app } from '../../main/app';
-import { LEGACY_URLS  } from '../../main/definitions/constants';
-
+import { YesOrNo } from '../../main/definitions/case';
+import { LEGACY_URLS } from '../../main/definitions/constants';
 
 describe('GET /lip-or-representative', () => {
   it('should return the lip or representative page', async () => {
@@ -19,9 +17,9 @@ describe('on POST /lip-or-representative', () => {
     await request(app)
       .post('/lip-or-representative')
       .send({ representingMyself: YesOrNo.YES })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal('/single-or-multiple-claim');
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual('/single-or-multiple-claim');
       });
   });
 
@@ -29,9 +27,9 @@ describe('on POST /lip-or-representative', () => {
     await request(app)
       .post('/lip-or-representative')
       .send({ representingMyself: YesOrNo.NO })
-      .expect((res) => {
-        expect(res.status).to.equal(302);
-        expect(res.header['location']).to.equal(LEGACY_URLS.ET1);
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(LEGACY_URLS.ET1);
       });
   });
 });
