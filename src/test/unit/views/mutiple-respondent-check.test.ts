@@ -1,11 +1,19 @@
-import { expect } from 'chai';
 import fs from 'fs';
 import path from 'path';
+
+import { expect } from 'chai';
 import request from 'supertest';
+
 import { app } from '../../../main/app';
 
-const multipleRespondentJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/multiple-respondent-check.json'), 'utf-8');
-const commonJsonRaw = fs.readFileSync(path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'), 'utf-8');
+const multipleRespondentJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/multiple-respondent-check.json'),
+  'utf-8'
+);
+const commonJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/common.json'),
+  'utf-8'
+);
 const multipleRespondentJson = JSON.parse(multipleRespondentJsonRaw);
 const commonJsonRawJson = JSON.parse(commonJsonRaw);
 const PAGE_URL = '/multiple-respondent-check';
@@ -26,9 +34,11 @@ const expectedBackButtonText = commonJsonRawJson.back;
 let htmlRes: Document;
 describe('Multiple Respondent page', () => {
   beforeAll(async () => {
-    await request(app).get(PAGE_URL).then(res => {
-      htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-    });
+    await request(app)
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
   });
 
   it('should display title', () => {
@@ -53,7 +63,10 @@ describe('Multiple Respondent page', () => {
 
   it('should display back button', () => {
     const backButton = htmlRes.getElementsByClassName(backButtonClass);
-    expect(backButton[0].innerHTML).contains(expectedBackButtonText, 'Could not find button with text ' + expectedButtonText);
+    expect(backButton[0].innerHTML).contains(
+      expectedBackButtonText,
+      'Could not find button with text ' + expectedButtonText
+    );
   });
 
   it('should display 2 radio buttons', () => {
@@ -63,7 +76,13 @@ describe('Multiple Respondent page', () => {
 
   it('should display radio buttons with valid text', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons[0].innerHTML).contains(expectedRadioLabel1, 'Could not find the radio button with label ' + expectedRadioLabel1);
-    expect(radioButtons[1].innerHTML).contains(expectedRadioLabel2, 'Could not find the radio button with label ' + expectedRadioLabel2);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedRadioLabel1,
+      'Could not find the radio button with label ' + expectedRadioLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedRadioLabel2,
+      'Could not find the radio button with label ' + expectedRadioLabel2
+    );
   });
 });

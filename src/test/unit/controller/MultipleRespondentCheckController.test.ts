@@ -1,11 +1,12 @@
-import MultipleRespondentCheckController from '../../../main/controllers/multiple_respondent/MultipleRespondentCheckController';
 import sinon from 'sinon';
-import { mockRequest } from '../mocks/mockRequest';
+
 import { isFieldFilledIn } from '../../../main/components/form/validator';
-import { FormContent } from '../../../main/definitions/form';
-import { mockResponse } from '../mocks/mockResponse';
+import MultipleRespondentCheckController from '../../../main/controllers/multiple_respondent/MultipleRespondentCheckController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
+import { FormContent } from '../../../main/definitions/form';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Mutiple Response Controller Tests', () => {
   const t = {
@@ -55,7 +56,7 @@ describe('Mutiple Response Controller Tests', () => {
 
   it('should redirect back to self if there are errors', () => {
     const errors = [{ propertyName: 'isMultipleRespondent', errorType: 'required' }];
-    const body = { 'isMultipleRespondent': '' };
+    const body = { isMultipleRespondent: '' };
     const controller = new MultipleRespondentCheckController(mockedFormContent);
 
     const req = mockRequest({ body });
@@ -68,7 +69,7 @@ describe('Mutiple Response Controller Tests', () => {
   });
 
   it('should redirect to home if no errors', () => {
-    const body = { 'isMultipleRespondent': YesOrNo.YES };
+    const body = { isMultipleRespondent: YesOrNo.YES };
     const controller = new MultipleRespondentCheckController(mockedFormContent);
 
     const req = mockRequest({ body });

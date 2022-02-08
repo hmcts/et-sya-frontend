@@ -1,9 +1,5 @@
 import { convertToDateObject } from '../../components/form/parser';
-import {
-  areDateFieldsFilledIn,
-  isDateInputInvalid,
-  isFutureDate,
-} from '../../components/form/validator';
+import { areDateFieldsFilledIn, isDateInputInvalid, isFutureDate } from '../../components/form/validator';
 import { CaseDate } from '../../definitions/case';
 import { FormContent, InvalidField } from '../../definitions/form';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
@@ -37,12 +33,9 @@ export const dobFormContent: FormContent = {
           attributes: { maxLength: 4 },
         },
       ],
-      parser: (body: UnknownRecord): any =>
-        convertToDateObject('dobDate', body),
+      parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
       validator: (value: CaseDate): string | void | InvalidField =>
-        areDateFieldsFilledIn(value) ||
-        isDateInputInvalid(value) ||
-        isFutureDate(value),
+        areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
     },
   },
   submit: {
