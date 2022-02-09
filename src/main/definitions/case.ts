@@ -18,9 +18,14 @@ export interface Case {
   addressTown?: string;
   addressCounty?: string;
   addressPostcode?: string;
+  videoHearing?: YesOrNo;
+  updatePreference?: YesOrNo;
+  representingMyself?: YesOrNo;
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
+  telNumber?: string;
   returnToExisting: YesOrNo;
+  isMultipleRespondent?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {

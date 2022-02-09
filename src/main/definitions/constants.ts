@@ -4,6 +4,8 @@ export const LEGACY_URLS = {
   ET1_PATH: '/apply/application-number',
 } as const;
 
+export const ACAS_EC_URL = 'https://www.acas.org.uk/early-conciliation' as const;
+
 export const CALLBACK_URL = '/oauth2/callback' as const;
 
 export const LOGIN = '/login' as const;
@@ -13,3 +15,7 @@ export const LOGOUT = '/logout' as const;
 export const HOME = '/' as const;
 
 export const HTTPS_PROTOCOL = 'https://' as const;
+
+export const CLAIM_SAVED = 'your-claim-has-been-saved' as const;
+
+export const CLAIM_STEPS = '/steps-to-making-your-claim' as const;
