@@ -47,6 +47,9 @@ export default function (app: Application): void {
   app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
   app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
 
+  app.get('/do-you-have-an-acas-no-many-resps', app.locals.container.cradle.acasMultipleController.get);
+  app.post('/do-you-have-an-acas-no-many-resps', app.locals.container.cradle.acasMultipleController.post);
+
   app.get(
     '/how-would-you-like-to-be-updated-about-your-claim',
     app.locals.container.cradle.updatePreferenceController.get
