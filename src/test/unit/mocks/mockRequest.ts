@@ -1,12 +1,18 @@
-import { AppRequest } from 'definitions/appRequest';
-import { CaseWithId } from 'definitions/case';
+import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
+import { CaseWithId } from '../../../main/definitions/case';
+import { AnyRecord } from '../../../main/definitions/util-types';
 
 export const mockRequest = ({
   body,
   userCase,
   session,
   t,
-}: any): AppRequest => {
+}: {
+  body?: AnyRecord;
+  userCase?: Partial<CaseWithId>;
+  session?: AppSession;
+  t?: AnyRecord;
+}): AppRequest => {
   const req = {
     t: () => t,
   } as unknown as AppRequest;
@@ -20,10 +26,10 @@ export const mockRequest = ({
       ...userCase,
     } as CaseWithId,
     ...session,
-    save: jest.fn((done) => done()),
+    save: jest.fn(done => done()),
     lang: 'en',
     errors: undefined,
-  } as any;
+  } as unknown as AppSession;
   return req;
 };
 

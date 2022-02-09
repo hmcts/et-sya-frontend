@@ -1,20 +1,8 @@
 import { Form } from '../../../main/components/form/form';
 import { convertToDateObject } from '../../../main/components/form/parser';
-import {
-  Case,
-  CaseDate,
-  Checkbox,
-  YesOrNo,
-} from '../../../main/definitions/case';
-import {
-  areDateFieldsFilledIn,
-  isFieldFilledIn,
-} from '../../../main/components/form/validator';
-import {
-  FormContent,
-  FormFields,
-  FormFieldsFn,
-} from '../../../main/definitions/form';
+import { areDateFieldsFilledIn, isFieldFilledIn } from '../../../main/components/form/validator';
+import { Case, CaseDate, Checkbox, YesOrNo } from '../../../main/definitions/case';
+import { FormContent, FormFields, FormFieldsFn } from '../../../main/definitions/form';
 
 describe('Form', () => {
   const mockForm: FormContent = {
@@ -22,21 +10,20 @@ describe('Form', () => {
       field: {
         type: 'radios',
         values: [
-          { label: (l) => l.yes, value: YesOrNo.YES },
-          { label: (l) => l.no, value: YesOrNo.NO },
+          { label: l => l.no, value: YesOrNo.YES },
+          { label: l => l.yes, value: YesOrNo.NO },
         ],
         validator: jest.fn().mockImplementation(isFieldFilledIn),
       },
       dateField: {
         type: 'date',
         values: [
-          { label: (l) => l.dateFormat['day'], name: 'day' },
-          { label: (l) => l.dateFormat['month'], name: 'month' },
-          { label: (l) => l.dateFormat['year'], name: 'year' },
+          { label: l => l.dateFormat['day'], name: 'day' },
+          { label: l => l.dateFormat['month'], name: 'month' },
+          { label: l => l.dateFormat['year'], name: 'year' },
         ],
-        parser: (value) =>
-          convertToDateObject('dateField', value as Record<string, unknown>),
-        validator: (value) => areDateFieldsFilledIn(value as CaseDate),
+        parser: value => convertToDateObject('dateField', value as Record<string, unknown>),
+        validator: value => areDateFieldsFilledIn(value as CaseDate),
       },
       checkboxes: {
         type: 'checkboxes',
@@ -48,7 +35,7 @@ describe('Form', () => {
       },
     },
     submit: {
-      text: (l) => l.continue,
+      text: l => l.continue,
     },
   };
 
@@ -66,15 +53,12 @@ describe('Form', () => {
       checkboxes: 'checkbox1',
     } as unknown as Case);
 
-    expect((mockForm.fields as FormFields)['field'].validator).toHaveBeenCalledWith(
-      YesOrNo.YES,
-      {
-        field: YesOrNo.YES,
-        dateField: { day: '1', month: '1', year: '2000' },
-        applicant1DoesNotKnowApplicant2EmailAddress: Checkbox.Checked,
-        checkboxes: 'checkbox1',
-      },
-    );
+    expect((mockForm.fields as FormFields)['field'].validator).toHaveBeenCalledWith(YesOrNo.YES, {
+      field: YesOrNo.YES,
+      dateField: { day: '1', month: '1', year: '2000' },
+      applicant1DoesNotKnowApplicant2EmailAddress: Checkbox.Checked,
+      checkboxes: 'checkbox1',
+    });
     expect(errors).toStrictEqual([]);
   });
 
@@ -105,7 +89,7 @@ describe('Form', () => {
           type: 'radios',
           values: [
             {
-              label: (l) => l.no,
+              label: l => l.no,
               value: YesOrNo.NO,
               subFields: {
                 testSubField: {
@@ -132,13 +116,13 @@ describe('Form', () => {
                 },
               },
             },
-            { label: (l) => l.yes, value: YesOrNo.YES, name: YesOrNo.YES },
+            { label: l => l.yes, value: YesOrNo.YES, name: YesOrNo.YES },
           ],
           validator: isFieldFilledIn,
         },
       },
       submit: {
-        text: (l) => l.continue,
+        text: l => l.continue,
       },
     };
 
@@ -167,7 +151,6 @@ describe('Form', () => {
       const errors = subFieldForm.getErrors({
         field: YesOrNo.NO,
       } as unknown as Case);
-      
 
       expect(errors).toStrictEqual([
         {
@@ -231,29 +214,22 @@ describe('Form', () => {
         },
         expected: true,
       },
-    ])(
-      'checks if complete when %o',
-      ({
-        body,
-        expected,
-      }: {
-        body: Record<string, unknown>
-        expected: boolean
-      }) => {
-        expect(form.isComplete(body)).toBe(expected);
-      },
-    );
+    ])('checks if complete when %o', ({ body, expected }: { body: Record<string, unknown>; expected: boolean }) => {
+      expect(form.isComplete(body)).toBe(expected);
+    });
   });
 
   it('Should build a form with a custom field function', async () => {
     const mockFieldFnForm: FormContent = {
-      fields: (userCase) => ({
+      fields: userCase => ({
         ...(userCase.dobDate
-          ? { customQuestion: { type: 'text', label: 'custom', name: 'custom' } }
+          ? {
+              customQuestion: { type: 'text', label: 'custom', name: 'custom' },
+            }
           : {}),
       }),
       submit: {
-        text: (l) => l.continue,
+        text: l => l.continue,
       },
     };
     mockFieldFnForm.fields = mockFieldFnForm.fields as FormFieldsFn;

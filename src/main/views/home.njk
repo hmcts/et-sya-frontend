@@ -1,13 +1,37 @@
 {% extends "template.njk" %}
-
-{% block pageTitle %}
-  Home
-{% endblock %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl">Home Page</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageTitle }}</h1>
+      <p class="govuk-body">{{ serviceInfo }}</p>
+      {{ govukInsetText({
+        text: infoTxt
+      }) }}
+      {{ govukWarningText({
+        html: warningTxt1,
+        iconFallbackText: warningTxt
+      }) }}
+      <p class="govuk-body">{{ saveInfo }}</p>
+      {{ govukWarningText({
+        html: warningTxt2,
+        iconFallbackText: warningTxt
+      }) }}
+      {{ govukButton({
+        text: startNow,
+        href: "/checklist",
+        isStartButton: true
+      }) }}
+      <ul class="govuk-list">
+        <li><b>{{ claimStartedTxt }}</b></li>
+        <li><a href="/" class="govuk-link">{{ returnClaimTxt }}</a></li>
+      </ul>
+      <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
+      <p class="govuk-body">{{ contactUsHelpTxt }}</p>
+      <p class="govuk-body ">{{ contactUsForHelp|safe }}</p>
     </div>
   </div>
 {% endblock %}

@@ -1,13 +1,12 @@
-import { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import i18next, { InitOptions, Resource } from 'i18next';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import requireDir from 'require-directory';
-import express from 'express';
 
 const resources = requireDir(module, '../../resources', {
   include: /locales/,
 }).locales as Resource;
- 
+
 export class I18Next {
   constructor() {
     const options: InitOptions = {
