@@ -14,7 +14,8 @@ export default function (app: Application): void {
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
   app.get('/contact-acas', app.locals.container.cradle.contactAcasController.get);
-
+  app.get('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.get);
+  app.post('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.post);
   app.get(
     '/info',
     infoRequestHandler({

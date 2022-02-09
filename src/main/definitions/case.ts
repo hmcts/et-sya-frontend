@@ -25,6 +25,7 @@ export interface Case {
   isAcasSingle?: YesOrNo;
   telNumber?: string;
   returnToExisting: YesOrNo;
+  isMultipleRespondent?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {
