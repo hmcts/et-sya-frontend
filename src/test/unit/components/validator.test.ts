@@ -1,4 +1,3 @@
-import { CaseDate } from 'definitions/case';
 import {
   areDateFieldsFilledIn,
   atLeastOneFieldIsChecked,
@@ -6,7 +5,9 @@ import {
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
+  isValidUKTelNumber,
 } from '../../../main/components/form/validator';
+import { CaseDate } from '../../../main/definitions/case';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
@@ -32,7 +33,11 @@ describe('Validation', () => {
 
   describe('areFieldsFilledIn()', () => {
     it('Should check if values in object exist', () => {
-      const isValid = areDateFieldsFilledIn({ day: '1', month: '1', year: '1' });
+      const isValid = areDateFieldsFilledIn({
+        day: '1',
+        month: '1',
+        year: '1',
+      });
 
       expect(isValid).toStrictEqual(undefined);
     });
@@ -51,31 +56,29 @@ describe('Validation', () => {
     it.each([
       { dateObj: new Date(), expected: undefined },
       { dateObj: undefined, expected: undefined },
-    ])(
-      'Should check if date entered is future date when %o',
-      ({ dateObj, expected }) => {
-        const date = dateObj
-          ? {
+    ])('Should check if date entered is future date when %o', ({ dateObj, expected }) => {
+      const date = dateObj
+        ? {
             day: dateObj.getUTCDate().toString(),
             month: dateObj.getUTCMonth().toString(),
             year: (dateObj.getUTCFullYear() - 1).toString(),
           }
-          : undefined;
-        let isValid = isFutureDate(date);
+        : undefined;
+      let isValid = isFutureDate(date);
 
-        expect(isValid).toStrictEqual(expected);
+      expect(isValid).toStrictEqual(expected);
 
-        if (date) {
-          date.year += '1';
-          isValid = isFutureDate(date);
+      if (date) {
+        date.year += '1';
+        isValid = isFutureDate(date);
 
-          expect(isValid).toStrictEqual({
-            error: 'invalidDateInFuture',
-            fieldName: 'day',
-          });
-        }
-      },
-    );
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(isValid).toStrictEqual({
+          error: 'invalidDateInFuture',
+          fieldName: 'day',
+        });
+      }
+    });
   });
 
   describe('isDateInputInvalid()', () => {
@@ -158,6 +161,28 @@ describe('Validation', () => {
       { mockRef: 'SW1A!1AA', expected: 'invalid' },
     ])('validates the help with fees ref when %o', ({ mockRef, expected }) => {
       expect(isInvalidPostcode(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidUKTelNumber()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: null, expected: undefined },
+      { mockRef: '12345', expected: 'invalid' },
+      { mockRef: '@£$£@$%', expected: 'invalid' },
+      { mockRef: 'not a phone number', expected: 'invalid' },
+      { mockRef: '01234!567890', expected: 'invalid' },
+      { mockRef: '00361234567890', expected: 'invalid' },
+      { mockRef: '01234 567 890', expected: undefined },
+      { mockRef: '01234 567890', expected: undefined },
+      { mockRef: '+441234567890', expected: undefined },
+      { mockRef: '+4401234567890', expected: undefined },
+      { mockRef: '00441234567890', expected: undefined },
+      { mockRef: '004401234567890', expected: undefined },
+      { mockRef: '01234567890', expected: undefined },
+      { mockRef: '1234567890', expected: undefined },
+    ])('check telephone number validity when %o', ({ mockRef, expected }) => {
+      expect(isValidUKTelNumber(mockRef)).toEqual(expected);
     });
   });
 });

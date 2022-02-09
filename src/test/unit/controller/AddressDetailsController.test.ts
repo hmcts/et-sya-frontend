@@ -1,11 +1,9 @@
-import sinon from 'sinon';
-import { mockRequest } from '../mocks/mockRequest';
-import { FormContent } from '../../../main/definitions/form';
-import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import AddressDetailsController from '../../../main/controllers/address_details/AddressDetailsController';
-// import { CaseWithId } from '../../../main/definitions/case';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { FormContent } from '../../../main/definitions/form';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Address details Controller', () => {
   const t = {
@@ -19,26 +17,20 @@ describe('Address details Controller', () => {
         type: 'text',
         id: 'address-line1',
         name: 'address-line1',
-        validator: (value: any) => isFieldFilledIn(value),
+        validator: (value: string) => isFieldFilledIn(value),
       },
     },
   } as unknown as FormContent;
 
   it('should render the Address details controller page', () => {
-    const addressDetailsController = new AddressDetailsController(
-      mockFormContent,
-    );
+    const addressDetailsController = new AddressDetailsController(mockFormContent);
 
     const response = mockResponse();
     const userCase = { address1: '10 test street' };
     const request = <AppRequest>mockRequest({ t, userCase });
 
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('address-details');
-
     addressDetailsController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('address-details', expect.anything());
   });
 
   describe('post()', () => {

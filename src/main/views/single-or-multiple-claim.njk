@@ -1,58 +1,24 @@
 {% extends "template.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
   text: back,
   href: "/lip-or-representative"
-}) }}
+  }) }}
 {% endblock %}
 {% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
-      {% if noRadioButtonSelectedError %}
-        {{ govukErrorSummary({
-          "titleText": errorSummaryTitle,
-          "errorList": [
-            {
-              "text": errorMessage,
-              "href": "#single-or-multiple"
-            }
-          ]
-        }) }}
-      {% endif %}
-      
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
       <p class="govuk-body ">{{ p1 }}</p>
       <p class="govuk-body ">{{ p2 }}</p>
-      <form action="/single-or-multiple-claim" method="post">
-        {{ govukRadios({ 
-      idPrefix: "single-or-multiple",
-      id: "single-or-multiple",
-      name: "single-or-multiple",
-      items: [
-        {
-          value: "single",
-          text: radio1
-        },
-        {
-          value: "multiple",
-          text: radio2
-        }
-      ],
-      errorMessage: {
-        text: errorMessage
-        } if noRadioButtonSelectedError
-      }) }}
-        {{ govukButton({
-        text: continue,
-        preventDoubleClick: true
-      }) }}
-      </form>
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

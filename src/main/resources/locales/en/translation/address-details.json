@@ -10,14 +10,14 @@
   "enterAddressManually": "I want to enter the address manually.",
   "errors": {
     "address1": {
-      "required": "Enter a building and street."
+      "required": "Enter a building and street"
     },
     "addressTown": {
-      "required": "Enter a town or city."
+      "required": "Enter a town or city"
     },
     "addressPostcode": {
-      "required": "Enter a postcode.",
-      "invalid": "Enter a valid UK postcode."
+      "required": "Enter a postcode",
+      "invalid": "Enter a valid UK postcode"
     }
   }
 }
