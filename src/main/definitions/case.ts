@@ -19,6 +19,7 @@ export interface Case {
   addressCounty?: string;
   addressPostcode?: string;
   videoHearing?: YesOrNo;
+  updatePreference?: YesOrNo;
   representingMyself?: YesOrNo;
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
