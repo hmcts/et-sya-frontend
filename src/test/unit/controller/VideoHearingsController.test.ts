@@ -1,80 +1,69 @@
-import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import VideoHearingsController from '../../../main/controllers/video_hearings/VideoHearingsController';
+import { YesOrNo } from '../../../main/definitions/case';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-const videoHearingsController = new VideoHearingsController();
 
 describe('Video Hearing Controller', () => {
   const t = {
     'video-hearings': {},
+    common: {},
   };
 
-  it('should render the video hearing choice page', () => {
+  const mockFormContent: FormContent = {
+    fields: {
+      videoHearings: {
+        type: 'radios',
+        values: [
+          {
+            value: YesOrNo.YES,
+          },
+          {
+            value: YesOrNo.NO,
+          },
+        ],
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
+    },
+    submit: {
+      text: 'continue',
+    },
+  } as unknown as FormContent;
+
+  it('should render the video hearings choice page', () => {
+    const controller = new VideoHearingsController(mockFormContent);
     const response = mockResponse();
     const request = mockRequest({ t });
-
-    videoHearingsController.get(request, response);
-
+    controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('video-hearings', expect.anything());
   });
 
-  it("should render the 'Steps to making your claim' page when 'yes' and the 'save and continue' button are selected", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': 'yes', saveButton: 'saveContinue' };
-    const request = mockRequest({ t, body });
+  it('should render same page if errors are present', () => {
+    const errors = [{ propertyName: 'videoHearings', errorType: 'required' }];
+    const body = { videoHearings: '' };
+    const controller = new VideoHearingsController(mockFormContent);
 
-    videoHearingsController.post(request, response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    expect(response.redirect).toHaveBeenCalledWith('/steps-to-making-your-claim');
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 
-  it("should render the 'Steps to making your claim' page when 'no' and the 'save and continue' button are selected", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': 'no', saveButton: 'saveContinue' };
-    const request = mockRequest({ t, body });
+  it('should add the videoHearings form value to the userCase', () => {
+    const body = { videoHearings: YesOrNo.NO };
 
-    videoHearingsController.post(request, response);
+    const controller = new VideoHearingsController(mockFormContent);
 
-    expect(response.redirect).toHaveBeenCalledWith('/steps-to-making-your-claim');
-  });
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
 
-  it("should redirect to the 'Your claim has been saved' page when 'yes' and the 'save for later' button are selected", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': 'yes', saveButton: 'saveForLater' };
-    const request = mockRequest({ t, body });
+    controller.post(req, res);
 
-    videoHearingsController.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/your-claim-has-been-saved');
-  });
-
-  it("should redirect to the 'Your claim has been saved' page when 'no' and the 'save for later' button are selected", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': 'no', saveButton: 'saveForLater' };
-    const request = mockRequest({ t, body });
-
-    videoHearingsController.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/your-claim-has-been-saved');
-  });
-
-  it("should render same page if nothing selected and the 'save and continue' button is selected", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': '', saveButton: 'saveContinue' };
-    const request = mockRequest({ t, body });
-
-    videoHearingsController.post(request, response);
-
-    expect(response.render).toHaveBeenCalledWith('video-hearings', expect.anything());
-  });
-
-  it("should redirect to the 'Your claim has been saved' page when a radio button is not selected and the 'save for later' button is clicked", () => {
-    const response = mockResponse();
-    const body = { 'video-hearing': '', saveButton: 'saveForLater' };
-    const request = mockRequest({ t, body });
-
-    videoHearingsController.post(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith('/your-claim-has-been-saved');
+    expect(res.redirect).toBeCalledWith('/steps-to-making-your-claim');
+    expect(req.session.userCase).toStrictEqual({ videoHearings: YesOrNo.NO });
   });
 });
