@@ -13,10 +13,12 @@ export default function (app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
-  app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
-  app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
   app.get('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.get);
   app.post('/multiple-respondent-check', app.locals.container.cradle.multipleRespondentCheckController.post);
+  app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
+  app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
+  app.get('/do-you-have-an-acas-no-many-resps', app.locals.container.cradle.acasMultipleController.get);
+  app.post('/do-you-have-an-acas-no-many-resps', app.locals.container.cradle.acasMultipleController.post);
   app.get('/do-you-have-a-valid-no-acas-reason', app.locals.container.cradle.validNoAcasReasonController.get);
   app.post('/do-you-have-a-valid-no-acas-reason', app.locals.container.cradle.validNoAcasReasonController.post);
   app.get('/contact-acas', app.locals.container.cradle.contactAcasController.get);

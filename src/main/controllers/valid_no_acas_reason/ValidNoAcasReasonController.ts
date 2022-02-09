@@ -16,8 +16,8 @@ export default class ValidNoAcasReasonController {
   public get = (req: AppRequest, res: Response): void => {
     // TODO(Angela): Add correct back link for multiple resp
     const pageBackLink =
-      !!req.session && !!req.session.userCase && req.session.userCase.isMultipleRespondent === YesOrNo.YES
-        ? '/multiple-respondent-check'
+      !!req.session && !!req.session.userCase && !!req.session.userCase.acasMultiple
+        ? '/do-you-have-an-acas-no-many-resps'
         : '/do-you-have-an-acas-single-resps';
     const content = getPageContent(req, this.validNoAcasReasonFormContent, ['common', 'valid-no-acas-reason']);
     assignFormData(req.session.userCase, this.form.getFormFields());
