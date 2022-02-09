@@ -19,6 +19,8 @@ export interface Case {
   addressCounty?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
+  updatePreference?: YesOrNo;
+  representingMyself?: YesOrNo;
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
   telNumber?: string;
