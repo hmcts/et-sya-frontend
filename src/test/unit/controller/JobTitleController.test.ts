@@ -4,7 +4,7 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 
-describe('Telephone number Controller', () => {
+describe('Job Title Controller', () => {
   const t = {
     'job-title': {},
     common: {},
@@ -34,7 +34,7 @@ describe('Telephone number Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the same screen when no job title is present', () => {
+    it('should redirect to the same screen when job title is not present', () => {
       const errors = [{ propertyName: 'jobTitle', errorType: 'required' }];
       const body = { jobTitle: '' };
 
