@@ -1,75 +1,56 @@
 {% extends "template.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
-  text: "Back",
+  text: back,
   href: "/"
-}) }}
+  }) }}
 {% endblock %}
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-    <p class="govuk-body ">{{ p1 }}</p>
-    <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">{{ detailsSummary1 }}</span>
-      </summary>
-      <div class="govuk-details__text">
-        {{ detailsText1.p }}
-        <ul>
-          <li>{{ detailsText1.li1 }}</li>
-          <li>{{ detailsText1.li2 }}
-          </li>
-          <li>{{ detailsText1.li3 }}</li>
-          <li>{{ detailsText1.li4 }}
-          </li>
-        </ul>
-      </div>
-    </details>
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          {{ detailsSummary2 }}
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        <p class="govuk-body">{{ detailsText2.p1 }}</p>
-        <li>{{ detailsText2.li1 | safe }}</li>
-        <li>{{ detailsText2.li2 | safe }}</li>
-        <li>{{ detailsText2.li3 | safe }}</li>
-        <li>{{ detailsText2.li4 }}</li>
-        <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2 | safe }}</p>
-        <p class="govuk-body">{{ detailsText2.p3 | safe }}</p>
-        <p class="govuk-body">{{ detailsText2.p4 | safe }}</p>
-      </div>
-    </details>
-    <form action="/lip-or-representative" method="post">
-      {{ govukRadios({ 
-      idPrefix: "lip-or-representative",
-      name: "lip-or-representative",
-      items: [
-        {
-          value: "lip",
-          text: radio1
-        },
-        {
-          value: "representative",
-          text: radio2
-        }
-      ],
-      errorMessage: {
-        text: errorMessage
-        } if noRadioButtonSelectedError
-      }) }} 
-      {{ govukButton({
-        text: "Continue",
-        preventDoubleClick: true
-      }) }}
-    </form>
-  </div>
-</div>
-{% endblock %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <div>
+        <div>
+          <p class="govuk-body ">{{ p1 }}</p>
+          <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">{{ detailsSummary1 }}</span>
+            </summary>
+            <div class="govuk-details__text">
+              {{ detailsText1.p }}
+              <ul>
+                <li>{{ detailsText1.li1 }}</li>
+                <li>{{ detailsText1.li2 }}
+                </li>
+                <li>{{ detailsText1.li3 }}</li>
+                <li>{{ detailsText1.li4 }}
+                </li>
+              </ul>
+            </div>
+          </details>
+          <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                {{ detailsSummary2 }}
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <p class="govuk-body">{{ detailsText2.p1 }}</p>
+              <li>{{ detailsText2.li1 | safe }}</li>
+              <li>{{ detailsText2.li2 | safe }}</li>
+              <li>{{ detailsText2.li3 | safe }}</li>
+              <li>{{ detailsText2.li4 }}</li>
+              <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2 | safe }}</p>
+              <p class="govuk-body">{{ detailsText2.p3 | safe }}</p>
+              <p class="govuk-body">{{ detailsText2.p4 | safe }}</p>
+            </div>
+          </details>
+          {% block form %}
+            {% include "form/form.njk" %}
+          {% endblock %}
+        {% endblock %}
