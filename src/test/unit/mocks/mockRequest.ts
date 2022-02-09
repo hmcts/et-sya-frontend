@@ -32,4 +32,3 @@ export const mockRequest = ({
   } as unknown as AppSession;
   return req;
 };
-

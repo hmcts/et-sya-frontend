@@ -1,22 +1,16 @@
 import sinon from 'sinon';
+
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import AcasMultipleController from '../../../main/controllers/acas_multiple/AcasMultipleController';
+import { AppRequest } from '../../../main/definitions/appRequest';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
 
 describe('Acas Multiple Controller', () => {
   const t = {
     'acas-multiple': {},
     common: {},
-  };
-  const userCase = {
-    acas_multiple:
-    {
-      radio1: '',
-      radio2: '',
-    },
   };
 
   const mockFormContent = {
@@ -64,7 +58,7 @@ describe('Acas Multiple Controller', () => {
 
     const controller = new AcasMultipleController(mockFormContent);
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 

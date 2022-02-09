@@ -1,6 +1,6 @@
+import { isFieldFilledIn } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { isFieldFilledIn } from '../../components/form/validator';
 
 export const acasFormContent: FormContent = {
   fields: {
@@ -19,7 +19,7 @@ export const acasFormContent: FormContent = {
         {
           label: (l: AnyRecord): string => l.no,
           name: 'radio2',
-          value:'No',
+          value: 'No',
           attributes: { maxLength: 2 },
         },
       ],
