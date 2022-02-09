@@ -21,6 +21,7 @@ export interface Case {
   representingMyself?: YesOrNo;
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
+  telNumber?: string;
   returnToExisting: YesOrNo;
 }
 

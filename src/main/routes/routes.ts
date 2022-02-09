@@ -13,6 +13,8 @@ export default function (app: Application): void {
   app.post('/lip-or-representative', app.locals.container.cradle.lipOrRepController.post);
   app.get('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.get);
   app.post('/single-or-multiple-claim', app.locals.container.cradle.singleOrMultipleController.post);
+  app.get('/contact-acas', app.locals.container.cradle.contactAcasController.get);
+
   app.get(
     '/info',
     infoRequestHandler({
@@ -30,6 +32,8 @@ export default function (app: Application): void {
   app.get('/gender-details', app.locals.container.cradle.genderDetailsController.get);
   app.get('/address-details', app.locals.container.cradle.addressDetailsController.get);
   app.post('/address-details', app.locals.container.cradle.addressDetailsController.post);
+  app.get('/telephone-number', app.locals.container.cradle.telNumberController.get);
+  app.post('/telephone-number', app.locals.container.cradle.telNumberController.post);
 
   app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
   app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.post);
