@@ -5,6 +5,7 @@ import {
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
+  isValidUKTelNumber,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
 
@@ -160,6 +161,28 @@ describe('Validation', () => {
       { mockRef: 'SW1A!1AA', expected: 'invalid' },
     ])('validates the help with fees ref when %o', ({ mockRef, expected }) => {
       expect(isInvalidPostcode(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidUKTelNumber()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: null, expected: undefined },
+      { mockRef: '12345', expected: 'invalid' },
+      { mockRef: '@£$£@$%', expected: 'invalid' },
+      { mockRef: 'not a phone number', expected: 'invalid' },
+      { mockRef: '01234!567890', expected: 'invalid' },
+      { mockRef: '00361234567890', expected: 'invalid' },
+      { mockRef: '01234 567 890', expected: undefined },
+      { mockRef: '01234 567890', expected: undefined },
+      { mockRef: '+441234567890', expected: undefined },
+      { mockRef: '+4401234567890', expected: undefined },
+      { mockRef: '00441234567890', expected: undefined },
+      { mockRef: '004401234567890', expected: undefined },
+      { mockRef: '01234567890', expected: undefined },
+      { mockRef: '1234567890', expected: undefined },
+    ])('check telephone number validity when %o', ({ mockRef, expected }) => {
+      expect(isValidUKTelNumber(mockRef)).toEqual(expected);
     });
   });
 });

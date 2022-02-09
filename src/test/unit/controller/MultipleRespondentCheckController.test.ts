@@ -1,8 +1,5 @@
-import sinon from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import MultipleRespondentCheckController from '../../../main/controllers/multiple_respondent/MultipleRespondentCheckController';
-import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
@@ -44,14 +41,11 @@ describe('Mutiple Response Controller Tests', () => {
   it('should render multiple respondent page', () => {
     const controller = new MultipleRespondentCheckController(mockedFormContent);
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t });
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('multiple-respondent-check');
+    const request = mockRequest({ t });
 
     controller.get(request, response);
 
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('multiple-respondent-check', expect.anything());
   });
 
   it('should redirect back to self if there are errors', () => {
