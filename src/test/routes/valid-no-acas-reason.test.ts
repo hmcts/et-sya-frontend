@@ -3,10 +3,10 @@ import request from 'supertest';
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 
-const PAGE_URL = '/do-you-have-an-acas-single-resps';
+const PAGE_URL = '/do-you-have-a-valid-no-acas-reason';
 
 describe(`GET ${PAGE_URL}`, () => {
-  it('should return the acas single claim page', async () => {
+  it('should return the valid no acas reason page', async () => {
     const res = await request(app).get(PAGE_URL);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
@@ -14,11 +14,11 @@ describe(`GET ${PAGE_URL}`, () => {
 });
 
 describe(`on POST ${PAGE_URL}`, () => {
-  test('should return the acas single claim page when "correct data is enterered" is selected', async () => {
+  test('should return the valid no acas reason page when "correct data is entered" is selected', async () => {
     await request(app)
       .post(PAGE_URL)
       .send({
-        isAcasSingle: YesOrNo.YES,
+        validNoAcasReason: YesOrNo.YES,
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
@@ -26,11 +26,11 @@ describe(`on POST ${PAGE_URL}`, () => {
       });
   });
 
-  test('should return the acas single claim page when "incorrect data is enterered"', async () => {
+  test('should return the valid no acas reason page when "incorrect data is entered"', async () => {
     await request(app)
       .post(PAGE_URL)
       .send({
-        isAcasSingle: undefined,
+        validNoAcasReason: undefined,
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);

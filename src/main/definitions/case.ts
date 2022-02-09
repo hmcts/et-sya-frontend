@@ -24,6 +24,7 @@ export interface Case {
   IsASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
   telNumber?: string;
+  validNoAcasReason?: YesOrNo;
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
 }
