@@ -36,7 +36,7 @@ describe('Job Title Controller', () => {
       const body = {
         jobTitle: '',
       };
-      const errors: FormError = [];
+      const errors: FormError[] = [];
       const controller = new JobTitleController(mockFormContent);
 
       const req = mockRequest({ body });
