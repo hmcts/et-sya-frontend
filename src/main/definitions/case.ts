@@ -26,6 +26,7 @@ export interface Case {
   telNumber?: string;
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
+  jobTitle?: string;
 }
 
 export interface CaseWithId extends Case {

@@ -2,7 +2,6 @@ import JobTitleController from '../../../main/controllers/job_title/JobTitleCont
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
 
 describe('Job Title Controller', () => {
   const t = {
@@ -17,7 +16,6 @@ describe('Job Title Controller', () => {
         name: 'job-title',
         type: 'text',
         classes: 'govuk-!-width-one-half',
-        validator: (value: string) => isFieldFilledIn(value),
       },
     },
   } as unknown as FormContent;
@@ -34,18 +32,21 @@ describe('Job Title Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the same screen when job title is not present', () => {
-      const errors = [{ propertyName: 'jobTitle', errorType: 'required' }];
-      const body = { jobTitle: '' };
-
+    it('should not return an errors when the job title is empty', () => {
+      const body = {
+        jobTitle: '',
+      };
+      const errors: any[] = [];
       const controller = new JobTitleController(mockFormContent);
 
       const req = mockRequest({ body });
       const res = mockResponse();
+      req.session.userCase = undefined;
+
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
-      expect(req.session.errors).toStrictEqual(errors);
+      expect(res.redirect).toBeCalledWith('/');
+      expect(req.session.errors).toEqual(errors);
     });
 
     it('should add the jobtile to the session userCase', () => {
