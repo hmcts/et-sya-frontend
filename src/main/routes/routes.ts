@@ -50,9 +50,6 @@ export default function (app: Application): void {
   app.get('/return-to-existing', app.locals.container.cradle.returnToExistingController.get);
   app.post('/return-to-existing', app.locals.container.cradle.returnToExistingController.post);
 
-  app.get('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.get);
-  app.post('/do-you-have-an-acas-single-resps', app.locals.container.cradle.acasSingleClaimController.post);
-
   app.get('/job-title', app.locals.container.cradle.jobTitleController.get);
   app.post('/job-title', app.locals.container.cradle.jobTitleController.post);
   app.get(
