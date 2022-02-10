@@ -32,7 +32,7 @@ describe('Job Title Controller', () => {
   });
 
   describe('post()', () => {
-    it('should not return an errors when the job title is empty', () => {
+    it('should not return an error when the job title is empty', () => {
       const body = {
         jobTitle: '',
       };
