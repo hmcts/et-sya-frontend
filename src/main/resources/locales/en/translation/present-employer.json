@@ -1,0 +1,10 @@
+{
+  "heading": "Are you still working for the organisation or person who dismissed you?",
+  "yes": "Yes - I'm working my notice period",
+  "no": "No - I'm no longer working for them",
+  "errors": {
+    "presentEmployer": {
+      "required": "Select an option"
+    }
+  }
+}
