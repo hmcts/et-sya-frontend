@@ -49,7 +49,6 @@ export default function (app: Application): void {
   app.get('/your-claim-has-been-saved', app.locals.container.cradle.claimSavedController.get);
   app.get('/return-to-existing', app.locals.container.cradle.returnToExistingController.get);
   app.post('/return-to-existing', app.locals.container.cradle.returnToExistingController.post);
-
   app.get('/job-title', app.locals.container.cradle.jobTitleController.get);
   app.post('/job-title', app.locals.container.cradle.jobTitleController.post);
   app.get(
