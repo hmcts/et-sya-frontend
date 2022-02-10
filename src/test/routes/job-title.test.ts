@@ -1,4 +1,5 @@
 import request from 'supertest';
+
 import { app } from '../../main/app';
 
 const PAGE_URL = '/job-title';

@@ -1,5 +1,5 @@
 import JobTitleController from '../../../main/controllers/job_title/JobTitleController';
-import { FormContent } from '../../../main/definitions/form';
+import { FormContent, FormError } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -36,7 +36,7 @@ describe('Job Title Controller', () => {
       const body = {
         jobTitle: '',
       };
-      const errors: any[] = [];
+      const errors: FormError = [];
       const controller = new JobTitleController(mockFormContent);
 
       const req = mockRequest({ body });
