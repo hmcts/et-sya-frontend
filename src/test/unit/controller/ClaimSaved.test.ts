@@ -1,4 +1,4 @@
-import ClaimSavedController from '../../../main/controllers/claimSavedController';
+import ClaimSavedController from '../../../main/controllers/ClaimSavedController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
