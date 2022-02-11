@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-const frontend = process.env.TEST_URL || 'https://localhost:3100';
+const frontend = process.env.TEST_URL || 'https://localhost:3001';
 
 describe('ET-SYA frontend health chech', () => {
   it('should return a 200 status', async () => {
