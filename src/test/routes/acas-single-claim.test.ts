@@ -34,7 +34,7 @@ describe(`on POST ${PAGE_URL}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/do-you-have-a-valid-no-acas-reason');
       });
   });
 
