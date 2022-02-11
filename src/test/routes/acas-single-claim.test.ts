@@ -26,7 +26,7 @@ describe(`on POST ${PAGE_URL}`, () => {
       });
   });
 
-  test('should return the acas single claim page when "No" is selected', async () => {
+  test('should return the do you have a valid reason when "No" is selected', async () => {
     await request(app)
       .post(PAGE_URL)
       .send({

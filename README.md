@@ -6,7 +6,7 @@
 
 Running the application requires the following tools to be installed in your environment:
 
-- [Node.js](https://nodejs.org/) v12.0.0 or later
+- [Node.js](https://nodejs.org/) v14.0.0 or later
 - [yarn](https://yarnpkg.com/)
 - [Docker](https://www.docker.com)
 
@@ -57,12 +57,21 @@ You should get a very basic home page (no styles, etc.).
 ### Code style
 
 We use [ESLint](https://github.com/typescript-eslint/typescript-eslint)
+with [Prettier](https://github.com/prettier/prettier)
 alongside [sass-lint](https://github.com/sasstools/sass-lint)
+[Husky] Pre-Commit Hooks are enabled which makes sure all your files are formatted
+before commiting (https://github.com/typicode/husky)
 
-Running the linting with auto fix:
+Running the linting with ES auto fix and Prettier check:
 
 ```bash
 $ yarn lint --fix
+```
+
+Running the linting with Prettier auto fix:
+
+```bash
+$ yarn prettier src/* --write
 ```
 
 ### Running the tests
@@ -87,6 +96,12 @@ $ yarn test:a11y
 ```
 
 Make sure all the paths in your application are covered by accessibility tests (see [a11y.ts](src/test/a11y/a11y.ts)).
+
+Running all continuous integration tests:
+
+```bash
+$ yarn cichecks
+```
 
 ### Security
 
