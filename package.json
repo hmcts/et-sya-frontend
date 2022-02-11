@@ -21,9 +21,6 @@
     "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y",
     "prepare": "husky install"
   },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
-  },
   "dependencies": {
     "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
