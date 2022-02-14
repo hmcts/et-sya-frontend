@@ -25,7 +25,7 @@ export default class AcasMultipleController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.acasFormContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.ACAS_SINGLE_CLAIM,
+      TranslationKeys.ACAS_MULTIPLE_CLAIM,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_MULTIPLE_CLAIM, {

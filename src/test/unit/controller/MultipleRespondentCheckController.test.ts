@@ -1,6 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import MultipleRespondentCheckController from '../../../main/controllers/multiple_respondent/MultipleRespondentCheckController';
 import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -71,7 +72,7 @@ describe('Mutiple Response Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.redirect).toBeCalledWith(PageUrls.ACAS_MULTIPLE_CLAIM);
     expect(req.session.errors).toEqual([]);
   });
 });

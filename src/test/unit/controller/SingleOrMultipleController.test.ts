@@ -1,7 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import SingleOrMultipleController from '../../../main/controllers/single_or_multiple_claim/singleOrMultipleController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { LEGACY_URLS } from '../../../main/definitions/constants';
+import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -51,7 +51,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.redirect).toBeCalledWith(PageUrls.MULTIPLE_RESPONDENT_CHECK);
   });
 
   it("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {
@@ -62,7 +62,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(LEGACY_URLS.ET1);
+    expect(res.redirect).toBeCalledWith(LegacyUrls.ET1);
   });
 
   it('should render same page if nothing selected', () => {
