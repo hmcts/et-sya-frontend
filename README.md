@@ -157,9 +157,18 @@ e.g. the ones verifying the state of each service it depends on.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-### Running functional tests
+## Functional tests
 
-Run:
+### Technology Stack
+
+| Technology | Description                               | 
+|------------|-------------------------------------------|
+| Nodejs & Yarn    |   [Node.js](https://nodejs.org/) & [yarn](https://yarnpkg.com/)         | 
+| Codecept 3.2.3     | CodeceptJS allows to run several browser sessions inside a test. This can be useful for testing communication between users inside a chat or other systems.|
+| Puppeteer 13.2.0   | Puppeteer framework is one such framework that offers Headless Browser Testing for Google Chrome. It allows the tester to perform the actions on the Chrome browser using commands in JavaScript| 
+| JavaScript | Using java script to implement features & scenarios | 
+
+### Running functional tests
 
 ```bash
 $ yarn test:functional
