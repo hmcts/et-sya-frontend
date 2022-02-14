@@ -1,3 +1,4 @@
+import { isJobTitleValid } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -13,6 +14,7 @@ export const jobTitleContent: FormContent = {
       attributes: {
         autocomplete: 'organization-title',
       },
+      validator: isJobTitleValid,
     },
   },
   submit: {
