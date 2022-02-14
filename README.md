@@ -141,3 +141,17 @@ e.g. the ones verifying the state of each service it depends on.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+### Running functional tests
+
+Install dependencies by executing the following command:
+
+```bash
+$ yarn install
+```
+
+Run:
+
+```bash
+$ yarn test:functional
+```
