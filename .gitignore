@@ -25,3 +25,5 @@ dist/
 public/
 coverage/
 package-lock.json
+
+functional-output/functional/reports
