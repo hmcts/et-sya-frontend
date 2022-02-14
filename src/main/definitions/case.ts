@@ -27,6 +27,7 @@ export interface Case {
   validNoAcasReason?: YesOrNo;
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
+  presentEmployer?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {

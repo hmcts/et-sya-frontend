@@ -6,7 +6,7 @@
 
 Running the application requires the following tools to be installed in your environment:
 
-- [Node.js](https://nodejs.org/) v12.0.0 or later
+- [Node.js](https://nodejs.org/) v14.0.0 or later
 - [yarn](https://yarnpkg.com/)
 - [Docker](https://www.docker.com)
 
@@ -30,7 +30,7 @@ Run:
 $ yarn start
 ```
 
-The applications's home page will be available at https://localhost:3100
+The applications's home page will be available at https://localhost:3001
 
 ### Running with Docker
 
@@ -47,9 +47,9 @@ Run the application by executing the following command:
 ```
 
 This will start the frontend container exposing the application's port
-(set to `3100` in this template app).
+(set to `3001` in this template app).
 
-In order to test if the application is up, you can visit https://localhost:3100 in your browser.
+In order to test if the application is up, you can visit https://localhost:3001 in your browser.
 You should get a very basic home page (no styles, etc.).
 
 ## Developing
@@ -57,12 +57,21 @@ You should get a very basic home page (no styles, etc.).
 ### Code style
 
 We use [ESLint](https://github.com/typescript-eslint/typescript-eslint)
+with [Prettier](https://github.com/prettier/prettier)
 alongside [sass-lint](https://github.com/sasstools/sass-lint)
+[Husky] Pre-Commit Hooks are enabled which makes sure all your files are formatted
+before commiting (https://github.com/typicode/husky)
 
-Running the linting with auto fix:
+Running the linting with ES auto fix and Prettier check:
 
 ```bash
 $ yarn lint --fix
+```
+
+Running the linting with Prettier auto fix:
+
+```bash
+$ yarn prettier src/* --write
 ```
 
 ### Running the tests
@@ -87,6 +96,12 @@ $ yarn test:a11y
 ```
 
 Make sure all the paths in your application are covered by accessibility tests (see [a11y.ts](src/test/a11y/a11y.ts)).
+
+Running all continuous integration tests:
+
+```bash
+$ yarn cichecks
+```
 
 ### Security
 
@@ -132,7 +147,7 @@ Make sure you have those values set correctly for your application.
 
 ### Healthcheck
 
-The application exposes a health endpoint (https://localhost:3100/health), created with the use of
+The application exposes a health endpoint (https://localhost:3001/health), created with the use of
 [Nodejs Healthcheck](https://github.com/hmcts/nodejs-healthcheck) library. This endpoint is defined
 in [health.ts](src/main/routes/health.ts) file. Make sure you adjust it correctly in your application.
 In particular, remember to replace the sample check with checks specific to your frontend app,

@@ -48,6 +48,7 @@ export const PageUrls = {
   TELEPHONE_NUMBER: '/telephone-number',
   GENDER_DETAILS: '/gender-details',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
+  PRESENT_EMPLOYER: '/present-employer',
 } as const;
 
 export const AuthUrls = {
