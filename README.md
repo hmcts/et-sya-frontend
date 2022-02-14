@@ -144,12 +144,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Running functional tests
 
-Install dependencies by executing the following command:
-
-```bash
-$ yarn install
-```
-
 Run:
 
 ```bash
