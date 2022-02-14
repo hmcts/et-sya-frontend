@@ -1,7 +1,6 @@
 import { isFieldFilledIn } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { YesOrNo } from '../../definitions/case';
 
 export const stillWorkingContent: FormContent = {
     fields: {
@@ -12,21 +11,21 @@ export const stillWorkingContent: FormContent = {
             label: (l: AnyRecord): string => l.label,
             values: [
                 {
-                    name: '',
+                    name: 'working',
                     label: (l: AnyRecord): string => l.optionText1,
-                    value: YesOrNo.YES,
+                    value: 1,
                     selected: false,
                 },
                 {
-                    name: '',
+                    name: 'working_notice',
                     label: (l: AnyRecord): string => l.optionText2,
-                    value: YesOrNo.YES,
+                    value: 2,
                     selected: false,
                 },
                 {
-                    name: 'have_account',
+                    name: 'not_working',
                     label: (l: AnyRecord): string => l.optionText3,
-                    value: YesOrNo.NO,
+                    value: 3,
                     selected: false,
                 },
             ],
