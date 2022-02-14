@@ -22,12 +22,12 @@
       }) }}
       {{ govukButton({
         text: startNow,
-        href: "/checklist",
+        href: PageUrls.CHECKLIST,
         isStartButton: true
       }) }}
       <ul class="govuk-list">
         <li><b>{{ claimStartedTxt }}</b></li>
-        <li><a href="/" class="govuk-link">{{ returnClaimTxt }}</a></li>
+        <li><a href={{PageUrls.RETURN_TO_EXISTING}} class="govuk-link">{{ returnClaimTxt }}</a></li>
       </ul>
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
       <p class="govuk-body">{{ contactUsHelpTxt }}</p>

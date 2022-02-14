@@ -1,13 +1,9 @@
 {% extends "template.njk" %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
-  {{ govukBackLink({
-  text: back,
-  href: "/"
-}) }}
+  {% include "back-link.njk"%}
 {% endblock %}
 
 {% block content %}

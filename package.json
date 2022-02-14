@@ -54,7 +54,7 @@
     "express-session": "^1.17.2",
     "glob": "^7.1.6",
     "google-libphonenumber": "^3.2.26",
-    "govuk-frontend": "^4.0.0",
+    "govuk-frontend": "^4.0.1",
     "helmet": "^4.2.0",
     "i18next": "^21.6.0",
     "i18next-http-middleware": "^3.1.4",
