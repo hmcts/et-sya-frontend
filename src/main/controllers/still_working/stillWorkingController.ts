@@ -17,7 +17,7 @@ export default class stillWorkingController {
     };
   
     public get = (req: AppRequest, res: Response): void => {
-      const content = getPageContent(req, this.stillWorkingContent, ['common', 'address-details']);
+      const content = getPageContent(req, this.stillWorkingContent, ['common', 'still-working']);
       assignFormData(req.session.userCase, this.form.getFormFields());
       res.render('still-working', {
         ...content,
