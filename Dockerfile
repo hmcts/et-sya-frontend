@@ -1,7 +1,7 @@
 # ---- Base image ----
 FROM hmctspublic.azurecr.io/base/node:14-alpine as base
 COPY --chown=hmcts:hmcts . .
-RUN yarn install --frozen-lockfile --production \
+RUN yarn install --production \
   && yarn cache clean
 
 # ---- Build image ----
