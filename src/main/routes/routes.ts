@@ -46,7 +46,6 @@ export default function (app: Application): void {
   app.get('/present-employer', app.locals.container.cradle.presentEmployerController.get);
   app.post('/present-employer', app.locals.container.cradle.presentEmployerController.post);
 
-
   app.get('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.get);
   app.post('/would-you-want-to-take-part-in-video-hearings', app.locals.container.cradle.videoHearingsController.post);
 
