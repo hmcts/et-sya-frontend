@@ -5153,10 +5153,10 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-i18next-http-middleware@^3.1.4:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/i18next-http-middleware/-/i18next-http-middleware-3.1.6.tgz#d6c02fa806305f516ac05c11f0f3076f72cb3e44"
-  integrity sha512-hCsOHePc+zW3t4BqYVOBZy/WBeoJiUILuc9h+agT2WkAowJQyKUDuTRKG8W6thqDqE8XWtluqEHnR8lYkXFcnQ==
+i18next-http-middleware@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/i18next-http-middleware/-/i18next-http-middleware-3.2.0.tgz#baabe77c70964229d022e47ab2faa7fbab27498c"
+  integrity sha512-xsQls5hMeHTuDYt0SSS2rgJP7EtNQ1YuYzSQUSloUH3bhz/vahXQuJYm9n+ajdG1fpTEjo7yDpLwDWzRu+o1HQ==
 
 i18next@*, i18next@^21.6.0:
   version "21.6.11"
