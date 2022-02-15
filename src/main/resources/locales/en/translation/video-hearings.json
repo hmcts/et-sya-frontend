@@ -10,5 +10,9 @@
     "li1": "have a reliable internet connection",
     "li2": "know how to join the hearing"
   },
-  "errorMessage": "Select an option"
+  "errors": {
+    "videoHearings": {
+      "required": "Select an Option"
+    }
+  }
 }

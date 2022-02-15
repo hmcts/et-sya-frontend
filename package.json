@@ -18,7 +18,8 @@
     "sonar-scan": "sonar-scanner",
     "test:smoke": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && jest -c jest.smoke.config.js",
     "test:functional": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && jest -c jest.smoke.config.js",
-    "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y"
+    "cichecks": "yarn && yarn build && yarn lint  && yarn test && yarn test:routes &&  yarn test:a11y",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hmcts/frontend": "^0.0.50-alpha",
@@ -57,7 +58,7 @@
     "govuk-frontend": "^4.0.0",
     "helmet": "^4.2.0",
     "i18next": "^21.6.0",
-    "i18next-http-middleware": "^3.1.4",
+    "i18next-http-middleware": "^3.2.0",
     "jquery": "^3.5.1",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
