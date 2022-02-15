@@ -4,22 +4,23 @@ exports.config = {
   tests: testConfig.tests,
   output: testConfig.reportFolder,
   helpers: testConfig.helpers,
+  include: { I: './pages/steps.js' },
   plugins: {
     allure: {
-      enabled: true
+      enabled: true,
     },
     pauseOnFail: {
-      enabled: false
+      enabled: false,
     },
     retryFailedStep: {
-      enabled: true
+      enabled: true,
     },
     tryTo: {
-      enabled: true
+      enabled: true,
     },
     screenshotOnFail: {
       enabled: true,
-      fullPageScreenshots: true
-    }
-  }
-}
+      fullPageScreenshots: true,
+    },
+  },
+};
