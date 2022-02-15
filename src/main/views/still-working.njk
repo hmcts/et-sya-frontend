@@ -11,12 +11,9 @@
 {% endblock %}
 
 {% block content %}
-	 {{ 
-    govukErrorSummary({
-      titleText: errorSummaryTitle,
-      errorList: getErrors(form.fields)
-    }) if getErrors(form.fields).length > 0
-  }}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">

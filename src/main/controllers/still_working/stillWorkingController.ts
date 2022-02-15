@@ -14,14 +14,14 @@ export default class stillWorkingController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '/are-you-still-working';
-    if (req.body.isStillWorking === 1) {
-      // this redirect URL below will need updated to the still working page
+    if (req.body.isStillWorking === 'WORKING') {
+      // TODO update url with employment details(WORKING) page
       redirectUrl = '/';
-    } else if (req.body.isStillWorking === 2) {
-      // this redirect URL below will need to be updated to the working notice page
+    } else if (req.body.isStillWorking === 'NOTICE') {
+      // TODO update url with employment details(NOTICE) page
       redirectUrl = '/';
-    } else if (req.body.isStillWorking === 3) {
-      // this redirect URL below will need to be updated to the not working page
+    } else if (req.body.isStillWorking === 'NO LONGER WORKING') {
+      // TODO update url with employment details(NO LONGER WORKING) page
       redirectUrl = '/';
     }
 

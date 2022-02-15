@@ -13,19 +13,19 @@ export const stillWorkingContent: FormContent = {
         {
           name: 'working',
           label: (l: AnyRecord): string => l.optionText1,
-          value: 1,
+          value: 'WORKING',
           selected: false,
         },
         {
           name: 'working_notice',
           label: (l: AnyRecord): string => l.optionText2,
-          value: 2,
+          value: 'NOTICE',
           selected: false,
         },
         {
           name: 'not_working',
           label: (l: AnyRecord): string => l.optionText3,
-          value: 3,
+          value: 'NO LONGER WORKING',
           selected: false,
         },
       ],
