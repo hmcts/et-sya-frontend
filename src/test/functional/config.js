@@ -15,7 +15,7 @@ module.exports = {
       show: !testHeadlessBrowser,
       waitForNavigation: 'networkidle0',
       ignoreHTTPSErrors,
-      headless: !testHeadlessBrowser,
+      headless: true,
       chrome: {
         ignoreHTTPSErrors,
         args: ['--no-sandbox', '--proxy-server=proxyout.reform.hmcts.net:8080'],
