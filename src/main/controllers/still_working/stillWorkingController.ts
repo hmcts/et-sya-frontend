@@ -18,9 +18,13 @@ export default class stillWorkingController {
       // this redirect URL below will need updated to the still working page
       redirectUrl = '/';
     } else if (req.body.isStillWorking === 2) {
-      // this redirect URL below will need to be updated to the notice 
+      // this redirect URL below will need to be updated to the working notice page
+      redirectUrl = '/';
+    } else if (req.body.isStillWorking === 3) {
+      // this redirect URL below will need to be updated to the not working page
       redirectUrl = '/';
     }
+
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
