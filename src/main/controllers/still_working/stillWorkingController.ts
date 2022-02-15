@@ -13,7 +13,15 @@ export default class stillWorkingController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, '/');
+    let redirectUrl = '/are-you-still-working';
+    if (req.body.isStillWorking === 1) {
+      // this redirect URL below will need updated to the still working page
+      redirectUrl = '/';
+    } else if (req.body.isStillWorking === 2) {
+      // this redirect URL below will need to be updated to the notice 
+      redirectUrl = '/';
+    }
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
