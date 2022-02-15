@@ -13,7 +13,19 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
   ],
-  globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
+  globals: { 
+    Atomics: 'readonly', 
+    SharedArrayBuffer: 'readonly',
+    "actor": true,
+    "Feature": true,
+    "Scenario": true,
+    "xScenario": true,
+    "Before": true,
+    "BeforeSuite": true,
+    "AfterSuite": true,
+    "codecept_helper": true,
+    "pause":true
+  },
   rules: {
     '@typescript-eslint/array-type': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
