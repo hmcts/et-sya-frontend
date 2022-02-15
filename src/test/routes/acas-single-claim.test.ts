@@ -14,7 +14,7 @@ describe(`GET ${PAGE_URL}`, () => {
 });
 
 describe(`on POST ${PAGE_URL}`, () => {
-  test('should return the acas single claim page when "correct data is enterered" is selected', async () => {
+  test('should return the acas single claim page when "Yes" is selected', async () => {
     await request(app)
       .post(PAGE_URL)
       .send({
@@ -22,7 +22,19 @@ describe(`on POST ${PAGE_URL}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/type-of-claim');
+      });
+  });
+
+  test('should return the do you have a valid reason when "No" is selected', async () => {
+    await request(app)
+      .post(PAGE_URL)
+      .send({
+        isAcasSingle: YesOrNo.NO,
+      })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual('/do-you-have-a-valid-no-acas-reason');
       });
   });
 

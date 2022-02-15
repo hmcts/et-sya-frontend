@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
+import { CLAIM_SAVED } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -30,13 +31,19 @@ export const getSessionErrors = (req: AppRequest, form: Form): FormError[] => {
 export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
   const sessionErrors = getSessionErrors(req, form);
   req.session.errors = sessionErrors;
+  const { saveForLater } = req.body;
+  const requiredErrExists = sessionErrors.some(err => err.errorType === 'required');
 
-  if (sessionErrors.length > 0) {
+  if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
+    req.session.errors = [];
+    return res.redirect(CLAIM_SAVED);
+  }
+  if (sessionErrors.length) {
     req.session.save(err => {
       if (err) {
         throw err;
       }
-      res.redirect(req.url);
+      return res.redirect(req.url);
     });
   } else {
     res.redirect(redirectUrl);

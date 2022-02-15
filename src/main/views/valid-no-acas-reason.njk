@@ -1,0 +1,43 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    text: back,
+    href: backLink
+  }) }}
+{% endblock %}
+{% block content %}
+
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <p class="govuk-body">
+        {{ p1 }}<br><br>
+        {{ p2 }}
+      </p>
+      <ul class="govuk-list govuk-list--bullet govuk-list--spaced govuk-!-margin-bottom-9">
+        <li>{{ li1 }}</li>
+        <li>{{ li2 }}</li>
+        <li>{{ li3 }}</li>
+        <li>{{ li4 }}</li>
+      </ul>
+      {{ govukWarningText({
+        text: warningTxt1,
+        iconFallbackText: warningTxt
+      }) }}
+      <div class="govuk-inset-text">{{ insetText1 | safe }}</div>
+    </div>
+  </div>
+  {% block form %}
+    {% include "form/form.njk"%}
+  {% endblock %}
+{% endblock %}
