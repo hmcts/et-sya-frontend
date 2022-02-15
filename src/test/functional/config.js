@@ -11,7 +11,8 @@ module.exports = {
     Puppeteer: {
       url: testUrl,
       waitForTimeout: 10000,
-      waitForAction: 1000,
+      waitForAction: 2000,
+      getPageTimeout: 30000,
       show: !testHeadlessBrowser,
       waitForNavigation: 'networkidle0',
       ignoreHTTPSErrors,
