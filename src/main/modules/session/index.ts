@@ -43,6 +43,6 @@ export class Session {
       return new RedisStore({ client });
     }
 
-    return new FileStore({ path: '/tmp' });
+    return new FileStore({ path: '/tmp', reapInterval: -1 });
   }
 }
