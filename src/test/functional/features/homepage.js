@@ -7,7 +7,6 @@ Scenario('ET homepage to create single claim for myself', async () => {
   I.wait(waitSeconds);
 });
 
-/*
 Scenario('ET homepage to create single claim for myself', async () => {
   etpageFlow();
   I.wait(waitSeconds);
@@ -50,4 +49,4 @@ async function etpageFlow() {
   I.wait(waitSeconds);
   I.see('To make a claim you may want to prepare and have the following to hand');
   I.click('Continue');
-}*/
+}
