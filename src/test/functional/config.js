@@ -16,9 +16,10 @@ module.exports = {
       waitForNavigation: 'networkidle0',
       ignoreHTTPSErrors: true,
       headless: true,
+      browser: 'chrome',
       chrome: {
         ignoreHTTPSErrors: true,
-        args: ['--no-sandbox', '--proxy-server=proxyout.reform.hmcts.net:8080'],
+        args: ['--no-sandbox', '--ignore-certificate-errors'],
       },
     },
   },
