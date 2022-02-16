@@ -4,7 +4,9 @@ exports.config = {
   tests: testConfig.tests,
   output: testConfig.reportFolder,
   helpers: testConfig.helpers,
-  include: { I: './pages/steps.js' },
+  include: {
+    I: './pages/steps.js',
+  },
   plugins: {
     allure: {
       enabled: true,
