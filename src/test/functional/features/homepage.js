@@ -2,10 +2,6 @@ Feature('ET Homepage');
 const testConfig = require('../config.js');
 const { I } = inject();
 const waitSeconds = 5;
-Scenario('ET homepage to create single claim', async () => {
-  I.amOnPage(testConfig.testUrl);
-  I.wait(waitSeconds);
-});
 
 Scenario('ET homepage to create single claim for myself', async () => {
   etpageFlow();
