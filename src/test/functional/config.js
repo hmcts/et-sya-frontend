@@ -1,6 +1,6 @@
 const testHeadlessBrowser = true;
 const testUrl = process.env.TEST_URL || 'http://localhost:3001';
-const ignoreHTTPSErrors = true;
+const httpsErrorsIngore = true;
 module.exports = {
   testUrl,
   name: 'et-ui-functional',
@@ -15,10 +15,10 @@ module.exports = {
       getPageTimeout: 30000,
       show: !testHeadlessBrowser,
       waitForNavigation: 'networkidle0',
-      ignoreHTTPSErrors,
+      ignoreHTTPSErrors: httpsErrorsIngore,
       headless: true,
       chrome: {
-        ignoreHTTPSErrors,
+        ignoreHTTPSErrors: httpsErrorsIngore,
         args: ['--no-sandbox', '--proxy-server=proxyout.reform.hmcts.net:8080'],
       },
     },
