@@ -1,7 +1,7 @@
 Feature('ET Homepage');
 const testConfig = require('../config.js');
 const { I } = inject();
-const waitSeconds = 30;
+const waitSeconds = 5;
 Scenario('ET homepage to create single claim', async () => {
   I.amOnPage(testConfig.testUrl);
   I.wait(waitSeconds);
