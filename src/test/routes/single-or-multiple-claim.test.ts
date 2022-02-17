@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
-import { LEGACY_URLS } from '../../main/definitions/constants';
+import { LegacyUrls } from '../../main/definitions/constants';
 
 describe('GET /single-or-multiple-claim', () => {
   it('should return the single or multiple claim page', async () => {
@@ -30,7 +30,7 @@ describe('on POST /single-or-multiple-claim', () => {
       .send({ isASingleClaim: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(LEGACY_URLS.ET1);
+        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1);
       });
   });
 });

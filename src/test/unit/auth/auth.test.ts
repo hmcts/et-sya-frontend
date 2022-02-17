@@ -2,7 +2,7 @@ import Axios, { AxiosStatic } from 'axios';
 import config from 'config';
 
 import { getRedirectUrl, getUserDetails } from '../../../main/auth';
-import { CALLBACK_URL } from '../../../main/definitions/constants';
+import { AuthUrls } from '../../../main/definitions/constants';
 
 jest.mock('axios');
 
@@ -13,7 +13,7 @@ const loginUrl = config.get('services.idam.authorizationURL');
 
 describe('getRedirectUrl', () => {
   test('should create a valid URL to redirect to the login screen', () => {
-    expect(getRedirectUrl('http://localhost', CALLBACK_URL)).toBe(
+    expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK)).toBe(
       `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback`
     );
   });
@@ -28,7 +28,7 @@ describe('getUserDetails', () => {
       },
     });
 
-    const result = await getUserDetails('http://localhost', '123', CALLBACK_URL);
+    const result = await getUserDetails('http://localhost', '123', AuthUrls.CALLBACK);
     expect(result).toStrictEqual({
       accessToken: token,
       email: 'test@test.com',

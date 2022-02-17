@@ -1,6 +1,6 @@
 const path = require('path');
 
-const sourcePath = path.resolve(__dirname, 'src/main/assets/');
+const sourcePath = path.resolve(__dirname, 'src/main/assets/js');
 const govukFrontend = require(path.resolve(__dirname, 'webpack/govukFrontend'));
 const hmctsFrontend = require(path.resolve(__dirname, 'webpack/hmctsFrontend'));
 const scss = require(path.resolve(__dirname, 'webpack/scss'));
@@ -12,7 +12,7 @@ const filename = `[name]${fileNameSuffix}.js`;
 
 module.exports = {
   plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins],
-  entry: path.resolve(sourcePath, 'js/index.js'),
+  entry: path.resolve(sourcePath, 'index.js'),
   mode: devMode ? 'development' : 'production',
   module: {
     rules: [
