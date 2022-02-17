@@ -1,8 +1,8 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
-import StillWorkingController from 'controllers/still_working/StillWorkingController';
-import { FormContent } from 'definitions/form';
-import { mockResponse } from '../mocks/mockResponse';
+import StillWorkingController from '../../../main/controllers/still_working/StillWorkingController';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Are you still working controller', () => {
   const t = {
