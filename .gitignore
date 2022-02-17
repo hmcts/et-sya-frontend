@@ -26,3 +26,4 @@ public/
 coverage/
 package-lock.json
 .vscode
+functional-output/functional/reports
