@@ -6,7 +6,7 @@ home: https://github.com/hmcts/et-sya
 version: 0.0.4
 dependencies:
   - name: nodejs
-    version: 2.4.0
+    version: 2.3.9
     repository: '@hmctspublic'
   - name: idam-pr
     version: 2.2.6
