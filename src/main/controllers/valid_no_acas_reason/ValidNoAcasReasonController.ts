@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
@@ -14,24 +15,20 @@ export default class ValidNoAcasReasonController {
   }
 
   public get = (req: AppRequest, res: Response): void => {
-    // TODO(Angela): Add correct back link for multiple resp
-    const pageBackLink =
-      !!req.session && !!req.session.userCase && !!req.session.userCase.acasMultiple
-        ? '/do-you-have-an-acas-no-many-resps'
-        : '/do-you-have-an-acas-single-resps';
-    const content = getPageContent(req, this.validNoAcasReasonFormContent, ['common', 'valid-no-acas-reason']);
+    const content = getPageContent(req, this.validNoAcasReasonFormContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.NO_ACAS_NUMBER,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('valid-no-acas-reason', {
+    res.render(TranslationKeys.NO_ACAS_NUMBER, {
       ...content,
-      backLink: pageBackLink,
     });
   };
 
   public post = (req: AppRequest, res: Response): void => {
-    // TODO(Angela): Change to the correct redirect url
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? '/type-of-claim'
-      : '/contact-acas';
+      ? PageUrls.TYPE_OF_CLAIM
+      : PageUrls.CONTACT_ACAS;
 
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
