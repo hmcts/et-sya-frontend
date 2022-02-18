@@ -1,3 +1,6 @@
+import os from 'os';
+
+import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
 import { PageUrls } from '../definitions/constants';
@@ -36,4 +39,15 @@ export default function (app: Application): void {
   app.post(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.post);
   app.get(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.get);
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
+  app.get(
+    PageUrls.INFO,
+    infoRequestHandler({
+      extraBuildInfo: {
+        host: os.hostname(),
+        name: 'et-sya-frontend',
+        uptime: process.uptime(),
+      },
+      info: {},
+    })
+  );
 }
