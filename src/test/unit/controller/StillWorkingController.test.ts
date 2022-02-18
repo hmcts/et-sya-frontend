@@ -43,4 +43,49 @@ describe('Are you still working controller', () => {
 
     expect(response.render).toHaveBeenCalledWith('still-working', expect.anything());
   });
+
+  it('should render the employment details(WORKING) page', () => {
+    const body = { isStillWorking: 'WORKING' };
+    const controller = new StillWorkingController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+    //TODO update with appropriate URL
+    expect(res.redirect).toBeCalledWith('/');
+  });
+
+  it('should render the employment details(NOTICE) page', () => {
+    const body = { isStillWorking: 'NOTICE' };
+    const controller = new StillWorkingController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+    //TODO update with appropriate URL
+    expect(res.redirect).toBeCalledWith('/');
+  });
+  it('should render the employment details(NO LONGER WORKING) page', () => {
+    const body = { isStillWorking: 'NO LONGER WORKING' };
+    const controller = new StillWorkingController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+    //TODO update with appropriate URL
+    expect(res.redirect).toBeCalledWith('/');
+  });
+
+  it('should render same page if nothing selected', () => {
+    const errors = [{ propertyName: 'isStillWorking', errorType: 'required' }];
+    const body = { isStillWorking: '' };
+    const controller = new StillWorkingController(mockFormContent);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
 });
