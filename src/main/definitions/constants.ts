@@ -22,6 +22,7 @@ export const TranslationKeys = {
   TELEPHONE_NUMBER: 'telephone-number',
   UPDATE_PREFERENCE: 'update-preference',
   NO_ACAS_NUMBER: 'valid-no-acas-reason',
+  STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
 } as const;
@@ -39,6 +40,7 @@ export const PageUrls = {
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
   MULTIPLE_RESPONDENT_CHECK: '/multiple-respondent-check',
   NO_ACAS_NUMBER: '/do-you-have-a-valid-no-acas-reason',
+  STILL_WORKING: '/are-you-still-working',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
   DOB_DETAISLS: '/dob-details',

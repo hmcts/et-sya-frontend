@@ -41,7 +41,9 @@ export default function (app: Application): void {
   app.post(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.post);
   app.get(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.get);
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
-
+  app.get(PageUrls.STILL_WORKING, app.locals.container.cradle.StillWorkingController.get);
+  app.post(PageUrls.STILL_WORKING, app.locals.container.cradle.StillWorkingController.post);
+  
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),
