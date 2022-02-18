@@ -2,8 +2,8 @@ import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { FormContent, FormFields } from '../../definitions/form';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 export default class StillWorkingController {
   private readonly form: Form;
