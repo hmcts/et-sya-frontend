@@ -8,8 +8,6 @@ const PAGE_URL = '/are-you-still-working';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
-const buttonClass = 'govuk-button';
-const radioClass = 'govuk-radios__item';
 
 const expectedRadioLabel1 = "Yes - I'm still working for them";
 const expectedRadioLabel2 = "Yes - I'm working my notice period";
