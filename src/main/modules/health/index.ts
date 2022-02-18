@@ -1,12 +1,10 @@
-import os from 'os';
-
 import config from 'config';
 import { Application } from 'express';
 
 const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 /**
- * Sets up the HMCTS info and health endpoints
+ * Sets up the HMCTS health endpoints
  */
 export class HealthCheck {
   public enableFor(app: Application): void {
@@ -18,6 +16,7 @@ export class HealthCheck {
 
     healthcheck.addTo(app, {
       checks: {
+        ...(redis ? { redis } : {}),
         'idam-api': healthcheck.web(new URL('/health', idamUrl.replace('/o/token', ''))),
       },
       ...(redis
@@ -27,11 +26,6 @@ export class HealthCheck {
             },
           }
         : {}),
-      buildInfo: {
-        host: os.hostname(),
-        name: 'et-sya-frontend',
-        uptime: process.uptime(),
-      },
     });
   }
 }
