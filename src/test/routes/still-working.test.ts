@@ -13,7 +13,7 @@ describe('GET /are-you-still-working', () => {
 describe('on POST /are-you-still-working', () => {
   test('should return the employment details(WORKING) page', async () => {
     await request(app)
-      .post('/')
+      .post('/are-you-still-working')
       .send({ isStillWorking: 'WORKING' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
@@ -23,7 +23,7 @@ describe('on POST /are-you-still-working', () => {
   });
   test('should return the employment details(NOTICE) page', async () => {
     await request(app)
-      .post('/')
+      .post('/are-you-still-working')
       .send({ isStillWorking: 'NOTICE' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
@@ -33,7 +33,7 @@ describe('on POST /are-you-still-working', () => {
   });
   test('should return the employment details(NO LONGER WORKING) page', async () => {
     await request(app)
-      .post('/')
+      .post('/are-you-still-working')
       .send({ isStillWorking: 'NO LONGER WORKING' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
