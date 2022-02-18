@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
-import { LEGACY_URLS } from '../../main/definitions/constants';
+import { LegacyUrls } from '../../main/definitions/constants';
 
 describe('GET /lip-or-representative', () => {
   it('should return the lip or representative page', async () => {
@@ -29,7 +29,7 @@ describe('on POST /lip-or-representative', () => {
       .send({ representingMyself: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(LEGACY_URLS.ET1);
+        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1);
       });
   });
 });
