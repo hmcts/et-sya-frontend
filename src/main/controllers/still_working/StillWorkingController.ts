@@ -32,7 +32,10 @@ export default class StillWorkingController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.stillWorkingContent, [TranslationKeys.COMMON,TranslationKeys.STILL_WORKING]);
+    const content = getPageContent(req, this.stillWorkingContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.STILL_WORKING,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.STILL_WORKING, {
       ...content,

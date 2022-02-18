@@ -43,7 +43,7 @@ export default function (app: Application): void {
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
   app.get(PageUrls.STILL_WORKING, app.locals.container.cradle.StillWorkingController.get);
   app.post(PageUrls.STILL_WORKING, app.locals.container.cradle.StillWorkingController.post);
-  
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),
