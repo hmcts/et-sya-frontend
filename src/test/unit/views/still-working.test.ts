@@ -36,7 +36,7 @@ describe('Are you still working page', () => {
 
   it('should display 3 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(3, '3 radio buttons not found');
+    expect(radioButtons.length).equal(3, '3  radio buttons not found');
   });
 
   it('should display radio buttons with valid text', () => {
@@ -49,7 +49,7 @@ describe('Are you still working page', () => {
       expectedRadioLabel2,
       'Could not find the radio button with label ' + expectedRadioLabel2
     );
-    expect(radioButtons[3].innerHTML).contains(
+    expect(radioButtons[2].innerHTML).contains(
       expectedRadioLabel3,
       'Could not find the radio button with label ' + expectedRadioLabel3
     );
