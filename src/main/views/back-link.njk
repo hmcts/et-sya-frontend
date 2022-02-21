@@ -1,0 +1,8 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block backLink %}
+  {{ govukBackLink({
+    text: back,
+    href: '#'
+  }) }}
+{% endblock %}

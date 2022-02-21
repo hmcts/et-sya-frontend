@@ -1,6 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import AddressDetailsController from '../../../main/controllers/address_details/AddressDetailsController';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { PageUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -59,7 +60,7 @@ describe('Address details Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/');
+      expect(res.redirect).toBeCalledWith(PageUrls.TELEPHONE_NUMBER);
       expect(req.session.userCase).toStrictEqual({
         address1: '10 test street',
       });

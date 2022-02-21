@@ -1,7 +1,7 @@
-import { LEGACY_URLS } from '../definitions/constants';
+import { LegacyUrls } from '../definitions/constants';
 
-export default function getLegacyUrlFromLng(lng = 'en'): URL['href'] {
-  const legacyUrl = new URL(LEGACY_URLS.ET1_BASE);
-  legacyUrl.pathname = lng + LEGACY_URLS.ET1_PATH;
+export default function getLegacyUrlFromLng(path: string, lng = 'en'): URL['href'] {
+  const legacyUrl = new URL(LegacyUrls.ET1_BASE);
+  legacyUrl.pathname = lng + path;
   return legacyUrl.href;
 }

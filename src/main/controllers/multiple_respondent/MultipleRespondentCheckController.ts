@@ -1,8 +1,16 @@
 import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../../controllers/helpers';
+import {
+  assignFormData,
+  conditionalRedirect,
+  getPageContent,
+  handleSessionErrors,
+  setUserCase,
+} from '../../controllers/helpers';
 import { AppRequest } from '../../definitions/appRequest';
+import { YesOrNo } from '../../definitions/case';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 
 export default class MultipleRespondentCheckController {
@@ -13,14 +21,20 @@ export default class MultipleRespondentCheckController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      ? PageUrls.ACAS_MULTIPLE_CLAIM
+      : PageUrls.ACAS_SINGLE_CLAIM;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, '/');
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.multipleRespondentContent, ['common', 'multiple-respondent-check']);
+    const content = getPageContent(req, this.multipleRespondentContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.MULTIPLE_RESPONDENT_CHECK,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('multiple-respondent-check', {
+    res.render(TranslationKeys.MULTIPLE_RESPONDENT_CHECK, {
       ...content,
     });
   };

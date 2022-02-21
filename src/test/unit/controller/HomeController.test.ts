@@ -1,4 +1,6 @@
 import HomeController from '../../../main/controllers/HomeController';
+import { PageUrls } from '../../../main/definitions/constants';
+import { AnyRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -15,6 +17,9 @@ describe('Onboarding Controller', () => {
 
     homeController.get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith('home', request.t('home', { returnObjects: true }));
+    expect(response.render).toHaveBeenCalledWith('home', {
+      ...(<AnyRecord>request.t('home', { returnObjects: true })),
+      PageUrls,
+    });
   });
 });

@@ -1,7 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import LipOrRepController from '../../../main/controllers/litigation_in_person_or_representative/lipOrRepController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { LEGACY_URLS } from '../../../main/definitions/constants';
+import { LegacyUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -61,7 +61,7 @@ describe('Litigation in Person or Representative Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(LEGACY_URLS.ET1);
+    expect(res.redirect).toBeCalledWith(LegacyUrls.ET1);
   });
 
   it('should render same page if errors are present when nothing is selected', () => {
