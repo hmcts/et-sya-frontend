@@ -45,7 +45,7 @@
     "@types/sinon": "^10.0.10",
     "applicationinsights": "^2.2.0",
     "awilix": "^6.0.0",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "codeceptjs": "^3.2.3",
     "config": "^3.3.2",
     "cookie-parser": "^1.4.5",
