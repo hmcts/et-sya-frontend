@@ -199,6 +199,10 @@ describe('Validation', () => {
       },
       { mockRef: 'CEO', expected: undefined },
       { mockRef: 'Developer', expected: undefined },
+      { mockRef: 'ex-mayor', expected: 'invalid-characters' },
+      { mockRef: 'Lorry Driver', expected: 'invalid-characters' },
+      { mockRef: 'I.T. technician', expected: 'invalid-characters' },
+      { mockRef: 'Manager', expected: undefined },
     ])('check job title is valid', ({ mockRef, expected }) => {
       expect(isJobTitleValid(mockRef)).toEqual(expected);
     });

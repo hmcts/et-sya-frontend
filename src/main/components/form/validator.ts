@@ -141,5 +141,10 @@ export const isJobTitleValid: Validator = value => {
     if (inputStrLength === 1 || inputStrLength > 100) {
       return 'invalid-length';
     }
+
+    const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    if (!alphanumericRegex.test(value)) {
+      return 'invalid-characters';
+    }
   }
 };

@@ -24,6 +24,7 @@ export const TranslationKeys = {
   NO_ACAS_NUMBER: 'valid-no-acas-reason',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  JOB_TITLE: 'job-title',
 } as const;
 
 export const PageUrls = {
