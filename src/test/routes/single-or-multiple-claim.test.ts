@@ -19,8 +19,7 @@ describe('on POST /single-or-multiple-claim', () => {
       .send({ isASingleClaim: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/multiple-respondent-check');
       });
   });
 

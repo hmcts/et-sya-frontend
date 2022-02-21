@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { mock } from 'sinon';
 
 import { isValidUKTelNumber } from '../../../main/components/form/validator';
 import TelNumberController from '../../../main/controllers/tel_number/TelNumberController';
@@ -32,7 +32,7 @@ describe('Telephone number Controller', () => {
     const userCase = { telNumber: '01234567890' };
     const request = <AppRequest>mockRequest({ t, userCase });
 
-    const responseMock = sinon.mock(response);
+    const responseMock = mock(response);
 
     responseMock.expects('render').once().withArgs('telephone-number');
 

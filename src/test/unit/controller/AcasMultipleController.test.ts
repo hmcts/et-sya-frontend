@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { mock } from 'sinon';
 
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import AcasMultipleController from '../../../main/controllers/acas_multiple/AcasMultipleController';
@@ -44,7 +44,7 @@ describe('Acas Multiple Controller', () => {
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
+    const responseMock = mock(response);
 
     responseMock.expects('render').once().withArgs('acas-multiple');
 

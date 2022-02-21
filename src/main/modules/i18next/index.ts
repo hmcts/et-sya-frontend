@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import i18next, { InitOptions, Resource } from 'i18next';
+import i18next, { InitOptions, Resource, use } from 'i18next';
 import * as i18nextMiddleware from 'i18next-http-middleware';
 import requireDir from 'require-directory';
 
@@ -16,7 +16,7 @@ export class I18Next {
       supportedLngs: ['en', 'cy'],
       detection: { order: ['querystring', 'cookie'], caches: ['cookie'] },
     };
-    i18next.use(i18nextMiddleware.LanguageDetector).init(options);
+    use(i18nextMiddleware.LanguageDetector).init(options);
   }
 
   public enableFor(app: express.Express): void {
