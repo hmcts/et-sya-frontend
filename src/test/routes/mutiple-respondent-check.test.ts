@@ -12,13 +12,22 @@ describe('GET /multiple-respondent-check', () => {
 });
 
 describe('on POST /multiple-respondent-check', () => {
-  test('should go back to home when an option has been selected', async () => {
+  test('should go to acas many page when Yes has been selected', async () => {
     await request(app)
       .post('/multiple-respondent-check')
       .send({ isMultipleRespondent: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/do-you-have-an-acas-no-many-resps');
       });
-  });
+  }),
+    test('should go to acas single page when No has been selected', async () => {
+      await request(app)
+        .post('/multiple-respondent-check')
+        .send({ isMultipleRespondent: YesOrNo.NO })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual('/do-you-have-an-acas-single-resps');
+        });
+    });
 });
