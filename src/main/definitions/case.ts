@@ -29,6 +29,7 @@ export interface Case {
   isMultipleRespondent?: YesOrNo;
   jobTitle?: string;
   presentEmployer?: YesOrNo;
+  pastEmployer?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {
