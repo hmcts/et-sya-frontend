@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
-import { AuthUrls, LegacyUrls, PageUrls } from '../../main/definitions/constants';
+import { AuthUrls, PageUrls } from '../../main/definitions/constants';
 
 describe(`GET ${PageUrls.RETURN_TO_EXISTING}`, () => {
   it('should go to the return to existing claim page', async () => {
@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.RETURN_TO_EXISTING}`, () => {
       .send({ returnToExisting: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(LegacyUrls.ET1_BASE);
+        expect(res.header['location']).toStrictEqual('https://employmenttribunals.service.gov.uk');
       });
   });
 

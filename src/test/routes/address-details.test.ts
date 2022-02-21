@@ -12,7 +12,7 @@ describe(`GET ${PageUrls.ADDRESS_DETAILS}`, () => {
 });
 
 describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
-  test('should go to telephone number page when correct address data is entered', async () => {
+  test('should return the telephone details page when valid address is entered', async () => {
     await request(app)
       .post(PageUrls.ADDRESS_DETAILS)
       .send({
@@ -24,7 +24,7 @@ describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TELEPHONE_NUMBER);
+        expect(res.header['location']).toStrictEqual('/telephone-number');
       });
   });
 });
