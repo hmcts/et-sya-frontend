@@ -1,15 +1,7 @@
 {
-  "serviceName": "Lorem ipsum",
-  "guide": "Lorem",
-  "termsAndConditions": "Lorem ipsum dolor",
-  "cookiePolicy": "Lorem",
-  "contact": "Lorem ipsum",
-  "stage": "Lorem",
   "phaseBanner": {
-    "feedback": "Lorem ipsum dolor",
-    "additionalText": "sit amet, consectetur adipiscing elit.",
+    "feedback": "Bydd eich adborth",
+    "additionalText": "yn ein helpu i wella’r gwasanaeth.",
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
-  },
-  "contactUsTitle": "Lorem ipsum dolor sit",
-  "contactUsForHelp": "Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet, consectetur<br> <br><a href=\"#\" class=\"govuk-link\">Lorem ipsum dolor sit amet</a>"
+  }
 }

@@ -5,10 +5,25 @@
   "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id tempus risus. Ut tortor ex, lacinia ac dui ac, porta dapibus sem. Duis pellentesque lacus non lectus tincidunt.",
   "radio1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "radio2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  "serviceName": "Lorem ipsum",
+  "guide": "Lorem",
+  "termsAndConditions": "Lorem ipsum dolor",
+  "cookiePolicy": "Lorem",
+  "contact": "Lorem ipsum",
+  "stage": "Lorem",
+  "errorSummaryTitle": "Lorem ipsum dolor sit",
   "continue": "Lorem",
+  "back": "Lorem",
+  "contactUsTitle": "Lorem ipsum dolor sit",
+  "contactUsForHelp": "Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet, consectetur<br> <br><a href=\"#\" class=\"govuk-link\">Lorem ipsum dolor sit amet</a>",
   "errors": {
     "isASingleClaim": {
       "required": "Lorem ipsum dolor"
     }
+  },
+  "phaseBanner": {
+    "feedback": "Lorem ipsum dolor",
+    "additionalText": "sit amet, consectetur adipiscing elit.",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
   }
 }
