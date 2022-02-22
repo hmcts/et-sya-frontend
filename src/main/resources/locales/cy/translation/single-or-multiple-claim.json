@@ -1,0 +1,14 @@
+{
+  "title": "Lorem ipsum dolor sit",
+  "h1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer convallis mi sed erat dapibus interdum non?",
+  "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse metus lacus, convallis nec maximus in, vehicula at nunc. Sed facilisis accumsan dolor ac mattis.",
+  "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id tempus risus. Ut tortor ex, lacinia ac dui ac, porta dapibus sem. Duis pellentesque lacus non lectus tincidunt.",
+  "radio1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  "radio2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  "continue": "Lorem",
+  "errors": {
+    "isASingleClaim": {
+      "required": "Lorem ipsum dolor"
+    }
+  }
+}
