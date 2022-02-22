@@ -18,7 +18,7 @@ describe('on POST /return-to-existing', () => {
       .send({ returnToExisting: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('https://employmenttribunals.service.gov.uk');
       });
   });
 });

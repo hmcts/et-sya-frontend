@@ -1,15 +1,15 @@
 import { mock } from 'sinon';
 
 import { isFieldFilledIn } from '../../../main/components/form/validator';
-import UpdatePreferenceController from '../../../main/controllers/update_preference/UpdatePreferenceController';
+import pastEmployerController from '../../../main/controllers/past_employer/PastEmployerController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Update Preference Controller', () => {
+describe('Update Past Employer Controller', () => {
   const t = {
-    'update-preference': {},
+    'past-employer': {},
     common: {},
   };
 
@@ -17,7 +17,7 @@ describe('Update Preference Controller', () => {
     fields: {
       updatePreference: {
         classes: 'govuk-radios',
-        id: 'update-preference',
+        id: 'past-employer',
         type: 'radios',
         values: [
           {
@@ -39,14 +39,14 @@ describe('Update Preference Controller', () => {
   } as unknown as FormContent;
 
   it('should render the Update Preference page', () => {
-    const controller = new UpdatePreferenceController(mockFormContent);
+    const controller = new pastEmployerController(mockFormContent);
 
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
     const responseMock = mock(response);
 
-    responseMock.expects('render').once().withArgs('update-preference');
+    responseMock.expects('render').once().withArgs('past-employer');
 
     controller.get(request, response);
     responseMock.verify();
@@ -54,9 +54,9 @@ describe('Update Preference Controller', () => {
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'updatePreference', errorType: 'required' }];
-    const body = { 'update-preference': '' };
+    const body = { 'past-employer': '' };
 
-    const controller = new UpdatePreferenceController(mockFormContent);
+    const controller = new pastEmployerController(mockFormContent);
 
     const req = mockRequest({ body });
     const res = mockResponse();
