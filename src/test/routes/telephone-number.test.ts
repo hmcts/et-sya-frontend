@@ -22,8 +22,7 @@ describe(`on POST ${PAGE_URL}`, () => {
       })
       .expect(res => {
         expect(res.status).equal(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).equal('/');
+        expect(res.header['location']).equal('/how-would-you-like-to-be-updated-about-your-claim');
       });
   });
 });

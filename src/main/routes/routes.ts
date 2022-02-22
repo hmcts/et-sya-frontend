@@ -43,6 +43,8 @@ export default function (app: Application): void {
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
   app.get(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.get);
   app.post(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.post);
+  app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
+  app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
 
   const healthCheckConfig = {
     checks: {

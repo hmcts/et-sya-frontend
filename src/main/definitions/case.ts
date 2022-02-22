@@ -30,6 +30,7 @@ export interface Case {
   isMultipleRespondent?: YesOrNo;
   presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
+  pastEmployer?: YesOrNo;
 }
 
 export interface CaseWithId extends Case {
