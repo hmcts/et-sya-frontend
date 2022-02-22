@@ -39,7 +39,14 @@ export type RadioFormFields = {
 };
 
 export const DefaultRadioFormFields = {
-  classes: 'govuk-radios',
+  type: 'radios',
+  label: (l: AnyRecord): string => l.label,
+  values: YesNoRadioValues,
+  validator: isFieldFilledIn,
+};
+
+export const DefaultInlineRadioFormFields = {
+  classes: 'govuk-radios--inline',
   type: 'radios',
   label: (l: AnyRecord): string => l.label,
   values: YesNoRadioValues,
