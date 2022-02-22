@@ -24,6 +24,7 @@ export const TranslationKeys = {
   NO_ACAS_NUMBER: 'valid-no-acas-reason',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  CLAIM_STEPS: 'claim-steps',
 } as const;
 
 export const PageUrls = {
@@ -41,7 +42,7 @@ export const PageUrls = {
   NO_ACAS_NUMBER: '/do-you-have-a-valid-no-acas-reason',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
-  DOB_DETAISLS: '/dob-details',
+  DOB_DETAILS: '/dob-details',
   ADDRESS_DETAILS: '/address-details',
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',

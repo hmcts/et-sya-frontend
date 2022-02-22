@@ -1,0 +1,25 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{ h1 }}</h1>
+  <h2 class="govuk-heading-l">{{ section1.title }}</h2>
+  <hr class="govuk-section-break govuk-section-break--visible">
+  <a href="{{ PageUrls.DOB_DETAILS }}" class="govuk-link">{{ section1.link1Txt }}</a>
+  <hr class="govuk-section-break govuk-section-break--visible">
+  <a href="{{ PageUrls.ADDRESS_DETAILS }}" class="govuk-link">{{ section1.link2Txt }}</a>
+  <hr class="govuk-section-break govuk-section-break--visible">
+  <a href="{{ PageUrls.UPDATE_PREFERENCES }}" class="govuk-link">{{ section1.link3Txt }}</a>
+  <hr class="govuk-section-break govuk-section-break--visible">
+
+  {{ govukButton({
+    text: saveForLater,
+    classes: "govuk-button--secondary",
+    href: PageUrls.CLAIM_SAVED
+  }) }}
+{% endblock %}
