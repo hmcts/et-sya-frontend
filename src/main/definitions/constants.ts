@@ -56,6 +56,6 @@ export const AuthUrls = {
   CALLBACK: '/oauth2/callback',
   LOGIN: '/login',
   LOGOUT: '/logout',
-};
+} as const;
 
 export const HTTPS_PROTOCOL = 'https://';
