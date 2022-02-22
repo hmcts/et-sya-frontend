@@ -1,4 +1,8 @@
 {% extends "template.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
 {% block beforeContent %}
@@ -8,6 +12,12 @@
 
 {% block content %}
         {{ govukPanel({
-        titleText: "Your claim has been saved"
+        titleText: titleText
+      }) }}
+      <p class="govuk-body ">{{ p1 }}</p>
+      {{ govukButton({
+        text: continueWithClaim,
+        href: "/return-to-existing",
+        preventDoubleClick: true
       }) }}
 {% endblock %}
