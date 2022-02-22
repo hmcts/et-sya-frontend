@@ -13,7 +13,7 @@ describe(`GET ${PAGE_URL}`, () => {
 });
 
 describe(`on POST ${PAGE_URL}`, () => {
-  test('should return the address details page when "correct date is enterered" is selected', async () => {
+  test('should return the telephone details page when "correct date is enterered" is selected', async () => {
     await request(app)
       .post(PAGE_URL)
       .send({
@@ -25,7 +25,7 @@ describe(`on POST ${PAGE_URL}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/telephone-number');
       });
   });
 });

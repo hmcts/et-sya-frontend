@@ -1,13 +1,9 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
   {{ super() }}
-  {{ govukBackLink({
-  text: back,
-  href: "/"
-}) }}
+  {% include "back-link.njk"%}
 {% endblock %}
 
 {% block content %}
@@ -36,9 +32,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
   {{ govukButton({
-        text: continue,
-        href: "/lip-or-representative",
-        preventDoubleClick: true
+    text: continue,
+    href: PageUrls.LIP_OR_REPRESENTATIVE,
+    preventDoubleClick: true
   }) }}
   <p class="govuk-body ">{{ printLinkTxt | safe }}</p>
   </div>

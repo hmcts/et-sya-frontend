@@ -1,68 +1,79 @@
-import sinon from 'sinon';
-
-import LipOrRepController from '../../../main/controllers/LipOrRepController';
-import { LEGACY_URLS } from '../../../main/definitions/constants';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
+import LipOrRepController from '../../../main/controllers/litigation_in_person_or_representative/lipOrRepController';
+import { YesOrNo } from '../../../main/definitions/case';
+import { LegacyUrls } from '../../../main/definitions/constants';
+import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-const lipOrRepController = new LipOrRepController();
-
-describe('LiP or Representative Controller', () => {
+describe('Litigation in Person or Representative Controller', () => {
   const t = {
-    'lip-or-representative': {},
+    representingMyself: {},
+    common: {},
   };
 
+  const mockFormContent: FormContent = {
+    fields: {
+      representingMyself: {
+        type: 'radios',
+        values: [
+          {
+            value: YesOrNo.YES,
+          },
+          {
+            value: YesOrNo.NO,
+          },
+        ],
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
+    },
+    submit: {
+      text: 'continue',
+    },
+  } as unknown as FormContent;
+
   it("should render the 'representing myself (LiP) or using a representative choice' page", () => {
+    const controller = new LipOrRepController(mockFormContent);
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
+    controller.get(request, response);
 
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('lip-or-representative', request.t('lip-or-representative', { returnObjects: true }));
-
-    lipOrRepController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('lip-or-representative', expect.anything());
   });
 
   it("should render the Single or Multiple claims page when 'representing myself' is selected", () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': 'lip' };
-    const request = mockRequest({ t, body });
+    const body = { representingMyself: YesOrNo.YES };
+    const controller = new LipOrRepController(mockFormContent);
 
-    const responseMock = sinon.mock(response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    responseMock.expects('redirect').once().withArgs('/single-or-multiple-claim');
-
-    lipOrRepController.post(request, response);
-    responseMock.verify();
+    expect(res.redirect).toBeCalledWith('/single-or-multiple-claim');
   });
 
   it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': 'representative' };
-    const request = mockRequest({ t, body });
+    const body = { representingMyself: YesOrNo.NO };
+    const controller = new LipOrRepController(mockFormContent);
 
-    const responseMock = sinon.mock(response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    responseMock.expects('redirect').once().withArgs(LEGACY_URLS.ET1);
-
-    lipOrRepController.post(request, response);
-    responseMock.verify();
+    expect(res.redirect).toBeCalledWith(LegacyUrls.ET1);
   });
 
-  it('should render same page if nothing selected', () => {
-    const response = mockResponse();
-    const body = { 'lip-or-representative': '' };
-    const request = mockRequest({ t, body });
+  it('should render same page if errors are present when nothing is selected', () => {
+    const errors = [{ propertyName: 'representingMyself', errorType: 'required' }];
+    const body = { representingMyself: '' };
+    const controller = new LipOrRepController(mockFormContent);
 
-    const responseMock = sinon.mock(response);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-    responseMock.expects('render').once().withArgs('lip-or-representative');
-
-    lipOrRepController.post(request, response);
-    responseMock.verify();
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 });

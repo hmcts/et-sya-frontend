@@ -1,5 +1,6 @@
-import { initAll } from 'govuk-frontend';
+const govUkFrontend = require('govuk-frontend');
 
 import '../scss/main.scss';
+import './go-back';
 
-initAll();
+govUkFrontend.initAll();

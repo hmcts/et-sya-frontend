@@ -1,0 +1,13 @@
+{
+  "h1": "Are you making a claim against more than 1 'respondent'?",
+  "p1": "You can claim against more than 1 respondent if you think you’ve been treated unlawfully on a personal as well as an organisational level.",
+  "p2": "For example, if you’re making your claim against an employer as well as someone who worked there - you can claim against multiple respondents.",
+  "radio1": "Yes - I’m making a <span class=\"govuk-!-font-weight-bold\">claim against more than 1</span> respondent",
+  "radio2": "No - I’m making a <span class=\"govuk-!-font-weight-bold\">claim against 1</span> single respondent",
+  "button1": "Continue",
+  "errors": {
+    "isMultipleRespondent": {
+      "required": "Select an option"
+    }
+  }
+}

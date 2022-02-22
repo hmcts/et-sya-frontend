@@ -1,10 +1,14 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
+
+import { AppRequest } from '../definitions/appRequest';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 
 export default class HomeController {
-  public get(req: Request, res: Response): void {
-    res.render('home', {
-      ...req.t('common', { returnObjects: true }),
-      ...req.t('home', { returnObjects: true }),
+  public get(req: AppRequest, res: Response): void {
+    res.render(TranslationKeys.HOME, {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.HOME, { returnObjects: true }),
+      PageUrls,
     });
   }
 }

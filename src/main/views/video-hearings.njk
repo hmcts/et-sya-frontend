@@ -1,31 +1,16 @@
 {% extends "template.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 {% block beforeContent %}
   {{ super() }}
-  {{ govukBackLink({
-  text: back,
-  href: "/"
-}) }}
+  {% include "back-link.njk"%}
 {% endblock %}
+
 {% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      
-      {% if noRadioButtonSelectedError %}
-        {{ govukErrorSummary({
-        "titleText": errorSummaryTitle,
-        "errorList": [
-          {
-            "text": errorMessage,
-            "href": "#video-hearing"
-          }
-        ]
-      }) }}
-
-      {% endif %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
       <p class="govuk-body ">{{ p1 }}</p>
       <p class="govuk-body ">{{ p2 }}</p>
@@ -44,42 +29,9 @@
           </ul>
         </div>
       </details>
-      <form action="/would-you-want-to-take-part-in-video-hearings" method="post">
-        {{ govukRadios({ 
-      classes: "govuk-radios--inline govuk-!-margin-bottom-6",
-      idPrefix: "video-hearing",
-      id:"video-hearing",
-      name: "video-hearing",
-      items: [
-        {
-          value: "yes",
-          text: yes
-        },
-        {
-          value: "no",
-          text: no
-        }
-      ],
-      errorMessage: {
-        text: errorMessage
-        } if noRadioButtonSelectedError
-      }) }}
-        <div class="govuk-button-group">
-          {{ govukButton({
-        text: submit,
-        preventDoubleClick: true,
-        name:"saveButton",
-        value:"saveContinue"
-      }) }}
-          {{ govukButton({
-        text: saveForLater,
-        classes: "govuk-button--secondary",
-        preventDoubleClick: true,
-        name:"saveButton",
-        value:"saveForLater"
-      }) }}
-        </div>
-      </form>
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
     </div>
   </div>
 {% endblock %}

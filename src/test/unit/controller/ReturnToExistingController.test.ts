@@ -1,6 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import ReturnToExistingController from '../../../main/controllers/return_to_existing_claim/ReturnToExistingController';
 import { YesOrNo } from '../../../main/definitions/case';
+import { LegacyUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -70,7 +71,7 @@ describe('Return To Existing Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
     expect(req.session.errors).toEqual([]);
   });
 });

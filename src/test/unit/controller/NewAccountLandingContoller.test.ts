@@ -1,4 +1,4 @@
-import NewAccountLandingController from '../../../main/controllers/NewAccountLanding/NewAccountLandingController';
+import NewAccountLandingController from '../../../main/controllers/new_account_landing/NewAccountLandingController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 

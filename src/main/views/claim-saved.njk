@@ -1,14 +1,15 @@
 {% extends "template.njk" %}
+
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
+
 {% block beforeContent %}
   {{ super() }}
-  {{ govukBackLink({
-  text: "Back",
-  href: "/" + previousPage
-}) }}
+  {% include "back-link.njk"%}
 {% endblock %}
+
 {% block content %}
         {{ govukPanel({
         titleText: titleText
