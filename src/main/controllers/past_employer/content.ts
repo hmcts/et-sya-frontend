@@ -1,14 +1,14 @@
 import { FormContent } from '../../definitions/form';
 import { DefaultRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../../definitions/radios';
 
-const present_employer: RadioFormFields = {
+const past_employer: RadioFormFields = {
   ...DefaultRadioFormFields,
-  id: 'present-employer',
-  classes: 'govuk-radios',
+  id: 'past-employer',
+  classes: 'govuk-radios--inline',
 };
 
-export const presentEmployerFormContent: FormContent = {
-  fields: { presentEmployer: present_employer },
+export const pastEmployerFormContent: FormContent = {
+  fields: { pastEmployer: past_employer },
   submit: submitButton,
   saveForLater: saveForLaterButton,
 };

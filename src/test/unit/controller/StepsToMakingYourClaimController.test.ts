@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import sinon from 'sinon';
+import { mock } from 'sinon';
 
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
 import { mockRequest } from '../mocks/mockRequest';
@@ -15,7 +15,7 @@ describe('Steps to Making your claim Controller', () => {
     const response = { render: () => '' } as unknown as Response;
     const request = mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
+    const responseMock = mock(response);
 
     responseMock
       .expects('render')

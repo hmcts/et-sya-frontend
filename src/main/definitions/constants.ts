@@ -51,6 +51,7 @@ export const PageUrls = {
   GENDER_DETAILS: '/gender-details',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   PRESENT_EMPLOYER: '/present-employer',
+  PAST_EMPLOYER: '/past-employer',
 } as const;
 
 export const AuthUrls = {
