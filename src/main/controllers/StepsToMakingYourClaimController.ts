@@ -8,8 +8,11 @@ import { getPageContent } from './helpers';
 
 export default class StepsToMakingYourClaimController {
   public get(req: AppRequest, res: Response): void {
-    const content = getPageContent(req, <FormContent>{}, [TranslationKeys.COMMON, TranslationKeys.CLAIM_STEPS]);
-    res.render(TranslationKeys.CLAIM_STEPS, {
+    const content = getPageContent(req, <FormContent>{}, [
+      TranslationKeys.COMMON,
+      TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
+    ]);
+    res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
     });
   }

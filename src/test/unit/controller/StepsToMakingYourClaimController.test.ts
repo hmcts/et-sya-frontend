@@ -15,6 +15,6 @@ describe('Steps to Making your claim Controller', () => {
     const request = mockRequest({ t });
 
     stepsToMakingYourClaimController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_STEPS, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });
 });
