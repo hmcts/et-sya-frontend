@@ -29,10 +29,15 @@ describe('Are you still working page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display continue button', () => {
+  it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
+
+  it('should display save for later button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[1].innerHTML).contains('Save for later','Could not find the button');
+  })
 
   it('should display 3 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
