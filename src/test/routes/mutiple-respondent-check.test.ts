@@ -2,10 +2,11 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
+import { PageUrls } from '../../main/definitions/constants';
 
-describe('GET /multiple-respondent-check', () => {
+describe(`GET ${PageUrls.MULTIPLE_RESPONDENT_CHECK}`, () => {
   it('should return multiple respondent page', async () => {
-    const res = await request(app).get('/multiple-respondent-check');
+    const res = await request(app).get(PageUrls.MULTIPLE_RESPONDENT_CHECK);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -14,7 +15,7 @@ describe('GET /multiple-respondent-check', () => {
 describe('on POST /multiple-respondent-check', () => {
   test('should go to acas many page when Yes has been selected', async () => {
     await request(app)
-      .post('/multiple-respondent-check')
+      .post(PageUrls.MULTIPLE_RESPONDENT_CHECK)
       .send({ isMultipleRespondent: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
