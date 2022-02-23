@@ -4,7 +4,7 @@
   "optionText2": "Yes - I'm working my notice period",
   "optionText3": "No - I'm no longer working for them",
   "errors": {
-    "stillWorking": {
+    "isStillWorking": {
       "required": "Select an option"
     }
   }
