@@ -11,6 +11,16 @@ export interface CaseDate {
   day: string;
 }
 
+export interface Address {
+  AddressLine1: string;
+  AddressLine2: string;
+  AddressLine3: string;
+  PostTown: string;
+  County: string;
+  PostCode: string;
+  Country: string;
+}
+
 export interface Case {
   dobDate: CaseDate;
   address1?: string;
@@ -28,6 +38,11 @@ export interface Case {
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
   presentEmployer?: YesOrNo;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCounty?: string;
+  workAddressPostcode?: string;
 }
 
 export interface CaseWithId extends Case {

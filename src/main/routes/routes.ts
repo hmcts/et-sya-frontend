@@ -61,6 +61,10 @@ export default function (app: Application): void {
     app.locals.container.cradle.updatePreferenceController.post
   );
 
+  app.post('/address-lookup', app.locals.container.cradle.addressLookupController.post);
+  app.get('/place-of-work', app.locals.container.cradle.placeOfWorkController.get);
+  app.post('/place-of-work', app.locals.container.cradle.placeOfWorkController.post);
+
   const healthCheckConfig = {
     checks: {
       sampleCheck: healthcheck.raw(() => healthcheck.up()),

@@ -1,0 +1,34 @@
+{
+  "title": "Where do you work?",
+  "workedFromHome": "If you worked from home tell us your home address.",
+  "enterPostcode": "Enter a UK postcode",
+  "findAddress": "Find address",
+  "manualAddress": "I want to enter the address manually",
+  "cannotFindAddress": "I cannot find the address in the list",
+  "change": "Change",
+  "postcode": "Postcode",
+  "selectAddress": "Select an address",
+  "buildingStreet": "Building and street",
+  "line1": "Address line 1",
+  "line2Optional": "Address line 2 (optional)",
+  "county": "County",
+  "country": "Country",
+  "town": "Town or city",
+  "selectDefault": "Several addresses found...",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",
+      "required": "A postcode is required."
+    },
+    "workAddress1": {
+      "required": "Address line is required"
+    },
+    "workAddressTown": {
+      "required": "Town is required"
+    },
+    "workAddressPostcode": {
+      "required": "A postcode is required.",
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing."
+    }
+  }
+}

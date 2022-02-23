@@ -10,6 +10,7 @@ export class PropertiesVolume {
 
       this.setSecret('secrets.et.AppInsightsInstrumentationKey', 'appInsights.instrumentationKey');
       this.setSecret('secrets.et.idam-secret', 'services.idam.clientSecret');
+      this.setSecret('secrets.et.os-places-token', 'services.addressLookup.token');
     }
   }
 

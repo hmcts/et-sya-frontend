@@ -1,0 +1,16 @@
+{
+  "title": "Where do you work?",
+  "workedFromHome": "If you worked from home tell us your home address.",
+  "errors": {
+    "workAddress1": {
+      "required": "Address line is required"
+    },
+    "workAddressTown": {
+      "required": "Town is required"
+    },
+    "workAddressPostcode": {
+      "required": "A postcode is required.",
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing."
+    }
+  }
+}
