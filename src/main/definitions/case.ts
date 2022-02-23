@@ -38,6 +38,7 @@ export interface Case {
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
   presentEmployer?: YesOrNo;
+  pastEmployer?: YesOrNo;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;

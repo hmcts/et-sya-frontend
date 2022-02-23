@@ -13,6 +13,7 @@ export default class PresentEmployerController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    // TODO: Change to the correct redirect url - Employment Details
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, '/');
   };

@@ -1,12 +1,8 @@
 {% extends "template.njk" %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block beforeContent %}
   {{ super() }}
-  {{ govukBackLink({
-  text: back,
-  href: "/gender-details"
-}) }}
+  {% include "back-link.njk"%}
 {% endblock %}
 
 {% block content %}

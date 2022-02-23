@@ -4,6 +4,7 @@ import { DefaultRadioFormFields, RadioFormFields, saveForLaterButton, submitButt
 const present_employer: RadioFormFields = {
   ...DefaultRadioFormFields,
   id: 'present-employer',
+  classes: 'govuk-radios',
 };
 
 export const presentEmployerFormContent: FormContent = {

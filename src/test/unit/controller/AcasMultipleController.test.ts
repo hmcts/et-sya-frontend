@@ -1,5 +1,3 @@
-import sinon from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import AcasMultipleController from '../../../main/controllers/acas_multiple/AcasMultipleController';
 import { AppRequest } from '../../../main/definitions/appRequest';
@@ -40,16 +38,11 @@ describe('Acas Multiple Controller', () => {
 
   it('should render the AcasMultipleController page', () => {
     const acasMultipleController = new AcasMultipleController(mockFormContent);
-
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
-    const responseMock = sinon.mock(response);
-
-    responseMock.expects('render').once().withArgs('acas-multiple');
-
     acasMultipleController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('acas-multiple', expect.anything());
   });
 
   it('should redirect to the same screen when errors are present', () => {

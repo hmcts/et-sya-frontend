@@ -1,21 +1,20 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { PageUrls } from '../../main/definitions/constants';
 
-const PAGE_URL = '/address-details';
-
-describe(`GET ${PAGE_URL}`, () => {
+describe(`GET ${PageUrls.ADDRESS_DETAILS}`, () => {
   it('should return the address details page', async () => {
-    const res = await request(app).get(PAGE_URL);
+    const res = await request(app).get(PageUrls.ADDRESS_DETAILS);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
 });
 
-describe(`on POST ${PAGE_URL}`, () => {
-  test('should return the address details page when "correct date is enterered" is selected', async () => {
+describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
+  test('should return the telephone details page when valid address is entered', async () => {
     await request(app)
-      .post(PAGE_URL)
+      .post(PageUrls.ADDRESS_DETAILS)
       .send({
         addressPostcode: 'AB11 5ND',
         addressCounty: 'Testshire',
@@ -25,7 +24,7 @@ describe(`on POST ${PAGE_URL}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual('/telephone-number');
       });
   });
 });
