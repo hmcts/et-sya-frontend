@@ -1,5 +1,3 @@
-import { mock } from 'sinon';
-
 import GenderDetailsController from '../../../main/controllers/gender_details/GenderDetailsController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -16,12 +14,8 @@ describe('Gender Details Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    const responseMock = mock(response);
-
-    responseMock.expects('render').once().withArgs('gender-details');
-
     genderDetailsController.get(request, response);
 
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('gender-details', expect.anything());
   });
 });
