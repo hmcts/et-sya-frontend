@@ -1,5 +1,3 @@
-import { mock } from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import UpdatePreferenceController from '../../../main/controllers/update_preference/UpdatePreferenceController';
 import { AppRequest } from '../../../main/definitions/appRequest';
@@ -40,16 +38,11 @@ describe('Update Preference Controller', () => {
 
   it('should render the Update Preference page', () => {
     const controller = new UpdatePreferenceController(mockFormContent);
-
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
-    const responseMock = mock(response);
-
-    responseMock.expects('render').once().withArgs('update-preference');
-
     controller.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('update-preference', expect.anything());
   });
 
   it('should redirect to the same screen when errors are present', () => {

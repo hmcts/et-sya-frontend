@@ -1,5 +1,3 @@
-import { mock } from 'sinon';
-
 import { isValidUKTelNumber } from '../../../main/components/form/validator';
 import TelNumberController from '../../../main/controllers/tel_number/TelNumberController';
 import { AppRequest } from '../../../main/definitions/appRequest';
@@ -27,17 +25,12 @@ describe('Telephone number Controller', () => {
 
   it('should render the Address details controller page', () => {
     const telNumberController = new TelNumberController(mockFormContent);
-
     const response = mockResponse();
     const userCase = { telNumber: '01234567890' };
     const request = <AppRequest>mockRequest({ t, userCase });
 
-    const responseMock = mock(response);
-
-    responseMock.expects('render').once().withArgs('telephone-number');
-
     telNumberController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('telephone-number', expect.anything());
   });
 
   describe('post()', () => {
