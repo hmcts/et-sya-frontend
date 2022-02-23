@@ -31,7 +31,7 @@ describe('Are you still working page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
   it('should display 3 radio buttons', () => {
