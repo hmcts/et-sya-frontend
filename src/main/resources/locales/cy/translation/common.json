@@ -45,27 +45,5 @@
   "termsAndConditions": "Lorem ipsum dolor",
   "cookiePolicy": "Lorem",
   "contact": "Lorem ipsum",
-  "stage": "Lorem",
-  "govukFooter": {
-    "meta": {
-      "items": [
-        {
-          "href": "/guide",
-          "text": "Lorem"
-        },
-        {
-          "href": "/terms-and-conditions",
-          "text": "Lorem ipsum dolor"
-        },
-        {
-          "href": "/cookies",
-          "text": "Lorem ipsum"
-        },
-        {
-          "href": "/contact-us",
-          "text": "Lorem"
-        }
-      ]
-    }
-  }
+  "stage": "Lorem"
 }
