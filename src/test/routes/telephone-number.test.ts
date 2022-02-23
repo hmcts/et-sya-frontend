@@ -2,21 +2,20 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { PageUrls } from '../../main/definitions/constants';
 
-const PAGE_URL = '/telephone-number';
-
-describe(`GET ${PAGE_URL}`, () => {
+describe(`GET ${PageUrls.TELEPHONE_NUMBER}`, () => {
   it('should return the telephone number page', async () => {
-    const res = await request(app).get(PAGE_URL);
+    const res = await request(app).get(PageUrls.TELEPHONE_NUMBER);
     expect(res.type).equal('text/html');
     expect(res.status).equal(200);
   });
 });
 
-describe(`on POST ${PAGE_URL}`, () => {
-  test('should navigate to the next page when phone number has been entered', async () => {
+describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
+  test('should go to update preferences page when phone number has been entered', async () => {
     await request(app)
-      .post(PAGE_URL)
+      .post(PageUrls.TELEPHONE_NUMBER)
       .send({
         telNumber: '01234567890',
       })
