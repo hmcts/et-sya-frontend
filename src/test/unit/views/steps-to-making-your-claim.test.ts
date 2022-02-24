@@ -74,8 +74,8 @@ describe('Steps to making your claim page', () => {
   it('should display the correct row link text', () => {
     const link = htmlRes.getElementsByClassName(linkClass);
 
-    expect(link[3].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
-    expect(link[4].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
-    expect(link[5].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
+    expect(link[2].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
+    expect(link[3].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
+    expect(link[4].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
   });
 });
