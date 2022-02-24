@@ -12,7 +12,11 @@
     "welsh": "true"
   },
   "session": {
-    "secret": "local"
+    "secret": "local",
+    "redis": {
+      "host": "",
+      "key": ""
+    }
   },
   "services": {
     "idam": {

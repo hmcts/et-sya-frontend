@@ -1,11 +1,9 @@
-import * as os from 'os';
+import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
 import { PageUrls } from '../definitions/constants';
-
-const healthcheck = require('@hmcts/nodejs-healthcheck');
 
 export default function (app: Application): void {
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
@@ -41,17 +39,12 @@ export default function (app: Application): void {
   app.post(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.post);
   app.get(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.get);
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
+  app.get(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.get);
+  app.post(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.post);
   app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
   app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
   app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
-
-  const healthCheckConfig = {
-    checks: {
-      sampleCheck: healthcheck.raw(() => healthcheck.up()),
-    },
-  };
-
   app.get(
     PageUrls.INFO,
     infoRequestHandler({
@@ -63,5 +56,4 @@ export default function (app: Application): void {
       info: {},
     })
   );
-  healthcheck.addTo(app, healthCheckConfig);
 }

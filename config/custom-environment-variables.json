@@ -7,5 +7,11 @@
       "clientSecret": "IDAM_CLIENT_SECRET",
       "tokenURL": "IDAM_API_URL"
     }
+  },
+  "session": {
+    "redis": {
+      "host": "REDIS_HOST",
+      "key": ""
+    }
   }
 }

@@ -8,6 +8,7 @@ nodejs:
       secrets:
         - AppInsightsInstrumentationKey
         - idam-secret
+        - redis-access-key
 
 idam-pr:
   enabled: true

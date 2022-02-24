@@ -12,6 +12,7 @@ import { AppRequest } from './definitions/appRequest';
 import setupDev from './development';
 import { AppInsights } from './modules/appinsights';
 import { Container } from './modules/awilix';
+import { HealthCheck } from './modules/health';
 import { Helmet } from './modules/helmet';
 import { I18Next } from './modules/i18next';
 import { Nunjucks } from './modules/nunjucks';
@@ -39,6 +40,7 @@ new Container().enableFor(app);
 new I18Next().enableFor(app);
 new Session().enableFor(app);
 new Oidc().enableFor(app);
+new HealthCheck().enableFor(app);
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());

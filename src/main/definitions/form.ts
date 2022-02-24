@@ -1,7 +1,7 @@
 import { Case, CaseDate } from './case';
-import { AnyRecord, NeverRecord } from './util-types';
+import { AnyRecord } from './util-types';
 
-type LanguageLookup = (lang: NeverRecord) => string;
+type LanguageLookup = (lang: AnyRecord) => string;
 
 type ValidationCheck = (
   value: string | string[] | CaseDate | undefined | Case,
@@ -36,6 +36,7 @@ export interface FormOptions {
   label?: Label;
   labelHidden?: boolean;
   labelSize?: string | null;
+  isPageHeading?: boolean | null;
   hideError?: boolean;
   values: FormInput[];
   attributes?: Partial<HTMLInputElement | HTMLTextAreaElement>;
