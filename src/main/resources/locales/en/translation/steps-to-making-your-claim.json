@@ -15,3 +15,12 @@
     "table3_2": "Tell us what you want from your claim",
     "table4_1": "Check your answers"
 }
+
+  "section1": {
+    "title": "1. Your details",
+    "link1Txt": "Personal details",
+    "link2Txt": "Contact details",
+    "link3Txt": "Your preferences"
+  }
+}
+
