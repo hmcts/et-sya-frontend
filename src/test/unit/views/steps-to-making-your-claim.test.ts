@@ -24,9 +24,9 @@ const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
 const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
 const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
-const expectedLink1 = stepsToMakingYourClaimJSON.section1.link1text;
-const expectedLink2 = stepsToMakingYourClaimJSON.section1.link2text;
-const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3text;
+const expectedLink1 = stepsToMakingYourClaimJSON.section1.link1Txt;
+const expectedLink2 = stepsToMakingYourClaimJSON.section1.link2Txt;
+const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3Txt;
 
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
@@ -73,8 +73,9 @@ describe('Steps to making your claim page', () => {
 
   it('should display the correct row link text', () => {
     const link = htmlRes.getElementsByClassName(linkClass);
-    expect(link[0].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
-    expect(link[1].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
-    expect(link[2].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
+
+    expect(link[3].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
+    expect(link[4].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
+    expect(link[5].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
   });
 });
