@@ -22,9 +22,10 @@ export default function (app: Application): void {
   app.get(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.validNoAcasReasonController.get);
   app.post(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.validNoAcasReasonController.post);
   app.get(PageUrls.CONTACT_ACAS, app.locals.container.cradle.contactAcasController.get);
-  app.get(PageUrls.DOB_DETAISLS, app.locals.container.cradle.dobController.get);
-  app.post(PageUrls.DOB_DETAISLS, app.locals.container.cradle.dobController.post);
+  app.get(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.get);
+  app.post(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.post);
   app.get(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.get);
+  app.post(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.post);
   app.get(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.get);
   app.post(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.post);
   app.get(PageUrls.TELEPHONE_NUMBER, app.locals.container.cradle.telNumberController.get);

@@ -1,4 +1,5 @@
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -14,6 +15,6 @@ describe('Steps to Making your claim Controller', () => {
     const request = mockRequest({ t });
 
     stepsToMakingYourClaimController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith('steps-to-making-your-claim', expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });
 });
