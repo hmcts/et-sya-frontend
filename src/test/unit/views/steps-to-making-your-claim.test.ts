@@ -20,10 +20,10 @@ const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1 + "TODO";
-const expectedHeader1 = stepsToMakingYourClaimJSON.title1;
-const expectedHeader2 = stepsToMakingYourClaimJSON.title2;
-const expectedHeader3 = stepsToMakingYourClaimJSON.title3;
-const expectedHeader4 = stepsToMakingYourClaimJSON.title4;
+const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
+const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
+const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
+const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
 
 let htmlRes: Document;
 describe('Steps to making your claim page',()=>{

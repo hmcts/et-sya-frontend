@@ -12,20 +12,32 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{title1}}</th>
+        <th scope="col" class="govuk-table__header">{{ section1.title }}</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell"><a href={{PageUrls.DOB_DETAILS}}>{{table1_1}}</a></th>
+        <th scope="row" class="govuk-table__cell">  
+        <a href="{{ PageUrls.DOB_DETAILS }}" class="govuk-link">
+        {{ section1.link1Txt }}
+        </a>
+        </th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table1_2}}</a></th>
+        <th scope="row" class="govuk-table__cell">
+        <a href="{{ PageUrls.ADDRESS_DETAILS }}" class="govuk-link">
+        {{ section1.link2Txt }}
+        </a>
+        </th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table1_3}}</a></th>
+        <th scope="row" class="govuk-table__cell">
+        <a href="{{ PageUrls.UPDATE_PREFERENCES }}" class="govuk-link">
+        {{ section1.link3Txt }}
+        </a>
+        </th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
     </tbody>
@@ -34,24 +46,24 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{title2}}</th>
+        <th scope="col" class="govuk-table__header">{{section2.title}}</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table2_1}}</th>
+        <th scope="row" class="govuk-table__cell">{{section2.link1Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table2_2}}</th>
+        <th scope="row" class="govuk-table__cell">{{section2.link2Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table2_3}}</th>
+        <th scope="row" class="govuk-table__cell">{{section2.link3Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table2_4}}</th>
+        <th scope="row" class="govuk-table__cell">{{section2.link4Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
     </tbody>
@@ -60,16 +72,16 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{title3}}</th>
+        <th scope="col" class="govuk-table__header">{{section3.title}}</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table3_1}}</th>
+        <th scope="row" class="govuk-table__cell">{{section3.link1Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table3_2}}</th>
+        <th scope="row" class="govuk-table__cell">{{section3.link2Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
     </tbody>
@@ -77,25 +89,16 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{title4}}</th>
+        <th scope="col" class="govuk-table__header">{{section4.title}}</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{table4_1}}</th>
+        <th scope="row" class="govuk-table__cell">{{section4.link1Txt}}</th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
     </tbody>
   </table>
-
-  <h2 class="govuk-heading-l">{{ section1.title }}</h2>
-  <hr class="govuk-section-break govuk-section-break--visible">
-  <a href="{{ PageUrls.DOB_DETAILS }}" class="govuk-link">{{ section1.link1Txt }}</a>
-  <hr class="govuk-section-break govuk-section-break--visible">
-  <a href="{{ PageUrls.ADDRESS_DETAILS }}" class="govuk-link">{{ section1.link2Txt }}</a>
-  <hr class="govuk-section-break govuk-section-break--visible">
-  <a href="{{ PageUrls.UPDATE_PREFERENCES }}" class="govuk-link">{{ section1.link3Txt }}</a>
-  <hr class="govuk-section-break govuk-section-break--visible">
 
   {{ govukButton({
     text: saveForLater,
