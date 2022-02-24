@@ -25,6 +25,7 @@ export const TranslationKeys = {
   STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  TYPE_OF_CLAIM: 'type-of-claim',
 } as const;
 
 export const PageUrls = {
@@ -58,6 +59,6 @@ export const AuthUrls = {
   CALLBACK: '/oauth2/callback',
   LOGIN: '/login',
   LOGOUT: '/logout',
-};
+} as const;
 
 export const HTTPS_PROTOCOL = 'https://';
