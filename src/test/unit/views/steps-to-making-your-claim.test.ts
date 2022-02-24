@@ -12,7 +12,7 @@ const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
 );
 const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 
-const PAGE_URL = '/steps-to-making-your-claim-page';
+const PAGE_URL = '/steps-to-making-your-claim';
 const rowClass = 'govuk-table__row';
 const cellClass = 'govuk-table__cell';
 const linkClass = 'govuk-link';
@@ -70,11 +70,11 @@ describe('Steps to making your claim page', () => {
     expect(header[2].innerHTML).contains(expectedHeader3, 'could not find table 3 header text');
     expect(header[3].innerHTML).contains(expectedHeader4, 'could not find table 4 header text');
   });
-  
+
   it('should display the correct row link text', () => {
-      const link = htmlRes.getElementsByClassName(linkClass);
-      expect(link[0].innerHTML).contains (expectedLink1, 'could not find table1 row 1 link text');
-      expect(link[1].innerHTML).contains (expectedLink2, 'could not find table1 row 2 link text');
-      expect(link[2].innerHTML).contains (expectedLink3, 'could not find table1 row 3 link text');
-  })
+    const link = htmlRes.getElementsByClassName(linkClass);
+    expect(link[0].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
+    expect(link[1].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
+    expect(link[2].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
+  });
 });
