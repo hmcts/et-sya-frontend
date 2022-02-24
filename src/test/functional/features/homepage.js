@@ -78,9 +78,10 @@ Scenario('ET gender details page', async () => {
   I.see('Sex and gender identity');
 });
 
-Scenario('ET homepage verify cached item configuration on a new tab', () => {
+Scenario('ET homepage verify cached configuration on a new tab', () => {
   etpageFlow();
   I.checkOption('input[id=lip-or-representative]');
+  I.seeCheckboxIsChecked('input[id=lip-or-representative]');
   I.openNewTab();
   I.amOnPage('/lip-or-representative');
   I.seeInCurrentUrl('/lip-or-representative');
