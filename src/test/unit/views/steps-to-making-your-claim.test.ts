@@ -15,6 +15,7 @@ const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 const PAGE_URL = '/steps-to-making-your-claim-page';
 const rowClass = 'govuk-table__row';
 const cellClass = 'govuk-table__cell';
+const linkClass = 'govuk-link';
 const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
 const titleClass = 'govuk-heading-xl';
@@ -23,6 +24,9 @@ const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
 const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
 const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
+const expectedLink1 = stepsToMakingYourClaimJSON.section1.link1text;
+const expectedLink2 = stepsToMakingYourClaimJSON.section1.link2text;
+const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3text;
 
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
@@ -66,4 +70,11 @@ describe('Steps to making your claim page', () => {
     expect(header[2].innerHTML).contains(expectedHeader3, 'could not find table 3 header text');
     expect(header[3].innerHTML).contains(expectedHeader4, 'could not find table 4 header text');
   });
+  
+  it('should display the correct row link text', () => {
+      const link = htmlRes.getElementsByClassName(linkClass);
+      expect(link[0].innerHTML).contains (expectedLink1, 'could not find table1 row 1 link text');
+      expect(link[1].innerHTML).contains (expectedLink2, 'could not find table1 row 2 link text');
+      expect(link[2].innerHTML).contains (expectedLink3, 'could not find table1 row 3 link text');
+  })
 });
