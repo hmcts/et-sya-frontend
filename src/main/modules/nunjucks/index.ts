@@ -94,6 +94,9 @@ export class Nunjucks {
         hint: i.hint && {
           html: this.env.globals.getContent.call(this, i.hint),
         },
+        inputmode: i.inputMode,
+        pattern: i.pattern,
+        spellcheck: i.spellCheck,
         conditional: ((): { html: string | undefined } => {
           if (i.conditionalText) {
             return {

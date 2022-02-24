@@ -11,6 +11,11 @@ export interface CaseDate {
   day: string;
 }
 
+export interface NoticePeriod {
+  length: string;
+  unit: WeeksOrMonths;
+}
+
 export interface Case {
   dobDate: CaseDate;
   address1?: string;
@@ -29,6 +34,7 @@ export interface Case {
   isMultipleRespondent?: YesOrNo;
   presentEmployer?: YesOrNo;
   pastEmployer?: YesOrNo;
+  noticePeriod?: NoticePeriod;
 }
 
 export interface CaseWithId extends Case {
@@ -38,6 +44,11 @@ export interface CaseWithId extends Case {
 export const enum YesOrNo {
   YES = 'Yes',
   NO = 'No',
+}
+
+export const enum WeeksOrMonths {
+  WEEKS = 'Weeks',
+  MONTHS = 'Months',
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
