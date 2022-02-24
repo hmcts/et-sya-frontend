@@ -59,7 +59,4 @@ export default function (app: Application): void {
     })
   );
 
-
-  healthcheck.addTo(app, healthCheckConfig);
-
 }
