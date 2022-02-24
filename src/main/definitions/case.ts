@@ -1,3 +1,4 @@
+import { TypesOfClaim } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -28,6 +29,7 @@ export interface Case {
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
   presentEmployer?: YesOrNo;
+  typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
 }
 
