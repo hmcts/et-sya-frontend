@@ -58,7 +58,7 @@ describe('Steps to making your claim page', () => {
     expect(cell.length).equal(20, 'number of cells found is not 20');
   });
 
-  it('shoul display the correct number of table headers', () => {
+  it('should display the correct number of table headers', () => {
     const header = htmlRes.getElementsByClassName(headerClass);
     expect(header.length).equal(4, 'number of table headers found is not 4');
   });
