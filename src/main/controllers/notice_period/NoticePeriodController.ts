@@ -14,7 +14,6 @@ export default class NoticePeriodController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    console.log(JSON.stringify(req.body));
     setUserCase(req, this.form);
     // TODO: fill in correct navigation
     handleSessionErrors(req, res, this.form, '/');

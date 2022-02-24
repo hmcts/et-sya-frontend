@@ -5,5 +5,13 @@
   "months": "Months",
   "lengthLabel": "How many weeks or months is your notice period?",
   "unitLabel": "Is your notice period in weeks or months?",
-  "hintText": "If you're not sure, check the terms and conditions of your employment contract."
+  "insetText": "<div class=\"govuk-inset-text\">If you're not sure, check the terms and conditions of your employment contract.</div>",
+  "errors": {
+    "noticePeriodLength": {
+      "required": "Enter a number"
+    },
+    "noticePeriodUnit": {
+      "required": "Select an option"
+    }
+  }
 }

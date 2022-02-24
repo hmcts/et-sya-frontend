@@ -12,11 +12,6 @@ export interface CaseDate {
   day: string;
 }
 
-export interface NoticePeriod {
-  length: string;
-  unit: WeeksOrMonths;
-}
-
 export interface Case {
   dobDate: CaseDate;
   address1?: string;
@@ -36,7 +31,9 @@ export interface Case {
   presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
-  noticePeriod?: NoticePeriod;
+  noticePeriod?: YesOrNo;
+  noticePeriodLength?: string;
+  noticePeriodUnit?: WeeksOrMonths;
 }
 
 export interface CaseWithId extends Case {

@@ -98,16 +98,21 @@ export class Nunjucks {
         pattern: i.pattern,
         spellcheck: i.spellCheck,
         conditional: ((): { html: string | undefined } => {
-          if (i.conditionalText) {
-            return {
-              html: this.env.globals.getContent.call(this, i.conditionalText),
-            };
-          } else if (i.subFields) {
-            return {
-              html: nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
+          let innerHtml = '';
+          if (i.subFields) {
+            innerHtml =
+              innerHtml +
+              nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
                 ...this.ctx,
                 form: { fields: i.subFields },
-              }),
+              });
+          }
+          if (i.conditionalText) {
+            innerHtml = innerHtml + this.env.globals.getContent.call(this, i.conditionalText);
+          }
+          if (innerHtml.length > 0) {
+            return {
+              html: innerHtml,
             };
           } else {
             return undefined;

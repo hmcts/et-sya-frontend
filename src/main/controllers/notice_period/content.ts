@@ -1,3 +1,4 @@
+import { isFieldFilledIn } from '../../components/form/validator';
 import { WeeksOrMonths, YesOrNo } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -12,12 +13,14 @@ export const noticePeriodFormContent: FormContent = {
         {
           label: (l: AnyRecord): string => l.yes,
           value: YesOrNo.YES,
+          conditionalText: (l: AnyRecord): string => l.insetText,
           subFields: {
-            unit: {
+            noticePeriodUnit: {
               type: 'radios',
               id: 'notice-period-length',
               classes: 'govuk-radios--inline',
               label: (l: AnyRecord): string => l.unitLabel,
+              labelSize: null,
               values: [
                 {
                   label: (l: AnyRecord): string => l.weeks,
@@ -28,13 +31,14 @@ export const noticePeriodFormContent: FormContent = {
                   value: WeeksOrMonths.MONTHS,
                 },
               ],
+              validator: isFieldFilledIn,
             },
-            length: {
+            noticePeriodLength: {
               id: 'notice-period-length',
               type: 'input',
               classes: 'govuk-input--width-2',
               label: (l: AnyRecord): string => l.lengthLabel,
-              hint: (l: AnyRecord): string => l.hintText,
+              labelSize: null,
               inputMode: 'numeric',
               pattern: '[0-9]*',
               spellCheck: false,
@@ -42,6 +46,7 @@ export const noticePeriodFormContent: FormContent = {
                 autocomplete: 'notice-period-length',
                 maxLength: 2,
               },
+              validator: isFieldFilledIn,
             },
           },
         },
