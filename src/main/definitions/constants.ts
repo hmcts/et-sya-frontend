@@ -24,6 +24,7 @@ export const TranslationKeys = {
   NO_ACAS_NUMBER: 'valid-no-acas-reason',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  EMPLOYMENT_DETAILS_PENSION: 'employment-details-pension',
 } as const;
 
 export const PageUrls = {
@@ -50,6 +51,7 @@ export const PageUrls = {
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   PRESENT_EMPLOYER: '/present-employer',
   PAST_EMPLOYER: '/past-employer',
+  EMPLOYMENT_DETAILS_PENSION: '/employment-details-notice-pension',
 } as const;
 
 export const AuthUrls = {

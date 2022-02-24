@@ -43,6 +43,8 @@ export default function (app: Application): void {
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
   app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
   app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
+  app.get(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.get);
+  app.post(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.post);
 
   const healthCheckConfig = {
     checks: {
