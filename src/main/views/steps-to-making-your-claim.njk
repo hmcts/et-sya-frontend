@@ -9,96 +9,35 @@
 {% block content %}
 
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{h1}} TODO</h1>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{ section1.title }}</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">  
-        <a href="{{ PageUrls.DOB_DETAILS }}" class="govuk-link">
-        {{ section1.link1Txt }}
-        </a>
-        </th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">
-        <a href="{{ PageUrls.ADDRESS_DETAILS }}" class="govuk-link">
-        {{ section1.link2Txt }}
-        </a>
-        </th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">
-        <a href="{{ PageUrls.UPDATE_PREFERENCES }}" class="govuk-link">
-        {{ section1.link3Txt }}
-        </a>
-        </th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-    </tbody>
-  </table>
+
+  {% for section in sections %}
   
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{section2.title}}</th>
+        <th scope="col" class="govuk-table__header">{{ section.title }}</th>
       </tr>
     </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section2.link1Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section2.link2Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section2.link3Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section2.link4Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-    </tbody>
-  </table>
+    {% for link in section.links %}
 
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{section3.title}}</th>
-      </tr>
-    </thead>
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section3.link1Txt}}</th>
+        <th scope="row" class="govuk-table__cell">  
+        {% if link.url !="" %}
+        <a href= "{{ link.url }}" class="govuk-link">
+        {{ link.linkTxt }}
+        </a>
+        {% else %}
+        {{link.linkTxt}}
+        {% endif %}
+        </th>
         <th scope="row" class="govuk-table__cell">TODO</th>
       </tr>
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section3.link2Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-    </tbody>
+      {% endfor %}
+      </tbody>
   </table>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{section4.title}}</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">{{section4.link1Txt}}</th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
-      </tr>
-    </tbody>
-  </table>
+  {% endfor %}
+
 
   {{ govukButton({
     text: saveForLater,
