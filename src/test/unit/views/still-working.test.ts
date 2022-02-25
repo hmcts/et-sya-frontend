@@ -36,8 +36,8 @@ describe('Are you still working page', () => {
 
   it('should display save for later button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save for later','Could not find the button');
-  })
+    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
+  });
 
   it('should display 3 radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radioClass);
