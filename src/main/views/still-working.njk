@@ -1,4 +1,6 @@
 {% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -6,11 +8,16 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
     <div>
   <div>
+  
   {% block form %}
     {% include "form/form.njk"%}
   {% endblock %}
