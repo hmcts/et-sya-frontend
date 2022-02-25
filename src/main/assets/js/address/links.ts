@@ -18,6 +18,14 @@ const resetSelectAddress = () => {
   }
 };
 
+export const resetAddressFields = (): void => {
+  (getById('address1') as HTMLInputElement).value = '';
+  (getById('address2') as HTMLInputElement).value = '';
+  (getById('addressTown') as HTMLInputElement).value = '';
+  (getById('addressCounty') as HTMLInputElement).value = '';
+  (getById('addressPostcode') as HTMLInputElement).value = '';
+};
+
 export const showUkAddressFields = (): void => {
   getById('selectAddress').classList.add(hidden);
   qs('.govuk-form-group.address1').classList.remove(hidden);
@@ -40,13 +48,22 @@ export const hideUkAddressFields = (): void => {
   getById('main-form-save-for-later').classList.add(hidden);
 };
 
+const onManualAddress = (e: UIEvent) => {
+  e.preventDefault();
+  hideErrors();
+  hideEnterPostcode();
+  showUkAddressFields();
+};
+
 const cannotFindAddress = getById('cannotFindAddress') as HTMLAnchorElement;
+const manualAddress = getById('manualAddress') as HTMLAnchorElement;
+
 if (cannotFindAddress) {
-  cannotFindAddress.onclick = e => {
-    e.preventDefault();
-    hideErrors();
-    showUkAddressFields();
-  };
+  cannotFindAddress.onclick = onManualAddress;
+}
+
+if (manualAddress) {
+  manualAddress.onclick = onManualAddress;
 }
 
 const onResetPostcodeLookup = (e: UIEvent) => {
@@ -54,6 +71,7 @@ const onResetPostcodeLookup = (e: UIEvent) => {
   hideErrors();
   resetSelectAddress();
   hideSelectAddress();
+  resetAddressFields();
   hideUkAddressFields();
 
   for (const el of qsa('.govuk-error-summary:not([id="addressErrorSummary"])')) {

@@ -18,9 +18,9 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.placeOfWorkContent, ['common', 'enter-address']);
+    const content = getPageContent(req, this.placeOfWorkContent, ['common', 'enter-address', 'place-of-work']);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('enter-address/enter-address', {
+    res.render('place-of-work', {
       ...content,
     });
   };

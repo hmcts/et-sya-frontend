@@ -16,7 +16,7 @@ export const placeOfWorkContent: FormContent = {
       id: 'address2',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: l => l.line2Optional,
+      label: null,
       labelSize: null,
       labelHidden: true,
     },

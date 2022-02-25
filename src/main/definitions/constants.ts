@@ -50,6 +50,8 @@ export const PageUrls = {
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   PRESENT_EMPLOYER: '/present-employer',
   PAST_EMPLOYER: '/past-employer',
+  PLACE_OF_WORK: '/place-of-work',
+  ADDRESS_LOOK_UP: '/address-lookup',
 } as const;
 
 export const AuthUrls = {

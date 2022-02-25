@@ -22,10 +22,8 @@ if (selectAddressInput) {
   };
 
   selectAddressInput.onchange = updateAddressInputs;
-  updateAddressInputs();
 
   (getById('main-form') as HTMLFormElement).onsubmit = () => {
-    updateAddressInputs();
     hideErrors();
 
     if (!getById('selectAddress')?.classList.contains(hidden) && selectAddressInput.value === '-1') {

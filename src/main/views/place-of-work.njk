@@ -13,12 +13,15 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      {% include "./postcodeError.njk" %}
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
-      <p class="govuk-body">{{ workedFromHome | safe}}</p>
+      {% block errorSummary %}
+        {% include "./error-summary.njk" %}
+      {% endblock %}
 
-      {% include "./postcodeEnter.njk" %}
-      {% include "./postcodeSelect.njk" %}
+      {% include "./address/postcodeError.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageHeader }}</h1>
+      <p class="govuk-body">{{ pageText | safe}}</p>
+      {% include "./address/postcodeEnter.njk" %}
+      {% include "./address/postcodeSelect.njk" %}
 
       {% block form %}
         {% include "form/form.njk"%}

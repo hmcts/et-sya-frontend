@@ -43,6 +43,9 @@ export default function (app: Application): void {
   app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
   app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
   app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
+  app.get(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.get);
+  app.post(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.post);
+  app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
 
   const healthCheckConfig = {
     checks: {
@@ -61,10 +64,6 @@ export default function (app: Application): void {
       info: {},
     })
   );
-
-  app.post('/address-lookup', app.locals.container.cradle.addressLookupController.post);
-  app.get('/place-of-work', app.locals.container.cradle.placeOfWorkController.get);
-  app.post('/place-of-work', app.locals.container.cradle.placeOfWorkController.post);
 
   healthcheck.addTo(app, healthCheckConfig);
 }

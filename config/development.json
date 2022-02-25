@@ -6,6 +6,10 @@
       "authorizationURL": "http://localhost:3501/login",
       "clientSecret": "test1234",
       "tokenURL": "http://localhost:5000/o/token"
+    },
+    "addressLookup": {
+      "url": "https://api.os.uk/search/places/v1/postcode",
+      "token": "TO BE PICKED UP FROM ENV"
     }
   }
 }
