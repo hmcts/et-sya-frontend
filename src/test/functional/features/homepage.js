@@ -78,11 +78,21 @@ Scenario('ET gender details page', async () => {
   I.see('Sex and gender identity');
 });
 
-async function etpageFlow() {
-  I.amOnPage(testConfig.testUrl);
-  I.waitForText('Make a claim to an employment tribunal', waitSeconds);
-  I.waitForText('Start now', waitSeconds);
+Scenario('ET homepage verify cached configuration on a new tab', () => {
+  etpageFlow();
+  I.checkOption('input[id=lip-or-representative]');
+  I.seeCheckboxIsChecked('input[id=lip-or-representative]');
+  I.openNewTab();
+  I.amOnPage('/lip-or-representative');
+  I.seeInCurrentUrl('/lip-or-representative');
+  I.see('I’m representing myself and making my own claim');
+  I.dontSeeCheckboxIsChecked('representingMyself');
+}).tag('@RET-1014');
+
+function etpageFlow() {
+  I.amOnPage('/');
+  I.see('Make a claim to an employment tribunal');
   I.click('Start now');
-  I.waitForText('To make a claim you may want to prepare and have the following to hand', waitSeconds);
+  I.see('Before you continue');
   I.click('Continue');
 }
