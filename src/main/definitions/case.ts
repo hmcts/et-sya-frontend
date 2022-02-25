@@ -28,6 +28,7 @@ export interface Case {
   validNoAcasReason?: YesOrNo;
   returnToExisting: YesOrNo;
   isMultipleRespondent?: YesOrNo;
+  jobTitle?: string;
   presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
