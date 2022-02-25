@@ -18,19 +18,19 @@ export const convertToDateObject: DateParser = (property, body) =>
 type CheckboxParser = (isSavingAndSigningOut: boolean) => ([key, field]: [string, FormField]) => [string, FormField];
 
 export const setupCheckboxParser: CheckboxParser =
-  isSavingAndSigningOut =>
-  ([key, field]) => {
-    if ((field as FormOptions)?.type === 'checkboxes') {
+  (saveForLater = false) =>
+  ([key, field]: [string, FormOptions]) => {
+    if (field?.type === 'checkboxes') {
       field.parser = (formData: AnyRecord) => {
         const checkbox = formData[key] ?? [];
         let checkboxValues;
-        if ((field as FormOptions).values.length > 1) {
+        if (field.values.length > 1) {
           checkboxValues = checkbox.filter(Boolean);
         } else {
           checkboxValues = checkbox[checkbox.length - 1];
         }
 
-        if (isSavingAndSigningOut && !checkboxValues) {
+        if (saveForLater && !checkboxValues) {
           checkboxValues = null;
         }
 
