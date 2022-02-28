@@ -6,15 +6,15 @@
       "title": "1. Your details",
       "links": [
         {
-          "url": "{{ PageUrls.DOB_DETAILS }}",
+          "url": "/dob-details",
           "linkTxt": "Personal details"
         },
         {
-          "url": "{{ PageUrls.ADDRESS_DETAILS }}",
+          "url": "/address-details",
           "linkTxt": "Contact details"
         },
         {
-          "url": "{{ PageUrls.UPDATE_PREFERENCES }}",
+          "url": "/how-would-you-like-to-be-updated-about-your-claim",
           "linkTxt": "Your preferences"
         }
       ]
