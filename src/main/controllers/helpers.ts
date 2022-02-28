@@ -87,7 +87,16 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
   });
 };
 
-export const conditionalRedirect = (req: AppRequest, formFields: FormFields, condition: boolean | string): boolean => {
+export const conditionalRedirect = (
+  req: AppRequest,
+  formFields: FormFields,
+  condition: boolean | string | string[]
+): boolean => {
   const matchingValues = Object.entries(req.body).find(([k]) => Object.keys(formFields).some(ff => ff === k));
-  return matchingValues ? matchingValues.some(v => v === condition) : false;
+  if (Array.isArray(condition) && matchingValues) {
+    return matchingValues.filter(Array.isArray).some(v => {
+      return (condition as string[]).some(c => v.includes(c));
+    });
+  }
+  return matchingValues?.some(v => v === condition);
 };

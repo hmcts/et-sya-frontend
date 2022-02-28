@@ -130,3 +130,16 @@ export const isValidUKTelNumber: Validator = value => {
     return 'invalid';
   }
 };
+
+export const isJobTitleValid: Validator = value => {
+  if (typeof value === 'string') {
+    const inputStrLength = (value as string).trim().length;
+    if (inputStrLength === 0) {
+      return;
+    }
+
+    if (inputStrLength === 1 || inputStrLength > 100) {
+      return 'invalid-length';
+    }
+  }
+};

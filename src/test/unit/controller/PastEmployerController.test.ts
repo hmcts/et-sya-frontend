@@ -1,5 +1,3 @@
-import { mock } from 'sinon';
-
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import pastEmployerController from '../../../main/controllers/past_employer/PastEmployerController';
 import { AppRequest } from '../../../main/definitions/appRequest';
@@ -40,16 +38,11 @@ describe('Update Past Employer Controller', () => {
 
   it('should render the Update Preference page', () => {
     const controller = new pastEmployerController(mockFormContent);
-
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
-    const responseMock = mock(response);
-
-    responseMock.expects('render').once().withArgs('past-employer');
-
     controller.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith('past-employer', expect.anything());
   });
 
   it('should redirect to the same screen when errors are present', () => {
