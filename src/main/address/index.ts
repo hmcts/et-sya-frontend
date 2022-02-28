@@ -52,6 +52,7 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
       })
     );
   } catch (err) {
+    //TODO: Log error after introducing logger
     return [];
   }
 };

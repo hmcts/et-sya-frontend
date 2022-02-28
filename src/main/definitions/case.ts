@@ -12,16 +12,6 @@ export interface CaseDate {
   day: string;
 }
 
-export interface Address {
-  AddressLine1: string;
-  AddressLine2: string;
-  AddressLine3: string;
-  PostTown: string;
-  County: string;
-  PostCode: string;
-  Country: string;
-}
-
 export interface Case {
   dobDate: CaseDate;
   address1?: string;
