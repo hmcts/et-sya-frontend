@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as nunjucks from 'nunjucks';
 
 import { Form } from '../../components/form/form';
-import { FormError, FormFields, FormInput } from '../../definitions/form';
+import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 export class Nunjucks {
@@ -53,7 +53,7 @@ export class Nunjucks {
       }
       return {
         text: errors[fieldName][fieldError.errorType],
-        fieldName: fieldError['fieldName'],
+        fieldName: fieldError['propertyName'],
       };
     });
 
@@ -64,21 +64,24 @@ export class Nunjucks {
       return Object.entries(items)
         .flatMap(([fieldName, field]) => {
           const errors = [];
-          if (field.subFields) {
-            const subFields = Object.entries(field.subFields);
-            subFields.flatMap(([subFieldName, subField]) => {
-              const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
-                text?: string;
-                fieldName?: string;
-              };
-              if (subFieldError && subFieldError?.text) {
-                errors.push({
-                  text: subFieldError.text,
-                  href: `#${subField.id}${subFieldError.fieldName ? '-' + subFieldError.fieldName : ''}`,
-                });
-              }
-            });
+          for (const value of field.values as unknown as FormField[]) {
+            if (value.subFields) {
+              const subFields = Object.entries(value.subFields);
+              subFields.flatMap(([subFieldName, subField]) => {
+                const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
+                  text?: string;
+                  fieldName?: string;
+                };
+                if (subFieldError && subFieldError?.text) {
+                  errors.push({
+                    text: subFieldError.text,
+                    href: `#${subField.id}${subFieldError.fieldName ? '-' + subFieldError.fieldName : ''}`,
+                  });
+                }
+              });
+            }
           }
+
           const error = this.env.globals.getError.call(this, fieldName) as {
             text?: string;
             fieldName?: string;
