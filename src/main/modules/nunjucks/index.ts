@@ -42,8 +42,8 @@ export class Nunjucks {
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
       const { form, sessionErrors, errors } = this.ctx;
 
-      const hasMoreThanTwoFields = new Form(form).getFieldNames().size >= 2;
-      if (!sessionErrors?.length || !hasMoreThanTwoFields) {
+      const hasMoreThanThreeFields = new Form(form).getFieldNames().size >= 3;
+      if (!sessionErrors?.length || !hasMoreThanThreeFields) {
         return false;
       }
 
@@ -63,17 +63,33 @@ export class Nunjucks {
     }[] {
       return Object.entries(items)
         .flatMap(([fieldName, field]) => {
+          const errors = [];
+          if (field.subFields) {
+            const subFields = Object.entries(field.subFields);
+            subFields.flatMap(([subFieldName, subField]) => {
+              const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
+                text?: string;
+                fieldName?: string;
+              };
+              if (subFieldError && subFieldError?.text) {
+                errors.push({
+                  text: subFieldError.text,
+                  href: `#${subField.id}${subFieldError.fieldName ? '-' + subFieldError.fieldName : ''}`,
+                });
+              }
+            });
+          }
           const error = this.env.globals.getError.call(this, fieldName) as {
             text?: string;
             fieldName?: string;
           };
           if (error && error?.text) {
-            return {
+            errors.push({
               text: error.text,
               href: `#${field.id}${error.fieldName ? '-' + error.fieldName : ''}`,
-            };
+            });
           }
-          return;
+          return errors;
         })
         .filter(e => e);
     });
