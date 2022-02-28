@@ -14,15 +14,15 @@
   
   <table class="govuk-table">
     <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">{{ section.title }}</th>
+      <tr class="govuk-table__row ">
+        <th scope="col" class="govuk-table__header govuk-grid-column-three-quarters">{{ section.title }}</th>
       </tr>
     </thead>
     {% for link in section.links %}
 
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell">  
+        <th scope="row" class="govuk-table__cell govuk-grid-column-one-half">  
         {% if link.url !="" %}
         <a href= "{{ link.url }}" class="govuk-link">
         {{ link.linkTxt }}
@@ -31,7 +31,7 @@
         {{link.linkTxt}}
         {% endif %}
         </th>
-        <th scope="row" class="govuk-table__cell">TODO</th>
+        <th scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</th>
       </tr>
       {% endfor %}
       </tbody>
