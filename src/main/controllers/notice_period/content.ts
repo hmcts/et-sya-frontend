@@ -16,8 +16,8 @@ export const noticePeriodFormContent: FormContent = {
           conditionalText: (l: AnyRecord): string => l.insetText,
           subFields: {
             noticePeriodUnit: {
+              id: 'notice-period-unit',
               type: 'radios',
-              id: 'notice-period-length',
               classes: 'govuk-radios--inline',
               label: (l: AnyRecord): string => l.unitLabel,
               labelSize: null,
