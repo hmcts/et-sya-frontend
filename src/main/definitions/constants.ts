@@ -25,6 +25,7 @@ export const TranslationKeys = {
   STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  JOB_TITLE: 'job-title',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
 } as const;
@@ -53,6 +54,7 @@ export const PageUrls = {
   GENDER_DETAILS: '/gender-details',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   PRESENT_EMPLOYER: '/present-employer',
+  JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
 } as const;
 
