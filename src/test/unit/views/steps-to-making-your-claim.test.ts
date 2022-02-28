@@ -20,13 +20,13 @@ const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
-const expectedHeader1 = stepsToMakingYourClaimJSON.sections.section1.title;
-const expectedHeader2 = stepsToMakingYourClaimJSON.sections.section2.title;
-const expectedHeader3 = stepsToMakingYourClaimJSON.sections.section3.title;
-const expectedHeader4 = stepsToMakingYourClaimJSON.sections.section4.title;
-const expectedLink1 = stepsToMakingYourClaimJSON.sections.section1.links.link1.linkTxt;
-const expectedLink2 = stepsToMakingYourClaimJSON.sections.section1.links.link2.linkTxt;
-const expectedLink3 = stepsToMakingYourClaimJSON.sections.section1.links.link3.linkTxt;
+const expectedHeader1 = stepsToMakingYourClaimJSON.sections[0].title;
+const expectedHeader2 = stepsToMakingYourClaimJSON.sections[1].title;
+const expectedHeader3 = stepsToMakingYourClaimJSON.sections[2].title;
+const expectedHeader4 = stepsToMakingYourClaimJSON.sections[3].title;
+const expectedLink1 = stepsToMakingYourClaimJSON.sections[0].links[0].linkTxt;
+const expectedLink2 = stepsToMakingYourClaimJSON.sections[0].links[1].linkTxt;
+const expectedLink3 = stepsToMakingYourClaimJSON.sections[0].links[2].linkTxt;
 
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
