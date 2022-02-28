@@ -1,67 +1,67 @@
 {
   "title": "Steps to making your claim",
   "h1": "Steps to making your claim",
-  "sections": {
-    "section1": {
+  "sections": [
+    {
       "title": "1. Your details",
-      "links": {
-        "link1": {
+      "links": [
+        {
           "url": "{{ PageUrls.DOB_DETAILS }}",
           "linkTxt": "Personal details"
         },
-        "link2": {
+        {
           "url": "{{ PageUrls.ADDRESS_DETAILS }}",
           "linkTxt": "Contact details"
         },
-        "link3": {
+        {
           "url": "{{ PageUrls.UPDATE_PREFERENCES }}",
           "linkTxt": "Your preferences"
         }
-      }
+      ]
     },
-    "section2": {
+    {
       "title": "2. Employment and respondent details",
-      "links": {
-        "link1": {
+      "links": [
+        {
           "url": "",
           "linkTxt": "Employment status"
         },
-        "link2": {
+        {
           "url": "",
           "linkTxt": "Work Address"
         },
-        "link3": {
+        {
           "url": "",
           "linkTxt": "Where you worked"
         },
-        "link4": {
+        {
           "url": "",
           "linkTxt": "Respondent details"
         }
-      }
+      ]
     },
-    "section3": {
+    {
       "title": "3. Claim details",
-      "links": {
-        "link1": {
+      "links": [
+        {
           "url": "",
           "linkTxt": "Summarise what happened to you"
         },
-        "link2": {
+        {
           "url": "",
 
           "linkTxt": "Tell us what you want from your claim"
         }
-      }
+      ]
     },
-    "section4": {
+    {
       "title": "4. Check and submit",
-      "links": {
-        "link1": {
+      "links": [
+        {
           "url": "",
           "linkTxt": "Check your answers"
         }
-      }
+      ]
     }
-  }
+  ]
 }
