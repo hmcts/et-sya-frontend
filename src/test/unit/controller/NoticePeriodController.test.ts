@@ -22,7 +22,6 @@ describe('Update Notice Period Controller', () => {
           {
             name: 'radio1',
             label: 'radio1',
-            value: '',
             subFields: {
               noticePeriodUnit: {
                 id: 'notice-period-length',
@@ -32,12 +31,10 @@ describe('Update Notice Period Controller', () => {
                   {
                     name: 'innerRadio1',
                     label: 'innerRadio1',
-                    value: '',
                   },
                   {
                     name: 'innerRadio2',
                     label: 'innerRadio2',
-                    value: '',
                   },
                 ],
                 validator: isFieldFilledIn,
@@ -62,7 +59,6 @@ describe('Update Notice Period Controller', () => {
           {
             name: 'radio1',
             label: 'radio2',
-            value: '',
           },
         ],
       },
@@ -78,7 +74,7 @@ describe('Update Notice Period Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_PERIOD, expect.anything());
   });
 
-  /*it('should redirect to the same screen when errors aare present', () => {
+  it('should redirect to the same screen when errors are present', () => {
     const errors = [
       {
         propertyName: 'noticePeriodUnit',
@@ -98,7 +94,7 @@ describe('Update Notice Period Controller', () => {
 
     expect(req.session.errors).toEqual(errors);
     expect(res.redirect).toBeCalledWith(req.path);
-  });*/
+  });
 
   it('should assign userCase from notice period form data', () => {
     const body = { noticePeriod: 'Yes', noticePeriodLength: '2', noticePeriodUnit: 'Weeks' };
