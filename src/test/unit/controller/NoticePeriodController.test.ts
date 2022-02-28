@@ -78,24 +78,18 @@ describe('Update Notice Period Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_PERIOD, expect.anything());
   });
 
-  /*it('should redirect to the same screen when noticePeriodUnit error is present', () => {
-    const errors = [{ propertyName: 'noticePeriodUnit', errorType: 'required' }];
-    const body = { noticePeriod: 'Yes' };
-
-    const controller = new NoticePeriodController(mockFormContent);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.errors).toEqual(errors);
-    expect(res.redirect).toBeCalledWith(req.path);
-  });
-
-  it('should redirect to the same screen when noticePeriodLength error is present', () => {
-    const errors = [{ propertyName: 'noticePeriodLength', errorType: 'required' }];
-    const body = { noticePeriod: 'Yes' };
-
+  /*it('should redirect to the same screen when errors aare present', () => {
+    const errors = [
+      {
+        propertyName: 'noticePeriodUnit',
+        errorType: 'required',
+      },
+      {
+        propertyName: 'noticePeriodLength',
+        errorType: 'required',
+      },
+    ];
+    const body = { noticePeriod: 'Yes', noticePeriodUnit: '', noticePeriodLength: '' };
     const controller = new NoticePeriodController(mockFormContent);
 
     const req = mockRequest({ body });
@@ -108,7 +102,6 @@ describe('Update Notice Period Controller', () => {
 
   it('should assign userCase from notice period form data', () => {
     const body = { noticePeriod: 'Yes', noticePeriodLength: '2', noticePeriodUnit: 'Weeks' };
-
     const controller = new NoticePeriodController(mockFormContent);
 
     const req = mockRequest({ body });
