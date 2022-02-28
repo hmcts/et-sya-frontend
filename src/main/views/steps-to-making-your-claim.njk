@@ -22,7 +22,7 @@
 
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__cell govuk-grid-column-one-half">  
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-half">  
         {% if link.url !="" %}
         <a href= "{{ link.url }}" class="govuk-link">
         {{ link.linkTxt }}
@@ -30,8 +30,8 @@
         {% else %}
         {{link.linkTxt}}
         {% endif %}
-        </th>
-        <th scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</th>
+        </td>
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</td>
       </tr>
       {% endfor %}
       </tbody>
