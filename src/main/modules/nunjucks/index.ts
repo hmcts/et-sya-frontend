@@ -1,10 +1,9 @@
 import * as path from 'path';
 
 import config from 'config';
-import * as express from 'express';
-import * as nunjucks from 'nunjucks';
+import express from 'express';
+import nunjucks from 'nunjucks';
 
-import { Form } from '../../components/form/form';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -40,10 +39,9 @@ export class Nunjucks {
     );
 
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
-      const { form, sessionErrors, errors } = this.ctx;
+      const { sessionErrors, errors } = this.ctx;
 
-      const hasMoreThanThreeFields = new Form(form).getFieldNames().size >= 3;
-      if (!sessionErrors?.length || !hasMoreThanThreeFields) {
+      if (!sessionErrors?.length) {
         return false;
       }
 
@@ -51,10 +49,8 @@ export class Nunjucks {
       if (!fieldError) {
         return false;
       }
-      return {
-        text: errors[fieldName][fieldError.errorType],
-        fieldName: fieldError['propertyName'],
-      };
+
+      return { text: errors[fieldName][fieldError.errorType] };
     });
 
     nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
@@ -116,9 +112,6 @@ export class Nunjucks {
         hint: i.hint && {
           html: this.env.globals.getContent.call(this, i.hint),
         },
-        inputmode: i.inputMode,
-        pattern: i.pattern,
-        spellcheck: i.spellCheck,
         conditional: ((): { html: string | undefined } => {
           let innerHtml = '';
           if (i.subFields) {
@@ -132,13 +125,9 @@ export class Nunjucks {
           if (i.conditionalText) {
             innerHtml = innerHtml + this.env.globals.getContent.call(this, i.conditionalText);
           }
-          if (innerHtml.length > 0) {
-            return {
-              html: innerHtml,
-            };
-          } else {
-            return undefined;
-          }
+          return {
+            html: innerHtml,
+          };
         })(),
       }));
     });

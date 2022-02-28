@@ -1,4 +1,4 @@
-import { isFieldFilledIn } from '../../components/form/validator';
+import { isFieldFilledIn, isValidInteger } from '../../components/form/validator';
 import { WeeksOrMonths, YesOrNo } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -39,14 +39,11 @@ export const noticePeriodFormContent: FormContent = {
               classes: 'govuk-input--width-2',
               label: (l: AnyRecord): string => l.lengthLabel,
               labelSize: null,
-              inputMode: 'numeric',
-              pattern: '[0-9]*',
-              spellCheck: false,
               attributes: {
                 autocomplete: 'notice-period-length',
                 maxLength: 2,
               },
-              validator: isFieldFilledIn,
+              validator: isFieldFilledIn && isValidInteger,
             },
           },
         },

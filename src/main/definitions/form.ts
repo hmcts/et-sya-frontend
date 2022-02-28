@@ -60,9 +60,6 @@ export interface FormInput {
   warning?: Warning;
   conditionalText?: Label;
   subFields?: Record<string, FormField>;
-  inputMode?: string;
-  pattern?: string;
-  spellCheck?: boolean;
 }
 
 export type FormError = {
