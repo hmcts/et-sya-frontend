@@ -64,21 +64,24 @@ export class Nunjucks {
       return Object.entries(items)
         .flatMap(([fieldName, field]) => {
           const errors = [];
-          for (const value of field.values as unknown as FormField[]) {
-            if (value.subFields) {
-              const subFields = Object.entries(value.subFields);
-              subFields.flatMap(([subFieldName, subField]) => {
-                const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
-                  text?: string;
-                  fieldName?: string;
-                };
-                if (subFieldError && subFieldError?.text) {
-                  errors.push({
-                    text: subFieldError.text,
-                    href: `#${subField.id}${subFieldError.fieldName ? '-' + subFieldError.fieldName : ''}`,
-                  });
-                }
-              });
+
+          if (field.values) {
+            for (const value of field.values as unknown as FormField[]) {
+              if (value.subFields) {
+                const subFields = Object.entries(value.subFields);
+                subFields.flatMap(([subFieldName, subField]) => {
+                  const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
+                    text?: string;
+                    fieldName?: string;
+                  };
+                  if (subFieldError && subFieldError?.text) {
+                    errors.push({
+                      text: subFieldError.text,
+                      href: `#${subField.id}`,
+                    });
+                  }
+                });
+              }
             }
           }
 
@@ -89,7 +92,7 @@ export class Nunjucks {
           if (error && error?.text) {
             errors.push({
               text: error.text,
-              href: `#${field.id}${error.fieldName ? '-' + error.fieldName : ''}`,
+              href: `#${field.id}`,
             });
           }
           return errors;
