@@ -1,67 +1,37 @@
 {
   "title": "Steps to making your claim",
   "h1": "Steps to making your claim",
-  "sections": [
-    {
+  "sections": {
+    "section1": {
       "title": "1. Your details",
-      "links": [
-        {
-          "url": "/dob-details",
-          "linkTxt": "Personal details"
-        },
-        {
-          "url": "/address-details",
-          "linkTxt": "Contact details"
-        },
-        {
-          "url": "/how-would-you-like-to-be-updated-about-your-claim",
-          "linkTxt": "Your preferences"
-        }
-      ]
+      "links": {
+        "link1Txt": "Personal details",
+        "link2Txt": "Contact details",
+        "link3Txt": "Your preferences"
+      }
     },
-    {
-      "title": "2. Employment and respondent details",
-      "links": [
-        {
-          "url": "",
-          "linkTxt": "Employment status"
-        },
-        {
-          "url": "",
-          "linkTxt": "Work Address"
-        },
-        {
-          "url": "",
-          "linkTxt": "Where you worked"
-        },
-        {
-          "url": "",
-          "linkTxt": "Respondent details"
-        }
-      ]
-    },
-    {
-      "title": "3. Claim details",
-      "links": [
-        {
-          "url": "",
-          "linkTxt": "Summarise what happened to you"
-        },
-        {
-          "url": "",
 
-          "linkTxt": "Tell us what you want from your claim"
-        }
-      ]
+    "section2": {
+      "title": "2. Employment and respondent details",
+      "links": {
+        "link1Txt": "Employment status",
+        "link2Txt": "Work Address",
+        "link3Txt": "Where you worked",
+        "link4Txt": "Respondent details"
+      }
     },
-    {
+    "section3": {
+      "title": "3. Claim details",
+      "links": {
+        "link1Txt": "Summarise what happened to you",
+        "link2Txt": "Tell us what you want from your claim"
+      }
+    },
+    "section4": {
       "title": "4. Check and submit",
-      "links": [
-        {
-          "url": "",
-          "linkTxt": "Check your answers"
-        }
-      ]
+      "links": {
+        "link1Txt": "Check your answers"
+      }
     }
-  ]
+  }
 }

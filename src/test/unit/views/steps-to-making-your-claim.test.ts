@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
+import { PageUrls } from '../../../main/definitions/constants';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -20,13 +21,14 @@ const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
-const expectedHeader1 = stepsToMakingYourClaimJSON.sections[0].title;
-const expectedHeader2 = stepsToMakingYourClaimJSON.sections[1].title;
-const expectedHeader3 = stepsToMakingYourClaimJSON.sections[2].title;
-const expectedHeader4 = stepsToMakingYourClaimJSON.sections[3].title;
-const expectedLink1 = stepsToMakingYourClaimJSON.sections[0].links[0].linkTxt;
-const expectedLink2 = stepsToMakingYourClaimJSON.sections[0].links[1].linkTxt;
-const expectedLink3 = stepsToMakingYourClaimJSON.sections[0].links[2].linkTxt;
+const expectedHeader1 = stepsToMakingYourClaimJSON.sections1.title;
+const expectedHeader2 = stepsToMakingYourClaimJSON.sections2.title;
+const expectedHeader3 = stepsToMakingYourClaimJSON.sections3.title;
+const expectedHeader4 = stepsToMakingYourClaimJSON.sections4.title;
+const expectedLink1 = PageUrls.DOB_DETAILS;
+const expectedLink2 = PageUrls.ADDRESS_DETAILS;
+const expectedLink3 = PageUrls.UPDATE_PREFERENCES;
+const expectedLink4 = PageUrls.STILL_WORKING;
 
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
@@ -77,5 +79,6 @@ describe('Steps to making your claim page', () => {
     expect(link[2].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
     expect(link[3].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
     expect(link[4].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
+    expect(link[5].innerHTML).contains(expectedLink4, 'could not find table 2 row 1 link text');
   });
 });
