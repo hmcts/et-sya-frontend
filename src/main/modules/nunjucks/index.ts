@@ -1,11 +1,10 @@
 import * as path from 'path';
 
 import config from 'config';
-import * as express from 'express';
-import * as nunjucks from 'nunjucks';
+import express from 'express';
+import nunjucks from 'nunjucks';
 
-import { Form } from '../../components/form/form';
-import { FormError, FormFields, FormInput } from '../../definitions/form';
+import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 export class Nunjucks {
@@ -40,10 +39,9 @@ export class Nunjucks {
     );
 
     nunEnv.addGlobal('getError', function (fieldName: string): { text?: string; fieldName?: string } | boolean {
-      const { form, sessionErrors, errors } = this.ctx;
+      const { sessionErrors, errors } = this.ctx;
 
-      const hasMoreThanTwoFields = new Form(form).getFieldNames().size >= 2;
-      if (!sessionErrors?.length || !hasMoreThanTwoFields) {
+      if (!sessionErrors?.length) {
         return false;
       }
 
@@ -51,10 +49,8 @@ export class Nunjucks {
       if (!fieldError) {
         return false;
       }
-      return {
-        text: errors[fieldName][fieldError.errorType],
-        fieldName: fieldError['fieldName'],
-      };
+
+      return { text: errors[fieldName][fieldError.errorType] };
     });
 
     nunEnv.addGlobal('getErrors', function (items: FormFields[]): {
@@ -63,17 +59,39 @@ export class Nunjucks {
     }[] {
       return Object.entries(items)
         .flatMap(([fieldName, field]) => {
+          const errors = [];
+
+          if (field.values) {
+            for (const value of field.values as unknown as FormField[]) {
+              if (value.subFields) {
+                const subFields = Object.entries(value.subFields);
+                subFields.flatMap(([subFieldName, subField]) => {
+                  const subFieldError = this.env.globals.getError.call(this, subFieldName) as {
+                    text?: string;
+                    fieldName?: string;
+                  };
+                  if (subFieldError && subFieldError?.text) {
+                    errors.push({
+                      text: subFieldError.text,
+                      href: `#${subField.id}`,
+                    });
+                  }
+                });
+              }
+            }
+          }
+
           const error = this.env.globals.getError.call(this, fieldName) as {
             text?: string;
             fieldName?: string;
           };
           if (error && error?.text) {
-            return {
+            errors.push({
               text: error.text,
-              href: `#${field.id}${error.fieldName ? '-' + error.fieldName : ''}`,
-            };
+              href: `#${field.id}`,
+            });
           }
-          return;
+          return errors;
         })
         .filter(e => e);
     });
@@ -95,20 +113,21 @@ export class Nunjucks {
           html: this.env.globals.getContent.call(this, i.hint),
         },
         conditional: ((): { html: string | undefined } => {
-          if (i.conditionalText) {
-            return {
-              html: this.env.globals.getContent.call(this, i.conditionalText),
-            };
-          } else if (i.subFields) {
-            return {
-              html: nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
+          let innerHtml = '';
+          if (i.subFields) {
+            innerHtml =
+              innerHtml +
+              nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
                 ...this.ctx,
                 form: { fields: i.subFields },
-              }),
-            };
-          } else {
-            return undefined;
+              });
           }
+          if (i.conditionalText) {
+            innerHtml = innerHtml + this.env.globals.getContent.call(this, i.conditionalText);
+          }
+          return {
+            html: innerHtml,
+          };
         })(),
       }));
     });

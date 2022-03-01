@@ -32,6 +32,9 @@ export interface Case {
   presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
+  noticePeriod?: YesOrNo;
+  noticePeriodLength?: string;
+  noticePeriodUnit?: WeeksOrMonths;
 }
 
 export interface CaseWithId extends Case {
@@ -41,6 +44,11 @@ export interface CaseWithId extends Case {
 export const enum YesOrNo {
   YES = 'Yes',
   NO = 'No',
+}
+
+export const enum WeeksOrMonths {
+  WEEKS = 'Weeks',
+  MONTHS = 'Months',
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;

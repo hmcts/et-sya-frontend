@@ -6,6 +6,7 @@ import {
   isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
+  isValidInteger,
   isValidUKTelNumber,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
@@ -205,6 +206,19 @@ describe('Validation', () => {
       { mockRef: 'Manager', expected: undefined },
     ])('check job title is valid', ({ mockRef, expected }) => {
       expect(isJobTitleValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidInteger()', () => {
+    it.each([
+      { mockRef: '', expected: 'invalid' },
+      { mockRef: null, expected: 'invalid' },
+      { mockRef: 'a', expected: 'invalid' },
+      { mockRef: '%', expected: 'invalid' },
+      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: '20', expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidInteger(mockRef)).toEqual(expected);
     });
   });
 });
