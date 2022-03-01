@@ -1,5 +1,6 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% set legendClasses %}{% if field.labelSize !== null%}govuk-fieldset__legend--{{ field.labelSize if field.labelSize else "m"}}{% endif %}{% endset %}
 {{ govukRadios({
     classes: field.classes,
     idPrefix: field.id if field.id else fieldName,
@@ -7,7 +8,7 @@
     fieldset: {
       legend: {
         text: getContent(field.label),
-        classes: "hidden" if field.labelHidden else "govuk-fieldset__legend--m"
+        classes: "hidden" if field.labelHidden else legendClasses
       }
     },
     hint: {
