@@ -16,38 +16,46 @@
 {% endblock %}
 
 {% block pageTitle %}
-  {{ title }} - {{ govUk }}
+  {{ title }}
+  -
+  {{ govUk }}
 {% endblock %}
 
 {% block beforeContent %}
   {% set phaseBarHtml = '<a class="govuk-link" href="#" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
+  {% if "lng=cy" in currentUrl %}
+    {% set phaseBarText = "Lorem" %}
+  {% else %}
+    {% set phaseBarText = "beta" %}
+  {% endif %}
+
   {% if welshEnabled %}
-      {% set queryStringConcat = "" %}
+    {% set queryStringConcat = "" %}
 
-      {% if "lng=" in currentUrl %}
-          {% set currentUrl = currentUrl | replace("?lng=en", "") | replace("&lng=en", "") | replace("?lng=cy", "") | replace("&lng=cy", "") %}
-      {% endif %}
+    {% if "lng=" in currentUrl %}
+      {% set currentUrl = currentUrl | replace("?lng=en", "") | replace("&lng=en", "") | replace("?lng=cy", "") | replace("&lng=cy", "") %}
+    {% endif %}
 
-      {% if "?" not in currentUrl %}
-          {% set queryStringConcat = "?" %}
-      {% else %}
-          {% set queryStringConcat = "&" %}
-      {% endif %}
+    {% if "?" not in currentUrl %}
+      {% set queryStringConcat = "?" %}
+    {% else %}
+      {% set queryStringConcat = "&" %}
+    {% endif %}
 
-      {% set languageFlag = "" %}
-      {% if i18n.language == "en" %}
-          {% set languageFlag = queryStringConcat + "lng=cy" %}
-      {% else %}
-          {% set languageFlag = queryStringConcat + "lng=en" %}
-      {% endif %}
+    {% set languageFlag = "" %}
+    {% if i18n.language == "en" %}
+      {% set languageFlag = queryStringConcat + "lng=cy" %}
+    {% else %}
+      {% set languageFlag = queryStringConcat + "lng=en" %}
+    {% endif %}
 
-      {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
+    {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
   {% endif %}
 
   {{ govukPhaseBanner({
       tag: {
-          text: "beta"
+          text: phaseBarText
       },
       html: phaseBarHtml
   }) }}
@@ -59,21 +67,22 @@
 {% endblock %}
 
 {% block footer %}
-{% if "/" !== currentUrl %}
-  <div class="govuk-width-container">
-    <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          {{ contactUsTitle }}
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        {{ contactUsForHelp|safe }}
-      </div>
-    </details>
-  </div>
-{% endif %}
-{{ govukFooter({
+  {% if "/" !== currentUrl %}
+    <div class="govuk-width-container">
+      <details class="govuk-details govuk-!-margin-top-8" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            {{ contactUsTitle }}
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          {{ contactUsForHelp|safe }}
+        </div>
+      </details>
+    </div>
+  {% endif %}
+
+  {{ govukFooter({
   meta: {
     items: [
       {
