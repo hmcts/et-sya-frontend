@@ -9,64 +9,64 @@ import { getPageContent } from './helpers';
 
 const sections = [
   {
-    title: (l: AnyRecord): string => l.section1.title,
+    title: (l: AnyRecord): string => l.sections.section1.title,
     links: [
       {
         url: PageUrls.DOB_DETAILS,
-        linkTxt: (l: AnyRecord): string => l.section1.link1Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section1.link1Text,
       },
       {
         url: PageUrls.ADDRESS_DETAILS,
-        linkTxt: (l: AnyRecord): string => l.section1.link2Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section1.link2Text,
       },
       {
         url: PageUrls.UPDATE_PREFERENCES,
-        linkTxt: (l: AnyRecord): string => l.section1.link3Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section1.link3Text,
       },
     ],
   },
   {
-    title: (l: AnyRecord): string => l.section2.title,
+    title: (l: AnyRecord): string => l.sections.section2.title,
     links: [
       {
         url: PageUrls.STILL_WORKING,
-        linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section2.link1Text,
       },
       {
         url: '',
-        linkTxt: (l: AnyRecord): string => l.section2.link2Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section2.link2Text,
       },
       {
         url: '',
-        linkTxt: (l: AnyRecord): string => l.section2.link3Text,
-      },
-
-      {
-        url: '',
-        linkTxt: (l: AnyRecord): string => l.section2.link4Text,
-      },
-    ],
-  },
-  {
-    title: (l: AnyRecord): string => l.section3.title,
-    links: [
-      {
-        url: '',
-        linkTxt: (l: AnyRecord): string => l.section3.link1Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section2.link3Text,
       },
 
       {
         url: '',
-        linkTxt: (l: AnyRecord): string => l.section3.link2Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section2.link4Text,
       },
     ],
   },
   {
-    title: (l: AnyRecord): string => l.section4.title,
+    title: (l: AnyRecord): string => l.sections.section3.title,
     links: [
       {
         url: '',
-        linkTxt: (l: AnyRecord): string => l.section4.link1Text,
+        linkTxt: (l: AnyRecord): string => l.sections.section3.link1Text,
+      },
+
+      {
+        url: '',
+        linkTxt: (l: AnyRecord): string => l.sections.section3.link2Text,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.sections.section4.title,
+    links: [
+      {
+        url: '',
+        linkTxt: (l: AnyRecord): string => l.sections.section4.link1Text,
       },
     ],
   },
