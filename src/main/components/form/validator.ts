@@ -145,7 +145,13 @@ export const isJobTitleValid: Validator = value => {
 };
 
 export const isValidInteger: Validator = value => {
-  if (value && typeof value === 'string' && !/^\d+$/.test(value)) {
+  if (!value || (value as string).trim().length === 0) {
+    return 'invalid';
+  }
+
+  if (/^\d+$/.test(value as string)) {
+    return;
+  } else {
     return 'invalid';
   }
 };

@@ -211,8 +211,8 @@ describe('Validation', () => {
 
   describe('isValidInteger()', () => {
     it.each([
-      { mockRef: '', expected: undefined },
-      { mockRef: null, expected: undefined },
+      { mockRef: '', expected: 'invalid' },
+      { mockRef: null, expected: 'invalid' },
       { mockRef: 'a', expected: 'invalid' },
       { mockRef: '%', expected: 'invalid' },
       { mockRef: '25a', expected: 'invalid' },

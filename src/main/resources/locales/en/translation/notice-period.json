@@ -8,7 +8,6 @@
   "insetText": "<div class=\"govuk-inset-text\">If you're not sure, check the terms and conditions of your employment contract.</div>",
   "errors": {
     "noticePeriodLength": {
-      "required": "Enter a number",
       "invalid": "Enter a number"
     },
     "noticePeriodUnit": {
