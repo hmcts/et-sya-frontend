@@ -5,7 +5,6 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
-import { PageUrls } from '../../../main/definitions/constants';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -21,14 +20,14 @@ const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
-const expectedHeader1 = stepsToMakingYourClaimJSON.sections.section1.title;
-const expectedHeader2 = stepsToMakingYourClaimJSON.sections.section2.title;
-const expectedHeader3 = stepsToMakingYourClaimJSON.sections.section3.title;
-const expectedHeader4 = stepsToMakingYourClaimJSON.sections.section4.title;
-const expectedLink1 = PageUrls.DOB_DETAILS;
-const expectedLink2 = PageUrls.ADDRESS_DETAILS;
-const expectedLink3 = PageUrls.UPDATE_PREFERENCES;
-const expectedLink4 = PageUrls.STILL_WORKING;
+const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
+const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
+const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
+const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
+const expectedLink1 = stepsToMakingYourClaimJSON.section1.link1Text;
+const expectedLink2 = stepsToMakingYourClaimJSON.section1.link2Text;
+const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3Text;
+const expectedLink4 = stepsToMakingYourClaimJSON.section2.link1Text;
 
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
