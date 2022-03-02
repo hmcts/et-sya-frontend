@@ -24,6 +24,10 @@
       "authorizationURL": "https://idam-web-public.aat.platform.hmcts.net/login",
       "clientSecret": "TO BE PICKED UP FROM ENV",
       "tokenURL": "https://idam-api.aat.platform.hmcts.net/o/token"
+    },
+    "addressLookup": {
+      "url": "https://api.os.uk/search/places/v1/postcode",
+      "token": "TO BE PICKED UP FROM ENV"
     }
   }
 }

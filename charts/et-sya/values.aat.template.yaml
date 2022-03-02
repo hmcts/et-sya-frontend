@@ -4,6 +4,14 @@ nodejs:
   ingressHost: ${SERVICE_FQDN}
   environment:
     OAUTH_CLIENT_REDIRECT: https://${SERVICE_FQDN}/oauth2/callback
+  keyVaults:
+    et:
+      resourceGroup: et
+      secrets:
+        - AppInsightsInstrumentationKey
+        - idam-secret
+        - redis-access-key
+        - os-places-token
 
 idam-pr:
   enabled: false

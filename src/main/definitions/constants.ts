@@ -64,6 +64,8 @@ export const PageUrls = {
   EMPLOYMENT_DETAILS_PENSION: '/employment-details-notice-pension',
   NOTICE_PERIOD: '/got-a-notice-period',
   CHECK_ANSWERS: '/check-your-answers',
+  PLACE_OF_WORK: '/place-of-work',
+  ADDRESS_LOOK_UP: '/address-lookup',
 } as const;
 
 export const AuthUrls = {

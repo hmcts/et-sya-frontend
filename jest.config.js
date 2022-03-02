@@ -1,4 +1,5 @@
 module.exports = {
+  coveragePathIgnorePatterns: ['<rootDir>/src/main/assets'],
   roots: ['<rootDir>/src/test/unit'],
   testRegex: '(/src/test/.*|\\.(test|spec))\\.(ts|js)$',
   moduleFileExtensions: ['ts', 'js'],
