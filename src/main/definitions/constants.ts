@@ -30,6 +30,8 @@ export const TranslationKeys = {
   NOTICE_PERIOD: 'notice-period',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
+  CLAIM_SUBMITTED: 'claim-submitted',
+  CHECK_ANSWERS: 'check-your-answers',
 } as const;
 
 export const PageUrls = {
@@ -38,6 +40,7 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
@@ -60,6 +63,7 @@ export const PageUrls = {
   PAST_EMPLOYER: '/past-employer',
   EMPLOYMENT_DETAILS_PENSION: '/employment-details-notice-pension',
   NOTICE_PERIOD: '/got-a-notice-period',
+  CHECK_ANSWERS: '/check-your-answers',
 } as const;
 
 export const AuthUrls = {
