@@ -1,0 +1,49 @@
+{
+  "phaseBanner": {
+    "feedback": "Lorem ipsum dolor",
+    "additionalText": "sit amet, consectetur adipiscing elit.",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
+  },
+  "startNow": "Lorem ipsum",
+  "continue": "Lorem",
+  "back": "Lorem",
+  "saveForLater": "Lorem ipsum dolor",
+  "submit": "Lorem ipsum dolor",
+  "required": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id tempus risus. Ut tortor.",
+  "notAnswered": "Lorem ipsum dolor sit amet, consectetur.",
+  "errorSaving": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id tempus risus. Ut tortor ex.",
+  "errorSummaryTitle": "Lorem ipsum dolor sit",
+  "contactUsTitle": "Lorem ipsum dolor sit",
+  "contactUsForHelp": "Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet<br>Lorem ipsum dolor<br>Lorem ipsum dolor sit amet, consectetur<br> <br><a href=\"#\" class=\"govuk-link\">Lorem ipsum dolor sit amet</a>",
+  "months": [
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem",
+    "Lorem"
+  ],
+  "dateFormat": {
+    "day": "Lorem",
+    "month": "Lorem",
+    "year": "Lorem"
+  },
+  "yes": "Lorem",
+  "no": "Lorem",
+  "english": "Lorem",
+  "welsh": "Lorem",
+  "govUk": "Lorem",
+  "warningTxt": "Lorem",
+  "serviceName": "Lorem ipsum",
+  "guide": "Lorem",
+  "termsAndConditions": "Lorem ipsum dolor",
+  "cookiePolicy": "Lorem",
+  "contact": "Lorem ipsum",
+  "stage": "Lorem"
+}

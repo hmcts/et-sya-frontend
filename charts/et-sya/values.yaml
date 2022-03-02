@@ -10,6 +10,7 @@ nodejs:
       secrets:
         - AppInsightsInstrumentationKey
         - idam-secret
+        - redis-access-key
         - os-places-token
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'

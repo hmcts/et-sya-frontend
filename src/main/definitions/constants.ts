@@ -25,7 +25,9 @@ export const TranslationKeys = {
   STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  EMPLOYMENT_DETAILS_PENSION: 'employment-details-pension',
   JOB_TITLE: 'job-title',
+  NOTICE_PERIOD: 'notice-period',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
 } as const;
@@ -56,6 +58,8 @@ export const PageUrls = {
   PRESENT_EMPLOYER: '/present-employer',
   JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
+  EMPLOYMENT_DETAILS_PENSION: '/employment-details-notice-pension',
+  NOTICE_PERIOD: '/got-a-notice-period',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
 } as const;

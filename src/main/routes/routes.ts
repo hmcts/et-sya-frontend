@@ -51,6 +51,10 @@ export default function (app: Application): void {
   app.get(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.get);
   app.post(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.post);
   app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
+  app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
+  app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
+  app.get(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.get);
+  app.post(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.post);
 
   app.get(
     PageUrls.INFO,
