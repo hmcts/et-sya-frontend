@@ -8,7 +8,7 @@ describe('Check Your answers Controller', () => {
     common: {},
   };
 
-  it('should render the Job Title page', () => {
+  it('should render the Check your answers page', () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
     const request = mockRequest({ t });
