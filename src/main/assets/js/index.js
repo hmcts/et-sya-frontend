@@ -4,3 +4,4 @@ import '../scss/main.scss';
 import './go-back';
 
 govUkFrontend.initAll();
+import './enter-address';
