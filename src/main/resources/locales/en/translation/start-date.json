@@ -1,7 +1,7 @@
 {
   "title": "Employment start date",
   "h1": "Employment start date",
-  "hint": "tell us when you started working for them.<br>If you do not know the exact date then enter your best estimate <br><br>For example, 22 04 2014",
+  "hint": "Tell us when you started working for them.<br>If you do not know the exact date then enter your best estimate <br><br>For example, 22 04 2014",
   "errors": {
     "startDate": {
       "required": "Enter your employment start date. For example, 22 04 2014",
