@@ -12,6 +12,7 @@ export class PropertiesVolume {
       this.setSecret('secrets.et.idam-secret', 'services.idam.clientSecret');
       this.setSecret('secrets.et.redis-access-key', 'session.redis.key');
       this.setSecret('secrets.et.redis-access-key', 'session.secret');
+      this.setSecret('secrets.et.os-places-token', 'services.addressLookup.token');
     }
   }
 

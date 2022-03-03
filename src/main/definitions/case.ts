@@ -35,6 +35,11 @@ export interface Case {
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
   noticePeriodUnit?: WeeksOrMonths;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCounty?: string;
+  workAddressPostcode?: string;
 }
 
 export interface CaseWithId extends Case {

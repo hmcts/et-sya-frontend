@@ -1,0 +1,27 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div id="enterPostcode">
+  <form id="postcodeLookup">
+    <input type="hidden" name="_csrf" id="csrfToken" value="12345">
+
+    {{ govukInput({
+      id: "postcode",
+      name: "postcode",
+      classes: "govuk-input--width-10",
+      label: {
+        text: enterPostcode
+      }
+    }) }}
+
+    {{ govukButton({
+      attributes: {
+        id: "findAddressButton"
+      },
+      text: findAddress,
+      type: "submit",
+      preventDoubleClick: true
+    }) }}
+  </form>
+  <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
+</div>

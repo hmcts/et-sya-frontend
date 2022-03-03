@@ -1,0 +1,14 @@
+{
+  "enterPostcode": "Enter a UK postcode",
+  "findAddress": "Find address",
+  "manualAddress": "I want to enter the address manually",
+  "cannotFindAddress": "I cannot find the address in the list",
+  "change": "Change",
+  "postcode": "Postcode",
+  "selectAddress": "Select an address",
+  "buildingStreet": "Building and street",
+  "county": "County",
+  "country": "Country",
+  "town": "Town or city",
+  "selectDefault": "Several addresses found..."
+}
