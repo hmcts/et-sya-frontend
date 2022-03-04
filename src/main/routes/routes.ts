@@ -55,7 +55,10 @@ export default function (app: Application): void {
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
   app.get(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.get);
   app.post(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.post);
-
+  app.get(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.get);
+  app.post(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.post);
+  app.get(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.get);
+  app.post(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.post);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({
