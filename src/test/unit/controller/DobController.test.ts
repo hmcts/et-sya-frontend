@@ -58,6 +58,11 @@ describe('Dob Controller', () => {
         month: '12',
         year: '2000',
       },
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
+      },
       id: '1234',
     });
   });
@@ -82,6 +87,11 @@ describe('Dob Controller', () => {
         day: '',
         month: '11',
         year: '2000',
+      },
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
       },
     });
 

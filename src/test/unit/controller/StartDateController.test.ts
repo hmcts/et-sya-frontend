@@ -53,10 +53,15 @@ describe('StartDate Controller', () => {
 
     expect(response.render).toHaveBeenCalledWith('start-date', expect.anything());
     expect(request.session.userCase).toEqual({
-      startDate: {
-        day: '24',
-        month: '12',
+      dobDate: {
         year: '2000',
+        month: '12',
+        day: '24',
+      },
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
       },
       id: '1234',
     });
@@ -77,12 +82,17 @@ describe('StartDate Controller', () => {
     controller.post(req, res);
 
     expect(req.session.userCase).toEqual({
-      id: '1234',
+      dobDate: {
+        year: '2000',
+        month: '12',
+        day: '24',
+      },
       startDate: {
         day: '',
         month: '11',
         year: '2000',
       },
+      id: '1234',
     });
 
     expect(res.redirect).toBeCalledWith(req.path);
