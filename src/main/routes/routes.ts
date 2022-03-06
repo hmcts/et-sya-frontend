@@ -55,6 +55,18 @@ export default function (app: Application): void {
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
   app.get(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.get);
   app.post(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.post);
+  app.get(PageUrls.REASONABLE_ADJUSTMENTS, app.locals.container.cradle.reasonableAdjustmentsController.get);
+  app.post(PageUrls.REASONABLE_ADJUSTMENTS, app.locals.container.cradle.reasonableAdjustmentsController.post);
+  app.get(PageUrls.DOCUMENTS, app.locals.container.cradle.documentsController.get);
+  app.post(PageUrls.DOCUMENTS, app.locals.container.cradle.documentsController.post);
+  app.get(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.get);
+  app.post(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.post);
+  app.get(PageUrls.SUPPORT, app.locals.container.cradle.supportController.get);
+  app.post(PageUrls.SUPPORT, app.locals.container.cradle.supportController.post);
+  app.get(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.get);
+  app.post(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.post);
+  app.get(PageUrls.TRAVEL, app.locals.container.cradle.travelController.get);
+  app.post(PageUrls.TRAVEL, app.locals.container.cradle.travelController.post);
 
   app.get(
     PageUrls.INFO,

@@ -30,6 +30,12 @@ export const TranslationKeys = {
   NOTICE_PERIOD: 'notice-period',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
+  REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
+  DOCUMENTS: 'documents',
+  COMMUNICATING: 'communicating',
+  SUPPORT: 'support',
+  COMFORTABLE: 'comfortable',
+  TRAVEL: 'travel',
 } as const;
 
 export const PageUrls = {
@@ -62,6 +68,12 @@ export const PageUrls = {
   NOTICE_PERIOD: '/got-a-notice-period',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
+  REASONABLE_ADJUSTMENTS: '/reasonable-adjustments',
+  DOCUMENTS: '/documents',
+  COMMUNICATING: '/communicating',
+  SUPPORT: '/support',
+  COMFORTABLE: '/comfortable',
+  TRAVEL: '/travel',
 } as const;
 
 export const AuthUrls = {

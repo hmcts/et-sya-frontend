@@ -6,23 +6,20 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors } from '../helpers';
 
-export default class ReasonableAdjustmentsController {
+export default class DocumentsController {
   private readonly form: Form;
 
-  constructor(private readonly reasonableAdjustmentsContent: FormContent) {
-    this.form = new Form(<FormFields>this.reasonableAdjustmentsContent.fields);
+  constructor(private readonly documentsContent: FormContent) {
+    this.form = new Form(<FormFields>this.documentsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     // add setUserCase here if requried
-    handleSessionErrors(req, res, this.form, PageUrls.DOCUMENTS);
+    handleSessionErrors(req, res, this.form, PageUrls.COMMUNICATING);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.reasonableAdjustmentsContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.REASONABLE_ADJUSTMENTS,
-    ]);
+    const content = getPageContent(req, this.documentsContent, [TranslationKeys.COMMON, TranslationKeys.DOCUMENTS]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('generic-form-template', {
       ...content,

@@ -1,10 +1,10 @@
 import { atLeastOneFieldIsChecked } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 
-export const reasonableAdjustmentsContent: FormContent = {
+export const travelContent: FormContent = {
   fields: {
-    reasonableAdjustments: {
-      id: 'reasonableAdjustments',
+    travel: {
+      id: 'travel',
       type: 'checkboxes',
       labelHidden: false,
       label: l => l.h1,
@@ -14,17 +14,17 @@ export const reasonableAdjustmentsContent: FormContent = {
       validator: atLeastOneFieldIsChecked,
       values: [
         {
-          name: 'reasonableAdjustments',
+          name: 'travel',
           label: l => l.checkbox1,
           value: 'one',
         },
         {
-          name: 'reasonableAdjustments',
+          name: 'travel',
           label: l => l.checkbox1,
           value: 'two',
         },
         {
-          name: 'reasonableAdjustments',
+          name: 'travel',
           label: l => l.checkbox1,
           value: 'three',
         },

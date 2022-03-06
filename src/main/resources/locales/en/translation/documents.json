@@ -1,0 +1,11 @@
+{
+  "title": "documents in alternative format",
+  "h1": "I need documents in an alternative format",
+  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
+  "checkbox1": "tbc",
+  "errors": {
+    "reasonableAdjustments": {
+      "required": "Add error message..."
+    }
+  }
+}
