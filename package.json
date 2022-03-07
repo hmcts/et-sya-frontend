@@ -68,7 +68,7 @@
     "lodash": "^4.17.20",
     "nunjucks": "^3.2.2",
     "prettier": "^2.5.1",
-    "puppeteer": "^13.2.0",
+    "puppeteer": "^13.5.0",
     "redis": "^3.1.2",
     "require-directory": "^2.1.1",
     "serve-favicon": "^2.5.0",
