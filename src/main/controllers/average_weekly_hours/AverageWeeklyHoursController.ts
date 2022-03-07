@@ -6,22 +6,24 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-export default class JobTitleController {
+export default class averageWeeklyHoursController {
   private readonly form: Form;
 
-  constructor(private readonly jobTitleContent: FormContent) {
-    this.form = new Form(<FormFields>this.jobTitleContent.fields);
+  constructor(private readonly averageWeeklyHoursContent: FormContent) {
+    this.form = new Form(<FormFields>this.averageWeeklyHoursContent.fields);
   }
-
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.START_DATE);
+    handleSessionErrors(req, res, this.form, PageUrls.PAY_BEFORE_TAX);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.jobTitleContent, [TranslationKeys.COMMON, TranslationKeys.JOB_TITLE]);
+    const content = getPageContent(req, this.averageWeeklyHoursContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.AVERAGE_WEEKLY_HOURS,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.JOB_TITLE, {
+    res.render(TranslationKeys.AVERAGE_WEEKLY_HOURS, {
       ...content,
     });
   };
