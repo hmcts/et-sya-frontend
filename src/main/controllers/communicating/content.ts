@@ -6,27 +6,22 @@ export const communicatingContent: FormContent = {
     communicating: {
       id: 'communicating',
       type: 'checkboxes',
-      labelHidden: false,
       label: l => l.h1,
       labelSize: 'l',
       isPageHeading: true,
       hint: l => l.hint,
+      labelHidden: false,
       validator: atLeastOneFieldIsChecked,
       values: [
         {
           name: 'communicating',
           label: l => l.checkbox1,
-          value: 'one',
+          value: 'val1',
         },
         {
           name: 'communicating',
           label: l => l.checkbox1,
-          value: 'two',
-        },
-        {
-          name: 'communicating',
-          label: l => l.checkbox1,
-          value: 'three',
+          value: 'val2',
         },
       ],
     },
