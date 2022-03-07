@@ -74,7 +74,7 @@
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "ts-node": "^10.7.0",
-    "tsconfig-paths": "^3.9.0",
+    "tsconfig-paths": "^3.13.0",
     "typescript": "^4.6.2"
   },
   "devDependencies": {
