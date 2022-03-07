@@ -21,9 +21,8 @@ export default class startDateController {
     } else if (req.session.userCase.isStillWorking === StillWorking.NOTICE) {
       redirectUrl = PageUrls.NOTICE_END;
     } else if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+      // TODO: redirect to end date page
       redirectUrl = PageUrls.HOME;
-    } else {
-      redirectUrl = PageUrls.START_DATE;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
