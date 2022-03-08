@@ -1,4 +1,4 @@
-Feature('ET Homepage');
+Feature('ET Place of Work');
 const test_url = '/place-of-work';
 const { I } = inject();
 
@@ -10,7 +10,7 @@ Scenario('ET Place of work flow: Valid post code with address list', () => {
   I.fillField('#postcode', 'BH1 1AJ');
   I.click('#findAddressButton');
   I.dontSeeElement('#main-form-submit');
-  I.selectOption('#selectAddressInput', '');
+  I.see('Several addresses found...');
   //the next page is yet to be deployed
 }).tag('@RET-943');
 
@@ -35,7 +35,6 @@ Scenario('ET Place of work flow: Manual Entry', () => {
   I.seeElement('#findAddressButton');
   I.seeElement('#manualAddress');
   I.click('#manualAddress');
-  I.see('');
   I.fillField('#address1', 'LongHouse');
   I.fillField('#address2', 'LongStreet');
   I.fillField('#addressTown', 'LongTown');
