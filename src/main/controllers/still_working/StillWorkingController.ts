@@ -13,8 +13,8 @@ export default class StillWorkingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
     const redirectUrl = PageUrls.JOB_TITLE;
+    setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
