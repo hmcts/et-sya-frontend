@@ -55,7 +55,12 @@ export default function (app: Application): void {
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
   app.get(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.get);
   app.post(PageUrls.EMPLOYMENT_DETAILS_PENSION, app.locals.container.cradle.employmentDetailsPensionController.post);
-
+  app.get(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.get);
+  app.post(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.post);
+  app.get(PageUrls.NEW_JOB_PAY, app.locals.container.cradle.newJobPayController.get);
+  app.post(PageUrls.NEW_JOB_PAY, app.locals.container.cradle.newJobPayController.post);
+  app.get(PageUrls.NEW_JOB_START_DATE, app.locals.container.cradle.newJobStartDateController.get);
+  app.post(PageUrls.NEW_JOB_START_DATE, app.locals.container.cradle.newJobStartDateController.post);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({

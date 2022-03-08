@@ -30,6 +30,9 @@ export const TranslationKeys = {
   NOTICE_PERIOD: 'notice-period',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
+  NEW_JOB: 'new-job',
+  NEW_JOB_START_DATE: 'new-job-start-date',
+  NEW_JOB_PAY: 'new-job-pay-before-tax',
 } as const;
 
 export const PageUrls = {
@@ -62,6 +65,9 @@ export const PageUrls = {
   NOTICE_PERIOD: '/got-a-notice-period',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
+  NEW_JOB: '/new-job',
+  NEW_JOB_START_DATE: '/new-job-start-date',
+  NEW_JOB_PAY: '/new-job-pay-before-tax',
 } as const;
 
 export const AuthUrls = {
