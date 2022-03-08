@@ -1,5 +1,5 @@
 Feature('ET Homepage');
-const test_url = require('/place-of-work');
+const test_url = '/place-of-work';
 const { I } = inject();
 
 Scenario('ET Place of work flow: Valid post code with address list', () => {
