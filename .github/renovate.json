@@ -20,5 +20,5 @@
   "lockFileMaintenance": {
     "enabled": false
   },
-  "schedule": ["before 6am every weekday"]
+  "schedule": ["before 6am on Monday"]
 }
