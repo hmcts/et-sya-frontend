@@ -1,0 +1,20 @@
+{
+  "pageHeader": "Where do you work?",
+  "pageText": "If you worked from home tell us your home address.",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",
+      "required": "A postcode is required."
+    },
+    "workAddress1": {
+      "required": "Address line is required"
+    },
+    "workAddressTown": {
+      "required": "Town is required"
+    },
+    "workAddressPostcode": {
+      "required": "A postcode is required.",
+      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing."
+    }
+  }
+}

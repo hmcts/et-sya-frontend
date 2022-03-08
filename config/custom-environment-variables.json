@@ -6,6 +6,16 @@
       "authorizationURL": "IDAM_WEB_URL",
       "clientSecret": "IDAM_CLIENT_SECRET",
       "tokenURL": "IDAM_API_URL"
+    },
+    "addressLookup": {
+      "url": "ADDRESS_LOOK_UP_URL",
+      "token": "ADDRESS_LOOKUP_TOKEN"
+    }
+  },
+  "session": {
+    "redis": {
+      "host": "REDIS_HOST",
+      "key": ""
     }
   }
 }

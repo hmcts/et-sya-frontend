@@ -5,6 +5,8 @@ import {
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
+  isJobTitleValid,
+  isValidInteger,
   isValidUKTelNumber,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
@@ -183,6 +185,40 @@ describe('Validation', () => {
       { mockRef: '1234567890', expected: undefined },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isJobTitleValid()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: null, expected: undefined },
+      { mockRef: 'a', expected: 'invalid-length' },
+      {
+        mockRef:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al.',
+        expected: 'invalid-length',
+      },
+      { mockRef: 'CEO', expected: undefined },
+      { mockRef: 'Developer', expected: undefined },
+      { mockRef: 'ex-mayor', expected: undefined },
+      { mockRef: 'Lorry Driver', expected: undefined },
+      { mockRef: 'I.T. technician', expected: undefined },
+      { mockRef: 'Manager', expected: undefined },
+    ])('check job title is valid', ({ mockRef, expected }) => {
+      expect(isJobTitleValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidInteger()', () => {
+    it.each([
+      { mockRef: '', expected: 'invalid' },
+      { mockRef: null, expected: 'invalid' },
+      { mockRef: 'a', expected: 'invalid' },
+      { mockRef: '%', expected: 'invalid' },
+      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: '20', expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidInteger(mockRef)).toEqual(expected);
     });
   });
 });

@@ -22,8 +22,14 @@ export const TranslationKeys = {
   TELEPHONE_NUMBER: 'telephone-number',
   UPDATE_PREFERENCE: 'update-preference',
   NO_ACAS_NUMBER: 'valid-no-acas-reason',
+  STILL_WORKING: 'still-working',
   VIDEO_HEARINGS: 'video-hearings',
   CONTACT_ACAS: 'contact-acas',
+  EMPLOYMENT_DETAILS_PENSION: 'employment-details-pension',
+  JOB_TITLE: 'job-title',
+  NOTICE_PERIOD: 'notice-period',
+  STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
+  TYPE_OF_CLAIM: 'type-of-claim',
 } as const;
 
 export const PageUrls = {
@@ -39,9 +45,10 @@ export const PageUrls = {
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
   MULTIPLE_RESPONDENT_CHECK: '/multiple-respondent-check',
   NO_ACAS_NUMBER: '/do-you-have-a-valid-no-acas-reason',
+  STILL_WORKING: '/are-you-still-working',
   TYPE_OF_CLAIM: '/type-of-claim',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
-  DOB_DETAISLS: '/dob-details',
+  DOB_DETAILS: '/dob-details',
   ADDRESS_DETAILS: '/address-details',
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',
@@ -49,13 +56,18 @@ export const PageUrls = {
   GENDER_DETAILS: '/gender-details',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   PRESENT_EMPLOYER: '/present-employer',
+  JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
+  EMPLOYMENT_DETAILS_PENSION: '/employment-details-notice-pension',
+  NOTICE_PERIOD: '/got-a-notice-period',
+  PLACE_OF_WORK: '/place-of-work',
+  ADDRESS_LOOK_UP: '/address-lookup',
 } as const;
 
 export const AuthUrls = {
   CALLBACK: '/oauth2/callback',
   LOGIN: '/login',
   LOGOUT: '/logout',
-};
+} as const;
 
 export const HTTPS_PROTOCOL = 'https://';

@@ -1,0 +1,33 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+  text: back,
+  href: "/"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% block errorSummary %}
+        {% include "./error-summary.njk" %}
+      {% endblock %}
+
+      {% include "./address/postcodeError.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageHeader }}</h1>
+      <p class="govuk-body">{{ pageText | safe}}</p>
+      {% include "./address/postcodeEnter.njk" %}
+      {% include "./address/postcodeSelect.njk" %}
+
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -6,5 +7,42 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">Steps to making your claim</h1>
+
+  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{h1}} TODO</h1>
+
+  {% for section in sections %}
+  
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row ">
+        <th scope="col" class="govuk-table__header govuk-grid-column-three-quarters">{{ getContent(section.title) }}</th>
+      </tr>
+    </thead>
+    {% for link in section.links %}
+
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-half">  
+        {% if getContent(link.url) !="" %}
+        <a href= "{{ getContent(link.url) }}" class="govuk-link">
+        {{ getContent(link.linkTxt) }}
+        </a>
+        {% else %}
+        {{getContent(link.linkTxt)}}
+        {% endif %}
+        </td>
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  {% endfor %}
+
+
+  {{ govukButton({
+    text: saveForLater,
+    classes: "govuk-button--secondary",
+    href: PageUrls.CLAIM_SAVED
+  }) }}
+
 {% endblock %}

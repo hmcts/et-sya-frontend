@@ -8,7 +8,7 @@ export const multipleRespondentContent: FormContent = {
     isMultipleRespondent: {
       id: 'more_than_one_respondent',
       type: 'radios',
-      classes: 'govuk-date-input',
+      classes: 'govuk-radios',
       label: (l: AnyRecord): string => l.label,
       values: [
         {

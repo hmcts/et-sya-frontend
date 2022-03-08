@@ -1,8 +1,7 @@
-import { Response } from 'express';
-import { mock } from 'sinon';
-
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 
@@ -12,17 +11,10 @@ describe('Steps to Making your claim Controller', () => {
   };
 
   it('should render single or multiple claim page', () => {
-    const response = { render: () => '' } as unknown as Response;
+    const response = mockResponse();
     const request = mockRequest({ t });
 
-    const responseMock = mock(response);
-
-    responseMock
-      .expects('render')
-      .once()
-      .withArgs('steps-to-making-your-claim', request.t('steps-to-making-your-claim', { returnObjects: true }));
-
     stepsToMakingYourClaimController.get(request, response);
-    responseMock.verify();
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });
 });
