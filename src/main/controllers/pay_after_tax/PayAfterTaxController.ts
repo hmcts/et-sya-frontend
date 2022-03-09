@@ -6,26 +6,24 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-export default class employmentDetailsPensionController {
+export default class payAfterTaxController {
   private readonly form: Form;
 
-  constructor(private readonly employmentDetailsPensionContent: FormContent) {
-    this.form = new Form(<FormFields>this.employmentDetailsPensionContent.fields);
+  constructor(private readonly payAfterTaxContent: FormContent) {
+    this.form = new Form(<FormFields>this.payAfterTaxContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    // TODO: Change to the correct redirect url
-    // YES, NO or no response - '/employment-details-notice-benefits' RET-1059
-    handleSessionErrors(req, res, this.form, PageUrls.HOME);
+    handleSessionErrors(req, res, this.form, PageUrls.PENSION);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.employmentDetailsPensionContent, [
+    const content = getPageContent(req, this.payAfterTaxContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.EMPLOYMENT_DETAILS_PENSION,
+      TranslationKeys.PAY_AFTER_TAX,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.EMPLOYMENT_DETAILS_PENSION, {
+    res.render(TranslationKeys.PAY_AFTER_TAX, {
       ...content,
     });
   };
