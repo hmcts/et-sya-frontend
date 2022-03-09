@@ -1,11 +1,24 @@
 {
-  "enabledManagers": ["helm-requirements", "nvm"],
-  "automerge": true,
+  "enabledManagers": ["helm-requirements", "nvm", "npm"],
   "labels": ["dependencies"],
   "helm-requirements": {
     "fileMatch": ["\\Chart.yaml$"],
     "aliases": {
       "hmctspublic": "https://hmctspublic.azurecr.io/helm/v1/repo/"
     }
-  }
+  },
+  "groupName": "all dependencies",
+  "separateMajorMinor": false,
+  "groupSlug": "all",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "groupName": "all dependencies",
+      "groupSlug": "all"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "schedule": ["before 6am on Monday"]
 }
