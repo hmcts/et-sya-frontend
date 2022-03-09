@@ -5,25 +5,25 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
+import { PageUrls } from '../../../main/definitions/constants';
 
-const employmentDetailsPensionJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/employment-details-pension.json'),
+const pensionJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/pension.json'),
   'utf-8'
 );
-const employmentDetailsPensionJson = JSON.parse(employmentDetailsPensionJsonRaw);
+const pensionJson = JSON.parse(pensionJsonRaw);
 
-const PAGE_URL = '/employment-details-notice-pension';
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = employmentDetailsPensionJson.h1;
+const expectedTitle = pensionJson.h1;
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-radios--inline';
 const expectedInputLabel = 'label';
 
 let htmlRes: Document;
-describe('Employment details notice pension page', () => {
+describe('Pension page', () => {
   beforeAll(async () => {
     await request(app)
-      .get(PAGE_URL)
+      .get(PageUrls.PENSION)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
