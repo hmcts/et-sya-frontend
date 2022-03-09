@@ -5,26 +5,22 @@ import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
-export default class StillWorkingController {
+
+export default class noticeEndController {
   private readonly form: Form;
 
-  constructor(private readonly stillWorkingContent: FormContent) {
-    this.form = new Form(<FormFields>this.stillWorkingContent.fields);
+  constructor(private readonly noticeEndContent: FormContent) {
+    this.form = new Form(<FormFields>this.noticeEndContent.fields);
   }
-
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = PageUrls.JOB_TITLE;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.stillWorkingContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.STILL_WORKING,
-    ]);
+    const content = getPageContent(req, this.noticeEndContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_END]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.STILL_WORKING, {
+    res.render(TranslationKeys.NOTICE_END, {
       ...content,
     });
   };
