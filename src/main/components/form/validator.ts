@@ -5,7 +5,10 @@ import { CaseDate } from '../../definitions/case';
 import { InvalidField } from '../../definitions/form';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
-export type DateValidator = (value: CaseDate | undefined) => void | string | InvalidField;
+export type DateValidator = (
+  value: CaseDate | undefined,
+  value2?: CaseDate | undefined
+) => void | string | InvalidField;
 
 export const isFieldFilledIn: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
@@ -153,5 +156,20 @@ export const isValidInteger: Validator = value => {
     return;
   } else {
     return 'invalid';
+  }
+};
+
+export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, value2: CaseDate | undefined) => {
+  if (!value1) {
+    return;
+  }
+
+  const enteredDate = new Date(+value1.year, +value1.month, +value1.day);
+  const otherDate = new Date(+value2.year, +value2.month, +value2.day);
+
+  if (otherDate > enteredDate) {
+    return 'invalidDateBeforeDOB';
+  } else {
+    return;
   }
 };

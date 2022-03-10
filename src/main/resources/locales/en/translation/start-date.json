@@ -11,7 +11,8 @@
       "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInFuture": "You have entered a date that is in the future. Enter a date that is in the past before continuing",
-      "invalidDateTooFarInPast": "You have entered a year which is too far in the past"
+      "invalidDateTooFarInPast": "You have entered a year which is too far in the past",
+      "invalidDateBeforeDOB": "Date entered must not be earlier than your date of birth"
     }
   }
 }

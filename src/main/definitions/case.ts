@@ -40,6 +40,7 @@ export interface Case {
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
+  startDate: CaseDate;
 }
 
 export interface CaseWithId extends Case {
