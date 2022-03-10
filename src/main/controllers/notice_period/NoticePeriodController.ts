@@ -2,11 +2,11 @@ import { Response } from 'express';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { TranslationKeys } from '../../definitions/constants';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-export default class NoticePeriodController {
+export default class noticePeriodController {
   private readonly form: Form;
 
   constructor(private readonly noticePeriodFormContent: FormContent) {
@@ -15,8 +15,7 @@ export default class NoticePeriodController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    // TODO: fill in correct navigation
-    handleSessionErrors(req, res, this.form, '/');
+    handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

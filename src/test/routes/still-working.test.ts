@@ -1,44 +1,43 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { StillWorking } from '../../main/definitions/case';
+import { PageUrls } from '../../main/definitions/constants';
 
-describe('GET /are-you-still-working', () => {
+describe(`GET ${PageUrls.STILL_WORKING}`, () => {
   it('should return the are you still working page page', async () => {
-    const res = await request(app).get('/are-you-still-working');
+    const res = await request(app).get(PageUrls.STILL_WORKING);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
 });
 
-describe('on POST /are-you-still-working', () => {
-  test('should return the employment details(WORKING) page', async () => {
+describe(`on POST ${PageUrls.STILL_WORKING}`, () => {
+  test('should return the employment details - job title page when Still working for them button is selected', async () => {
     await request(app)
-      .post('/are-you-still-working')
-      .send({ isStillWorking: 'WORKING' })
+      .post(PageUrls.STILL_WORKING)
+      .send({ isStillWorking: StillWorking.WORKING })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual(PageUrls.JOB_TITLE);
       });
   });
-  test('should return the employment details(NOTICE) page', async () => {
+  test('should return the employment details - job title page when notice period button is selected', async () => {
     await request(app)
-      .post('/are-you-still-working')
-      .send({ isStillWorking: 'NOTICE' })
+      .post(PageUrls.STILL_WORKING)
+      .send({ isStillWorking: StillWorking.NOTICE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual(PageUrls.JOB_TITLE);
       });
   });
-  test('should return the employment details(NO LONGER WORKING) page', async () => {
+  test('should return the employment details - job title page when no longer working button is selected', async () => {
     await request(app)
-      .post('/are-you-still-working')
-      .send({ isStillWorking: 'NO LONGER WORKING' })
+      .post(PageUrls.STILL_WORKING)
+      .send({ isStillWorking: StillWorking.NOTICE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        // page to be implemented, this test will need updated
-        expect(res.header['location']).toStrictEqual('/');
+        expect(res.header['location']).toStrictEqual(PageUrls.JOB_TITLE);
       });
   });
 });

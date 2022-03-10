@@ -35,11 +35,18 @@ export interface Case {
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
   noticePeriodUnit?: WeeksOrMonths;
+  isStillWorking: StillWorking;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
+}
+
+export const enum StillWorking {
+  WORKING = 'WORKING',
+  NOTICE = 'NOTICE',
+  NO_LONGER_WORKING = 'NO LONGER WORKING',
 }
 
 export interface CaseWithId extends Case {
