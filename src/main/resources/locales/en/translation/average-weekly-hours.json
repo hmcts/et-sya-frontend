@@ -1,3 +1,8 @@
 {
-  "h1": "Employment details - average weekly hours (to do)"
+  "title": "Average weekly hours",
+  "h1": {
+    "workingOrNotice": "Employment details - average weekly hours (to do)",
+    "noLongerWorking": "Employment details - average weekly hours - no longer working (to do)"
+  },
+  "notWorking": "NO LONGER WORKING"
 }
