@@ -1,7 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import NoticePeriodController from '../../../main/controllers/notice_period/NoticePeriodController';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -106,7 +106,7 @@ describe('Update Notice Period Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.redirect).toBeCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
     expect(req.session.userCase).toStrictEqual({
       noticePeriod: 'Yes',
       noticePeriodLength: '2',
