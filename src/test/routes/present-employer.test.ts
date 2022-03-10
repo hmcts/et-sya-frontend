@@ -1,10 +1,12 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { YesOrNo } from '../../main/definitions/case';
+import { PageUrls } from '../../main/definitions/constants';
 
 describe('GET /present-employer', () => {
   it('should return the how did you work for the employer page', async () => {
-    const res = await request(app).get('/present-employer');
+    const res = await request(app).get(PageUrls.PRESENT_EMPLOYER);
     expect(res.type).toEqual('text/html');
     expect(res.status).toEqual(200);
   });
@@ -13,11 +15,11 @@ describe('GET /present-employer', () => {
 describe('on POST /present-employer with Yes', () => {
   test('should reload the current page when the Yes radio button is selected', async () => {
     await request(app)
-      .post('/present-employer')
-      .send({ 'present-employer': 'Yes' })
+      .post(PageUrls.PRESENT_EMPLOYER)
+      .send({ presentEmployer: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual('/present-employer');
+        expect(res.header['location']).toEqual(PageUrls.JOB_TITLE);
       });
   });
 });
@@ -25,11 +27,11 @@ describe('on POST /present-employer with Yes', () => {
 describe('on POST /present-employer with No', () => {
   test('should reload the current page when the No radio button is selected', async () => {
     await request(app)
-      .post('/present-employer')
-      .send({ 'present-employer': 'No' })
+      .post(PageUrls.PRESENT_EMPLOYER)
+      .send({ presentEmployer: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual('/present-employer');
+        expect(res.header['location']).toEqual(PageUrls.HOME);
       });
   });
 });
