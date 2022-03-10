@@ -1,0 +1,23 @@
+{
+  "title": "Work Address",
+  "h1": "Where do you work?",
+  "hint": "If you work from home tell us your home address.",
+  "enterPostcode": "Enter a UK postcode",
+  "buildingStreet": "Building and street",
+  "town": "Town or city",
+  "county": "County",
+  "postcode": "Postcode",
+  "enterAddressManually": "I want to enter the address manually.",
+  "errors": {
+    "address1": {
+      "required": "Enter a building and street."
+    },
+    "addressTown": {
+      "required": "Enter a town or city."
+    },
+    "addressPostcode": {
+      "required": "Enter a postcode.",
+      "invalid": "Enter a valid UK postcode."
+    }
+  }
+}
