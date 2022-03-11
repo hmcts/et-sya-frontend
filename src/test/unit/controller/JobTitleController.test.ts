@@ -1,4 +1,5 @@
 import JobTitleController from '../../../main/controllers/job_title/JobTitleController';
+import { PageUrls } from '../../../main/definitions/constants';
 import { FormContent, FormError } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -45,7 +46,7 @@ describe('Job Title Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/');
+      expect(res.redirect).toBeCalledWith(PageUrls.START_DATE);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -60,7 +61,7 @@ describe('Job Title Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/');
+      expect(res.redirect).toBeCalledWith(PageUrls.START_DATE);
       expect(req.session.userCase).toStrictEqual({
         jobTitle: 'Vice President Branch Co-Manager',
       });

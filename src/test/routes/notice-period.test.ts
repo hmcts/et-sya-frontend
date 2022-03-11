@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
       .send({ noticePeriod: YesOrNo.YES, noticePeriodLength: '2', noticePeriodUnit: WeeksOrMonths.WEEKS })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual('/');
+        expect(res.header['location']).toEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
       });
   });
 });
@@ -31,7 +31,7 @@ describe(`on POST ${PageUrls.NOTICE_PERIOD} with No`, () => {
       .send({ noticePeriod: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual('/');
+        expect(res.header['location']).toEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
       });
   });
 });
