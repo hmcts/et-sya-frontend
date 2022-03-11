@@ -13,21 +13,8 @@ export default class StillWorkingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = PageUrls.JOB_TITLE;
     setUserCase(req, this.form);
-    let redirectUrl = '';
-    if (req.body.isStillWorking === 'WORKING') {
-      // TODO update url with employment details(WORKING) page
-      redirectUrl = '/';
-    } else if (req.body.isStillWorking === 'NOTICE') {
-      // TODO update url with employment details(NOTICE) page
-      redirectUrl = '/';
-    } else if (req.body.isStillWorking === 'NO LONGER WORKING') {
-      // TODO update url with employment details(NO LONGER WORKING) page
-      redirectUrl = '/';
-    } else {
-      redirectUrl = PageUrls.STILL_WORKING;
-    }
-
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

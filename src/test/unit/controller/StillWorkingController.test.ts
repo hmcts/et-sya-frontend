@@ -1,5 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import StillWorkingController from '../../../main/controllers/still_working/StillWorkingController';
+import { StillWorking } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -16,20 +18,17 @@ describe('Are you still working controller', () => {
         type: 'radios',
         values: [
           {
-            value: 'WORKING',
+            value: StillWorking.WORKING,
           },
           {
-            value: 'NOTICE',
+            value: StillWorking.NOTICE,
           },
           {
-            value: 'NOT WORKING',
+            value: StillWorking.NO_LONGER_WORKING,
           },
         ],
         validator: jest.fn().mockImplementation(isFieldFilledIn),
       },
-    },
-    submit: {
-      text: 'continue',
     },
   } as unknown as FormContent;
 
@@ -41,39 +40,17 @@ describe('Are you still working controller', () => {
 
     controller.get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith('still-working', expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STILL_WORKING, expect.anything());
   });
 
-  it('should render the employment details(WORKING) page', () => {
-    const body = { isStillWorking: 'WORKING' };
+  it('should render the employment details page', () => {
+    const body = { isStillWorking: StillWorking.WORKING };
     const controller = new StillWorkingController(mockFormContent);
 
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
-    //TODO update with appropriate URL
-    expect(res.redirect).toBeCalledWith('/');
-  });
-
-  it('should render the employment details(NOTICE) page', () => {
-    const body = { isStillWorking: 'NOTICE' };
-    const controller = new StillWorkingController(mockFormContent);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-    //TODO update with appropriate URL
-    expect(res.redirect).toBeCalledWith('/');
-  });
-  it('should render the employment details(NO LONGER WORKING) page', () => {
-    const body = { isStillWorking: 'NO LONGER WORKING' };
-    const controller = new StillWorkingController(mockFormContent);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-    //TODO update with appropriate URL
-    expect(res.redirect).toBeCalledWith('/');
+    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
   });
 
   it('should render same page if nothing selected', () => {

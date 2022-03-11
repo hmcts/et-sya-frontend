@@ -1,10 +1,32 @@
 {
   "title": "Steps to making your claim",
-  "h1": "Steps to making your claim (to do)",
+  "h1": "Steps to making your claim",
+
   "section1": {
     "title": "1. Your details",
-    "link1Txt": "Personal details",
-    "link2Txt": "Contact details",
-    "link3Txt": "Your preferences"
+
+    "link1Text": "Personal details",
+    "link2Text": "Contact details",
+    "link3Text": "Your preferences"
+  },
+
+  "section2": {
+    "title": "2. Employment and respondent details",
+
+    "link1Text": "Employment status",
+    "link2Text": "Work Address",
+    "link3Text": "Where you worked",
+    "link4Text": "Respondent details"
+  },
+  "section3": {
+    "title": "3. Claim details",
+
+    "link1Text": "Summarise what happened to you",
+    "link2Text": "Tell us what you want from your claim"
+  },
+  "section4": {
+    "title": "4. Check and submit",
+
+    "link1Text": "Check your answers"
   }
 }

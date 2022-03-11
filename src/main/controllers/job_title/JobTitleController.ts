@@ -15,7 +15,7 @@ export default class JobTitleController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.HOME);
+    handleSessionErrors(req, res, this.form, PageUrls.START_DATE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
