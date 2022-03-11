@@ -10,17 +10,18 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class startDateController {
   private readonly form: Form;
 
-  constructor(private readonly startDateContent: FormContent) {
-    this.form = new Form(<FormFields>this.startDateContent.fields);
+  constructor(private readonly startDateFormContent: FormContent) {
+    this.form = new Form(<FormFields>this.startDateFormContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '';
-    if (req.session.userCase.isStillWorking === StillWorking.WORKING) {
+    const stillWorking = this.getValueFromSession(req);
+    if (stillWorking === StillWorking.WORKING) {
       redirectUrl = PageUrls.NOTICE_PERIOD;
-    } else if (req.session.userCase.isStillWorking === StillWorking.NOTICE) {
+    } else if (stillWorking === StillWorking.NOTICE) {
       redirectUrl = PageUrls.NOTICE_END;
-    } else if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       // TODO: redirect to end date page
       redirectUrl = PageUrls.HOME;
     }
@@ -28,10 +29,19 @@ export default class startDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.startDateContent, [TranslationKeys.COMMON, TranslationKeys.START_DATE]);
+    const content = getPageContent(req, this.startDateFormContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.START_DATE,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.START_DATE, {
       ...content,
     });
   };
+
+  private getValueFromSession(
+    req: AppRequest<Partial<import('/root/et-sya-frontend/src/main/definitions/util-types').AnyRecord>>
+  ) {
+    return req.session.userCase.isStillWorking;
+  }
 }

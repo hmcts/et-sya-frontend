@@ -1,7 +1,8 @@
 import { convertToDateObject } from '../../../main/components/form/parser';
 import { areDateFieldsFilledIn } from '../../../main/components/form/validator';
 import StartDateController from '../../../main/controllers/start_date/StartDateController';
-import { CaseDate } from '../../../main/definitions/case';
+import { CaseDate, StillWorking } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { UnknownRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
@@ -68,7 +69,10 @@ describe('StartDate Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' }];
+    const errors = [
+      { propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' },
+      { propertyName: 'startDate', errorType: 'invalidDateBeforeDOB' },
+    ];
     const body = {
       'startDate-day': '',
       'startDate-month': '11',
@@ -97,5 +101,111 @@ describe('StartDate Controller', () => {
 
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should redirect to notice period when WORKING is selected', () => {
+    const body = {
+      'startDate-day': '11',
+      'startDate-month': '11',
+      'startDate-year': '2000',
+    };
+    const userCase = {
+      dobDate: { year: '1990', month: '12', day: '24' },
+      isStillWorking: StillWorking.WORKING,
+    };
+
+    const controller = new StartDateController(mockFormContent);
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      dobDate: {
+        year: '1990',
+        month: '12',
+        day: '24',
+      },
+      startDate: {
+        day: '11',
+        month: '11',
+        year: '2000',
+      },
+      id: '1234',
+      isStillWorking: StillWorking.WORKING,
+    });
+
+    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_PERIOD);
+  });
+
+  it('should redirect to notice end when NOTICE is selected', () => {
+    const body = {
+      'startDate-day': '11',
+      'startDate-month': '11',
+      'startDate-year': '2000',
+    };
+    const userCase = {
+      dobDate: { year: '1990', month: '12', day: '24' },
+      isStillWorking: StillWorking.NOTICE,
+    };
+
+    const controller = new StartDateController(mockFormContent);
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      dobDate: {
+        year: '1990',
+        month: '12',
+        day: '24',
+      },
+      startDate: {
+        day: '11',
+        month: '11',
+        year: '2000',
+      },
+      id: '1234',
+      isStillWorking: StillWorking.NOTICE,
+    });
+
+    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_END);
+  });
+
+  it('should redirect to employment end date when NO_LONGER_WORKING is selected', () => {
+    const body = {
+      'startDate-day': '11',
+      'startDate-month': '11',
+      'startDate-year': '2000',
+    };
+    const userCase = {
+      dobDate: { year: '1990', month: '12', day: '24' },
+      isStillWorking: StillWorking.NO_LONGER_WORKING,
+    };
+
+    const controller = new StartDateController(mockFormContent);
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      dobDate: {
+        year: '1990',
+        month: '12',
+        day: '24',
+      },
+      startDate: {
+        day: '11',
+        month: '11',
+        year: '2000',
+      },
+      id: '1234',
+      isStillWorking: StillWorking.NO_LONGER_WORKING,
+    });
+
+    // TODO Update to correct page
+    expect(res.redirect).toBeCalledWith(PageUrls.HOME);
   });
 });

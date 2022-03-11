@@ -12,7 +12,7 @@ const startDateJsonRaw = fs.readFileSync(
 );
 const startDateJson = JSON.parse(startDateJsonRaw);
 
-const PAGE_URL = '/employment-details-start-date';
+const PAGE_URL = '/start-date';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = startDateJson.h1;
 const buttonClass = 'govuk-button';
