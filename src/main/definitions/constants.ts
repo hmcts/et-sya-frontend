@@ -40,6 +40,8 @@ export const TranslationKeys = {
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
   DOCUMENTS: 'documents',
   COMMUNICATING: 'communicating',
+  SUPPORT: 'support',
+  COMFORTABLE: 'comfortable',
 } as const;
 
 export const PageUrls = {
@@ -82,6 +84,8 @@ export const PageUrls = {
   REASONABLE_ADJUSTMENTS: '/reasonable-adjustments',
   DOCUMENTS: '/documents',
   COMMUNICATING: '/communicating',
+  SUPPORT: '/support',
+  COMFORTABLE: '/comfortable',
 } as const;
 
 export const AuthUrls = {

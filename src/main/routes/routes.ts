@@ -75,6 +75,10 @@ export default function (app: Application): void {
   app.post(PageUrls.DOCUMENTS, app.locals.container.cradle.documentsController.post);
   app.get(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.get);
   app.post(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.post);
+  app.get(PageUrls.SUPPORT, app.locals.container.cradle.supportController.get);
+  app.post(PageUrls.SUPPORT, app.locals.container.cradle.supportController.post);
+  app.get(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.get);
+  app.post(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.post);
 
   app.get(
     PageUrls.INFO,
