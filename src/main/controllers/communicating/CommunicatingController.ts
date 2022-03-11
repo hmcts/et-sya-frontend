@@ -15,7 +15,7 @@ export default class CommunicatingController {
 
   public post = (req: AppRequest, res: Response): void => {
     // add setUserCase here if requried
-    handleSessionErrors(req, res, this.form, PageUrls.SUPPORT);
+    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
