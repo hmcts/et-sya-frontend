@@ -4,7 +4,7 @@ import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
-import { assignFormData, getPageContent, handleSessionErrors } from '../helpers';
+import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
 export default class ComfortableController {
   private readonly form: Form;
@@ -14,7 +14,7 @@ export default class ComfortableController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    // add setUserCase here if requried
+    setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.TRAVEL);
   };
 
