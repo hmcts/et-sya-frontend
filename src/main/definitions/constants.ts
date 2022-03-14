@@ -37,6 +37,8 @@ export const TranslationKeys = {
   PAY_AFTER_TAX: 'pay-after-tax',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
+  SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
+  DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
 } as const;
 
 export const PageUrls = {
@@ -76,6 +78,8 @@ export const PageUrls = {
   NOTICE_PERIOD: '/got-a-notice-period',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
+  SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
+  DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
 } as const;
 
 export const AuthUrls = {
