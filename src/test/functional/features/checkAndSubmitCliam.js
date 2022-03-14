@@ -17,6 +17,6 @@ Scenario('ET Check your answer: Save for later', () => {
   I.click('#main-form-save-for-later');
   I.see('Your claim has been saved');
   I.see('Continue with your claim');
-  I.seeElement('href="/return-to-existing"');
   I.click('[href="/return-to-existing"]');
+  I.see('Return to an existing claim');
 }).tag('@RET-1178');
