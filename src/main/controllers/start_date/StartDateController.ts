@@ -16,7 +16,7 @@ export default class startDateController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '';
-    const stillWorking = this.getValueFromSession(req);
+    const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
       redirectUrl = PageUrls.NOTICE_PERIOD;
     } else if (stillWorking === StillWorking.NOTICE) {
@@ -38,10 +38,4 @@ export default class startDateController {
       ...content,
     });
   };
-
-  private getValueFromSession(
-    req: AppRequest<Partial<import('/root/et-sya-frontend/src/main/definitions/util-types').AnyRecord>>
-  ) {
-    return req.session.userCase.isStillWorking;
-  }
 }
