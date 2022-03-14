@@ -65,7 +65,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section4.title,
     links: [
       {
-        url: '',
+        url: PageUrls.CHECK_ANSWERS,
         linkTxt: (l: AnyRecord): string => l.section4.link1Text,
       },
     ],
