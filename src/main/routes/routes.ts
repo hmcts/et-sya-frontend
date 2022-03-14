@@ -69,6 +69,8 @@ export default function (app: Application): void {
   app.post(PageUrls.PAY_AFTER_TAX, app.locals.container.cradle.payAfterTaxController.post);
   app.get(PageUrls.BENEFITS, app.locals.container.cradle.benefitsController.get);
   app.post(PageUrls.BENEFITS, app.locals.container.cradle.benefitsController.post);
+  app.get(PageUrls.CLAIM_SUBMITTED, app.locals.container.cradle.claimSubmittedController.get);
+  app.get(PageUrls.CHECK_ANSWERS, app.locals.container.cradle.checkYourAnswersController.get);
   app.get(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.get);
   app.post(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.post);
   app.get(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.get);
