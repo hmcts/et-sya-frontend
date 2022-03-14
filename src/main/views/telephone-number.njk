@@ -13,13 +13,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-    <div>
-    <label class="govuk-label govuk-!-padding-bottom-2">
-      {{ hint }}
-    </label>
-  <div>
+      <label class="govuk-label govuk-!-padding-bottom-2">
+        {{ hint }}
+      </label>
 
-  {% block form %}
-    {% include "form/form.njk"%}
-  {% endblock %}
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
 {% endblock %}

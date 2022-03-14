@@ -31,9 +31,10 @@
         iconFallbackText: warningTxt
       }) }}
       <div class="govuk-inset-text">{{ insetText1 | safe }}</div>
+
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
     </div>
   </div>
-  {% block form %}
-    {% include "form/form.njk"%}
-  {% endblock %}
 {% endblock %}

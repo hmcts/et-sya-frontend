@@ -7,11 +7,9 @@
 {% endblock %}
 
 {% block content %}
-
   <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{h1}} TODO</h1>
 
   {% for section in sections %}
-  
   <table class="govuk-table">
     <thead class="govuk-table__head">
       <tr class="govuk-table__row ">
@@ -22,7 +20,7 @@
 
     <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <td scope="row" class="govuk-table__cell govuk-grid-column-one-half">  
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-half">
         {% if getContent(link.url) !="" %}
         <a href= "{{ getContent(link.url) }}" class="govuk-link">
         {{ getContent(link.linkTxt) }}
@@ -44,5 +42,4 @@
     classes: "govuk-button--secondary",
     href: PageUrls.CLAIM_SAVED
   }) }}
-
 {% endblock %}
