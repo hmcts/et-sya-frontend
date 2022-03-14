@@ -1,6 +1,7 @@
 import { isFieldFilledIn } from '../../../main/components/form/validator';
 import UpdatePreferenceController from '../../../main/controllers/update_preference/UpdatePreferenceController';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -42,12 +43,12 @@ describe('Update Preference Controller', () => {
     const request = <AppRequest>mockRequest({ t });
 
     controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith('update-preference', expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.UPDATE_PREFERENCE, expect.anything());
   });
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'updatePreference', errorType: 'required' }];
-    const body = { 'update-preference': '' };
+    const body = { updatePreference: '' };
 
     const controller = new UpdatePreferenceController(mockFormContent);
 

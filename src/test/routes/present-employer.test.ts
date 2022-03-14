@@ -4,7 +4,7 @@ import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 
-describe('GET /present-employer', () => {
+describe(`GET ${PageUrls.PRESENT_EMPLOYER}`, () => {
   it('should return the how did you work for the employer page', async () => {
     const res = await request(app).get(PageUrls.PRESENT_EMPLOYER);
     expect(res.type).toEqual('text/html');
@@ -12,7 +12,7 @@ describe('GET /present-employer', () => {
   });
 });
 
-describe('on POST /present-employer with Yes', () => {
+describe(`on POST ${PageUrls.PRESENT_EMPLOYER}`, () => {
   test('should reload the current page when the Yes radio button is selected', async () => {
     await request(app)
       .post(PageUrls.PRESENT_EMPLOYER)
@@ -22,9 +22,7 @@ describe('on POST /present-employer with Yes', () => {
         expect(res.header['location']).toEqual(PageUrls.JOB_TITLE);
       });
   });
-});
 
-describe('on POST /present-employer with No', () => {
   test('should reload the current page when the No radio button is selected', async () => {
     await request(app)
       .post(PageUrls.PRESENT_EMPLOYER)

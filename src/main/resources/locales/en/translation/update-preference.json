@@ -1,8 +1,8 @@
 {
   "title": "How would you like to be updated about your claim?",
   "h1": "How would you like to be updated about your claim?",
-  "yes": "Email",
-  "no": "Post",
+  "email": "Email",
+  "post": "Post",
   "errors": {
     "updatePreference": {
       "required": "Select if you would like to be updated by email or post"

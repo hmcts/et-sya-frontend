@@ -21,7 +21,7 @@ describe(`on POST ${PageUrls.TYPE_OF_CLAIM}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/type-of-claim');
+        expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM);
       });
   });
 

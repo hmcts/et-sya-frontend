@@ -1,5 +1,5 @@
 import { isFieldFilledIn } from '../../components/form/validator';
-import { YesOrNo } from '../../definitions/case';
+import { EmailOrPost } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -12,15 +12,15 @@ export const updatePrefFormContent: FormContent = {
       label: (l: AnyRecord): string => l.label,
       values: [
         {
-          label: (l: AnyRecord): string => l.yes,
-          name: 'radio1',
-          value: YesOrNo.YES,
+          label: (l: AnyRecord): string => l.email,
+          name: 'email',
+          value: EmailOrPost.EMAIL,
           attributes: { maxLength: 2 },
         },
         {
-          label: (l: AnyRecord): string => l.no,
-          name: 'radio2',
-          value: YesOrNo.NO,
+          label: (l: AnyRecord): string => l.post,
+          name: 'post',
+          value: EmailOrPost.POST,
           attributes: { maxLength: 2 },
         },
       ],
