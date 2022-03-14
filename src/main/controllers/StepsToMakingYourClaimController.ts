@@ -51,12 +51,12 @@ const sections = [
     title: (l: AnyRecord): string => l.section3.title,
     links: [
       {
-        url: '',
+        url: PageUrls.SUMMARISE_YOUR_CLAIM,
         linkTxt: (l: AnyRecord): string => l.section3.link1Text,
       },
 
       {
-        url: '',
+        url: PageUrls.DESIRED_CLAIM_OUTCOME,
         linkTxt: (l: AnyRecord): string => l.section3.link2Text,
       },
     ],
