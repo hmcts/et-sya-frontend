@@ -15,6 +15,10 @@
       "matchPackagePatterns": ["*"],
       "groupName": "all dependencies",
       "groupSlug": "all"
+    },
+    {
+      "matchPackageNames": ["ansi-regex"],
+      "allowedVersions": "<=5"
     }
   ],
   "lockFileMaintenance": {
