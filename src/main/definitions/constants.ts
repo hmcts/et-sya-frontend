@@ -43,6 +43,10 @@ export const TranslationKeys = {
   SUPPORT: 'support',
   COMFORTABLE: 'comfortable',
   TRAVEL: 'travel',
+  CLAIM_SUBMITTED: 'claim-submitted',
+  CHECK_ANSWERS: 'check-your-answers',
+  SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
+  DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
 } as const;
 
 export const PageUrls = {
@@ -51,6 +55,7 @@ export const PageUrls = {
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
+  CLAIM_SUBMITTED: '/your-claim-has-been-submitted',
   RETURN_TO_EXISTING: '/return-to-existing',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
@@ -80,6 +85,7 @@ export const PageUrls = {
   PAY_AFTER_TAX: '/pay-after-tax',
   BENEFITS: '/benefits',
   NOTICE_PERIOD: '/got-a-notice-period',
+  CHECK_ANSWERS: '/check-your-answers',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
   REASONABLE_ADJUSTMENTS: '/reasonable-adjustments',
@@ -88,6 +94,8 @@ export const PageUrls = {
   SUPPORT: '/support',
   COMFORTABLE: '/comfortable',
   TRAVEL: '/travel',
+  SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
+  DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
 } as const;
 
 export const AuthUrls = {
