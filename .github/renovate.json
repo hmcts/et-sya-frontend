@@ -19,6 +19,10 @@
     {
       "matchPackageNames": ["ansi-regex"],
       "allowedVersions": "<=5"
+    },
+    {
+      "matchPackageNames": ["redis"],
+      "allowedVersions": "<=3"
     }
   ],
   "lockFileMaintenance": {
