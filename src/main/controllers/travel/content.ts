@@ -6,37 +6,27 @@ export const travelContent: FormContent = {
     travel: {
       id: 'travel',
       type: 'checkboxes',
-      label: l => l.h1,
       labelHidden: false,
-      hint: l => l.hint,
+      label: l => l.h1,
       labelSize: 'l',
       isPageHeading: true,
+      hint: l => l.hint,
       validator: atLeastOneFieldIsChecked,
       values: [
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: '1',
+          value: 'one',
         },
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: '2',
+          value: 'two',
         },
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: '3',
-        },
-        {
-          name: 'travel',
-          label: l => l.checkbox1,
-          value: '4',
-        },
-        {
-          name: 'travel',
-          label: l => l.checkbox1,
-          value: '5',
+          value: 'three',
         },
       ],
     },
