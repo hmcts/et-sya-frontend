@@ -16,17 +16,17 @@ export const travelContent: FormContent = {
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: 'one',
+          value: 'travel-val-one',
         },
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: 'two',
+          value: 'travel-val-two',
         },
         {
           name: 'travel',
           label: l => l.checkbox1,
-          value: 'three',
+          value: 'travel-val-three',
         },
       ],
     },

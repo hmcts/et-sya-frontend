@@ -16,17 +16,17 @@ export const comfortableContent: FormContent = {
         {
           name: 'comfortable',
           label: l => l.checkbox1,
-          value: 'one',
+          value: 'comfortable-one',
         },
         {
           name: 'comfortable',
           label: l => l.checkbox1,
-          value: 'two',
+          value: 'comfortable-two',
         },
         {
           name: 'comfortable',
           label: l => l.checkbox1,
-          value: 'three',
+          value: 'comfortable-three',
         },
       ],
     },
