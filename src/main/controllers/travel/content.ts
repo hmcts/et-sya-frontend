@@ -9,8 +9,8 @@ export const travelContent: FormContent = {
       labelHidden: false,
       label: l => l.h1,
       labelSize: 'l',
-      isPageHeading: true,
       hint: l => l.hint,
+      isPageHeading: true,
       validator: atLeastOneFieldIsChecked,
       values: [
         {
@@ -22,11 +22,6 @@ export const travelContent: FormContent = {
           name: 'travel',
           label: l => l.checkbox1,
           value: 'travel-val-two',
-        },
-        {
-          name: 'travel',
-          label: l => l.checkbox1,
-          value: 'travel-val-three',
         },
       ],
     },

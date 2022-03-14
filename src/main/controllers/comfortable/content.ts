@@ -6,8 +6,8 @@ export const comfortableContent: FormContent = {
     comfortable: {
       id: 'comfortable',
       type: 'checkboxes',
-      labelHidden: false,
       label: l => l.h1,
+      labelHidden: false,
       labelSize: 'l',
       isPageHeading: true,
       hint: l => l.hint,
@@ -27,6 +27,11 @@ export const comfortableContent: FormContent = {
           name: 'comfortable',
           label: l => l.checkbox1,
           value: 'comfortable-three',
+        },
+        {
+          name: 'comfortable',
+          label: l => l.checkbox1,
+          value: 'comfortable-four',
         },
       ],
     },
