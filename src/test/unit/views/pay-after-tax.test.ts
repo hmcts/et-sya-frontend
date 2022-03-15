@@ -14,7 +14,7 @@ const payAfterTaxJsonRaw = fs.readFileSync(
 const payAfterTaxJson = JSON.parse(payAfterTaxJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = payAfterTaxJson.h1;
+const expectedTitle = payAfterTaxJson.h1.workingOrNotice;
 const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
