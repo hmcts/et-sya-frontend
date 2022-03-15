@@ -1,43 +1,18 @@
 import { convertToDateObject } from '../../components/form/parser';
-import { areDateFieldsFilledIn, isDateInputInvalid, isFutureDate } from '../../components/form/validator';
 import { CaseDate } from '../../definitions/case';
-import { FormContent, InvalidField } from '../../definitions/form';
+import { DateFormFields, DefaultDateFormFields } from '../../definitions/dates';
+import { FormContent } from '../../definitions/form';
 import { AnyRecord, UnknownRecord } from '../../definitions/util-types';
 
+const start_date: DateFormFields = {
+  ...DefaultDateFormFields,
+  id: 'start-date',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
+};
+
 export const startDateFormContent: FormContent = {
-  fields: {
-    startDate: {
-      id: 'start-date',
-      type: 'date',
-      classes: 'govuk-date-input',
-      label: (l: AnyRecord): string => l.label,
-      labelHidden: true,
-      hint: (l: AnyRecord): string => l.hint,
-      values: [
-        {
-          label: (l: AnyRecord): string => l.dateFormat.day,
-          name: 'day',
-          classes: 'govuk-input--width-2',
-          attributes: { maxLength: 2 },
-        },
-        {
-          label: (l: AnyRecord): string => l.dateFormat.month,
-          name: 'month',
-          classes: 'govuk-input--width-2',
-          attributes: { maxLength: 2 },
-        },
-        {
-          label: (l: AnyRecord): string => l.dateFormat.year,
-          name: 'year',
-          classes: 'govuk-input--width-4',
-          attributes: { maxLength: 4 },
-        },
-      ],
-      parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
-      validator: (value: CaseDate): string | void | InvalidField =>
-        areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
-    },
-  },
+  fields: { startDate: start_date },
+
   submit: {
     text: (l: AnyRecord): string => l.submit,
     classes: 'govuk-!-margin-right-2',
