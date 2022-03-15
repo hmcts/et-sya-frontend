@@ -17,7 +17,4 @@ Scenario('Pages while not working for the organisation', () => {
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
-
-  I.see('pay before tax');
-  I.click('#main-form-submit');
 }).tag('@RET-1131');
