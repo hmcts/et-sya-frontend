@@ -1,45 +1,36 @@
-import { isFieldFilledIn, isInvalidPostcode } from '../../components/form/validator';
+import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../../components/form/validator';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const workAddressContent: FormContent = {
   fields: {
-    address1: {
+    workAddress1: {
       id: 'address-line1',
       name: 'address-line1',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
       label: l => l.buildingStreet,
       labelSize: null,
-      validator: isFieldFilledIn,
-      attributes: {
-        autocomplete: 'address-line1',
-      },
+      validator: isWorkAddressLineOneValid,
     },
-    address2: {
+    workAddress2: {
       id: 'address-line2',
       name: 'address-line2',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
       label: l => l.line2Optional,
       labelSize: null,
-      attributes: {
-        autocomplete: 'address-line2',
-      },
     },
-    addressTown: {
+    workAddressTown: {
       id: 'address-town',
       name: 'address-town',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
       label: l => l.town,
       labelSize: null,
-      attributes: {
-        autocomplete: 'address-level2',
-      },
-      validator: isFieldFilledIn,
+      validator: isWorkAddressTownValid,
     },
-    addressCounty: {
+    workAddressCounty: {
       id: 'address-county',
       name: 'address-county',
       type: 'text',
@@ -47,7 +38,7 @@ export const workAddressContent: FormContent = {
       label: l => l.county,
       labelSize: null,
     },
-    addressPostcode: {
+    workAddressPostcode: {
       id: 'address-postcode',
       name: 'address-postcode',
       type: 'text',
@@ -56,7 +47,6 @@ export const workAddressContent: FormContent = {
       labelSize: null,
       attributes: {
         maxLength: 14,
-        autocomplete: 'postal-code',
       },
       validator: isInvalidPostcode,
     },

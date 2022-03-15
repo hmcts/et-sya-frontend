@@ -155,3 +155,22 @@ export const isValidInteger: Validator = value => {
     return 'invalid';
   }
 };
+
+export const isWorkAddressLineOneValid: Validator = value => {
+  if (typeof value === 'string') {
+    const inputStrLength = (value as string).trim().length;
+    if (inputStrLength === 0 || inputStrLength > 100) {
+      return 'required';
+    }
+  }
+};
+
+export const isWorkAddressTownValid: Validator = value => {
+  if (typeof value === 'string') {
+    const inputStrLength = (value as string).trim().length;
+
+    if (inputStrLength < 3 || inputStrLength > 60) {
+      return 'required';
+    }
+  }
+};
