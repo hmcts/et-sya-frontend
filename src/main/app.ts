@@ -33,14 +33,31 @@ app.locals.developmentMode = developmentMode;
 const logger = Logger.getLogger('app');
 
 new PropertiesVolume().enableFor(app);
+logger.info('Properties volume enabled');
+
 new AppInsights().enable();
+logger.info('App insights');
+
 new Nunjucks(developmentMode).enableFor(app);
+logger.info('Nunjucks');
+
 new Helmet(config.get('security')).enableFor(app);
+logger.info('Helmet');
+
 new Container().enableFor(app);
+logger.info('Container read dir');
+
 new I18Next().enableFor(app);
+logger.info('I18Next translations');
+
 new Session().enableFor(app);
+logger.info('Sessions');
+
 new Oidc().enableFor(app);
+logger.info('Oidc');
+
 new HealthCheck().enableFor(app);
+logger.info('Health Check');
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
@@ -53,6 +70,7 @@ app.use((req, res, next) => {
 });
 
 routes(app);
+logger.info('routes added');
 
 setupDev(app, developmentMode);
 // returning "not found" page for requests with paths not resolved by the router
