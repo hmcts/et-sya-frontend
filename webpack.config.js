@@ -14,6 +14,15 @@ module.exports = {
   plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins],
   entry: path.resolve(sourcePath, 'index.js'),
   mode: devMode ? 'development' : 'production',
+  performance: {
+    hints: false,
+  },
+  optimization: {
+    splitChunks: {
+      minSize: 10000,
+      maxSize: 250000,
+    },
+  },
   module: {
     rules: [
       ...scss.rules,
