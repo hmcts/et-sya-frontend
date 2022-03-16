@@ -7,21 +7,21 @@ import request from 'supertest';
 import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
 
-const endDateJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/end-date.json'),
+const startDateJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/start-date.json'),
   'utf-8'
 );
-const endDateJson = JSON.parse(endDateJsonRaw);
+const startDateJson = JSON.parse(startDateJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = endDateJson.h1;
+const expectedTitle = startDateJson.h1;
 const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
-describe('Benefits page', () => {
+describe('Start date page', () => {
   beforeAll(async () => {
     await request(app)
-      .get(PageUrls.END_DATE)
+      .get(PageUrls.START_DATE)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
