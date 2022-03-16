@@ -70,6 +70,7 @@ app.use((req, res, next) => {
 });
 
 routes(app);
+logger.info('routes added');
 
 setupDev(app, developmentMode);
 // returning "not found" page for requests with paths not resolved by the router
