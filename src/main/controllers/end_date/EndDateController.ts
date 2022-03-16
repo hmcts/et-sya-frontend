@@ -6,27 +6,22 @@ import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import { FormContent, FormFields } from '../../definitions/form';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from '../helpers';
 
-export default class payBeforeTaxController {
+export default class endDateController {
   private readonly form: Form;
 
-  constructor(private readonly payBeforeTaxContent: FormContent) {
-    this.form = new Form(<FormFields>this.payBeforeTaxContent.fields);
+  constructor(private readonly endDateContent: FormContent) {
+    this.form = new Form(<FormFields>this.endDateContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY_AFTER_TAX);
+    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PERIOD);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.payBeforeTaxContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.PAY_BEFORE_TAX,
-    ]);
-    const employmentStatus = req.session.userCase.isStillWorking;
+    const content = getPageContent(req, this.endDateContent, [TranslationKeys.COMMON, TranslationKeys.END_DATE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.PAY_BEFORE_TAX, {
+    res.render(TranslationKeys.END_DATE, {
       ...content,
-      employmentStatus,
     });
   };
 }

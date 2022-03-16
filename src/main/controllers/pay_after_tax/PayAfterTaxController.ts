@@ -22,9 +22,11 @@ export default class payAfterTaxController {
       TranslationKeys.COMMON,
       TranslationKeys.PAY_AFTER_TAX,
     ]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PAY_AFTER_TAX, {
       ...content,
+      employmentStatus,
     });
   };
 }
