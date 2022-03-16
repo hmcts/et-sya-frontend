@@ -25,6 +25,11 @@ describe('Work Address Page', () => {
     expect(title[0].innerHTML).contains(expectedPageHeaderText, 'Page title does not exist');
   });
 
+  it('should display continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+  });
+
   it('should display save for later button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
