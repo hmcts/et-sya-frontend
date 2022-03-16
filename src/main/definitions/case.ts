@@ -41,6 +41,8 @@ export interface Case {
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
+  employeeBenefit?: string;
+  receiveEmployeeBenefit?: YesOrNo;
 }
 
 export const enum StillWorking {

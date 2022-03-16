@@ -75,6 +75,7 @@ export default function (app: Application): void {
   app.post(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.post);
   app.get(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.get);
   app.post(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.post);
+  app.get(PageUrls.EMPLOYEE_BENEFIT, app.locals.container.cradle.employeeBenefitController.get);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({
