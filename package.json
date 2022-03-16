@@ -10,7 +10,7 @@
     "start:dev": "nodemon --config nodemon.json",
     "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx --fix && prettier --check ./src/",
     "build": "yarn webpack --config webpack.config.js",
-    "build:prod": "NODE_OPTIONS=--max-old-space-size=4096 NODE_ENV=production yarn webpack --mode production --config webpack.config.js",
+    "build:prod": "NODE_ENV=production yarn webpack --mode production --config webpack.config.js",
     "test": "jest",
     "test:pact": "jest -c jest.pact.config.js --runInBand",
     "test:coverage": "jest --coverage",
