@@ -1,0 +1,45 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row ">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ h1 }}</h1>
+    </div>
+  </div>
+   <div class="govuk-form-group">
+    {{ 
+      govukButton({
+        text: submitBtn,
+        classes: 'govuk-!-margin-right-2',
+        type: "submit",
+        href: PageUrls.CLAIM_SUBMITTED,
+        preventDoubleClick: true,
+        attributes: {
+          id: 'main-form-submit'
+        }
+      }) 
+    }}
+
+    {{ 
+      govukButton({
+        text: saveForLater,
+        classes: 'govuk-button--secondary',
+        preventDoubleClick: true,
+        name: 'saveForLater',
+        href: PageUrls.CLAIM_SAVED,
+        value: true,
+        attributes: {
+          id: 'main-form-save-for-later'
+        },
+        value: true
+      }) 
+    }}
+  </div>
+{% endblock %}

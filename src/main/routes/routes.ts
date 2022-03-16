@@ -72,6 +72,12 @@ export default function (app: Application): void {
   app.get(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.get);
   app.post(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.post);
 
+  app.get(PageUrls.CLAIM_SUBMITTED, app.locals.container.cradle.claimSubmittedController.get);
+  app.get(PageUrls.CHECK_ANSWERS, app.locals.container.cradle.checkYourAnswersController.get);
+  app.get(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.get);
+  app.post(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.post);
+  app.get(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.get);
+  app.post(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.post);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({
