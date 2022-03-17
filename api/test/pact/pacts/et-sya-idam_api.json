@@ -1,0 +1,62 @@
+{
+  "consumer": {
+    "name": "et-sya"
+  },
+  "provider": {
+    "name": "idam_api"
+  },
+  "interactions": [
+    {
+      "description": "a request for that user",
+      "providerState": "a valid user exists",
+      "request": {
+        "method": "GET",
+        "path": "/details",
+        "headers": {
+          "Authorization": "Bearer some-access-token"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "uid": "abc123",
+          "given_name": "Joe",
+          "family_name": "Bloggs",
+          "sub": "joe.bloggs@hmcts.net",
+          "roles": ["solicitor", "caseworker"]
+        },
+        "matchingRules": {
+          "$.body.uid": {
+            "match": "type"
+          },
+          "$.body.given_name": {
+            "match": "type"
+          },
+          "$.body.family_name": {
+            "match": "type"
+          },
+          "$.body.sub": {
+            "match": "type"
+          },
+          "$.body.roles": {
+            "match": "type"
+          },
+          "$.body.roles[0]": {
+            "match": "type"
+          },
+          "$.body.roles[1]": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
