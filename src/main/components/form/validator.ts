@@ -70,10 +70,15 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
     };
   }
 
-  if (year < 1900) {
-    if (year < 1000) {
-      return { error: 'invalidYear', fieldName: 'year' };
-    }
+  if (year < 1000) {
+    return { error: 'invalidYear', fieldName: 'year' };
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus100 = new Date();
+  dateMinus100.setFullYear(dateMinus100.getFullYear() - 100);
+
+  if (enteredDate < dateMinus100) {
     return { error: 'invalidDateTooFarInPast', fieldName: 'year' };
   }
 
