@@ -14,5 +14,9 @@ withPipeline(type, product, component) {
   after('build') {
     yarnBuilder.yarn('build')
   }
-  
+
+  enablePactAs([
+              AppPipelineDsl.PactRoles.CONSUMER
+   ])
+
 }
