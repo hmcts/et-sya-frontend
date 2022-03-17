@@ -1,7 +1,5 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import ValidNoAcasReasonController from '../../../main/controllers/valid_no_acas_reason/ValidNoAcasReasonController';
+import ValidNoAcasReasonController from '../../../main/controllers/ValidNoAcasReasonController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,19 +9,8 @@ describe('Valid no acas reason Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      validNoAcasReason: {
-        type: 'radios',
-        id: 'radio1',
-        name: YesOrNo.YES,
-        validator: jest.fn(isFieldFilledIn),
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Valid No Acas Reason controller page', () => {
-    const acasSingleClaimController = new ValidNoAcasReasonController(mockFormContent);
+    const acasSingleClaimController = new ValidNoAcasReasonController();
 
     const response = mockResponse();
     const userCase = { validNoAcasReason: YesOrNo.YES };
@@ -38,7 +25,7 @@ describe('Valid no acas reason Controller', () => {
       const errors = [{ propertyName: 'validNoAcasReason', errorType: 'required' }];
       const body = { validNoAcasReason: '' };
 
-      const controller = new ValidNoAcasReasonController(mockFormContent);
+      const controller = new ValidNoAcasReasonController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -51,7 +38,7 @@ describe('Valid no acas reason Controller', () => {
     it('should assign userCase from formData for Valid No Acas Reason', () => {
       const body = { validNoAcasReason: YesOrNo.YES };
 
-      const controller = new ValidNoAcasReasonController(mockFormContent);
+      const controller = new ValidNoAcasReasonController();
 
       const req = mockRequest({ body });
       const res = mockResponse();

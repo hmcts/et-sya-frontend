@@ -1,6 +1,5 @@
-import NewJobController from '../../../main/controllers/new_job/NewJobController';
+import NewJobController from '../../../main/controllers/NewJobController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('New Job Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render the New Job Choice page', () => {
-    const controller = new NewJobController(mockFormContent);
+    const controller = new NewJobController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);

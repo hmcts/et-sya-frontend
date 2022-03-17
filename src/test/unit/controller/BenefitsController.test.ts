@@ -1,6 +1,5 @@
-import BenefitsController from '../../../main/controllers/benefits/BenefitsController';
+import BenefitsController from '../../../main/controllers/BenefitsController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('Benefits Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render benefits page', () => {
-    const benefitsController = new BenefitsController(mockFormContent);
+    const benefitsController = new BenefitsController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
