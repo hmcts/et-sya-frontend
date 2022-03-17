@@ -4,32 +4,30 @@ import { AnyRecord } from '../../definitions/util-types';
 
 export const employeeBenefitContent: FormContent = {
   fields: {
-    employeeBenefit: {
-      id: 'employee_benefit_title',
-      name: 'employee_benefit_title',
-      type: 'text',
-      // classes: 'govuk-!-width-one-half',
-      label: (l: AnyRecord): string => l.employee_benefit_title,
-      hint: (l: AnyRecord): string => l.hint,
-      // attributes: {
-      //     autocomplete: 'employee-benefits'
-      // },
-    },
-
     receiveEmployeeBenefit: {
       id: 'receive-employee-benefit',
       type: 'radios',
       classes: 'govuk-radios',
+      hint: (l: AnyRecord): string => l.hint,
+
       values: [
         {
           label: (l: AnyRecord): string => l.yes,
           value: YesOrNo.YES,
           selected: false,
+          subFields: {
+            employeeBenefit: {
+              id: 'employee-benefit',
+              type: 'text',
+              label: (l: AnyRecord): string => l.tellUsAboutBenefit,
+            },
+          },
         },
 
         {
           label: (l: AnyRecord): string => l.no,
           value: YesOrNo.NO,
+          selected: false,
         },
       ],
     },
