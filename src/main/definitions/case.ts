@@ -22,8 +22,8 @@ export interface Case {
   acasMultiple?: YesOrNo;
   updatePreference?: EmailOrPost;
   representingMyself?: YesOrNo;
-  IsASingleClaim?: YesOrNo;
   isASingleClaim?: YesOrNo;
+  isAcasSingle?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting: YesOrNo;
