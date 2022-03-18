@@ -37,10 +37,15 @@ export const TranslationKeys = {
   PAY_AFTER_TAX: 'pay-after-tax',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
+  NEW_JOB: 'new-job',
+  NEW_JOB_START_DATE: 'new-job-start-date',
+  NEW_JOB_PAY: 'new-job-pay-before-tax',
   CLAIM_SUBMITTED: 'claim-submitted',
   CHECK_ANSWERS: 'check-your-answers',
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
   DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
+  PAST_EMPLOYER: 'past-employer',
+  PRESENT_EMPLOYER: 'present-employer',
 } as const;
 
 export const PageUrls = {
@@ -82,6 +87,9 @@ export const PageUrls = {
   CHECK_ANSWERS: '/check-your-answers',
   PLACE_OF_WORK: '/place-of-work',
   ADDRESS_LOOK_UP: '/address-lookup',
+  NEW_JOB: '/new-job',
+  NEW_JOB_START_DATE: '/new-job-start-date',
+  NEW_JOB_PAY: '/new-job-pay-before-tax',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
 } as const;

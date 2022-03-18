@@ -1,6 +1,5 @@
-import NoticePayController from '../../../main/controllers/notice_pay/NoticePayController';
+import NoticePayController from '../../../main/controllers/NoticePayController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('Notice pay Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render notice pay page', () => {
-    const noticePayController = new NoticePayController(mockFormContent);
+    const noticePayController = new NoticePayController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
