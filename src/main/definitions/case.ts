@@ -20,10 +20,10 @@ export interface Case {
   addressCounty?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
-  updatePreference?: YesOrNo;
+  updatePreference?: EmailOrPost;
   representingMyself?: YesOrNo;
   IsASingleClaim?: YesOrNo;
-  isAcasSingle?: YesOrNo;
+  isASingleClaim?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting: YesOrNo;
@@ -61,6 +61,11 @@ export const enum YesOrNo {
 export const enum WeeksOrMonths {
   WEEKS = 'Weeks',
   MONTHS = 'Months',
+}
+
+export const enum EmailOrPost {
+  EMAIL = 'Email',
+  POST = 'Post',
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
