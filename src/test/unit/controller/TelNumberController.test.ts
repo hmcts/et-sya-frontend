@@ -1,8 +1,6 @@
-import { isValidUKTelNumber } from '../../../main/components/form/validator';
-import TelNumberController from '../../../main/controllers/tel_number/TelNumberController';
+import TelNumberController from '../../../main/controllers/TelNumberController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,19 +10,8 @@ describe('Telephone number Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      telNumber: {
-        type: 'tel',
-        id: 'telephone-number',
-        name: 'telephone-number',
-        validator: (value: never) => isValidUKTelNumber(value),
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Address details controller page', () => {
-    const telNumberController = new TelNumberController(mockFormContent);
+    const telNumberController = new TelNumberController();
     const response = mockResponse();
     const userCase = { telNumber: '01234567890' };
     const request = <AppRequest>mockRequest({ t, userCase });
@@ -38,7 +25,7 @@ describe('Telephone number Controller', () => {
       const errors = [{ propertyName: 'telNumber', errorType: 'invalid' }];
       const body = { telNumber: 'not valid' };
 
-      const controller = new TelNumberController(mockFormContent);
+      const controller = new TelNumberController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -51,7 +38,7 @@ describe('Telephone number Controller', () => {
     it('should assign userCase from formData', () => {
       const body = { telNumber: '01234567890' };
 
-      const controller = new TelNumberController(mockFormContent);
+      const controller = new TelNumberController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
