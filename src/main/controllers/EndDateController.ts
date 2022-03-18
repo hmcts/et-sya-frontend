@@ -10,8 +10,37 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 
 export default class EndDateController {
   private readonly form: Form;
-  private readonly endDateContent: FormContent = {
-    fields: {},
+  private readonly endDateFormContent: FormContent = {
+    fields: {
+      endDate: {
+        id: 'end-date',
+        type: 'date',
+        classes: 'govuk-date-input',
+        label: (l: AnyRecord): string => l.label,
+        labelHidden: true,
+        hint: (l: AnyRecord): string => l.hint,
+        values: [
+          {
+            label: (l: AnyRecord): string => l.dateFormat.day,
+            name: 'day',
+            classes: 'govuk-input--width-2',
+            attributes: { maxLength: 2 },
+          },
+          {
+            label: (l: AnyRecord): string => l.dateFormat.month,
+            name: 'month',
+            classes: 'govuk-input--width-2',
+            attributes: { maxLength: 2 },
+          },
+          {
+            label: (l: AnyRecord): string => l.dateFormat.year,
+            name: 'year',
+            classes: 'govuk-input--width-4',
+            attributes: { maxLength: 4 },
+          },
+        ],
+      },
+    },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -23,7 +52,7 @@ export default class EndDateController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.endDateContent.fields);
+    this.form = new Form(<FormFields>this.endDateFormContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
@@ -31,7 +60,7 @@ export default class EndDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.endDateContent, [TranslationKeys.COMMON, TranslationKeys.END_DATE]);
+    const content = getPageContent(req, this.endDateFormContent, [TranslationKeys.COMMON, TranslationKeys.END_DATE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.END_DATE, {
       ...content,

@@ -35,9 +35,11 @@ export default class AverageWeeklyHoursController {
       TranslationKeys.COMMON,
       TranslationKeys.AVERAGE_WEEKLY_HOURS,
     ]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.AVERAGE_WEEKLY_HOURS, {
       ...content,
+      employmentStatus,
     });
   };
 }
