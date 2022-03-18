@@ -18,7 +18,7 @@ export class Container {
       withFileTypes: true,
     });
     files
-      .filter(f => !IGNORE_LIST.includes(f.name))
+      .filter(f => !IGNORE_LIST.includes(f.name) && f.isFile())
       .forEach(f => {
         const controllerName = f.name.slice(0, -3);
         const registerName = controllerName.charAt(0).toLowerCase() + controllerName.slice(1);

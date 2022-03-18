@@ -29,7 +29,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: PageUrls.STILL_WORKING,
+        url: PageUrls.PAST_EMPLOYER,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
