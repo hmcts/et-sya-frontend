@@ -1,7 +1,7 @@
-import PensionController from '../../../main/controllers/pension/PensionController';
+import PensionController from '../../../main/controllers/PensionController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent, FormError } from '../../../main/definitions/form';
+import { FormError } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,24 +11,8 @@ describe('Pension controller', () => {
     common: {},
   };
 
-  const mockFormContent: FormContent = {
-    fields: {
-      pension: {
-        type: 'radios',
-        values: [
-          {
-            value: YesOrNo.YES,
-          },
-          {
-            value: YesOrNo.NO,
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the pension page', () => {
-    const controller = new PensionController(mockFormContent);
+    const controller = new PensionController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -40,7 +24,7 @@ describe('Pension controller', () => {
       pension: '',
     };
     const errors: FormError[] = [];
-    const controller = new PensionController(mockFormContent);
+    const controller = new PensionController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -55,7 +39,7 @@ describe('Pension controller', () => {
   it('should add the pension form value to the userCase', () => {
     const body = { pension: YesOrNo.NO };
 
-    const controller = new PensionController(mockFormContent);
+    const controller = new PensionController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
