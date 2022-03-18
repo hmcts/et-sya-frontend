@@ -1,8 +1,6 @@
-import { atLeastOneFieldIsChecked } from '../../../main/components/form/validator';
-import TypeOfClaimController from '../../../main/controllers/type_of_claim/TypeOfClaimController';
+import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import { AuthUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,26 +10,8 @@ describe('Type Of Claim Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      typeOfClaim: {
-        id: 'typeOfClaim',
-        type: 'checkboxes',
-        labelHidden: true,
-        validator: jest.fn(atLeastOneFieldIsChecked),
-        values: [
-          {
-            id: 'typeOfClaim',
-            name: 'typeOfClaim',
-            value: TypesOfClaim.BREACH_OF_CONTRACT,
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Type Of Claim controller page', () => {
-    const typeOfController = new TypeOfClaimController(mockFormContent);
+    const typeOfController = new TypeOfClaimController();
 
     const response = mockResponse();
     const userCase = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
@@ -47,7 +27,7 @@ describe('Type Of Claim Controller', () => {
       const errors = [{ propertyName: 'typeOfClaim', errorType: 'required' }];
       const body = { typesOfClaim: [''] };
 
-      const controller = new TypeOfClaimController(mockFormContent);
+      const controller = new TypeOfClaimController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -60,7 +40,7 @@ describe('Type Of Claim Controller', () => {
     it('should assign userCase from formData for Type of Claim', () => {
       const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
 
-      const controller = new TypeOfClaimController(mockFormContent);
+      const controller = new TypeOfClaimController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
