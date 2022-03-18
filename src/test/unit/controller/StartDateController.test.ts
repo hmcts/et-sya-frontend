@@ -1,7 +1,6 @@
-import StartDateController from '../../../main/controllers/start_date/StartDateController';
+import StartDateController from '../../../main/controllers/StartDateController';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,12 +10,8 @@ describe('Start date Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render start date page', () => {
-    const startDateController = new StartDateController(mockFormContent);
+    const startDateController = new StartDateController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -32,7 +27,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.WORKING,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -59,7 +54,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NOTICE,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -86,7 +81,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();

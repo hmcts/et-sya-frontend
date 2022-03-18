@@ -18,7 +18,7 @@ const expectedTitle = endDateJson.h1;
 const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
-describe('Benefits page', () => {
+describe('End date page', () => {
   beforeAll(async () => {
     await request(app)
       .get(PageUrls.END_DATE)

@@ -1,6 +1,5 @@
-import EndDateController from '../../../main/controllers/end_date/EndDateController';
+import EndDateController from '../../../main/controllers/EndDateController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('End date Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render end date page', () => {
-    const endDateController = new EndDateController(mockFormContent);
+    const endDateController = new EndDateController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
