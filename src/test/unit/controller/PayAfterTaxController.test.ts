@@ -1,6 +1,5 @@
-import PayAfterTaxController from '../../../main/controllers/pay_after_tax/PayAfterTaxController';
+import PayAfterTaxController from '../../../main/controllers/PayAfterTaxController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('Pay after tax Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render pay after tax page', () => {
-    const payAfterTaxController = new PayAfterTaxController(mockFormContent);
+    const payAfterTaxController = new PayAfterTaxController();
     const response = mockResponse();
     const request = mockRequest({ t });
 

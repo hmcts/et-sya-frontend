@@ -81,6 +81,12 @@ export default function (app: Application): void {
   app.post(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.post);
   app.get(PageUrls.TRAVEL, app.locals.container.cradle.travelController.get);
   app.post(PageUrls.TRAVEL, app.locals.container.cradle.travelController.post);
+  app.get(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.get);
+  app.post(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.post);
+  app.get(PageUrls.NEW_JOB_PAY, app.locals.container.cradle.newJobPayController.get);
+  app.post(PageUrls.NEW_JOB_PAY, app.locals.container.cradle.newJobPayController.post);
+  app.get(PageUrls.NEW_JOB_START_DATE, app.locals.container.cradle.newJobStartDateController.get);
+  app.post(PageUrls.NEW_JOB_START_DATE, app.locals.container.cradle.newJobStartDateController.post);
   app.get(PageUrls.CLAIM_SUBMITTED, app.locals.container.cradle.claimSubmittedController.get);
   app.get(PageUrls.CHECK_ANSWERS, app.locals.container.cradle.checkYourAnswersController.get);
   app.get(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.get);

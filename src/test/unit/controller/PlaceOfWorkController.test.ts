@@ -1,8 +1,5 @@
-import { isFieldFilledIn, isInvalidPostcode } from '../../../main/components/form/validator';
-import PlaceOfWorkController from '../../../main/controllers/place_of_work/PlaceOfWorkController';
+import PlaceOfWorkController from '../../../main/controllers/PlaceOfWorkController';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
-import { AnyRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -13,42 +10,8 @@ describe('Place Of Work Controller Tests', () => {
     common: {},
   };
 
-  const mockedFormContent = {
-    fields: {
-      workAddress1: {
-        id: 'address1',
-        type: 'text',
-        validator: isFieldFilledIn,
-      },
-      workAddress2: {
-        id: 'address2',
-        type: 'text',
-      },
-      workAddressTown: {
-        id: 'addressTown',
-        type: 'text',
-        validator: isFieldFilledIn,
-      },
-      workAddressCounty: {
-        id: 'addressCounty',
-        type: 'text',
-      },
-      workAddressPostcode: {
-        id: 'addressPostcode',
-        type: 'text',
-        validator: isInvalidPostcode,
-      },
-    },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-    },
-  } as unknown as FormContent;
-
   it('should render place of work page', () => {
-    const controller = new PlaceOfWorkController(mockedFormContent);
+    const controller = new PlaceOfWorkController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -66,7 +29,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddressCounty: '',
       workAddressPostcode: 'EX7 8KK',
     };
-    const controller = new PlaceOfWorkController(mockedFormContent);
+    const controller = new PlaceOfWorkController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -85,7 +48,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddressCounty: '',
       workAddressPostcode: 'EX7 8KK',
     };
-    const controller = new PlaceOfWorkController(mockedFormContent);
+    const controller = new PlaceOfWorkController();
 
     const req = mockRequest({ body });
     const res = mockResponse();

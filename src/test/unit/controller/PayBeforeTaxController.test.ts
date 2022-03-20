@@ -1,6 +1,5 @@
-import PayBeforeTaxController from '../../../main/controllers/pay_before_tax/PayBeforeTaxController';
+import PayBeforeTaxController from '../../../main/controllers/PayBeforeTaxController';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,12 +9,8 @@ describe('Pay before tax Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {},
-  } as unknown as FormContent;
-
   it('should render pay before tax page', () => {
-    const payBeforeTaxController = new PayBeforeTaxController(mockFormContent);
+    const payBeforeTaxController = new PayBeforeTaxController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
