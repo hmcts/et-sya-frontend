@@ -14,7 +14,7 @@ describe('Employee benefit controller', () => {
     fields: {},
   } as unknown as FormContent;
 
-  it('shoulf render employee benmefit page', () => {
+  it('should render employee benefit page', () => {
     const employeeBenefitControllers = new employeeBenefitController(mockFormContent);
     const response = mockResponse();
     const request = mockRequest({ t });
