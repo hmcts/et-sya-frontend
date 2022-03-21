@@ -1,8 +1,6 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import AddressDetailsController from '../../../main/controllers/address_details/AddressDetailsController';
+import AddressDetailsController from '../../../main/controllers/AddressDetailsController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,19 +10,8 @@ describe('Address details Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      address1: {
-        type: 'text',
-        id: 'address-line1',
-        name: 'address-line1',
-        validator: (value: string) => isFieldFilledIn(value),
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Address details controller page', () => {
-    const addressDetailsController = new AddressDetailsController(mockFormContent);
+    const addressDetailsController = new AddressDetailsController();
 
     const response = mockResponse();
     const userCase = { address1: '10 test street' };
@@ -36,10 +23,14 @@ describe('Address details Controller', () => {
 
   describe('post()', () => {
     it('should redirect to the same screen when errors are present', () => {
-      const errors = [{ propertyName: 'address1', errorType: 'required' }];
-      const body = { 'address-line1': '' };
+      const errors = [
+        { propertyName: 'address1', errorType: 'required' },
+        { propertyName: 'addressTown', errorType: 'required' },
+        { propertyName: 'addressPostcode', errorType: 'required' },
+      ];
+      const body = { address1: '' };
 
-      const controller = new AddressDetailsController(mockFormContent);
+      const controller = new AddressDetailsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -50,9 +41,9 @@ describe('Address details Controller', () => {
     });
 
     it('should assign userCase from formData', () => {
-      const body = { address1: '10 test street' };
+      const body = { address1: '10 test street', addressTown: 'test', addressPostcode: 'AB1 2CD' };
 
-      const controller = new AddressDetailsController(mockFormContent);
+      const controller = new AddressDetailsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -63,6 +54,8 @@ describe('Address details Controller', () => {
       expect(res.redirect).toBeCalledWith(PageUrls.TELEPHONE_NUMBER);
       expect(req.session.userCase).toStrictEqual({
         address1: '10 test street',
+        addressTown: 'test',
+        addressPostcode: 'AB1 2CD',
       });
     });
   });
