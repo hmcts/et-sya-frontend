@@ -1,6 +1,8 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -10,10 +12,357 @@
 {% block content %}
   <div class="govuk-grid-row ">
     <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ h1 }}</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+      <p class="govuk-body govuk-!-margin-bottom-8">{{ des }}</p>
     </div>
   </div>
-   <div class="govuk-form-group">
+
+  {{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: typeOfClaim,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: typeOfClaim
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.TYPE_OF_CLAIM,
+                text: "Change",
+                visuallyHiddenText: typeOfClaim
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  {{
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: personalDetails.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: personalDetails.dob
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.DOB_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.dob
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.gender
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.GENDER_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.gender
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.genderSameAsBirth
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.GENDER_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.genderSameAsBirth
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.title
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.GENDER_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.title
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  {{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: contactDetails.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: contactDetails.contact
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.ADDRESS_DETAILS,
+                text: "Change",
+                visuallyHiddenText: contactDetails.contact
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: contactDetails.telephone
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.TELEPHONE_NUMBER,
+                text: "Change",
+                visuallyHiddenText: contactDetails.telephone
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  {{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: yourPreferences.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: yourPreferences.requireAsistence
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: yourPreferences.requireAsistence
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: yourPreferences.updatePreference
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.UPDATE_PREFERENCES,
+                text: "Change",
+                visuallyHiddenText: yourPreferences.updatePreference
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: yourPreferences.videoHearings
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.VIDEO_HEARINGS,
+                text: "Change",
+                visuallyHiddenText: yourPreferences.videoHearings
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  {{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: employer.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: employer.didYouWorkFor
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAST_EMPLOYER,
+                text: "Change",
+                visuallyHiddenText: employer.didYouWorkFor
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employer.isStillWorking
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PRESENT_EMPLOYER,
+                text: "Change",
+                visuallyHiddenText: employer.isStillWorking
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  {% if userCase.isStillWorking == "NO LONGER WORKING" %}
+    {% include "employer-no-longer-working.njk" %}
+  {% elseif userCase.isStillWorking == "NOTICE" %}
+    {% include "employer-notice.njk" %}
+  {% else %}
+    {% include "employer-working.njk" %}
+  {% endif %}
+
+  {% if userCase.isAcasSingle == "Yes" %}
+    {% include "respondent-details.njk" %}
+  {% else %}
+    {% include "respondent-details-no-acas.njk" %}
+  {% endif %}
+
+  {{ 
+    govukSummaryList({
+      rows: [
+         {
+          key: {
+            text: claimDetails.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: claimDetails.summary
+          },
+          value: {
+          
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.CLAIM_STEPS,
+                text: "Change",
+                visuallyHiddenText: claimDetails.summary
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: claimDetails.fileUploads
+          },
+          value: {
+
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.SUMMARISE_YOUR_CLAIM,
+                text: "Change",
+                visuallyHiddenText: claimDetails.fileUploads
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: claimDetails.whatYouWant
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.DESIRED_CLAIM_OUTCOME,
+                text: "Change",
+                visuallyHiddenText: claimDetails.whatYouWant
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
+
+  <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-9">{{ submitYourClaim }}</h1>
+  <p class="govuk-body">{{ checkAllAnswers }}</p>
+  {{ 
+    govukWarningText({
+      text: warning,
+      iconFallbackText: "Warning"
+    }) 
+  }}
+  <p class="govuk-body">{{ remember }}</p>
+  <p class="govuk-body">{{ emailConfirmation }}</p>
+
+  <div class="govuk-form-group">
     {{ 
       govukButton({
         text: submitBtn,
@@ -41,5 +390,8 @@
         value: true
       }) 
     }}
+
+    <p class="govuk-body">{{ printLinkTxt | safe }}</p>
+
   </div>
 {% endblock %}
