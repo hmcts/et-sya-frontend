@@ -1,6 +1,4 @@
-import { atLeastOneFieldIsChecked } from '../../../main/components/form/validator';
-import DocumentsController from '../../../main/controllers/documents/DocumentsController';
-import { FormContent } from '../../../main/definitions/form';
+import DocumentsController from '../../../main/controllers/DocumentsController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,26 +8,8 @@ describe('Documents Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      documents: {
-        id: 'documents',
-        type: 'checkboxes',
-        labelHidden: true,
-        validator: jest.fn(atLeastOneFieldIsChecked),
-        values: [
-          {
-            id: 'documents',
-            name: 'documents',
-            value: 'anything',
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the "I need documents in alternative format" page', () => {
-    const controller = new DocumentsController(mockFormContent);
+    const controller = new DocumentsController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -44,7 +24,7 @@ describe('Documents Controller', () => {
       const errors = [{ propertyName: 'documents', errorType: 'required' }];
       const body = { documents: [''] };
 
-      const controller = new DocumentsController(mockFormContent);
+      const controller = new DocumentsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();

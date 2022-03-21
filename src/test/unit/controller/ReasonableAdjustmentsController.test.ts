@@ -1,6 +1,4 @@
-import { atLeastOneFieldIsChecked } from '../../../main/components/form/validator';
-import ReasonableAdjustmentsController from '../../../main/controllers/reasonable_adjustments/ReasonableAdjustmentsController';
-import { FormContent } from '../../../main/definitions/form';
+import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,26 +8,8 @@ describe('Reasonable Adjustments Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      reasonableAdjustments: {
-        id: 'reasonableAdjustments',
-        type: 'checkboxes',
-        labelHidden: true,
-        validator: jest.fn(atLeastOneFieldIsChecked),
-        values: [
-          {
-            id: 'reasonableAdjustments',
-            name: 'reasonableAdjustments',
-            value: 'anything',
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Reasonable Adjustments page', () => {
-    const controller = new ReasonableAdjustmentsController(mockFormContent);
+    const controller = new ReasonableAdjustmentsController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -44,7 +24,7 @@ describe('Reasonable Adjustments Controller', () => {
       const errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
       const body = { reasonableAdjustments: [''] };
 
-      const controller = new ReasonableAdjustmentsController(mockFormContent);
+      const controller = new ReasonableAdjustmentsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();

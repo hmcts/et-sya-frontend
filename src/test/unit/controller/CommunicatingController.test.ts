@@ -1,6 +1,4 @@
-import { atLeastOneFieldIsChecked } from '../../../main/components/form/validator';
-import CommunicatingController from '../../../main/controllers/communicating/CommunicatingController';
-import { FormContent } from '../../../main/definitions/form';
+import CommunicatingController from '../../../main/controllers/CommunicatingController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,26 +8,8 @@ describe('Communicating Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      communicating: {
-        id: 'communicating',
-        type: 'checkboxes',
-        labelHidden: true,
-        validator: jest.fn(atLeastOneFieldIsChecked),
-        values: [
-          {
-            id: 'communicating',
-            name: 'communicating',
-            value: 'anything',
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the "I need help communicating" page', () => {
-    const controller = new CommunicatingController(mockFormContent);
+    const controller = new CommunicatingController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -44,7 +24,7 @@ describe('Communicating Controller', () => {
       const errors = [{ propertyName: 'communicating', errorType: 'required' }];
       const body = { communicating: [''] };
 
-      const controller = new CommunicatingController(mockFormContent);
+      const controller = new CommunicatingController();
 
       const req = mockRequest({ body });
       const res = mockResponse();

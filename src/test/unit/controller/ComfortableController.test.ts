@@ -1,6 +1,4 @@
-import { atLeastOneFieldIsChecked } from '../../../main/components/form/validator';
-import ComfortableController from '../../../main/controllers/comfortable/ComfortableController';
-import { FormContent } from '../../../main/definitions/form';
+import ComfortableController from '../../../main/controllers/ComfortableController';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,26 +8,8 @@ describe('Comfortable Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      comfortable: {
-        id: 'comfortable',
-        type: 'checkboxes',
-        labelHidden: true,
-        validator: jest.fn(atLeastOneFieldIsChecked),
-        values: [
-          {
-            id: 'comfortable',
-            name: 'comfortable',
-            value: 'anything',
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the "need something to make me feel comfortable" page', () => {
-    const controller = new ComfortableController(mockFormContent);
+    const controller = new ComfortableController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -44,7 +24,7 @@ describe('Comfortable Controller', () => {
       const errors = [{ propertyName: 'comfortable', errorType: 'required' }];
       const body = { comfortable: [''] };
 
-      const controller = new ComfortableController(mockFormContent);
+      const controller = new ComfortableController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
