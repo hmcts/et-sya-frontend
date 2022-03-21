@@ -45,6 +45,8 @@ export const TranslationKeys = {
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
   DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
   END_DATE: 'end-date',
+  PAST_EMPLOYER: 'past-employer',
+  PRESENT_EMPLOYER: 'present-employer',
 } as const;
 
 export const PageUrls = {
