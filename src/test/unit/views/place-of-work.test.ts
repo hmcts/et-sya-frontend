@@ -20,8 +20,8 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const expectedPageHeaderText = placeOfWorkJson.pageHeader;
-const expectedPageText = placeOfWorkJson.pageText;
+const expectedPageHeaderText = placeOfWorkJson.h1.workingOrNotice;
+const expectedPageText = placeOfWorkJson.pText.workingOrNotice;
 const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const expectedInputLabel = addressJson.enterPostcode;

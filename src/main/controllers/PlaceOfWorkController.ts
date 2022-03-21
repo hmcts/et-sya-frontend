@@ -77,7 +77,7 @@ export default class PlaceOfWorkController {
 
   public get = (req: AppRequest, res: Response): void => {
     let stillWorking = true;
-    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (req.session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       stillWorking = false;
     }
 
