@@ -24,7 +24,7 @@ describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/telephone-number');
+        expect(res.header['location']).toStrictEqual(PageUrls.TELEPHONE_NUMBER);
       });
   });
 });
