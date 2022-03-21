@@ -1,33 +1,44 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { PageUrls } from '../../main/definitions/constants';
 
-describe('GET /how-would-you-like-to-be-updated-about-your-claim', () => {
+describe(`GET ${PageUrls.UPDATE_PREFERENCES}`, () => {
   it('should return the how would you like to be updated about your claim page', async () => {
-    const res = await request(app).get('/how-would-you-like-to-be-updated-about-your-claim');
+    const res = await request(app).get(PageUrls.UPDATE_PREFERENCES);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
 });
 
-describe('on POST /how-would-you-like-to-be-updated-about-your-claim', () => {
-  test('should reload the current page when the Email radio button is selected', async () => {
+describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
+  test('should go to the video hearing page when the Email radio button is selected', async () => {
     await request(app)
-      .post('/how-would-you-like-to-be-updated-about-your-claim')
-      .send({ 'update-preference': 'Email' })
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ updatePreference: 'Email' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/how-would-you-like-to-be-updated-about-your-claim');
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
       });
   });
-});
 
-test('should reload the current page when the Post radio button is selected', async () => {
-  await request(app)
-    .post('/how-would-you-like-to-be-updated-about-your-claim')
-    .send({ 'update-preference': 'Post' })
-    .expect(res => {
-      expect(res.status).toStrictEqual(302);
-      expect(res.header['location']).toStrictEqual('/how-would-you-like-to-be-updated-about-your-claim');
-    });
+  test('should go to the video hearing page when the Post radio button is selected', async () => {
+    await request(app)
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ updatePreference: 'Post' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+      });
+  });
+
+  test('should reload the page when the no radio button is selected', async () => {
+    await request(app)
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ updatePreference: undefined })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+      });
+  });
 });

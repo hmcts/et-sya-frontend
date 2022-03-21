@@ -1,6 +1,6 @@
-import JobTitleController from '../../../main/controllers/job_title/JobTitleController';
+import JobTitleController from '../../../main/controllers/JobTitleController';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent, FormError } from '../../../main/definitions/form';
+import { FormError } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,19 +10,8 @@ describe('Job Title Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      jobTitle: {
-        id: 'job-title',
-        name: 'job-title',
-        type: 'text',
-        classes: 'govuk-!-width-one-half',
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Job Title page', () => {
-    const controller = new JobTitleController(mockFormContent);
+    const controller = new JobTitleController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -38,7 +27,7 @@ describe('Job Title Controller', () => {
         jobTitle: '',
       };
       const errors: FormError[] = [];
-      const controller = new JobTitleController(mockFormContent);
+      const controller = new JobTitleController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -53,7 +42,7 @@ describe('Job Title Controller', () => {
     it('should add the jobtile to the session userCase', () => {
       const body = { jobTitle: 'Vice President Branch Co-Manager' };
 
-      const controller = new JobTitleController(mockFormContent);
+      const controller = new JobTitleController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
