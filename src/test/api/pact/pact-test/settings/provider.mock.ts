@@ -15,7 +15,7 @@ export class PactTestSetup {
     this.provider = new Pact({
       port: this.port,
       log: path.resolve(process.cwd(), 'api/test/pact/logs', 'mockserver-integration.log'),
-      dir: path.resolve(process.cwd(), 'api/test/pact/pacts'),
+      dir: path.resolve(process.cwd(), 'src/test/api/pact/pacts'),
       spec: 2,
       consumer: 'et-sya',
       provider: config.provider,
