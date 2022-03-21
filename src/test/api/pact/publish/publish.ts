@@ -1,6 +1,7 @@
 import * as path from 'path';
 
 import pact from '@pact-foundation/pact-node';
+import * as git from 'git-rev-sync';
 
 import { getConfigValue } from '../../configuration';
 import {
@@ -10,8 +11,6 @@ import {
   PACT_BROKER_USERNAME,
   PACT_CONSUMER_VERSION,
 } from '../../configuration/references';
-
-const { git } = require('@types/git-rev-sync');
 
 const publish = async (): Promise<void> => {
   try {
