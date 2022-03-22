@@ -51,8 +51,8 @@
     "autobind-decorator": "^2.4.0",
     "awilix": "^7.0.0",
     "axios": "^0.26.0",
-    "codeceptjs": "^3.2.3",
-    "config": "^3.3.2",
+    "codeceptjs": "^3.3.0",
+    "config": "^3.3.7",
     "connect-redis": "^6.1.1",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
@@ -78,7 +78,7 @@
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "ts-node": "^10.7.0",
-    "tsconfig-paths": "^3.13.0",
+    "tsconfig-paths": "^3.14.0",
     "typescript": "^4.6.2"
   },
   "devDependencies": {
