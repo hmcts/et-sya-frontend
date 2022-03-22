@@ -1385,10 +1385,10 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/semantic-conventions/-/semantic-conventions-1.0.1.tgz#9349c3860a53468fa2108b5df09aa843f22dbf94"
   integrity sha512-7XU1sfQ8uCVcXLxtAHA8r3qaLJ2oq7sKtEwzZhzuEXqYmjW+n+J4yM3kNo0HQo3Xp1eUe47UM6Wy6yuAvIyllg==
 
-"@pact-foundation/pact-node@^10.15.0":
-  version "10.17.1"
-  resolved "https://registry.yarnpkg.com/@pact-foundation/pact-node/-/pact-node-10.17.1.tgz#d4eebaf596dee31a345f8794338ec98879059178"
-  integrity sha512-hK47aYywVF9hfWvnvANcf18ojtp0Hd1/Gw1QX8Zy8Ho+3ePWAyoT3ESw2x4pLiPCdy0RgjSwQB+sRUe9PWZlnw==
+"@pact-foundation/pact-node@^10.17.2":
+  version "10.17.2"
+  resolved "https://registry.yarnpkg.com/@pact-foundation/pact-node/-/pact-node-10.17.2.tgz#9fa09cdab8a4a4b83086b174ed6d012bc24e90e7"
+  integrity sha512-RslLuFYItB0uDfKLYXei0ZfAPK0W0nwSwp+Zt7Qyt+Stnea2H4DOucKV03uFSiv3TLVKojut5nF70wfgXyNItQ==
   dependencies:
     "@types/needle" "^2.5.1"
     "@types/pino" "^6.3.5"
@@ -1411,12 +1411,12 @@
     unzipper "^0.10.10"
     url-join "^4.0.0"
 
-"@pact-foundation/pact@9.17.2":
-  version "9.17.2"
-  resolved "https://registry.yarnpkg.com/@pact-foundation/pact/-/pact-9.17.2.tgz#7baa06cc29d66f52463e39b528fe18c774f1a269"
-  integrity sha512-q87I/NHzEeZeS2Zf/M15wzoept9WY0VU/he1o8wn5yJLkRTLeUnFBCp3jB4yj8RhAa708gVoKYpvk48HP3tOXw==
+"@pact-foundation/pact@9.17.3":
+  version "9.17.3"
+  resolved "https://registry.yarnpkg.com/@pact-foundation/pact/-/pact-9.17.3.tgz#9621e23e6803385841a3ab29a4162a90b6bcac3e"
+  integrity sha512-AVcScLZsxDDKlO1AuyN7m26Z2EqIt5AA4P8cPGEkokyHf97vbbWlHOPZsgZgzxZXQRnvjNyQnyMwHR69hQ1hew==
   dependencies:
-    "@pact-foundation/pact-node" "^10.15.0"
+    "@pact-foundation/pact-node" "^10.17.2"
     "@types/bluebird" "^3.5.20"
     "@types/express" "^4.17.11"
     bluebird "~3.5.1"
@@ -2775,10 +2775,10 @@ autobind-decorator@^2.4.0:
   resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-2.4.0.tgz#ea9e1c98708cf3b5b356f7cf9f10f265ff18239c"
   integrity sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==
 
-awilix@^6.0.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/awilix/-/awilix-6.1.0.tgz#5959ca02fee49ae96ada642df11c49418131b19e"
-  integrity sha512-hFT47lS6t4eHoZ4ddojmoab2eDjBK9OyVDANFHaSLkFW4kJVlL4AE4O7oE4lX6FW8RveAbAyAfHQ7Ar9re15Xw==
+awilix@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/awilix/-/awilix-7.0.0.tgz#5f222f4868cfb26d3e6a2559f653d48d5e4d477f"
+  integrity sha512-Ye4SLwqVfrsHSRRT6OmxvJjmnKryWzvEUdKEgnq/wODkYsV1Yo+L2k0aHEj5WhPyDym17hCRBxJn5whXWhU2Tw==
   dependencies:
     camel-case "^4.1.2"
     fast-glob "^3.2.11"
@@ -6803,10 +6803,10 @@ jest-mock@^27.5.1:
     "@jest/types" "^27.5.1"
     "@types/node" "*"
 
-jest-pact@0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/jest-pact/-/jest-pact-0.9.1.tgz#60c6a77a2bff1d8827c666e6dddd9d699bb5f253"
-  integrity sha512-IfM5mCbtPMR+894Dtbj8rwuM8Oxi/Pc9ecPd/ZrI8N5oCeKzsGjEOAN0RFAma2Pc1Gx+npBc4I3oP+ku+1SvLQ==
+jest-pact@0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/jest-pact/-/jest-pact-0.9.3.tgz#61e8e1ef531adfce67a3dd648e5d6a78a95abd98"
+  integrity sha512-LzHA5n311N6aR5dFP6rrmVvu+NJPMwK0q5R9E9RN9Q3IL5jwX4ZJaEVTAQWEjnZtifV8GPpMCJRhh5B60D2MmQ==
 
 jest-pnp-resolver@^1.2.2:
   version "1.2.2"
