@@ -1,11 +1,19 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
+import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.PAY_BEFORE_TAX}`, () => {
-  it('should return the pay before tax end page', async () => {
-    const res = await request(app).get(PageUrls.PAY_BEFORE_TAX);
+  it('should return the pay before tax page when Still Working has been selected', async () => {
+    const res = await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING,
+        },
+      })
+    ).get(PageUrls.PAY_BEFORE_TAX);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
