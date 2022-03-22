@@ -5,8 +5,11 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
+import { StillWorking } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
-const PAGE_URL = '/place-of-work';
+const PAGE_URL = PageUrls.PLACE_OF_WORK;
 
 const translationRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/place-of-work.json'),
@@ -63,5 +66,34 @@ describe('Place Of Work Page', () => {
   it('should display find address button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
+  });
+});
+
+describe('Place of work while no longer working', () => {
+  beforeAll(async () => {
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should display title', () => {
+    const expectedTitle = placeOfWorkJson.h1.noLongerWorking;
+    const title = htmlRes.getElementsByClassName(titleClass);
+    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display description text', () => {
+    const expectedParagraph = placeOfWorkJson.pText.noLongerWorking;
+
+    const paragraph = htmlRes.getElementsByClassName(pClass);
+    expect(paragraph[0].innerHTML).contains(expectedParagraph, 'P1 does not exist');
   });
 });
