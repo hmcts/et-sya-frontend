@@ -1,3 +1,10 @@
 {
-  "h1": "Employment details - start date (to do)"
+  "h1": "Employment start date",
+  "p1": {
+    "workingOrNotice": "Tell us when you started working for them.",
+    "noLongerWorking": "Tell us when you started working for them. For example, 22 04 2014."
+  },
+  "p2": "If you do not know the exact date then enter your best estimate.",
+  "p3": "For example, 22 04 2014.",
+  "notWorking": "NO LONGER WORKING"
 }

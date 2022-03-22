@@ -12,9 +12,20 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-      {% block form %}
-        {% include "form/form.njk" %}
-      {% endblock %}
+      {% if employmentStatus === notWorking %}
+        <p class="govuk-body">
+          {{ p1.noLongerWorking }}<br>
+          {{ p2 }}
+        </p>
+      {% else %}
+        <p class="govuk-body">
+          {{ p1.workingOrNotice }}<br>
+          {{ p2 }}<br><br>
+          {{ p3 }}
+        {% endif %}
+        {% block form %}
+          {% include "form/form.njk" %}
+        {% endblock %}
+      </div>
     </div>
-  </div>
-{% endblock %}
+  {% endblock %}
