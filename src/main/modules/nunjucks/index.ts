@@ -112,6 +112,8 @@ export class Nunjucks {
         hint: i.hint && {
           html: this.env.globals.getContent.call(this, i.hint),
         },
+        divider: i.divider && 'or',
+        behaviour: i.exclusive && 'exclusive',
         conditional: ((): { html: string | undefined } => {
           let innerHtml = '';
           if (i.subFields) {

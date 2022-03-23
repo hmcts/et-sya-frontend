@@ -24,18 +24,42 @@ export default class ReasonableAdjustmentsController {
         values: [
           {
             name: 'reasonableAdjustments',
-            label: l => l.checkbox1,
-            value: 'one',
+            hint: l => l.documents.hint,
+            label: l => l.documents.text,
+            value: 'documents',
           },
           {
             name: 'reasonableAdjustments',
-            label: l => l.checkbox1,
-            value: 'two',
+            hint: l => l.communicating.hint,
+            label: l => l.communicating.text,
+            value: 'communicating',
           },
           {
             name: 'reasonableAdjustments',
-            label: l => l.checkbox1,
-            value: 'three',
+            hint: l => l.support.hint,
+            label: l => l.support.text,
+            value: 'support',
+          },
+          {
+            name: 'reasonableAdjustments',
+            hint: l => l.comfortable.hint,
+            label: l => l.comfortable.text,
+            value: 'comfortable',
+          },
+          {
+            name: 'reasonableAdjustments',
+            hint: l => l.travelling.hint,
+            label: l => l.travelling.text,
+            value: 'travelling',
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'reasonableAdjustments',
+            label: l => l.noSupport,
+            value: 'noSupport',
+            exclusive: true,
           },
         ],
       },
@@ -50,8 +74,14 @@ export default class ReasonableAdjustmentsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    console.log('begin post function');
+    console.log('req.session', req.session);
+
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.DOCUMENTS);
+
+    console.log('end post function');
+    console.log('req.session', req.session);
   };
 
   public get = (req: AppRequest, res: Response): void => {
