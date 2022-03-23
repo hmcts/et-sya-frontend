@@ -1,0 +1,11 @@
+{
+  "title": "bring support",
+  "h1": "I would need to bring support with me to a hearing (to do)",
+  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
+  "checkbox1": "tbc",
+  "errors": {
+    "support": {
+      "required": "Add error message..."
+    }
+  }
+}
