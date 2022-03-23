@@ -5,7 +5,10 @@ import { CaseDate } from '../../definitions/case';
 import { InvalidField } from '../../definitions/form';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
-export type DateValidator = (value: CaseDate | undefined) => void | string | InvalidField;
+export type DateValidator = (
+  value: CaseDate | undefined,
+  value2?: CaseDate | undefined
+) => void | string | InvalidField;
 
 export const isFieldFilledIn: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
@@ -67,10 +70,15 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
     };
   }
 
-  if (year < 1900) {
-    if (year < 1000) {
-      return { error: 'invalidYear', fieldName: 'year' };
-    }
+  if (year < 1000) {
+    return { error: 'invalidYear', fieldName: 'year' };
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus100 = new Date();
+  dateMinus100.setFullYear(dateMinus100.getFullYear() - 100);
+
+  if (enteredDate < dateMinus100) {
     return { error: 'invalidDateTooFarInPast', fieldName: 'year' };
   }
 
@@ -172,5 +180,20 @@ export const isWorkAddressTownValid: Validator = value => {
     if (inputStrLength < 3 || inputStrLength > 60) {
       return 'required';
     }
+  }
+};
+
+export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, value2: CaseDate | undefined) => {
+  if (!value1) {
+    return;
+  }
+
+  const enteredDate = new Date(+value1.year, +value1.month, +value1.day);
+  const otherDate = new Date(+value2.year, +value2.month, +value2.day);
+
+  if (otherDate > enteredDate) {
+    return 'invalidDateBeforeDOB';
+  } else {
+    return;
   }
 };
