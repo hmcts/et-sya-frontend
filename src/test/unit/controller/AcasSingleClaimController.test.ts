@@ -1,7 +1,5 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import AcasSingleClaimController from '../../../main/controllers/acas_single_claim/AcasSingleClaimController';
+import AcasSingleClaimController from '../../../main/controllers/AcasSingleClaimController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,19 +9,8 @@ describe('Acas single claim Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      isAcasSingle: {
-        type: 'radios',
-        id: 'radio1',
-        name: YesOrNo.YES,
-        validator: jest.fn(isFieldFilledIn),
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Acas Single Claim controller page', () => {
-    const acasSingleClaimController = new AcasSingleClaimController(mockFormContent);
+    const acasSingleClaimController = new AcasSingleClaimController();
 
     const response = mockResponse();
     const userCase = { isAcasSingle: YesOrNo.YES };
@@ -38,7 +25,7 @@ describe('Acas single claim Controller', () => {
       const errors = [{ propertyName: 'isAcasSingle', errorType: 'required' }];
       const body = { isAcasSingle: '' };
 
-      const controller = new AcasSingleClaimController(mockFormContent);
+      const controller = new AcasSingleClaimController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -51,7 +38,7 @@ describe('Acas single claim Controller', () => {
     it('should assign userCase from formData for Acas Single', () => {
       const body = { isAcasSingle: YesOrNo.YES };
 
-      const controller = new AcasSingleClaimController(mockFormContent);
+      const controller = new AcasSingleClaimController();
 
       const req = mockRequest({ body });
       const res = mockResponse();

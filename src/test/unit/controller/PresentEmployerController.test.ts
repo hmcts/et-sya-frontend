@@ -1,7 +1,5 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import PresentEmployerController from '../../../main/controllers/present_employer/PresentEmployerController';
+import PresentEmployerController from '../../../main/controllers/PresentEmployerController';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,33 +9,8 @@ describe('Update present Employer Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      updatePreference: {
-        classes: 'govuk-radios',
-        id: 'present-employer',
-        type: 'radios',
-        values: [
-          {
-            name: 'radioYes',
-            label: 'radio1',
-            value: '',
-            attributes: { maxLength: 2 },
-          },
-          {
-            name: 'radioNo',
-            label: 'radio2',
-            value: '',
-            attributes: { maxLength: 2 },
-          },
-        ],
-        validator: isFieldFilledIn,
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the Update Preference page', () => {
-    const controller = new PresentEmployerController(mockFormContent);
+    const controller = new PresentEmployerController();
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
@@ -46,10 +19,10 @@ describe('Update present Employer Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'updatePreference', errorType: 'required' }];
-    const body = { 'present-employer': '' };
+    const errors = [{ propertyName: 'presentEmployer', errorType: 'required' }];
+    const body = { presentEmployer: '' };
 
-    const controller = new PresentEmployerController(mockFormContent);
+    const controller = new PresentEmployerController();
 
     const req = mockRequest({ body });
     const res = mockResponse();

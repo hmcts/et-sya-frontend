@@ -1,10 +1,6 @@
-import { convertToDateObject } from '../../../main/components/form/parser';
-import { areDateFieldsFilledIn } from '../../../main/components/form/validator';
-import StartDateController from '../../../main/controllers/start_date/StartDateController';
-import { CaseDate, StillWorking } from '../../../main/definitions/case';
+import StartDateController from '../../../main/controllers/StartDateController';
+import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
-import { UnknownRecord } from '../../../main/definitions/util-types';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -14,38 +10,8 @@ describe('StartDate Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      startDate: {
-        type: 'date',
-        values: [
-          {
-            label: 'day',
-            name: 'day',
-            classes: 'govuk-input--width-2',
-            attributes: { maxLength: 2 },
-          },
-          {
-            label: 'month',
-            name: 'month',
-            classes: 'govuk-input--width-2',
-            attributes: { maxLength: 2 },
-          },
-          {
-            label: 'year',
-            name: 'year',
-            classes: 'govuk-input--width-4',
-            attributes: { maxLength: 4 },
-          },
-        ],
-        parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
-        validator: jest.fn(areDateFieldsFilledIn),
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the StartDateController page', () => {
-    const startDateController = new StartDateController(mockFormContent);
+    const startDateController = new StartDateController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -79,7 +45,7 @@ describe('StartDate Controller', () => {
       'startDate-year': '2000',
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -114,7 +80,7 @@ describe('StartDate Controller', () => {
       isStillWorking: StillWorking.WORKING,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -149,7 +115,7 @@ describe('StartDate Controller', () => {
       isStillWorking: StillWorking.NOTICE,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -184,7 +150,7 @@ describe('StartDate Controller', () => {
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     };
 
-    const controller = new StartDateController(mockFormContent);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();

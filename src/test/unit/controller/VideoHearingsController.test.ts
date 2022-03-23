@@ -1,7 +1,5 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import VideoHearingsController from '../../../main/controllers/video_hearings/VideoHearingsController';
+import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,28 +9,8 @@ describe('Video Hearing Controller', () => {
     common: {},
   };
 
-  const mockFormContent: FormContent = {
-    fields: {
-      videoHearings: {
-        type: 'radios',
-        values: [
-          {
-            value: YesOrNo.YES,
-          },
-          {
-            value: YesOrNo.NO,
-          },
-        ],
-        validator: jest.fn().mockImplementation(isFieldFilledIn),
-      },
-    },
-    submit: {
-      text: 'continue',
-    },
-  } as unknown as FormContent;
-
   it('should render the video hearings choice page', () => {
-    const controller = new VideoHearingsController(mockFormContent);
+    const controller = new VideoHearingsController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -42,7 +20,7 @@ describe('Video Hearing Controller', () => {
   it('should render same page if errors are present', () => {
     const errors = [{ propertyName: 'videoHearings', errorType: 'required' }];
     const body = { videoHearings: '' };
-    const controller = new VideoHearingsController(mockFormContent);
+    const controller = new VideoHearingsController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -55,7 +33,7 @@ describe('Video Hearing Controller', () => {
   it('should add the videoHearings form value to the userCase', () => {
     const body = { videoHearings: YesOrNo.NO };
 
-    const controller = new VideoHearingsController(mockFormContent);
+    const controller = new VideoHearingsController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
