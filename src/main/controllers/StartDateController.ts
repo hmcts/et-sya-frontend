@@ -14,7 +14,7 @@ export default class StartDateController {
   private readonly startDateContent: FormContent = {
     fields: {
       endDate: {
-        id: 'end-date',
+        id: 'start-date',
         type: 'date',
         classes: 'govuk-date-input',
         label: (l: AnyRecord): string => l.label,
@@ -22,17 +22,17 @@ export default class StartDateController {
         values: [
           {
             label: (l: AnyRecord): string => l.dateFormat.day,
-            name: 'day',
+            name: 'startDay',
             classes: 'govuk-input--width-2',
           },
           {
             label: (l: AnyRecord): string => l.dateFormat.month,
-            name: 'month',
+            name: 'startMonth',
             classes: 'govuk-input--width-2',
           },
           {
             label: (l: AnyRecord): string => l.dateFormat.year,
-            name: 'year',
+            name: 'startYear',
             classes: 'govuk-input--width-4',
           },
         ],
