@@ -1,0 +1,11 @@
+{
+  "title": "help with travel",
+  "h1": "I need help travelling to, or around Tribunal buildings (to do)",
+  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
+  "checkbox1": "tbc",
+  "errors": {
+    "travel": {
+      "required": "Add error message..."
+    }
+  }
+}
