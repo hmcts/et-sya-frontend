@@ -12,7 +12,12 @@ Scenario('Claim while on notice for organisation', () => {
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment details');
+  I.see('Employment start date');
+  I.click('#main-form-submit');
+  I.see('Enter your employment start date.');
+  I.fillField('#start-date-day', '20');
+  I.fillField('#start-date-month', '04');
+  I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
   I.see('notice end');

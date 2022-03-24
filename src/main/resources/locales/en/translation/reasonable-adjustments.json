@@ -1,0 +1,11 @@
+{
+  "title": "reasonable adjustments",
+  "h1": "Do you have a physical, mental or learning disability or long term health condition that means you need support during your case? (to do)",
+  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
+  "checkbox1": "tbc",
+  "errors": {
+    "reasonableAdjustments": {
+      "required": "Add error message..."
+    }
+  }
+}

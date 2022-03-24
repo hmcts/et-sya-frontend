@@ -1,3 +1,7 @@
 {
-  "h1": "Employment details - pay after tax (to do)"
+  "h1": {
+    "workingOrNotice": "Employment details - pay after tax (to do)",
+    "noLongerWorking": "Employment details - pay after tax - no longer working (to do)"
+  },
+  "notWorking": "NO LONGER WORKING"
 }

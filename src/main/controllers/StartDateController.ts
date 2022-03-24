@@ -1,18 +1,26 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
-import { StillWorking } from '../definitions/case';
+import { CaseDate, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const start_date: DateFormFields = {
+  ...DefaultDateFormFields,
+  id: 'start-date',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
+};
 
 export default class StartDateController {
   private readonly form: Form;
   private readonly startDateContent: FormContent = {
-    fields: {},
+    fields: { startDate: start_date },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -34,8 +42,7 @@ export default class StartDateController {
     } else if (req.session.userCase.isStillWorking === StillWorking.NOTICE) {
       redirectUrl = PageUrls.NOTICE_END;
     } else if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-      // TODO: redirect to end date page
-      redirectUrl = PageUrls.HOME;
+      redirectUrl = PageUrls.END_DATE;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

@@ -1,3 +1,18 @@
 {
-  "h1": "Employment details - start date (to do)"
+  "title": "Employment start date",
+  "h1": "Employment start date",
+  "hint": "Tell us when you started working for them.<br>If you do not know the exact date then enter your best estimate <br><br>For example, 22 04 2014",
+  "errors": {
+    "startDate": {
+      "required": "Enter your employment start date. For example, 22 04 2014",
+      "dayRequired": "Enter a day for your start date. For example, 23",
+      "monthRequired": "Enter a month for your start date. For example, 04",
+      "yearRequired": " Enter a year for your start date. For example, 1981",
+      "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
+      "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
+      "invalidDateInFuture": "Date entered must be in the past",
+      "invalidDateTooFarInPast": "You have entered a year which is too far in the past",
+      "invalidDateBeforeDOB": "Date entered must not be earlier than your date of birth"
+    }
+  }
 }
