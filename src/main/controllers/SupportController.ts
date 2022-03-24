@@ -25,17 +25,60 @@ export default class SupportController {
           {
             name: 'support',
             label: l => l.checkbox1,
-            value: 'support1',
+            value: 'workerOrCarer',
+            subFields: {
+              supportWorkerOrCarerExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
           },
           {
             name: 'support',
-            label: l => l.checkbox1,
-            value: 'support2',
+            label: l => l.checkbox2,
+            value: 'friendOrFamily',
+            subFields: {
+              supportFriendOrFamilyExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
           },
           {
             name: 'support',
-            label: l => l.checkbox1,
-            value: 'support3',
+            label: l => l.checkbox3,
+            value: 'assistanceGuideDog',
+          },
+          {
+            name: 'support',
+            label: l => l.checkbox4,
+            value: 'therapyDog',
+          },
+          {
+            name: 'support',
+            label: l => l.other,
+            value: 'other',
+            subFields: {
+              supportOtherExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'support',
+            label: l => l.notNeeded,
+            value: 'notNeeded',
+            exclusive: true,
           },
         ],
       },
@@ -50,9 +93,14 @@ export default class SupportController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
+    console.log('begin post function');
+    console.log('req.session', req.session);
 
+    setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.COMFORTABLE);
+
+    console.log('end post function');
+    console.log('req.session', req.session);
   };
 
   public get = (req: AppRequest, res: Response): void => {

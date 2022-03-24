@@ -27,12 +27,11 @@ export default class DocumentsController {
             label: l => l.checkbox1,
             value: 'printed',
             subFields: {
-              printedExplanation: {
+              documentsPrintedExplanation: {
                 type: 'textarea',
                 classes: 'govuk-input--width-10',
                 label: l => l.describe,
                 labelSize: 'normal',
-                validator: isFieldFilledIn,
               },
             },
           },
@@ -51,7 +50,7 @@ export default class DocumentsController {
             label: l => l.checkbox4,
             value: 'largePrint',
             subFields: {
-              largePrintExplanation: {
+              documentsLargePrintExplanation: {
                 type: 'textarea',
                 classes: 'govuk-input--width-10',
                 label: l => l.describe,
@@ -80,12 +79,11 @@ export default class DocumentsController {
             label: l => l.checkbox8,
             value: 'other',
             subFields: {
-              otherExplanation: {
+              documentsOtherExplanation: {
                 type: 'textarea',
                 classes: 'govuk-input--width-10',
                 label: l => l.describe,
                 labelSize: 'normal',
-                validator: isFieldFilledIn,
               },
             },
           },

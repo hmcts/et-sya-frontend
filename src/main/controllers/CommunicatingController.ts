@@ -74,7 +74,7 @@ export default class CommunicatingController {
             value: 'Intermediary',
             hint: l => l.checkbox10Hint,
             subFields: {
-              intermediaryExplanation: {
+              communicatingIntermediaryExplanation: {
                 type: 'textarea',
                 classes: 'govuk-input--width-10',
                 label: l => l.describe,

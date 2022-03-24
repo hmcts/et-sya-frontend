@@ -25,12 +25,89 @@ export default class TravelController {
           {
             name: 'travel',
             label: l => l.checkbox1,
-            value: 'travel-val-one',
+            value: 'taxi',
+            subFields: {
+              travelTaxiExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.explain,
+                labelSize: 'normal',
+              },
+            },
           },
           {
             name: 'travel',
-            label: l => l.checkbox1,
-            value: 'travel-val-two',
+            label: l => l.checkbox2,
+            value: 'closeParking',
+            subFields: {
+              travelCloseParkingExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.explain,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox3,
+            value: 'wheelchairAccess',
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox4,
+            value: 'venueWheelchair',
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox5,
+            value: 'accessibleToilet',
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox6,
+            value: 'helpUsingLift',
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox7,
+            value: 'differentTypeOfChair',
+            subFields: {
+              travelDifferentTypeOfChairExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                hint: l => l.checkboxTextarea7Hint,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            name: 'travel',
+            label: l => l.checkbox8,
+            value: 'guidingInBuilding',
+          },
+          {
+            name: 'travel',
+            label: l => l.other,
+            value: 'other',
+            subFields: {
+              travelOtherExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'travel',
+            label: l => l.notNeeded,
+            value: 'notNeeded',
+            exclusive: true,
           },
         ],
       },
@@ -45,8 +122,14 @@ export default class TravelController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    console.log('begin post function');
+    console.log('req.session', req.session);
+
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+
+    console.log('end post function');
+    console.log('req.session', req.session);
   };
 
   public get = (req: AppRequest, res: Response): void => {
