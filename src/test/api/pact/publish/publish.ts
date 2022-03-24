@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as path from 'path';
 
 import pact from '@pact-foundation/pact-node';
@@ -29,10 +30,10 @@ const publish = async (): Promise<void> => {
       pactBroker,
       pactBrokerPassword: getConfigValue(PACT_BROKER_PASSWORD),
       pactBrokerUsername: getConfigValue(PACT_BROKER_USERNAME),
-      pactFilesOrDirs: [path.resolve(__dirname, 'src/test/api/pact/pacts')],
+      pactFilesOrDirs: [path.resolve(__dirname, '../pacts/')],
       tags: [pactTag],
     };
-
+    // @ts-ignore
     await pact.publishPacts(opts);
 
     console.log('Pact contract publishing complete!');

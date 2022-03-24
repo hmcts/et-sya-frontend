@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as propertiesVolume from '@hmcts/properties-volume';
-import * as config from 'config';
+import config from 'config';
 
 import { DEVELOPMENT, HTTP } from './constants';
 import { ENVIRONMENT, PROTOCOL } from './references';
@@ -32,7 +32,7 @@ export const getEnvironment = (): string => process.env.NODE_CONFIG_ENV;
  * @see references.ts
  * @param reference - ie. 'services.ccdDefApi'
  */
-export const getConfigValue = <T = string>(reference: string): T => config.get<T>(reference);
+export const getConfigValue = (reference: string) => config.get(reference);
 
 /**
  * Generate Environment Check Text

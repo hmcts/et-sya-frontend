@@ -27,3 +27,4 @@ coverage/
 package-lock.json
 .vscode
 functional-output/functional/reports
+src/test/api/pact/pacts/
