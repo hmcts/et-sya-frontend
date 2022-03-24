@@ -1,11 +1,25 @@
 {
   "title": "help communicating and understanding",
   "h1": "I need help communicating and understanding (to do)",
-  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
-  "checkbox1": "tbc",
+  "hint": "<div class=\"govuk-body\">Think about all communication with the tribunal, as well as what you might need at a hearing. Consider remote and in-person hearings, in case your preferred hearing type is not possible.</div><p class=\"govuk-body govuk-!-padding-bottom-2\">Select all that apply</p>",
+  "checkbox1": "Hearing loop (hearing enhancement system)",
+  "checkbox2": "Infrared receiver (hearing enhancement system)",
+  "checkbox3": "Need to be close to who is speaking",
+  "checkbox4": "Lip speaker",
+  "checkbox4Hint": "hearing person who has been trained to be easily lip read",
+  "checkbox5": "British Sign Language interpreter",
+  "checkbox6": "Speech to text reporter (palantypist)",
+  "checkbox7": "Extra time to think and explain myself",
+  "checkbox8": "Visit to court or tribunal before the hearing",
+  "checkbox9": "Explanation of the court and who’s in the room at the hearing",
+  "checkbox10": "Intermediary",
+  "checkbox10Hint": "a person to act as a link and assist you in the hearing - a judge may allow this to help you understand and communicate better",
+  "other": "Other",
+  "notNeeded": "I do not need any of this support at this time",
+  "describe": "Please describe what you need",
   "errors": {
     "communicating": {
-      "required": "Add error message..."
+      "required": "Select an Option"
     }
   }
 }
