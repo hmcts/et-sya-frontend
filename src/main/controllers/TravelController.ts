@@ -122,14 +122,8 @@ export default class TravelController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    console.log('begin post function');
-    console.log('req.session', req.session);
-
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
-
-    console.log('end post function');
-    console.log('req.session', req.session);
   };
 
   public get = (req: AppRequest, res: Response): void => {
