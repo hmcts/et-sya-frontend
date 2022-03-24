@@ -53,6 +53,14 @@ export default function (app: Application): void {
   app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
   app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
+  app.get(
+    PageUrls.NOTICE_PERIOD_NO_LONGER_WORKING,
+    app.locals.container.cradle.noticePeriodNolongerworkingController.get
+  );
+  app.post(
+    PageUrls.NOTICE_PERIOD_NO_LONGER_WORKING,
+    app.locals.container.cradle.noticePeriodNolongerworkingController.post
+  );
   app.get(PageUrls.PENSION, app.locals.container.cradle.pensionController.get);
   app.post(PageUrls.PENSION, app.locals.container.cradle.pensionController.post);
   app.get(PageUrls.START_DATE, app.locals.container.cradle.startDateController.get);

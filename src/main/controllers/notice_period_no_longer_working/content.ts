@@ -2,7 +2,7 @@ import { WeeksOrMonths, YesOrNo } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const noticePayContent: FormContent = {
+export const noticePeriodFormContent: FormContent = {
   fields: {
     noticePeriodLength: {
       id: 'notice-period-length',
@@ -22,58 +22,50 @@ export const noticePayContent: FormContent = {
               values: [
                 {
                   label: (l: AnyRecord): string => l.empty,
-                  attributes: { maxLength: 2 },
                   value: 1,
                 },
               ],
             },
-            noticePeriodPaid: {
-              id: 'notice-period-paid',
+            noticePeriodUnit2: {
+              id: 'notice-period-unit2',
               type: 'radios',
               classes: 'govuk-radios--inline',
-              name: 'notice-period-pay',
               values: [
                 {
                   label: (l: AnyRecord): string => l.weeks,
                   value: WeeksOrMonths.WEEKS,
-                  selected: false,
                 },
                 {
                   label: (l: AnyRecord): string => l.months,
                   value: WeeksOrMonths.MONTHS,
-                  selected: false,
                 },
               ],
             },
 
-            noticePeriodUnit2: {
-              id: 'notice-period-unit',
+            noticePeriodPaid: {
+              id: 'notice-period-paid',
               type: 'option',
               classes: 'govuk-radios--inline',
               label: (l: AnyRecord): string => l.hint2,
               values: [
                 {
                   label: (l: AnyRecord): string => l.empty,
-                  attributes: { maxLength: 2 },
                   value: 1,
                 },
               ],
             },
             noticePeriodPaid2: {
-              id: 'notice-period-paid',
+              id: 'notice-period-paid2',
               type: 'radios',
               classes: 'govuk-radios--inline',
-              name: 'notice-period-pay',
               values: [
                 {
                   label: (l: AnyRecord): string => l.weeks,
                   value: WeeksOrMonths.WEEKS,
-                  selected: false,
                 },
                 {
                   label: (l: AnyRecord): string => l.months,
                   value: WeeksOrMonths.MONTHS,
-                  selected: false,
                 },
               ],
             },
@@ -82,12 +74,10 @@ export const noticePayContent: FormContent = {
         {
           label: (l: AnyRecord): string => l.no,
           value: YesOrNo.NO,
-          selected: false,
         },
       ],
     },
   },
-
   submit: {
     text: (l: AnyRecord): string => l.submit,
     classes: 'govuk-!-margin-right-2',
