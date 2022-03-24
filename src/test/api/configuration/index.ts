@@ -32,7 +32,8 @@ export const getEnvironment = (): string => process.env.NODE_CONFIG_ENV;
  * @see references.ts
  * @param reference - ie. 'services.ccdDefApi'
  */
-export const getConfigValue = (reference: string) => config.get(reference);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+export const getConfigValue = reference => config.get(reference);
 
 /**
  * Generate Environment Check Text
