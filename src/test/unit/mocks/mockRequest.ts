@@ -23,6 +23,7 @@ export const mockRequest = ({
     userCase: {
       id: '1234',
       dobDate: { year: '2000', month: '12', day: '24' },
+      startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
     } as CaseWithId,
     ...session,

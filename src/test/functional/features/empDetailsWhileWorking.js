@@ -12,7 +12,10 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment details');
+  I.see('Employment start date');
+  I.fillField('#start-date-day', '20');
+  I.fillField('#start-date-month', '04');
+  I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
   I.see('Have you got a notice period?');
@@ -51,7 +54,10 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment details');
+  I.see('Employment start date');
+  I.fillField('#start-date-day', '20');
+  I.fillField('#start-date-month', '04');
+  I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
   I.see('Have you got a notice period?');
@@ -90,7 +96,10 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment details');
+  I.see('Employment start date');
+  I.fillField('#start-date-day', '20');
+  I.fillField('#start-date-month', '04');
+  I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
   I.see('Have you got a notice period?');
@@ -126,7 +135,10 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment details');
+  I.see('Employment start date');
+  I.fillField('#start-date-day', '20');
+  I.fillField('#start-date-month', '04');
+  I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
   I.see('Have you got a notice period?');
