@@ -32,7 +32,7 @@ export const getEnvironment = (): string => process.env.NODE_CONFIG_ENV;
  * @see references.ts
  * @param reference - ie. 'services.ccdDefApi'
  */
-export const getConfigValue = reference => config.get(reference);
+export const getConfigValue = (reference: string) => config.get(reference);
 
 /**
  * Generate Environment Check Text
