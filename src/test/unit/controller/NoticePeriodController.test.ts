@@ -1,8 +1,6 @@
-import { isFieldFilledIn } from '../../../main/components/form/validator';
-import NoticePeriodController from '../../../main/controllers/notice_period/NoticePeriodController';
+import NoticePeriodController from '../../../main/controllers/NoticePeriodController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { FormContent } from '../../../main/definitions/form';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -12,61 +10,8 @@ describe('Update Notice Period Controller', () => {
     common: {},
   };
 
-  const mockFormContent = {
-    fields: {
-      noticePeriod: {
-        classes: 'govuk-radios',
-        id: 'notice-period',
-        type: 'radios',
-        values: [
-          {
-            name: 'radio1',
-            label: 'radio1',
-            subFields: {
-              noticePeriodUnit: {
-                id: 'notice-period-length',
-                type: 'radios',
-                classes: 'govuk-radios--inline',
-                values: [
-                  {
-                    name: 'innerRadio1',
-                    label: 'innerRadio1',
-                  },
-                  {
-                    name: 'innerRadio2',
-                    label: 'innerRadio2',
-                  },
-                ],
-                validator: isFieldFilledIn,
-              },
-              noticePeriodLength: {
-                id: 'notice-period-unit',
-                type: 'input',
-                classes: 'govuk-input--width-2',
-                label: 'input',
-                labelSize: null,
-                inputMode: 'numeric',
-                pattern: '[0-9]*',
-                spellCheck: false,
-                attributes: {
-                  autocomplete: 'notice-period-length',
-                  maxLength: 2,
-                },
-                validator: isFieldFilledIn,
-              },
-            },
-          },
-          {
-            name: 'radio1',
-            label: 'radio2',
-          },
-        ],
-      },
-    },
-  } as unknown as FormContent;
-
   it('should render the next page', () => {
-    const controller = new NoticePeriodController(mockFormContent);
+    const controller = new NoticePeriodController();
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
@@ -82,11 +27,11 @@ describe('Update Notice Period Controller', () => {
       },
       {
         propertyName: 'noticePeriodLength',
-        errorType: 'required',
+        errorType: 'invalid',
       },
     ];
     const body = { noticePeriod: 'Yes', noticePeriodUnit: '', noticePeriodLength: '' };
-    const controller = new NoticePeriodController(mockFormContent);
+    const controller = new NoticePeriodController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -98,7 +43,7 @@ describe('Update Notice Period Controller', () => {
 
   it('should assign userCase from notice period form data', () => {
     const body = { noticePeriod: 'Yes', noticePeriodLength: '2', noticePeriodUnit: 'Weeks' };
-    const controller = new NoticePeriodController(mockFormContent);
+    const controller = new NoticePeriodController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
