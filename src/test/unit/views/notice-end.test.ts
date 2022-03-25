@@ -15,7 +15,10 @@ const noticeEndJson = JSON.parse(noticeEndJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticeEndJson.h1;
-const buttonClass = 'govuk-button';
+const buttonId = 'main-form-submit';
+const hintClass = 'govuk-body';
+const hintValue = noticeEndJson.p2;
+const dateFieldClass = 'govuk-date-input__item';
 
 let htmlRes: Document;
 describe('Notice end page', () => {
@@ -29,11 +32,22 @@ describe('Notice end page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+    expect(title[0].innerHTML).contains(expectedTitle, 'When does your notice period end?');
   });
 
-  it('should display continue button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+  it('shoudl display hint', () => {
+    const hint = htmlRes.getElementsByClassName(hintClass);
+    expect(hint[1].innerHTML).contains(hintValue, 'For example, 22 04 2014.');
+  });
+
+  it('should display date input fields', () => {
+    const dateFields = htmlRes.getElementsByClassName(dateFieldClass);
+    expect(dateFields.length).equal(3, `only ${dateFields.length} found`);
+  });
+
+  it('should display save and continue button', () => {
+    const button = htmlRes.getElementById(buttonId);
+    console.log(`Button name is ${button.innerHTML}`);
+    expect(button.innerHTML).contains('Save and continue', 'Save and continue');
   });
 });
