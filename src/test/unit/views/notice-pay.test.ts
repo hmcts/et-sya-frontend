@@ -15,7 +15,7 @@ const noticePayJson = JSON.parse(noticePayJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticePayJson.h1;
-const buttonClass = 'govuk-button';
+const buttonId = 'main-form-submit';
 
 let htmlRes: Document;
 describe('Notice pay page', () => {
@@ -29,11 +29,11 @@ describe('Notice pay page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+    expect(title[0].innerHTML).contains(expectedTitle, 'Are you getting paid for working your notice period?');
   });
 
   it('should display continue button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    const button = htmlRes.getElementById(buttonId);
+    expect(button.innerHTML).contains('Save and continue', 'Save and continue');
   });
 });
