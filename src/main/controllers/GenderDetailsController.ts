@@ -35,9 +35,9 @@ export default class GenderDetailsController {
         ],
         validator: isFieldFilledIn,
       },
-      genderIdentity: {
+      genderIdentitySame: {
         classes: 'govuk-radios',
-        id: 'gender',
+        id: 'genderIdentitySame',
         type: 'radios',
         label: (l: AnyRecord): string => l.genderIdentity,
         hint: (l: AnyRecord): string => l.genderIdentityHint,
@@ -49,6 +49,16 @@ export default class GenderDetailsController {
           {
             label: l => l.no,
             value: YesOrNo.NO,
+            subFields: {
+              genderIdentity: {
+                id: 'genderIdentityText',
+                name: 'genderIdentityText',
+                type: 'text',
+                label: (l: AnyRecord): string => l.genderIdentityTextLabel,
+                hint: (l: AnyRecord): string => l.hint,
+                attributes: { maxLength: 2500 },
+              },
+            },
           },
         ],
         validator: isFieldFilledIn,

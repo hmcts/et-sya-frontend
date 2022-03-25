@@ -7,5 +7,6 @@
   "sex": "What is your sex?",
   "genderIdentity": "Is the gender you identify with the same as your sex registered at birth?",
   "genderIdentityHint": "This question is voluntary.",
-  "preferredTitle": "What is your preferred title?"
+  "preferredTitle": "What is your preferred title?",
+  "genderIdentityTextLabel": "What is your gender identity?"
 }
