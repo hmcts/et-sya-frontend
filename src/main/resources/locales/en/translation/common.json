@@ -32,5 +32,8 @@
   "english": "English",
   "welsh": "Welsh",
   "govUk": "GOV.UK",
-  "warningTxt": "Warning"
+  "warningTxt": "Warning",
+  "weekly": "Weekly",
+  "monthly": "Monthly",
+  "annual": "Annual"
 }
