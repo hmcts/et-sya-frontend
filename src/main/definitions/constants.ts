@@ -50,6 +50,7 @@ export const TranslationKeys = {
   CHECK_ANSWERS: 'check-your-answers',
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
   DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
+  END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
   PRESENT_EMPLOYER: 'present-employer',
 } as const;
@@ -104,6 +105,7 @@ export const PageUrls = {
   NEW_JOB_PAY: '/new-job-pay-before-tax',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
+  END_DATE: '/end-date',
 } as const;
 
 export const AuthUrls = {
