@@ -1,0 +1,6 @@
+{
+  "h1": "Do or did you receive any employee benefits? - To Do",
+  "employee_benefit_title": "employee-title",
+  "hint": "For example, child care, company car, housing, health insurance etc.<br><br> <details class=\"govuk-details\" data-module=\"govuk-details\"> <summary class=\"govuk-details__summary\"> <span class=\"govuk-details__summary-text\"> What's classed as an employee benefit? </span> </summary> <div class=\"govuk-details__text\"> Employee benefits (also known as 'benefits in kind') are the various types of non-wage compensation you get on top of your normal wages. </div> </details>",
+  "tellUsAboutBenefit": "Tell us about any benefits."
+}

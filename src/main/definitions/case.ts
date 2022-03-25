@@ -35,12 +35,19 @@ export interface Case {
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
   noticePeriodUnit?: WeeksOrMonths;
+  noticePeriodUnit2?: WeeksOrMonths;
+  noticePeriodPaid?: string;
+  noticePeriodPaid2?: string;
+  noticePeriodUnitDropDown?: string;
+  noticeEnd?: string;
   isStillWorking: StillWorking;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
+  employeeBenefit?: string;
+  receiveEmployeeBenefit?: YesOrNo;
 }
 
 export const enum StillWorking {

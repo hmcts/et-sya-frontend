@@ -9,7 +9,7 @@ export const addressDetailsContent: FormContent = {
       name: 'address-line1',
       type: 'text',
       classes: 'govuk-label govuk-!-width-one-half',
-      label: l => l.buildingStreet,
+      label: l => l.m,
       labelSize: null,
       validator: isFieldFilledIn,
       attributes: {
