@@ -9,6 +9,7 @@ export default class CheckYourAnswersController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       PageUrls,
+      userCase: req.session?.userCase,
     });
   }
 }
