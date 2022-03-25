@@ -1,10 +1,11 @@
 import { Response } from 'express';
 
-import { Form } from '../../components/form/form';
-import { AppRequest } from '../../definitions/appRequest';
-import { TranslationKeys } from '../../definitions/constants';
-import { FormContent, FormFields } from '../../definitions/form';
-import { assignFormData, getPageContent } from '../helpers';
+import { Form } from '../components/form/form';
+import { AppRequest } from '../definitions/appRequest';
+import { TranslationKeys } from '../definitions/constants';
+import { FormContent, FormFields } from '../definitions/form';
+
+import { assignFormData, getPageContent } from './helpers';
 
 export default class employeeBenefitController {
   private readonly form: Form;

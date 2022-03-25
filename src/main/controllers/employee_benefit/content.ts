@@ -9,7 +9,6 @@ export const employeeBenefitContent: FormContent = {
       type: 'radios',
       classes: 'govuk-radios',
       hint: (l: AnyRecord): string => l.hint,
-
       values: [
         {
           label: (l: AnyRecord): string => l.yes,

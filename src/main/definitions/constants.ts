@@ -106,7 +106,7 @@ export const PageUrls = {
   NEW_JOB_PAY: '/new-job-pay-before-tax',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
-  EMPLOYEE_BENEFIT: '/employee_benefit',
+  EMPLOYEE_BENEFIT: '/employee-benefit',
   END_DATE: '/end-date',
 } as const;
 
