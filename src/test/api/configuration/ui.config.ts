@@ -3,20 +3,20 @@ export interface UIConfig {
   cookies: UIConfigCookies;
   exceptionOptions: UIConfigExceptionOptions;
   health: UIConfigServices;
-  idamClient: string;
-  indexUrl: string;
-  logging: string;
-  now: boolean;
-  maxLogLine: number;
-  microservice: string;
-  oauthCallbackUrl: string;
-  protocol: string;
+  idamClient: unknown;
+  indexUrl: unknown;
+  logging: unknown;
+  now: unknown;
+  maxLogLine: unknown;
+  microservice: unknown;
+  oauthCallbackUrl: unknown;
+  protocol: unknown;
   secureCookie: boolean;
   services: UIConfigServices;
-  sessionSecret: string;
+  sessionSecret: unknown;
   oidcEnabled: boolean;
   iss: string;
-  launchDarklyClientId: string;
+  launchDarklyClientId: unknown;
 }
 
 export interface UIConfigCookies {
