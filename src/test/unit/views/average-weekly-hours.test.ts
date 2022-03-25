@@ -16,6 +16,7 @@ const averageWeeklyHoursJson = JSON.parse(averageWeeklyHoursJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
+const input = 'govuk-input--width-3';
 
 let htmlRes: Document;
 describe('Average weekly hours page Still Working', () => {
@@ -37,6 +38,11 @@ describe('Average weekly hours page Still Working', () => {
     const expectedTitle = averageWeeklyHoursJson.h1.workingOrNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
   });
 
   it('should display continue button', () => {
@@ -65,6 +71,16 @@ describe('Average weekly hours page Notice', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  });
+
+  it('should display continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+  });
 });
 
 describe('Average weekly hours page No Longer Working', () => {
@@ -86,5 +102,15 @@ describe('Average weekly hours page No Longer Working', () => {
     const expectedTitle = averageWeeklyHoursJson.h1.noLongerWorking;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  });
+
+  it('should display continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
   });
 });
