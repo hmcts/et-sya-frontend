@@ -10,5 +10,6 @@ module.exports = {
   modulePathIgnorePatterns: [
     '<rootDir>/src/test/api/pact/pact-test/settings/',
     '<rootDir>/src/test/api/pact/pactUtil.ts',
+    '<rootDir>/src/test/api/pact/publish/publish.ts',
   ],
 };
