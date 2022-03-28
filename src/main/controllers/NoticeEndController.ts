@@ -1,45 +1,26 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const start_date: DateFormFields = {
+  ...DefaultDateFormFields,
+  id: 'start-date',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
+};
 
 export default class NoticeEndController {
   private readonly form: Form;
   private readonly noticeEndContent: FormContent = {
-    fields: {
-      noticeEnd: {
-        id: 'notice-end',
-        type: 'date',
-        classes: 'govuk-date-input',
-        label: (l: AnyRecord): string => l.label,
-        labelHidden: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.dateFormat.day,
-            name: 'day',
-            classes: 'govuk-input--width-2',
-            attributes: { maxLength: 2 },
-          },
-          {
-            label: (l: AnyRecord): string => l.dateFormat.month,
-            name: 'month',
-            classes: 'govuk-input--width-2',
-            attributes: { maxLength: 2 },
-          },
-          {
-            label: (l: AnyRecord): string => l.dateFormat.year,
-            name: 'year',
-            classes: 'govuk-input--width-4',
-            attributes: { maxLength: 4 },
-          },
-        ],
-      },
-    },
+    fields: { startDate: start_date },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',

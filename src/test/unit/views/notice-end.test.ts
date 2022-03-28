@@ -35,7 +35,7 @@ describe('Notice end page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'When does your notice period end?');
   });
 
-  it('shoudl display hint', () => {
+  it('should display hint', () => {
     const hint = htmlRes.getElementsByClassName(hintClass);
     expect(hint[1].innerHTML).contains(hintValue, 'For example, 22 04 2014.');
   });
