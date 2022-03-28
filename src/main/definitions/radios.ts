@@ -8,17 +8,14 @@ export const PayIntervalRadioValues = [
   {
     label: (l: AnyRecord): string => l.weekly,
     value: PayInterval.WEEKLY,
-    attributes: { maxLength: 2 },
   },
   {
     label: (l: AnyRecord): string => l.monthly,
     value: PayInterval.MONTHLY,
-    attributes: { maxLength: 2 },
   },
   {
     label: (l: AnyRecord): string => l.annual,
     value: PayInterval.ANNUAL,
-    attributes: { maxLength: 2 },
   },
 ];
 
