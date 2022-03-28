@@ -25,20 +25,20 @@ export default class PayAfterTaxController {
       payAfterTaxInterval: {
         type: 'radios',
         classes: 'govuk-radios',
-        id: 'pay-after-tax-interval',
         label: (l: AnyRecord): string => l.label,
+        id: 'pay-after-tax-interval',
         values: [
           {
-            label: (l: AnyRecord): string => l.weekly,
             value: PayInterval.WEEKLY,
+            label: (l: AnyRecord): string => l.weekly,
           },
           {
-            label: (l: AnyRecord): string => l.monthly,
             value: PayInterval.MONTHLY,
+            label: (l: AnyRecord): string => l.monthly,
           },
           {
-            label: (l: AnyRecord): string => l.annual,
             value: PayInterval.ANNUAL,
+            label: (l: AnyRecord): string => l.annual,
           },
         ],
       },
