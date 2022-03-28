@@ -11,7 +11,17 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class AverageWeeklyHoursController {
   private readonly form: Form;
   private readonly averageWeeklyHoursContent: FormContent = {
-    fields: {},
+    fields: {
+      avgWeeklyHrs: {
+        id: 'avg-weekly-hrs',
+        name: 'avg-weekly-hrs',
+        type: 'text',
+        classes: 'govuk-input--width-3',
+        label: (l: AnyRecord): string => l.avgWeeklyHrs,
+        hint: (l: AnyRecord): string => l.hint,
+        attributes: { maxLength: 3 },
+      },
+    },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
