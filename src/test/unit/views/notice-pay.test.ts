@@ -16,8 +16,15 @@ const noticePayJson = JSON.parse(noticePayJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticePayJson.h1;
 const buttonId = 'main-form-submit';
-
+// const yesRadioButtonId = "noticePeriodLength";
+// const expectYesHint1 = noticePayJson.hint1
+// const expectYesHint2 = noticePayJson.hint2
+// const noticepayHint1Class = "govuk-hint";
+const noticePayInputFieldClass = 'govuk-input govuk-input--width-2';
+// const noticepayHint2Id = "notice-period-paid-number-hint";
+const radioButtonLabels = 'govuk-label govuk-radios__label';
 let htmlRes: Document;
+
 describe('Notice pay page', () => {
   beforeAll(async () => {
     await request(app)
@@ -35,5 +42,19 @@ describe('Notice pay page', () => {
   it('should display continue button', () => {
     const button = htmlRes.getElementById(buttonId);
     expect(button.innerHTML).contains('Save and continue', 'Save and continue');
+  });
+
+  it('should display yes or no radios', () => {
+    const radioLabels = htmlRes.getElementsByClassName(radioButtonLabels);
+    expect(radioLabels.length).equals(6);
+  });
+
+  it('should display first hint when user click yes', () => {
+    // const hint1 = htmlRes.getElementsByClassName(noticepayHint1Class);
+    // expect(hint1[0].innerHTML).include(expectYesHint1);
+    // const hint2 = htmlRes.getElementsByClassName(noticepayHint2Id);
+    // expect(hint2[0].innerHTML).contains(expectYesHint2);
+    const inputFields = htmlRes.getElementsByClassName(noticePayInputFieldClass);
+    expect(inputFields.length).equals(2);
   });
 });
