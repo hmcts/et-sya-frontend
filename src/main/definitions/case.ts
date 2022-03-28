@@ -42,6 +42,11 @@ export interface Case {
   workAddressCounty?: string;
   workAddressPostcode?: string;
   startDate: CaseDate;
+  avgWeeklyHrs?: number;
+  payBeforeTax?: number;
+  payAfterTax?: number;
+  payBeforeTaxInterval?: PayInterval;
+  payAfterTaxInterval?: PayInterval;
 }
 
 export const enum StillWorking {
@@ -67,6 +72,12 @@ export const enum WeeksOrMonths {
 export const enum EmailOrPost {
   EMAIL = 'Email',
   POST = 'Post',
+}
+
+export const enum PayInterval {
+  WEEKLY = 'Weekly',
+  MONTHLY = 'Monthly',
+  ANNUAL = 'Annual',
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
