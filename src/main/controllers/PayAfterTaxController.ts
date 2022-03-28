@@ -14,8 +14,8 @@ export default class PayAfterTaxController {
   private readonly payAfterTaxContent: FormContent = {
     fields: {
       payAfterTax: {
-        id: 'pay-after-tax',
         name: 'pay-after-tax',
+        id: 'pay-after-tax',
         type: 'currency',
         classes: 'govuk-input--width-5',
         label: (l: AnyRecord): string => l.payAfterTax,
@@ -23,9 +23,9 @@ export default class PayAfterTaxController {
         attributes: { maxLength: 12 },
       },
       payAfterTaxInterval: {
-        id: 'pay-after-tax-interval',
         type: 'radios',
         classes: 'govuk-radios',
+        id: 'pay-after-tax-interval',
         label: (l: AnyRecord): string => l.label,
         values: [
           {
