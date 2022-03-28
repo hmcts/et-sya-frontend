@@ -96,7 +96,7 @@ export default class AddressDetailsController {
       'enter-address',
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('place-of-work', {
+    res.render(TranslationKeys.ADDRESS_DETAILS, {
       ...content,
     });
   };
