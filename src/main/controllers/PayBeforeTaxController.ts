@@ -35,9 +35,11 @@ export default class PayBeforeTaxController {
       TranslationKeys.COMMON,
       TranslationKeys.PAY_BEFORE_TAX,
     ]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PAY_BEFORE_TAX, {
       ...content,
+      employmentStatus,
     });
   };
 }

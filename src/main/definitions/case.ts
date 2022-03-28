@@ -41,6 +41,7 @@ export interface Case {
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
+  startDate: CaseDate;
 }
 
 export const enum StillWorking {
