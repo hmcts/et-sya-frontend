@@ -16,6 +16,9 @@ const payAfterTaxJson = JSON.parse(payAfterTaxJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
+const expectedTitle = payAfterTaxJson.h1;
+const radios = 'govuk-radios';
+const input = 'govuk-input--width-5';
 
 let htmlRes: Document;
 describe('Pay after tax page - Still Working', () => {
@@ -34,9 +37,18 @@ describe('Pay after tax page - Still Working', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = payAfterTaxJson.h1.workingOrNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  });
+
+  it('should display radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radios);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
   it('should display continue button', () => {
@@ -61,9 +73,23 @@ describe('Pay after tax page - Notice', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = payAfterTaxJson.h1.workingOrNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  });
+
+  it('should display radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radios);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
+  });
+
+  it('should display continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
   });
 });
 
@@ -83,8 +109,22 @@ describe('Pay after tax page - No Longer Working', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = payAfterTaxJson.h1.noLongerWorking;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field', () => {
+    const inputField = htmlRes.getElementsByClassName(input);
+    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  });
+
+  it('should display radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radios);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
+  });
+
+  it('should display continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
   });
 });
