@@ -12,13 +12,15 @@
     "build": "yarn webpack --config webpack.config.js",
     "build:prod": "NODE_ENV=production yarn webpack --mode production --config webpack.config.js",
     "test": "jest",
-    "test:pact": "jest -c jest.pact.config.js --runInBand",
+    "test:pact": "jest -c jest.pact.config.js --detectOpenHandles --runInBand",
     "test:coverage": "jest --coverage",
     "test:routes": "jest -c jest.routes.config.js",
     "test:a11y": "jest -c jest.a11y.config.js --maxWorkers 15",
+    "publish-pact": "NODE_PATH=. NODE_CONFIG_DIR=./config LOG_LEVEL=error node -r ts-node/register src/test/api/pact/publish/publish.ts",
+    "test:pact:run-and-publish": "yarn test:pact && yarn publish-pact",
     "sonar-scan": "sonar-scanner",
-    "test:smoke": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && jest -c jest.smoke.config.js",
     "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/functional/codecept.conf.js run-workers 2 parallel",
+    "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js run-workers 2 parallel",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn test:routes && yarn test:a11y",
     "prepare": "husky install"
   },
@@ -84,6 +86,7 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@types/chai-as-promised": "^7.1.5",
+    "@types/git-rev-sync": "2.0.0",
     "@types/jest": "^27.4.0",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
@@ -99,6 +102,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "git-rev-sync": "3.0.2",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "jest": "^27.5.0",
@@ -123,7 +127,8 @@
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-middleware": "^5.3.1",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "path": "^0.12.7"
   },
   "resolutions": {
     "**/**/ansi-regex": "^5.0.1"
