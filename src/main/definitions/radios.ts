@@ -1,8 +1,23 @@
 import { Validator, isFieldFilledIn } from '../components/form/validator';
 
-import { YesOrNo } from './case';
+import { PayInterval, YesOrNo } from './case';
 import { SubmitButton } from './form';
 import { AnyRecord } from './util-types';
+
+export const PayIntervalRadioValues = [
+  {
+    label: (l: AnyRecord): string => l.weekly,
+    value: PayInterval.WEEKLY,
+  },
+  {
+    label: (l: AnyRecord): string => l.monthly,
+    value: PayInterval.MONTHLY,
+  },
+  {
+    label: (l: AnyRecord): string => l.annual,
+    value: PayInterval.ANNUAL,
+  },
+];
 
 export const YesNoRadioValues = [
   {

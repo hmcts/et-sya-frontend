@@ -2,9 +2,9 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { PayInterval } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { PayIntervalRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -14,8 +14,8 @@ export default class PayAfterTaxController {
   private readonly payAfterTaxContent: FormContent = {
     fields: {
       payAfterTax: {
-        name: 'pay-after-tax',
         id: 'pay-after-tax',
+        name: 'pay-after-tax',
         type: 'currency',
         classes: 'govuk-input--width-5',
         label: (l: AnyRecord): string => l.payAfterTax,
@@ -23,34 +23,15 @@ export default class PayAfterTaxController {
         attributes: { maxLength: 12 },
       },
       payAfterTaxInterval: {
+        id: 'pay-after-tax-interval',
         type: 'radios',
         classes: 'govuk-radios',
         label: (l: AnyRecord): string => l.label,
-        id: 'pay-after-tax-interval',
-        values: [
-          {
-            value: PayInterval.WEEKLY,
-            label: (l: AnyRecord): string => l.weekly,
-          },
-          {
-            value: PayInterval.MONTHLY,
-            label: (l: AnyRecord): string => l.monthly,
-          },
-          {
-            value: PayInterval.ANNUAL,
-            label: (l: AnyRecord): string => l.annual,
-          },
-        ],
+        values: PayIntervalRadioValues,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
