@@ -11,7 +11,7 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-const start_date: DateFormFields = {
+const notice_dates: DateFormFields = {
   ...DefaultDateFormFields,
   id: 'start-date',
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
@@ -20,7 +20,7 @@ const start_date: DateFormFields = {
 export default class NoticeEndController {
   private readonly form: Form;
   private readonly noticeEndContent: FormContent = {
-    fields: { startDate: start_date },
+    fields: { startDate: notice_dates },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
