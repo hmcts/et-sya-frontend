@@ -48,16 +48,18 @@ export default class TypeOfClaimController {
       : LegacyUrls.ET1_BASE;
     setUserCase(req, this.form);
 
-    const redisClient = req.app.locals.redisClient;
-    const typsOfClaims = req.session.userCase.typeOfClaim;
-    if (redisClient) {
-      if (typsOfClaims) {
-        req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
+    if (req.app?.locals) {
+      const redisClient = req.app.locals?.redisClient;
+      const typsOfClaims = req.session.userCase?.typeOfClaim;
+      if (redisClient) {
+        if (typsOfClaims) {
+          req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
+        }
+      } else {
+        const err = new Error('Redis client does not exist');
+        err.name = RedisErrors.FAILED_TO_CONNECT;
+        throw err;
       }
-    } else {
-      const err = new Error('Redis client does not exist');
-      err.name = RedisErrors.FAILED_TO_CONNECT;
-      throw err;
     }
 
     handleSessionErrors(req, res, this.form, redirectUrl);
