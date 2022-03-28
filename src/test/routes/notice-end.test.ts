@@ -17,7 +17,7 @@ describe(`on POST ${PageUrls.NOTICE_END}`, () => {
       .post(PageUrls.NOTICE_END)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_PAY);
+        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_END);
       });
   });
 });

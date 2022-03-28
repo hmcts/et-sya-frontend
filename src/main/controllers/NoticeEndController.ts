@@ -13,14 +13,14 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 
 const notice_dates: DateFormFields = {
   ...DefaultDateFormFields,
-  id: 'notice-date',
-  parser: (body: UnknownRecord): CaseDate => convertToDateObject('noticeDate', body),
+  id: 'notice-dates',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('noticeEnds', body),
 };
 
 export default class NoticeEndController {
   private readonly form: Form;
   private readonly noticeEndContent: FormContent = {
-    fields: { noticeDates: notice_dates },
+    fields: { noticeEnds: notice_dates },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -34,6 +34,7 @@ export default class NoticeEndController {
   constructor() {
     this.form = new Form(<FormFields>this.noticeEndContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PAY);
