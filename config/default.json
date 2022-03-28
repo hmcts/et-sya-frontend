@@ -29,5 +29,12 @@
       "url": "https://api.os.uk/search/places/v1/postcode",
       "token": "TO BE PICKED UP FROM ENV"
     }
+  },
+  "pact": {
+    "branchName": "master",
+    "brokerUrl": "https://pact-broker.platform.hmcts.net",
+    "consumerVersion": "",
+    "brokerUsername": "",
+    "brokerPassword": ""
   }
 }
