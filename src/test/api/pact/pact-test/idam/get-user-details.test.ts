@@ -7,9 +7,9 @@ import { PactTestSetup } from '../settings/provider.mock';
 
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
-const pactSetUp = new PactTestSetup({ provider: 'idamApi_users', port: 8000 });
-
-pactWith({ consumer: 'ET-SYA', provider: 'IDAM' }, () => {
+const pactSetUp = new PactTestSetup({ provider: 'Idam_api', port: 8000 });
+jest.setTimeout(100000);
+pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
   const RESPONSE_BODY = {
     uid: somethingLike('abc123'),
     given_name: somethingLike('Joe'),
@@ -19,7 +19,9 @@ pactWith({ consumer: 'ET-SYA', provider: 'IDAM' }, () => {
   };
 
   describe('Get user details from Idam', () => {
-    beforeEach(async () => {
+    jest.setTimeout(100000);
+    beforeAll(async () => {
+      await new Promise(resolve => setTimeout(resolve, 10000));
       await pactSetUp.provider.setup();
       const interaction = {
         state: 'a valid user exists',
@@ -39,21 +41,20 @@ pactWith({ consumer: 'ET-SYA', provider: 'IDAM' }, () => {
           body: RESPONSE_BODY,
         },
       };
-      pactSetUp.provider.addInteraction(interaction);
+      await pactSetUp.provider.addInteraction(interaction);
     });
 
+    // eslint-disable-next-line jest/expect-expect
     it('Returns the user details from IDAM', async () => {
       const taskUrl = `${pactSetUp.provider.mockService.baseUrl}/details`;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response = idamGetUserDetails(taskUrl);
 
-      response
-        .then((axiosResponse: { data: IdTokenJwtPayload }) => {
-          const dto: IdTokenJwtPayload = axiosResponse.data;
-          assertResponses(dto);
-        })
-        .then(() => {
-          pactSetUp.provider.verify(), pactSetUp.provider.finalize();
-        });
+      response.then((axiosResponse: { data: IdTokenJwtPayload }) => {
+        const dto: IdTokenJwtPayload = axiosResponse.data;
+        assertResponses(dto);
+        pactSetUp.provider.verify(), pactSetUp.provider.finalize();
+      });
     });
   });
 });
