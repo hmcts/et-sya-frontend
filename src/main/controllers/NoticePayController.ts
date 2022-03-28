@@ -2,9 +2,10 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { WeeksOrMonths, YesOrNo } from '../definitions/case';
+import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -14,96 +15,78 @@ export default class NoticePayController {
   private readonly noticePayContent: FormContent = {
     fields: {
       noticePeriodLength: {
-        id: 'notice-period-length',
-        type: 'radios',
-        classes: 'govuk-radios',
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-            selected: false,
-            subFields: {
-              noticePeriodUnit: {
-                id: 'notice-period-unit',
-                type: 'option',
-                classes: 'govuk-radios--inline',
-                label: (l: AnyRecord): string => l.hint1,
-                values: [
-                  {
-                    label: (l: AnyRecord): string => l.empty,
-                    attributes: { maxLength: 2 },
-                    value: 1,
-                  },
-                ],
+        ...DefaultRadioFormFields,
+        id: 'notice-pay',
+        classes: 'govuk-radios--inline',
+        subFields: {
+          noticePeriodUnit: {
+            id: 'notice-period-unit',
+            type: 'option',
+            classes: 'govuk-radios--inline',
+            label: (l: AnyRecord): string => l.hint1,
+            values: [
+              {
+                label: (l: AnyRecord): string => l.empty,
+                attributes: { maxLength: 2 },
+                value: 1,
               },
-              noticePeriodPaid: {
-                id: 'notice-period-paid',
-                type: 'radios',
-                classes: 'govuk-radios--inline',
-                name: 'notice-period-paid',
-                values: [
-                  {
-                    label: (l: AnyRecord): string => l.weeks,
-                    value: WeeksOrMonths.WEEKS,
-                    selected: false,
-                  },
-                  {
-                    label: (l: AnyRecord): string => l.months,
-                    value: WeeksOrMonths.MONTHS,
-                    selected: false,
-                  },
-                ],
+            ],
+          },
+          noticePeriodPaid: {
+            id: 'notice-period-paid',
+            type: 'radios',
+            classes: 'govuk-radios--inline',
+            name: 'notice-period-paid',
+            values: [
+              {
+                label: (l: AnyRecord): string => l.weeks,
+                value: WeeksOrMonths.WEEKS,
+                selected: false,
               },
+              {
+                label: (l: AnyRecord): string => l.months,
+                value: WeeksOrMonths.MONTHS,
+                selected: false,
+              },
+            ],
+          },
 
-              noticePeriodUnit2: {
-                id: 'notice-period-unit',
-                type: 'option',
-                classes: 'govuk-radios--inline',
-                label: (l: AnyRecord): string => l.hint2,
-                values: [
-                  {
-                    label: (l: AnyRecord): string => l.empty,
-                    attributes: { maxLength: 2 },
-                    value: 1,
-                  },
-                ],
+          noticePeriodUnit2: {
+            id: 'notice-period-unit',
+            type: 'option',
+            classes: 'govuk-radios--inline',
+            label: (l: AnyRecord): string => l.hint2,
+            values: [
+              {
+                label: (l: AnyRecord): string => l.empty,
+                attributes: { maxLength: 2 },
+                value: 1,
               },
-              noticePeriodPaid2: {
-                id: 'notice-period-paid',
-                type: 'radios',
-                classes: 'govuk-radios--inline',
-                name: 'notice-period-pay',
-                values: [
-                  {
-                    label: (l: AnyRecord): string => l.weeks,
-                    value: WeeksOrMonths.WEEKS,
-                    selected: false,
-                  },
-                  {
-                    label: (l: AnyRecord): string => l.months,
-                    value: WeeksOrMonths.MONTHS,
-                    selected: false,
-                  },
-                ],
+            ],
+          },
+          noticePeriodPaid2: {
+            id: 'notice-period-paid',
+            type: 'radios',
+            classes: 'govuk-radios--inline',
+            name: 'notice-period-pay',
+            values: [
+              {
+                label: (l: AnyRecord): string => l.weeks,
+                value: WeeksOrMonths.WEEKS,
+                selected: false,
               },
-            },
+              {
+                label: (l: AnyRecord): string => l.months,
+                value: WeeksOrMonths.MONTHS,
+                selected: false,
+              },
+            ],
           },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-            selected: false,
-          },
-        ],
+        },
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
