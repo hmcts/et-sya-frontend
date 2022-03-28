@@ -13,14 +13,14 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 
 const notice_dates: DateFormFields = {
   ...DefaultDateFormFields,
-  id: 'start-date',
-  parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
+  id: 'notice-date',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('noticeDate', body),
 };
 
 export default class NoticeEndController {
   private readonly form: Form;
   private readonly noticeEndContent: FormContent = {
-    fields: { startDate: notice_dates },
+    fields: { noticeDates: notice_dates },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
