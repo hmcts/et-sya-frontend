@@ -113,3 +113,11 @@ export const AuthUrls = {
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
+
+export const RedisErrors = {
+  REDIS_ERROR: 'redisError',
+  DISPLAY_MESSAGE: 'Please try again or return later.',
+  FAILED_TO_CONNECT: 'Error when attempting to connect to Redis',
+  FAILED_TO_SAVE: 'Error when attempting to save to Redis',
+  FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
+} as const;

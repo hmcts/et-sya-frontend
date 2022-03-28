@@ -3,9 +3,10 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { AuthUrls, LegacyUrls, TranslationKeys } from '../definitions/constants';
+import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
+import { cacheTypesOfClaim } from '../services/CacheService';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -46,6 +47,19 @@ export default class TypeOfClaimController {
       ? AuthUrls.LOGIN
       : LegacyUrls.ET1_BASE;
     setUserCase(req, this.form);
+
+    const redisClient = req.app.locals.redisClient;
+    const typsOfClaims = req.session.userCase.typeOfClaim;
+    if (redisClient) {
+      if (typsOfClaims) {
+        req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
+      }
+    } else {
+      const err = new Error('Redis client does not exist');
+      err.name = RedisErrors.FAILED_TO_CONNECT;
+      throw err;
+    }
+
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
@@ -57,6 +71,7 @@ export default class TypeOfClaimController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.TYPE_OF_CLAIM, {
       ...content,
+      redisError: req.app?.get(RedisErrors.REDIS_ERROR),
     });
   };
 }

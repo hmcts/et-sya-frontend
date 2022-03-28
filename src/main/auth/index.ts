@@ -4,12 +4,11 @@ import jwtDecode from 'jwt-decode';
 
 import { UserDetails } from '../definitions/appRequest';
 
-export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string): string => {
+export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid: string): string => {
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
-
-  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}`;
+  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}?guid=${guid}`;
 };
 
 export const getUserDetails = async (
