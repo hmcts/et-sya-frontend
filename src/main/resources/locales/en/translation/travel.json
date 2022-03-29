@@ -14,7 +14,7 @@
   "other": "Other",
   "notNeeded": "I do not need any of this support at this time",
   "describe": "Please describe what you need",
-  "explain": "Please explain what you need this",
+  "explain": "Please explain why you need this",
   "errors": {
     "travel": {
       "required": "Select an Option"
