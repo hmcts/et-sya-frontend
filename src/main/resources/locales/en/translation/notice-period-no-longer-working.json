@@ -1,0 +1,11 @@
+{
+  "title": "Did you have or work a notice period?",
+  "h1": "Did you have or work a notice period?",
+  "insetText1": "<div class=\"govuk-inset-text\">Tell us how long your notice period was. If you're not sure, check the terms and conditions of your employment contract.</div>",
+  "insetText2": "<div class=\"govuk-inset-text\">Tell us how much of your notice period you're being paid for.</div>",
+  "weeks": "Weeks",
+  "months": "Months",
+  "hint1": "Tell us how long your notice period was. If you're not sure, check the terms and conditions of your employment contract.",
+  "hint2": "Tell us how much of your notice period you're being paid for.",
+  "empty": ""
+}

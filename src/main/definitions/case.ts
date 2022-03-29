@@ -34,6 +34,9 @@ export interface Case {
   pastEmployer?: YesOrNo;
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
+  noticePeriodUnit2?: WeeksOrMonths;
+  noticePeriodPaid?: string;
+  noticePeriodPaid2?: string;
   noticePeriodUnit?: WeeksOrMonths;
   isStillWorking: StillWorking;
   workAddress1?: string;

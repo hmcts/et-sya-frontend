@@ -96,6 +96,14 @@ export default function (app: Application): void {
   app.get(PageUrls.END_DATE, app.locals.container.cradle.endDateController.get);
   app.post(PageUrls.END_DATE, app.locals.container.cradle.endDateController.post);
   app.get(
+    PageUrls.NOTICE_PERIOD_NO_LONGER_WORKING,
+    app.locals.container.cradle.noticePeriodNolongerworkingController.get
+  );
+  app.post(
+    PageUrls.NOTICE_PERIOD_NO_LONGER_WORKING,
+    app.locals.container.cradle.noticePeriodNolongerworkingController.post
+  );
+  app.get(
     PageUrls.INFO,
     infoRequestHandler({
       extraBuildInfo: {
