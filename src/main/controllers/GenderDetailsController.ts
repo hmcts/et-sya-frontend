@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -23,13 +23,13 @@ export default class GenderDetailsController {
           {
             label: (l: AnyRecord): string => l.female,
             name: 'radio1',
-            value: 'Yes',
+            value: 'Female',
             attributes: { maxLength: 2 },
           },
           {
             label: (l: AnyRecord): string => l.male,
             name: 'radio2',
-            value: 'No',
+            value: 'Male',
             attributes: { maxLength: 2 },
           },
         ],
@@ -70,20 +70,36 @@ export default class GenderDetailsController {
         label: (l: AnyRecord): string => l.preferredTitle,
         values: [
           {
-            value: 'published',
-            label: (l: AnyRecord): string => l.female,
+            value: 'Not selectable',
+            label: (l: AnyRecord): string => l.genderTitle.pleaseSelect,
           },
           {
-            value: 'updated',
-            label: (l: AnyRecord): string => l.female,
+            value: GenderTitle.MR,
+            label: (l: AnyRecord): string => l.genderTitle.mr,
           },
           {
-            value: 'views',
-            label: (l: AnyRecord): string => l.female,
+            value: GenderTitle.MRS,
+            label: (l: AnyRecord): string => l.genderTitle.mrs,
           },
           {
-            value: 'comments',
-            label: (l: AnyRecord): string => l.female,
+            value: GenderTitle.MISS,
+            label: (l: AnyRecord): string => l.genderTitle.miss,
+          },
+          {
+            value: GenderTitle.MS,
+            label: (l: AnyRecord): string => l.genderTitle.ms,
+          },
+          {
+            value: GenderTitle.MX,
+            label: (l: AnyRecord): string => l.genderTitle.mx,
+          },
+          {
+            value: GenderTitle.OTHER,
+            label: (l: AnyRecord): string => l.genderTitle.other,
+          },
+          {
+            value: GenderTitle.PREFER_NOT_TO_SAY,
+            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
           },
         ],
       },
@@ -105,6 +121,7 @@ export default class GenderDetailsController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.ADDRESS_DETAILS);
+    console.log('req.session', req.session);
   };
 
   public get = (req: AppRequest, res: Response): void => {

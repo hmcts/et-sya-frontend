@@ -69,4 +69,14 @@ export const enum EmailOrPost {
   POST = 'Post',
 }
 
+export const enum GenderTitle {
+  MR = 'Mr',
+  MRS = 'Mrs',
+  MISS = 'Miss',
+  MS = 'Ms',
+  MX = 'Mx',
+  OTHER = 'Other',
+  PREFER_NOT_TO_SAY = 'Prefer not to say',
+}
+
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
