@@ -3,6 +3,8 @@
   "p1": "Tell us when you’ll finish with them.",
   "p2": "For example, 22 04 2014.",
   "errors": {
-    "noticeEnds": {}
+    "noticeEnds": {
+      "required": "Enter your employment start date. For example, 22 04 2014"
+    }
   }
 }
