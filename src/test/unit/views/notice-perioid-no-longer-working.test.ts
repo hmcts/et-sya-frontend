@@ -40,6 +40,6 @@ describe('Did you have or work a notice period?', () => {
 
   it('should display correct options field', () => {
     const optionsField = htmlRes.getElementsByClassName(input);
-    expect(optionsField.length).equal(2, `only ${optionsField.length} found`);
+    expect(optionsField.length).equal(3, `only ${optionsField.length} found`);
   });
 });

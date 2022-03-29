@@ -1,17 +1,23 @@
-import { WeeksOrMonths, YesOrNo } from '../../definitions/case';
+import { WeeksOrMonths } from '../../definitions/case';
 import { FormContent } from '../../definitions/form';
+import { DefaultRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../../definitions/radios';
 import { AnyRecord } from '../../definitions/util-types';
+
+const notice_period: RadioFormFields = {
+  ...DefaultRadioFormFields,
+  id: 'notice-period',
+  classes: 'govuk-radios--inline',
+};
 
 export const noticePeriodFormContent: FormContent = {
   fields: {
     noticePeriodLength: {
       id: 'notice-period-length',
       type: 'radios',
-      classes: 'govuk-radios',
+      classes: 'govuk-radios--inline',
       values: [
         {
-          label: (l: AnyRecord): string => l.yes,
-          value: YesOrNo.YES,
+          label: notice_period.values[0].value,
           selected: false,
           subFields: {
             noticePeriodUnit: {
@@ -72,18 +78,11 @@ export const noticePeriodFormContent: FormContent = {
           },
         },
         {
-          label: (l: AnyRecord): string => l.no,
-          value: YesOrNo.NO,
+          label: notice_period.values[1].value,
         },
       ],
     },
   },
-  submit: {
-    text: (l: AnyRecord): string => l.submit,
-    classes: 'govuk-!-margin-right-2',
-  },
-  saveForLater: {
-    text: (l: AnyRecord): string => l.saveForLater,
-    classes: 'govuk-button--secondary',
-  },
+  submit: submitButton,
+  saveForLater: saveForLaterButton,
 };
