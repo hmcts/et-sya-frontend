@@ -33,5 +33,25 @@ describe('Documents Controller', () => {
       expect(res.redirect).toBeCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
+
+    it('should assign userCase from the page form data', () => {
+      const body = {
+        documents: ['printed', 'easyRead', 'largePrint', 'other'],
+        documentsPrintedExplanation: 'I have poor eyesight',
+        documentsOtherExplanation: 'large font',
+      };
+      const controller = new DocumentsController();
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      req.session.userCase = undefined;
+
+      controller.post(req, res);
+
+      expect(req.session.userCase).toStrictEqual({
+        documents: ['printed', 'easyRead', 'largePrint', 'other'],
+        documentsPrintedExplanation: 'I have poor eyesight',
+        documentsOtherExplanation: 'large font',
+      });
+    });
   });
 });
