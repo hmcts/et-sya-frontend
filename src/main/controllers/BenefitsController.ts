@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -11,7 +12,33 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class BenefitsController {
   private readonly form: Form;
   private readonly benefitsContent: FormContent = {
-    fields: {},
+    fields: {
+      employeeBenefits: {
+        id: 'employee-benefits',
+        type: 'radios',
+        classes: 'govuk-radios',
+        values: [
+          {
+            label: (l: AnyRecord): string => l.yes,
+            value: YesOrNo.YES,
+            subFields: {
+              benefitsCharCount: {
+                id: 'benefits-char-count',
+                name: 'benefits-char-count',
+                type: 'charCount',
+                label: (l: AnyRecord): string => l.label,
+                hint: (l: AnyRecord): string => l.hint,
+                attributes: { maxLength: 2500 },
+              },
+            },
+          },
+          {
+            label: (l: AnyRecord): string => l.no,
+            value: YesOrNo.NO,
+          },
+        ],
+      },
+    },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',

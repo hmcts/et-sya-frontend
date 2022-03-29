@@ -1,8 +1,13 @@
 {
   "title": "Average weekly hours",
   "h1": {
-    "workingOrNotice": "Employment details - average weekly hours (to do)",
-    "noLongerWorking": "Employment details - average weekly hours - no longer working (to do)"
+    "workingOrNotice": "What are your average weekly hours? (to do)",
+    "noLongerWorking": "What were your average weekly hours? (to do)"
   },
+  "p1": {
+    "workingOrNotice": "If the number of hours you work changes each week (for example, if you’re on a zero-hours contract), use your last 3 months of payslips to work out your weekly average.",
+    "noLongerWorking": "If the number of hours you worked changed each week (for example, if you had a zero-hours contract), use your final 3 months of payslips to work out your weekly average."
+  },
+  "p2": "Do not include overtime hours.",
   "notWorking": "NO LONGER WORKING"
 }
