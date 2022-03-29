@@ -70,10 +70,6 @@ export default class GenderDetailsController {
         label: (l: AnyRecord): string => l.preferredTitle,
         values: [
           {
-            value: 'Not selectable',
-            label: (l: AnyRecord): string => l.genderTitle.pleaseSelect,
-          },
-          {
             value: GenderTitle.MR,
             label: (l: AnyRecord): string => l.genderTitle.mr,
           },
