@@ -100,7 +100,7 @@ export default class noticePeriodNolongerworkingController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PERIOD_NO_LONGER_WORKING);
+    handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
