@@ -15,7 +15,7 @@ export default class GenderDetailsController {
   private readonly genderDetailsContent: FormContent = {
     fields: {
       gender: {
-        classes: 'govuk-radios',
+        classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'gender',
         type: 'radios',
         label: (l: AnyRecord): string => l.sex,
@@ -36,7 +36,7 @@ export default class GenderDetailsController {
         validator: isFieldFilledIn,
       },
       genderIdentitySame: {
-        classes: 'govuk-radios',
+        classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'genderIdentitySame',
         type: 'radios',
         label: (l: AnyRecord): string => l.genderIdentity,
@@ -55,7 +55,7 @@ export default class GenderDetailsController {
                 name: 'genderIdentityText',
                 type: 'text',
                 label: (l: AnyRecord): string => l.genderIdentityTextLabel,
-                hint: (l: AnyRecord): string => l.hint,
+                //   hint: (l: AnyRecord): string => l.hint,
                 attributes: { maxLength: 2500 },
               },
             },
@@ -64,7 +64,7 @@ export default class GenderDetailsController {
         validator: isFieldFilledIn,
       },
       preferredTitle: {
-        classes: 'govuk-radios',
+        classes: 'govuk-select',
         id: 'preferredTitle',
         type: 'option',
         label: (l: AnyRecord): string => l.preferredTitle,
@@ -92,6 +92,18 @@ export default class GenderDetailsController {
           {
             value: GenderTitle.OTHER,
             label: (l: AnyRecord): string => l.genderTitle.other,
+            subFields: {
+              genderIdentity: {
+                id: 'genderTitleText',
+                name: 'genderTitleText',
+                type: 'text',
+                label: (l: AnyRecord): string => l.genderTitleTextLabel,
+                labelSize: 'xl',
+
+                //       hint: (l: AnyRecord): string => l.hint,
+                attributes: { maxLength: 2500 },
+              },
+            },
           },
           {
             value: GenderTitle.PREFER_NOT_TO_SAY,
