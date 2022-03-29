@@ -53,10 +53,19 @@ export default class TypeOfClaimController {
       const typsOfClaims = req.session.userCase?.typeOfClaim;
       if (redisClient) {
         if (typsOfClaims) {
-          req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
+          try {
+            req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
+          } catch (err) {
+            const error = new Error(err.message);
+            error.name = RedisErrors.FAILED_TO_SAVE;
+            if (err.stack) {
+              error.stack = err.stack;
+            }
+            throw error;
+          }
         }
       } else {
-        const err = new Error('Redis client does not exist');
+        const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
         err.name = RedisErrors.FAILED_TO_CONNECT;
         throw err;
       }

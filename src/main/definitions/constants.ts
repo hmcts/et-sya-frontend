@@ -122,4 +122,5 @@ export const RedisErrors = {
   FAILED_TO_CONNECT: 'Error when attempting to connect to Redis',
   FAILED_TO_SAVE: 'Error when attempting to save to Redis',
   FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
+  CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;

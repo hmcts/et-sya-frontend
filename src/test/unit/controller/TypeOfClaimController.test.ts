@@ -2,7 +2,7 @@ import express from 'express';
 import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
-import { AuthUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { AuthUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cacheTypesOfClaim } from '../../../main/services/CacheService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -83,6 +83,22 @@ describe('Type Of Claim Controller', () => {
       controller.post(req, res);
 
       expect(cacheTypesOfClaim).toHaveBeenCalledWith(redisClient, TypesOfClaim.BREACH_OF_CONTRACT);
+    });
+
+    it('should throw error if Redis client not found', () => {
+      const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
+
+      const controller = new TypeOfClaimController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+
+      req.app = app;
+      req.app.locals = {};
+
+      expect(() => {
+        controller.post(req, res);
+      }).toThrowError(RedisErrors.CLIENT_NOT_FOUND);
     });
   });
 });
