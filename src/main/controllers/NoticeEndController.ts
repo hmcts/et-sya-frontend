@@ -1,17 +1,26 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const notice_dates: DateFormFields = {
+  ...DefaultDateFormFields,
+  id: 'notice-dates',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('noticeEnds', body),
+};
 
 export default class NoticeEndController {
   private readonly form: Form;
   private readonly noticeEndContent: FormContent = {
-    fields: {},
+    fields: { noticeEnds: notice_dates },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -25,6 +34,7 @@ export default class NoticeEndController {
   constructor() {
     this.form = new Form(<FormFields>this.noticeEndContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PAY);

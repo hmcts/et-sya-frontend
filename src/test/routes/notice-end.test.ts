@@ -12,12 +12,12 @@ describe(`GET ${PageUrls.NOTICE_END}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_END}`, () => {
-  test('should navigate to the notice pay page when save and continue button is clicked', async () => {
+  test('should navigate to the notice end page when save and continue button is clicked', async () => {
     await request(app)
       .post(PageUrls.NOTICE_END)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_PAY);
+        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_END);
       });
   });
 });
