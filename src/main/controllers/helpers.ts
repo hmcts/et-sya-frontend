@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
+import { isAfterDateOfBirth } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
@@ -24,14 +25,37 @@ export const getPageContent = (req: AppRequest, formContent: FormContent, transl
   return content;
 };
 
-export const getSessionErrors = (req: AppRequest, form: Form): FormError[] => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
+export const getCustomStartDateError = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError => {
+  const dob = req.session.userCase.dobDate;
+  const startDate = formData.startDate;
+
+  if (startDate && dob) {
+    const errorType = isAfterDateOfBirth(startDate, dob);
+    if (errorType) {
+      return { errorType: errorType as string, propertyName: Object.keys(form.getFormFields())[0] };
+    }
+  } else {
+    return;
+  }
+};
+
+export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
 
 export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
-  const sessionErrors = getSessionErrors(req, form);
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  let sessionErrors = getSessionErrors(req, form, formData);
+
+  //call get custom errors and add to session errors
+  const custErrors = getCustomStartDateError(req, form, formData);
+
+  if (custErrors) {
+    sessionErrors = [...sessionErrors, custErrors];
+  }
+
   req.session.errors = sessionErrors;
+
   const { saveForLater } = req.body;
   const requiredErrExists = sessionErrors.some(err => err.errorType === 'required');
 

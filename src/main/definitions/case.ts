@@ -20,9 +20,9 @@ export interface Case {
   addressCounty?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
-  updatePreference?: YesOrNo;
+  updatePreference?: EmailOrPost;
   representingMyself?: YesOrNo;
-  IsASingleClaim?: YesOrNo;
+  isASingleClaim?: YesOrNo;
   isAcasSingle?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
@@ -48,6 +48,7 @@ export interface Case {
   workAddressPostcode?: string;
   employeeBenefit?: string;
   receiveEmployeeBenefit?: YesOrNo;
+  startDate: CaseDate;
 }
 
 export const enum StillWorking {
@@ -68,6 +69,11 @@ export const enum YesOrNo {
 export const enum WeeksOrMonths {
   WEEKS = 'Weeks',
   MONTHS = 'Months',
+}
+
+export const enum EmailOrPost {
+  EMAIL = 'Email',
+  POST = 'Post',
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;

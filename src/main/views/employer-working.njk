@@ -1,0 +1,142 @@
+
+
+{{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: employmentDetails.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: employmentDetails.jobTitle
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.JOB_TITLE,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.jobTitle
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.startDate
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.START_DATE,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.startDate
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.noticePeriod
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NOTICE_END,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.noticePeriod
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.weeklyHours
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.AVERAGE_WEEKLY_HOURS,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.weeklyHours
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.payBeforeTax
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAY_BEFORE_TAX,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.payBeforeTax
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.payAfterTax
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAY_AFTER_TAX,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.payAfterTax
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.pensionScheme
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PENSION,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.pensionScheme
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.benefits
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.BENEFITS,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.benefits
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}

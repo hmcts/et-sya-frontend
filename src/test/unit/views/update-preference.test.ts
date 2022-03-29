@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
+import { PageUrls } from '../../../main/definitions/constants';
 
 const updatePreferenceJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/update-preference.json'),
@@ -12,7 +13,7 @@ const updatePreferenceJsonRaw = fs.readFileSync(
 );
 const updatePreferenceJson = JSON.parse(updatePreferenceJsonRaw);
 
-const PAGE_URL = '/how-would-you-like-to-be-updated-about-your-claim';
+const PAGE_URL = PageUrls.UPDATE_PREFERENCES;
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = updatePreferenceJson.h1;
 const buttonClass = 'govuk-button';

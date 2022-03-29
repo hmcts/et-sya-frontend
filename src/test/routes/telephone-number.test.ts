@@ -21,7 +21,7 @@ describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
       })
       .expect(res => {
         expect(res.status).equal(302);
-        expect(res.header['location']).equal('/how-would-you-like-to-be-updated-about-your-claim');
+        expect(res.header['location']).equal(PageUrls.UPDATE_PREFERENCES);
       });
   });
 });
