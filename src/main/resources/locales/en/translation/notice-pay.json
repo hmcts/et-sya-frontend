@@ -1,3 +1,8 @@
 {
-  "h1": "Employment details - notice pay (to do)"
+  "h1": "Are you getting paid for working your notice period?",
+  "hint1": "Tell us how long your notice period is. If you’re not sure, check the terms and conditions of your employment contract.",
+  "hint2": "Tell us how much of your notice period you’re being paid for.",
+  "empty": " ",
+  "weeks": "Weeks",
+  "months": "Months"
 }
