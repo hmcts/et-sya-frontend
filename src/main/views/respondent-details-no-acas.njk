@@ -1,0 +1,125 @@
+{{ 
+    govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: respodentDetails.header,
+            classes: "govuk-heading-m"
+          }
+        },
+        {
+          key: {
+            text: respodentDetails.orgOrPerson
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.orgOrPerson
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.acasNumber
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.acasNumber
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.acasExemption
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NO_ACAS_NUMBER,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.acasExemption
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.name
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.name
+              }
+            ]
+          } 
+        },
+        
+        {
+          key: {
+            text: respodentDetails.telephone
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.telephone
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.officeAddress
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.officeAddress
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.workAddress
+          },
+          value: {
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "Change",
+                visuallyHiddenText: respodentDetails.workAddress
+              }
+            ]
+          } 
+        }
+      ]
+    }) 
+  }}
