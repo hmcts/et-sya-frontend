@@ -49,9 +49,11 @@ export default class StartDateController {
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.startDateContent, [TranslationKeys.COMMON, TranslationKeys.START_DATE]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.START_DATE, {
       ...content,
+      employmentStatus,
     });
   };
 }

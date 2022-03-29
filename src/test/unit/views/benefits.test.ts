@@ -16,6 +16,7 @@ const benefitsJson = JSON.parse(benefitsJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = benefitsJson.h1;
 const buttonClass = 'govuk-button';
+const radios = 'govuk-radios';
 
 let htmlRes: Document;
 describe('Benefits page', () => {
@@ -30,6 +31,11 @@ describe('Benefits page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radios);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
   it('should display continue button', () => {
