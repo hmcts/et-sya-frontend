@@ -1,11 +1,17 @@
 {
   "title": "bring support",
   "h1": "I would need to bring support with me to a hearing (to do)",
-  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
-  "checkbox1": "tbc",
+  "hint": "<div class=\"govuk-body\">Think about what you would need if the hearing was in person, by phone or video.</div><p class=\"govuk-body govuk-!-padding-bottom-2\">Select all that apply</p>",
+  "checkbox1": "Support worker or carer with me",
+  "checkbox2": "Friend or family with me",
+  "checkbox3": "Assistance/guide dog",
+  "checkbox4": "Therapy dog",
+  "other": "Other",
+  "notNeeded": "I do not need any of this support at this time",
+  "describe": "Please describe what you need",
   "errors": {
     "support": {
-      "required": "Add error message..."
+      "required": "Select an Option"
     }
   }
 }

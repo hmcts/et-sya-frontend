@@ -25,22 +25,66 @@ export default class ComfortableController {
           {
             name: 'comfortable',
             label: l => l.checkbox1,
-            value: 'comfortable-one',
+            value: 'appropriateLighting',
+            subFields: {
+              comfortableAppropriateLightingExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
           },
           {
             name: 'comfortable',
-            label: l => l.checkbox1,
-            value: 'comfortable-two',
+            label: l => l.checkbox2,
+            value: 'regularBreaks',
           },
           {
             name: 'comfortable',
-            label: l => l.checkbox1,
-            value: 'comfortable-three',
+            label: l => l.checkbox3,
+            value: 'spaceToMove',
           },
           {
             name: 'comfortable',
-            label: l => l.checkbox1,
-            value: 'comfortable-four',
+            label: l => l.checkbox4,
+            value: 'privateWaitingRoom',
+          },
+          {
+            name: 'comfortable',
+            label: l => l.checkbox5,
+            value: 'differentTypeOfChair',
+            subFields: {
+              comfortableDifferentTypeOfChairExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                hint: l => l.checkbox5TextAreaHint,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            name: 'comfortable',
+            label: l => l.other,
+            value: 'other',
+            subFields: {
+              comfortableOtherExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'comfortable',
+            label: l => l.notNeeded,
+            value: 'notNeeded',
+            exclusive: true,
           },
         ],
       },

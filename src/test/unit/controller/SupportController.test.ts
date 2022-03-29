@@ -19,19 +19,35 @@ describe('Support Controller', () => {
     expect(response.render).toHaveBeenCalledWith('generic-form-template', expect.anything());
   });
 
-  describe('post()', () => {
-    it('should redirect back to the "I need support" page when errors are present', () => {
-      const errors = [{ propertyName: 'support', errorType: 'required' }];
-      const body = { support: [''] };
+  it('should redirect back to the "I need support" page when errors are present', () => {
+    const errors = [{ propertyName: 'support', errorType: 'required' }];
+    const body = { support: [''] };
 
-      const controller = new SupportController();
+    const controller = new SupportController();
 
-      const req = mockRequest({ body });
-      const res = mockResponse();
-      controller.post(req, res);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
-      expect(req.session.errors).toEqual(errors);
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should assign userCase from the page form data', () => {
+    const body = {
+      support: ['friendOrFamily', 'other'],
+      supportFriendOrFamilyExplanation: 'friend is required',
+    };
+    const controller = new SupportController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      support: ['friendOrFamily', 'other'],
+      supportFriendOrFamilyExplanation: 'friend is required',
     });
   });
 });
