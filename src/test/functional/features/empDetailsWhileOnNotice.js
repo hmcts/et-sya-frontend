@@ -48,6 +48,8 @@ Scenario('Claim while on notice for organisation', () => {
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1131');

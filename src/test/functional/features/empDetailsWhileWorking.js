@@ -48,10 +48,12 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.checkOption('input[id=pension]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
-/*
+
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);
   I.seeElement('#still-working');
@@ -89,7 +91,7 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
 
   I.see('Pay AFTER tax');
   I.seeElement('#pay-after-tax');
-  I.fillField('#pay-after-tax','35000');
+  I.fillField('#pay-after-tax', '35000');
   I.checkOption('input[id=pay-after-tax-interval-3]');
   I.click('#main-form-submit');
 
@@ -98,7 +100,9 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
 
@@ -136,7 +140,7 @@ Scenario('Claim while working for organisation when notice period selected as no
 
   I.see('Pay AFTER tax');
   I.seeElement('#pay-after-tax');
-  I.fillField('#pay-after-tax','35000');
+  I.fillField('#pay-after-tax', '35000');
   I.checkOption('input[id=pay-after-tax-interval-3]');
   I.click('#main-form-submit');
 
@@ -145,7 +149,9 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
 
@@ -172,4 +178,3 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.seeElement('#notice-period-unit-error');
   I.seeElement('#notice-period-length-error');
 }).tag('@RET-1130');
-*/
