@@ -47,6 +47,8 @@ export interface Case {
   payAfterTax?: number;
   payBeforeTaxInterval?: PayInterval;
   payAfterTaxInterval?: PayInterval;
+  employeeBenefits?: YesOrNo;
+  benefitsCharCount?: string;
 }
 
 export const enum StillWorking {

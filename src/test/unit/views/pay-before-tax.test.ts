@@ -15,8 +15,8 @@ const payBeforeTaxJsonRaw = fs.readFileSync(
 const payBeforeTaxJson = JSON.parse(payBeforeTaxJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const buttonClass = 'govuk-button';
 const expectedTitle = payBeforeTaxJson.h1;
+const buttonClass = 'govuk-button';
 const radios = 'govuk-radios';
 const input = 'govuk-input--width-5';
 
