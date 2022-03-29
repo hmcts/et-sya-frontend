@@ -16,7 +16,8 @@ const submitYourClaimClass = 'govuk-heading-m govuk-!-margin-bottom-2 govuk-!-ma
 const expectedSubmitYourClaim = 'Submit your claim';
 const submitYourClaimBodyClass = 'govuk-body';
 const expectedSubmitYourClaimText1 = 'Check all the answers you’ve provided and details you have entered are correct.';
-const expectedSubmitYourClaimText2 = 'Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save for later’ at the bottom of this page.';
+const expectedSubmitYourClaimText2 =
+  'Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save for later’ at the bottom of this page.';
 const expectedSubmitYourClaimText3 = 'We’ll send you an email confirmation once you’ve submitted your claim.';
 const warningClass = 'govuk-warning-text';
 const expectedWarningText = 'This is your last opportunity to change any details before you submit your claim.';
@@ -86,7 +87,7 @@ describe('Check your answers confirmation page', () => {
     const yourPreferencesList = summeryListSections[3].querySelectorAll(summeryListKeyExcludeHeadingClass);
     expect(yourPreferencesList.length).equals(3, 'Incorrect number of rows found');
   });
-  
+
   it('should display 2 rows in Past Employer summery list', () => {
     const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
     const employerList = summeryListSections[4].querySelectorAll(summeryListKeyExcludeHeadingClass);
@@ -199,7 +200,6 @@ describe('Check your answers confirmation page', () => {
   it('should display warning message', () => {
     const warning = htmlRes.getElementsByClassName(warningClass);
     expect(warning[0].innerHTML).contains(expectedWarningText, 'Warning text does not exist');
-
   });
 
 });

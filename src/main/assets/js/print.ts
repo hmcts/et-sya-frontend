@@ -3,5 +3,5 @@ const printLink = document.getElementById('print') as HTMLElement | null;
 if (printLink) {
   printLink.onclick = function () {
     window.print();
-   }
+  };
 }
