@@ -31,9 +31,9 @@ describe('I need documents page', () => {
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
-  it('should display checkboxes', () => {
+  it('should display 9 checkboxes', () => {
     const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).greaterThan(0, `only ${checkboxes.length} found`);
+    expect(checkboxes.length).equal(9, `only ${checkboxes.length} found`);
   });
 
   it('should display checkboxes with valid labels', () => {

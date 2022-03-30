@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { atLeastOneFieldIsChecked, isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -25,17 +25,76 @@ export default class DocumentsController {
           {
             name: 'documents',
             label: l => l.checkbox1,
-            value: 'value1',
+            value: 'printed',
+            subFields: {
+              documentsPrintedExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
           },
           {
             name: 'documents',
-            label: l => l.checkbox1,
-            value: 'value2',
+            label: l => l.checkbox2,
+            value: 'easyRead',
           },
           {
             name: 'documents',
-            label: l => l.checkbox1,
-            value: 'value3',
+            label: l => l.checkbox3,
+            value: 'braille',
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox4,
+            value: 'largePrint',
+            subFields: {
+              documentsLargePrintExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+                validator: isFieldFilledIn,
+              },
+            },
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox5,
+            value: 'audioTranslation',
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox6,
+            value: 'readOut',
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox7,
+            value: 'emailed',
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox8,
+            value: 'other',
+            subFields: {
+              documentsOtherExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'documents',
+            label: l => l.checkbox9,
+            value: 'none',
+            exclusive: true,
           },
         ],
       },
