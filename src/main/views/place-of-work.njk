@@ -14,8 +14,15 @@
       {% endblock %}
 
       {% include "./address/postcodeError.njk" %}
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ pageHeader }}</h1>
-      <p class="govuk-body">{{ pageText | safe}}</p>
+
+      {% if not stillWorking %}
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.noLongerWorking }}</h1>
+        <p class="govuk-body">{{ pText.noLongerWorking | safe}}</p>
+      {% else %}
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.workingOrNotice }}</h1>
+        <p class="govuk-body">{{ pText.workingOrNotice | safe}}</p>
+      {% endif %}
+
       {% include "./address/postcodeEnter.njk" %}
       {% include "./address/postcodeSelect.njk" %}
 

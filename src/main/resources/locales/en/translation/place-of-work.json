@@ -1,20 +1,27 @@
 {
-  "pageHeader": "Where do you work?",
-  "pageText": "If you worked from home tell us your home address.",
+  "title": "Work Address",
+  "h1": {
+    "noLongerWorking": "Where did you work?",
+    "workingOrNotice": "Where do you work?"
+  },
+  "pText": {
+    "noLongerWorking": "If you worked from home tell us your home address. ",
+    "workingOrNotice": "If you work from home tell us your home address. "
+  },
   "errors": {
     "addressPostcode": {
       "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",
       "required": "A postcode is required."
     },
     "workAddress1": {
-      "required": "Address line is required"
+      "required": "Enter a building and street for your work address up to 100 characters"
     },
     "workAddressTown": {
-      "required": "Town is required"
+      "required": "Enter a town or city for your work address up to 60 characters"
     },
     "workAddressPostcode": {
-      "required": "A postcode is required.",
-      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing."
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode"
     }
   }
 }

@@ -1,8 +1,9 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isInvalidPostcode } from '../components/form/validator';
+import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { StillWorking } from '../definitions/case';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -18,7 +19,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.buildingStreet,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isWorkAddressLineOneValid,
       },
       workAddress2: {
         id: 'address2',
@@ -34,7 +35,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isWorkAddressTownValid,
       },
       workAddressCounty: {
         id: 'addressCounty',
@@ -75,10 +76,16 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    let stillWorking = true;
+    if (req.session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+      stillWorking = false;
+    }
+
     const content = getPageContent(req, this.placeOfWorkContent, ['common', 'enter-address', 'place-of-work']);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('place-of-work', {
       ...content,
+      stillWorking,
     });
   };
 }
