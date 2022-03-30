@@ -4,5 +4,6 @@
   "hint2": "Tell us how much of your notice period you’re being paid for.",
   "empty": " ",
   "weeks": "Weeks",
-  "months": "Months"
+  "months": "Months",
+  "insetText": "<div class=\"govuk-inset-text\">If you're not sure, check the terms and conditions of your employment contract.</div>"
 }

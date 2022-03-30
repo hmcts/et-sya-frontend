@@ -23,11 +23,10 @@ export default class NoticePayController {
       noticePeriodLength: {
         id: 'notice-period',
         type: 'radios',
-        classes: 'govuk-radios--inline',
+        classes: 'govuk-radios',
         values: [
           {
             label: notice_pay.values[0].value,
-            value: notice_pay.values[0].value,
             selected: false,
             subFields: {
               noticePeriodUnit: {

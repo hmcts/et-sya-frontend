@@ -19,10 +19,15 @@ describe('Notice end Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
+    const errors = [{ propertyName: 'noticeEnds', errorType: 'dayRequired', fieldName: 'day' }];
     const body = { noticeEnd: '' };
+
     const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
+
     controller.post(req, res);
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 });
