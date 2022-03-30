@@ -1,7 +1,14 @@
 {
-  "h1": {
-    "workingOrNotice": "Employment details - pay after tax (to do)",
-    "noLongerWorking": "Employment details - pay after tax - no longer working (to do)"
+  "title": "Pay AFTER tax (to do)",
+  "h1": "Pay AFTER tax (to do)",
+  "p1": {
+    "workingOrNotice": "Tell us your net or take-home pay - after tax and other deductions. You’ll find this on your payslips.",
+    "noLongerWorking": "Tell us what your net or take-home pay was - after tax and other deductions. You’ll find this on your payslips."
   },
+  "p2": {
+    "workingOrNotice": "If your net pay changes on a regular basis (for example, if you have a zero-hours contract), use your last 3 months of payslips to work out your average net pay.",
+    "noLongerWorking": "If your net pay changed changed on a regular basis (for example, if you had a zero-hours contract), use your final 3 months of payslips to work out your average net pay."
+  },
+  "p3": "Include any overtime payments, commission and bonuses.",
   "notWorking": "NO LONGER WORKING"
 }

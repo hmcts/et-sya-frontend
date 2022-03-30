@@ -1,8 +1,14 @@
 {
-  "title": "Pay before tax",
-  "h1": {
-    "workingOrNotice": "Employment details - pay before tax (to do)",
-    "noLongerWorking": "Employment details - pay before tax - no longer working (to do)"
+  "title": "Pay BEFORE tax (to do)",
+  "h1": "Pay BEFORE tax (to do)",
+  "p1": {
+    "workingOrNotice": "Tell us your gross pay - before tax and other deductions. You’ll find this on your payslips.",
+    "noLongerWorking": "Tell us what your gross pay was - before tax and other deductions. You’ll find this on your payslips."
   },
+  "p2": {
+    "workingOrNotice": "If your gross pay changes on a regular basis (for example, if you have a zero-hours contract), use your last 3 months of payslips to work out your average gross pay.",
+    "noLongerWorking": "If your gross pay changed on a regular basis (for example, if you had a zero-hours contract), use your final 3 months of payslips to work out your average gross pay."
+  },
+  "p3": "Do not include any overtime payments.",
   "notWorking": "NO LONGER WORKING"
 }

@@ -1,11 +1,20 @@
 {
   "title": "documents in alternative format",
-  "h1": "I need documents in an alternative format (to do)",
-  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
-  "checkbox1": "tbc",
+  "h1": "I need documents in an alternative format",
+  "hint": "<div class=\"govuk-body\">Think about all communication with the tribunal, as well as what you might need at a hearing. Consider remote and in-person hearings, in case your preferred hearing type is not possible.</div><p class=\"govuk-body govuk-!-padding-bottom-2\">Select all that apply</p>",
+  "checkbox1": "I need documents printed in a particular colour or font",
+  "checkbox2": "Documents in an easy read format",
+  "checkbox3": "Braille documents",
+  "checkbox4": "Documents in large print",
+  "checkbox5": "Audio translation of documents",
+  "checkbox6": "Documents read out to me",
+  "checkbox7": "Information emailed to me",
+  "checkbox8": "Other",
+  "checkbox9": "I do not need any of this support at this time",
+  "describe": "Please describe what you need",
   "errors": {
     "documents": {
-      "required": "Add error message..."
+      "required": "Select an Option"
     }
   }
 }

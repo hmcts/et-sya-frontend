@@ -25,12 +25,84 @@ export default class CommunicatingController {
           {
             name: 'communicating',
             label: l => l.checkbox1,
-            value: 'val1',
+            value: 'hearingLoop',
           },
           {
             name: 'communicating',
-            label: l => l.checkbox1,
-            value: 'val2',
+            label: l => l.checkbox2,
+            value: 'InfraredReceiver',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox3,
+            value: 'closeToSpeaker',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox4,
+            hint: l => l.checkbox4Hint,
+            value: 'lipSpeaker',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox5,
+            value: 'signLanugage',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox6,
+            value: 'speechToText',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox7,
+            value: 'extraTime',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox8,
+            value: 'visitBefore',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox9,
+            value: 'explanationOfCourt',
+          },
+          {
+            name: 'communicating',
+            label: l => l.checkbox10,
+            value: 'Intermediary',
+            hint: l => l.checkbox10Hint,
+            subFields: {
+              communicatingIntermediaryExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            name: 'communicating',
+            label: l => l.other,
+            value: 'other',
+            subFields: {
+              communicatingOtherExplanation: {
+                type: 'textarea',
+                classes: 'govuk-input--width-10',
+                label: l => l.describe,
+                labelSize: 'normal',
+              },
+            },
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'communicating',
+            label: l => l.notNeeded,
+            value: 'notNeeded',
+            exclusive: true,
           },
         ],
       },

@@ -47,7 +47,7 @@ export default class VideoHearingsController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+    handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
