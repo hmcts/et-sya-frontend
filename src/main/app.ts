@@ -44,7 +44,7 @@ new Nunjucks(developmentMode).enableFor(app);
 logger.info('Nunjucks');
 logMemUsage();
 
-new Helmet(config.get('security')).enableFor(app);
+new Helmet(config.get('security'), config.get('services.idam.authorizationURL')).enableFor(app);
 logger.info('Helmet');
 logMemUsage();
 
