@@ -19,7 +19,7 @@ describe('Reasonable Adjustments Controller', () => {
     expect(response.render).toHaveBeenCalledWith('generic-form-template', expect.anything());
   });
 
-  describe('post()', () => {
+  describe('post() reasobable adjustments', () => {
     it('should redirect back to the Reasonable Adjustments page when errors are present', () => {
       const errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
       const body = { reasonableAdjustments: [''] };
@@ -32,6 +32,21 @@ describe('Reasonable Adjustments Controller', () => {
 
       expect(res.redirect).toBeCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
+    });
+
+    it('should assign userCase from reasonable adjustments form data', () => {
+      const body = { reasonableAdjustments: ['documents', 'support', 'comfortable'] };
+      const controller = new ReasonableAdjustmentsController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      req.session.userCase = undefined;
+
+      controller.post(req, res);
+
+      expect(req.session.userCase).toStrictEqual({
+        reasonableAdjustments: ['documents', 'support', 'comfortable'],
+      });
     });
   });
 });

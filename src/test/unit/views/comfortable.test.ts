@@ -31,9 +31,9 @@ describe('"I need something to make me feel comfortable" page', () => {
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
-  it('should display checkboxes', () => {
+  it('should display 7 checkboxes', () => {
     const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).greaterThan(0, `only ${checkboxes.length} found`);
+    expect(checkboxes.length).equals(7, `only ${checkboxes.length} found`);
   });
 
   it('should display checkboxes with valid labels', () => {

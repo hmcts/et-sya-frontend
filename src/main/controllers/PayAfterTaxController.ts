@@ -4,6 +4,7 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { PayIntervalRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -11,15 +12,26 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class PayAfterTaxController {
   private readonly form: Form;
   private readonly payAfterTaxContent: FormContent = {
-    fields: {},
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
+    fields: {
+      payAfterTax: {
+        id: 'pay-after-tax',
+        name: 'pay-after-tax',
+        type: 'currency',
+        classes: 'govuk-input--width-5',
+        label: (l: AnyRecord): string => l.payAfterTax,
+        hint: (l: AnyRecord): string => l.hint,
+        attributes: { maxLength: 12 },
+      },
+      payAfterTaxInterval: {
+        id: 'pay-after-tax-interval',
+        type: 'radios',
+        classes: 'govuk-radios',
+        label: (l: AnyRecord): string => l.label,
+        values: PayIntervalRadioValues,
+      },
     },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
