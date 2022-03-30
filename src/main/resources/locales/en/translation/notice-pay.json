@@ -5,5 +5,9 @@
   "empty": " ",
   "weeks": "Weeks",
   "months": "Months",
-  "insetText": "<div class=\"govuk-inset-text\">If you're not sure, check the terms and conditions of your employment contract.</div>"
+  "errors": {
+    "noticeDate": {
+      "required": "Enter your employment start date"
+    }
+  }
 }

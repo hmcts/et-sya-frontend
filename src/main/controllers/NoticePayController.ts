@@ -1,12 +1,14 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
-import { WeeksOrMonths } from '../definitions/case';
+import { CaseDate, WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -14,6 +16,12 @@ const notice_pay: RadioFormFields = {
   ...DefaultRadioFormFields,
   id: 'notice-pay',
   classes: 'govuk-radios--inline',
+};
+
+const notice_pay_dates: DateFormFields = {
+  ...DefaultDateFormFields,
+  id: 'notice-pay-dates',
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('noticeDate', body),
 };
 
 export default class NoticePayController {
@@ -49,8 +57,8 @@ export default class NoticePayController {
                 name: 'notice-period-paid',
                 values: [
                   {
-                    label: (l: AnyRecord): string => l.weeks,
-                    value: WeeksOrMonths.WEEKS,
+                    label: notice_pay_dates.values[0].label,
+                    value: notice_pay_dates.values[0].name,
                     selected: false,
                   },
                   {
@@ -61,7 +69,7 @@ export default class NoticePayController {
                 ],
               },
 
-              noticePeriodUnit2: {
+              noticePeriodUnitPaid: {
                 id: 'notice-period-paid-number',
                 type: 'input',
                 classes: 'govuk-input--width-2',
@@ -74,7 +82,7 @@ export default class NoticePayController {
                   },
                 ],
               },
-              noticePeriodPaid2: {
+              noticePeriodAmountPaid: {
                 id: 'notice-period-paid',
                 type: 'radios',
                 classes: 'govuk-radios--inline',
