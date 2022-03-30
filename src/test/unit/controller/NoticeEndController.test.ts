@@ -16,12 +16,16 @@ describe('Notice end Controller', () => {
 
     noticeEndController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_END, expect.anything());
+    const body = { noticeEnds: '' };
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    noticeEndController.post(req, res);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_END, expect.anything());
   });
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'dayRequired', fieldName: 'day' }];
     const body = { noticeEnd: '' };
-
     const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();

@@ -14,10 +14,10 @@ describe(`GET ${PageUrls.NOTICE_PAY}`, () => {
 describe(`on POST ${PageUrls.NOTICE_PAY}`, () => {
   test('should navigate to the average weekly hours page when save and continue button is clicked', async () => {
     await request(app)
-      .post(PageUrls.NOTICE_END)
+      .post(PageUrls.NOTICE_PAY)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_END);
+        expect(res.header['location']).toStrictEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
       });
   });
 });

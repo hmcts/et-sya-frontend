@@ -4,7 +4,7 @@
   "p2": "For example, 22 04 2014.",
   "errors": {
     "noticeEnds": {
-      "required": "Enter your employment start date. For example, 22 04 2014"
+      "required": "Enter your notice date. For example, 22 04 2014"
     }
   }
 }
