@@ -23,12 +23,10 @@ export default class GenderDetailsController {
           {
             label: (l: AnyRecord): string => l.female,
             value: 'Female',
-            attributes: { maxLength: 2 },
           },
           {
             label: (l: AnyRecord): string => l.male,
             value: 'Male',
-            attributes: { maxLength: 2 },
           },
         ],
       },
