@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -18,27 +17,26 @@ export default class GenderDetailsController {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'gender',
         type: 'radios',
+        labelSize: 's',
         label: (l: AnyRecord): string => l.sex,
         values: [
           {
             label: (l: AnyRecord): string => l.female,
-            name: 'radio1',
             value: 'Female',
             attributes: { maxLength: 2 },
           },
           {
             label: (l: AnyRecord): string => l.male,
-            name: 'radio2',
             value: 'Male',
             attributes: { maxLength: 2 },
           },
         ],
-        validator: isFieldFilledIn,
       },
       genderIdentitySame: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'genderIdentitySame',
         type: 'radios',
+        labelSize: 's',
         label: (l: AnyRecord): string => l.genderIdentity,
         hint: (l: AnyRecord): string => l.genderIdentityHint,
         values: [
@@ -55,20 +53,24 @@ export default class GenderDetailsController {
                 name: 'genderIdentityText',
                 type: 'text',
                 label: (l: AnyRecord): string => l.genderIdentityTextLabel,
-                //   hint: (l: AnyRecord): string => l.hint,
+                classes: 'govuk-input--width-10',
+                labelSize: 's',
                 attributes: { maxLength: 2500 },
               },
             },
           },
         ],
-        validator: isFieldFilledIn,
       },
       preferredTitle: {
-        classes: 'govuk-select',
         id: 'preferredTitle',
         type: 'option',
         label: (l: AnyRecord): string => l.preferredTitle,
+        labelSize: 's',
         values: [
+          {
+            value: 'pleaseSelect',
+            label: (l: AnyRecord): string => l.genderTitle.pleaseSelect,
+          },
           {
             value: GenderTitle.MR,
             label: (l: AnyRecord): string => l.genderTitle.mr,
@@ -92,18 +94,6 @@ export default class GenderDetailsController {
           {
             value: GenderTitle.OTHER,
             label: (l: AnyRecord): string => l.genderTitle.other,
-            subFields: {
-              genderIdentity: {
-                id: 'genderTitleText',
-                name: 'genderTitleText',
-                type: 'text',
-                label: (l: AnyRecord): string => l.genderTitleTextLabel,
-                labelSize: 'xl',
-
-                //       hint: (l: AnyRecord): string => l.hint,
-                attributes: { maxLength: 2500 },
-              },
-            },
           },
           {
             value: GenderTitle.PREFER_NOT_TO_SAY,

@@ -7,9 +7,8 @@
   "sex": "What is your sex?",
   "genderIdentity": "Is the gender you identify with the same as your sex registered at birth?",
   "genderIdentityHint": "This question is voluntary.",
-  "preferredTitle": "<p class=\"govuk-heading-m\">What is your preferred title?</p>",
-  "genderIdentityTextLabel": "<p class=\"govuk-body\">What is your gender identity?</p>",
-  "genderTitleTextLabel": "What other title would you like?",
+  "preferredTitle": "What is your preferred title?",
+  "genderIdentityTextLabel": "What is your gender identity?",
   "genderTitle": {
     "pleaseSelect": "Please select",
     "mr": "Mr",
