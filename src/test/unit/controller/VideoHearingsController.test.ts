@@ -41,7 +41,6 @@ describe('Video Hearing Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/steps-to-making-your-claim');
     expect(req.session.userCase).toStrictEqual({ videoHearings: YesOrNo.NO });
   });
 });

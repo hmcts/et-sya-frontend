@@ -1,11 +1,23 @@
 {
   "title": "help with travel",
   "h1": "I need help travelling to, or around Tribunal buildings (to do)",
-  "hint": "<p class=\"govuk-body govuk-!-padding-bottom-2 govuk-!-padding-top-2\">Select all that apply</p>",
-  "checkbox1": "tbc",
+  "hint": "<div class=\"govuk-body\">In the event of a remote hearing not being possible, let us know what you might need for an in-person hearing.</div><p class=\"govuk-body govuk-!-padding-bottom-2\">Select all that apply</p>",
+  "checkbox1": "Taxi to hearing",
+  "checkbox2": "Parking space close to the venue",
+  "checkbox3": "Step free/wheelchair access",
+  "checkbox4": "Use of a venue wheelchair",
+  "checkbox5": "Accessible toilet",
+  "checkbox6": "Help using a lift",
+  "checkbox7": "A different type of chair",
+  "checkboxTextarea7Hint": "For example, a chair with back support",
+  "checkbox8": "Guiding in the building",
+  "other": "Other",
+  "notNeeded": "I do not need any of this support at this time",
+  "describe": "Please describe what you need",
+  "explain": "Please explain why you need this",
   "errors": {
     "travel": {
-      "required": "Add error message..."
+      "required": "Select an Option"
     }
   }
 }

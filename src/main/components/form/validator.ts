@@ -164,6 +164,25 @@ export const isValidInteger: Validator = value => {
   }
 };
 
+export const isWorkAddressLineOneValid: Validator = value => {
+  if (typeof value === 'string') {
+    const inputStrLength = (value as string).trim().length;
+    if (inputStrLength === 0 || inputStrLength > 100) {
+      return 'required';
+    }
+  }
+};
+
+export const isWorkAddressTownValid: Validator = value => {
+  if (typeof value === 'string') {
+    const inputStrLength = (value as string).trim().length;
+
+    if (inputStrLength < 3 || inputStrLength > 60) {
+      return 'required';
+    }
+  }
+};
+
 export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, value2: CaseDate | undefined) => {
   if (!value1) {
     return;

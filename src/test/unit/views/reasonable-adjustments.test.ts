@@ -22,22 +22,22 @@ describe('Reasonable Adjustments page', () => {
       });
   });
 
-  it('should display title', () => {
+  it('should display page heading', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display continue button', () => {
+  it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
   it('should display checkboxes', () => {
     const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).greaterThan(0, `only ${checkboxes.length} found`);
+    expect(checkboxes.length).equal(6, `only ${checkboxes.length} found`);
   });
 
-  it('should display checkboxes with valid labels', () => {
+  it('should display 6 checkboxes with valid labels', () => {
     const checkboxItems = htmlRes.getElementsByClassName(checkboxItem);
     expect(checkboxItems[0].innerHTML).contains(
       expectedInputLabel,

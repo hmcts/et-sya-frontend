@@ -26,13 +26,21 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.fillField('#notice-period-length', '3');
   I.click('#main-form-submit');
 
-  I.see('average weekly hours');
+  I.see('What are your average weekly hours?');
+  I.seeElement('#avg-weekly-hrs');
+  I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
 
-  I.see('pay before tax');
+  I.see('Pay BEFORE tax');
+  I.seeElement('#pay-before-tax');
+  I.fillField('#pay-before-tax', '40000');
+  I.checkOption('input[id=pay-before-tax-interval-3]');
   I.click('#main-form-submit');
 
-  I.see('pay after tax');
+  I.see('Pay AFTER tax');
+  I.seeElement('#pay-after-tax');
+  I.fillField('#pay-after-tax', '35000');
+  I.checkOption('input[id=pay-after-tax-interval-3]');
   I.click('#main-form-submit');
 
   I.see('Pension scheme');
@@ -40,7 +48,9 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.checkOption('input[id=pension]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
 
@@ -68,13 +78,21 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.fillField('#notice-period-length', '2');
   I.click('#main-form-submit');
 
-  I.see('average weekly hours');
+  I.see('What are your average weekly hours?');
+  I.seeElement('#avg-weekly-hrs');
+  I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
 
-  I.see('pay before tax');
+  I.see('Pay BEFORE tax');
+  I.seeElement('#pay-before-tax');
+  I.fillField('#pay-before-tax', '40000');
+  I.checkOption('input[id=pay-before-tax-interval-3]');
   I.click('#main-form-submit');
 
-  I.see('pay after tax');
+  I.see('Pay AFTER tax');
+  I.seeElement('#pay-after-tax');
+  I.fillField('#pay-after-tax', '35000');
+  I.checkOption('input[id=pay-after-tax-interval-3]');
   I.click('#main-form-submit');
 
   I.see('Pension scheme');
@@ -82,7 +100,9 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
 
@@ -107,13 +127,21 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.checkOption('input[id=notice-period-2]');
   I.click('#main-form-submit');
 
-  I.see('average weekly hours');
+  I.see('What are your average weekly hours?');
+  I.seeElement('#avg-weekly-hrs');
+  I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
 
-  I.see('pay before tax');
+  I.see('Pay BEFORE tax');
+  I.seeElement('#pay-before-tax');
+  I.fillField('#pay-before-tax', '40000');
+  I.checkOption('input[id=pay-before-tax-interval-3]');
   I.click('#main-form-submit');
 
-  I.see('pay after tax');
+  I.see('Pay AFTER tax');
+  I.seeElement('#pay-after-tax');
+  I.fillField('#pay-after-tax', '35000');
+  I.checkOption('input[id=pay-after-tax-interval-3]');
   I.click('#main-form-submit');
 
   I.see('Pension scheme');
@@ -121,7 +149,9 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
-  I.see('benefits');
+  I.seeElement('#employee-benefits');
+  I.see('Do or did you receive any employee benefits?');
+  I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
 }).tag('@RET-1130');
 

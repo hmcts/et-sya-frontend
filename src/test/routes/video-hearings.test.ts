@@ -13,23 +13,23 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 });
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
-  test("should return the steps to making a claim page when 'yes' and 'save and continue' are selected", async () => {
+  test("should return the reasonable adjustments page when 'yes' and 'save and continue' are selected", async () => {
     await request(app)
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ videoHearings: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
       });
   });
 
-  test("should return the steps to making a claim page when 'no' and 'save and continue' are selected", async () => {
+  test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected", async () => {
     await request(app)
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ videoHearings: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
       });
   });
 

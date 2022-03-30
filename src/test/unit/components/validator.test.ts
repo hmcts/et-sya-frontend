@@ -8,6 +8,8 @@ import {
   isJobTitleValid,
   isValidInteger,
   isValidUKTelNumber,
+  isWorkAddressLineOneValid,
+  isWorkAddressTownValid,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
 
@@ -230,6 +232,37 @@ describe('Validation', () => {
       { mockRef: '20', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidInteger(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isWorkAddressLineOneValid', () => {
+    it.each([
+      { mockRef: '', expected: 'required' },
+      { mockRef: 'a', expected: undefined },
+      {
+        mockRef:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al.',
+        expected: 'required',
+      },
+      { mockRef: "1 King's Road", expected: undefined },
+      { mockRef: 'Kingston-upon-Thames', expected: undefined },
+    ])('check work address line one is valid', ({ mockRef, expected }) => {
+      expect(isWorkAddressLineOneValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isWorkAddressTownValid', () => {
+    it.each([
+      { mockRef: '', expected: 'required' },
+      { mockRef: 'aa', expected: 'required' },
+      {
+        mockRef: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
+        expected: 'required',
+      },
+      { mockRef: "1 King's Road", expected: undefined },
+      { mockRef: 'Kingston-upon-Thames', expected: undefined },
+    ])('check work addrss town is valid', ({ mockRef, expected }) => {
+      expect(isWorkAddressTownValid(mockRef)).toEqual(expected);
     });
   });
 });
