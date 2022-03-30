@@ -1,4 +1,3 @@
-import generalConfig from 'config';
 import * as express from 'express';
 import helmet from 'helmet';
 
@@ -8,7 +7,6 @@ export interface HelmetConfig {
 
 const googleAnalyticsDomain = '*.google-analytics.com';
 const self = "'self'";
-const idamAuthorizationURL: string = generalConfig.get('services.idam.authorizationURL');
 
 /**
  * Module that enables helmet in the application
@@ -40,7 +38,6 @@ export class Helmet {
           objectSrc: [self],
           scriptSrc,
           styleSrc: [self],
-          formAction: [self, idamAuthorizationURL],
         },
       })
     );
