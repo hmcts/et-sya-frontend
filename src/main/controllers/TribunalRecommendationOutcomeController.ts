@@ -8,30 +8,19 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class SummariseYourClaimController {
+export default class TribunalRecommendationOutcomeController {
   private readonly form: Form;
-  private readonly summariseYourClaimContent: FormContent = {
+  private readonly tribunalRecommendationOutcomeContent: FormContent = {
     fields: {
-      claimSummaryText: {
-        id: 'claim-summary-text',
-        name: 'claim-summary-text',
+      tribunalRecommendationOutcome: {
+        id: 'tribunal-recommendation-outcome',
+        name: 'tribunal-recommendation-outcome',
         type: 'charactercount',
         classes: 'govuk-label',
         label: l => l.label,
         labelHidden: true,
         hint: l => l.textInputHint,
-        maxlength: 2000,
-      },
-      claimSummaryFile: {
-        id: 'claim-summary-file',
-        name: 'claim-summary-file',
-        type: 'upload',
-        classes: 'govuk-label',
-        label: l => l.label,
-        labelHidden: true,
-        hint: l => l.fileUpload.hint,
-        isCollapsable: true,
-        collapsableTitle: l => l.fileUpload.linkText,
+        maxlength: 1000,
       },
     },
     submit: {
@@ -45,21 +34,21 @@ export default class SummariseYourClaimController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.summariseYourClaimContent.fields);
+    this.form = new Form(<FormFields>this.tribunalRecommendationOutcomeContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DESIRED_CLAIM_OUTCOME);
+    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.summariseYourClaimContent, [
+    const content = getPageContent(req, this.tribunalRecommendationOutcomeContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.SUMMARISE_YOUR_CLAIM,
+      TranslationKeys.TRIBUNAL_RECOMMENDATION_OUTCOME,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.SUMMARISE_YOUR_CLAIM, {
+    res.render(TranslationKeys.TRIBUNAL_RECOMMENDATION_OUTCOME, {
       ...content,
     });
   };

@@ -62,6 +62,9 @@ export interface FormInput {
   warning?: Warning;
   conditionalText?: Label;
   subFields?: Record<string, FormField>;
+  isCollapsable?: boolean | null;
+  collapsableTitle?: Label;
+  maxlength?: number | null;
 }
 
 export type FormError = {

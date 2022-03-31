@@ -1,6 +1,6 @@
 {
-  "title": "Tell us what you want from your claim",
-  "h1": "Tell us what you want from your claim (to do)",
+  "title": "What compensation are you seeking",
+  "h1": "What compensation are you seeking? (to do)",
   "collapsableSection1": {
     "linkText": "Compensation - what can a tribunal award?",
     "p1": "If a tribunal decides you’ve been unfairly dismissed, you’ll normally receive compensation which is made up of:",
@@ -11,26 +11,6 @@
     "p4": "Similarly, awards can be reduced if a tribunal decides you’ve failed to follow the guidance set out in the <a href='#' target='_blank'>Acas Code of Practice on disciplinary and grievance procedures.</a>",
     "p5": "In certain claims, such as those involving discrimination, a tribunal may compensate you for ‘injury to feelings’ (individual hurt and distress you may have suffered) in addition to compensation for financial loss."
   },
-  "collapsableSection2": {
-    "linkText": "What is a tribunal recommendation?",
-    "p1": "Depending on the nature and details of your claim, a tribunal can make a variety of recommendations and in the past included recommending:",
-    "li1": "employers review and update their equality and diversity policies",
-    "li2": "employees responsible for discrimination attend diversity and equality training",
-    "li3": "employers put a copy of a tribunal’s decision on their company noticeboard to make it clear to all employees a tribunal has decided discrimination has occurred"
-  },
-  "checkboxHint": "Select all that apply.",
-  "compensation": {
-    "text": "Compensation",
-    "hint": "You’ll be asked to provide an estimate of total compensation"
-  },
-  "tribunalRecommendation": {
-    "text": "A tribunal recommendation",
-    "hint": "You’ll be asked to describe your request to the tribunal"
-  },
-  "oldJob": {
-    "text": "I want my old job back"
-  },
-  "anotherJob": {
-    "text": "To get another job with the employer or an associated employer"
-  }
+  "textInputHint": "Try to set out all compensation you’re claiming for, and provide a total if possible",
+  "amountLabel": "Enter the total compensation amount you are requesting"
 }

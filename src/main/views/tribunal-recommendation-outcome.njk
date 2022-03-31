@@ -1,0 +1,29 @@
+{% extends "template.njk" %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      {{ govukDetails({
+        summaryText: collapsableSection1.linkText,
+        html: "<ol class='govuk-list govuk-list--number'>
+                <li>"+collapsableSection1.li1+"</li>
+                <li>"+collapsableSection1.li2+"</li>
+                <li>"+collapsableSection1.li3+"</li>
+              </ol>"
+      }) }}
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
