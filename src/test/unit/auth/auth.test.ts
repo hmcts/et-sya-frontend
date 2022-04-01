@@ -10,11 +10,12 @@ const mockedAxios = Axios as jest.Mocked<AxiosStatic>;
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IkRvcmlhbiIsInVpZCI6IjEyMyJ9.KaDIFSDdD3ZIYCl_qavvYbQ3a4abk47iBOZhB1-9mUQ';
 const loginUrl = config.get('services.idam.authorizationURL');
+const guid = '4e3cac74-d8cf-4de9-ad20-cf6248ba99aa';
 
 describe('getRedirectUrl', () => {
   test('should create a valid URL to redirect to the login screen', () => {
-    expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK)).toBe(
-      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback`
+    expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK, guid)).toBe(
+      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback?guid=4e3cac74-d8cf-4de9-ad20-cf6248ba99aa`
     );
   });
 });

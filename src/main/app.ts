@@ -5,10 +5,11 @@ import { HTTPError } from 'HttpError';
 import * as bodyParser from 'body-parser';
 import config from 'config';
 import cookieParser from 'cookie-parser';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import favicon from 'serve-favicon';
 
 import { AppRequest } from './definitions/appRequest';
+import { PageUrls, RedisErrors } from './definitions/constants';
 import setupDev from './development';
 import { AppInsights } from './modules/appinsights';
 import { Container } from './modules/awilix';
@@ -43,7 +44,7 @@ new Nunjucks(developmentMode).enableFor(app);
 logger.info('Nunjucks');
 logMemUsage();
 
-new Helmet(config.get('security')).enableFor(app);
+new Helmet(config.get('security'), config.get('services.idam.authorizationURL')).enableFor(app);
 logger.info('Helmet');
 logMemUsage();
 
@@ -86,6 +87,15 @@ setupDev(app, developmentMode);
 app.use((req, res) => {
   res.status(404);
   res.render('not-found');
+});
+
+app.use((error: HTTPError, request: Request, response: Response, next: NextFunction) => {
+  if (error.name === RedisErrors.FAILED_TO_CONNECT || error.name === RedisErrors.FAILED_TO_SAVE) {
+    request.app.set(RedisErrors.REDIS_ERROR, RedisErrors.DISPLAY_MESSAGE);
+    response.redirect(PageUrls.TYPE_OF_CLAIM);
+  } else {
+    next(error);
+  }
 });
 
 // error handler
