@@ -7,4 +7,17 @@
     errorList: getErrors(form.fields)
   }) if getErrors(form.fields).length > 0
 }}
+
+{{ 
+  govukErrorSummary({
+    titleText: errorSummaryTitle,
+    errorList: [
+    {
+      text: redisError
+    }
+  ]
+  }) if redisError
+}}
+
+
 {% endblock %}
