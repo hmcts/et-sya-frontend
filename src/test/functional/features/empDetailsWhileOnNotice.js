@@ -4,8 +4,11 @@ const { I } = inject();
 
 Scenario('Claim while on notice for organisation', () => {
   I.amOnPage(testUrl);
+  I.executeScript(function () {
+    sessionStorage.clear();
+  });
   I.seeElement('#still-working-2');
-  I.checkOption('input[id=still-working-2]');
+  I.checkOption('#still-working-2');
   I.click('#main-form-submit');
 
   I.seeElement('#job-title');
@@ -13,17 +16,24 @@ Scenario('Claim while on notice for organisation', () => {
   I.click('#main-form-submit');
 
   I.see('Employment start date');
-  I.click('#main-form-submit');
-  I.see('Enter your employment start date.');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('notice end');
+  I.see('When does your notice period end?');
+  I.fillField('#notice-dates-day', '20');
+  I.fillField('#notice-dates-month', '06');
+  I.fillField('#notice-dates-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('notice pay');
+  I.see('Are you getting paid for working your notice period?');
+  I.checkOption('[name="noticePeriodLength"]');
+  I.fillField('[name="noticePeriodUnit"]', '1');
+  I.checkOption('#notice-period-paid');
+
+  I.fillField('[name="noticePeriodUnitPaid"]', '3');
+  I.checkOption('#notice-period-paid-2');
   I.click('#main-form-submit');
 
   I.see('What are your average weekly hours?');
@@ -52,4 +62,6 @@ Scenario('Claim while on notice for organisation', () => {
   I.see('Do or did you receive any employee benefits?');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-}).tag('@RET-1131');
+})
+  .tag('@RET-1131')
+  .tag('@RET-1023');
