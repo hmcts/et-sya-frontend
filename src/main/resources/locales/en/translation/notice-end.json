@@ -4,7 +4,8 @@
   "p2": "For example, 22 04 2014.",
   "errors": {
     "noticeEnds": {
-      "required": "Enter your notice date. For example, 22 04 2014"
+      "required": "Enter your notice date. For example, 22 04 2014",
+      "invalidDateTooFarInPast": "You have entered a year which is too far in the past"
     }
   }
 }
