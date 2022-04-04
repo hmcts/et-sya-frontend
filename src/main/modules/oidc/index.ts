@@ -20,7 +20,7 @@ export class Oidc {
 
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response) => {
       const redisClient = req.app.locals?.redisClient;
-      const guid = req.query?.guid;
+      const guid = req.query?.state;
       if (redisClient && guid) {
         redisClient.get(guid, (err: Error, typesOfClaim: string) => {
           if (typesOfClaim) {
