@@ -14,8 +14,9 @@ const guid = '4e3cac74-d8cf-4de9-ad20-cf6248ba99aa';
 
 describe('getRedirectUrl', () => {
   test('should create a valid URL to redirect to the login screen', () => {
+    const encoderedGuid = encodeURIComponent(`?guid=${guid}`);
     expect(getRedirectUrl('http://localhost', AuthUrls.CALLBACK, guid)).toBe(
-      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback?guid=4e3cac74-d8cf-4de9-ad20-cf6248ba99aa`
+      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=http://localhost/oauth2/callback${encoderedGuid}`
     );
   });
 });
