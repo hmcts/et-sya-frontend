@@ -24,10 +24,10 @@ export const setupCheckboxParser: CheckboxParser =
       field.parser = (formData: AnyRecord) => {
         const data = formData[key];
         const checkbox: string[] = [];
-        if (typeof data === 'string') {
-          checkbox.push(data);
-        } else {
+        if (Array.isArray(data)) {
           checkbox.push(...data);
+        } else {
+          checkbox.push(data);
         }
 
         let checkboxValues;
