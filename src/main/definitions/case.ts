@@ -51,7 +51,7 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: string; //TODO: implement proper upload document object when connecting to api.
-  claimOutcome: ClaimOutcomes[];
+  claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;

@@ -47,9 +47,10 @@ export default class CompensationOutcomeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
-      ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
-      : PageUrls.CLAIM_STEPS;
+    const redirectUrl =
+      req.session.userCase && req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
+        ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
+        : PageUrls.CLAIM_STEPS;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

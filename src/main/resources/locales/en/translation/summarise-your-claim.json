@@ -1,6 +1,6 @@
 {
   "title": "Summarise what happened to you",
-  "h1": "Summarise what happened to you (to do)",
+  "h1": "Summarise what happened to you (optional) (to do)",
   "p1": "This is your opportunity to explain why you are making a claim to an employment tribunal.",
   "p2": "It’s important you focus on setting out what happened to you and explain, as far as you can, why you think what happened was unlawful.",
   "p3": "Your claim will be sent to the respondents who will have a chance to reply through the tribunal.",
@@ -33,6 +33,6 @@
   "textInputHint": "Use this box to describe the events around your dispute, or add to your claim by uploading a document",
   "fileUpload": {
     "linkText": "Upload a document to support your claim (optional)",
-    "hint": "<p>You can only upload 1 document and it must be in one of the following text formats:</p><ul></ul>"
+    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
   }
 }
