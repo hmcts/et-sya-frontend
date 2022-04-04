@@ -14,7 +14,6 @@ export default class SummariseYourClaimController {
     fields: {
       claimSummaryText: {
         id: 'claim-summary-text',
-        name: 'claim-summary-text',
         type: 'charactercount',
         classes: 'govuk-label',
         label: l => l.label,
@@ -24,7 +23,6 @@ export default class SummariseYourClaimController {
       },
       claimSummaryFile: {
         id: 'claim-summary-file',
-        name: 'claim-summary-file',
         type: 'upload',
         classes: 'govuk-label',
         label: l => l.label,

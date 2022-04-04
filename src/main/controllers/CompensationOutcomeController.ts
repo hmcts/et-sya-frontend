@@ -15,7 +15,6 @@ export default class CompensationOutcomeController {
     fields: {
       compensationOutcome: {
         id: 'compensation-outcome',
-        name: 'compensation-outcome',
         type: 'charactercount',
         classes: 'govuk-label',
         label: l => l.label,
@@ -25,7 +24,6 @@ export default class CompensationOutcomeController {
       },
       compensationAmount: {
         id: 'compensation-amount',
-        name: 'compensation-amount',
         type: 'currency',
         classes: 'govuk-input--width-5',
         label: (l: AnyRecord): string => l.amountLabel,
@@ -48,7 +46,9 @@ export default class CompensationOutcomeController {
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl =
-      req.session.userCase && req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
+      req.session.userCase &&
+      req.session.userCase.claimOutcome &&
+      req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
         ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
         : PageUrls.CLAIM_STEPS;
     setUserCase(req, this.form);

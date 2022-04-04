@@ -22,7 +22,14 @@ export const setupCheckboxParser: CheckboxParser =
   ([key, field]: [string, FormOptions]) => {
     if (field?.type === 'checkboxes') {
       field.parser = (formData: AnyRecord) => {
-        const checkbox = formData[key] ?? [];
+        const data = formData[key];
+        const checkbox: string[] = [];
+        if (typeof data === 'string') {
+          checkbox.push(data);
+        } else {
+          checkbox.push(...data);
+        }
+
         let checkboxValues;
         if (field.values.length > 1) {
           checkboxValues = checkbox.filter(Boolean);

@@ -14,7 +14,6 @@ export default class TribunalRecommendationOutcomeController {
     fields: {
       tribunalRecommendationOutcome: {
         id: 'tribunal-recommendation-outcome',
-        name: 'tribunal-recommendation-outcome',
         type: 'charactercount',
         classes: 'govuk-label',
         label: l => l.label,
