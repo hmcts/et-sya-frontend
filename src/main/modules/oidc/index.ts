@@ -25,6 +25,8 @@ export class Oidc {
         redisClient.get(guid, (err: Error, typesOfClaim: string) => {
           if (typesOfClaim) {
             req.session.userCase.typeOfClaim = JSON.parse(typesOfClaim);
+          } else {
+            res.redirect(PageUrls.TYPE_OF_CLAIM);
           }
           if (err) {
             const error = new Error(err.message);
@@ -35,6 +37,8 @@ export class Oidc {
             throw error;
           }
         });
+      } else {
+        res.redirect(PageUrls.TYPE_OF_CLAIM);
       }
 
       if (typeof req.query.code === 'string') {
