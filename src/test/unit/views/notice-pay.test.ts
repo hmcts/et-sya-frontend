@@ -15,9 +15,11 @@ const noticePayJson = JSON.parse(noticePayJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticePayJson.h1;
-const buttonClass = 'govuk-button';
-
+const buttonId = 'main-form-submit';
+const noticePayInputFieldClass = 'govuk-input govuk-input--width-2';
+const radioButtonLabels = 'govuk-label govuk-radios__label';
 let htmlRes: Document;
+
 describe('Notice pay page', () => {
   beforeAll(async () => {
     await request(app)
@@ -29,11 +31,21 @@ describe('Notice pay page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+    expect(title[0].innerHTML).contains(expectedTitle, 'Are you getting paid for working your notice period?');
   });
 
   it('should display continue button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    const button = htmlRes.getElementById(buttonId);
+    expect(button.innerHTML).contains('Save and continue', 'Save and continue');
+  });
+
+  it('should display yes or no radios', () => {
+    const radioLabels = htmlRes.getElementsByClassName(radioButtonLabels);
+    expect(radioLabels.length).equals(6);
+  });
+
+  it('should display first hint when user click yes', () => {
+    const inputFields = htmlRes.getElementsByClassName(noticePayInputFieldClass);
+    expect(inputFields.length).equals(2);
   });
 });
