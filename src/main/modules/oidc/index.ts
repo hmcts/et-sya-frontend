@@ -1,5 +1,5 @@
 import config from 'config';
-import { Application, Response } from 'express';
+import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
@@ -18,15 +18,13 @@ export class Oidc {
       req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
     });
 
-    app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response) => {
+    app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
       const redisClient = req.app.locals?.redisClient;
       const guid = req.query?.state;
       if (redisClient && guid) {
         redisClient.get(guid, (err: Error, typesOfClaim: string) => {
           if (typesOfClaim) {
             req.session.userCase.typeOfClaim = JSON.parse(typesOfClaim);
-          } else {
-            res.redirect(PageUrls.TYPE_OF_CLAIM);
           }
           if (err) {
             const error = new Error(err.message);
@@ -34,11 +32,13 @@ export class Oidc {
             if (err.stack) {
               error.stack = err.stack;
             }
-            throw error;
+            return next(error);
           }
         });
       } else {
-        res.redirect(PageUrls.TYPE_OF_CLAIM);
+        const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
+        err.name = RedisErrors.FAILED_TO_CONNECT;
+        return next(err);
       }
 
       if (typeof req.query.code === 'string') {
