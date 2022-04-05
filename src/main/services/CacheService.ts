@@ -2,10 +2,8 @@ import { randomUUID } from 'crypto';
 
 import { RedisClient } from 'redis';
 
-import { TypesOfClaim } from '../definitions/definition';
-
-export const cacheTypesOfClaim = (redisClient: RedisClient, typeOfClaim: TypesOfClaim[]): string => {
+export const cacheTypesOfClaim = (redisClient: RedisClient, cacheMap: Map<string, string>): string => {
   const guid = randomUUID();
-  redisClient.set(guid, JSON.stringify(typeOfClaim));
+  redisClient.set(guid, JSON.stringify(Array.from(cacheMap.entries())));
   return guid;
 };

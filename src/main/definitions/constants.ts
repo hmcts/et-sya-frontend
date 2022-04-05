@@ -124,3 +124,13 @@ export const RedisErrors = {
   FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
   CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;
+
+export const CacheMapNames = {
+  CASE_TYPE: 'caseType',
+  TYPES_OF_CLAIM: 'typesOfClaim',
+};
+
+export const CcdDataModel = {
+  SINGLE_CASE: 'ET_EnglandWales',
+  MULTIPLE_CASE: 'ET_EnglandWales_Multiple',
+};

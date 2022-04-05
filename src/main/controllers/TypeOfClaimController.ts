@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { AuthUrls, CacheMapNames, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { cacheTypesOfClaim } from '../services/CacheService';
@@ -50,19 +50,21 @@ export default class TypeOfClaimController {
 
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
-      const typsOfClaims = req.session.userCase?.typeOfClaim;
       if (redisClient) {
-        if (typsOfClaims) {
-          try {
-            req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
-          } catch (err) {
-            const error = new Error(err.message);
-            error.name = RedisErrors.FAILED_TO_SAVE;
-            if (err.stack) {
-              error.stack = err.stack;
-            }
-            throw error;
+        const cacheMap = new Map<string, string>([
+          [CacheMapNames.CASE_TYPE, JSON.stringify(req.session.userCase?.isASingleClaim)],
+          [CacheMapNames.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+        ]);
+
+        try {
+          req.app.set('guid', cacheTypesOfClaim(redisClient, cacheMap));
+        } catch (err) {
+          const error = new Error(err.message);
+          error.name = RedisErrors.FAILED_TO_SAVE;
+          if (err.stack) {
+            error.stack = err.stack;
           }
+          throw error;
         }
       } else {
         const err = new Error(RedisErrors.CLIENT_NOT_FOUND);

@@ -10,6 +10,9 @@
     "addressLookup": {
       "url": "ADDRESS_LOOK_UP_URL",
       "token": "ADDRESS_LOOKUP_TOKEN"
+    },
+    "etSyaApi": {
+      "host": "ET_SYA_API_HOST"
     }
   },
   "session": {

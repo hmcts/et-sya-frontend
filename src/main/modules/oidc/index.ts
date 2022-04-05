@@ -1,9 +1,18 @@
+import axios from 'axios';
 import config from 'config';
 import { Application, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import { YesOrNo } from '../../definitions/case';
+import {
+  AuthUrls,
+  CacheMapNames,
+  CcdDataModel,
+  HTTPS_PROTOCOL,
+  PageUrls,
+  RedisErrors,
+} from '../../definitions/constants';
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -21,10 +30,19 @@ export class Oidc {
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response) => {
       const redisClient = req.app.locals?.redisClient;
       const guid = req.query?.guid;
+      let caseType;
       if (redisClient && guid) {
-        redisClient.get(guid, (err: Error, typesOfClaim: string) => {
-          if (typesOfClaim) {
-            req.session.userCase.typeOfClaim = JSON.parse(typesOfClaim);
+        redisClient.get(guid, (err: Error, userData: string) => {
+          if (userData) {
+            const userDataMap = new Map(JSON.parse(userData));
+            switch (userDataMap.get(CacheMapNames.CASE_TYPE)) {
+              case YesOrNo.YES:
+                caseType = CcdDataModel.SINGLE_CASE;
+                break;
+              case YesOrNo.NO:
+                caseType = CcdDataModel.MULTIPLE_CASE;
+                break;
+            }
           }
           if (err) {
             const error = new Error(err.message);
@@ -39,6 +57,24 @@ export class Oidc {
 
       if (typeof req.query.code === 'string') {
         req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
+
+        const conf = {
+          headers: {
+            Authorization: `Bearer ${req.session.user.accessToken}`,
+          },
+        };
+        const body = {
+          case_type: caseType,
+          case_source: '',
+        };
+
+        const syaApiHost: string = config.get('services.etSyaApi.host');
+        await axios.post(
+          `http://${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`,
+          body,
+          conf
+        );
+
         req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
       } else {
         res.redirect(AuthUrls.LOGIN);
