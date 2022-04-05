@@ -86,12 +86,13 @@ describe('Validation', () => {
   });
 
   describe('isDateInputInvalid()', () => {
-    const dateGreaterThan100 = new Date();
-    dateGreaterThan100.setFullYear(dateGreaterThan100.getFullYear() - 101);
+    const dateGreaterThan100 = new Date(1922, 3, 17);
+    dateGreaterThan100.setFullYear(dateGreaterThan100.getFullYear() - 100);
 
     it.each([
       { date: { day: 1, month: 1, year: 1970 }, expected: undefined },
       { date: { day: 31, month: 12, year: 2000 }, expected: undefined },
+
       {
         date: { day: 31, month: 12, year: 123 },
         expected: { error: 'invalidYear', fieldName: 'year' },

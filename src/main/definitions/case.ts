@@ -32,8 +32,12 @@ export interface Case {
   presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
+  noticeEnd?: string;
   noticePeriod?: YesOrNo;
   noticePeriodLength?: string;
+  noticePeriodUnitPaid?: WeeksOrMonths;
+  noticePeriodPaid?: string;
+  noticePeriodAmountPaid?: string;
   noticePeriodUnit?: WeeksOrMonths;
   isStillWorking: StillWorking;
   workAddress1?: string;
