@@ -15,5 +15,25 @@ def product = "et"
 def component = "sya"
 
 withNightlyPipeline(type, product, component) {
+    env.TEST_URL = params.URL_TO_TEST
+    env.TEST_E2E_URL = params.URL_TO_TEST
+    env.RUNNING_ENV = params.ENVIRONMENT
+
+
+    enableFullFunctionalTest()
+    enableCrossBrowserTest()
+
+    after('fullFunctionalTest') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
+
+        publishHTML target: [
+                allowMissing : true,
+                alwaysLinkToLastBuild: true,
+                keepAll : true,
+                reportDir : "functional-output",
+                reportFiles : "et-e2e-result.html",
+                reportName : "ET E2E tests result"
+        ]
+    }
 
 }

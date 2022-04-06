@@ -1,8 +1,8 @@
 module.exports = {
   root: true,
-  env: { browser: true, es6: true, node: true },
+  env: { browser: true, es6: true, node: true, 'codeceptjs/codeceptjs': true },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'import', 'jest'],
+  plugins: ['@typescript-eslint', 'prettier', 'import', 'jest', 'codeceptjs'],
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -12,6 +12,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:codeceptjs/recommended',
   ],
   globals: {
     Atomics: 'readonly',
