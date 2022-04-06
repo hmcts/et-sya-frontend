@@ -201,5 +201,4 @@ describe('Check your answers confirmation page', () => {
     const warning = htmlRes.getElementsByClassName(warningClass);
     expect(warning[0].innerHTML).contains(expectedWarningText, 'Warning text does not exist');
   });
-
 });
