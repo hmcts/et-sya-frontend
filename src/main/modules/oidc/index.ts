@@ -1,4 +1,4 @@
-import axios from 'axios';
+//import axios from 'axios';
 import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
@@ -13,6 +13,7 @@ import {
   PageUrls,
   RedisErrors,
 } from '../../definitions/constants';
+import { createCase } from '../../services/CaseService';
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -30,6 +31,12 @@ export class Oidc {
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
       const redisClient = req.app.locals?.redisClient;
       const guid = req.query?.state;
+      if (typeof req.query.code === 'string') {
+        req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
+      } else {
+        return res.redirect(PageUrls.TYPE_OF_CLAIM);
+      }
+
       let caseType: string;
       if (redisClient && guid) {
         redisClient.get(guid, (err: Error, userData: string) => {
@@ -52,7 +59,14 @@ export class Oidc {
             }
             return next(error);
           } else {
-            createCase();
+            createCase(caseType, req.session.user.accessToken)
+              .then(() => {
+                req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
+              })
+              .catch(() => {
+                //to-do: should be handled by error handler
+                return res.redirect(PageUrls.TYPE_OF_CLAIM);
+              });
           }
         });
       } else {
@@ -60,34 +74,6 @@ export class Oidc {
         err.name = RedisErrors.FAILED_TO_CONNECT;
         return next(err);
       }
-
-      const createCase = async () => {
-        const conf = {
-          headers: {
-            Authorization: `Bearer ${req.session.user.accessToken}`,
-          },
-        };
-        const body = {
-          case_type: caseType,
-          case_source: '',
-        };
-
-        const syaApiHost: string = config.get('services.etSyaApi.host');
-        await axios
-          .post(`${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf)
-          .then(async () => {
-            if (typeof req.query.code === 'string') {
-              req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
-              req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
-            } else {
-              return res.redirect(PageUrls.TYPE_OF_CLAIM);
-            }
-          })
-          .catch(() => {
-            //to-do: should be handled by error handler
-            return res.redirect(PageUrls.TYPE_OF_CLAIM);
-          });
-      };
     });
   }
 }
