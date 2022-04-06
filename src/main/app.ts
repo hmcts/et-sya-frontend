@@ -90,7 +90,11 @@ app.use((req, res) => {
 });
 
 app.use((error: HTTPError, request: Request, response: Response, next: NextFunction) => {
-  if (error.name === RedisErrors.FAILED_TO_CONNECT || error.name === RedisErrors.FAILED_TO_SAVE) {
+  if (
+    error.name === RedisErrors.FAILED_TO_CONNECT ||
+    error.name === RedisErrors.FAILED_TO_SAVE ||
+    error.name === RedisErrors.FAILED_TO_RETREIVE
+  ) {
     request.app.set(RedisErrors.REDIS_ERROR, RedisErrors.DISPLAY_MESSAGE);
     response.redirect(PageUrls.TYPE_OF_CLAIM);
   } else {

@@ -1,10 +1,13 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 
+{% set labelClasses %}{% if field.labelSize !== null%}govuk-label--{{ field.labelSize if field.labelSize else "m"}}{% endif %}{% endset %}
+
 {{ govukSelect({
   id: field.id if field.id else fieldName,
   name: fieldName,
   label: {
-    text: getContent(field.label)
+    text: getContent(field.label),
+    classes: "hidden" if field.labelHidden else labelClasses
   },
   items: formItems(field.values, userCase[fieldName]),
   errorMessage: getError(fieldName),
@@ -12,3 +15,4 @@
     classes: "hidden " + field.id if field.hidden else field.id
   }
 }) }}
+

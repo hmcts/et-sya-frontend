@@ -1,22 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-
 import { expect } from 'chai';
 import request from 'supertest';
 
 import { app } from '../../../main/app';
 
-const addressDetailsJSONRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/address-details.json'),
-  'utf-8'
-);
-const adJSON = JSON.parse(addressDetailsJSONRaw);
-
 const PAGE_URL = '/address-details';
 const titleClass = 'govuk-heading-xl';
-const helperClass = 'govuk-label';
-const expectedTitle = adJSON.h1;
-const expectedHelperText = adJSON.hint;
+const expectedTitle = 'What is your contact or home address?';
 const buttonClass = 'govuk-button';
 const inputs = '[class*="address"]';
 const expectedInputLabel1 = 'Building and street';
@@ -40,22 +29,12 @@ describe('Address details page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display helper text', () => {
-    const helper = htmlRes.getElementsByClassName(helperClass);
-    expect(helper[0].innerHTML).contains(expectedHelperText, 'Could not find helper text');
-  });
-
-  it('should display save and continue button', () => {
+  it("should display the 'Find Address' button", () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
   });
 
-  it('should display save for later button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
-  });
-
-  it('should display 5 input fields', () => {
+  it('should have 5 input address fields which are conditionally displayed', () => {
     const inputFields = htmlRes.querySelectorAll(inputs);
     expect(inputFields.length).equal(5, `only ${inputFields.length} found`);
   });

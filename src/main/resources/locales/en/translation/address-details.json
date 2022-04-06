@@ -1,7 +1,7 @@
 {
   "title": "Address details",
-  "h1": "What is your contact address?",
-  "hint": "We'll send any correspondence to this address.",
+  "pageHeader": "What is your contact or home address?",
+  "pageText": "We'll send any correspondence to this address.",
   "enterPostcode": "Enter a UK postcode",
   "buildingStreet": "Building and street",
   "town": "Town or city",

@@ -14,7 +14,7 @@ export default class AddressDetailsController {
   private readonly addressDetailsContent: FormContent = {
     fields: {
       address1: {
-        id: 'address-line1',
+        id: 'address1',
         name: 'address-line1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -26,7 +26,7 @@ export default class AddressDetailsController {
         },
       },
       address2: {
-        id: 'address-line2',
+        id: 'address2',
         name: 'address-line2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -37,7 +37,7 @@ export default class AddressDetailsController {
         },
       },
       addressTown: {
-        id: 'address-town',
+        id: 'addressTown',
         name: 'address-town',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -49,7 +49,7 @@ export default class AddressDetailsController {
         validator: isFieldFilledIn,
       },
       addressCounty: {
-        id: 'address-county',
+        id: 'addressCounty',
         name: 'address-county',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
@@ -57,7 +57,7 @@ export default class AddressDetailsController {
         labelSize: null,
       },
       addressPostcode: {
-        id: 'address-postcode',
+        id: 'addressPostcode',
         name: 'address-postcode',
         type: 'text',
         classes: 'govuk-label govuk-input--width-10',
@@ -93,6 +93,7 @@ export default class AddressDetailsController {
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDRESS_DETAILS,
+      'enter-address',
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_DETAILS, {
