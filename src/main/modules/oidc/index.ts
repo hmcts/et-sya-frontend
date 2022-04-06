@@ -30,12 +30,12 @@ export class Oidc {
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response) => {
       const redisClient = req.app.locals?.redisClient;
       const guid = req.query?.guid;
-      let caseType;
+      let caseType: string;
       if (redisClient && guid) {
-        redisClient.get(guid, (err: Error, userData: string) => {
+        await redisClient.get(guid, (err: Error, userData: string) => {
           if (userData) {
             const userDataMap = new Map(JSON.parse(userData));
-            switch (userDataMap.get(CacheMapNames.CASE_TYPE)) {
+            switch (String(userDataMap.get(CacheMapNames.CASE_TYPE)).slice(1, -1)) {
               case YesOrNo.YES:
                 caseType = CcdDataModel.SINGLE_CASE;
                 break;
@@ -51,30 +51,29 @@ export class Oidc {
               error.stack = err.stack;
             }
             throw error;
+          } else {
+            const conf = {
+              headers: {
+                Authorization: `Bearer ${req.session.user.accessToken}`,
+              },
+            };
+            const body = {
+              case_type: caseType,
+              case_source: '',
+            };
+
+            const syaApiHost: string = config.get('services.etSyaApi.host');
+            axios
+              .post(`${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf)
+              .catch(function () {
+                return res.redirect(PageUrls.TYPE_OF_CLAIM);
+              });
           }
         });
       }
 
       if (typeof req.query.code === 'string') {
         req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
-
-        const conf = {
-          headers: {
-            Authorization: `Bearer ${req.session.user.accessToken}`,
-          },
-        };
-        const body = {
-          case_type: caseType,
-          case_source: '',
-        };
-
-        const syaApiHost: string = config.get('services.etSyaApi.host');
-        await axios.post(
-          `http://${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`,
-          body,
-          conf
-        );
-
         req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
       } else {
         res.redirect(AuthUrls.LOGIN);
