@@ -27,12 +27,12 @@ export class Oidc {
       req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
     });
 
-    app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response) => {
+    app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response) => {
       const redisClient = req.app.locals?.redisClient;
       const guid = req.query?.guid;
       let caseType: string;
       if (redisClient && guid) {
-        await redisClient.get(guid, (err: Error, userData: string) => {
+        redisClient.get(guid, (err: Error, userData: string) => {
           if (userData) {
             const userDataMap = new Map(JSON.parse(userData));
             switch (String(userDataMap.get(CacheMapNames.CASE_TYPE)).slice(1, -1)) {
@@ -52,32 +52,38 @@ export class Oidc {
             }
             throw error;
           } else {
-            const conf = {
-              headers: {
-                Authorization: `Bearer ${req.session.user.accessToken}`,
-              },
-            };
-            const body = {
-              case_type: caseType,
-              case_source: '',
-            };
-
-            const syaApiHost: string = config.get('services.etSyaApi.host');
-            axios
-              .post(`${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf)
-              .catch(function () {
-                return res.redirect(PageUrls.TYPE_OF_CLAIM);
-              });
+            createCase();
           }
         });
       }
 
-      if (typeof req.query.code === 'string') {
-        req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
-        req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
-      } else {
-        res.redirect(AuthUrls.LOGIN);
-      }
+      const createCase = async () => {
+        const conf = {
+          headers: {
+            Authorization: `Bearer ${req.session.user.accessToken}`,
+          },
+        };
+        const body = {
+          case_type: caseType,
+          case_source: '',
+        };
+
+        const syaApiHost: string = config.get('services.etSyaApi.host');
+        await axios
+          .post(`${syaApiHost}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf)
+          .then(async () => {
+            if (typeof req.query.code === 'string') {
+              req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
+              req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
+            } else {
+              return res.redirect(PageUrls.TYPE_OF_CLAIM);
+            }
+          })
+          .catch(() => {
+            //to-do: should be handled by error handler
+            return res.redirect(PageUrls.TYPE_OF_CLAIM);
+          });
+      };
     });
   }
 }
