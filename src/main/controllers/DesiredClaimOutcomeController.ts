@@ -23,23 +23,27 @@ export default class DesiredClaimOutcomeController {
         values: [
           {
             id: 'claimOutcome',
+            name: 'claimOutcome',
             label: l => l.compensation.text,
             hint: l => l.compensation.hint,
             value: ClaimOutcomes.COMPENSATION,
           },
           {
             id: 'claimOutcome',
+            name: 'claimOutcome',
             label: l => l.tribunalRecommendation.text,
             hint: l => l.tribunalRecommendation.hint,
             value: ClaimOutcomes.TRIBUNAL_RECOMMENDATION,
           },
           {
             id: 'claimOutcome',
+            name: 'claimOutcome',
             label: l => l.oldJob.text,
             value: ClaimOutcomes.OLD_JOB,
           },
           {
             id: 'claimOutcome',
+            name: 'claimOutcome',
             label: l => l.anotherJob.text,
             value: ClaimOutcomes.ANOTHER_JOB,
           },
