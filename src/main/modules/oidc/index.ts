@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from 'config';
-import { Application, Response } from 'express';
+import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
@@ -27,9 +27,9 @@ export class Oidc {
       req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
     });
 
-    app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response) => {
+    app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
       const redisClient = req.app.locals?.redisClient;
-      const guid = req.query?.guid;
+      const guid = req.query?.state;
       let caseType: string;
       if (redisClient && guid) {
         redisClient.get(guid, (err: Error, userData: string) => {
@@ -50,11 +50,15 @@ export class Oidc {
             if (err.stack) {
               error.stack = err.stack;
             }
-            throw error;
+            return next(error);
           } else {
             createCase();
           }
         });
+      } else {
+        const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
+        err.name = RedisErrors.FAILED_TO_CONNECT;
+        return next(err);
       }
 
       const createCase = async () => {
