@@ -1,4 +1,3 @@
-//import axios from 'axios';
 import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
@@ -59,7 +58,7 @@ export class Oidc {
             }
             return next(error);
           } else {
-            createCase(caseType, req.session.user.accessToken)
+            createCase(caseType, req.session.user.accessToken, config.get('services.etSyaApi.host'))
               .then(() => {
                 req.session.save(() => res.redirect(PageUrls.NEW_ACCOUNT_LANDING));
               })
