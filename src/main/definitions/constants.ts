@@ -50,6 +50,8 @@ export const TranslationKeys = {
   CHECK_ANSWERS: 'check-your-answers',
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
   DESIRED_CLAIM_OUTCOME: 'desired-claim-outcome',
+  COMPENSATION_OUTCOME: 'compensation-outcome',
+  TRIBUNAL_RECOMMENDATION_OUTCOME: 'tribunal-recommendation-outcome',
   END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
   PRESENT_EMPLOYER: 'present-employer',
@@ -105,6 +107,8 @@ export const PageUrls = {
   NEW_JOB_PAY: '/new-job-pay-before-tax',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
+  COMPENSATION_OUTCOME: '/what-compensation-are-you-seeking',
+  TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
 } as const;
 

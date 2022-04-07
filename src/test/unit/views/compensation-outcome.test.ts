@@ -7,23 +7,24 @@ import request from 'supertest';
 import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
 
-const desiredClaimOutcomeJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/desired-claim-outcome.json'),
+const compensationOutcomeJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/compensation-outcome.json'),
   'utf-8'
 );
-const desiredClaimOutcomeJson = JSON.parse(desiredClaimOutcomeJsonRaw);
+const compensationOutcomeJson = JSON.parse(compensationOutcomeJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const detailsClass = 'govuk-details';
 const buttonClass = 'govuk-button';
-const checkboxesClass = 'govuk-checkboxes';
-const expectedTitle = desiredClaimOutcomeJson.h1;
+const textInputId = 'compensation-outcome';
+const currencyInputId = 'compensation-amount';
+const expectedTitle = compensationOutcomeJson.h1;
 
 let htmlRes: Document;
-describe('Desired Claim Outcome page', () => {
+describe('Compensation Outcome page', () => {
   beforeAll(async () => {
     await request(app)
-      .get(PageUrls.DESIRED_CLAIM_OUTCOME)
+      .get(PageUrls.COMPENSATION_OUTCOME)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -36,12 +37,17 @@ describe('Desired Claim Outcome page', () => {
 
   it('should display expandable details section', () => {
     const details = htmlRes.getElementsByClassName(detailsClass);
-    expect(details.length).equals(3, 'Incorrect number of expandable details sections');
+    expect(details.length).equals(2, 'Incorrect number of expandable details sections');
   });
 
-  it('should display checkboxes', () => {
-    const checkboxes = htmlRes.getElementsByClassName(checkboxesClass);
-    expect(checkboxes.length).equals(1, 'Could not find textarea');
+  it('should display textarea', () => {
+    const textarea = htmlRes.getElementById(textInputId);
+    expect(textarea.id).equals(textInputId, 'Could not find textarea');
+  });
+
+  it('should display currency input', () => {
+    const input = htmlRes.getElementById(currencyInputId);
+    expect(input.id).equals(currencyInputId, 'Could not find currency input');
   });
 
   it('should display save and continue button', () => {
