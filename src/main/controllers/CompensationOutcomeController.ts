@@ -3,33 +3,31 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ClaimOutcomes } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class SummariseYourClaimController {
+export default class CompensationOutcomeController {
   private readonly form: Form;
-  private readonly summariseYourClaimContent: FormContent = {
+  private readonly compensationOutcomeContent: FormContent = {
     fields: {
-      claimSummaryText: {
-        id: 'claim-summary-text',
+      compensationOutcome: {
+        id: 'compensation-outcome',
         type: 'charactercount',
         classes: 'govuk-label',
         label: l => l.label,
         labelHidden: true,
         hint: l => l.textInputHint,
-        maxlength: 2000,
+        maxlength: 1000,
       },
-      claimSummaryFile: {
-        id: 'claim-summary-file',
-        type: 'upload',
-        classes: 'govuk-label',
-        label: l => l.label,
-        labelHidden: true,
-        hint: l => l.fileUpload.hint,
-        isCollapsable: true,
-        collapsableTitle: l => l.fileUpload.linkText,
+      compensationAmount: {
+        id: 'compensation-amount',
+        type: 'currency',
+        classes: 'govuk-input--width-5',
+        label: (l: AnyRecord): string => l.amountLabel,
+        attributes: { maxLength: 12 },
       },
     },
     submit: {
@@ -43,21 +41,27 @@ export default class SummariseYourClaimController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.summariseYourClaimContent.fields);
+    this.form = new Form(<FormFields>this.compensationOutcomeContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl =
+      req.session.userCase &&
+      req.session.userCase.claimOutcome &&
+      req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
+        ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
+        : PageUrls.CLAIM_STEPS;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DESIRED_CLAIM_OUTCOME);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.summariseYourClaimContent, [
+    const content = getPageContent(req, this.compensationOutcomeContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.SUMMARISE_YOUR_CLAIM,
+      TranslationKeys.COMPENSATION_OUTCOME,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.SUMMARISE_YOUR_CLAIM, {
+    res.render(TranslationKeys.COMPENSATION_OUTCOME, {
       ...content,
     });
   };

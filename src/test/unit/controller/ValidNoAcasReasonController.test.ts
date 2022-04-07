@@ -1,5 +1,6 @@
 import ValidNoAcasReasonController from '../../../main/controllers/ValidNoAcasReasonController';
 import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,13 +11,12 @@ describe('Valid no acas reason Controller', () => {
   };
 
   it('should render the Valid No Acas Reason controller page', () => {
-    const acasSingleClaimController = new ValidNoAcasReasonController();
-
+    const controller = new ValidNoAcasReasonController();
     const response = mockResponse();
     const userCase = { validNoAcasReason: YesOrNo.YES };
     const request = mockRequest({ t, userCase });
 
-    acasSingleClaimController.get(request, response);
+    controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('valid-no-acas-reason', expect.anything());
   });
 
@@ -46,7 +46,7 @@ describe('Valid no acas reason Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/type-of-claim');
+      expect(res.redirect).toBeCalledWith(PageUrls.TYPE_OF_CLAIM);
       expect(req.session.userCase).toStrictEqual({
         validNoAcasReason: YesOrNo.YES,
       });

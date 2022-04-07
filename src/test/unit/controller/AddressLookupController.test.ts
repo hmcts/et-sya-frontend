@@ -1,8 +1,8 @@
 import * as app from '../../../main/address/index';
 import AddressLookupController from '../../../main/controllers/AddressLookupController';
-import { mockRequest } from '../../unit/mocks/mockRequest';
-import { mockResponse } from '../../unit/mocks/mockResponse';
-import { addressLookupResponse } from '../../unit/mocks/mockedAddressLookupResponse';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+import { addressLookupResponse } from '../mocks/mockedAddressLookupResponse';
 
 const mockGetAddressesFromPostcode = jest.spyOn(app, 'getAddressesForPostcode');
 

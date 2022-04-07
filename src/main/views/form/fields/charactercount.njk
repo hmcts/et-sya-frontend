@@ -1,0 +1,21 @@
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{{ govukCharacterCount({
+  id: field.id if field.id else fieldName,
+  name: fieldName,
+  label: {
+    text: getContent(field.label),
+    classes: "hidden" if field.labelHidden else labelClasses
+  },
+  hint: {
+    html: getContent(field.hint)
+  },
+  value: field.value if field.value !== undefined else userCase[fieldName],
+  rows: field.attributes.rows,
+  attributes: field.attributes,
+  maxlength: field.maxlength,
+  errorMessage: null if field.hideError else getError(fieldName),
+  formGroup: {
+    classes: "hidden " + field.id if field.hidden else field.id
+  }
+}) }}
