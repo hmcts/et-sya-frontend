@@ -1,8 +1,8 @@
 import axios from 'axios';
 import redis from 'redis-mock';
 
-import { YesOrNo } from '../../../main/definitions/case';
-import { CacheMapNames, CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
+import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
+import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { createCase, getPreloginCaseData } from '../../../main/services/CaseService';
 
@@ -11,9 +11,9 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 const redisClient = redis.createClient();
 const guid = '7e7dfe56-b16d-43da-8bc4-5feeef9c3d68';
 
-const cacheMap = new Map<string, string>([
-  [CacheMapNames.CASE_TYPE, JSON.stringify(YesOrNo.YES)],
-  [CacheMapNames.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
+const cacheMap = new Map<CaseDataCacheKey, string>([
+  [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
 ]);
 
 describe('Axios post to iniate case', () => {

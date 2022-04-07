@@ -3,10 +3,11 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { AuthUrls, CacheMapNames, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { CaseDataCacheKey } from '../definitions/case';
+import { AuthUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
-import { cacheTypesOfClaim } from '../services/CacheService';
+import { cachePreloginCaseData } from '../services/CacheService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -52,13 +53,13 @@ export default class TypeOfClaimController {
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
       if (redisClient) {
-        const cacheMap = new Map<string, string>([
-          [CacheMapNames.CASE_TYPE, JSON.stringify(req.session.userCase?.isASingleClaim)],
-          [CacheMapNames.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+        const cacheMap = new Map<CaseDataCacheKey, string>([
+          [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(req.session.userCase?.isASingleClaim)],
+          [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
         ]);
 
         try {
-          req.app.set('guid', cacheTypesOfClaim(redisClient, cacheMap));
+          req.app.set('guid', cachePreloginCaseData(redisClient, cacheMap));
         } catch (err) {
           const error = new Error(err.message);
           error.name = RedisErrors.FAILED_TO_SAVE;

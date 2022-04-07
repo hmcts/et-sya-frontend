@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { RedisClient } from 'redis';
 
-import { YesOrNo } from '../definitions/case';
-import { CacheMapNames, CcdDataModel, RedisErrors } from '../definitions/constants';
+import { CaseDataCacheKey, YesOrNo } from '../definitions/case';
+import { CcdDataModel, RedisErrors } from '../definitions/constants';
 
 export interface initiateCaseDraftResponse {
   id: number;
@@ -47,7 +47,7 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
     redisClient.get(guid, (err: Error, userData: string) => {
       if (userData) {
         const userDataMap = new Map(JSON.parse(userData));
-        switch (String(userDataMap.get(CacheMapNames.CASE_TYPE)).slice(1, -1)) {
+        switch (String(userDataMap.get(CaseDataCacheKey.IS_SINGLE_CASE)).slice(1, -1)) {
           case YesOrNo.YES:
             resolve(CcdDataModel.SINGLE_CASE);
             break;
