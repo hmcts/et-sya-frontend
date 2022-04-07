@@ -4,10 +4,10 @@ const { I } = inject();
 const loginIdam = require('../authUser/loginIdam.js');
 
 Scenario('Verify new account loading page', () => {
+  I.amOnPage(test_url);
   I.executeScript(function () {
     sessionStorage.clear();
   });
-  I.amOnPage(test_url);
   I.see('What type of claim do you want to make?');
   I.checkOption('#typeOfClaim');
   I.click('#main-form-submit');
