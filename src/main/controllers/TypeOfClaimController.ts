@@ -3,12 +3,12 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { AuthUrls, CacheMapNames, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { AuthUrls, CacheMapNames, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { cacheTypesOfClaim } from '../services/CacheService';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class TypeOfClaimController {
   private readonly form: Form;
@@ -43,9 +43,10 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
-      ? AuthUrls.LOGIN
-      : LegacyUrls.ET1_BASE;
+    // const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
+    //   ? AuthUrls.LOGIN
+    //   : LegacyUrls.ET1_BASE;
+    const redirectUrl = AuthUrls.LOGIN;
     setUserCase(req, this.form);
 
     if (req.app?.locals) {
