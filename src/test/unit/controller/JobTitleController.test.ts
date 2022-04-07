@@ -39,7 +39,7 @@ describe('Job Title Controller', () => {
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should add the jobtile to the session userCase', () => {
+    it('should add the job title to the session userCase', () => {
       const body = { jobTitle: 'Vice President Branch Co-Manager' };
 
       const controller = new JobTitleController();

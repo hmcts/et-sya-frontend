@@ -95,6 +95,16 @@ export default function (app: Application): void {
   app.post(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.post);
   app.get(PageUrls.END_DATE, app.locals.container.cradle.endDateController.get);
   app.post(PageUrls.END_DATE, app.locals.container.cradle.endDateController.post);
+  app.get(PageUrls.COMPENSATION_OUTCOME, app.locals.container.cradle.compensationOutcomeController.get);
+  app.post(PageUrls.COMPENSATION_OUTCOME, app.locals.container.cradle.compensationOutcomeController.post);
+  app.get(
+    PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
+    app.locals.container.cradle.tribunalRecommendationOutcomeController.get
+  );
+  app.post(
+    PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
+    app.locals.container.cradle.tribunalRecommendationOutcomeController.post
+  );
   app.get(
     PageUrls.INFO,
     infoRequestHandler({

@@ -1,0 +1,7 @@
+{% set formField %}
+  {% include "./fields/" + field.type + ".njk" %}
+{% endset %}
+{{ govukDetails({
+  summaryText: getContent(field.collapsableTitle),
+  html: formField
+}) }}
