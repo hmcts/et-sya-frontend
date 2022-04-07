@@ -14,7 +14,7 @@ Scenario('Verify new account loading page', () => {
 
   loginIdam.signInWithCredentials();
 
-  I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
+  //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
   I.see('You do not have to complete your claim in one go');
   I.executeScript(function () {
     sessionStorage.clear();
