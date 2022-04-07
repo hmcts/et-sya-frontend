@@ -28,6 +28,9 @@ export class Oidc {
       } else {
         return res.redirect(PageUrls.TYPE_OF_CLAIM);
       }
+      if (!req.session?.user?.accessToken) {
+        return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
+      }
 
       if (redisClient && guid) {
         getPreloginCaseData(redisClient, guid)
