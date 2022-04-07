@@ -26,14 +26,6 @@
               <p class='govuk-body'>"+collapsableSection1.p4+"</p>
               <p class='govuk-body'>"+collapsableSection1.p5+"</p>"
       }) }}
-      {{ govukDetails({
-        summaryText: collapsableSection2.linkText,
-        html: "<ol class='govuk-list govuk-list--number'>
-                <li>"+collapsableSection2.li1+"</li>
-                <li>"+collapsableSection2.li2+"</li>
-                <li>"+collapsableSection2.li3+"</li>
-              </ol>"
-      }) }}
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
