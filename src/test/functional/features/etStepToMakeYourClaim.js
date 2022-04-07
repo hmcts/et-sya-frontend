@@ -1,5 +1,5 @@
 Feature('Claim Details');
-const test_url = 'https://et-sya-pr-192.service.core-compute-preview.internal/steps-to-making-your-claim';
+const test_url = '/steps-to-making-your-claim';
 const { I } = inject();
 const discriminationClaim = locate('.govuk-details__summary-text').withText('What to write for discrimination claims');
 const whatToWrite_dismissal = locate('.govuk-details__summary-text').withText('What to write for dismissal claims');
@@ -11,7 +11,7 @@ const document_upload = locate('.govuk-details__summary-text').withText('Upload 
 const compensation_award = locate('.govuk-details__summary-text').withText('Compensation - what can a tribunal award?');
 const tribunal_recommendation = locate('.govuk-details__summary-text').withText('What is a tribunal recommendation?');
 
-Scenario('Claim Details: Summarise what happenend to you', () => {
+Scenario('Claim Details: Summarise what happened to you', () => {
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/summarise-what-happened"]');
