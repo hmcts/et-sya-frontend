@@ -8,11 +8,8 @@ export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
-  const idamUrl = new URL(`${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}`);
-  if (guid) {
-    idamUrl.searchParams.set('state', guid);
-  }
-  return idamUrl.href;
+  const idamUrl = `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}`;
+  return !guid ? idamUrl : idamUrl + `&state=${guid}`;
 };
 
 export const getUserDetails = async (
