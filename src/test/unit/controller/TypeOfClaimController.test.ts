@@ -3,7 +3,7 @@ import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
-import { AuthUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
+import { LegacyUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -62,9 +62,9 @@ describe('Type Of Claim Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(AuthUrls.LOGIN);
+      expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
       expect(req.session.userCase).toStrictEqual({
-        typeOfClaim: TypesOfClaim.BREACH_OF_CONTRACT,
+        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
       });
     });
 
@@ -78,7 +78,7 @@ describe('Type Of Claim Controller', () => {
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
         [CaseDataCacheKey.IS_SINGLE_CASE, undefined],
-        [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(TypesOfClaim.BREACH_OF_CONTRACT)],
+        [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
       ]);
 
       req.app = app;

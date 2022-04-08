@@ -23,7 +23,7 @@ describe('Axios post to iniate case', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       'testurl/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case',
       expect.objectContaining({
-        case_source: '',
+        case_source: CcdDataModel.CASE_SOURCE,
         case_type: 'testCaseData',
       }),
       expect.objectContaining({
@@ -36,7 +36,7 @@ describe('Axios post to iniate case', () => {
 describe('Get pre-login case data from Redis', () => {
   it('should return case data if it is stored in Redis with the guid provided', async () => {
     redisClient.set(guid, JSON.stringify(Array.from(cacheMap.entries())));
-    await expect(getPreloginCaseData(redisClient, guid)).resolves.toEqual(CcdDataModel.SINGLE_CASE);
+    await expect(getPreloginCaseData(redisClient, guid)).resolves.toEqual(CcdDataModel.SINGLE_CASE_ENGLAND);
   });
 
   it('should throw error if case data does not exist in Redis with the guid provided', async () => {

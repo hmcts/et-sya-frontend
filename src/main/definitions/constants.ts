@@ -130,6 +130,8 @@ export const RedisErrors = {
 } as const;
 
 export const CcdDataModel = {
-  SINGLE_CASE: 'ET_EnglandWales',
-  MULTIPLE_CASE: 'ET_EnglandWales_Multiple',
+  SINGLE_CASE_ENGLAND: 'ET_EnglandWales',
+  MULTIPLE_CASE_ENGLAND: 'ET_EnglandWales_Multiple',
+  SINGLE_CASE_SCOTLAND: 'ET_Scotland',
+  CASE_SOURCE: 'ET1 Online',
 };

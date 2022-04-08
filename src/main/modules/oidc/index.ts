@@ -31,11 +31,8 @@ export class Oidc {
         } else {
           return res.redirect(AuthUrls.LOGIN);
         }
-        if (!req.session?.user?.accessToken) {
-          return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
-        }
 
-        if (redisClient && guid) {
+        if (redisClient) {
           getPreloginCaseData(redisClient, guid)
             .then(caseType =>
               createCase(caseType, req.session.user.accessToken, config.get('services.etSyaApi.host'))
@@ -53,7 +50,9 @@ export class Oidc {
           return next(err);
         }
       } else {
-        //ToDo - if guid doesn't exist then go to dashboard page
+        /* ToDo - If there is no guid at the point of login we will send off a different request to retrieve 
+        the cases that belong to the user, before moving to the dashboard */
+        return res.redirect(PageUrls.CLAIM_STEPS);
       }
     });
   }

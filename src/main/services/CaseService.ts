@@ -35,7 +35,7 @@ export const createCase = async (
   };
   const body = {
     case_type: caseType,
-    case_source: '',
+    case_source: CcdDataModel.CASE_SOURCE,
   };
 
   return axios.post(`${url}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf);
@@ -49,10 +49,10 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
         const userDataMap = new Map(JSON.parse(userData));
         switch (String(userDataMap.get(CaseDataCacheKey.IS_SINGLE_CASE)).slice(1, -1)) {
           case YesOrNo.YES:
-            resolve(CcdDataModel.SINGLE_CASE);
+            resolve(CcdDataModel.SINGLE_CASE_ENGLAND);
             break;
           case YesOrNo.NO:
-            resolve(CcdDataModel.MULTIPLE_CASE);
+            resolve(CcdDataModel.MULTIPLE_CASE_ENGLAND);
             break;
         }
       }

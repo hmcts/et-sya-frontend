@@ -4,12 +4,12 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { AuthUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { cachePreloginCaseData } from '../services/CacheService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class TypeOfClaimController {
   private readonly form: Form;
@@ -31,6 +31,12 @@ export default class TypeOfClaimController {
             label: l => l.breachOfContract.checkbox,
             value: TypesOfClaim.BREACH_OF_CONTRACT,
           },
+          {
+            id: 'typeOfClaim',
+            name: 'typeOfClaim',
+            label: l => l.discrimination.checkbox,
+            value: TypesOfClaim.DISCRIMINATION,
+          },
         ],
       },
     },
@@ -44,10 +50,10 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    // const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
-    //   ? AuthUrls.LOGIN
-    //   : LegacyUrls.ET1_BASE;
-    const redirectUrl = AuthUrls.LOGIN;
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
+      ? LegacyUrls.ET1_BASE
+      : AuthUrls.LOGIN;
+
     setUserCase(req, this.form);
 
     if (req.app?.locals) {
