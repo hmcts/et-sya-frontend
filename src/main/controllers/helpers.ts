@@ -118,7 +118,7 @@ export const conditionalRedirect = (
   const matchingValues = Object.entries(req.body).find(([k]) => Object.keys(formFields).some(ff => ff === k));
   if (Array.isArray(condition) && matchingValues) {
     return matchingValues.some(v => {
-      return condition.some(c => (Array.isArray(v) ? v.some(e => String(e) === c) : v.includes(c)));
+      return (condition as string[]).some(c => (Array.isArray(v) ? v.some(e => String(e) === c) : v.includes(c)));
     });
   }
   return matchingValues?.some(v => v === condition);
