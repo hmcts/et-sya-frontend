@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import config from 'config';
 import { RedisClient } from 'redis';
 
 import { CaseDataCacheKey, YesOrNo } from '../definitions/case';
@@ -66,4 +67,46 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
       }
     });
   });
+};
+
+class CaseApi {
+  constructor(private readonly axio: AxiosInstance) {}
+
+  public async getCase(caseTypeId = 'ET_EnglandWales'): Promise<initiateCaseDraftResponse | false> {
+    const fetchedCases = await this.getDraftCasesForUser(caseTypeId);
+    switch (fetchedCases.length) {
+      case 0: {
+        return false;
+      }
+      default: {
+        return fetchedCases[fetchedCases.length - 1];
+      }
+    }
+  }
+
+  private async getDraftCasesForUser(caseTypeId: string): Promise<initiateCaseDraftResponse[]> {
+    try {
+      const response = await this.axio.get(`/caseTypes/${caseTypeId}/cases`, {
+        data: {
+          match: { state: 'Draft' },
+        },
+      });
+      return response.data;
+    } catch (err) {
+      throw new Error('Cases for user could not be retrieved.');
+    }
+  }
+}
+
+export const getCaseApi = (token: string): CaseApi => {
+  return new CaseApi(
+    axios.create({
+      baseURL: config.get('services.etSyaApi.host'),
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: '*/*',
+        'Content-Type': 'application/json',
+      },
+    })
+  );
 };

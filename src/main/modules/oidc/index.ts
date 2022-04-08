@@ -4,7 +4,7 @@ import { Application, NextFunction, Response } from 'express';
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
-import { createCase, getPreloginCaseData } from '../../services/CaseService';
+import { createCase, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -50,9 +50,12 @@ export class Oidc {
           return next(err);
         }
       } else {
-        /* ToDo - If there is no guid at the point of login we will send off a different request to retrieve 
-        the cases that belong to the user, before moving to the dashboard */
-        return res.redirect(PageUrls.CLAIM_STEPS);
+        const foundCase = await getCaseApi(req.session.user.accessToken).getCase();
+        if (foundCase && foundCase.case_data) {
+          res.redirect(PageUrls.CLAIM_STEPS);
+        } else {
+          res.redirect(PageUrls.TYPE_OF_CLAIM);
+        }
       }
     });
   }
