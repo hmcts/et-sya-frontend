@@ -11,8 +11,8 @@ export class Oidc {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
-    app.get(AuthUrls.LOGIN, (req, res) => {
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, req.app.get('guid')));
+    app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
+      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, req.session.guid));
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
