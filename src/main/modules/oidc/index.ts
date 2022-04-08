@@ -23,7 +23,7 @@ export class Oidc {
       const redisClient = req.app.locals?.redisClient;
 
       //Only go to new account landing page if it is a new user
-      if (req.query?.state) {
+      if (req.query?.state && !!req.query.state) {
         const guid = String(req.query?.state);
         if (typeof req.query.code === 'string') {
           req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
