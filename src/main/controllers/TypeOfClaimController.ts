@@ -65,7 +65,7 @@ export default class TypeOfClaimController {
         ]);
 
         try {
-          req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
+          req.app.set('guid', cachePreloginCaseData(redisClient, cacheMap));
         } catch (err) {
           const error = new Error(err.message);
           error.name = RedisErrors.FAILED_TO_SAVE;

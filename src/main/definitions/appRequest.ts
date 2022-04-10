@@ -15,7 +15,6 @@ export interface AppSession extends Session {
   errors: FormError[] | undefined;
   userCase: CaseWithId;
   user: UserDetails;
-  guid?: string;
 }
 
 export interface UserDetails {
