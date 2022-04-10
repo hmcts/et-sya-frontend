@@ -11,8 +11,11 @@ export class Oidc {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
-    app.get(AuthUrls.LOGIN, (req, res) => {
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, req.app.get('guid')));
+    app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
+      if (!req.session.guid) {
+        req.session.guid = 'loginFromHome';
+      }
+      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, req.session.guid));
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
@@ -22,16 +25,18 @@ export class Oidc {
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
       const redisClient = req.app.locals?.redisClient;
 
-      //Only go to new account landing page if it is a new user
-      if (req.query?.state && !!req.query.state) {
-        const guid = String(req.query?.state);
-        if (typeof req.query.code === 'string') {
-          req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
-          req.session.save();
-        } else {
-          return res.redirect(AuthUrls.LOGIN);
-        }
+      // check req.query.code
+      if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
+        req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
+        req.session.save();
+      } else {
+        return res.redirect(AuthUrls.LOGIN);
+      }
 
+      // check value of guid
+
+      const guid = String(req.query?.state);
+      if (guid !== 'loginFromHome') {
         if (redisClient) {
           getPreloginCaseData(redisClient, guid)
             .then(caseType =>
