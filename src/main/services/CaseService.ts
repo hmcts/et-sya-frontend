@@ -101,13 +101,7 @@ export class CaseApi {
       });
       return response.data;
     } catch (error) {
-      if (error.response) {
-        logger.error('Cases could not be retrieved, status: ' + error.response.status);
-      } else if (error.request) {
-        logger.error('Cases not retrieved, request made but no reponse received');
-      } else {
-        logger.error('Cases not retrieved, something happened in setting up the request');
-      }
+      logger.error(error?.response || error?.request || error?.message);
     }
   }
 }
