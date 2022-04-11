@@ -50,6 +50,29 @@ describe('CaseApi', () => {
     });
   });
 
+  test('Should return the single case if one case is found', async () => {
+    const mockCase = {
+      id: '100',
+      state: State.Draft,
+      case_data: {
+        caseSource: 'Manually Created',
+        caseType: 'Single',
+      },
+    };
+
+    mockedAxios.get.mockResolvedValue({
+      data: [mockCase],
+    });
+
+    const userCase = await api.getCase();
+
+    expect(userCase).toStrictEqual({
+      id: '100',
+      state: State.Draft,
+      isASingleClaim: YesOrNo.YES,
+    });
+  });
+
   test('Should retrieve the last case if two cases found', async () => {
     const firstMockCase = {
       id: '1',
@@ -79,6 +102,14 @@ describe('CaseApi', () => {
       state: State.Draft,
       isASingleClaim: YesOrNo.YES,
     });
+  });
+
+  test('Should return false if no cases are found', async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: [],
+    });
+    const userCase = await api.getCase();
+    expect(userCase).toStrictEqual(false);
   });
 
   describe('getCaseApi', () => {
