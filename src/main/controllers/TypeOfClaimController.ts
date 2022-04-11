@@ -3,10 +3,11 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseDataCacheKey } from '../definitions/case';
 import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
-import { cacheTypesOfClaim } from '../services/CacheService';
+import { cachePreloginCaseData } from '../services/CacheService';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -25,10 +26,16 @@ export default class TypeOfClaimController {
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            id: 'typeOfClaim',
+            id: 'breachOfContract',
             name: 'typeOfClaim',
             label: l => l.breachOfContract.checkbox,
             value: TypesOfClaim.BREACH_OF_CONTRACT,
+          },
+          {
+            id: 'discrimination',
+            name: 'typeOfClaim',
+            label: l => l.discrimination.checkbox,
+            value: TypesOfClaim.DISCRIMINATION,
           },
         ],
       },
@@ -44,25 +51,28 @@ export default class TypeOfClaimController {
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
-      ? AuthUrls.LOGIN
-      : LegacyUrls.ET1_BASE;
+      ? LegacyUrls.ET1_BASE
+      : AuthUrls.LOGIN;
+
     setUserCase(req, this.form);
 
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
-      const typsOfClaims = req.session.userCase?.typeOfClaim;
       if (redisClient) {
-        if (typsOfClaims) {
-          try {
-            req.app.set('guid', cacheTypesOfClaim(redisClient, typsOfClaims));
-          } catch (err) {
-            const error = new Error(err.message);
-            error.name = RedisErrors.FAILED_TO_SAVE;
-            if (err.stack) {
-              error.stack = err.stack;
-            }
-            throw error;
+        const cacheMap = new Map<CaseDataCacheKey, string>([
+          [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(req.session.userCase?.isASingleClaim)],
+          [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+        ]);
+
+        try {
+          req.app.set('guid', cachePreloginCaseData(redisClient, cacheMap));
+        } catch (err) {
+          const error = new Error(err.message);
+          error.name = RedisErrors.FAILED_TO_SAVE;
+          if (err.stack) {
+            error.stack = err.stack;
           }
+          throw error;
         }
       } else {
         const err = new Error(RedisErrors.CLIENT_NOT_FOUND);

@@ -6,6 +6,10 @@
     "title": "Breach of contract claim",
     "checkbox": "Breach of Contract"
   },
+  "discrimination": {
+    "title": "Discrimination claim",
+    "checkbox": "Discrimination"
+  },
   "errors": {
     "typeOfClaim": {
       "required": "Select if you're making breach of contract claim"

@@ -2,12 +2,16 @@ import { randomUUID } from 'crypto';
 
 import redis from 'redis-mock';
 
+import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
 import { TypesOfClaim } from '../../../main/definitions/definition';
-import { cacheTypesOfClaim } from '../../../main/services/CacheService';
+import { cachePreloginCaseData } from '../../../main/services/CacheService';
 
 const redisClient = redis.createClient();
-const typesOfClaim = [TypesOfClaim.BREACH_OF_CONTRACT];
 const uuid = 'f0d62bc6-5c7b-4ac1-98d2-c745a2df79b8';
+const cacheMap = new Map<CaseDataCacheKey, string>([
+  [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
+]);
 
 jest.mock('crypto');
 const mockedRandomUUID = randomUUID as jest.Mock<string>;
@@ -17,8 +21,8 @@ describe('Cache Types of Claim to Redis', () => {
     mockedRandomUUID.mockImplementation(() => uuid);
     jest.spyOn(redisClient, 'set');
 
-    cacheTypesOfClaim(redisClient, typesOfClaim);
-    expect(redisClient.set).toHaveBeenCalledWith(uuid, JSON.stringify(typesOfClaim));
+    cachePreloginCaseData(redisClient, cacheMap);
+    expect(redisClient.set).toHaveBeenCalledWith(uuid, JSON.stringify(Array.from(cacheMap.entries())));
   });
 
   it('should return an uuid', () => {
@@ -26,6 +30,6 @@ describe('Cache Types of Claim to Redis', () => {
     jest.spyOn(redisClient, 'set');
     jest.spyOn(redisClient, 'set');
 
-    expect(cacheTypesOfClaim(redisClient, typesOfClaim)).toBe(uuid);
+    expect(cachePreloginCaseData(redisClient, cacheMap)).toBe(uuid);
   });
 });

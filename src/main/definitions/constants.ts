@@ -128,3 +128,10 @@ export const RedisErrors = {
   FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
   CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;
+
+export const CcdDataModel = {
+  SINGLE_CASE_ENGLAND: 'ET_EnglandWales',
+  MULTIPLE_CASE_ENGLAND: 'ET_EnglandWales_Multiple',
+  SINGLE_CASE_SCOTLAND: 'ET_Scotland',
+  CASE_SOURCE: 'ET1 Online',
+};

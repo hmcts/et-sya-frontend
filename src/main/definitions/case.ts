@@ -103,3 +103,8 @@ export const enum PayInterval {
 }
 
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
+
+export const enum CaseDataCacheKey {
+  IS_SINGLE_CASE = 'isSingleCase',
+  TYPES_OF_CLAIM = 'typesOfClaim',
+}
