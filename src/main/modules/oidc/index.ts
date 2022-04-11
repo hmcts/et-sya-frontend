@@ -12,10 +12,9 @@ export class Oidc {
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
-      if (!req.session.guid) {
-        req.session.guid = 'loginFromHome';
-      }
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, req.session.guid));
+      let stateParam = '';
+      req.session.guid ? (stateParam = req.session.guid) : (stateParam = 'loginFromHome');
+      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
@@ -55,7 +54,7 @@ export class Oidc {
           return next(err);
         }
       } else {
-        const foundCase = await getCaseApi(req.session.user.accessToken).getCase();
+        const foundCase = await getCaseApi(req.session.user).getCase();
         if (foundCase && foundCase.case_data) {
           res.redirect(PageUrls.CLAIM_STEPS);
         } else {

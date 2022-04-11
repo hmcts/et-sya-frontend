@@ -2,13 +2,15 @@ import axios, { AxiosInstance } from 'axios';
 import config from 'config';
 import { RedisClient } from 'redis';
 
-import { CaseDataCacheKey, YesOrNo } from '../definitions/case';
+import { UserDetails } from '../definitions/appRequest';
+import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
+import { State } from '../definitions/definition';
 
 export interface initiateCaseDraftResponse {
-  id: number;
+  id: string;
   jurisdiction: string;
-  state: string;
+  state: State;
   case_type_id: string;
   created_date: Date;
   last_modified: Date;
@@ -69,22 +71,32 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
   });
 };
 
-class CaseApi {
+export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): CaseWithId => ({
+  id: fromApiCaseData.id,
+  state: fromApiCaseData.state,
+  isASingleClaim: fromApiCaseData.case_data.case_type === 'Single' ? YesOrNo.YES : YesOrNo.NO,
+});
+
+export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
-  public async getCase(caseTypeId = 'ET_EnglandWales'): Promise<initiateCaseDraftResponse | false> {
-    const fetchedCases = await this.getDraftCasesForUser(caseTypeId);
-    switch (fetchedCases.length) {
-      case 0: {
-        return false;
+  public async getCase(caseTypeId = CcdDataModel.SINGLE_CASE_ENGLAND): Promise<CaseWithId | false> {
+    try {
+      const fetchedCases = await this.getDraftCases(caseTypeId);
+      switch (fetchedCases.length) {
+        case 0: {
+          return false;
+        }
+        default: {
+          return formatCaseData(fetchedCases[fetchedCases.length - 1]);
+        }
       }
-      default: {
-        return fetchedCases[fetchedCases.length - 1];
-      }
+    } catch (err) {
+      throw new Error('Case could not be retrieved.');
     }
   }
 
-  private async getDraftCasesForUser(caseTypeId: string): Promise<initiateCaseDraftResponse[]> {
+  private async getDraftCases(caseTypeId: string): Promise<initiateCaseDraftResponse[]> {
     try {
       const response = await this.axio.get(`/caseTypes/${caseTypeId}/cases`, {
         data: {
@@ -92,18 +104,24 @@ class CaseApi {
         },
       });
       return response.data;
-    } catch (err) {
-      throw new Error('Cases for user could not be retrieved.');
+    } catch (error) {
+      if (error.response) {
+        throw new Error('Cases could not be retrieved, status: ' + error.response.status);
+      } else if (error.request) {
+        throw new Error('Cases not retrieved, request made but no reponse received');
+      } else {
+        throw new Error('Cases not retrieved, something happened in setting up the request');
+      }
     }
   }
 }
 
-export const getCaseApi = (token: string): CaseApi => {
+export const getCaseApi = (userDetails: UserDetails): CaseApi => {
   return new CaseApi(
     axios.create({
       baseURL: config.get('services.etSyaApi.host'),
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + userDetails.accessToken,
         Accept: '*/*',
         'Content-Type': 'application/json',
       },

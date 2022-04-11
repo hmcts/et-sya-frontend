@@ -9,3 +9,7 @@ export const enum ClaimOutcomes {
   OLD_JOB = 'oldJob',
   ANOTHER_JOB = 'anotherJob',
 }
+
+export const enum State {
+  Draft = 'Draft',
+}
