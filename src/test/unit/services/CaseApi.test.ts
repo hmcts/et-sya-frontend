@@ -18,18 +18,16 @@ describe('CaseApi', () => {
   test.each([CcdDataModel.SINGLE_CASE_ENGLAND])('Should return %s case data response', async () => {
     // add more example cases in this array to test other case data
     mockedAxios.get.mockResolvedValue({
-      data: {
-        cases: [
-          {
-            id: '1234',
-            state: State.Draft,
-            case_data: {
-              caseSource: 'Manually Created',
-              caseType: 'Single',
-            },
+      data: [
+        {
+          id: '1234',
+          state: State.Draft,
+          case_data: {
+            caseSource: 'Manually Created',
+            caseType: 'Single',
           },
-        ],
-      },
+        },
+      ],
     });
 
     const userCase = await api.getCase();

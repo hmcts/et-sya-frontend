@@ -7,6 +7,9 @@ import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
 import { State } from '../definitions/definition';
 
+const { Logger } = require('@hmcts/nodejs-logging');
+const logger = Logger.getLogger('app');
+
 export interface initiateCaseDraftResponse {
   id: string;
   jurisdiction: string;
@@ -22,8 +25,8 @@ export interface initiateCaseDraftResponse {
 }
 
 export interface CaseData {
-  case_type?: string;
-  case_source?: string;
+  caseType?: string;
+  caseSource?: string;
 }
 
 export const createCase = async (
@@ -74,7 +77,7 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
 export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): CaseWithId => ({
   id: fromApiCaseData.id,
   state: fromApiCaseData.state,
-  isASingleClaim: fromApiCaseData.case_data.case_type === 'Single' ? YesOrNo.YES : YesOrNo.NO,
+  isASingleClaim: fromApiCaseData.case_data.caseType === 'Single' ? YesOrNo.YES : YesOrNo.NO,
 });
 
 export class CaseApi {
@@ -83,16 +86,9 @@ export class CaseApi {
   public async getCase(caseTypeId = CcdDataModel.SINGLE_CASE_ENGLAND): Promise<CaseWithId | false> {
     try {
       const fetchedCases = await this.getDraftCases(caseTypeId);
-      switch (fetchedCases.length) {
-        case 0: {
-          return false;
-        }
-        default: {
-          return formatCaseData(fetchedCases[fetchedCases.length - 1]);
-        }
-      }
+      return fetchedCases.length === 0 ? false : formatCaseData(fetchedCases[fetchedCases.length - 1]);
     } catch (err) {
-      throw new Error('Case could not be retrieved.');
+      logger.error('Case could not be retrieved.');
     }
   }
 
@@ -106,11 +102,11 @@ export class CaseApi {
       return response.data;
     } catch (error) {
       if (error.response) {
-        throw new Error('Cases could not be retrieved, status: ' + error.response.status);
+        logger.error('Cases could not be retrieved, status: ' + error.response.status);
       } else if (error.request) {
-        throw new Error('Cases not retrieved, request made but no reponse received');
+        logger.error('Cases not retrieved, request made but no reponse received');
       } else {
-        throw new Error('Cases not retrieved, something happened in setting up the request');
+        logger.error('Cases not retrieved, something happened in setting up the request');
       }
     }
   }
