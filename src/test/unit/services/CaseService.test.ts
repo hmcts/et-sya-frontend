@@ -3,8 +3,8 @@ import redis from 'redis-mock';
 
 import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
-import { TypesOfClaim } from '../../../main/definitions/definition';
-import { createCase, getPreloginCaseData } from '../../../main/services/CaseService';
+import { State, TypesOfClaim } from '../../../main/definitions/definition';
+import { createCase, formatCaseData, getPreloginCaseData } from '../../../main/services/CaseService';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -44,5 +44,41 @@ describe('Get pre-login case data from Redis', () => {
     const error = new Error(RedisErrors.REDIS_ERROR);
     error.name = RedisErrors.FAILED_TO_RETREIVE;
     await expect(getPreloginCaseData(redisClient, guid)).rejects.toEqual(error);
+  });
+});
+
+describe('Format Case Data', () => {
+  it('should format single claim type`', () => {
+    const mockedApiData = {
+      id: '1234',
+      state: State.Draft,
+      case_data: {
+        caseSource: 'Manually Created',
+        caseType: 'Single',
+      },
+    };
+    const result = formatCaseData(mockedApiData);
+    expect(result).toStrictEqual({
+      id: '1234',
+      state: State.Draft,
+      isASingleClaim: YesOrNo.YES,
+    });
+  });
+
+  it('should format multiple claim type`', () => {
+    const mockedApiData = {
+      id: '1234',
+      state: State.Draft,
+      case_data: {
+        caseSource: 'Manually Created',
+        caseType: 'Multiple',
+      },
+    };
+    const result = formatCaseData(mockedApiData);
+    expect(result).toStrictEqual({
+      id: '1234',
+      state: State.Draft,
+      isASingleClaim: YesOrNo.NO,
+    });
   });
 });
