@@ -56,7 +56,7 @@ export class Oidc {
       } else {
         const foundCase = await getCaseApi(req.session.user).getCase();
         if (foundCase) {
-          //assign case to session
+          req.session.userCase = foundCase;
           res.redirect(PageUrls.CLAIM_STEPS);
         } else {
           res.redirect(PageUrls.TYPE_OF_CLAIM);
