@@ -78,8 +78,18 @@ Scenario('Verify ET single claim myself when claim against single respondent', a
   I.click('Continue');
 
   I.see('What type of claim do you want to make?');
-  I.checkOption('input[id=typeOfClaim]');
-  I.click('Continue');
+  I.checkOption('input[value=discrimination]');
+  I.click('#main-form-submit');
+
+  I.wait(5);
+  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
+  I.wait(5);
+
+  //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
+  I.see('You do not have to complete your claim in one go');
+  I.executeScript(function () {
+    sessionStorage.clear();
+  });
 });
 
 function commonPages() {
