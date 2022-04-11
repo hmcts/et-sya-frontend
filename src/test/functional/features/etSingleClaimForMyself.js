@@ -1,83 +1,83 @@
 Feature('ET Single claim for my self');
-const commonFlow = require('./commonFlow.js');
 const { I } = inject();
-const waitSeconds = 2;
+const loginIdam = require('../authUser/loginIdam.js');
+const data = require('../data.json');
+
+const commonFlow = require('./commonFlow.js');
 
 Scenario('Verify ET single claim for myself when there is no acas certificate', async () => {
   commonPages();
 
-  I.waitForText("Are you making a claim against more than 1 'respondent'?", waitSeconds);
+  I.see("Are you making a claim against more than 1 'respondent'?");
   I.see('Yes - I’m making a claim against more than 1 respondent');
   I.checkOption('input[id=more_than_one_respondent]');
   I.click('Continue');
 
-  I.waitForText(
-    "Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?",
-    waitSeconds
-  );
+  I.see("Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?");
   I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
   I.see('Making a claim can be time-consuming and difficult for everyone involved.');
   I.see('No');
   I.checkOption('input[id=acas-multiple-2]');
   I.click('Continue');
 
-  I.waitForText(
-    'Do you have a valid reason why you do not have an ‘Acas early conciliation certificate’?',
-    waitSeconds
-  );
+  I.see('Do you have a valid reason why you do not have an ‘Acas early conciliation certificate’?');
   I.see('No');
   I.checkOption('input[id=valid-no-acas-reason-2]');
   I.click('Continue');
 
-  I.waitForText('You need to contact Acas', waitSeconds);
+  I.see('You need to contact Acas');
   I.click('Contact Acas');
 });
 
 Scenario('Verify ET single claim myself when claim against more than one respondent', async () => {
   commonPages();
 
-  I.waitForText("Are you making a claim against more than 1 'respondent'?", waitSeconds);
+  I.see("Are you making a claim against more than 1 'respondent'?");
   I.see('Yes - I’m making a claim against more than 1 respondent');
   I.checkOption('input[id=more_than_one_respondent]');
   I.click('Continue');
 
-  I.waitForText(
-    "Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?",
-    waitSeconds
-  );
+  I.see("Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?");
   I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
   I.see('Making a claim can be time-consuming and difficult for everyone involved.');
   I.see('No');
   I.checkOption('input[id=acas-multiple-2]');
   I.click('Continue');
 
-  I.waitForText(
-    'Do you have a valid reason why you do not have an ‘Acas early conciliation certificate’?',
-    waitSeconds
-  );
+  I.see('Do you have a valid reason why you do not have an ‘Acas early conciliation certificate’?');
   I.see('Yes');
   I.checkOption('input[id=valid-no-acas-reason]');
   I.click('Continue');
 
-  I.waitForText('What type of claim do you want to make?', waitSeconds);
-  I.checkOption('input[id=typeOfClaim]');
-  I.click('Continue');
+  I.see('What type of claim do you want to make?');
+  I.checkOption('input[value=discrimination]');
+  I.click('#main-form-submit');
+
+  I.wait(5);
+  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
+  I.wait(5);
+
+  //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
+  I.see('You do not have to complete your claim in one go');
+  I.executeScript(function () {
+    sessionStorage.clear();
+  });
 });
 
 Scenario('Verify ET single claim myself when claim against single respondent', async () => {
   commonPages();
 
-  I.waitForText("Are you making a claim against more than 1 'respondent'?", waitSeconds);
+  I.see("Are you making a claim against more than 1 'respondent'?");
   I.see('No - I’m making a claim against 1 single respondent');
   I.checkOption('input[id=more_than_one_respondent-2]');
   I.click('Continue');
 
-  I.waitForText("Do you have an 'Acas early conciliation certificate'?", waitSeconds);
+  I.see("Do you have an 'Acas early conciliation certificate'?");
   I.see('Yes');
   I.checkOption('input[id=acas-single]');
   I.click('Continue');
 
-  I.waitForText('What type of claim do you want to make?', waitSeconds);
+  I.see('What type of claim do you want to make?');
   I.checkOption('input[id=typeOfClaim]');
   I.click('Continue');
 });
@@ -85,16 +85,13 @@ Scenario('Verify ET single claim myself when claim against single respondent', a
 function commonPages() {
   commonFlow.initialPageFlow();
 
-  I.waitForText('I’m representing myself and making my own claim', waitSeconds);
+  I.see('I’m representing myself and making my own claim');
   I.click('Who can act as a representative?', 'span[class=govuk-details__summary-text]');
   I.see('employment advisors – including those from Citizens Advice');
   I.checkOption('input[id=lip-or-representative]');
   I.click('Continue');
 
-  I.waitForText(
-    'Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?',
-    waitSeconds
-  );
+  I.see('Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?');
   I.checkOption('input[id=single-or-multiple-claim]');
   I.click('Continue');
 }
