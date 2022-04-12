@@ -4,7 +4,7 @@ import { Application, NextFunction, Response } from 'express';
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
-import { formatCaseData, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+import { getCaseApi, getPreloginCaseData } from '../../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -62,9 +62,9 @@ export class Oidc {
             if (apiRes.data.length === 0) {
               return res.redirect(PageUrls.TYPE_OF_CLAIM);
             } else {
-              const cases = apiRes.data;
-              req.session.userCase = formatCaseData(cases[cases.length - 1]);
-              req.session.save();
+              // const cases = apiRes.data;
+              // req.session.userCase = formatCaseData(cases[cases.length - 1]);
+              // req.session.save();
               return res.redirect(PageUrls.CLAIM_STEPS);
             }
           })
