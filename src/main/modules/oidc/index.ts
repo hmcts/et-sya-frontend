@@ -4,7 +4,10 @@ import { Application, NextFunction, Response } from 'express';
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
-import { createCase, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+import { formatCaseData, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+const logger = Logger.getLogger('app');
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -24,7 +27,6 @@ export class Oidc {
     app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
       const redisClient = req.app.locals?.redisClient;
 
-      // check req.query.code
       if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
         req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
         req.session.save();
@@ -32,14 +34,14 @@ export class Oidc {
         return res.redirect(AuthUrls.LOGIN);
       }
 
-      // check value of guid
-
       const guid = String(req.query?.state);
+
       if (guid !== 'loginFromHome') {
         if (redisClient) {
           getPreloginCaseData(redisClient, guid)
             .then(caseType =>
-              createCase(caseType, req.session.user.accessToken, config.get('services.etSyaApi.host'))
+              getCaseApi(req.session.user?.accessToken)
+                .createCase(caseType)
                 .then(() => {
                   return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
                 })
@@ -54,13 +56,22 @@ export class Oidc {
           return next(err);
         }
       } else {
-        const foundCase = await getCaseApi(req.session.user).getCase();
-        if (foundCase) {
-          req.session.userCase = foundCase;
-          res.redirect(PageUrls.CLAIM_STEPS);
-        } else {
-          res.redirect(PageUrls.TYPE_OF_CLAIM);
-        }
+        getCaseApi(req.session.user?.accessToken)
+          .getDraftCases()
+          .then(apiRes => {
+            if (apiRes.data.length === 0) {
+              return res.redirect(PageUrls.TYPE_OF_CLAIM);
+            } else {
+              const cases = apiRes.data;
+              req.session.userCase = formatCaseData(cases[cases.length - 1]);
+              req.session.save();
+              return res.redirect(PageUrls.CLAIM_STEPS);
+            }
+          })
+          .catch(err => {
+            logger.log(err);
+            return res.redirect(PageUrls.TYPE_OF_CLAIM);
+          });
       }
     });
   }

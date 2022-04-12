@@ -1,14 +1,10 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import { RedisClient } from 'redis';
 
-import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
 import { State } from '../definitions/definition';
-
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
 
 export interface initiateCaseDraftResponse {
   id: string;
@@ -28,24 +24,6 @@ export interface CaseData {
   caseType?: string;
   caseSource?: string;
 }
-
-export const createCase = async (
-  caseType: string,
-  accessToken: string,
-  url: string
-): Promise<initiateCaseDraftResponse> => {
-  const conf = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-  const body = {
-    case_type: caseType,
-    case_source: CcdDataModel.CASE_SOURCE,
-  };
-
-  return axios.post(`${url}/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case`, body, conf);
-};
 
 //ToDo - Eventually this should return all the pre-login case data
 export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Promise<string> => {
@@ -83,35 +61,32 @@ export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): Case
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
-  public async getCase(caseTypeId = CcdDataModel.SINGLE_CASE_ENGLAND): Promise<CaseWithId | false> {
-    try {
-      const fetchedCases = await this.getDraftCases(caseTypeId);
-      return fetchedCases.length === 0 ? false : formatCaseData(fetchedCases[fetchedCases.length - 1]);
-    } catch (err) {
-      logger.error('Case could not be retrieved.');
-    }
-  }
+  createCase = async (caseType: string): Promise<initiateCaseDraftResponse> => {
+    const body = {
+      case_type: caseType,
+      case_source: CcdDataModel.CASE_SOURCE,
+    };
 
-  private async getDraftCases(caseTypeId: string): Promise<initiateCaseDraftResponse[]> {
-    try {
-      const response = await this.axio.get(`/caseTypes/${caseTypeId}/cases`, {
-        data: {
-          match: { state: 'Draft' },
-        },
-      });
-      return response.data;
-    } catch (error) {
-      logger.error(error?.response || error?.request || error?.message);
-    }
-  }
+    return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
+  };
+
+  getDraftCases = (
+    caseTypeId = CcdDataModel.SINGLE_CASE_ENGLAND
+  ): Promise<AxiosResponse<initiateCaseDraftResponse[]>> => {
+    return this.axio.get<initiateCaseDraftResponse[]>(`/caseTypes/${caseTypeId}/cases`, {
+      data: {
+        match: { state: 'Draft' },
+      },
+    });
+  };
 }
 
-export const getCaseApi = (userDetails: UserDetails): CaseApi => {
+export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
     axios.create({
       baseURL: config.get('services.etSyaApi.host'),
       headers: {
-        Authorization: 'Bearer ' + userDetails.accessToken,
+        Authorization: 'Bearer ' + token,
         Accept: '*/*',
         'Content-Type': 'application/json',
       },
