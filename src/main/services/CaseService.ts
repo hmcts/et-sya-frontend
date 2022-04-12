@@ -6,7 +6,7 @@ import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
 import { State } from '../definitions/definition';
 
-export interface initiateCaseDraftResponse {
+export interface CaseDraftResponse {
   id: string;
   jurisdiction?: string;
   state: State;
@@ -15,7 +15,7 @@ export interface initiateCaseDraftResponse {
   last_modified?: Date;
   locked_by_user_id?: boolean | null;
   security_level?: string | null;
-  case_data: CaseData;
+  case_data?: CaseData;
   security_classification?: string;
   callback_response_status?: string | null;
 }
@@ -52,7 +52,7 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
   });
 };
 
-export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): CaseWithId => ({
+export const formatCaseData = (fromApiCaseData: CaseDraftResponse): CaseWithId => ({
   id: fromApiCaseData.id,
   state: fromApiCaseData.state,
   //ToDo - need a better case data type to store caseType in session (instead of using isASingleClaim)
@@ -61,7 +61,7 @@ export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): Case
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
-  createCase = async (caseType: string): Promise<initiateCaseDraftResponse> => {
+  createCase = async (caseType: string): Promise<CaseDraftResponse> => {
     const body = {
       case_type: caseType,
       case_source: CcdDataModel.CASE_SOURCE,
@@ -70,8 +70,8 @@ export class CaseApi {
     return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
   };
 
-  getDraftCases = (): Promise<AxiosResponse<initiateCaseDraftResponse[]>> => {
-    return this.axio.get<initiateCaseDraftResponse[]>('/caseTypes/ET_EnglandWales/cases', {
+  getDraftCases = (): Promise<AxiosResponse<CaseDraftResponse[]>> => {
+    return this.axio.get<CaseDraftResponse[]>('/caseTypes/ET_EnglandWales/cases', {
       data: {
         match: { state: 'Draft' },
       },

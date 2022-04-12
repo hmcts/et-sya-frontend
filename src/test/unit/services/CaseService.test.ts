@@ -35,16 +35,11 @@ describe('Format Case Data', () => {
     const mockedApiData = {
       id: '1234',
       state: State.Draft,
-      case_data: {
-        caseSource: 'Manually Created',
-        caseType: 'Single',
-      },
     };
     const result = formatCaseData(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
       state: State.Draft,
-      isASingleClaim: YesOrNo.YES,
     });
   });
 
@@ -52,16 +47,11 @@ describe('Format Case Data', () => {
     const mockedApiData = {
       id: '1234',
       state: State.Draft,
-      case_data: {
-        caseSource: 'Manually Created',
-        caseType: 'Multiple',
-      },
     };
     const result = formatCaseData(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
       state: State.Draft,
-      isASingleClaim: YesOrNo.NO,
     });
   });
 });
