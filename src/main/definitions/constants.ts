@@ -135,3 +135,5 @@ export const CcdDataModel = {
   SINGLE_CASE_SCOTLAND: 'ET_Scotland',
   CASE_SOURCE: 'ET1 Online',
 };
+
+export const EXISTING_USER = 'existingUser';

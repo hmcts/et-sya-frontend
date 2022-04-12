@@ -55,7 +55,7 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
 export const formatCaseData = (fromApiCaseData: initiateCaseDraftResponse): CaseWithId => ({
   id: fromApiCaseData.id,
   state: fromApiCaseData.state,
-  isASingleClaim: fromApiCaseData.case_data.caseType === 'Single' ? YesOrNo.YES : YesOrNo.NO,
+  //ToDo - need a better case data type to store caseType in session (instead of using isASingleClaim)
 });
 
 export class CaseApi {

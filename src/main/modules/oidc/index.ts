@@ -3,8 +3,8 @@ import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
-import { getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import { formatCaseData, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -16,7 +16,7 @@ export class Oidc {
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam = '';
-      req.session.guid ? (stateParam = req.session.guid) : (stateParam = 'loginFromHome');
+      req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
     });
 
@@ -36,7 +36,7 @@ export class Oidc {
 
       const guid = String(req.query?.state);
 
-      if (guid !== 'loginFromHome') {
+      if (guid !== EXISTING_USER) {
         if (redisClient) {
           getPreloginCaseData(redisClient, guid)
             .then(caseType =>
@@ -62,9 +62,9 @@ export class Oidc {
             if (apiRes.data.length === 0) {
               return res.redirect(PageUrls.TYPE_OF_CLAIM);
             } else {
-              // const cases = apiRes.data;
-              // req.session.userCase = formatCaseData(cases[cases.length - 1]);
-              // req.session.save();
+              const cases = apiRes.data;
+              req.session.userCase = formatCaseData(cases[cases.length - 1]);
+              req.session.save();
               return res.redirect(PageUrls.CLAIM_STEPS);
             }
           })
