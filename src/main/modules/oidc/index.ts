@@ -70,7 +70,7 @@ export class Oidc {
           })
           .catch(err => {
             logger.log(err);
-            return res.redirect(PageUrls.TYPE_OF_CLAIM);
+            return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
           });
       }
     });

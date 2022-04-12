@@ -70,10 +70,8 @@ export class CaseApi {
     return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
   };
 
-  getDraftCases = (
-    caseTypeId = CcdDataModel.SINGLE_CASE_ENGLAND
-  ): Promise<AxiosResponse<initiateCaseDraftResponse[]>> => {
-    return this.axio.get<initiateCaseDraftResponse[]>(`/caseTypes/${caseTypeId}/cases`, {
+  getDraftCases = (): Promise<AxiosResponse<initiateCaseDraftResponse[]>> => {
+    return this.axio.get<initiateCaseDraftResponse[]>('/caseTypes/ET_EnglandWales/cases', {
       data: {
         match: { state: 'Draft' },
       },
