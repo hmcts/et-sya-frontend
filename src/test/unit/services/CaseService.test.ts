@@ -1,18 +1,15 @@
-import axios from 'axios';
-import config from 'config';
+// import axios from 'axios';
 import redis from 'redis-mock';
 
 import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
 import { State, TypesOfClaim } from '../../../main/definitions/definition';
-import { CaseApi, formatCaseData, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
+import { formatCaseData, getPreloginCaseData } from '../../../main/services/CaseService';
 
-jest.mock('config');
 jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// const mockedAxios = axios as jest.Mocked<typeof axios>;
 const redisClient = redis.createClient();
 const guid = '7e7dfe56-b16d-43da-8bc4-5feeef9c3d68';
-const token = 'testToken';
 
 const cacheMap = new Map<CaseDataCacheKey, string>([
   [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(YesOrNo.YES)],
@@ -56,46 +53,5 @@ describe('Format Case Data', () => {
       id: '1234',
       state: State.Draft,
     });
-  });
-});
-
-const api = new CaseApi(mockedAxios);
-
-describe('Axios post to iniate case', () => {
-  it('should send post request to the correct api endpoint with the case type passed', async () => {
-    api.createCase('testCaseType');
-
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      '/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case',
-      expect.objectContaining({
-        case_source: CcdDataModel.CASE_SOURCE,
-        case_type: 'testCaseType',
-      })
-    );
-  });
-});
-
-describe('Axios get to retreive draft cases', () => {
-  it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
-    api.getDraftCases();
-
-    expect(mockedAxios.get).toHaveBeenCalledWith(
-      '/caseTypes/ET_EnglandWales/cases',
-      expect.objectContaining({
-        data: {
-          match: { state: 'Draft' },
-        },
-      })
-    );
-  });
-});
-
-describe('getCaseApi', () => {
-  beforeAll(() => {
-    config.get('services.etSyaApi.host');
-    return 'http://randomurl';
-  });
-  test('should create a CaseApi', () => {
-    expect(getCaseApi(token)).toBeInstanceOf(CaseApi);
   });
 });
