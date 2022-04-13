@@ -24,55 +24,64 @@ export class Oidc {
       req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
     });
 
-    app.get(AuthUrls.CALLBACK, async (req: AppRequest, res: Response, next: NextFunction) => {
-      const redisClient = req.app.locals?.redisClient;
-
-      if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
-        req.session.user = await getUserDetails(serviceUrl(res), req.query.code, AuthUrls.CALLBACK);
-        req.session.save();
-      } else {
-        return res.redirect(AuthUrls.LOGIN);
-      }
-
-      const guid = String(req.query?.state);
-
-      if (guid !== EXISTING_USER) {
-        if (redisClient) {
-          getPreloginCaseData(redisClient, guid)
-            .then(caseType =>
-              getCaseApi(req.session.user?.accessToken)
-                .createCase(caseType)
-                .then(() => {
-                  return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
-                })
-                .catch(() => {
-                  //ToDo - needs to handle different error response
-                })
-            )
-            .catch(err => next(err));
-        } else {
-          const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
-          err.name = RedisErrors.FAILED_TO_CONNECT;
-          return next(err);
-        }
-      } else {
-        getCaseApi(req.session.user?.accessToken)
-          .getDraftCases()
-          .then(apiRes => {
-            if (apiRes.data.length === 0) {
-              return res.redirect(PageUrls.TYPE_OF_CLAIM);
-            } else {
-              const cases = apiRes.data;
-              req.session.userCase = formatCaseData(cases[cases.length - 1]);
-              req.session.save();
-              return res.redirect(PageUrls.CLAIM_STEPS);
-            }
-          })
-          .catch(err => {
-            logger.log(err);
-            return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
-          });
-      }
+    app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
+      idamCallbackHandler(req, res, next, serviceUrl(res));
     });
+  }
+}
+
+export async function idamCallbackHandler(
+  req: AppRequest,
+  res: Response,
+  next: NextFunction,
+  serviceUrl: string
+): Promise<void> {
+  const redisClient = req.app.locals?.redisClient;
+  if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
+    req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
+    req.session.save();
+  } else {
+    return res.redirect(AuthUrls.LOGIN);
+  }
+
+  const guid = String(req.query?.state);
+
+  if (guid !== EXISTING_USER) {
+    if (redisClient) {
+      getPreloginCaseData(redisClient, guid)
+        .then(caseType =>
+          getCaseApi(req.session.user?.accessToken)
+            .createCase(caseType)
+            .then(() => {
+              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+            })
+            .catch(() => {
+              //ToDo - needs to handle different error response
+            })
+        )
+        .catch(err => next(err));
+    } else {
+      const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
+      err.name = RedisErrors.FAILED_TO_CONNECT;
+      return next(err);
+    }
+  } else {
+    getCaseApi(req.session.user?.accessToken)
+      .getDraftCases()
+      .then(apiRes => {
+        if (apiRes.data.length === 0) {
+          return res.redirect(PageUrls.TYPE_OF_CLAIM);
+        } else {
+          const cases = apiRes.data;
+          //We are not sure how multiple cases will be handled yet, so only fetching last case for now
+          req.session.userCase = formatCaseData(cases[cases.length - 1]);
+          req.session.save();
+          return res.redirect(PageUrls.CLAIM_STEPS);
+        }
+      })
+      .catch(err => {
+        logger.log(err);
+        return res.redirect(PageUrls.TYPE_OF_CLAIM);
+      });
   }
 }
