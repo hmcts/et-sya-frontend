@@ -27,7 +27,7 @@ export const mockRequest = ({
       ...userCase,
     } as CaseWithId,
     ...session,
-    save: jest.fn(done => (done ? done() : true)),
+    save: jest.fn(done => done()),
     lang: 'en',
     errors: undefined,
   } as unknown as AppSession;
