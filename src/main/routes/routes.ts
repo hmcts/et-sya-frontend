@@ -13,10 +13,6 @@ export default function (app: Application): void {
   app.post(PageUrls.LIP_OR_REPRESENTATIVE, app.locals.container.cradle.lipOrRepController.post);
   app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, app.locals.container.cradle.singleOrMultipleController.get);
   app.post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, app.locals.container.cradle.singleOrMultipleController.post);
-  app.get(PageUrls.MULTIPLE_RESPONDENT_CHECK, app.locals.container.cradle.multipleRespondentCheckController.get);
-  app.post(PageUrls.MULTIPLE_RESPONDENT_CHECK, app.locals.container.cradle.multipleRespondentCheckController.post);
-  app.get(PageUrls.ACAS_SINGLE_CLAIM, app.locals.container.cradle.acasSingleClaimController.get);
-  app.post(PageUrls.ACAS_SINGLE_CLAIM, app.locals.container.cradle.acasSingleClaimController.post);
   app.get(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.get);
   app.post(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.post);
   app.get(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.validNoAcasReasonController.get);
@@ -38,8 +34,6 @@ export default function (app: Application): void {
   app.post(PageUrls.RETURN_TO_EXISTING, app.locals.container.cradle.returnToExistingController.post);
   app.get(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.get);
   app.post(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.post);
-  app.get(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.get);
-  app.post(PageUrls.PRESENT_EMPLOYER, app.locals.container.cradle.presentEmployerController.post);
   app.get(PageUrls.JOB_TITLE, app.locals.container.cradle.jobTitleController.get);
   app.post(PageUrls.JOB_TITLE, app.locals.container.cradle.jobTitleController.post);
   app.get(PageUrls.STILL_WORKING, app.locals.container.cradle.stillWorkingController.get);
