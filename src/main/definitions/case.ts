@@ -1,4 +1,4 @@
-import { ClaimOutcomes, State, TypesOfClaim } from './definition';
+import { CaseState, ClaimOutcomes, TypesOfClaim } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -69,7 +69,7 @@ export const enum StillWorking {
 
 export interface CaseWithId extends Case {
   id: string;
-  state: State;
+  state: CaseState;
 }
 
 export const enum YesOrNo {

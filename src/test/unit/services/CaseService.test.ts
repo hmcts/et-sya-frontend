@@ -4,7 +4,7 @@ import redis from 'redis-mock';
 
 import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
-import { State, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
 import { CaseApi, formatCaseData, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
 
 jest.mock('config');
@@ -37,24 +37,24 @@ describe('Format Case Data', () => {
   it('should format single claim type`', () => {
     const mockedApiData = {
       id: '1234',
-      state: State.Draft,
+      state: CaseState.DRAFT,
     };
     const result = formatCaseData(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
-      state: State.Draft,
+      state: CaseState.DRAFT,
     });
   });
 
   it('should format multiple claim type`', () => {
     const mockedApiData = {
       id: '1234',
-      state: State.Draft,
+      state: CaseState.DRAFT,
     };
     const result = formatCaseData(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
-      state: State.Draft,
+      state: CaseState.DRAFT,
     });
   });
 });

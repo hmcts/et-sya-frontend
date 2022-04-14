@@ -5,7 +5,7 @@ import redis, { RedisClient } from 'redis-mock';
 import * as authIndex from '../../../main/auth/index';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { State } from '../../../main/definitions/definition';
+import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc/index';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi, CaseDraftResponse } from '../../../main/services/CaseService';
@@ -109,7 +109,7 @@ describe('Test responds to /oauth2/callback', function () {
     caseApi.getDraftCases = jest
       .fn()
       .mockResolvedValue(
-        Promise.resolve({ data: [{ id: 'testId', state: State.Draft }] } as AxiosResponse<CaseDraftResponse[]>)
+        Promise.resolve({ data: [{ id: 'testId', state: CaseState.DRAFT }] } as AxiosResponse<CaseDraftResponse[]>)
       );
 
     //Then it should redirect to CLAIM_STEPS page

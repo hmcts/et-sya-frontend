@@ -4,12 +4,12 @@ import { RedisClient } from 'redis';
 
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
-import { State } from '../definitions/definition';
+import { CaseState } from '../definitions/definition';
 
 export interface CaseDraftResponse {
   id: string;
   jurisdiction?: string;
-  state: State;
+  state: CaseState;
   case_type_id?: string;
   created_date?: Date;
   last_modified?: Date;
