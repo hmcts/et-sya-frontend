@@ -76,9 +76,7 @@ export const idamCallbackHandler = async (
       .getDraftCases()
       .then(apiRes => {
         if (apiRes.data.length === 0) {
-          const error = new Error();
-          error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
-          return next(error);
+          return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
         } else {
           const cases = apiRes.data;
           //We are not sure how multiple cases will be handled yet, so only fetching last case for now
