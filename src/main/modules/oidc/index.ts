@@ -3,7 +3,14 @@ import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import {
+  AuthUrls,
+  CaseApiErrors,
+  EXISTING_USER,
+  HTTPS_PROTOCOL,
+  PageUrls,
+  RedisErrors,
+} from '../../definitions/constants';
 import { formatCaseData, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -30,12 +37,12 @@ export class Oidc {
   }
 }
 
-export async function idamCallbackHandler(
+export const idamCallbackHandler = async (
   req: AppRequest,
   res: Response,
   next: NextFunction,
   serviceUrl: string
-): Promise<void> {
+): Promise<void> => {
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
@@ -47,30 +54,31 @@ export async function idamCallbackHandler(
   const guid = String(req.query?.state);
 
   if (guid !== EXISTING_USER) {
-    if (redisClient) {
-      getPreloginCaseData(redisClient, guid)
-        .then(caseType =>
-          getCaseApi(req.session.user?.accessToken)
-            .createCase(caseType)
-            .then(() => {
-              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
-            })
-            .catch(() => {
-              //ToDo - needs to handle different error response
-            })
-        )
-        .catch(err => next(err));
-    } else {
+    if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;
       return next(err);
     }
+    getPreloginCaseData(redisClient, guid)
+      .then(caseType =>
+        getCaseApi(req.session.user?.accessToken)
+          .createCase(caseType)
+          .then(() => {
+            return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+          })
+          .catch(() => {
+            //ToDo - needs to handle different error response
+          })
+      )
+      .catch(err => next(err));
   } else {
     getCaseApi(req.session.user?.accessToken)
       .getDraftCases()
       .then(apiRes => {
         if (apiRes.data.length === 0) {
-          return res.redirect(PageUrls.TYPE_OF_CLAIM);
+          const error = new Error();
+          error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
+          return next(error);
         } else {
           const cases = apiRes.data;
           //We are not sure how multiple cases will be handled yet, so only fetching last case for now
@@ -81,7 +89,9 @@ export async function idamCallbackHandler(
       })
       .catch(err => {
         logger.log(err);
-        return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
+        const error = new Error(err);
+        error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
+        return next(error);
       });
   }
-}
+};

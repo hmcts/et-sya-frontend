@@ -129,6 +129,10 @@ export const RedisErrors = {
   CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;
 
+export const CaseApiErrors = {
+  FAILED_TO_RETREIVE_CASE: 'Error when attempting to retreive draft case from sya-api',
+} as const;
+
 export const CcdDataModel = {
   SINGLE_CASE_ENGLAND: 'ET_EnglandWales',
   MULTIPLE_CASE_ENGLAND: 'ET_EnglandWales_Multiple',
