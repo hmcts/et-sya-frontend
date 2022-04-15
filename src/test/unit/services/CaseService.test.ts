@@ -15,7 +15,7 @@ const guid = '7e7dfe56-b16d-43da-8bc4-5feeef9c3d68';
 const token = 'testToken';
 
 const cacheMap = new Map<CaseDataCacheKey, string>([
-  [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.CASE_TYPE, JSON.stringify(YesOrNo.YES)],
   [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
 ]);
 

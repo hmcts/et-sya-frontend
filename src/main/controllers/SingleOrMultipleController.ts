@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { CaseType } from '../definitions/case';
 import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -15,18 +15,18 @@ export default class SingleOrMultipleController {
   private readonly form: Form;
   private readonly singleOrMultipleContent: FormContent = {
     fields: {
-      isASingleClaim: {
+      caseType: {
         type: 'radios',
         classes: 'govuk-radios',
         id: 'single-or-multiple-claim',
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
-            value: YesOrNo.YES,
+            value: CaseType.SINGLE,
           },
           {
             label: (l: AnyRecord): string => l.radio2,
-            value: YesOrNo.NO,
+            value: CaseType.MULTIPLE,
           },
         ],
         validator: isFieldFilledIn,
@@ -44,9 +44,9 @@ export default class SingleOrMultipleController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '';
-    if (req.body.isASingleClaim === YesOrNo.YES) {
+    if (req.body.caseType === CaseType.SINGLE) {
       redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
-    } else if (req.body.isASingleClaim === YesOrNo.NO) {
+    } else if (req.body.caseType === CaseType.MULTIPLE) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
