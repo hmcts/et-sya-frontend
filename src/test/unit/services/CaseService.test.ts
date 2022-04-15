@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from 'config';
 import redis from 'redis-mock';
 
-import { CaseDataCacheKey, YesOrNo } from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
 import { CaseApi, formatCaseData, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
@@ -15,7 +15,8 @@ const guid = '7e7dfe56-b16d-43da-8bc4-5feeef9c3d68';
 const token = 'testToken';
 
 const cacheMap = new Map<CaseDataCacheKey, string>([
-  [CaseDataCacheKey.CASE_TYPE, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.CLAIMANT_REPRESENTED, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.CASE_TYPE, JSON.stringify(CaseType.SINGLE)],
   [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
 ]);
 

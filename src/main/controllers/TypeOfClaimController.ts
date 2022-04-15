@@ -60,6 +60,7 @@ export default class TypeOfClaimController {
       const redisClient = req.app.locals?.redisClient;
       if (redisClient) {
         const cacheMap = new Map<CaseDataCacheKey, string>([
+          [CaseDataCacheKey.CLAIMANT_REPRESENTED, JSON.stringify(req.session.userCase?.claimantRepresentedQuestion)],
           [CaseDataCacheKey.CASE_TYPE, JSON.stringify(req.session.userCase?.caseType)],
           [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
         ]);

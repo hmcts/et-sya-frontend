@@ -77,6 +77,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
+        [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
       ]);
