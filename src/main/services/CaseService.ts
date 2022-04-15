@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import { RedisClient } from 'redis';
 
-import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseDataCacheKey, CaseType, CaseWithId } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
 
@@ -32,10 +32,10 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
       if (userData) {
         const userDataMap = new Map(JSON.parse(userData));
         switch (String(userDataMap.get(CaseDataCacheKey.CASE_TYPE)).slice(1, -1)) {
-          case YesOrNo.YES:
+          case CaseType.SINGLE:
             resolve(CcdDataModel.SINGLE_CASE_ENGLAND);
             break;
-          case YesOrNo.NO:
+          case CaseType.MULTIPLE:
             resolve(CcdDataModel.MULTIPLE_CASE_ENGLAND);
             break;
         }
