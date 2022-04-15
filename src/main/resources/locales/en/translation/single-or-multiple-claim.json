@@ -6,7 +6,7 @@
   "radio1": "I’m making a ‘Single’ claim on my own",
   "radio2": "I’m making a ‘Multiple’ claim alongside other people",
   "errors": {
-    "isASingleClaim": {
+    "caseType": {
       "required": "Select an Option"
     }
   }

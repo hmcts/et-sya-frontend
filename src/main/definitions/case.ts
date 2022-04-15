@@ -22,7 +22,7 @@ export interface Case {
   acasMultiple?: YesOrNo;
   updatePreference?: EmailOrPost;
   representingMyself?: YesOrNo;
-  isASingleClaim?: YesOrNo;
+  caseType?: CaseType;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;
@@ -74,6 +74,11 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
+export const enum CaseType {
+  SINGLE = 'Single',
+  MULTIPLE = 'Multiple',
+}
+
 export const enum WeeksOrMonths {
   WEEKS = 'Weeks',
   MONTHS = 'Months',
@@ -103,6 +108,6 @@ export const enum PayInterval {
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
 
 export const enum CaseDataCacheKey {
-  IS_SINGLE_CASE = 'isSingleCase',
+  CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typesOfClaim',
 }

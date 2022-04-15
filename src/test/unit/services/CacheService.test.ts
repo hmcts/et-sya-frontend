@@ -9,7 +9,7 @@ import { cachePreloginCaseData } from '../../../main/services/CacheService';
 const redisClient = redis.createClient();
 const uuid = 'f0d62bc6-5c7b-4ac1-98d2-c745a2df79b8';
 const cacheMap = new Map<CaseDataCacheKey, string>([
-  [CaseDataCacheKey.IS_SINGLE_CASE, JSON.stringify(YesOrNo.YES)],
+  [CaseDataCacheKey.CASE_TYPE, JSON.stringify(YesOrNo.YES)],
   [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
 ]);
 
