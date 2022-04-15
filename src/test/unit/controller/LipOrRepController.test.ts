@@ -6,7 +6,7 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Litigation in Person or Representative Controller', () => {
   const t = {
-    representingMyself: {},
+    claimantRepresentedQuestion: {},
     common: {},
   };
 
@@ -21,7 +21,7 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it("should render the Single or Multiple claims page when 'representing myself' is selected", () => {
-    const body = { representingMyself: YesOrNo.YES };
+    const body = { claimantRepresentedQuestion: YesOrNo.YES };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
@@ -32,7 +32,7 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
-    const body = { representingMyself: YesOrNo.NO };
+    const body = { claimantRepresentedQuestion: YesOrNo.NO };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
@@ -43,8 +43,8 @@ describe('Litigation in Person or Representative Controller', () => {
   });
 
   it('should render same page if errors are present when nothing is selected', () => {
-    const errors = [{ propertyName: 'representingMyself', errorType: 'required' }];
-    const body = { representingMyself: '' };
+    const errors = [{ propertyName: 'claimantRepresentedQuestion', errorType: 'required' }];
+    const body = { claimantRepresentedQuestion: '' };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });

@@ -21,7 +21,7 @@ export interface Case {
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
   updatePreference?: EmailOrPost;
-  representingMyself?: YesOrNo;
+  claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;

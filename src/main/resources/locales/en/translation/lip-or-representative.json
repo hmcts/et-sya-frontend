@@ -24,7 +24,7 @@
   "radio1": "I’m representing myself and making my own claim",
   "radio2": "I’m making a claim for someone else and acting as their representative",
   "errors": {
-    "representingMyself": {
+    "claimantRepresentedQuestion": {
       "required": "Select an Option"
     }
   }
