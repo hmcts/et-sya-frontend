@@ -19,5 +19,5 @@ Scenario('ET homepage verify cached configuration on a new tab', () => {
   I.amOnPage('/lip-or-representative');
   I.seeInCurrentUrl('/lip-or-representative');
   I.see('I’m representing myself and making my own claim');
-  I.dontSeeCheckboxIsChecked('representingMyself');
+  I.dontSeeCheckboxIsChecked('claimantRepresentedQuestion');
 }).tag('@RET-1014');

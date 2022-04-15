@@ -16,7 +16,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
   test("should return the Single or Multiple claims page when 'representing myself' is selected", async () => {
     await request(app)
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ representingMyself: YesOrNo.YES })
+      .send({ claimantRepresentedQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
@@ -26,7 +26,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
   test("should return the legacy ET1 service when the 'making a claim for someone else' option is selected", async () => {
     await request(app)
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
-      .send({ representingMyself: YesOrNo.NO })
+      .send({ claimantRepresentedQuestion: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(LegacyUrls.ET1);
