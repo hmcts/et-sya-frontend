@@ -12,10 +12,9 @@ describe(`GET ${PageUrls.GENDER_DETAILS}`, () => {
 });
 
 describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
-  test('should go to the date of birth details page', async () => {
+  test('should go to the address details page', async () => {
     await request(app)
       .post(PageUrls.GENDER_DETAILS)
-      .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);

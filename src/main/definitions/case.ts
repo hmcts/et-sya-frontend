@@ -23,13 +23,10 @@ export interface Case {
   updatePreference?: EmailOrPost;
   representingMyself?: YesOrNo;
   isASingleClaim?: YesOrNo;
-  isAcasSingle?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
-  returnToExisting?: YesOrNo;
-  isMultipleRespondent?: YesOrNo;
+  returnToExisting: YesOrNo;
   jobTitle?: string;
-  presentEmployer?: YesOrNo;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
   noticeEnd?: string;
