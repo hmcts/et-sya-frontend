@@ -29,7 +29,7 @@
     "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.7.0",
-    "@hmcts/nodejs-logging": "^3.0.2",
+    "@hmcts/nodejs-logging": "^4.0.0",
     "@hmcts/properties-volume": "^0.0.13",
     "@pact-foundation/pact": "9.17.3",
     "@types/config": "^0.0.41",
@@ -62,8 +62,8 @@
     "express": "^4.17.3",
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
-    "faker": "^5.5.1",
-    "glob": "^7.1.6",
+    "faker": "^6.0.0",
+    "glob": "^8.0.0",
     "google-libphonenumber": "^3.2.26",
     "govuk-frontend": "^4.0.1",
     "helmet": "^5.0.2",
@@ -142,6 +142,6 @@
     "**/**/ansi-regex": "^5.0.1"
   },
   "peerDependencies": {
-    "faker": "^5.5.1"
+    "faker": "^6.0.0"
   }
 }
