@@ -8,6 +8,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -39,6 +40,8 @@ export default class DobController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    const formData = req.body;
+    getCaseApi(req.session.user?.accessToken).updateDraftCase('ET_EnglandWales', formData);
     handleSessionErrors(req, res, this.form, PageUrls.GENDER_DETAILS);
   };
 

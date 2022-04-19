@@ -5,6 +5,7 @@ import { RedisClient } from 'redis';
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
 import { CcdDataModel, RedisErrors } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
+import { AnyRecord } from '../definitions/util-types';
 
 export interface CaseDraftResponse {
   id: string;
@@ -76,6 +77,18 @@ export class CaseApi {
         match: { state: 'Draft' },
       },
     });
+  };
+
+  updateDraftCase = async (caseType: string, formData: AnyRecord): Promise<CaseDraftResponse> => {
+    const body = {
+      case_type: caseType,
+      case_source: CcdDataModel.CASE_SOURCE,
+      claimantIndType: {
+        claimant_date_of_birth: formData,
+      },
+    };
+
+    return this.axio.post('/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT/case', body);
   };
 }
 
