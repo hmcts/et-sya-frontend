@@ -19,7 +19,6 @@ withNightlyPipeline(type, product, component) {
 
     enableFullFunctionalTest()
     enableCrossBrowserTest()
-
     after('fullFunctionalTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
 
