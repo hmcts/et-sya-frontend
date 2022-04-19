@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       .send({ isASingleClaim: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.MULTIPLE_RESPONDENT_CHECK);
+        expect(res.header['location']).toStrictEqual(PageUrls.ACAS_MULTIPLE_CLAIM);
       });
   });
 

@@ -45,7 +45,7 @@ Scenario('Verify check your answers page', () => {
   I.executeScript('window.history.back();');
 
   I.see('Still working for the organisation or person');
-  I.click('(//a[@href="/present-employer"])');
+  I.click('(//a[@href="/are-you-still-working"])');
   I.executeScript('window.history.back();');
 
   I.see('Job title');

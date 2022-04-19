@@ -146,7 +146,7 @@ describe('Check your answers confirmation page', () => {
     const didYouWorkForLink = employerList[0].getAttribute('href');
     const isStillWorkingLink = employerList[1].getAttribute('href');
     expect(didYouWorkForLink).equals(PageUrls.PAST_EMPLOYER, 'Incorrect href found');
-    expect(isStillWorkingLink).equals(PageUrls.PRESENT_EMPLOYER, 'Incorrect href found');
+    expect(isStillWorkingLink).equals(PageUrls.STILL_WORKING, 'Incorrect href found');
 
     const employmentDetailsList = summeryListSections[5].getElementsByClassName(summeryListLinkClass);
     const jobTitleLink = employmentDetailsList[0].getAttribute('href');
