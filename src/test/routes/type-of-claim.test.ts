@@ -1,8 +1,7 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
-import { AuthUrls, PageUrls } from '../../main/definitions/constants';
-import { TypesOfClaim } from '../../main/definitions/definition';
+import { PageUrls } from '../../main/definitions/constants';
 
 describe(`GET ${PageUrls.TYPE_OF_CLAIM}`, () => {
   it('should return the type of claim page', async () => {
@@ -22,18 +21,6 @@ describe(`on POST ${PageUrls.TYPE_OF_CLAIM}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM);
-      });
-  });
-
-  test('should navigate to login page when "Breach of contract" is selected', async () => {
-    await request(app)
-      .post(PageUrls.TYPE_OF_CLAIM)
-      .send({
-        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
-      })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(AuthUrls.LOGIN);
       });
   });
 });
