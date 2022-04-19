@@ -12,8 +12,6 @@ export const TranslationKeys = {
   CHECKLIST: 'checklist',
   LIP_OR_REPRESENTATIVE: 'lip-or-representative',
   SINGLE_OR_MULTIPLE_CLAIM: 'single-or-multiple-claim',
-  MULTIPLE_RESPONDENT_CHECK: 'multiple-respondent-check',
-  ACAS_SINGLE_CLAIM: 'acas-single-claim',
   ACAS_MULTIPLE_CLAIM: 'acas-multiple',
   ADDRESS_DETAILS: 'address-details',
   DATE_OF_BIRTH: 'date-of-birth',
@@ -54,7 +52,6 @@ export const TranslationKeys = {
   TRIBUNAL_RECOMMENDATION_OUTCOME: 'tribunal-recommendation-outcome',
   END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
-  PRESENT_EMPLOYER: 'present-employer',
 } as const;
 
 export const PageUrls = {
@@ -67,9 +64,7 @@ export const PageUrls = {
   RETURN_TO_EXISTING: '/return-to-existing',
   LIP_OR_REPRESENTATIVE: '/lip-or-representative',
   SINGLE_OR_MULTIPLE_CLAIM: '/single-or-multiple-claim',
-  ACAS_SINGLE_CLAIM: '/do-you-have-an-acas-single-resps',
   ACAS_MULTIPLE_CLAIM: '/do-you-have-an-acas-no-many-resps',
-  MULTIPLE_RESPONDENT_CHECK: '/multiple-respondent-check',
   NO_ACAS_NUMBER: '/do-you-have-a-valid-no-acas-reason',
   STILL_WORKING: '/are-you-still-working',
   TYPE_OF_CLAIM: '/type-of-claim',
@@ -81,7 +76,6 @@ export const PageUrls = {
   TELEPHONE_NUMBER: '/telephone-number',
   GENDER_DETAILS: '/gender-details',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
-  PRESENT_EMPLOYER: '/present-employer',
   JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
   PENSION: '/pension',

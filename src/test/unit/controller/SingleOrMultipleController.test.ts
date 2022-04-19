@@ -29,7 +29,7 @@ describe('Single or Multiple Claim Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.MULTIPLE_RESPONDENT_CHECK);
+    expect(res.redirect).toBeCalledWith(PageUrls.ACAS_MULTIPLE_CLAIM);
   });
 
   it("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {

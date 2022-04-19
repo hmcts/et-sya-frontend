@@ -45,7 +45,7 @@ export default class SingleOrMultipleController {
     setUserCase(req, this.form);
     let redirectUrl = '';
     if (req.body.isASingleClaim === YesOrNo.YES) {
-      redirectUrl = PageUrls.MULTIPLE_RESPONDENT_CHECK;
+      redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
     } else if (req.body.isASingleClaim === YesOrNo.NO) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
