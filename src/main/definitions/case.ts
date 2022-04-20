@@ -25,7 +25,7 @@ export interface Case {
   isASingleClaim?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
-  returnToExisting: YesOrNo;
+  returnToExisting?: YesOrNo;
   jobTitle?: string;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
