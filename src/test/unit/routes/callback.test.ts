@@ -4,11 +4,12 @@ import redis, { RedisClient } from 'redis-mock';
 
 import * as authIndex from '../../../main/auth/index';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
+import { CaseApiResponse } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc/index';
 import * as CaseService from '../../../main/services/CaseService';
-import { CaseApi, CaseDraftResponse } from '../../../main/services/CaseService';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -85,7 +86,7 @@ describe('Test responds to /oauth2/callback', function () {
     //Given that case is created sucessfully
     const getCaseApiMock = CaseService.getCaseApi as jest.MockedFunction<(token: string) => CaseApi>;
     getCaseApiMock.mockReturnValue(caseApi);
-    caseApi.createCase = jest.fn().mockResolvedValue(Promise.resolve({} as CaseDraftResponse));
+    caseApi.createCase = jest.fn().mockResolvedValue(Promise.resolve({} as CaseApiResponse));
 
     //Then it should redirect to NEW_ACCOUNT_LANDING page
     idamCallbackHandler(req, res, next, serviceUrl);
@@ -96,7 +97,7 @@ describe('Test responds to /oauth2/callback', function () {
   test('Should get the existing draft case if it is a existing user', async () => {
     //Given that the state param is 'existingUser'
     req.query = { code: 'testCode', state: existingUser };
-    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as CaseDraftResponse[]));
+    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as CaseApiResponse[]));
 
     //Then it should call getCaseApi
     jest.spyOn(caseApi, 'getDraftCases');
@@ -109,7 +110,9 @@ describe('Test responds to /oauth2/callback', function () {
     caseApi.getDraftCases = jest
       .fn()
       .mockResolvedValue(
-        Promise.resolve({ data: [{ id: 'testId', state: CaseState.DRAFT }] } as AxiosResponse<CaseDraftResponse[]>)
+        Promise.resolve({ data: [{ id: 'testId', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS }] } as AxiosResponse<
+          CaseApiResponse[]
+        >)
       );
 
     //Then it should redirect to CLAIM_STEPS page

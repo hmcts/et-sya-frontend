@@ -2,10 +2,11 @@ import axios from 'axios';
 import config from 'config';
 import redis from 'redis-mock';
 
+import { UserDetails } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
-import { CcdDataModel, RedisErrors } from '../../../main/definitions/constants';
+import { CcdDataModel, JavaApiUrls, RedisErrors } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
-import { CaseApi, formatCaseData, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
+import { CaseApi, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
 
 jest.mock('config');
 jest.mock('axios');
@@ -23,7 +24,10 @@ const cacheMap = new Map<CaseDataCacheKey, string>([
 describe('Get pre-login case data from Redis', () => {
   it('should return case data if it is stored in Redis with the guid provided', async () => {
     redisClient.set(guid, JSON.stringify(Array.from(cacheMap.entries())));
-    await expect(getPreloginCaseData(redisClient, guid)).resolves.toEqual(CcdDataModel.SINGLE_CASE_ENGLAND);
+    const caseData = await getPreloginCaseData(redisClient, guid);
+    const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
+
+    expect(userDataMap.get(CaseDataCacheKey.CASE_TYPE)).toEqual('"Single"');
   });
 
   it('should throw error if case data does not exist in Redis with the guid provided', async () => {
@@ -34,43 +38,34 @@ describe('Get pre-login case data from Redis', () => {
   });
 });
 
-describe('Format Case Data', () => {
-  it('should format single claim type`', () => {
-    const mockedApiData = {
-      id: '1234',
-      state: CaseState.DRAFT,
-    };
-    const result = formatCaseData(mockedApiData);
-    expect(result).toStrictEqual({
-      id: '1234',
-      state: CaseState.DRAFT,
-    });
-  });
-
-  it('should format multiple claim type`', () => {
-    const mockedApiData = {
-      id: '1234',
-      state: CaseState.DRAFT,
-    };
-    const result = formatCaseData(mockedApiData);
-    expect(result).toStrictEqual({
-      id: '1234',
-      state: CaseState.DRAFT,
-    });
-  });
-});
-
 const api = new CaseApi(mockedAxios);
 
 describe('Axios post to iniate case', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
-    api.createCase('testCaseType');
+    const mockUserDetails: UserDetails = {
+      id: '1234',
+      givenName: 'Bobby',
+      familyName: 'Ryan',
+      email: 'bobby@gmail.com',
+      accessToken: 'xxxx',
+    };
+    const caseData =
+      '[["claimantRepresentedQuestion","Yes"],["caseType","Single"], ["typesOfClaim", "[\\"discrimination\\"]"]]';
+    api.createCase(caseData, mockUserDetails);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
-      '/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case',
+      JavaApiUrls.INITIATE_CASE_DRAFT,
       expect.objectContaining({
-        case_source: CcdDataModel.CASE_SOURCE,
-        case_type: 'testCaseType',
+        caseSource: CcdDataModel.CASE_SOURCE,
+        caseType: 'Single',
+        claimantRespresentedQuestion: 'Yes',
+        claimantIndType: {
+          claimant_first_names: 'Bobby',
+          claimant_last_name: 'Ryan',
+        },
+        claimantType: {
+          claimant_email_address: 'bobby@gmail.com',
+        },
       })
     );
   });
@@ -84,7 +79,7 @@ describe('Axios get to retreive draft cases', () => {
       '/caseTypes/ET_EnglandWales/cases',
       expect.objectContaining({
         data: {
-          match: { state: 'Draft' },
+          match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
         },
       })
     );
