@@ -1,5 +1,6 @@
+import { CaseApiResponse } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseApiResponse, CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
 import { fromApiFormat, toApiFormat } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel } from '../mocks/mockEt1DataModel';
