@@ -2,44 +2,15 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import { RedisClient } from 'redis';
 
-import { CaseDataCacheKey, CaseType, CaseWithId } from '../definitions/case';
-import { CcdDataModel, RedisErrors } from '../definitions/constants';
+import { UserDetails } from '../definitions/appRequest';
+import { CaseApiResponse, CaseDataCacheKey } from '../definitions/case';
+import { JavaApiUrls, RedisErrors } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
+import { toApiFormat } from '../helper/ApiFormatter';
 
-export interface CaseDraftResponse {
-  id: string;
-  jurisdiction?: string;
-  state: CaseState;
-  case_type_id?: string;
-  created_date?: Date;
-  last_modified?: Date;
-  locked_by_user_id?: boolean | null;
-  security_level?: string | null;
-  case_data?: CaseData;
-  security_classification?: string;
-  callback_response_status?: string | null;
-}
-
-export interface CaseData {
-  caseType?: string;
-  caseSource?: string;
-}
-
-//ToDo - Eventually this should return all the pre-login case data
 export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
     redisClient.get(guid, (err: Error, userData: string) => {
-      if (userData) {
-        const userDataMap = new Map(JSON.parse(userData));
-        switch (String(userDataMap.get(CaseDataCacheKey.CASE_TYPE)).slice(1, -1)) {
-          case CaseType.SINGLE:
-            resolve(CcdDataModel.SINGLE_CASE_ENGLAND);
-            break;
-          case CaseType.MULTIPLE:
-            resolve(CcdDataModel.MULTIPLE_CASE_ENGLAND);
-            break;
-        }
-      }
       if (err || !userData) {
         const error = new Error(err ? err.message : RedisErrors.REDIS_ERROR);
         error.name = RedisErrors.FAILED_TO_RETREIVE;
@@ -48,32 +19,25 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
         }
         reject(error);
       }
+      resolve(userData);
     });
   });
 };
 
-export const formatCaseData = (fromApiCaseData: CaseDraftResponse): CaseWithId => ({
-  id: fromApiCaseData.id,
-  state: fromApiCaseData.state,
-  //ToDo - need a better case data type to store caseType in session (instead of using isASingleClaim)
-});
-
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
-  createCase = async (caseType: string): Promise<CaseDraftResponse> => {
-    const body = {
-      case_type: caseType,
-      case_source: CcdDataModel.CASE_SOURCE,
-    };
+  createCase = async (caseData: string, userDetails: UserDetails): Promise<CaseApiResponse> => {
+    const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
+    const body = toApiFormat(userDataMap, userDetails);
 
-    return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
+    return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 
-  getDraftCases = (): Promise<AxiosResponse<CaseDraftResponse[]>> => {
-    return this.axio.get<CaseDraftResponse[]>('/caseTypes/ET_EnglandWales/cases', {
+  getDraftCases = (): Promise<AxiosResponse<CaseApiResponse[]>> => {
+    return this.axio.get<CaseApiResponse[]>(JavaApiUrls.GET_CASES, {
       data: {
-        match: { state: 'Draft' },
+        match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       },
     });
   };
