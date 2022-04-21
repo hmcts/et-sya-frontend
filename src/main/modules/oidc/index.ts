@@ -12,7 +12,8 @@ import {
   RedisErrors,
 } from '../../definitions/constants';
 import { fromApiFormat } from '../../helper/ApiFormatter';
-import { getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+import { getPreloginCaseData } from '../../services/CacheService';
+import { getCaseApi } from '../../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -61,9 +62,9 @@ export const idamCallbackHandler = async (
       return next(err);
     }
     getPreloginCaseData(redisClient, guid)
-      .then(caseType =>
+      .then(caseData =>
         getCaseApi(req.session.user?.accessToken)
-          .createCase(caseType, req.session.user)
+          .createCase(caseData, req.session.user)
           .then(() => {
             return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
           })

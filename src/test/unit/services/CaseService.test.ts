@@ -1,42 +1,15 @@
 import axios from 'axios';
 import config from 'config';
-import redis from 'redis-mock';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
-import { CcdDataModel, JavaApiUrls, RedisErrors } from '../../../main/definitions/constants';
-import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
-import { CaseApi, getCaseApi, getPreloginCaseData } from '../../../main/services/CaseService';
+import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
+import { CaseState } from '../../../main/definitions/definition';
+import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
 
 jest.mock('config');
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-const redisClient = redis.createClient();
-const guid = '7e7dfe56-b16d-43da-8bc4-5feeef9c3d68';
 const token = 'testToken';
-
-const cacheMap = new Map<CaseDataCacheKey, string>([
-  [CaseDataCacheKey.CLAIMANT_REPRESENTED, JSON.stringify(YesOrNo.YES)],
-  [CaseDataCacheKey.CASE_TYPE, JSON.stringify(CaseType.SINGLE)],
-  [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
-]);
-
-describe('Get pre-login case data from Redis', () => {
-  it('should return case data if it is stored in Redis with the guid provided', async () => {
-    redisClient.set(guid, JSON.stringify(Array.from(cacheMap.entries())));
-    const caseData = await getPreloginCaseData(redisClient, guid);
-    const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
-
-    expect(userDataMap.get(CaseDataCacheKey.CASE_TYPE)).toEqual('"Single"');
-  });
-
-  it('should throw error if case data does not exist in Redis with the guid provided', async () => {
-    redisClient.flushdb();
-    const error = new Error(RedisErrors.REDIS_ERROR);
-    error.name = RedisErrors.FAILED_TO_RETREIVE;
-    await expect(getPreloginCaseData(redisClient, guid)).rejects.toEqual(error);
-  });
-});
 
 const api = new CaseApi(mockedAxios);
 

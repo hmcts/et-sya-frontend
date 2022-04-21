@@ -1,28 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
-import { RedisClient } from 'redis';
 
+import { CaseApiResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseApiResponse, CaseDataCacheKey } from '../definitions/case';
-import { JavaApiUrls, RedisErrors } from '../definitions/constants';
+import { CaseDataCacheKey } from '../definitions/case';
+import { JavaApiUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
 import { toApiFormat } from '../helper/ApiFormatter';
-
-export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Promise<string> => {
-  return new Promise<string>((resolve, reject) => {
-    redisClient.get(guid, (err: Error, userData: string) => {
-      if (err || !userData) {
-        const error = new Error(err ? err.message : RedisErrors.REDIS_ERROR);
-        error.name = RedisErrors.FAILED_TO_RETREIVE;
-        if (err?.stack) {
-          error.stack = err.stack;
-        }
-        reject(error);
-      }
-      resolve(userData);
-    });
-  });
-};
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
@@ -30,7 +14,6 @@ export class CaseApi {
   createCase = async (caseData: string, userDetails: UserDetails): Promise<CaseApiResponse> => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
     const body = toApiFormat(userDataMap, userDetails);
-
     return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 

@@ -3,11 +3,12 @@ import { Application, NextFunction, Response } from 'express';
 import redis, { RedisClient } from 'redis-mock';
 
 import * as authIndex from '../../../main/auth/index';
+import { CaseApiResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
-import { CaseApiResponse } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc/index';
+import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -62,15 +63,15 @@ describe('Test responds to /oauth2/callback', function () {
     req.query = { code: 'testCode', state: guid };
 
     //Then it should call getPreloginCaseData
-    jest.spyOn(CaseService, 'getPreloginCaseData');
+    jest.spyOn(CacheService, 'getPreloginCaseData');
     return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
-      expect(CaseService.getPreloginCaseData).toHaveBeenCalled()
+      expect(CacheService.getPreloginCaseData).toHaveBeenCalled()
     );
   });
 
   test('Should call sya-api to create draft case if prelogin data successfully retreived', () => {
     //Given that prelogin data is successfully retreived
-    const getPreloginCaseDataMock = CaseService.getPreloginCaseData as jest.MockedFunction<
+    const getPreloginCaseDataMock = CacheService.getPreloginCaseData as jest.MockedFunction<
       (redisClient: RedisClient, guid: string) => Promise<string>
     >;
     getPreloginCaseDataMock.mockReturnValue(Promise.resolve(caseType));

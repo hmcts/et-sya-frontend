@@ -1,6 +1,7 @@
-import { CaseApiBody } from '../definitions/CaseApiBody';
+import { CaseApiBody } from '../definitions/api/caseApiBody';
+import { CaseApiResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseApiResponse, CaseDataCacheKey, CaseWithId } from '../definitions/case';
+import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormat(userDataMap: Map<CaseDataCacheKey, string>, userDetails: UserDetails): CaseApiBody {
