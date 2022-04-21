@@ -23,6 +23,10 @@
     {
       "matchPackageNames": ["redis"],
       "allowedVersions": "<=3"
+    },
+    {
+      "matchPackageNames": ["faker"],
+      "allowedVersions": "<=5"
     }
   ],
   "lockFileMaintenance": {
