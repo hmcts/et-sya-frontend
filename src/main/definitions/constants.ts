@@ -137,3 +137,4 @@ export const CcdDataModel = {
 } as const;
 
 export const EXISTING_USER = 'existingUser';
+export const LOCAL_REDIS_SERVER = '127.0.0.1';
