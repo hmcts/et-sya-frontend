@@ -2,8 +2,10 @@ import config from 'config';
 import ConnectRedis from 'connect-redis';
 import { Application } from 'express';
 import session from 'express-session';
-import { createClient } from 'redis';
+import { ClientOpts, createClient } from 'redis';
 import FileStoreFactory from 'session-file-store';
+
+import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
 
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
@@ -31,18 +33,26 @@ export class Session {
   private getStore(app: Application) {
     const redisHost = config.get('session.redis.host') as string;
     if (redisHost) {
-      const client = createClient({
-        host: redisHost,
-        port: 6380,
-        tls: true,
-        connect_timeout: 15000,
-        password: config.get('session.redis.key') as string,
-      });
+      const clientOptions: ClientOpts =
+        redisHost === LOCAL_REDIS_SERVER
+          ? {
+              host: redisHost,
+              port: 6379,
+              tls: false,
+              connect_timeout: 15000,
+            }
+          : {
+              host: redisHost,
+              port: 6380,
+              tls: true,
+              connect_timeout: 15000,
+              password: config.get('session.redis.key') as string,
+            };
 
+      const client = createClient(clientOptions);
       app.locals.redisClient = client;
       return new RedisStore({ client });
     }
-
     return new FileStore({ path: '/tmp', reapInterval: -1 });
   }
 }
