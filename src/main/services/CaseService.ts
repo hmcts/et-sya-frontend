@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import config from 'config';
+// import config from 'config';
 import { RedisClient } from 'redis';
 
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
@@ -61,25 +61,24 @@ export const formatCaseData = (fromApiCaseData: CaseDraftResponse): CaseWithId =
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
-
   createCase = async (caseType: string): Promise<CaseDraftResponse> => {
     const body = {
       case_type: caseType,
       case_source: CcdDataModel.CASE_SOURCE,
     };
 
-    return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
+    return this.axio.post('/case-type/ET_EnglandWales/event-type/INITIATE_CASE_DRAFT/case', body);
   };
 
   getDraftCases = (): Promise<AxiosResponse<CaseDraftResponse[]>> => {
     return this.axio.get<CaseDraftResponse[]>('/caseTypes/ET_EnglandWales/cases', {
       data: {
-        match: { state: 'Draft' },
+        match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       },
     });
   };
 
-  updateDraftCase = async (caseType: string, formData: AnyRecord): Promise<CaseDraftResponse> => {
+  updateDraftCase = async (caseType: string, caseId: string, formData: AnyRecord): Promise<CaseDraftResponse> => {
     const body = {
       case_type: caseType,
       case_source: CcdDataModel.CASE_SOURCE,
@@ -87,15 +86,17 @@ export class CaseApi {
         claimant_date_of_birth: formData,
       },
     };
-
-    return this.axio.post('/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT/case', body);
+    const id = caseId;
+    // const caseId = "1649243011452845";
+    return this.axio.put(`/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT/${id}`, body);
   };
 }
 
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
     axios.create({
-      baseURL: config.get('services.etSyaApi.host'),
+      // baseURL: config.get('services.etSyaApi.host'),
+      baseURL: 'http://localhost:4550',
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: '*/*',
