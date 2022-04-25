@@ -1,4 +1,4 @@
-import { CaseApiResponse } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
@@ -27,7 +27,7 @@ describe('Should return data in api format', () => {
 
 describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
-    const mockedApiData: CaseApiResponse = {
+    const mockedApiData: CaseApiDataResponse = {
       id: '1234',
       state: CaseState.DRAFT,
       case_data: {
@@ -45,7 +45,7 @@ describe('Format Case Data to Frontend Model', () => {
   });
 
   it('should return null for empty field`', () => {
-    const mockedApiData: CaseApiResponse = {
+    const mockedApiData: CaseApiDataResponse = {
       id: '1234',
       state: CaseState.DRAFT,
       case_data: {

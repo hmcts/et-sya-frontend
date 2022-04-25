@@ -3,7 +3,11 @@ import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { CaseState } from '../definition';
 
-export interface CaseApiResponse {
+export interface CreateCaseResponse {
+  data: CaseApiDataResponse;
+}
+
+export interface CaseApiDataResponse {
   id: string;
   jurisdiction?: string;
   state: CaseState;

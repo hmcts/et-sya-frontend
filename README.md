@@ -36,7 +36,7 @@ Run Dev Mode:
 $ yarn start:dev
 ```
 
-Run Dev Mode With Redis:
+Run Dev Mode With Redis server:
 
 ```bash
 $ yarn start:dev-red

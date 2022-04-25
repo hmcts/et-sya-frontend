@@ -1,5 +1,5 @@
 import { CaseApiBody } from '../definitions/api/caseApiBody';
-import { CaseApiResponse } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
@@ -19,7 +19,7 @@ export function toApiFormat(userDataMap: Map<CaseDataCacheKey, string>, userDeta
   };
 }
 
-export function fromApiFormat(fromApiCaseData: CaseApiResponse): CaseWithId {
+export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
     state: fromApiCaseData.state,
