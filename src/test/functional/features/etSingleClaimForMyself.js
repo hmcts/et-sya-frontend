@@ -1,7 +1,7 @@
 Feature('ET Single claim for my self');
 const { I } = inject();
-//const loginIdam = require('../authUser/loginIdam.js');
-//const data = require('../data.json');
+const loginIdam = require('../authUser/loginIdam.js');
+const data = require('../data.json');
 
 const commonFlow = require('./commonFlow.js');
 
@@ -39,7 +39,6 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.checkOption('input[id=valid-no-acas-reason]');
   I.click('Continue');
 
-  /*
   I.see('What type of claim do you want to make?');
   I.checkOption('input[value=discrimination]');
   I.click('#main-form-submit');
@@ -52,7 +51,7 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.see('You do not have to complete your claim in one go');
   I.executeScript(function () {
     sessionStorage.clear();
-  });*/
+  });
 });
 
 function commonPages() {
