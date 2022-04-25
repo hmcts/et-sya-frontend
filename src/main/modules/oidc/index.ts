@@ -11,6 +11,7 @@ import {
   PageUrls,
   RedisErrors,
 } from '../../definitions/constants';
+import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
@@ -65,22 +66,26 @@ export const idamCallbackHandler = async (
       .then(caseData =>
         getCaseApi(req.session.user?.accessToken)
           .createCase(caseData, req.session.user)
-          .then(() => {
-            return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+          .then(response => {
+            if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+            }
+            throw new Error('Draft Case was not created successfully');
           })
-          .catch(() => {
+          .catch(error => {
             //ToDo - needs to handle different error response
+            console.log(error);
           })
       )
       .catch(err => next(err));
   } else {
     getCaseApi(req.session.user?.accessToken)
       .getDraftCases()
-      .then(apiRes => {
-        if (apiRes.data.length === 0) {
+      .then(response => {
+        if (response.data.length === 0) {
           return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
         } else {
-          const cases = apiRes.data;
+          const cases = response.data;
           //We are not sure how multiple cases will be handled yet, so only fetching last case for now
           req.session.userCase = fromApiFormat(cases[cases.length - 1]);
           req.session.save();

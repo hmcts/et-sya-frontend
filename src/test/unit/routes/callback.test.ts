@@ -3,7 +3,7 @@ import { Application, NextFunction, Response } from 'express';
 import redis, { RedisClient } from 'redis-mock';
 
 import * as authIndex from '../../../main/auth/index';
-import { CaseApiResponse } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
@@ -87,7 +87,14 @@ describe('Test responds to /oauth2/callback', function () {
     //Given that case is created sucessfully
     const getCaseApiMock = CaseService.getCaseApi as jest.MockedFunction<(token: string) => CaseApi>;
     getCaseApiMock.mockReturnValue(caseApi);
-    caseApi.createCase = jest.fn().mockResolvedValue(Promise.resolve({} as CaseApiResponse));
+    caseApi.createCase = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        data: {
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        },
+        status: 200,
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
 
     //Then it should redirect to NEW_ACCOUNT_LANDING page
     idamCallbackHandler(req, res, next, serviceUrl);
@@ -98,7 +105,7 @@ describe('Test responds to /oauth2/callback', function () {
   test('Should get the existing draft case if it is a existing user', async () => {
     //Given that the state param is 'existingUser'
     req.query = { code: 'testCode', state: existingUser };
-    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as CaseApiResponse[]));
+    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as AxiosResponse<CaseApiDataResponse[]>));
 
     //Then it should call getCaseApi
     jest.spyOn(caseApi, 'getDraftCases');
@@ -112,7 +119,7 @@ describe('Test responds to /oauth2/callback', function () {
       .fn()
       .mockResolvedValue(
         Promise.resolve({ data: [{ id: 'testId', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS }] } as AxiosResponse<
-          CaseApiResponse[]
+          CaseApiDataResponse[]
         >)
       );
 
