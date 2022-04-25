@@ -140,7 +140,10 @@
   },
   "resolutions": {
     "**/**/ansi-regex": "^5.0.1",
-    "**/**/async": "^3.2.2"
+    "**/**/async": ">=3.2.2",
+    "**/**/minimist": ">=1.2.6",
+    "**/**/shelljs": ">=0.8.5",
+    "**/**/merge": ">=2.1.1"
   },
   "peerDependencies": {
     "faker": "^5.5.1"
