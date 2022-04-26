@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import config from 'config';
+// import config from 'config';
 import { RedisClient } from 'redis';
 
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
@@ -77,12 +77,25 @@ export class CaseApi {
       },
     });
   };
+
+  updateDraftCase = async (caseType: string, caseId: string, formData: string): Promise<CaseDraftResponse> => {
+    const body = {
+      caseType,
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimantIndType: {
+        claimant_date_of_birth: formData,
+      },
+    };
+    const id = caseId;
+    return this.axio.put(`/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT/${id}`, body);
+  };
 }
 
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
     axios.create({
-      baseURL: config.get('services.etSyaApi.host'),
+      // baseURL: config.get('services.etSyaApi.host'),
+      baseURL: 'http://localhost:4550',
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: '*/*',
