@@ -9,7 +9,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import favicon from 'serve-favicon';
 
 import { AppRequest } from './definitions/appRequest';
-import { PageUrls, RedisErrors } from './definitions/constants';
+import { CaseApiErrors, PageUrls, RedisErrors } from './definitions/constants';
 import setupDev from './development';
 import { AppInsights } from './modules/appinsights';
 import { Container } from './modules/awilix';
@@ -93,7 +93,8 @@ app.use((error: HTTPError, request: Request, response: Response, next: NextFunct
   if (
     error.name === RedisErrors.FAILED_TO_CONNECT ||
     error.name === RedisErrors.FAILED_TO_SAVE ||
-    error.name === RedisErrors.FAILED_TO_RETREIVE
+    error.name === RedisErrors.FAILED_TO_RETREIVE ||
+    error.name === CaseApiErrors.FAILED_TO_RETREIVE_CASE
   ) {
     request.app.set(RedisErrors.REDIS_ERROR, RedisErrors.DISPLAY_MESSAGE);
     response.redirect(PageUrls.TYPE_OF_CLAIM);
