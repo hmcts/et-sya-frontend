@@ -1,9 +1,10 @@
+// import { handleSessionErrors } from '../../../main/controllers/helpers';
 import express from 'express';
 import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
-import { LegacyUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
+import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -17,7 +18,6 @@ jest.mock('../../../main/services/CacheService', () => {
     cachePreloginCaseData: jest.fn(),
   };
 });
-
 describe('Type Of Claim Controller', () => {
   const t = {
     'type-of-claim': {},
@@ -87,7 +87,6 @@ describe('Type Of Claim Controller', () => {
       };
 
       controller.post(req, res);
-
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
     });
 
@@ -105,6 +104,30 @@ describe('Type Of Claim Controller', () => {
       expect(() => {
         controller.post(req, res);
       }).toThrowError(RedisErrors.CLIENT_NOT_FOUND);
+    });
+
+    it('should redirect to ET1_BASE page if Breach of Contract is selected', () => {
+      const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
+      const controller = new TypeOfClaimController();
+      const req = mockRequest({ body });
+      const res = mockResponse();
+
+      jest.spyOn(res, 'redirect');
+
+      controller.post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+    });
+
+    it('should redirect to LOGIN page if Discrimination is selected', () => {
+      const body = { typeOfClaim: [TypesOfClaim.DISCRIMINATION] };
+      const controller = new TypeOfClaimController();
+      const req = mockRequest({ body });
+      const res = mockResponse();
+
+      jest.spyOn(res, 'redirect');
+
+      controller.post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(AuthUrls.LOGIN);
     });
   });
 });

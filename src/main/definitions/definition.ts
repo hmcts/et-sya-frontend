@@ -9,3 +9,9 @@ export const enum ClaimOutcomes {
   OLD_JOB = 'oldJob',
   ANOTHER_JOB = 'anotherJob',
 }
+
+export const enum CaseState {
+  DRAFT = 'DRAFT',
+  AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
+  SUBMITTED = 'SUBMITTED',
+}

@@ -1,4 +1,4 @@
-import { ClaimOutcomes, TypesOfClaim } from './definition';
+import { CaseState, ClaimOutcomes, TypesOfClaim } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -13,7 +13,7 @@ export interface CaseDate {
 }
 
 export interface Case {
-  dobDate: CaseDate;
+  dobDate?: CaseDate;
   address1?: string;
   address2?: string;
   addressTown?: string;
@@ -25,7 +25,7 @@ export interface Case {
   isASingleClaim?: YesOrNo;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
-  returnToExisting: YesOrNo;
+  returnToExisting?: YesOrNo;
   jobTitle?: string;
   typeOfClaim?: TypesOfClaim[];
   pastEmployer?: YesOrNo;
@@ -36,13 +36,13 @@ export interface Case {
   noticePeriodPaid?: string;
   noticePeriodAmountPaid?: string;
   noticePeriodUnit?: WeeksOrMonths;
-  isStillWorking: StillWorking;
+  isStillWorking?: StillWorking;
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
   workAddressCounty?: string;
   workAddressPostcode?: string;
-  startDate: CaseDate;
+  startDate?: CaseDate;
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;
@@ -66,6 +66,7 @@ export const enum StillWorking {
 
 export interface CaseWithId extends Case {
   id: string;
+  state: CaseState;
 }
 
 export const enum YesOrNo {
