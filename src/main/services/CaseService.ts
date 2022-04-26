@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-// import config from 'config';
+import config from 'config';
 import { RedisClient } from 'redis';
 
 import { CaseDataCacheKey, CaseWithId, YesOrNo } from '../definitions/case';
@@ -94,8 +94,8 @@ export class CaseApi {
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
     axios.create({
-      // baseURL: config.get('services.etSyaApi.host'),
-      baseURL: 'http://localhost:4550',
+      baseURL: config.get('services.etSyaApi.host'),
+      // baseURL: 'http://localhost:4550',
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: '*/*',
