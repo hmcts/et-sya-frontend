@@ -8,12 +8,16 @@ import { JavaApiUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
 import { toApiFormat } from '../helper/ApiFormatter';
 
+const { Logger } = require('@hmcts/nodejs-logging');
+const logger = Logger.getLogger('app');
+
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
   createCase = async (caseData: string, userDetails: UserDetails): Promise<AxiosResponse<CaseApiDataResponse>> => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
     const body = toApiFormat(userDataMap, userDetails);
+    logger.info(body);
     return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 

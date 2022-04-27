@@ -31,7 +31,7 @@ describe('Axios post to iniate case', () => {
       expect.objectContaining({
         caseSource: CcdDataModel.CASE_SOURCE,
         caseType: 'Single',
-        claimantRespresentedQuestion: 'Yes',
+        claimantRepresentedQuestion: 'Yes',
         claimantIndType: {
           claimant_first_names: 'Bobby',
           claimant_last_name: 'Ryan',
