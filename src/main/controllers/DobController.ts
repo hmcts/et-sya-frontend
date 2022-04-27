@@ -40,11 +40,11 @@ export default class DobController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    const day = req.body['dobDate-day'];
-    const month = req.body['dobDate-month'];
-    const year = req.body['dobDate-year'];
-    const dateFormat = `${year}+"-"+${month}+"-"+${day}`;
-    getCaseApi(req.session.user?.accessToken).updateDraftCase('ET_EnglandWales', req.session.userCase.id, dateFormat);
+    // const day = req.body['dobDate-day'];
+    // const month = req.body['dobDate-month'];
+    // const year = req.body['dobDate-year'];
+    // const dateFormat = `${year}+"-"+${month}+"-"+${day}`;
+    getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
     handleSessionErrors(req, res, this.form, PageUrls.GENDER_DETAILS);
   };
 

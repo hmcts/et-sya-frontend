@@ -75,13 +75,6 @@ describe('Dob Controller', () => {
     const request = mockRequest({ body });
     dobController.post(request, response);
 
-    // expect(request.session.userCase).toEqual({
-    //   dobDate: {
-    //     day: '05',
-    //     month: '11',
-    //     year: '2000',
-    //   },
-    // });
     expect(request.session.userCase).toEqual({
       dobDate: {
         day: '05',
