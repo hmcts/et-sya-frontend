@@ -60,13 +60,11 @@ export const formatCaseData = (fromApiCaseData: CaseDraftResponse): CaseWithId =
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
-
   createCase = async (caseType: string): Promise<CaseDraftResponse> => {
     const body = {
       case_type: caseType,
       case_source: CcdDataModel.CASE_SOURCE,
     };
-
     return this.axio.post('/case-type/ET_EnglandWales/event-type/initiateCaseDraft/case', body);
   };
 
