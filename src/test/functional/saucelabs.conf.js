@@ -44,7 +44,7 @@ const setupConfig = {
       capabilities: {},
     },
     MyHelper: {
-      require: './saucelabshelper.js',
+      require: './saucelabsHelper.js',
       url: process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net/',
     },
   },
