@@ -1,6 +1,6 @@
 export const mockEt1DataModel = {
   caseType: 'Single',
-  claimantRespresentedQuestion: 'Yes',
+  claimantRepresentedQuestion: 'Yes',
   caseSource: 'ET1 Online',
   claimantIndType: {
     claimant_first_names: 'Bobby',
