@@ -6,7 +6,7 @@
   "radio1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "radio2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   "errors": {
-    "isASingleClaim": {
+    "caseType": {
       "required": "Lorem ipsum dolor"
     }
   }

@@ -30,6 +30,18 @@ Run:
 $ yarn start
 ```
 
+Run Dev Mode:
+
+```bash
+$ yarn start:dev
+```
+
+Run Dev Mode With Redis server:
+
+```bash
+$ yarn start:dev-red
+```
+
 The applications's home page will be available at https://localhost:3001
 
 ### Running with Docker

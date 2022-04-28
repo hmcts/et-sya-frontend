@@ -1,12 +1,12 @@
 import SingleOrMultipleController from '../../../main/controllers/SingleOrMultipleController';
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseType } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Single or Multiple Claim Controller', () => {
   const t = {
-    isASingleClaim: {},
+    caseType: {},
     common: {},
   };
 
@@ -22,7 +22,7 @@ describe('Single or Multiple Claim Controller', () => {
   });
 
   it("should render the next page when 'single' is selected", () => {
-    const body = { isASingleClaim: YesOrNo.YES };
+    const body = { caseType: CaseType.SINGLE };
     const controller = new SingleOrMultipleController();
 
     const req = mockRequest({ body });
@@ -33,7 +33,7 @@ describe('Single or Multiple Claim Controller', () => {
   });
 
   it("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {
-    const body = { isASingleClaim: YesOrNo.NO };
+    const body = { caseType: CaseType.MULTIPLE };
     const controller = new SingleOrMultipleController();
 
     const req = mockRequest({ body });
@@ -44,8 +44,8 @@ describe('Single or Multiple Claim Controller', () => {
   });
 
   it('should render same page if nothing selected', () => {
-    const errors = [{ propertyName: 'isASingleClaim', errorType: 'required' }];
-    const body = { isASingleClaim: '' };
+    const errors = [{ propertyName: 'caseType', errorType: 'required' }];
+    const body = { caseType: '' };
     const controller = new SingleOrMultipleController();
 
     const req = mockRequest({ body });

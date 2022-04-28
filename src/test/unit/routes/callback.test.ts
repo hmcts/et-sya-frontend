@@ -3,12 +3,14 @@ import { Application, NextFunction, Response } from 'express';
 import redis, { RedisClient } from 'redis-mock';
 
 import * as authIndex from '../../../main/auth/index';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc/index';
+import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
-import { CaseApi, CaseDraftResponse } from '../../../main/services/CaseService';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -61,15 +63,15 @@ describe('Test responds to /oauth2/callback', function () {
     req.query = { code: 'testCode', state: guid };
 
     //Then it should call getPreloginCaseData
-    jest.spyOn(CaseService, 'getPreloginCaseData');
+    jest.spyOn(CacheService, 'getPreloginCaseData');
     return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
-      expect(CaseService.getPreloginCaseData).toHaveBeenCalled()
+      expect(CacheService.getPreloginCaseData).toHaveBeenCalled()
     );
   });
 
   test('Should call sya-api to create draft case if prelogin data successfully retreived', () => {
     //Given that prelogin data is successfully retreived
-    const getPreloginCaseDataMock = CaseService.getPreloginCaseData as jest.MockedFunction<
+    const getPreloginCaseDataMock = CacheService.getPreloginCaseData as jest.MockedFunction<
       (redisClient: RedisClient, guid: string) => Promise<string>
     >;
     getPreloginCaseDataMock.mockReturnValue(Promise.resolve(caseType));
@@ -85,7 +87,14 @@ describe('Test responds to /oauth2/callback', function () {
     //Given that case is created sucessfully
     const getCaseApiMock = CaseService.getCaseApi as jest.MockedFunction<(token: string) => CaseApi>;
     getCaseApiMock.mockReturnValue(caseApi);
-    caseApi.createCase = jest.fn().mockResolvedValue(Promise.resolve({} as CaseDraftResponse));
+    caseApi.createCase = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        data: {
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        },
+        status: 200,
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
 
     //Then it should redirect to NEW_ACCOUNT_LANDING page
     idamCallbackHandler(req, res, next, serviceUrl);
@@ -96,7 +105,7 @@ describe('Test responds to /oauth2/callback', function () {
   test('Should get the existing draft case if it is a existing user', async () => {
     //Given that the state param is 'existingUser'
     req.query = { code: 'testCode', state: existingUser };
-    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as CaseDraftResponse[]));
+    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as AxiosResponse<CaseApiDataResponse[]>));
 
     //Then it should call getCaseApi
     jest.spyOn(caseApi, 'getDraftCases');
@@ -109,7 +118,9 @@ describe('Test responds to /oauth2/callback', function () {
     caseApi.getDraftCases = jest
       .fn()
       .mockResolvedValue(
-        Promise.resolve({ data: [{ id: 'testId', state: CaseState.DRAFT }] } as AxiosResponse<CaseDraftResponse[]>)
+        Promise.resolve({ data: [{ id: 'testId', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS }] } as AxiosResponse<
+          CaseApiDataResponse[]
+        >)
       );
 
     //Then it should redirect to CLAIM_STEPS page

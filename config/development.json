@@ -10,13 +10,15 @@
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
       "token": "TO BE PICKED UP FROM ENV"
+    },
+    "etSyaApi": {
+      "host": "http://localhost:4550/"
     }
   },
   "session": {
     "secret": "local",
     "redis": {
-      "host": "",
-      "key": ""
+      "host": "127.0.0.1"
     }
   }
 }

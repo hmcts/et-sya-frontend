@@ -112,6 +112,11 @@ export const AuthUrls = {
   LOGOUT: '/logout',
 } as const;
 
+export const JavaApiUrls = {
+  GET_CASES: '/caseTypes/ET_EnglandWales/cases',
+  INITIATE_CASE_DRAFT: '/case-type/ET_EnglandWales/event-type/INITIATE_CASE_DRAFT/case',
+} as const;
+
 export const HTTPS_PROTOCOL = 'https://';
 
 export const RedisErrors = {
@@ -128,10 +133,8 @@ export const CaseApiErrors = {
 } as const;
 
 export const CcdDataModel = {
-  SINGLE_CASE_ENGLAND: 'ET_EnglandWales',
-  MULTIPLE_CASE_ENGLAND: 'ET_EnglandWales_Multiple',
-  SINGLE_CASE_SCOTLAND: 'ET_Scotland',
   CASE_SOURCE: 'ET1 Online',
-};
+} as const;
 
 export const EXISTING_USER = 'existingUser';
+export const LOCAL_REDIS_SERVER = '127.0.0.1';

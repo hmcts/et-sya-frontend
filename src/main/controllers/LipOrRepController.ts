@@ -15,7 +15,7 @@ export default class LipOrRepController {
   private readonly form: Form;
   private readonly lipOrRepContent: FormContent = {
     fields: {
-      representingMyself: {
+      claimantRepresentedQuestion: {
         type: 'radios',
         classes: 'govuk-radios',
         id: 'lip-or-representative',
@@ -44,9 +44,9 @@ export default class LipOrRepController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl;
-    if (req.body.representingMyself === YesOrNo.YES) {
+    if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (req.body.representingMyself === YesOrNo.NO) {
+    } else if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;

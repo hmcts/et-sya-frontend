@@ -11,7 +11,7 @@ export const enum ClaimOutcomes {
 }
 
 export const enum CaseState {
-  DRAFT = 'DRAFT',
+  DRAFT = 'Draft',
   AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
   SUBMITTED = 'SUBMITTED',
 }

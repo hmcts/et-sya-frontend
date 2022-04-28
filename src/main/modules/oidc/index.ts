@@ -11,7 +11,10 @@ import {
   PageUrls,
   RedisErrors,
 } from '../../definitions/constants';
-import { formatCaseData, getCaseApi, getPreloginCaseData } from '../../services/CaseService';
+import { CaseState } from '../../definitions/definition';
+import { fromApiFormat } from '../../helper/ApiFormatter';
+import { getPreloginCaseData } from '../../services/CacheService';
+import { getCaseApi } from '../../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -60,27 +63,34 @@ export const idamCallbackHandler = async (
       return next(err);
     }
     getPreloginCaseData(redisClient, guid)
-      .then(caseType =>
+      .then(caseData =>
         getCaseApi(req.session.user?.accessToken)
-          .createCase(caseType)
-          .then(() => {
-            return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+          .createCase(caseData, req.session.user)
+          .then(response => {
+            if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+              logger.info(`Created Draft Case - ${response.data.id}`);
+              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+            }
+            throw new Error('Draft Case was not created successfully');
           })
-          .catch(() => {
+          .catch(error => {
             //ToDo - needs to handle different error response
+            logger.info(error);
           })
       )
       .catch(err => next(err));
   } else {
     getCaseApi(req.session.user?.accessToken)
       .getDraftCases()
-      .then(apiRes => {
-        if (apiRes.data.length === 0) {
+      .then(response => {
+        if (response.data.length === 0) {
           return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
         } else {
-          const cases = apiRes.data;
+          logger.info('Retrieving Latest Draft Case');
+          const cases = response.data;
           //We are not sure how multiple cases will be handled yet, so only fetching last case for now
-          req.session.userCase = formatCaseData(cases[cases.length - 1]);
+          req.session.userCase = fromApiFormat(cases[cases.length - 1]);
+          logger.info(`Retrieved case id - ${req.session.userCase.id}`);
           req.session.save();
           return res.redirect(PageUrls.CLAIM_STEPS);
         }
