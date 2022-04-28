@@ -63,4 +63,26 @@ describe('Dob Controller', () => {
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
+
+  it('should update draft case when date is submitted', async () => {
+    const body = {
+      'dobDate-day': '05',
+      'dobDate-month': '11',
+      'dobDate-year': '2000',
+    };
+    const dobController = new DobController();
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    dobController.post(request, response);
+
+    expect(request.session.userCase).toEqual({
+      dobDate: {
+        day: '05',
+        month: '11',
+        year: '2000',
+      },
+      id: '1234',
+      startDate: { day: '21', month: '04', year: '2019' },
+    });
+  });
 });
