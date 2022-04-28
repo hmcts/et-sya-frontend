@@ -30,4 +30,4 @@ class MyHelper extends Helper {
   }
 }
 
-module.exports === MyHelper;
+module.exports = MyHelper;
