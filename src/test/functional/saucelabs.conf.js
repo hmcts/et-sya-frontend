@@ -1,5 +1,5 @@
 const supportedBrowsers = require('./supportedBrowsers');
-
+const testUrl = process.env.TEST_URL || 'http://localhost:3001';
 const defaultSauceOptions = {
   username: process.env.SAUCE_USERNAME,
   accessKey: process.env.SAUCE_ACCESS_KEY,
@@ -34,7 +34,7 @@ const setupConfig = {
   output: 'functional/output',
   helpers: {
     WebDriver: {
-      url: process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net/',
+      url: testUrl,
       browser: process.env.SAUCE_BROWSER || '',
       //host: process.env.HOST || 'saucelabs',
       cssSelectorsEnabled: 'true',
@@ -45,7 +45,7 @@ const setupConfig = {
     },
     MyHelper: {
       require: './saucelabsHelper.js',
-      url: process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net/',
+      url: testUrl,
     },
   },
   include: {
