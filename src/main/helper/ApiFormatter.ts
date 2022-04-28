@@ -25,6 +25,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     state: fromApiCaseData.state,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
     caseType: fromApiCaseData.case_data?.caseType,
+    firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
+    lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
+    email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
+    dobDate: formatDoBString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
   };
 }
 
@@ -41,4 +45,20 @@ export function toApiFormat(caseItem: CaseWithId): CaseApiBody {
 
 function formatDoB(dobDate: CaseDate) {
   return `${dobDate.year}-${dobDate.month}-${dobDate.day}`;
+}
+
+function formatDoBString(dobDate: string): CaseDate {
+  if (dobDate) {
+    const year = dobDate.substring(0, 4);
+    const month = dobDate.substring(5, 7);
+    const day = dobDate.substring(8);
+
+    return {
+      year,
+      month,
+      day,
+    };
+  }
+
+  return;
 }

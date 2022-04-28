@@ -12,6 +12,10 @@ import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
+
 const dob_date: DateFormFields = {
   ...DefaultDateFormFields,
   id: 'dob',
@@ -41,6 +45,7 @@ export default class DobController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
+    logger.info(`Updated draft case id: ${req.session.userCase.id}`);
     handleSessionErrors(req, res, this.form, PageUrls.GENDER_DETAILS);
   };
 

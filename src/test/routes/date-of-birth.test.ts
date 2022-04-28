@@ -10,19 +10,3 @@ describe(`GET ${PageUrls.DOB_DETAILS}`, () => {
     expect(res.status).toStrictEqual(200);
   });
 });
-
-describe(`on POST ${PageUrls.DOB_DETAILS}`, () => {
-  test('should go to the Gender details page when correct date is entered', async () => {
-    await request(app)
-      .post(PageUrls.DOB_DETAILS)
-      .send({
-        'dobDate-year': '2000',
-        'dobDate-month': '12',
-        'dobDate-day': '24',
-      })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.GENDER_DETAILS);
-      });
-  });
-});

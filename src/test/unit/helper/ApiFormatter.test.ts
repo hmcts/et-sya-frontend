@@ -46,25 +46,41 @@ describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
     const mockedApiData: CaseApiDataResponse = {
       id: '1234',
-      state: CaseState.DRAFT,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       case_data: {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
+        claimantIndType: {
+          claimant_first_names: 'Jane',
+          claimant_last_name: 'Doe',
+          claimant_date_of_birth: '2022-10-05',
+        },
+        claimantType: {
+          claimant_email_address: 'janedoe@exmaple.com',
+        },
       },
     };
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
-      state: CaseState.DRAFT,
+      dobDate: {
+        day: '05',
+        month: '10',
+        year: '2022',
+      },
+      email: 'janedoe@exmaple.com',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: 'Single',
       claimantRepresentedQuestion: 'Yes',
     });
   });
 
-  it('should return null for empty field`', () => {
+  it('should return undefined for empty field`', () => {
     const mockedApiData: CaseApiDataResponse = {
       id: '1234',
-      state: CaseState.DRAFT,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       case_data: {
         claimantRepresentedQuestion: YesOrNo.YES,
       },
@@ -72,9 +88,13 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
-      state: CaseState.DRAFT,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
+      dobDate: undefined,
+      email: undefined,
+      firstName: undefined,
+      lastName: undefined,
     });
   });
 });
