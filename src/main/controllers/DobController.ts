@@ -44,8 +44,15 @@ export default class DobController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
-    logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(response => {
+        logger.info(`Updated draft case id: ${response.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
+
     handleSessionErrors(req, res, this.form, PageUrls.GENDER_DETAILS);
   };
 
