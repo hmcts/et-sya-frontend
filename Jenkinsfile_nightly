@@ -15,7 +15,7 @@ def product = "et"
 def component = "sya"
 
 withNightlyPipeline(type, product, component) {
-    env.TEST_URL = params.URL_TO_TEST
+    env.TEST_URL = params.TEST_URL
 
     enableFullFunctionalTest()
     enableCrossBrowserTest()
