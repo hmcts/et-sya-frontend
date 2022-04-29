@@ -38,7 +38,12 @@ export function toApiFormat(caseItem: CaseWithId): CaseApiBody {
     claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
     caseSource: CcdDataModel.CASE_SOURCE,
     claimantIndType: {
+      claimant_first_names: caseItem.firstName,
+      claimant_last_name: caseItem.lastName,
       claimant_date_of_birth: formatDoB(caseItem.dobDate),
+    },
+    claimantType: {
+      claimant_email_address: caseItem.email,
     },
   };
 }

@@ -25,7 +25,7 @@ export class CaseApi {
     });
   };
 
-  updateDraftCase = async (caseItem: CaseWithId): Promise<CaseApiDataResponse> => {
+  updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(`${JavaApiUrls.UPDATE_CASE_DRAFT}/${caseItem.id}`, toApiFormat(caseItem));
   };
 }

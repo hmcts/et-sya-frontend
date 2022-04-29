@@ -83,6 +83,9 @@ describe('updateDraftCase', () => {
         month: '05',
         day: '11',
       },
+      email: 'tester@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
     };
     api.updateDraftCase(caseItem);
     const id = '1234';

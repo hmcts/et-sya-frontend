@@ -36,6 +36,9 @@ describe('Should return data in api format', () => {
         month: '05',
         day: '11',
       },
+      email: 'tester@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
