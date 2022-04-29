@@ -64,6 +64,4 @@ function formatDoBString(dobDate: string): CaseDate {
       day,
     };
   }
-
-  return;
 }

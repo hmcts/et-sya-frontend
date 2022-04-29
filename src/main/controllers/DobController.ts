@@ -46,8 +46,8 @@ export default class DobController {
     setUserCase(req, this.form);
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
-      .then(response => {
-        logger.info(`Updated draft case id: ${response.data.id}`);
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       })
       .catch(error => {
         logger.info(error);
