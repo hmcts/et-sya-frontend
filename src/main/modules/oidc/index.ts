@@ -69,6 +69,7 @@ export const idamCallbackHandler = async (
           .then(response => {
             if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
               logger.info(`Created Draft Case - ${response.data.id}`);
+              req.session.userCase = fromApiFormat(response.data);
               return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
             }
             throw new Error('Draft Case was not created successfully');
