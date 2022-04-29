@@ -2,9 +2,11 @@ import axios from 'axios';
 import config from 'config';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
+import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
+import { mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 jest.mock('config');
 jest.mock('axios');
@@ -66,5 +68,30 @@ describe('getCaseApi', () => {
   });
   test('should create a CaseApi', () => {
     expect(getCaseApi(token)).toBeInstanceOf(CaseApi);
+  });
+});
+
+describe('updateDraftCase', () => {
+  it('should update draft case data', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseType: CaseType.SINGLE,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      dobDate: {
+        year: '2010',
+        month: '05',
+        day: '11',
+      },
+      email: 'tester@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
+    };
+    api.updateDraftCase(caseItem);
+    const id = '1234';
+    expect(mockedAxios.put).toHaveBeenCalledWith(
+      `${JavaApiUrls.UPDATE_CASE_DRAFT}/${id}`,
+      expect.objectContaining(mockEt1DataModelUpdate)
+    );
   });
 });

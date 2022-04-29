@@ -1,1 +1,7 @@
-{}
+{
+  "services": {
+    "etSyaApi": {
+      "host": "http://localhost:4550/"
+    }
+  }
+}

@@ -3,17 +3,17 @@ import config from 'config';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey } from '../definitions/case';
+import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
-import { toApiFormat } from '../helper/ApiFormatter';
+import { toApiFormat, toApiFormatPreLogin } from '../helper/ApiFormatter';
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
   createCase = async (caseData: string, userDetails: UserDetails): Promise<AxiosResponse<CaseApiDataResponse>> => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
-    const body = toApiFormat(userDataMap, userDetails);
+    const body = toApiFormatPreLogin(userDataMap, userDetails);
     return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 
@@ -23,6 +23,10 @@ export class CaseApi {
         match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
       },
     });
+  };
+
+  updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.put(`${JavaApiUrls.UPDATE_CASE_DRAFT}/${caseItem.id}`, toApiFormat(caseItem));
   };
 }
 

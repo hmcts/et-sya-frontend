@@ -13,6 +13,9 @@ export interface CaseDate {
 }
 
 export interface Case {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   dobDate?: CaseDate;
   address1?: string;
   address2?: string;
