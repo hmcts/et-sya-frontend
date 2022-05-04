@@ -65,14 +65,8 @@ export default class DesiredClaimOutcomeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl =
-      req.body.claimOutcome && req.body.claimOutcome.includes(ClaimOutcomes.COMPENSATION)
-        ? PageUrls.COMPENSATION_OUTCOME
-        : req.body.claimOutcome && req.body.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
-        ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
-        : PageUrls.CLAIM_STEPS;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    handleSessionErrors(req, res, this.form, getRedirectUrl(req));
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -85,4 +79,14 @@ export default class DesiredClaimOutcomeController {
       ...content,
     });
   };
+}
+
+function getRedirectUrl(req: AppRequest<Partial<AnyRecord>>) {
+  if (req.body.claimOutcome && req.body.claimOutcome.includes(ClaimOutcomes.COMPENSATION)) {
+    return PageUrls.COMPENSATION_OUTCOME;
+  }
+
+  return req.body.claimOutcome && req.body.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
+    ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
+    : PageUrls.CLAIM_STEPS;
 }
