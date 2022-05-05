@@ -5,7 +5,7 @@ module.exports = {
   name: 'et-ui-functional',
   testHeadlessBrowser: true,
   tests: './features/**/*js',
-  reportFolder: '../../../functional-output/functional/reports',
+  reportFolder: './functional-output/reports',
   helpers: {
     Puppeteer: {
       url: testUrl,
