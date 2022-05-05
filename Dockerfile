@@ -6,7 +6,7 @@ RUN yarn install --production \
 
 # ---- Build image ----
 FROM base as build
-RUN PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && yarn build:prod
+RUN yarn install && yarn build:prod
 
 # ---- Runtime image ----
 FROM base as runtime
