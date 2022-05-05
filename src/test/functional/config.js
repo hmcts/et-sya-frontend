@@ -19,7 +19,14 @@ module.exports = {
       browser: 'chrome',
       chrome: {
         ignoreHTTPSErrors: true,
-        args: ['--no-sandbox', '--ignore-certificate-errors'],
+        args: [
+          '--headless',
+          '--disable-gpu',
+          '--disable-dev-shm-usage',
+          '--no-sandbox',
+          '--allow-running-insecure-content',
+          '--ignore-certificate-errors',
+        ],
       },
     },
   },
