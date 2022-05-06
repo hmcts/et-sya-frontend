@@ -18,4 +18,4 @@ Scenario('Verify ET multiple claim for myself', async () => {
   );
   I.checkOption('input[id=single-or-multiple-claim-2]');
   I.click('Continue');
-});
+}).tag(' @RET-BAT');
