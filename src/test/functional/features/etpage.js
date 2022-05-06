@@ -3,11 +3,9 @@ const testConfig = require('../config.js');
 
 const commonFlow = require('./commonFlow.js');
 const { I } = inject();
-const waitSeconds = 2;
 
 Scenario('ET gender details page', async () => {
   I.amOnPage(testConfig.testUrl + '/gender-details');
-  I.wait(waitSeconds);
   I.see('Sex and gender identity');
 });
 
