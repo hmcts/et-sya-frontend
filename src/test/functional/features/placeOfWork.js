@@ -21,7 +21,9 @@ Scenario('ET Place of work flow: Invalid Postcode ', () => {
   I.fillField('#postcode', 'BH1');
   I.click('#findAddressButton');
   I.see('You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.');
-}).tag('@RET-943');
+})
+  .tag('@RET-943')
+  .tag(' @RET-BAT');
 
 Scenario('ET Place of work flow: No post code ', () => {
   I.amOnPage(test_url);
@@ -41,4 +43,6 @@ Scenario('ET Place of work flow: Manual Entry', () => {
   I.fillField('#addressCounty', 'LongCounty');
   I.fillField('#addressPostcode', 'BH1 1AJ');
   I.click('#main-form-submit');
-}).tag('@RET-943');
+})
+  .tag('@RET-943')
+  .tag(' @RET-BAT');

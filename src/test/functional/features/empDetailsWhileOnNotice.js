@@ -64,4 +64,5 @@ Scenario('Claim while on notice for organisation', () => {
   I.click('#main-form-submit');
 })
   .tag('@RET-1131')
-  .tag('@RET-1023');
+  .tag('@RET-1023')
+  .tag(' @RET-BAT');

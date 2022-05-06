@@ -26,6 +26,6 @@ public/
 coverage/
 package-lock.json
 .vscode
-functional-output/functional/reports
+functional-output/*
 smoke-output/reports
 src/test/api/pact/pacts/

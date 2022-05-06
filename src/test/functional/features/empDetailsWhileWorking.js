@@ -52,7 +52,9 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.see('Do or did you receive any employee benefits?');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-}).tag('@RET-1130');
+})
+  .tag('@RET-1130')
+  .tag(' @RET-BAT');
 
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);
@@ -177,4 +179,6 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.click('#main-form-submit');
   I.seeElement('#notice-period-unit-error');
   I.seeElement('#notice-period-length-error');
-}).tag('@RET-1130');
+})
+  .tag('@RET-1130')
+  .tag(' @RET-BAT');
