@@ -12,4 +12,6 @@ Scenario('Employee details when he got a new job', () => {
 
   I.see('New job pay BEFORE tax');
   I.click('#main-form-submit');
-}).tag('@RET-1170');
+})
+  .tag('@RET-1170')
+  .tag(' @RET-BAT');
