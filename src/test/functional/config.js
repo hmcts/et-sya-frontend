@@ -6,6 +6,7 @@ module.exports = {
   testHeadlessBrowser: true,
   tests: './features/**/*js',
   reportFolder: '../../../functional-output/functional/reports',
+  logInfo: '../../../functional-output/console.log',
   helpers: {
     Puppeteer: {
       url: testUrl,
