@@ -7,24 +7,6 @@ exports.config = {
   include: {
     I: './pages/steps.js',
   },
-  mocha: {
-    reporterOptions: {
-      'codeceptjs-cli-reporter': {
-        stdout: '-',
-        options: {
-          steps: true,
-        },
-      },
-      mochawesome: {
-        stdout: testConfig.logInfo,
-        options: {
-          reportDir: testConfig.reportFolder,
-          reportName: 'index',
-          inlineAssets: true,
-        },
-      },
-    },
-  },
   plugins: {
     allure: {
       enabled: true,

@@ -6,7 +6,6 @@ module.exports = {
   testHeadlessBrowser: true,
   tests: './features/**/*js',
   reportFolder: '../../../functional-output/functional/reports',
-  logInfo: '../../../functional-output/console.log',
   helpers: {
     Puppeteer: {
       url: testUrl,
@@ -20,14 +19,7 @@ module.exports = {
       browser: 'chrome',
       chrome: {
         ignoreHTTPSErrors: true,
-        args: [
-          '--headless',
-          '--disable-gpu',
-          '--disable-dev-shm-usage',
-          '--no-sandbox',
-          '--allow-running-insecure-content',
-          '--ignore-certificate-errors',
-        ],
+        args: ['--no-sandbox', '--ignore-certificate-errors'],
       },
     },
   },
