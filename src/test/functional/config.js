@@ -4,7 +4,7 @@ module.exports = {
   testUrl,
   name: 'et-ui-functional',
   testHeadlessBrowser: true,
-  tests: './features/**/checkyourAnswers.js',
+  tests: './features/**/*js',
   reportFolder: '../../../functional-output/functional/reports',
   helpers: {
     Puppeteer: {
