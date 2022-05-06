@@ -25,6 +25,23 @@ export class CaseApi {
     });
   };
 
+  downloadClaimPdf = async (): Promise<AxiosResponse> => {
+    return this.axio.get(JavaApiUrls.DOWNLOAD_CLAIM_PDF, {
+      responseType: 'blob',
+    });
+    //   .then(response => {
+    //   const downloadLocation = path.join(path.dirname(require.main.filename), 'public');
+    //   fs.writeFile(downloadLocation, response.data, err => {
+    //     if (err) {
+    //     } else {
+    //     }
+    //   });
+    //   return downloadLocation;
+    //
+    //   })
+    //    .catch(error => new Error(error))
+  };
+
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(`${JavaApiUrls.UPDATE_CASE_DRAFT}/${caseItem.id}`, toApiFormat(caseItem));
   };

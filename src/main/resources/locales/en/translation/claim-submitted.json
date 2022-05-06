@@ -1,4 +1,6 @@
 {
   "title": "Confirmation",
-  "h1": "Your claim has been submitted (to do)"
+  "h1": "Your claim has been submitted (to do)",
+  "downloadClaim": "Download your claim",
+  "downloadBtn": "<a href=\"/download-claim\" class=\"govuk-link\">Save a copy of your claim</a>"
 }

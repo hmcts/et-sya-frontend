@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -11,4 +12,17 @@
   {{ govukPanel({
     titleText: h1
   }) }}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: downloadClaim
+      },
+      value: {
+        text: downloadBtn | safe
+      }
+    }
+  ]
+}) }}
 {% endblock %}
