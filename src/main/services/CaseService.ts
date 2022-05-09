@@ -26,20 +26,12 @@ export class CaseApi {
   };
 
   downloadClaimPdf = async (): Promise<AxiosResponse> => {
-    return this.axio.get(JavaApiUrls.DOWNLOAD_CLAIM_PDF, {
-      responseType: 'blob',
+    return this.axio.get(`${JavaApiUrls.DOWNLOAD_CLAIM_PDF}/54321`, {
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/pdf',
+      },
     });
-    //   .then(response => {
-    //   const downloadLocation = path.join(path.dirname(require.main.filename), 'public');
-    //   fs.writeFile(downloadLocation, response.data, err => {
-    //     if (err) {
-    //     } else {
-    //     }
-    //   });
-    //   return downloadLocation;
-    //
-    //   })
-    //    .catch(error => new Error(error))
   };
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
