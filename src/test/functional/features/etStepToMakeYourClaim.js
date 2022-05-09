@@ -83,4 +83,6 @@ Scenario('Feedback exit survey link on confirmation page', () => {
   I.seeElement('//*[@id="main-content"]/div[2]/div/p/a');
   I.click('//*[@id="main-content"]/div[2]/div/p/a');
   I.seeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt');
+  // regression step to ensure that it is not redirecting to the feedback link on the homepage
+  I.dontSeeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=your-claim-has-been-submitted');
 }).tag('@RET-1441');
