@@ -5,7 +5,7 @@
   "submitYourClaim": "Submit your claim",
   "checkAllAnswers": "Check all the answers you’ve provided and details you have entered are correct.",
   "warning": "This is your last opportunity to change any details before you submit your claim.",
-  "remember": "Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save for later’ at the bottom of this page.",
+  "remember": "Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save as draft’ at the bottom of this page.",
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
   "submitBtn": "Submit claim",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
