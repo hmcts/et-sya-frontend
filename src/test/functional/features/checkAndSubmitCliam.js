@@ -8,7 +8,9 @@ Scenario('ET Check your answer: Submit Claim', () => {
   I.seeElement('#main-content');
   I.click('#main-form-submit');
   I.see('Your claim has been submitted');
-}).tag('@RET-1178');
+})
+  .tag('@RET-1178')
+  .tag(' @RET-BAT');
 
 Scenario('ET Check your answer: Save for later', () => {
   I.amOnPage(test_url);

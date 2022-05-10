@@ -1,5 +1,6 @@
 import CompensationOutcomeController from '../../../main/controllers/CompensationOutcomeController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseState, ClaimOutcomes } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -33,6 +34,30 @@ describe('Compensation Outcome Controller', () => {
       expect(req.session.userCase).toStrictEqual({
         compensationOutcome: 'test',
         compensationAmount: 10,
+      });
+    });
+
+    it('should redirect to Tribunal recommendation', () => {
+      const body = { compensationOutcome: 'test', compensationAmount: 10 };
+
+      const controller = new CompensationOutcomeController();
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      req.session.userCase = {
+        id: '12234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        claimOutcome: [ClaimOutcomes.TRIBUNAL_RECOMMENDATION],
+      };
+
+      controller.post(req, res);
+
+      expect(res.redirect).toBeCalledWith(PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME);
+      expect(req.session.userCase).toStrictEqual({
+        claimOutcome: ['tribunalRecommendation'],
+        compensationOutcome: 'test',
+        compensationAmount: 10,
+        id: '12234',
+        state: 'AWAITING_SUBMISSION_TO_HMCTS',
       });
     });
   });

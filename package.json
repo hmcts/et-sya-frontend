@@ -20,8 +20,8 @@
     "publish-pact": "NODE_PATH=. NODE_CONFIG_DIR=./config LOG_LEVEL=error node -r ts-node/register src/test/api/pact/publish/publish.ts",
     "test:pact:run-and-publish": "yarn test:pact && yarn publish-pact",
     "sonar-scan": "sonar-scanner",
-    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/functional/codecept.conf.js run-workers 2 parallel",
-    "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/functional/codecept.conf.js run-workers 2 parallel",
+    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c ./src/test/functional/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
+    "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c ./src/test/functional/codecept.conf.js --steps --reporter mocha-multi --verbose",
     "test:crossbrowser": "codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} --steps -c ./src/test/functional/saucelabs.conf.js --steps --reporter mocha-multi --verbose --grep @RET-1235",
     "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js run-workers 2 parallel",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn test:routes && yarn test:a11y",
@@ -53,8 +53,8 @@
     "applicationinsights": "^2.2.0",
     "autobind-decorator": "^2.4.0",
     "awilix": "^7.0.0",
-    "axios": "^0.26.0",
-    "codeceptjs": "3.3.0",
+    "axios": "^0.27.0",
+    "codeceptjs": "3.3.3",
     "config": "^3.3.7",
     "connect-redis": "^6.1.1",
     "cookie-parser": "^1.4.5",
@@ -64,7 +64,7 @@
     "express": "^4.17.3",
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
-    "faker": "^5.5.1",
+    "faker": "^5.5.3",
     "glob": "^8.0.1",
     "google-libphonenumber": "^3.2.26",
     "govuk-frontend": "^4.0.1",
@@ -148,6 +148,6 @@
     "**/**/merge": ">=2.1.1"
   },
   "peerDependencies": {
-    "faker": "^5.5.1"
+    "faker": "^5.5.3"
   }
 }

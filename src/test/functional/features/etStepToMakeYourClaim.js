@@ -1,13 +1,11 @@
 Feature('Claim Details');
 const test_url = '/steps-to-making-your-claim';
 const { I } = inject();
-const discriminationClaim = locate('.govuk-details__summary-text').withText('What to write for discrimination claims');
-const whatToWrite_dismissal = locate('.govuk-details__summary-text').withText('What to write for dismissal claims');
-const whatToWrite_whitsleblower = locate('.govuk-details__summary-text').withText(
-  'What to write for whistleblower claims'
-);
-const whatToWrite_otherClaim = locate('.govuk-details__summary-text').withText("What to write for 'other' claims");
-const document_upload = locate('.govuk-details__summary-text').withText('Upload a document to support your claim');
+const discriminationClaim = '//*[@id="main-content"]/div/div/details[1]/summary/span';
+const whatToWrite_dismissal = '//*[@id="main-content"]/div/div/details[2]/summary/span';
+const whatToWrite_whitsleblower = '//*[@id="main-content"]/div/div/details[3]/summary/span';
+const whatToWrite_otherClaim = '//*[@id="main-content"]/div/div/details[4]/summary/span';
+const document_upload = '//*[@id="main-form"]/details/summary/span';
 const compensation_award = locate('.govuk-details__summary-text').withText('Compensation - what can a tribunal award?');
 const tribunal_recommendation = locate('.govuk-details__summary-text').withText('What is a tribunal recommendation?');
 
@@ -18,6 +16,7 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.click('[href="/summarise-what-happened"]');
   I.see('Summarise what happened to you (optional) (to do)');
   I.see('What to include in your claim');
+  I.seeElement(discriminationClaim);
   I.click(discriminationClaim);
   I.see('Describe the events you are complaining about.');
   I.click(whatToWrite_dismissal);
