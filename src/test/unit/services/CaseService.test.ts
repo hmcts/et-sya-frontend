@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from 'config';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import { CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
@@ -31,15 +31,18 @@ describe('Axios post to iniate case', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.INITIATE_CASE_DRAFT,
       expect.objectContaining({
-        caseSource: CcdDataModel.CASE_SOURCE,
-        caseType: 'Single',
-        claimantRepresentedQuestion: 'Yes',
-        claimantIndType: {
-          claimant_first_names: 'Bobby',
-          claimant_last_name: 'Ryan',
-        },
-        claimantType: {
-          claimant_email_address: 'bobby@gmail.com',
+        post_code: 'SW1A 1AA',
+        case_data: {
+          caseSource: CcdDataModel.CASE_SOURCE,
+          caseType: 'Single',
+          claimantRepresentedQuestion: 'Yes',
+          claimantIndType: {
+            claimant_first_names: 'Bobby',
+            claimant_last_name: 'Ryan',
+          },
+          claimantType: {
+            claimant_email_address: 'bobby@gmail.com',
+          },
         },
       })
     );
@@ -51,7 +54,7 @@ describe('Axios get to retreive draft cases', () => {
     api.getDraftCases();
 
     expect(mockedAxios.get).toHaveBeenCalledWith(
-      '/caseTypes/ET_EnglandWales/cases',
+      '/cases/user-cases',
       expect.objectContaining({
         data: {
           match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
@@ -76,6 +79,7 @@ describe('updateDraftCase', () => {
     const caseItem: CaseWithId = {
       id: '1234',
       caseType: CaseType.SINGLE,
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       dobDate: {
@@ -88,9 +92,8 @@ describe('updateDraftCase', () => {
       lastName: 'Doe',
     };
     api.updateDraftCase(caseItem);
-    const id = '1234';
     expect(mockedAxios.put).toHaveBeenCalledWith(
-      `${JavaApiUrls.UPDATE_CASE_DRAFT}/${id}`,
+      JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
     );
   });

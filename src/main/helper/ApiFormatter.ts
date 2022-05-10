@@ -1,20 +1,26 @@
-import { CaseApiBody } from '../definitions/api/caseApiBody';
+import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
-export function toApiFormatPreLogin(userDataMap: Map<CaseDataCacheKey, string>, userDetails: UserDetails): CaseApiBody {
+export function toApiFormatCreate(
+  userDataMap: Map<CaseDataCacheKey, string>,
+  userDetails: UserDetails
+): CreateCaseBody {
   return {
-    caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
-    claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
-    caseSource: CcdDataModel.CASE_SOURCE,
-    claimantIndType: {
-      claimant_first_names: userDetails.givenName,
-      claimant_last_name: userDetails.familyName,
-    },
-    claimantType: {
-      claimant_email_address: userDetails.email,
+    post_code: 'SW1A 1AA', // TODO Replace with value from new triage page
+    case_data: {
+      caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
+      claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimantIndType: {
+        claimant_first_names: userDetails.givenName,
+        claimant_last_name: userDetails.familyName,
+      },
+      claimantType: {
+        claimant_email_address: userDetails.email,
+      },
     },
   };
 }
@@ -23,6 +29,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
   return {
     id: fromApiCaseData.id,
     state: fromApiCaseData.state,
+    caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
     caseType: fromApiCaseData.case_data?.caseType,
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
@@ -32,18 +39,22 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
   };
 }
 
-export function toApiFormat(caseItem: CaseWithId): CaseApiBody {
+export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return {
-    caseType: caseItem.caseType,
-    claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
-    caseSource: CcdDataModel.CASE_SOURCE,
-    claimantIndType: {
-      claimant_first_names: caseItem.firstName,
-      claimant_last_name: caseItem.lastName,
-      claimant_date_of_birth: formatDoB(caseItem.dobDate),
-    },
-    claimantType: {
-      claimant_email_address: caseItem.email,
+    case_id: caseItem.id,
+    case_type_id: caseItem.caseTypeId,
+    case_data: {
+      caseType: caseItem.caseType,
+      claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimantIndType: {
+        claimant_first_names: caseItem.firstName,
+        claimant_last_name: caseItem.lastName,
+        claimant_date_of_birth: formatDoB(caseItem.dobDate),
+      },
+      claimantType: {
+        claimant_email_address: caseItem.email,
+      },
     },
   };
 }

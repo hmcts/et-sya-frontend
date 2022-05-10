@@ -55,33 +55,15 @@ export const idamCallbackHandler = async (
   }
 
   const guid = String(req.query?.state);
+  const caseApi = getCaseApi(req.session.user?.accessToken);
 
-  if (guid !== EXISTING_USER) {
+  if (guid === EXISTING_USER) {
     if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;
       return next(err);
     }
-    getPreloginCaseData(redisClient, guid)
-      .then(caseData =>
-        getCaseApi(req.session.user?.accessToken)
-          .createCase(caseData, req.session.user)
-          .then(response => {
-            if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-              logger.info(`Created Draft Case - ${response.data.id}`);
-              req.session.userCase = fromApiFormat(response.data);
-              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
-            }
-            throw new Error('Draft Case was not created successfully');
-          })
-          .catch(error => {
-            //ToDo - needs to handle different error response
-            logger.info(error);
-          })
-      )
-      .catch(err => next(err));
-  } else {
-    getCaseApi(req.session.user?.accessToken)
+    caseApi
       .getDraftCases()
       .then(response => {
         if (response.data.length === 0) {
@@ -102,5 +84,24 @@ export const idamCallbackHandler = async (
         error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
         return next(error);
       });
+  } else {
+    getPreloginCaseData(redisClient, guid)
+      .then(caseData =>
+        caseApi
+          .createCase(caseData, req.session.user)
+          .then(response => {
+            if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+              logger.info(`Created Draft Case - ${response.data.id}`);
+              req.session.userCase = fromApiFormat(response.data);
+              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+            }
+            throw new Error('Draft Case was not created successfully');
+          })
+          .catch(error => {
+            //ToDo - needs to handle different error response
+            logger.info(error);
+          })
+      )
+      .catch(err => next(err));
   }
 };
