@@ -38,7 +38,7 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.see('Tell us what you want from your claim? (optional) (to do)');
 }).tag('@RET-1235');
 
-Scenario('Claim Details: Tell us what you want from your claim - Save for later', () => {
+Scenario('Claim Details: Tell us what you want from your claim - Save as draft', () => {
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/what-you-want-from-your-claim"]');
