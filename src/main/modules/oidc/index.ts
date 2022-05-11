@@ -2,6 +2,7 @@ import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
+import { CaseApiDataResponse } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import {
   AuthUrls,
@@ -55,7 +56,6 @@ export const idamCallbackHandler = async (
   }
 
   const guid = String(req.query?.state);
-  const caseApi = getCaseApi(req.session.user?.accessToken);
 
   if (guid === EXISTING_USER) {
     if (!redisClient) {
@@ -63,16 +63,20 @@ export const idamCallbackHandler = async (
       err.name = RedisErrors.FAILED_TO_CONNECT;
       return next(err);
     }
-    caseApi
+    getCaseApi(req.session.user?.accessToken)
       .getDraftCases()
       .then(response => {
         if (response.data.length === 0) {
           return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
         } else {
+          // TODO Implement page for User to select case they want to continue
           logger.info('Retrieving Latest Draft Case');
-          const cases = response.data;
-          //We are not sure how multiple cases will be handled yet, so only fetching last case for now
-          req.session.userCase = fromApiFormat(cases[cases.length - 1]);
+          const casesByLastModified: CaseApiDataResponse[] = response.data.sort((a, b) => {
+            const da = new Date(a.last_modified),
+              db = new Date(b.last_modified);
+            return db.valueOf() - da.valueOf();
+          });
+          req.session.userCase = fromApiFormat(casesByLastModified[0]);
           logger.info(`Retrieved case id - ${req.session.userCase.id}`);
           req.session.save();
           return res.redirect(PageUrls.CLAIM_STEPS);
@@ -87,7 +91,7 @@ export const idamCallbackHandler = async (
   } else {
     getPreloginCaseData(redisClient, guid)
       .then(caseData =>
-        caseApi
+        getCaseApi(req.session.user?.accessToken)
           .createCase(caseData, req.session.user)
           .then(response => {
             if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {

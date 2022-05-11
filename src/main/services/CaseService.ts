@@ -5,7 +5,6 @@ import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
-import { CaseState } from '../definitions/definition';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 export class CaseApi {
@@ -18,11 +17,7 @@ export class CaseApi {
   };
 
   getDraftCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
-    return this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES, {
-      data: {
-        match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
-      },
-    });
+    return this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
   };
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {

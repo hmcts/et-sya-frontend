@@ -53,14 +53,7 @@ describe('Axios get to retreive draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
     api.getDraftCases();
 
-    expect(mockedAxios.get).toHaveBeenCalledWith(
-      '/cases/user-cases',
-      expect.objectContaining({
-        data: {
-          match: { state: CaseState.AWAITING_SUBMISSION_TO_HMCTS },
-        },
-      })
-    );
+    expect(mockedAxios.get).toHaveBeenCalledWith('/cases/user-cases');
   });
 });
 
