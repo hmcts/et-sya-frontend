@@ -31,7 +31,7 @@ function getBrowserConfig(browserGroup) {
 
 const setupConfig = {
   tests: '../functional/features/*.js',
-  output: 'functional/output',
+  output: './functional-output/',
   helpers: {
     WebDriver: {
       url: testUrl,
@@ -59,9 +59,9 @@ const setupConfig = {
         options: { steps: true },
       },
       mochawesome: {
-        stdout: 'functional/output/console.log',
+        stdout: './functional-output/console.log',
         options: {
-          reportDir: '',
+          reportDir: './functional-output/reports',
           reportName: 'index',
           inlineAssets: true,
         },

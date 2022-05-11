@@ -2,5 +2,11 @@
   "title": "Confirmation",
   "h1": "Your claim has been submitted (to do)",
   "downloadClaim": "Download your claim",
-  "downloadBtn": "<a href=\"/download-claim\" class=\"govuk-link\">Save a copy of your claim</a>"
+  "downloadBtn": "<a href=\"/download-claim\" class=\"govuk-link\">Save a copy of your claim</a>",
+  "survey": {
+    "titleText": "Help us improve this service",
+    "p1": "This is a new service. Help us to improve it for others by ",
+    "linkText": "giving your feedback",
+    "url": "https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt"
+  }
 }

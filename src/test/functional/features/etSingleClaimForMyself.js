@@ -22,7 +22,7 @@ Scenario('Verify ET single claim for myself when there is no acas certificate', 
 
   I.see('You need to contact Acas');
   I.click('Contact Acas');
-});
+}).tag(' @RET-BAT');
 
 Scenario('Verify ET single claim myself when claim against one or more respondents', async () => {
   commonPages();

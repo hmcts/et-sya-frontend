@@ -1,13 +1,11 @@
 Feature('Claim Details');
 const test_url = '/steps-to-making-your-claim';
 const { I } = inject();
-const discriminationClaim = locate('.govuk-details__summary-text').withText('What to write for discrimination claims');
-const whatToWrite_dismissal = locate('.govuk-details__summary-text').withText('What to write for dismissal claims');
-const whatToWrite_whitsleblower = locate('.govuk-details__summary-text').withText(
-  'What to write for whistleblower claims'
-);
-const whatToWrite_otherClaim = locate('.govuk-details__summary-text').withText("What to write for 'other' claims");
-const document_upload = locate('.govuk-details__summary-text').withText('Upload a document to support your claim');
+const discriminationClaim = '//*[@id="main-content"]/div/div/details[1]/summary/span';
+const whatToWrite_dismissal = '//*[@id="main-content"]/div/div/details[2]/summary/span';
+const whatToWrite_whitsleblower = '//*[@id="main-content"]/div/div/details[3]/summary/span';
+const whatToWrite_otherClaim = '//*[@id="main-content"]/div/div/details[4]/summary/span';
+const document_upload = '//*[@id="main-form"]/details/summary/span';
 const compensation_award = locate('.govuk-details__summary-text').withText('Compensation - what can a tribunal award?');
 const tribunal_recommendation = locate('.govuk-details__summary-text').withText('What is a tribunal recommendation?');
 
@@ -18,6 +16,7 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.click('[href="/summarise-what-happened"]');
   I.see('Summarise what happened to you (optional) (to do)');
   I.see('What to include in your claim');
+  I.seeElement(discriminationClaim);
   I.click(discriminationClaim);
   I.see('Describe the events you are complaining about.');
   I.click(whatToWrite_dismissal);
@@ -77,3 +76,13 @@ Scenario('Claim Details: Tell us what you want from your claim - Save and contin
   // returned to start page at the moment
   I.see('Steps to making your claim TODO');
 }).tag('@RET-1235');
+
+Scenario('Feedback exit survey link on confirmation page', () => {
+  I.amOnPage('/your-claim-has-been-submitted');
+  I.see('Your claim has been submitted (to do)');
+  I.seeElement('//*[@id="main-content"]/div[2]/div/p/a');
+  I.click('//*[@id="main-content"]/div[2]/div/p/a');
+  I.seeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt');
+  // regression step to ensure that it is not redirecting to the feedback link on the homepage
+  I.dontSeeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=your-claim-has-been-submitted');
+}).tag('@RET-1441');

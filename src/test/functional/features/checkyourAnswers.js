@@ -112,4 +112,6 @@ Scenario('Verify check your answers page', () => {
 
   I.click('#main-form-submit');
   I.see('Your claim has been submitted');
-}).tag('@RET-1236');
+})
+  .tag('@RET-1236')
+  .tag(' @RET-BAT');
