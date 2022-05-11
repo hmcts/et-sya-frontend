@@ -10,14 +10,14 @@ const logger = Logger.getLogger('app');
 export default class DownloadClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     try {
-      const response = await getCaseApi(req.session.user?.accessToken).downloadClaimPdf();
+      const response = await getCaseApi(req.session.user?.accessToken).downloadClaimPdf('1234');
 
       if (response.status === 200) {
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename=submitted-claim.pdf');
-        res.send(Buffer.from(response.data, 'binary'));
+        res.status(200).send(Buffer.from(response.data, 'binary'));
       } else {
-        throw new Error('error retrieving pdf file, status not as expected');
+        // redirect to a file-not-found page
       }
     } catch (error) {
       logger.info(error);
