@@ -1,5 +1,5 @@
 Feature('ET Claim while working for organisation');
-const testUrl = 'https://et-sya-pr-221.service.core-compute-preview.internal/are-you-still-working';
+const testUrl = '/are-you-still-working';
 const { I } = inject();
 
 Scenario('Claim while working for organisation when notice period is for 3 months', () => {
