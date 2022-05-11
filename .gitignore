@@ -29,4 +29,3 @@ package-lock.json
 functional-output/*
 smoke-output/reports
 src/test/api/pact/pacts/
-!/src/test/functional/features/etStepToMakeYourClaim.js
