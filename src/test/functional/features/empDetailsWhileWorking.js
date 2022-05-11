@@ -1,5 +1,5 @@
 Feature('ET Claim while working for organisation');
-const testUrl = '/are-you-still-working';
+const testUrl = 'https://et-sya-pr-221.service.core-compute-preview.internal/are-you-still-working';
 const { I } = inject();
 
 Scenario('Claim while working for organisation when notice period is for 3 months', () => {
@@ -182,3 +182,21 @@ Scenario('Claim while working for organisation and not submitted details', () =>
 })
   .tag('@RET-1130')
   .tag(' @RET-BAT');
+
+Scenario('Save as Draft: Still working for respondent', () => {
+  I.amOnPage(testUrl);
+  I.checkOption('#still-working');
+  I.click('#main-form-save-for-later');
+  I.see('Your claim has been saved');
+  I.see('Continue with your claim');
+  I.click('[class="govuk-back-link"]');
+  I.checkOption('#still-working-2');
+  I.click('#main-form-save-for-later');
+  I.see('Your claim has been saved');
+  I.see('Continue with your claim');
+  I.click('[class="govuk-back-link"]');
+  I.checkOption('#still-working-2');
+  I.click('#main-form-save-for-later');
+  I.see('Your claim has been saved');
+  I.see('Continue with your claim');
+}).tag('@RET-1521');
