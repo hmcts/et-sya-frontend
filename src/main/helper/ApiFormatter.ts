@@ -9,7 +9,7 @@ export function toApiFormatCreate(
   userDetails: UserDetails
 ): CreateCaseBody {
   return {
-    post_code: 'SW1A 1AA', // TODO Replace with value from new triage page
+    post_code: 'SW1A 1AA', // TODO Replace with value from new postcode triage page
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
