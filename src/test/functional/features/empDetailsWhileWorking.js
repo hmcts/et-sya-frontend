@@ -183,8 +183,18 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   .tag('@RET-1130')
   .tag(' @RET-BAT');
 
-Scenario('Save as Draft: Still working for respondent', () => {
-  I.amOnPage(testUrl);
+// No validation for Save as draft button at the moment
+Scenario('Save as Draft: Still working for organisation', () => {
+  I.amOnPage('/past-employer');
+  I.click('#main-form-submit');
+  I.seeElement('[aria-labelledby="error-summary-title"]');
+  I.see('There is a problem');
+  I.checkOption('#past-employer');
+  I.click('#main-form-save-for-later');
+  I.see('Your claim has been saved');
+  I.click('[class="govuk-back-link"]');
+  I.click('#main-form-submit');
+  I.see("Are you still working for the organisation or person you're making your claim against?");
   I.checkOption('#still-working');
   I.click('#main-form-save-for-later');
   I.see('Your claim has been saved');
