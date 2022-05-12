@@ -81,7 +81,7 @@ function testAccessibility1(url: string): void {
 describe('Accessibility', () => {
   testAccessibility('/');
   testAccessibility('/checklist');
-  testAccessibility('/checklisasdfasdft1');
+  testAccessibility('/lip-or-representative');
 
   // TODO: include each path of your application in accessibility checks
 });
