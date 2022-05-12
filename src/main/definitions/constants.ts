@@ -117,7 +117,7 @@ export const JavaApiUrls = {
   GET_CASES: '/caseTypes/ET_EnglandWales/cases',
   INITIATE_CASE_DRAFT: '/case-type/ET_EnglandWales/event-type/INITIATE_CASE_DRAFT/case',
   UPDATE_CASE_DRAFT: '/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT',
-  DOWNLOAD_CLAIM_PDF: '/generatePDF',
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
