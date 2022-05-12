@@ -82,6 +82,8 @@ describe('Accessibility', () => {
   testAccessibility('/');
   testAccessibility('/checklist');
   testAccessibility('/lip-or-representative');
+  testAccessibility('/notice-pay');
+  testAccessibility('/do-you-have-an-acas-no-many-resp');
 
   // TODO: include each path of your application in accessibility checks
 });
