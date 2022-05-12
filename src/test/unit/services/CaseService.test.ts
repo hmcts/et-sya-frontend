@@ -95,3 +95,28 @@ describe('updateDraftCase', () => {
     );
   });
 });
+
+describe('Axios post to retrieve pdf', () => {
+  it('should send post request to the correct api endpoint with the case id passed in the request body', async () => {
+    const mockUserDetails: UserDetails = {
+      id: '1234',
+      givenName: 'Bobby',
+      familyName: 'Ryan',
+      email: 'bobby@gmail.com',
+      accessToken: 'xxxx',
+    };
+
+    api.downloadClaimPdf(mockUserDetails.accessToken);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.DOWNLOAD_CLAIM_PDF,
+      expect.objectContaining({
+        caseId: 'xxxx',
+      }),
+      expect.objectContaining({
+        headers: expect.objectContaining({ 'Content-Type': 'application/pdf' }),
+        responseType: 'arraybuffer',
+      })
+    );
+  });
+});
