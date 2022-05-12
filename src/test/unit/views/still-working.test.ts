@@ -9,9 +9,9 @@ const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
 
-const expectedRadioLabel1 = "Yes - I'm still working for them";
-const expectedRadioLabel2 = "Yes - I'm working my notice period";
-const expectedRadioLabel3 = "No - I'm no longer working for them";
+const expectedRadioLabel1 = "I'm still working for the respondent";
+const expectedRadioLabel2 = "I'm working my notice period for the respondent";
+const expectedRadioLabel3 = "I'm no longer working for the respondent";
 const expectedTitle = "Are you still working for the organisation or person you're making your claim against?";
 
 let htmlRes: Document;
@@ -34,9 +34,9 @@ describe('Are you still working page', () => {
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
-  it('should display save for later button', () => {
+  it('should display Save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
+    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 
   it('should display 3 radio buttons', () => {
