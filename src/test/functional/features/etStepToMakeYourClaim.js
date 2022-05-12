@@ -38,7 +38,7 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.see('Tell us what you want from your claim? (optional) (to do)');
 }).tag('@RET-1235');
 
-Scenario('Claim Details: Tell us what you want from your claim - Save for later', () => {
+Scenario('Claim Details: Tell us what you want from your claim - Save as draft', () => {
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/what-you-want-from-your-claim"]');
@@ -76,3 +76,13 @@ Scenario('Claim Details: Tell us what you want from your claim - Save and contin
   // returned to start page at the moment
   I.see('Steps to making your claim TODO');
 }).tag('@RET-1235');
+
+Scenario('Feedback exit survey link on confirmation page', () => {
+  I.amOnPage('/your-claim-has-been-submitted');
+  I.see('Your claim has been submitted (to do)');
+  I.seeElement('//*[@id="main-content"]/div[2]/div/p/a');
+  I.click('//*[@id="main-content"]/div[2]/div/p/a');
+  I.seeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt');
+  // regression step to ensure that it is not redirecting to the feedback link on the homepage
+  I.dontSeeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=your-claim-has-been-submitted');
+}).tag('@RET-1441');

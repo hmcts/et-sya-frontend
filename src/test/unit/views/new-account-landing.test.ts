@@ -51,6 +51,6 @@ describe('New Account Landing page', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button.length).equal(2, 'Expected two buttons');
     expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
-    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
+    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });
