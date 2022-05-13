@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import DownloadClaimController from '../../../main/controllers/DownloadClaimController';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -23,7 +24,12 @@ describe('Download Claim Controller', () => {
     };
     const expectedBuffer = Buffer.from(fetchResponse.body, 'binary');
 
-    mockedAxios.get.mockResolvedValueOnce({ data: expectedBuffer });
+    let getCaseApi: Partial<CaseApi>;
+
+    // getCaseApi.downloadClaimPdf = return resolved promise
+    // mockedAxios.get.mockResolvedValueOnce({ data: expectedBuffer });
+    jest.spyOn(getCaseApi, 'downloadClaimPdf').mockImplementation(() => Promise.resolve({ data: expectedBuffer }));
+
     const result = controller.get(req, res);
 
     expect(mockedAxios.get).toHaveBeenCalled();
