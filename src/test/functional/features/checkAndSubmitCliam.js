@@ -12,7 +12,7 @@ Scenario('ET Check your answer: Submit Claim', () => {
   .tag('@RET-1178')
   .tag(' @RET-BAT');
 
-Scenario('ET Check your answer: Save for later', () => {
+Scenario('ET Check your answer: Save as draft', () => {
   I.amOnPage(test_url);
   I.see('Check your answers');
   I.seeElement('#main-form-save-for-later');
