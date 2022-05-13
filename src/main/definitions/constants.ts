@@ -113,7 +113,7 @@ export const AuthUrls = {
 } as const;
 
 export const JavaApiUrls = {
-  GET_CASES: '/cases/user-cases',
+  GET_CASES: 'cases/user-cases',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
