@@ -1,38 +1,44 @@
-import axios from 'axios';
+import { AxiosResponse } from 'axios';
 
 import DownloadClaimController from '../../../main/controllers/DownloadClaimController';
-import { CaseApi } from '../../../main/services/CaseService';
+import * as caseApi from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.mock('axios');
-
-describe('Download Claim Controller', () => {
-  jest.mock('axios');
-  jest.mock('../../../main/auth/index');
-
-  const mockedAxios = axios as jest.Mocked<typeof axios>;
+describe('Download claim Controller', () => {
   const t = {};
-  it('should display file', () => {
-    const controller = new DownloadClaimController();
-    const req = mockRequest({ t });
-    const res = mockResponse();
-    const fetchResponse = {
-      headers: { 'content-type': 'application/pdf' },
-      statusCode: 200,
-      body: 'someBinaryContent',
+  const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
+
+  it('should download pdf binary array', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.user = {
+      id: '1234',
+      givenName: 'Bobby',
+      familyName: 'Ryan',
+      email: 'bobby@gmail.com',
+      accessToken: 'token',
     };
-    const expectedBuffer = Buffer.from(fetchResponse.body, 'binary');
+    const fetchResponse = {
+      status: 200,
+      data: 'someBinaryContent',
+    } as AxiosResponse;
 
-    let getCaseApi: Partial<CaseApi>;
+    const controller = new DownloadClaimController();
 
-    // getCaseApi.downloadClaimPdf = return resolved promise
-    // mockedAxios.get.mockResolvedValueOnce({ data: expectedBuffer });
-    jest.spyOn(getCaseApi, 'downloadClaimPdf').mockImplementation(() => Promise.resolve({ data: expectedBuffer }));
+    (getCaseApiMock as jest.Mock).mockReturnValue({
+      downloadClaimPdf: jest.fn(() => {
+        return fetchResponse;
+      }),
+    });
 
-    const result = controller.get(req, res);
+    const expectedBuffer = Buffer.from(fetchResponse.data, 'binary');
 
-    expect(mockedAxios.get).toHaveBeenCalled();
-    expect(result).toBe(expectedBuffer);
+    await controller.get(request, response);
+    expect(getCaseApiMock).toHaveBeenCalledWith('token');
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'application/pdf');
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Disposition', 'attachment; filename=submitted-claim.pdf');
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.send).toHaveBeenCalledWith(expectedBuffer);
   });
 });
