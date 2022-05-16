@@ -41,4 +41,25 @@ describe('Download claim Controller', () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.send).toHaveBeenCalledWith(expectedBuffer);
   });
+
+  it('should redirect to not-found on error', async () => {
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.user = {
+      id: '1234',
+      givenName: 'Bobby',
+      familyName: 'Ryan',
+      email: 'bobby@gmail.com',
+      accessToken: 'token',
+    };
+
+    const controller = new DownloadClaimController();
+
+    (getCaseApiMock as jest.Mock).mockReturnValue({
+      downloadClaimPdf: jest.fn().mockRejectedValue(new Error('error')),
+    });
+    await controller.get(request, response);
+
+    expect(response.redirect).toBeCalledWith('not-found');
+  });
 });
