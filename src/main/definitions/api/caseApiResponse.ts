@@ -20,6 +20,7 @@ export interface CaseApiDataResponse {
   security_classification?: string;
   callback_response_status?: string | null;
 }
+
 export interface CaseData {
   caseType?: CaseType;
   caseSource?: string;
