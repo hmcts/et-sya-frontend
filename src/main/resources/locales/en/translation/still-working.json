@@ -5,7 +5,7 @@
   "optionText3": "I'm no longer working for the respondent",
   "errors": {
     "isStillWorking": {
-      "required": "Select an option"
+      "required": "Tell us if you are still working for the organisation or person"
     }
   }
 }
