@@ -37,7 +37,7 @@ export default class AverageWeeklyHoursController {
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY_BEFORE_TAX);
+    handleSessionErrors(req, res, this.form, PageUrls.PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {
