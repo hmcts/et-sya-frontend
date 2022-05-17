@@ -10,8 +10,6 @@ nodejs:
         - idam-secret
         - redis-access-key
         - os-places-token
-  environment:
-    ET_SYA_FRONTEND_HOST: 'http://et-sya.{{ .Values.global.environment }}.platform.hmcts.net'
 
 idam-pr:
   enabled: true

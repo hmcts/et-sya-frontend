@@ -28,9 +28,6 @@
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
       "token": "TO BE PICKED UP FROM ENV"
-    },
-    "frontend": {
-      "host": "http://localhost:3001/"
     }
   },
   "pact": {

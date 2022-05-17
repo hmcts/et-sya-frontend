@@ -65,6 +65,4 @@ describe('Accessibility', () => {
   testAccessibility('/');
   testAccessibility('/checklist');
   testAccessibility('/lip-or-representative');
-  //testAccessibility('/do-you-have-an-acas-no-many-resps');
-  testAccessibility('/notice-pay');
 });

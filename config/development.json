@@ -13,9 +13,6 @@
     },
     "etSyaApi": {
       "host": "http://localhost:4550/"
-    },
-    "frontend": {
-      "host": "http://localhost:3001/"
     }
   },
   "session": {
