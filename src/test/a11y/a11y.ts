@@ -58,6 +58,7 @@ function testAccessibility(url: string): void {
       await ensurePageCallWillSucceed(url);
       const frontendUrl: string = config.get('services.frontend.host');
       console.log('.....' + frontendUrl);
+      console.log('...etSyaApi..' + config.get('services.etSyaApi.host'));
       const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
       expectNoErrors(messages.issues);
     });
