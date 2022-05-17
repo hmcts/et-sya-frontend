@@ -26,6 +26,7 @@ export interface Case {
   updatePreference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
+  caseTypeId?: CaseTypeId;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;
@@ -80,6 +81,11 @@ export const enum YesOrNo {
 export const enum CaseType {
   SINGLE = 'Single',
   MULTIPLE = 'Multiple',
+}
+
+export const enum CaseTypeId {
+  ENGLAND_WALES = 'ET_EnglandWales',
+  SCOTLAND = 'ET_Scotland',
 }
 
 export const enum WeeksOrMonths {
