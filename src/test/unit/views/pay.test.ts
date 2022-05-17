@@ -7,33 +7,39 @@ import request from 'supertest';
 import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
 
-const noticePeriodJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-period.json'),
+const payJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/pay.json'),
   'utf-8'
 );
-const noticePeriodJson = JSON.parse(noticePeriodJsonRaw);
+const payJson = JSON.parse(payJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = noticePeriodJson.h1;
-const radios = 'govuk-radios';
+const expectedTitle = payJson.h1;
 const buttonClass = 'govuk-button';
+const radios = 'govuk-radios';
+const inputs = 'govuk-input--width-5';
 
 let htmlRes: Document;
-describe('Have you got a notice period?', () => {
+describe('Pay page', () => {
   beforeAll(async () => {
     await request(app)
-      .get(PageUrls.NOTICE_PERIOD)
+      .get(PageUrls.PAY)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
   });
 
-  it('should display correct heading', () => {
+  it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display correct radio buttons', () => {
+  it('should have 2 input fields', () => {
+    const inputFields = htmlRes.getElementsByClassName(inputs);
+    expect(inputFields.length).equal(2, `only ${inputFields.length} found`);
+  });
+
+  it('should display radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radios);
     expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
