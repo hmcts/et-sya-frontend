@@ -56,6 +56,8 @@ function testAccessibility(url: string): void {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
       console.log('.....' + agent.get(url).url);
+      console.log('env----> ' + process.env['NODE_ENV']);
+      console.log('TEST_URL----> ' + process.env.TEST_URL);
       const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
       expectNoErrors(messages.issues);
     });
