@@ -9,6 +9,8 @@ const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
 
+const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+
 const options = {
   ignore: [
     'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
@@ -53,37 +55,17 @@ function expectNoErrors(messages: PallyIssue[]): void {
 
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
-    console.log('logs------ ' + url);
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      console.log('.....' + agent.get(url).url);
-      const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
+      console.log('----> ' + testUrl);
+      const messages = await pa11y(testUrl + url, options);
       expectNoErrors(messages.issues);
     });
   });
 }
 
-/*
-function testAccessibility1(url: string): void {
-  describe(`Page ${url}`, () => {
-    test('should have no accessibility errors', done => {
-      ensurePageCallWillSucceed(url)
-        .then(() => runPally(agent.get(url).url))
-        .then((result: Pa11yResult) => {
-          expectNoErrors(result.issues);
-          done();
-        })
-        .catch((err: Error) => done(err));
-    });
-  });
-}*/
-
 describe('Accessibility', () => {
   testAccessibility('/');
   testAccessibility('/checklist');
   testAccessibility('/lip-or-representative');
-  testAccessibility('/notice-pay');
-  testAccessibility('/do-you-have-an-acas-no-many-resp');
-
-  // TODO: include each path of your application in accessibility checks
 });
