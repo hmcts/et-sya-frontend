@@ -9,7 +9,7 @@ const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
 
-const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+const testConfig = require('./config');
 
 const options = {
   ignore: [
@@ -57,8 +57,8 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      console.log('----> ' + testUrl);
-      const messages = await pa11y(testUrl + url, options);
+      console.log('----> ' + testConfig.testUrl);
+      const messages = await pa11y(testConfig.testUrl + url, options);
       expectNoErrors(messages.issues);
     });
   });
