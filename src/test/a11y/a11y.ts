@@ -5,6 +5,7 @@ import * as supertest from 'supertest';
 
 import { app } from '../../main/app';
 
+const config = require('config');
 const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
@@ -55,9 +56,8 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      console.log('.....' + agent.get(url).url);
-      console.log('env----> ' + process.env['NODE_ENV']);
-      console.log('TEST_URL----> ' + process.env.TEST_URL);
+      const frontendUrl: string = config.get('services.frontend.host');
+      console.log('.....' + frontendUrl);
       const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
       expectNoErrors(messages.issues);
     });

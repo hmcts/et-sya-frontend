@@ -13,6 +13,9 @@
     },
     "etSyaApi": {
       "host": "ET_SYA_API_HOST"
+    },
+    "frontend": {
+      "host": "ET_SYA_FRONTEND_HOST"
     }
   },
   "session": {
