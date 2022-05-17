@@ -5,7 +5,6 @@ import * as supertest from 'supertest';
 
 import { app } from '../../main/app';
 
-const config = require('config');
 const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
@@ -56,8 +55,6 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      console.log('.....' + agent.get('/lip-or-representative').url);
-      console.log('...etSyaApi..' + config.get('services.etSyaApi.host'));
       const messages = await pa11y(agent.get(url).url, options);
       expectNoErrors(messages.issues);
     });
@@ -68,4 +65,6 @@ describe('Accessibility', () => {
   testAccessibility('/');
   testAccessibility('/checklist');
   testAccessibility('/lip-or-representative');
+  //testAccessibility('/do-you-have-an-acas-no-many-resps');
+  testAccessibility('/notice-pay');
 });
