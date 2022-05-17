@@ -56,10 +56,9 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      const frontendUrl: string = config.get('services.frontend.host');
-      console.log('.....' + frontendUrl);
+      console.log('.....' + agent.get('/lip-or-representative').url);
       console.log('...etSyaApi..' + config.get('services.etSyaApi.host'));
-      const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
+      const messages = await pa11y(agent.get(url).url, options);
       expectNoErrors(messages.issues);
     });
   });
