@@ -9,11 +9,18 @@ const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
 
-class Pa11yResult {
-  documentTitle: string;
-  pageUrl: string;
-  issues: PallyIssue[];
-}
+const options = {
+  ignore: [
+    'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
+    'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name',
+    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H71.NoLegend',
+    'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68',
+    'WCAG2AA.Principle3.Guideline3_2.3_2_2.H32.2',
+    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired',
+    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2',
+  ],
+  hideElements: '.govuk-header, .govuk-footer, link[rel=mask-icon], #ctsc-web-chat, iframe, #app-cookie-banner',
+};
 
 class PallyIssue {
   code: string;
@@ -24,10 +31,6 @@ class PallyIssue {
   typeCode: number;
 }
 
-beforeAll((done /* call it or remove it*/) => {
-  done(); // calling it
-});
-
 function ensurePageCallWillSucceed(url: string): Promise<void> {
   return agent.get(url).then((res: supertest.Response) => {
     if (res.redirect) {
@@ -36,12 +39,6 @@ function ensurePageCallWillSucceed(url: string): Promise<void> {
     if (res.serverError) {
       throw new Error(`Call to ${url} resulted in internal server error`);
     }
-  });
-}
-
-function runPally(url: string): Pa11yResult {
-  return pa11y(url, {
-    hideElements: '.govuk-footer__licence-logo, .govuk-header__logotype-crown',
   });
 }
 
@@ -56,21 +53,16 @@ function expectNoErrors(messages: PallyIssue[]): void {
 
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
-    test('should have no accessibility errors', done => {
-      ensurePageCallWillSucceed(url)
-        .then(() => runPally(agent.get(url).url))
-        .then((result: Pa11yResult) => {
-          expectNoErrors(result.issues);
-          done();
-        })
-        .catch((err: Error) => done(err));
+    it('should have no accessibility errors', async () => {
+      await ensurePageCallWillSucceed(url);
+      const messages = await pa11y(agent.get(url).url, options);
+      expectNoErrors(messages.issues);
     });
   });
 }
 
 describe('Accessibility', () => {
-  // testing accessibility of the home page
   testAccessibility('/');
-
-  // TODO: include each path of your application in accessibility checks
+  testAccessibility('/checklist');
+  testAccessibility('/lip-or-representative');
 });
