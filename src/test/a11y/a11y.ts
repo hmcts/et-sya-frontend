@@ -9,8 +9,6 @@ const pa11y = require('pa11y');
 
 const agent = supertest.agent(app);
 
-const testConfig = require('./config');
-
 const options = {
   ignore: [
     'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
@@ -57,8 +55,8 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       await ensurePageCallWillSucceed(url);
-      console.log('----> ' + testConfig.testUrl);
-      const messages = await pa11y(testConfig.testUrl + url, options);
+      console.log('.....' + agent.get(url).url);
+      const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, options);
       expectNoErrors(messages.issues);
     });
   });
