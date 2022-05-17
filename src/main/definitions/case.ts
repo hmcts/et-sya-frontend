@@ -77,6 +77,12 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
+export const enum YesOrNoOrNotSure {
+  YES = 'Yes',
+  NO = 'No',
+  NOT_SURE = 'Not sure',
+}
+
 export const enum CaseType {
   SINGLE = 'Single',
   MULTIPLE = 'Multiple',
