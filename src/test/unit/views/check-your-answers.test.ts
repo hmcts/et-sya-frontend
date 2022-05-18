@@ -161,8 +161,8 @@ describe('Check your answers confirmation page', () => {
     expect(startDateLink).equals(PageUrls.START_DATE, 'Incorrect href found');
     expect(noticePeriodLink).equals(PageUrls.NOTICE_END, 'Incorrect href found');
     expect(weeklyHoursLink).equals(PageUrls.AVERAGE_WEEKLY_HOURS, 'Incorrect href found');
-    expect(payBeforeTaxLink).equals(PageUrls.PAY_BEFORE_TAX, 'Incorrect href found');
-    expect(payAfterTaxLink).equals(PageUrls.PAY_AFTER_TAX, 'Incorrect href found');
+    expect(payBeforeTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
+    expect(payAfterTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
     expect(pensionSchemeLink).equals(PageUrls.PENSION, 'Incorrect href found');
     expect(benefitsLink).equals(PageUrls.BENEFITS, 'Incorrect href found');
 

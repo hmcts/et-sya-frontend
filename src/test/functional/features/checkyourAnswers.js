@@ -65,11 +65,11 @@ Scenario('Verify check your answers page', () => {
   I.executeScript('window.history.back();');
 
   I.see('Pay BEFORE tax');
-  I.click('(//a[@href="/pay-before-tax"])');
+  I.click('(//a[@href="/pay"])');
   I.executeScript('window.history.back();');
 
   I.see('Pay AFTER tax');
-  I.click('(//a[@href="/pay-after-tax"])');
+  I.click('(//a[@href="/pay"])');
   I.executeScript('window.history.back();');
 
   I.see('Pension scheme');

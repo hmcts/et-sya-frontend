@@ -1,13 +1,9 @@
 {
   "title": "Employment start date",
   "h1": "Employment start date",
-  "p1": {
-    "workingOrNotice": "Tell us when you started working for them.",
-    "noLongerWorking": "Tell us when you started working for them. For example, 22 04 2014."
-  },
+  "p1": "Tell us when you started working for the respondent.",
   "p2": "If you do not know the exact date then enter your best estimate.",
-  "p3": "For example, 22 04 2014.",
-  "notWorking": "NO LONGER WORKING",
+  "hint": "For example, 27 3 2007",
   "errors": {
     "startDate": {
       "required": "Enter your employment start date. For example, 22 04 2014",

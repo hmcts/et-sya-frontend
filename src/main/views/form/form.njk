@@ -1,9 +1,15 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 <form class="form" id="main-form" method="post" action="" novalidate="novalidate">
   <input type="hidden" name="_csrf" id="csrfToken" value="12345">
   {% block form_content %}
     {% include "./fields.njk" %}
+    {% if "got-a-notice-period" in currentUrl %}
+      {{ govukInsetText({
+        text: noticeLengthInsetText
+      }) }}
+    {% endif %}
   {% endblock %}
 
   <div class="govuk-form-group">

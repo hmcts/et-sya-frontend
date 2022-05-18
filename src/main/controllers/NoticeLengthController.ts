@@ -8,17 +8,16 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class AverageWeeklyHoursController {
+export default class NoticeLengthController {
   private readonly form: Form;
-  private readonly averageWeeklyHoursContent: FormContent = {
+  private readonly noticeLengthContent: FormContent = {
     fields: {
-      avgWeeklyHrs: {
-        id: 'avg-weekly-hrs',
-        name: 'avg-weekly-hrs',
+      noticeLength: {
+        id: 'notice-length',
+        name: 'notice-length',
         type: 'text',
         classes: 'govuk-input--width-3',
-        label: (l: AnyRecord): string => l.avgWeeklyHrs,
-        hint: (l: AnyRecord): string => l.hint,
+        hint: (l: AnyRecord): string => l.noticeLengthHint,
         attributes: { maxLength: 3 },
       },
     },
@@ -33,23 +32,23 @@ export default class AverageWeeklyHoursController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.averageWeeklyHoursContent.fields);
+    this.form = new Form(<FormFields>this.noticeLengthContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY);
+    handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.averageWeeklyHoursContent, [
+    const content = getPageContent(req, this.noticeLengthContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.AVERAGE_WEEKLY_HOURS,
+      TranslationKeys.NOTICE_LENGTH,
     ]);
-    const employmentStatus = req.session.userCase.isStillWorking;
+    const noticeType = req.session.userCase.noticePeriodUnit;
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.AVERAGE_WEEKLY_HOURS, {
+    res.render(TranslationKeys.NOTICE_LENGTH, {
       ...content,
-      employmentStatus,
+      noticeType,
     });
   };
 }
