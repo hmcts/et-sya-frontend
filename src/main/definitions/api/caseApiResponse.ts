@@ -1,4 +1,4 @@
-import { CaseType, YesOrNo } from '../case';
+import { CaseType, CaseTypeId, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { CaseState } from '../definition';
@@ -11,7 +11,7 @@ export interface CaseApiDataResponse {
   id: string;
   jurisdiction?: string;
   state: CaseState;
-  case_type_id?: string;
+  case_type_id?: CaseTypeId;
   created_date?: Date;
   last_modified?: Date;
   locked_by_user_id?: boolean | null;
