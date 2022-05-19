@@ -25,7 +25,7 @@ describe(`on POST ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
       .post(PageUrls.AVERAGE_WEEKLY_HOURS)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.PAY_BEFORE_TAX);
+        expect(res.header['location']).toStrictEqual(PageUrls.PAY);
       });
   });
 });

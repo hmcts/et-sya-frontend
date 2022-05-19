@@ -2,24 +2,31 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class AverageWeeklyHoursController {
+export default class NoticeTypeController {
   private readonly form: Form;
-  private readonly averageWeeklyHoursContent: FormContent = {
+  private readonly noticeTypeContent: FormContent = {
     fields: {
-      avgWeeklyHrs: {
-        id: 'avg-weekly-hrs',
-        name: 'avg-weekly-hrs',
-        type: 'text',
-        classes: 'govuk-input--width-3',
-        label: (l: AnyRecord): string => l.avgWeeklyHrs,
-        hint: (l: AnyRecord): string => l.hint,
-        attributes: { maxLength: 3 },
+      noticePeriodUnit: {
+        id: 'notice-type',
+        type: 'radios',
+        classes: 'govuk-radios--inline',
+        values: [
+          {
+            label: (l: AnyRecord): string => l.weeks,
+            value: WeeksOrMonths.WEEKS,
+          },
+          {
+            label: (l: AnyRecord): string => l.months,
+            value: WeeksOrMonths.MONTHS,
+          },
+        ],
       },
     },
     submit: {
@@ -33,23 +40,19 @@ export default class AverageWeeklyHoursController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.averageWeeklyHoursContent.fields);
+    this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY);
+    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_LENGTH);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.averageWeeklyHoursContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.AVERAGE_WEEKLY_HOURS,
-    ]);
-    const employmentStatus = req.session.userCase.isStillWorking;
+    const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.AVERAGE_WEEKLY_HOURS, {
+    res.render(TranslationKeys.NOTICE_TYPE, {
       ...content,
-      employmentStatus,
     });
   };
 }

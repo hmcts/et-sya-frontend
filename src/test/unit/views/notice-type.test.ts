@@ -7,22 +7,22 @@ import request from 'supertest';
 import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
 
-const noticePeriodJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-period.json'),
+const noticeTypeJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-type.json'),
   'utf-8'
 );
-const noticePeriodJson = JSON.parse(noticePeriodJsonRaw);
+const noticeTypeJson = JSON.parse(noticeTypeJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = noticePeriodJson.h1;
+const expectedTitle = noticeTypeJson.h1;
 const radios = 'govuk-radios';
 const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
-describe('Have you got a notice period?', () => {
+describe('Is your notice period in weeks or months?', () => {
   beforeAll(async () => {
     await request(app)
-      .get(PageUrls.NOTICE_PERIOD)
+      .get(PageUrls.NOTICE_TYPE)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
