@@ -34,7 +34,7 @@ export default class NoticeEndController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_PAY);
+    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_TYPE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
