@@ -102,12 +102,12 @@ describe('Axios post to retrieve pdf', () => {
       accessToken: 'xxxx',
     };
 
-    api.downloadClaimPdf(mockUserDetails.accessToken);
+    api.downloadClaimPdf(mockUserDetails.id);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.DOWNLOAD_CLAIM_PDF,
       expect.objectContaining({
-        caseId: 'xxxx',
+        caseId: '1234',
       }),
       expect.objectContaining({
         headers: expect.objectContaining({ 'Content-Type': 'application/pdf' }),
