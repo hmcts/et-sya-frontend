@@ -11,7 +11,13 @@
   {{ govukHeader({
     homepageUrl: "https://www.gov.uk",
     serviceName: serviceName,
-    serviceUrl: "#"
+    serviceUrl: "#",
+    navigation: [
+      {
+        href: "/logout" if isLoggedIn,
+        text: signOut if isLoggedIn
+      }
+    ]
   }) }}
 {% endblock %}
 
