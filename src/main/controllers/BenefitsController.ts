@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -55,7 +55,13 @@ export default class BenefitsController {
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NEW_JOB);
+    let redirectUrl = '';
+    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+      redirectUrl = PageUrls.NEW_JOB;
+    } else {
+      redirectUrl = PageUrls.HOME;
+    }
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

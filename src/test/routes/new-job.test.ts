@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.NEW_JOB}`, () => {
 });
 
 describe(`on POST ${PageUrls.NEW_JOB} with Yes`, () => {
-  test('should return the new job start date page when Yes radio button is selected', async () => {
+  test('should return the new job page when Yes radio button is selected', async () => {
     await request(app)
       .post(`${PageUrls.NEW_JOB}`)
       .send({ newJob: YesOrNo.YES })

@@ -5,7 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { YesNoRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -17,26 +17,11 @@ export default class NewJobController {
         id: 'new-job',
         type: 'radios',
         classes: 'govuk-radios--inline',
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: YesNoRadioValues,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {

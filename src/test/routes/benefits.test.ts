@@ -1,6 +1,5 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -20,9 +19,34 @@ describe(`GET ${PageUrls.BENEFITS}`, () => {
 });
 
 describe(`on POST ${PageUrls.BENEFITS}`, () => {
-  test('should navigate to the new job page when save and continue button is clicked', async () => {
-    await request(app)
+  test('should navigate to the home page when either working or notice and save and continue button is clicked', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE,
+        },
+      })
+    )
       .post(PageUrls.BENEFITS)
+      .send({})
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.HOME);
+      });
+  });
+});
+
+describe(`on POST ${PageUrls.BENEFITS}`, () => {
+  test('should navigate to the new job page when no longer working and save and continue button is clicked', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    )
+      .post(PageUrls.BENEFITS)
+      .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NEW_JOB);
