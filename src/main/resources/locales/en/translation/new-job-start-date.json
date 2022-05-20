@@ -1,4 +1,6 @@
 {
   "title": "New job start date",
-  "h1": "New job start date (to do)"
+  "h1": "What's the start date for your new job? (to do)",
+  "p1": "Tell us about your new job. If you do not know the exact date then enter your best estimate.",
+  "hint": "DD MM YYYY"
 }
