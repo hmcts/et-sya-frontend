@@ -14,6 +14,7 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 const start_date: DateFormFields = {
   ...DefaultDateFormFields,
   id: 'start-date',
+  hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
 };
 
@@ -49,11 +50,9 @@ export default class StartDateController {
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.startDateContent, [TranslationKeys.COMMON, TranslationKeys.START_DATE]);
-    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.START_DATE, {
       ...content,
-      employmentStatus,
     });
   };
 }

@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
-import { WeeksOrMonths, YesOrNo } from '../../main/definitions/case';
+import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 
 describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
@@ -13,19 +13,19 @@ describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
-  test('should go to next page the Yes radio button is selected', async () => {
+  test('should return the notice type page when the Yes radio button is selected', async () => {
     await request(app)
       .post(`${PageUrls.NOTICE_PERIOD}`)
-      .send({ noticePeriod: YesOrNo.YES, noticePeriodLength: '2', noticePeriodUnit: WeeksOrMonths.WEEKS })
+      .send({ noticePeriod: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
+        expect(res.header['location']).toEqual(PageUrls.NOTICE_TYPE);
       });
   });
 });
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with No`, () => {
-  test('should go to next page when the No radio button is selected', async () => {
+  test('should return the Average Weekly Hours page when the No radio button is selected', async () => {
     await request(app)
       .post(`${PageUrls.NOTICE_PERIOD}`)
       .send({ noticePeriod: YesOrNo.NO })

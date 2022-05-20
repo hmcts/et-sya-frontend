@@ -1,0 +1,8 @@
+{
+  "h1": {
+    "noticeWeeks": "How many weeks in your notice period? (to do)",
+    "noticeMonths": "How many months in your notice period? (to do)"
+  },
+  "noticeLengthHint": "For example, 4",
+  "noticeWeeks": "Weeks"
+}

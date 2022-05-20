@@ -1,9 +1,8 @@
-// import { CcdDataModel } from '../../../main/definitions/constants';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseDataCacheKey, CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
-import { fromApiFormat, toApiFormat, toApiFormatPreLogin } from '../../../main/helper/ApiFormatter';
+import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 describe('Should return data in api format', () => {
@@ -21,13 +20,14 @@ describe('Should return data in api format', () => {
       email: 'bobby@gmail.com',
       accessToken: 'xxxx',
     };
-    const apiData = toApiFormatPreLogin(userDataMap, mockUserDetails);
+    const apiData = toApiFormatCreate(userDataMap, mockUserDetails);
     expect(apiData).toEqual(mockEt1DataModel);
   });
 
   it('should transform case date to api format', () => {
     const caseItem: CaseWithId = {
       id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
       caseType: CaseType.SINGLE,
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -49,6 +49,7 @@ describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
     const mockedApiData: CaseApiDataResponse = {
       id: '1234',
+      case_type_id: CaseTypeId.ENGLAND_WALES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       case_data: {
         caseType: CaseType.SINGLE,
@@ -76,6 +77,7 @@ describe('Format Case Data to Frontend Model', () => {
       lastName: 'Doe',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: 'Single',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: 'Yes',
     });
   });
@@ -93,6 +95,7 @@ describe('Format Case Data to Frontend Model', () => {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
+      caseTypeId: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
       dobDate: undefined,
       email: undefined,

@@ -1,11 +1,11 @@
 {
   "h1": "Are you still working for the organisation or person you're making your claim against?",
   "optionText1": "I'm still working for the respondent",
-  "optionText2": "I'm working my notice period for the respondent",
+  "optionText2": "I'm working a notice period for the respondent",
   "optionText3": "I'm no longer working for the respondent",
   "errors": {
     "isStillWorking": {
-      "required": "Select an option"
+      "required": "Tell us if you are still working for the organisation or person"
     }
   }
 }

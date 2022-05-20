@@ -47,6 +47,10 @@ export default function (app: Application): void {
   app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
   app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
+  app.get(PageUrls.NOTICE_TYPE, app.locals.container.cradle.noticeTypeController.get);
+  app.get(PageUrls.NOTICE_LENGTH, app.locals.container.cradle.noticeLengthController.get);
+  app.post(PageUrls.NOTICE_LENGTH, app.locals.container.cradle.noticeLengthController.post);
+  app.post(PageUrls.NOTICE_TYPE, app.locals.container.cradle.noticeTypeController.post);
   app.get(PageUrls.PENSION, app.locals.container.cradle.pensionController.get);
   app.post(PageUrls.PENSION, app.locals.container.cradle.pensionController.post);
   app.get(PageUrls.START_DATE, app.locals.container.cradle.startDateController.get);
@@ -57,10 +61,8 @@ export default function (app: Application): void {
   app.post(PageUrls.NOTICE_PAY, app.locals.container.cradle.noticePayController.post);
   app.get(PageUrls.AVERAGE_WEEKLY_HOURS, app.locals.container.cradle.averageWeeklyHoursController.get);
   app.post(PageUrls.AVERAGE_WEEKLY_HOURS, app.locals.container.cradle.averageWeeklyHoursController.post);
-  app.get(PageUrls.PAY_BEFORE_TAX, app.locals.container.cradle.payBeforeTaxController.get);
-  app.post(PageUrls.PAY_BEFORE_TAX, app.locals.container.cradle.payBeforeTaxController.post);
-  app.get(PageUrls.PAY_AFTER_TAX, app.locals.container.cradle.payAfterTaxController.get);
-  app.post(PageUrls.PAY_AFTER_TAX, app.locals.container.cradle.payAfterTaxController.post);
+  app.get(PageUrls.PAY, app.locals.container.cradle.payController.get);
+  app.post(PageUrls.PAY, app.locals.container.cradle.payController.post);
   app.get(PageUrls.BENEFITS, app.locals.container.cradle.benefitsController.get);
   app.post(PageUrls.BENEFITS, app.locals.container.cradle.benefitsController.post);
   app.get(PageUrls.REASONABLE_ADJUSTMENTS, app.locals.container.cradle.reasonableAdjustmentsController.get);

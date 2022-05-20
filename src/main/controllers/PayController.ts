@@ -9,9 +9,9 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class PayBeforeTaxController {
+export default class PayController {
   private readonly form: Form;
-  private readonly payBeforeTaxContent: FormContent = {
+  private readonly payContent: FormContent = {
     fields: {
       payBeforeTax: {
         id: 'pay-before-tax',
@@ -22,11 +22,20 @@ export default class PayBeforeTaxController {
         hint: (l: AnyRecord): string => l.hint,
         attributes: { maxLength: 12 },
       },
-      payBeforeTaxInterval: {
-        id: 'pay-before-tax-interval',
+      payAfterTax: {
+        id: 'pay-after-tax',
+        name: 'pay-after-tax',
+        type: 'currency',
+        classes: 'govuk-input--width-5',
+        label: (l: AnyRecord): string => l.payAfterTax,
+        hint: (l: AnyRecord): string => l.hint,
+        attributes: { maxLength: 12 },
+      },
+      payInterval: {
+        id: 'pay-interval',
         type: 'radios',
         classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
         values: PayIntervalRadioValues,
       },
     },
@@ -35,23 +44,18 @@ export default class PayBeforeTaxController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.payBeforeTaxContent.fields);
+    this.form = new Form(<FormFields>this.payContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY_AFTER_TAX);
+    handleSessionErrors(req, res, this.form, PageUrls.PENSION);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.payBeforeTaxContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.PAY_BEFORE_TAX,
-    ]);
-    const employmentStatus = req.session.userCase.isStillWorking;
+    const content = getPageContent(req, this.payContent, [TranslationKeys.COMMON, TranslationKeys.PAY]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.PAY_BEFORE_TAX, {
+    res.render(TranslationKeys.PAY, {
       ...content,
-      employmentStatus,
     });
   };
 }
