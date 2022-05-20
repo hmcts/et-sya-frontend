@@ -11,7 +11,33 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class NewJobStartDateController {
   private readonly form: Form;
   private readonly newJobStartDateContent: FormContent = {
-    fields: {},
+    fields: {
+      newJobStartDate: {
+        id: 'new-job-start-date',
+        type: 'date',
+        classes: 'govuk-date-input',
+        label: (l: AnyRecord): string => l.label,
+        hint: (l: AnyRecord): string => l.hint,
+        labelHidden: true,
+        values: [
+          {
+            label: (l: AnyRecord): string => l.dateFormat.day,
+            name: 'day',
+            classes: 'govuk-input--width-2',
+          },
+          {
+            label: (l: AnyRecord): string => l.dateFormat.month,
+            name: 'month',
+            classes: 'govuk-input--width-2',
+          },
+          {
+            label: (l: AnyRecord): string => l.dateFormat.year,
+            name: 'year',
+            classes: 'govuk-input--width-4',
+          },
+        ],
+      },
+    },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -37,7 +63,7 @@ export default class NewJobStartDateController {
       TranslationKeys.NEW_JOB_START_DATE,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.NEW_JOB, {
+    res.render(TranslationKeys.NEW_JOB_START_DATE, {
       ...content,
     });
   };

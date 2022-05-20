@@ -17,6 +17,7 @@ export default class EndDateController {
         type: 'date',
         classes: 'govuk-date-input',
         label: (l: AnyRecord): string => l.label,
+        hint: (l: AnyRecord): string => l.hint,
         labelHidden: true,
         values: [
           {

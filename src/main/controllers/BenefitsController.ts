@@ -55,14 +55,16 @@ export default class BenefitsController {
   }
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.HOME);
+    handleSessionErrors(req, res, this.form, PageUrls.NEW_JOB);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.BENEFITS, {
       ...content,
+      employmentStatus,
     });
   };
 }
