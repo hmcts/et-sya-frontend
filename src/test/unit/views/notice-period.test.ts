@@ -16,7 +16,7 @@ const noticePeriodJson = JSON.parse(noticePeriodJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticePeriodJson.h1;
 const radios = 'govuk-radios';
-const input = 'govuk-input--width-2';
+const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
 describe('Have you got a notice period?', () => {
@@ -35,11 +35,16 @@ describe('Have you got a notice period?', () => {
 
   it('should display correct radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radios);
-    expect(radioButtons.length).equal(2, `only ${radioButtons.length} found`);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
-  it('should display correct input field', () => {
-    const inputField = htmlRes.getElementsByClassName(input);
-    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+  it('should display save and continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+  });
+
+  it('should display Save as draft button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });

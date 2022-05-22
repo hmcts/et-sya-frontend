@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -14,17 +14,31 @@ export default class PensionController {
   private readonly pensionContent: FormContent = {
     fields: {
       pension: {
-        type: 'radios',
-        classes: 'govuk-radios--inline',
         id: 'pension',
+        type: 'radios',
+        classes: 'govuk-radios',
         values: [
           {
-            label: l => l.yes,
-            value: YesOrNo.YES,
+            label: (l: AnyRecord): string => l.yes,
+            value: YesOrNoOrNotSure.YES,
+            subFields: {
+              pensionContributions: {
+                id: 'pension-contributions',
+                name: 'pension-contributions',
+                type: 'currency',
+                classes: 'govuk-input--width-5',
+                hint: (l: AnyRecord): string => l.pensionContributions,
+                attributes: { maxLength: 12 },
+              },
+            },
           },
           {
-            label: l => l.no,
-            value: YesOrNo.NO,
+            label: (l: AnyRecord): string => l.no,
+            value: YesOrNoOrNotSure.NO,
+          },
+          {
+            label: (l: AnyRecord): string => l.notSure,
+            value: YesOrNoOrNotSure.NOT_SURE,
           },
         ],
       },
