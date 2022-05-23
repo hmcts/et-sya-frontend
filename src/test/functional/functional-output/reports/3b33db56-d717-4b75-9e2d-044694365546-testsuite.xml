@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653302162129' stop='1653302162129'>
+    <name>ET Claim while working for organisation:</name>
+    <title>ET Claim while working for organisation:</title>
+    <test-cases>
+        <test-case start='1653302162129' status='pending' stop='1653302162129'>
+            <name>Save as Draft: Still working for organisation @RET-1521</name>
+            <title>Save as Draft: Still working for organisation @RET-1521</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+            <failure>
+                <message>Skipped due to failure in 'before' hook</message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

@@ -1,0 +1,102 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653302196220' stop='1653302220164'>
+    <name>ET multiple claims for my self:</name>
+    <title>ET multiple claims for my self:</title>
+    <test-cases>
+        <test-case start='1653302196220' status='passed' stop='1653302220154'>
+            <name>Verify ET multiple claim for myself @ @RET-BAT</name>
+            <title>Verify ET multiple claim for myself @ @RET-BAT</title>
+            <labels>
+                <label name='tag' value='@ @RET-BAT'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1653302198568' status='passed' stop='1653302205946'>
+                    <name>I am on page "/"</name>
+                    <title>I am on page "/"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302205946' status='passed' stop='1653302205950'>
+                    <name>I see "Make a claim to an employment tribunal"</name>
+                    <title>I see "Make a claim to an employment tribunal"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302205950' status='passed' stop='1653302207995'>
+                    <name>I click "Start now"</name>
+                    <title>I click "Start now"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302207995' status='passed' stop='1653302207998'>
+                    <name>I see "Before you continue"</name>
+                    <title>I see "Before you continue"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302207998' status='passed' stop='1653302210022'>
+                    <name>I click "Continue"</name>
+                    <title>I click "Continue"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302210022' status='passed' stop='1653302210026'>
+                    <name>I wait for text "I’m representing myself and making my own claim", 2</name>
+                    <title>I wait for text "I’m representing myself and making my own claim", 2</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302210026' status='passed' stop='1653302212052'>
+                    <name>I click "Who can act as a representative?", "span[class=govuk-details__summary-text]"</name>
+                    <title>I click "Who can act as a representative?", "span[class=govuk-details__summary-text]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302212053' status='passed' stop='1653302212056'>
+                    <name>I see "employment advisors – including those from Citizens Advice"</name>
+                    <title>I see "employment advisors – including those from Citizens Advice"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302212056' status='passed' stop='1653302214091'>
+                    <name>I check option "input[id=lip-or-representative]"</name>
+                    <title>I check option "input[id=lip-or-representative]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302214091' status='passed' stop='1653302216102'>
+                    <name>I click "Continue"</name>
+                    <title>I click "Continue"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302216103' status='passed' stop='1653302216107'>
+                    <name>I see element "#single-or-multiple-claim-2"</name>
+                    <title>I see element "#single-or-multiple-claim-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302216107' status='passed' stop='1653302216109'>
+                    <name>I see "Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?"</name>
+                    <title>I see "Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302216109' status='passed' stop='1653302218137'>
+                    <name>I check option "input[id=single-or-multiple-claim-2]"</name>
+                    <title>I check option "input[id=single-or-multiple-claim-2]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302218137' status='passed' stop='1653302220154'>
+                    <name>I click "Continue"</name>
+                    <title>I click "Continue"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

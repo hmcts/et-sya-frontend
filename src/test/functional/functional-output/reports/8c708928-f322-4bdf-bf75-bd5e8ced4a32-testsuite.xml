@@ -1,0 +1,91 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653302171779' stop='1653302196217'>
+    <name>ET pages while employee not working for organisation:</name>
+    <title>ET pages while employee not working for organisation:</title>
+    <test-cases>
+        <test-case start='1653302171779' status='passed' stop='1653302196204'>
+            <name>Pages while not working for the organisation @RET-1131 @ @RET-BAT</name>
+            <title>Pages while not working for the organisation @RET-1131 @ @RET-BAT</title>
+            <labels>
+                <label name='tag' value='@RET-1131'/>
+                <label name='tag' value='@ @RET-BAT'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1653302174128' status='passed' stop='1653302179833'>
+                    <name>I am on page "/are-you-still-working"</name>
+                    <title>I am on page "/are-you-still-working"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302179834' status='passed' stop='1653302179838'>
+                    <name>I see element "#still-working-2"</name>
+                    <title>I see element "#still-working-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302179838' status='passed' stop='1653302181866'>
+                    <name>I check option "input[id=still-working-2]"</name>
+                    <title>I check option "input[id=still-working-2]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302181866' status='passed' stop='1653302183888'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302183888' status='passed' stop='1653302183891'>
+                    <name>I see element "#job-title"</name>
+                    <title>I see element "#job-title"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302183891' status='passed' stop='1653302185980'>
+                    <name>I fill field "#job-title", "Tester"</name>
+                    <title>I fill field "#job-title", "Tester"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302185980' status='passed' stop='1653302188022'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302188022' status='passed' stop='1653302188025'>
+                    <name>I see "Employment start date"</name>
+                    <title>I see "Employment start date"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302188025' status='passed' stop='1653302190060'>
+                    <name>I fill field "#start-date-day", "20"</name>
+                    <title>I fill field "#start-date-day", "20"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302190060' status='passed' stop='1653302192098'>
+                    <name>I fill field "#start-date-month", "04"</name>
+                    <title>I fill field "#start-date-month", "04"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302192098' status='passed' stop='1653302194163'>
+                    <name>I fill field "#start-date-year", "2014"</name>
+                    <title>I fill field "#start-date-year", "2014"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653302194163' status='passed' stop='1653302196204'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

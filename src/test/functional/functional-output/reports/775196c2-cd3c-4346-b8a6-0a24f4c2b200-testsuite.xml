@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653301967422' stop='1653301967423'>
+    <name>Check Your Answers Skeletal Pages:</name>
+    <title>Check Your Answers Skeletal Pages:</title>
+    <test-cases>
+        <test-case start='1653301967423' status='pending' stop='1653301967423'>
+            <name>ET Check your answer: Save as draft @RET-1178</name>
+            <title>ET Check your answer: Save as draft @RET-1178</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+            <failure>
+                <message>Skipped due to failure in 'before' hook</message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>
