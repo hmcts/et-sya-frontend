@@ -1,8 +1,11 @@
 {
   "h1": {
-    "noticeWeeks": "How many weeks in your notice period? (to do)",
-    "noticeMonths": "How many months in your notice period? (to do)"
+    "nonNoticeWeeks": "How many weeks in your notice period? (to do)",
+    "nonNoticeMonths": "How many months in your notice period? (to do)",
+    "noticeWeeks": "How many weeks of your notice period are you being paid for? (optional) (to do)",
+    "noticeMonths": "How many months of your notice period are you being paid for? (optional) (to do)"
   },
   "noticeLengthHint": "For example, 4",
+  "onNotice": "NOTICE",
   "noticeWeeks": "Weeks"
 }

@@ -1,6 +1,6 @@
 {
   "h1": "When does your notice period end?",
-  "p1": "Tell us when you’ll finish with them.",
+  "p1": "Tell us when you'll finish with the respondent.",
   "p2": "For example, 22 04 2014.",
   "errors": {
     "noticeEnds": {
