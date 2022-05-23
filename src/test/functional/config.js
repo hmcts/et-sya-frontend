@@ -1,10 +1,10 @@
 const testHeadlessBrowser = true;
-const testUrl = 'https://et-sya-pr-233.service.core-compute-preview.internal';
+const testUrl = process.env.TEST_URL || 'http://localhost:3001';
 module.exports = {
   testUrl,
   name: 'et-ui-functional',
   testHeadlessBrowser: true,
-  tests: './features/**/employeeGotNewJob.js',
+  tests: './features/**/*js',
   reportFolder: './functional-output/reports',
   helpers: {
     Puppeteer: {
