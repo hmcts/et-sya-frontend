@@ -19,7 +19,7 @@ withNightlyPipeline(type, product, component) {
 
     enableFullFunctionalTest()
     enableCrossBrowserTest()
-    enableFortifyScan()
+    enableFortifyScan('et-aat')
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
