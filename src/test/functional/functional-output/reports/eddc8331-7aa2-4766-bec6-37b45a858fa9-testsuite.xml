@@ -1,0 +1,246 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653303254747' stop='1653303317240'>
+    <name>ET Claim while serving notice period for organisation:</name>
+    <title>ET Claim while serving notice period for organisation:</title>
+    <test-cases>
+        <test-case start='1653303254749' status='passed' stop='1653303317220'>
+            <name>Claim while on notice for organisation @RET-1131 @RET-1023 @ @RET-BAT</name>
+            <title>Claim while on notice for organisation @RET-1131 @RET-1023 @ @RET-BAT</title>
+            <labels>
+                <label name='tag' value='@RET-1131'/>
+                <label name='tag' value='@RET-1023'/>
+                <label name='tag' value='@ @RET-BAT'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1653303257135' status='passed' stop='1653303263269'>
+                    <name>I am on page "/are-you-still-working"</name>
+                    <title>I am on page "/are-you-still-working"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303263270' status='passed' stop='1653303263272'>
+                    <name>I execute script function () {
+                        sessionStorage.clear();
+                      }</name>
+                    <title>I execute script function () {
+                        sessionStorage.clear();
+                      }</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303263272' status='passed' stop='1653303263278'>
+                    <name>I see element "#still-working-2"</name>
+                    <title>I see element "#still-working-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303263278' status='passed' stop='1653303265331'>
+                    <name>I check option "#still-working-2"</name>
+                    <title>I check option "#still-working-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303265331' status='passed' stop='1653303267356'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303267356' status='passed' stop='1653303267361'>
+                    <name>I see element "#job-title"</name>
+                    <title>I see element "#job-title"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303267361' status='passed' stop='1653303269458'>
+                    <name>I fill field "#job-title", "Tester"</name>
+                    <title>I fill field "#job-title", "Tester"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303269459' status='passed' stop='1653303271488'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303271489' status='passed' stop='1653303271493'>
+                    <name>I see "Employment start date"</name>
+                    <title>I see "Employment start date"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303271493' status='passed' stop='1653303273530'>
+                    <name>I fill field "#start-date-day", "20"</name>
+                    <title>I fill field "#start-date-day", "20"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303273530' status='passed' stop='1653303275568'>
+                    <name>I fill field "#start-date-month", "04"</name>
+                    <title>I fill field "#start-date-month", "04"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303275569' status='passed' stop='1653303277633'>
+                    <name>I fill field "#start-date-year", "2014"</name>
+                    <title>I fill field "#start-date-year", "2014"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303277633' status='passed' stop='1653303279670'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303279670' status='passed' stop='1653303280126'>
+                    <name>I see "When does your notice period end?"</name>
+                    <title>I see "When does your notice period end?"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303280126' status='passed' stop='1653303282163'>
+                    <name>I fill field "#notice-dates-day", "20"</name>
+                    <title>I fill field "#notice-dates-day", "20"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303282163' status='passed' stop='1653303284200'>
+                    <name>I fill field "#notice-dates-month", "06"</name>
+                    <title>I fill field "#notice-dates-month", "06"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303284201' status='passed' stop='1653303286263'>
+                    <name>I fill field "#notice-dates-year", "2014"</name>
+                    <title>I fill field "#notice-dates-year", "2014"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303286263' status='passed' stop='1653303288287'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303288287' status='passed' stop='1653303290303'>
+                    <name>I check option "#notice-type"</name>
+                    <title>I check option "#notice-type"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303290303' status='passed' stop='1653303292336'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303292337' status='passed' stop='1653303294826'>
+                    <name>I fill field "#notice-length", "20"</name>
+                    <title>I fill field "#notice-length", "20"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303294826' status='passed' stop='1653303296854'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303296854' status='passed' stop='1653303296856'>
+                    <name>I see "What are your average weekly hours?"</name>
+                    <title>I see "What are your average weekly hours?"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303296856' status='passed' stop='1653303296859'>
+                    <name>I see element "#avg-weekly-hrs"</name>
+                    <title>I see element "#avg-weekly-hrs"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303296859' status='passed' stop='1653303298892'>
+                    <name>I fill field "#avg-weekly-hrs", "20"</name>
+                    <title>I fill field "#avg-weekly-hrs", "20"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303298892' status='passed' stop='1653303300921'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303300921' status='passed' stop='1653303300926'>
+                    <name>I see element "#pay-before-tax"</name>
+                    <title>I see element "#pay-before-tax"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303300926' status='passed' stop='1653303303001'>
+                    <name>I fill field "#pay-before-tax", "40000"</name>
+                    <title>I fill field "#pay-before-tax", "40000"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303303002' status='passed' stop='1653303305078'>
+                    <name>I fill field "#pay-after-tax", "35000"</name>
+                    <title>I fill field "#pay-after-tax", "35000"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303305079' status='passed' stop='1653303307106'>
+                    <name>I check option "input[id=pay-interval]"</name>
+                    <title>I check option "input[id=pay-interval]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303307106' status='passed' stop='1653303309121'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303309121' status='passed' stop='1653303309125'>
+                    <name>I see element "#pension"</name>
+                    <title>I see element "#pension"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303309125' status='passed' stop='1653303311156'>
+                    <name>I check option "input[id=pension]"</name>
+                    <title>I check option "input[id=pension]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303311156' status='passed' stop='1653303313171'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303313171' status='passed' stop='1653303313175'>
+                    <name>I see element "#employee-benefits"</name>
+                    <title>I see element "#employee-benefits"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303313176' status='passed' stop='1653303315204'>
+                    <name>I check option "input[id=employee-benefits]"</name>
+                    <title>I check option "input[id=employee-benefits]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303315204' status='passed' stop='1653303317220'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

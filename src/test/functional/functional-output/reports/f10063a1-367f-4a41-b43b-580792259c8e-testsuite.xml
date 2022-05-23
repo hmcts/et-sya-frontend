@@ -1,0 +1,90 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1653303102457' stop='1653303125949'>
+    <name>ET Claim while serving notice period for organisation:</name>
+    <title>ET Claim while serving notice period for organisation:</title>
+    <test-cases>
+        <test-case start='1653303102458' status='failed' stop='1653303123853'>
+            <name>Claim while on notice for organisation @RET-1131 @RET-1023 @ @RET-BAT</name>
+            <title>Claim while on notice for organisation @RET-1131 @RET-1023 @ @RET-BAT</title>
+            <labels>
+                <label name='tag' value='@RET-1131'/>
+                <label name='tag' value='@RET-1023'/>
+                <label name='tag' value='@ @RET-BAT'/>
+            </labels>
+            <parameters/>
+            <steps>
+                <step start='1653303104841' status='passed' stop='1653303114182'>
+                    <name>I am on page "/are-you-still-working"</name>
+                    <title>I am on page "/are-you-still-working"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303114183' status='passed' stop='1653303114185'>
+                    <name>I execute script function () {
+                        sessionStorage.clear();
+                      }</name>
+                    <title>I execute script function () {
+                        sessionStorage.clear();
+                      }</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303114186' status='passed' stop='1653303114191'>
+                    <name>I see element "#still-working-2"</name>
+                    <title>I see element "#still-working-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303114191' status='passed' stop='1653303116238'>
+                    <name>I check option "#still-working-2"</name>
+                    <title>I check option "#still-working-2"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303116238' status='passed' stop='1653303118261'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303118261' status='passed' stop='1653303118266'>
+                    <name>I see element "#job-title"</name>
+                    <title>I see element "#job-title"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303118266' status='passed' stop='1653303120359'>
+                    <name>I fill field "#job-title", "Tester"</name>
+                    <title>I fill field "#job-title", "Tester"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303120359' status='passed' stop='1653303122392'>
+                    <name>I click "#main-form-submit"</name>
+                    <title>I click "#main-form-submit"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1653303122392' status='failed' stop='1653303123851'>
+                    <name>I see "Employment start date"</name>
+                    <title>I see "Employment start date"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='a4a0f92e-497c-418d-b6f2-6700649b3e86-attachment.png' type='image/png' size='60305'/>
+            </attachments>
+            <failure>
+                <message>Execution context was destroyed, most likely because of a navigation.</message>
+                <stack-trace>Error: Execution context was destroyed, most likely because of a navigation.
+                    at rewriteError (/Users/udayabhaskar/code/et-sya-frontend/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js:265:23)
+                    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+                    at async ExecutionContext._evaluateInternal (/Users/udayabhaskar/code/et-sya-frontend/node_modules/puppeteer/lib/cjs/puppeteer/common/ExecutionContext.js:219:60)
+                    at async ElementHandle.evaluateHandle (/Users/udayabhaskar/code/et-sya-frontend/node_modules/puppeteer/lib/cjs/puppeteer/common/JSHandle.js:125:16)
+                    at async ElementHandle.getProperty (/Users/udayabhaskar/code/et-sya-frontend/node_modules/puppeteer/lib/cjs/puppeteer/common/JSHandle.js:130:30)
+                    at async Puppeteer.proceedSee (/Users/udayabhaskar/code/et-sya-frontend/node_modules/codeceptjs/lib/helper/Puppeteer.js:2349:16)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>
