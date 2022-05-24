@@ -87,6 +87,16 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   }
 };
 
+export const isDateTenYearsInPast: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus10 = new Date();
+  dateMinus10.setFullYear(dateMinus10.getFullYear() - 10);
+
+  if (enteredDate < dateMinus10) {
+    return { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' };
+  }
+};
+
 export const isFutureDate: DateValidator = date => {
   if (!date) {
     return;

@@ -7,7 +7,7 @@
     "endDate": {
       "required": "Tell us when your Employment Date ends. For example, DD MM YYYY",
       "invalidDateInFuture": "Enter a valid end date, date must be in the past",
-      "invalidDateInPast": "Enter a valid end date, date must not be more than 10years in the past",
+      "invalidDateMoreThanTenYearsInPast": "Enter a valid end date, date must not be more than 10 years in the past",
       "dayRequired": "Enter a day for your end date. For example, 23",
       "monthRequired": "Enter a month for your end date. For example, 04",
       "yearRequired": " Enter the year for your end date. For example, 2022"

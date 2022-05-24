@@ -1,4 +1,10 @@
-import { DateValidator, areDateFieldsFilledIn, isDateInputInvalid, isFutureDate } from '../components/form/validator';
+import {
+  DateValidator,
+  areDateFieldsFilledIn,
+  isDateInputInvalid,
+  isDateTenYearsInPast,
+  isFutureDate,
+} from '../components/form/validator';
 
 import { CaseDate } from './case';
 import { InvalidField } from './form';
@@ -44,5 +50,5 @@ export const DefaultDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): string | void | InvalidField =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value) || isDateTenYearsInPast(value),
 };
