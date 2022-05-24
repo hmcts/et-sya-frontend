@@ -27,9 +27,10 @@ Scenario('Claim while on notice for organisation', () => {
   I.fillField('#notice-dates-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('Are you getting paid for working your notice period?');
-  I.checkOption('#notice-period');
+  I.checkOption('#notice-type');
+  I.click('#main-form-submit');
 
+  I.fillField('#notice-length', '20');
   I.click('#main-form-submit');
 
   I.see('What are your average weekly hours?');
