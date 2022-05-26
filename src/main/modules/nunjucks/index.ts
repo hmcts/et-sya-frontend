@@ -4,6 +4,7 @@ import config from 'config';
 import express from 'express';
 import nunjucks from 'nunjucks';
 
+import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -134,7 +135,12 @@ export class Nunjucks {
       }));
     });
 
-    app.use((req, res, next) => {
+    //  nunEnv.addGlobal('isLoggedIn', () => {
+    //   console.log('#### ###### GLOBALLY ADDING IS LOGGED IN', !!req.session.user);
+    //   return !!req.session.user;
+    // });
+    q;
+    app.use((req: AppRequest, res, next) => {
       res.locals.host = req.headers['x-forwarded-host'] || req.hostname;
       res.locals.pagePath = req.path;
       nunEnv.addGlobal('currentUrl', req.url);

@@ -7,17 +7,24 @@
   {% include "webpack/css.njk" %}
 {% endblock %}
 
+{% set lastElement = {
+              href: "/logout",
+              text: signOut,
+              active: false
+} if isLoggedIn else {
+    href: "/login",
+    text: 'please add login text here',
+    active: false
+} %}
+
 {% block header %}
   {{ govukHeader({
+    containerClasses: "govuk-width-container",
     homepageUrl: "https://www.gov.uk",
     serviceName: serviceName,
     serviceUrl: "#",
-    navigation: [
-      {
-        href: "/logout" if isLoggedIn,
-        text: signOut if isLoggedIn
-      }
-    ]
+    navigationClasses: 'govuk-header__navigation--end',
+    navigation: [lastElement]
   }) }}
 {% endblock %}
 

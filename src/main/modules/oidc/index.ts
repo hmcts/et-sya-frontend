@@ -51,6 +51,10 @@ export const idamCallbackHandler = async (
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
     req.session.save();
+    if (req.session.user) {
+      res.locals.isLoggedIn = true;
+    }
+    console.log('is logged in - ' + res.locals.isLoggedIn);
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
