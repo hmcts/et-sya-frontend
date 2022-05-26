@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const benefitsJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/benefits.json'),
@@ -21,7 +21,7 @@ const radios = 'govuk-radios';
 let htmlRes: Document;
 describe('Benefits page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.BENEFITS)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

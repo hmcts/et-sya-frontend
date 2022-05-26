@@ -4,7 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const newAccountJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/new-account-landing.json'),
@@ -23,7 +23,7 @@ const expectedP2 = newAccountJson.p2;
 let htmlRes: Document;
 describe('New Account Landing page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

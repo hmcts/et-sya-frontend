@@ -4,7 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const genderJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/gender-details.json'),
@@ -23,7 +23,7 @@ const option = 'option';
 let htmlRes: Document;
 describe('Gender details page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

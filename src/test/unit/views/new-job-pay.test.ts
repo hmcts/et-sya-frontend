@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/new-job-pay-before-tax';
 const titleClass = 'govuk-heading-xl';
@@ -11,7 +11,7 @@ const buttonClass = 'govuk-button';
 let htmlRes: Document;
 describe('New Job Pay BEFORE tax page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

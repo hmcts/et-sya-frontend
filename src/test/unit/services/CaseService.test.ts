@@ -23,6 +23,7 @@ describe('Axios post to iniate case', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'xxxx',
+      isCitizen: true,
     };
     const caseData =
       '[["claimantRepresentedQuestion","Yes"],["caseType","Single"], ["typesOfClaim", "[\\"discrimination\\"]"]]';
