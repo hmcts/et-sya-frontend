@@ -1,6 +1,5 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { StillWorking, YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -21,7 +20,7 @@ describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
   test('should return the notice type page when the Yes radio button is selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(`${PageUrls.NOTICE_PERIOD}`)
       .send({ noticePeriod: YesOrNo.YES })
       .expect(res => {
@@ -33,7 +32,7 @@ describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with No`, () => {
   test('should return the Average Weekly Hours page when the No radio button is selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(`${PageUrls.NOTICE_PERIOD}`)
       .send({ noticePeriod: YesOrNo.NO })
       .expect(res => {

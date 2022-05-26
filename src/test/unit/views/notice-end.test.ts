@@ -40,7 +40,6 @@ describe('Notice end page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementById(buttonId);
-    console.log(`Button name is ${button.innerHTML}`);
     expect(button.innerHTML).contains('Save and continue', 'Save and continue');
   });
 });

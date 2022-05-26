@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const newJobPayJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/new-job-pay.json'),
@@ -22,7 +22,7 @@ const inputs = 'govuk-input--width-5';
 let htmlRes: Document;
 describe('New Job Pay page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.NEW_JOB_PAY)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
