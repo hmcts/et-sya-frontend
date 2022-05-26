@@ -59,6 +59,7 @@ export interface Case {
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
+  ClaimantPcqId?: string;
 }
 
 export const enum StillWorking {

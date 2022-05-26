@@ -12,13 +12,14 @@ const self = "'self'";
  * Module that enables helmet in the application
  */
 export class Helmet {
-  constructor(public config: HelmetConfig, public idamAuthUrl: string) {}
+  constructor(public config: HelmetConfig, public idamAuthUrl: string, public pcqurl: string) {}
 
   public enableFor(app: express.Express): void {
     // include default helmet functions
     app.use(helmet());
 
     this.setContentSecurityPolicy(app, this.idamAuthUrl);
+    this.setContentSecurityPolicy(app, this.pcqurl);
     this.setReferrerPolicy(app, this.config.referrerPolicy);
   }
 

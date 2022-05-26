@@ -12,6 +12,11 @@ nodejs:
         - idam-secret
         - redis-access-key
         - os-places-token
+    pcq:
+      resourceGroup: pcq
+      secrets:
+        - et-token-key
+
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'

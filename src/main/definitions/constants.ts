@@ -104,6 +104,7 @@ export const PageUrls = {
   COMPENSATION_OUTCOME: '/what-compensation-are-you-seeking',
   TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
+  PCQ: '/pcq',
 } as const;
 
 export const AuthUrls = {
