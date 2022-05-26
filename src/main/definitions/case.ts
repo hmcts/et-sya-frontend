@@ -26,6 +26,7 @@ export interface Case {
   updatePreference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
+  caseTypeId?: CaseTypeId;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;
@@ -59,6 +60,7 @@ export interface Case {
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
+  newJob?: YesOrNo;
   ClaimantPcqId?: string;
 }
 
@@ -78,9 +80,20 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
+export const enum YesOrNoOrNotSure {
+  YES = 'Yes',
+  NO = 'No',
+  NOT_SURE = 'Not sure',
+}
+
 export const enum CaseType {
   SINGLE = 'Single',
   MULTIPLE = 'Multiple',
+}
+
+export const enum CaseTypeId {
+  ENGLAND_WALES = 'ET_EnglandWales',
+  SCOTLAND = 'ET_Scotland',
 }
 
 export const enum WeeksOrMonths {

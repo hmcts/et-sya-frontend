@@ -16,8 +16,8 @@ const pensionJson = JSON.parse(pensionJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = pensionJson.h1;
 const buttonClass = 'govuk-button';
-const inputs = 'govuk-radios--inline';
-const expectedInputLabel = 'label';
+const inputs = 'govuk-input--width-5';
+const radios = 'govuk-radios';
 
 let htmlRes: Document;
 describe('Pension page', () => {
@@ -34,21 +34,23 @@ describe('Pension page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display continue button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
-  });
-
   it('should display radio buttons', () => {
-    const radioButtons = htmlRes.getElementsByClassName(inputs);
+    const radioButtons = htmlRes.getElementsByClassName(radios);
     expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 
-  it('should display inputs with valid labels', () => {
-    const radioButtons = htmlRes.getElementsByClassName(inputs);
-    expect(radioButtons[0].innerHTML).contains(
-      expectedInputLabel,
-      'Could not find the radio button with label ' + expectedInputLabel
-    );
+  it('should have 1 input field', () => {
+    const inputFields = htmlRes.getElementsByClassName(inputs);
+    expect(inputFields.length).equal(1, `only ${inputFields.length} found`);
+  });
+
+  it('should display save and continue button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+  });
+
+  it('should display Save as draft button', () => {
+    const button = htmlRes.getElementsByClassName(buttonClass);
+    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });

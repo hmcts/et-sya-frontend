@@ -28,11 +28,12 @@ export const TranslationKeys = {
   START_DATE: 'start-date',
   NOTICE_END: 'notice-end',
   NOTICE_PAY: 'notice-pay',
+  NOTICE_LENGTH: 'notice-length',
+  NOTICE_TYPE: 'notice-type',
+  PAY: 'pay',
   AVERAGE_WEEKLY_HOURS: 'average-weekly-hours',
   BENEFITS: 'benefits',
   NOTICE_PERIOD: 'notice-period',
-  PAY_BEFORE_TAX: 'pay-before-tax',
-  PAY_AFTER_TAX: 'pay-after-tax',
   STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
@@ -43,7 +44,7 @@ export const TranslationKeys = {
   TRAVEL: 'travel',
   NEW_JOB: 'new-job',
   NEW_JOB_START_DATE: 'new-job-start-date',
-  NEW_JOB_PAY: 'new-job-pay-before-tax',
+  NEW_JOB_PAY: 'new-job-pay',
   CLAIM_SUBMITTED: 'claim-submitted',
   CHECK_ANSWERS: 'check-your-answers',
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
@@ -52,6 +53,7 @@ export const TranslationKeys = {
   TRIBUNAL_RECOMMENDATION_OUTCOME: 'tribunal-recommendation-outcome',
   END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
+  FORM: 'form',
 } as const;
 
 export const PageUrls = {
@@ -82,9 +84,10 @@ export const PageUrls = {
   START_DATE: '/start-date',
   NOTICE_END: '/notice-end',
   NOTICE_PAY: '/notice-pay',
+  NOTICE_LENGTH: '/notice-length',
+  NOTICE_TYPE: '/notice-type',
+  PAY: '/pay',
   AVERAGE_WEEKLY_HOURS: '/average-weekly-hours',
-  PAY_BEFORE_TAX: '/pay-before-tax',
-  PAY_AFTER_TAX: '/pay-after-tax',
   BENEFITS: '/benefits',
   NOTICE_PERIOD: '/got-a-notice-period',
   CHECK_ANSWERS: '/check-your-answers',
@@ -98,7 +101,7 @@ export const PageUrls = {
   TRAVEL: '/travel',
   NEW_JOB: '/new-job',
   NEW_JOB_START_DATE: '/new-job-start-date',
-  NEW_JOB_PAY: '/new-job-pay-before-tax',
+  NEW_JOB_PAY: '/new-job-pay',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
   COMPENSATION_OUTCOME: '/what-compensation-are-you-seeking',
@@ -114,9 +117,10 @@ export const AuthUrls = {
 } as const;
 
 export const JavaApiUrls = {
-  GET_CASES: '/caseTypes/ET_EnglandWales/cases',
-  INITIATE_CASE_DRAFT: '/case-type/ET_EnglandWales/event-type/INITIATE_CASE_DRAFT/case',
-  UPDATE_CASE_DRAFT: '/case-type/ET_EnglandWales/event-type/UPDATE_CASE_DRAFT',
+  GET_CASES: 'cases/user-cases',
+  INITIATE_CASE_DRAFT: 'cases/initiate-case',
+  UPDATE_CASE_DRAFT: 'cases/update-case',
+  SUBMIT_CASE: 'cases/submit-case',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';

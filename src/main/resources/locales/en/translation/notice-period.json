@@ -1,17 +1,8 @@
 {
   "title": "Have you got a notice period",
-  "h1": "Have you got a notice period?",
-  "weeks": "Weeks",
-  "months": "Months",
-  "lengthLabel": "How many weeks or months is your notice period?",
-  "unitLabel": "Is your notice period in weeks or months?",
-  "insetText": "<div class=\"govuk-inset-text\">If you're not sure, check the terms and conditions of your employment contract.</div>",
-  "errors": {
-    "noticePeriodLength": {
-      "invalid": "Enter a number"
-    },
-    "noticePeriodUnit": {
-      "required": "Select an option"
-    }
-  }
+  "h1": {
+    "workingOrNotice": "Have you got a notice period?",
+    "noLongerWorking": "Did you have or work a notice period?"
+  },
+  "noLongerWorking": "NO LONGER WORKING"
 }

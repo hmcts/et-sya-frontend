@@ -17,7 +17,7 @@ const expectedSubmitYourClaim = 'Submit your claim';
 const submitYourClaimBodyClass = 'govuk-body';
 const expectedSubmitYourClaimText1 = 'Check all the answers you’ve provided and details you have entered are correct.';
 const expectedSubmitYourClaimText2 =
-  'Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save for later’ at the bottom of this page.';
+  'Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save as draft’ at the bottom of this page.';
 const expectedSubmitYourClaimText3 = 'We’ll send you an email confirmation once you’ve submitted your claim.';
 const warningClass = 'govuk-warning-text';
 const expectedWarningText = 'This is your last opportunity to change any details before you submit your claim.';
@@ -42,9 +42,9 @@ describe('Check your answers confirmation page', () => {
     expect(button[0].innerHTML).contains('Submit claim', 'Could not find the submit claim button');
   });
 
-  it('should display save for later button', () => {
+  it('should display Save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save for later', 'Could not find the button');
+    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 
   it('should display 8 summery lists', () => {
@@ -161,8 +161,8 @@ describe('Check your answers confirmation page', () => {
     expect(startDateLink).equals(PageUrls.START_DATE, 'Incorrect href found');
     expect(noticePeriodLink).equals(PageUrls.NOTICE_END, 'Incorrect href found');
     expect(weeklyHoursLink).equals(PageUrls.AVERAGE_WEEKLY_HOURS, 'Incorrect href found');
-    expect(payBeforeTaxLink).equals(PageUrls.PAY_BEFORE_TAX, 'Incorrect href found');
-    expect(payAfterTaxLink).equals(PageUrls.PAY_AFTER_TAX, 'Incorrect href found');
+    expect(payBeforeTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
+    expect(payAfterTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
     expect(pensionSchemeLink).equals(PageUrls.PENSION, 'Incorrect href found');
     expect(benefitsLink).equals(PageUrls.BENEFITS, 'Incorrect href found');
 
