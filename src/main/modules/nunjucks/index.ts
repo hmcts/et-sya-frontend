@@ -139,7 +139,6 @@ export class Nunjucks {
     //   console.log('#### ###### GLOBALLY ADDING IS LOGGED IN', !!req.session.user);
     //   return !!req.session.user;
     // });
-    q;
     app.use((req: AppRequest, res, next) => {
       res.locals.host = req.headers['x-forwarded-host'] || req.hostname;
       res.locals.pagePath = req.path;
