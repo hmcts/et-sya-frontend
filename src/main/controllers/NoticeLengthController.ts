@@ -44,10 +44,12 @@ export default class NoticeLengthController {
       TranslationKeys.COMMON,
       TranslationKeys.NOTICE_LENGTH,
     ]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     const noticeType = req.session.userCase.noticePeriodUnit;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_LENGTH, {
       ...content,
+      employmentStatus,
       noticeType,
     });
   };

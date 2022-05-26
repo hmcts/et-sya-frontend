@@ -16,8 +16,6 @@ const noticeEndJson = JSON.parse(noticeEndJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticeEndJson.h1;
 const buttonId = 'main-form-submit';
-const hintClass = 'govuk-body';
-const hintValue = noticeEndJson.p2;
 const dateFieldClass = 'govuk-date-input__item';
 
 let htmlRes: Document;
@@ -33,11 +31,6 @@ describe('Notice end page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'When does your notice period end?');
-  });
-
-  it('should display hint', () => {
-    const hint = htmlRes.getElementsByClassName(hintClass);
-    expect(hint[1].innerHTML).contains(hintValue, 'For example, 22 04 2014.');
   });
 
   it('should display date input fields', () => {

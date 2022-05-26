@@ -3,7 +3,9 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DateValues } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -11,15 +13,19 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class NewJobStartDateController {
   private readonly form: Form;
   private readonly newJobStartDateContent: FormContent = {
-    fields: {},
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
+    fields: {
+      newJobStartDate: {
+        id: 'new-job-start-date',
+        type: 'date',
+        classes: 'govuk-date-input',
+        label: (l: AnyRecord): string => l.label,
+        hint: (l: AnyRecord): string => l.hint,
+        labelHidden: true,
+        values: DateValues,
+      },
     },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -37,7 +43,7 @@ export default class NewJobStartDateController {
       TranslationKeys.NEW_JOB_START_DATE,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.NEW_JOB, {
+    res.render(TranslationKeys.NEW_JOB_START_DATE, {
       ...content,
     });
   };
