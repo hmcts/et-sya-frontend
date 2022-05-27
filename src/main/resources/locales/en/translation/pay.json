@@ -9,6 +9,12 @@
   "errors": {
     "payBeforeTax": {
       "required": "Tell us your pay before or after tax"
+    },
+    "payAfterTax": {
+      "required": "Tell us your pay before or after tax"
+    },
+    "payInterval": {
+      "required": "Tell us your pay frequency"
     }
   }
 }

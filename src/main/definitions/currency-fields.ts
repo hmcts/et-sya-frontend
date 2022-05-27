@@ -4,15 +4,6 @@ import { AnyRecord } from './util-types';
 
 export const CurrencyValues = [
   {
-    label: (l: AnyRecord): string => l.payBeforeTax,
-    attributes: { maxLength: 12 },
-  },
-  {
-    label: (l: AnyRecord): string => l.payAfterTax,
-    attributes: { maxLength: 12 },
-  },
-  {
-    label: (l: AnyRecord): string => l.payIntervalRadios,
     attributes: { maxLength: 12 },
   },
 ];

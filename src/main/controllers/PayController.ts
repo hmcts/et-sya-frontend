@@ -5,7 +5,12 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { FormContent, FormFields } from '../definitions/form';
-import { PayIntervalRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
+import {
+  DefaultPayIntervalRadioFormFields,
+  PayIntervalRadioFormFields,
+  saveForLaterButton,
+  submitButton,
+} from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -13,6 +18,19 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'pay-before-tax',
+  label: (l: AnyRecord): string => l.payBeforeTax,
+};
+
+const pay_after_tax: CurrencyFormFields = {
+  ...DefaultCurrencyFormFields,
+  id: 'pay-after-tax',
+  label: (l: AnyRecord): string => l.payAfterTax,
+};
+
+const pay_interval: PayIntervalRadioFormFields = {
+  ...DefaultPayIntervalRadioFormFields,
+  id: 'pay-interval',
+  label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
 };
 
 export default class PayController {
@@ -20,22 +38,8 @@ export default class PayController {
   private readonly payContent: FormContent = {
     fields: {
       payBeforeTax: pay_before_tax,
-      payAfterTax: {
-        id: 'pay-after-tax',
-        name: 'pay-after-tax',
-        type: 'currency',
-        classes: 'govuk-input--width-5',
-        label: (l: AnyRecord): string => l.payAfterTax,
-        hint: (l: AnyRecord): string => l.hint,
-        attributes: { maxLength: 12 },
-      },
-      payInterval: {
-        id: 'pay-interval',
-        type: 'radios',
-        classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
-        values: PayIntervalRadioValues,
-      },
+      payAfterTax: pay_after_tax,
+      payInterval: pay_interval,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,
