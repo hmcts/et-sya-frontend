@@ -5,5 +5,10 @@
   "p2": "You can get information from payslips. Include any overtime payments, commission and bonuses.",
   "payBeforeTax": "Enter your pay BEFORE tax and National Insurance",
   "payAfterTax": "Enter your pay AFTER tax and National Insurance",
-  "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?"
+  "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?",
+  "errors": {
+    "payBeforeTax": {
+      "required": "Tell us your pay before or after tax"
+    }
+  }
 }
