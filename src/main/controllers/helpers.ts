@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
-import { isAfterDateOfBirth } from '../components/form/validator';
+import { arePayValuesNull, isAfterDateOfBirth, isPayIntervalNull } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
@@ -39,6 +39,29 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   }
 };
 
+export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
+  const payBeforeTax = formData.payBeforeTax;
+  const payAfterTax = formData.payAfterTax;
+  const payInterval = formData.payInterval;
+
+  if (payBeforeTax || payAfterTax) {
+    const errorType = isPayIntervalNull(payInterval);
+    if (errorType) {
+      return [{ errorType: errorType as string, propertyName: 'payInterval' }];
+    }
+  }
+
+  if (payInterval) {
+    const errorType = arePayValuesNull([payBeforeTax.toString(), payAfterTax.toString()]);
+    if (errorType) {
+      return [
+        { errorType: errorType as string, propertyName: 'payBeforeTax' },
+        { errorType: errorType as string, propertyName: 'payAfterTax' },
+      ];
+    }
+  }
+};
+
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
@@ -49,9 +72,14 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   //call get custom errors and add to session errors
   const custErrors = getCustomStartDateError(req, form, formData);
+  const payErrors = getPartialPayInfoError(req, form, formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
+  }
+
+  if (payErrors) {
+    sessionErrors = [...sessionErrors, ...payErrors];
   }
 
   req.session.errors = sessionErrors;

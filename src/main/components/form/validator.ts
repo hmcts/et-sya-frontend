@@ -207,3 +207,15 @@ export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, 
     return;
   }
 };
+
+export const isPayIntervalNull: Validator = (value: string) => {
+  if (!value) {
+    return 'required';
+  }
+};
+
+export const arePayValuesNull: Validator = (value: string[]) => {
+  if (value && value.every(element => !element)) {
+    return 'required';
+  }
+};
