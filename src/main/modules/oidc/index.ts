@@ -32,11 +32,19 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
+      // req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
+      console.log('before destory session');
+      req.session.destroy(() => res.redirect(AuthUrls.LOGIN));
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
       idamCallbackHandler(req, res, next, serviceUrl(res));
+    });
+
+    app.use((req: AppRequest, res) => {
+      if (req.session?.user) {
+        res.locals.isLoggedIn = true;
+      }
     });
   }
 }
@@ -51,10 +59,10 @@ export const idamCallbackHandler = async (
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
     req.session.save();
-    if (req.session.user) {
-      res.locals.isLoggedIn = true;
-    }
-    console.log('is logged in - ' + res.locals.isLoggedIn);
+    // if (req.session.user) {
+    //   res.locals.isLoggedIn = true;
+    // }
+    console.log('idam callback - is logged in - ' + !!req.session.user);
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
