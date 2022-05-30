@@ -43,15 +43,12 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.checkOption('input[value=discrimination]');
   I.click('#main-form-submit');
 
-  I.wait(5);
   loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(5);
+  I.wait(3);
 
   //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
   I.see('You do not have to complete your claim in one go');
-  I.executeScript(function () {
-    sessionStorage.clear();
-  });
+  I.amOnPage('/logout');
 });
 
 function commonPages() {

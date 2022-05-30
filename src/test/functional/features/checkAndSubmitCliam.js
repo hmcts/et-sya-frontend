@@ -6,9 +6,8 @@ const { I } = inject();
 
 Scenario('ET Check your answer: Submit Claim', () => {
   I.amOnPage(test_url);
-  I.wait(5);
   loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(5);
+  I.wait(3);
 
   I.amOnPage(test_url);
   I.see('Check your answers');
@@ -23,9 +22,8 @@ Scenario('ET Check your answer: Submit Claim', () => {
 
 Scenario('ET Check your answer: Save as draft', () => {
   I.amOnPage(test_url);
-  I.wait(5);
   loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(5);
+  I.wait(3);
   I.amOnPage(test_url);
   I.see('Check your answers');
   I.seeElement('#main-form-save-for-later');
