@@ -5,20 +5,20 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { YesNoRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
+import { DefaultInlineRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const new_job: RadioFormFields = {
+  ...DefaultInlineRadioFormFields,
+  id: 'new-job',
+};
 
 export default class NewJobController {
   private readonly form: Form;
   private readonly newJobContent: FormContent = {
     fields: {
-      newJob: {
-        id: 'new-job',
-        type: 'radios',
-        classes: 'govuk-radios--inline',
-        values: YesNoRadioValues,
-      },
+      newJob: new_job,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

@@ -1,11 +1,11 @@
 {
   "title": "Employment end date",
-  "h1": "Employment end date (to do)",
+  "h1": "Employment end date",
   "p1": "Tell us when you finished with the respondent.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "endDate": {
-      "required": "Tell us when your Employment Date ends. For example, DD MM YYYY",
+      "required": "Tell us your Employment end date. For example, DD MM YYYY",
       "invalidDateInFuture": "Enter a valid end date, date must be in the past",
       "invalidDateMoreThanTenYearsInPast": "Enter a valid end date, date must not be more than 10 years in the past",
       "dayRequired": "Enter a day for your end date. For example, 23",

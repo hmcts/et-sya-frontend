@@ -24,13 +24,11 @@ export const YesNoRadioValues = [
     label: (l: AnyRecord): string => l.yes,
     name: 'radioYes',
     value: YesOrNo.YES,
-    attributes: { maxLength: 2 },
   },
   {
     label: (l: AnyRecord): string => l.no,
     name: 'radioNo',
     value: YesOrNo.NO,
-    attributes: { maxLength: 2 },
   },
 ];
 
@@ -60,6 +58,14 @@ export const DefaultRadioFormFields = {
   validator: isFieldFilledIn,
 };
 
+export const DefaultInlineRadioFormFields = {
+  classes: 'govuk-radios--inline',
+  type: 'radios',
+  label: (l: AnyRecord): string => l.label,
+  values: YesNoRadioValues,
+  validator: isFieldFilledIn,
+};
+
 export type PayIntervalRadioFormFields = {
   id: string;
   classes: string;
@@ -73,12 +79,4 @@ export const DefaultPayIntervalRadioFormFields = {
   classes: 'govuk-radios',
   label: (l: AnyRecord): string => l.label,
   values: PayIntervalRadioValues,
-};
-
-export const DefaultInlineRadioFormFields = {
-  classes: 'govuk-radios--inline',
-  type: 'radios',
-  label: (l: AnyRecord): string => l.label,
-  values: YesNoRadioValues,
-  validator: isFieldFilledIn,
 };
