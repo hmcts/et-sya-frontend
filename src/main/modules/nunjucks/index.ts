@@ -140,7 +140,7 @@ export class Nunjucks {
       next();
     });
 
-    app.use((req: AppRequest, res, next) => {
+    app.use((req, res, next) => {
       res.locals.host = req.headers['x-forwarded-host'] || req.hostname;
       res.locals.pagePath = req.path;
       nunEnv.addGlobal('currentUrl', req.url);
