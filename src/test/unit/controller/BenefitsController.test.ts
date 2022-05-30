@@ -1,5 +1,6 @@
 import BenefitsController from '../../../main/controllers/BenefitsController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -16,5 +17,29 @@ describe('Benefits Controller', () => {
 
     benefitsController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.BENEFITS, expect.anything());
+  });
+
+  it('should render the new job page when no longer working and yes radio button is selected', () => {
+    const body = { employeeBenefits: YesOrNo.YES };
+    const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };
+    const controller = new BenefitsController();
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
+  });
+
+  it('should render the home page when working or notice and no radio button is selected', () => {
+    const body = { employeeBenefits: YesOrNo.YES };
+    const userCase = { isStillWorking: StillWorking.WORKING || StillWorking.NOTICE };
+    const controller = new BenefitsController();
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.HOME);
   });
 });

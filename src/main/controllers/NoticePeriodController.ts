@@ -56,9 +56,11 @@ export default class NoticePeriodController {
       TranslationKeys.COMMON,
       TranslationKeys.NOTICE_PERIOD,
     ]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_PERIOD, {
       ...content,
+      employmentStatus,
     });
   };
 }

@@ -50,9 +50,11 @@ export default class NoticeTypeController {
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
+    const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_TYPE, {
       ...content,
+      employmentStatus,
     });
   };
 }

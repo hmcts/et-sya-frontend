@@ -14,6 +14,6 @@ describe('New Job Start Date Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB_START_DATE, expect.anything());
   });
 });

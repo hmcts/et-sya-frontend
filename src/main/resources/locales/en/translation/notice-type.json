@@ -1,6 +1,10 @@
 {
   "title": "Is your notice period in weeks or months?",
-  "h1": "Is your notice period in weeks or months?",
+  "h1": {
+    "workingOrNotice": "Is your notice period in weeks or months?",
+    "noLongerWorking": "Was your notice period in weeks or months?"
+  },
   "months": "Months",
-  "weeks": "Weeks"
+  "weeks": "Weeks",
+  "noLongerWorking": "NO LONGER WORKING"
 }

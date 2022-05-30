@@ -13,10 +13,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      {% if noticeType === noticeWeeks %}
+      {% if employmentStatus === onNotice and noticeType === noticeWeeks %}
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.noticeWeeks }}</h1>
-      {% else %}
+      {% elif employmentStatus === onNotice and noticeType !== noticeWeeks %}
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.noticeMonths }}</h1>
+      {% elif employmentStatus !== onNotice and noticeType === noticeWeeks %}
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.nonNoticeWeeks }}</h1>
+      {% else %}
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.nonNoticeMonths }}</h1>
       {% endif %}
 
       {% block form %}
