@@ -135,19 +135,10 @@ export class Nunjucks {
       }));
     });
 
-    // app.use((req: AppRequest, res, next) => {
-    // res.locals.isLoggedIn = !!req.session?.user;
-    // const check = () => {
-    //   return !!req.session?.user;
-    // };
-    //const loggedIn = check();
-    //  nunEnv.addGlobal('isLoggedIn', check);
-    // console.log('req.session - ', req.session);
-
-    // nunEnv.addGlobal('isLoggedIn', false);
-    // console.log('nunj - not not req.session is ', !!req.session?.user);
-    // next();
-    // });
+    app.use((req: AppRequest, res, next) => {
+      nunEnv.addGlobal('isLoggedIn', !!res.locals.isLoggedIn);
+      next();
+    });
 
     app.use((req: AppRequest, res, next) => {
       res.locals.host = req.headers['x-forwarded-host'] || req.hostname;

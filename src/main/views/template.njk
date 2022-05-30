@@ -7,13 +7,13 @@
   {% include "webpack/css.njk" %}
 {% endblock %}
 
-{% set lastElement = {
+{% set logInOrOut = {
               href: "/logout",
               text: signOut,
               active: false
 } if isLoggedIn else {
     href: "/login",
-    text: 'please add login text here',
+    text: logIn,
     active: false
 } %}
 
@@ -24,7 +24,7 @@
     serviceName: serviceName,
     serviceUrl: "#",
     navigationClasses: 'govuk-header__navigation--end',
-    navigation: [lastElement]
+    navigation: [logInOrOut]
   }) }}
 {% endblock %}
 
