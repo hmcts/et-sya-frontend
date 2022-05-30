@@ -2,8 +2,10 @@ import {
   DateValidator,
   areDateFieldsFilledIn,
   isDateInputInvalid,
+  isDateTenYearsInFuture,
   isDateTenYearsInPast,
   isFutureDate,
+  isPastDate,
 } from '../components/form/validator';
 
 import { CaseDate } from './case';
@@ -50,5 +52,27 @@ export const DefaultDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): string | void | InvalidField =>
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+};
+
+export const EndDateFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.label,
+  labelHidden: true,
+  hint: (l: AnyRecord): string => l.hint,
+  values: DateValues,
+  validator: (value: CaseDate): string | void | InvalidField =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value) || isDateTenYearsInPast(value),
+};
+
+export const NewJobDateFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.label,
+  labelHidden: true,
+  hint: (l: AnyRecord): string => l.hint,
+  values: DateValues,
+  validator: (value: CaseDate): string | void | InvalidField =>
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
 };

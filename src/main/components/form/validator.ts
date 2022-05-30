@@ -108,6 +108,28 @@ export const isFutureDate: DateValidator = date => {
   }
 };
 
+export const isDateTenYearsInFuture: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const datePlus10 = new Date();
+  datePlus10.setFullYear(datePlus10.getFullYear() + 10);
+
+  if (enteredDate > datePlus10) {
+    return { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' };
+  }
+};
+
+export const isPastDate: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+
+  if (new Date() > enteredDate) {
+    return { error: 'invalidDateInPast', fieldName: 'day' };
+  }
+};
+
 export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
   const year = parseInt(date.year, 10) || 0;
 
