@@ -67,3 +67,18 @@ export const DefaultInlineRadioFormFields = {
   values: YesNoRadioValues,
   validator: isFieldFilledIn,
 };
+
+export type PayIntervalRadioFormFields = {
+  id: string;
+  classes: string;
+  type: string;
+  label: (l: AnyRecord) => string;
+  values: typeof PayIntervalRadioValues;
+};
+
+export const DefaultPayIntervalRadioFormFields = {
+  type: 'radios',
+  classes: 'govuk-radios',
+  label: (l: AnyRecord): string => l.label,
+  values: PayIntervalRadioValues,
+};
