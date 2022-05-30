@@ -4,6 +4,7 @@ export const mockResponse = (): Response => {
   const res: Partial<Response> = {};
   res.redirect = jest.fn().mockReturnValue(res);
   res.render = jest.fn().mockReturnValue(res);
+  res.setHeader = jest.fn();
   res.json = jest.fn().mockReturnValue(res);
   res.send = jest.fn().mockReturnValue(res);
   res.type = jest.fn().mockReturnValue(res);
