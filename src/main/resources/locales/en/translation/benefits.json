@@ -11,8 +11,7 @@
   "noLongerWorking": "NO LONGER WORKING",
   "errors": {
     "benefitsCharCount": {
-      "required": "Tell us about any benefits received",
-      "exceeded": "Hours must be less than 168 (max number of hours in a week)"
+      "required": "Tell us about any benefits received"
     }
   }
 }
