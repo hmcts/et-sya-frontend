@@ -197,3 +197,52 @@ export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, 
     return;
   }
 };
+
+export const isPayIntervalNull: Validator = (value: string) => {
+  if (!value) {
+    return 'required';
+  }
+};
+
+export const arePayValuesNull: Validator = (value: string[]) => {
+  if (value && value.every(element => !element)) {
+    return 'required';
+  }
+};
+
+export const isValidAvgWeeklyHours: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
+
+  if (((value as string).startsWith('0') && (value as string).trim().length > 1) || (value as string).includes('.')) {
+    return 'invalid';
+  }
+
+  const maxLength = 168;
+  if (parseInt(value as string) > maxLength) {
+    return 'exceeded';
+  }
+
+  if (/^\d+$/.test(value as string)) {
+    return;
+  } else {
+    return 'invalid';
+  }
+};
+
+export const isValidPension: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return 'required';
+  }
+
+  if ((value as string).trim().length < 2) {
+    return 'invalid';
+  }
+
+  if (/^\d{2,}$/.test(value as string) || /^\d{2,}\.\d+$/.test(value as string)) {
+    return;
+  } else {
+    return 'invalid';
+  }
+};
