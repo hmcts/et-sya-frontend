@@ -10,7 +10,8 @@ nodejs:
         - idam-secret
         - redis-access-key
         - os-places-token
-
+        - fortify-on-demand-username
+        - fortify-on-demand-password
 idam-pr:
   enabled: true
   redirect_uris:

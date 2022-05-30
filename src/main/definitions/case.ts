@@ -60,6 +60,7 @@ export interface Case {
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
+  newJob?: YesOrNo;
 }
 
 export const enum StillWorking {

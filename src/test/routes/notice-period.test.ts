@@ -1,12 +1,19 @@
 import request from 'supertest';
 
 import { app } from '../../main/app';
-import { YesOrNo } from '../../main/definitions/case';
+import { StillWorking, YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
   it('should return notice period page', async () => {
-    const res = await request(app).get(`${PageUrls.NOTICE_PERIOD}`);
+    const res = await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE || StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    ).get(PageUrls.NOTICE_PERIOD);
     expect(res.type).toEqual('text/html');
     expect(res.status).toEqual(200);
   });
