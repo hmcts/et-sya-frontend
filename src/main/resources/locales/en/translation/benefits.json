@@ -1,12 +1,18 @@
 {
   "title": "Benefits",
   "h1": {
-    "workingOrNotice": "Do or did you receive any employee benefits? (to do)",
-    "noLongerWorking": "Did you receive any employee benefits? (to do)"
+    "workingOrNotice": "Do or did you receive any employee benefits?",
+    "noLongerWorking": "Did you receive any employee benefits?"
   },
   "p1": "For example, child care, company car, housing, health insurance etc.",
   "benefitsTitle": "What's classed as an employee benefit?",
   "benefitsHelpTxt": "Employee benefits (also known as 'benefits in kind') are the various types of non-wage compensation you get on top of your normal wages.",
-  "hint": "Tell us about any benefits.",
-  "noLongerWorking": "NO LONGER WORKING"
+  "hint": "Tell us about any benefits",
+  "noLongerWorking": "NO LONGER WORKING",
+  "errors": {
+    "benefitsCharCount": {
+      "required": "Tell us about any benefits received",
+      "exceeded": "Hours must be less than 168 (max number of hours in a week)"
+    }
+  }
 }
