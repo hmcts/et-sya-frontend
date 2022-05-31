@@ -241,3 +241,19 @@ export const arePayValuesNull: Validator = (value: string[]) => {
     return 'required';
   }
 };
+
+export const isValidCurrency: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
+
+  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
+    return 'minLengthRequired';
+  }
+
+  if (/^(\d+,?\d+)+(.{1}\d{2}){0,1}$/.test(value as string)) {
+    return;
+  } else {
+    return 'minLengthRequired';
+  }
+};

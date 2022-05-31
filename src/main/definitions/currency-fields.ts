@@ -1,3 +1,5 @@
+import { isValidCurrency } from '../components/form/validator';
+
 import { AnyRecord } from './util-types';
 
 export type CurrencyFormFields = {
@@ -12,5 +14,6 @@ export const DefaultCurrencyFormFields = {
   classes: 'govuk-input--width-5',
   type: 'currency',
   label: (l: AnyRecord): string => l.label,
-  attributes: { maxlength: 12 },
+  attributes: { maxLength: 12 },
+  validator: isValidCurrency,
 };
