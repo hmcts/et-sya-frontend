@@ -16,25 +16,26 @@ Scenario('Claim while on notice for organisation', () => {
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('When does your notice period end?');
+  I.seeElement('#notice-dates-day');
   I.fillField('#notice-dates-day', '20');
   I.fillField('#notice-dates-month', '06');
   I.fillField('#notice-dates-year', '2014');
   I.click('#main-form-submit');
 
+  I.seeElement('#notice-type');
   I.checkOption('#notice-type');
   I.click('#main-form-submit');
 
+  I.seeElement('#notice-length');
   I.fillField('#notice-length', '20');
   I.click('#main-form-submit');
 
-  I.see('What are your average weekly hours?');
   I.seeElement('#avg-weekly-hrs');
   I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
@@ -47,7 +48,6 @@ Scenario('Claim while on notice for organisation', () => {
 
   I.seeElement('#pension');
   I.checkOption('input[id=pension]');
-  //I.fillField('input[id=pension-contributions]','100');
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');

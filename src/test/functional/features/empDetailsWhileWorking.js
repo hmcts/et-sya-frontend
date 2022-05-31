@@ -16,13 +16,12 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('Have you got a notice period?');
   I.seeElement('#notice-period');
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
@@ -61,7 +60,6 @@ Scenario('Claim while working for organisation when notice period is for 3 month
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);
   authPage.login();
-
   I.amOnPage(testUrl);
 
   I.seeElement('#still-working');
@@ -72,13 +70,12 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('Have you got a notice period?');
   I.seeElement('#notice-period');
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
@@ -91,7 +88,6 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.fillField('input[id=notice-length]', '4');
   I.click('#main-form-submit');
 
-  I.see('What are your average weekly hours?');
   I.seeElement('#avg-weekly-hrs');
   I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
@@ -125,18 +121,16 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('Have you got a notice period?');
   I.seeElement('#notice-period-2');
   I.checkOption('input[id=notice-period-2]');
   I.click('#main-form-submit');
 
-  I.see('What are your average weekly hours?');
   I.seeElement('#avg-weekly-hrs');
   I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
@@ -170,13 +164,12 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');
   I.click('#main-form-submit');
 
-  I.see('Have you got a notice period?');
   I.seeElement('#notice-period');
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
@@ -191,6 +184,7 @@ Scenario('Save as Draft: Still working for organisation', () => {
   authPage.login();
   I.amOnPage('/past-employer');
 
+  I.seeElement('#main-form-submit');
   I.click('#main-form-submit');
   I.seeElement('[aria-labelledby="error-summary-title"]');
   I.see('There is a problem');

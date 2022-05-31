@@ -14,12 +14,12 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.amOnPage(test_url);
   authPage.login();
   I.amOnPage(test_url);
-  I.see('3. Claim details');
   I.seeElement('[href="/summarise-what-happened"]');
+  I.see('3. Claim details');
   I.click('[href="/summarise-what-happened"]');
+  I.seeElement(discriminationClaim);
   I.see('Summarise what happened to you (optional) (to do)');
   I.see('What to include in your claim');
-  I.seeElement(discriminationClaim);
   I.click(discriminationClaim);
   I.see('Describe the events you are complaining about.');
   I.click(whatToWrite_dismissal);
@@ -66,9 +66,11 @@ Scenario('Claim Details: Tell us what you want from your claim - Save and contin
   I.amOnPage(test_url);
   authPage.login();
   I.amOnPage(test_url);
-  I.see('3. Claim details');
+
   I.seeElement('[href="/what-you-want-from-your-claim"]');
+  I.see('3. Claim details');
   I.click('[href="/what-you-want-from-your-claim"]');
+
   I.see('Tell us what you want from your claim? (optional) (to do)');
   I.click(compensation_award);
   I.see(
@@ -78,6 +80,7 @@ Scenario('Claim Details: Tell us what you want from your claim - Save and contin
   I.checkOption(locate('#claimOutcome').first());
   I.checkOption(locate('#claimOutcome').last());
   I.click('#main-form-submit');
+
   I.see('What compensation are you seeking?');
   I.fillField('#compensation-outcome', 'Employment Tribunal Test');
   I.fillField('#compensation-amount', '5000000');
@@ -91,8 +94,8 @@ Scenario('Feedback exit survey link on confirmation page', () => {
   I.amOnPage('/your-claim-has-been-submitted');
   authPage.login();
   I.amOnPage('/your-claim-has-been-submitted');
-  I.see('Your claim has been submitted (to do)');
   I.seeElement('//*[@id="main-content"]/div[2]/div/p/a');
+  I.see('Your claim has been submitted (to do)');
   I.click('//*[@id="main-content"]/div[2]/div/p/a');
   I.seeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt');
   // regression step to ensure that it is not redirecting to the feedback link on the homepage

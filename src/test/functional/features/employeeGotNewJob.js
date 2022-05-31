@@ -6,11 +6,9 @@ const { I } = inject();
 Scenario('Employee details when he got a new job', () => {
   I.amOnPage(testUrl);
   authPage.login();
-
   I.amOnPage(testUrl);
 
-  I.see('Have you got a new job?');
-
+  I.seeElement('#new-job');
   I.checkOption('input[id=new-job]');
   I.click('#main-form-submit');
   authPage.logout();

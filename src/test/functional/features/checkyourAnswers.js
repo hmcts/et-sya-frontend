@@ -7,9 +7,7 @@ Scenario('Verify check your answers page', () => {
   I.amOnPage(test_url);
   authPage.login();
   I.amOnPage(test_url);
-  I.see('Check your answers');
 
-  I.see('Type of claim');
   I.seeElement('(//a[@href="/type-of-claim"])');
 
   I.see('Date of birth');

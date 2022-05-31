@@ -16,7 +16,7 @@ Scenario('Pages while not working for the organisation', () => {
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.see('Employment start date');
+  I.seeElement('#start-date-day');
   I.fillField('#start-date-day', '20');
   I.fillField('#start-date-month', '04');
   I.fillField('#start-date-year', '2014');

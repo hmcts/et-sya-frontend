@@ -7,7 +7,6 @@ Scenario('ET Check your answer: Submit Claim', () => {
   I.amOnPage(test_url);
   authPage.login();
   I.amOnPage(test_url);
-  I.see('Check your answers');
   I.seeElement('#main-content');
   I.click('#main-form-submit');
   I.see('Your claim has been submitted');
@@ -21,7 +20,6 @@ Scenario('ET Check your answer: Save as draft', () => {
   I.amOnPage(test_url);
   authPage.login();
   I.amOnPage(test_url);
-  I.see('Check your answers');
   I.seeElement('#main-form-save-for-later');
   I.click('#main-form-save-for-later');
   I.see('Your claim has been saved');
