@@ -101,6 +101,7 @@ describe('Axios post to retrieve pdf', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'xxxx',
+      isCitizen: true,
     };
 
     api.downloadClaimPdf(mockUserDetails.id);
