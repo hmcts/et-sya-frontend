@@ -10,7 +10,7 @@ import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 
-const cookieMaxAge = 21 * (60 * 1000); // 21 minutes
+const cookieMaxAge = 60 * (60 * 1000); // 60 minutes
 
 export class Session {
   public enableFor(app: Application): void {

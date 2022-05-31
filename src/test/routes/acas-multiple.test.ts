@@ -1,12 +1,12 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
   it('should return the do you have an Acas certificate page', async () => {
-    const res = await request(app).get(PageUrls.ACAS_MULTIPLE_CLAIM);
+    const res = await request(mockApp({})).get(PageUrls.ACAS_MULTIPLE_CLAIM);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
 
 describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
   test('should go to the types of claim page when the Yes radio button is selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.ACAS_MULTIPLE_CLAIM)
       .send({ acasMultiple: YesOrNo.YES })
       .expect(res => {
@@ -24,7 +24,7 @@ describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
   });
 
   test('should go to the no valid acas page when the No radio button is selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.ACAS_MULTIPLE_CLAIM)
       .send({ acasMultiple: YesOrNo.NO })
       .expect(res => {
@@ -34,7 +34,7 @@ describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
   });
 
   test('should return the acas multiple claim page when "incorrect data is entered"', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.ACAS_MULTIPLE_CLAIM)
       .send({
         acasMultiple: undefined,

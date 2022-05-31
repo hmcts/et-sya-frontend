@@ -5,6 +5,8 @@ import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseWithId } from '../../../main/definitions/case';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
+import { mockUserDetails } from './mockUser';
+
 export const mockApp = ({
   body,
   userCase,
@@ -27,6 +29,7 @@ export const mockApp = ({
       save: jest.fn(done => done()),
       lang: 'en',
       errors: undefined,
+      user: mockUserDetails,
     } as unknown as AppSession;
     next();
   });

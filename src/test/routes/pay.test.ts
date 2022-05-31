@@ -1,6 +1,5 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -21,7 +20,7 @@ describe(`GET ${PageUrls.PAY}`, () => {
 
 describe(`on POST ${PageUrls.PAY}`, () => {
   test('should navigate to the pay after tax page when save and continue button is clicked', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.PAY)
       .expect(res => {
         expect(res.status).toStrictEqual(302);

@@ -13,6 +13,7 @@ import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { mockUserDetails } from '../mocks/mockUser';
 
 jest.mock('axios');
 jest.mock('../../../main/auth/index');
@@ -49,7 +50,7 @@ describe('Test responds to /oauth2/callback', function () {
     const getUserDetailsMock = authIndex.getUserDetails as jest.MockedFunction<
       (serviceUrl: string, rawCode: string, callbackUrlPageLink: string) => Promise<UserDetails>
     >;
-    getUserDetailsMock.mockReturnValue(Promise.resolve({} as UserDetails));
+    getUserDetailsMock.mockReturnValue(Promise.resolve(mockUserDetails as UserDetails));
 
     //Then it should call getUserDetails
     jest.spyOn(authIndex, 'getUserDetails');

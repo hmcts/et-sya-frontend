@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const newJobStartDateJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/new-job-start-date.json'),
@@ -24,7 +24,7 @@ const expectedInputLabel3 = 'Year';
 let htmlRes: Document;
 describe('New Job Start Date page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.NEW_JOB_START_DATE)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

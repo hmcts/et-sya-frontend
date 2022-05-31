@@ -17,6 +17,8 @@ import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
+import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
+
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
 
@@ -32,18 +34,21 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => res.redirect(AuthUrls.LOGIN));
+      req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
       idamCallbackHandler(req, res, next, serviceUrl(res));
     });
 
-    app.use((req: AppRequest, res, next) => {
+    app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
       if (req.session?.user) {
-        res.locals.isLoggedIn = true;
+        next();
+      } else if (noSignInRequiredEndpoints.includes(req.url)) {
+        next();
+      } else {
+        return res.redirect(AuthUrls.LOGIN);
       }
-      next();
     });
   }
 }
@@ -56,9 +61,15 @@ export const idamCallbackHandler = async (
 ): Promise<void> => {
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
+    // eslint-disable-next-line prettier/prettier
     req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
     req.session.save();
   } else {
+    return res.redirect(AuthUrls.LOGIN);
+  }
+
+  //For now if user account does not have the citizen role redirect to login
+  if (!req.session.user?.isCitizen) {
     return res.redirect(AuthUrls.LOGIN);
   }
 
