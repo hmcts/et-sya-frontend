@@ -256,7 +256,7 @@ export const isValidCurrency: Validator = value => {
     return 'required';
   }
 
-  if (/^\d{2,}$/.test(value as string) || /^\d{1,},\d+$/.test(value as string)) {
+  if (/^\d{2,}$/.test(value as string) || /^\d+,\d{3,}$/.test(value as string)) {
     return;
   } else {
     return 'required';

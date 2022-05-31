@@ -1,12 +1,17 @@
 import {
   areDateFieldsFilledIn,
+  arePayValuesNull,
   atLeastOneFieldIsChecked,
   isDateInputInvalid,
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
+  isPayIntervalNull,
+  isValidAvgWeeklyHours,
+  isValidCurrency,
   isValidInteger,
+  isValidPension,
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
@@ -264,6 +269,66 @@ describe('Validation', () => {
       { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work addrss town is valid', ({ mockRef, expected }) => {
       expect(isWorkAddressTownValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isPayIntervalNull()', () => {
+    it('Should check if pay interval value is null', () => {
+      const isValid = isPayIntervalNull(['']);
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+  });
+
+  describe('arePayValuesNull()', () => {
+    it('Should check if pay values are null', () => {
+      const isValid = arePayValuesNull(['']);
+
+      expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isValidAvgWeeklyHours()', () => {
+    it.each([
+      { mockRef: '00', expected: 'invalid' },
+      { mockRef: 'a', expected: 'invalid' },
+      { mockRef: '%', expected: 'invalid' },
+      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: '20.00', expected: 'invalid' },
+      { mockRef: '169', expected: 'exceeded' },
+      { mockRef: '35', expected: undefined },
+      { mockRef: '2', expected: undefined },
+      { mockRef: null, expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidAvgWeeklyHours(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidPension()', () => {
+    it.each([
+      { mockRef: '1', expected: 'invalid' },
+      { mockRef: 'a', expected: 'invalid' },
+      { mockRef: '%', expected: 'invalid' },
+      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: '20.', expected: 'invalid' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '20.00', expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidPension(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidCurrency()', () => {
+    it.each([
+      { mockRef: '1', expected: 'required' },
+      { mockRef: 'a', expected: 'required' },
+      { mockRef: '%', expected: 'required' },
+      { mockRef: '25a', expected: 'required' },
+      { mockRef: '20,00', expected: 'required' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '10,000', expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidCurrency(mockRef)).toEqual(expected);
     });
   });
 });
