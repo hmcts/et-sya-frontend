@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/comfortable';
 const titleClass = 'govuk-fieldset__heading';
@@ -14,7 +14,7 @@ const expectedInputLabel = 'govuk-label';
 let htmlRes: Document;
 describe('"I need something to make me feel comfortable" page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
