@@ -1,15 +1,11 @@
 Feature('ET Claim while working for organisation');
 const testUrl = '/are-you-still-working';
-const loginIdam = require('../authUser/loginIdam.js');
-const data = require('../data.json');
+const authPage = require('./authPage.js');
 const { I } = inject();
 
 Scenario('Claim while working for organisation when notice period is for 3 months', () => {
   I.amOnPage(testUrl);
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
-
+  authPage.login();
   I.amOnPage(testUrl);
 
   I.seeElement('#still-working');
@@ -57,16 +53,14 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.see('Do or did you receive any employee benefits?');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-  I.amOnPage('/logout');
+  authPage.logout();
 })
   .tag('@RET-1130')
   .tag(' @RET-BAT');
 
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
 
   I.amOnPage(testUrl);
 
@@ -89,6 +83,14 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
 
+  I.seeElement('#notice-type');
+  I.checkOption('input[id=notice-type]');
+  I.click('#main-form-submit');
+
+  I.seeElement('#notice-length');
+  I.fillField('input[id=notice-length]', '4');
+  I.click('#main-form-submit');
+
   I.see('What are your average weekly hours?');
   I.seeElement('#avg-weekly-hrs');
   I.fillField('#avg-weekly-hrs', '20');
@@ -96,6 +98,7 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
 
   I.seeElement('#pay-before-tax');
   I.fillField('#pay-before-tax', '40000');
+  I.fillField('#pay-after-tax', '35000');
   I.checkOption('input[id=pay-interval]');
   I.click('#main-form-submit');
 
@@ -107,15 +110,12 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.seeElement('#employee-benefits');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1130');
 
 Scenario('Claim while working for organisation when notice period selected as no', () => {
   I.amOnPage(testUrl);
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
-
+  authPage.login();
   I.amOnPage(testUrl);
   I.seeElement('#still-working');
   I.checkOption('input[id=still-working]');
@@ -141,36 +141,26 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.fillField('#avg-weekly-hrs', '20');
   I.click('#main-form-submit');
 
-  I.see('Pay BEFORE tax');
   I.seeElement('#pay-before-tax');
   I.fillField('#pay-before-tax', '40000');
-  I.checkOption('input[id=pay-before-tax-interval-3]');
-  I.click('#main-form-submit');
-
-  I.see('Pay AFTER tax');
-  I.seeElement('#pay-after-tax');
   I.fillField('#pay-after-tax', '35000');
-  I.checkOption('input[id=pay-after-tax-interval-3]');
+  I.checkOption('input[id=pay-interval]');
   I.click('#main-form-submit');
 
-  I.see('Pension scheme');
   I.seeElement('#pension-2');
   I.checkOption('input[id=pension-2]');
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');
-  I.see('Do or did you receive any employee benefits?');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-  I.amOnPage('/logout');
+
+  authPage.logout();
 }).tag('@RET-1130');
 
 Scenario('Claim while working for organisation and not submitted details', () => {
   I.amOnPage(testUrl);
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
-
+  authPage.login();
   I.amOnPage(testUrl);
   I.seeElement('#still-working');
   I.checkOption('input[id=still-working]');
@@ -190,7 +180,7 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.seeElement('#notice-period');
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
-  I.amOnPage('/logout');
+  authPage.logout();
 })
   .tag('@RET-1130')
   .tag(' @RET-BAT');
@@ -198,10 +188,7 @@ Scenario('Claim while working for organisation and not submitted details', () =>
 // No validation for Save as draft button at the moment
 Scenario('Save as Draft: Still working for organisation', () => {
   I.amOnPage('/past-employer');
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
-
+  authPage.login();
   I.amOnPage('/past-employer');
 
   I.click('#main-form-submit');
@@ -227,5 +214,5 @@ Scenario('Save as Draft: Still working for organisation', () => {
   I.click('#main-form-save-for-later');
   I.see('Your claim has been saved');
   I.see('Continue with your claim');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1521');

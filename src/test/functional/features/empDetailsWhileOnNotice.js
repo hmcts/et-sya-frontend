@@ -1,15 +1,11 @@
 Feature('ET Claim while serving notice period for organisation');
 const testUrl = '/are-you-still-working';
-const loginIdam = require('../authUser/loginIdam.js');
-const data = require('../data.json');
+const authPage = require('./authPage.js');
 const { I } = inject();
 
 Scenario('Claim while on notice for organisation', () => {
   I.amOnPage(testUrl);
-
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
-
+  authPage.login();
   I.amOnPage(testUrl);
 
   I.seeElement('#still-working-2');
@@ -57,7 +53,7 @@ Scenario('Claim while on notice for organisation', () => {
   I.seeElement('#employee-benefits');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
-  I.amOnPage('/logout');
+  authPage.logout();
 })
   .tag('@RET-1131')
   .tag('@RET-1023')

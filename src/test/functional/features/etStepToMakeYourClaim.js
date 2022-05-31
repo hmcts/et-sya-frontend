@@ -1,7 +1,6 @@
 Feature('Claim Details');
 const test_url = '/steps-to-making-your-claim';
-const loginIdam = require('../authUser/loginIdam.js');
-const data = require('../data.json');
+const authPage = require('./authPage.js');
 const { I } = inject();
 const discriminationClaim = '//*[@id="main-content"]/div/div/details[1]/summary/span';
 const whatToWrite_dismissal = '//*[@id="main-content"]/div/div/details[2]/summary/span';
@@ -13,8 +12,7 @@ const tribunal_recommendation = locate('.govuk-details__summary-text').withText(
 
 Scenario('Claim Details: Summarise what happened to you', () => {
   I.amOnPage(test_url);
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/summarise-what-happened"]');
@@ -41,13 +39,12 @@ Scenario('Claim Details: Summarise what happened to you', () => {
   I.attachFile('input[name="claimSummaryFile"]', 'features/Data/test_doc.pdf');
   I.click('#main-form-submit');
   I.see('Tell us what you want from your claim? (optional) (to do)');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1235');
 
 Scenario('Claim Details: Tell us what you want from your claim - Save as draft', () => {
   I.amOnPage(test_url);
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/what-you-want-from-your-claim"]');
@@ -62,13 +59,12 @@ Scenario('Claim Details: Tell us what you want from your claim - Save as draft',
   I.checkOption(locate('#claimOutcome').last());
   I.click('#main-form-save-for-later');
   I.see('Your claim has been saved');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1235');
 
 Scenario('Claim Details: Tell us what you want from your claim - Save and continue', () => {
   I.amOnPage(test_url);
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
   I.amOnPage(test_url);
   I.see('3. Claim details');
   I.seeElement('[href="/what-you-want-from-your-claim"]');
@@ -88,13 +84,12 @@ Scenario('Claim Details: Tell us what you want from your claim - Save and contin
   I.click('#main-form-submit');
   // returned to start page at the moment
   I.see('Steps to making your claim TODO');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1235');
 
 Scenario('Feedback exit survey link on confirmation page', () => {
   I.amOnPage('/your-claim-has-been-submitted');
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
   I.amOnPage('/your-claim-has-been-submitted');
   I.see('Your claim has been submitted (to do)');
   I.seeElement('//*[@id="main-content"]/div[2]/div/p/a');
@@ -102,5 +97,5 @@ Scenario('Feedback exit survey link on confirmation page', () => {
   I.seeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/SurveyExit/?service=Employment&party=clmt');
   // regression step to ensure that it is not redirecting to the feedback link on the homepage
   I.dontSeeCurrentUrlEquals('https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=your-claim-has-been-submitted');
-  I.amOnPage('/logout');
+  authPage.logout();
 }).tag('@RET-1441');

@@ -1,8 +1,6 @@
 Feature('ET Single claim for my self');
 const { I } = inject();
-const loginIdam = require('../authUser/loginIdam.js');
-const data = require('../data.json');
-
+const authPage = require('./authPage.js');
 const commonFlow = require('./commonFlow.js');
 
 Scenario('Verify ET single claim for myself when there is no acas certificate', async () => {
@@ -43,12 +41,11 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.checkOption('input[value=discrimination]');
   I.click('#main-form-submit');
 
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
 
   //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
   I.see('You do not have to complete your claim in one go');
-  I.amOnPage('/logout');
+  authPage.logout();
 });
 
 function commonPages() {
