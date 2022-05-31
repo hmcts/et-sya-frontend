@@ -3,7 +3,7 @@
   "services": {
     "idam": {
       "clientID": "et-sya",
-      "authorizationURL": "http://localhost:3501/login",
+      "authorizationURL": "http://localhost:5000/login",
       "clientSecret": "test1234",
       "tokenURL": "http://localhost:5000/o/token"
     },

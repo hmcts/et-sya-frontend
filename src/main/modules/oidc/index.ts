@@ -32,11 +32,18 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
+      req.session.destroy(() => res.redirect(AuthUrls.LOGIN));
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
       idamCallbackHandler(req, res, next, serviceUrl(res));
+    });
+
+    app.use((req: AppRequest, res, next) => {
+      if (req.session?.user) {
+        res.locals.isLoggedIn = true;
+      }
+      next();
     });
   }
 }
