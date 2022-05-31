@@ -3,10 +3,11 @@ import request from 'supertest';
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.PENSION}`, () => {
   it('should return the employment details notice pension page', async () => {
-    const res = await request(app).get(PageUrls.PENSION);
+    const res = await request(mockApp({})).get(PageUrls.PENSION);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -27,7 +28,7 @@ describe(`on POST ${PageUrls.PENSION}`, () => {
   });
 
   test("should return the benefits page when 'no' and 'save and continue' are selected", async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.PENSION)
       .send({
         pension: YesOrNo.NO,
@@ -39,7 +40,7 @@ describe(`on POST ${PageUrls.PENSION}`, () => {
   });
 
   test('should return the benefits page when no radio buttons are selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.PENSION)
       .send({ employmentDetailsPension: undefined })
       .expect(res => {

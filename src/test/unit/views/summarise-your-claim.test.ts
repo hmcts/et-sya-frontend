@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const summariseYourClaimJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/summarise-your-claim.json'),
@@ -23,7 +23,7 @@ const expectedTitle = summairiseYourClaimJson.h1;
 let htmlRes: Document;
 describe('Summarise Your Claim page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.SUMMARISE_YOUR_CLAIM)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

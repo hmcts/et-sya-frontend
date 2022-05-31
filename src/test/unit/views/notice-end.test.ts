@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const noticeEndJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-end.json'),
@@ -21,7 +21,7 @@ const dateFieldClass = 'govuk-date-input__item';
 let htmlRes: Document;
 describe('Notice end page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.NOTICE_END)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -40,7 +40,6 @@ describe('Notice end page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementById(buttonId);
-    console.log(`Button name is ${button.innerHTML}`);
     expect(button.innerHTML).contains('Save and continue', 'Save and continue');
   });
 });

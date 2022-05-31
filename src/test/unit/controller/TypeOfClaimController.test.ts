@@ -4,7 +4,7 @@ import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
-import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
+import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -128,7 +128,7 @@ describe('Type Of Claim Controller', () => {
       jest.spyOn(res, 'redirect');
 
       controller.post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(AuthUrls.LOGIN);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     });
   });
 });

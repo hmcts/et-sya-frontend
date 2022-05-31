@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const endDateJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/end-date.json'),
@@ -20,7 +20,7 @@ const buttonClass = 'govuk-button';
 let htmlRes: Document;
 describe('End date page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.END_DATE)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

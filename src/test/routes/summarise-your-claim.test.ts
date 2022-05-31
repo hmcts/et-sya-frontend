@@ -1,11 +1,11 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.SUMMARISE_YOUR_CLAIM}`, () => {
   it('should return the summarise your claim page', async () => {
-    const res = await request(app).get(PageUrls.SUMMARISE_YOUR_CLAIM);
+    const res = await request(mockApp({})).get(PageUrls.SUMMARISE_YOUR_CLAIM);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.SUMMARISE_YOUR_CLAIM}`, () => {
 
 describe(`POST ${PageUrls.SUMMARISE_YOUR_CLAIM}`, () => {
   test('should go to the desired claim outcome page', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.SUMMARISE_YOUR_CLAIM)
       .send({})
       .expect(res => {
