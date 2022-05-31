@@ -4,6 +4,7 @@ import config from 'config';
 import express from 'express';
 import nunjucks from 'nunjucks';
 
+import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -132,6 +133,11 @@ export class Nunjucks {
           };
         })(),
       }));
+    });
+
+    app.use((req: AppRequest, res, next) => {
+      nunEnv.addGlobal('isLoggedIn', !!res.locals.isLoggedIn);
+      next();
     });
 
     app.use((req, res, next) => {
