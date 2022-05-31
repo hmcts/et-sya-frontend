@@ -246,3 +246,19 @@ export const isValidPension: Validator = value => {
     return 'invalid';
   }
 };
+
+export const isValidCurrency: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
+
+  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
+    return 'required';
+  }
+
+  if (/^\d{2,}$/.test(value as string) || /^\d{1,},\d+$/.test(value as string)) {
+    return;
+  } else {
+    return 'required';
+  }
+};

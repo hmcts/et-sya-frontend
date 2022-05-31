@@ -1,3 +1,5 @@
+import { isValidCurrency } from '../components/form/validator';
+
 import { AnyRecord } from './util-types';
 
 export type CurrencyFormFields = {
@@ -13,4 +15,5 @@ export const DefaultCurrencyFormFields = {
   type: 'currency',
   label: (l: AnyRecord): string => l.label,
   attributes: { maxlength: 12 },
+  validator: isValidCurrency,
 };
