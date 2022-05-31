@@ -18,6 +18,7 @@ describe('Download claim Controller', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'token',
+      isCitizen: true,
     };
     const fetchResponse = {
       status: 200,
@@ -51,6 +52,7 @@ describe('Download claim Controller', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'token',
+      isCitizen: true,
     };
 
     const controller = new DownloadClaimController();
