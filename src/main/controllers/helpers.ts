@@ -39,7 +39,7 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   }
 };
 
-export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
+export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: Partial<CaseWithId>): FormError[] => {
   const payBeforeTax = formData.payBeforeTax;
   const payAfterTax = formData.payAfterTax;
   const payInterval = formData.payInterval;
@@ -63,8 +63,8 @@ export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Pa
 };
 
 export const getNewJobPartialPayInfoError = (
-  req: AppRequest,
-  form: Form,
+  _req: AppRequest,
+  _form: Form,
   formData: Partial<CaseWithId>
 ): FormError[] => {
   const newJobPay = formData.newJobPay;
