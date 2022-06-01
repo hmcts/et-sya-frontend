@@ -47,7 +47,7 @@ export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Pa
   if (payBeforeTax || payAfterTax) {
     const errorType = isPayIntervalNull(payInterval);
     if (errorType) {
-      return [{ errorType: errorType as string, propertyName: 'payInterval' }];
+      return [{ errorType, propertyName: 'payInterval' }];
     }
   }
 
@@ -55,8 +55,8 @@ export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Pa
     const errorType = arePayValuesNull([payBeforeTax.toString(), payAfterTax.toString()]);
     if (errorType) {
       return [
-        { errorType: errorType as string, propertyName: 'payBeforeTax' },
-        { errorType: errorType as string, propertyName: 'payAfterTax' },
+        { errorType, propertyName: 'payBeforeTax' },
+        { errorType, propertyName: 'payAfterTax' },
       ];
     }
   }
@@ -73,14 +73,14 @@ export const getNewJobPartialPayInfoError = (
   if (newJobPay) {
     const errorType = isPayIntervalNull(newJobPayInterval);
     if (errorType) {
-      return [{ errorType: errorType as string, propertyName: 'newJobPayInterval' }];
+      return [{ errorType, propertyName: 'newJobPayInterval' }];
     }
   }
 
   if (newJobPayInterval) {
     const errorType = arePayValuesNull([newJobPay.toString()]);
     if (errorType) {
-      return [{ errorType: errorType as string, propertyName: 'newJobPay' }];
+      return [{ errorType, propertyName: 'newJobPay' }];
     }
   }
 };
