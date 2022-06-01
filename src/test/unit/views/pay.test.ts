@@ -15,6 +15,7 @@ const payJson = JSON.parse(payJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = payJson.h1;
+const labelClass = 'govuk-label govuk-label--m';
 const buttonClass = 'govuk-button';
 const radios = 'govuk-radios';
 const inputs = 'govuk-input--width-5';
@@ -32,6 +33,11 @@ describe('Pay page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display 2 labels', () => {
+    const labels = htmlRes.getElementsByClassName(labelClass);
+    expect(labels.length).equal(2, `only ${labels.length} found`);
   });
 
   it('should have 2 input fields', () => {
