@@ -251,7 +251,7 @@ export const isValidCurrency: Validator = value => {
     return 'minLengthRequired';
   }
 
-  if (/^(\d+,?\d+)+(.{1}\d{2}){0,1}$/.test(value as string)) {
+  if (/^(\d{1,3},?){0,3}(.{1}\d{2}){0,1}$/.test(value as string)) {
     return;
   } else {
     return 'minLengthRequired';
