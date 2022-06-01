@@ -3,6 +3,8 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   isDateInputInvalid,
+  isDateTenYearsInFuture,
+  isDateTenYearsInPast,
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
@@ -297,6 +299,58 @@ describe('Validation', () => {
           fieldName: 'day',
         });
       }
+    });
+  });
+
+  describe('isDateTenYearsInPast()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the past when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInPast(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('isDateTenYearsInFuture()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
     });
   });
 
