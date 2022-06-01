@@ -46,6 +46,7 @@ Scenario('Claim while working for organisation when notice period is for 3 month
 
   I.seeElement('#pension');
   I.checkOption('input[id=pension]');
+  I.fillField('#pension-contributions', '200');
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');
@@ -100,7 +101,7 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
 
   I.seeElement('#pension');
   I.checkOption('input[id=pension]');
-  //I.fillField('input[id=pension-contributions]','100');
+  I.fillField('#pension-contributions', '200');
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');
