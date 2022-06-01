@@ -1,17 +1,13 @@
 Feature('ET check your answers');
 const test_url = '/check-your-answers';
-const loginIdam = require('../authUser/loginIdam.js');
-const data = require('../data.json');
+const authPage = require('./authPage.js');
 const { I } = inject();
 
 Scenario('Verify check your answers page', () => {
   I.amOnPage(test_url);
-  loginIdam.signInWithCredentials(data.signIn.username, data.signIn.password);
-  I.wait(3);
+  authPage.login();
   I.amOnPage(test_url);
-  I.see('Check your answers');
 
-  I.see('Type of claim');
   I.seeElement('(//a[@href="/type-of-claim"])');
 
   I.see('Date of birth');
@@ -92,7 +88,7 @@ Scenario('Verify check your answers page', () => {
   I.see('What you want');
   I.seeElement('(//a[@href="/what-you-want-from-your-claim"])');
 
-  I.amOnPage('/logout');
+  authPage.logout();
 })
   .tag('@RET-1236')
   .tag(' @RET-BAT');
