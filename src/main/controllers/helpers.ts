@@ -39,7 +39,7 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   }
 };
 
-export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: Partial<CaseWithId>): FormError[] => {
+export const getPartialPayInfoError = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   const payBeforeTax = formData.payBeforeTax;
   const payAfterTax = formData.payAfterTax;
   const payInterval = formData.payInterval;
@@ -47,7 +47,7 @@ export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: 
   if (payBeforeTax || payAfterTax) {
     const errorType = isPayIntervalNull(payInterval);
     if (errorType) {
-      return [{ errorType, propertyName: 'payInterval' }];
+      return [{ errorType: errorType as string, propertyName: 'payInterval' }];
     }
   }
 
@@ -55,16 +55,16 @@ export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: 
     const errorType = arePayValuesNull([payBeforeTax.toString(), payAfterTax.toString()]);
     if (errorType) {
       return [
-        { errorType, propertyName: 'payBeforeTax' },
-        { errorType, propertyName: 'payAfterTax' },
+        { errorType: errorType as string, propertyName: 'payBeforeTax' },
+        { errorType: errorType as string, propertyName: 'payAfterTax' },
       ];
     }
   }
 };
 
 export const getNewJobPartialPayInfoError = (
-  _req: AppRequest,
-  _form: Form,
+  req: AppRequest,
+  form: Form,
   formData: Partial<CaseWithId>
 ): FormError[] => {
   const newJobPay = formData.newJobPay;
@@ -73,14 +73,14 @@ export const getNewJobPartialPayInfoError = (
   if (newJobPay) {
     const errorType = isPayIntervalNull(newJobPayInterval);
     if (errorType) {
-      return [{ errorType, propertyName: 'newJobPayInterval' }];
+      return [{ errorType: errorType as string, propertyName: 'newJobPayInterval' }];
     }
   }
 
   if (newJobPayInterval) {
     const errorType = arePayValuesNull([newJobPay.toString()]);
     if (errorType) {
-      return [{ errorType, propertyName: 'newJobPay' }];
+      return [{ errorType: errorType as string, propertyName: 'newJobPay' }];
     }
   }
 };
