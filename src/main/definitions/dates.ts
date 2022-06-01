@@ -44,6 +44,8 @@ export type DateFormFields = {
   validator: DateValidator;
 };
 
+type DateTypes = string | void | InvalidField;
+
 export const DefaultDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
@@ -51,7 +53,7 @@ export const DefaultDateFormFields = {
   labelHidden: true,
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
-  validator: (value: CaseDate): string | void | InvalidField =>
+  validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
 };
 
@@ -62,7 +64,7 @@ export const EndDateFormFields = {
   labelHidden: true,
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
-  validator: (value: CaseDate): string | void | InvalidField =>
+  validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value) || isDateTenYearsInPast(value),
 };
 
@@ -73,6 +75,6 @@ export const NewJobDateFormFields = {
   labelHidden: true,
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
-  validator: (value: CaseDate): string | void | InvalidField =>
+  validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
 };
