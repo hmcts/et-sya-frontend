@@ -8,11 +8,11 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class TaskListCheckController {
+export default class PersonalDetailsCheckController {
   private readonly form: Form;
-  private readonly tasklistCheckContent: FormContent = {
+  private readonly personalDetailsCheckContent: FormContent = {
     fields: {
-      tasklistCheck: {
+      personalDetailsCheck: {
         ...DefaultRadioFormFields,
         id: 'tasklist-check',
         classes: 'govuk-radios',
@@ -23,7 +23,7 @@ export default class TaskListCheckController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.tasklistCheckContent.fields);
+    this.form = new Form(<FormFields>this.personalDetailsCheckContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -32,7 +32,7 @@ export default class TaskListCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.tasklistCheckContent, [
+    const content = getPageContent(req, this.personalDetailsCheckContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TASK_LIST_CHECK,
     ]);

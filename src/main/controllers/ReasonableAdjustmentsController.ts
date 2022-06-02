@@ -58,7 +58,7 @@ export default class ReasonableAdjustmentsController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TASK_LIST_CHECK);
+    handleSessionErrors(req, res, this.form, PageUrls.PERSONAL_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {

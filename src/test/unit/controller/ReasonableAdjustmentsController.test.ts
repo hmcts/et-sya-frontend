@@ -32,7 +32,7 @@ describe('Reasonable Adjustments Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/tasklist-check');
+      expect(res.redirect).toBeCalledWith('/personal-details-check');
       //  expect(req.session.errors).toEqual(errors);
     });
   });

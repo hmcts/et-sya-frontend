@@ -109,7 +109,7 @@ export const PageUrls = {
   TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
   DOWNLOAD_CLAIM: '/download-claim',
-  TASK_LIST_CHECK: '/tasklist-check',
+  PERSONAL_DETAILS_CHECK: '/personal-details-check',
 } as const;
 
 export const AuthUrls = {

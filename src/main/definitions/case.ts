@@ -61,7 +61,7 @@ export interface Case {
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
-  tasklistCheck?: YesOrNo;
+  personalDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {

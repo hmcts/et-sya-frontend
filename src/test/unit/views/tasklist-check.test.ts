@@ -25,7 +25,7 @@ let htmlRes: Document;
 describe('Task list check page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.TASK_LIST_CHECK)
+      .get(PageUrls.PERSONAL_DETAILS_CHECK)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

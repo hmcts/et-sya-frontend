@@ -1,4 +1,4 @@
-import TaskListCheckController from '../../../main/controllers/TaskListCheckController';
+import PersonalDetailsCheckController from '../../../main/controllers/PersonalDetailsCheckController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -6,12 +6,12 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Test task List check controller', () => {
   const t = {
-    tasklistCheck: {},
+    personalDetailsCheck: {},
     common: {},
   };
 
   it('should render the task list check page', () => {
-    const controller = new TaskListCheckController();
+    const controller = new PersonalDetailsCheckController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -22,8 +22,8 @@ describe('Test task List check controller', () => {
   });
 
   it('should render the claim steps page', () => {
-    const body = { tasklistCheck: YesOrNo.YES };
-    const controller = new TaskListCheckController();
+    const body = { personalDetailsCheck: YesOrNo.YES };
+    const controller = new PersonalDetailsCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -32,9 +32,9 @@ describe('Test task List check controller', () => {
   });
 
   it('should render same page if nothing selected', () => {
-    const errors = [{ propertyName: 'tasklistCheck', errorType: 'required' }];
-    const body = { tasklistCheck: '' };
-    const controller = new TaskListCheckController();
+    const errors = [{ propertyName: 'personalDetailsCheck', errorType: 'required' }];
+    const body = { personalDetailsCheck: '' };
+    const controller = new PersonalDetailsCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
