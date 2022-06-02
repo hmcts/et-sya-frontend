@@ -1,71 +1,54 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class ReasonableAdjustmentsController {
   private readonly form: Form;
+
   private readonly reasonableAdjustmentsContent: FormContent = {
     fields: {
       reasonableAdjustments: {
+        classes: 'govuk-radios',
         id: 'reasonableAdjustments',
-        type: 'checkboxes',
-        labelHidden: false,
-        label: l => l.h1,
-        labelSize: 'l',
+        type: 'radios',
+        label: (l: AnyRecord): string => l.h1,
         isPageHeading: true,
-        hint: l => l.hint,
-        validator: atLeastOneFieldIsChecked,
         values: [
           {
             name: 'reasonableAdjustments',
-            hint: l => l.documents.hint,
-            label: l => l.documents.text,
-            value: 'documents',
-          },
-          {
-            name: 'reasonableAdjustments',
-            hint: l => l.communicating.hint,
-            label: l => l.communicating.text,
-            value: 'communicating',
-          },
-          {
-            name: 'reasonableAdjustments',
-            hint: l => l.support.hint,
-            label: l => l.support.text,
-            value: 'support',
-          },
-          {
-            name: 'reasonableAdjustments',
-            hint: l => l.comfortable.hint,
-            label: l => l.comfortable.text,
-            value: 'comfortable',
-          },
-          {
-            name: 'reasonableAdjustments',
-            hint: l => l.travelling.hint,
-            label: l => l.travelling.text,
-            value: 'travelling',
-          },
-          {
-            divider: true,
+            label: (l: AnyRecord): string => l.yes,
+            subFields: {
+              adjustmentDetail: {
+                id: 'adjustmentDetailText',
+                name: 'adjustmentDetailText',
+                type: 'text',
+                label: (l: AnyRecord): string => l.adjustmentDetailTextLabel,
+                classes: 'govuk-textarea',
+                attributes: { maxLength: 5000 },
+              },
+            },
           },
           {
             name: 'reasonableAdjustments',
             label: l => l.noSupport,
             value: 'noSupport',
-            exclusive: true,
           },
         ],
       },
     },
     submit: {
-      text: l => l.submit,
+      text: (l: AnyRecord): string => l.submit,
+      classes: 'govuk-!-margin-right-2',
+    },
+    saveForLater: {
+      text: (l: AnyRecord): string => l.saveForLater,
+      classes: 'govuk-button--secondary',
     },
   };
 
@@ -75,7 +58,7 @@ export default class ReasonableAdjustmentsController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DOCUMENTS);
+    handleSessionErrors(req, res, this.form, PageUrls.TASK_LIST_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -84,7 +67,7 @@ export default class ReasonableAdjustmentsController {
       TranslationKeys.REASONABLE_ADJUSTMENTS,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('generic-form-template', {
+    res.render('reasonable-adjustments', {
       ...content,
     });
   };

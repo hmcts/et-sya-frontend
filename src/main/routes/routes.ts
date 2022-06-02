@@ -9,6 +9,7 @@ export default function (app: Application): void {
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
   app.get(PageUrls.CHECKLIST, app.locals.container.cradle.checklistController.get);
   app.get(PageUrls.NEW_ACCOUNT_LANDING, app.locals.container.cradle.newAccountLandingController.get);
+  app.get(PageUrls.TASK_LIST_CHECK, app.locals.container.cradle.taskListCheckController.get);
   app.get(PageUrls.LIP_OR_REPRESENTATIVE, app.locals.container.cradle.lipOrRepController.get);
   app.post(PageUrls.LIP_OR_REPRESENTATIVE, app.locals.container.cradle.lipOrRepController.post);
   app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, app.locals.container.cradle.singleOrMultipleController.get);

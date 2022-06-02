@@ -1,0 +1,44 @@
+import { Response } from 'express';
+
+import { Form } from '../components/form/form';
+import { AppRequest } from '../definitions/appRequest';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FormContent, FormFields } from '../definitions/form';
+import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+
+import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+export default class TaskListCheckController {
+  private readonly form: Form;
+  private readonly tasklistCheckContent: FormContent = {
+    fields: {
+      tasklistCheck: {
+        ...DefaultRadioFormFields,
+        id: 'tasklist-check',
+        classes: 'govuk-radios',
+      },
+    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
+  };
+
+  constructor() {
+    this.form = new Form(<FormFields>this.tasklistCheckContent.fields);
+  }
+
+  public post = (req: AppRequest, res: Response): void => {
+    setUserCase(req, this.form);
+    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+  };
+
+  public get = (req: AppRequest, res: Response): void => {
+    const content = getPageContent(req, this.tasklistCheckContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.TASK_LIST_CHECK,
+    ]);
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render(TranslationKeys.TASK_LIST_CHECK, {
+      ...content,
+    });
+  };
+}
