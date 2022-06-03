@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const noticeEndJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-end.json'),
@@ -16,14 +16,12 @@ const noticeEndJson = JSON.parse(noticeEndJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticeEndJson.h1;
 const buttonId = 'main-form-submit';
-const hintClass = 'govuk-body';
-const hintValue = noticeEndJson.p2;
 const dateFieldClass = 'govuk-date-input__item';
 
 let htmlRes: Document;
 describe('Notice end page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.NOTICE_END)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -35,11 +33,6 @@ describe('Notice end page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'When does your notice period end?');
   });
 
-  it('should display hint', () => {
-    const hint = htmlRes.getElementsByClassName(hintClass);
-    expect(hint[1].innerHTML).contains(hintValue, 'For example, 22 04 2014.');
-  });
-
   it('should display date input fields', () => {
     const dateFields = htmlRes.getElementsByClassName(dateFieldClass);
     expect(dateFields.length).equal(3, `only ${dateFields.length} found`);
@@ -47,7 +40,6 @@ describe('Notice end page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementById(buttonId);
-    console.log(`Button name is ${button.innerHTML}`);
     expect(button.innerHTML).contains('Save and continue', 'Save and continue');
   });
 });

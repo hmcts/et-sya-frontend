@@ -23,6 +23,7 @@ describe('Axios post to iniate case', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'xxxx',
+      isCitizen: true,
     };
     const caseData =
       '[["claimantRepresentedQuestion","Yes"],["caseType","Single"], ["typesOfClaim", "[\\"discrimination\\"]"]]';
@@ -88,6 +89,32 @@ describe('updateDraftCase', () => {
     expect(mockedAxios.put).toHaveBeenCalledWith(
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
+    );
+  });
+});
+
+describe('Axios post to retrieve pdf', () => {
+  it('should send post request to the correct api endpoint with the case id passed in the request body', async () => {
+    const mockUserDetails: UserDetails = {
+      id: '1234',
+      givenName: 'Bobby',
+      familyName: 'Ryan',
+      email: 'bobby@gmail.com',
+      accessToken: 'xxxx',
+      isCitizen: true,
+    };
+
+    api.downloadClaimPdf(mockUserDetails.id);
+
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.DOWNLOAD_CLAIM_PDF,
+      expect.objectContaining({
+        caseId: '1234',
+      }),
+      expect.objectContaining({
+        headers: expect.objectContaining({ 'Content-Type': 'application/pdf' }),
+        responseType: 'arraybuffer',
+      })
     );
   });
 });

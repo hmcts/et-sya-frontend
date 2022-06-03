@@ -44,7 +44,7 @@ export const TranslationKeys = {
   TRAVEL: 'travel',
   NEW_JOB: 'new-job',
   NEW_JOB_START_DATE: 'new-job-start-date',
-  NEW_JOB_PAY: 'new-job-pay-before-tax',
+  NEW_JOB_PAY: 'new-job-pay',
   CLAIM_SUBMITTED: 'claim-submitted',
   CHECK_ANSWERS: 'check-your-answers',
   SUMMARISE_YOUR_CLAIM: 'summarise-your-claim',
@@ -101,12 +101,13 @@ export const PageUrls = {
   TRAVEL: '/travel',
   NEW_JOB: '/new-job',
   NEW_JOB_START_DATE: '/new-job-start-date',
-  NEW_JOB_PAY: '/new-job-pay-before-tax',
+  NEW_JOB_PAY: '/new-job-pay',
   SUMMARISE_YOUR_CLAIM: '/summarise-what-happened',
   DESIRED_CLAIM_OUTCOME: '/what-you-want-from-your-claim',
   COMPENSATION_OUTCOME: '/what-compensation-are-you-seeking',
   TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
+  DOWNLOAD_CLAIM: '/download-claim',
 } as const;
 
 export const AuthUrls = {
@@ -120,6 +121,7 @@ export const JavaApiUrls = {
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
@@ -143,3 +145,4 @@ export const CcdDataModel = {
 
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
+export const CITIZEN_ROLE = 'citizen';

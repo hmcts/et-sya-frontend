@@ -101,6 +101,7 @@ export default function (app: Application): void {
     PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
     app.locals.container.cradle.tribunalRecommendationOutcomeController.post
   );
+  app.get(PageUrls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({

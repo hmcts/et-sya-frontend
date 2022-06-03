@@ -24,7 +24,7 @@ describe('Notice end Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_END, expect.anything());
   });
 
-  it('should redirect to notice period pay on successful post', () => {
+  it('should redirect to notice type on successful post', () => {
     const body = {
       'noticeEnds-day': '21',
 
@@ -40,7 +40,7 @@ describe('Notice end Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_PAY);
+    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_TYPE);
   });
 
   it('should redirect to the same screen when errors are present', () => {

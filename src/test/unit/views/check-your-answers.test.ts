@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
 const expectedTitle = 'Check your answers';
@@ -25,7 +25,7 @@ const expectedWarningText = 'This is your last opportunity to change any details
 let htmlRes: Document;
 describe('Check your answers confirmation page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

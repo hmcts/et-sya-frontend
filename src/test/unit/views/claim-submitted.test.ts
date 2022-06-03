@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/your-claim-has-been-submitted';
 const expectedTitle = 'Your claim has been submitted';
@@ -11,7 +11,7 @@ const panelTitleClass = 'govuk-panel__title';
 let htmlRes: Document;
 describe('Claim Submitted Confirmation page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

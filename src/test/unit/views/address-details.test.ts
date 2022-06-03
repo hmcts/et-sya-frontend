@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/address-details';
 const titleClass = 'govuk-heading-xl';
@@ -17,7 +17,7 @@ const expectedInputLabel5 = 'Postcode';
 let htmlRes: Document;
 describe('Address details page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

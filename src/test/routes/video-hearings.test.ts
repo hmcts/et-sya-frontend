@@ -1,12 +1,12 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
   it('should return the video hearing choice page', async () => {
-    const res = await request(app).get('/would-you-want-to-take-part-in-video-hearings');
+    const res = await request(mockApp({})).get('/would-you-want-to-take-part-in-video-hearings');
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should return the reasonable adjustments page when 'yes' and 'save and continue' are selected", async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ videoHearings: YesOrNo.YES })
       .expect(res => {
@@ -24,7 +24,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   });
 
   test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected", async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ videoHearings: YesOrNo.NO })
       .expect(res => {
@@ -34,7 +34,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   });
 
   test('should reload the page when nothing have been selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
       .send({ videoHearings: undefined })
       .expect(res => {

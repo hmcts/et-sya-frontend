@@ -4,8 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockApp } from '../mocks/mockApp';
 
 const tribunalRecommendationOutcomeJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/tribunal-recommendation-outcome.json'),
@@ -22,7 +22,7 @@ const expectedTitle = tribunalRecommendationOutcomeJson.h1;
 let htmlRes: Document;
 describe('Tribunal Recommendation Outcome page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
