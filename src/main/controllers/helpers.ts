@@ -48,6 +48,8 @@ export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: 
     const errorType = isPayIntervalNull(payInterval);
     if (errorType) {
       return [{ errorType, propertyName: 'payInterval' }];
+    } else {
+      return;
     }
   }
 
