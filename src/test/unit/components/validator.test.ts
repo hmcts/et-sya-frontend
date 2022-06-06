@@ -10,6 +10,7 @@ import {
   isInvalidPostcode,
   isJobTitleValid,
   isPastDate,
+  isPayIntervalNull,
   isValidCurrency,
   isValidInteger,
   isValidUKTelNumber,
@@ -350,6 +351,29 @@ describe('Validation', () => {
     ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
       const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
       expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('isPayIntervalNull()', () => {
+    it('Should check if value is Weekly', () => {
+      const isValid = isPayIntervalNull('Weekly');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value is Monthly', () => {
+      const isValid = isPayIntervalNull('Monthly');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value is Annual', () => {
+      const isValid = isPayIntervalNull('Annual');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const value = '';
+      const isValid = isPayIntervalNull(value);
+      expect(isValid).toStrictEqual('required');
     });
   });
 
