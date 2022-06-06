@@ -4,7 +4,8 @@ import { Response } from 'express';
 import i18next from 'i18next';
 import { uuid } from 'uuidv4';
 
-import { AppRequest } from '../definitions/appRequest';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 
 import { createToken } from './createToken';
@@ -27,43 +28,64 @@ export interface PCQRequest {
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
 
+const isEnabled = (): boolean => {
+  // return process.env.PCQ_ENABLED === 'true' || config.get('services.pcq.enabled') === 'true';
+  return true;
+};
+
 export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> => {
-  const healthResp = await callPCQHealth();
-  const pcqUrl: string = config.get('services.pcq.url');
+  if (isEnabled()) {
+    const healthResp = await callPCQHealth();
+    const pcqUrl: string = config.get('services.pcq.url');
 
-  logger.info(`PCQ health status  ${healthResp.data.status}`);
-  if (!req.session.userCase?.ClaimantPcqId && healthResp.data.status === 'UP') {
-    //call pcq
-    logger.info('Calling the PCQ Service');
-    const returnurl = 'http://' + req.headers.host + PageUrls.CHECK_ANSWERS;
+    // logger.info(`PCQ health status  ${healthResp.data.status}`);
+    // logger.info(`claimant PCQ ID ${req.session.userCase?.ClaimantPcqId}`);
 
-    //Generate pcq id
-    const claimantPcqId: string = uuid();
+    if (!req.session.userCase?.ClaimantPcqId && healthResp.data.status === 'UP') {
+      //call pcq
+      logger.info('Calling the PCQ Service');
+      const returnurl = req.protocol + '://' + req.headers.host + PageUrls.CHECK_ANSWERS;
 
-    const params: PCQRequest = {
-      serviceId: 'ET',
-      actor: 'Claimant',
-      pcqId: claimantPcqId,
-      ccdCaseId: req.session.userCase.id,
-      partyId: req.session.user.email,
-      returnUrl: returnurl,
-      language: i18next.language || 'en',
-    };
+      //Generate pcq id
+      const claimantPcqId: string = uuid();
 
-    params.token = createToken(params);
-    params.partyId = encodeURIComponent(params.partyId);
+      //remove dummy ccd
+      req.session.userCase = <CaseWithId>{};
+      req.session.user = <UserDetails>{};
+      req.session.userCase.id = '1653474371593877';
+      req.session.user.email = 'johndoe@example.com';
 
-    const qs: string = Object.keys(params)
-      .map((key: keyof typeof params) => `${key}=${params[key]}`)
-      .join('&');
+      const params: PCQRequest = {
+        serviceId: 'ET',
+        actor: 'Claimant',
+        pcqId: claimantPcqId,
+        ccdCaseId: req.session.userCase.id,
+        partyId: req.session.user.email,
+        returnUrl: returnurl,
+        language: i18next.language || 'en',
+      };
 
-    req.session.userCase.ClaimantPcqId = claimantPcqId;
-    req.session.save();
+      params.token = createToken(params);
+      params.partyId = encodeURIComponent(params.partyId);
 
-    res.redirect(`${pcqUrl}?${qs}`);
+      const qs: string = Object.keys(params)
+        .map((key: keyof typeof params) => `${key}=${params[key]}`)
+        .join('&');
+
+      req.session.userCase.ClaimantPcqId = claimantPcqId;
+      req.session.save();
+      logger.info(`Info ####### ${pcqUrl}?${qs}`);
+      // res.redirect(`${pcqUrl}?${qs}`);
+      // logger.info(`Info ####### ${config.get('services.pcq.health')}`);
+
+      // res.redirect(`${config.get('services.pcq.health')}`);
+      res.redirect(PageUrls.CHECK_ANSWERS);
+    } else {
+      //skip pcq
+      res.redirect(PageUrls.CHECK_ANSWERS);
+    }
   } else {
     //skip pcq
-    logger.info('Skipping PCQ Service Call');
     res.redirect(PageUrls.CHECK_ANSWERS);
   }
 };

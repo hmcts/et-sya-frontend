@@ -32,7 +32,8 @@
     "pcq": {
       "url": "https://pcq.aat.platform.hmcts.net/service-endpoint",
       "health": "https://pcq.aat.platform.hmcts.net/health",
-      "token": "SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP"
+      "token": "SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP",
+      "enabled": "true"
     }
   },
   "pact": {

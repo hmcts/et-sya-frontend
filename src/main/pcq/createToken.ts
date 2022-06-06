@@ -11,6 +11,7 @@ const keyLen = 32;
 
 export const createToken = (params: PCQRequest): string => {
   const tokenKey: crypto.BinaryLike = config.get('services.pcq.token');
+
   let encrypted = '';
 
   if (tokenKey) {
@@ -24,5 +25,6 @@ export const createToken = (params: PCQRequest): string => {
     encrypted = cipher.update(paramsJson, 'utf-8', 'hex');
     encrypted += cipher.final('hex');
   }
+
   return encrypted;
 };
