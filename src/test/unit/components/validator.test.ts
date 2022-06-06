@@ -365,6 +365,12 @@ describe('Validation', () => {
       const isValid = isPayIntervalNull(value);
       expect(isValid).toStrictEqual('required');
     });
+
+    it('Should check if value exists as string', () => {
+      const value: string = undefined;
+      const isValid = isPayIntervalNull(value);
+      expect(isValid).toStrictEqual('required');
+    });
   });
 
   describe('arePayValuesNull()', () => {
