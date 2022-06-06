@@ -39,7 +39,7 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   }
 };
 
-export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: Partial<CaseWithId>): FormError[] => {
+export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError[] => {
   const payBeforeTax = formData.payBeforeTax;
   const payAfterTax = formData.payAfterTax;
   const payInterval = formData.payInterval;
@@ -52,7 +52,7 @@ export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: 
   }
 
   if (payInterval) {
-    const errorType = arePayValuesNull([payBeforeTax.toString(), payAfterTax.toString()]);
+    const errorType = arePayValuesNull([`${payBeforeTax || ''}`, `${payAfterTax || ''}`]);
     if (errorType) {
       return [
         { errorType, propertyName: 'payBeforeTax' },
@@ -62,11 +62,7 @@ export const getPartialPayInfoError = (_req: AppRequest, _form: Form, formData: 
   }
 };
 
-export const getNewJobPartialPayInfoError = (
-  _req: AppRequest,
-  _form: Form,
-  formData: Partial<CaseWithId>
-): FormError[] => {
+export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): FormError[] => {
   const newJobPay = formData.newJobPay;
   const newJobPayInterval = formData.newJobPayInterval;
 
@@ -78,7 +74,7 @@ export const getNewJobPartialPayInfoError = (
   }
 
   if (newJobPayInterval) {
-    const errorType = arePayValuesNull([newJobPay.toString()]);
+    const errorType = arePayValuesNull([`${newJobPay || ''}`]);
     if (errorType) {
       return [{ errorType, propertyName: 'newJobPay' }];
     }
@@ -95,8 +91,8 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   //call get custom errors and add to session errors
   const custErrors = getCustomStartDateError(req, form, formData);
-  const payErrors = getPartialPayInfoError(req, form, formData);
-  const newJobPayErrors = getNewJobPartialPayInfoError(req, form, formData);
+  const payErrors = getPartialPayInfoError(formData);
+  const newJobPayErrors = getNewJobPartialPayInfoError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
