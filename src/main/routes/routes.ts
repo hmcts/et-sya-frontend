@@ -28,9 +28,17 @@ export default function (app: Application): void {
   app.get(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.get);
   app.post(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.post);
   app.get(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.get);
-  // app.post(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.post);
+  app.post(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.post);
   app.get(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.get);
   app.post(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.post);
+  app.get(
+    PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
+    app.locals.container.cradle.employmentAndRespondentCheckController.get
+  );
+  app.post(
+    PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
+    app.locals.container.cradle.employmentAndRespondentCheckController.post
+  );
   app.get(PageUrls.CONTACT_ACAS, app.locals.container.cradle.contactAcasController.get);
   app.get(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.get);
   app.post(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.post);

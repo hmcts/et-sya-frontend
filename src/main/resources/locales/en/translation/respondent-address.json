@@ -1,6 +1,7 @@
 {
   "enterPostcode": "Enter postcode",
   "findAddress": "Find address",
+  "pageText": "You should be able to find this text on your payslips, contract or other official documents.",
   "buildingStreet": "Building and street",
   "town": "Town or city",
   "county": "County",

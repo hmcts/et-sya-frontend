@@ -11,14 +11,7 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class RespondentNameController {
   private readonly form: Form;
   private readonly respondentAddressContent: FormContent = {
-    fields: {
-      respondentAddress: {
-        id: 'respondent-address',
-        name: 'respondent-address',
-        type: 'text',
-        label: (l: AnyRecord): string => l.label,
-      },
-    },
+    fields: {},
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-!-margin-right-2',
@@ -35,21 +28,23 @@ export default class RespondentNameController {
 
   public post = (req: AppRequest, res: Response): void => {
     console.log(req.session.userCase);
+    const redirectUrl = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.WORK_ADDRESS);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.respondentAddressContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_ADDRESS,
+      'enter-address',
     ]);
     const respondents = req.session.userCase.respondents;
-    const currentRespondentName = respondents[respondents.length - 1].respondentName;
+    const selectedRespondent = respondents[req.session.userCase.selectedRespondent - 1];
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,
-      respondentName: currentRespondentName,
+      respondentName: selectedRespondent.respondentName,
     });
   };
 }

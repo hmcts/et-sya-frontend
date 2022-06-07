@@ -7,7 +7,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -23,7 +23,7 @@ export default class AcasCertNumController {
         values: [
           {
             name: 'acasCertNum',
-            label: YesOrNo.YES,
+            label: (l: AnyRecord): string => l.yes,
             value: YesOrNo.YES,
             subFields: {
               acasCertNum: {
@@ -38,7 +38,7 @@ export default class AcasCertNumController {
           },
           {
             name: 'acasCertNum',
-            label: YesOrNo.NO,
+            label: (l: AnyRecord): string => l.no,
             value: YesOrNo.NO,
           },
         ],
@@ -59,8 +59,11 @@ export default class AcasCertNumController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      ? PageUrls.RESPONDENT_DETAILS_CHECK
+      : PageUrls.NO_ACAS_NUMBER;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.HOME);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

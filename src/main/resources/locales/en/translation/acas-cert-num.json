@@ -1,3 +1,5 @@
 {
-  "acasCertNum": "Enter the Acas early conciliation certificate number"
+  "acasCertNum": "Enter the Acas early conciliation certificate number",
+  "yes": "Yes",
+  "no": "No"
 }

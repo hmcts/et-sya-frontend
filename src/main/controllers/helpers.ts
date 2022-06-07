@@ -137,13 +137,22 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
 };
 
 export const setUserCaseForNewRespondent = (req: AppRequest): void => {
-  const respondent: Respondent = {
-    respondentName: req.body.respondentName,
-  };
-  if (req.session.userCase.respondents === undefined) {
-    req.session.userCase.respondents = [];
+  if (!req.session.userCase) {
+    req.session.userCase = {} as CaseWithId;
   }
-  req.session.userCase.respondents.push(respondent);
+  let respondent: Respondent;
+  if (!req.session.userCase.respondents) {
+    req.session.userCase.respondents = [];
+    respondent = {
+      respondentNumber: 1,
+      respondentName: req.body.respondentName,
+    };
+    req.session.userCase.respondents.push(respondent);
+    req.session.userCase.selectedRespondent = respondent.respondentNumber;
+  } else {
+    req.session.userCase.respondents[req.session.userCase.selectedRespondent - 1].respondentName =
+      req.body.respondentName;
+  }
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {

@@ -3,5 +3,6 @@
   "subTitle": "Respondent 1",
   "name": "Name",
   "address": "Address",
-  "acasNum": "Acas Certificate number"
+  "acasNum": "Acas Certificate number",
+  "submit": "Add new respondent"
 }

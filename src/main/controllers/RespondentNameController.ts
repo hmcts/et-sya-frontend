@@ -36,6 +36,7 @@ export default class RespondentNameController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCaseForNewRespondent(req);
+
     handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_ADDRESS);
   };
 

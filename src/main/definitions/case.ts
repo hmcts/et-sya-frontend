@@ -13,6 +13,7 @@ export interface CaseDate {
 }
 
 export interface Respondent {
+  respondentNumber: number;
   respondentName?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
@@ -75,7 +76,10 @@ export interface Case {
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
+  claimantWorkAddressQuestion?: YesOrNo;
+  selectedRespondent?: number;
   respondents?: Respondent[];
+  employmentAndRespondentCheck?: YesOrNo;
 }
 
 export const enum StillWorking {
