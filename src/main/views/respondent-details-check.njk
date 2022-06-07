@@ -1,0 +1,53 @@
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h2>
+    <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">{{ subTitle }}</caption>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">{{ name }}</th>
+                <td class="govuk-table__cell">Dummy</td>
+                <td class="govuk-table__cell">Dummy</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">{{ address }}</th>
+                <td class="govuk-table__cell">Dummy</td>
+                <td class="govuk-table__cell">Dummy</td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">{{ acasNum }}</th>
+                <td class="govuk-table__cell">Dummy</td>
+                <td class="govuk-table__cell">Dummy</td>
+            </tr>
+        </tbody>
+    </table>
+</div>  
+<div class="govuk-grid-row">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: "Save and continue",
+        href: "/steps-to-making-your-claim"
+      }) }}
+
+      {{ govukButton({
+        text: "Save as draft",
+        classes: "govuk-button--secondary",
+        href: "/your-claim-has-been-saved"
+      }) }}
+    </div>
+</div>     
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+{% endblock %} 

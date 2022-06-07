@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../components/form/form';
 import { arePayValuesNull, isAfterDateOfBirth, isPayIntervalNull } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId } from '../definitions/case';
+import { CaseWithId, Respondent } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -129,10 +129,21 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
+  console.log(formData);
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
   Object.assign(req.session.userCase, formData);
+};
+
+export const setUserCaseForNewRespondent = (req: AppRequest): void => {
+  const respondent: Respondent = {
+    respondentName: req.body.respondentName,
+  };
+  if (req.session.userCase.respondents === undefined) {
+    req.session.userCase.respondents = [];
+  }
+  req.session.userCase.respondents.push(respondent);
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
