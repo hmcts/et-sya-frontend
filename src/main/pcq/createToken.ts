@@ -28,7 +28,3 @@ export const createToken = (params: PCQRequest): string => {
 
   return encrypted;
 };
-
-export const demofn = (): void => {
-  console.log('hello');
-};
