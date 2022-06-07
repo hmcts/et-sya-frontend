@@ -13,6 +13,12 @@
     },
     "etSyaApi": {
       "host": "http://localhost:4550/"
+    },
+    "pcq": {
+      "url": "https://pcq.aat.platform.hmcts.net/service-endpoint",
+      "health": "https://pcq.aat.platform.hmcts.net/health",
+      "token": "TO BE PICKED FROM ENV",
+      "enabled": "true"
     }
   },
   "session": {
