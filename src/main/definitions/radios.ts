@@ -79,6 +79,5 @@ export type PayIntervalRadioFormFields = {
 export const DefaultPayIntervalRadioFormFields = {
   type: 'radios',
   classes: 'govuk-radios',
-  label: (l: AnyRecord): string => l.label,
   values: PayIntervalRadioValues,
 };
