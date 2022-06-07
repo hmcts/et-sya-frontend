@@ -232,9 +232,9 @@ describe('Validation', () => {
     it.each([
       { mockRef: '', expected: 'invalid' },
       { mockRef: null, expected: 'invalid' },
-      { mockRef: 'a', expected: 'invalid' },
-      { mockRef: '%', expected: 'invalid' },
-      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidInteger(mockRef)).toEqual(expected);
@@ -307,9 +307,9 @@ describe('Validation', () => {
   describe('isValidPension()', () => {
     it.each([
       { mockRef: '1', expected: 'invalid' },
-      { mockRef: 'a', expected: 'invalid' },
-      { mockRef: '%', expected: 'invalid' },
-      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
@@ -320,11 +320,15 @@ describe('Validation', () => {
 
   describe('isValidCurrency()', () => {
     it.each([
-      { mockRef: '1', expected: 'required' },
-      { mockRef: 'a', expected: 'required' },
-      { mockRef: '%', expected: 'required' },
-      { mockRef: '25a', expected: 'required' },
-      { mockRef: '20,00', expected: 'required' },
+      { mockRef: '', expected: undefined },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: '1234567891011', expected: 'minLengthRequired' },
+      { mockRef: '123,456.12', expected: undefined },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '20,00', expected: 'minLengthRequired' },
       { mockRef: '100', expected: undefined },
       { mockRef: '10,000', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {

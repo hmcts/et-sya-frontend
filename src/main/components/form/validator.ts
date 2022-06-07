@@ -157,9 +157,7 @@ export const isValidInteger: Validator = value => {
     return 'invalid';
   }
 
-  if (/^\d+$/.test(value as string)) {
-    return;
-  } else {
+  if (/^\D+$/.test(value as string) || /^\d{1,}\D+$/.test(value as string)) {
     return 'notANumber';
   }
 };
@@ -236,7 +234,7 @@ export const isValidPension: Validator = value => {
     return 'required';
   }
 
-  if (!/^\d+$/.test(value as string)) {
+  if (/^\D+$/.test(value as string) || /^\d{1,}[^0-9.]+$/.test(value as string)) {
     return 'notANumber';
   }
 
@@ -256,7 +254,7 @@ export const isValidCurrency: Validator = value => {
     return;
   }
 
-  if (!/^\d+$/.test(value as string)) {
+  if (/^\D+$/.test(value as string) || /^\d{1,}\D+$/.test(value as string)) {
     return 'notANumber';
   }
 
