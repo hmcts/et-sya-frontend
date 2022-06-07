@@ -19,6 +19,7 @@ describe('Should return data in api format', () => {
       familyName: 'Ryan',
       email: 'bobby@gmail.com',
       accessToken: 'xxxx',
+      isCitizen: true,
     };
     const apiData = toApiFormatCreate(userDataMap, mockUserDetails);
     expect(apiData).toEqual(mockEt1DataModel);

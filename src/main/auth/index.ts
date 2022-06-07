@@ -3,6 +3,7 @@ import config from 'config';
 import jwtDecode from 'jwt-decode';
 
 import { UserDetails } from '../definitions/appRequest';
+import { CITIZEN_ROLE } from '../definitions/constants';
 
 export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid: string): string => {
   const clientID: string = config.get('services.idam.clientID');
@@ -36,6 +37,7 @@ export const getUserDetails = async (
     email: jwt.sub,
     givenName: jwt.given_name,
     familyName: jwt.family_name,
+    isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : false,
   };
 };
 

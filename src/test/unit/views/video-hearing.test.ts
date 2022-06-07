@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { app } from '../../../main/app';
+import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/would-you-want-to-take-part-in-video-hearings';
 const titleClass = 'govuk-heading-xl';
@@ -21,7 +21,7 @@ const detailsSummary2 = 'Contact us for help';
 let htmlRes: Document;
 describe('Video Hearing Choice page', () => {
   beforeAll(async () => {
-    await request(app)
+    await request(mockApp({}))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

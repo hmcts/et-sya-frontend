@@ -107,6 +107,7 @@ export const PageUrls = {
   COMPENSATION_OUTCOME: '/what-compensation-are-you-seeking',
   TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
+  DOWNLOAD_CLAIM: '/download-claim',
   PCQ: '/pcq',
 } as const;
 
@@ -121,6 +122,7 @@ export const JavaApiUrls = {
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
@@ -144,3 +146,4 @@ export const CcdDataModel = {
 
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
+export const CITIZEN_ROLE = 'citizen';

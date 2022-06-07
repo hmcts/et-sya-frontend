@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { AuthUrls, LegacyUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { cachePreloginCaseData } from '../services/CacheService';
@@ -52,7 +52,7 @@ export default class TypeOfClaimController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
       ? LegacyUrls.ET1_BASE
-      : AuthUrls.LOGIN;
+      : PageUrls.CLAIM_STEPS;
 
     setUserCase(req, this.form);
 

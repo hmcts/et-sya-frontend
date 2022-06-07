@@ -1,12 +1,12 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { PageUrls } from '../../main/definitions/constants';
 import { ClaimOutcomes } from '../../main/definitions/definition';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.DESIRED_CLAIM_OUTCOME}`, () => {
   it('should return the desired claim outcome page', async () => {
-    const res = await request(app).get(PageUrls.DESIRED_CLAIM_OUTCOME);
+    const res = await request(mockApp({})).get(PageUrls.DESIRED_CLAIM_OUTCOME);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.DESIRED_CLAIM_OUTCOME}`, () => {
 
 describe(`POST ${PageUrls.DESIRED_CLAIM_OUTCOME}`, () => {
   test(`${ClaimOutcomes.COMPENSATION} outcome should go to compensation outcome page`, async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.DESIRED_CLAIM_OUTCOME)
       .send({
         claimOutcome: [ClaimOutcomes.COMPENSATION],
@@ -25,7 +25,7 @@ describe(`POST ${PageUrls.DESIRED_CLAIM_OUTCOME}`, () => {
       });
   });
   test(`${ClaimOutcomes.TRIBUNAL_RECOMMENDATION} outcome should go to tribunal recommendation outcome page`, async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.DESIRED_CLAIM_OUTCOME)
       .send({
         claimOutcome: [ClaimOutcomes.TRIBUNAL_RECOMMENDATION],
@@ -36,7 +36,7 @@ describe(`POST ${PageUrls.DESIRED_CLAIM_OUTCOME}`, () => {
       });
   });
   test('other outcomes should go back to claim steps page', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.DESIRED_CLAIM_OUTCOME)
       .send({
         claimOutcome: [ClaimOutcomes.OLD_JOB, ClaimOutcomes.ANOTHER_JOB],

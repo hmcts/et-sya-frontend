@@ -7,18 +7,19 @@ import uk.gov.hmcts.contino.AppPipelineDsl
 def type = "nodejs"
 def product = "et"
 def component = "sya"
+def branchesToSync = ['perftest']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 withPipeline(type, product, component) {
   disableLegacyDeployment()
+  syncBranchesWithMaster(branchesToSync)
 
   after('build') {
     yarnBuilder.yarn('build')
   }
 
   enablePactAs([
-              AppPipelineDsl.PactRoles.CONSUMER
+    AppPipelineDsl.PactRoles.CONSUMER
    ])
-
 }

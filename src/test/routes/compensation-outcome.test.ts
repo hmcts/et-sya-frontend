@@ -1,13 +1,12 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
 import { PageUrls } from '../../main/definitions/constants';
 import { ClaimOutcomes } from '../../main/definitions/definition';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.COMPENSATION_OUTCOME}`, () => {
   it('should return the acas single claim page', async () => {
-    const res = await request(app).get(PageUrls.COMPENSATION_OUTCOME);
+    const res = await request(mockApp({})).get(PageUrls.COMPENSATION_OUTCOME);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
   });
@@ -45,7 +44,7 @@ describe(`on POST ${PageUrls.COMPENSATION_OUTCOME}`, () => {
       });
   });
   test('should go to claim steps page when nothing has been selected', async () => {
-    await request(app)
+    await request(mockApp({}))
       .post(PageUrls.COMPENSATION_OUTCOME)
       .send({})
       .expect(res => {

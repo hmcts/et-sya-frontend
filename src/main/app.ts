@@ -64,10 +64,6 @@ new Session().enableFor(app);
 logger.info('Sessions');
 logMemUsage();
 
-new Oidc().enableFor(app);
-logger.info('Oidc');
-logMemUsage();
-
 new HealthCheck().enableFor(app);
 logger.info('Health Check');
 logMemUsage();
@@ -81,6 +77,10 @@ app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-cache, max-age=0, must-revalidate, no-store');
   next();
 });
+
+new Oidc().enableFor(app);
+logger.info('Oidc');
+logMemUsage();
 
 routes(app);
 logger.info('routes added');

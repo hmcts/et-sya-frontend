@@ -1,12 +1,13 @@
 Feature('ET check your answers');
 const test_url = '/check-your-answers';
+const authPage = require('./authPage.js');
 const { I } = inject();
 
 Scenario('Verify check your answers page', () => {
   I.amOnPage(test_url);
-  I.see('Check your answers');
+  authPage.login();
+  I.amOnPage(test_url);
 
-  I.see('Type of claim');
   I.seeElement('(//a[@href="/type-of-claim"])');
 
   I.see('Date of birth');
@@ -86,6 +87,8 @@ Scenario('Verify check your answers page', () => {
 
   I.see('What you want');
   I.seeElement('(//a[@href="/what-you-want-from-your-claim"])');
+
+  authPage.logout();
 })
   .tag('@RET-1236')
   .tag(' @RET-BAT');
