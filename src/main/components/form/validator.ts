@@ -192,6 +192,10 @@ export const isValidInteger: Validator = value => {
   if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
     return 'notANumber';
   }
+
+  if (/^\D+$/.test(value as string) || /^\d+[^0-9.]+$/.test(value as string)) {
+    return 'notANumber';
+  }
 };
 
 export const isWorkAddressLineOneValid: Validator = value => {
@@ -284,6 +288,10 @@ export const isValidPension: Validator = value => {
 export const isValidCurrency: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
     return;
+  }
+
+  if (!/^\d+$/.test(value as string)) {
+    return 'notANumber';
   }
 
   if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {

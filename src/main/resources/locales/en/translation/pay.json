@@ -9,11 +9,13 @@
   "errors": {
     "payBeforeTax": {
       "required": "Tell us your pay before or after tax",
-      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10"
+      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10",
+      "notANumber": "Pay before tax must be a number"
     },
     "payAfterTax": {
       "required": "Tell us your pay before or after tax",
-      "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10"
+      "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10",
+      "notANumber": "Pay after tax must be a number"
     },
     "payInterval": {
       "required": "Tell us your pay frequency"

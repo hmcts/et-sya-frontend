@@ -238,6 +238,9 @@ describe('Validation', () => {
       { mockRef: 'a', expected: 'notANumber' },
       { mockRef: '%', expected: 'notANumber' },
       { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidInteger(mockRef)).toEqual(expected);
@@ -294,6 +297,9 @@ describe('Validation', () => {
   describe('isValidPension()', () => {
     it.each([
       { mockRef: '1', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: 'a', expected: 'notANumber' },
       { mockRef: '%', expected: 'notANumber' },
       { mockRef: '25a', expected: 'notANumber' },
