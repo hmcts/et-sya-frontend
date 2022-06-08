@@ -14,11 +14,7 @@ nodejs:
         - os-places-token
         - fortify-on-demand-username
         - fortify-on-demand-password
-    pcq:
-      resourceGroup: pcq
-      secrets:
-        - et-token-key
-
+        - pcq-token-key
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
