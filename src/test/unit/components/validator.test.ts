@@ -1,11 +1,17 @@
 import {
   areDateFieldsFilledIn,
+  arePayValuesNull,
   atLeastOneFieldIsChecked,
   isDateInputInvalid,
+  isDateTenYearsInFuture,
+  isDateTenYearsInPast,
   isFieldFilledIn,
   isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
+  isPastDate,
+  isPayIntervalNull,
+  isValidCurrency,
   isValidInteger,
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
@@ -264,6 +270,124 @@ describe('Validation', () => {
       { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work addrss town is valid', ({ mockRef, expected }) => {
       expect(isWorkAddressTownValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isPastDate()', () => {
+    it.each([
+      { dateObj: new Date(), expected: undefined },
+      { dateObj: undefined, expected: undefined },
+    ])('Should check if date entered is past date when %o', ({ dateObj, expected }) => {
+      const date = dateObj
+        ? {
+            day: dateObj.getUTCDate().toString(),
+            month: dateObj.getUTCMonth().toString(),
+            year: (dateObj.getUTCFullYear() + 1).toString(),
+          }
+        : undefined;
+      let isValid = isPastDate(date);
+
+      expect(isValid).toStrictEqual(expected);
+
+      if (date) {
+        date.year = '1';
+        isValid = isPastDate(date);
+
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(isValid).toStrictEqual({
+          error: 'invalidDateInPast',
+          fieldName: 'day',
+        });
+      }
+    });
+  });
+
+  describe('isDateTenYearsInPast()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the past when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInPast(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('isDateTenYearsInFuture()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('isPayIntervalNull()', () => {
+    it('Should check if value exists', () => {
+      const isValid = isPayIntervalNull('Weekly' || 'Monthly' || 'Annual');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const value = '';
+      const isValid = isPayIntervalNull(value);
+      expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('arePayValuesNull()', () => {
+    it('Should check if pay values exists', () => {
+      const isValid = arePayValuesNull(['123', '123']);
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if pay values do not exist', () => {
+      const value = ['', ''];
+      const isValid = arePayValuesNull(value);
+      expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isValidCurrency()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: '1234567891011', expected: 'minLengthRequired' },
+      { mockRef: '123,456.12', expected: undefined },
+    ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
+      expect(isValidCurrency(mockRef)).toEqual(expected);
     });
   });
 });

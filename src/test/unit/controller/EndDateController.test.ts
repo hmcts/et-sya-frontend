@@ -17,4 +17,41 @@ describe('End date Controller', () => {
     endDateController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.END_DATE, expect.anything());
   });
+
+  it('should redirect to the same screen when errors are present', () => {
+    const errors = [{ propertyName: 'endDate', errorType: 'dayRequired', fieldName: 'day' }];
+    const body = {
+      'endDate-day': '',
+      'endDate-month': '11',
+      'endDate-year': '2000',
+    };
+
+    const controller = new EndDateController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      dobDate: {
+        year: '2000',
+        month: '12',
+        day: '24',
+      },
+      endDate: {
+        day: '',
+        month: '11',
+        year: '2000',
+      },
+      id: '1234',
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
+      },
+    });
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
 });

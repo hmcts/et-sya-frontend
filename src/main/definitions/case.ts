@@ -50,8 +50,9 @@ export interface Case {
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;
-  payBeforeTaxInterval?: PayInterval;
-  payAfterTaxInterval?: PayInterval;
+  payInterval?: PayInterval;
+  newJobPay?: number;
+  newJobPayInterval?: PayInterval;
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
