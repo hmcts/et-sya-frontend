@@ -9,9 +9,9 @@ import {
   isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
+  isPastDate,
   isPayIntervalNull,
   isValidAvgWeeklyHours,
-  isPastDate,
   isValidCurrency,
   isValidInteger,
   isValidPension,
@@ -302,6 +302,8 @@ describe('Validation', () => {
       { mockRef: '20.00', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidPension(mockRef)).toEqual(expected);
+    });
+  });
 
   describe('isPastDate()', () => {
     it.each([
