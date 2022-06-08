@@ -300,9 +300,6 @@ describe('Validation', () => {
       { mockRef: 'a', expected: 'notANumber' },
       { mockRef: '%', expected: 'notANumber' },
       { mockRef: '25a', expected: 'notANumber' },
-      { mockRef: 'a', expected: 'notANumber' },
-      { mockRef: '%', expected: 'notANumber' },
-      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
@@ -424,6 +421,9 @@ describe('Validation', () => {
       { mockRef: '20,00', expected: 'minLengthRequired' },
       { mockRef: '100', expected: undefined },
       { mockRef: '10,000', expected: undefined },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
     });
