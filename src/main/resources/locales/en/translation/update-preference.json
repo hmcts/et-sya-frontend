@@ -1,6 +1,7 @@
 {
   "title": "How would you like to be updated about your claim?",
   "h1": "How would you like to be updated about your claim?",
+  "label": "What format would you like to be contacted in?",
   "email": "Email",
   "post": "Post",
   "errors": {

@@ -1,9 +1,8 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -14,21 +13,39 @@ export default class VideoHearingsController {
   private readonly form: Form;
   private readonly videoHearingsContent: FormContent = {
     fields: {
-      videoHearings: {
-        type: 'radios',
-        classes: 'govuk-radios--inline',
-        id: 'video-hearings',
+      hearingPreference: {
+        id: 'hearingPreference',
+        type: 'checkboxes',
+        validator: atLeastOneFieldIsChecked,
         values: [
           {
-            label: l => l.yes,
-            value: YesOrNo.YES,
+            name: 'hearingPreference',
+            label: l => l.checkbox1,
+            value: 'video',
           },
           {
-            label: l => l.no,
-            value: YesOrNo.NO,
+            name: 'hearingPreference',
+            label: l => l.checkbox2,
+            value: 'phone',
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'hearingPreference',
+            label: l => l.checkbox3,
+            value: 'neither',
+            exclusive: true,
+            hint: l => l.checkbox3Hint,
+            subFields: {
+              neitherVideoOrPhoneExplanation: {
+                type: 'textarea',
+                label: l => l.explain,
+                labelSize: 'normal',
+              },
+            },
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -47,6 +64,7 @@ export default class VideoHearingsController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    console.log(req.session.userCase);
     handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
   };
 
