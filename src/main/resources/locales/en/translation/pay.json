@@ -1,5 +1,5 @@
 {
-  "title": "Your pay (optional) ",
+  "title": "Pay",
   "h1": "Your pay (optional)",
   "p1": "For some types of claim, the tribunal will need the average of your last 12 weeks' pay. Provide your best estimate for your average weekly pay. You will be able to correct it later if needed. Providing your pay information will help the tribunal progress your claim.",
   "p2": "You can get information from payslips. Include any overtime payments, commission and bonuses.",
@@ -9,12 +9,10 @@
   "errors": {
     "payBeforeTax": {
       "required": "Tell us your pay before or after tax",
-      "notANumber": "Pay before tax must be a number",
       "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10"
     },
     "payAfterTax": {
       "required": "Tell us your pay before or after tax",
-      "notANumber": "Pay after tax must be a number",
       "minLengthRequired": "Pay after tax and NI must be a minimum of double figures. For example £10"
     },
     "payInterval": {

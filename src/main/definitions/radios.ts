@@ -24,13 +24,11 @@ export const YesNoRadioValues = [
     label: (l: AnyRecord): string => l.yes,
     name: 'radioYes',
     value: YesOrNo.YES,
-    attributes: { maxLength: 2 },
   },
   {
     label: (l: AnyRecord): string => l.no,
     name: 'radioNo',
     value: YesOrNo.NO,
-    attributes: { maxLength: 2 },
   },
 ];
 

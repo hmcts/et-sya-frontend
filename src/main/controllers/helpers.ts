@@ -62,6 +62,25 @@ export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError
   }
 };
 
+export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): FormError[] => {
+  const newJobPay = formData.newJobPay;
+  const newJobPayInterval = formData.newJobPayInterval;
+
+  if (newJobPay) {
+    const errorType = isPayIntervalNull(newJobPayInterval);
+    if (errorType) {
+      return [{ errorType, propertyName: 'newJobPayInterval' }];
+    }
+  }
+
+  if (newJobPayInterval) {
+    const errorType = arePayValuesNull([`${newJobPay || ''}`]);
+    if (errorType) {
+      return [{ errorType, propertyName: 'newJobPay' }];
+    }
+  }
+};
+
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
@@ -73,6 +92,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   //call get custom errors and add to session errors
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
+  const newJobPayErrors = getNewJobPartialPayInfoError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -80,6 +100,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (payErrors) {
     sessionErrors = [...sessionErrors, ...payErrors];
+  }
+
+  if (newJobPayErrors) {
+    sessionErrors = [...sessionErrors, ...newJobPayErrors];
   }
 
   req.session.errors = sessionErrors;

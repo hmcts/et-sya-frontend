@@ -13,6 +13,6 @@ export type CurrencyFormFields = {
 export const DefaultCurrencyFormFields = {
   classes: 'govuk-input--width-5',
   type: 'currency',
-  attributes: { maxlength: 12 },
+  attributes: { maxLength: 12 },
   validator: isValidCurrency,
 };

@@ -3,32 +3,36 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { FormContent, FormFields } from '../definitions/form';
-import { PayIntervalRadioValues, saveForLaterButton, submitButton } from '../definitions/radios';
+import {
+  DefaultPayIntervalRadioFormFields,
+  PayIntervalRadioFormFields,
+  saveForLaterButton,
+  submitButton,
+} from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const pay_before_tax: CurrencyFormFields = {
+  ...DefaultCurrencyFormFields,
+  id: 'new-pay-before-tax',
+  label: (l: AnyRecord): string => l.payBeforeTax,
+};
+
+const pay_interval: PayIntervalRadioFormFields = {
+  ...DefaultPayIntervalRadioFormFields,
+  id: 'new-job-pay-interval',
+  label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
+};
 
 export default class NewJobPayController {
   private readonly form: Form;
   private readonly newJobPayContent: FormContent = {
     fields: {
-      newJobPay: {
-        id: 'new-job-pay',
-        name: 'new-job-pay',
-        type: 'currency',
-        classes: 'govuk-input--width-5',
-        label: (l: AnyRecord): string => l.payBeforeTax,
-        hint: (l: AnyRecord): string => l.hint,
-        attributes: { maxLength: 12 },
-      },
-      payInterval: {
-        id: 'new-job-pay-interval',
-        type: 'radios',
-        classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
-        values: PayIntervalRadioValues,
-      },
+      newJobPay: pay_before_tax,
+      newJobPayInterval: pay_interval,
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

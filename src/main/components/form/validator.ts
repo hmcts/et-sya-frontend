@@ -87,6 +87,16 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   }
 };
 
+export const isDateTenYearsInPast: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus10 = new Date();
+  dateMinus10.setFullYear(dateMinus10.getFullYear() - 10);
+
+  if (enteredDate < dateMinus10) {
+    return { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' };
+  }
+};
+
 export const isFutureDate: DateValidator = date => {
   if (!date) {
     return;
@@ -95,6 +105,28 @@ export const isFutureDate: DateValidator = date => {
   const enteredDate = new Date(+date.year, +date.month, +date.day);
   if (new Date() < enteredDate) {
     return { error: 'invalidDateInFuture', fieldName: 'day' };
+  }
+};
+
+export const isDateTenYearsInFuture: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const datePlus10 = new Date();
+  datePlus10.setFullYear(datePlus10.getFullYear() + 10);
+
+  if (enteredDate > datePlus10) {
+    return { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' };
+  }
+};
+
+export const isPastDate: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+
+  if (new Date() > enteredDate) {
+    return { error: 'invalidDateInPast', fieldName: 'day' };
   }
 };
 
@@ -252,10 +284,6 @@ export const isValidPension: Validator = value => {
 export const isValidCurrency: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
     return;
-  }
-
-  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
-    return 'notANumber';
   }
 
   if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {

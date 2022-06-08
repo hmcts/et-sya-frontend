@@ -51,6 +51,8 @@ export interface Case {
   payBeforeTax?: number;
   payAfterTax?: number;
   payInterval?: PayInterval;
+  newJobPay?: number;
+  newJobPayInterval?: PayInterval;
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
