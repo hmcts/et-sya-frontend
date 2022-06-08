@@ -14,7 +14,7 @@
   "session": {
     "secret": "local",
     "redis": {
-      "host": "127.0.0.1",
+      "host": "",
       "key": ""
     }
   },
