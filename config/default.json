@@ -14,7 +14,7 @@
   "session": {
     "secret": "local",
     "redis": {
-      "host": "",
+      "host": "127.0.0.1",
       "key": ""
     }
   },
@@ -31,7 +31,9 @@
     },
     "pcq": {
       "url": "https://pcq.aat.platform.hmcts.net/service-endpoint",
-      "health": "https://pcq.aat.platform.hmcts.net/health"
+      "health": "https://pcq.aat.platform.hmcts.net/health",
+      "token": "xssdssdedd",
+      "enabled": "true"
     }
   },
   "pact": {
