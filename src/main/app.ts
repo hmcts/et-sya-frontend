@@ -44,11 +44,10 @@ new Nunjucks(developmentMode).enableFor(app);
 logger.info('Nunjucks');
 logMemUsage();
 
-new Helmet(
-  config.get('security'),
+new Helmet(config.get('security'), [
   config.get('services.idam.authorizationURL'),
-  config.get('services.pcq.url')
-).enableFor(app);
+  config.get('services.pcq.url'),
+]).enableFor(app);
 logger.info('Helmet');
 logMemUsage();
 
