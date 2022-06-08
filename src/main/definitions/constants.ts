@@ -53,6 +53,7 @@ export const TranslationKeys = {
   TRIBUNAL_RECOMMENDATION_OUTCOME: 'tribunal-recommendation-outcome',
   END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
+  CLAIM_TYPE_DISCRIMINATION: 'claim-type-discrimination',
   FORM: 'form',
 } as const;
 
@@ -108,6 +109,7 @@ export const PageUrls = {
   TRIBUNAL_RECOMMENDATION_OUTCOME: '/what-tribunal-recommendation-would-you-like',
   END_DATE: '/end-date',
   DOWNLOAD_CLAIM: '/download-claim',
+  CLAIM_TYPE_DISCRIMINATION: '/claim-type-discrimination',
 } as const;
 
 export const AuthUrls = {
