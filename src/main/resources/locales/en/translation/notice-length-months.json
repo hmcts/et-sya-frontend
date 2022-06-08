@@ -6,8 +6,9 @@
   "noticeLengthHint": "For example, 4",
   "onNotice": "NOTICE",
   "errors": {
-    "noticeLength": {
-      "invalid": "Tell us the number of months in your notice period"
+    "noticePeriodLength": {
+      "invalid": "Tell us the number of months in your notice period",
+      "notANumber": "Months in your notice period must be a number"
     }
   }
 }

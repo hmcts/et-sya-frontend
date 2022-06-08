@@ -157,10 +157,22 @@ export const isValidInteger: Validator = value => {
     return 'invalid';
   }
 
-  if (/^\d+$/.test(value as string)) {
+  if (/^\d+[^0-9]+$/.test(value as string)) {
+    return 'notANumber';
+  }
+};
+
+export const isValidNoticeLength: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
     return;
-  } else {
+  }
+
+  if ((value as string).trim().length > 2) {
     return 'invalid';
+  }
+
+  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
+    return 'notANumber';
   }
 };
 
@@ -260,5 +272,27 @@ export const isValidCurrency: Validator = value => {
     return;
   } else {
     return 'required';
+  }
+};
+
+export const isPastDate: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+
+  if (new Date() > enteredDate) {
+    return { error: 'invalidDateInPast', fieldName: 'day' };
+  }
+};
+
+export const isDateTenYearsInFuture: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const datePlus10 = new Date();
+  datePlus10.setFullYear(datePlus10.getFullYear() + 10);
+
+  if (enteredDate > datePlus10) {
+    return { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' };
   }
 };
