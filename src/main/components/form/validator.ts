@@ -87,6 +87,16 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   }
 };
 
+export const isDateTenYearsInPast: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus10 = new Date();
+  dateMinus10.setFullYear(dateMinus10.getFullYear() - 10);
+
+  if (enteredDate < dateMinus10) {
+    return { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' };
+  }
+};
+
 export const isFutureDate: DateValidator = date => {
   if (!date) {
     return;
@@ -95,6 +105,28 @@ export const isFutureDate: DateValidator = date => {
   const enteredDate = new Date(+date.year, +date.month, +date.day);
   if (new Date() < enteredDate) {
     return { error: 'invalidDateInFuture', fieldName: 'day' };
+  }
+};
+
+export const isDateTenYearsInFuture: DateValidator = (date: CaseDate | undefined) => {
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const datePlus10 = new Date();
+  datePlus10.setFullYear(datePlus10.getFullYear() + 10);
+
+  if (enteredDate > datePlus10) {
+    return { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' };
+  }
+};
+
+export const isPastDate: DateValidator = date => {
+  if (!date) {
+    return;
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+
+  if (new Date() > enteredDate) {
+    return { error: 'invalidDateInPast', fieldName: 'day' };
   }
 };
 
@@ -195,5 +227,33 @@ export const isAfterDateOfBirth: DateValidator = (value1: CaseDate | undefined, 
     return 'invalidDateBeforeDOB';
   } else {
     return;
+  }
+};
+
+export const isPayIntervalNull: Validator = (value: string) => {
+  if (!value) {
+    return 'required';
+  }
+};
+
+export const arePayValuesNull: Validator = (value: string[]) => {
+  if (value && value.every(element => !element)) {
+    return 'required';
+  }
+};
+
+export const isValidCurrency: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
+
+  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
+    return 'minLengthRequired';
+  }
+
+  if (/^\d{1,12}(,\d{3}){0,3}(\.\d{2})?$/.test(value as string)) {
+    return;
+  } else {
+    return 'minLengthRequired';
   }
 };

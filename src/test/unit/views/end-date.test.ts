@@ -16,6 +16,10 @@ const endDateJson = JSON.parse(endDateJsonRaw);
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = endDateJson.h1;
 const buttonClass = 'govuk-button';
+const inputs = 'govuk-date-input__item';
+const expectedInputLabel1 = 'Day';
+const expectedInputLabel2 = 'Month';
+const expectedInputLabel3 = 'Year';
 
 let htmlRes: Document;
 describe('End date page', () => {
@@ -30,6 +34,27 @@ describe('End date page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display 3 input fields', () => {
+    const radioButtons = htmlRes.getElementsByClassName(inputs);
+    expect(radioButtons.length).equal(3, `only ${radioButtons.length} found`);
+  });
+
+  it('should display inputs with valid labels', () => {
+    const radioButtons = htmlRes.getElementsByClassName(inputs);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedInputLabel1,
+      'Could not find the radio button with label ' + expectedInputLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedInputLabel2,
+      'Could not find the radio button with label ' + expectedInputLabel2
+    );
+    expect(radioButtons[2].innerHTML).contains(
+      expectedInputLabel3,
+      'Could not find the radio button with label ' + expectedInputLabel3
+    );
   });
 
   it('should display continue button', () => {
