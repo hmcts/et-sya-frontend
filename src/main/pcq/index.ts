@@ -49,7 +49,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
         actor: 'Claimant',
         pcqId: claimantPcqId,
         ccdCaseId: req.session.userCase.id,
-        partyId: req.session.user.email,
+        partyId: req.session.user?.email ? req.session.user.email : 'anonymous',
         returnUrl: returnurl,
         language: i18next.language || 'en',
       };
