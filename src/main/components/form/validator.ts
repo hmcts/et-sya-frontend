@@ -53,7 +53,7 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   for (const [fieldName, value] of Object.entries(date)) {
     if (isNaN(+value)) {
       return {
-        error: invalid,
+        error: `${fieldName}NotANumber`,
         fieldName,
       };
     }
@@ -184,15 +184,23 @@ export const isJobTitleValid: Validator = value => {
   }
 };
 
-export const isValidInteger: Validator = value => {
+export const isValidTwoDigitInteger: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
     return 'invalid';
   }
 
-  if (/^\d+$/.test(value as string)) {
+  if (!/^\d{1,2}$/.test(value as string)) {
+    return 'notANumber';
+  }
+};
+
+export const isValidNoticeLength: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
     return;
-  } else {
-    return 'invalid';
+  }
+
+  if (!/^\d{1,2}$/.test(value as string)) {
+    return 'notANumber';
   }
 };
 

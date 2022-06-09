@@ -6,6 +6,9 @@
   "errors": {
     "noticeEnds": {
       "required": "Enter your notice date. For example, 23 3 2007",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2012",
       "invalidDateTooFarInPast": "You have entered a year which is too far in the past"
     }
   }
