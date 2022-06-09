@@ -15,7 +15,7 @@ export default class UpdatePreferenceController {
   private readonly updatePrefFormContent: FormContent = {
     fields: {
       updatePreference: {
-        classes: 'govuk-radios',
+        classes: 'govuk-radios--inline',
         id: 'update-preference',
         type: 'radios',
         label: (l: AnyRecord): string => l.label,
