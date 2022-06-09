@@ -95,6 +95,10 @@ export default function (app: Application): void {
   app.post(PageUrls.COMPENSATION_OUTCOME, app.locals.container.cradle.compensationOutcomeController.post);
   app.get(PageUrls.CLAIM_TYPE_DISCRIMINATION, app.locals.container.cradle.claimTypeDiscriminationController.get);
   app.post(PageUrls.CLAIM_TYPE_DISCRIMINATION, app.locals.container.cradle.claimTypeDiscriminationController.post);
+  app.get(PageUrls.TRIBUNAL_RECOMMENDATION, app.locals.container.cradle.tribunalRecommendationController.get);
+  app.post(PageUrls.TRIBUNAL_RECOMMENDATION, app.locals.container.cradle.tribunalRecommendationController.post);
+  app.get(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.get);
+  app.post(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.post);
   app.get(
     PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
     app.locals.container.cradle.tribunalRecommendationOutcomeController.get

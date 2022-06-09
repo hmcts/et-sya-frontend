@@ -54,6 +54,8 @@ export const TranslationKeys = {
   END_DATE: 'end-date',
   PAST_EMPLOYER: 'past-employer',
   CLAIM_TYPE_DISCRIMINATION: 'claim-type-discrimination',
+  TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
+  WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
   FORM: 'form',
 } as const;
 
@@ -110,6 +112,8 @@ export const PageUrls = {
   END_DATE: '/end-date',
   DOWNLOAD_CLAIM: '/download-claim',
   CLAIM_TYPE_DISCRIMINATION: '/claim-type-discrimination',
+  TRIBUNAL_RECOMMENDATION: '/tribunal-recommendation',
+  WHISTLEBLOWING_CLAIMS: '/whistleblowing-claims',
 } as const;
 
 export const AuthUrls = {
