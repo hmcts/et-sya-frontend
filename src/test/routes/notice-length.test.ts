@@ -1,7 +1,6 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
-import { WeeksOrMonths } from '../../main/definitions/case';
+import { StillWorking, WeeksOrMonths } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -21,7 +20,13 @@ describe(`GET ${PageUrls.NOTICE_LENGTH}`, () => {
 
 describe(`on POST ${PageUrls.NOTICE_LENGTH}`, () => {
   test('should navigate to the average weekly hours page when a valid notice length is entered and save and continue button is clicked', async () => {
-    await request(app)
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE || StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    )
       .post(PageUrls.NOTICE_LENGTH)
       .send({
         noticeLength: '2',

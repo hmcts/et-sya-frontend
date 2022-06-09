@@ -30,7 +30,7 @@ describe('Notice end Controller', () => {
 
       'noticeEnds-month': '01',
 
-      'noticeEnds-year': '2022',
+      'noticeEnds-year': '2023',
     };
 
     const controller = new NoticeEndController();
