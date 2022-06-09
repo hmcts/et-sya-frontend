@@ -13,8 +13,8 @@ import {
   isPayIntervalNull,
   isValidAvgWeeklyHours,
   isValidCurrency,
-  isValidInteger,
   isValidPension,
+  isValidTwoDigitInteger,
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
@@ -231,16 +231,16 @@ describe('Validation', () => {
     });
   });
 
-  describe('isValidInteger()', () => {
+  describe('isValidTwoDigitInteger()', () => {
     it.each([
       { mockRef: '', expected: 'invalid' },
       { mockRef: null, expected: 'invalid' },
       { mockRef: 'a', expected: 'notANumber' },
       { mockRef: '%', expected: 'notANumber' },
-      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '2a', expected: 'notANumber' },
       { mockRef: '20', expected: undefined },
-    ])('check integer input is valid', ({ mockRef, expected }) => {
-      expect(isValidInteger(mockRef)).toEqual(expected);
+    ])('check two digit input is valid', ({ mockRef, expected }) => {
+      expect(isValidTwoDigitInteger(mockRef)).toEqual(expected);
     });
   });
 

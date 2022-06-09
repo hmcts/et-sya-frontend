@@ -184,12 +184,12 @@ export const isJobTitleValid: Validator = value => {
   }
 };
 
-export const isValidInteger: Validator = value => {
+export const isValidTwoDigitInteger: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
     return 'invalid';
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+[^0-9.]+$/.test(value as string)) {
+  if (!/^\d{1,2}$/.test(value as string)) {
     return 'notANumber';
   }
 };
