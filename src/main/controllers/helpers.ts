@@ -6,8 +6,8 @@ import {
   arePayValuesNull,
   isAfterDateOfBirth,
   isPayIntervalNull,
-  isValidInteger,
   isValidNoticeLength,
+  isValidTwoDigitInteger,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, StillWorking } from '../definitions/case';
@@ -50,7 +50,7 @@ export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<Ca
   const noticeLength = formData.noticePeriodLength;
 
   if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
-    const errorType = isValidInteger(noticeLength);
+    const errorType = isValidTwoDigitInteger(noticeLength);
     if (errorType) {
       return { errorType, propertyName: 'noticePeriodLength' };
     }
