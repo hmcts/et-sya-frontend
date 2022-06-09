@@ -10,6 +10,8 @@ export default function (app: Application): void {
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
   app.get(PageUrls.CHECKLIST, app.locals.container.cradle.checklistController.get);
   app.get(PageUrls.NEW_ACCOUNT_LANDING, app.locals.container.cradle.newAccountLandingController.get);
+  app.get(PageUrls.PERSONAL_DETAILS_CHECK, app.locals.container.cradle.personalDetailsCheckController.get);
+  app.post(PageUrls.PERSONAL_DETAILS_CHECK, app.locals.container.cradle.personalDetailsCheckController.post);
   app.get(PageUrls.LIP_OR_REPRESENTATIVE, app.locals.container.cradle.lipOrRepController.get);
   app.post(PageUrls.LIP_OR_REPRESENTATIVE, app.locals.container.cradle.lipOrRepController.post);
   app.get(PageUrls.SINGLE_OR_MULTIPLE_CLAIM, app.locals.container.cradle.singleOrMultipleController.get);
@@ -68,16 +70,6 @@ export default function (app: Application): void {
   app.post(PageUrls.BENEFITS, app.locals.container.cradle.benefitsController.post);
   app.get(PageUrls.REASONABLE_ADJUSTMENTS, app.locals.container.cradle.reasonableAdjustmentsController.get);
   app.post(PageUrls.REASONABLE_ADJUSTMENTS, app.locals.container.cradle.reasonableAdjustmentsController.post);
-  app.get(PageUrls.DOCUMENTS, app.locals.container.cradle.documentsController.get);
-  app.post(PageUrls.DOCUMENTS, app.locals.container.cradle.documentsController.post);
-  app.get(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.get);
-  app.post(PageUrls.COMMUNICATING, app.locals.container.cradle.communicatingController.post);
-  app.get(PageUrls.SUPPORT, app.locals.container.cradle.supportController.get);
-  app.post(PageUrls.SUPPORT, app.locals.container.cradle.supportController.post);
-  app.get(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.get);
-  app.post(PageUrls.COMFORTABLE, app.locals.container.cradle.comfortableController.post);
-  app.get(PageUrls.TRAVEL, app.locals.container.cradle.travelController.get);
-  app.post(PageUrls.TRAVEL, app.locals.container.cradle.travelController.post);
   app.get(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.get);
   app.post(PageUrls.NEW_JOB, app.locals.container.cradle.newJobController.post);
   app.get(PageUrls.NEW_JOB_PAY, app.locals.container.cradle.newJobPayController.get);
