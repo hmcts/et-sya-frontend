@@ -44,7 +44,6 @@ export default class RespondentDetailsCheckController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    console.log('Here we go');
     const respondents = req.session.userCase.respondents;
 
     if (respondents.length < 6) {

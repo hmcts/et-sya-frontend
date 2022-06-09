@@ -7,7 +7,6 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCaseForNewRespondent } from './helpers';
-//import { Respondent } from '../definitions/case';
 
 export default class RespondentNameController {
   private readonly form: Form;

@@ -18,8 +18,6 @@ export default class AcasCertNumController {
         classes: 'govuk-radios',
         id: 'acasCert',
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        isPageHeading: true,
         values: [
           {
             name: 'acasCertNum',

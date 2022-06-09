@@ -7,7 +7,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
@@ -57,7 +57,7 @@ export default class NoAcasNumberController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    // setUserCase(req, this.form);
+    setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
   };
 

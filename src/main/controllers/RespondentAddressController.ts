@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class RespondentNameController {
+export default class RespondentAddressController {
   private readonly form: Form;
   private readonly respondentAddressContent: FormContent = {
     fields: {},
@@ -27,7 +27,6 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    console.log(req.session.userCase);
     const redirectUrl = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
@@ -37,7 +36,6 @@ export default class RespondentNameController {
     const content = getPageContent(req, this.respondentAddressContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_ADDRESS,
-      'enter-address',
     ]);
     const respondents = req.session.userCase.respondents;
     const selectedRespondent = respondents[req.session.userCase.selectedRespondent - 1];

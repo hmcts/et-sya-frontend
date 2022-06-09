@@ -174,7 +174,7 @@ describe('Check your answers confirmation page', () => {
     // to-do const respondenttelephoneLink = respondentDetailsList[4].getAttribute('href');
     // to-do const officeAddressLink = respondentDetailsList[5].getAttribute('href');
     // to-do const workAddressLink = respondentDetailsList[6].getAttribute('href');
-    expect(acasExemptionLink).equals(PageUrls.VALID_ACAS_REASON, 'Incorrect href found');
+    expect(acasExemptionLink).equals(PageUrls.NO_ACAS_NUMBER, 'Incorrect href found');
 
     const claimDetailsList = summeryListSections[7].getElementsByClassName(summeryListLinkClass);
     const summaryLink = claimDetailsList[0].getAttribute('href');

@@ -129,7 +129,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
-  console.log(formData);
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
