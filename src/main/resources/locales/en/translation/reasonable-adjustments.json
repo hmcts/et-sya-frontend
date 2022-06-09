@@ -6,22 +6,7 @@
     "text": "I need documents in alternative formats",
     "hint": "for example, braille or different colours and sizes"
   },
-  "communicating": {
-    "text": "I need help communicating and understanding",
-    "hint": "for example, sight, hearing, speaking or interpretation"
-  },
-  "support": {
-    "text": "I need to bring support with me to a hearing",
-    "hint": "for example, someone you know or an assistance animal"
-  },
-  "comfortable": {
-    "text": "I need something to feel comfortable during a hearing",
-    "hint": "for example, breaks or extra space"
-  },
-  "travelling": {
-    "text": "I need help travelling to, or around tribunal buildings",
-    "hint": "access and mobility support if a hearing takes place in person"
-  },
+  "yes": "Yes",
   "noSupport": "No, I do not need any extra support at this time",
   "errors": {
     "reasonableAdjustments": {
