@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { uuid } from 'uuidv4';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { HTTPS_PROTOCOL, PageUrls } from '../definitions/constants';
 
 import { createToken } from './createToken';
 
@@ -39,7 +39,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     if (!req.session.userCase?.ClaimantPcqId && healthResp.data.status === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
-      const returnurl = req.protocol + '://' + req.headers.host + PageUrls.CHECK_ANSWERS;
+      const returnurl = HTTPS_PROTOCOL + req.headers.host + PageUrls.CHECK_ANSWERS;
 
       //Generate pcq id
       const claimantPcqId: string = uuid();
