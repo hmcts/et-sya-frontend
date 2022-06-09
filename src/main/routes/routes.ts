@@ -57,8 +57,6 @@ export default function (app: Application): void {
   app.post(PageUrls.START_DATE, app.locals.container.cradle.startDateController.post);
   app.get(PageUrls.NOTICE_END, app.locals.container.cradle.noticeEndController.get);
   app.post(PageUrls.NOTICE_END, app.locals.container.cradle.noticeEndController.post);
-  app.get(PageUrls.NOTICE_PAY, app.locals.container.cradle.noticePayController.get);
-  app.post(PageUrls.NOTICE_PAY, app.locals.container.cradle.noticePayController.post);
   app.get(PageUrls.AVERAGE_WEEKLY_HOURS, app.locals.container.cradle.averageWeeklyHoursController.get);
   app.post(PageUrls.AVERAGE_WEEKLY_HOURS, app.locals.container.cradle.averageWeeklyHoursController.post);
   app.get(PageUrls.PAY, app.locals.container.cradle.payController.get);
