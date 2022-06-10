@@ -1,4 +1,4 @@
-import { CaseState, ClaimOutcomes, TypesOfClaim } from './definition';
+import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, TypesOfClaim } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -62,6 +62,7 @@ export interface Case {
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
+  claimTypeDiscrimination?: ClaimTypeDiscrimination[];
 }
 
 export const enum StillWorking {

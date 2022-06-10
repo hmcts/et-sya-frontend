@@ -1,4 +1,45 @@
 {
   "title": "Claim details - claim type discrimination",
-  "h1": "What type of discrimination are you claiming? (to do)"
+  "h1": "What type of discrimination are you claiming? (to do)",
+  "hint": "Select all that apply.",
+  "age": {
+    "title": "Age claim",
+    "checkbox": "Age"
+  },
+  "disability": {
+    "title": "Disability claim",
+    "checkbox": "Disability"
+  },
+  "ethnicity": {
+    "title": "Ethnicity claim",
+    "checkbox": "Ethnicity"
+  },
+  "genderReassignment": {
+    "title": "Gender reassignment claim",
+    "checkbox": "Gender reassignment"
+  },
+  "marriageOrCivilPartnership": {
+    "title": "Marriage or civil partnership claim",
+    "checkbox": "Marriage or civil partnership"
+  },
+  "pregnancyOrMaternity": {
+    "title": "Pregnancy or maternity claim",
+    "checkbox": "Pregnancy or maternity"
+  },
+  "race": {
+    "title": "Race claim",
+    "checkbox": "Race"
+  },
+  "religionOrBelief": {
+    "title": "Religion or belief claim",
+    "checkbox": "Religion or belief"
+  },
+  "sex": {
+    "title": "Sex claim",
+    "checkbox": "Sex"
+  },
+  "sexualOrientation": {
+    "title": "Sexual orientation claim",
+    "checkbox": "Sexual orientation"
+  }
 }

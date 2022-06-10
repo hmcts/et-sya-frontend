@@ -15,3 +15,16 @@ export const enum CaseState {
   AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
   SUBMITTED = 'SUBMITTED',
 }
+
+export const enum ClaimTypeDiscrimination {
+  AGE = 'age',
+  DISABILITY = 'disability',
+  ETHNICITY = 'ethnicity',
+  GENDER_REASSIGNMENT = 'genderReassignment',
+  MARRIAGE_OR_CIVIL_PARTNERSHIP = 'marriageOrCivilPartnership',
+  PREGNANCY_OR_MATERNITY = 'pregnancyOrMaternity',
+  RACE = 'race',
+  RELIGION_OR_BELIEF = 'religionOrBelief',
+  SEX = 'sex',
+  SEXUAL_ORIENTATION = 'sexualOrientation',
+}
