@@ -1,13 +1,13 @@
 /* eslint-disable jest/no-done-callback */
 import { fail } from 'assert';
 
-import * as supertest from 'supertest';
+//import * as supertest from 'supertest';
 
-import { app } from '../../main/app';
+//import { app } from '../../main/app';
 
 const pa11y = require('pa11y');
 
-const agent = supertest.agent(app);
+//const agent = supertest.agent(app);
 
 const options = {
   ignore: [
@@ -60,7 +60,7 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       //   const actions = await isRedirect(url);
-      const messages = await pa11y(agent.get(url).url, {
+      const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, {
         actions: [
           'set field #username to tester@test.com',
           'set field #password to QATest@2022',
