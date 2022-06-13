@@ -19,12 +19,10 @@ describe('Reasonable Adjustments Controller', () => {
     expect(response.render).toHaveBeenCalledWith('reasonable-adjustments', expect.anything());
   });
 
-  describe('post() reasobable adjustments', () => {
+  describe('post() reasonable adjustments', () => {
     it('should redirect back to the Reasonable Adjustments page when errors are present', () => {
-      // TODO Fix validation errors
-
-      // const errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
-      const body = { reasonableAdjustments: [''] };
+      const errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
+      const body = {};
 
       const controller = new ReasonableAdjustmentsController();
 
@@ -32,8 +30,8 @@ describe('Reasonable Adjustments Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith('/personal-details-check');
-      //  expect(req.session.errors).toEqual(errors);
+      expect(req.session.errors).toEqual(errors);
+      expect(res.redirect).toBeCalledWith(req.path);
     });
   });
 });

@@ -1,7 +1,9 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -17,27 +19,30 @@ export default class ReasonableAdjustmentsController {
         classes: 'govuk-radios',
         id: 'reasonableAdjustments',
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        isPageHeading: true,
+        validator: isFieldFilledIn,
         values: [
           {
             name: 'reasonableAdjustments',
             label: (l: AnyRecord): string => l.yes,
+            value: YesOrNo.YES,
+            hint: (l: AnyRecord): string => l.textAreaHint,
             subFields: {
               adjustmentDetail: {
                 id: 'adjustmentDetailText',
                 name: 'adjustmentDetailText',
-                type: 'text',
+                type: 'textarea',
+                labelSize: 'normal',
                 label: (l: AnyRecord): string => l.adjustmentDetailTextLabel,
                 classes: 'govuk-textarea',
                 attributes: { maxLength: 5000 },
+                validator: isFieldFilledIn,
               },
             },
           },
           {
             name: 'reasonableAdjustments',
             label: l => l.noSupport,
-            value: 'noSupport',
+            value: YesOrNo.NO,
           },
         ],
       },

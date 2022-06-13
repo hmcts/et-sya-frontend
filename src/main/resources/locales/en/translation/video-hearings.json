@@ -15,6 +15,9 @@
   "errors": {
     "hearingPreference": {
       "required": "Select an Option"
+    },
+    "neitherVideoOrPhoneExplanation": {
+      "required": "Select an Option"
     }
   }
 }
