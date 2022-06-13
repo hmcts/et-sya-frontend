@@ -20,36 +20,53 @@ Scenario('Verify ET single claim for myself when there is no acas certificate', 
 
   I.see('You need to contact Acas');
   I.click('Contact Acas');
-}).tag(' @RET-BAT');
+});
 
 Scenario('Verify ET single claim myself when claim against one or more respondents', async () => {
   commonPages();
 
   I.seeElement('#acas-multiple-2');
-  I.see("Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?");
   I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
-  I.see('Making a claim can be time-consuming and difficult for everyone involved.');
-  I.see('No');
   I.checkOption('input[id=acas-multiple-2]');
   I.click('Continue');
 
   I.seeElement('#valid-no-acas-reason');
-  I.see('Do you have a valid reason why you do not have an ‘Acas early conciliation certificate’?');
-  I.see('Yes');
   I.checkOption('input[id=valid-no-acas-reason]');
   I.click('Continue');
 
   I.seeElement('#discrimination');
-  I.see('What type of claim do you want to make?');
   I.checkOption('input[value=discrimination]');
   I.click('#main-form-submit');
 
   authPage.login();
 
-  //I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
+  I.seeElement('(//a[@href="/steps-to-making-your-claim"])');
   I.see('You do not have to complete your claim in one go');
+  I.click('Continue');
+
+  I.seeElement('(//a[@href="/how-would-you-like-to-be-updated-about-your-claim"])');
+  I.click('(//a[@href="/how-would-you-like-to-be-updated-about-your-claim"])');
+
+  I.seeElement('#update-preference');
+  I.checkOption('#update-preference');
+  I.click('#main-form-submit');
+
+  I.seeElement('#hearingPreference');
+  I.checkOption('#hearingPreference');
+  I.click('#main-form-submit');
+
+  I.seeElement('#reasonableAdjustments');
+  I.checkOption('#reasonableAdjustments');
+  I.seeElement('#adjustmentDetailText');
+  I.fillField('#adjustmentDetailText', 'disability details');
+  I.click('#main-form-submit');
+
+  I.seeElement('#tasklist-check');
+  I.checkOption('#tasklist-check');
+  I.click('#main-form-submit');
+
   authPage.logout();
-});
+}).tag(' @RET-BAT');
 
 function commonPages() {
   commonFlow.initialPageFlow();
