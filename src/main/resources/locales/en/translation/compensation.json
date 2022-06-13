@@ -12,5 +12,5 @@
     "p5": "In certain claims, such as those involving discrimination, a tribunal may compensate you for 'injury to feelings' (individual hurt and distress you may have suffered) in addition to compensation for financial loss."
   },
   "hint": "Try to set out all compensation you’re claiming for, and provide a total if possible",
-  "compensationAmount": "Enter the total compensation amount you are requesting"
+  "amountLabel": "Enter the total compensation amount you are requesting"
 }

@@ -73,6 +73,8 @@ export interface Case {
   claimTypePay?: ClaimTypePay[];
   tellUsWhatYouWant?: TellUsWhatYouWant[];
   tribunalRecommendationRequest?: string;
+  whistleblowingClaim?: YesOrNo;
+  whistleblowingEntityName?: string;
 }
 
 export const enum StillWorking {

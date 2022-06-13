@@ -2,16 +2,44 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 export default class WhistleblowingClaimsController {
   private readonly form: Form;
   private readonly whistleblowingClaimsFormContent: FormContent = {
-    fields: {},
+    fields: {
+      whistleblowingClaim: {
+        id: 'whistleblowing-claim',
+        type: 'radios',
+        classes: 'govuk-radios',
+        label: l => l.forwardClaim,
+        values: [
+          {
+            label: (l: AnyRecord): string => l.yes,
+            value: YesOrNo.YES,
+            subFields: {
+              whistleblowingEntityName: {
+                id: 'whistleblowing-entity-name',
+                name: 'whistleblowing-entity-name',
+                type: 'text',
+                hint: (l: AnyRecord): string => l.regOrBodyName,
+              },
+            },
+          },
+          {
+            label: (l: AnyRecord): string => l.no,
+            value: YesOrNo.NO,
+          },
+        ],
+        validator: null,
+      },
+    },
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };

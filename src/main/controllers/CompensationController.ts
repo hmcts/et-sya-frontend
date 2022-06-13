@@ -13,7 +13,7 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 const compensation_amount: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
   id: 'compensation-amount',
-  label: (l: AnyRecord): string => l.compensationAmount,
+  label: (l: AnyRecord): string => l.amountLabel,
 };
 
 export default class CompensationController {
