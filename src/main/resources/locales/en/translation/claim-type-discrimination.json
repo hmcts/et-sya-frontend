@@ -1,7 +1,11 @@
 {
   "title": "Claim details - claim type discrimination",
   "h1": "What type of discrimination are you claiming? (to do)",
-  "hint": "Select all that apply.",
+  "detailsSummary": "What is discrimination?",
+  "detailsText": {
+    "p1": "Discrimination is when you're treated unfairly and the treatment is related to any of the protected characteristics from the 2010 Equality Act. You have rights at work if you have experienced discrimination.<br><br>",
+    "p2": "See the <a href=\"https://www.gov.uk/guidance/equality-act-2010-guidance\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">GOV.UK guidance (opens in new tab)</a> for further information on protected characteristics and your workplace rights."
+  },
   "age": {
     "title": "Age claim",
     "checkbox": "Age"

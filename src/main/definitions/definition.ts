@@ -28,3 +28,11 @@ export const enum ClaimTypeDiscrimination {
   SEX = 'sex',
   SEXUAL_ORIENTATION = 'sexualOrientation',
 }
+
+export const enum ClaimTypePay {
+  ARREARS = 'arrears',
+  HOLIDAY_PAY = 'holidayPay',
+  NOTICE_PAY = 'noticePay',
+  REDUNDANCY_PAY = 'redundancyPay',
+  OTHER_PAYMENTS = 'otherPayments',
+}

@@ -1,4 +1,11 @@
 {
   "title": "Claim details - claim type pay",
-  "h1": "What type of pay claim are you making? (to do)"
+  "h1": "What type of pay claim are you making? (to do)",
+  "detailsSummary": "What are pay claims?",
+  "detailsText": "It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",
+  "arrears": { "title": "Arrears claim", "checkbox": "Arrears (pay you are owed)" },
+  "holidayPay": { "title": "Holiday pay claim", "checkbox": "Holiday pay" },
+  "noticePay": { "title": "Notice pay claim", "checkbox": "Notice pay" },
+  "redundancyPay": { "title": "Redundancy pay claim", "checkbox": "Redundancy pay" },
+  "otherPayments": { "title": "Other payments claim", "checkbox": "Other payments" }
 }

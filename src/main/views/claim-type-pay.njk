@@ -11,10 +11,23 @@
   {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+
+      <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ detailsSummary }}</span>
+        </summary>
+        <div class="govuk-details__text">
+          {{ detailsText }}
+        </div>
+      </details>
+
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
+
     </div>
   </div>
+
 {% endblock %}

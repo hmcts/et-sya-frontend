@@ -17,7 +17,7 @@ export default class ClaimTypeDiscriminationController {
         id: 'claimTypeDiscrimination',
         type: 'checkboxes',
         isPageHeading: true,
-        hint: l => l.hint,
+        hint: l => l.selectAllHint,
         validator: null,
         values: [
           {
