@@ -59,14 +59,14 @@ function testAccessibility(url: string): void {
       console.log('test env is: ' + process.env.TEST_URL);
       //   const actions = await isRedirect(url);
       const messages = await pa11y(process.env.TEST_URL + url, {
-        actions: [
+        /*actions: [
           'set field #username to tester@test.com',
           'set field #password to QATest@2022',
           'click element .button',
           'wait for path to be /steps-to-making-your-claim',
           'navigate to ' + process.env.TEST_URL + '/notice-pay',
           'wait for url to be ' + process.env.TEST_URL + '/notice-pay',
-        ],
+        ],*/
         options,
       });
       expectNoErrors(messages.issues);
@@ -75,8 +75,8 @@ function testAccessibility(url: string): void {
 }
 
 describe('Accessibility', () => {
-  //testAccessibility('/');
-  //testAccessibility('/checklist');
+  testAccessibility('/');
+  testAccessibility('/checklist');
   //testAccessibility('/lip-or-representative');
-  testAccessibility('/notice-pay');
+  //testAccessibility('/notice-pay');
 });
