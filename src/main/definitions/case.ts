@@ -50,8 +50,9 @@ export interface Case {
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;
-  payBeforeTaxInterval?: PayInterval;
-  payAfterTaxInterval?: PayInterval;
+  payInterval?: PayInterval;
+  newJobPay?: number;
+  newJobPayInterval?: PayInterval;
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
@@ -61,6 +62,7 @@ export interface Case {
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
+  personalDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {

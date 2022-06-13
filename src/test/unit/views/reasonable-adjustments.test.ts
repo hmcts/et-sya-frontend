@@ -4,13 +4,11 @@ import request from 'supertest';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/reasonable-adjustments';
-const titleClass = 'govuk-fieldset__heading';
+const titleClass = 'govuk-fieldset__legend';
 const expectedTitle =
   'Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?';
 const buttonClass = 'govuk-button';
-const inputs = 'govuk-checkboxes__input';
-const checkboxItem = 'govuk-checkboxes__item';
-const expectedInputLabel = 'govuk-label';
+const inputs = 'govuk-radios__item';
 
 let htmlRes: Document;
 describe('Reasonable Adjustments page', () => {
@@ -32,16 +30,8 @@ describe('Reasonable Adjustments page', () => {
     expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
-  it('should display checkboxes', () => {
-    const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).equal(6, `only ${checkboxes.length} found`);
-  });
-
-  it('should display 6 checkboxes with valid labels', () => {
-    const checkboxItems = htmlRes.getElementsByClassName(checkboxItem);
-    expect(checkboxItems[0].innerHTML).contains(
-      expectedInputLabel,
-      'Could not find the checkboxes with label ' + expectedInputLabel
-    );
+  it('should display radios', () => {
+    const radios = htmlRes.getElementsByClassName(inputs);
+    expect(radios.length).equal(2, `only ${radios.length} found`);
   });
 });

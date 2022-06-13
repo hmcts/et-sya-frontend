@@ -6,20 +6,17 @@ import { mockApp } from '../mocks/mockApp';
 const PAGE_URL = '/would-you-want-to-take-part-in-video-hearings';
 const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
-const expectedTitle = 'Would you be able to take part in video hearings?';
-const expectedP1 = 'They’re not always guaranteed and held at the discretion of an employment judge.';
+const expectedTitle = 'Would you be able to take part in hearings by video and phone?';
+const expectedP1 = 'If your case goes to a hearing, it can take place either:';
 const buttonClass = 'govuk-button';
-const radioClass = 'govuk-radios__item';
-const expectedRadioLabel1 = 'Yes';
-const expectedRadioLabel2 = 'No';
-const detailsClass = 'govuk-details';
-const detailsTextClass = 'govuk-details__text';
-const detailsSummaryTextClass = 'govuk-details__summary-text';
-const detailsSummary1 = 'What is a video hearing?';
-const detailsSummary2 = 'Contact us for help';
+const checkboxClass = 'govuk-checkboxes__input';
+const checkboxLabel = 'govuk-checkboxes__label';
+const expectedLabel1 = 'Yes, I can take part in video hearings';
+const expectedLabel2 = 'Yes, I can take part in phone hearings';
+const expectedLabel3 = 'No, I cannot take part in either video or phone hearings';
 
 let htmlRes: Document;
-describe('Video Hearing Choice page', () => {
+describe('Hearing Preference video or phone Choice page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
       .get(PAGE_URL)
@@ -43,42 +40,24 @@ describe('Video Hearing Choice page', () => {
     expect(button[0].innerHTML).contains('continue', 'Could not find the button');
   });
 
-  it('should display 2 radio buttons', () => {
-    const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons.length).equal(2, '2 radio buttons not found');
+  it('should display 3 checkboxes', () => {
+    const checkboxes = htmlRes.getElementsByClassName(checkboxClass);
+    expect(checkboxes.length).equal(3, '3 checkboxes not found');
   });
 
-  it('should display radio buttons with valid text', () => {
-    const radioButtons = htmlRes.getElementsByClassName(radioClass);
-    expect(radioButtons[0].innerHTML).contains(
-      expectedRadioLabel1,
-      'Could not find the radio button with label ' + expectedRadioLabel1
+  it('should display checkboxes with valid text', () => {
+    const checkboxes = htmlRes.getElementsByClassName(checkboxLabel);
+    expect(checkboxes[0].innerHTML).contains(
+      expectedLabel1,
+      'Could not find the checkbox with label ' + expectedLabel1
     );
-    expect(radioButtons[1].innerHTML).contains(
-      expectedRadioLabel2,
-      'Could not find the radio button with label ' + expectedRadioLabel2
+    expect(checkboxes[1].innerHTML).contains(
+      expectedLabel2,
+      'Could not find the checkbox with label ' + expectedLabel2
     );
-  });
-
-  it('should display 3 GDS details components', () => {
-    const detailsComponents = htmlRes.getElementsByClassName(detailsClass);
-    expect(detailsComponents.length).equal(2, '2 details components not found');
-  });
-
-  it('should display 3 GDS detail text components which reveal detailed information', () => {
-    const detailsTextComponents = htmlRes.getElementsByClassName(detailsTextClass);
-    expect(detailsTextComponents.length).equal(2, '2 detail text classes not found');
-  });
-
-  it('should display details components with valid summary text', () => {
-    const detailSummaries = htmlRes.getElementsByClassName(detailsSummaryTextClass);
-    expect(detailSummaries[0].innerHTML).contains(
-      detailsSummary1,
-      'Could not find the details summary with text ' + detailsSummary1
-    );
-    expect(detailSummaries[1].innerHTML).contains(
-      detailsSummary2,
-      'Could not find the details summary with text ' + detailsSummary2
+    expect(checkboxes[2].innerHTML).contains(
+      expectedLabel3,
+      'Could not find the checkbox with label ' + expectedLabel3
     );
   });
 });
