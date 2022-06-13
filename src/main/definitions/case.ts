@@ -75,6 +75,7 @@ export interface Case {
   tribunalRecommendationRequest?: string;
   whistleblowingClaim?: YesOrNo;
   whistleblowingEntityName?: string;
+  personalDetailsCheck?: YesOrNo;
 }
 
 export const enum StillWorking {

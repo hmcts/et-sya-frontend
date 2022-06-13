@@ -59,6 +59,7 @@ export const TranslationKeys = {
   COMPENSATION: 'compensation',
   TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
+  TASK_LIST_CHECK: 'tasklist-check',
   FORM: 'form',
 } as const;
 
@@ -120,6 +121,7 @@ export const PageUrls = {
   COMPENSATION: '/compensation',
   TRIBUNAL_RECOMMENDATION: '/tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: '/whistleblowing-claims',
+  PERSONAL_DETAILS_CHECK: '/personal-details-check',
 } as const;
 
 export const AuthUrls = {
