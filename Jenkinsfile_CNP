@@ -19,17 +19,32 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
-  after('test') {
-    onMaster {
-      yarnBuilder.yarn('tests:a11y')
-    }
-  }
-
-  after('test') {
-    onPR {
-      yarnBuilder.yarn('tests:a11y')
-    }
-  }
+  after('functionalTest:aat') {
+      stage('Accessibiltiy') {
+          yarnBuilder.yarn('tests:a11y')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/accessibility-report",
+              reportFiles          : 'a11y.html',
+              reportName           : 'et-sya-frontend'
+      ])
+      }
+  } 
+  after('functionalTest:preview') {
+      stage('Accessibiltiy') {
+          yarnBuilder.yarn('tests:a11y')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/accessibility-report",
+              reportFiles          : 'a11y.html',
+              reportName           : 'et-sya-frontend'
+        ])
+      }
+  } 
 
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
