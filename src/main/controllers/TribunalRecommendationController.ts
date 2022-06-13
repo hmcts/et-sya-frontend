@@ -11,7 +11,13 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class TribunalRecommendationController {
   private readonly form: Form;
   private readonly tribunalRecommendationFormContent: FormContent = {
-    fields: {},
+    fields: {
+      tribunalRecommendationRequest: {
+        id: 'tribunalRecommendationRequest',
+        type: 'textarea',
+        hint: l => l.hint,
+      },
+    },
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };

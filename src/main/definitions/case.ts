@@ -72,6 +72,7 @@ export interface Case {
   claimTypeDiscrimination?: ClaimTypeDiscrimination[];
   claimTypePay?: ClaimTypePay[];
   tellUsWhatYouWant?: TellUsWhatYouWant[];
+  tribunalRecommendationRequest?: string;
 }
 
 export const enum StillWorking {
