@@ -2,12 +2,9 @@
 import { fail } from 'assert';
 
 //import * as supertest from 'supertest';
-
 //import { app } from '../../main/app';
-
-const pa11y = require('pa11y');
-
 //const agent = supertest.agent(app);
+const pa11y = require('pa11y');
 
 const options = {
   ignore: [
@@ -59,15 +56,16 @@ function expectNoErrors(messages: PallyIssue[]): void {
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
+      console.log('test env is: ' + process.env.TEST_URL);
       //   const actions = await isRedirect(url);
-      const messages = await pa11y('https://et-sya.aat.platform.hmcts.net' + url, {
+      const messages = await pa11y(process.env.TEST_URL + url, {
         actions: [
           'set field #username to tester@test.com',
           'set field #password to QATest@2022',
           'click element .button',
           'wait for path to be /steps-to-making-your-claim',
-          'navigate to https://et-sya.aat.platform.hmcts.net/notice-pay',
-          'wait for url to be https://et-sya.aat.platform.hmcts.net/notice-pay',
+          'navigate to ' + process.env.TEST_URL + '/notice-pay',
+          'wait for url to be ' + process.env.TEST_URL + '/notice-pay',
         ],
         options,
       });
