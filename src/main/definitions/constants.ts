@@ -122,6 +122,7 @@ export const PageUrls = {
   TRIBUNAL_RECOMMENDATION: '/tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: '/whistleblowing-claims',
   PERSONAL_DETAILS_CHECK: '/personal-details-check',
+  CLAIM_DETAILS_CHECK: '/claim-details-check',
 } as const;
 
 export const AuthUrls = {
