@@ -1,14 +1,34 @@
 {
   "title": "Type of claim",
   "h1": "What type of claim do you want to make?",
-  "hint": "You can select <span class=\"govuk-!-font-weight-bold\">more than 1 </span> type of claim. <br><br> <details class=\"govuk-details\" data-module=\"govuk-details\"> <summary class=\"govuk-details__summary\"> <span class=\"govuk-details__summary-text\"> What are breach of contract claims about? </span> </summary> <div class=\"govuk-details__text\"> You might have a written or verbal contract of employment with your employer. <br><br> If your employer does not keep to the terms of the contract and makes changes without your agreement - this is known as a ‘breach of the contract’. <br><br> If you can prove you’ve lost out financially because of a ‘breach of the contract’ you may be able to claim compensation. </div> </details>",
+  "hints": "You can select <span class=\"govuk-!-font-weight-bold\">more than 1 </span> type of claim. <br><br> <details class=\"govuk-details\" data-module=\"govuk-details\"> <summary class=\"govuk-details__summary\"> <span class=\"govuk-details__summary-text\"> What are breach of contract claims about? </span> </summary> <div class=\"govuk-details__text\"> You might have a written or verbal contract of employment with your employer. <br><br> If your employer does not keep to the terms of the contract and makes changes without your agreement - this is known as a ‘breach of the contract’. <br><br> If you can prove you’ve lost out financially because of a ‘breach of the contract’ you may be able to claim compensation. </div> </details>",
+  "hint": "You can choose all that apply to you. Further information will be asked for later in the claim. <span class=\"govuk-!-font-weight-bold\">Select all that applies </span>",
   "breachOfContract": {
     "title": "Breach of contract claim",
-    "checkbox": "Breach of Contract"
+    "checkbox": "Breach of Contract: including notice pay"
   },
   "discrimination": {
     "title": "Discrimination claim",
-    "checkbox": "Discrimination"
+    "checkbox": "Discrimination of any type",
+    "hint": "for example because of your sex, ethnicity, disability or other characteristics"
+  },
+  "payRelated": {
+    "title": "Pay related claim",
+    "checkbox": "Pay-related claim"
+  },
+  "unfairDismissal": {
+    "title": "Unfair Dismissal",
+    "checkbox": "Unfair dismissal",
+    "hint": "including constructive dismissal"
+  },
+  "whistleBlowing": {
+    "title": "whistleblowing",
+    "checkbox": "WhistleBlowing",
+    "hint": "including dismissal or any other unfair treatment after whistleblowing"
+  },
+  "otherTypesOfClaims": {
+    "title": "other types of claims",
+    "checkbox": "Other type of claim"
   },
   "errors": {
     "typeOfClaim": {
