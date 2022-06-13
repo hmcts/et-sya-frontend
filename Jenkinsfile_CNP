@@ -25,6 +25,12 @@ withPipeline(type, product, component) {
     }
   }
 
+  after('test') {
+    onPR {
+      yarnBuilder.yarn('tests:a11y')
+    }
+  }
+
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
    ])
