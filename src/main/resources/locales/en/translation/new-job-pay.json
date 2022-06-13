@@ -1,7 +1,16 @@
 {
-  "title": "What's your new job pay? (optional)?",
-  "h1": "What's your new job pay? (optional)(to do)?",
+  "title": "New job pay",
+  "h1": "What's your new job pay? (optional)",
   "p1": "Tell us your gross pay - before tax and other deductions. You'll find this on your new payslips or ask your employer for details.",
   "payBeforeTax": "Enter your pay BEFORE tax and National Insurance",
-  "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?"
+  "weeklyMonthlyAnnual": "Is this your weekly, monthly or annual pay?",
+  "errors": {
+    "newJobPay": {
+      "required": "Tell us your Pay before tax and NI",
+      "minLengthRequired": "Pay before tax and NI must be a minimum of double figures. For example £10"
+    },
+    "newJobPayInterval": {
+      "required": "Tell us your pay frequency"
+    }
+  }
 }

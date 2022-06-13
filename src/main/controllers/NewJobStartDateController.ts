@@ -1,29 +1,28 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DateValues } from '../definitions/dates';
+import { DateFormFields, NewJobDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const new_job_start_date: DateFormFields = {
+  ...NewJobDateFormFields,
+  id: 'new-job-start-date',
+  hint: (l: AnyRecord): string => l.hint,
+  parser: (body: UnknownRecord): CaseDate => convertToDateObject('newJobStartDate', body),
+};
 
 export default class NewJobStartDateController {
   private readonly form: Form;
   private readonly newJobStartDateContent: FormContent = {
-    fields: {
-      newJobStartDate: {
-        id: 'new-job-start-date',
-        type: 'date',
-        classes: 'govuk-date-input',
-        label: (l: AnyRecord): string => l.label,
-        hint: (l: AnyRecord): string => l.hint,
-        labelHidden: true,
-        values: DateValues,
-      },
-    },
+    fields: { newJobStartDate: new_job_start_date },
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };

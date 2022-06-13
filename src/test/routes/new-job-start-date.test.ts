@@ -15,7 +15,7 @@ describe(`on POST ${PageUrls.NEW_JOB_START_DATE}`, () => {
   test('should navigate to the new job pay page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.NEW_JOB_START_DATE)
-      .send({ 'noticeEnds-day': '10', 'noticeEnds-month': '10', 'noticeEnds-year': '2014' })
+      .send({ 'newJobStartDate-day': '10', 'newJobStartDate-month': '10', 'newJobStartDate-year': '2030' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NEW_JOB_PAY);

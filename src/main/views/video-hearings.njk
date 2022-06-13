@@ -13,22 +13,13 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
       <p class="govuk-body ">{{ p1 }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ bullet1 }} </li>
+        <li>{{ bullet2 }} </li>        
+        <li>{{ bullet3 }} </li>
+      </ul>
       <p class="govuk-body ">{{ p2 }}</p>
-      <p class="govuk-body ">{{ p3 }}</p>
-      <details class="govuk-details govuk-!-margin-bottom-4" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">{{ detailsSummary }}</span>
-        </summary>
-        <div class="govuk-details__text">
-          <p class="govuk-body">{{ detailsText.p1 }}</p>
-          <p class="govuk-body govuk-!-margin-bottom-0 govuk-!-padding-bottom-0">{{ detailsText.p2 }}
-          </p>
-          <ul class="govuk-!-margin-top-0 govuk-!-padding-top-0">
-            <li>{{ detailsText.li1 }}</li>
-            <li>{{ detailsText.li2 }}</li>
-          </ul>
-        </div>
-      </details>
+      <div class="govuk-hint"> {{ selectAllHint }} </div>
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
