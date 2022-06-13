@@ -3,15 +3,30 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const compensation_amount: CurrencyFormFields = {
+  ...DefaultCurrencyFormFields,
+  id: 'compensation-amount',
+  label: (l: AnyRecord): string => l.compensationAmount,
+};
 
 export default class CompensationController {
   private readonly form: Form;
   private readonly compensationFormContent: FormContent = {
-    fields: {},
+    fields: {
+      compensationOutcome: {
+        id: 'compensationOutcome',
+        type: 'textarea',
+        hint: l => l.hint,
+      },
+      compensationAmount: compensation_amount,
+    },
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };

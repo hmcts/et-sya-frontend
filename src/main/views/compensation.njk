@@ -11,10 +11,30 @@
   {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+
+      <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ detailsSummaryComp }}</span>
+        </summary>
+        <div class="govuk-details__text">
+          {{ detailsTextComp.p1 }}
+          <ul>
+            <li>{{ detailsTextComp.li1 }}</li>
+            <li>{{ detailsTextComp.li2 }}</li>
+          </ul>
+          {{ detailsTextComp.p2 | safe }}
+          {{ detailsTextComp.p3 | safe }}
+          {{ detailsTextComp.p4 | safe }}
+          {{ detailsTextComp.p5 }}
+        </div>
+      </details>
+      
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
+
     </div>
   </div>
 {% endblock %}
