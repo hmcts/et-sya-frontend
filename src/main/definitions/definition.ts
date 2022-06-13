@@ -36,3 +36,10 @@ export const enum ClaimTypePay {
   REDUNDANCY_PAY = 'redundancyPay',
   OTHER_PAYMENTS = 'otherPayments',
 }
+
+export const enum TellUsWhatYouWant {
+  COMPENSATION_ONLY = 'compensationOnly',
+  TRIBUNAL_RECOMMENDATION = 'tribunalRecommendation',
+  OLD_JOB = 'oldJob',
+  ANOTHER_JOB = 'anotherJob',
+}

@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TellUsWhatYouWant } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
@@ -11,7 +12,39 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 export default class TellUsWhatYouWantController {
   private readonly form: Form;
   private readonly tellUsWhatYouWantFormContent: FormContent = {
-    fields: {},
+    fields: {
+      tellUsWhatYouWant: {
+        id: 'tellUsWhatYouWant',
+        type: 'checkboxes',
+        isPageHeading: true,
+        hint: l => l.selectAllHint,
+        validator: null,
+        values: [
+          {
+            id: 'compensationOnly',
+            label: l => l.compensationOnly.checkbox,
+            hint: l => l.compensationOnlyHint,
+            value: TellUsWhatYouWant.COMPENSATION_ONLY,
+          },
+          {
+            id: 'tribunalRecommendation',
+            label: l => l.tribunalRecommendation.checkbox,
+            hint: l => l.tribunalRecommendationHint,
+            value: TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION,
+          },
+          {
+            id: 'oldJob',
+            label: l => l.oldJob.checkbox,
+            value: TellUsWhatYouWant.OLD_JOB,
+          },
+          {
+            id: 'anotherJob',
+            label: l => l.anotherJob.checkbox,
+            value: TellUsWhatYouWant.ANOTHER_JOB,
+          },
+        ],
+      },
+    },
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };
