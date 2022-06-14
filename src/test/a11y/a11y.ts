@@ -5,7 +5,7 @@ import { fail } from 'assert';
 //import { app } from '../../main/app';
 //const agent = supertest.agent(app);
 const pa11y = require('pa11y');
-
+const testUrl = process.env.TEST_URL || 'http://localhost:3001';
 const options = {
   ignore: [
     'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
@@ -56,9 +56,9 @@ function expectNoErrors(messages: PallyIssue[]): void {
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
-      console.log('test env is: ' + process.env.TEST_URL);
+      console.log('test env is: ' + testUrl);
       //   const actions = await isRedirect(url);
-      const messages = await pa11y(process.env.TEST_URL + url, {
+      const messages = await pa11y(testUrl + url, {
         /*actions: [
           'set field #username to tester@test.com',
           'set field #password to QATest@2022',
