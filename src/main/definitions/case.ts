@@ -89,7 +89,7 @@ export const enum StillWorking {
 }
 
 export const enum NoAcasNumberReason {
-  ANOTHER = "Another persion I'm making the claim with has an early conciliation certificate number",
+  ANOTHER = "Another person I'm making the claim with has an early conciliation certificate number",
   NO_POWER = "Acas doesn't have the power to conciliate on some or all of my cliam",
   EMPLOYER = 'My employer has already been in touch with Acas',
   UNFAIR_DISMISSAL = 'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',

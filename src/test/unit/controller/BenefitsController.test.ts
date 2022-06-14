@@ -19,7 +19,7 @@ describe('Benefits Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.BENEFITS, expect.anything());
   });
 
-  it('should render the new job page when on no longer working route, yes radio button is selected and valid benefits text entered', () => {
+  it('should render the new job page when no longer working and yes radio button is selected', () => {
     const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };
     const controller = new BenefitsController();
@@ -32,7 +32,7 @@ describe('Benefits Controller', () => {
   });
 
   it('should render the respondent name page when working or notice and no radio button is selected', () => {
-    const body = { employeeBenefits: YesOrNo.YES };
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.WORKING || StillWorking.NOTICE };
     const controller = new BenefitsController();
 
@@ -44,7 +44,7 @@ describe('Benefits Controller', () => {
   });
 
   it('should render the have you got a new job page when no longer working radio button is selected', () => {
-    const body = { employeeBenefits: YesOrNo.YES };
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };
     const controller = new BenefitsController();
 
