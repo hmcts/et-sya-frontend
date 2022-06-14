@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -27,6 +28,7 @@ export default class NoticeTypeController {
             value: WeeksOrMonths.MONTHS,
           },
         ],
+        validator: isFieldFilledIn,
       },
     },
     submit: {
