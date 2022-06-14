@@ -63,6 +63,7 @@ export interface Case {
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
   personalDetailsCheck?: YesOrNo;
+  ClaimantPcqId?: string;
 }
 
 export const enum StillWorking {

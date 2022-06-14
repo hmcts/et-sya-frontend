@@ -114,6 +114,7 @@ export const PageUrls = {
   END_DATE: '/end-date',
   DOWNLOAD_CLAIM: '/download-claim',
   PERSONAL_DETAILS_CHECK: '/personal-details-check',
+  PCQ: '/pcq',
 } as const;
 
 export const AuthUrls = {
