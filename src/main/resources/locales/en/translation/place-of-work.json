@@ -1,13 +1,6 @@
 {
   "title": "Work Address",
-  "h1": {
-    "noLongerWorking": "Where did you work?",
-    "workingOrNotice": "Where do you work?"
-  },
-  "pText": {
-    "noLongerWorking": "If you worked from home tell us your home address. ",
-    "workingOrNotice": "If you work from home tell us your home address. "
-  },
+  "h1": "What address did you work at?",
   "errors": {
     "addressPostcode": {
       "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",

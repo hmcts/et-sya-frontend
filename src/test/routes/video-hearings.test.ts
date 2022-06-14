@@ -1,6 +1,5 @@
 import request from 'supertest';
 
-import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -13,10 +12,20 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 });
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
-  test("should return the reasonable adjustments page when 'yes' and 'save and continue' are selected", async () => {
+  test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ videoHearings: YesOrNo.YES })
+      .send({ hearingPreference: 'video' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+      });
+  });
+
+  test("should return the reasonable adjustments page when 'phone' and 'save and continue' are selected", async () => {
+    await request(mockApp({}))
+      .post(PageUrls.VIDEO_HEARINGS)
+      .send({ hearingPreference: 'phone' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -26,7 +35,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ videoHearings: YesOrNo.NO })
+      .send({ hearingPreference: 'neither' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -36,7 +45,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test('should reload the page when nothing have been selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ videoHearings: undefined })
+      .send({ hearingPreference: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);

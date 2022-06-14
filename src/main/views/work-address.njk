@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -7,16 +8,13 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      {% block errorSummary %}
-        {% include "./error-summary.njk" %}
-      {% endblock %}
-
-      {% include "./address/postcodeError.njk" %}
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-      {% include "./address/postcodeEnter.njk" %}
-      {% include "./address/postcodeSelect.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">Did you work at [first line of respondent address]?</h1>
 
       {% block form %}
         {% include "form/form.njk"%}

@@ -19,7 +19,7 @@ describe(`GET ${PageUrls.BENEFITS}`, () => {
 });
 
 describe(`on POST ${PageUrls.BENEFITS}`, () => {
-  test('should navigate to the home page when either working or notice and save and continue button is clicked', async () => {
+  test('should navigate to the respondent name when either working or notice and save and continue button is clicked', async () => {
     await request(
       mockApp({
         userCase: {
@@ -31,7 +31,7 @@ describe(`on POST ${PageUrls.BENEFITS}`, () => {
       .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.HOME);
+        expect(res.header['location']).toStrictEqual(PageUrls.RESPONDENT_NAME);
       });
   });
 });

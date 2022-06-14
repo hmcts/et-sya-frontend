@@ -49,7 +49,7 @@ export default class AcasMultipleController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.TYPE_OF_CLAIM
-      : PageUrls.NO_ACAS_NUMBER;
+      : PageUrls.VALID_ACAS_REASON;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
