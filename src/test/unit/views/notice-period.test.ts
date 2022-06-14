@@ -8,15 +8,20 @@ import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const noticePeriodJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-period.json'),
+const noticePeriodWorkingJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-period-working.json'),
   'utf-8'
 );
-const noticePeriodJson = JSON.parse(noticePeriodJsonRaw);
+const noticePeriodNoLongerWorkingJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-period-no-longer-working.json'),
+  'utf-8'
+);
+const noticePeriodWorkingJson = JSON.parse(noticePeriodWorkingJsonRaw);
+const noticePeriodNoLongerWorkingJson = JSON.parse(noticePeriodNoLongerWorkingJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitleWorkingOrNotice = noticePeriodJson.h1.workingOrNotice;
-const expectedTitleNoLongerWorking = noticePeriodJson.h1.noLongerWorking;
+const expectedTitleWorkingOrNotice = noticePeriodWorkingJson.h1;
+const expectedTitleNoLongerWorking = noticePeriodNoLongerWorkingJson.h1;
 const radios = 'govuk-radios';
 const buttonClass = 'govuk-button';
 
