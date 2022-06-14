@@ -34,7 +34,7 @@ export default class ReasonableAdjustmentsController {
                 labelSize: 'normal',
                 label: (l: AnyRecord): string => l.adjustmentDetailTextLabel,
                 classes: 'govuk-textarea',
-                attributes: { maxLength: 5000 },
+                attributes: { maxLength: 2500 },
                 validator: isFieldFilledIn,
               },
             },
