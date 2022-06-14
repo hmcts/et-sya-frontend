@@ -1,17 +1,19 @@
 {
-  "h1": "Would you be able to take part in video hearings?",
-  "p1": "They’re not always guaranteed and held at the discretion of an employment judge.",
-  "p2": "They may also not always be possible or suitable depending on your type of claim.",
-  "p3": "If you're asked to take part in a video hearing, you’ll need a reliable internet connection.",
-  "detailsSummary": "What is a video hearing?",
-  "detailsText": {
-    "p1": "It’s a hearing carried out via a video call and you need to prepare for and treat them like a face-to-face hearing.",
-    "p2": "If you’re allowed to take part in one, you’ll be called before the hearing to check you:",
-    "li1": "have a reliable internet connection",
-    "li2": "know how to join the hearing"
-  },
+  "title": "Hearing preference",
+  "h1": "Would you be able to take part in hearings by video and phone?",
+  "p1": "If your case goes to a hearing, it can take place either:",
+  "bullet1": "in person, in a room at a tribunal (‘face-to-face’)",
+  "bullet2": "by video (where you can join from a place suitable to you)",
+  "bullet3": "by phone",
+  "p2": "Some hearings use a combination of these methods. The approach take will be decided by a judge. It may depend on the type of claim.",
+  "checkbox1": "Yes, I can take part in video hearings",
+  "checkbox2": "Yes, I can take part in phone hearings",
+  "checkbox3": "No, I cannot take part in either video or phone hearings",
+  "checkbox3Hint": "If you choose this option please tell us why in case we can assist you",
+  "explain": "Explain why you are unable to take part in video or phone hearings",
+  "selectAllHint": "Select all that apply",
   "errors": {
-    "videoHearings": {
+    "hearingPreference": {
       "required": "Select an Option"
     }
   }

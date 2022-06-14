@@ -1,9 +1,8 @@
 import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
-import { YesOrNo } from '../../../main/definitions/case';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Video Hearing Controller', () => {
+describe('Hearing Preferences Controller', () => {
   const t = {
     'video-hearings': {},
     common: {},
@@ -18,8 +17,8 @@ describe('Video Hearing Controller', () => {
   });
 
   it('should render same page if errors are present', () => {
-    const errors = [{ propertyName: 'videoHearings', errorType: 'required' }];
-    const body = { videoHearings: '' };
+    const errors = [{ propertyName: 'hearingPreference', errorType: 'required' }];
+    const body = { hearingPreference: '' };
     const controller = new VideoHearingsController();
 
     const req = mockRequest({ body });
@@ -31,7 +30,7 @@ describe('Video Hearing Controller', () => {
   });
 
   it('should add the videoHearings form value to the userCase', () => {
-    const body = { videoHearings: YesOrNo.NO };
+    const body = { hearingPreference: 'phone' };
 
     const controller = new VideoHearingsController();
 
@@ -41,6 +40,6 @@ describe('Video Hearing Controller', () => {
 
     controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ videoHearings: YesOrNo.NO });
+    expect(req.session.userCase).toStrictEqual({ hearingPreference: ['phone'] });
   });
 });
