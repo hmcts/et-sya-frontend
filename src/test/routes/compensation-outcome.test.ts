@@ -40,7 +40,7 @@ describe(`on POST ${PageUrls.COMPENSATION_OUTCOME}`, () => {
       .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.PCQ);
       });
   });
   test('should go to claim steps page when nothing has been selected', async () => {
@@ -49,7 +49,7 @@ describe(`on POST ${PageUrls.COMPENSATION_OUTCOME}`, () => {
       .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.PCQ);
       });
   });
 });

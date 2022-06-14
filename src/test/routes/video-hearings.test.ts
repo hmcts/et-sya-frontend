@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ videoHearings: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
       });
   });
 
@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .send({ videoHearings: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
       });
   });
 

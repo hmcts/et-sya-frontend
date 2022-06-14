@@ -38,7 +38,7 @@ export default class TribunalRecommendationOutcomeController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+    handleSessionErrors(req, res, this.form, PageUrls.PCQ);
   };
 
   public get = (req: AppRequest, res: Response): void => {

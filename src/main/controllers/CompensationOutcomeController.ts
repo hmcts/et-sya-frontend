@@ -50,7 +50,7 @@ export default class CompensationOutcomeController {
       req.session.userCase.claimOutcome &&
       req.session.userCase.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
         ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
-        : PageUrls.CLAIM_STEPS;
+        : PageUrls.PCQ;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
