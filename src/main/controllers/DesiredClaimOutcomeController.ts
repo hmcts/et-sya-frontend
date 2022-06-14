@@ -88,5 +88,5 @@ function getRedirectUrl(req: AppRequest<Partial<AnyRecord>>) {
 
   return req.body.claimOutcome && req.body.claimOutcome.includes(ClaimOutcomes.TRIBUNAL_RECOMMENDATION)
     ? PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME
-    : PageUrls.CLAIM_STEPS;
+    : PageUrls.PCQ;
 }

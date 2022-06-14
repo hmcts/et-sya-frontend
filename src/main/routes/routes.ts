@@ -6,6 +6,7 @@ import { Application } from 'express';
 import { PageUrls } from '../definitions/constants';
 
 export default function (app: Application): void {
+  app.get(PageUrls.PCQ, app.locals.container.cradle.pcqController.get);
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
   app.get(PageUrls.CHECKLIST, app.locals.container.cradle.checklistController.get);
   app.get(PageUrls.NEW_ACCOUNT_LANDING, app.locals.container.cradle.newAccountLandingController.get);
