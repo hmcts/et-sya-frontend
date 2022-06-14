@@ -4,6 +4,7 @@
   "pageText": "We'll send any correspondence to this address.",
   "enterPostcode": "Enter a UK postcode",
   "buildingStreet": "Building and street",
+  "line2Optional": "Address line 2 (optional)",
   "town": "Town or city",
   "county": "County",
   "postcode": "Postcode",
