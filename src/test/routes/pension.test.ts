@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,10 +14,13 @@ describe(`GET ${PageUrls.PENSION}`, () => {
 });
 
 describe(`on POST ${PageUrls.PENSION}`, () => {
-  test("should return the benefits page when 'yes' and 'save and continue' are selected", async () => {
-    await request(mockApp({}))
+  test("should return the benefits page when 'yes' radio button is selected, a valid pension contribution is entered and 'save and continue' are selected", async () => {
+    await request(app)
       .post(PageUrls.PENSION)
-      .send({ pension: YesOrNo.YES })
+      .send({
+        pension: YesOrNo.YES,
+        pensionContributions: '100',
+      })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.BENEFITS);

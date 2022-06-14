@@ -11,8 +11,10 @@ import {
   isJobTitleValid,
   isPastDate,
   isPayIntervalNull,
+  isValidAvgWeeklyHours,
   isValidCurrency,
-  isValidInteger,
+  isValidPension,
+  isValidTwoDigitInteger,
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
@@ -229,16 +231,16 @@ describe('Validation', () => {
     });
   });
 
-  describe('isValidInteger()', () => {
+  describe('isValidTwoDigitInteger()', () => {
     it.each([
       { mockRef: '', expected: 'invalid' },
       { mockRef: null, expected: 'invalid' },
-      { mockRef: 'a', expected: 'invalid' },
-      { mockRef: '%', expected: 'invalid' },
-      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '2a', expected: 'notANumber' },
       { mockRef: '20', expected: undefined },
-    ])('check integer input is valid', ({ mockRef, expected }) => {
-      expect(isValidInteger(mockRef)).toEqual(expected);
+    ])('check two digit input is valid', ({ mockRef, expected }) => {
+      expect(isValidTwoDigitInteger(mockRef)).toEqual(expected);
     });
   });
 
@@ -270,6 +272,36 @@ describe('Validation', () => {
       { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work addrss town is valid', ({ mockRef, expected }) => {
       expect(isWorkAddressTownValid(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidAvgWeeklyHours()', () => {
+    it.each([
+      { mockRef: '00', expected: 'invalid' },
+      { mockRef: 'a', expected: 'invalid' },
+      { mockRef: '%', expected: 'invalid' },
+      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: '20.00', expected: 'invalid' },
+      { mockRef: '169', expected: 'exceeded' },
+      { mockRef: '35', expected: undefined },
+      { mockRef: '2', expected: undefined },
+      { mockRef: null, expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidAvgWeeklyHours(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidPension()', () => {
+    it.each([
+      { mockRef: '1', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '20.', expected: 'invalid' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '20.00', expected: undefined },
+    ])('check integer input is valid', ({ mockRef, expected }) => {
+      expect(isValidPension(mockRef)).toEqual(expected);
     });
   });
 
@@ -382,10 +414,13 @@ describe('Validation', () => {
 
   describe('isValidCurrency()', () => {
     it.each([
-      { mockRef: '', expected: undefined },
       { mockRef: '1', expected: 'minLengthRequired' },
-      { mockRef: '1234567891011', expected: 'minLengthRequired' },
-      { mockRef: '123,456.12', expected: undefined },
+      { mockRef: '20,00', expected: 'minLengthRequired' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '10,000', expected: undefined },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
     });

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isValidPension } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -29,6 +30,7 @@ export default class PensionController {
                 classes: 'govuk-input--width-5',
                 hint: (l: AnyRecord): string => l.pensionContributions,
                 attributes: { maxLength: 12 },
+                validator: isValidPension,
               },
             },
           },
