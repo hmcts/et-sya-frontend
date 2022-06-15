@@ -18,7 +18,7 @@ describe(`POST ${PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME}`, () => {
       .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_STEPS);
+        expect(res.header['location']).toStrictEqual(PageUrls.PCQ);
       });
   });
 });

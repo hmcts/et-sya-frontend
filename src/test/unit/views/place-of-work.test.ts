@@ -22,9 +22,6 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const expectedPageHeaderText = placeOfWorkJson.h1.workingOrNotice;
-const expectedPageText = placeOfWorkJson.pText.workingOrNotice;
-const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const expectedInputLabel = addressJson.enterPostcode;
 const labelClass = 'govuk-label';
@@ -40,16 +37,6 @@ describe('Place Of Work Page', () => {
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
-  });
-
-  it('should display title', () => {
-    const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedPageHeaderText, 'Page title does not exist');
-  });
-
-  it('should display description text', () => {
-    const paragraph = htmlRes.getElementsByClassName(pClass);
-    expect(paragraph[0].innerHTML).contains(expectedPageText, 'P1 does not exist');
   });
 
   it('should display postcode label', () => {
@@ -84,15 +71,8 @@ describe('Place of work while no longer working', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = placeOfWorkJson.h1.noLongerWorking;
+    const expectedTitle = placeOfWorkJson.h1;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
-  });
-
-  it('should display description text', () => {
-    const expectedParagraph = placeOfWorkJson.pText.noLongerWorking;
-
-    const paragraph = htmlRes.getElementsByClassName(pClass);
-    expect(paragraph[0].innerHTML).contains(expectedParagraph, 'P1 does not exist');
   });
 });

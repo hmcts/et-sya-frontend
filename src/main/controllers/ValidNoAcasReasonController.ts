@@ -47,10 +47,10 @@ export default class ValidNoAcasReasonController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.validNoAcasReasonFormContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.NO_ACAS_NUMBER,
+      TranslationKeys.VALID_ACAS_REASON,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.NO_ACAS_NUMBER, {
+    res.render(TranslationKeys.VALID_ACAS_REASON, {
       ...content,
     });
   };

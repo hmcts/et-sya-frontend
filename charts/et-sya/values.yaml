@@ -14,6 +14,7 @@ nodejs:
         - os-places-token
         - fortify-on-demand-username
         - fortify-on-demand-password
+        - pcq-token-key
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
@@ -21,5 +22,6 @@ nodejs:
     ET_SYA_API_HOST: 'http://et-sya-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
     FORTIFY_USER_NAME: secrets.et.fortify-on-demand-username
     FORTIFY_PASSWORD: secrets.et.fortify-on-demand-password
+    PCQ_ENABLED: 'true'
 idam-pr:
   enable: false
