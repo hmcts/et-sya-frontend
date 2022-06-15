@@ -48,6 +48,7 @@ Scenario('Claim while on notice for organisation', () => {
 
   I.seeElement('#pension');
   I.checkOption('input[id=pension]');
+  I.fillField('#pension-contributions', '200');
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');

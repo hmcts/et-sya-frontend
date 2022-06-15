@@ -1,0 +1,23 @@
+{
+  "h1": "What is the address of ",
+  "enterPostcode": "Enter postcode",
+  "findAddress": "Find address",
+  "pageText": "You should be able to find this text on your payslips, contract or other official documents.",
+  "buildingStreet": "Building and street",
+  "town": "Town or city",
+  "county": "County",
+  "postcode": "Postcode",
+  "enterAddressManually": "I want to enter the address manually.",
+  "errors": {
+    "address1": {
+      "required": "Enter a building and street"
+    },
+    "addressTown": {
+      "required": "Enter a town or city"
+    },
+    "addressPostcode": {
+      "required": "Enter a postcode",
+      "invalid": "Enter a valid UK postcode"
+    }
+  }
+}

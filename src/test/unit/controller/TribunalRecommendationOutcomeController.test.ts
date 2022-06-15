@@ -29,7 +29,7 @@ describe('Tribunal Recommendation Outcome Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+      expect(res.redirect).toBeCalledWith(PageUrls.PCQ);
       expect(req.session.userCase).toStrictEqual({
         tribunalRecommendationOutcome: 'test',
       });

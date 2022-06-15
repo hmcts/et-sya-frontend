@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.PLACE_OF_WORK}`, () => {
 });
 
 describe(`on POST ${PageUrls.PLACE_OF_WORK}`, () => {
-  test('should redirect to home on submit', async () => {
+  test('should redirect to acas number page on submit', async () => {
     await request(mockApp({}))
       .post(PageUrls.PLACE_OF_WORK)
       .send({
@@ -26,7 +26,7 @@ describe(`on POST ${PageUrls.PLACE_OF_WORK}`, () => {
       })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.HOME);
+        expect(res.header['location']).toEqual(PageUrls.ACAS_CERT_NUM);
       });
   });
 });

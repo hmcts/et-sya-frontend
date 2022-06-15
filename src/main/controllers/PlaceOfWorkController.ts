@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { StillWorking } from '../definitions/case';
+import { PageUrls } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -72,20 +72,14 @@ export default class PlaceOfWorkController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, '/');
+    handleSessionErrors(req, res, this.form, PageUrls.ACAS_CERT_NUM);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    let stillWorking = true;
-    if (req.session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-      stillWorking = false;
-    }
-
     const content = getPageContent(req, this.placeOfWorkContent, ['common', 'enter-address', 'place-of-work']);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render('place-of-work', {
       ...content,
-      stillWorking,
     });
   };
 }

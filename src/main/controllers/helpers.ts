@@ -10,7 +10,7 @@ import {
   isValidTwoDigitInteger,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, StillWorking } from '../definitions/case';
+import { CaseWithId, Respondent, StillWorking } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -161,6 +161,25 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
     req.session.userCase = {} as CaseWithId;
   }
   Object.assign(req.session.userCase, formData);
+};
+
+export const setUserCaseForNewRespondent = (req: AppRequest): void => {
+  if (!req.session.userCase) {
+    req.session.userCase = {} as CaseWithId;
+  }
+  let respondent: Respondent;
+  if (!req.session.userCase.respondents) {
+    req.session.userCase.respondents = [];
+    respondent = {
+      respondentNumber: 1,
+      respondentName: req.body.respondentName,
+    };
+    req.session.userCase.respondents.push(respondent);
+    req.session.userCase.selectedRespondent = respondent.respondentNumber;
+  } else {
+    req.session.userCase.respondents[req.session.userCase.selectedRespondent - 1].respondentName =
+      req.body.respondentName;
+  }
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
