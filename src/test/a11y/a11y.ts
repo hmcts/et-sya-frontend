@@ -6,7 +6,7 @@ import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequi
 
 const pa11y = require('pa11y');
 
-const envUrl = 'https://et-sya.aat.platform.hmcts.net';
+const envUrl = process.env.TEST_URL || 'http://localhost:3001';
 const data = require('../../test/functional/data.json');
 
 const options = {
