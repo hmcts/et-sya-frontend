@@ -1,11 +1,14 @@
 /* eslint-disable jest/no-done-callback */
 import { fail } from 'assert';
 
-//import * as supertest from 'supertest';
-//import { app } from '../../main/app';
-//const agent = supertest.agent(app);
+import { PageUrls } from '../../main/definitions/constants';
+import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
+
 const pa11y = require('pa11y');
-const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+
+const envUrl = 'https://et-sya.aat.platform.hmcts.net';
+const data = require('../../test/functional/data.json');
+
 const options = {
   ignore: [
     'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
@@ -36,37 +39,24 @@ function expectNoErrors(messages: PallyIssue[]): void {
     fail(`There are accessibility issues: \n${errorsAsJson}\n`);
   }
 }
-/*
-  function isRedirect(url:string) {
-  agent.get(url).then((res: supertest.Response) => {
-    if (res.redirect) {
-      return [
-        'set field #username to tester@test.com',
-        'set field #password to QATest@2022',
-        'click element .button',
-        'wait for path to be /steps-to-making-your-claim',
-        'navigate to https://et-sya.aat.platform.hmcts.net/notice-pay',
-        'wait for url to be https://et-sya.aat.platform.hmcts.net/notice-pay'
-      ];
-    } else {
-      return [];
-    }
-  });
-}*/
+
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
-      console.log('test env is: ' + testUrl);
-      //   const actions = await isRedirect(url);
-      const messages = await pa11y(testUrl + url, {
-        /*actions: [
-          'set field #username to tester@test.com',
-          'set field #password to QATest@2022',
+      let actions: string[] = [];
+      const pageUrl = envUrl + url;
+      if (!noSignInRequiredEndpoints.includes(url)) {
+        actions = [
+          'set field #username to ' + data.signIn.username,
+          'set field #password to ' + data.signIn.password,
           'click element .button',
           'wait for path to be /steps-to-making-your-claim',
-          'navigate to ' + process.env.TEST_URL + '/notice-pay',
-          'wait for url to be ' + process.env.TEST_URL + '/notice-pay',
-        ],*/
+          'navigate to ' + pageUrl,
+          'wait for url to be ' + pageUrl,
+        ];
+      }
+      const messages = await pa11y(pageUrl, {
+        actions,
         options,
       });
       expectNoErrors(messages.issues);
@@ -75,8 +65,8 @@ function testAccessibility(url: string): void {
 }
 
 describe('Accessibility', () => {
-  testAccessibility('/');
-  testAccessibility('/checklist');
-  //testAccessibility('/lip-or-representative');
-  //testAccessibility('/notice-pay');
+  //Below code needs to be added in future when dev team completed RET-1888 & RET-1889
+  Object.values(PageUrls).forEach(url => {
+    testAccessibility(url);
+  });
 });
