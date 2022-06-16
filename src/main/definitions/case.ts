@@ -19,6 +19,19 @@ export interface CaseDate {
   day: string;
 }
 
+export interface Respondent {
+  respondentNumber: number;
+  respondentName?: string;
+  respondentAddress1?: string;
+  respondentAddress2?: string;
+  respondentAddressTown?: string;
+  respondentAddressCounty?: string;
+  respondentAddressPostcode?: string;
+  acasCert?: YesOrNo;
+  acasCertNum?: string;
+  noAcasReson?: NoAcasNumberReason;
+}
+
 export interface Case {
   firstName?: string;
   lastName?: string;
@@ -77,12 +90,24 @@ export interface Case {
   whistleblowingEntityName?: string;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
+  claimantWorkAddressQuestion?: YesOrNo;
+  selectedRespondent?: number;
+  respondents?: Respondent[];
+  employmentAndRespondentCheck?: YesOrNo;
+  ClaimantPcqId?: string;
 }
 
 export const enum StillWorking {
   WORKING = 'WORKING',
   NOTICE = 'NOTICE',
   NO_LONGER_WORKING = 'NO LONGER WORKING',
+}
+
+export const enum NoAcasNumberReason {
+  ANOTHER = "Another person I'm making the claim with has an early conciliation certificate number",
+  NO_POWER = "Acas doesn't have the power to conciliate on some or all of my cliam",
+  EMPLOYER = 'My employer has already been in touch with Acas',
+  UNFAIR_DISMISSAL = 'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',
 }
 
 export interface CaseWithId extends Case {

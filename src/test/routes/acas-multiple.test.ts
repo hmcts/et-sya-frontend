@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
       .send({ acasMultiple: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.NO_ACAS_NUMBER);
+        expect(res.header['location']).toStrictEqual(PageUrls.VALID_ACAS_REASON);
       });
   });
 
