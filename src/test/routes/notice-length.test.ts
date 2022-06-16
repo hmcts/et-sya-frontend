@@ -19,9 +19,12 @@ describe(`GET ${PageUrls.NOTICE_LENGTH}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_LENGTH}`, () => {
-  test('should navigate to the average weekly hours page when save and continue button is clicked', async () => {
+  test('should navigate to the average weekly hours page when a valid notice length is entered and save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.NOTICE_LENGTH)
+      .send({
+        noticeLength: '2',
+      })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.AVERAGE_WEEKLY_HOURS);

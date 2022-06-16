@@ -8,18 +8,23 @@ import { StillWorking, WeeksOrMonths } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const noticeLengthJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-length.json'),
+const noticeLengthWeeksJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-length-weeks.json'),
   'utf-8'
 );
-const noticeLengthJson = JSON.parse(noticeLengthJsonRaw);
+const noticeLengthMonthsJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-length-months.json'),
+  'utf-8'
+);
+const noticeLengthWeeksJson = JSON.parse(noticeLengthWeeksJsonRaw);
+const noticeLengthMonthsJson = JSON.parse(noticeLengthMonthsJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const input = 'govuk-input--width-3';
-const expectedTitleWeeks = noticeLengthJson.h1.noticeWeeks;
-const expectedTitleMonths = noticeLengthJson.h1.noticeMonths;
-const expectedTitleWeeksNonNotice = noticeLengthJson.h1.nonNoticeWeeks;
-const expectedTitleMonthsNonNotice = noticeLengthJson.h1.nonNoticeMonths;
+const expectedTitleWeeksNotice = noticeLengthWeeksJson.h1.notice;
+const expectedTitleMonthsNotice = noticeLengthMonthsJson.h1.notice;
+const expectedTitleWeeksNonNotice = noticeLengthWeeksJson.h1.nonNotice;
+const expectedTitleMonthsNonNotice = noticeLengthMonthsJson.h1.nonNotice;
 
 let htmlRes: Document;
 describe('Notice length page - weeks - on notice', () => {
@@ -39,7 +44,7 @@ describe('Notice length page - weeks - on notice', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = expectedTitleWeeks;
+    const expectedTitle = expectedTitleWeeksNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
@@ -67,7 +72,7 @@ describe('Notice length page - months - on notice', () => {
   });
 
   it('should display title', () => {
-    const expectedTitle = expectedTitleMonths;
+    const expectedTitle = expectedTitleMonthsNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });

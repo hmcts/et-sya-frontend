@@ -12,17 +12,17 @@ const self = "'self'";
  * Module that enables helmet in the application
  */
 export class Helmet {
-  constructor(public config: HelmetConfig, public idamAuthUrl: string) {}
+  constructor(public config: HelmetConfig, public formActionUrls: string[]) {}
 
   public enableFor(app: express.Express): void {
     // include default helmet functions
     app.use(helmet());
 
-    this.setContentSecurityPolicy(app, this.idamAuthUrl);
+    this.setContentSecurityPolicy(app, this.formActionUrls);
     this.setReferrerPolicy(app, this.config.referrerPolicy);
   }
 
-  private setContentSecurityPolicy(app: express.Express, idamAuthUrl: string): void {
+  private setContentSecurityPolicy(app: express.Express, formActionUrls: string[]): void {
     const scriptSrc = [self, googleAnalyticsDomain, "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='"];
 
     if (app.locals.developmentMode) {
@@ -38,7 +38,7 @@ export class Helmet {
           objectSrc: [self],
           scriptSrc,
           styleSrc: [self],
-          formAction: [self, idamAuthUrl],
+          formAction: [self, ...formActionUrls],
         },
       })
     );

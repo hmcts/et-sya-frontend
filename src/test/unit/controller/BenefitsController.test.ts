@@ -20,7 +20,7 @@ describe('Benefits Controller', () => {
   });
 
   it('should render the new job page when no longer working and yes radio button is selected', () => {
-    const body = { employeeBenefits: YesOrNo.YES };
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };
     const controller = new BenefitsController();
 
@@ -31,8 +31,8 @@ describe('Benefits Controller', () => {
     expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
   });
 
-  it('should render the home page when working or notice and no radio button is selected', () => {
-    const body = { employeeBenefits: YesOrNo.YES };
+  it('should render the respondent name page when working or notice and no radio button is selected', () => {
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.WORKING || StillWorking.NOTICE };
     const controller = new BenefitsController();
 
@@ -40,6 +40,18 @@ describe('Benefits Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.HOME);
+    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_NAME);
+  });
+
+  it('should render the have you got a new job page when no longer working radio button is selected', () => {
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
+    const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };
+    const controller = new BenefitsController();
+
+    const req = mockRequest({ body, userCase });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
   });
 });

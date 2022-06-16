@@ -6,7 +6,7 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.LIP_OR_REPRESENTATIVE,
   PageUrls.SINGLE_OR_MULTIPLE_CLAIM,
   PageUrls.ACAS_MULTIPLE_CLAIM,
-  PageUrls.NO_ACAS_NUMBER,
+  PageUrls.VALID_ACAS_REASON,
   PageUrls.CONTACT_ACAS,
   PageUrls.TYPE_OF_CLAIM,
   PageUrls.INFO,
