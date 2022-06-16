@@ -28,7 +28,8 @@
   },
   "otherTypesOfClaims": {
     "title": "other types of claims",
-    "checkbox": "Other type of claim"
+    "checkbox": "Other type of claim",
+    "explain": "Please describe what type of claim you want to make"
   },
   "errors": {
     "typeOfClaim": {

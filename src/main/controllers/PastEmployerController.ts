@@ -8,6 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+let employmentStatus: string;
 
 export default class PastEmployerController {
   private readonly form: Form;
@@ -38,12 +39,14 @@ export default class PastEmployerController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.pastEmployerFormContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.PAST_EMPLOYER,
-    ]);
+    if (req.session.userCase.typeOfClaim.includes('unfairDismissal')) {
+      employmentStatus = TranslationKeys.STILL_WORKING;
+    } else {
+      employmentStatus = TranslationKeys.PAST_EMPLOYER;
+    }
+    const content = getPageContent(req, this.pastEmployerFormContent, [TranslationKeys.COMMON, employmentStatus]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.PAST_EMPLOYER, {
+    res.render(employmentStatus, {
       ...content,
     });
   };

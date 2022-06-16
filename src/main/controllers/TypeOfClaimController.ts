@@ -62,7 +62,14 @@ export default class TypeOfClaimController {
             id: 'otherTypes',
             name: 'typeOfClaim',
             label: l => l.otherTypesOfClaims.checkbox,
-            value: TypesOfClaim.OTHER_TYPES,
+            subFields: {
+              otherClaim: {
+                type: 'textarea',
+                label: l => l.otherTypesOfClaims.explain,
+                labelSize: 'normal',
+              },
+            },
+            value: 'otherClaim',
           },
         ],
       },
@@ -77,10 +84,13 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
-      ? LegacyUrls.ET1_BASE
-      : PageUrls.CLAIM_STEPS;
-
+    let redirectUrl;
+    if (conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.UNFAIR_DISMISSAL])) {
+      redirectUrl = PageUrls.CLAIM_STEPS;
+    } else {
+      redirectUrl = LegacyUrls.ET1_BASE + LegacyUrls.ET1_APPLY;
+    }
+    req.session.userCase.typeOfClaim.push(req.body.otherClaim);
     setUserCase(req, this.form);
 
     if (req.app?.locals) {

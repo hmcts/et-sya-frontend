@@ -6,7 +6,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers';
-
+// let employeeStatus: string;
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
@@ -74,6 +74,7 @@ const sections = [
 
 export default class StepsToMakingYourClaimController {
   public get(req: AppRequest, res: Response): void {
+    // conditionalWorkingType(req);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
@@ -84,3 +85,12 @@ export default class StepsToMakingYourClaimController {
     });
   }
 }
+
+// const conditionalWorkingType = (req: AppRequest): string => {
+//   console.log(req.session.userCase.typeOfClaim);
+//   if (req.session.userCase.typeOfClaim.includes('unfairDismissal')) {
+//     return (employeeStatus = PageUrls.STILL_WORKING);
+//   } else {
+//     return (employeeStatus = PageUrls.PAST_EMPLOYER);
+//   }
+// };

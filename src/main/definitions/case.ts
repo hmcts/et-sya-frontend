@@ -1,4 +1,4 @@
-import { CaseState, ClaimOutcomes, TypesOfClaim } from './definition';
+import { CaseState, ClaimOutcomes } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -31,7 +31,7 @@ export interface Case {
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;
   jobTitle?: string;
-  typeOfClaim?: TypesOfClaim[];
+  typeOfClaim?: string[];
   pastEmployer?: YesOrNo;
   noticeEnd?: string;
   noticePeriod?: YesOrNo;
@@ -129,4 +129,5 @@ export const enum CaseDataCacheKey {
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typesOfClaim',
+  OTHER_CLAIM_TYPE = 'otherClaimType',
 }
