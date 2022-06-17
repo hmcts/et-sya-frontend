@@ -33,7 +33,6 @@ export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefine
       fieldName: fields ? Object.keys(fields)[0] : undefined,
     };
   }
-
   for (const [fieldName, field] of Object.entries(fields)) {
     if (!field) {
       return {

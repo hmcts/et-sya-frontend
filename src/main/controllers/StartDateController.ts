@@ -5,14 +5,14 @@ import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
+import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 const start_date: DateFormFields = {
-  ...DefaultDateFormFields,
+  ...StartDateFormFields,
   id: 'start-date',
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),

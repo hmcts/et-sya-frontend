@@ -6,10 +6,10 @@
   "hint": "For example, 27 3 2007",
   "errors": {
     "startDate": {
-      "required": "Enter your employment start date. For example, 22 04 2014",
+      "required": "Tell us when you started work. For example, 23 04 2014",
       "dayRequired": "Enter a day for your start date. For example, 23",
       "monthRequired": "Enter a month for your start date. For example, 04",
-      "yearRequired": " Enter a year for your start date. For example, 1981",
+      "yearRequired": " Enter a year for your start date. For example, 2014",
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
       "yearNotANumber": "Year must only contain numbers. For example, 2014",
