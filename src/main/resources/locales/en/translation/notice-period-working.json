@@ -1,0 +1,9 @@
+{
+  "title": "Have you got a notice period",
+  "h1": "Have you got a notice period?",
+  "errors": {
+    "noticePeriod": {
+      "required": "Tell us if you have a notice period"
+    }
+  }
+}

@@ -12,6 +12,7 @@ nodejs:
         - os-places-token
         - fortify-on-demand-username
         - fortify-on-demand-password
+        - pcq-token-key
 idam-pr:
   enabled: true
   redirect_uris:

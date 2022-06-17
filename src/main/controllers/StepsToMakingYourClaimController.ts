@@ -33,17 +33,8 @@ const sections = [
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
-        url: '',
+        url: PageUrls.RESPONDENT_NAME,
         linkTxt: (l: AnyRecord): string => l.section2.link2Text,
-      },
-      {
-        url: '',
-        linkTxt: (l: AnyRecord): string => l.section2.link3Text,
-      },
-
-      {
-        url: '',
-        linkTxt: (l: AnyRecord): string => l.section2.link4Text,
       },
     ],
   },

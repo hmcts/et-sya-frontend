@@ -1,0 +1,14 @@
+{
+  "h1": {
+    "nonNotice": "How many months in your notice period?",
+    "notice": "How many months of your notice period are you being paid for? (optional)"
+  },
+  "noticeLengthHint": "For example, 4",
+  "onNotice": "NOTICE",
+  "errors": {
+    "noticeLength": {
+      "invalid": "Tell us the number of months in your notice period",
+      "notANumber": "Notice period must be a number, like 3"
+    }
+  }
+}

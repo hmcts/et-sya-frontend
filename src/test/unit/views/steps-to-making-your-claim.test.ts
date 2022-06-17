@@ -53,7 +53,7 @@ describe('Steps to making your claim page', () => {
 
   it('should display correct number of rows', () => {
     const row = htmlRes.getElementsByClassName(rowClass);
-    expect(row.length).equal(14, 'number of tables found is not 14');
+    expect(row.length).equal(12, 'number of tables found is not 14');
   });
 
   it('should display the correct number of tables', () => {
@@ -63,7 +63,7 @@ describe('Steps to making your claim page', () => {
 
   it('should display the correct number of cells', () => {
     const cell = htmlRes.getElementsByClassName(cellClass);
-    expect(cell.length).equal(20, 'number of cells found is not 20');
+    expect(cell.length).equal(16, 'number of cells found is not 20');
   });
 
   it('should display the correct number of table headers', () => {

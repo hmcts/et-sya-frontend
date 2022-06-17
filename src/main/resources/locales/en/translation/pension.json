@@ -1,4 +1,11 @@
 {
   "h1": "Did the respondent make any contributions to your pension?",
-  "pensionContributions": "Enter their pension contributions - worked out weekly"
+  "pensionContributions": "Enter their pension contributions - worked out weekly",
+  "errors": {
+    "pensionContributions": {
+      "invalid": "Enter amount in double figures, with/without decimal point. For example, 10, 10.00 etc",
+      "required": "Tell us the respondent’s weekly pension contribution amount",
+      "notANumber": "Pension amount must be a number"
+    }
+  }
 }

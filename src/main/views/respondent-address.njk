@@ -1,0 +1,24 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
+       {{ h1 + respondentName }}?
+      </h1>
+      <p class="govuk-body">{{ pageText | safe}}</p>
+      {% include "./address/postcodeEnter.njk" %}
+      {% include "./address/postcodeSelect.njk" %}
+
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
