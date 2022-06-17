@@ -35,10 +35,6 @@ export class CaseApi {
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
   };
-
-  submitDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axio.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
-  };
 }
 
 export const getCaseApi = (token: string): CaseApi => {
