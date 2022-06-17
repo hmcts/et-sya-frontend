@@ -10,7 +10,7 @@ export const mockRequest = ({
 }: {
   body?: AnyRecord;
   userCase?: Partial<CaseWithId>;
-  session?: AppSession;
+  session?: AnyRecord;
   t?: AnyRecord;
 }): AppRequest => {
   const req = {

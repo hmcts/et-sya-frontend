@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isValidAvgWeeklyHours } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -20,6 +21,7 @@ export default class AverageWeeklyHoursController {
         label: (l: AnyRecord): string => l.avgWeeklyHrs,
         hint: (l: AnyRecord): string => l.hint,
         attributes: { maxLength: 3 },
+        validator: isValidAvgWeeklyHours,
       },
     },
     submit: {

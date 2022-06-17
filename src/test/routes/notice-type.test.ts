@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { StillWorking } from '../../main/definitions/case';
+import { StillWorking, WeeksOrMonths } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -19,9 +19,10 @@ describe(`GET ${PageUrls.NOTICE_TYPE}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_TYPE}`, () => {
-  test('should navigate to the notice length page when save and continue button is clicked', async () => {
+  test('should navigate to the notice length page when weeks radio button is selected and save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.NOTICE_TYPE)
+      .send({ noticePeriodUnit: WeeksOrMonths.WEEKS })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_LENGTH);

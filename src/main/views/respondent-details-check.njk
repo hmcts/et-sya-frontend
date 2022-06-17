@@ -1,0 +1,56 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h2>
+          <table class="govuk-table">
+              <caption class="govuk-table__caption govuk-table__caption--m">{{ subTitle }}</caption>
+              <tbody class="govuk-table__body">
+                  <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">{{ name }}</th>
+                      <td class="govuk-table__cell">Dummy</td>
+                      <td class="govuk-table__cell">Dummy</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">{{ address }}</th>
+                      <td class="govuk-table__cell">Dummy</td>
+                      <td class="govuk-table__cell">Dummy</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">{{ acasNum }}</th>
+                      <td class="govuk-table__cell">Dummy</td>
+                      <td class="govuk-table__cell">Dummy</td>
+                  </tr>
+              </tbody>
+          </table>
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Save and continue",
+          href: "/employment-respondent-task-check"
+        }) }}
+
+        {{ govukButton({
+          text: "Save as draft",
+          classes: "govuk-button--secondary",
+          href: "/your-claim-has-been-saved"
+        }) }}
+      </div>
+    </div> 
+{% endblock %}

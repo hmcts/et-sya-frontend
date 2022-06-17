@@ -6,5 +6,10 @@
   },
   "months": "Months",
   "weeks": "Weeks",
-  "noLongerWorking": "NO LONGER WORKING"
+  "noLongerWorking": "NO LONGER WORKING",
+  "errors": {
+    "noticePeriodUnit": {
+      "required": "Tell us your notice period in weeks or months"
+    }
+  }
 }

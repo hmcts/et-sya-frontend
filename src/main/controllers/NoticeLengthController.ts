@@ -1,7 +1,9 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isValidTwoDigitInteger } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -18,7 +20,8 @@ export default class NoticeLengthController {
         type: 'text',
         classes: 'govuk-input--width-3',
         hint: (l: AnyRecord): string => l.noticeLengthHint,
-        attributes: { maxLength: 3 },
+        attributes: { maxLength: 2 },
+        validator: isValidTwoDigitInteger,
       },
     },
     submit: {
@@ -42,15 +45,17 @@ export default class NoticeLengthController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.noticeLengthContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.NOTICE_LENGTH,
+      req.session.userCase.noticePeriodUnit === WeeksOrMonths.WEEKS
+        ? TranslationKeys.NOTICE_LENGTH_WEEKS
+        : TranslationKeys.NOTICE_LENGTH_MONTHS,
     ]);
     const employmentStatus = req.session.userCase.isStillWorking;
     const noticeType = req.session.userCase.noticePeriodUnit;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_LENGTH, {
-      ...content,
       employmentStatus,
       noticeType,
+      ...content,
     });
   };
 }
