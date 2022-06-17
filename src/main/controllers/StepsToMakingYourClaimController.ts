@@ -6,13 +6,13 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers';
-let employeeStatus;
+let employeeStatus: string;
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
     links: [
       {
-        url: PageUrls.DOB_DETAILS,
+        url: employeeStatus,
         linkTxt: (l: AnyRecord): string => l.section1.link1Text,
       },
       {
@@ -29,7 +29,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: employeeStatus,
+        url: PageUrls.PAST_EMPLOYER,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
@@ -69,6 +69,7 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
+
     sections[1].links[0].url = conditionalWorkingType(req);
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
@@ -77,10 +78,11 @@ export default class StepsToMakingYourClaimController {
   }
 }
 
-const conditionalWorkingType = (req: AppRequest): string => {
+const conditionalWorkingType = (req: AppRequest) => {
   if (req.session.userCase.typeOfClaim.includes('unfairDismissal')) {
-    return (employeeStatus = PageUrls.STILL_WORKING);
+    employeeStatus = PageUrls.STILL_WORKING;
   } else {
-    return (employeeStatus = PageUrls.PAST_EMPLOYER);
+    employeeStatus = PageUrls.PAST_EMPLOYER;
   }
+  return employeeStatus;
 };

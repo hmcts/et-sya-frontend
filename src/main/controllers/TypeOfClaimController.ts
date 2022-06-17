@@ -89,7 +89,6 @@ export default class TypeOfClaimController {
       redirectUrl = PageUrls.CLAIM_STEPS;
     } else {
       redirectUrl = LegacyUrls.ET1_BASE;
-      // + LegacyUrls.ET1_APPLY;
     }
     setUserCase(req, this.form);
     if (req.body.otherClaim) {
