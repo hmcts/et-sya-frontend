@@ -1,6 +1,5 @@
 import PastEmployerController from '../../../main/controllers/PastEmployerController';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { TypesOfClaim } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,31 +10,11 @@ describe('Update Past Employer Controller', () => {
   };
 
   it('should render the Update Preference page', () => {
-    const userCase = {
-      typeOfClaim: [
-        TypesOfClaim.BREACH_OF_CONTRACT,
-        TypesOfClaim.DISCRIMINATION,
-        TypesOfClaim.OTHER_TYPES,
-        TypesOfClaim.PAY_RELATED_CLAIM,
-      ],
-    };
     const controller = new PastEmployerController();
     const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t, userCase });
+    const request = <AppRequest>mockRequest({ t });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('past-employer', expect.anything());
-  });
-
-  it('should render still working for employer when session contains unfairDismissal type of claim', () => {
-    const userCase = {
-      typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL],
-    };
-    const controller = new PastEmployerController();
-    const response = mockResponse();
-    const request = <AppRequest>mockRequest({ t, userCase });
-    controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith('still-working', expect.anything());
-    // expect(response.req).toHaveBeenCalledWith(TranslationKeys.STILL_WORKING, {});
   });
 
   it('should redirect to the same screen when errors are present', () => {

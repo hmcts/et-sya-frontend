@@ -90,7 +90,6 @@ describe('Type Of Claim Controller', () => {
     it('should cache the Other Types of Claims to Redis', () => {
       const body = {
         typeOfClaim: [TypesOfClaim.OTHER_TYPES],
-        otherClaim: 'Shady contract',
       };
 
       const controller = new TypeOfClaimController();
@@ -107,7 +106,6 @@ describe('Type Of Claim Controller', () => {
       req.app.locals = {
         redisClient,
       };
-
       controller.post(req, res);
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
     });
@@ -126,17 +124,11 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
-        // [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.DISCRIMINATION])],
-        // [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.UNFAIR_DISMISSAL])],
-        // [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.WHISTLE_BLOWING])],
-        // [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
-        // [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
       ]);
       req.app = app;
       req.app.locals = {
         redisClient,
       };
-
       controller.post(req, res);
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
     });

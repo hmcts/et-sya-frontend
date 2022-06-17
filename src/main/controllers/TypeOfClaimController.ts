@@ -88,11 +88,13 @@ export default class TypeOfClaimController {
     if (conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.UNFAIR_DISMISSAL])) {
       redirectUrl = PageUrls.CLAIM_STEPS;
     } else {
-      redirectUrl = LegacyUrls.ET1_BASE + LegacyUrls.ET1_APPLY;
+      redirectUrl = LegacyUrls.ET1_BASE;
+      // + LegacyUrls.ET1_APPLY;
     }
-    req.session.userCase.typeOfClaim.push(req.body.otherClaim);
     setUserCase(req, this.form);
-
+    if (req.body.otherClaim) {
+      req.session.userCase.typeOfClaim.push(req.body.otherClaim);
+    }
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
       if (redisClient) {
@@ -101,7 +103,6 @@ export default class TypeOfClaimController {
           [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
           [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
         ]);
-
         try {
           req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
         } catch (err) {
