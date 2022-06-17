@@ -19,6 +19,33 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
+  after('functionalTest:aat') {
+      stage('Accessibiltiy') {
+          yarnBuilder.yarn('tests:a11y')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/accessibility-report",
+              reportFiles          : 'a11y.html',
+              reportName           : 'Accessibility results'
+      ])
+      }
+  } 
+  after('functionalTest:preview') {
+      stage('Accessibiltiy') {
+          yarnBuilder.yarn('tests:a11y')
+          publishHTML([
+              allowMissing         : true,
+              alwaysLinkToLastBuild: true,
+              keepAll              : true,
+              reportDir            : "functional-output/accessibility-report",
+              reportFiles          : 'a11y.html',
+              reportName           : 'Accessibility results'
+        ])
+      }
+  } 
+
   enablePactAs([
     AppPipelineDsl.PactRoles.CONSUMER
    ])
