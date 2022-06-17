@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-done-callback */
 import { fail } from 'assert';
 
-//import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../main/definitions/constants';
 import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
 
 const pa11y = require('pa11y');
@@ -65,8 +65,8 @@ function testAccessibility(url: string): void {
 }
 
 describe('Accessibility', () => {
-  testAccessibility('/');
-  testAccessibility('/checklist');
+  testAccessibility(PageUrls.HOME);
+  testAccessibility(PageUrls.CHECKLIST);
   /*
   //Below code needs to be added in future when dev team completed RET-1888 & RET-1889
   Object.values(PageUrls).forEach(url => {
