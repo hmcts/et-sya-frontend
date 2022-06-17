@@ -1,13 +1,13 @@
 /* eslint-disable jest/no-done-callback */
 import { fail } from 'assert';
 
-import * as supertest from 'supertest';
-
-import { app } from '../../main/app';
+import { PageUrls } from '../../main/definitions/constants';
+import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
 
 const pa11y = require('pa11y');
 
-const agent = supertest.agent(app);
+const envUrl = process.env.TEST_URL || 'http://localhost:3001';
+const data = require('../../test/functional/data.json');
 
 const options = {
   ignore: [
@@ -31,17 +31,6 @@ class PallyIssue {
   typeCode: number;
 }
 
-function ensurePageCallWillSucceed(url: string): Promise<void> {
-  return agent.get(url).then((res: supertest.Response) => {
-    if (res.redirect) {
-      throw new Error(`Call to ${url} resulted in a redirect to ${res.get('Location')}`);
-    }
-    if (res.serverError) {
-      throw new Error(`Call to ${url} resulted in internal server error`);
-    }
-  });
-}
-
 function expectNoErrors(messages: PallyIssue[]): void {
   const errors = messages.filter(m => m.type === 'error');
 
@@ -54,15 +43,33 @@ function expectNoErrors(messages: PallyIssue[]): void {
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
-      await ensurePageCallWillSucceed(url);
-      const messages = await pa11y(agent.get(url).url, options);
+      let actions: string[] = [];
+      const pageUrl = envUrl + url;
+      if (!noSignInRequiredEndpoints.includes(url)) {
+        actions = [
+          'set field #username to ' + data.signIn.username,
+          'set field #password to ' + data.signIn.password,
+          'click element .button',
+          'wait for path to be /steps-to-making-your-claim',
+          'navigate to ' + pageUrl,
+          'wait for url to be ' + pageUrl,
+        ];
+      }
+      const messages = await pa11y(pageUrl, {
+        actions,
+        options,
+      });
       expectNoErrors(messages.issues);
     });
   });
 }
 
 describe('Accessibility', () => {
-  testAccessibility('/');
-  testAccessibility('/checklist');
-  testAccessibility('/lip-or-representative');
+  testAccessibility(PageUrls.HOME);
+  testAccessibility(PageUrls.CHECKLIST);
+  /*
+  //Below code needs to be added in future when dev team completed RET-1888 & RET-1889
+  Object.values(PageUrls).forEach(url => {
+    testAccessibility(url);
+  });*/
 });
