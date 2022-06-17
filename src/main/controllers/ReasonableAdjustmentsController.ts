@@ -19,7 +19,6 @@ export default class ReasonableAdjustmentsController {
         classes: 'govuk-radios',
         id: 'reasonableAdjustments',
         type: 'radios',
-        validator: isFieldFilledIn,
         values: [
           {
             name: 'reasonableAdjustments',

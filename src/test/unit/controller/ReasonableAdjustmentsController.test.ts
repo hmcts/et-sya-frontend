@@ -1,4 +1,5 @@
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -20,8 +21,7 @@ describe('Reasonable Adjustments Controller', () => {
   });
 
   describe('post() reasonable adjustments', () => {
-    it('should redirect back to the Reasonable Adjustments page when errors are present', () => {
-      const errors = [{ propertyName: 'reasonableAdjustments', errorType: 'required' }];
+    it('should redirect to the next page when nothing is selected as the form is optional', () => {
       const body = {};
 
       const controller = new ReasonableAdjustmentsController();
@@ -30,8 +30,7 @@ describe('Reasonable Adjustments Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(req.session.errors).toEqual(errors);
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toBeCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
   });
 });
