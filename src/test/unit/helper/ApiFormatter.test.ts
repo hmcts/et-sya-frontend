@@ -1,6 +1,15 @@
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseType,
+  CaseTypeId,
+  CaseWithId,
+  PayInterval,
+  WeeksOrMonths,
+  YesOrNo,
+  YesOrNoOrNotSure,
+} from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
 import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
@@ -40,6 +49,19 @@ describe('Should return data in api format', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      benefitsCharCount: 'Some benefits',
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -63,6 +85,21 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
         },
+        claimantOtherType: {
+          claimant_occupation: 'Developer',
+          claimant_employed_from: '2010-05-11',
+          claimant_notice_period: YesOrNo.YES,
+          claimant_notice_period_unit: WeeksOrMonths.WEEKS,
+          claimant_notice_period_duration: '1',
+          claimant_average_weekly_hours: 5,
+          claimant_pay_before_tax: 123,
+          claimant_pay_after_tax: 120,
+          claimant_pay_cycle: PayInterval.WEEKLY,
+          claimant_pension_contribution: YesOrNoOrNotSure.YES,
+          claimant_pension_weekly_contribution: 15,
+          claimant_benefits: YesOrNo.YES,
+          claimant_benefits_detail: 'Some benefits',
+        },
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -80,6 +117,18 @@ describe('Format Case Data to Frontend Model', () => {
       caseType: 'Single',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: 'Yes',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
     });
   });
 
@@ -102,6 +151,19 @@ describe('Format Case Data to Frontend Model', () => {
       email: undefined,
       firstName: undefined,
       lastName: undefined,
+      avgWeeklyHrs: undefined,
+      claimantPensionContribution: undefined,
+      claimantPensionWeeklyContribution: undefined,
+      employeeBenefits: undefined,
+      jobTitle: undefined,
+      noticePeriod: undefined,
+      noticePeriodLength: undefined,
+      noticePeriodUnit: undefined,
+      payAfterTax: undefined,
+      payBeforeTax: undefined,
+      payInterval: undefined,
+      startDate: undefined,
+      benefitsCharCount: undefined,
     });
   });
 });
