@@ -13,6 +13,8 @@
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
       "yearNotANumber": "Year must only contain numbers. For example, 2014",
+      "dayInvalid": "Day must be between 1 and 31",
+      "monthInvalid": "Month must be between 1 and 12",
       "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInFuture": "Date entered must be in the past",

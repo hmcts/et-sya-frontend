@@ -22,6 +22,18 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
+// export const isMoreThanOneDateFieldInvalid = (date: CaseDate): string => {
+
+//   const errors = [];
+//   for (const [fieldName, field] of Object.entries(date)) {
+//     if (!field) {
+//       errors.push(`${fieldName}Required`);
+//     }
+//   }
+//   console.log(`${errors}`)
+//   return errors;
+// };
+
 export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefined) => {
   if (
     typeof fields !== 'object' ||
@@ -40,6 +52,109 @@ export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefine
         fieldName,
       };
     }
+  }
+};
+
+// export const isDayValid: DateValidator = (date: CaseDate | undefined) => {
+//   if (!date.day) {
+//     return {
+//       error: 'dayRequired',
+//       fieldName: date.day,
+//     };
+//   }
+
+//   const day = parseInt(date.day, 10) || 0;
+
+//   if (isNaN(day)) {
+//     return {
+//       error: 'dayNotANumber',
+//       fieldName: date.day,
+//     };
+//   }
+
+//   if (day < 1 || day > 31) {
+//     return {
+//       error: 'dayInvalid',
+//       fieldName: date.day,
+//     };
+//   }
+// };
+
+// export const isMonthValid: DateValidator = (date: CaseDate | undefined) => {
+//   if (!date.month) {
+//     return {
+//       error: 'monthRequired',
+//       fieldName: date.month,
+//     };
+//   }
+
+//   const month = parseInt(date.month, 10) || 0;
+
+//   if (isNaN(month)) {
+//     return {
+//       error: 'monthNotANumber',
+//       fieldName: date.month,
+//     };
+//   }
+
+//   if (month < 1 || month > 12) {
+//     return {
+//       error: 'monthInvalid',
+//       fieldName: date.month,
+//     };
+//   }
+// };
+
+export const isDateInputInvalid2: DateValidator = (date: CaseDate | undefined) => {
+  const invalid = 'invalidDate';
+  if (!date) {
+    return invalid;
+  }
+
+  for (const [fieldName, value] of Object.entries(date)) {
+    if (isNaN(+value)) {
+      return {
+        error: `${fieldName}NotANumber`,
+        fieldName,
+      };
+    }
+  }
+
+  const year = parseInt(date.year, 10) || 0;
+  const month = parseInt(date.month, 10) || 0;
+  const day = parseInt(date.day, 10) || 0;
+
+  if (month < 1 || month > 12) {
+    return {
+      error: 'monthInvalid',
+      fieldName: 'month',
+    };
+  }
+
+  if (day < 1 || day > 31) {
+    return {
+      error: 'dayInvalid',
+      fieldName: 'day',
+    };
+  }
+
+  if (year < 1000) {
+    return {
+      error: 'invalidYear',
+      fieldName: 'year',
+    };
+  }
+
+  const enteredDate = new Date(+date.year, +date.month, +date.day);
+  const dateMinus100 = new Date();
+  dateMinus100.setFullYear(dateMinus100.getFullYear() - 100);
+
+  if (enteredDate < dateMinus100) {
+    return { error: 'invalidDateTooFarInPast', fieldName: 'year' };
+  }
+
+  if (validateDayInTheMonth(date)) {
+    return { error: invalid, fieldName: validateDayInTheMonth(date) as string };
   }
 };
 
