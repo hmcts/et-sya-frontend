@@ -58,7 +58,7 @@ export default class ClaimTypePayController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+    handleSessionErrors(req, res, this.form, PageUrls.DESCRIBE_WHAT_HAPPENED);
   };
 
   public get = (req: AppRequest, res: Response): void => {

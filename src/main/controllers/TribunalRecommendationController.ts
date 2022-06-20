@@ -16,6 +16,7 @@ export default class TribunalRecommendationController {
         id: 'tribunalRecommendationRequest',
         type: 'textarea',
         hint: l => l.hint,
+        maxlength: 2500,
       },
     },
     submit: submitButton,

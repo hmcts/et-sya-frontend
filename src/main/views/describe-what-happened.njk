@@ -22,32 +22,30 @@
       {{ govukInsetText({
         text: insetText
       }) }}
-      <h2 class="govuk-heading-m">{{ subTitle1 }}</h2>
-      <p class="govuk-body govuk-!-margin-bottom-7">{{ p5 }}</p>
       {{ govukDetails({
-        summaryText: collapsableSection1.linkText,
-        html: "<p class='govuk-body'>"+collapsableSection1.p1+"</p>
-              <p class='govuk-body'>"+collapsableSection1.p2+"</p>"
+        summaryText: collapsibleSection1.linkText,
+        html: "<p class='govuk-body'>"+collapsibleSection1.p1+"</p>
+              <p class='govuk-body'>"+collapsibleSection1.p2+"</p>"
       }) }}
       {{ govukDetails({
-        summaryText: collapsableSection2.linkText,
-        html: "<p class='govuk-body'>"+collapsableSection2.p1+"</p>
-              <p class='govuk-body'>"+collapsableSection2.p2+"</p>"
+        summaryText: collapsibleSection2.linkText,
+        html: "<p class='govuk-body'>"+collapsibleSection2.p1+"</p>
+              <p class='govuk-body'>"+collapsibleSection2.p2+"</p>"
       }) }}
       {{ govukDetails({
-        summaryText: collapsableSection3.linkText,
-        html: "<p class='govuk-body'>"+collapsableSection3.p1+"</p>
-              <ol class='govuk-list govuk-list--number'>
-                <li>"+collapsableSection3.li1+"</li>
-                <li>"+collapsableSection3.li2+"</li>
-                <li>"+collapsableSection3.li3+"</li>
+        summaryText: collapsibleSection3.linkText,
+        html: "<ol class='govuk-list govuk-list--number'>
+                <li>"+collapsibleSection3.li1+"</li>
+                <li>"+collapsibleSection3.li2+"</li>
+                <li>"+collapsibleSection3.li3+"</li>
+                <li>"+collapsibleSection3.li4+"</li>
               </ol>"
       }) }}
       {{ govukDetails({
-        summaryText: collapsableSection4.linkText,
+        summaryText: collapsibleSection4.linkText,
         html: "<ol class='govuk-list govuk-list--number'>
-                <li>"+collapsableSection4.li1+"</li>
-                <li>"+collapsableSection4.li2+"</li>
+                <li>"+collapsibleSection4.li1+"</li>
+                <li>"+collapsibleSection4.li2+"</li>
               </ol>"
       }) }}
       {% block form %}

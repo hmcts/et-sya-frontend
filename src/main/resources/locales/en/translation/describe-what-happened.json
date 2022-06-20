@@ -1,0 +1,36 @@
+{
+  "title": "Describe what happened to you",
+  "h1": "Describe what happened to you (to do)",
+  "p1": "This is your opportunity to explain why you are making a claim to an employment tribunal.",
+  "p2": "It’s important you focus on setting out what happened to you and explain, as far as you can, why you think what happened was unlawful.",
+  "p3": "Your claim will be sent to the respondents who will have a chance to reply through the tribunal.",
+  "p4": "The tribunal will then decide (usually via a hearing) whether the respondents have acted unlawfully.",
+  "insetText": "We do not need detailed evidence, such as copies of emails, letters or other documents at this stage. Keep hold of these documents in case they are needed. You may need to bring them to a hearing.",
+  "collapsibleSection1": {
+    "linkText": "What to write for discrimination claims",
+    "p1": "Describe the events you are complaining about.",
+    "p2": "Try to give the dates of the events (and set them out in date order) and the names of other people involved. Explain, as best you can, why you consider that these events mean that you have been unlawfully discriminated against, by reference to the protected characteristics you rely on."
+  },
+  "collapsibleSection2": {
+    "linkText": "What to write for dismissal claims",
+    "p1": "Describe the circumstances of your dismissal.",
+    "p2": "Try to give the dates of the events (like dismissal meetings) and the names of others involved (such as the person who dismissed you). You should explain, as best you can, why you consider that your dismissal was unfair."
+  },
+  "collapsibleSection3": {
+    "linkText": "What to write for whistleblower claims",
+    "li1": "Give the dates of each time you say you \"blew the whistle\" by making a protected disclosure. For each disclosure summarise the information you disclosed, whether it was done verbally or in writing, the person to whom you made the disclosure, what kind of wrongdoing you were disclosing, and why the disclosure was in the public interest.",
+    "li2": "Explain how you were treated detrimentally (which can include being dismissed) because of the disclosure(s), giving dates and summarising the incidents.",
+    "li3": "Give the names of the people involved in and witness to these events and incidents.",
+    "li4": "Describe how you’ve been affected by the detrimental treatment."
+  },
+  "collapsibleSection4": {
+    "linkText": "What to write for 'other' claims",
+    "li1": "The tribunal can only hear cases where legislation gives it power to do so. Explain briefly, if you can, what legislation you say covers this claim.",
+    "li2": "Even if you cannot, the most important thing is to explain what was done and, so far as you can, why you say it was unlawful. Give dates and brief details of each incident, including the name of the person responsible."
+  },
+  "textInputHint": "Use this box to describe the events around your dispute, or add to your claim by uploading a document",
+  "fileUpload": {
+    "linkText": "Or upload your summary as a separate document (optional)",
+    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
+  }
+}

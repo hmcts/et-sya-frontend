@@ -7,24 +7,25 @@ import request from 'supertest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const compensationOutcomeJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/compensation-outcome.json'),
+const describeWhatHappenedJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/describe-what-happened.json'),
   'utf-8'
 );
-const compensationOutcomeJson = JSON.parse(compensationOutcomeJsonRaw);
+const summairiseYourClaimJson = JSON.parse(describeWhatHappenedJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const detailsClass = 'govuk-details';
 const buttonClass = 'govuk-button';
-const textInputId = 'compensation-outcome';
-const currencyInputId = 'compensation-amount';
-const expectedTitle = compensationOutcomeJson.h1;
+const textInputId = 'claim-summary-text';
+const fileUploadId = 'claim-summary-file';
+const expectedTitle = summairiseYourClaimJson.h1;
 
 let htmlRes: Document;
-describe('Compensation Outcome page', () => {
+// eslint-disable-next-line jest/valid-title
+describe('Describe What Happened page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.COMPENSATION_OUTCOME)
+      .get(PageUrls.DESCRIBE_WHAT_HAPPENED)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -37,7 +38,7 @@ describe('Compensation Outcome page', () => {
 
   it('should display expandable details section', () => {
     const details = htmlRes.getElementsByClassName(detailsClass);
-    expect(details.length).equals(2, 'Incorrect number of expandable details sections');
+    expect(details.length).equals(6, 'Incorrect number of expandable details sections');
   });
 
   it('should display textarea', () => {
@@ -45,9 +46,9 @@ describe('Compensation Outcome page', () => {
     expect(textarea.id).equals(textInputId, 'Could not find textarea');
   });
 
-  it('should display currency input', () => {
-    const input = htmlRes.getElementById(currencyInputId);
-    expect(input.id).equals(currencyInputId, 'Could not find currency input');
+  it('should display file upload', () => {
+    const fileUpload = htmlRes.getElementById(fileUploadId);
+    expect(fileUpload.id).equals(fileUploadId, 'Could not find file upload');
   });
 
   it('should display save and continue button', () => {

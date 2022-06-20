@@ -8,9 +8,9 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
-export default class SummariseYourClaimController {
+export default class DescribeWhatHappenedController {
   private readonly form: Form;
-  private readonly summariseYourClaimContent: FormContent = {
+  private readonly describeWhatHappenedFormContent: FormContent = {
     fields: {
       claimSummaryText: {
         id: 'claim-summary-text',
@@ -19,7 +19,7 @@ export default class SummariseYourClaimController {
         label: l => l.label,
         labelHidden: true,
         hint: l => l.textInputHint,
-        maxlength: 2000,
+        maxlength: 2500,
       },
       claimSummaryFile: {
         id: 'claim-summary-file',
@@ -43,21 +43,21 @@ export default class SummariseYourClaimController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.summariseYourClaimContent.fields);
+    this.form = new Form(<FormFields>this.describeWhatHappenedFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DESIRED_CLAIM_OUTCOME);
+    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.summariseYourClaimContent, [
+    const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.SUMMARISE_YOUR_CLAIM,
+      TranslationKeys.DESCRIBE_WHAT_HAPPENED,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.SUMMARISE_YOUR_CLAIM, {
+    res.render(TranslationKeys.DESCRIBE_WHAT_HAPPENED, {
       ...content,
     });
   };
