@@ -1,6 +1,7 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { ClaimantOtherType } from '../complexTypes/claimantOtherType';
 import { CaseState } from '../definition';
 
 export interface CreateCaseResponse {
@@ -27,4 +28,5 @@ export interface CaseData {
   claimantRepresentedQuestion?: YesOrNo;
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;
+  claimantOtherType?: ClaimantOtherType;
 }

@@ -7,14 +7,19 @@ import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class NoticeLengthController {
   private readonly form: Form;
   private readonly noticeLengthContent: FormContent = {
     fields: {
-      noticeLength: {
+      noticePeriodLength: {
         id: 'notice-length',
         name: 'notice-length',
         type: 'text',
@@ -37,8 +42,17 @@ export default class NoticeLengthController {
   constructor() {
     this.form = new Form(<FormFields>this.noticeLengthContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 

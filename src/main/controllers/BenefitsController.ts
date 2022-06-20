@@ -7,8 +7,13 @@ import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class BenefitsController {
   private readonly form: Form;
@@ -55,6 +60,7 @@ export default class BenefitsController {
   constructor() {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '';
@@ -63,6 +69,14 @@ export default class BenefitsController {
     } else {
       redirectUrl = PageUrls.RESPONDENT_NAME;
     }
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

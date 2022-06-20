@@ -7,8 +7,13 @@ import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class NoticePeriodController {
   private readonly form: Form;
@@ -50,17 +55,25 @@ export default class NoticePeriodController {
       ? PageUrls.NOTICE_TYPE
       : PageUrls.AVERAGE_WEEKLY_HOURS;
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.noticePeriodFormContent, [
       TranslationKeys.COMMON,
-      req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
+      req.session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING
         ? TranslationKeys.NOTICE_PERIOD_NO_LONGER_WORKING
         : TranslationKeys.NOTICE_PERIOD_WORKING,
     ]);
-    const employmentStatus = req.session.userCase.isStillWorking;
+    const employmentStatus = req.session.userCase?.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_PERIOD, {
       ...content,

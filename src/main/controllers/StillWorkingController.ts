@@ -7,8 +7,13 @@ import { StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class StillWorkingController {
   private readonly form: Form;
@@ -56,6 +61,14 @@ export default class StillWorkingController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = PageUrls.JOB_TITLE;
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

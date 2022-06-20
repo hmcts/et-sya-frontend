@@ -12,8 +12,13 @@ import {
   submitButton,
 } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
@@ -48,8 +53,17 @@ export default class PayController {
   constructor() {
     this.form = new Form(<FormFields>this.payContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, PageUrls.PENSION);
   };
 

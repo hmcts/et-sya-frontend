@@ -7,14 +7,19 @@ import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class PensionController {
   private readonly form: Form;
   private readonly pensionContent: FormContent = {
     fields: {
-      pension: {
+      claimantPensionContribution: {
         id: 'pension',
         type: 'radios',
         classes: 'govuk-radios',
@@ -23,7 +28,7 @@ export default class PensionController {
             label: (l: AnyRecord): string => l.yes,
             value: YesOrNoOrNotSure.YES,
             subFields: {
-              pensionContributions: {
+              claimantPensionWeeklyContribution: {
                 id: 'pension-contributions',
                 name: 'pension-contributions',
                 type: 'currency',
@@ -58,8 +63,17 @@ export default class PensionController {
   constructor() {
     this.form = new Form(<FormFields>this.pensionContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, PageUrls.BENEFITS);
   };
 
