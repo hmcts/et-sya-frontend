@@ -1,7 +1,8 @@
 const { I } = inject();
 
-let username = process.env.TEST_CASE_USERNAME;
-let password = process.env.TEST_CASE_PASSWORD;
+const testConfig = require('../../../../config/fe-test-config');
+let username = testConfig.test_case_username;
+let password = testConfig.test_case_password;
 
 function signInWithCredentials() {
   I.seeElement('#username');
