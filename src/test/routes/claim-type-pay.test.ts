@@ -17,7 +17,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_PAY}`, () => {
       .post(PageUrls.CLAIM_TYPE_PAY)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT);
+        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED);
       });
   });
 });
