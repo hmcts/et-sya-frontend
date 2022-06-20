@@ -61,7 +61,13 @@ describe('Type Of Claim Controller', () => {
 
     it('should assign userCase from formData for Type of Claim', () => {
       const body = {
-        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.OTHER_TYPES, TypesOfClaim.PAY_RELATED_CLAIM],
+        typeOfClaim: [
+          TypesOfClaim.BREACH_OF_CONTRACT,
+          TypesOfClaim.OTHER_TYPES,
+          TypesOfClaim.PAY_RELATED_CLAIM,
+          TypesOfClaim.UNFAIR_DISMISSAL,
+        ],
+        otherClaim: 'Help',
       };
 
       const controller = new TypeOfClaimController();
@@ -73,13 +79,20 @@ describe('Type Of Claim Controller', () => {
 
       expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
       expect(req.session.userCase).toStrictEqual({
-        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.OTHER_TYPES, TypesOfClaim.PAY_RELATED_CLAIM],
+        typeOfClaim: [
+          TypesOfClaim.BREACH_OF_CONTRACT,
+          TypesOfClaim.OTHER_TYPES,
+          TypesOfClaim.PAY_RELATED_CLAIM,
+          TypesOfClaim.UNFAIR_DISMISSAL,
+          'Help',
+        ],
+        otherClaim: 'Help',
       });
     });
 
     it('should assign userCase from formData for Type of Claim and redirect call with step to making your claim', () => {
       const body = {
-        typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
+        typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       };
 
       const controller = new TypeOfClaimController();
@@ -91,7 +104,7 @@ describe('Type Of Claim Controller', () => {
 
       expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
       expect(req.session.userCase).toStrictEqual({
-        typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
+        typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       });
     });
 
@@ -180,17 +193,5 @@ describe('Type Of Claim Controller', () => {
       controller.post(req, res);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     });
-  });
-
-  it('should redirect to LOGIN page if unfair dismissal is selected', () => {
-    const body = { typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL] };
-    const controller = new TypeOfClaimController();
-    const req = mockRequest({ body });
-    const res = mockResponse();
-
-    jest.spyOn(res, 'redirect');
-
-    controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 });
