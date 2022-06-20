@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TypesOfClaim } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -12,7 +13,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section1.title,
     links: [
       {
-        url: employeeStatus,
+        url: PageUrls.DOB_DETAILS,
         linkTxt: (l: AnyRecord): string => l.section1.link1Text,
       },
       {
@@ -29,7 +30,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: PageUrls.PAST_EMPLOYER,
+        url: employeeStatus,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
@@ -79,7 +80,7 @@ export default class StepsToMakingYourClaimController {
 }
 
 const conditionalWorkingType = (req: AppRequest) => {
-  if (req.session.userCase.typeOfClaim.includes('unfairDismissal')) {
+  if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
     employeeStatus = PageUrls.STILL_WORKING;
   } else {
     employeeStatus = PageUrls.PAST_EMPLOYER;

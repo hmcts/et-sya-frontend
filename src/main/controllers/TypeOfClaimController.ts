@@ -85,7 +85,11 @@ export default class TypeOfClaimController {
 
   public post = (req: AppRequest, res: Response): void => {
     let redirectUrl;
-    if (conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.UNFAIR_DISMISSAL])) {
+    if (
+      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.UNFAIR_DISMISSAL]) ||
+      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
+      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
+    ) {
       redirectUrl = PageUrls.CLAIM_STEPS;
     } else {
       redirectUrl = LegacyUrls.ET1_BASE;

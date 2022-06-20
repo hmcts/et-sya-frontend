@@ -61,12 +61,7 @@ describe('Type Of Claim Controller', () => {
 
     it('should assign userCase from formData for Type of Claim', () => {
       const body = {
-        typeOfClaim: [
-          TypesOfClaim.BREACH_OF_CONTRACT,
-          TypesOfClaim.DISCRIMINATION,
-          TypesOfClaim.OTHER_TYPES,
-          TypesOfClaim.PAY_RELATED_CLAIM,
-        ],
+        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.OTHER_TYPES, TypesOfClaim.PAY_RELATED_CLAIM],
       };
 
       const controller = new TypeOfClaimController();
@@ -78,12 +73,25 @@ describe('Type Of Claim Controller', () => {
 
       expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
       expect(req.session.userCase).toStrictEqual({
-        typeOfClaim: [
-          TypesOfClaim.BREACH_OF_CONTRACT,
-          TypesOfClaim.DISCRIMINATION,
-          TypesOfClaim.OTHER_TYPES,
-          TypesOfClaim.PAY_RELATED_CLAIM,
-        ],
+        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.OTHER_TYPES, TypesOfClaim.PAY_RELATED_CLAIM],
+      });
+    });
+
+    it('should assign userCase from formData for Type of Claim and redirect call with step to making your claim', () => {
+      const body = {
+        typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
+      };
+
+      const controller = new TypeOfClaimController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      req.session.userCase = undefined;
+      controller.post(req, res);
+
+      expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+      expect(req.session.userCase).toStrictEqual({
+        typeOfClaim: [TypesOfClaim.UNFAIR_DISMISSAL, TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       });
     });
 
@@ -170,7 +178,7 @@ describe('Type Of Claim Controller', () => {
       jest.spyOn(res, 'redirect');
 
       controller.post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
     });
   });
 
