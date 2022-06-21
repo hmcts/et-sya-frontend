@@ -1,6 +1,6 @@
 const { I } = inject();
 
-const testConfig = require('../../../../config/fe-test-config');
+const testConfig = require('../config');
 let username = testConfig.test_case_username;
 let password = testConfig.test_case_password;
 

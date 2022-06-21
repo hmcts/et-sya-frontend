@@ -7,7 +7,7 @@ import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequi
 const pa11y = require('pa11y');
 
 const envUrl = process.env.TEST_URL || 'http://localhost:3001';
-const data = require('../../../config/fe-test-config');
+const data = require('../functional/config');
 const username = data.test_case_username;
 const password = data.test_case_password;
 const options = {
