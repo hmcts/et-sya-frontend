@@ -15,7 +15,7 @@ describe('Address Lookup', () => {
 
     expect(mockedAxios.get).toHaveBeenCalledWith('https://api.os.uk/search/places/v1/postcode', {
       headers: { accept: 'application/json' },
-      params: { key: 'Fbjw79fAGJxyo1SzwTDqHk2B85mJSdyn', postcode: 'EX44PN' },
+      params: { key: 'TO BE PICKED UP FROM ENV', postcode: 'EX44PN' },
     });
 
     expect(actual).toEqual(addressLookupResponse);
