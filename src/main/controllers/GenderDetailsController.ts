@@ -68,7 +68,7 @@ export default class GenderDetailsController {
           },
         ],
       },
-      preferredTitles: {
+      preferredTitle: {
         id: 'preferredTitle',
         type: 'option',
         label: (l: AnyRecord): string => l.preferredTitle,
@@ -115,7 +115,6 @@ export default class GenderDetailsController {
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord) => l.otherTitlePreference,
         labelSize: 's',
-        value: '',
         validator: validatePreferredOther,
       },
     },
@@ -134,9 +133,6 @@ export default class GenderDetailsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    if (req.body.preferredTitle === 'other' && !req.body.otherTitlePreference) {
-      console.log('=======ERRRRORRRRRRRR==========');
-    }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.ADDRESS_DETAILS);
   };

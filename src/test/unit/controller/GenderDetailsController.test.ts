@@ -40,4 +40,47 @@ describe('Gender Details Controller', () => {
       preferredTitle: 'Mr',
     });
   });
+
+  it('Should display error if Other title is selected and Other input field is blank', () => {
+    const body = {
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
+      preferredTitle: 'Other',
+      otherTitlePreference: '',
+    };
+    const controller = new GenderDetailsController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.GENDER_DETAILS);
+  });
+
+  it('Should assign userCase for Other title', () => {
+    const body = {
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
+      preferredTitle: 'Other',
+      otherTitlePreference: 'Pastor',
+    };
+    const controller = new GenderDetailsController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(req.session.userCase).toStrictEqual({
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
+      preferredTitle: 'Other',
+      otherTitlePreference: 'Pastor',
+    });
+  });
 });

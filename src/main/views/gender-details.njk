@@ -12,12 +12,6 @@
         <p class="govuk-body govuk-!-margin-bottom-6">{{ p }}</p>
       {% block form %}
         {% include "form/form.njk"%}
-          {{ 
-            govukWarningText({
-            text: warning,
-            iconFallbackText: "Warning"
-          }) 
-  }}
       {% endblock %}
     </div>
   </div>

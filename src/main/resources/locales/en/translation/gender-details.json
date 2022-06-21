@@ -23,7 +23,7 @@
   "errors": {
     "genderTitle": {
       "other": {
-        "otherPrompt": "Tell us your preferred title"
+        "otherPrompts": "Tell us your preferred title"
       }
     },
     "otherTitlePreference": {
