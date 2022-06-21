@@ -43,4 +43,31 @@ describe('Are you still working controller', () => {
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
+
+  it('should render the job title page when the page submitted', () => {
+    const body = { isStillWorking: StillWorking.WORKING };
+    const controller = new StillWorkingController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
+  });
+
+  it('should add isStillWorking to the session userCase', () => {
+    const body = { isStillWorking: StillWorking.WORKING };
+
+    const controller = new StillWorkingController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      isStillWorking: StillWorking.WORKING,
+    });
+  });
 });

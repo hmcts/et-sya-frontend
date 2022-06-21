@@ -41,4 +41,20 @@ describe('Notice Period Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
   });
+
+  it('should add the notice period selected value to the session userCase', () => {
+    const body = { noticePeriod: YesOrNo.YES };
+
+    const controller = new NoticePeriodController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      noticePeriod: YesOrNo.YES,
+    });
+  });
 });

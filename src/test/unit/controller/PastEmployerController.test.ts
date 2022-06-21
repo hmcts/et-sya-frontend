@@ -1,5 +1,7 @@
 import PastEmployerController from '../../../main/controllers/PastEmployerController';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -30,5 +32,32 @@ describe('Update Past Employer Controller', () => {
 
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should render are you still working page when the page submitted', () => {
+    const body = { pastEmployer: YesOrNo.YES };
+    const controller = new PastEmployerController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.STILL_WORKING);
+  });
+
+  it('should add pastEmployer to the session userCase', () => {
+    const body = { pastEmployer: YesOrNo.YES };
+
+    const controller = new PastEmployerController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      pastEmployer: YesOrNo.YES,
+    });
   });
 });

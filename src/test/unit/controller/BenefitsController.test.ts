@@ -54,4 +54,18 @@ describe('Benefits Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
   });
+
+  it('should add the benefits form value to the userCase', () => {
+    const body = { employeeBenefits: YesOrNo.NO };
+
+    const controller = new BenefitsController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO });
+  });
 });
