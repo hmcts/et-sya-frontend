@@ -15,7 +15,7 @@ import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/hel
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 describe('Should return data in api format', () => {
-  it('should tranform triage and Idam credentials to api format', () => {
+  it('should transform triage and Idam credentials to api format', () => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map<CaseDataCacheKey, string>([
       [CaseDataCacheKey.CLAIMANT_REPRESENTED, 'Yes'],
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
@@ -129,6 +129,7 @@ describe('Format Case Data to Frontend Model', () => {
       payAfterTax: 120,
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
+      benefitsCharCount: 'Some benefits',
     });
   });
 

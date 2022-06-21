@@ -104,6 +104,7 @@ describe('updateDraftCase', () => {
       payAfterTax: 120,
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
+      benefitsCharCount: 'Some benefits',
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(

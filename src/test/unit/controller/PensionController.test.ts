@@ -37,7 +37,7 @@ describe('Pension controller', () => {
   });
 
   it('should add the pension form value to the userCase', () => {
-    const body = { pension: YesOrNo.NO };
+    const body = { claimantPensionContribution: YesOrNo.NO };
 
     const controller = new PensionController();
 
@@ -48,6 +48,6 @@ describe('Pension controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
-    expect(req.session.userCase).toStrictEqual({ pension: YesOrNo.NO });
+    expect(req.session.userCase).toStrictEqual({ claimantPensionContribution: YesOrNo.NO });
   });
 });
