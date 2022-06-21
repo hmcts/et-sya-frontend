@@ -1,5 +1,5 @@
 const testHeadlessBrowser = true;
-const testUrl = process.env.TEST_URL || 'https://et-sya.aat.platform.hmcts.net';
+const testUrl = process.env.TEST_URL || 'http://localhost:3001';
 const test_case_username = process.env.TEST_CASE_USERNAME || '';
 const test_case_password = process.env.TEST_CASE_PASSWORD || '';
 module.exports = {
