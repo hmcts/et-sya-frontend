@@ -59,15 +59,31 @@ describe('Are you still working controller', () => {
     const body = { isStillWorking: StillWorking.WORKING };
 
     const controller = new StillWorkingController();
-
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
 
     controller.post(req, res);
 
+    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
     expect(req.session.userCase).toStrictEqual({
       isStillWorking: StillWorking.WORKING,
     });
+  });
+
+  it('should redirect to the same screen when errors are present', () => {
+    const errors = [{ propertyName: 'isStillWorking', errorType: 'required' }];
+    const body = {
+      isStillWorking: '',
+    };
+
+    const controller = new StillWorkingController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
   });
 });
