@@ -7,8 +7,9 @@ import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequi
 const pa11y = require('pa11y');
 
 const envUrl = process.env.TEST_URL || 'http://localhost:3001';
-const data = require('../../test/functional/data.json');
-
+const data = require('../../../config/fe-test-config');
+const username = data.test_case_username;
+const password = data.test_case_password;
 const options = {
   ignore: [
     'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
@@ -47,8 +48,8 @@ function testAccessibility(url: string): void {
       const pageUrl = envUrl + url;
       if (!noSignInRequiredEndpoints.includes(url)) {
         actions = [
-          'set field #username to ' + data.signIn.username,
-          'set field #password to ' + data.signIn.password,
+          'set field #username to ' + username,
+          'set field #password to ' + password,
           'click element .button',
           'wait for path to be /steps-to-making-your-claim',
           'navigate to ' + pageUrl,
