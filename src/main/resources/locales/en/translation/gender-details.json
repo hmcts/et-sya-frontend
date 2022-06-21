@@ -18,5 +18,16 @@
     "mx": "Mx",
     "other": "Other",
     "preferNotToSay": "Prefer not to say"
+  },
+  "otherTitlePreference": "If 'other' please enter your preferred title",
+  "errors": {
+    "genderTitle": {
+      "other": {
+        "otherPrompt": "Tell us your preferred title"
+      }
+    },
+    "otherTitlePreference": {
+      "required": "Tell us your preferred title"
+    }
   }
 }
