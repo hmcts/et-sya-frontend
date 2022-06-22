@@ -315,7 +315,7 @@ export const validatePreferredOther: Validator = value => {
     } else if (
       /^\d+$/.test(value as string) ||
       /^\s*\d*\.?\d+\s*$/.test(value as string) ||
-      /[0-9]/.test(value as string)
+      /\d/.test(value as string)
     ) {
       outcome = 'numberError';
     }
