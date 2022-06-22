@@ -31,12 +31,13 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 
 withNightlyPipeline(type, product, component) {
-    env.TEST_URL = params.TEST_URL
-
-    loadVaultSecrets(secrets)
+ loadVaultSecrets(secrets)
     enableFullFunctionalTest()
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
+
+    env.TEST_URL = params.TEST_URL
+    env.RUNNING_ENV = params.ENVIRONMENT
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
