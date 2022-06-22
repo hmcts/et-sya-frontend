@@ -48,14 +48,15 @@ export default class NoticePeriodController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NOTICE_TYPE
       : PageUrls.AVERAGE_WEEKLY_HOURS;
     setUserCase(req, this.form);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
+    getCaseApi(session.user?.accessToken)
+      .updateDraftCase(session.userCase)
       .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
       })
       .catch(error => {
         this.logger.info(error);
@@ -64,14 +65,15 @@ export default class NoticePeriodController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     const content = getPageContent(req, this.noticePeriodFormContent, [
       TranslationKeys.COMMON,
-      req.session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING
+      session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING
         ? TranslationKeys.NOTICE_PERIOD_NO_LONGER_WORKING
         : TranslationKeys.NOTICE_PERIOD_WORKING,
     ]);
-    const employmentStatus = req.session.userCase?.isStillWorking;
-    assignFormData(req.session.userCase, this.form.getFormFields());
+    const employmentStatus = session.userCase?.isStillWorking;
+    assignFormData(session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_PERIOD, {
       ...content,
       employmentStatus,

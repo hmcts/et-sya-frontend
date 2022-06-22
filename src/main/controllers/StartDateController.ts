@@ -40,14 +40,14 @@ export default class StartDateController {
 
   public post = (req: AppRequest, res: Response): void => {
     let redirectUrl = '';
-    if (req.session.userCase.isStillWorking === StillWorking.WORKING) {
+    const stillWorking = req.session.userCase.isStillWorking;
+    if (stillWorking === StillWorking.WORKING) {
       redirectUrl = PageUrls.NOTICE_PERIOD;
-    } else if (req.session.userCase.isStillWorking === StillWorking.NOTICE) {
+    } else if (stillWorking === StillWorking.NOTICE) {
       redirectUrl = PageUrls.NOTICE_END;
-    } else if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
-
     setUserCase(req, this.form);
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
@@ -57,7 +57,6 @@ export default class StartDateController {
       .catch(error => {
         this.logger.info(error);
       });
-
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

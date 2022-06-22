@@ -56,12 +56,13 @@ export default class StillWorkingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     const redirectUrl = PageUrls.JOB_TITLE;
     setUserCase(req, this.form);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
+    getCaseApi(session.user?.accessToken)
+      .updateDraftCase(session.userCase)
       .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
       })
       .catch(error => {
         this.logger.info(error);
