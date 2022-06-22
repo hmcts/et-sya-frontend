@@ -1,5 +1,12 @@
 {
+  "title": "Personal Details Check",
   "heading": "Have you completed this section?",
   "yes": "Yes, I've completed this section",
-  "no": "No, I'll come back to it later"
+  "no": "No, I'll come back to it later",
+  "p": "You can change your answers later.",
+  "errors": {
+    "personalDetailsCheck": {
+      "required": "Tell us if you have completed this section"
+    }
+  }
 }
