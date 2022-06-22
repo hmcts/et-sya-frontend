@@ -312,11 +312,7 @@ export const validatePreferredOther: Validator = value => {
   if (otherGenderTitle === 'Other') {
     if ((value as string).trim().length === 0) {
       outcome = 'required';
-    } else if (
-      /^\d+$/.test(value as string) ||
-      /^\s*\d*\.?\d+\s*$/.test(value as string) ||
-      /\d/.test(value as string)
-    ) {
+    } else if (/^\d+$/.test(value as string) || /^\s*\d/.test(value as string)) {
       outcome = 'numberError';
     }
     return outcome;
