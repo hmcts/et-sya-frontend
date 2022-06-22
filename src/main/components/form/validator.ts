@@ -308,9 +308,17 @@ export const validateGenderTitle: Validator = value => {
 };
 
 export const validatePreferredOther: Validator = value => {
+  let outcome: string = undefined;
   if (otherGenderTitle === 'Other') {
-    if (/^\d+$/.test(value as string) || /[0-9]/.test(value as string) || (value as string).trim().length === 0) {
-      return 'required';
+    if ((value as string).trim().length === 0) {
+      outcome = 'required';
+    } else if (
+      /^\d+$/.test(value as string) ||
+      /^\s*\d*\.?\d+\s*$/.test(value as string) ||
+      /[0-9]/.test(value as string)
+    ) {
+      outcome = 'numberError';
     }
+    return outcome;
   }
 };
