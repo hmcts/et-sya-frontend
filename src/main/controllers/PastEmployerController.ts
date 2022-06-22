@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -9,10 +10,6 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
-
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
 
 export default class PastEmployerController {
   private readonly form: Form;
@@ -28,7 +25,7 @@ export default class PastEmployerController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.pastEmployerFormContent.fields);
   }
 
@@ -42,10 +39,10 @@ export default class PastEmployerController {
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
       .then(() => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       })
       .catch(error => {
-        logger.info(error);
+        this.logger.info(error);
       });
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

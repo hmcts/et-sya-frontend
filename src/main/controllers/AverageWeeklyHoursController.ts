@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isValidAvgWeeklyHours } from '../components/form/validator';
@@ -9,10 +10,6 @@ import { AnyRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
-
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
 
 export default class AverageWeeklyHoursController {
   private readonly form: Form;
@@ -39,18 +36,19 @@ export default class AverageWeeklyHoursController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.averageWeeklyHoursContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
       .then(() => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       })
       .catch(error => {
-        logger.info(error);
+        this.logger.info(error);
       });
     handleSessionErrors(req, res, this.form, PageUrls.PAY);
   };

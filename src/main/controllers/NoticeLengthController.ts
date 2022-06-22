@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isValidTwoDigitInteger } from '../components/form/validator';
@@ -10,10 +11,6 @@ import { AnyRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
-
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
 
 export default class NoticeLengthController {
   private readonly form: Form;
@@ -39,7 +36,7 @@ export default class NoticeLengthController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.noticeLengthContent.fields);
   }
 
@@ -48,10 +45,10 @@ export default class NoticeLengthController {
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
       .then(() => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       })
       .catch(error => {
-        logger.info(error);
+        this.logger.info(error);
       });
     handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
   };

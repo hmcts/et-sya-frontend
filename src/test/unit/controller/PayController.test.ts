@@ -1,8 +1,15 @@
+import axios from 'axios';
+import { LoggerInstance } from 'winston';
+
 import PayController from '../../../main/controllers/PayController';
 import { PayInterval } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Pay Controller', () => {
   const t = {
@@ -10,8 +17,13 @@ describe('Pay Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render pay page', () => {
-    const payController = new PayController();
+    const payController = new PayController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -25,7 +37,7 @@ describe('Pay Controller', () => {
       payAfterTax: '122',
       payInterval: PayInterval.WEEKLY,
     };
-    const controller = new PayController();
+    const controller = new PayController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -37,7 +49,7 @@ describe('Pay Controller', () => {
   it('should add payBeforeTax, payAfterTax and payInterval to the session userCase', () => {
     const body = { payBeforeTax: '123', payAfterTax: '124', payInterval: PayInterval.WEEKLY };
 
-    const controller = new PayController();
+    const controller = new PayController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -50,5 +62,16 @@ describe('Pay Controller', () => {
       payAfterTax: '124',
       payInterval: PayInterval.WEEKLY,
     });
+  });
+
+  it('should run logger in catch block', async () => {
+    const body = { payBeforeTax: '123', payAfterTax: '124', payInterval: PayInterval.WEEKLY };
+    const controller = new PayController(mockLogger);
+    const request = mockRequest({ body });
+    const response = mockResponse();
+
+    await controller.post(request, response);
+
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.info).toBeCalled());
   });
 });

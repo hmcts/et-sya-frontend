@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -11,10 +12,6 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
-
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
 
 const start_date: DateFormFields = {
   ...DefaultDateFormFields,
@@ -37,20 +34,11 @@ export default class StartDateController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.startDateContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(() => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        logger.info(error);
-      });
     let redirectUrl = '';
     if (req.session.userCase.isStillWorking === StillWorking.WORKING) {
       redirectUrl = PageUrls.NOTICE_PERIOD;
@@ -59,6 +47,17 @@ export default class StartDateController {
     } else if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
+
+    setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
+
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
