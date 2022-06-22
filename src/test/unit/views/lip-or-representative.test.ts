@@ -41,7 +41,7 @@ describe('LiP or Representative page', () => {
 
   it('should display header label', () => {
     const header = htmlRes.getElementsByClassName(headerLabelClass);
-    expect(header[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+    expect(header[0].innerHTML).contains(expectedTitle, 'Page header and its label does not exist');
   });
 
   it('should have hidden legend', () => {
