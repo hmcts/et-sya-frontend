@@ -167,4 +167,34 @@ describe('Format Case Data to Frontend Model', () => {
       benefitsCharCount: undefined,
     });
   });
+
+  it('date formatter should return null when input value is undefined', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      caseType: CaseType.SINGLE,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      dobDate: undefined,
+      email: 'tester@test.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      benefitsCharCount: 'Some benefits',
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: undefined,
+    };
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
+    expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
+  });
 });
