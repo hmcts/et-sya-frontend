@@ -309,7 +309,7 @@ export const validateGenderTitle: Validator = value => {
 
 export const validatePreferredOther: Validator = value => {
   if (otherGenderTitle === 'Other') {
-    if (/^\d+$/.test(value as string) || (value as string).trim().length < 0) {
+    if (/^\d+$/.test(value as string) || /[0-9]/.test(value as string) || (value as string).trim().length === 0) {
       return 'required';
     }
   }

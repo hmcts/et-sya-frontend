@@ -21,11 +21,6 @@
   },
   "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
-    "genderTitle": {
-      "other": {
-        "otherPrompts": "Tell us your preferred title"
-      }
-    },
     "otherTitlePreference": {
       "required": "Tell us your preferred title"
     }
