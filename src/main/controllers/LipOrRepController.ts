@@ -19,6 +19,8 @@ export default class LipOrRepController {
         type: 'radios',
         classes: 'govuk-radios',
         id: 'lip-or-representative',
+        label: l => l.h1,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,

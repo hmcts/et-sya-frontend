@@ -13,7 +13,7 @@
     },
     hint: {
       html: getContent(field.hint)
-    },
+    } if field.hint,
     items: formItems(field.values, userCase[fieldName]),
     errorMessage: getError(fieldName),
     formGroup: {

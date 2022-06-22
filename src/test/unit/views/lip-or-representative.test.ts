@@ -13,7 +13,6 @@ const lipOrRepJsonRaw = fs.readFileSync(
 const lipOrRepJson = JSON.parse(lipOrRepJsonRaw);
 
 const PAGE_URL = '/lip-or-representative';
-const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
 const expectedTitle = lipOrRepJson.h1;
 const expectedP1 = lipOrRepJson.p1;
@@ -27,6 +26,8 @@ const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
 const detailsSummary3 = 'Contact us for help';
+const headerLabelClass = 'govuk-label govuk-label--xl';
+const legendClass = 'govuk-fieldset__legend hidden';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {
@@ -38,9 +39,14 @@ describe('LiP or Representative page', () => {
       });
   });
 
-  it('should display title', () => {
-    const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  it('should display header label', () => {
+    const header = htmlRes.getElementsByClassName(headerLabelClass);
+    expect(header[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should have hidden legend', () => {
+    const header = htmlRes.getElementsByClassName(legendClass);
+    expect(header[0].innerHTML).contains(expectedTitle, 'Fieldset legend does not exist');
   });
 
   it('should display firt paragraph', () => {
