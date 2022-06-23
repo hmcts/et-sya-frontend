@@ -1,6 +1,6 @@
 import { PayInterval, WeeksOrMonths, YesOrNo, YesOrNoOrNotSure } from '../case';
 
-export interface ClaimantOtherType {
+export interface ClaimantEmploymentDetails {
   claimant_occupation?: string;
   claimant_employed_from?: string;
   claimant_notice_period?: YesOrNo;
