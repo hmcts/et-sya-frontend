@@ -64,14 +64,14 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
-        claimant_date_of_birth: formatDoB(caseItem.dobDate),
+        claimant_date_of_birth: formatDate(caseItem.dobDate),
       },
       claimantType: {
         claimant_email_address: caseItem.email,
       },
       claimantOtherType: {
         claimant_occupation: caseItem.jobTitle,
-        claimant_employed_from: formatDoB(caseItem.startDate),
+        claimant_employed_from: formatDate(caseItem.startDate),
         claimant_notice_period: caseItem.noticePeriod,
         claimant_notice_period_unit: caseItem.noticePeriodUnit,
         claimant_notice_period_duration: caseItem.noticePeriodLength,
@@ -88,7 +88,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   };
 }
 
-function formatDoB(dobDate: CaseDate) {
+function formatDate(dobDate: CaseDate) {
   return dobDate ? `${dobDate.year}-${dobDate.month}-${dobDate.day}` : null;
 }
 
