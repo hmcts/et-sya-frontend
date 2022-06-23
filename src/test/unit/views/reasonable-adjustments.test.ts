@@ -4,7 +4,7 @@ import request from 'supertest';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/reasonable-adjustments';
-const titleClass = 'govuk-fieldset__legend';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle =
   'Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?';
 const buttonClass = 'govuk-button';
