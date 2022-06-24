@@ -48,7 +48,6 @@ export class Oidc {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);
-        //next();
       }
     });
   }

@@ -18,6 +18,8 @@ export default class PensionController {
         id: 'pension',
         type: 'radios',
         classes: 'govuk-radios',
+        label: (l: AnyRecord): string => l.label,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
