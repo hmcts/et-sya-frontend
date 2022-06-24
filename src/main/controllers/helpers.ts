@@ -49,7 +49,7 @@ export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<Ca
   const employmentStatus = req.session.userCase.isStillWorking;
   const noticeLength = formData.noticePeriodLength;
 
-  if (employmentStatus !== StillWorking.NOTICE) {
+  if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
     const invalid = isValidTwoDigitInteger(noticeLength);
     if (invalid) {
       return { errorType: invalid, propertyName: 'noticePeriodLength' };
