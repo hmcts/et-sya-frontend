@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -16,6 +17,7 @@ export default class PersonalDetailsCheckController {
         ...DefaultRadioFormFields,
         id: 'tasklist-check',
         classes: 'govuk-radios',
+        validator: isFieldFilledIn,
       },
     },
     submit: submitButton,
