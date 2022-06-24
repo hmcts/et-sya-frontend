@@ -69,19 +69,7 @@ export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError
 
   const required = isPayIntervalNull(payInterval);
   if (required) {
-    if (payBeforeTax && !payAfterTax) {
-      return [{ errorType: 'payBeforeTax', propertyName: 'payInterval' }];
-    }
-
-    if (payAfterTax && !payBeforeTax) {
-      return [{ errorType: 'payAfterTax', propertyName: 'payInterval' }];
-    }
-
-    if (payBeforeTax || payAfterTax) {
-      if (required) {
-        return [{ errorType: required, propertyName: 'payInterval' }];
-      }
-    }
+    return payIntervalError(payBeforeTax, payAfterTax);
   }
 
   if (payInterval) {
@@ -92,6 +80,20 @@ export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError
         { errorType, propertyName: 'payAfterTax' },
       ];
     }
+  }
+};
+
+export const payIntervalError = (payBeforeTax: number, payAfterTax: number): FormError[] => {
+  if (payBeforeTax && !payAfterTax) {
+    return [{ errorType: 'payBeforeTax', propertyName: 'payInterval' }];
+  }
+
+  if (payAfterTax && !payBeforeTax) {
+    return [{ errorType: 'payAfterTax', propertyName: 'payInterval' }];
+  }
+
+  if (payBeforeTax || payAfterTax) {
+    return [{ errorType: 'required', propertyName: 'payInterval' }];
   }
 };
 

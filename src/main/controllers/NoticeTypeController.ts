@@ -18,6 +18,8 @@ export default class NoticeTypeController {
         id: 'notice-type',
         type: 'radios',
         classes: 'govuk-radios--inline',
+        label: (l: AnyRecord): string => l.labelHidden,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.weeks,

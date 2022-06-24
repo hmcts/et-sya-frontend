@@ -18,6 +18,8 @@ export default class BenefitsController {
         id: 'employee-benefits',
         type: 'radios',
         classes: 'govuk-radios',
+        label: (l: AnyRecord): string => l.label,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
@@ -27,7 +29,6 @@ export default class BenefitsController {
                 id: 'benefits-char-count',
                 name: 'benefits-char-count',
                 type: 'charactercount',
-                label: (l: AnyRecord): string => l.label,
                 hint: (l: AnyRecord): string => l.hint,
                 maxlength: 2500,
                 attributes: { maxLength: 2500 },
