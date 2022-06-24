@@ -18,7 +18,7 @@ const logger = Logger.getLogger('app');
 
 const dob_date: DateFormFields = {
   ...DefaultDateFormFields,
-  id: 'dob',
+  id: 'dobDate',
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
 };
 

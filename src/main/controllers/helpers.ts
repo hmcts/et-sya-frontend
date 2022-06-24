@@ -50,9 +50,9 @@ export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<Ca
   const noticeLength = formData.noticePeriodLength;
 
   if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
-    const errorType = isValidTwoDigitInteger(noticeLength);
-    if (errorType) {
-      return { errorType, propertyName: 'noticePeriodLength' };
+    const invalid = isValidTwoDigitInteger(noticeLength);
+    if (invalid) {
+      return { errorType: invalid, propertyName: 'noticePeriodLength' };
     }
   } else {
     const errorType = isValidNoticeLength(noticeLength);
@@ -67,10 +67,20 @@ export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError
   const payAfterTax = formData.payAfterTax;
   const payInterval = formData.payInterval;
 
-  if (payBeforeTax || payAfterTax) {
-    const errorType = isPayIntervalNull(payInterval);
-    if (errorType) {
-      return [{ errorType, propertyName: 'payInterval' }];
+  const required = isPayIntervalNull(payInterval);
+  if (required) {
+    if (payBeforeTax && !payAfterTax) {
+      return [{ errorType: 'payBeforeTax', propertyName: 'payInterval' }];
+    }
+
+    if (payAfterTax && !payBeforeTax) {
+      return [{ errorType: 'payAfterTax', propertyName: 'payInterval' }];
+    }
+
+    if (payBeforeTax || payAfterTax) {
+      if (required) {
+        return [{ errorType: required, propertyName: 'payInterval' }];
+      }
     }
   }
 

@@ -2,7 +2,6 @@ import {
   DateValidator,
   areDateFieldsFilledIn,
   isDateInputInvalid,
-  isDateInputInvalid2,
   isDateTenYearsInFuture,
   isDateTenYearsInPast,
   isFutureDate,
@@ -97,5 +96,5 @@ export const StartDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    isDateInputInvalid2(value) || isPastDate(value) || isDateTenYearsInFuture(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
 };

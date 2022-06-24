@@ -5,7 +5,7 @@
     "pensionContributions": {
       "invalid": "Enter amount in double figures, with/without decimal point. For example, 10, 10.00 etc",
       "required": "Tell us the respondent’s weekly pension contribution amount",
-      "notANumber": "Pension amount must be a number"
+      "notANumber": "Amount entered must be a number For example 100, 10.00"
     }
   }
 }

@@ -13,7 +13,7 @@ import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
-  id: 'start-date',
+  id: 'startDate',
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
 };
