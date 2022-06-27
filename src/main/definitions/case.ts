@@ -81,6 +81,8 @@ export interface Case {
   respondents?: Respondent[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
+  reasonableAdjustments?: YesOrNo;
+  reasonableAdjustmentsDetail?: string;
 }
 
 export const enum StillWorking {

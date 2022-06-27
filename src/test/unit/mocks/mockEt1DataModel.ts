@@ -1,3 +1,5 @@
+import { YesOrNo } from '../../../main/definitions/case';
+
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
   case_data: {
@@ -28,6 +30,13 @@ export const mockEt1DataModelUpdate = {
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
+    },
+    claimantHearingPreference: {
+      reasonable_adjustments: YesOrNo.YES,
+      reasonable_adjustments_detail: 'Adjustments detail test',
+    },
+    claimantTaskListChecks: {
+      personalDetailsCheck: YesOrNo.YES,
     },
   },
 };

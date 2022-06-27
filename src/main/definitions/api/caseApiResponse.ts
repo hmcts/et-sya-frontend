@@ -1,6 +1,8 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
+import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { CaseState } from '../definition';
 
 export interface CreateCaseResponse {
@@ -27,4 +29,6 @@ export interface CaseData {
   claimantRepresentedQuestion?: YesOrNo;
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;
+  claimantHearingPreference?: ClaimantHearingPreference;
+  claimantTaskListChecks?: TaskListCheckType;
 }

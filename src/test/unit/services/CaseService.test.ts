@@ -84,6 +84,9 @@ describe('updateDraftCase', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(

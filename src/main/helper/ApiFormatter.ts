@@ -36,6 +36,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     dobDate: formatDoBString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
+    reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
+    reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
+    personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
   };
 }
 
@@ -50,17 +53,24 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
-        claimant_date_of_birth: formatDoB(caseItem.dobDate),
+        claimant_date_of_birth: formatDate(caseItem.dobDate),
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+      },
+      claimantHearingPreference: {
+        reasonable_adjustments: caseItem.reasonableAdjustments,
+        reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
+      },
+      claimantTaskListChecks: {
+        personalDetailsCheck: caseItem.personalDetailsCheck,
       },
     },
   };
 }
 
-function formatDoB(dobDate: CaseDate) {
-  return `${dobDate.year}-${dobDate.month}-${dobDate.day}`;
+function formatDate(dobDate: CaseDate) {
+  return dobDate ? `${dobDate.year}-${dobDate.month}-${dobDate.day}` : null;
 }
 
 function formatDoBString(dobDate: string): CaseDate {

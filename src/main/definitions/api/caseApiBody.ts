@@ -1,4 +1,6 @@
 import { ClaimantIndividual } from '../../definitions/complexTypes/claimantIndividual';
+import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
+import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 
 interface CaseDataApiBody {
   caseType: string;
@@ -6,6 +8,8 @@ interface CaseDataApiBody {
   caseSource: string;
   claimantIndType?: ClaimantIndividual;
   claimantType?: { claimant_email_address: string };
+  claimantHearingPreference?: ClaimantHearingPreference;
+  claimantTaskListChecks?: TaskListCheckType;
 }
 
 export interface CreateCaseBody {

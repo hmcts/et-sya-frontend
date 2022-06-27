@@ -40,6 +40,9 @@ describe('Should return data in api format', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -63,6 +66,13 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
         },
+        claimantHearingPreference: {
+          reasonable_adjustments: YesOrNo.YES,
+          reasonable_adjustments_detail: 'Adjustments detail test',
+        },
+        claimantTaskListChecks: {
+          personalDetailsCheck: YesOrNo.YES,
+        },
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -80,6 +90,9 @@ describe('Format Case Data to Frontend Model', () => {
       caseType: 'Single',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: 'Yes',
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     });
   });
 
@@ -102,6 +115,19 @@ describe('Format Case Data to Frontend Model', () => {
       email: undefined,
       firstName: undefined,
       lastName: undefined,
+      personalDetailsCheck: undefined,
+      reasonableAdjustments: undefined,
+      reasonableAdjustmentsDetail: undefined,
     });
+  });
+
+  it('date formatter should return null when input value is undefined', () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      dobDate: undefined,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+    };
+    const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
   });
 });

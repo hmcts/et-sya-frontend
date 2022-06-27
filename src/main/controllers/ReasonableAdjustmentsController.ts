@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -7,6 +8,7 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -26,7 +28,7 @@ export default class ReasonableAdjustmentsController {
             value: YesOrNo.YES,
             hint: (l: AnyRecord): string => l.textAreaHint,
             subFields: {
-              adjustmentDetail: {
+              reasonableAdjustmentsDetail: {
                 id: 'adjustmentDetailText',
                 name: 'adjustmentDetailText',
                 type: 'textarea',
@@ -56,12 +58,21 @@ export default class ReasonableAdjustmentsController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.reasonableAdjustmentsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const requestSession = req.session;
     setUserCase(req, this.form);
+    getCaseApi(requestSession.user?.accessToken)
+      .updateDraftCase(requestSession.userCase)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${requestSession.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.error(error);
+      });
     handleSessionErrors(req, res, this.form, PageUrls.PERSONAL_DETAILS_CHECK);
   };
 
