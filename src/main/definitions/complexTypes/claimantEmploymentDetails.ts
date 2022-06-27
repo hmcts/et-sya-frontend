@@ -1,6 +1,8 @@
-import { PayInterval, WeeksOrMonths, YesOrNo, YesOrNoOrNotSure } from '../case';
+import { PayInterval, StillWorking, WeeksOrMonths, YesOrNo, YesOrNoOrNotSure } from '../case';
 
 export interface ClaimantEmploymentDetails {
+  pastEmployer?: YesOrNo;
+  stillWorking?: StillWorking;
   claimant_occupation?: string;
   claimant_employed_from?: string;
   claimant_notice_period?: YesOrNo;

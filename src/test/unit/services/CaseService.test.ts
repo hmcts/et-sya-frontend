@@ -7,6 +7,7 @@ import {
   CaseTypeId,
   CaseWithId,
   PayInterval,
+  StillWorking,
   WeeksOrMonths,
   YesOrNo,
   YesOrNoOrNotSure,
@@ -105,6 +106,8 @@ describe('updateDraftCase', () => {
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
       benefitsCharCount: 'Some benefits',
+      pastEmployer: YesOrNo.YES,
+      isStillWorking: StillWorking.WORKING,
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(

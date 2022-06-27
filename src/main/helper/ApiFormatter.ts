@@ -1,7 +1,7 @@
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -50,6 +50,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_weekly_contribution,
     employeeBenefits: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits,
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
+    pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
+    isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
   };
 }
 
@@ -70,6 +72,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_email_address: caseItem.email,
       },
       claimantOtherType: {
+        pastEmployer: caseItem.pastEmployer,
+        stillWorking: StillWorking.WORKING,
         claimant_occupation: caseItem.jobTitle,
         claimant_employed_from: formatDate(caseItem.startDate),
         claimant_notice_period: caseItem.noticePeriod,

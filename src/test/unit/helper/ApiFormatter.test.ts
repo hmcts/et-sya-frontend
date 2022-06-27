@@ -6,6 +6,7 @@ import {
   CaseTypeId,
   CaseWithId,
   PayInterval,
+  StillWorking,
   WeeksOrMonths,
   YesOrNo,
   YesOrNoOrNotSure,
@@ -62,6 +63,8 @@ describe('Should return data in api format', () => {
       payAfterTax: 120,
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
+      pastEmployer: YesOrNo.YES,
+      isStillWorking: StillWorking.WORKING,
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -86,6 +89,8 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_email_address: 'janedoe@exmaple.com',
         },
         claimantOtherType: {
+          pastEmployer: YesOrNo.YES,
+          stillWorking: StillWorking.WORKING,
           claimant_occupation: 'Developer',
           claimant_employed_from: '2010-05-11',
           claimant_notice_period: YesOrNo.YES,
@@ -130,6 +135,8 @@ describe('Format Case Data to Frontend Model', () => {
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
       benefitsCharCount: 'Some benefits',
+      isStillWorking: StillWorking.WORKING,
+      pastEmployer: YesOrNo.YES,
     });
   });
 
@@ -165,32 +172,16 @@ describe('Format Case Data to Frontend Model', () => {
       payInterval: undefined,
       startDate: undefined,
       benefitsCharCount: undefined,
+      isStillWorking: undefined,
+      pastEmployer: undefined,
     });
   });
 
   it('date formatter should return null when input value is undefined', () => {
     const caseItem: CaseWithId = {
       id: '1234',
-      caseTypeId: CaseTypeId.ENGLAND_WALES,
-      caseType: CaseType.SINGLE,
-      claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       dobDate: undefined,
-      email: 'tester@test.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      avgWeeklyHrs: 5,
-      claimantPensionContribution: YesOrNoOrNotSure.YES,
-      claimantPensionWeeklyContribution: 15,
-      employeeBenefits: YesOrNo.YES,
-      benefitsCharCount: 'Some benefits',
-      jobTitle: 'Developer',
-      noticePeriod: YesOrNo.YES,
-      noticePeriodLength: '1',
-      noticePeriodUnit: WeeksOrMonths.WEEKS,
-      payBeforeTax: 123,
-      payAfterTax: 120,
-      payInterval: PayInterval.WEEKLY,
       startDate: undefined,
     };
     const apiData = toApiFormat(caseItem);

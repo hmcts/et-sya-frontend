@@ -1,3 +1,5 @@
+import { StillWorking, YesOrNo } from '../../../main/definitions/case';
+
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
   case_data: {
@@ -30,6 +32,8 @@ export const mockEt1DataModelUpdate = {
       claimant_email_address: 'tester@test.com',
     },
     claimantOtherType: {
+      pastEmployer: YesOrNo.YES,
+      stillWorking: StillWorking.WORKING,
       claimant_occupation: 'Developer',
       claimant_employed_from: '2010-05-11',
       claimant_notice_period: 'Yes',
