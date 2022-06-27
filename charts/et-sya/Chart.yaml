@@ -3,11 +3,11 @@ appVersion: '1.0'
 description: A Helm chart for et-sya App
 name: et-sya
 home: https://github.com/hmcts/et-sya-frontend
-version: 0.0.18
+version: 0.0.19
 dependencies:
   - name: nodejs
     version: 2.4.3
-    repository: '@hmctspublic'
+    repository: https://hmctspublic.azurecr.io/helm/v1/repo/
   - name: idam-pr
     version: 2.2.7
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
