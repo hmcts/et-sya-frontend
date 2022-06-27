@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { LoggerInstance } from 'winston';
 
-import PersonalDetailsCheckController from '../../../main/controllers/PersonalDetailsCheckController';
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { YesOrNo } from '../../../main/definitions/case';
@@ -49,7 +48,7 @@ describe('Reasonable Adjustments Controller', () => {
 
   it('should invoke logger in then() block', async () => {
     const body = { employeeBenefits: YesOrNo.NO };
-    const controller = new PersonalDetailsCheckController(mockLogger);
+    const controller = new ReasonableAdjustmentsController(mockLogger);
     const request = mockRequest({ body });
     const response = mockResponse();
     const fetchResponse = Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
