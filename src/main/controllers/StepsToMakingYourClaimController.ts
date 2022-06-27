@@ -80,7 +80,7 @@ export default class StepsToMakingYourClaimController {
 }
 
 const conditionalWorkingType = (req: AppRequest) => {
-  if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+  if (req.session.userCase?.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
     employeeStatus = PageUrls.STILL_WORKING;
   } else {
     employeeStatus = PageUrls.PAST_EMPLOYER;
