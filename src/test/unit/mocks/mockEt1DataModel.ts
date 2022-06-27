@@ -1,3 +1,5 @@
+import { StillWorking, YesOrNo } from '../../../main/definitions/case';
+
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
   case_data: {
@@ -28,6 +30,23 @@ export const mockEt1DataModelUpdate = {
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
+    },
+    claimantOtherType: {
+      pastEmployer: YesOrNo.YES,
+      stillWorking: StillWorking.WORKING,
+      claimant_occupation: 'Developer',
+      claimant_employed_from: '2010-05-11',
+      claimant_notice_period: 'Yes',
+      claimant_notice_period_unit: 'Weeks',
+      claimant_notice_period_duration: '1',
+      claimant_average_weekly_hours: 5,
+      claimant_pay_before_tax: 123,
+      claimant_pay_after_tax: 120,
+      claimant_pay_cycle: 'Weeks',
+      claimant_pension_contribution: 'Yes',
+      claimant_pension_weekly_contribution: 15,
+      claimant_benefits: 'Yes',
+      claimant_benefits_detail: 'Some benefits',
     },
   },
 };

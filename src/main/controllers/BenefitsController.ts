@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -7,6 +8,7 @@ import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -52,9 +54,10 @@ export default class BenefitsController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
+
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = '';
@@ -63,6 +66,14 @@ export default class BenefitsController {
     } else {
       redirectUrl = PageUrls.RESPONDENT_NAME;
     }
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
