@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -7,6 +8,7 @@ import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -41,12 +43,20 @@ export default class NoticeTypeController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_LENGTH);
   };
 

@@ -2,7 +2,16 @@ import axios from 'axios';
 import config from 'config';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import {
+  CaseType,
+  CaseTypeId,
+  CaseWithId,
+  PayInterval,
+  StillWorking,
+  WeeksOrMonths,
+  YesOrNo,
+  YesOrNoOrNotSure,
+} from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
@@ -69,7 +78,7 @@ describe('getCaseApi', () => {
 });
 
 describe('updateDraftCase', () => {
-  it('should update draft case data', () => {
+  it('should update draft case data', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
       caseType: CaseType.SINGLE,
@@ -84,6 +93,21 @@ describe('updateDraftCase', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
+      benefitsCharCount: 'Some benefits',
+      pastEmployer: YesOrNo.YES,
+      isStillWorking: StillWorking.WORKING,
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',

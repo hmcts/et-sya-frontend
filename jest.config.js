@@ -1,6 +1,6 @@
 module.exports = {
   coveragePathIgnorePatterns: ['<rootDir>/src/main/assets'],
-  roots: ['<rootDir>/src/test/unit'],
+  roots: ['<rootDir>/src/test/unit', '<rootDir>/src/test/routes'],
   testRegex: '(/src/test/.*|\\.(test|spec))\\.(ts|js)$',
   moduleFileExtensions: ['ts', 'js'],
   testEnvironment: 'node',

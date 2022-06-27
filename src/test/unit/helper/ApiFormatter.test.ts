@@ -1,12 +1,22 @@
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
-import { CaseDataCacheKey, CaseType, CaseTypeId, CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseType,
+  CaseTypeId,
+  CaseWithId,
+  PayInterval,
+  StillWorking,
+  WeeksOrMonths,
+  YesOrNo,
+  YesOrNoOrNotSure,
+} from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
 import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 describe('Should return data in api format', () => {
-  it('should tranform triage and Idam credentials to api format', () => {
+  it('should transform triage and Idam credentials to api format', () => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map<CaseDataCacheKey, string>([
       [CaseDataCacheKey.CLAIMANT_REPRESENTED, 'Yes'],
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
@@ -40,6 +50,21 @@ describe('Should return data in api format', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      benefitsCharCount: 'Some benefits',
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
+      pastEmployer: YesOrNo.YES,
+      isStillWorking: StillWorking.WORKING,
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
@@ -66,6 +91,23 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
         },
+        claimantOtherType: {
+          pastEmployer: YesOrNo.YES,
+          stillWorking: StillWorking.WORKING,
+          claimant_occupation: 'Developer',
+          claimant_employed_from: '2010-05-11',
+          claimant_notice_period: YesOrNo.YES,
+          claimant_notice_period_unit: WeeksOrMonths.WEEKS,
+          claimant_notice_period_duration: '1',
+          claimant_average_weekly_hours: 5,
+          claimant_pay_before_tax: 123,
+          claimant_pay_after_tax: 120,
+          claimant_pay_cycle: PayInterval.WEEKLY,
+          claimant_pension_contribution: YesOrNoOrNotSure.YES,
+          claimant_pension_weekly_contribution: 15,
+          claimant_benefits: YesOrNo.YES,
+          claimant_benefits_detail: 'Some benefits',
+        },
         claimantHearingPreference: {
           reasonable_adjustments: YesOrNo.YES,
           reasonable_adjustments_detail: 'Adjustments detail test',
@@ -90,6 +132,21 @@ describe('Format Case Data to Frontend Model', () => {
       caseType: 'Single',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: 'Yes',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
+      benefitsCharCount: 'Some benefits',
+      isStillWorking: StillWorking.WORKING,
+      pastEmployer: YesOrNo.YES,
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
@@ -115,6 +172,21 @@ describe('Format Case Data to Frontend Model', () => {
       email: undefined,
       firstName: undefined,
       lastName: undefined,
+      avgWeeklyHrs: undefined,
+      claimantPensionContribution: undefined,
+      claimantPensionWeeklyContribution: undefined,
+      employeeBenefits: undefined,
+      jobTitle: undefined,
+      noticePeriod: undefined,
+      noticePeriodLength: undefined,
+      noticePeriodUnit: undefined,
+      payAfterTax: undefined,
+      payBeforeTax: undefined,
+      payInterval: undefined,
+      startDate: undefined,
+      benefitsCharCount: undefined,
+      isStillWorking: undefined,
+      pastEmployer: undefined,
       personalDetailsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
@@ -124,10 +196,12 @@ describe('Format Case Data to Frontend Model', () => {
   it('date formatter should return null when input value is undefined', () => {
     const caseItem: CaseWithId = {
       id: '1234',
-      dobDate: undefined,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      dobDate: undefined,
+      startDate: undefined,
     };
     const apiData = toApiFormat(caseItem);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
   });
 });
