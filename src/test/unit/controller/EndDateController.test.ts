@@ -129,7 +129,7 @@ describe('End date Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when day fields are empty', () => {
+  it('should redirect to the same screen when date fields are empty', () => {
     const errors = [{ propertyName: 'endDate', errorType: 'required', fieldName: 'day' }];
     const body = {
       'endDate-day': '',
