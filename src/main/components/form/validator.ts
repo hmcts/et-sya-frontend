@@ -300,3 +300,21 @@ export const isValidCurrency: Validator = value => {
     return 'minLengthRequired';
   }
 };
+
+let otherGenderTitle: string | string[];
+
+export const validateGenderTitle: Validator = value => {
+  otherGenderTitle = value;
+};
+
+export const validatePreferredOther: Validator = value => {
+  let outcome: string = undefined;
+  if (otherGenderTitle === 'Other') {
+    if ((value as string).trim().length === 0) {
+      outcome = 'required';
+    } else if (/^\d+$/.test(value as string) || /^\s*\d/.test(value as string)) {
+      outcome = 'numberError';
+    }
+    return outcome;
+  }
+};

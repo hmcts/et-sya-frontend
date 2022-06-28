@@ -42,7 +42,7 @@ describe('Gender details page', () => {
 
   it('should display an input field for the gender identity', () => {
     const inputField = htmlRes.getElementsByClassName(input);
-    expect(inputField.length).equal(1, `only ${inputField.length} found`);
+    expect(inputField.length).equal(2, `only ${inputField.length} found`);
   });
 
   it('should display a select form element for the preferred title', () => {

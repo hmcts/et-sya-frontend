@@ -27,7 +27,6 @@ describe('Update Past Employer Controller', () => {
     const controller = new PastEmployerController(mockLogger);
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
-
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('past-employer', expect.anything());
   });

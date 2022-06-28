@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { validateGenderTitle, validatePreferredOther } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -27,6 +28,10 @@ export default class GenderDetailsController {
           {
             label: (l: AnyRecord): string => l.male,
             value: 'Male',
+          },
+          {
+            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
+            value: 'Prefer not to say',
           },
         ],
       },
@@ -56,6 +61,10 @@ export default class GenderDetailsController {
                 attributes: { maxLength: 2500 },
               },
             },
+          },
+          {
+            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
+            value: 'Prefer not to say',
           },
         ],
       },
@@ -92,12 +101,21 @@ export default class GenderDetailsController {
           {
             value: GenderTitle.OTHER,
             label: (l: AnyRecord): string => l.genderTitle.other,
+            validator: validateGenderTitle,
           },
           {
             value: GenderTitle.PREFER_NOT_TO_SAY,
             label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
           },
         ],
+      },
+      otherTitlePreference: {
+        id: 'otherTitlePreference',
+        type: 'text',
+        classes: 'govuk-input--width-10',
+        label: (l: AnyRecord) => l.otherTitlePreference,
+        labelSize: 's',
+        validator: validatePreferredOther,
       },
     },
     submit: {
