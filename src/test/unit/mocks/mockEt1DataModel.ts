@@ -48,5 +48,12 @@ export const mockEt1DataModelUpdate = {
       claimant_benefits: 'Yes',
       claimant_benefits_detail: 'Some benefits',
     },
+    claimantHearingPreference: {
+      reasonable_adjustments: YesOrNo.YES,
+      reasonable_adjustments_detail: 'Adjustments detail test',
+    },
+    claimantTaskListChecks: {
+      personalDetailsCheck: YesOrNo.YES,
+    },
   },
 };

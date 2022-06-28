@@ -108,6 +108,9 @@ describe('updateDraftCase', () => {
       benefitsCharCount: 'Some benefits',
       pastEmployer: YesOrNo.YES,
       isStillWorking: StillWorking.WORKING,
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
