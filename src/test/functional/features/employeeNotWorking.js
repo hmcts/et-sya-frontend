@@ -12,8 +12,8 @@ Scenario('Pages while not working for the organisation', () => {
   I.checkOption('input[id=still-working-3]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');

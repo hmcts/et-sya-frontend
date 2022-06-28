@@ -9,7 +9,7 @@
     "noLongerWorking": "If the number of hours you worked changed each week (for example, if you had a zero-hours contract), use your final 3 months of payslips to work out your weekly average."
   },
   "p2": "Do not include overtime hours.",
-  "notWorking": "NO LONGER WORKING",
+  "notWorking": "No longer working",
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Enter average weekly hours in a valid format, for example 0, 10, 35 etc",

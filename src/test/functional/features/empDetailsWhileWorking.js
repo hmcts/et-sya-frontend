@@ -12,8 +12,8 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');
@@ -67,8 +67,8 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');
@@ -118,8 +118,8 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');
@@ -161,8 +161,8 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');

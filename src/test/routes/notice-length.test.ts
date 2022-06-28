@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.NOTICE_LENGTH}`, () => {
     )
       .post(PageUrls.NOTICE_LENGTH)
       .send({
-        noticeLength: '2',
+        noticePeriodLength: '2',
       })
       .expect(res => {
         expect(res.status).toStrictEqual(302);

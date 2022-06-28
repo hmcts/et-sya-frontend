@@ -4,7 +4,7 @@
     "notice": "How many months of your notice period are you being paid for? (optional)"
   },
   "noticeLengthHint": "For example, 4",
-  "onNotice": "NOTICE",
+  "onNotice": "Notice",
   "errors": {
     "noticePeriodLength": {
       "invalid": "Tell us the number of months in your notice period",

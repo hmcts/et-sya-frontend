@@ -12,8 +12,8 @@ Scenario('Claim while on notice for organisation', () => {
   I.checkOption('#still-working-2');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
   I.seeElement('#startDate-day');
