@@ -66,7 +66,7 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.click('#main-form-submit');
 
   authPage.logout();
-}).tag(' @RET-BAT');
+});
 
 function commonPages() {
   commonFlow.initialPageFlow();
