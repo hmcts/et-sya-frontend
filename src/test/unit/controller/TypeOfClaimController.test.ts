@@ -28,7 +28,15 @@ describe('Type Of Claim Controller', () => {
     const typeOfController = new TypeOfClaimController();
 
     const response = mockResponse();
-    const userCase = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
+    const userCase = {
+      typeOfClaim: [
+        TypesOfClaim.BREACH_OF_CONTRACT,
+        TypesOfClaim.DISCRIMINATION,
+        TypesOfClaim.UNFAIR_DISMISSAL,
+        TypesOfClaim.OTHER_TYPES,
+        TypesOfClaim.PAY_RELATED_CLAIM,
+      ],
+    };
     const request = mockRequest({ t, userCase });
 
     typeOfController.get(request, response);
@@ -52,24 +60,81 @@ describe('Type Of Claim Controller', () => {
     });
 
     it('should assign userCase from formData for Type of Claim', () => {
-      const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
+      const body = {
+        typeOfClaim: [
+          TypesOfClaim.BREACH_OF_CONTRACT,
+          TypesOfClaim.OTHER_TYPES,
+          TypesOfClaim.PAY_RELATED_CLAIM,
+          TypesOfClaim.UNFAIR_DISMISSAL,
+        ],
+        otherClaim: 'Help',
+      };
 
       const controller = new TypeOfClaimController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
       req.session.userCase = undefined;
-
       controller.post(req, res);
 
       expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
       expect(req.session.userCase).toStrictEqual({
-        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
+        typeOfClaim: [
+          TypesOfClaim.BREACH_OF_CONTRACT,
+          TypesOfClaim.OTHER_TYPES,
+          TypesOfClaim.PAY_RELATED_CLAIM,
+          TypesOfClaim.UNFAIR_DISMISSAL,
+          'Help',
+        ],
+        otherClaim: 'Help',
       });
     });
 
+    it('should assign userCase from formData for Type of Claim and redirect call with step to making your claim', () => {
+      const body = {
+        typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
+      };
+
+      const controller = new TypeOfClaimController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      req.session.userCase = undefined;
+      controller.post(req, res);
+
+      expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+      expect(req.session.userCase).toStrictEqual({
+        typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
+      });
+    });
+
+    it('should cache the Other Types of Claims to Redis', () => {
+      const body = {
+        typeOfClaim: [TypesOfClaim.OTHER_TYPES],
+      };
+
+      const controller = new TypeOfClaimController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+
+      const cacheMap = new Map<CaseDataCacheKey, string>([
+        [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
+        [CaseDataCacheKey.CASE_TYPE, undefined],
+        [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
+      ]);
+      req.app = app;
+      req.app.locals = {
+        redisClient,
+      };
+      controller.post(req, res);
+      expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
+    });
+
     it('should cache the Types of Claims to Redis', () => {
-      const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
+      const body = {
+        typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
+      };
 
       const controller = new TypeOfClaimController();
 
@@ -81,12 +146,10 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
       ]);
-
       req.app = app;
       req.app.locals = {
         redisClient,
       };
-
       controller.post(req, res);
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
     });
