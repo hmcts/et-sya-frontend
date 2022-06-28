@@ -31,6 +31,7 @@ const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3Text;
 const expectedLink4 = stepsToMakingYourClaimJSON.section2.link1Text;
 
 let htmlRes: Document;
+
 describe('Steps to making your claim page', () => {
   beforeAll(async () => {
     await request(

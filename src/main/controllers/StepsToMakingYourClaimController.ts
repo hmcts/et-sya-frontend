@@ -7,7 +7,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers';
-
+let employeeStatus: string;
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
@@ -30,7 +30,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: PageUrls.PAST_EMPLOYER.toString(),
+        url: employeeStatus,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
@@ -65,7 +65,7 @@ const sections = [
 ];
 
 export default class StepsToMakingYourClaimController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
@@ -75,9 +75,20 @@ export default class StepsToMakingYourClaimController {
     } else if (req.session.userCase.typeOfClaim.indexOf(TypesOfClaim.BREACH_OF_CONTRACT)) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
     }
+
+    sections[1].links[0].url = conditionalWorkingType(req);
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
     });
   }
 }
+
+const conditionalWorkingType = (req: AppRequest) => {
+  if (req.session.userCase?.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+    employeeStatus = PageUrls.STILL_WORKING;
+  } else {
+    employeeStatus = PageUrls.PAST_EMPLOYER;
+  }
+  return employeeStatus;
+};

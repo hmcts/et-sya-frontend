@@ -36,6 +36,40 @@ export default class TypeOfClaimController {
             name: 'typeOfClaim',
             label: l => l.discrimination.checkbox,
             value: TypesOfClaim.DISCRIMINATION,
+            hint: h => h.discrimination.hint,
+          },
+          {
+            id: 'payRelatedClaim',
+            name: 'typeOfClaim',
+            label: l => l.payRelated.checkbox,
+            value: TypesOfClaim.PAY_RELATED_CLAIM,
+          },
+          {
+            id: 'unfairDismissal',
+            name: 'typeOfClaim',
+            label: l => l.unfairDismissal.checkbox,
+            value: TypesOfClaim.UNFAIR_DISMISSAL,
+            hint: h => h.unfairDismissal.hint,
+          },
+          {
+            id: 'whistleBlowing',
+            name: 'typeOfClaim',
+            label: l => l.whistleBlowing.checkbox,
+            value: TypesOfClaim.WHISTLE_BLOWING,
+            hint: h => h.whistleBlowing.hint,
+          },
+          {
+            id: 'otherTypes',
+            name: 'typeOfClaim',
+            label: l => l.otherTypesOfClaims.checkbox,
+            subFields: {
+              otherClaim: {
+                type: 'textarea',
+                label: l => l.otherTypesOfClaims.explain,
+                labelSize: 'normal',
+              },
+            },
+            value: 'otherClaim',
           },
         ],
       },
@@ -50,12 +84,19 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.BREACH_OF_CONTRACT])
-      ? LegacyUrls.ET1_BASE
-      : PageUrls.CLAIM_STEPS;
-
+    let redirectUrl;
+    if (
+      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
+      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
+    ) {
+      redirectUrl = PageUrls.CLAIM_STEPS;
+    } else {
+      redirectUrl = LegacyUrls.ET1_BASE;
+    }
     setUserCase(req, this.form);
-
+    if (req.body.otherClaim) {
+      req.session.userCase.typeOfClaim.push(req.body.otherClaim);
+    }
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
       if (redisClient) {
@@ -64,7 +105,6 @@ export default class TypeOfClaimController {
           [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
           [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
         ]);
-
         try {
           req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
         } catch (err) {

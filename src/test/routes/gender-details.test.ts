@@ -21,3 +21,37 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
       });
   });
 });
+
+describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
+  test('should return gender details page if other title preference contains number', async () => {
+    const body = {
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
+      preferredTitle: 'Other',
+      otherTitlePreference: '234444',
+    };
+    await request(mockApp({ body }))
+      .post(PageUrls.GENDER_DETAILS)
+      .expect(res => {
+        expect(res.header['location']).toStrictEqual(PageUrls.GENDER_DETAILS);
+      });
+  });
+});
+
+describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
+  test('should return gender details page if other title preference is blank', async () => {
+    const body = {
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
+      preferredTitle: 'Other',
+      otherTitlePreference: ' ',
+    };
+    await request(mockApp({ body }))
+      .post(PageUrls.GENDER_DETAILS)
+      .expect(res => {
+        expect(res.header['location']).toStrictEqual(PageUrls.GENDER_DETAILS);
+      });
+  });
+});

@@ -18,6 +18,8 @@ import {
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
+  validateGenderTitle,
+  validatePreferredOther,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
 
@@ -168,6 +170,23 @@ describe('Validation', () => {
       const isValid = atLeastOneFieldIsChecked([]);
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('OtherGenderTitlePreference()', () => {
+    validateGenderTitle('Other');
+    it('Should check if value is not blank', () => {
+      const isValid = validatePreferredOther('');
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value does not contain number', () => {
+      const isValid = validatePreferredOther('1234');
+      expect(isValid).toStrictEqual('numberError');
+    });
+    it('Should check if value has no space is and number', () => {
+      const isValid = validatePreferredOther('  1234');
+      expect(isValid).toStrictEqual('numberError');
     });
   });
 
