@@ -30,9 +30,16 @@ const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3Text;
 const expectedLink4 = stepsToMakingYourClaimJSON.section2.link1Text;
 
 let htmlRes: Document;
+
 describe('Steps to making your claim page', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          typeOfClaim: ['unfairDismissal'],
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
