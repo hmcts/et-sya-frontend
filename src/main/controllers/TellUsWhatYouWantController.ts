@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -55,7 +56,14 @@ export default class TellUsWhatYouWantController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
+    const selectedOptions = this.form.getParsedBody(cloneDeep(req.body), this.form.getFormFields()).tellUsWhatYouWant;
+    if (selectedOptions.indexOf(TellUsWhatYouWant.COMPENSATION_ONLY) >= 0) {
+      handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
+    } else if (selectedOptions.indexOf(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION) >= 0) {
+      handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
+    } else {
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

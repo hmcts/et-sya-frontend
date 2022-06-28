@@ -1,5 +1,6 @@
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import { TypesOfClaim } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -13,7 +14,7 @@ describe('Steps to Making your claim Controller', () => {
   it('should render single or multiple claim page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-
+    request.session.userCase.typeOfClaim = [TypesOfClaim.DISCRIMINATION];
     stepsToMakingYourClaimController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });

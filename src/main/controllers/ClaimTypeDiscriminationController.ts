@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { ClaimTypeDiscrimination } from '../definitions/definition';
+import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
@@ -83,7 +83,11 @@ export default class ClaimTypeDiscriminationController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_TYPE_PAY);
+    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    if (req.session.userCase.typeOfClaim.indexOf(TypesOfClaim.BREACH_OF_CONTRACT) >= 0) {
+      redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
+    }
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

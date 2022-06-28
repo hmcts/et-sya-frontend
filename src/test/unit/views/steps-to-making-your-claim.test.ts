@@ -4,7 +4,8 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { mockApp } from '../mocks/mockApp';
+import { TypesOfClaim } from '../../../main/definitions/definition';
+import { mockApp, mockSession } from '../mocks/mockApp';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -18,7 +19,7 @@ const cellClass = 'govuk-table__cell';
 const linkClass = 'govuk-link';
 const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-2';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
@@ -32,7 +33,11 @@ const expectedLink4 = stepsToMakingYourClaimJSON.section2.link1Text;
 let htmlRes: Document;
 describe('Steps to making your claim page', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        session: mockSession([TypesOfClaim.DISCRIMINATION], []),
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
