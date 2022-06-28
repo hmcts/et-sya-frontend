@@ -16,16 +16,16 @@ Scenario('Claim while on notice for organisation', () => {
   I.fillField('#job-title', 'Tester');
   I.click('#main-form-submit');
 
-  I.seeElement('#start-date-day');
-  I.fillField('#start-date-day', '20');
-  I.fillField('#start-date-month', '04');
-  I.fillField('#start-date-year', '2014');
+  I.seeElement('#startDate-day');
+  I.fillField('#startDate-day', '20');
+  I.fillField('#startDate-month', '04');
+  I.fillField('#startDate-year', '2014');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-dates-day');
   I.fillField('#notice-dates-day', '20');
   I.fillField('#notice-dates-month', '06');
-  I.fillField('#notice-dates-year', '2014');
+  I.fillField('#notice-dates-year', '2023');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-type');
