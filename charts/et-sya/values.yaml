@@ -24,4 +24,4 @@ nodejs:
     FORTIFY_PASSWORD: secrets.et.fortify-on-demand-password
     PCQ_ENABLED: 'true'
 idam-pr:
-  enable: false
+  enabled: false

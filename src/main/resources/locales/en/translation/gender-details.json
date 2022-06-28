@@ -1,6 +1,6 @@
 {
   "title": "Sex and gender identity",
-  "h1": "Sex and gender identity (to do)",
+  "h1": "Sex and gender identity",
   "p": "These details will be used to help progress your claim.",
   "male": "Male",
   "female": "Female",
@@ -18,5 +18,12 @@
     "mx": "Mx",
     "other": "Other",
     "preferNotToSay": "Prefer not to say"
+  },
+  "otherTitlePreference": "If 'other' please enter your preferred title",
+  "errors": {
+    "otherTitlePreference": {
+      "required": "Tell us your preferred title",
+      "numberError": "Tell us your preferred title? This must not include numbers"
+    }
   }
 }
