@@ -1,4 +1,5 @@
-import { ClaimantIndividual } from '../../definitions/complexTypes/claimantIndividual';
+import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
+import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 
 interface CaseDataApiBody {
   caseType: string;
@@ -6,6 +7,7 @@ interface CaseDataApiBody {
   caseSource: string;
   claimantIndType?: ClaimantIndividual;
   claimantType?: { claimant_email_address: string };
+  claimantOtherType?: ClaimantEmploymentDetails;
 }
 
 export interface CreateCaseBody {

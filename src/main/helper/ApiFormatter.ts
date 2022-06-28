@@ -1,7 +1,7 @@
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -36,6 +36,22 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     dobDate: formatDoBString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
+    jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
+    startDate: formatDoBString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
+    noticePeriod: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period,
+    noticePeriodUnit: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_unit,
+    noticePeriodLength: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_duration,
+    avgWeeklyHrs: fromApiCaseData.case_data?.claimantOtherType?.claimant_average_weekly_hours,
+    payBeforeTax: fromApiCaseData.case_data?.claimantOtherType?.claimant_pay_before_tax,
+    payAfterTax: fromApiCaseData.case_data?.claimantOtherType?.claimant_pay_after_tax,
+    payInterval: fromApiCaseData.case_data?.claimantOtherType?.claimant_pay_cycle,
+    claimantPensionContribution: fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_contribution,
+    claimantPensionWeeklyContribution:
+      fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_weekly_contribution,
+    employeeBenefits: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits,
+    benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
+    pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
+    isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
   };
 }
 
@@ -50,17 +66,34 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
-        claimant_date_of_birth: formatDoB(caseItem.dobDate),
+        claimant_date_of_birth: formatDate(caseItem.dobDate),
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+      },
+      claimantOtherType: {
+        pastEmployer: caseItem.pastEmployer,
+        stillWorking: StillWorking.WORKING,
+        claimant_occupation: caseItem.jobTitle,
+        claimant_employed_from: formatDate(caseItem.startDate),
+        claimant_notice_period: caseItem.noticePeriod,
+        claimant_notice_period_unit: caseItem.noticePeriodUnit,
+        claimant_notice_period_duration: caseItem.noticePeriodLength,
+        claimant_average_weekly_hours: caseItem.avgWeeklyHrs,
+        claimant_pay_before_tax: caseItem.payBeforeTax,
+        claimant_pay_after_tax: caseItem.payAfterTax,
+        claimant_pay_cycle: caseItem.payInterval,
+        claimant_pension_contribution: caseItem.claimantPensionContribution,
+        claimant_pension_weekly_contribution: caseItem.claimantPensionWeeklyContribution,
+        claimant_benefits: caseItem.employeeBenefits,
+        claimant_benefits_detail: caseItem.benefitsCharCount,
       },
     },
   };
 }
 
-function formatDoB(dobDate: CaseDate) {
-  return `${dobDate.year}-${dobDate.month}-${dobDate.day}`;
+function formatDate(dobDate: CaseDate) {
+  return dobDate ? `${dobDate.year}-${dobDate.month}-${dobDate.day}` : null;
 }
 
 function formatDoBString(dobDate: string): CaseDate {
