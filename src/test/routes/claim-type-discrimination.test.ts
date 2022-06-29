@@ -1,7 +1,8 @@
 import request from 'supertest';
 
 import { PageUrls } from '../../main/definitions/constants';
-import { mockApp } from '../unit/mocks/mockApp';
+import { TypesOfClaim } from '../../main/definitions/definition';
+import { mockApp, mockSession } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
   it('should return the claim type discrimination page', async () => {
@@ -12,12 +13,23 @@ describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
-  test('should navigate to the claim type pay page when save and continue button is clicked', async () => {
-    await request(mockApp({}))
+  test('should navigate to the describe what happened page when TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
+    await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], []) }))
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_TYPE_PAY);
+        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED.toString());
+      });
+  });
+});
+// This case occurs only whenTypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
+describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
+  test('should navigate to the claim type pay when TypesOfClaim.PAY_RELATED_CLAIM selected', async () => {
+    await request(mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], []) }))
+      .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_TYPE_PAY.toString());
       });
   });
 });
