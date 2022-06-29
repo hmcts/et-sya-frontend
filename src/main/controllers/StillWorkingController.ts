@@ -69,6 +69,7 @@ export default class StillWorkingController {
       .catch(error => {
         this.logger.info(error);
       });
+    ('');
   };
 
   public get = (req: AppRequest, res: Response): void => {
