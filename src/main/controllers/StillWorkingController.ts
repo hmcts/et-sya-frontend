@@ -61,16 +61,14 @@ export default class StillWorkingController {
     const redirectUrl = PageUrls.JOB_TITLE;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
-    if (!req.session.errors.length) {
-      getCaseApi(session.user?.accessToken)
-        .updateDraftCase(session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.info(error);
-        });
-    }
+    getCaseApi(session.user?.accessToken)
+      .updateDraftCase(session.userCase, session.errors)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
   };
 
   public get = (req: AppRequest, res: Response): void => {

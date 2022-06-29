@@ -45,16 +45,14 @@ export default class JobTitleController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.START_DATE);
-    if (!req.session.errors.length) {
-      getCaseApi(req.session.user?.accessToken)
-        .updateDraftCase(req.session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.info(error);
-        });
-    }
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase, req.session.errors)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
   };
 
   public get = (req: AppRequest, res: Response): void => {

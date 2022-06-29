@@ -39,16 +39,14 @@ export default class NoticeEndController {
     const session = req.session;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_TYPE);
-    if (!req.session.errors.length) {
-      getCaseApi(session.user?.accessToken)
-        .updateDraftCase(session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.error(error);
-        });
-    }
+    getCaseApi(session.user?.accessToken)
+      .updateDraftCase(session.userCase, session.errors)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.error(error);
+      });
   };
 
   public get = (req: AppRequest, res: Response): void => {

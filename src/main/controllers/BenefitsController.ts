@@ -69,16 +69,14 @@ export default class BenefitsController {
       redirectUrl = PageUrls.RESPONDENT_NAME;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
-    if (!session.errors.length) {
-      getCaseApi(session.user?.accessToken)
-        .updateDraftCase(session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.info(error);
-        });
-    }
+    getCaseApi(session.user?.accessToken)
+      .updateDraftCase(session.userCase, session.errors)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.info(error);
+      });
   };
 
   public get = (req: AppRequest, res: Response): void => {

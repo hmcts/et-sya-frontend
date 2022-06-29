@@ -66,16 +66,14 @@ export default class ReasonableAdjustmentsController {
     const requestSession = req.session;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.PERSONAL_DETAILS_CHECK);
-    if (!req.session.errors.length) {
-      getCaseApi(requestSession.user?.accessToken)
-        .updateDraftCase(requestSession.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${requestSession.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.error(error);
-        });
-    }
+    getCaseApi(requestSession.user?.accessToken)
+      .updateDraftCase(requestSession.userCase, requestSession.errors)
+      .then(() => {
+        this.logger.info(`Updated draft case id: ${requestSession.userCase.id}`);
+      })
+      .catch(error => {
+        this.logger.error(error);
+      });
   };
 
   public get = (req: AppRequest, res: Response): void => {
