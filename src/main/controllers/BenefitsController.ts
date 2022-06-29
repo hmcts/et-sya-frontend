@@ -60,19 +60,20 @@ export default class BenefitsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     setUserCase(req, this.form);
     let redirectUrl = '';
-    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.RESPONDENT_NAME;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
-    if (!req.session.errors.length) {
-      getCaseApi(req.session.user?.accessToken)
-        .updateDraftCase(req.session.userCase)
+    if (!session.errors.length) {
+      getCaseApi(session.user?.accessToken)
+        .updateDraftCase(session.userCase)
         .then(() => {
-          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
         })
         .catch(error => {
           this.logger.info(error);

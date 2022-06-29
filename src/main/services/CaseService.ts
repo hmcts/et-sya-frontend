@@ -5,6 +5,7 @@ import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
+import { FormError } from '../definitions/form';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 export class CaseApi {
@@ -32,8 +33,13 @@ export class CaseApi {
     });
   };
 
-  updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
+  updateDraftCase = async (
+    caseItem: CaseWithId,
+    sessionErrors?: FormError[]
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return sessionErrors
+      ? Promise.reject(new Error(sessionErrors.toString()))
+      : this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
   };
 }
 
