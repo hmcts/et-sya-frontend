@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { TellUsWhatYouWant } from '../definitions/definition';
+import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
@@ -56,11 +56,17 @@ export default class TellUsWhatYouWantController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    const selectedOptions = this.form.getParsedBody(cloneDeep(req.body), this.form.getFormFields()).tellUsWhatYouWant;
-    if (selectedOptions.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
+    const selectedTellUsWhatYouWantOptions = this.form.getParsedBody(
+      cloneDeep(req.body),
+      this.form.getFormFields()
+    ).tellUsWhatYouWant;
+
+    if (selectedTellUsWhatYouWantOptions.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
       handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
-    } else if (selectedOptions.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+    } else if (selectedTellUsWhatYouWantOptions.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
+    } else if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     }
