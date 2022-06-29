@@ -84,7 +84,7 @@ export default class ClaimTypeDiscriminationController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
-    if (req.session.userCase.typeOfClaim.indexOf(TypesOfClaim.BREACH_OF_CONTRACT) >= 0) {
+    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
