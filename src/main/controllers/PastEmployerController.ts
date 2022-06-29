@@ -30,16 +30,15 @@ export default class PastEmployerController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const session = req.session;
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.RESPONDENT_NAME;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
-    getCaseApi(session.user?.accessToken)
-      .updateDraftCase(session.userCase, session.errors)
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase, req.session.errors)
       .then(() => {
-        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
       })
       .catch(error => {
         this.logger.info(error);
