@@ -83,6 +83,8 @@ export interface Case {
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
   claimantPensionWeeklyContribution?: number;
+  reasonableAdjustments?: YesOrNo;
+  reasonableAdjustmentsDetail?: string;
 }
 
 export const enum StillWorking {

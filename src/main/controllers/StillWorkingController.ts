@@ -21,6 +21,7 @@ export default class StillWorkingController {
         id: 'still-working',
         type: 'radios',
         label: (l: AnyRecord): string => l.label,
+        labelHidden: true,
         values: [
           {
             name: 'working',

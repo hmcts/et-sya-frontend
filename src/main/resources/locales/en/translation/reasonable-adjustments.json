@@ -14,7 +14,7 @@
   "adjustmentDetailTextLabel": "Tell us what support you need to request",
   "textAreaHint": "You can describe to us what you need",
   "errors": {
-    "adjustmentDetail": {
+    "reasonableAdjustmentsDetail": {
       "required": "Give details of the support you need"
     }
   }

@@ -11,7 +11,7 @@ const expectedTitle = 'Employment details';
 const expectedP1 =
   'Tell us some details about working for the organisation or person you’re making your claim against.';
 const expectedP2 = 'These details will be used to help progress your claim.';
-const inputs = '[class*="job-title"]';
+const inputs = '[class*="jobTitle"]';
 const expectedInputLabel = 'Job title';
 
 let htmlRes: Document;

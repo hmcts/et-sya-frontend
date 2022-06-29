@@ -65,6 +65,9 @@ describe('Should return data in api format', () => {
       startDate: { year: '2010', month: '05', day: '11' },
       pastEmployer: YesOrNo.YES,
       isStillWorking: StillWorking.WORKING,
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -105,6 +108,13 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_benefits: YesOrNo.YES,
           claimant_benefits_detail: 'Some benefits',
         },
+        claimantHearingPreference: {
+          reasonable_adjustments: YesOrNo.YES,
+          reasonable_adjustments_detail: 'Adjustments detail test',
+        },
+        claimantTaskListChecks: {
+          personalDetailsCheck: YesOrNo.YES,
+        },
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -137,6 +147,9 @@ describe('Format Case Data to Frontend Model', () => {
       benefitsCharCount: 'Some benefits',
       isStillWorking: StillWorking.WORKING,
       pastEmployer: YesOrNo.YES,
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
     });
   });
 
@@ -174,6 +187,9 @@ describe('Format Case Data to Frontend Model', () => {
       benefitsCharCount: undefined,
       isStillWorking: undefined,
       pastEmployer: undefined,
+      personalDetailsCheck: undefined,
+      reasonableAdjustments: undefined,
+      reasonableAdjustmentsDetail: undefined,
     });
   });
 

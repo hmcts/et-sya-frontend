@@ -20,7 +20,13 @@ describe(`GET ${PageUrls.NOTICE_TYPE}`, () => {
 
 describe(`on POST ${PageUrls.NOTICE_TYPE}`, () => {
   test('should navigate to the notice length page when weeks radio button is selected and save and continue button is clicked', async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE || StillWorking.WORKING,
+        },
+      })
+    )
       .post(PageUrls.NOTICE_TYPE)
       .send({ noticePeriodUnit: WeeksOrMonths.WEEKS })
       .expect(res => {
