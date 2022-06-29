@@ -5,7 +5,8 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -14,9 +15,9 @@ export default class WorkAddressController {
   private readonly workAddressFormContent: FormContent = {
     fields: {
       claimantWorkAddressQuestion: {
-        ...DefaultRadioFormFields,
+        ...DefaultInlineRadioFormFields,
+        hint: (l: AnyRecord): string => l.hintText,
         id: 'work-address',
-        classes: 'govuk-radios--inline',
       },
     },
     submit: submitButton,

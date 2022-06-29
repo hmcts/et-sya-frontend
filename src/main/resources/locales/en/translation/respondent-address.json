@@ -4,6 +4,7 @@
   "findAddress": "Find address",
   "pageText": "You should be able to find this text on your payslips, contract or other official documents.",
   "buildingStreet": "Building and street",
+  "insetText": "This should be the same respondent address given to Acas.",
   "town": "Town or city",
   "county": "County",
   "postcode": "Postcode",

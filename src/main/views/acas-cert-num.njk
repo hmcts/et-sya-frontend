@@ -18,6 +18,9 @@
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
            {{ h1 + respondentName }}?
         </h1>
+        <p class="govuk-body">{{ hintText }} 
+          <a href='https://www.acas.org.uk/early-conciliation' class="govuk-link" rel="noreferrer noopener" target="_blank">{{linkText}}</a>
+        </p>
         {% block form %}
           {% include "form/form.njk"%}
         {% endblock %}

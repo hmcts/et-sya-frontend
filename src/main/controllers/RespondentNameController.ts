@@ -13,8 +13,8 @@ export default class RespondentNameController {
   private readonly respondentNameContent: FormContent = {
     fields: {
       respondentName: {
-        id: 'respondent-name',
-        name: 'respondent-name',
+        id: 'respondentName',
+        name: 'respondentName',
         type: 'text',
         label: (l: AnyRecord): string => l.label,
       },
