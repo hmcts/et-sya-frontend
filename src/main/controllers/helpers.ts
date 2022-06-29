@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { cloneDeep } from 'lodash';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import {
@@ -14,6 +15,7 @@ import { CaseWithId, Respondent, StillWorking } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 export const getPageContent = (req: AppRequest, formContent: FormContent, translations: string[] = []): AnyRecord => {
   const sessionErrors = req.session?.errors || [];
@@ -233,4 +235,17 @@ export const conditionalRedirect = (
     });
   }
   return matchingValues?.some(v => v === condition);
+};
+
+export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
+  if (!req.session.errors.length) {
+    getCaseApi(req.session.user?.accessToken)
+      .updateDraftCase(req.session.userCase)
+      .then(() => {
+        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      })
+      .catch(error => {
+        logger.error(error);
+      });
+  }
 };

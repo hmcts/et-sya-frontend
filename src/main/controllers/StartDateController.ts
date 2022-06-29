@@ -9,9 +9,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -50,14 +49,7 @@ export default class StartDateController {
     }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase, req.session.errors)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

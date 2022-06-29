@@ -65,6 +65,6 @@ describe('Average weekly hours Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.info).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
   });
 });

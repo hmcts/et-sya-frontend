@@ -8,9 +8,8 @@ import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 export default class NoticeTypeController {
   private readonly form: Form;
@@ -52,14 +51,7 @@ export default class NoticeTypeController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_LENGTH);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase, req.session.errors)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

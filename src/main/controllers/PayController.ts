@@ -13,9 +13,8 @@ import {
   submitButton,
 } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
@@ -54,14 +53,7 @@ export default class PayController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.PENSION);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase, req.session.errors)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
