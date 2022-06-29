@@ -12,7 +12,7 @@ describe(`GET ${PageUrls.TYPE_OF_CLAIM}`, () => {
 });
 
 describe(`on POST ${PageUrls.TYPE_OF_CLAIM}`, () => {
-  test('should return the type of claim claim page when is not selected "Breach of contract" is selected', async () => {
+  test('should return the type of claim page when case types discrimination or whistle blowing is not selected', async () => {
     await request(app)
       .post(PageUrls.TYPE_OF_CLAIM)
       .send({
