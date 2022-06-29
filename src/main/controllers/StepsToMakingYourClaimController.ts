@@ -7,7 +7,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers';
-let employeeStatus: string;
+
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
@@ -30,7 +30,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: employeeStatus,
+        url: PageUrls.PAST_EMPLOYER,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
@@ -70,25 +70,19 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
-    if (req.session.userCase.typeOfClaim.indexOf(TypesOfClaim.DISCRIMINATION) >= 0) {
+    sections[2].links[0].url = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    sections[1].links[0].url = PageUrls.PAST_EMPLOYER.toString();
+    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
-    } else if (req.session.userCase.typeOfClaim.indexOf(TypesOfClaim.BREACH_OF_CONTRACT)) {
+    } else if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
     }
-
-    sections[1].links[0].url = conditionalWorkingType(req);
+    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+      sections[1].links[0].url = PageUrls.STILL_WORKING;
+    }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
     });
   }
 }
-
-const conditionalWorkingType = (req: AppRequest) => {
-  if (req.session.userCase?.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
-    employeeStatus = PageUrls.STILL_WORKING;
-  } else {
-    employeeStatus = PageUrls.PAST_EMPLOYER;
-  }
-  return employeeStatus;
-};
