@@ -42,8 +42,9 @@ export default class CompensationController {
       handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
     } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
       handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+    } else {
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     }
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {
