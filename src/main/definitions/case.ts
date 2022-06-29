@@ -1,4 +1,4 @@
-import { CaseState, ClaimOutcomes, TypesOfClaim } from './definition';
+import { CaseState, ClaimOutcomes } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -44,7 +44,7 @@ export interface Case {
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;
   jobTitle?: string;
-  typeOfClaim?: TypesOfClaim[];
+  typeOfClaim?: string[];
   pastEmployer?: YesOrNo;
   noticeEnd?: string;
   noticePeriod?: YesOrNo;
@@ -81,12 +81,16 @@ export interface Case {
   respondents?: Respondent[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
+  claimantPensionContribution?: YesOrNoOrNotSure;
+  claimantPensionWeeklyContribution?: number;
+  reasonableAdjustments?: YesOrNo;
+  reasonableAdjustmentsDetail?: string;
 }
 
 export const enum StillWorking {
-  WORKING = 'WORKING',
-  NOTICE = 'NOTICE',
-  NO_LONGER_WORKING = 'NO LONGER WORKING',
+  WORKING = 'Working',
+  NOTICE = 'Notice',
+  NO_LONGER_WORKING = 'No longer working',
 }
 
 export const enum NoAcasNumberReason {
@@ -143,8 +147,8 @@ export const enum GenderTitle {
 }
 
 export const enum PayInterval {
-  WEEKLY = 'Weekly',
-  MONTHLY = 'Monthly',
+  WEEKLY = 'Weeks',
+  MONTHLY = 'Months',
   ANNUAL = 'Annual',
 }
 
@@ -154,4 +158,5 @@ export const enum CaseDataCacheKey {
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typesOfClaim',
+  OTHER_CLAIM_TYPE = 'otherClaimType',
 }

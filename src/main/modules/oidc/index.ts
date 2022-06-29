@@ -67,7 +67,6 @@ export const idamCallbackHandler = async (
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
-
   //For now if user account does not have the citizen role redirect to login
   if (!req.session.user?.isCitizen) {
     return res.redirect(AuthUrls.LOGIN);

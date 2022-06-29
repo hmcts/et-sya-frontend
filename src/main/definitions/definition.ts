@@ -1,6 +1,10 @@
 export const enum TypesOfClaim {
   BREACH_OF_CONTRACT = 'breachOfContract',
   DISCRIMINATION = 'discrimination',
+  PAY_RELATED_CLAIM = 'payRelated',
+  UNFAIR_DISMISSAL = 'unfairDismissal',
+  WHISTLE_BLOWING = 'whistleBlowing',
+  OTHER_TYPES = 'otherTypesOfClaims',
 }
 
 export const enum ClaimOutcomes {

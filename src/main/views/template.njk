@@ -5,6 +5,7 @@
 
 {% block head %}
   {% include "webpack/css.njk" %}
+  <meta name="format-detection" content="telephone=no">
 {% endblock %}
 
 {% set logInOrOut = {
@@ -22,13 +23,15 @@
     navigationClasses: 'govuk-header__navigation--end',
     navigation: [logInOrOut]
   }) }}
-{% endblock %}
 
+{% endblock %}
 {% block pageTitle %}
   {{ title }}
   -
   {{ govUk }}
 {% endblock %}
+
+
 
 {% block beforeContent %}
 
