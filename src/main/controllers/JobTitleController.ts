@@ -16,8 +16,8 @@ export default class JobTitleController {
   private readonly jobTitleContent: FormContent = {
     fields: {
       jobTitle: {
-        id: 'job-title',
-        name: 'job-title',
+        id: 'jobTitle',
+        name: 'jobTitle',
         type: 'text',
         classes: 'govuk-!-width-one-half',
         label: (l: AnyRecord): string => l.jobTitle,

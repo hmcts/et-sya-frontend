@@ -12,14 +12,14 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
-  I.seeElement('#start-date-day');
-  I.fillField('#start-date-day', '20');
-  I.fillField('#start-date-month', '04');
-  I.fillField('#start-date-year', '2014');
+  I.seeElement('#startDate-day');
+  I.fillField('#startDate-day', '20');
+  I.fillField('#startDate-month', '04');
+  I.fillField('#startDate-year', '2014');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-period');
@@ -67,14 +67,14 @@ Scenario('Claim while working for organisation when notice period is for 2 weeks
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
-  I.seeElement('#start-date-day');
-  I.fillField('#start-date-day', '20');
-  I.fillField('#start-date-month', '04');
-  I.fillField('#start-date-year', '2014');
+  I.seeElement('#startDate-day');
+  I.fillField('#startDate-day', '20');
+  I.fillField('#startDate-month', '04');
+  I.fillField('#startDate-year', '2014');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-period');
@@ -118,14 +118,14 @@ Scenario('Claim while working for organisation when notice period selected as no
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
-  I.seeElement('#start-date-day');
-  I.fillField('#start-date-day', '20');
-  I.fillField('#start-date-month', '04');
-  I.fillField('#start-date-year', '2014');
+  I.seeElement('#startDate-day');
+  I.fillField('#startDate-day', '20');
+  I.fillField('#startDate-month', '04');
+  I.fillField('#startDate-year', '2014');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-period-2');
@@ -161,14 +161,14 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.checkOption('input[id=still-working]');
   I.click('#main-form-submit');
 
-  I.seeElement('#job-title');
-  I.fillField('#job-title', 'Tester');
+  I.seeElement('#jobTitle');
+  I.fillField('#jobTitle', 'Tester');
   I.click('#main-form-submit');
 
-  I.seeElement('#start-date-day');
-  I.fillField('#start-date-day', '20');
-  I.fillField('#start-date-month', '04');
-  I.fillField('#start-date-year', '2014');
+  I.seeElement('#startDate-day');
+  I.fillField('#startDate-day', '20');
+  I.fillField('#startDate-month', '04');
+  I.fillField('#startDate-year', '2014');
   I.click('#main-form-submit');
 
   I.seeElement('#notice-period');

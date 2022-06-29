@@ -13,6 +13,7 @@ import {
   isPayIntervalNull,
   isValidAvgWeeklyHours,
   isValidCurrency,
+  isValidNoticeLength,
   isValidPension,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
@@ -125,23 +126,31 @@ describe('Validation', () => {
       },
       {
         date: { day: -31, month: 12, year: 2000 },
-        expected: { error: 'invalidDate', fieldName: 'day' },
+        expected: { error: 'dayInvalid', fieldName: 'day' },
       },
       {
         date: { day: 31, month: -12, year: 2000 },
-        expected: { error: 'invalidDate', fieldName: 'month' },
+        expected: { error: 'monthInvalid', fieldName: 'month' },
       },
       {
         date: { day: 32, month: 12, year: 2000 },
-        expected: { error: 'invalidDate', fieldName: 'day' },
+        expected: { error: 'dayInvalid', fieldName: 'day' },
       },
       {
         date: { day: 31, month: 13, year: 2000 },
-        expected: { error: 'invalidDate', fieldName: 'month' },
+        expected: { error: 'monthInvalid', fieldName: 'month' },
       },
       {
         date: { day: 'no', month: '!%', year: 'way' },
-        expected: { error: 'invalidDate', fieldName: 'day' },
+        expected: { error: 'dayNotANumber', fieldName: 'day' },
+      },
+      {
+        date: { day: 1, month: '!%', year: 2022 },
+        expected: { error: 'monthNotANumber', fieldName: 'month' },
+      },
+      {
+        date: { day: 1, month: 12, year: 'way' },
+        expected: { error: 'yearNotANumber', fieldName: 'year' },
       },
       { date: undefined, expected: 'invalidDate' },
       {
@@ -263,6 +272,16 @@ describe('Validation', () => {
     });
   });
 
+  describe('isValidNoticeLength()', () => {
+    it.each([
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '2a', expected: 'notANumber' },
+    ])('check notice length is valid', ({ mockRef, expected }) => {
+      expect(isValidNoticeLength(mockRef)).toEqual(expected);
+    });
+  });
+
   describe('isWorkAddressLineOneValid', () => {
     it.each([
       { mockRef: '', expected: 'required' },
@@ -297,11 +316,12 @@ describe('Validation', () => {
   describe('isValidAvgWeeklyHours()', () => {
     it.each([
       { mockRef: '00', expected: 'invalid' },
-      { mockRef: 'a', expected: 'invalid' },
-      { mockRef: '%', expected: 'invalid' },
-      { mockRef: '25a', expected: 'invalid' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20.00', expected: 'invalid' },
       { mockRef: '169', expected: 'exceeded' },
+      { mockRef: '-4', expected: 'negativeNumber' },
       { mockRef: '35', expected: undefined },
       { mockRef: '2', expected: undefined },
       { mockRef: null, expected: undefined },

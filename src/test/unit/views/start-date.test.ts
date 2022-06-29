@@ -18,6 +18,7 @@ const paragraphClass = 'govuk-body';
 const expectedTitle = startDateJson.h1;
 const expectedP1 = startDateJson.p1;
 const expectedP2 = startDateJson.p2;
+const expectedHint = startDateJson.hint;
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-date-input__item';
 const expectedInputLabel1 = 'Day';
@@ -52,6 +53,11 @@ describe('Employment start date page', () => {
   it('should display 3 input fields', () => {
     const radioButtons = htmlRes.getElementsByClassName(inputs);
     expect(radioButtons.length).equal(3, `only ${radioButtons.length} found`);
+  });
+
+  it('should display hint', () => {
+    const hint = htmlRes.getElementsByClassName('govuk-hint');
+    expect(hint[0].innerHTML).contains(expectedHint, 'hint text not found');
   });
 
   it('should display inputs with valid labels', () => {

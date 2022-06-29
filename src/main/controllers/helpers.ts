@@ -2,9 +2,15 @@ import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
-import { arePayValuesNull, isAfterDateOfBirth, isPayIntervalNull } from '../components/form/validator';
+import {
+  arePayValuesNull,
+  isAfterDateOfBirth,
+  isPayIntervalNull,
+  isValidNoticeLength,
+  isValidTwoDigitInteger,
+} from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, Respondent } from '../definitions/case';
+import { CaseWithId, Respondent, StillWorking } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -39,16 +45,31 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   }
 };
 
+export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<CaseWithId>): FormError => {
+  const employmentStatus = req.session.userCase.isStillWorking;
+  const noticeLength = formData.noticePeriodLength;
+
+  if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
+    const invalid = isValidTwoDigitInteger(noticeLength);
+    if (invalid) {
+      return { errorType: invalid, propertyName: 'noticePeriodLength' };
+    }
+  } else {
+    const errorType = isValidNoticeLength(noticeLength);
+    if (errorType) {
+      return { errorType, propertyName: 'noticePeriodLength' };
+    }
+  }
+};
+
 export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError[] => {
   const payBeforeTax = formData.payBeforeTax;
   const payAfterTax = formData.payAfterTax;
   const payInterval = formData.payInterval;
 
-  if (payBeforeTax || payAfterTax) {
-    const errorType = isPayIntervalNull(payInterval);
-    if (errorType) {
-      return [{ errorType, propertyName: 'payInterval' }];
-    }
+  const required = isPayIntervalNull(payInterval);
+  if (required) {
+    return payIntervalError(payBeforeTax, payAfterTax);
   }
 
   if (payInterval) {
@@ -59,6 +80,20 @@ export const getPartialPayInfoError = (formData: Partial<CaseWithId>): FormError
         { errorType, propertyName: 'payAfterTax' },
       ];
     }
+  }
+};
+
+export const payIntervalError = (payBeforeTax: number, payAfterTax: number): FormError[] => {
+  if (payBeforeTax && !payAfterTax) {
+    return [{ errorType: 'payBeforeTax', propertyName: 'payInterval' }];
+  }
+
+  if (payAfterTax && !payBeforeTax) {
+    return [{ errorType: 'payAfterTax', propertyName: 'payInterval' }];
+  }
+
+  if (payBeforeTax || payAfterTax) {
+    return [{ errorType: 'required', propertyName: 'payInterval' }];
   }
 };
 
@@ -93,6 +128,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
+  const noticeErrors = getCustomNoticeLengthError(req, formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -104,6 +140,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (newJobPayErrors) {
     sessionErrors = [...sessionErrors, ...newJobPayErrors];
+  }
+
+  if (noticeErrors) {
+    sessionErrors = [...sessionErrors, noticeErrors];
   }
 
   req.session.errors = sessionErrors;
