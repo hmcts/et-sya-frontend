@@ -29,7 +29,7 @@ export const enum ClaimTypeDiscrimination {
   PREGNANCY_OR_MATERNITY = 'pregnancyOrMaternity',
   RACE = 'race',
   RELIGION_OR_BELIEF = 'religionOrBelief',
-  SEX = 'sex',
+  SEX = 'Sex (Including equal pay)',
   SEXUAL_ORIENTATION = 'sexualOrientation',
 }
 
