@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { YesOrNo } from '../../main/definitions/case';
+import { StillWorking, YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -14,7 +14,13 @@ describe(`GET ${PageUrls.PENSION}`, () => {
 
 describe(`on POST ${PageUrls.PENSION}`, () => {
   test("should return the benefits page when 'yes' radio button is selected, a valid pension contribution is entered and 'save and continue' are selected", async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE || StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    )
       .post(PageUrls.PENSION)
       .send({
         pension: YesOrNo.YES,

@@ -76,3 +76,25 @@ export const NewJobDateFormFields = {
   validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
 };
+
+export const NoticeEndDateFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.label,
+  labelHidden: true,
+  hint: (l: AnyRecord): string => l.hint,
+  values: DateValues,
+  validator: (value: CaseDate): DateTypes =>
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
+};
+
+export const StartDateFormFields = {
+  classes: 'govuk-date-input',
+  type: 'date',
+  label: (l: AnyRecord): string => l.label,
+  labelHidden: true,
+  hint: (l: AnyRecord): string => l.hint,
+  values: DateValues,
+  validator: (value: CaseDate): DateTypes =>
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+};

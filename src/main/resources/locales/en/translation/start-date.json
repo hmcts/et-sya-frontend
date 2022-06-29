@@ -1,15 +1,21 @@
 {
   "title": "Employment start date",
+  "label": "Employment start date",
   "h1": "Employment start date",
   "p1": "Tell us when you started working for the respondent.",
   "p2": "If you do not know the exact date then enter your best estimate.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "startDate": {
-      "required": "Enter your employment start date. For example, 22 04 2014",
+      "required": "Tell us when you started work. For example, 23 04 2014",
       "dayRequired": "Enter a day for your start date. For example, 23",
       "monthRequired": "Enter a month for your start date. For example, 04",
-      "yearRequired": " Enter a year for your start date. For example, 1981",
+      "yearRequired": " Enter a year for your start date. For example, 2014",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2014",
+      "dayInvalid": "Day must be between 1 and 31",
+      "monthInvalid": "Month must be between 1 and 12",
       "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInFuture": "Date entered must be in the past",

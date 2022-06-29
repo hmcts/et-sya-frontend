@@ -15,6 +15,7 @@ const noticeEndJson = JSON.parse(noticeEndJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = noticeEndJson.h1;
+const expectedHint = noticeEndJson.hint;
 const buttonId = 'main-form-submit';
 const dateFieldClass = 'govuk-date-input__item';
 
@@ -36,6 +37,11 @@ describe('Notice end page', () => {
   it('should display date input fields', () => {
     const dateFields = htmlRes.getElementsByClassName(dateFieldClass);
     expect(dateFields.length).equal(3, `only ${dateFields.length} found`);
+  });
+
+  it('should display hint', () => {
+    const hint = htmlRes.getElementsByClassName('govuk-hint');
+    expect(hint[0].innerHTML).contains(expectedHint, 'hint text not found');
   });
 
   it('should display save and continue button', () => {

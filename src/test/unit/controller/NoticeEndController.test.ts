@@ -30,7 +30,7 @@ describe('Notice end Controller', () => {
 
       'noticeEnds-month': '01',
 
-      'noticeEnds-year': '2022',
+      'noticeEnds-year': '2023',
     };
 
     const controller = new NoticeEndController();
@@ -45,7 +45,57 @@ describe('Notice end Controller', () => {
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'dayRequired', fieldName: 'day' }];
-    const body = { noticeEnd: '' };
+    const body = { noticeEnds: '' };
+    const controller = new NoticeEndController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should redirect to the same screen when date is in the future', () => {
+    const errors = [
+      { propertyName: 'noticeEnds', errorType: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
+    ];
+    const body = {
+      'noticeEnds-day': '23',
+      'noticeEnds-month': '11',
+      'noticeEnds-year': '2039',
+    };
+    const controller = new NoticeEndController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should redirect to the same screen when date is in the 10 years past', () => {
+    const errors = [{ propertyName: 'noticeEnds', errorType: 'invalidDateInPast', fieldName: 'day' }];
+    const body = {
+      'noticeEnds-day': '23',
+      'noticeEnds-month': '11',
+      'noticeEnds-year': '2000',
+    };
+    const controller = new NoticeEndController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should redirect to the same screen when date fields are empty', () => {
+    const errors = [{ propertyName: 'noticeEnds', errorType: 'required', fieldName: 'day' }];
+    const body = {
+      'noticeEnds-day': '',
+      'noticeEnds-month': '',
+      'noticeEnds-year': '',
+    };
     const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
