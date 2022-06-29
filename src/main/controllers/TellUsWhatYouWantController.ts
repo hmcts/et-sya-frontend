@@ -57,9 +57,9 @@ export default class TellUsWhatYouWantController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     const selectedOptions = this.form.getParsedBody(cloneDeep(req.body), this.form.getFormFields()).tellUsWhatYouWant;
-    if (selectedOptions.indexOf(TellUsWhatYouWant.COMPENSATION_ONLY) >= 0) {
+    if (selectedOptions.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
       handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
-    } else if (selectedOptions.indexOf(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION) >= 0) {
+    } else if (selectedOptions.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
