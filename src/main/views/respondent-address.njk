@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -13,6 +14,9 @@
        {{ h1 + respondentName }}?
       </h1>
       <p class="govuk-body">{{ pageText | safe}}</p>
+      {{ govukInsetText({
+        text: insetText
+      }) }}
       {% include "./address/postcodeEnter.njk" %}
       {% include "./address/postcodeSelect.njk" %}
 

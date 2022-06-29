@@ -7,8 +7,10 @@ import { mockApp } from '../mocks/mockApp';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const expectedTitle = "What is the name of the respondent you're making the claim against?";
-const inputs = '[class*="respondent-name"]';
+const inputs = '[class*="respondentName"]';
 const expectedInputLabel = 'Enter name of respondent';
+const insetClass = 'govuk-inset-text';
+const insetText = "You'll be able to add more respondents later if you need to";
 
 let htmlRes: Document;
 describe('Respondent Name page', () => {
@@ -23,6 +25,11 @@ describe('Respondent Name page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display insetText', () => {
+    const title = htmlRes.getElementsByClassName(insetClass);
+    expect(title[0].innerHTML).contains(insetText, 'Inset text does not exist');
   });
 
   it('should display 1 input field', () => {

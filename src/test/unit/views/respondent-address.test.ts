@@ -15,6 +15,7 @@ const respondentAddressJson = JSON.parse(translationRaw);
 
 const respondentName = 'Globo Gym';
 const titleClass = 'govuk-heading-xl';
+const insetClass = 'govuk-inset-text';
 const expectedTitle = respondentAddressJson.h1 + respondentName;
 
 let htmlRes: Document;
@@ -42,5 +43,10 @@ describe('Respondent Address Page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display insetText', () => {
+    const title = htmlRes.getElementsByClassName(insetClass);
+    expect(title[0].innerHTML).contains(respondentAddressJson.insetText, 'Inset text does not exist');
   });
 });
