@@ -33,7 +33,7 @@ describe('Steps to making your claim page', () => {
   beforeAll(async () => {
     await request(
       mockApp({
-        session: mockSession([TypesOfClaim.DISCRIMINATION], []),
+        session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
       })
     )
       .get(PAGE_URL)
@@ -81,7 +81,7 @@ describe('Steps to making your claim page', () => {
     async () => {
       await request(
         mockApp({
-          session: mockSession([TypesOfClaim.DISCRIMINATION], []),
+          session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
         })
       )
         .get(PAGE_URL)
@@ -98,7 +98,7 @@ describe('Steps to making your claim page', () => {
     async () => {
       await request(
         mockApp({
-          session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], []),
+          session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []),
         })
       )
         .get(PAGE_URL)
@@ -115,7 +115,7 @@ describe('Steps to making your claim page', () => {
     async () => {
       await request(
         mockApp({
-          session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], []),
+          session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], [], []),
         })
       )
         .get(PAGE_URL)
@@ -132,7 +132,7 @@ describe('Steps to making your claim page', () => {
     async () => {
       await request(
         mockApp({
-          session: mockSession([], []),
+          session: mockSession([], [], []),
         })
       )
         .get(PAGE_URL)

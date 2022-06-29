@@ -13,28 +13,28 @@ const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 describe('Steps to Making your claim Controller', () => {
   it('should render single or multiple claim page', () => {
     const response = mockResponse();
-    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], []) });
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
   });
 
   it('should render page with claim type DISCRIMINATION', () => {
     const response = mockResponse();
-    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], []) });
+    const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([TypesOfClaim.DISCRIMINATION]);
   });
 
   it('should render page with claim type UNFAIR_DISMISSAL', () => {
     const response = mockResponse();
-    const request = mockRequest({ session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], []) });
+    const request = mockRequest({ session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([TypesOfClaim.UNFAIR_DISMISSAL]);
   });
 
   it('should render page with claim type PAY_RELATED_CLAIM', () => {
     const response = mockResponse();
-    const request = mockRequest({ session: mockSession([TypesOfClaim.PAY_RELATED_CLAIM], []) });
+    const request = mockRequest({ session: mockSession([TypesOfClaim.PAY_RELATED_CLAIM], [], []) });
     stepsToMakingYourClaimController.get(request, response);
     expect(request.session.userCase.typeOfClaim).toEqual([TypesOfClaim.PAY_RELATED_CLAIM]);
   });
@@ -51,6 +51,7 @@ describe('Steps to Making your claim Controller', () => {
           TypesOfClaim.WHISTLE_BLOWING,
           TypesOfClaim.OTHER_TYPES,
         ],
+        [],
         []
       ),
     });

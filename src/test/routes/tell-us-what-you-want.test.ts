@@ -59,3 +59,20 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
     }
   );
 });
+
+/*describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
+  test(
+    'should navigate to the whistle blowing claims page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING selected ' +
+      'and save and continue button is clicked',
+    async () => {
+      await request(mockApp({}))
+        .post(PageUrls.TELL_US_WHAT_YOU_WANT)
+        .send({ typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING] })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.WHISTLEBLOWING_CLAIMS);
+        });
+    }
+  );
+});*/

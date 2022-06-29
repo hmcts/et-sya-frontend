@@ -3,13 +3,17 @@ import express, { Express } from 'express';
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseWithId } from '../../../main/definitions/case';
-import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
 
-export function mockSession(typeOfClaimList: TypesOfClaim[], errorList: FormError[]): AppSession {
+export function mockSession(
+  typeOfClaimList: TypesOfClaim[],
+  tellUsWhatYouWantList: TellUsWhatYouWant[],
+  errorList: FormError[]
+): AppSession {
   return {
     id: 'testSessionId',
     lang: 'en',
@@ -29,6 +33,7 @@ export function mockSession(typeOfClaimList: TypesOfClaim[], errorList: FormErro
       id: 'testUserCaseId',
       state: CaseState.DRAFT,
       typeOfClaim: typeOfClaimList,
+      tellUsWhatYouWant: tellUsWhatYouWantList,
     },
     errors: errorList,
     guid: 'c8d6b6a3-e6bb-4225-82e5-db63fc66a2c8',
