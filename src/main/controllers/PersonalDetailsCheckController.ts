@@ -33,15 +33,17 @@ export default class PersonalDetailsCheckController {
   public post = (req: AppRequest, res: Response): void => {
     const requestSession = req.session;
     setUserCase(req, this.form);
-    getCaseApi(requestSession.user?.accessToken)
-      .updateDraftCase(requestSession.userCase)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${requestSession.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.error(error);
-      });
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+    if (!req.session.errors.length) {
+      getCaseApi(requestSession.user?.accessToken)
+        .updateDraftCase(requestSession.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${requestSession.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.error(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

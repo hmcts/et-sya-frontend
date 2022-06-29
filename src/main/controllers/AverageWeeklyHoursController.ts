@@ -42,15 +42,17 @@ export default class AverageWeeklyHoursController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
     handleSessionErrors(req, res, this.form, PageUrls.PAY);
+    if (!req.session.errors.length) {
+      getCaseApi(req.session.user?.accessToken)
+        .updateDraftCase(req.session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.info(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

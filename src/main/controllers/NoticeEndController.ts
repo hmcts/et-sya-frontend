@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -9,6 +10,7 @@ import { DateFormFields, NoticeEndDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -29,13 +31,24 @@ export default class NoticeEndController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.noticeEndContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.NOTICE_TYPE);
+    if (!req.session.errors.length) {
+      getCaseApi(session.user?.accessToken)
+        .updateDraftCase(session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.error(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

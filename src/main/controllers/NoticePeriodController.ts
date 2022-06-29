@@ -53,15 +53,17 @@ export default class NoticePeriodController {
       ? PageUrls.NOTICE_TYPE
       : PageUrls.AVERAGE_WEEKLY_HOURS;
     setUserCase(req, this.form);
-    getCaseApi(session.user?.accessToken)
-      .updateDraftCase(session.userCase)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
     handleSessionErrors(req, res, this.form, redirectUrl);
+    if (!req.session.errors.length) {
+      getCaseApi(session.user?.accessToken)
+        .updateDraftCase(session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.info(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
