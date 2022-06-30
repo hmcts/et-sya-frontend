@@ -1,10 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseDataCacheKey } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getPreloginCaseData } from '../services/CacheService';
 
 import { getPageContent } from './helpers';
 
@@ -65,19 +67,23 @@ const sections = [
 ];
 
 export default class StepsToMakingYourClaimController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
+    const redisClient = req.app.locals?.redisClient;
+    const caseData = await getPreloginCaseData(redisClient, req.session.guid);
+    const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
+    const selectedClaimTypes = userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM);
     sections[2].links[0].url = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     sections[1].links[0].url = PageUrls.PAST_EMPLOYER.toString();
-    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.DISCRIMINATION.toString())) {
+    if (selectedClaimTypes.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
-    } else if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
+    } else if (selectedClaimTypes.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
     }
-    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+    if (selectedClaimTypes.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       sections[1].links[0].url = PageUrls.STILL_WORKING;
     }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
