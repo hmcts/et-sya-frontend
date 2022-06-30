@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
@@ -29,7 +30,11 @@ export default class TribunalRecommendationController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+    } else {
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
