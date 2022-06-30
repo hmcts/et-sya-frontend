@@ -4,9 +4,10 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
-import { mockApp, mockSession } from '../mocks/mockApp';
+import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../mocks/mockApp';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -32,8 +33,15 @@ let htmlRes: Document;
 describe('Steps to making your claim page', () => {
   beforeAll(async () => {
     await request(
-      mockApp({
-        session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
+      mockAppWithRedisClient({
+        session: mockSession([], [], []),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.WHISTLE_BLOWING])],
+          ])
+        ),
       })
     )
       .get(PAGE_URL)
@@ -80,8 +88,15 @@ describe('Steps to making your claim page', () => {
       'when TypesOfClaim.DISCRIMINATION selected',
     async () => {
       await request(
-        mockApp({
-          session: mockSession([TypesOfClaim.DISCRIMINATION], [], []),
+        mockAppWithRedisClient({
+          session: mockSession([], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.DISCRIMINATION])],
+            ])
+          ),
         })
       )
         .get(PAGE_URL)
@@ -97,8 +112,15 @@ describe('Steps to making your claim page', () => {
       'when TypesOfClaim.PAY_RELATED_CLAIM selected and TypesOfClaim.DISCRIMINATION is not selected',
     async () => {
       await request(
-        mockApp({
+        mockAppWithRedisClient({
           session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+            ])
+          ),
         })
       )
         .get(PAGE_URL)
@@ -114,8 +136,15 @@ describe('Steps to making your claim page', () => {
       'when TypesOfClaim.UNFAIR_DISMISSAL is selected',
     async () => {
       await request(
-        mockApp({
+        mockAppWithRedisClient({
           session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.UNFAIR_DISMISSAL])],
+            ])
+          ),
         })
       )
         .get(PAGE_URL)
@@ -131,8 +160,15 @@ describe('Steps to making your claim page', () => {
       'when TypesOfClaim.UNFAIR_DISMISSAL is not selected',
     async () => {
       await request(
-        mockApp({
+        mockAppWithRedisClient({
           session: mockSession([], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+            ])
+          ),
         })
       )
         .get(PAGE_URL)
