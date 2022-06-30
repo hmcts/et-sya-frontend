@@ -17,11 +17,11 @@ describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
     'should navigate to PageUrls.CLAIM_DETAILS_CHECK when TypesOfClaim.WHISTLE_BLOWING is not selected and ' +
       'save and continue button is clicked',
     async () => {
-      await request(mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING], [], []) }))
+      await request(mockApp({ session: mockSession([], [], []) }))
         .post(PageUrls.TRIBUNAL_RECOMMENDATION)
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.WHISTLEBLOWING_CLAIMS);
+          expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_DETAILS_CHECK);
         });
     }
   );

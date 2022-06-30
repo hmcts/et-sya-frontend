@@ -30,7 +30,7 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
 
 describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
-    'should navigate to the tribunal recommendation page when TellUsWhatYouWant.COMPENSATION_ONLY selected ' +
+    'should navigate to the tribunal recommendation page when TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION selected ' +
       'and save and continue button is clicked',
     async () => {
       await request(mockApp({}))
@@ -71,6 +71,22 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         .expect(res => {
           expect(res.status).toStrictEqual(302);
           expect(res.header['location']).toStrictEqual(PageUrls.WHISTLEBLOWING_CLAIMS);
+        });
+    }
+  );
+});
+
+describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
+  test(
+    'should navigate to the PageUrls.CLAIM_DETAILS_CHECK page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING is not selected ' +
+      'and save and continue button is clicked',
+    async () => {
+      await request(mockApp({ session: mockSession([], [], []) }))
+        .post(PageUrls.TELL_US_WHAT_YOU_WANT)
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_DETAILS_CHECK);
         });
     }
   );
