@@ -1,19 +1,23 @@
 {
   "title": "Employment notice end",
+  "label": "When does your notice period end?",
   "h1": "When does your notice period end?",
   "p1": "Tell us when you'll finish with the respondent.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "noticeEnds": {
-      "required": "Enter your notice date. For example, 23 3 2007",
+      "required": "Tell us when your notice period ends. For example, DD MM YYYY",
       "dayRequired": "Enter a day for your start date. For example, 23",
       "monthRequired": "Enter a month for your start date. For example, 04",
-      "yearRequired": " Enter a year for your start date. For example, 1981",
-      "invalidDate": "You have entered an invalid date. Enter the date using the following format: 22 04 2014",
+      "yearRequired": " Enter a year for your start date. For example, 2014",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2014",
+      "dayInvalid": "Day must be between 1 and 31",
+      "monthInvalid": "Month must be between 1 and 12",
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
-      "invalidDateInFuture": "Date entered must be in the past",
-      "invalidDateTooFarInPast": "You have entered a year which is too far in the past",
-      "invalidDateBeforeDOB": "Date entered must not be earlier than your date of birth"
+      "invalidDateInPast": "Enter a valid date, date must not be in the past",
+      "invalidDateMoreThanTenYearsInFuture": "Enter a valid date, date must not be greater than 10 years from current date"
     }
   }
 }

@@ -52,6 +52,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
+    reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
+    reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
+    personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
   };
 }
 
@@ -87,6 +90,13 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_pension_weekly_contribution: caseItem.claimantPensionWeeklyContribution,
         claimant_benefits: caseItem.employeeBenefits,
         claimant_benefits_detail: caseItem.benefitsCharCount,
+      },
+      claimantHearingPreference: {
+        reasonable_adjustments: caseItem.reasonableAdjustments,
+        reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
+      },
+      claimantTaskListChecks: {
+        personalDetailsCheck: caseItem.personalDetailsCheck,
       },
     },
   };

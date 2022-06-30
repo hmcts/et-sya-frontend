@@ -13,7 +13,9 @@
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Enter average weekly hours in a valid format, for example 0, 10, 35 etc",
-      "exceeded": "Hours must be less than 168 (max number of hours in a week)"
+      "exceeded": "Hours must be less than 168 (max number of hours in a week)",
+      "notANumber": "Hours worked in a week must be entered as a number, for example 0, 10, 35 etc.",
+      "negativeNumber": "Hours worked cannot be a negative value. It must be entered as a number, for example 0, 10, 35 etc."
     }
   }
 }

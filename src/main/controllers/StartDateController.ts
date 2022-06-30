@@ -6,7 +6,7 @@ import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate, StillWorking } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
+import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
@@ -14,8 +14,8 @@ import { getCaseApi } from '../services/CaseService';
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 const start_date: DateFormFields = {
-  ...DefaultDateFormFields,
-  id: 'start-date',
+  ...StartDateFormFields,
+  id: 'startDate',
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
 };
