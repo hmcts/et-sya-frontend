@@ -1,8 +1,10 @@
 import express, { Express } from 'express';
+import { RedisClient } from 'redis';
+import redis from 'redis-mock';
 
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
-import { CaseWithId } from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
 import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
@@ -36,7 +38,7 @@ export function mockSession(
       tellUsWhatYouWant: tellUsWhatYouWantList,
     },
     errors: errorList,
-    guid: 'c8d6b6a3-e6bb-4225-82e5-db63fc66a2c8',
+    guid: 'kedicik6-l0v3-y0u2-t1h3-mehmet9c3d68',
     user: {
       accessToken: 'testAccessToken',
       email: 'et.dev@hmcts.net',
@@ -46,6 +48,13 @@ export function mockSession(
       familyName: 'user',
     },
   };
+}
+
+export function mockRedisClient(cacheMap: Map<CaseDataCacheKey, string>): RedisClient {
+  const redisClient = redis.createClient();
+  const guid = 'kedicik6-l0v3-y0u2-t1h3-mehmet9c3d68';
+  redisClient.set(guid, JSON.stringify(Array.from(cacheMap.entries())));
+  return redisClient;
 }
 
 export const mockApp = ({
@@ -74,6 +83,39 @@ export const mockApp = ({
     } as unknown as AppSession;
     next();
   });
+  mock.use(app);
+  return mock;
+};
+
+export const mockAppWithRedisClient = ({
+  body,
+  userCase,
+  session,
+  redisClient,
+}: {
+  body?: AnyRecord;
+  userCase?: Partial<CaseWithId>;
+  session?: AppSession;
+  redisClient?: RedisClient;
+}): Express => {
+  const mock = express();
+  mock.all('*', function (req, res, next) {
+    req.body = body;
+    req.session = {
+      userCase: {
+        id: '1234',
+        dobDate: { year: '2000', month: '12', day: '24' },
+        ...userCase,
+      } as CaseWithId,
+      ...session,
+      save: jest.fn(done => done()),
+      lang: 'en',
+      errors: undefined,
+      user: mockUserDetails,
+    } as unknown as AppSession;
+    next();
+  });
+  app.locals.redisClient = redisClient;
   mock.use(app);
   return mock;
 };
