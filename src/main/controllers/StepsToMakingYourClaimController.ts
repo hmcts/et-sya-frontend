@@ -72,12 +72,12 @@ export default class StepsToMakingYourClaimController {
     ]);
     sections[2].links[0].url = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     sections[1].links[0].url = PageUrls.PAST_EMPLOYER.toString();
-    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.DISCRIMINATION.toString())) {
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
-    } else if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
+    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
     }
-    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       sections[1].links[0].url = PageUrls.STILL_WORKING;
     }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
