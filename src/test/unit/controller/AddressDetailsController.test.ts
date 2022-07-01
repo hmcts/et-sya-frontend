@@ -26,7 +26,6 @@ describe('Address details Controller', () => {
       const errors = [
         { propertyName: 'address1', errorType: 'required' },
         { propertyName: 'addressTown', errorType: 'required' },
-        { propertyName: 'addressPostcode', errorType: 'required' },
       ];
       const body = { address1: '' };
 

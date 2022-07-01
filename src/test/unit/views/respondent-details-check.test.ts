@@ -4,7 +4,7 @@ import request from 'supertest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-heading-l';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'Check the respondent details';
 
