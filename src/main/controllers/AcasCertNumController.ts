@@ -7,7 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  conditionalRedirect,
+  getPageContent,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -60,7 +66,7 @@ export default class AcasCertNumController {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.RESPONDENT_DETAILS_CHECK
       : PageUrls.NO_ACAS_NUMBER;
-    setUserCase(req, this.form);
+    setUserCaseForRespondent(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

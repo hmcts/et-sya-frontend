@@ -8,7 +8,7 @@ describe(`GET ${PageUrls.RESPONDENT_ADDRESS}`, () => {
     const res = await request(
       mockApp({
         userCase: {
-          selectedRespondent: 1,
+          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,

@@ -9,7 +9,7 @@ describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
     const res = await request(
       mockApp({
         userCase: {
-          selectedRespondent: 1,
+          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,
@@ -26,7 +26,19 @@ describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
 
 describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   test('should load acas number page if yes is selected', async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          selectedRespondentIndex: 0,
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'Name',
+            },
+          ],
+        },
+      })
+    )
       .post(PageUrls.WORK_ADDRESS)
       .send({ claimantWorkAddressQuestion: YesOrNo.YES })
       .expect(res => {
@@ -36,7 +48,19 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   });
 
   test('should load place of work page if no is selected', async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          selectedRespondentIndex: 0,
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'Name',
+            },
+          ],
+        },
+      })
+    )
       .post(PageUrls.WORK_ADDRESS)
       .send({ claimantWorkAddressQuestion: YesOrNo.NO })
       .expect(res => {

@@ -8,27 +8,6 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors } from './helpers';
 
-const pageElements = [
-  {
-    title: (l: AnyRecord): string => l.title,
-    subTitle: (l: AnyRecord): string => l.subTitle,
-    links: [
-      {
-        url: PageUrls.RESPONDENT_NAME,
-        linkTxt: (l: AnyRecord): string => l.name,
-      },
-      {
-        url: PageUrls.RESPONDENT_ADDRESS,
-        linkTxt: (l: AnyRecord): string => l.address,
-      },
-      {
-        url: PageUrls.ACAS_CERT_NUM,
-        linkTxt: (l: AnyRecord): string => l.acasNum,
-      },
-    ],
-  },
-];
-
 export default class RespondentDetailsCheckController {
   private readonly form: Form;
   private readonly addRespondentForm: FormContent = {
@@ -52,7 +31,7 @@ export default class RespondentDetailsCheckController {
         respondentNumber: newRespondentNum,
       };
       req.session.userCase.respondents.push(newRespondent);
-      req.session.userCase.selectedRespondent = newRespondentNum;
+      req.session.userCase.selectedRespondentIndex = newRespondentNum - 1;
     } else {
       // TODO Error handling
       console.log('Limit reached');
@@ -62,6 +41,7 @@ export default class RespondentDetailsCheckController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const respondents = req.session.userCase.respondents;
     const content = getPageContent(req, this.addRespondentForm, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_DETAILS_CHECK,
@@ -69,7 +49,7 @@ export default class RespondentDetailsCheckController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_DETAILS_CHECK, {
       ...content,
-      pageElements,
+      respondents,
     });
   };
 }

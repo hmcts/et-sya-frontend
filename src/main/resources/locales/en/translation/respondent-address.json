@@ -1,6 +1,7 @@
 {
+  "title": "Respondent address",
   "h1": "What is the address of ",
-  "enterPostcode": "Enter postcode",
+  "enterPostcode": "Enter a UK postcode",
   "findAddress": "Find address",
   "pageText": "You should be able to find this text on your payslips, contract or other official documents.",
   "buildingStreet": "Building and street",
@@ -10,13 +11,13 @@
   "postcode": "Postcode",
   "enterAddressManually": "I want to enter the address manually.",
   "errors": {
-    "address1": {
+    "respondentAddress1": {
       "required": "Enter a building and street"
     },
-    "addressTown": {
+    "respondentAddressTown": {
       "required": "Enter a town or city"
     },
-    "addressPostcode": {
+    "respondentAddressPostcode": {
       "required": "Enter a postcode",
       "invalid": "Enter a valid UK postcode"
     }

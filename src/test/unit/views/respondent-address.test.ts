@@ -24,7 +24,7 @@ describe('Respondent Address Page', () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondent: 1,
+          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,

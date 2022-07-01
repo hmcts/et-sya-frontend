@@ -7,7 +7,7 @@
   "town": "Town or city",
   "county": "County",
   "postcode": "Postcode",
-  "enterAddressManually": "I want to enter the address manually.",
+  "enterAddressManually": "I don't live in the UK",
   "errors": {
     "address1": {
       "required": "Enter a building and street"

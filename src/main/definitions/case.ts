@@ -84,7 +84,7 @@ export interface Case {
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
-  selectedRespondent?: number;
+  selectedRespondentIndex?: number;
   respondents?: Respondent[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;

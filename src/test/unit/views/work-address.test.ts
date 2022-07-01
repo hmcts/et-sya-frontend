@@ -5,7 +5,7 @@ import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = 'Did you work at [first line of respondent address]?';
+const expectedTitle = 'Did you work at 1 The street?';
 const hintClass = 'govuk-hint';
 const expectedHint =
   "Choose 'Yes' if you worked from home occasionally or full-time for the same address listed for the repondent.";
@@ -16,9 +16,10 @@ describe('Work address', () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondent: 1,
+          selectedRespondentIndex: 0,
           respondents: [
             {
+              respondentAddress1: '1 The street',
               respondentNumber: 1,
               respondentName: 'Globo Gym',
             },
