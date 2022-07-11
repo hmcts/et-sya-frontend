@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% block beforeContent %}
   {{ super() }}
@@ -29,7 +30,37 @@
         {{getContent(link.linkTxt)}}
         {% endif %}
         </td>
-        <td scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</td>
+        <td scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">
+
+        {% if getContent(link.status) =="NOT STARTED" %}
+          {{ govukTag({
+            text: 'NOT STARTED',
+            classes: "govuk-tag--grey"
+          }) }}
+        {% endif %}
+
+        {% if getContent(link.status) =="COMPLETED" %}
+          {{ govukTag({
+            text: 'COMPLETED'
+          }) }}
+        {% endif %}
+
+        {% if getContent(link.status) =="IN PROGRESS" %}
+          {{ govukTag({
+            text: 'IN PROGRESS',
+            classes: "govuk-tag--BLUE"
+          }) }}
+        {% endif %}
+
+        {% if getContent(link.status) =="CANNOT START YET" %}
+          {{ govukTag({
+            text: 'CANNOT START YET',
+            classes: "govuk-tag--grey"
+          }) }}
+        {% endif %}
+
+         </td>
+
       </tr>
       {% endfor %}
       </tbody>
