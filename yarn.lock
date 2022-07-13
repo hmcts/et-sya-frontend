@@ -1057,12 +1057,12 @@
     lodash.mapvalues "^4.6.0"
     request-promise-native "^1.0.5"
 
-"@hmcts/nodejs-healthcheck@^1.7.0":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@hmcts/nodejs-healthcheck/-/nodejs-healthcheck-1.7.1.tgz#c29e44238b888d7245bc72ae5561cee5cb8cc979"
-  integrity sha512-vHX3WiqJ+zCPx9xHzgDhfH/IlY+1PvUptqS8vMZ56RWl0hLqmOfXCZT/w5cA3JpzkpxxoFTDCLCDQQDkkXY8Kw==
+"@hmcts/nodejs-healthcheck@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@hmcts/nodejs-healthcheck/-/nodejs-healthcheck-1.7.3.tgz#895657d102ac784963b77a0886809f8699253d1b"
+  integrity sha512-BaPkkhrVluLircAODM7Z7kPRRDy50T2OzxaJlgUTJ1WWAWi01gkDIMmhPkKNw8S3wunqNP/GIzOwdti20l0+jQ==
   dependencies:
-    "@hmcts/nodejs-logging" "^4.0.1"
+    "@hmcts/nodejs-logging" "^4.0.4"
     js-yaml "^3.8.4"
     superagent "7"
 
@@ -1075,16 +1075,7 @@
     on-finished "^2.3.0"
     winston "^2.4.5"
 
-"@hmcts/nodejs-logging@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-4.0.1.tgz#a130f07b6aa23bf7d5b06f0d697e1404347b8efa"
-  integrity sha512-gVl6pExodmnI66VXLr5a9dJqhJCn8HmZF6Ss/hcAGgg7TPfqLiptWRFAzpLbelKJxXK/9Uy+QztDl5jCgaYdsg==
-  dependencies:
-    moment "^2.19.3"
-    on-finished "^2.3.0"
-    winston "^2.4.5"
-
-"@hmcts/nodejs-logging@^4.0.2":
+"@hmcts/nodejs-logging@^4.0.2", "@hmcts/nodejs-logging@^4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@hmcts/nodejs-logging/-/nodejs-logging-4.0.4.tgz#83d8757c6e2f28ac68b57c87b35d71f72024a5f2"
   integrity sha512-VtrVD6ERZKWu/iy17GZXNuFq/MoK0Q8DrEhd5P30WMzsYDrSKBIr3szEV8M3Ht59oaTm3MUA6Az7PldnFWg3Ow==
