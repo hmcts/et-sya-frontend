@@ -46,17 +46,17 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.DOB_DETAILS,
             linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-            status: (): string => getSectionStatus(userCase.personalDetailsCheck, userCase.dobDate),
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
           },
           {
             url: PageUrls.ADDRESS_DETAILS,
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
-            status: (): string => getSectionStatus(userCase.personalDetailsCheck, userCase.address1),
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },
           {
             url: PageUrls.UPDATE_PREFERENCES,
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
-            status: (): string => getSectionStatus(userCase.personalDetailsCheck, userCase.updatePreference),
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.updatePreference),
           },
         ],
       },
@@ -66,12 +66,12 @@ export default class StepsToMakingYourClaimController {
           {
             url: employeeStatus,
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (): string => getSectionStatus(userCase.employmentAndRespondentCheck, userCase.isStillWorking),
+            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.isStillWorking),
           },
           {
             url: PageUrls.RESPONDENT_NAME,
             linkTxt: (l: AnyRecord): string => l.section2.link2Text,
-            status: (): string => getSectionStatus(userCase.employmentAndRespondentCheck, userCase.respondents),
+            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents),
           },
         ],
       },
@@ -81,13 +81,13 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.SUMMARISE_YOUR_CLAIM,
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
-            status: (): string => getSectionStatus(userCase.employmentAndRespondentCheck, userCase.claimSummaryText),
+            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.claimSummaryText),
           },
 
           {
             url: PageUrls.DESIRED_CLAIM_OUTCOME,
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
-            status: (): string => getSectionStatus(userCase.employmentAndRespondentCheck, userCase.claimOutcome),
+            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.claimOutcome),
           },
         ],
       },
