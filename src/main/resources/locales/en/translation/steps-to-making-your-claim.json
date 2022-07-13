@@ -1,7 +1,10 @@
 {
   "title": "Steps to making your claim",
   "h1": "Steps to making your claim",
-
+  "notStarted": "NOT STARTED",
+  "completed": "COMPLETED",
+  "inProgress": "IN PROGRESS",
+  "cannotStartYet": "CANNOT START YET",
   "section1": {
     "title": "Your details",
 

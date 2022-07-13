@@ -81,13 +81,11 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.SUMMARISE_YOUR_CLAIM,
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
-            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.claimSummaryText),
           },
 
           {
             url: PageUrls.DESIRED_CLAIM_OUTCOME,
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
-            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.claimOutcome),
           },
         ],
       },

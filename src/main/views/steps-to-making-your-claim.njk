@@ -41,28 +41,28 @@
               </span>
               {% if getContent(link.status) =="NOT STARTED" %}
                 {{ govukTag({
-                  text: 'NOT STARTED',
+                  text: notStarted,
                   classes: "app-task-list__tag govuk-tag--grey"
                 }) }}
               {% endif %}
 
               {% if getContent(link.status) =="COMPLETED" %}
                 {{ govukTag({
-                  text: 'COMPLETED',
+                  text: completed,
                   classes: "app-task-list__tag"
                 }) }}
               {% endif %}
 
               {% if getContent(link.status) =="IN PROGRESS" %}
                 {{ govukTag({
-                  text: 'IN PROGRESS',
+                  text: inProgress,
                   classes: "app-task-list__tag govuk-tag--blue"
                 }) }}
               {% endif %}
 
               {% if getContent(link.status) =="CANNOT START YET" %}
                 {{ govukTag({
-                  text: 'CANNOT START YET',
+                  text: cannotStartYet,
                   classes: "app-task-list__tag govuk-tag--grey"
                 }) }}
               {% endif %}
