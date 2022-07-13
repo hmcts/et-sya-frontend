@@ -14,12 +14,30 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 
-withNightlyPipeline(type, product, component) {
-    env.TEST_URL = params.TEST_URL
+def secrets = [
+    'et-aat': [
+        secret('test-username', 'TEST_CASE_USERNAME'),
+        secret('test-password', 'TEST_CASE_PASSWORD')
+    ]
+]
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
 
+
+withNightlyPipeline(type, product, component) {
+    loadVaultSecrets(secrets)
     enableFullFunctionalTest()
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
+
+    env.TEST_URL = params.TEST_URL
+    env.RUNNING_ENV = params.ENVIRONMENT
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
