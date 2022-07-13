@@ -34,7 +34,7 @@
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.7.3",
     "@hmcts/nodejs-logging": "^4.0.2",
-    "@hmcts/properties-volume": "^0.0.13",
+    "@hmcts/properties-volume": "^0.0.14",
     "@pact-foundation/pact": "9.18.1",
     "@types/config": "^0.0.41",
     "@types/connect-redis": "^0.0.18",
