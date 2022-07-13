@@ -30,4 +30,3 @@ functional-output/*
 smoke-output/reports
 src/test/api/pact/pacts/
 src/test/functional/functional-output/*
-/yarn.lock
