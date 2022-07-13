@@ -33,7 +33,7 @@
     "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
     "@hmcts/nodejs-healthcheck": "^1.7.0",
-    "@hmcts/nodejs-logging": "^4.0.1",
+    "@hmcts/nodejs-logging": "^4.0.4",
     "@hmcts/properties-volume": "^0.0.13",
     "@pact-foundation/pact": "9.18.1",
     "@types/config": "^0.0.41",
