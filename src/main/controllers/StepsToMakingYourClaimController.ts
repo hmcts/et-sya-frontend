@@ -1,9 +1,9 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate, Respondent, YesOrNo } from '../definitions/case';
+import { CaseDate, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { ClaimOutcomes, TypesOfClaim } from '../definitions/definition';
+import { TypesOfClaim } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -17,10 +17,7 @@ export const enum sectionStatus {
   cannotStartYet = 'CANNOT START YET',
 }
 
-const getSectionStatus = (
-  detailsCheckValue: YesOrNo,
-  sessionValue: string | CaseDate | Respondent[] | ClaimOutcomes[]
-) => {
+const getSectionStatus = (detailsCheckValue: YesOrNo, sessionValue: string | CaseDate | number) => {
   if (detailsCheckValue === YesOrNo.YES) {
     return sectionStatus.completed;
   } else if (detailsCheckValue === YesOrNo.NO) {
@@ -66,12 +63,13 @@ export default class StepsToMakingYourClaimController {
           {
             url: employeeStatus,
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.isStillWorking),
+            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.pastEmployer),
           },
           {
             url: PageUrls.RESPONDENT_NAME,
             linkTxt: (l: AnyRecord): string => l.section2.link2Text,
-            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents),
+            status: (): string =>
+              getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),
           },
         ],
       },
@@ -81,11 +79,12 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.SUMMARISE_YOUR_CLAIM,
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
+            status: (): string => getSectionStatus(undefined, userCase?.claimSummaryFile || userCase?.claimSummaryText),
           },
-
           {
             url: PageUrls.DESIRED_CLAIM_OUTCOME,
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
+            status: (): string => getSectionStatus(undefined, userCase?.claimOutcome?.length),
           },
         ],
       },
