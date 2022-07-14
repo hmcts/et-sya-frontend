@@ -25,12 +25,12 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
       envVariable: envVar
     ]
 }
-@NonCPS
+
 withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
-
+  @NonCPS
   after('build') {
     yarnBuilder.yarn('build')
   }
