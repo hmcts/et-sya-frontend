@@ -20,9 +20,7 @@ export const enum sectionStatus {
 const getSectionStatus = (detailsCheckValue: YesOrNo, sessionValue: string | CaseDate | number) => {
   if (detailsCheckValue === YesOrNo.YES) {
     return sectionStatus.completed;
-  } else if (detailsCheckValue === YesOrNo.NO) {
-    return sectionStatus.inProgress;
-  } else if (sessionValue) {
+  } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
     return sectionStatus.inProgress;
   } else {
     return sectionStatus.notStarted;
@@ -63,7 +61,11 @@ export default class StepsToMakingYourClaimController {
           {
             url: employeeStatus,
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (): string => getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.pastEmployer),
+            status: (): string =>
+              getSectionStatus(
+                userCase?.employmentAndRespondentCheck,
+                userCase?.pastEmployer || userCase?.isStillWorking
+              ),
           },
           {
             url: PageUrls.RESPONDENT_NAME,
