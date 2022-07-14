@@ -2,7 +2,7 @@ const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const packageJson = require.resolve('govuk-frontend/package.json');
+const packageJson = path.resolve('node_modules', 'govuk-frontend', 'package.json');
 const root = path.resolve(packageJson, '..', 'govuk');
 const sass = path.resolve(root, 'all.scss');
 const javascript = path.resolve(root, 'all.js');
