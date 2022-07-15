@@ -13,11 +13,10 @@ const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
 const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 
 const PAGE_URL = '/steps-to-making-your-claim';
-const rowClass = 'govuk-table__row';
-const cellClass = 'govuk-table__cell';
-const linkClass = 'govuk-link';
-const tableClass = 'govuk-table';
-const headerClass = 'govuk-table__header';
+const sectionClass = 'app-task-list__items';
+//const linkClass = 'app-task-list__task-name';
+const rowClass = 'app-task-list__item';
+const headerClass = 'app-task-list__section';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
@@ -51,22 +50,17 @@ describe('Steps to making your claim page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display correct number of rows', () => {
-    const row = htmlRes.getElementsByClassName(rowClass);
-    expect(row.length).equal(12, 'number of tables found is not 14');
+  it('should display correct number of tables / sections', () => {
+    const section = htmlRes.getElementsByClassName(sectionClass);
+    expect(section.length).equal(4, 'number of sections/tables found is not 4');
   });
 
-  it('should display the correct number of tables', () => {
-    const table = htmlRes.getElementsByClassName(tableClass);
-    expect(table.length).equal(4, 'number of tables found is not 4');
+  it('should display the correct number of rows for each task', () => {
+    const table = htmlRes.getElementsByClassName(rowClass);
+    expect(table.length).equal(8, 'number of tasks / rows found is not correct');
   });
 
-  it('should display the correct number of cells', () => {
-    const cell = htmlRes.getElementsByClassName(cellClass);
-    expect(cell.length).equal(16, 'number of cells found is not 20');
-  });
-
-  it('should display the correct number of table headers', () => {
+  it('should display the correct number of table / section headers', () => {
     const header = htmlRes.getElementsByClassName(headerClass);
     expect(header.length).equal(4, 'number of table headers found is not 4');
   });
@@ -80,11 +74,10 @@ describe('Steps to making your claim page', () => {
   });
 
   it('should display the correct row link text', () => {
-    const link = htmlRes.getElementsByClassName(linkClass);
-
-    expect(link[2].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
-    expect(link[3].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
-    expect(link[4].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
-    expect(link[5].innerHTML).contains(expectedLink4, 'could not find table 2 row 1 link text');
+    const link = htmlRes.querySelectorAll('span.app-task-list__task-name > a');
+    expect(link[0].innerHTML).contains(expectedLink1, 'could not find first link text');
+    expect(link[1].innerHTML).contains(expectedLink2, 'could not find second link text');
+    expect(link[2].innerHTML).contains(expectedLink3, 'could not find third link text');
+    expect(link[3].innerHTML).contains(expectedLink4, 'could not find fourth link text');
   });
 });
