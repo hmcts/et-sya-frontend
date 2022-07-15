@@ -4,7 +4,10 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { mockApp } from '../mocks/mockApp';
+import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
+import { TypesOfClaim } from '../../../main/definitions/definition';
+import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../mocks/mockApp';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -15,29 +18,30 @@ const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 const PAGE_URL = '/steps-to-making-your-claim';
 const rowClass = 'govuk-table__row';
 const cellClass = 'govuk-table__cell';
-const linkClass = 'govuk-link';
+
 const tableClass = 'govuk-table';
 const headerClass = 'govuk-table__header';
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-2';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
 const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
 const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
-const expectedLink1 = stepsToMakingYourClaimJSON.section1.link1Text;
-const expectedLink2 = stepsToMakingYourClaimJSON.section1.link2Text;
-const expectedLink3 = stepsToMakingYourClaimJSON.section1.link3Text;
-const expectedLink4 = stepsToMakingYourClaimJSON.section2.link1Text;
 
 let htmlRes: Document;
 
 describe('Steps to making your claim page', () => {
   beforeAll(async () => {
     await request(
-      mockApp({
-        userCase: {
-          typeOfClaim: ['unfairDismissal'],
-        },
+      mockAppWithRedisClient({
+        session: mockSession([], [], []),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.WHISTLE_BLOWING])],
+          ])
+        ),
       })
     )
       .get(PAGE_URL)
@@ -79,12 +83,100 @@ describe('Steps to making your claim page', () => {
     expect(header[3].innerHTML).contains(expectedHeader4, 'could not find table 4 header text');
   });
 
-  it('should display the correct row link text', () => {
-    const link = htmlRes.getElementsByClassName(linkClass);
-
-    expect(link[2].innerHTML).contains(expectedLink1, 'could not find table1 row 1 link text');
-    expect(link[3].innerHTML).contains(expectedLink2, 'could not find table1 row 2 link text');
-    expect(link[4].innerHTML).contains(expectedLink3, 'could not find table1 row 3 link text');
-    expect(link[5].innerHTML).contains(expectedLink4, 'could not find table 2 row 1 link text');
-  });
+  it(
+    'should have the correct link(PageUrls.CLAIM_TYPE_DISCRIMINATION) on Summarise what happened to you ' +
+      'when TypesOfClaim.DISCRIMINATION selected',
+    async () => {
+      await request(
+        mockAppWithRedisClient({
+          session: mockSession([], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.DISCRIMINATION])],
+            ])
+          ),
+        })
+      )
+        .get(PAGE_URL)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+      const links = htmlRes.getElementsByClassName('govuk-link');
+      expect(links[7].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
+    }
+  );
+  it(
+    'should have the correct link(PageUrls.CLAIM_TYPE_PAY) on Summarise what happened to you ' +
+      'when TypesOfClaim.PAY_RELATED_CLAIM selected and TypesOfClaim.DISCRIMINATION is not selected',
+    async () => {
+      await request(
+        mockAppWithRedisClient({
+          session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+            ])
+          ),
+        })
+      )
+        .get(PAGE_URL)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+      const links = htmlRes.getElementsByClassName('govuk-link');
+      expect(links[7].outerHTML).contains(PageUrls.CLAIM_TYPE_PAY.toString());
+    }
+  );
+  it(
+    'should have the correct link(PageUrls.STILL_WORKING) on Employment status ' +
+      'when TypesOfClaim.UNFAIR_DISMISSAL is selected',
+    async () => {
+      await request(
+        mockAppWithRedisClient({
+          session: mockSession([TypesOfClaim.UNFAIR_DISMISSAL], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.UNFAIR_DISMISSAL])],
+            ])
+          ),
+        })
+      )
+        .get(PAGE_URL)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+      const links = htmlRes.getElementsByClassName('govuk-link');
+      expect(links[5].outerHTML).contains(PageUrls.STILL_WORKING.toString());
+    }
+  );
+  it(
+    'should have the correct link(PageUrls.PAST_EMPLOYER) on Employment status ' +
+      'when TypesOfClaim.UNFAIR_DISMISSAL is not selected',
+    async () => {
+      await request(
+        mockAppWithRedisClient({
+          session: mockSession([], [], []),
+          redisClient: mockRedisClient(
+            new Map<CaseDataCacheKey, string>([
+              [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+              [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+              [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.PAY_RELATED_CLAIM])],
+            ])
+          ),
+        })
+      )
+        .get(PAGE_URL)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+      const links = htmlRes.getElementsByClassName('govuk-link');
+      expect(links[5].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
+    }
+  );
 });

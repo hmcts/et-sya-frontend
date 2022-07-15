@@ -5,9 +5,10 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getPreloginCaseData } from '../services/CacheService';
 
-import { getPageContent } from './helpers';
-let employeeStatus: string;
+import { getPageContent, setUserCaseWithRedisData } from './helpers';
+
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
@@ -30,11 +31,11 @@ const sections = [
     title: (l: AnyRecord): string => l.section2.title,
     links: [
       {
-        url: employeeStatus,
+        url: PageUrls.PAST_EMPLOYER,
         linkTxt: (l: AnyRecord): string => l.section2.link1Text,
       },
       {
-        url: PageUrls.RESPONDENT_NAME,
+        url: PageUrls.RESPONDENT_NAME.toString(),
         linkTxt: (l: AnyRecord): string => l.section2.link2Text,
       },
     ],
@@ -43,12 +44,12 @@ const sections = [
     title: (l: AnyRecord): string => l.section3.title,
     links: [
       {
-        url: PageUrls.SUMMARISE_YOUR_CLAIM,
+        url: PageUrls.DESCRIBE_WHAT_HAPPENED.toString(),
         linkTxt: (l: AnyRecord): string => l.section3.link1Text,
       },
 
       {
-        url: PageUrls.DESIRED_CLAIM_OUTCOME,
+        url: PageUrls.TELL_US_WHAT_YOU_WANT.toString(),
         linkTxt: (l: AnyRecord): string => l.section3.link2Text,
       },
     ],
@@ -57,7 +58,7 @@ const sections = [
     title: (l: AnyRecord): string => l.section4.title,
     links: [
       {
-        url: PageUrls.CHECK_ANSWERS,
+        url: PageUrls.CHECK_ANSWERS.toString(),
         linkTxt: (l: AnyRecord): string => l.section4.link1Text,
       },
     ],
@@ -70,20 +71,24 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
-
-    sections[1].links[0].url = conditionalWorkingType(req);
+    if (req.app && req.app.locals && req.app.locals.redisClient) {
+      const redisClient = req.app.locals.redisClient;
+      const caseData = await getPreloginCaseData(redisClient, req.session.guid);
+      setUserCaseWithRedisData(req, caseData);
+    }
+    sections[2].links[0].url = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
+    sections[1].links[0].url = PageUrls.PAST_EMPLOYER.toString();
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
+      sections[2].links[0].url = PageUrls.CLAIM_TYPE_DISCRIMINATION.toString();
+    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
+      sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
+    }
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+      sections[1].links[0].url = PageUrls.STILL_WORKING;
+    }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
     });
   }
 }
-
-const conditionalWorkingType = (req: AppRequest) => {
-  if (req.session.userCase?.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
-    employeeStatus = PageUrls.STILL_WORKING;
-  } else {
-    employeeStatus = PageUrls.PAST_EMPLOYER;
-  }
-  return employeeStatus;
-};

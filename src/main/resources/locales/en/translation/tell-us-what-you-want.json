@@ -1,0 +1,31 @@
+{
+  "title": "Claim details - tell us what you want",
+  "h1": "What do you want if your claim is successful? (to do)",
+  "detailsSummaryComp": "Compensation - what can a tribunal award?",
+  "detailsTextComp": {
+    "p1": "If a tribunal decides you've been unfairly dismissed, you'll normally receive compensation which is made up of:",
+    "li1": "a basic award - fixed sum worked out using a standard formula",
+    "li2": "a compensatory award - compensation for the actual money you lost due to your dismissal, or which you expect to lose in future because of your dismissal",
+    "p2": "Compensation can be reduced for various reasons and a tribunal will tell you more about this if it applies in your specific circumstances.<br><br>",
+    "p3": "In disciplinary or grievance cases, you may be entitled to an increased award if an employer fails to follow the guidance set out in the <a href=\"https://www.equalityadvisoryservice.com/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Acas Code of Practice on disciplinary and grievance procedures.</a><br><br>",
+    "p4": "Similarly, awards can be reduced if a tribunal decides you've failed to follow the guidance set out in the <a href=\"https://www.equalityadvisoryservice.com/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Acas Code of Practice on disciplinary and grievance procedures.</a><br><br>",
+    "p5": "In certain claims, such as those involving discrimination, a tribunal may compensate you for 'injury to feelings' (individual hurt and distress you may have suffered) in addition to compensation for financial loss."
+  },
+  "detailsSummaryRecom": "What is a tribunal recommendation?",
+  "detailsTextRecom": "If your employer is found to have discriminated against you, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on you",
+  "compensationOnly": { "title": "Compensation only option", "checkbox": "Compensation only" },
+  "compensationOnlyHint": "You’ll be asked to provide an estimate of total compensation",
+  "tribunalRecommendation": {
+    "title": "Tribunal recommendation option",
+    "checkbox": "If claiming discrimination , a tribunal recommendation"
+  },
+  "tribunalRecommendationHint": "You’ll be asked to describe your request to the tribunal",
+  "oldJob": {
+    "title": "Old job option",
+    "checkbox": "If claiming unfair dismissal, to get your old job and compensation"
+  },
+  "anotherJob": {
+    "title": "Another job option",
+    "checkbox": "If claiming unfair dismissal, to get another job with the same employer or associated employer and compensation (re-engagement)"
+  }
+}
