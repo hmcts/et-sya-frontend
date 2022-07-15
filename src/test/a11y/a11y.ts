@@ -6,7 +6,7 @@ import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequi
 
 const pa11y = require('pa11y');
 
-const envUrl = 'https://et-sya.aat.platform.hmcts.net';
+const envUrl = process.env.TEST_URL || 'http://localhost:3001';
 const username = process.env.TEST_CASE_USERNAME;
 const password = process.env.TEST_CASE_PASSWORD;
 const options = ['WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2'];
