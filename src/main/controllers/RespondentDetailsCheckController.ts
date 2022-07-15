@@ -6,7 +6,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors } from './helpers';
+import { assignFormData, getPageContent, getRespondentRedirectUrl, handleSessionErrors } from './helpers';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;
@@ -24,20 +24,20 @@ export default class RespondentDetailsCheckController {
 
   public post = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
-
-    if (respondents.length < 6) {
-      const newRespondentNum = respondents.length + 1;
+    const newRespondentNum = respondents.length + 1;
+    if (newRespondentNum <= 6) {
       const newRespondent = {
         respondentNumber: newRespondentNum,
       };
       req.session.userCase.respondents.push(newRespondent);
-      req.session.userCase.selectedRespondentIndex = newRespondentNum - 1;
     } else {
       // TODO Error handling
       console.log('Limit reached');
     }
 
-    handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_NAME);
+    const redirectUrl = getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME);
+
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

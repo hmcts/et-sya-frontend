@@ -1,13 +1,20 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isInvalidPostcode } from '../components/form/validator';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCaseForRespondent } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentIndex,
+  getRespondentRedirectUrl,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -18,7 +25,7 @@ export default class RespondentAddressController {
         name: 'address-line1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.buildingStreet,
+        label: l => l.addressLine1,
         labelSize: null,
         validator: isFieldFilledIn,
         attributes: {
@@ -30,7 +37,7 @@ export default class RespondentAddressController {
         name: 'address-line2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.line2Optional,
+        label: l => l.addressLine2,
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
@@ -53,7 +60,7 @@ export default class RespondentAddressController {
         name: 'address-county',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.county,
+        label: l => l.country,
         labelSize: null,
       },
       respondentAddressPostcode: {
@@ -67,7 +74,6 @@ export default class RespondentAddressController {
           maxLength: 14,
           autocomplete: 'postal-code',
         },
-        validator: isInvalidPostcode,
       },
     },
     submit: {
@@ -85,7 +91,8 @@ export default class RespondentAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
+    const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
     setUserCaseForRespondent(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
@@ -97,7 +104,8 @@ export default class RespondentAddressController {
       'enter-address',
     ]);
     const respondents = req.session.userCase.respondents;
-    const selectedRespondent = respondents[req.session.userCase.selectedRespondentIndex];
+    const respondentIndex = getRespondentIndex(req);
+    const selectedRespondent = respondents[respondentIndex];
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,

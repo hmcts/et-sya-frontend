@@ -6,7 +6,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCaseForNewRespondent } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentRedirectUrl,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class RespondentNameController {
   private readonly form: Form;
@@ -34,9 +40,9 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForNewRespondent(req);
-
-    handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_ADDRESS);
+    setUserCaseForRespondent(req, this.form);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
