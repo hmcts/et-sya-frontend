@@ -96,22 +96,24 @@ export default function (app: Application): void {
   app.post(PageUrls.NEW_JOB_START_DATE, app.locals.container.cradle.newJobStartDateController.post);
   app.get(PageUrls.CLAIM_SUBMITTED, app.locals.container.cradle.claimSubmittedController.get);
   app.get(PageUrls.CHECK_ANSWERS, app.locals.container.cradle.checkYourAnswersController.get);
-  app.get(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.get);
-  app.post(PageUrls.DESIRED_CLAIM_OUTCOME, app.locals.container.cradle.desiredClaimOutcomeController.post);
-  app.get(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.get);
-  app.post(PageUrls.SUMMARISE_YOUR_CLAIM, app.locals.container.cradle.summariseYourClaimController.post);
   app.get(PageUrls.END_DATE, app.locals.container.cradle.endDateController.get);
   app.post(PageUrls.END_DATE, app.locals.container.cradle.endDateController.post);
-  app.get(PageUrls.COMPENSATION_OUTCOME, app.locals.container.cradle.compensationOutcomeController.get);
-  app.post(PageUrls.COMPENSATION_OUTCOME, app.locals.container.cradle.compensationOutcomeController.post);
-  app.get(
-    PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
-    app.locals.container.cradle.tribunalRecommendationOutcomeController.get
-  );
-  app.post(
-    PageUrls.TRIBUNAL_RECOMMENDATION_OUTCOME,
-    app.locals.container.cradle.tribunalRecommendationOutcomeController.post
-  );
+  app.get(PageUrls.CLAIM_TYPE_DISCRIMINATION, app.locals.container.cradle.claimTypeDiscriminationController.get);
+  app.post(PageUrls.CLAIM_TYPE_DISCRIMINATION, app.locals.container.cradle.claimTypeDiscriminationController.post);
+  app.get(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.get);
+  app.post(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.post);
+  app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.get);
+  app.post(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.post);
+  app.get(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.get);
+  app.post(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.post);
+  app.get(PageUrls.COMPENSATION, app.locals.container.cradle.compensationController.get);
+  app.post(PageUrls.COMPENSATION, app.locals.container.cradle.compensationController.post);
+  app.get(PageUrls.TRIBUNAL_RECOMMENDATION, app.locals.container.cradle.tribunalRecommendationController.get);
+  app.post(PageUrls.TRIBUNAL_RECOMMENDATION, app.locals.container.cradle.tribunalRecommendationController.post);
+  app.get(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.get);
+  app.post(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.post);
+  app.get(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.get);
+  app.post(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.post);
   app.get(PageUrls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(
     PageUrls.INFO,

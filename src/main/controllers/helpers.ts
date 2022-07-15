@@ -11,7 +11,7 @@ import {
   isValidTwoDigitInteger,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, Respondent, StillWorking } from '../definitions/case';
+import { CaseDataCacheKey, CaseType, CaseWithId, Respondent, StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -175,6 +175,18 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
     req.session.userCase = {} as CaseWithId;
   }
   Object.assign(req.session.userCase, formData);
+};
+
+export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): void => {
+  if (!req.session.userCase) {
+    req.session.userCase = {} as CaseWithId;
+  }
+  const userDataMap: Map<CaseDataCacheKey, string> = new Map(JSON.parse(caseData));
+  req.session.userCase.claimantRepresentedQuestion =
+    userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED) === YesOrNo.YES.toString() ? YesOrNo.YES : YesOrNo.NO;
+  req.session.userCase.caseType =
+    userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.SINGLE.toString() ? CaseType.SINGLE : CaseType.MULTIPLE;
+  req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
 export const setUserCaseForNewRespondent = (req: AppRequest): void => {

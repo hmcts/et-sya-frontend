@@ -1,4 +1,4 @@
-import { CaseState, ClaimOutcomes } from './definition';
+import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -75,7 +75,14 @@ export interface Case {
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
   newJob?: YesOrNo;
+  claimTypeDiscrimination?: ClaimTypeDiscrimination[];
+  claimTypePay?: ClaimTypePay[];
+  tellUsWhatYouWant?: TellUsWhatYouWant[];
+  tribunalRecommendationRequest?: string;
+  whistleblowingClaim?: YesOrNo;
+  whistleblowingEntityName?: string;
   personalDetailsCheck?: YesOrNo;
+  claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   selectedRespondent?: number;
   respondents?: Respondent[];

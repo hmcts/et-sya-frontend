@@ -181,8 +181,8 @@ describe('Check your answers confirmation page', () => {
     const fileUploadsLink = claimDetailsList[1].getAttribute('href');
     const whatYouWantLink = claimDetailsList[2].getAttribute('href');
     expect(summaryLink).equals(PageUrls.CLAIM_STEPS, 'Incorrect href found');
-    expect(fileUploadsLink).equals(PageUrls.SUMMARISE_YOUR_CLAIM, 'Incorrect href found');
-    expect(whatYouWantLink).equals(PageUrls.DESIRED_CLAIM_OUTCOME, 'Incorrect href found');
+    expect(fileUploadsLink).equals(PageUrls.DESCRIBE_WHAT_HAPPENED, 'Incorrect href found');
+    expect(whatYouWantLink).equals(PageUrls.TELL_US_WHAT_YOU_WANT, 'Incorrect href found');
   });
 
   it('should display Submit Your Claim heading', () => {
