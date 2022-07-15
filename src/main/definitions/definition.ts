@@ -19,3 +19,10 @@ export const enum CaseState {
   AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
   SUBMITTED = 'SUBMITTED',
 }
+
+export const enum sectionStatus {
+  notStarted = 'NOT STARTED',
+  completed = 'COMPLETED',
+  inProgress = 'IN PROGRESS',
+  cannotStartYet = 'CANNOT START YET',
+}

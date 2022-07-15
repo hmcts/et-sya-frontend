@@ -1,31 +1,13 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDate, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { TypesOfClaim } from '../definitions/definition';
+import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getPageContent } from './helpers';
+import { getPageContent, getSectionStatus } from './helpers';
 let employeeStatus: string;
-
-export const enum sectionStatus {
-  notStarted = 'NOT STARTED',
-  completed = 'COMPLETED',
-  inProgress = 'IN PROGRESS',
-  cannotStartYet = 'CANNOT START YET',
-}
-
-const getSectionStatus = (detailsCheckValue: YesOrNo, sessionValue: string | CaseDate | number) => {
-  if (detailsCheckValue === YesOrNo.YES) {
-    return sectionStatus.completed;
-  } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
-    return sectionStatus.inProgress;
-  } else {
-    return sectionStatus.notStarted;
-  }
-};
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
