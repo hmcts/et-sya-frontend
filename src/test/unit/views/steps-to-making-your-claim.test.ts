@@ -14,7 +14,7 @@ const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 
 const PAGE_URL = '/steps-to-making-your-claim';
 const sectionClass = 'app-task-list__items';
-//const linkClass = 'app-task-list__task-name';
+const linkClass = 'span.app-task-list__task-name > a';
 const rowClass = 'app-task-list__item';
 const headerClass = 'app-task-list__section';
 const titleClass = 'govuk-heading-xl';
@@ -74,7 +74,7 @@ describe('Steps to making your claim page', () => {
   });
 
   it('should display the correct row link text', () => {
-    const link = htmlRes.querySelectorAll('span.app-task-list__task-name > a');
+    const link = htmlRes.querySelectorAll(linkClass);
     expect(link[0].innerHTML).contains(expectedLink1, 'could not find first link text');
     expect(link[1].innerHTML).contains(expectedLink2, 'could not find second link text');
     expect(link[2].innerHTML).contains(expectedLink3, 'could not find third link text');
