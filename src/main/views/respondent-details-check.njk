@@ -27,7 +27,7 @@
                       actions: {
                         items: [
                           {
-                            href: PageUrls.RESPONDENT_NAME,
+                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
                             text: "Change",
                             visuallyHiddenText: "name"
                           }
@@ -38,13 +38,13 @@
                       key: {
                         text: address
                       },
-                      value: {
-                        text: respondent.respondentAddress1 + ', ' + respondent.respondentAddressPostcode
+                      value: {             
+                          text: respondent.respondentAddress1           
                       },
                       actions: {
                         items: [
                           {
-                            href: PageUrls.RESPONDENT_ADDRESS,
+                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS,
                             text: "Change",
                             visuallyHiddenText: "address"
                           }
@@ -61,7 +61,7 @@
                       actions: {
                         items: [
                           {
-                            href: PageUrls.ACAS_CERT_NUM,
+                            href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM,
                             text: "Change",
                             visuallyHiddenText: "acasCertNum"
                           }

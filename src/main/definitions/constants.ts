@@ -135,6 +135,8 @@ export const PageUrls = {
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
   PCQ: '/pcq',
   WORK_POSTCODE: '/work-postcode',
+  RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
+  FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
 } as const;
 
 export const AuthUrls = {

@@ -12,6 +12,8 @@ import {
   assignFormData,
   conditionalRedirect,
   getPageContent,
+  getRespondentIndex,
+  getRespondentRedirectUrl,
   handleSessionErrors,
   setUserCase,
   updateWorkAddress,
@@ -37,21 +39,19 @@ export default class WorkAddressController {
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? PageUrls.ACAS_CERT_NUM
-      : PageUrls.PLACE_OF_WORK;
+      ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
+      : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
     if (YesOrNo.YES) {
-      updateWorkAddress(
-        req.session.userCase,
-        req.session.userCase.respondents[req.session.userCase.selectedRespondentIndex]
-      );
+      const respondentIndex = getRespondentIndex(req);
+      updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
     }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const addressLine =
-      req.session.userCase.respondents[req.session.userCase.selectedRespondentIndex].respondentAddress1;
+    const respondentIndex = getRespondentIndex(req);
+    const addressLine = req.session.userCase.respondents[respondentIndex].respondentAddress1;
     const content = getPageContent(req, this.workAddressFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.WORK_ADDRESS,

@@ -20,18 +20,57 @@ export default function (app: Application): void {
   app.post(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.post);
   app.get(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.get);
   app.post(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.post);
-  app.get(PageUrls.RESPONDENT_NAME, app.locals.container.cradle.respondentNameController.get);
-  app.post(PageUrls.RESPONDENT_NAME, app.locals.container.cradle.respondentNameController.post);
-  app.get(PageUrls.RESPONDENT_ADDRESS, app.locals.container.cradle.respondentAddressController.get);
-  app.post(PageUrls.RESPONDENT_ADDRESS, app.locals.container.cradle.respondentAddressController.post);
-  app.get(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.get);
-  app.post(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.post);
-  app.get(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.get);
-  app.post(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.post);
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
+    app.locals.container.cradle.respondentNameController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
+    app.locals.container.cradle.respondentNameController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS,
+    app.locals.container.cradle.respondentAddressController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS,
+    app.locals.container.cradle.respondentAddressController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS,
+    app.locals.container.cradle.workAddressController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS,
+    app.locals.container.cradle.workAddressController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK,
+    app.locals.container.cradle.placeOfWorkController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK,
+    app.locals.container.cradle.placeOfWorkController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ACAS_CERT_NUM,
+    app.locals.container.cradle.acasCertNumController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ACAS_CERT_NUM,
+    app.locals.container.cradle.acasCertNumController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER,
+    app.locals.container.cradle.noAcasNumberController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER,
+    app.locals.container.cradle.noAcasNumberController.post
+  );
   app.get(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.get);
   app.post(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.post);
-  app.get(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.get);
-  app.post(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.post);
+
   app.get(
     PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     app.locals.container.cradle.employmentAndRespondentCheckController.get
@@ -65,8 +104,6 @@ export default function (app: Application): void {
   app.post(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.post);
   app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
   app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
-  app.get(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.get);
-  app.post(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.post);
   app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
   app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);

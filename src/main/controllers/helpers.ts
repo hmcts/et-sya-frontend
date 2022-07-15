@@ -206,27 +206,17 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 }
 
-export const updateWorkAddress = (userCase: CaseWithId, respndent: Respondent): void => {
-  userCase.workAddress1 = respndent.respondentAddress1;
-  userCase.workAddress2 = respndent.respondentAddress2;
-  userCase.workAddressTown = respndent.respondentAddressTown;
-  userCase.workAddressCounty = respndent.respondentAddressCounty;
-  userCase.workAddressPostcode = respndent.respondentAddressPostcode;
+export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
+  userCase.workAddress1 = respondent.respondentAddress1;
+  userCase.workAddress2 = respondent.respondentAddress2;
+  userCase.workAddressTown = respondent.respondentAddressTown;
+  userCase.workAddressCounty = respondent.respondentAddressCounty;
+  userCase.workAddressPostcode = respondent.respondentAddressPostcode;
 };
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
-  if (!req.session.userCase) {
-    req.session.userCase = {} as CaseWithId;
-  }
-  if (!req.session.userCase.respondents) {
-    req.session.userCase.selectedRespondentIndex = 0;
-    req.session.userCase.respondents = [{ respondentNumber: 0 }];
-  }
-  Object.assign(req.session.userCase.respondents[req.session.userCase.selectedRespondentIndex], formData);
-};
-
-export const setUserCaseForNewRespondent = (req: AppRequest): void => {
+  const selectedRespondentIndex = getRespondentIndex(req);
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
@@ -235,14 +225,14 @@ export const setUserCaseForNewRespondent = (req: AppRequest): void => {
     req.session.userCase.respondents = [];
     respondent = {
       respondentNumber: 1,
-      respondentName: req.body.respondentName,
     };
     req.session.userCase.respondents.push(respondent);
-    req.session.userCase.selectedRespondentIndex = respondent.respondentNumber - 1;
-  } else {
-    req.session.userCase.respondents[req.session.userCase.selectedRespondentIndex].respondentName =
-      req.body.respondentName;
   }
+  Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
+};
+
+export const getRespondentIndex = (req: AppRequest): number => {
+  return parseInt(req.params.respondentNumber) - 1;
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
@@ -270,6 +260,10 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
       }
     }
   });
+};
+
+export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
+  return '/respondent/' + respondentNumber.toString() + pageUrl;
 };
 
 export const conditionalRedirect = (

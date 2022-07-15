@@ -8,7 +8,7 @@ const titleClass = 'govuk-heading-xl';
 const expectedTitle = 'Did you work at 1 The street?';
 const hintClass = 'govuk-hint';
 const expectedHint =
-  "Choose 'Yes' if you worked from home occasionally or full-time for the same address listed for the repondent.";
+  "Choose 'Yes' if you worked from home occasionally or full-time for the same address listed for the respondent.";
 
 let htmlRes: Document;
 describe('Work address', () => {
