@@ -10,8 +10,17 @@ import {
   isValidTwoDigitInteger,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseType, CaseWithId, Respondent, StillWorking, YesOrNo } from '../definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseType,
+  CaseWithId,
+  Respondent,
+  StillWorking,
+  YesOrNo,
+} from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
+import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -245,4 +254,17 @@ export const conditionalRedirect = (
     });
   }
   return matchingValues?.some(v => v === condition);
+};
+
+export const getSectionStatus = (
+  detailsCheckValue: YesOrNo,
+  sessionValue: string | CaseDate | number
+): sectionStatus => {
+  if (detailsCheckValue === YesOrNo.YES) {
+    return sectionStatus.completed;
+  } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
+    return sectionStatus.inProgress;
+  } else {
+    return sectionStatus.notStarted;
+  }
 };

@@ -2,68 +2,12 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { TypesOfClaim } from '../definitions/definition';
+import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getPreloginCaseData } from '../services/CacheService';
 
-import { getPageContent, setUserCaseWithRedisData } from './helpers';
-
-const sections = [
-  {
-    title: (l: AnyRecord): string => l.section1.title,
-    links: [
-      {
-        url: PageUrls.DOB_DETAILS,
-        linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-      },
-      {
-        url: PageUrls.ADDRESS_DETAILS,
-        linkTxt: (l: AnyRecord): string => l.section1.link2Text,
-      },
-      {
-        url: PageUrls.UPDATE_PREFERENCES,
-        linkTxt: (l: AnyRecord): string => l.section1.link3Text,
-      },
-    ],
-  },
-  {
-    title: (l: AnyRecord): string => l.section2.title,
-    links: [
-      {
-        url: PageUrls.PAST_EMPLOYER,
-        linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-      },
-      {
-        url: PageUrls.RESPONDENT_NAME.toString(),
-        linkTxt: (l: AnyRecord): string => l.section2.link2Text,
-      },
-    ],
-  },
-  {
-    title: (l: AnyRecord): string => l.section3.title,
-    links: [
-      {
-        url: PageUrls.DESCRIBE_WHAT_HAPPENED.toString(),
-        linkTxt: (l: AnyRecord): string => l.section3.link1Text,
-      },
-
-      {
-        url: PageUrls.TELL_US_WHAT_YOU_WANT.toString(),
-        linkTxt: (l: AnyRecord): string => l.section3.link2Text,
-      },
-    ],
-  },
-  {
-    title: (l: AnyRecord): string => l.section4.title,
-    links: [
-      {
-        url: PageUrls.CHECK_ANSWERS.toString(),
-        linkTxt: (l: AnyRecord): string => l.section4.link1Text,
-      },
-    ],
-  },
-];
+import { getPageContent, getSectionStatus, setUserCaseWithRedisData } from './helpers';
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -76,6 +20,74 @@ export default class StepsToMakingYourClaimController {
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       setUserCaseWithRedisData(req, caseData);
     }
+    const { userCase } = req.session;
+    const sections = [
+      {
+        title: (l: AnyRecord): string => l.section1.title,
+        links: [
+          {
+            url: PageUrls.DOB_DETAILS,
+            linkTxt: (l: AnyRecord): string => l.section1.link1Text,
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
+          },
+          {
+            url: PageUrls.ADDRESS_DETAILS,
+            linkTxt: (l: AnyRecord): string => l.section1.link2Text,
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
+          },
+          {
+            url: PageUrls.UPDATE_PREFERENCES,
+            linkTxt: (l: AnyRecord): string => l.section1.link3Text,
+            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.updatePreference),
+          },
+        ],
+      },
+      {
+        title: (l: AnyRecord): string => l.section2.title,
+        links: [
+          {
+            url: PageUrls.PAST_EMPLOYER,
+            linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+            status: (): string =>
+              getSectionStatus(
+                userCase?.employmentAndRespondentCheck,
+                userCase?.pastEmployer || userCase?.isStillWorking
+              ),
+          },
+          {
+            url: PageUrls.RESPONDENT_NAME.toString(),
+            linkTxt: (l: AnyRecord): string => l.section2.link2Text,
+            status: (): string =>
+              getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),
+          },
+        ],
+      },
+      {
+        title: (l: AnyRecord): string => l.section3.title,
+        links: [
+          {
+            url: PageUrls.DESCRIBE_WHAT_HAPPENED.toString(),
+            linkTxt: (l: AnyRecord): string => l.section3.link1Text,
+            status: (): string => getSectionStatus(undefined, userCase?.claimSummaryFile || userCase?.claimSummaryText),
+          },
+          {
+            url: PageUrls.TELL_US_WHAT_YOU_WANT.toString(),
+            linkTxt: (l: AnyRecord): string => l.section3.link2Text,
+            status: (): string => getSectionStatus(undefined, userCase?.claimOutcome?.length),
+          },
+        ],
+      },
+      {
+        title: (l: AnyRecord): string => l.section4.title,
+        links: [
+          {
+            url: PageUrls.CHECK_ANSWERS.toString(),
+            linkTxt: (l: AnyRecord): string => l.section4.link1Text,
+            status: sectionStatus.cannotStartYet,
+          },
+        ],
+      },
+    ];
     sections[2].links[0].url = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     sections[1].links[0].url = PageUrls.PAST_EMPLOYER.toString();
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {

@@ -47,3 +47,10 @@ export const enum TellUsWhatYouWant {
   OLD_JOB = 'oldJob',
   ANOTHER_JOB = 'anotherJob',
 }
+
+export const enum sectionStatus {
+  notStarted = 'NOT STARTED',
+  completed = 'COMPLETED',
+  inProgress = 'IN PROGRESS',
+  cannotStartYet = 'CANNOT START YET',
+}
