@@ -9,7 +9,7 @@ const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 const pactSetUp = new PactTestSetup({ provider: 'Idam_api', port: 8000 });
 pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
-  describe('Movies Service', () => {
+  describe('IDAM Service simulation', () => {
     const RESPONSE_BODY = {
       uid: somethingLike('abc123'),
       given_name: somethingLike('Joe'),
@@ -62,4 +62,3 @@ function assertResponses(dto: IdTokenJwtPayload) {
   expect(dto.roles[0]).toStrictEqual('solicitor');
   expect(dto.roles[1]).toStrictEqual('caseworker');
 }
-
