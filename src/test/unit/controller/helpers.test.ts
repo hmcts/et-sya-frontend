@@ -2,8 +2,10 @@ import {
   getCustomNoticeLengthError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
+  setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
 import { PayInterval, StillWorking } from '../../../main/definitions/case';
+import { mockSession } from '../mocks/mockApp';
 import { mockRequest } from '../mocks/mockRequest';
 
 describe('Partial Pay errors', () => {
@@ -128,4 +130,20 @@ describe('Custom Notice Length errors', () => {
 
     expect(errors).toEqual(expectedErrors);
   });
+
+  it(
+    'should set req.session.userCase when setUserCaaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+      );
+    }
+  );
 });

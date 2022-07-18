@@ -1,0 +1,56 @@
+{% extends "template.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <p class="govuk-body">{{ p1 }}</p>
+      <p class="govuk-body">{{ p2 }}</p>
+      <p class="govuk-body">{{ p3 }}</p>
+      <p class="govuk-body">{{ p4 }}</p>
+      {{ govukInsetText({
+        text: insetText
+      }) }}
+      {{ govukDetails({
+        summaryText: collapsibleSection1.linkText,
+        html: "<p class='govuk-body'>"+collapsibleSection1.p1+"</p>
+              <p class='govuk-body'>"+collapsibleSection1.p2+"</p>"
+      }) }}
+      {{ govukDetails({
+        summaryText: collapsibleSection2.linkText,
+        html: "<p class='govuk-body'>"+collapsibleSection2.p1+"</p>
+              <p class='govuk-body'>"+collapsibleSection2.p2+"</p>"
+      }) }}
+      {{ govukDetails({
+        summaryText: collapsibleSection3.linkText,
+        html: "<ol class='govuk-list govuk-list--number'>
+                <li>"+collapsibleSection3.li1+"</li>
+                <li>"+collapsibleSection3.li2+"</li>
+                <li>"+collapsibleSection3.li3+"</li>
+                <li>"+collapsibleSection3.li4+"</li>
+              </ol>"
+      }) }}
+      {{ govukDetails({
+        summaryText: collapsibleSection4.linkText,
+        html: "<ol class='govuk-list govuk-list--number'>
+                <li>"+collapsibleSection4.li1+"</li>
+                <li>"+collapsibleSection4.li2+"</li>
+              </ol>"
+      }) }}
+      {% block form %}
+        {% include "form/form.njk"%}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

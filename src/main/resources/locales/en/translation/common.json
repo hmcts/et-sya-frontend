@@ -36,5 +36,6 @@
   "warningTxt": "Warning",
   "weekly": "Weekly",
   "monthly": "Monthly",
-  "annual": "Annual"
+  "annual": "Annual",
+  "selectAllHint": "Select all that apply."
 }

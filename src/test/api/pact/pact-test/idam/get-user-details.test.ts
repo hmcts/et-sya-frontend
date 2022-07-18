@@ -8,22 +8,18 @@ import { PactTestSetup } from '../settings/provider.mock';
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;
 const pactSetUp = new PactTestSetup({ provider: 'Idam_api', port: 8000 });
-jest.setTimeout(100000);
 pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
-  const RESPONSE_BODY = {
-    uid: somethingLike('abc123'),
-    given_name: somethingLike('Joe'),
-    family_name: somethingLike('Bloggs'),
-    sub: somethingLike('joe.bloggs@hmcts.net'),
-    roles: somethingLike([somethingLike('solicitor'), somethingLike('caseworker')]),
-  };
+  describe('IDAM Service simulation', () => {
+    const RESPONSE_BODY = {
+      uid: somethingLike('abc123'),
+      given_name: somethingLike('Joe'),
+      family_name: somethingLike('Bloggs'),
+      sub: somethingLike('joe.bloggs@hmcts.net'),
+      roles: somethingLike([somethingLike('solicitor'), somethingLike('caseworker')]),
+    };
 
-  describe('Get user details from Idam', () => {
-    jest.setTimeout(100000);
-    beforeAll(async () => {
-      await new Promise(resolve => setTimeout(resolve, 10000));
-      await pactSetUp.provider.setup();
-      const interaction = {
+    pactSetUp.provider.setup().then(() => {
+      pactSetUp.provider.addInteraction({
         state: 'a valid user exists',
         uponReceiving: 'a request for that user',
         withRequest: {
@@ -40,25 +36,24 @@ pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
           },
           body: RESPONSE_BODY,
         },
-      };
-      await pactSetUp.provider.addInteraction(interaction);
-    });
-
-    // eslint-disable-next-line jest/expect-expect
-    it('Returns the user details from IDAM', async () => {
-      const taskUrl = `${pactSetUp.provider.mockService.baseUrl}/details`;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const response = idamGetUserDetails(taskUrl);
-
-      response.then((axiosResponse: { data: IdTokenJwtPayload }) => {
-        const dto: IdTokenJwtPayload = axiosResponse.data;
-        assertResponses(dto);
-        pactSetUp.provider.verify(), pactSetUp.provider.finalize();
       });
     });
   });
+  // eslint-disable-next-line jest/expect-expect
+  test('Returns the user details from IDAM', () => {
+    const taskUrl = `${pactSetUp.provider.mockService.baseUrl}/details`;
+    idamGetUserDetails(taskUrl)
+      .then((axiosResponse: { data: IdTokenJwtPayload }) => {
+        const dto: IdTokenJwtPayload = axiosResponse.data;
+        assertResponses(dto);
+      })
+      .then(() => {
+        pactSetUp.provider.verify().then(() => {
+          pactSetUp.provider.finalize();
+        });
+      });
+  });
 });
-
 function assertResponses(dto: IdTokenJwtPayload) {
   expect(dto.uid).toStrictEqual('abc123');
   expect(dto.sub).toStrictEqual('joe.bloggs@hmcts.net');
