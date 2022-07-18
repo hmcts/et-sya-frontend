@@ -22,6 +22,12 @@ export default class StepsToMakingYourClaimController {
       setUserCaseWithRedisData(req, caseData);
     }
     const { userCase } = req.session;
+    const allSectionsCompleted = !!(
+      userCase?.personalDetailsCheck === YesOrNo.YES &&
+      userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
+      userCase?.claimDetailsCheck === YesOrNo.YES
+    );
+
     const sections = [
       {
         title: (l: AnyRecord): string => l.section1.title,
@@ -89,19 +95,9 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: PageUrls.CHECK_ANSWERS.toString(),
+            url: (): string => (allSectionsCompleted ? PageUrls.CHECK_ANSWERS.toString() : ''),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
-            status: (): string => {
-              if (
-                userCase?.personalDetailsCheck === YesOrNo.YES &&
-                userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
-                userCase?.claimDetailsCheck === YesOrNo.YES
-              ) {
-                return sectionStatus.notStarted;
-              } else {
-                return sectionStatus.cannotStartYet;
-              }
-            },
+            status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
         ],
       },
