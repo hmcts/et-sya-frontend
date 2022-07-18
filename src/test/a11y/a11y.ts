@@ -9,18 +9,7 @@ const pa11y = require('pa11y');
 const envUrl = process.env.TEST_URL || 'http://localhost:3001';
 const username = process.env.TEST_CASE_USERNAME;
 const password = process.env.TEST_CASE_PASSWORD;
-const options = {
-  ignore: [
-    'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Fieldset.Name',
-    'WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.Select.Name',
-    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H71.NoLegend',
-    'WCAG2AA.Principle1.Guideline1_3.1_3_1.F68',
-    'WCAG2AA.Principle3.Guideline3_2.3_2_2.H32.2',
-    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H43.HeadersRequired',
-    'WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2',
-  ],
-  hideElements: '.govuk-header, .govuk-footer, link[rel=mask-icon], #ctsc-web-chat, iframe, #app-cookie-banner',
-};
+const options = ['WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2'];
 
 class PallyIssue {
   code: string;
@@ -57,7 +46,7 @@ function testAccessibility(url: string): void {
       }
       const messages = await pa11y(pageUrl, {
         actions,
-        options,
+        ignore: options,
       });
       expectNoErrors(messages.issues);
     });
