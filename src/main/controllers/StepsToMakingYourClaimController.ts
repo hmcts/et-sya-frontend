@@ -70,12 +70,18 @@ export default class StepsToMakingYourClaimController {
             url: PageUrls.DESCRIBE_WHAT_HAPPENED.toString(),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
-              getSectionStatus(userCase?.claimDetailsCheck, userCase?.claimSummaryFile || userCase?.claimSummaryText),
+              getSectionStatus(
+                userCase?.claimDetailsCheck,
+                userCase?.claimSummaryFile ||
+                  userCase?.claimSummaryText ||
+                  userCase?.claimTypeDiscrimination?.length ||
+                  userCase?.claimTypePay?.length
+              ),
           },
           {
             url: PageUrls.TELL_US_WHAT_YOU_WANT.toString(),
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
-            status: (): string => getSectionStatus(userCase?.claimDetailsCheck, userCase?.claimOutcome?.length),
+            status: (): string => getSectionStatus(userCase?.claimDetailsCheck, userCase?.tellUsWhatYouWant?.length),
           },
         ],
       },
