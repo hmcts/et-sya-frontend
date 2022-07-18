@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -68,12 +69,13 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.DESCRIBE_WHAT_HAPPENED.toString(),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
-            status: (): string => getSectionStatus(undefined, userCase?.claimSummaryFile || userCase?.claimSummaryText),
+            status: (): string =>
+              getSectionStatus(userCase?.claimDetailsCheck, userCase?.claimSummaryFile || userCase?.claimSummaryText),
           },
           {
             url: PageUrls.TELL_US_WHAT_YOU_WANT.toString(),
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
-            status: (): string => getSectionStatus(undefined, userCase?.claimOutcome?.length),
+            status: (): string => getSectionStatus(userCase?.claimDetailsCheck, userCase?.claimOutcome?.length),
           },
         ],
       },
@@ -83,7 +85,17 @@ export default class StepsToMakingYourClaimController {
           {
             url: PageUrls.CHECK_ANSWERS.toString(),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
-            status: sectionStatus.cannotStartYet,
+            status: (): string => {
+              if (
+                userCase?.personalDetailsCheck === YesOrNo.YES &&
+                userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
+                userCase?.claimDetailsCheck === YesOrNo.YES
+              ) {
+                return sectionStatus.notStarted;
+              } else {
+                return sectionStatus.cannotStartYet;
+              }
+            },
           },
         ],
       },
