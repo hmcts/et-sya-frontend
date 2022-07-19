@@ -4,7 +4,6 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const translationRaw = fs.readFileSync(
@@ -24,7 +23,6 @@ describe('Respondent Address Page', () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,
@@ -34,7 +32,7 @@ describe('Respondent Address Page', () => {
         },
       })
     )
-      .get(PageUrls.RESPONDENT_ADDRESS)
+      .get('/respondent/1/respondent-address')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

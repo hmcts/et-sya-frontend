@@ -1,5 +1,5 @@
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
@@ -32,7 +32,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_ADDRESS);
+    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globo Gym',
@@ -51,7 +51,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_ADDRESS);
+    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globe Gym',

@@ -19,6 +19,9 @@ export const mockRequest = ({
 
   req.t = jest.fn().mockReturnValue(req);
   req.body = body;
+  req.params = {
+    respondentNumber: '1',
+  };
   req.session = {
     userCase: {
       id: '1234',

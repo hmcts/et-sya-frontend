@@ -4,7 +4,6 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const acasJsonRaw = fs.readFileSync(
@@ -32,7 +31,7 @@ describe('Do you have an Acas cert num Page', () => {
         },
       })
     )
-      .get(PageUrls.ACAS_CERT_NUM)
+      .get('/respondent/1/acas-cert-num')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

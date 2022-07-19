@@ -47,8 +47,7 @@ export class Oidc {
       } else if (noSignInRequiredEndpoints.includes(req.url)) {
         next();
       } else {
-        next();
-        //return res.redirect(AuthUrls.LOGIN);
+        return res.redirect(AuthUrls.LOGIN);
       }
     });
   }

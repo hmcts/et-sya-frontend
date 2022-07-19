@@ -4,12 +4,13 @@ import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
+const pageUrl = '/respondent/1/work-address';
+
 describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
   it('should return the did you work at respondent address page', async () => {
     const res = await request(
       mockApp({
         userCase: {
-          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,
@@ -18,7 +19,7 @@ describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
           ],
         },
       })
-    ).get(PageUrls.WORK_ADDRESS);
+    ).get(pageUrl);
     expect(res.type).toEqual('text/html');
     expect(res.status).toEqual(200);
   });
@@ -29,7 +30,6 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,
@@ -39,11 +39,11 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
         },
       })
     )
-      .post(PageUrls.WORK_ADDRESS)
+      .post(pageUrl)
       .send({ claimantWorkAddressQuestion: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.ACAS_CERT_NUM);
+        expect(res.header['location']).toEqual('/respondent/1/acas-cert-num');
       });
   });
 
@@ -51,7 +51,6 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentNumber: 1,
@@ -61,11 +60,11 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
         },
       })
     )
-      .post(PageUrls.WORK_ADDRESS)
+      .post(pageUrl)
       .send({ claimantWorkAddressQuestion: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.PLACE_OF_WORK);
+        expect(res.header['location']).toEqual('/respondent/1/place-of-work');
       });
   });
 });
