@@ -9,6 +9,7 @@ import {
   isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
+  isOptionSelected,
   isPastDate,
   isPayIntervalNull,
   isValidAvgWeeklyHours,
@@ -33,8 +34,7 @@ describe('Validation', () => {
     });
 
     it('Should check if value does not exist', () => {
-      let value;
-      const isValid = isFieldFilledIn(value);
+      const isValid = isFieldFilledIn(undefined);
 
       expect(isValid).toStrictEqual('required');
     });
@@ -43,6 +43,16 @@ describe('Validation', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isOptionSelected()', () => {
+    it('Should correctly identify an option was selected', () => {
+      expect(isOptionSelected('anything')).toStrictEqual(undefined);
+    });
+
+    it('Should correctly identify an option was not selected', () => {
+      expect(isOptionSelected('notSelected')).toStrictEqual('required');
     });
   });
 
