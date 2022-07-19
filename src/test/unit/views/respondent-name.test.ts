@@ -16,7 +16,7 @@ let htmlRes: Document;
 describe('Respondent Name page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.RESPONDENT_NAME)
+      .get(PageUrls.FIRST_RESPONDENT_NAME)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

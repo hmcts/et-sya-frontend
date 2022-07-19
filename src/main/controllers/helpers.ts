@@ -204,7 +204,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.caseType =
     userDataMap.get(CaseDataCacheKey.CASE_TYPE) === CaseType.SINGLE.toString() ? CaseType.SINGLE : CaseType.MULTIPLE;
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
-}
+};
 
 export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
   userCase.workAddress1 = respondent.respondentAddress1;

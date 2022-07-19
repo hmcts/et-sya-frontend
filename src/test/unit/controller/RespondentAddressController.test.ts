@@ -1,5 +1,5 @@
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -40,7 +40,7 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.WORK_ADDRESS);
+    expect(response.redirect).toBeCalledWith('/respondent/1/work-address');
   });
 
   it('should render the Acas Cert Num page on post when more than one respondent', () => {
@@ -57,7 +57,6 @@ describe('Respondent Address Controller', () => {
     request.session.userCase = {
       id: '12354',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      selectedRespondentIndex: 1,
       respondents: [
         {
           respondentNumber: 1,
@@ -72,6 +71,6 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.ACAS_CERT_NUM);
+    expect(response.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
   });
 });

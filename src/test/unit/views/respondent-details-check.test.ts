@@ -25,6 +25,6 @@ describe('Respondent Details check page', () => {
 
   it('should display Add new respondent button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Add new respondent', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Add another respondent', 'Could not find the button');
   });
 });

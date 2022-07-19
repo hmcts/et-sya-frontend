@@ -1,5 +1,4 @@
 import PlaceOfWorkController from '../../../main/controllers/PlaceOfWorkController';
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -55,7 +54,7 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ACAS_CERT_NUM);
+    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
     expect(req.session.errors).toEqual([]);
   });
 });

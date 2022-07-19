@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.PAST_EMPLOYER}`, () => {
       .send({ pastEmployer: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.RESPONDENT_NAME);
+        expect(res.header['location']).toEqual(PageUrls.FIRST_RESPONDENT_NAME);
       });
   });
 });

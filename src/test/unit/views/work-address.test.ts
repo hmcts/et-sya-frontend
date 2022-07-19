@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const titleClass = 'govuk-heading-xl';
@@ -16,7 +15,6 @@ describe('Work address', () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondentIndex: 0,
           respondents: [
             {
               respondentAddress1: '1 The street',
@@ -27,7 +25,7 @@ describe('Work address', () => {
         },
       })
     )
-      .get(PageUrls.WORK_ADDRESS)
+      .get('/respondent/1/work-address')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

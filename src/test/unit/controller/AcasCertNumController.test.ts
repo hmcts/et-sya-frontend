@@ -49,6 +49,6 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NO_ACAS_NUMBER);
+    expect(res.redirect).toBeCalledWith('/respondent/1/no-acas-reason');
   });
 });
