@@ -10,7 +10,7 @@
   "preferredTitle": "What is your preferred title?",
   "genderIdentityTextLabel": "What is your gender identity?",
   "genderTitle": {
-    "pleaseSelect": "Please select",
+    "notSelected": "Please select",
     "mr": "Mr",
     "mrs": "Mrs",
     "miss": "Miss",
@@ -21,6 +21,12 @@
   },
   "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
+    "gender": {
+      "required": "Select an option for the \"What is your sex\" question"
+    },
+    "preferredTitle": {
+      "required": "Select a list option from the \"What is your preferred title\" dropdown"
+    },
     "otherTitlePreference": {
       "required": "Tell us your preferred title",
       "numberError": "Tell us your preferred title? This must not include numbers"

@@ -16,6 +16,12 @@ export const isFieldFilledIn: Validator = value => {
   }
 };
 
+export const isOptionSelected: Validator = value => {
+  if (!value || (value as string).trim() === 'notSelected') {
+    return 'required';
+  }
+};
+
 export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   if (!fields || (fields as []).length === 0) {
     return 'required';
@@ -160,7 +166,7 @@ export const isInvalidPostcode: Validator = value => {
     return fieldNotFilledIn;
   }
 
-  if (!(value as string).match(/^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i)) {
+  if (!(value as string).match(/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i)) {
     return 'invalid';
   }
 };
@@ -264,7 +270,7 @@ export const isValidAvgWeeklyHours: Validator = value => {
     return;
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+[^0-9.]+$/.test(value as string)) {
+  if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
     return 'notANumber';
   }
 
@@ -294,7 +300,7 @@ export const isValidPension: Validator = value => {
     return 'required';
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+[^0-9.]+$/.test(value as string)) {
+  if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
     return 'notANumber';
   }
 
@@ -314,7 +320,7 @@ export const isValidCurrency: Validator = value => {
     return;
   }
 
-  if (/^\D+$/.test(value as string) || /^\d{1,}\D+$/.test(value as string)) {
+  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
     return 'notANumber';
   }
 

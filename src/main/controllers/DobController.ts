@@ -7,7 +7,8 @@ import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { UnknownRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -25,17 +26,9 @@ const dob_date: DateFormFields = {
 export default class DobController {
   private readonly form: Form;
   private readonly dobFormContent: FormContent = {
-    fields: {
-      dobDate: dob_date,
-    },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    fields: { dobDate: dob_date },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {

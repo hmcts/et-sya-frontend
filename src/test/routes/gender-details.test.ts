@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -15,6 +16,7 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should go to the address details page', async () => {
     await request(mockApp({}))
       .post(PageUrls.GENDER_DETAILS)
+      .send({ gender: YesOrNo.YES, preferredTitle: 'Mr' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);
