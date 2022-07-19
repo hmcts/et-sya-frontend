@@ -22,10 +22,10 @@
   "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
     "gender": {
-      "required": "Select an option for the \"What is you sex\" question"
+      "required": "Select an option for the \"What is your sex\" question"
     },
     "preferredTitle": {
-      "required": "Select a list option from the \"What is your preferred title\""
+      "required": "Select a list option from the \"What is your preferred title\" dropdown"
     },
     "otherTitlePreference": {
       "required": "Tell us your preferred title",
