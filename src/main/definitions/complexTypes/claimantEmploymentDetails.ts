@@ -16,4 +16,5 @@ export interface ClaimantEmploymentDetails {
   claimant_pension_weekly_contribution?: number;
   claimant_benefits?: YesOrNo;
   claimant_benefits_detail?: string;
+  claimant_employed_notice_period?: string;
 }

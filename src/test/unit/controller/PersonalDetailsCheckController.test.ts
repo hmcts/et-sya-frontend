@@ -56,7 +56,7 @@ describe('Test task List check controller', () => {
   });
 
   it('should invoke logger in then() block', async () => {
-    const body = { employeeBenefits: YesOrNo.NO };
+    const body = { personalDetailsCheck: YesOrNo.NO };
     const controller = new PersonalDetailsCheckController(mockLogger);
     const request = mockRequest({ body });
     const response = mockResponse();

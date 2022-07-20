@@ -68,6 +68,7 @@ describe('Should return data in api format', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -107,6 +108,7 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_pension_weekly_contribution: 15,
           claimant_benefits: YesOrNo.YES,
           claimant_benefits_detail: 'Some benefits',
+          claimant_employed_notice_period: '2022-08-11',
         },
         claimantHearingPreference: {
           reasonable_adjustments: YesOrNo.YES,
@@ -150,6 +152,7 @@ describe('Format Case Data to Frontend Model', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     });
   });
 
@@ -190,6 +193,7 @@ describe('Format Case Data to Frontend Model', () => {
       personalDetailsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
+      noticeEnds: undefined,
     });
   });
 
