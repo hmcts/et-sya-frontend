@@ -16,6 +16,12 @@ export const isFieldFilledIn: Validator = value => {
   }
 };
 
+export const isContent2500CharsOrLess: Validator = value => {
+  if (value !== undefined && (value as string).trim().length > 2500) {
+    return 'tooLong';
+  }
+};
+
 export const isOptionSelected: Validator = value => {
   if (!value || (value as string).trim() === 'notSelected') {
     return 'required';
@@ -316,23 +322,19 @@ export const isValidPension: Validator = value => {
 };
 
 export const isValidCurrency: Validator = value => {
-  if (!value || (value as string).trim().length === 0) {
+  if (!value) {
     return;
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
-    return 'notANumber';
-  }
+  value = (value as string).trim();
+  const digitCount = value.replace(/\D/g, '').length;
+  const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
 
-  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
-    return 'minLengthRequired';
-  }
-
-  if (/^\d{1,12}(,\d{3}){0,3}(\.\d{2})?$/.test(value as string)) {
+  if (digitCount <= 12 && correctFormat) {
     return;
-  } else {
-    return 'minLengthRequired';
   }
+
+  return 'invalidCurrency';
 };
 
 let otherGenderTitle: string | string[];

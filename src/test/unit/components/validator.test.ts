@@ -2,6 +2,7 @@ import {
   areDateFieldsFilledIn,
   arePayValuesNull,
   atLeastOneFieldIsChecked,
+  isContent2500CharsOrLess,
   isDateInputInvalid,
   isDateTenYearsInFuture,
   isDateTenYearsInPast,
@@ -43,6 +44,18 @@ describe('Validation', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isContent2500CharsOrLess()', () => {
+    it('should not warn when content is 2500 characters or less', () => {
+      expect(isContent2500CharsOrLess(undefined)).toStrictEqual(undefined);
+      expect(isContent2500CharsOrLess('')).toStrictEqual(undefined);
+      expect(isContent2500CharsOrLess('1'.repeat(2500))).toStrictEqual(undefined);
+    });
+
+    it('should warn when content longer than 2500 characters', () => {
+      expect(isContent2500CharsOrLess('1'.repeat(2501))).toStrictEqual('tooLong');
     });
   });
 
@@ -453,13 +466,22 @@ describe('Validation', () => {
 
   describe('isValidCurrency()', () => {
     it.each([
-      { mockRef: '1', expected: 'minLengthRequired' },
-      { mockRef: '20,00', expected: 'minLengthRequired' },
+      { mockRef: undefined, expected: undefined },
+      { mockRef: '', expected: undefined },
+      { mockRef: '0', expected: undefined },
+      { mockRef: '1', expected: undefined },
       { mockRef: '100', expected: undefined },
       { mockRef: '10,000', expected: undefined },
-      { mockRef: 'a', expected: 'notANumber' },
-      { mockRef: '%', expected: 'notANumber' },
-      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '1,123,456,789.12', expected: undefined },
+      { mockRef: 'a', expected: 'invalidCurrency' },
+      { mockRef: '%', expected: 'invalidCurrency' },
+      { mockRef: '25a', expected: 'invalidCurrency' },
+      { mockRef: '-120', expected: 'invalidCurrency' },
+      { mockRef: '20,00', expected: 'invalidCurrency' },
+      { mockRef: '100,00', expected: 'invalidCurrency' },
+      { mockRef: '123456,890', expected: 'invalidCurrency' },
+      { mockRef: '1234567890123', expected: 'invalidCurrency' },
+      { mockRef: '123456789012.12', expected: 'invalidCurrency' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
     });
