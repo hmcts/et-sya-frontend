@@ -67,6 +67,7 @@ export const TranslationKeys = {
   ACAS_CERT_NUM: 'acas-cert-num',
   RESPONDENT_DETAILS_CHECK: 'respondent-details-check',
   NO_ACAS_NUMBER: 'no-acas-reason',
+  WORK_POSTCODE: 'work-postcode',
 } as const;
 
 export const PageUrls = {
@@ -133,6 +134,7 @@ export const PageUrls = {
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
   PCQ: '/pcq',
+  WORK_POSTCODE: '/work-postcode',
 } as const;
 
 export const AuthUrls = {

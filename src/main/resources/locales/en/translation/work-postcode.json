@@ -1,0 +1,13 @@
+{
+  "title": "Work Postcode",
+  "h1": "What’s the postcode where you worked or work?",
+  "p1": "We need this to help progress your claim. If you work or worked at home occasionally or full time, enter the postcode where you would go to work for the employer.",
+  "p2": "If you’re claiming against someone you’ve not worked for - as best as you can, enter the postcode of where they’re based.",
+  "postcode": "Postcode",
+  "errors": {
+    "workPostcode": {
+      "required": "Enter a postcode",
+      "invalid": "Enter a valid UK postcode"
+    }
+  }
+}
