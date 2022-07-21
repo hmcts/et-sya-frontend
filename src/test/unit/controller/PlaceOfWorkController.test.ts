@@ -25,7 +25,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddress1: '',
       workAddress12: '',
       workAddressTown: 'Exeter',
-      workAddressCounty: '',
+      workAddressCountry: '',
       workAddressPostcode: 'EX7 8KK',
     };
     const controller = new PlaceOfWorkController();
@@ -44,7 +44,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddress1: '31 The Street',
       workAddress12: '',
       workAddressTown: 'Exeter',
-      workAddressCounty: '',
+      workAddressCountry: '',
       workAddressPostcode: 'EX7 8KK',
     };
     const controller = new PlaceOfWorkController();

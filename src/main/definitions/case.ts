@@ -18,7 +18,7 @@ export interface Respondent {
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
-  respondentAddressCounty?: string;
+  respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
   acasCert?: YesOrNo;
   acasCertNum?: string;
@@ -33,7 +33,7 @@ export interface Case {
   address1?: string;
   address2?: string;
   addressTown?: string;
-  addressCounty?: string;
+  addressCountry?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
   updatePreference?: EmailOrPost;
@@ -57,7 +57,7 @@ export interface Case {
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
-  workAddressCounty?: string;
+  workAddressCountry?: string;
   workAddressPostcode?: string;
   startDate?: CaseDate;
   avgWeeklyHrs?: number;

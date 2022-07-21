@@ -22,7 +22,7 @@ export const resetAddressFields = (): void => {
   (getById('address1') as HTMLInputElement).value = '';
   (getById('address2') as HTMLInputElement).value = '';
   (getById('addressTown') as HTMLInputElement).value = '';
-  (getById('addressCounty') as HTMLInputElement).value = '';
+  (getById('addressCountry') as HTMLInputElement).value = '';
   (getById('addressPostcode') as HTMLInputElement).value = '';
 };
 
@@ -31,7 +31,7 @@ export const showUkAddressFields = (): void => {
   qs('.govuk-form-group.address1').classList.remove(hidden);
   qs('.govuk-form-group.address2').classList.remove(hidden);
   qs('.govuk-form-group.addressTown').classList.remove(hidden);
-  qs('.govuk-form-group.addressCounty').classList.remove(hidden);
+  qs('.govuk-form-group.addressCountry').classList.remove(hidden);
   qs('.govuk-form-group.addressPostcode').classList.remove(hidden);
   getById('main-form-submit').classList.remove(hidden);
   getById('main-form-save-for-later').classList.remove(hidden);
@@ -42,7 +42,7 @@ export const hideUkAddressFields = (): void => {
   qs('.govuk-form-group.address1').classList.add(hidden);
   qs('.govuk-form-group.address2').classList.add(hidden);
   qs('.govuk-form-group.addressTown').classList.add(hidden);
-  qs('.govuk-form-group.addressCounty').classList.add(hidden);
+  qs('.govuk-form-group.addressCountry').classList.add(hidden);
   qs('.govuk-form-group.addressPostcode').classList.add(hidden);
   getById('main-form-submit').classList.add(hidden);
   getById('main-form-save-for-later').classList.add(hidden);

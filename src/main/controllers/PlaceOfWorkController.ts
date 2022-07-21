@@ -42,8 +42,8 @@ export default class PlaceOfWorkController {
         labelSize: null,
         validator: isWorkAddressTownValid,
       },
-      workAddressCounty: {
-        id: 'addressCounty',
+      workAddressCountry: {
+        id: 'addressCountry',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
@@ -84,11 +84,11 @@ export default class PlaceOfWorkController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.placeOfWorkContent, [
       TranslationKeys.COMMON,
-      'enter-address',
-      'place-of-work',
+      TranslationKeys.ENTER_ADDRESS,
+      TranslationKeys.PLACE_OF_WORK,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('place-of-work', {
+    res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
     });
   };

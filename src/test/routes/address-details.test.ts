@@ -17,7 +17,7 @@ describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
       .post(PageUrls.ADDRESS_DETAILS)
       .send({
         addressPostcode: 'AB11 5ND',
-        addressCounty: 'Testshire',
+        addressCountry: 'Testshire',
         addressTown: 'Testtown',
         address2: '',
         address1: '10 test street',

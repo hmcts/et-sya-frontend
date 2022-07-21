@@ -55,9 +55,9 @@ export default class RespondentAddressController {
         },
         validator: isFieldFilledIn,
       },
-      respondentAddressCounty: {
-        id: 'addressCounty',
-        name: 'address-county',
+      respondentAddressCountry: {
+        id: 'addressCountry',
+        name: 'address-country',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
@@ -101,7 +101,7 @@ export default class RespondentAddressController {
     const content = getPageContent(req, this.respondentAddressContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_ADDRESS,
-      'enter-address',
+      TranslationKeys.ENTER_ADDRESS,
     ]);
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
