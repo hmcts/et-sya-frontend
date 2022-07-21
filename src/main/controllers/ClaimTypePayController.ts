@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypePay } from '../definitions/definition';
@@ -18,7 +19,7 @@ export default class ClaimTypePayController {
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,
-        validator: null,
+        validator: atLeastOneFieldIsChecked,
         values: [
           {
             id: 'arrears',
