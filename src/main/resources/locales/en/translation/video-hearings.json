@@ -6,15 +6,19 @@
   "bullet2": "by video (where you can join from a place suitable to you)",
   "bullet3": "by phone",
   "p2": "Some hearings use a combination of these methods. The approach take will be decided by a judge. It may depend on the type of claim.",
-  "checkbox1": "Yes, I can take part in video hearings",
-  "checkbox2": "Yes, I can take part in phone hearings",
-  "checkbox3": "No, I cannot take part in either video or phone hearings",
-  "checkbox3Hint": "If you choose this option please tell us why in case we can assist you",
+  "checkboxVideo": "Yes, I can take part in video hearings",
+  "checkboxPhone": "Yes, I can take part in phone hearings",
+  "checkboxNeither": "No, I cannot take part in either video or phone hearings",
+  "checkboxNeitherHint": "If you choose this option please tell us why in case we can assist you",
   "explain": "Explain why you are unable to take part in video or phone hearings",
   "selectAllHint": "Select all that apply",
   "errors": {
-    "hearingPreference": {
-      "required": "Select an Option"
+    "hearing_preferences": {
+      "required": "Select an Option",
+      "explanationRequired": "Tell us why you cannot take part in a video or phone hearing"
+    },
+    "hearing_assistance": {
+      "required": "Tell us why you cannot take part in a video or phone hearing"
     }
   }
 }
