@@ -68,6 +68,8 @@ export const TranslationKeys = {
   RESPONDENT_DETAILS_CHECK: 'respondent-details-check',
   NO_ACAS_NUMBER: 'no-acas-reason',
   WORK_POSTCODE: 'work-postcode',
+  ENTER_ADDRESS: 'enter-address',
+  PLACE_OF_WORK: 'place-of-work',
 } as const;
 
 export const PageUrls = {

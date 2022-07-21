@@ -11,7 +11,7 @@ if (selectAddressInput) {
       (getById('address1') as HTMLInputElement).value = selectedAddress.street1;
       (getById('address2') as HTMLInputElement).value = selectedAddress.street2;
       (getById('addressTown') as HTMLInputElement).value = selectedAddress.town;
-      (getById('addressCounty') as HTMLInputElement).value = selectedAddress.county;
+      (getById('addressCountry') as HTMLInputElement).value = selectedAddress.country;
       (getById('addressPostcode') as HTMLInputElement).value = selectedAddress.postcode;
       getById('main-form-submit').classList.remove(hidden);
       getById('main-form-save-for-later').classList.remove(hidden);

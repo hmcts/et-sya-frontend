@@ -55,7 +55,7 @@ Scenario('ET Place of work flow: Manual Entry', () => {
   I.fillField('#address1', 'LongHouse');
   I.fillField('#address2', 'LongStreet');
   I.fillField('#addressTown', 'LongTown');
-  I.fillField('#addressCounty', 'LongCounty');
+  I.fillField('#addressCountry', 'LongCountry');
   I.fillField('#addressPostcode', 'BH1 1AJ');
   I.click('#main-form-submit');
   authPage.logout();

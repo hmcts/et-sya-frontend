@@ -70,7 +70,6 @@ export default function (app: Application): void {
   );
   app.get(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.get);
   app.post(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.post);
-
   app.get(
     PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     app.locals.container.cradle.employmentAndRespondentCheckController.get

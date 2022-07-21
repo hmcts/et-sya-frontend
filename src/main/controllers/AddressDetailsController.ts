@@ -48,12 +48,12 @@ export default class AddressDetailsController {
         },
         validator: isFieldFilledIn,
       },
-      addressCounty: {
-        id: 'addressCounty',
-        name: 'address-county',
+      addressCountry: {
+        id: 'addressCountry',
+        name: 'address-country',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.county,
+        label: l => l.country,
         labelSize: null,
       },
       addressPostcode: {
@@ -92,7 +92,7 @@ export default class AddressDetailsController {
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDRESS_DETAILS,
-      'enter-address',
+      TranslationKeys.ENTER_ADDRESS,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_DETAILS, {

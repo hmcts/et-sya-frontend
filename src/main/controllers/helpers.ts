@@ -210,7 +210,7 @@ export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent):
   userCase.workAddress1 = respondent.respondentAddress1;
   userCase.workAddress2 = respondent.respondentAddress2;
   userCase.workAddressTown = respondent.respondentAddressTown;
-  userCase.workAddressCounty = respondent.respondentAddressCounty;
+  userCase.workAddressCountry = respondent.respondentAddressCountry;
   userCase.workAddressPostcode = respondent.respondentAddressPostcode;
 };
 
