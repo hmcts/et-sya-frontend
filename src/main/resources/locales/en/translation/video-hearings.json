@@ -14,8 +14,7 @@
   "selectAllHint": "Select all that apply",
   "errors": {
     "hearing_preferences": {
-      "required": "Select an Option",
-      "explanationRequired": "Tell us why you cannot take part in a video or phone hearing"
+      "required": "Tell us if you can take part in a video or phone hearing"
     },
     "hearing_assistance": {
       "required": "Tell us why you cannot take part in a video or phone hearing"
