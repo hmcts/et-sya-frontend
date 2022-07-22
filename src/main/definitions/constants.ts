@@ -152,6 +152,36 @@ export const JavaApiUrls = {
 
 export const HTTPS_PROTOCOL = 'https://';
 
+export const ALLOWED_FILE_FORMATS = [
+  'pdf',
+  'doc',
+  'docx',
+  'txt',
+  'dot',
+  'jpg',
+  'jpeg',
+  'bmp',
+  'tif',
+  'tiff',
+  'png',
+  'pdf',
+  'xls',
+  'xlt',
+  'xla',
+  'xlsx',
+  'xltx',
+  'xlsb',
+  'ppt',
+  'pot',
+  'pps',
+  'ppa',
+  'pptx',
+  'potx',
+  'ppsx',
+  'rtf',
+  'csv',
+];
+
 export const RedisErrors = {
   REDIS_ERROR: 'redisError',
   DISPLAY_MESSAGE: 'Please try again or return later.',

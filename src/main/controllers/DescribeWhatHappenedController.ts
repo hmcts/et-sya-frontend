@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { hasValidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -18,6 +19,7 @@ export default class DescribeWhatHappenedController {
         classes: 'govuk-label',
         hint: l => l.textInputHint,
         maxlength: 2500,
+        validator: isContent2500CharsOrLess,
       },
       claimSummaryFile: {
         id: 'claim-summary-file',
@@ -26,6 +28,7 @@ export default class DescribeWhatHappenedController {
         hint: l => l.fileUpload.hint,
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
+        validator: hasValidFileFormat,
       },
     },
     submit: {

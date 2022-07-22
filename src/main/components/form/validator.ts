@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import { CaseDate } from '../../definitions/case';
+import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
 import { InvalidField } from '../../definitions/form';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
@@ -364,4 +365,19 @@ export const validatePreferredOther: Validator = value => {
     }
     return outcome;
   }
+};
+
+export const hasValidFileFormat: Validator = value => {
+  if (!value) {
+    return;
+  }
+
+  value = (value as string).trim();
+  for (const format of ALLOWED_FILE_FORMATS) {
+    if (value.endsWith('.' + format)) {
+      return;
+    }
+  }
+
+  return 'invalidFileFormat';
 };

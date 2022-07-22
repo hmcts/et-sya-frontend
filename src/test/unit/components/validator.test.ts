@@ -2,6 +2,7 @@ import {
   areDateFieldsFilledIn,
   arePayValuesNull,
   atLeastOneFieldIsChecked,
+  hasValidFileFormat,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
   isDateInputInvalid,
@@ -35,8 +36,7 @@ describe('Validation', () => {
     });
 
     it('Should check if value does not exist', () => {
-      let value;
-      const isValid = isFieldFilledIn(value);
+      const isValid = isFieldFilledIn(undefined);
 
       expect(isValid).toStrictEqual('required');
     });
@@ -500,6 +500,24 @@ describe('Validation', () => {
       { mockRef: '123456789012.12', expected: 'invalidCurrency' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('hasValidFileFormat()', () => {
+    it.each([
+      { fileName: undefined, expected: undefined },
+      { fileName: '', expected: undefined },
+      { fileName: '.csv', expected: undefined },
+      { fileName: '..csv', expected: undefined },
+      { fileName: 'file.csv', expected: undefined },
+      { fileName: 'file.file.csv', expected: undefined },
+      { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file', expected: 'invalidFileFormat' },
+      { fileName: 'csv', expected: 'invalidFileFormat' },
+      { fileName: 'file.', expected: 'invalidFileFormat' },
+      { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
+    ])('Check file format %o', ({ fileName, expected }) => {
+      expect(hasValidFileFormat(fileName)).toEqual(expected);
     });
   });
 });
