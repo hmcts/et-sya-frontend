@@ -15,7 +15,7 @@
   hint: {
     html: getContent(field.hint)
   } if field.hint,
-  items: formItems(field.values, formState),
+  items: formItems(field.values, userCase[fieldName]),
   errorMessage: getError(fieldName),
   formGroup: {
     classes: "govuk-visually-hidden " + field.id if field.hidden else field.id

@@ -5,6 +5,7 @@ import { Form } from '../components/form/form';
 import {
   arePayValuesNull,
   isAfterDateOfBirth,
+  isFieldFilledIn,
   isPayIntervalNull,
   isValidNoticeLength,
   isValidTwoDigitInteger,
@@ -15,6 +16,7 @@ import {
   CaseDate,
   CaseType,
   CaseWithId,
+  HearingPreference,
   Respondent,
   StillWorking,
   YesOrNo,
@@ -138,6 +140,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const noticeErrors = getCustomNoticeLengthError(req, formData);
+  const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -153,6 +156,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (noticeErrors) {
     sessionErrors = [...sessionErrors, noticeErrors];
+  }
+
+  if (hearingPreferenceErrors) {
+    sessionErrors = [...sessionErrors, hearingPreferenceErrors];
   }
 
   req.session.errors = sessionErrors;
@@ -254,6 +261,21 @@ export const conditionalRedirect = (
     });
   }
   return matchingValues?.some(v => v === condition);
+};
+
+export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): FormError => {
+  const hearingPreferenceCheckbox = formData.hearing_preferences;
+  const hearingPreferenceNeitherTextarea = formData.hearing_assistance;
+
+  if (
+    (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
+    (!hearingPreferenceNeitherTextarea || (hearingPreferenceNeitherTextarea as string).trim().length === 0)
+  ) {
+    const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'hearing_assistance' };
+    }
+  }
 };
 
 export const getSectionStatus = (

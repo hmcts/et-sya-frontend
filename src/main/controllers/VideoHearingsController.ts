@@ -3,9 +3,10 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -13,32 +14,33 @@ export default class VideoHearingsController {
   private readonly form: Form;
   private readonly videoHearingsContent: FormContent = {
     fields: {
-      hearingPreference: {
-        id: 'hearingPreference',
+      hearing_preferences: {
+        id: 'hearing_preferences',
         type: 'checkboxes',
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            name: 'hearingPreference',
-            label: l => l.checkbox1,
-            value: 'video',
+            name: 'hearing_preferences',
+            label: l => l.checkboxVideo,
+            value: HearingPreference.VIDEO,
           },
           {
-            name: 'hearingPreference',
-            label: l => l.checkbox2,
-            value: 'phone',
+            name: 'hearing_preferences',
+            label: l => l.checkboxPhone,
+            value: HearingPreference.PHONE,
           },
           {
             divider: true,
           },
           {
-            name: 'hearingPreference',
-            label: l => l.checkbox3,
-            value: 'neither',
+            name: 'hearing_preferences',
+            label: l => l.checkboxNeither,
             exclusive: true,
-            hint: l => l.checkbox3Hint,
+            hint: l => l.checkboxNeitherHint,
+            value: HearingPreference.NEITHER,
             subFields: {
-              neitherVideoOrPhoneExplanation: {
+              hearing_assistance: {
+                id: 'hearing_assistance',
                 type: 'textarea',
                 label: l => l.explain,
                 labelSize: 'normal',
@@ -48,14 +50,8 @@ export default class VideoHearingsController {
         ],
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {

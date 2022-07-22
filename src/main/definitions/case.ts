@@ -92,6 +92,8 @@ export interface Case {
   claimantPensionWeeklyContribution?: number;
   reasonableAdjustments?: YesOrNo;
   reasonableAdjustmentsDetail?: string;
+  hearing_preferences?: HearingPreference[];
+  hearing_assistance?: string;
 }
 
 export const enum StillWorking {
@@ -166,4 +168,10 @@ export const enum CaseDataCacheKey {
   CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typesOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
+}
+
+export const enum HearingPreference {
+  VIDEO = 'Video',
+  PHONE = 'Phone',
+  NEITHER = 'Neither',
 }

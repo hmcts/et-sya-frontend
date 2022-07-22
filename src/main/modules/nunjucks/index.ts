@@ -97,43 +97,48 @@ export class Nunjucks {
         .filter(e => e);
     });
 
-    nunEnv.addGlobal('formItems', function (items: FormInput[], userAnswer: string | Record<string, string>) {
-      return items.map((i: FormInput) => ({
-        id: i.id,
-        label: this.env.globals.getContentSafe.call(this, i.label),
-        text: this.env.globals.getContentSafe.call(this, i.label),
-        name: i.name,
-        classes: i.classes,
-        value: i.value ?? (userAnswer as AnyRecord)?.[i.name as string] ?? (userAnswer as string),
-        attributes: i.attributes,
-        checked:
-          i.selected ??
-          (userAnswer as AnyRecord)?.[i.name as string]?.includes(i.value as string) ??
-          i.value === userAnswer,
-        hint: i.hint && {
-          html: this.env.globals.getContent.call(this, i.hint),
-        },
-        divider: i.divider && 'or',
-        behaviour: i.exclusive && 'exclusive',
-        conditional: ((): { html: string | undefined } => {
-          let innerHtml = '';
-          if (i.subFields) {
-            innerHtml =
-              innerHtml +
-              nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
-                ...this.ctx,
-                form: { fields: i.subFields },
-              });
-          }
-          if (i.conditionalText) {
-            innerHtml = innerHtml + this.env.globals.getContent.call(this, i.conditionalText);
-          }
-          return {
-            html: innerHtml,
-          };
-        })(),
-      }));
-    });
+    nunEnv.addGlobal(
+      'formItems',
+      function (items: FormInput[], userAnswer: string | Record<string, string> | string[]) {
+        return items.map((i: FormInput) => ({
+          id: i.id,
+          label: this.env.globals.getContentSafe.call(this, i.label),
+          text: this.env.globals.getContentSafe.call(this, i.label),
+          name: i.name,
+          classes: i.classes,
+          value: i.value ?? (userAnswer as AnyRecord)?.[i.name as string] ?? (userAnswer as string),
+          attributes: i.attributes,
+          checked:
+            i.selected ??
+            (userAnswer as AnyRecord)?.[i.name as string]?.includes(i.value as string) ??
+            Array.isArray(userAnswer)
+              ? (userAnswer as string[]).includes(i.value as string)
+              : i.value === userAnswer,
+          hint: i.hint && {
+            html: this.env.globals.getContent.call(this, i.hint),
+          },
+          divider: i.divider && 'or',
+          behaviour: i.exclusive && 'exclusive',
+          conditional: ((): { html: string | undefined } => {
+            let innerHtml = '';
+            if (i.subFields) {
+              innerHtml =
+                innerHtml +
+                nunEnv.render(`${__dirname}/../../views/form/fields.njk`, {
+                  ...this.ctx,
+                  form: { fields: i.subFields },
+                });
+            }
+            if (i.conditionalText) {
+              innerHtml = innerHtml + this.env.globals.getContent.call(this, i.conditionalText);
+            }
+            return {
+              html: innerHtml,
+            };
+          })(),
+        }));
+      }
+    );
 
     app.use((req: AppRequest, res, next) => {
       nunEnv.addGlobal('isLoggedIn', !!res.locals.isLoggedIn);
