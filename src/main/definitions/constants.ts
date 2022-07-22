@@ -59,6 +59,7 @@ export const TranslationKeys = {
   COMPENSATION: 'compensation',
   TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
+  CLAIM_DETAILS_CHECK: 'claim-details-check',
   TASK_LIST_CHECK: 'tasklist-check',
   FORM: 'form',
   RESPONDENT_NAME: 'respondent-name',

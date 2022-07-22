@@ -1,0 +1,12 @@
+{
+  "title": "Have you completed this section",
+  "heading": "Have you completed this section?",
+  "yes": "Yes, I've completed this section",
+  "no": "No, I'll come back to it later",
+  "p": "You can change your answers later.",
+  "errors": {
+    "claimDetailsCheck": {
+      "required": "Tell us if you have completed this section"
+    }
+  }
+}
