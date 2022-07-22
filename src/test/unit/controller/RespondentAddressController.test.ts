@@ -1,18 +1,24 @@
+import { LoggerInstance } from 'winston';
+
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
-
 describe('Respondent Address Controller', () => {
   const t = {
     respondentAddress: {},
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render the Respondent Address controller page', () => {
-    const controller = new RespondentAddressController();
+    const controller = new RespondentAddressController(mockLogger);
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -37,7 +43,7 @@ describe('Respondent Address Controller', () => {
 
   it('should render the Work Address page on post', () => {
     const body = {};
-    const controller = new RespondentAddressController();
+    const controller = new RespondentAddressController(mockLogger);
 
     const response = mockResponse();
     const request = mockRequest({ body });
@@ -50,7 +56,7 @@ describe('Respondent Address Controller', () => {
   });
   it('should render the Acas Cert Num page on post when more than one respondent', () => {
     const body = {};
-    const controller = new RespondentAddressController();
+    const controller = new RespondentAddressController(mockLogger);
 
     const response = mockResponse();
     const request = mockRequest({ body });
