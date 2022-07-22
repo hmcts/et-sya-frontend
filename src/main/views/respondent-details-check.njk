@@ -14,9 +14,14 @@
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
             {% for respondent in respondents %}
-            <h2 class="govuk-heading-m">{{ subTitle + respondent.respondentNumber }}</h2>
               {{ govukSummaryList({
                   rows: [
+                    {
+                      key: {
+                        text: subTitle + respondent.respondentNumber,
+                        classes: "govuk-heading-m"
+                      } 
+                    },
                     {
                       key: {
                         text: name
