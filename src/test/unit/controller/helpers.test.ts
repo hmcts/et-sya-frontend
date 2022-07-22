@@ -2,9 +2,11 @@ import {
   getCustomNoticeLengthError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
+  getSectionStatus,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { PayInterval, StillWorking } from '../../../main/definitions/case';
+import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
 import { mockRequest } from '../mocks/mockRequest';
 
@@ -146,4 +148,42 @@ describe('Custom Notice Length errors', () => {
       );
     }
   );
+});
+
+describe('getSectionStatus()', () => {
+  it.each([
+    {
+      detailsCheckValue: YesOrNo.YES,
+      sessionValue: undefined,
+      expected: sectionStatus.completed,
+    },
+    {
+      detailsCheckValue: YesOrNo.NO,
+      sessionValue: undefined,
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: undefined,
+      expected: sectionStatus.notStarted,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 'a string',
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 0,
+      expected: sectionStatus.notStarted,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 1,
+      expected: sectionStatus.inProgress,
+    },
+  ])('checks section status for task list page when %o', ({ detailsCheckValue, sessionValue, expected }) => {
+    const providedStatus = getSectionStatus(detailsCheckValue, sessionValue);
+    expect(providedStatus).toStrictEqual(expected);
+  });
 });
