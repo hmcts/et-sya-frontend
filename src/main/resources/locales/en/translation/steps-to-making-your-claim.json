@@ -1,6 +1,8 @@
 {
   "title": "Steps to making your claim",
   "h1": "Steps to making your claim",
+  "applicationDetails": "Application Details",
+  "claimType": "Claim type",
   "notStarted": "NOT STARTED",
   "completed": "COMPLETED",
   "inProgress": "IN PROGRESS",
@@ -24,5 +26,13 @@
   "section4": {
     "title": "Check and submit",
     "link1Text": "Check your answers"
+  },
+  "claimTypes": {
+    "breachOfContract": "Breach of contract",
+    "discrimination": "Discrimination",
+    "payRelated": "Pay-related",
+    "unfairDismissal": "Unfair dismissal",
+    "whistleBlowing": "Whistleblowing",
+    "otherClaim": "Other type of Claim"
   }
 }
