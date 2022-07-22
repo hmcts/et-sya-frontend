@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isInvalidPostcode } from '../components/form/validator';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -48,12 +48,12 @@ export default class AddressDetailsController {
         },
         validator: isFieldFilledIn,
       },
-      addressCounty: {
-        id: 'addressCounty',
-        name: 'address-county',
+      addressCountry: {
+        id: 'addressCountry',
+        name: 'address-country',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.county,
+        label: l => l.country,
         labelSize: null,
       },
       addressPostcode: {
@@ -67,7 +67,6 @@ export default class AddressDetailsController {
           maxLength: 14,
           autocomplete: 'postal-code',
         },
-        validator: isInvalidPostcode,
       },
     },
     submit: {
@@ -93,7 +92,7 @@ export default class AddressDetailsController {
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDRESS_DETAILS,
-      'enter-address',
+      TranslationKeys.ENTER_ADDRESS,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_DETAILS, {

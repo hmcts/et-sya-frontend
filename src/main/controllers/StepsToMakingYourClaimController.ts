@@ -62,7 +62,7 @@ export default class StepsToMakingYourClaimController {
               ),
           },
           {
-            url: PageUrls.RESPONDENT_NAME.toString(),
+            url: PageUrls.FIRST_RESPONDENT_NAME.toString(),
             linkTxt: (l: AnyRecord): string => l.section2.link2Text,
             status: (): string =>
               getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),

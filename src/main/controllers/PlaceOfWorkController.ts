@@ -3,11 +3,17 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentRedirectUrl,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class PlaceOfWorkController {
   private readonly form: Form;
@@ -17,7 +23,7 @@ export default class PlaceOfWorkController {
         id: 'address1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.buildingStreet,
+        label: l => l.addressLine1,
         labelSize: null,
         validator: isWorkAddressLineOneValid,
       },
@@ -25,9 +31,8 @@ export default class PlaceOfWorkController {
         id: 'address2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: null,
+        label: l => l.addressLine2,
         labelSize: null,
-        labelHidden: true,
       },
       workAddressTown: {
         id: 'addressTown',
@@ -37,11 +42,11 @@ export default class PlaceOfWorkController {
         labelSize: null,
         validator: isWorkAddressTownValid,
       },
-      workAddressCounty: {
-        id: 'addressCounty',
+      workAddressCountry: {
+        id: 'addressCountry',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.county,
+        label: l => l.country,
         labelSize: null,
       },
       workAddressPostcode: {
@@ -71,14 +76,19 @@ export default class PlaceOfWorkController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.ACAS_CERT_NUM);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
+    setUserCaseForRespondent(req, this.form);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.placeOfWorkContent, ['common', 'enter-address', 'place-of-work']);
+    const content = getPageContent(req, this.placeOfWorkContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.ENTER_ADDRESS,
+      TranslationKeys.PLACE_OF_WORK,
+    ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('place-of-work', {
+    res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
     });
   };

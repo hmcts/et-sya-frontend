@@ -2,11 +2,10 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { NoAcasNumberReason } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = 'Why do you not have an Acas Number?';
+const expectedTitle = 'Why do you not have an Acas number?';
 const radios = 'govuk-radios__item';
 const expectedRadioLabel1 = NoAcasNumberReason.ANOTHER;
 const expectedRadioLabel2 = NoAcasNumberReason.NO_POWER;
@@ -19,7 +18,7 @@ let htmlRes: Document;
 describe('Why do you not have an Acas number page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.NO_ACAS_NUMBER)
+      .get('/respondent/1/no-acas-reason')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

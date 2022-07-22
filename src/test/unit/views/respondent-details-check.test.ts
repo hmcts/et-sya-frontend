@@ -4,7 +4,7 @@ import request from 'supertest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-heading-l';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'Check the respondent details';
 
@@ -25,6 +25,6 @@ describe('Respondent Details check page', () => {
 
   it('should display Add new respondent button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Add new respondent', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Add another respondent', 'Could not find the button');
   });
 });

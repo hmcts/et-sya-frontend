@@ -196,7 +196,17 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const setUserCaseForNewRespondent = (req: AppRequest): void => {
+export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
+  userCase.workAddress1 = respondent.respondentAddress1;
+  userCase.workAddress2 = respondent.respondentAddress2;
+  userCase.workAddressTown = respondent.respondentAddressTown;
+  userCase.workAddressCountry = respondent.respondentAddressCountry;
+  userCase.workAddressPostcode = respondent.respondentAddressPostcode;
+};
+
+export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
+  const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
+  const selectedRespondentIndex = getRespondentIndex(req);
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
@@ -205,14 +215,14 @@ export const setUserCaseForNewRespondent = (req: AppRequest): void => {
     req.session.userCase.respondents = [];
     respondent = {
       respondentNumber: 1,
-      respondentName: req.body.respondentName,
     };
     req.session.userCase.respondents.push(respondent);
-    req.session.userCase.selectedRespondent = respondent.respondentNumber;
-  } else {
-    req.session.userCase.respondents[req.session.userCase.selectedRespondent - 1].respondentName =
-      req.body.respondentName;
   }
+  Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
+};
+
+export const getRespondentIndex = (req: AppRequest): number => {
+  return parseInt(req.params.respondentNumber) - 1;
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
@@ -240,6 +250,10 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
       }
     }
   });
+};
+
+export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
+  return '/respondent/' + respondentNumber.toString() + pageUrl;
 };
 
 export const conditionalRedirect = (

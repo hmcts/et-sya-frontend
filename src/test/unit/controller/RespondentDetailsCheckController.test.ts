@@ -1,5 +1,5 @@
 import RespondentDetailsCheckController from '../../../main/controllers/RespondentDetailsCheckController';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
@@ -21,7 +21,7 @@ describe('Respondent Details Check Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_DETAILS_CHECK, expect.anything());
   });
 
-  it('should render the Respondent Name controller page and add new respondent on post', () => {
+  it('should render the Respondent Name controller page and increment the respondent number on post', () => {
     const body = {};
     const controller = new RespondentDetailsCheckController();
 
@@ -32,11 +32,7 @@ describe('Respondent Details Check Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.RESPONDENT_NAME);
-    expect(request.session.userCase.selectedRespondent).toStrictEqual(2);
-    expect(request.session.userCase.respondents).toStrictEqual([
-      { respondentName: 'Globo Gym', respondentNumber: 1 },
-      { respondentNumber: 2 },
-    ]);
+    expect(response.redirect).toBeCalledWith('/respondent/2/respondent-name');
+    expect(request.session.userCase.respondents).toStrictEqual([{ respondentName: 'Globo Gym', respondentNumber: 1 }]);
   });
 });

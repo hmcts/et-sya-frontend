@@ -33,8 +33,7 @@ export default class PastEmployerController {
     const session = req.session;
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
-      : PageUrls.RESPONDENT_NAME;
-    // NO - Respondent details
+      : PageUrls.FIRST_RESPONDENT_NAME;
     setUserCase(req, this.form);
     getCaseApi(session.user?.accessToken)
       .updateDraftCase(session.userCase)

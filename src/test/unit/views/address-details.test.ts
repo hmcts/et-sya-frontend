@@ -11,7 +11,7 @@ const inputs = '[class*="address"]';
 const expectedInputLabel1 = 'Building and street';
 const expectedInputLabel2 = '';
 const expectedInputLabel3 = 'Town or city';
-const expectedInputLabel4 = 'County';
+const expectedInputLabel4 = 'Country';
 const expectedInputLabel5 = 'Postcode';
 
 let htmlRes: Document;

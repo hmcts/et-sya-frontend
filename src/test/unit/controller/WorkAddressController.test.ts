@@ -1,13 +1,18 @@
 import WorkAddressController from '../../../main/controllers/WorkAddressController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
 describe('Update Work Address Controller', () => {
   const t = {
+    session: {
+      params: {
+        respondentNumber: '1',
+      },
+    },
     claimantWorkAddressQuestion: {},
     common: {},
   };
@@ -34,7 +39,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ACAS_CERT_NUM);
+    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
     // TODO Test respondent address is copied to work address
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('Yes');
   });
@@ -50,7 +55,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.PLACE_OF_WORK);
+    expect(res.redirect).toBeCalledWith('/respondent/1/place-of-work');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
 });
