@@ -40,6 +40,7 @@ export default class VideoHearingsController {
             value: HearingPreference.NEITHER,
             subFields: {
               hearing_assistance: {
+                id: 'hearing_assistance',
                 type: 'textarea',
                 label: l => l.explain,
                 labelSize: 'normal',
