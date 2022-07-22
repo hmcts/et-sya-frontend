@@ -25,12 +25,7 @@ export default class RespondentDetailsCheckController {
   public post = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
     const newRespondentNum = respondents.length + 1;
-    if (newRespondentNum <= 6) {
-      const newRespondent = {
-        respondentNumber: newRespondentNum,
-      };
-      req.session.userCase.respondents.push(newRespondent);
-    } else {
+    if (newRespondentNum > 6) {
       // TODO Error handling
       console.log('Limit reached');
     }
