@@ -1,5 +1,5 @@
 {
-  "title": "LiP or Representative",
+  "title": "Are you making your claim yourself?",
   "h1": "Are you making the claim for yourself, or representing someone else?",
   "p1": "A representative is someone who can act on your behalf to complete the claim, write to the employment tribunal or present your case at a hearing.",
   "detailsSummary1": "Who can act as a representative?",
@@ -23,7 +23,7 @@
     "li1": "<a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Find a solicitor in England and Wales</a> – list of solicitors run by The Law Society",
     "li2": "<a href=\"https://www.lawscot.org.uk/find-a-solicitor/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Find a solicitor in Scotland</a> – database of solicitors run The Law Society of Scotland",
     "li3": "<a href=\"https://www.thefru.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Free Representation Unit (FRU)</a> – charity providing legal advice, case preparation and advocacy for people not eligible for legal aid or who cannot afford lawyers (this service is not available in Scotland)",
-    "li4": "In Scotland, some university law clinics can provide advice and represenation. You can find a list at <a href=\"\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">The Scottish University Law Clinic Network (SULCN)</a>",
+    "li4": "In Scotland, some university law clinics can provide advice and represenation. You can find a list at <a href=\"https://www.abdn.ac.uk/law/research/the-scottish-university-law-clinic-network-546.php\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">The Scottish University Law Clinic Network (SULCN)</a>",
     "li5": "local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford lawyers.",
     "p2": "A trade union may also be able to pay for a solicitor and free legal advice is available from <a href=\"https://www.citizensadvice.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Citizens Advice</a> or <a href=\"https://www.cas.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Citizens Advice Scotland</a>.",
     "p3": "The <a href=\"https://www.equalityadvisoryservice.com/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Equality Advisory and Support Service</a> can help with discrimination claims.",

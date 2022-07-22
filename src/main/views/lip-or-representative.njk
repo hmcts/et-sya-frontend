@@ -18,14 +18,21 @@
           <span class="govuk-details__summary-text">{{ detailsSummary1 }}</span>
         </summary>
         <div class="govuk-details__text">
-          {{ detailsText1.p }}
-          <ul>
+          <p class="govuk-body">{{ detailsText1.p1 }}</p>
+          <ul class="govuk-list govuk-list--bullet">
             <li>{{ detailsText1.li1 }}</li>
-            <li>{{ detailsText1.li2 }}
-            </li>
+            <li>{{ detailsText1.li2 }}</li>
             <li>{{ detailsText1.li3 }}</li>
-            <li>{{ detailsText1.li4 }}
-            </li>
+            <li>{{ detailsText1.li4 }}</li>
+            <li>{{ detailsText1.li5 }}</li>
+            <li>{{ detailsText1.li6 }}</li>
+          </ul>
+          <p class="govuk-body">{{ detailsText1.p2 }}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>{{ detailsText1.li7 }}</li>
+            <li>{{ detailsText1.li8 }}</li>
+            <li>{{ detailsText1.li9 }}</li>
+            <li>{{ detailsText1.li10 }}</li>
           </ul>
         </div>
       </details>
@@ -37,10 +44,13 @@
         </summary>
         <div class="govuk-details__text">
           <p class="govuk-body">{{ detailsText2.p1 }}</p>
+          <ul class="govuk-list govuk-list--bullet">
           <li>{{ detailsText2.li1 | safe }}</li>
           <li>{{ detailsText2.li2 | safe }}</li>
           <li>{{ detailsText2.li3 | safe }}</li>
-          <li>{{ detailsText2.li4 }}</li>
+          <li>{{ detailsText2.li4 | safe }}</li>
+          <li>{{ detailsText2.li5  }}</li>
+          </ul>
           <p class="govuk-body govuk-!-margin-top-4">{{ detailsText2.p2 | safe }}</p>
           <p class="govuk-body">{{ detailsText2.p3 | safe }}</p>
           <p class="govuk-body">{{ detailsText2.p4 | safe }}</p>
