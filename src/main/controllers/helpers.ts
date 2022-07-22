@@ -13,6 +13,7 @@ import {
 import { AppRequest } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
+  CaseDate,
   CaseType,
   CaseWithId,
   HearingPreference,
@@ -21,6 +22,7 @@ import {
   YesOrNo,
 } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
+import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -273,5 +275,18 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
     if (errorType) {
       return { errorType, propertyName: 'hearing_assistance' };
     }
+  }
+};
+
+export const getSectionStatus = (
+  detailsCheckValue: YesOrNo,
+  sessionValue: string | CaseDate | number
+): sectionStatus => {
+  if (detailsCheckValue === YesOrNo.YES) {
+    return sectionStatus.completed;
+  } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
+    return sectionStatus.inProgress;
+  } else {
+    return sectionStatus.notStarted;
   }
 };

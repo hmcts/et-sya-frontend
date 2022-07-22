@@ -16,12 +16,12 @@ const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
 const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 
 const PAGE_URL = '/steps-to-making-your-claim';
-const rowClass = 'govuk-table__row';
-const cellClass = 'govuk-table__cell';
+const sectionClass = 'app-task-list__items';
+const listItemClass = 'app-task-list__item';
+const linkClass = 'span.app-task-list__task-name > a';
 
-const tableClass = 'govuk-table';
-const headerClass = 'govuk-table__header';
-const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-2';
+const headerClass = 'app-task-list__section';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
@@ -55,22 +55,17 @@ describe('Steps to making your claim page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display correct number of rows', () => {
-    const row = htmlRes.getElementsByClassName(rowClass);
-    expect(row.length).equal(12, 'number of tables found is not 14');
+  it('should display correct number of sections', () => {
+    const section = htmlRes.getElementsByClassName(sectionClass);
+    expect(section.length).equal(4, 'number of sections/tables found is not 4');
   });
 
-  it('should display the correct number of tables', () => {
-    const table = htmlRes.getElementsByClassName(tableClass);
-    expect(table.length).equal(4, 'number of tables found is not 4');
+  it('should display the correct number of list items - one for each task', () => {
+    const foundListItems = htmlRes.getElementsByClassName(listItemClass);
+    expect(foundListItems.length).equal(8, 'number of list items found is not correct');
   });
 
-  it('should display the correct number of cells', () => {
-    const cell = htmlRes.getElementsByClassName(cellClass);
-    expect(cell.length).equal(16, 'number of cells found is not 20');
-  });
-
-  it('should display the correct number of table headers', () => {
+  it('should display the correct number of table / section headers', () => {
     const header = htmlRes.getElementsByClassName(headerClass);
     expect(header.length).equal(4, 'number of table headers found is not 4');
   });
@@ -103,8 +98,8 @@ describe('Steps to making your claim page', () => {
         .then(res => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
-      const links = htmlRes.getElementsByClassName('govuk-link');
-      expect(links[7].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
+      const links = htmlRes.querySelectorAll(linkClass);
+      expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
     }
   );
   it(
@@ -127,8 +122,8 @@ describe('Steps to making your claim page', () => {
         .then(res => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
-      const links = htmlRes.getElementsByClassName('govuk-link');
-      expect(links[7].outerHTML).contains(PageUrls.CLAIM_TYPE_PAY.toString());
+      const links = htmlRes.querySelectorAll(linkClass);
+      expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_PAY.toString());
     }
   );
   it(
@@ -151,8 +146,8 @@ describe('Steps to making your claim page', () => {
         .then(res => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
-      const links = htmlRes.getElementsByClassName('govuk-link');
-      expect(links[5].outerHTML).contains(PageUrls.STILL_WORKING.toString());
+      const links = htmlRes.querySelectorAll(linkClass);
+      expect(links[3].outerHTML).contains(PageUrls.STILL_WORKING.toString());
     }
   );
   it(
@@ -175,8 +170,8 @@ describe('Steps to making your claim page', () => {
         .then(res => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
-      const links = htmlRes.getElementsByClassName('govuk-link');
-      expect(links[5].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
+      const links = htmlRes.querySelectorAll(linkClass);
+      expect(links[3].outerHTML).contains(PageUrls.PAST_EMPLOYER.toString());
     }
   );
 });
