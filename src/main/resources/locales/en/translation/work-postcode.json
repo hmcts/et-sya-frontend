@@ -6,8 +6,8 @@
   "postcode": "Postcode",
   "errors": {
     "workPostcode": {
-      "required": "Enter a postcode",
-      "invalid": "Enter a valid UK postcode"
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA"
     }
   }
 }

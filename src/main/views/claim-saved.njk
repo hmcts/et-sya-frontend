@@ -14,10 +14,18 @@
         {{ govukPanel({
         titleText: titleText
       }) }}
-      <p class="govuk-body ">{{ p1 }}</p>
+
+    <div class="govuk-button-group">
       {{ govukButton({
         text: continueWithClaim,
         href: "/return-to-existing",
         preventDoubleClick: true
       }) }}
+      {{ govukButton({
+        text: signOut,
+        href: "/logout",
+        classes: "govuk-button--secondary"
+      }) }}
+    </div>
+
 {% endblock %}
