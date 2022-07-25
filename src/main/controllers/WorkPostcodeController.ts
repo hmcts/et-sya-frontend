@@ -3,10 +3,11 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isInvalidPostcode } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, isPostcodeMVPLocation, setUserCase } from './helpers';
 
 export default class WorkPostcodeController {
   private readonly form: Form;
@@ -32,7 +33,11 @@ export default class WorkPostcodeController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.LIP_OR_REPRESENTATIVE);
+    let redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
+    if (isPostcodeMVPLocation(req.body.workPostcode)) {
+      redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
+    }
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
