@@ -22,6 +22,17 @@ export const isContent2500CharsOrLess: Validator = value => {
   }
 };
 
+export const isContentBetween3And100Chars: Validator = value => {
+  if (!value) {
+    return 'required';
+  }
+
+  const nameLength = (value as string).trim().length;
+  if (nameLength < 3 || nameLength > 100) {
+    return 'invalidLength';
+  }
+};
+
 export const isOptionSelected: Validator = value => {
   if (!value || (value as string).trim() === 'notSelected') {
     return 'required';

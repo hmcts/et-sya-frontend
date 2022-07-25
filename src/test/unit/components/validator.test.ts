@@ -3,6 +3,7 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   isContent2500CharsOrLess,
+  isContentBetween3And100Chars,
   isDateInputInvalid,
   isDateTenYearsInFuture,
   isDateTenYearsInPast,
@@ -56,6 +57,21 @@ describe('Validation', () => {
 
     it('should warn when content longer than 2500 characters', () => {
       expect(isContent2500CharsOrLess('1'.repeat(2501))).toStrictEqual('tooLong');
+    });
+  });
+
+  describe('isContentBetween3And100Chars()', () => {
+    it('should not warn when content is valid length', () => {
+      expect(isContentBetween3And100Chars('abc')).toStrictEqual(undefined);
+      expect(isContentBetween3And100Chars('1'.repeat(100))).toStrictEqual(undefined);
+    });
+
+    it('should warn when content shorter than 3 characters', () => {
+      expect(isContentBetween3And100Chars('12')).toStrictEqual('invalidLength');
+    });
+
+    it('should warn when content longer than 100 characters', () => {
+      expect(isContentBetween3And100Chars('1'.repeat(101))).toStrictEqual('invalidLength');
     });
   });
 
