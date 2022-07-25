@@ -20,8 +20,7 @@ import {
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
-  validateGenderTitle,
-  validatePreferredOther,
+  validateTitlePreference,
 } from '../../../main/components/form/validator';
 import { CaseDate } from '../../../main/definitions/case';
 
@@ -192,19 +191,19 @@ describe('Validation', () => {
     });
   });
 
-  describe('OtherGenderTitlePreference()', () => {
-    validateGenderTitle('Other');
+  describe('validateTitlePreference()', () => {
     it('Should check if value is not blank', () => {
-      const isValid = validatePreferredOther('');
+      const isValid = validateTitlePreference('');
       expect(isValid).toStrictEqual('required');
     });
 
     it('Should check if value does not contain number', () => {
-      const isValid = validatePreferredOther('1234');
+      const isValid = validateTitlePreference('1234');
       expect(isValid).toStrictEqual('numberError');
     });
+
     it('Should check if value has no space is and number', () => {
-      const isValid = validatePreferredOther('  1234');
+      const isValid = validateTitlePreference('  1234');
       expect(isValid).toStrictEqual('numberError');
     });
   });

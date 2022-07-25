@@ -95,6 +95,10 @@ export interface Case {
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
   workPostcode?: string;
+  gender?: string;
+  genderIdentitySame?: string;
+  preferredTitle?: string;
+  otherTitlePreference?: string;
 }
 
 export const enum StillWorking {

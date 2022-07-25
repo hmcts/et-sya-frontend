@@ -11,6 +11,7 @@ import {
   isPayIntervalNull,
   isValidNoticeLength,
   isValidTwoDigitInteger,
+  validateTitlePreference,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import {
@@ -18,6 +19,7 @@ import {
   CaseDate,
   CaseType,
   CaseWithId,
+  GenderTitle,
   HearingPreference,
   Respondent,
   StillWorking,
@@ -130,6 +132,15 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
   }
 };
 
+export const getGenderDetailsError = (formData: Partial<CaseWithId>): FormError => {
+  if (formData.preferredTitle === GenderTitle.OTHER) {
+    const errorType = validateTitlePreference(formData.otherTitlePreference);
+    if (errorType) {
+      return { errorType, propertyName: 'otherTitlePreference' };
+    }
+  }
+};
+
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
@@ -144,6 +155,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const noticeErrors = getCustomNoticeLengthError(req, formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
+  const genderErrors = getGenderDetailsError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -163,6 +175,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (hearingPreferenceErrors) {
     sessionErrors = [...sessionErrors, hearingPreferenceErrors];
+  }
+
+  if (genderErrors) {
+    sessionErrors = [...sessionErrors, genderErrors];
   }
 
   req.session.errors = sessionErrors;
