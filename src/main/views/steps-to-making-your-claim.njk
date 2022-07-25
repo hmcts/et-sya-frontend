@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% block beforeContent %}
   {{ super() }}
@@ -7,35 +8,73 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl govuk-!-margin-bottom-2">{{h1}} TODO</h1>
+ 
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        {{h1}} TODO
+      </h1>
 
-  {% for section in sections %}
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row ">
-        <th scope="col" class="govuk-table__header govuk-grid-column-three-quarters">{{ getContent(section.title) }}</th>
-      </tr>
-    </thead>
-    {% for link in section.links %}
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-2"> </h2>
+      <p class="govuk-body govuk-!-margin-bottom-7"> </p>
 
-    <tbody class="govuk-table__body">
-      <tr class="govuk-table__row">
-        <td scope="row" class="govuk-table__cell govuk-grid-column-one-half">
-        {% if getContent(link.url) !="" %}
-        <a href= "{{ getContent(link.url) }}" class="govuk-link">
-        {{ getContent(link.linkTxt) }}
-        </a>
-        {% else %}
-        {{getContent(link.linkTxt)}}
-        {% endif %}
-        </td>
-        <td scope="row" class="govuk-table__cell govuk-grid-column-one-quarter">TODO</td>
-      </tr>
-      {% endfor %}
-      </tbody>
-  </table>
-  {% endfor %}
+      <ol class="app-task-list">
+          {% for section in sections %}
 
+        <li>
+          <h2 class="app-task-list__section">
+            <span class="app-task-list__section-number">{{loop.index}}. </span> {{ getContent(section.title) }}
+          </h2>
+          <ul class="app-task-list__items">
+
+            {% for link in section.links %}
+            <li class="app-task-list__item">
+              <span class="app-task-list__task-name">
+                  {% if getContent(link.url) !="" %}
+                  <a href= "{{ getContent(link.url) }}">
+                  {{ getContent(link.linkTxt) }}
+                  </a>
+                  {% else %}
+                  {{getContent(link.linkTxt)}}
+                  {% endif %}
+              </span>
+              {% if getContent(link.status) =="NOT STARTED" %}
+                {{ govukTag({
+                  text: notStarted,
+                  classes: "app-task-list__tag govuk-tag--grey"
+                }) }}
+              {% endif %}
+
+              {% if getContent(link.status) =="COMPLETED" %}
+                {{ govukTag({
+                  text: completed,
+                  classes: "app-task-list__tag"
+                }) }}
+              {% endif %}
+
+              {% if getContent(link.status) =="IN PROGRESS" %}
+                {{ govukTag({
+                  text: inProgress,
+                  classes: "app-task-list__tag govuk-tag--blue"
+                }) }}
+              {% endif %}
+
+              {% if getContent(link.status) =="CANNOT START YET" %}
+                {{ govukTag({
+                  text: cannotStartYet,
+                  classes: "app-task-list__tag govuk-tag--grey"
+                }) }}
+              {% endif %}
+            </li>
+            {% endfor %}
+
+          </ul>
+        </li>
+       {% endfor %}
+
+      </ol>
+    </div>
+  </div>
 
   {{ govukButton({
     text: saveForLater,

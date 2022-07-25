@@ -1,11 +1,17 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { validateGenderTitle, validatePreferredOther } from '../components/form/validator';
+import {
+  isFieldFilledIn,
+  isOptionSelected,
+  validateGenderTitle,
+  validatePreferredOther,
+} from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
@@ -34,6 +40,7 @@ export default class GenderDetailsController {
             value: 'Prefer not to say',
           },
         ],
+        validator: isFieldFilledIn,
       },
       genderIdentitySame: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
@@ -75,8 +82,8 @@ export default class GenderDetailsController {
         labelSize: 's',
         values: [
           {
-            value: 'pleaseSelect',
-            label: (l: AnyRecord): string => l.genderTitle.pleaseSelect,
+            value: 'notSelected',
+            label: (l: AnyRecord): string => l.genderTitle.notSelected,
           },
           {
             value: GenderTitle.MR,
@@ -108,6 +115,7 @@ export default class GenderDetailsController {
             label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
           },
         ],
+        validator: isOptionSelected,
       },
       otherTitlePreference: {
         id: 'otherTitlePreference',
@@ -118,14 +126,8 @@ export default class GenderDetailsController {
         validator: validatePreferredOther,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {

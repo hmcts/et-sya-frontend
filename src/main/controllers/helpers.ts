@@ -6,13 +6,24 @@ import { Form } from '../components/form/form';
 import {
   arePayValuesNull,
   isAfterDateOfBirth,
+  isFieldFilledIn,
   isPayIntervalNull,
   isValidNoticeLength,
   isValidTwoDigitInteger,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseType, CaseWithId, Respondent, StillWorking, YesOrNo } from '../definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseType,
+  CaseWithId,
+  HearingPreference,
+  Respondent,
+  StillWorking,
+  YesOrNo,
+} from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
+import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
@@ -131,6 +142,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const noticeErrors = getCustomNoticeLengthError(req, formData);
+  const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -146,6 +158,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (noticeErrors) {
     sessionErrors = [...sessionErrors, noticeErrors];
+  }
+
+  if (hearingPreferenceErrors) {
+    sessionErrors = [...sessionErrors, hearingPreferenceErrors];
   }
 
   req.session.errors = sessionErrors;
@@ -247,6 +263,34 @@ export const conditionalRedirect = (
     });
   }
   return matchingValues?.some(v => v === condition);
+};
+
+export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): FormError => {
+  const hearingPreferenceCheckbox = formData.hearing_preferences;
+  const hearingPreferenceNeitherTextarea = formData.hearing_assistance;
+
+  if (
+    (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
+    (!hearingPreferenceNeitherTextarea || (hearingPreferenceNeitherTextarea as string).trim().length === 0)
+  ) {
+    const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'hearing_assistance' };
+    }
+  }
+};
+
+export const getSectionStatus = (
+  detailsCheckValue: YesOrNo,
+  sessionValue: string | CaseDate | number
+): sectionStatus => {
+  if (detailsCheckValue === YesOrNo.YES) {
+    return sectionStatus.completed;
+  } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
+    return sectionStatus.inProgress;
+  } else {
+    return sectionStatus.notStarted;
+  }
 };
 
 export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
