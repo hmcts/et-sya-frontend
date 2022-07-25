@@ -15,7 +15,7 @@ export default class GenderDetailsController {
   private readonly form: Form;
   private readonly genderDetailsContent: FormContent = {
     fields: {
-      gender: {
+      claimantGender: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'gender',
         type: 'radios',
@@ -37,7 +37,7 @@ export default class GenderDetailsController {
         ],
         validator: isFieldFilledIn,
       },
-      genderIdentitySame: {
+      claimantGenderIdentitySame: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'genderIdentitySame',
         type: 'radios',

@@ -22,7 +22,7 @@ describe('Gender Details Controller', () => {
   describe('Correct validation', () => {
     it('should require mandatory fields', () => {
       const body = {
-        gender: '',
+        claimantGender: '',
         preferredTitle: '',
       };
 
@@ -31,7 +31,7 @@ describe('Gender Details Controller', () => {
       new GenderDetailsController().post(req, res);
 
       const expectedErrors = [
-        { propertyName: 'gender', errorType: 'required' },
+        { propertyName: 'claimantGender', errorType: 'required' },
         { propertyName: 'preferredTitle', errorType: 'required' },
       ];
 
@@ -41,7 +41,7 @@ describe('Gender Details Controller', () => {
 
     it('should require other title given that preferred title is "other"', () => {
       const body = {
-        gender: 'Male',
+        claimantGender: 'Male',
         preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '',
       };
@@ -58,7 +58,7 @@ describe('Gender Details Controller', () => {
 
     it('should not allow numbers in the other title', () => {
       const body = {
-        gender: 'Male',
+        claimantGender: 'Male',
         preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '5',
       };
@@ -76,8 +76,8 @@ describe('Gender Details Controller', () => {
 
   it('should assign userCase from the page form data', () => {
     const body = {
-      gender: 'Male',
-      genderIdentitySame: 'Yes',
+      claimantGender: 'Male',
+      claimantGenderIdentitySame: 'Yes',
       preferredTitle: 'Mr',
     };
     const controller = new GenderDetailsController();
@@ -89,16 +89,16 @@ describe('Gender Details Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
-      gender: 'Male',
-      genderIdentitySame: 'Yes',
+      claimantGender: 'Male',
+      claimantGenderIdentitySame: 'Yes',
       preferredTitle: 'Mr',
     });
   });
 
   it('Should assign userCase for Other title', () => {
     const body = {
-      gender: 'Male',
-      genderIdentitySame: 'Yes',
+      claimantGender: 'Male',
+      claimantGenderIdentitySame: 'Yes',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     };
@@ -111,8 +111,8 @@ describe('Gender Details Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
-      gender: 'Male',
-      genderIdentitySame: 'Yes',
+      claimantGender: 'Male',
+      claimantGenderIdentitySame: 'Yes',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     });
