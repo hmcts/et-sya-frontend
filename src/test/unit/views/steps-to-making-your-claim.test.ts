@@ -214,7 +214,7 @@ describe('Steps to making your claim page', () => {
       'Unfair dismissal',
       'Whistleblowing',
       'Other type of Claim',
-    ].sort();
+    ];
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
     expect(foundArr).to.have.members(expected);
