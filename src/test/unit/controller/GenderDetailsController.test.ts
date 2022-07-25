@@ -1,4 +1,5 @@
 import GenderDetailsController from '../../../main/controllers/GenderDetailsController';
+import { GenderTitle } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -18,7 +19,7 @@ describe('Gender Details Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.GENDER_DETAILS, expect.anything());
   });
 
-  describe('should throw correct errors and stay on page', () => {
+  describe('Correct validation', () => {
     it('should require mandatory fields', () => {
       const body = {
         gender: '',
@@ -41,7 +42,7 @@ describe('Gender Details Controller', () => {
     it('should require other title given that preferred title is "other"', () => {
       const body = {
         gender: 'Male',
-        preferredTitle: 'Other',
+        preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '',
       };
 
@@ -58,7 +59,7 @@ describe('Gender Details Controller', () => {
     it('should not allow numbers in the other title', () => {
       const body = {
         gender: 'Male',
-        preferredTitle: 'Other',
+        preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '5',
       };
 
@@ -77,7 +78,6 @@ describe('Gender Details Controller', () => {
     const body = {
       gender: 'Male',
       genderIdentitySame: 'Yes',
-      genderIdentity: '',
       preferredTitle: 'Mr',
     };
     const controller = new GenderDetailsController();
@@ -91,7 +91,6 @@ describe('Gender Details Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       gender: 'Male',
       genderIdentitySame: 'Yes',
-      genderIdentity: '',
       preferredTitle: 'Mr',
     });
   });
@@ -100,7 +99,6 @@ describe('Gender Details Controller', () => {
     const body = {
       gender: 'Male',
       genderIdentitySame: 'Yes',
-      genderIdentity: '',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     };
@@ -115,7 +113,6 @@ describe('Gender Details Controller', () => {
     expect(req.session.userCase).toStrictEqual({
       gender: 'Male',
       genderIdentitySame: 'Yes',
-      genderIdentity: '',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     });
