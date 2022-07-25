@@ -111,6 +111,7 @@ describe('updateDraftCase', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
