@@ -1,5 +1,7 @@
+import { LoggerInstance } from 'winston';
+
 import GenderDetailsController from '../../../main/controllers/GenderDetailsController';
-import { GenderTitle } from '../../../main/definitions/case';
+import { GenderTitle, Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -10,8 +12,10 @@ describe('Gender Details Controller', () => {
     common: {},
   };
 
+  const mockLogger = {} as unknown as LoggerInstance;
+
   it('should render gender details page', () => {
-    const genderDetailsController = new GenderDetailsController();
+    const genderDetailsController = new GenderDetailsController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -28,7 +32,7 @@ describe('Gender Details Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController().post(req, res);
+      new GenderDetailsController(mockLogger).post(req, res);
 
       const expectedErrors = [
         { propertyName: 'claimantSex', errorType: 'required' },
@@ -41,14 +45,14 @@ describe('Gender Details Controller', () => {
 
     it('should require other title given that preferred title is "other"', () => {
       const body = {
-        claimantSex: 'Male',
+        claimantSex: Sex.MALE,
         preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '',
       };
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController().post(req, res);
+      new GenderDetailsController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'required' }];
 
@@ -58,14 +62,14 @@ describe('Gender Details Controller', () => {
 
     it('should not allow numbers in the other title', () => {
       const body = {
-        claimantSex: 'Male',
+        claimantSex: Sex.MALE,
         preferredTitle: GenderTitle.OTHER,
         otherTitlePreference: '5a',
       };
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController().post(req, res);
+      new GenderDetailsController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'numberError' }];
 
@@ -82,7 +86,7 @@ describe('Gender Details Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController().post(req, res);
+      new GenderDetailsController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'lengthError' }];
 
@@ -93,11 +97,11 @@ describe('Gender Details Controller', () => {
 
   it('should assign userCase from the page form data', () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Mr',
     };
-    const controller = new GenderDetailsController();
+    const controller = new GenderDetailsController(mockLogger);
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
@@ -106,20 +110,20 @@ describe('Gender Details Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Mr',
     });
   });
 
   it('Should assign userCase for Other title', () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     };
-    const controller = new GenderDetailsController();
+    const controller = new GenderDetailsController(mockLogger);
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
@@ -128,8 +132,8 @@ describe('Gender Details Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Other',
       otherTitlePreference: 'Pastor',
     });
