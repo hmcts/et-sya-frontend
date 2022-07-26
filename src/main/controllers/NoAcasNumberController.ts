@@ -7,7 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCaseForRespondent } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentIndex,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
@@ -64,10 +70,13 @@ export default class NoAcasNumberController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.noAcasNumberContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.NO_ACAS_NUMBER,
-    ]);
+    const respondentIndex = getRespondentIndex(req);
+    const content = getPageContent(
+      req,
+      this.noAcasNumberContent,
+      [TranslationKeys.COMMON, TranslationKeys.NO_ACAS_NUMBER],
+      respondentIndex
+    );
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NO_ACAS_NUMBER, {
       ...content,

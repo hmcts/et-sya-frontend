@@ -29,9 +29,15 @@ import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions }
 import { AnyRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
-export const getPageContent = (req: AppRequest, formContent: FormContent, translations: string[] = []): AnyRecord => {
+export const getPageContent = (
+  req: AppRequest,
+  formContent: FormContent,
+  translations: string[] = [],
+  selectedRespondentIndex?: number
+): AnyRecord => {
   const sessionErrors = req.session?.errors || [];
   const userCase = req.session?.userCase;
+  mapSelectedRespondentValuesToCase(selectedRespondentIndex, userCase);
 
   let content = {
     form: formContent,
@@ -228,6 +234,9 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
     };
     req.session.userCase.respondents.push(respondent);
   }
+  if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
+    formData.acasCertNum = undefined;
+  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
@@ -334,3 +343,16 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
       });
   }
 };
+function mapSelectedRespondentValuesToCase(selectedRespondentIndex: number, userCase: CaseWithId) {
+  if (typeof selectedRespondentIndex !== 'undefined') {
+    userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
+    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
+    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex].respondentAddress2;
+    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex].respondentAddressTown;
+    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex].respondentAddressCountry;
+    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex].respondentAddressPostcode;
+    userCase.acasCert = userCase.respondents[selectedRespondentIndex].acasCert;
+    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex].acasCertNum;
+    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex].noAcasReason;
+  }
+}

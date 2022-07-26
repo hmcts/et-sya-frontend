@@ -10,11 +10,23 @@ describe('Respondent Name Controller', () => {
     common: {},
   };
 
-  it('should render the Respondent Name controller page', () => {
+  it('should render the Respondent Name controller page when respondents empty', () => {
     const controller = new RespondentNameController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_NAME, expect.anything());
+  });
+
+  it('should render the Respondent Name controller page when respondent exists', () => {
+    const controller = new RespondentNameController();
+
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase = userCaseWithRespondent;
 
     controller.get(request, response);
 

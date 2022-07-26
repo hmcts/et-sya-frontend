@@ -22,7 +22,7 @@ export interface Respondent {
   respondentAddressPostcode?: string;
   acasCert?: YesOrNo;
   acasCertNum?: string;
-  noAcasReson?: NoAcasNumberReason;
+  noAcasReason?: NoAcasNumberReason;
 }
 
 export interface Case {
@@ -94,6 +94,15 @@ export interface Case {
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
   workPostcode?: string;
+  respondentName?: string;
+  respondentAddress1?: string;
+  respondentAddress2?: string;
+  respondentAddressTown?: string;
+  respondentAddressCountry?: string;
+  respondentAddressPostcode?: string;
+  acasCert?: YesOrNo;
+  acasCertNum?: string;
+  noAcasReason?: NoAcasNumberReason;
 }
 
 export const enum StillWorking {

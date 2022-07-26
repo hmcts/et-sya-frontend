@@ -38,17 +38,18 @@ describe('Acas Cert Num Controller', () => {
     expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
 
-  it('should redirect to no acas number reason when no is selected', () => {
-    const body = { acasCert: YesOrNo.NO };
+  it('should redirect to no acas number reason when no is selected and remove acas cert num value', () => {
+    const body = { acasCertNum: 12345, acasCert: YesOrNo.NO };
 
     const controller = new AcasCertNumController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    req.session.userCase = userCaseWithRespondent;
 
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith('/respondent/1/no-acas-reason');
+    expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
+    expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.NO);
   });
 });

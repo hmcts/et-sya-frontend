@@ -9,6 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import {
   assignFormData,
   getPageContent,
+  getRespondentIndex,
   getRespondentRedirectUrl,
   handleSessionErrors,
   setUserCaseForRespondent,
@@ -46,10 +47,17 @@ export default class RespondentNameController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.respondentNameContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_NAME,
-    ]);
+    let respondentIndex: number;
+    if (req.session.userCase?.respondents) {
+      respondentIndex = getRespondentIndex(req);
+    }
+
+    const content = getPageContent(
+      req,
+      this.respondentNameContent,
+      [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_NAME],
+      respondentIndex
+    );
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_NAME, {
       ...content,

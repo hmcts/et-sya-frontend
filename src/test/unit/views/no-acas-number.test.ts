@@ -17,7 +17,17 @@ let htmlRes: Document;
 
 describe('Why do you not have an Acas number page', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          respondents: [
+            {
+              respondentNumber: 1,
+            },
+          ],
+        },
+      })
+    )
       .get('/respondent/1/no-acas-reason')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

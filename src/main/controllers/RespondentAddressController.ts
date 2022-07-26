@@ -98,14 +98,16 @@ export default class RespondentAddressController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.respondentAddressContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_ADDRESS,
-      TranslationKeys.ENTER_ADDRESS,
-    ]);
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = respondents[respondentIndex];
+    const content = getPageContent(
+      req,
+      this.respondentAddressContent,
+      [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
+      respondentIndex
+    );
+
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,

@@ -73,13 +73,16 @@ export default class AcasCertNumController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.acasCertNumContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ACAS_CERT_NUM,
-    ]);
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
     const currentRespondentName = respondents[respondentIndex].respondentName;
+    const content = getPageContent(
+      req,
+      this.acasCertNumContent,
+      [TranslationKeys.COMMON, TranslationKeys.ACAS_CERT_NUM],
+      respondentIndex
+    );
+
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_CERT_NUM, {
       ...content,
