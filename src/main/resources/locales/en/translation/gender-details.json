@@ -21,7 +21,7 @@
   },
   "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
-    "claimantGender": {
+    "claimantSex": {
       "required": "Select an option for the \"What is your sex\" question"
     },
     "preferredTitle": {

@@ -15,7 +15,7 @@ export default class GenderDetailsController {
   private readonly form: Form;
   private readonly genderDetailsContent: FormContent = {
     fields: {
-      claimantGender: {
+      claimantSex: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'gender',
         type: 'radios',

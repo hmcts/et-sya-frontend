@@ -95,7 +95,7 @@ export interface Case {
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
   workPostcode?: string;
-  claimantGender?: string;
+  claimantSex?: string;
   claimantGenderIdentitySame?: string;
   preferredTitle?: string;
   otherTitlePreference?: string;
