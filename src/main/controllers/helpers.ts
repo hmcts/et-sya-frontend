@@ -304,16 +304,3 @@ export const getSectionStatus = (
     return sectionStatus.notStarted;
   }
 };
-
-export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
-  if (!req.session.errors.length) {
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(() => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        logger.error(error);
-      });
-  }
-};
