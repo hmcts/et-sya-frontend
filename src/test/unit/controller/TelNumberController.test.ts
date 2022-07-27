@@ -46,7 +46,7 @@ describe('Telephone number Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.UPDATE_PREFERENCES);
+      expect(res.redirect).toBeCalledWith(PageUrls.CONTACT_PREFERENCE);
       expect(req.session.userCase).toStrictEqual({
         telNumber: '01234567890',
       });

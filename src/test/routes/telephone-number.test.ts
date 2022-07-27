@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.TELEPHONE_NUMBER}`, () => {
 });
 
 describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
-  test('should go to update preferences page when phone number has been entered', async () => {
+  test('should go to contact preferences page when phone number has been entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.TELEPHONE_NUMBER)
       .send({
@@ -21,7 +21,7 @@ describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
       })
       .expect(res => {
         expect(res.status).equal(302);
-        expect(res.header['location']).equal(PageUrls.UPDATE_PREFERENCES);
+        expect(res.header['location']).equal(PageUrls.CONTACT_PREFERENCE);
       });
   });
 });

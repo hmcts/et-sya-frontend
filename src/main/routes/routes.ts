@@ -49,14 +49,14 @@ export default function (app: Application): void {
   app.post(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.post);
   app.get(PageUrls.TELEPHONE_NUMBER, app.locals.container.cradle.telNumberController.get);
   app.post(PageUrls.TELEPHONE_NUMBER, app.locals.container.cradle.telNumberController.post);
-  app.get(PageUrls.VIDEO_HEARINGS, app.locals.container.cradle.videoHearingsController.get);
-  app.post(PageUrls.VIDEO_HEARINGS, app.locals.container.cradle.videoHearingsController.post);
+  app.get(PageUrls.HEARING_PREFERENCE, app.locals.container.cradle.hearingPreferenceController.get);
+  app.post(PageUrls.HEARING_PREFERENCE, app.locals.container.cradle.hearingPreferenceController.post);
   app.get(PageUrls.CLAIM_STEPS, app.locals.container.cradle.stepsToMakingYourClaimController.get);
   app.get(PageUrls.CLAIM_SAVED, app.locals.container.cradle.claimSavedController.get);
   app.get(PageUrls.RETURN_TO_EXISTING, app.locals.container.cradle.returnToExistingController.get);
   app.post(PageUrls.RETURN_TO_EXISTING, app.locals.container.cradle.returnToExistingController.post);
-  app.get(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.get);
-  app.post(PageUrls.UPDATE_PREFERENCES, app.locals.container.cradle.updatePreferenceController.post);
+  app.get(PageUrls.CONTACT_PREFERENCE, app.locals.container.cradle.contactPreferenceController.get);
+  app.post(PageUrls.CONTACT_PREFERENCE, app.locals.container.cradle.contactPreferenceController.post);
   app.get(PageUrls.JOB_TITLE, app.locals.container.cradle.jobTitleController.get);
   app.post(PageUrls.JOB_TITLE, app.locals.container.cradle.jobTitleController.post);
   app.get(PageUrls.STILL_WORKING, app.locals.container.cradle.stillWorkingController.get);

@@ -1,0 +1,23 @@
+{
+  "title": "Hearing preference",
+  "h1": "Would you be able to take part in hearings by video and phone?",
+  "p1": "If your case goes to a hearing, it can take place either:",
+  "bullet1": "in person, in a room at a tribunal (‘face-to-face’)",
+  "bullet2": "by video (where you can join from a place suitable to you)",
+  "bullet3": "by phone",
+  "p2": "Some hearings use a combination of these methods. The approach take will be decided by a judge. It may depend on the type of claim.",
+  "checkboxVideo": "Yes, I can take part in video hearings",
+  "checkboxPhone": "Yes, I can take part in phone hearings",
+  "checkboxNeither": "No, I cannot take part in either video or phone hearings",
+  "checkboxNeitherHint": "If you choose this option please tell us why in case we can assist you",
+  "explain": "Explain why you are unable to take part in video or phone hearings",
+  "selectAllHint": "Select all that apply",
+  "errors": {
+    "hearing_preferences": {
+      "required": "Tell us if you can take part in a video or phone hearing"
+    },
+    "hearing_assistance": {
+      "required": "Tell us why you cannot take part in a video or phone hearing"
+    }
+  }
+}

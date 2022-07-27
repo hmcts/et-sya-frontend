@@ -44,11 +44,11 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   I.see('You do not have to complete your claim in one go');
   I.click('Continue');
 
-  I.seeElement('(//a[@href="/how-would-you-like-to-be-updated-about-your-claim"])');
-  I.click('(//a[@href="/how-would-you-like-to-be-updated-about-your-claim"])');
+  I.seeElement('(//a[@href="/how-would-you-like-to-be-contacted-about-your-claim"])');
+  I.click('(//a[@href="/how-would-you-like-to-be-contacted-about-your-claim"])');
 
-  I.seeElement('#update-preference');
-  I.checkOption('#update-preference');
+  I.seeElement('#contact-preference');
+  I.checkOption('#contact-preference');
   I.click('#main-form-submit');
 
   I.seeElement('#hearingPreference');

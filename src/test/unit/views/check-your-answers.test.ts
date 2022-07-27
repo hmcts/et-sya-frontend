@@ -137,10 +137,10 @@ describe('Check your answers confirmation page', () => {
 
     const yourPreferencesList = summeryListSections[3].getElementsByClassName(summeryListLinkClass);
     // To-do const requireAsistenceLink = yourPreferencesList[0].getAttribute('href');
-    const updatePreferenceLink = yourPreferencesList[1].getAttribute('href');
-    const videoHearingsLink = yourPreferencesList[2].getAttribute('href');
-    expect(updatePreferenceLink).equals(PageUrls.UPDATE_PREFERENCES, 'Incorrect href found');
-    expect(videoHearingsLink).equals(PageUrls.VIDEO_HEARINGS, 'Incorrect href found');
+    const contactPreferenceLink = yourPreferencesList[1].getAttribute('href');
+    const hearingPreferenceLink = yourPreferencesList[2].getAttribute('href');
+    expect(contactPreferenceLink).equals(PageUrls.CONTACT_PREFERENCE, 'Incorrect href found');
+    expect(hearingPreferenceLink).equals(PageUrls.HEARING_PREFERENCE, 'Incorrect href found');
 
     const employerList = summeryListSections[4].getElementsByClassName(summeryListLinkClass);
     const didYouWorkForLink = employerList[0].getAttribute('href');

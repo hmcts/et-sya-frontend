@@ -43,9 +43,10 @@ export default class StepsToMakingYourClaimController {
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },
           {
-            url: PageUrls.UPDATE_PREFERENCES,
+            url: PageUrls.CONTACT_PREFERENCE,
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
-            status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.updatePreference),
+            status: (): string =>
+              getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimant_contact_preference),
           },
         ],
       },

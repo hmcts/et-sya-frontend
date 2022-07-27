@@ -41,7 +41,7 @@ export default class TelNumberController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.UPDATE_PREFERENCES);
+    handleSessionErrors(req, res, this.form, PageUrls.CONTACT_PREFERENCE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
