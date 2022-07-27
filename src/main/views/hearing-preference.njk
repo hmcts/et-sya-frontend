@@ -1,0 +1,32 @@
+{% extends "template.njk" %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: getErrors(form.fields)
+    }) if getErrors(form.fields).length > 0
+  }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
+      <p class="govuk-body ">{{ p1 }}</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ bullet1 }} </li>
+        <li>{{ bullet2 }} </li>        
+        <li>{{ bullet3 }} </li>
+      </ul>
+      <p class="govuk-body ">{{ p2 }}</p>
+      <div class="govuk-hint"> {{ selectAllHint }} </div>
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
