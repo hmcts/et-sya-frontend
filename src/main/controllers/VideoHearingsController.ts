@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -7,6 +8,7 @@ import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -54,13 +56,23 @@ export default class VideoHearingsController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.videoHearingsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
+    if (!req.session.errors.length) {
+      getCaseApi(req.session.user?.accessToken)
+        .updateDraftCase(req.session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.info(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

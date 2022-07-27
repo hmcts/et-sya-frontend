@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -6,7 +7,9 @@ import { AppRequest } from '../definitions/appRequest';
 import { EmailOrPost } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getCaseApi } from '../services/CaseService';
 
 import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
@@ -14,7 +17,7 @@ export default class UpdatePreferenceController {
   private readonly form: Form;
   private readonly updatePrefFormContent: FormContent = {
     fields: {
-      updatePreference: {
+      claimant_contact_preference: {
         classes: 'govuk-radios--inline',
         id: 'update-preference',
         type: 'radios',
@@ -36,23 +39,27 @@ export default class UpdatePreferenceController {
         validator: isFieldFilledIn,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.updatePrefFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.VIDEO_HEARINGS);
+    if (!req.session.errors.length) {
+      getCaseApi(req.session.user?.accessToken)
+        .updateDraftCase(req.session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.info(error);
+        });
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
