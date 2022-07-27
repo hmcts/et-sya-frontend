@@ -7,9 +7,15 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  conditionalRedirect,
+  getPageContent,
+  handleSessionErrors,
+  handleUpdateDraftCase,
+  setUserCase,
+} from './helpers';
 
 export default class PastEmployerController {
   private readonly form: Form;
@@ -30,21 +36,12 @@ export default class PastEmployerController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const session = req.session;
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.RESPONDENT_NAME;
-    // NO - Respondent details
     setUserCase(req, this.form);
-    getCaseApi(session.user?.accessToken)
-      .updateDraftCase(session.userCase)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
     handleSessionErrors(req, res, this.form, redirectUrl);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

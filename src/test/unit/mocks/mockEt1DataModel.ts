@@ -47,6 +47,7 @@ export const mockEt1DataModelUpdate = {
       claimant_pension_weekly_contribution: 15,
       claimant_benefits: 'Yes',
       claimant_benefits_detail: 'Some benefits',
+      claimant_employed_notice_period: '2022-08-11',
     },
     claimantHearingPreference: {
       reasonable_adjustments: YesOrNo.YES,

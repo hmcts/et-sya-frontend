@@ -73,6 +73,7 @@ describe('Should return data in api format', () => {
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -112,6 +113,7 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_pension_weekly_contribution: 15,
           claimant_benefits: YesOrNo.YES,
           claimant_benefits_detail: 'Some benefits',
+          claimant_employed_notice_period: '2022-08-11',
         },
         claimantHearingPreference: {
           reasonable_adjustments: YesOrNo.YES,
@@ -163,6 +165,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     });
   });
 
@@ -206,6 +209,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearing_preferences: undefined,
       hearing_assistance: undefined,
       claimant_contact_preference: undefined,
+      noticeEnds: undefined,
     });
   });
 

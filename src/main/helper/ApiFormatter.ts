@@ -35,9 +35,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
-    dobDate: formatDoBString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
+    dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
-    startDate: formatDoBString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
+    startDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
     noticePeriod: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period,
     noticePeriodUnit: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_unit,
     noticePeriodLength: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_duration,
@@ -58,6 +58,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimant_contact_preference: fromApiCaseData.case_data?.claimantContactPreference?.claimant_contact_preference,
+    noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
   };
 }
 
@@ -93,6 +94,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_pension_weekly_contribution: caseItem.claimantPensionWeeklyContribution,
         claimant_benefits: caseItem.employeeBenefits,
         claimant_benefits_detail: caseItem.benefitsCharCount,
+        claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
       },
       claimantHearingPreference: {
         reasonable_adjustments: caseItem.reasonableAdjustments,
@@ -114,7 +116,7 @@ function formatDate(dobDate: CaseDate) {
   return dobDate ? `${dobDate.year}-${dobDate.month}-${dobDate.day}` : null;
 }
 
-function formatDoBString(dobDate: string): CaseDate {
+function parseDateFromString(dobDate: string): CaseDate {
   if (dobDate) {
     const year = dobDate.substring(0, 4);
     const month = dobDate.substring(5, 7);

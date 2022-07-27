@@ -116,6 +116,7 @@ describe('updateDraftCase', () => {
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      noticeEnds: { year: '2022', month: '08', day: '11' },
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
