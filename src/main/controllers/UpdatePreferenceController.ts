@@ -9,9 +9,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 export default class UpdatePreferenceController {
   private readonly form: Form;
@@ -50,16 +49,7 @@ export default class UpdatePreferenceController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.VIDEO_HEARINGS);
-    if (!req.session.errors.length) {
-      getCaseApi(req.session.user?.accessToken)
-        .updateDraftCase(req.session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.info(error);
-        });
-    }
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -8,9 +8,8 @@ import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 export default class VideoHearingsController {
   private readonly form: Form;
@@ -63,16 +62,7 @@ export default class VideoHearingsController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
-    if (!req.session.errors.length) {
-      getCaseApi(req.session.user?.accessToken)
-        .updateDraftCase(req.session.userCase)
-        .then(() => {
-          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-        })
-        .catch(error => {
-          this.logger.info(error);
-        });
-    }
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
