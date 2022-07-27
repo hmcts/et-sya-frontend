@@ -26,7 +26,7 @@ const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
-const detailsSummary3 = 'Contact us for help';
+const detailsSummary3 = 'Contact us';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {
