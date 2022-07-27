@@ -5,6 +5,8 @@ import {
   CaseType,
   CaseTypeId,
   CaseWithId,
+  EmailOrPost,
+  HearingPreference,
   PayInterval,
   StillWorking,
   WeeksOrMonths,
@@ -68,6 +70,9 @@ describe('Should return data in api format', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      hearing_preferences: [HearingPreference.PHONE],
+      hearing_assistance: 'Hearing assistance test',
+      claimant_contact_preference: EmailOrPost.EMAIL,
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -111,9 +116,14 @@ describe('Format Case Data to Frontend Model', () => {
         claimantHearingPreference: {
           reasonable_adjustments: YesOrNo.YES,
           reasonable_adjustments_detail: 'Adjustments detail test',
+          hearing_preferences: [HearingPreference.PHONE],
+          hearing_assistance: 'Hearing assistance test',
         },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
+        },
+        claimantContactPreference: {
+          claimant_contact_preference: EmailOrPost.EMAIL,
         },
       },
     };
@@ -150,6 +160,9 @@ describe('Format Case Data to Frontend Model', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      hearing_preferences: [HearingPreference.PHONE],
+      hearing_assistance: 'Hearing assistance test',
+      claimant_contact_preference: EmailOrPost.EMAIL,
     });
   });
 
@@ -190,6 +203,9 @@ describe('Format Case Data to Frontend Model', () => {
       personalDetailsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
+      hearing_preferences: undefined,
+      hearing_assistance: undefined,
+      claimant_contact_preference: undefined,
     });
   });
 

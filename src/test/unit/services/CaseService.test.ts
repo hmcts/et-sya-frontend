@@ -6,6 +6,8 @@ import {
   CaseType,
   CaseTypeId,
   CaseWithId,
+  EmailOrPost,
+  HearingPreference,
   PayInterval,
   StillWorking,
   WeeksOrMonths,
@@ -111,6 +113,9 @@ describe('updateDraftCase', () => {
       personalDetailsCheck: YesOrNo.YES,
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
+      hearing_preferences: [HearingPreference.PHONE],
+      hearing_assistance: 'Hearing assistance test',
+      claimant_contact_preference: EmailOrPost.EMAIL,
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
