@@ -1,0 +1,88 @@
+import { Response } from 'express';
+import { LoggerInstance } from 'winston';
+
+import { Form } from '../components/form/form';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { AppRequest } from '../definitions/appRequest';
+import { HearingPreference } from '../definitions/case';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getCaseApi } from '../services/CaseService';
+
+import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+
+export default class HearingPreferenceController {
+  private readonly form: Form;
+  private readonly hearingPreferenceContent: FormContent = {
+    fields: {
+      hearing_preferences: {
+        id: 'hearing_preferences',
+        type: 'checkboxes',
+        validator: atLeastOneFieldIsChecked,
+        values: [
+          {
+            name: 'hearing_preferences',
+            label: l => l.checkboxVideo,
+            value: HearingPreference.VIDEO,
+          },
+          {
+            name: 'hearing_preferences',
+            label: l => l.checkboxPhone,
+            value: HearingPreference.PHONE,
+          },
+          {
+            divider: true,
+          },
+          {
+            name: 'hearing_preferences',
+            label: l => l.checkboxNeither,
+            exclusive: true,
+            hint: l => l.checkboxNeitherHint,
+            value: HearingPreference.NEITHER,
+            subFields: {
+              hearing_assistance: {
+                id: 'hearing_assistance',
+                type: 'textarea',
+                label: l => l.explain,
+                labelSize: 'normal',
+              },
+            },
+          },
+        ],
+      },
+    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
+  };
+
+  constructor(private logger: LoggerInstance) {
+    this.form = new Form(<FormFields>this.hearingPreferenceContent.fields);
+  }
+
+  public post = (req: AppRequest, res: Response): void => {
+    setUserCase(req, this.form);
+    handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
+    if (!req.session.errors.length) {
+      getCaseApi(req.session.user?.accessToken)
+        .updateDraftCase(req.session.userCase)
+        .then(() => {
+          this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        })
+        .catch(error => {
+          this.logger.info(error);
+        });
+    }
+  };
+
+  public get = (req: AppRequest, res: Response): void => {
+    const content = getPageContent(req, this.hearingPreferenceContent, [
+      TranslationKeys.COMMON,
+      TranslationKeys.HEARING_PREFERENCE,
+    ]);
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render(TranslationKeys.HEARING_PREFERENCE, {
+      ...content,
+    });
+  };
+}
