@@ -3,10 +3,10 @@ import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
 import { LoggerInstance } from 'winston';
 
+import { isFirstDateBeforeSecond } from '../components/form/dateValidators';
 import { Form } from '../components/form/form';
 import {
   arePayValuesNull,
-  isAfterDateOfBirth,
   isFieldFilledIn,
   isPayIntervalNull,
   isValidNoticeLength,
@@ -52,7 +52,7 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   const startDate = formData.startDate;
 
   if (startDate && dob) {
-    const errorType = isAfterDateOfBirth(startDate, dob);
+    const errorType = isFirstDateBeforeSecond(startDate, dob);
     if (errorType) {
       return { errorType: errorType as string, propertyName: Object.keys(form.getFormFields())[0] };
     }

@@ -1,12 +1,15 @@
 import {
   DateValidator,
   areDateFieldsFilledIn,
+  areDates10YearsApartOrMore,
+  isDateEmpty,
   isDateInputInvalid,
+  isDateNotInFuture,
+  isDateNotPartial,
   isDateTenYearsInFuture,
   isDateTenYearsInPast,
-  isFutureDate,
   isPastDate,
-} from '../components/form/validator';
+} from '../components/form/dateValidators';
 
 import { CaseDate } from './case';
 import { InvalidField } from './form';
@@ -46,7 +49,7 @@ export type DateFormFields = {
 
 type DateTypes = string | void | InvalidField;
 
-export const DefaultDateFormFields = {
+export const BirthDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
   label: (l: AnyRecord): string => l.label,
@@ -54,7 +57,10 @@ export const DefaultDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+    isDateNotPartial(value) ||
+    (isDateEmpty(value) ? '' : isDateInputInvalid(value)) ||
+    isDateNotInFuture(value) ||
+    areDates10YearsApartOrMore(value, convertDateToCaseDate(new Date())),
 };
 
 export const EndDateFormFields = {
@@ -64,7 +70,10 @@ export const EndDateFormFields = {
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value) || isDateTenYearsInPast(value),
+    areDateFieldsFilledIn(value) ||
+    isDateInputInvalid(value) ||
+    isDateNotInFuture(value) ||
+    isDateTenYearsInPast(value),
 };
 
 export const NewJobDateFormFields = {
@@ -96,5 +105,9 @@ export const StartDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInFuture(value),
+};
+
+const convertDateToCaseDate = (date: Date): CaseDate => {
+  return { day: `${date.getDate()}`, month: `${date.getMonth() + 1}`, year: `${date.getFullYear()}` };
 };

@@ -1,6 +1,7 @@
+import { areDateFieldsFilledIn } from '../../../main/components/form/dateValidators';
 import { Form } from '../../../main/components/form/form';
 import { convertToDateObject } from '../../../main/components/form/parser';
-import { areDateFieldsFilledIn, isFieldFilledIn } from '../../../main/components/form/validator';
+import { isFieldFilledIn } from '../../../main/components/form/validator';
 import { Case, CaseDate, Checkbox, YesOrNo } from '../../../main/definitions/case';
 import { FormContent, FormFields, FormFieldsFn } from '../../../main/definitions/form';
 

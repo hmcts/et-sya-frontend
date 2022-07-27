@@ -48,7 +48,7 @@ describe('Start date Controller', () => {
   it('should redirect to the same screen when errors are present', () => {
     const errors = [
       { propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' },
-      { propertyName: 'startDate', errorType: 'invalidDateBeforeDOB' },
+      { propertyName: 'startDate', errorType: 'invalidDateOrder' },
     ];
     const body = {
       'startDate-day': '',

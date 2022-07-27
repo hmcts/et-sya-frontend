@@ -20,7 +20,7 @@
       "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInFuture": "Date entered must be in the past",
       "invalidDateTooFarInPast": "You have entered a year which is too far in the past",
-      "invalidDateBeforeDOB": "Date entered must not be earlier than your date of birth"
+      "invalidDateOrder": "Date entered must not be earlier than your date of birth"
     }
   }
 }
