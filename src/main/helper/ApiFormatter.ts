@@ -55,6 +55,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
     reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
+    hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
+    hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
+    claimant_contact_preference: fromApiCaseData.case_data?.claimantContactPreference?.claimant_contact_preference,
   };
 }
 
@@ -94,9 +97,14 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantHearingPreference: {
         reasonable_adjustments: caseItem.reasonableAdjustments,
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
+        hearing_preferences: caseItem.hearing_preferences,
+        hearing_assistance: caseItem.hearing_assistance,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
+      },
+      claimantContactPreference: {
+        claimant_contact_preference: caseItem.claimant_contact_preference,
       },
     },
   };

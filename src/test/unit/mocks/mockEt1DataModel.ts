@@ -1,4 +1,4 @@
-import { StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { EmailOrPost, HearingPreference, StillWorking, YesOrNo } from '../../../main/definitions/case';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -51,9 +51,14 @@ export const mockEt1DataModelUpdate = {
     claimantHearingPreference: {
       reasonable_adjustments: YesOrNo.YES,
       reasonable_adjustments_detail: 'Adjustments detail test',
+      hearing_preferences: [HearingPreference.PHONE],
+      hearing_assistance: 'Hearing assistance test',
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
+    },
+    claimantContactPreference: {
+      claimant_contact_preference: EmailOrPost.EMAIL,
     },
   },
 };
