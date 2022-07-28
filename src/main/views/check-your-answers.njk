@@ -32,6 +32,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.typeOfClaim
           },
           actions: {
             items: [
@@ -62,6 +63,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.dobDate.month
           },
           actions: {
             items: [
@@ -79,6 +81,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.gender
           },
           actions: {
             items: [
@@ -92,27 +95,11 @@
         },
         {
           key: {
-            text: personalDetails.genderSameAsBirth,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.GENDER_DETAILS,
-                text: "Change",
-                visuallyHiddenText: personalDetails.genderSameAsBirth
-              }
-            ]
-          } 
-        },
-        {
-          key: {
             text: personalDetails.title,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+             text: userCase.preferredTitle
           },
           actions: {
             items: [
@@ -120,6 +107,96 @@
                 href: PageUrls.GENDER_DETAILS,
                 text: "Change",
                 visuallyHiddenText: personalDetails.title
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+          text: personalDetails.contactOrHomeAddress,
+          classes: "govuk-heading-m"
+          },
+          value: {
+            text: userCase
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.ADDRESS_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.contactOrHomeAddress
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: contactDetails.telephone,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.telNumber
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.TELEPHONE_NUMBER,
+                text: "Change",
+                visuallyHiddenText: contactDetails.telephone
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.howToBeContacted,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.TELEPHONE_NUMBER,
+                text: "Change",
+                visuallyHiddenText: personalDetails.howToBeContacted
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.takePartInHearing,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.VIDEO_HEARINGS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.takePartInHearing
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: personalDetails.disability,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.claimTypeDiscrimination
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.CLAIM_TYPE_DISCRIMINATION,
+                text: "Change",
+                visuallyHiddenText: personalDetails.disability
               }
             ]
           } 
@@ -150,23 +227,6 @@
                 href: PageUrls.ADDRESS_DETAILS,
                 text: "Change",
                 visuallyHiddenText: contactDetails.contact
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: contactDetails.telephone,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.TELEPHONE_NUMBER,
-                text: "Change",
-                visuallyHiddenText: contactDetails.telephone
               }
             ]
           } 

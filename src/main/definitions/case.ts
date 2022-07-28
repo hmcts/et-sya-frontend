@@ -40,6 +40,8 @@ export interface Case {
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;
+  gender?: string;
+  preferredTitle?: string;
   telNumber?: string;
   validNoAcasReason?: YesOrNo;
   returnToExisting?: YesOrNo;

@@ -9,18 +9,21 @@
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
   "submitBtn": "Submit claim",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "typeOfClaim": "Type of claim",
+  "typeOfClaim": "Claim type",
   "personalDetails": {
-    "header": "Personal details",
+    "header": "Your details",
     "dob": "Date of birth",
     "gender": "Sex",
     "genderSameAsBirth": "Gender same as registered birth sex",
+    "contactOrHomeAddress": "Contact or home address",
+    "howToBeContacted": "How would you like to be contacted?",
+    "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
+    "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
     "title": "Preferred title"
   },
   "contactDetails": {
     "header": "Contact details",
-    "contact": "Contact or home address",
-    "telephone": "UK telephone number"
+    "telephone": "Telephone number"
   },
   "yourPreferences": {
     "header": "Your preferences",
