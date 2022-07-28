@@ -8,7 +8,7 @@ Scenario('Verify ET multiple claim for myself', async () => {
 
   I.waitForText('I’m representing myself and making my own claim', waitSeconds);
   I.click('Who can act as a representative?', 'span[class=govuk-details__summary-text]');
-  I.see('employment advisors – including those from Citizens Advice');
+  I.see('Citizens Advice advisers');
   I.checkOption('input[id=lip-or-representative]');
   I.click('Continue');
 
