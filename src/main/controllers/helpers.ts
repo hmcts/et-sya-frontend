@@ -51,13 +51,8 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
   const dob = req.session.userCase.dobDate;
   const startDate = formData.startDate;
 
-  if (startDate && dob) {
-    const errorType = isFirstDateBeforeSecond(startDate, dob);
-    if (errorType) {
-      return { errorType: errorType as string, propertyName: Object.keys(form.getFormFields())[0] };
-    }
-  } else {
-    return;
+  if (startDate && dob && isFirstDateBeforeSecond(startDate, dob)) {
+    return { errorType: 'invalidDateBeforeDOB', propertyName: Object.keys(form.getFormFields())[0] };
   }
 };
 

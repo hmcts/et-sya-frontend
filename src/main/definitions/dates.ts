@@ -108,6 +108,6 @@ export const StartDateFormFields = {
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInFuture(value),
 };
 
-const convertDateToCaseDate = (date: Date): CaseDate => {
+export const convertDateToCaseDate = (date: Date): CaseDate => {
   return { day: `${date.getDate()}`, month: `${date.getMonth() + 1}`, year: `${date.getFullYear()}` };
 };

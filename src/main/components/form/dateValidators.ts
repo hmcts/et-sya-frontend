@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 import { CaseDate } from '../../definitions/case';
+import { convertDateToCaseDate } from '../../definitions/dates';
 import { InvalidField } from '../../definitions/form';
 
 export type DateValidator = (
@@ -164,24 +165,11 @@ export const isPastDate: DateValidator = date => {
     return;
   }
 
-  const enteredDate = new Date(+date.year, +date.month, +date.day);
-
-  if (new Date() > enteredDate) {
+  if (isFirstDateBeforeSecond(date, convertDateToCaseDate(new Date()))) {
     return { error: 'invalidDateInPast', fieldName: 'day' };
   }
 };
 
-export const isFirstDateBeforeSecond: DateValidator = (value1: CaseDate | undefined, value2: CaseDate | undefined) => {
-  if (!value1) {
-    return;
-  }
-
-  const enteredDate = new Date(+value1.year, +value1.month, +value1.day);
-  const otherDate = new Date(+value2.year, +value2.month, +value2.day);
-
-  if (otherDate > enteredDate) {
-    return 'invalidDateOrder';
-  } else {
-    return;
-  }
+export const isFirstDateBeforeSecond = (value1: CaseDate, value2: CaseDate): boolean => {
+  return new Date(+value1.year, +value1.month, +value1.day) < new Date(+value2.year, +value2.month, +value2.day);
 };

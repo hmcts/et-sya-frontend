@@ -6,6 +6,7 @@ import {
   isDateNotPartial,
   isDateTenYearsInFuture,
   isDateTenYearsInPast,
+  isFirstDateBeforeSecond,
   isPastDate,
 } from '../../../main/components/form/dateValidators';
 import { CaseDate } from '../../../main/definitions/case';
@@ -258,5 +259,19 @@ describe('isDateTenYearsInFuture()', () => {
   ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
     const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
     expect(isValid).toStrictEqual(expected);
+  });
+});
+
+describe('isFirstDateBeforeSecond()', () => {
+  it.each([
+    { date1: { day: '1', month: '1', year: '1970' }, date2: { day: '2', month: '1', year: '1970' }, isBefore: true },
+    { date1: { day: '1', month: '1', year: '1970' }, date2: { day: '1', month: '2', year: '1970' }, isBefore: true },
+    { date1: { day: '1', month: '1', year: '1970' }, date2: { day: '1', month: '1', year: '1971' }, isBefore: true },
+    { date1: { day: '2', month: '1', year: '1970' }, date2: { day: '1', month: '1', year: '1970' }, isBefore: false },
+    { date1: { day: '1', month: '2', year: '1970' }, date2: { day: '1', month: '1', year: '1970' }, isBefore: false },
+    { date1: { day: '1', month: '1', year: '1971' }, date2: { day: '1', month: '1', year: '1970' }, isBefore: false },
+    { date1: { day: '1', month: '1', year: '2000' }, date2: { day: '1', month: '1', year: '2000' }, isBefore: false },
+  ])('should check correctly the order between the two dates: %o', ({ date1, date2, isBefore }) => {
+    expect(isFirstDateBeforeSecond(date1, date2)).toBe(isBefore);
   });
 });
