@@ -188,6 +188,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
       return res.redirect(req.url);
     });
   } else {
+    handleReturnUrl(req, res, redirectUrl);
     res.redirect(redirectUrl);
   }
 };
@@ -343,6 +344,21 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
       });
   }
 };
+
+function handleReturnUrl(req: AppRequest, res: Response, redirectUrl: string) {
+  if (req.url === PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK || req.url === PageUrls.CLAIM_SUBMITTED) {
+    req.session.returnUrl = undefined;
+  }
+  if (req.session.returnUrl !== undefined) {
+    return res.redirect(req.session.returnUrl);
+  }
+  if (redirectUrl === PageUrls.RESPONDENT_DETAILS_CHECK || redirectUrl === PageUrls.CHECK_ANSWERS) {
+    req.session.returnUrl = redirectUrl;
+  } else {
+    req.session.returnUrl = undefined;
+  }
+}
+
 function mapSelectedRespondentValuesToCase(selectedRespondentIndex: number, userCase: CaseWithId) {
   if (typeof selectedRespondentIndex !== 'undefined') {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;

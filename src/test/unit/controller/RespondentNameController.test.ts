@@ -1,5 +1,5 @@
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
@@ -68,5 +68,20 @@ describe('Respondent Name Controller', () => {
       respondentNumber: 1,
       respondentName: 'Globe Gym',
     });
+  });
+
+  it('should redirect to respondent details check if there is a returnUrl', () => {
+    const body = { respondentName: 'Globe Gym' };
+
+    const controller = new RespondentNameController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
 });
