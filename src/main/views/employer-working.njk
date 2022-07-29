@@ -1,6 +1,4 @@
-
-
-{{ 
+ {{ 
     govukSummaryList({
       rows: [
         {
@@ -11,10 +9,47 @@
         },
         {
           key: {
+            text: employmentDetails.didYouWorkFor,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.pastEmployer
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAST_EMPLOYER,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.didYouWorkFor
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.isStillWorking,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.STILL_WORKING
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.STILL_WORKING,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.isStillWorking
+              }
+            ]
+          } 
+        },
+        {
+          key: {
             text: employmentDetails.jobTitle,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.jobTitle
           },
           actions: {
             items: [
@@ -32,6 +67,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.startDate
           },
           actions: {
             items: [
@@ -49,13 +85,50 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.noticePeriod
           },
           actions: {
             items: [
               {
-                href: PageUrls.NOTICE_END,
+                href: PageUrls.NOTICE_PERIOD,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.noticePeriod
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.noticeLength,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.noticePeriodLength
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NOTICE_LENGTH,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.noticeLength
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.noticePeriodWeeksOrMonths,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.noticePeriodUnit
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NOTICE_PERIOD,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.noticePeriodWeeksOrMonths
               }
             ]
           } 
@@ -66,6 +139,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.avgWeeklyHrs
           },
           actions: {
             items: [
@@ -83,6 +157,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.payBeforeTax
           },
           actions: {
             items: [
@@ -100,6 +175,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.payAfterTax
           },
           actions: {
             items: [
@@ -113,10 +189,29 @@
         },
         {
           key: {
+            text: employmentDetails.payPeriod,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.noticePeriodPaid
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAY,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.payPeriod
+              }
+            ]
+          } 
+        },
+        {
+          key: {
             text: employmentDetails.pensionScheme,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase
           },
           actions: {
             items: [
@@ -134,6 +229,7 @@
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.employeeBenefits
           },
           actions: {
             items: [

@@ -114,7 +114,7 @@
         {
           key: {
           text: personalDetails.contactOrHomeAddress,
-          classes: "govuk-heading-m"
+          classes: "govuk-!-font-weight-regular"
           },
           value: {
             text: userCase
@@ -204,29 +204,197 @@
       ]
     }) 
   }}
+ 
+ {% include "employer-working.njk" %}
 
+  {% if userCase.isStillWorking === "NO-LONGER-WORKING" %}
+        {
+          key: {
+            text: employmentDetails.newJob,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.newJob
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NEW_JOB,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.newJob
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.newStartDate,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.newJob
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NEW_JOB_START_DATE,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.newStartDate
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.newPayBeforeTax,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.newJobPay
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NEW_JOB_PAY,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.newPayBeforeTax
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.payPeriod,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.noticePeriodPaid
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAY,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.payPeriod
+              }
+            ]
+          } 
+        }
+    {% endif %}
+  
   {{ 
     govukSummaryList({
       rows: [
         {
           key: {
-            text: contactDetails.header,
+            text: respodentDetails.header,
             classes: "govuk-heading-m"
           }
         },
         {
           key: {
-            text: contactDetails.contact,
+            text: respodentDetails.respondentName,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.respondents
           },
           actions: {
             items: [
               {
-                href: PageUrls.ADDRESS_DETAILS,
+                href: PageUrls.RESPONDENT_NAME,
                 text: "Change",
-                visuallyHiddenText: contactDetails.contact
+                visuallyHiddenText: respodentDetails.respondentName
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.respondentAddress,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.respondent
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.RESPONDENT_ADDRESS,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.respondentAddress
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.workedAtRespondent,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.respondents
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.RESPONDENT_NAME,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.workedAtRespondent
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.addressWorkedAt,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.respondents
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.RESPONDENT_NAME,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.addressWorkedAt
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.acasNumber,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.respondents
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.RESPONDENT_NAME,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.acasNumber
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: respodentDetails.noAcasReason,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.validNoAcasReason
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.RESPONDENT_NAME,
+                text: "Change",
+                visuallyHiddenText: respodentDetails.noAcasReason
               }
             ]
           } 
@@ -239,131 +407,6 @@
     govukSummaryList({
       rows: [
         {
-          key: {
-            text: yourPreferences.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: yourPreferences.requireAsistence,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: "#",
-                text: "Change",
-                visuallyHiddenText: yourPreferences.requireAsistence
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: yourPreferences.updatePreference,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.UPDATE_PREFERENCES,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.updatePreference
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: yourPreferences.videoHearings,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.VIDEO_HEARINGS,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.videoHearings
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
-  }}
-
-  {{ 
-    govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: employer.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: employer.didYouWorkFor,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.PAST_EMPLOYER,
-                text: "Change",
-                visuallyHiddenText: employer.didYouWorkFor
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employer.isStillWorking,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.STILL_WORKING,
-                text: "Change",
-                visuallyHiddenText: employer.isStillWorking
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
-  }}
-
-  {% if userCase.isStillWorking == "NO LONGER WORKING" %}
-    {% include "employer-no-longer-working.njk" %}
-  {% elseif userCase.isStillWorking == "NOTICE" %}
-    {% include "employer-notice.njk" %}
-  {% else %}
-    {% include "employer-working.njk" %}
-  {% endif %}
-
-  {% if userCase.isAcasSingle == "Yes" %}
-    {% include "respondent-details.njk" %}
-  {% else %}
-    {% include "respondent-details-no-acas.njk" %}
-  {% endif %}
-
-  {{ 
-    govukSummaryList({
-      rows: [
-         {
           key: {
             text: claimDetails.header,
             classes: "govuk-heading-m"
@@ -371,53 +414,108 @@
         },
         {
           key: {
-            text: claimDetails.summary,
+            text: claimDetails.claimType,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
-          
+            text: userCase.claimTypeDiscrimination
           },
           actions: {
             items: [
               {
-                href: PageUrls.CLAIM_STEPS,
+                href: "#",
                 text: "Change",
-                visuallyHiddenText: claimDetails.summary
+                visuallyHiddenText: claimDetails.claimType
               }
             ]
           } 
         },
         {
           key: {
-            text: claimDetails.fileUploads,
+            text: claimDetails.describeWhatHappened,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
-
+            text: userCase
           },
           actions: {
             items: [
               {
-                href: PageUrls.DESCRIBE_WHAT_HAPPENED,
+                href: PageUrls,
                 text: "Change",
-                visuallyHiddenText: claimDetails.fileUploads
+                visuallyHiddenText: claimDetails.describeWhatHappened
               }
             ]
           } 
         },
         {
           key: {
-            text: claimDetails.whatYouWant,
+            text: claimDetails.ifClaimSuccessful,
             classes: "govuk-!-font-weight-regular"
           },
           value: {
+            text: userCase.tellUsWhatYouWant
           },
           actions: {
             items: [
               {
                 href: PageUrls.TELL_US_WHAT_YOU_WANT,
                 text: "Change",
-                visuallyHiddenText: claimDetails.whatYouWant
+                visuallyHiddenText: yourPreferences.ifClaimSuccessful
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: claimDetails.expectedCompensation,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.compensationOutcome
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.COMPENSATION,
+                text: "Change",
+                visuallyHiddenText: yourPreferences.expectedCompensation
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: claimDetails.expectedTribunalsRecommendation,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.tribunalRecommendationOutcome
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.TRIBUNAL_RECOMMENDATION,
+                text: "Change",
+                visuallyHiddenText: yourPreferences.expectedTribunalsRecommendation
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: claimDetails.forwardClaim,
+            classes: "govuk-!-font-weight-regular"
+          },
+          value: {
+            text: userCase.whistleblowingClaim
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.WHISTLEBLOWING_CLAIMS,
+                text: "Change",
+                visuallyHiddenText: yourPreferences.forwardClaim
               }
             ]
           } 

@@ -8,10 +8,10 @@ const PAGE_URL = '/check-your-answers';
 const expectedTitle = 'Check your answers';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
-const summeryListClass = 'govuk-summary-list';
-const summeryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
-const summeryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-heading-m)';
-const summeryListLinkClass = 'govuk-link';
+const summaryListClass = 'govuk-summary-list';
+const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
+const summaryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-heading-m)';
+const summaryListLinkClass = 'govuk-link';
 const submitYourClaimClass = 'govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-9';
 const expectedSubmitYourClaim = 'Submit your claim';
 const submitYourClaimBodyClass = 'govuk-body';
@@ -48,12 +48,12 @@ describe('Check your answers confirmation page', () => {
   });
 
   it('should display 8 summery lists', () => {
-    const summeryLists = htmlRes.getElementsByClassName(summeryListClass);
+    const summeryLists = htmlRes.getElementsByClassName(summaryListClass);
     expect(summeryLists.length).equal(8, '8 summery lists not found');
   });
 
   it('should display correct headings in the summery lists', () => {
-    const summeryLists = htmlRes.getElementsByClassName(summeryListHeadingClass);
+    const summeryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
     expect(summeryLists[0].innerHTML).contains('Type of claim', 'List heading not found');
     expect(summeryLists[1].innerHTML).contains('Personal details', 'List heading not found');
     expect(summeryLists[2].innerHTML).contains('Contact details', 'List heading not found');
@@ -65,61 +65,61 @@ describe('Check your answers confirmation page', () => {
   });
 
   it('should display 1 row in Type Of Claim summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const typeOfClaimList = summeryListSections[0].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const typeOfClaimList = summeryListSections[0].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
   });
 
   it('should display 4 rows in Personal Details summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const personalDetailsList = summeryListSections[1].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const personalDetailsList = summeryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(personalDetailsList.length).equals(4, 'Incorrect number of rows found');
   });
 
   it('should display 2 rows in Contact Details summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const contactDetailsList = summeryListSections[2].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const contactDetailsList = summeryListSections[2].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(contactDetailsList.length).equals(2, 'Incorrect number of rows found');
   });
 
   it('should display 3 rows in Your Preferences summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const yourPreferencesList = summeryListSections[3].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const yourPreferencesList = summeryListSections[3].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(yourPreferencesList.length).equals(3, 'Incorrect number of rows found');
   });
 
   it('should display 2 rows in Past Employer summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const employerList = summeryListSections[4].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const employerList = summeryListSections[4].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(employerList.length).equals(2, 'Incorrect number of rows found');
   });
 
   it('should display 8 rows in Employment Details summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const employmentDetailsList = summeryListSections[5].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const employmentDetailsList = summeryListSections[5].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(employmentDetailsList.length).equals(8, 'Incorrect number of rows found');
   });
 
   it('should display 7 rows in Respondent Details summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const respondentDetailsList = summeryListSections[6].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const respondentDetailsList = summeryListSections[6].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(respondentDetailsList.length).equals(7, 'Incorrect number of rows found');
   });
 
   it('should display 3 rows in Claim Details summery list', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
-    const claimDetailsList = summeryListSections[7].querySelectorAll(summeryListKeyExcludeHeadingClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const claimDetailsList = summeryListSections[7].querySelectorAll(summaryListKeyExcludeHeadingClass);
     expect(claimDetailsList.length).equals(3, 'Incorrect number of rows found');
   });
 
   it('should have correct urls in the change buttons', () => {
-    const summeryListSections = htmlRes.getElementsByClassName(summeryListClass);
+    const summeryListSections = htmlRes.getElementsByClassName(summaryListClass);
 
-    const typeOfClaimList = summeryListSections[0].getElementsByClassName(summeryListLinkClass);
+    const typeOfClaimList = summeryListSections[0].getElementsByClassName(summaryListLinkClass);
     const typeOfClaimLink = typeOfClaimList[0].getAttribute('href');
     expect(typeOfClaimLink).equals(PageUrls.TYPE_OF_CLAIM, 'Incorrect href found');
 
-    const personalDetailsList = summeryListSections[1].getElementsByClassName(summeryListLinkClass);
+    const personalDetailsList = summeryListSections[1].getElementsByClassName(summaryListLinkClass);
     const dateOfBirthLink = personalDetailsList[0].getAttribute('href');
     const genderLink = personalDetailsList[1].getAttribute('href');
     const genderSameAsBirthLink = personalDetailsList[2].getAttribute('href');
@@ -129,26 +129,26 @@ describe('Check your answers confirmation page', () => {
     expect(genderSameAsBirthLink).equals(PageUrls.GENDER_DETAILS, 'Incorrect href found');
     expect(titleLink).equals(PageUrls.GENDER_DETAILS, 'Incorrect href found');
 
-    const contactDetailsList = summeryListSections[2].getElementsByClassName(summeryListLinkClass);
+    const contactDetailsList = summeryListSections[2].getElementsByClassName(summaryListLinkClass);
     const contactLink = contactDetailsList[0].getAttribute('href');
     const telephoneLink = contactDetailsList[1].getAttribute('href');
     expect(contactLink).equals(PageUrls.ADDRESS_DETAILS, 'Incorrect href found');
     expect(telephoneLink).equals(PageUrls.TELEPHONE_NUMBER, 'Incorrect href found');
 
-    const yourPreferencesList = summeryListSections[3].getElementsByClassName(summeryListLinkClass);
+    const yourPreferencesList = summeryListSections[3].getElementsByClassName(summaryListLinkClass);
     // To-do const requireAsistenceLink = yourPreferencesList[0].getAttribute('href');
     const updatePreferenceLink = yourPreferencesList[1].getAttribute('href');
     const videoHearingsLink = yourPreferencesList[2].getAttribute('href');
     expect(updatePreferenceLink).equals(PageUrls.UPDATE_PREFERENCES, 'Incorrect href found');
     expect(videoHearingsLink).equals(PageUrls.VIDEO_HEARINGS, 'Incorrect href found');
 
-    const employerList = summeryListSections[4].getElementsByClassName(summeryListLinkClass);
+    const employerList = summeryListSections[4].getElementsByClassName(summaryListLinkClass);
     const didYouWorkForLink = employerList[0].getAttribute('href');
     const isStillWorkingLink = employerList[1].getAttribute('href');
     expect(didYouWorkForLink).equals(PageUrls.PAST_EMPLOYER, 'Incorrect href found');
     expect(isStillWorkingLink).equals(PageUrls.STILL_WORKING, 'Incorrect href found');
 
-    const employmentDetailsList = summeryListSections[5].getElementsByClassName(summeryListLinkClass);
+    const employmentDetailsList = summeryListSections[5].getElementsByClassName(summaryListLinkClass);
     const jobTitleLink = employmentDetailsList[0].getAttribute('href');
     const startDateLink = employmentDetailsList[1].getAttribute('href');
     const noticePeriodLink = employmentDetailsList[2].getAttribute('href');
@@ -166,7 +166,7 @@ describe('Check your answers confirmation page', () => {
     expect(pensionSchemeLink).equals(PageUrls.PENSION, 'Incorrect href found');
     expect(benefitsLink).equals(PageUrls.BENEFITS, 'Incorrect href found');
 
-    const respondentDetailsList = summeryListSections[6].getElementsByClassName(summeryListLinkClass);
+    const respondentDetailsList = summeryListSections[6].getElementsByClassName(summaryListLinkClass);
     // to-do const orgOrPersonLink = respondentDetailsList[0].getAttribute('href');
     // to-do const acasNumberLink = respondentDetailsList[1].getAttribute('href');
     const acasExemptionLink = respondentDetailsList[2].getAttribute('href');
@@ -176,7 +176,7 @@ describe('Check your answers confirmation page', () => {
     // to-do const workAddressLink = respondentDetailsList[6].getAttribute('href');
     expect(acasExemptionLink).equals(PageUrls.NO_ACAS_NUMBER, 'Incorrect href found');
 
-    const claimDetailsList = summeryListSections[7].getElementsByClassName(summeryListLinkClass);
+    const claimDetailsList = summeryListSections[7].getElementsByClassName(summaryListLinkClass);
     const summaryLink = claimDetailsList[0].getAttribute('href');
     const fileUploadsLink = claimDetailsList[1].getAttribute('href');
     const whatYouWantLink = claimDetailsList[2].getAttribute('href');
