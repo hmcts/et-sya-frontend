@@ -67,6 +67,7 @@ export const TranslationKeys = {
   ACAS_CERT_NUM: 'acas-cert-num',
   RESPONDENT_DETAILS_CHECK: 'respondent-details-check',
   NO_ACAS_NUMBER: 'no-acas-reason',
+  WORK_POSTCODE: 'work-postcode',
 } as const;
 
 export const PageUrls = {
@@ -133,6 +134,7 @@ export const PageUrls = {
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
   PCQ: '/pcq',
+  WORK_POSTCODE: '/work-postcode',
 } as const;
 
 export const AuthUrls = {
@@ -171,3 +173,45 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+
+export const mvpLocations = [
+  'ZE',
+  'TD9',
+  'TD8',
+  'TD7',
+  'TD6',
+  'TD5',
+  'TD4',
+  'TD3',
+  'TD2',
+  'TD14',
+  'TD13',
+  'TD11',
+  'TD10',
+  'TD1',
+  'PH',
+  'PA',
+  'ML',
+  'KY',
+  'KW',
+  'KA',
+  'IV',
+  'HS',
+  'G',
+  'FK',
+  'EH',
+  'DG',
+  'DD',
+  'AB',
+  'YO',
+  'WF',
+  'S',
+  'OL14',
+  'LS',
+  'HX',
+  'HU',
+  'HG',
+  'HD',
+  'DN',
+  'BD',
+];

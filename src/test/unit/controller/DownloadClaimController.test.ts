@@ -58,7 +58,7 @@ describe('Download claim Controller', () => {
     const controller = new DownloadClaimController();
 
     (getCaseApiMock as jest.Mock).mockReturnValue({
-      downloadClaimPdf: jest.fn().mockRejectedValue(new Error('error')),
+      downloadClaimPdf: jest.fn().mockRejectedValue(new Error('test error message')),
     });
     await controller.get(request, response);
 

@@ -115,6 +115,8 @@ export default function (app: Application): void {
   app.get(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.get);
   app.post(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.post);
   app.get(PageUrls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
+  app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
+  app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(
     PageUrls.INFO,
     infoRequestHandler({
