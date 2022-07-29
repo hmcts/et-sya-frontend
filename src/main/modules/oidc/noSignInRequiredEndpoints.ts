@@ -10,5 +10,4 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.VALID_ACAS_REASON,
   PageUrls.CONTACT_ACAS,
   PageUrls.TYPE_OF_CLAIM,
-  PageUrls.INFO,
 ];
