@@ -3,10 +3,10 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, Urls } from '../definitions/constants';
 
 export default function (app: Application): void {
-  app.get(PageUrls.PCQ, app.locals.container.cradle.pcqController.get);
+  app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
   app.get(PageUrls.CHECKLIST, app.locals.container.cradle.checklistController.get);
   app.get(PageUrls.NEW_ACCOUNT_LANDING, app.locals.container.cradle.newAccountLandingController.get);
@@ -114,11 +114,11 @@ export default function (app: Application): void {
   app.post(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.post);
   app.get(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.get);
   app.post(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.post);
-  app.get(PageUrls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
+  app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(
-    PageUrls.INFO,
+    Urls.INFO,
     infoRequestHandler({
       extraBuildInfo: {
         host: os.hostname(),

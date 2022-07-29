@@ -25,7 +25,7 @@ export default class PlaceOfWorkController {
         id: 'address2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: null,
+        label: 'Work address 2',
         labelSize: null,
         labelHidden: true,
       },

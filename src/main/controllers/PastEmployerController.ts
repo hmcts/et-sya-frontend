@@ -23,6 +23,8 @@ export default class PastEmployerController {
     fields: {
       pastEmployer: {
         ...DefaultRadioFormFields,
+        label: 'Did you work for the organisation or person you’re making your claim against?',
+        labelHidden: true,
         id: 'past-employer',
         classes: 'govuk-radios--inline',
       },

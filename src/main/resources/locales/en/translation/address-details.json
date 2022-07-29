@@ -17,7 +17,8 @@
     },
     "addressPostcode": {
       "required": "Enter a postcode",
-      "invalid": "Enter a valid UK postcode"
+      "invalid": "Enter a valid UK postcode",
+      "notSelected": "Select an address"
     }
   }
 }
