@@ -44,6 +44,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     otherTitlePreference: fromApiCaseData.case_data?.claimantIndType?.claimant_title_other,
     jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
     startDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
+    endDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_to),
     noticePeriod: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period,
     noticePeriodUnit: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_unit,
     noticePeriodLength: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_duration,
@@ -55,6 +56,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantPensionWeeklyContribution:
       fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_weekly_contribution,
     employeeBenefits: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits,
+    newJob: fromApiCaseData.case_data?.newEmploymentType?.new_job,
+    newJobStartDate: parseDateFromString(fromApiCaseData.case_data?.newEmploymentType?.newly_employed_from),
+    newJobPay: fromApiCaseData.case_data?.newEmploymentType?.new_pay_before_tax,
+    newJobPayInterval: fromApiCaseData.case_data?.newEmploymentType?.new_pay_interval,
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
@@ -109,6 +114,13 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_benefits: caseItem.employeeBenefits,
         claimant_benefits_detail: caseItem.benefitsCharCount,
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
+        claimant_employed_to: formatDate(caseItem.endDate),
+      },
+      newEmploymentType: {
+        new_job: caseItem.newJob,
+        newly_employed_from: formatDate(caseItem.newJobStartDate),
+        new_pay_before_tax: caseItem.newJobPay,
+        new_pay_interval: caseItem.newJobPayInterval,
       },
       claimantHearingPreference: {
         reasonable_adjustments: caseItem.reasonableAdjustments,

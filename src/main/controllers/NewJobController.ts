@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -8,7 +9,14 @@ import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  conditionalRedirect,
+  getPageContent,
+  handleSessionErrors,
+  handleUpdateDraftCase,
+  setUserCase,
+} from './helpers';
 
 const new_job: RadioFormFields = {
   ...DefaultInlineRadioFormFields,
@@ -27,7 +35,7 @@ export default class NewJobController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.newJobContent.fields);
   }
 
@@ -37,6 +45,7 @@ export default class NewJobController {
       : PageUrls.FIRST_RESPONDENT_NAME;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

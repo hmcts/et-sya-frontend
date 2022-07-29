@@ -1,6 +1,7 @@
 import NewJobController from '../../../main/controllers/NewJobController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,7 +12,7 @@ describe('New Job Controller', () => {
   };
 
   it('should render the New Job Choice page', () => {
-    const controller = new NewJobController();
+    const controller = new NewJobController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -20,7 +21,7 @@ describe('New Job Controller', () => {
 
   it('should render the home page when no radio button is selected', () => {
     const body = { newJob: YesOrNo.NO };
-    const controller = new NewJobController();
+    const controller = new NewJobController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -31,7 +32,7 @@ describe('New Job Controller', () => {
 
   it('should render the new job start date page when yes radio button is selected', () => {
     const body = { newJob: YesOrNo.YES };
-    const controller = new NewJobController();
+    const controller = new NewJobController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();

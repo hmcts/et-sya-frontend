@@ -60,10 +60,13 @@ export interface Case {
   workAddressCountry?: string;
   workAddressPostcode?: string;
   startDate?: CaseDate;
+  endDate?: CaseDate;
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;
   payInterval?: PayInterval;
+  newJob?: YesOrNo;
+  newJobStartDate?: CaseDate;
   newJobPay?: number;
   newJobPayInterval?: PayInterval;
   employeeBenefits?: YesOrNo;
@@ -74,7 +77,6 @@ export interface Case {
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
-  newJob?: YesOrNo;
   claimTypeDiscrimination?: ClaimTypeDiscrimination[];
   claimTypePay?: ClaimTypePay[];
   tellUsWhatYouWant?: TellUsWhatYouWant[];

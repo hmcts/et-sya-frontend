@@ -1,5 +1,6 @@
 import NewJobStartDateController from '../../../main/controllers/NewJobStartDateController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,7 +11,7 @@ describe('New Job Start Date Controller', () => {
   };
 
   it('should render the New Job Start Date page', () => {
-    const controller = new NewJobStartDateController();
+    const controller = new NewJobStartDateController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -25,7 +26,7 @@ describe('New Job Start Date Controller', () => {
       'newJobStartDate-year': '2000',
     };
 
-    const controller = new NewJobStartDateController();
+    const controller = new NewJobStartDateController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();

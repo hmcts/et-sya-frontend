@@ -1,5 +1,6 @@
 import NewJobPayController from '../../../main/controllers/NewJobPayController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -10,7 +11,7 @@ describe('New Job Pay Controller', () => {
   };
 
   it('should render the New Job Pay page', () => {
-    const controller = new NewJobPayController();
+    const controller = new NewJobPayController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
