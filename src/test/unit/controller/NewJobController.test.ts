@@ -26,7 +26,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.HOME);
+    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the new job start date page when yes radio button is selected', () => {
