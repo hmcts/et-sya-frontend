@@ -11,7 +11,7 @@
       "monthNotANumber": "Month must only contain numbers. For example, 04",
       "yearNotANumber": "Year must only contain numbers. For example, 1981",
       "invalidDate": "Date of birth must be a real date.",
-      "invalidDateInFuture": "Date entered must be in in the past.",
+      "invalidDateInFuture": "Date entered must be in the past.",
       "invalidDateTooFarInPast": "Date must be between 10 years and 100 years in the past.",
       "invalidDateTooRecent": "Date must be between 10 years and 100 years in the past."
     }
