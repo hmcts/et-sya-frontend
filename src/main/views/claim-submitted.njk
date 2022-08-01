@@ -2,6 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -13,24 +14,93 @@
     titleText: h1
   }) }}
 
-{{ govukSummaryList({
+  <p class="govuk-body">
+    {{ emailConfirmation }}
+  </p>
+
+  <h2 class="govuk-heading-m">
+    {{ whatHappensNext }}
+  </h2>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>
+      {{whatHappensNextItemOne}}
+    </li>
+    <li>
+      {{whatHappensNextItemTwo}}
+    </li>
+  </ul>
+
+  <h2 class="govuk-heading-m">
+    {{ submissionDetails }}
+  </h2>
+
+  {{ govukSummaryList({
   rows: [
-    {
-      key: {
-        text: downloadClaim
-      },
-      value: {
-        text: downloadBtn | safe
-      }
-    }
+    { key: { text: submissionReference  }, value: { text: submissionReferenceText | safe } },
+    { key: { text: claimSubmitted  }, value: { text: claimSubmittedText | safe } },
+    { key: { text: downloadClaim  }, value: { text: downloadBtn | safe } },
+    { key: { text: attachments }, value: { text: attachmentsText | safe } }
   ]
-}) }}
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-  
+  }) }}
+
+  <h2 class="govuk-heading-m">
+    {{ claimQuestions }}
+  </h2>
+
+  <p class="govuk-body">
+    {{ claimQuestionsText}}
+  </p>
+
+  {{ govukSummaryList({
+    rows: [
+      { key: { text: tribunalOffice  }, value: { text: tribunalOfficeText } },
+      { key: { text: email  }, value: { text: emailText } },
+      { key: { text: telephone  }, value: { text: telephoneText } }
+    ]}) 
+  }}
+
+  <h2 class="govuk-heading-m">
+    {{ processQuestions }}
+  </h2>
+
+  <p class="govuk-body">
+    {{ processQuestionsText}}
+  </p>
+
+  <ul class="govuk-list">
+    <li>
+      {{contactPrimary}}
+    </li>
+    <li>
+      {{contactWelsh}}
+    </li>
+    <li>
+      {{contactScotland}}
+    </li>
+    <li>
+      {{contactEngland}}
+    </li>
+    <li>
+      {{contactScotland2}}
+    </li>
+  </ul>
+
+  <p class="govuk-body">
+    {{ contactAppend | safe}}
+  </p>
+
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds govuk-border blue-border">
-      <h2 class="govuk-heading-m"> {{ survey.titleText }} </h2>
-      <p class="govuk-body"> {{ survey.p1 }} <a href=" {{ survey.url }}" class="govuk-link"> {{ survey.linkText }} </a> </p>
+    <div class="govuk-grid-column-two-thirds govuk-border black-border govuk-!-padding-bottom-2">
+      <h2 class="govuk-heading-m">
+        {{ survey.titleText }}
+      </h2>
+      <p class="govuk-body">
+        {{ survey.text }}
+      </p>
+      <a href="{{ survey.url }}" class="govuk-link">
+        {{ survey.linkText }}
+      </a>
     </div>
   </div>
 {% endblock %}
