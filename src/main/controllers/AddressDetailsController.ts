@@ -30,7 +30,7 @@ export default class AddressDetailsController {
         name: 'address-line2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: 'Address 2',
+        label: l => l.addressLine2,
         labelHidden: true,
         labelSize: null,
         attributes: {
