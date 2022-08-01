@@ -26,7 +26,6 @@ const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
-const detailsSummary3 = 'Contact us for help';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {
@@ -89,10 +88,6 @@ describe('LiP or Representative page', () => {
     expect(detailSummaries[1].innerHTML).contains(
       detailsSummary2,
       'Could not find the details summary with text ' + detailsSummary2
-    );
-    expect(detailSummaries[2].innerHTML).contains(
-      detailsSummary3,
-      'Could not find the details summary with text ' + detailsSummary3
     );
   });
 });

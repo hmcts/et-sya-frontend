@@ -1,5 +1,5 @@
 {
-  "title": "Date of birth details",
+  "title": "Return to an existing claim",
   "h1": "Return to an existing claim",
   "p1": "You’ll need to use either a <span class=\"govuk-!-font-weight-bold\">‘save and return number’</span> or your new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span> to return to an existing claim.",
   "p2": "Have you got a ‘save and return number’ or a new ‘Employment Tribunal account’? ",
@@ -8,7 +8,7 @@
   "optionText2": "I’ve got a new <span class=\"govuk-!-font-weight-bold\">‘Employment Tribunal account’</span>",
   "errors": {
     "returnToExisting": {
-      "required": "Select an option"
+      "required": "Tell us if you have a save and return number or an Employment Tribunal account"
     }
   }
 }

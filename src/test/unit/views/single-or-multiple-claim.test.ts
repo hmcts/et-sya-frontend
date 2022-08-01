@@ -8,13 +8,13 @@ const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
-const expectedRadioLabel1 = 'I’m making a ‘Single’ claim on my own';
-const expectedRadioLabel2 = 'I’m making a ‘Multiple’ claim alongside other people';
-const expectedTitle = 'Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?';
+const expectedRadioLabel1 = 'I’m claiming on my own';
+const expectedRadioLabel2 = 'I’m claiming with another person or other people';
+const expectedTitle = 'Are you making a claim on your own or with others?';
 const expectedP1 =
-  'You make a ‘Single’ claim if your dispute is only between you and any respondents who you think treated you (as an individual) unlawfully.';
+  'You can make a claim to an employment tribunal on your own, where you are the only claimant. You can also make a claim alongside another person, or a group of people who have been treated in the same way.';
 const expectedP2 =
-  'You make a ‘Multiple’ claim if your dispute is between more than 1 more person and any respondents who you think treated you all (as a group) unlawfully.';
+  'It helps the employment tribunal to know which type it is. If you do not know, choose the first option.';
 
 let htmlRes: Document;
 describe('Single or Multiple Claim page', () => {

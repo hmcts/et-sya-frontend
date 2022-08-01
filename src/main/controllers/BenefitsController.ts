@@ -8,9 +8,8 @@ import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 export default class BenefitsController {
   private readonly form: Form;
@@ -60,22 +59,16 @@ export default class BenefitsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const session = req.session;
     setUserCase(req, this.form);
     let redirectUrl = '';
-    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.RESPONDENT_NAME;
     }
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(() => {
-        this.logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-      })
-      .catch(error => {
-        this.logger.info(error);
-      });
     handleSessionErrors(req, res, this.form, redirectUrl);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
