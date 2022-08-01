@@ -180,10 +180,10 @@ export const isValidCurrency: Validator = value => {
   }
 };
 
-export const validateTitlePreference: Validator = value => {
-  if ((value as string).trim().length === 0) {
+export const validateTitlePreference: Validator = (value: string) => {
+  if (value.trim().length === 0) {
     return 'required';
-  } else if (/^\d+$/.test(value as string) || /^\s*\d/.test(value as string)) {
+  } else if (/^\d+$/.test(value) || /^\s*\d/.test(value)) {
     return 'numberError';
   }
 };
