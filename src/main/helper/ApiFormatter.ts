@@ -105,32 +105,20 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   };
 }
 
-export const formatDate = (dobDate: CaseDate): string => {
-  if (isDateEmpty(dobDate)) {
+export const formatDate = (date: CaseDate): string => {
+  if (!date || isDateEmpty(date)) {
     return null;
   }
 
-  return (
-    dobDate.year +
-    '-' +
-    (dobDate.month.match(/^\d$/) ? '0' : '') +
-    dobDate.month +
-    '-' +
-    (dobDate.day.match(/^\d$/) ? '0' : '') +
-    dobDate.day
-  );
+  return `${date.year}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}`;
 };
 
 export const parseDateFromString = (dobDate: string): CaseDate => {
   if (dobDate) {
-    const year = dobDate.substring(0, 4);
-    const month = dobDate.substring(5, 7);
-    const day = dobDate.substring(8);
-
     return {
-      year,
-      month,
-      day,
+      year: dobDate.substring(0, 4),
+      month: dobDate.substring(5, 7),
+      day: dobDate.substring(8),
     };
   }
 };

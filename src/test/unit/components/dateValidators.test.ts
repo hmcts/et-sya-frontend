@@ -1,17 +1,18 @@
 import {
   areDateFieldsFilledIn,
   areDates10YearsApartOrMore,
+  convertCaseDateToDate,
+  convertDateToCaseDate,
   isDateEmpty,
+  isDateInLastTenYears,
+  isDateInNextTenYears,
   isDateInPast,
   isDateInputInvalid,
+  isDateNotInPast,
   isDateNotPartial,
-  isDateTenYearsInFuture,
-  isDateTenYearsInPast,
   isFirstDateBeforeSecond,
-  isNotPastDate,
 } from '../../../main/components/form/dateValidators';
 import { CaseDate } from '../../../main/definitions/case';
-import { convertDateToCaseDate } from '../../../main/definitions/dates';
 
 describe('areDateFieldsFilledIn()', () => {
   it('Should check if values in object exist', () => {
@@ -24,24 +25,6 @@ describe('areDateFieldsFilledIn()', () => {
     expect(isValid).toStrictEqual(undefined);
   });
 
-  it('Should return required when no fields are filled in', () => {
-    const isValid = areDateFieldsFilledIn(undefined);
-
-    expect(isValid).toStrictEqual({
-      error: 'required',
-      fieldName: undefined,
-    });
-  });
-
-  it('Should check if values in object does not exist', () => {
-    const isValid = areDateFieldsFilledIn({ day: '', month: '', year: '' });
-
-    expect(isValid).toStrictEqual({
-      error: 'required',
-      fieldName: 'day',
-    });
-  });
-
   it('Should check if one value in object does not exist', () => {
     const isValid = areDateFieldsFilledIn({ day: '5', month: '', year: '2000' });
 
@@ -50,18 +33,34 @@ describe('areDateFieldsFilledIn()', () => {
       fieldName: 'month',
     });
   });
+
+  it('Should check if multiple values in object does not exist', () => {
+    const isValid = areDateFieldsFilledIn({ day: '', month: '', year: '2000' });
+
+    expect(isValid).toStrictEqual({
+      error: 'dayRequired',
+      fieldName: 'day',
+    });
+  });
+
+  it('Should check if all values in object does not exist', () => {
+    const isValid = areDateFieldsFilledIn({ day: '', month: '', year: '' });
+
+    expect(isValid).toStrictEqual({
+      error: 'required',
+      fieldName: 'day',
+    });
+  });
 });
 
 describe('isDateNotPartial()', () => {
   it.each([
     { date: { day: '', month: '', year: '' }, error: undefined },
-    { date: { day: '' }, error: undefined },
-    { date: { month: '' }, error: undefined },
-    { date: { year: '' }, error: undefined },
     { date: { day: '1', month: '1', year: '2000' }, error: undefined },
     { date: { day: '', month: '1', year: '2000' }, error: { error: 'dayRequired', fieldName: 'day' } },
     { date: { day: '1', month: '', year: '2000' }, error: { error: 'monthRequired', fieldName: 'month' } },
     { date: { day: '1', month: '1', year: '' }, error: { error: 'yearRequired', fieldName: 'year' } },
+    { date: { day: '', month: '1', year: '' }, error: { error: 'dayRequired', fieldName: 'day' } },
   ])('check if date is not partial: %o', ({ date, error }) => {
     expect(isDateNotPartial(date as unknown as CaseDate)).toStrictEqual(error);
   });
@@ -76,6 +75,7 @@ describe('isDateInputInvalid()', () => {
   dateMoreThan100YearsAgo.setDate(dateMoreThan100YearsAgo.getDate() - 1);
 
   it.each([
+    { date: { day: '', month: '', year: '' }, expected: undefined },
     { date: { day: 1, month: 1, year: 1970 }, expected: undefined },
     { date: { day: 31, month: 12, year: 2000 }, expected: undefined },
     {
@@ -126,7 +126,6 @@ describe('isDateInputInvalid()', () => {
       date: { day: 1, month: 12, year: 'way' },
       expected: { error: 'yearNotANumber', fieldName: 'year' },
     },
-    { date: undefined, expected: 'invalidDate' },
     {
       date: { day: 31, month: 11, year: 2000 },
       expected: { error: 'invalidDate', fieldName: 'month' },
@@ -174,100 +173,83 @@ describe('areDates10YearsApartOrMore()', () => {
       date2: { day: '31', month: '12', year: '2000' },
       expected: undefined,
     },
+    {
+      date1: { day: '', month: '', year: '' },
+      date2: { day: '31', month: '12', year: '2000' },
+      expected: undefined,
+    },
+    {
+      date1: { day: '31', month: '12', year: '2000' },
+      date2: { day: '', month: '', year: '' },
+      expected: undefined,
+    },
   ])('checks dates validity when %o', ({ date1, date2, expected }) => {
     expect(areDates10YearsApartOrMore(date1, date2)).toStrictEqual(expected);
   });
 });
 
-describe('isDateTenYearsInPast()', () => {
-  const currentDate = new Date();
+describe('isDateInLastTenYears()', () => {
+  const date = convertDateToCaseDate(new Date());
 
   it.each([
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() - 5,
-      },
+      dateObj: { day: '', month: '', year: '' },
       expected: undefined,
     },
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() - 10,
-      },
+      dateObj: { ...date, year: `${+date.year - 5}` },
       expected: undefined,
     },
     {
-      dateObj: {
-        day: currentDate.getDate() - 1,
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() - 10,
-      },
+      dateObj: { ...date, year: `${+date.year - 10}` },
+      expected: undefined,
+    },
+    {
+      dateObj: { ...date, day: `${+date.day - 1}`, year: `${+date.year - 10}` },
       expected: { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' },
     },
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() - 15,
-      },
+      dateObj: { ...date, year: `${+date.year - 15}` },
       expected: { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' },
     },
   ])('Should check if date entered is ten year in the past when %o', ({ dateObj, expected }) => {
-    const isValid = isDateTenYearsInPast(dateObj as unknown as CaseDate);
-    expect(isValid).toStrictEqual(expected);
+    expect(isDateInLastTenYears(dateObj)).toStrictEqual(expected);
   });
 });
 
-describe('isDateTenYearsInFuture()', () => {
-  const currentDate = new Date();
+describe('isDateInNextTenYears()', () => {
+  const date = convertDateToCaseDate(new Date());
 
   it.each([
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() + 5,
-      },
+      dateObj: { day: '', month: '', year: '' },
       expected: undefined,
     },
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() + 10,
-      },
+      dateObj: { ...date, year: `${+date.year + 5}` },
       expected: undefined,
     },
     {
-      dateObj: {
-        day: currentDate.getDate() + 1,
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() + 10,
-      },
+      dateObj: { ...date, year: `${+date.year + 10}` },
+      expected: undefined,
+    },
+    {
+      dateObj: { ...date, day: `${+date.day + 10}`, year: `${+date.year + 10}` },
       expected: { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
     },
     {
-      dateObj: {
-        day: currentDate.getDate(),
-        month: currentDate.getMonth() + 1,
-        year: currentDate.getFullYear() + 15,
-      },
+      dateObj: { ...date, year: `${+date.year + 15}` },
       expected: { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
     },
   ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
-    const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
-    expect(isValid).toStrictEqual(expected);
+    expect(isDateInNextTenYears(dateObj)).toStrictEqual(expected);
   });
 });
 
 describe('isDateInPast()', () => {
   const currDate = convertDateToCaseDate(new Date());
   it.each([
-    { date: undefined, expected: undefined },
-    { date: {} as CaseDate, expected: undefined },
+    { date: { day: '', month: '', year: '' }, undefined },
     { date: { ...currDate, day: `${+currDate.day - 1}` }, undefined },
     { date: { ...currDate, month: `${+currDate.month - 1}` }, undefined },
     { date: { ...currDate, year: `${+currDate.year - 1}` }, undefined },
@@ -289,11 +271,10 @@ describe('isDateInPast()', () => {
   });
 });
 
-describe('isNotPastDate()', () => {
+describe('isDateNotInPast()', () => {
   const currDate = convertDateToCaseDate(new Date());
   it.each([
-    { date: undefined, expected: undefined },
-    { date: {} as CaseDate, expected: undefined },
+    { date: { day: '', month: '', year: '' }, undefined },
     { date: currDate, expected: undefined },
     { date: { ...currDate, day: `${+currDate.day + 1}` }, expected: undefined },
     { date: { ...currDate, month: `${+currDate.month + 1}` }, expected: undefined },
@@ -311,7 +292,7 @@ describe('isNotPastDate()', () => {
       expected: { error: 'invalidDateInPast', fieldName: 'day' },
     },
   ])('Should check if date entered is not a date in the past when %o', ({ date, expected }) => {
-    expect(isNotPastDate(date)).toStrictEqual(expected);
+    expect(isDateNotInPast(date)).toStrictEqual(expected);
   });
 });
 
@@ -333,18 +314,31 @@ describe('isFirstDateBeforeSecond()', () => {
 describe('isDateEmpty()', () => {
   it.each([
     { date: { day: '', month: '', year: '' }, empty: true },
-    { date: { day: '' }, empty: true },
-    { date: { day: undefined, month: undefined, year: undefined }, empty: true },
-    { date: { day: undefined }, empty: true },
-    { date: { day: undefined, month: '' }, empty: true },
-    { date: { month: '' }, empty: true },
-    { date: { year: '' }, empty: true },
-    { date: { day: '1' }, empty: false },
-    { date: { month: '1' }, empty: false },
-    { date: { year: '1' }, empty: false },
-    { date: { day: '1', month: '' }, empty: false },
-    { date: { day: '1', month: undefined }, empty: false },
+    { date: { day: '1', month: '', year: '' }, empty: false },
+    { date: { day: '', month: '1', year: '' }, empty: false },
+    { date: { day: '', month: '', year: '1' }, empty: false },
+    { date: { day: '1', month: '1', year: '' }, empty: false },
   ])('check if date is not partial: %o', ({ date, empty }) => {
     expect(isDateEmpty(date as unknown as CaseDate)).toStrictEqual(empty);
+  });
+});
+
+describe('convertDateToCaseDate()', () => {
+  it.each([
+    { date: new Date(2000, 0, 5), caseDate: { year: '2000', month: '1', day: '5' } },
+    { date: new Date(2000, 10, 5), caseDate: { year: '2000', month: '11', day: '5' } },
+    { date: new Date(2000, 11, 5), caseDate: { year: '2000', month: '12', day: '5' } },
+  ])('should convert date to CaseDate correctly: %o', ({ date, caseDate }) => {
+    expect(convertDateToCaseDate(date)).toMatchObject(caseDate);
+  });
+});
+
+describe('convertCaseDateToDate()', () => {
+  it.each([
+    { caseDate: { year: '2000', month: '1', day: '5' }, date: new Date(2000, 0, 5) },
+    { caseDate: { year: '2000', month: '11', day: '5' }, date: new Date(2000, 10, 5) },
+    { caseDate: { year: '2000', month: '12', day: '5' }, date: new Date(2000, 11, 5) },
+  ])('should convert date to CaseDate correctly: %o', ({ caseDate, date }) => {
+    expect(convertCaseDateToDate(caseDate)).toMatchObject(date);
   });
 });

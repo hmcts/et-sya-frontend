@@ -60,7 +60,7 @@ describe('Dob Controller', () => {
 
     // No input and one per validator
     it.each([
-      { body: {}, errors: [] },
+      { body: { 'dobDate-day': '', 'dobDate-month': '', 'dobDate-year': '' }, errors: [] },
       {
         body: { 'dobDate-day': '05', 'dobDate-month': '11', 'dobDate-year': '' },
         errors: [{ errorType: 'yearRequired', fieldName: 'year', propertyName: 'dobDate' }],

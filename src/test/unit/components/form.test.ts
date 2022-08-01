@@ -64,7 +64,7 @@ describe('Form', () => {
   });
 
   it('Should validate a form and return error', async () => {
-    const errors = form.getErrors({});
+    const errors = form.getErrors({ dateField: {} } as unknown as Case);
 
     expect(errors).toStrictEqual([
       {
@@ -73,7 +73,7 @@ describe('Form', () => {
       },
       {
         propertyName: 'dateField',
-        fieldName: undefined,
+        fieldName: 'day',
         errorType: 'required',
       },
       {

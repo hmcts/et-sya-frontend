@@ -1,61 +1,46 @@
 import dayjs from 'dayjs';
 
 import { CaseDate } from '../../definitions/case';
-import { convertDateToCaseDate } from '../../definitions/dates';
 import { InvalidField } from '../../definitions/form';
 
-export type DateValidator = (
-  value: CaseDate | undefined,
-  value2?: CaseDate | undefined
-) => void | string | InvalidField;
+/**
+ * All validators assume that date1 (and date2 if provided) are not null / undefined
+ * and contain all the CaseData fields (though they might be empty strings).
+ */
+export type DateValidator = (date1: CaseDate, date2?: CaseDate) => void | string | InvalidField;
 
-export const areDateFieldsFilledIn: DateValidator = (fields: CaseDate | undefined) => {
-  if (
-    typeof fields !== 'object' ||
-    Object.keys(fields).length !== 3 ||
-    Object.values(fields).every(e => e === null || e === '')
-  ) {
-    return {
-      error: 'required',
-      fieldName: fields ? Object.keys(fields)[0] : undefined,
-    };
+export const areDateFieldsFilledIn: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date)) {
+    return { error: 'required', fieldName: 'day' };
   }
-  for (const [fieldName, field] of Object.entries(fields)) {
-    if (!field) {
-      return {
-        error: `${fieldName}Required`,
-        fieldName,
-      };
-    }
-  }
+
+  return getErrorsForEmptyFields(date);
 };
 
-export const isDateNotPartial: DateValidator = (date: CaseDate | undefined) => {
-  if (date === undefined || isDateEmpty(date) || !Object.values(date).some(e => e === null || e === '')) {
+export const isDateNotPartial: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date) || Object.values(date).every(e => e !== '')) {
     return;
   }
+
+  return getErrorsForEmptyFields(date);
+};
+
+const getErrorsForEmptyFields: DateValidator = (date: CaseDate) => {
   for (const [fieldName, field] of Object.entries(date)) {
     if (!field) {
-      return {
-        error: `${fieldName}Required`,
-        fieldName,
-      };
+      return { error: `${fieldName}Required`, fieldName };
     }
   }
 };
 
-export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) => {
-  const invalid = 'invalidDate';
-  if (!date) {
-    return invalid;
+export const isDateInputInvalid: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date)) {
+    return;
   }
 
   for (const [fieldName, value] of Object.entries(date)) {
     if (isNaN(+value)) {
-      return {
-        error: `${fieldName}NotANumber`,
-        fieldName,
-      };
+      return { error: `${fieldName}NotANumber`, fieldName };
     }
   }
 
@@ -64,41 +49,31 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate | undefined) =>
   const day = parseInt(date.day, 10) || 0;
 
   if (day < 1 || day > 31) {
-    return {
-      error: 'dayInvalid',
-      fieldName: 'day',
-    };
+    return { error: 'dayInvalid', fieldName: 'day' };
   }
 
   if (month < 1 || month > 12) {
-    return {
-      error: 'monthInvalid',
-      fieldName: 'month',
-    };
+    return { error: 'monthInvalid', fieldName: 'month' };
   }
 
   if (year < 1000) {
-    return {
-      error: 'invalidYear',
-      fieldName: 'year',
-    };
+    return { error: 'invalidYear', fieldName: 'year' };
   }
 
-  const enteredDate = new Date(+date.year, +date.month - 1, +date.day);
   const dateMinus100 = new Date();
   dateMinus100.setFullYear(dateMinus100.getFullYear() - 100);
   dateMinus100.setHours(0, 0, 0, 0);
 
-  if (enteredDate < dateMinus100) {
+  if (convertCaseDateToDate(date) < dateMinus100) {
     return { error: 'invalidDateTooFarInPast', fieldName: 'year' };
   }
 
   if (validateDayInTheMonth(date)) {
-    return { error: invalid, fieldName: validateDayInTheMonth(date) as string };
+    return { error: 'invalidDate', fieldName: validateDayInTheMonth(date) as string };
   }
 };
 
-export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
+const validateDayInTheMonth = (date: CaseDate): string | boolean => {
   const year = parseInt(date.year, 10) || 0;
 
   const month = parseInt(date.month, 10) || 0;
@@ -113,12 +88,13 @@ export const validateDayInTheMonth = (date: CaseDate): string | boolean => {
   return !yearValid ? 'year' : !monthValid ? 'month' : !dayValid ? 'day' : false;
 };
 
-export const areDates10YearsApartOrMore: DateValidator = (
-  caseDate1: CaseDate | undefined,
-  caseDate2: CaseDate | undefined
-) => {
-  const date1 = new Date(+caseDate1.year, +caseDate1.month - 1, +caseDate1.day);
-  const date2 = new Date(+caseDate2.year, +caseDate2.month - 1, +caseDate2.day);
+export const areDates10YearsApartOrMore: DateValidator = (caseDate1: CaseDate, caseDate2: CaseDate) => {
+  if (isDateEmpty(caseDate1) || isDateEmpty(caseDate2)) {
+    return;
+  }
+
+  const date1 = convertCaseDateToDate(caseDate1);
+  const date2 = convertCaseDateToDate(caseDate2);
   const yearsBetweenDates = new Date(Math.abs(date1.getTime() - date2.getTime())).getUTCFullYear() - 1970;
 
   if (yearsBetweenDates < 10) {
@@ -126,62 +102,57 @@ export const areDates10YearsApartOrMore: DateValidator = (
   }
 };
 
-export const isDateTenYearsInPast: DateValidator = (date: CaseDate | undefined) => {
-  const enteredDate = new Date(+date.year, +date.month - 1, +date.day);
+export const isDateInLastTenYears: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date)) {
+    return;
+  }
+
   const dateMinus10 = new Date();
   dateMinus10.setFullYear(dateMinus10.getFullYear() - 10);
   dateMinus10.setHours(0, 0, 0, 0);
 
-  if (enteredDate < dateMinus10) {
+  if (convertCaseDateToDate(date) < dateMinus10) {
     return { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' };
   }
 };
 
-export const isDateTenYearsInFuture: DateValidator = (date: CaseDate | undefined) => {
-  const enteredDate = new Date(+date.year, +date.month - 1, +date.day);
+export const isDateInNextTenYears: DateValidator = (date: CaseDate) => {
+  if (isDateEmpty(date)) {
+    return;
+  }
+
   const datePlus10 = new Date();
   datePlus10.setFullYear(datePlus10.getFullYear() + 10);
 
-  if (enteredDate > datePlus10) {
+  if (convertCaseDateToDate(date) > datePlus10) {
     return { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' };
   }
 };
 
-/**
- * Validate that the date is not a current / future date but has already been.
- */
 export const isDateInPast: DateValidator = date => {
-  if (isDateEmpty(date)) {
-    return;
-  }
-
-  if (!isFirstDateBeforeSecond(date, convertDateToCaseDate(new Date()))) {
+  if (!isDateEmpty(date) && !isFirstDateBeforeSecond(date, convertDateToCaseDate(new Date()))) {
     return { error: 'invalidDateInFuture', fieldName: 'day' };
   }
 };
 
-/**
- * Validate that the date is the current or a future date.
- */
-export const isNotPastDate: DateValidator = date => {
-  if (isDateEmpty(date)) {
-    return;
-  }
-
-  if (isFirstDateBeforeSecond(date, convertDateToCaseDate(new Date()))) {
+export const isDateNotInPast: DateValidator = date => {
+  if (!isDateEmpty(date) && isFirstDateBeforeSecond(date, convertDateToCaseDate(new Date()))) {
     return { error: 'invalidDateInPast', fieldName: 'day' };
   }
 };
 
-/**
- * Comparison of dates excluding specific hours/minutes/seconds of the day.
- */
-export const isFirstDateBeforeSecond = (value1: CaseDate, value2: CaseDate): boolean => {
-  return (
-    new Date(+value1.year, +value1.month - 1, +value1.day) < new Date(+value2.year, +value2.month - 1, +value2.day)
-  );
+export const isFirstDateBeforeSecond = (date1: CaseDate, date2: CaseDate): boolean => {
+  return convertCaseDateToDate(date1) < convertCaseDateToDate(date2);
 };
 
 export const isDateEmpty = (date: CaseDate): boolean => {
-  return date === undefined || Object.values(date).every(e => e === undefined || e === '');
+  return Object.values(date).every(e => e === '');
+};
+
+export const convertDateToCaseDate = (date: Date): CaseDate => {
+  return { day: `${date.getDate()}`, month: `${date.getMonth() + 1}`, year: `${date.getFullYear()}` };
+};
+
+export const convertCaseDateToDate = (date: CaseDate): Date => {
+  return new Date(+date.year, +date.month - 1, +date.day);
 };
