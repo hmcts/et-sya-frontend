@@ -36,6 +36,7 @@ export interface Case {
   addressCounty?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
+  noAcasReason?: string;
   updatePreference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
@@ -62,6 +63,7 @@ export interface Case {
   workAddressCounty?: string;
   workAddressPostcode?: string;
   startDate?: CaseDate;
+  newJobStartDate?: CaseDate;
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;

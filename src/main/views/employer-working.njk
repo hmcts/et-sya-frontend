@@ -10,7 +10,7 @@
         {
           key: {
             text: employmentDetails.didYouWorkFor,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.pastEmployer
@@ -28,10 +28,10 @@
         {
           key: {
             text: employmentDetails.isStillWorking,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.STILL_WORKING
+            text: userCase.isStillWorking if userCase.pastEmployer === "Yes" else " "
           },
           actions: {
             items: [
@@ -46,10 +46,10 @@
         {
           key: {
             text: employmentDetails.jobTitle,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.jobTitle
+            text: userCase.jobTitle if userCase.pastEmployer === "Yes" else " "
           },
           actions: {
             items: [
@@ -64,10 +64,10 @@
         {
           key: {
             text: employmentDetails.startDate,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.startDate
+            text: "" if userCase.startDate.day === undefined else userCase.startDate.day + "-" + userCase.startDate.month + "-"+ userCase.startDate.year
           },
           actions: {
             items: [
@@ -82,7 +82,7 @@
         {
           key: {
             text: employmentDetails.noticePeriod,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.noticePeriod
@@ -100,7 +100,7 @@
         {
           key: {
             text: employmentDetails.noticeLength,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.noticePeriodLength
@@ -118,7 +118,7 @@
         {
           key: {
             text: employmentDetails.noticePeriodWeeksOrMonths,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.noticePeriodUnit
@@ -136,7 +136,7 @@
         {
           key: {
             text: employmentDetails.weeklyHours,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.avgWeeklyHrs
@@ -154,7 +154,7 @@
         {
           key: {
             text: employmentDetails.payBeforeTax,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.payBeforeTax
@@ -172,7 +172,7 @@
         {
           key: {
             text: employmentDetails.payAfterTax,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
             text: userCase.payAfterTax
@@ -190,10 +190,10 @@
         {
           key: {
             text: employmentDetails.payPeriod,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.noticePeriodPaid
+            text: userCase.payInterval
           },
           actions: {
             items: [
@@ -208,10 +208,11 @@
         {
           key: {
             text: employmentDetails.pensionScheme,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase
+            text: userCase.claimantPensionContribution  + ": " + userCase.claimantPensionWeeklyContribution if userCase.claimantPensionContribution === "Yes" 
+            else userCase.claimantPensionContribution  
           },
           actions: {
             items: [
@@ -226,10 +227,11 @@
         {
           key: {
             text: employmentDetails.benefits,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.employeeBenefits
+            text: userCase.employeeBenefits if userCase.employeeBenefits === "No" 
+            else userCase.employeeBenefits + ", " + userCase.benefitsCharCount
           },
           actions: {
             items: [
@@ -244,3 +246,4 @@
       ]
     }) 
   }}
+

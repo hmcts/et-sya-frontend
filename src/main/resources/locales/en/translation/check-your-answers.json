@@ -49,8 +49,8 @@
     "payBeforeTax": "Pay before tax and National Insurance",
     "payAfterTax": "Pay after tax and National Insurance",
     "payPeriod": "Is this your weekly, monthly or annual pay?",
-    "pensionScheme": "Did the respondent make any contributions to your pension",
-    "benefits": "Did the respondent make any contributions to your pension?",
+    "pensionScheme": "Did the respondent make any contributions to your pension?",
+    "benefits": "Do you or did you receive any employee benefits?",
     "newJob": "Have you got a new job?",
     "newStartDate": "New job start date",
     "newPayBeforeTax": "New job pay before tax and National Insurance",
@@ -82,5 +82,8 @@
     "summary": "Summary of claim",
     "fileUploads": "File uploads",
     "whatYouWant": "What you want"
+  },
+  "answers": {
+    "NA": "Not Provided"
   }
 }
