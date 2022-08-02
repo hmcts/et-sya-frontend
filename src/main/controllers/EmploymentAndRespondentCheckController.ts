@@ -14,6 +14,8 @@ export default class EmploymentAndRespondentCheckController {
     fields: {
       employmentAndRespondentCheck: {
         ...DefaultRadioFormFields,
+        label: 'Have you completed this section?',
+        labelHidden: true,
         id: 'tasklist-check',
         classes: 'govuk-radios',
       },

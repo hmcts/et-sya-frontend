@@ -53,7 +53,7 @@ type DateTypes = string | void | InvalidField;
 export const BirthDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
+  label: (l: AnyRecord): string => l.h1,
   labelHidden: true,
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
@@ -67,7 +67,7 @@ export const BirthDateFormFields = {
 export const EndDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
+  label: (l: AnyRecord): string => l.h1,
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
@@ -77,7 +77,7 @@ export const EndDateFormFields = {
 export const NewJobDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
+  label: (l: AnyRecord): string => l.h1,
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>

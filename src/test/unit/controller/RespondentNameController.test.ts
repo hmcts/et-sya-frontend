@@ -10,11 +10,23 @@ describe('Respondent Name Controller', () => {
     common: {},
   };
 
-  it('should render the Respondent Name controller page', () => {
+  it('should render the Respondent Name controller page when respondents empty', () => {
     const controller = new RespondentNameController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_NAME, expect.anything());
+  });
+
+  it('should render the Respondent Name controller page when respondent exists', () => {
+    const controller = new RespondentNameController();
+
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase = userCaseWithRespondent;
 
     controller.get(request, response);
 
@@ -32,7 +44,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_ADDRESS);
+    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globo Gym',
@@ -51,10 +63,25 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_ADDRESS);
+    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globe Gym',
     });
+  });
+
+  it('should redirect to respondent details check if there is a returnUrl', () => {
+    const body = { respondentName: 'Globe Gym' };
+
+    const controller = new RespondentNameController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
 });

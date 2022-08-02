@@ -32,7 +32,7 @@ describe(`on POST ${PageUrls.NEW_JOB} with No`, () => {
       .send({ newJob: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual(PageUrls.HOME);
+        expect(res.header['location']).toEqual(PageUrls.FIRST_RESPONDENT_NAME);
       });
   });
 });
