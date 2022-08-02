@@ -31,7 +31,7 @@ describe(`on POST ${PageUrls.BENEFITS}`, () => {
       .send({})
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.RESPONDENT_NAME);
+        expect(res.header['location']).toStrictEqual(PageUrls.FIRST_RESPONDENT_NAME);
       });
   });
 });

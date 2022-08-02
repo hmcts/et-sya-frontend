@@ -17,6 +17,8 @@ export default class SingleOrMultipleController {
     fields: {
       caseType: {
         type: 'radios',
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
         classes: 'govuk-radios',
         id: 'single-or-multiple-claim',
         values: [

@@ -29,9 +29,15 @@ import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions }
 import { AnyRecord } from '../definitions/util-types';
 import { getCaseApi } from '../services/CaseService';
 
-export const getPageContent = (req: AppRequest, formContent: FormContent, translations: string[] = []): AnyRecord => {
+export const getPageContent = (
+  req: AppRequest,
+  formContent: FormContent,
+  translations: string[] = [],
+  selectedRespondentIndex?: number
+): AnyRecord => {
   const sessionErrors = req.session?.errors || [];
   const userCase = req.session?.userCase;
+  mapSelectedRespondentValuesToCase(selectedRespondentIndex, userCase);
 
   let content = {
     form: formContent,
@@ -204,6 +210,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
       return res.redirect(req.url);
     });
   } else {
+    handleReturnUrl(req, res, redirectUrl);
     res.redirect(redirectUrl);
   }
 };
@@ -228,7 +235,17 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const setUserCaseForNewRespondent = (req: AppRequest): void => {
+export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent): void => {
+  userCase.workAddress1 = respondent.respondentAddress1;
+  userCase.workAddress2 = respondent.respondentAddress2;
+  userCase.workAddressTown = respondent.respondentAddressTown;
+  userCase.workAddressCountry = respondent.respondentAddressCountry;
+  userCase.workAddressPostcode = respondent.respondentAddressPostcode;
+};
+
+export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
+  const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
+  const selectedRespondentIndex = getRespondentIndex(req);
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
@@ -237,14 +254,17 @@ export const setUserCaseForNewRespondent = (req: AppRequest): void => {
     req.session.userCase.respondents = [];
     respondent = {
       respondentNumber: 1,
-      respondentName: req.body.respondentName,
     };
     req.session.userCase.respondents.push(respondent);
-    req.session.userCase.selectedRespondent = respondent.respondentNumber;
-  } else {
-    req.session.userCase.respondents[req.session.userCase.selectedRespondent - 1].respondentName =
-      req.body.respondentName;
   }
+  if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
+    formData.acasCertNum = undefined;
+  }
+  Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
+};
+
+export const getRespondentIndex = (req: AppRequest): number => {
+  return parseInt(req.params.respondentNumber) - 1;
 };
 
 export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
@@ -272,6 +292,10 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
       }
     }
   });
+};
+
+export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
+  return '/respondent/' + respondentNumber.toString() + pageUrl;
 };
 
 export const conditionalRedirect = (
@@ -342,3 +366,31 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
       });
   }
 };
+
+function handleReturnUrl(req: AppRequest, res: Response, redirectUrl: string) {
+  if (req.url === PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK || req.url === PageUrls.CLAIM_SUBMITTED) {
+    req.session.returnUrl = undefined;
+  }
+  if (req.session.returnUrl !== undefined) {
+    return res.redirect(req.session.returnUrl);
+  }
+  if (redirectUrl === PageUrls.RESPONDENT_DETAILS_CHECK || redirectUrl === PageUrls.CHECK_ANSWERS) {
+    req.session.returnUrl = redirectUrl;
+  } else {
+    req.session.returnUrl = undefined;
+  }
+}
+
+function mapSelectedRespondentValuesToCase(selectedRespondentIndex: number, userCase: CaseWithId) {
+  if (typeof selectedRespondentIndex !== 'undefined') {
+    userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
+    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
+    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex].respondentAddress2;
+    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex].respondentAddressTown;
+    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex].respondentAddressCountry;
+    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex].respondentAddressPostcode;
+    userCase.acasCert = userCase.respondents[selectedRespondentIndex].acasCert;
+    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex].acasCertNum;
+    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex].noAcasReason;
+  }
+}

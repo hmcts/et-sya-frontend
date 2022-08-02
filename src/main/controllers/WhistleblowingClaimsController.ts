@@ -28,6 +28,8 @@ export default class WhistleblowingClaimsController {
               whistleblowingEntityName: {
                 id: 'whistleblowing-entity-name',
                 name: 'whistleblowing-entity-name',
+                label: (l: AnyRecord): string => l.forwardClaim,
+                labelHidden: true,
                 type: 'text',
                 hint: (l: AnyRecord): string => l.regOrBodyName,
                 validator: isContentBetween3And100Chars,

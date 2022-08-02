@@ -1,5 +1,5 @@
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -17,17 +17,7 @@ describe('Respondent Address Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    const userCase = {
-      id: '12354',
-      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      selectedRespondent: 1,
-      respondents: [
-        {
-          respondentNumber: 1,
-          respondentName: 'Globo Gym',
-        },
-      ],
-    };
+    const userCase = userCaseWithRespondent;
     request.session.userCase = userCase;
 
     controller.get(request, response);
@@ -36,7 +26,11 @@ describe('Respondent Address Controller', () => {
   });
 
   it('should render the Work Address page on post', () => {
-    const body = {};
+    const body = {
+      respondentAddress1: '10 test street',
+      respondentAddressTown: 'test',
+      respondentAddressPostcode: 'AB1 2CD',
+    };
     const controller = new RespondentAddressController();
 
     const response = mockResponse();
@@ -46,10 +40,15 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.WORK_ADDRESS);
+    expect(response.redirect).toBeCalledWith('/respondent/1/work-address');
   });
+
   it('should render the Acas Cert Num page on post when more than one respondent', () => {
-    const body = {};
+    const body = {
+      respondentAddress1: '10 test street',
+      respondentAddressTown: 'test',
+      respondentAddressPostcode: 'AB1 2CD',
+    };
     const controller = new RespondentAddressController();
 
     const response = mockResponse();
@@ -58,7 +57,6 @@ describe('Respondent Address Controller', () => {
     request.session.userCase = {
       id: '12354',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      selectedRespondent: 2,
       respondents: [
         {
           respondentNumber: 1,
@@ -73,6 +71,6 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.ACAS_CERT_NUM);
+    expect(response.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
   });
 });
