@@ -98,6 +98,7 @@ export interface Case {
   reasonableAdjustmentsDetail?: string;
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
+  workPostcode?: string;
 }
 
 export const enum StillWorking {

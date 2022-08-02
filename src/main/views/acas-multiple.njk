@@ -16,21 +16,9 @@
     <div class="govuk-grid-column-full">
 
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-      <p class="govuk-body">
-        {{ p1 }}<br><br>
-        {{ p2 }}
-      </p>
-      <div class="govuk-inset-text">{{ insetText }}</div>
-      <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
-        <summary class="govuk-details__summary">
-          <span class="govuk-details__summary-text">{{ detailsSummary }}</span>
-        </summary>
-        <div class="govuk-details__text">
-          {{ detailsText.p1 }}<br><br>
-          {{ detailsText.p2 }}<br><br>
-          {{ detailsText.p3 | safe }}<br><br>
-        </div>
-      </details>
+      <p class="govuk-body"> {{ p1 }}</p>
+      <p class="govuk-body"> {{ p2 }}</p>
+      <p class="govuk-body"> {{ p3 }}</p>
     </div>
   </div>
   {% block form %}

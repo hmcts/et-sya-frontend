@@ -1,10 +1,9 @@
 {
   "title": "Interruption card - checklist",
   "pageTitle": "Before you continue",
-  "claimCheckListTitle": "To make a claim you may want to prepare and have the following to hand:",
-  "claimCheckListItem1": "Employment details - you may need to check payslips, contracts and letters of employment",
-  "claimCheckListItem2": "Details of the 'respondents’ you’re making the claim against - including registered / head office addresses for organisations and work addresses for people",
-  "claimCheckListItem3": "Claim details - including brief background details, dates and names of any people involved",
-  "claimCheckListReminder": "Remember, if you do not have these ready to complete a claim – you can save and return to a claim at any time.",
-  "printLinkTxt": "<a class=\"govuk-link\" href=\"javascript:window.print()\">Print this page </a> for your records"
+  "claimCheckListTitle": "You’ll have the opportunity to provide detailed information about your claim, but you might want to have the minimum required information to hand:",
+  "claimCheckListItem1": "The name and address of each claimant (you or the person you’re claiming for)",
+  "claimCheckListItem2": "Name and address of each respondent you’re making the claim against - this can be found in any letter you received offering you the job, a contract of employment or payslips",
+  "claimCheckListItem3": "Certificate number from the Acas early conciliation process for each respondent, or explain why you do not have one",
+  "claimCheckListReminder": "You do not have to complete your claim in one session. You can save your progress and return to the claim at any time before submitting."
 }

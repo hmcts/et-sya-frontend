@@ -115,6 +115,7 @@ export default class StepsToMakingYourClaimController {
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
       sections,
+      typeOfClaim: userCase?.typeOfClaim,
     });
   }
 }
