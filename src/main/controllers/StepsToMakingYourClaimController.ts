@@ -16,7 +16,7 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
-    if (req.app && req.app.locals && req.app.locals.redisClient) {
+    if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       setUserCaseWithRedisData(req, caseData);
@@ -62,7 +62,7 @@ export default class StepsToMakingYourClaimController {
               ),
           },
           {
-            url: PageUrls.RESPONDENT_NAME.toString(),
+            url: PageUrls.FIRST_RESPONDENT_NAME.toString(),
             linkTxt: (l: AnyRecord): string => l.section2.link2Text,
             status: (): string =>
               getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),

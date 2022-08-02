@@ -6,6 +6,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 1, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -14,6 +15,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 10, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -22,6 +24,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 11, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -30,6 +33,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 12, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -38,6 +42,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 13, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -46,6 +51,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 2, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -54,6 +60,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 3, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -62,6 +69,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 4, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -70,6 +78,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 5, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -78,6 +87,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 6, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -86,6 +96,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 7, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -94,6 +105,7 @@ export const addressLookupResponse = [
     street1: 'FLAT 8, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
   {
     county: 'EXETER',
@@ -102,5 +114,6 @@ export const addressLookupResponse = [
     street1: 'FLAT 9, HOPE COURT, PRINCE OF WALES ROAD',
     street2: '',
     town: 'EXETER',
+    country: 'ENGLAND',
   },
 ];

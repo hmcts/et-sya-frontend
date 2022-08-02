@@ -7,7 +7,15 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  conditionalRedirect,
+  getPageContent,
+  getRespondentIndex,
+  getRespondentRedirectUrl,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -59,18 +67,22 @@ export default class AcasCertNumController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.RESPONDENT_DETAILS_CHECK
-      : PageUrls.NO_ACAS_NUMBER;
-    setUserCase(req, this.form);
+      : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
+    setUserCaseForRespondent(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.acasCertNumContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ACAS_CERT_NUM,
-    ]);
     const respondents = req.session.userCase.respondents;
-    const currentRespondentName = respondents[respondents.length - 1].respondentName;
+    const respondentIndex = getRespondentIndex(req);
+    const currentRespondentName = respondents[respondentIndex].respondentName;
+    const content = getPageContent(
+      req,
+      this.acasCertNumContent,
+      [TranslationKeys.COMMON, TranslationKeys.ACAS_CERT_NUM],
+      respondentIndex
+    );
+
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_CERT_NUM, {
       ...content,

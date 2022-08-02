@@ -49,6 +49,7 @@ export interface FormInput {
   id?: string;
   name?: string;
   label?: Label;
+  labelHidden?: boolean;
   divider?: boolean;
   exclusive?: boolean;
   hint?: Label;

@@ -16,6 +16,8 @@ export default class PersonalDetailsCheckController {
     fields: {
       personalDetailsCheck: {
         ...DefaultRadioFormFields,
+        label: 'Have you completed this section?',
+        labelHidden: true,
         id: 'tasklist-check',
         classes: 'govuk-radios',
         validator: isFieldFilledIn,

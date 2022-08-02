@@ -52,7 +52,7 @@ describe('Benefits Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_NAME);
+    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the have you got a new job page when no longer working radio button is selected', () => {
