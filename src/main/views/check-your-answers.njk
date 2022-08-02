@@ -249,8 +249,8 @@
           },
           actions: {
             items: [
-              {
-                href: PageUrls.RESPONDENT_NAME,
+              { 
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.RESPONDENT_NAME,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.respondentName
               }
@@ -268,7 +268,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.RESPONDENT_ADDRESS,
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.RESPONDENT_ADDRESS,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.respondentAddress
               }
@@ -286,7 +286,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.WORK_ADDRESS,
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.WORK_ADDRESS,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.workedAtRespondent
               }
@@ -305,7 +305,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.PLACE_OF_WORK,
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.PLACE_OF_WORK,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.addressWorkedAt
               }
@@ -324,7 +324,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.ACAS_CERT_NUM,
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.ACAS_CERT_NUM,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.acasNumber
               }
@@ -342,7 +342,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.NO_ACAS_NUMBER,
+                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.NO_ACAS_NUMBER,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.noAcasReason
               }

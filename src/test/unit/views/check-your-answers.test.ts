@@ -122,13 +122,13 @@ describe('Check your answers confirmation page', () => {
     const addressWorkedAtLink = respondentDetailsList[3].getAttribute('href');
     const haveAcasLink = respondentDetailsList[4].getAttribute('href');
     const whyNoAcasLength = respondentDetailsList[5].getAttribute('href');
-
-    expect(respondentNameLink).equals(PageUrls.RESPONDENT_NAME, 'Incorrect href found');
-    expect(respondentAddressLink).equals(PageUrls.RESPONDENT_ADDRESS, 'Incorrect href found');
-    expect(workedForRespondentLink).equals(PageUrls.WORK_ADDRESS, 'Incorrect href found');
-    expect(addressWorkedAtLink).equals(PageUrls.PLACE_OF_WORK, 'Incorrect href found');
-    expect(haveAcasLink).equals(PageUrls.ACAS_CERT_NUM, 'Incorrect href found');
-    expect(whyNoAcasLength).equals(PageUrls.NO_ACAS_NUMBER, 'Incorrect href found');
+    const respondentPartialUrl = '/respondent/undefined';
+    expect(respondentNameLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_NAME, 'Incorrect href found');
+    expect(respondentAddressLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_ADDRESS, 'Incorrect href found');
+    expect(workedForRespondentLink).equals(respondentPartialUrl + PageUrls.WORK_ADDRESS, 'Incorrect href found');
+    expect(addressWorkedAtLink).equals(respondentPartialUrl + PageUrls.PLACE_OF_WORK, 'Incorrect href found');
+    expect(haveAcasLink).equals(respondentPartialUrl + PageUrls.ACAS_CERT_NUM, 'Incorrect href found');
+    expect(whyNoAcasLength).equals(respondentPartialUrl + PageUrls.NO_ACAS_NUMBER, 'Incorrect href found');
   });
 
   it('should display correct url in the change buttons for employment details row', () => {
