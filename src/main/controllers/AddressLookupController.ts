@@ -29,6 +29,7 @@ export default class AddressLookupController {
           town: 'LONDON',
           county: 'CITY OF WESTMINSTER',
           postcode: 'SW1A 1AA',
+          country: 'ENGLAND',
         },
       ];
     }
@@ -42,6 +43,7 @@ export default class AddressLookupController {
           town: 'LONDON',
           county: 'CITY OF WESTMINSTER',
           postcode: 'SW1H 9AJ',
+          country: 'ENGLAND',
         },
       ];
     }

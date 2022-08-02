@@ -31,7 +31,7 @@ export default class NewJobController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
-      : PageUrls.HOME;
+      : PageUrls.FIRST_RESPONDENT_NAME;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

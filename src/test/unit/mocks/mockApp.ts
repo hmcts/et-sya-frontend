@@ -47,6 +47,7 @@ export function mockSession(
       givenName: 'test',
       familyName: 'user',
     },
+    returnUrl: undefined,
   };
 }
 

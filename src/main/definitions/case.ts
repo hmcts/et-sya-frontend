@@ -18,11 +18,11 @@ export interface Respondent {
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
-  respondentAddressCounty?: string;
+  respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
   acasCert?: YesOrNo;
   acasCertNum?: string;
-  noAcasReson?: NoAcasNumberReason;
+  noAcasReason?: NoAcasNumberReason;
 }
 
 export interface Case {
@@ -33,7 +33,7 @@ export interface Case {
   address1?: string;
   address2?: string;
   addressTown?: string;
-  addressCounty?: string;
+  addressCountry?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
   updatePreference?: EmailOrPost;
@@ -57,7 +57,7 @@ export interface Case {
   workAddress1?: string;
   workAddress2?: string;
   workAddressTown?: string;
-  workAddressCounty?: string;
+  workAddressCountry?: string;
   workAddressPostcode?: string;
   startDate?: CaseDate;
   avgWeeklyHrs?: number;
@@ -84,7 +84,6 @@ export interface Case {
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
-  selectedRespondent?: number;
   respondents?: Respondent[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
@@ -95,6 +94,15 @@ export interface Case {
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
   workPostcode?: string;
+  respondentName?: string;
+  respondentAddress1?: string;
+  respondentAddress2?: string;
+  respondentAddressTown?: string;
+  respondentAddressCountry?: string;
+  respondentAddressPostcode?: string;
+  acasCert?: YesOrNo;
+  acasCertNum?: string;
+  noAcasReason?: NoAcasNumberReason;
 }
 
 export const enum StillWorking {

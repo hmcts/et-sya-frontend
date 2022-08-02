@@ -1,6 +1,8 @@
 {
   "title": "Work Address",
   "h1": "What address did you work at?",
+  "enterPostcode": "Enter a UK postcode",
+  "manualAddress": "I worked outside the UK",
   "errors": {
     "addressPostcode": {
       "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",

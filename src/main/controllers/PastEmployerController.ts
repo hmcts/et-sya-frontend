@@ -38,7 +38,7 @@ export default class PastEmployerController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
-      : PageUrls.RESPONDENT_NAME;
+      : PageUrls.FIRST_RESPONDENT_NAME;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);

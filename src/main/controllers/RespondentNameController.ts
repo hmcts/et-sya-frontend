@@ -6,15 +6,22 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCaseForNewRespondent } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentIndex,
+  getRespondentRedirectUrl,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class RespondentNameController {
   private readonly form: Form;
   private readonly respondentNameContent: FormContent = {
     fields: {
       respondentName: {
-        id: 'respondent-name',
-        name: 'respondent-name',
+        id: 'respondentName',
+        name: 'respondentName',
         type: 'text',
         label: (l: AnyRecord): string => l.label,
       },
@@ -34,16 +41,23 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForNewRespondent(req);
-
-    handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_ADDRESS);
+    setUserCaseForRespondent(req, this.form);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.respondentNameContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_NAME,
-    ]);
+    let respondentIndex: number;
+    if (req.session.userCase?.respondents) {
+      respondentIndex = getRespondentIndex(req);
+    }
+
+    const content = getPageContent(
+      req,
+      this.respondentNameContent,
+      [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_NAME],
+      respondentIndex
+    );
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_NAME, {
       ...content,
