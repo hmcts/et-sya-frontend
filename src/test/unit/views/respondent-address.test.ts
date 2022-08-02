@@ -4,7 +4,6 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const translationRaw = fs.readFileSync(
@@ -15,6 +14,7 @@ const respondentAddressJson = JSON.parse(translationRaw);
 
 const respondentName = 'Globo Gym';
 const titleClass = 'govuk-heading-xl';
+const insetClass = 'govuk-inset-text';
 const expectedTitle = respondentAddressJson.h1 + respondentName;
 
 let htmlRes: Document;
@@ -23,7 +23,6 @@ describe('Respondent Address Page', () => {
     await request(
       mockApp({
         userCase: {
-          selectedRespondent: 1,
           respondents: [
             {
               respondentNumber: 1,
@@ -33,7 +32,7 @@ describe('Respondent Address Page', () => {
         },
       })
     )
-      .get(PageUrls.RESPONDENT_ADDRESS)
+      .get('/respondent/1/respondent-address')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -42,5 +41,10 @@ describe('Respondent Address Page', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display insetText', () => {
+    const title = htmlRes.getElementsByClassName(insetClass);
+    expect(title[0].innerHTML).contains(respondentAddressJson.insetText, 'Inset text does not exist');
   });
 });

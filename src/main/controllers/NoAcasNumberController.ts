@@ -7,7 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import {
+  assignFormData,
+  getPageContent,
+  getRespondentIndex,
+  handleSessionErrors,
+  setUserCaseForRespondent,
+} from './helpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
@@ -19,6 +25,7 @@ export default class NoAcasNumberController {
         type: 'radios',
         label: (l: AnyRecord): string => l.h1,
         labelHidden: true,
+        hint: (l: AnyRecord): string => l.hint,
         values: [
           {
             name: 'another',
@@ -39,6 +46,7 @@ export default class NoAcasNumberController {
             name: 'unfair_dismissal',
             label: NoAcasNumberReason.UNFAIR_DISMISSAL,
             value: NoAcasNumberReason.UNFAIR_DISMISSAL,
+            hint: (l: AnyRecord): string => l.dismissalhint,
           },
         ],
       },
@@ -58,15 +66,18 @@ export default class NoAcasNumberController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
+    setUserCaseForRespondent(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.noAcasNumberContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.NO_ACAS_NUMBER,
-    ]);
+    const respondentIndex = getRespondentIndex(req);
+    const content = getPageContent(
+      req,
+      this.noAcasNumberContent,
+      [TranslationKeys.COMMON, TranslationKeys.NO_ACAS_NUMBER],
+      respondentIndex
+    );
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NO_ACAS_NUMBER, {
       ...content,

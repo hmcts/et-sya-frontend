@@ -79,4 +79,19 @@ describe('Job Title Controller', () => {
       return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
     });
   });
+
+  it('should redirect to respondent details check if there is a returnUrl', () => {
+    const body = { jobTitle: 'Assistant Vice President Branch Manager' };
+
+    const controller = new JobTitleController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+  });
 });

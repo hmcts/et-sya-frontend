@@ -67,7 +67,7 @@ export default class BenefitsController {
     if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
-      redirectUrl = PageUrls.RESPONDENT_NAME;
+      redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);

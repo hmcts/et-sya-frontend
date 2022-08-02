@@ -1,14 +1,16 @@
 {
   "title": "Address details",
   "pageHeader": "What is your contact or home address?",
+  "manualAddress": "I live outside the UK",
   "pageText": "We'll send any correspondence to this address.",
   "enterPostcode": "Enter a UK postcode",
   "buildingStreet": "Building and street",
   "addressLine2": "Address line 2",
   "town": "Town or city",
   "county": "County",
+  "country": "Country",
   "postcode": "Postcode",
-  "enterAddressManually": "I want to enter the address manually.",
+  "enterAddressManually": "I don't live in the UK",
   "errors": {
     "address1": {
       "required": "Enter a building and street"
