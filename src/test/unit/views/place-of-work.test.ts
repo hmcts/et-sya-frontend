@@ -5,10 +5,9 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { StillWorking } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const PAGE_URL = PageUrls.PLACE_OF_WORK;
+const PAGE_URL = '/respondent/1/place-of-work';
 
 const translationRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/place-of-work.json'),

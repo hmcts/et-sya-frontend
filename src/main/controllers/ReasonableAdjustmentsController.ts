@@ -20,6 +20,8 @@ export default class ReasonableAdjustmentsController {
         classes: 'govuk-radios',
         id: 'reasonableAdjustments',
         type: 'radios',
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
         values: [
           {
             name: 'reasonableAdjustments',

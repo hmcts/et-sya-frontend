@@ -25,6 +25,7 @@ export default class CompensationController {
         id: 'compensationOutcome',
         type: 'textarea',
         hint: l => l.hint,
+        attributes: { title: 'Compensation outcome text area' },
       },
       compensationAmount: compensation_amount,
     },
