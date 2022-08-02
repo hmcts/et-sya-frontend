@@ -7,13 +7,17 @@
   "warning": "This is your last opportunity to change any details before you submit your claim.",
   "remember": "Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save as draft’ at the bottom of this page.",
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
-  "submitBtn": "Submit claim",
+  "submitBtn": "Submit",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "typeOfClaim": "Claim type",
+  "applicationDetails": {
+    "header": "Application details",
+    "typeOfClaim": "Claim type"
+  },
   "personalDetails": {
     "header": "Your details",
     "dob": "Date of birth",
     "gender": "Sex",
+    "genderIdentity": "Gender Identity",
     "genderSameAsBirth": "Gender same as registered birth sex",
     "contactOrHomeAddress": "Contact or home address",
     "howToBeContacted": "How would you like to be contacted?",
@@ -45,7 +49,7 @@
     "noticeLength": "Is your notice period in weeks or months?",
     "noticePeriodWeeksOrMonths": "[Weeks/Months] in notice period",
     "noticePaid": "Notice being paid for",
-    "weeklyHours": "Average weeklyn work hours",
+    "weeklyHours": "Average weekly work hours",
     "payBeforeTax": "Pay before tax and National Insurance",
     "payAfterTax": "Pay after tax and National Insurance",
     "payPeriod": "Is this your weekly, monthly or annual pay?",

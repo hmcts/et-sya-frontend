@@ -126,7 +126,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.NOTICE_PERIOD,
+                href: PageUrls.NOTICE_TYPE,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.noticePeriodWeeksOrMonths
               }
@@ -230,8 +230,8 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.employeeBenefits if userCase.employeeBenefits === "No" 
-            else userCase.employeeBenefits + ", " + userCase.benefitsCharCount
+            text: userCase.employeeBenefits + ", " + userCase.benefitsCharCount if userCase.employeeBenefits === "Yes"
+            else userCase.employeeBenefits
           },
           actions: {
             items: [

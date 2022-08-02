@@ -22,13 +22,13 @@
       rows: [
         {
           key: {
-            text: typeOfClaim,
+            text: applicationDetails.header,
             classes: "govuk-heading-m"
           }
         },
         {
           key: {
-            text: typeOfClaim,
+            text: applicationDetails.typeOfClaim,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -39,7 +39,7 @@
               {
                 href: PageUrls.TYPE_OF_CLAIM,
                 text: "Change",
-                visuallyHiddenText: typeOfClaim
+                visuallyHiddenText: applicationDetails.typeOfClaim
               }
             ]
           } 
@@ -95,6 +95,24 @@
         },
         {
           key: {
+            text: personalDetails.genderIdentity,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.genderIdentitySame
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.GENDER_DETAILS,
+                text: "Change",
+                visuallyHiddenText: personalDetails.genderIdentity
+              }
+            ]
+          } 
+        },
+        {
+          key: {
             text: personalDetails.title,
             classes: "govuk-!-font-weight-regular-m"
           },
@@ -136,7 +154,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.telNumber if userCase.telNumber else "Not Provided"
+            text: "Not Provided" if userCase.telNumber.length === 0 else userCase.telNumber
           },
           actions: {
             items: [
@@ -281,9 +299,8 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: "" if userCase.claimantWorkAddressQuestion === "NO"
-            else userCase.workAddress1+", "+userCase.workAddressCounty+", "+
-            userCase.workAddressPostcode+", "+userCase.workAddressTown
+            text: userCase.workAddress1+", "+userCase.workAddressCounty+", "+
+            userCase.workAddressPostcode+", "+userCase.workAddressTown if userCase.claimantWorkAddressQuestion === "No" else ""
           },
           actions: {
             items: [
@@ -441,8 +458,8 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.whistleblowingClaim if userCase.whistleblowingClaim === "No"
-            else userCase.whistleblowingClaim +": "+userCase.whistleblowingEntityName
+            text: userCase.whistleblowingClaim +": "+userCase.whistleblowingEntityName if userCase.whistleblowingClaim === "Yes" 
+            else userCase.whistleblowingClaim
           },
           actions: {
             items: [
@@ -458,16 +475,6 @@
     }) 
   }}
 
-  <h1 class="govuk-heading-m govuk-!-margin-bottom-2 govuk-!-margin-top-9">{{ submitYourClaim }}</h1>
-  <p class="govuk-body">{{ checkAllAnswers }}</p>
-  {{ 
-    govukWarningText({
-      text: warning,
-      iconFallbackText: "Warning"
-    }) 
-  }}
-  <p class="govuk-body">{{ remember }}</p>
-  <p class="govuk-body">{{ emailConfirmation }}</p>
 
   <div class="govuk-form-group">
     {{ 
@@ -497,8 +504,6 @@
         value: true
       }) 
     }}
-
-    <p class="govuk-body">{{ printLinkTxt | safe }}</p>
 
   </div>
 {% endblock %}
