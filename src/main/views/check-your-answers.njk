@@ -230,6 +230,7 @@
     {% include "employer-no-longer-working.njk" %}
   {% endif %}
   
+  {% for respondent in respondents %}
   {{ 
     govukSummaryList({
       rows: [
@@ -245,12 +246,12 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.respondents[0].respondentName
+            text: respondent.respondentName
           },
           actions: {
             items: [
               { 
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.RESPONDENT_NAME,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.respondentName
               }
@@ -263,12 +264,13 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: "TO DO"
+            text: userCase.respondentAddress1+", "+userCase.respondentAddressCountry+", "+userCase.respondentAddressPostcode+" "+userCase.respondentAddressTown
+            if userCase.respondentAddress1 
           },
           actions: {
             items: [
               {
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.RESPONDENT_ADDRESS,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.respondentAddress
               }
@@ -286,7 +288,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.WORK_ADDRESS,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.workedAtRespondent
               }
@@ -305,7 +307,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.PLACE_OF_WORK,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.addressWorkedAt
               }
@@ -324,7 +326,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.ACAS_CERT_NUM,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.acasNumber
               }
@@ -342,7 +344,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondents[0].respondentNumber + PageUrls.NO_ACAS_NUMBER,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER,
                 text: "Change",
                 visuallyHiddenText: respodentDetails.noAcasReason
               }
@@ -352,6 +354,7 @@
       ]
     }) 
   }}
+  {% endfor %}
 
   {{ 
     govukSummaryList({
@@ -422,7 +425,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.compensationOutcome + ": "+ userCase.compensationAmount if userCase.tellUsWhatYouWant? === "compensationOnly"
+            text: userCase.compensationOutcome + ": "+ userCase.compensationAmount if userCase.tellUsWhatYouWant.includes("compensationOnly")
           },
           actions: {
             items: [
@@ -440,7 +443,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.tribunalRecommendationOutcome if userCase.tellUsWhatYouWant? === "tribunalRecommendation"
+            text: userCase.tribunalRecommendationRequest if userCase.tellUsWhatYouWant.includes("tribunalRecommendation")
           },
           actions: {
             items: [
