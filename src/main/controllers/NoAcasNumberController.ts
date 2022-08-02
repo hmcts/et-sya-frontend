@@ -23,7 +23,8 @@ export default class NoAcasNumberController {
         classes: 'govuk-radios',
         id: 'no-acas-reason',
         type: 'radios',
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
         hint: (l: AnyRecord): string => l.hint,
         values: [
           {

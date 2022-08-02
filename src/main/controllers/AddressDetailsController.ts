@@ -30,7 +30,8 @@ export default class AddressDetailsController {
         name: 'address-line2',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.line2Optional,
+        label: l => l.addressLine2,
+        labelHidden: true,
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',

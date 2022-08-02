@@ -18,6 +18,8 @@ export default class NoticeLengthController {
         id: 'notice-length',
         name: 'notice-length',
         type: 'text',
+        label: (l: AnyRecord): string => l.h1.nonNotice,
+        labelHidden: true,
         classes: 'govuk-input--width-3',
         hint: (l: AnyRecord): string => l.noticeLengthHint,
         attributes: { maxLength: 2 },

@@ -74,7 +74,6 @@ export const TranslationKeys = {
 
 export const PageUrls = {
   HOME: '/',
-  INFO: '/info',
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
@@ -118,7 +117,6 @@ export const PageUrls = {
   NEW_JOB_START_DATE: '/new-job-start-date',
   NEW_JOB_PAY: '/new-job-pay',
   END_DATE: '/end-date',
-  DOWNLOAD_CLAIM: '/download-claim',
   CLAIM_TYPE_DISCRIMINATION: '/claim-type-discrimination',
   CLAIM_TYPE_PAY: '/claim-type-pay',
   DESCRIBE_WHAT_HAPPENED: '/describe-what-happened',
@@ -135,7 +133,6 @@ export const PageUrls = {
   RESPONDENT_DETAILS_CHECK: '/respondent-details-check',
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
-  PCQ: '/pcq',
   WORK_POSTCODE: '/work-postcode',
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
@@ -153,6 +150,12 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+} as const;
+
+export const Urls = {
+  INFO: '/info',
+  DOWNLOAD_CLAIM: '/download-claim',
+  PCQ: '/pcq',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';

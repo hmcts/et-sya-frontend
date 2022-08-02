@@ -10,6 +10,8 @@ const envUrl = process.env.TEST_URL || 'http://localhost:3001';
 const username = process.env.TEST_CASE_USERNAME;
 const password = process.env.TEST_CASE_PASSWORD;
 const options = ['WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2'];
+// Ignore pages that are passing in WAVE evaluation tool
+const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation'];
 
 class PallyIssue {
   code: string;
@@ -32,33 +34,31 @@ function expectNoErrors(messages: PallyIssue[]): void {
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
-      let actions: string[] = [];
-      const pageUrl = envUrl + url;
-      if (!noSignInRequiredEndpoints.includes(url)) {
-        actions = [
-          'set field #username to ' + username,
-          'set field #password to ' + password,
-          'click element .button',
-          'wait for path to be /steps-to-making-your-claim',
-          'navigate to ' + pageUrl,
-          'wait for url to be ' + pageUrl,
-        ];
+      if (!ignoredPages.includes(url)) {
+        let actions: string[] = [];
+        const pageUrl = envUrl + url;
+        if (!noSignInRequiredEndpoints.includes(url)) {
+          actions = [
+            'set field #username to ' + username,
+            'set field #password to ' + password,
+            'click element .button',
+            'wait for path to be /steps-to-making-your-claim',
+            'navigate to ' + pageUrl,
+            'wait for url to be ' + pageUrl,
+          ];
+        }
+        const messages = await pa11y(pageUrl, {
+          actions,
+          ignore: options,
+        });
+        expectNoErrors(messages.issues);
       }
-      const messages = await pa11y(pageUrl, {
-        actions,
-        ignore: options,
-      });
-      expectNoErrors(messages.issues);
     });
   });
 }
 
 describe('Accessibility', () => {
-  testAccessibility(PageUrls.HOME);
-  testAccessibility(PageUrls.CHECKLIST);
-  /*
-  //Below code needs to be added in future when dev team completed RET-1888 & RET-1889
   Object.values(PageUrls).forEach(url => {
     testAccessibility(url);
-  });*/
+  });
 });

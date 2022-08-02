@@ -7,6 +7,7 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import {
   assignFormData,
@@ -23,6 +24,8 @@ export default class PastEmployerController {
     fields: {
       pastEmployer: {
         ...DefaultRadioFormFields,
+        label: (l: AnyRecord): string => l.heading,
+        labelHidden: true,
         id: 'past-employer',
         classes: 'govuk-radios--inline',
       },

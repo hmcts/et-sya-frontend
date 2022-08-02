@@ -15,6 +15,8 @@ export default class TribunalRecommendationController {
     fields: {
       tribunalRecommendationRequest: {
         id: 'tribunalRecommendationRequest',
+        label: l => l.hint,
+        labelHidden: true,
         type: 'textarea',
         hint: l => l.hint,
         maxlength: 2500,

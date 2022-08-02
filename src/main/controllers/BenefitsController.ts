@@ -30,6 +30,8 @@ export default class BenefitsController {
                 id: 'benefits-char-count',
                 name: 'benefits-char-count',
                 type: 'charactercount',
+                label: (l: AnyRecord): string => l.hint,
+                labelHidden: true,
                 hint: (l: AnyRecord): string => l.hint,
                 maxlength: 2500,
                 attributes: { maxLength: 2500 },
