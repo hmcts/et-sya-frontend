@@ -11,7 +11,7 @@
   "insetText1": "You’ll need to provide an exemption later as part of your claim. If you’re not sure which one applies <a href=\"https://www.acas.org.uk/early-conciliation\" target=\"_blank\" class=\"govuk-link\">contact Acas</a>.",
   "errors": {
     "validNoAcasReason": {
-      "required": "Select an option"
+      "required": "Tell us if you have a valid reason"
     }
   }
 }

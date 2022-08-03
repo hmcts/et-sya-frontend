@@ -8,12 +8,12 @@ Scenario('Verify ET multiple claim for myself', async () => {
 
   I.waitForText('I’m representing myself and making my own claim', waitSeconds);
   I.click('Who can act as a representative?', 'span[class=govuk-details__summary-text]');
-  I.see('employment advisors – including those from Citizens Advice');
+  I.see('Citizens Advice advisers');
   I.checkOption('input[id=lip-or-representative]');
   I.click('Continue');
 
   I.seeElement('#single-or-multiple-claim-2');
-  I.see('Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?');
+  I.see('Are you making a claim on your own or with others?');
   I.checkOption('input[id=single-or-multiple-claim-2]');
   I.click('Continue');
 }).tag(' @RET-BAT');

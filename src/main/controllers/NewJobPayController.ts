@@ -44,7 +44,7 @@ export default class NewJobPayController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.HOME);
+    handleSessionErrors(req, res, this.form, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
   public get = (req: AppRequest, res: Response): void => {

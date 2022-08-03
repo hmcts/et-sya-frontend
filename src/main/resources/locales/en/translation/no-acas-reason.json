@@ -1,3 +1,5 @@
 {
-  "h1": "Why do you not have an Acas Number?"
+  "h1": "Why do you not have an Acas number?",
+  "hint": "Please note: incorrectly claiming an exemption may lead to your claim being rejected. If in doubt, please contact Acas.",
+  "dismissalhint": "The fact that you are making a claim of unfair dismissal does not mean you are necessarily making an application for interim relief. If you are presenting this claim more than 7 days after your employment ended you cannot apply for interim relief."
 }

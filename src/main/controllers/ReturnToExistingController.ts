@@ -18,7 +18,8 @@ export default class ReturnToExistingController {
         id: 'return_number_or_account',
         type: 'radios',
         classes: 'govuk-date-input',
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.p2,
+        labelHidden: true,
         values: [
           {
             name: 'have_return_number',

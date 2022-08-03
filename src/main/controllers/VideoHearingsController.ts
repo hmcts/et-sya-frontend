@@ -17,6 +17,8 @@ export default class VideoHearingsController {
     fields: {
       hearing_preferences: {
         id: 'hearing_preferences',
+        label: l => l.h1,
+        labelHidden: true,
         type: 'checkboxes',
         validator: atLeastOneFieldIsChecked,
         values: [

@@ -47,7 +47,9 @@ logMemUsage();
 new Helmet(config.get('security'), [
   config.get('services.idam.authorizationURL'),
   config.get('services.pcq.url'),
+  config.get('services.et1Legacy.url'),
 ]).enableFor(app);
+
 logger.info('Helmet');
 logMemUsage();
 
