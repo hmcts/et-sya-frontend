@@ -30,7 +30,7 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
       claimantSex: 'Male',
       claimantGenderIdentitySame: 'Yes',
       preferredTitle: 'Other',
-      otherTitlePreference: 'Master',
+      otherTitlePreference: '7',
     };
     await request(mockApp({ body }))
       .post(PageUrls.GENDER_DETAILS)
