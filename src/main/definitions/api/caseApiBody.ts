@@ -1,3 +1,4 @@
+import { ClaimantContactPreference } from '../complexTypes/claimantContactPreference';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
@@ -10,6 +11,7 @@ interface CaseDataApiBody {
   claimantIndType?: ClaimantIndividual;
   claimantType?: { claimant_email_address: string };
   claimantHearingPreference?: ClaimantHearingPreference;
+  claimantContactPreference?: ClaimantContactPreference;
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
 }
