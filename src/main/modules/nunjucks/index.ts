@@ -28,13 +28,13 @@ export class Nunjucks {
 
     nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 
-    nunEnv.addGlobal('getContent', function (prop: (param: string) => string | string): string {
+    nunEnv.addGlobal('getContent', function (prop: ((param: string) => string) | string): string {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
     });
 
     nunEnv.addGlobal(
       'getContentSafe',
-      function (prop: (param: string) => string | string): nunjucks.runtime.SafeString {
+      function (prop: ((param: string) => string) | string): nunjucks.runtime.SafeString {
         return new nunjucks.runtime.SafeString(this.env.globals.getContent.call(this, prop));
       }
     );
@@ -114,6 +114,7 @@ export class Nunjucks {
             Array.isArray(userAnswer)
               ? (userAnswer as string[]).includes(i.value as string)
               : i.value === userAnswer,
+          selected: i.value === userAnswer,
           hint: i.hint && {
             html: this.env.globals.getContent.call(this, i.hint),
           },
