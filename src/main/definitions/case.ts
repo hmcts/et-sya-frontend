@@ -36,7 +36,7 @@ export interface Case {
   addressCountry?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
-  updatePreference?: EmailOrPost;
+  claimant_contact_preference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;
