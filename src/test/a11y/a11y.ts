@@ -2,13 +2,13 @@
 import { fail } from 'assert';
 
 import { PageUrls } from '../../main/definitions/constants';
-import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
+// import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
 
 const pa11y = require('pa11y');
 
-const envUrl = process.env.TEST_URL || 'http://localhost:3001';
-const username = process.env.TEST_CASE_USERNAME;
-const password = process.env.TEST_CASE_PASSWORD;
+const envUrl = 'http://localhost:3001';
+// const username = process.env.TEST_CASE_USERNAME;
+// const password = process.env.TEST_CASE_PASSWORD;
 const options = ['WCAG2AA.Principle1.Guideline1_3.1_3_1.H42.2'];
 // Ignore pages that are passing in WAVE evaluation tool
 const ignoredPages = ['/pension', '/pay', '/new-job-pay', '/compensation'];
@@ -35,20 +35,20 @@ function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
     it('should have no accessibility errors', async () => {
       if (!ignoredPages.includes(url)) {
-        let actions: string[] = [];
+        // let actions: string[] = [];
         const pageUrl = envUrl + url;
-        if (!noSignInRequiredEndpoints.includes(url)) {
-          actions = [
-            'set field #username to ' + username,
-            'set field #password to ' + password,
-            'click element .button',
-            'wait for path to be /steps-to-making-your-claim',
-            'navigate to ' + pageUrl,
-            'wait for url to be ' + pageUrl,
-          ];
-        }
+        // if (!noSignInRequiredEndpoints.includes(url)) {
+        //   actions = [
+        //     'set field #username to ' + username,
+        //     'set field #password to ' + password,
+        //     'click element .button',
+        //     'wait for path to be /steps-to-making-your-claim',
+        //     'navigate to ' + pageUrl,
+        //     'wait for url to be ' + pageUrl,
+        //   ];
+        // }
         const messages = await pa11y(pageUrl, {
-          actions,
+          // actions,
           ignore: options,
         });
         expectNoErrors(messages.issues);
