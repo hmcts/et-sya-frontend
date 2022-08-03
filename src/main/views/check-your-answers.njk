@@ -208,7 +208,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.reasonableAdjustments if userCase.reasonableAdjustments === "No" else userCase.reasonableAdjustments + ", " + userCase.reasonableAdjustmentsDetail 
+            text: userCase.reasonableAdjustments if (userCase.reasonableAdjustments === "No" and not undefined) else userCase.reasonableAdjustments + ", " + userCase.reasonableAdjustmentsDetail 
           },
           actions: {
             items: [
@@ -236,13 +236,13 @@
       rows: [
         {
           key: {
-            text: respodentDetails.header,
+            text: respondentDetails.header,
             classes: "govuk-heading-m"
           }
         },
         {
           key: {
-            text: respodentDetails.respondentName,
+            text: respondentDetails.respondentName,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -253,14 +253,14 @@
               { 
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.respondentName
+                visuallyHiddenText: respondentDetails.respondentName
               }
             ]
           } 
         },
         {
           key: {
-            text: respodentDetails.respondentAddress,
+            text: respondentDetails.respondentAddress,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -272,14 +272,14 @@
               {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.respondentAddress
+                visuallyHiddenText: respondentDetails.respondentAddress
               }
             ]
           } 
         },
         {
           key: {
-            text: respodentDetails.workedAtRespondent,
+            text: respondentDetails.workedAtRespondent,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -290,14 +290,14 @@
               {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.workedAtRespondent
+                visuallyHiddenText: respondentDetails.workedAtRespondent
               }
             ]
           } 
         },
         {
           key: {
-            text: respodentDetails.addressWorkedAt,
+            text: respondentDetails.addressWorkedAt,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -309,14 +309,14 @@
               {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.addressWorkedAt
+                visuallyHiddenText: respondentDetails.addressWorkedAt
               }
             ]
           } 
         },
         {
           key: {
-            text: respodentDetails.acasNumber,
+            text: respondentDetails.acasNumber,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -328,14 +328,14 @@
               {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.acasNumber
+                visuallyHiddenText: respondentDetails.acasNumber
               }
             ]
           } 
         },
         {
           key: {
-            text: respodentDetails.noAcasReason,
+            text: respondentDetails.noAcasReason,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -346,7 +346,7 @@
               {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER,
                 text: "Change",
-                visuallyHiddenText: respodentDetails.noAcasReason
+                visuallyHiddenText: respondentDetails.noAcasReason
               }
             ]
           } 
