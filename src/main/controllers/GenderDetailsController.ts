@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isOptionSelected } from '../components/form/validator';
+import { isFieldFilledIn, isOptionSelected, validateTitlePreference } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -117,6 +117,8 @@ export default class GenderDetailsController {
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord) => l.otherTitlePreference,
         labelSize: 's',
+        attributes: { maxLength: 20 },
+        validator: validateTitlePreference,
       },
     },
     submit: submitButton,

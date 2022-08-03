@@ -63,19 +63,15 @@ describe('Validation', () => {
   });
 
   describe('validateTitlePreference()', () => {
-    it('Should check if value is not blank', () => {
-      const isValid = validateTitlePreference('');
-      expect(isValid).toStrictEqual('required');
-    });
-
-    it('Should check if value does not contain number', () => {
-      const isValid = validateTitlePreference('1234');
-      expect(isValid).toStrictEqual('numberError');
-    });
-
-    it('Should check if value has no space is and number', () => {
-      const isValid = validateTitlePreference('  1234');
-      expect(isValid).toStrictEqual('numberError');
+    it.each([
+      { title: '', expectedError: 'required' },
+      { title: 'ab', expectedError: undefined },
+      { title: 'a1', expectedError: 'numberError' },
+      { title: ' 12', expectedError: 'numberError' },
+      { title: '1a', expectedError: 'numberError' },
+    ])('Should check if other title preference is valid: %o', ({ title, expectedError }) => {
+      const isValid = validateTitlePreference(title);
+      expect(isValid).toStrictEqual(expectedError);
     });
   });
 
