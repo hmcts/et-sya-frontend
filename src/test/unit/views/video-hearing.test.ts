@@ -1,19 +1,29 @@
+import fs from 'fs';
+import path from 'path';
+
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const PAGE_URL = '/would-you-want-to-take-part-in-video-hearings';
+const videoHearingJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/video-hearings.json'),
+  'utf-8'
+);
+const videoHearingJson = JSON.parse(videoHearingJsonRaw);
+const PAGE_URL = PageUrls.VIDEO_HEARINGS;
+
 const titleClass = 'govuk-heading-xl';
 const pClass = 'govuk-body';
-const expectedTitle = 'Would you be able to take part in hearings by video and phone?';
-const expectedP1 = 'If your case goes to a hearing, it can take place either:';
+const expectedTitle = videoHearingJson.h1;
+const expectedP1 = videoHearingJson.p1;
 const buttonClass = 'govuk-button';
 const checkboxClass = 'govuk-checkboxes__input';
 const checkboxLabel = 'govuk-checkboxes__label';
-const expectedLabel1 = 'Yes, I can take part in video hearings';
-const expectedLabel2 = 'Yes, I can take part in phone hearings';
-const expectedLabel3 = 'No, I cannot take part in either video or phone hearings';
+const expectedLabel1 = videoHearingJson.checkboxVideo;
+const expectedLabel2 = videoHearingJson.checkboxPhone;
+const expectedLabel3 = videoHearingJson.checkboxNeither;
 
 let htmlRes: Document;
 describe('Hearing Preference video or phone Choice page', () => {
