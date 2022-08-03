@@ -80,7 +80,7 @@ describe('isDateInputInvalid()', () => {
     { date: { day: 31, month: 12, year: 2000 }, expected: undefined },
     {
       date: { day: 31, month: 12, year: 123 },
-      expected: { error: 'invalidYear', fieldName: 'year' },
+      expected: { error: 'yearInvalid', fieldName: 'year' },
     },
     {
       date: convertDateToCaseDate(date100YearsAgo),
@@ -92,11 +92,11 @@ describe('isDateInputInvalid()', () => {
     },
     {
       date: { day: 31, month: 12, year: 19 },
-      expected: { error: 'invalidYear', fieldName: 'year' },
+      expected: { error: 'yearInvalid', fieldName: 'year' },
     },
     {
       date: { day: 1, month: 1, year: 1 },
-      expected: { error: 'invalidYear', fieldName: 'year' },
+      expected: { error: 'yearInvalid', fieldName: 'year' },
     },
     {
       date: { day: -31, month: 12, year: 2000 },

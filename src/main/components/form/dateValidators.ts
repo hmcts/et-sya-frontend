@@ -57,7 +57,7 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate) => {
   }
 
   if (year < 1000) {
-    return { error: 'invalidYear', fieldName: 'year' };
+    return { error: 'yearInvalid', fieldName: 'year' };
   }
 
   const dateMinus100 = new Date();
