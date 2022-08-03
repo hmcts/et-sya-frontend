@@ -140,7 +140,7 @@ describe('Check your answers confirmation page', () => {
     const addressWorkedAtLink = respondentDetailsList[3].getAttribute('href');
     const haveAcasLink = respondentDetailsList[4].getAttribute('href');
     const whyNoAcasLength = respondentDetailsList[5].getAttribute('href');
-    const respondentPartialUrl = '/respondent/undefined';
+    const respondentPartialUrl = '/respondent/1';
     expect(respondentNameLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_NAME, 'Incorrect href found');
     expect(respondentAddressLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_ADDRESS, 'Incorrect href found');
     expect(workedForRespondentLink).equals(respondentPartialUrl + PageUrls.WORK_ADDRESS, 'Incorrect href found');
