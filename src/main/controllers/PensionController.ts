@@ -31,6 +31,8 @@ export default class PensionController {
                 name: 'pension-contributions',
                 type: 'currency',
                 classes: 'govuk-input--width-5',
+                label: (l: AnyRecord): string => l.label,
+                labelHidden: true,
                 hint: (l: AnyRecord): string => l.pensionContributions,
                 attributes: { maxLength: 12 },
                 validator: isValidPension,

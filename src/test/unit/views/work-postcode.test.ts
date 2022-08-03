@@ -1,22 +1,25 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
+const PAGE_URL = '/work-postcode';
 const titleClass = 'govuk-heading-xl';
+const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
-const expectedTitle = "What is the name of the respondent you're making the claim against?";
-const inputs = '[class*="respondentName"]';
-const expectedInputLabel = 'Enter name of respondent';
-const insetClass = 'govuk-inset-text';
-const insetText = "You'll be able to add more respondents later if you need to";
+const expectedTitle = 'What’s the postcode where you worked or work?';
+const expectedP1 =
+  'We need this to help progress your claim. If you work or worked at home occasionally or full time, enter the postcode where you would go to work for the employer.';
+const expectedP2 =
+  'If you’re claiming against someone you’ve not worked for - as best as you can, enter the postcode of where they’re based.';
+const inputs = '[class*="workPostcode"]';
+const expectedInputLabel = 'Postcode';
 
 let htmlRes: Document;
-describe('Respondent Name page', () => {
+describe('Work postcode page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.FIRST_RESPONDENT_NAME)
+      .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -27,9 +30,14 @@ describe('Respondent Name page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display insetText', () => {
-    const title = htmlRes.getElementsByClassName(insetClass);
-    expect(title[0].innerHTML).contains(insetText, 'Inset text does not exist');
+  it('should display firt paragraph', () => {
+    const p1 = htmlRes.getElementsByClassName(pClass);
+    expect(p1[0].innerHTML).contains(expectedP1, 'P1 does not exist');
+  });
+
+  it('should display second paragraph', () => {
+    const p1 = htmlRes.getElementsByClassName(pClass);
+    expect(p1[1].innerHTML).contains(expectedP2, 'P2 does not exist');
   });
 
   it('should display 1 input field', () => {
@@ -47,6 +55,6 @@ describe('Respondent Name page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
   });
 });

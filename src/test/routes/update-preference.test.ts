@@ -15,7 +15,7 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   test('should go to the video hearing page when the Email radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ updatePreference: 'Email' })
+      .send({ claimant_contact_preference: 'Email' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -25,7 +25,7 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   test('should go to the video hearing page when the Post radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ updatePreference: 'Post' })
+      .send({ claimant_contact_preference: 'Post' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -35,7 +35,7 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   test('should reload the page when the no radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ updatePreference: undefined })
+      .send({ claimant_contact_preference: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);

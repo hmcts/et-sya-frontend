@@ -3,10 +3,10 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, Urls } from '../definitions/constants';
 
 export default function (app: Application): void {
-  app.get(PageUrls.PCQ, app.locals.container.cradle.pcqController.get);
+  app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
   app.get(PageUrls.CHECKLIST, app.locals.container.cradle.checklistController.get);
   app.get(PageUrls.NEW_ACCOUNT_LANDING, app.locals.container.cradle.newAccountLandingController.get);
@@ -20,18 +20,56 @@ export default function (app: Application): void {
   app.post(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.post);
   app.get(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.get);
   app.post(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.post);
-  app.get(PageUrls.RESPONDENT_NAME, app.locals.container.cradle.respondentNameController.get);
-  app.post(PageUrls.RESPONDENT_NAME, app.locals.container.cradle.respondentNameController.post);
-  app.get(PageUrls.RESPONDENT_ADDRESS, app.locals.container.cradle.respondentAddressController.get);
-  app.post(PageUrls.RESPONDENT_ADDRESS, app.locals.container.cradle.respondentAddressController.post);
-  app.get(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.get);
-  app.post(PageUrls.WORK_ADDRESS, app.locals.container.cradle.workAddressController.post);
-  app.get(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.get);
-  app.post(PageUrls.ACAS_CERT_NUM, app.locals.container.cradle.acasCertNumController.post);
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
+    app.locals.container.cradle.respondentNameController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
+    app.locals.container.cradle.respondentNameController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS,
+    app.locals.container.cradle.respondentAddressController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS,
+    app.locals.container.cradle.respondentAddressController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS,
+    app.locals.container.cradle.workAddressController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_ADDRESS,
+    app.locals.container.cradle.workAddressController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK,
+    app.locals.container.cradle.placeOfWorkController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.PLACE_OF_WORK,
+    app.locals.container.cradle.placeOfWorkController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ACAS_CERT_NUM,
+    app.locals.container.cradle.acasCertNumController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ACAS_CERT_NUM,
+    app.locals.container.cradle.acasCertNumController.post
+  );
+  app.get(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER,
+    app.locals.container.cradle.noAcasNumberController.get
+  );
+  app.post(
+    PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER,
+    app.locals.container.cradle.noAcasNumberController.post
+  );
   app.get(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.get);
   app.post(PageUrls.RESPONDENT_DETAILS_CHECK, app.locals.container.cradle.respondentDetailsCheckController.post);
-  app.get(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.get);
-  app.post(PageUrls.NO_ACAS_NUMBER, app.locals.container.cradle.noAcasNumberController.post);
   app.get(
     PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     app.locals.container.cradle.employmentAndRespondentCheckController.get
@@ -65,8 +103,6 @@ export default function (app: Application): void {
   app.post(PageUrls.TYPE_OF_CLAIM, app.locals.container.cradle.typeOfClaimController.post);
   app.get(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.get);
   app.post(PageUrls.PAST_EMPLOYER, app.locals.container.cradle.pastEmployerController.post);
-  app.get(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.get);
-  app.post(PageUrls.PLACE_OF_WORK, app.locals.container.cradle.placeOfWorkController.post);
   app.post(PageUrls.ADDRESS_LOOK_UP, app.locals.container.cradle.addressLookupController.post);
   app.get(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.get);
   app.post(PageUrls.NOTICE_PERIOD, app.locals.container.cradle.noticePeriodController.post);
@@ -114,9 +150,11 @@ export default function (app: Application): void {
   app.post(PageUrls.WHISTLEBLOWING_CLAIMS, app.locals.container.cradle.whistleblowingClaimsController.post);
   app.get(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.get);
   app.post(PageUrls.CLAIM_DETAILS_CHECK, app.locals.container.cradle.claimDetailsCheckController.post);
-  app.get(PageUrls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
+  app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
+  app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
+  app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(
-    PageUrls.INFO,
+    Urls.INFO,
     infoRequestHandler({
       extraBuildInfo: {
         host: os.hostname(),

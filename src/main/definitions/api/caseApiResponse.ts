@@ -1,4 +1,5 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
+import { ClaimantContactPreference } from '../complexTypes/claimantContactPreference';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -33,4 +34,5 @@ export interface CaseData {
   claimantOtherType?: ClaimantEmploymentDetails;
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
+  claimantContactPreference?: ClaimantContactPreference;
 }

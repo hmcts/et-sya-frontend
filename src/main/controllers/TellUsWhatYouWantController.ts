@@ -16,6 +16,8 @@ export default class TellUsWhatYouWantController {
     fields: {
       tellUsWhatYouWant: {
         id: 'tellUsWhatYouWant',
+        label: l => l.h1,
+        labelHidden: true,
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,

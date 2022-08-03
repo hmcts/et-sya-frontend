@@ -14,6 +14,8 @@ export default class ClaimDetailsCheckController {
     fields: {
       claimDetailsCheck: {
         ...DefaultRadioFormFields,
+        label: 'Have you completed this section?',
+        labelHidden: true,
         id: 'tasklist-check',
         classes: 'govuk-radios',
       },

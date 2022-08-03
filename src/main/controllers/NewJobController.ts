@@ -6,11 +6,14 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
 
 const new_job: RadioFormFields = {
   ...DefaultInlineRadioFormFields,
+  label: (l: AnyRecord): string => l.h1,
+  labelHidden: true,
   id: 'new-job',
 };
 
@@ -31,7 +34,7 @@ export default class NewJobController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
-      : PageUrls.HOME;
+      : PageUrls.FIRST_RESPONDENT_NAME;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

@@ -1,10 +1,13 @@
 {
   "title": "Work Address",
   "h1": "What address did you work at?",
+  "enterPostcode": "Enter a UK postcode",
+  "manualAddress": "I worked outside the UK",
   "errors": {
     "addressPostcode": {
       "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",
-      "required": "A postcode is required."
+      "required": "A postcode is required.",
+      "notSelected": "Select an address"
     },
     "workAddress1": {
       "required": "Enter a building and street for your work address up to 100 characters"

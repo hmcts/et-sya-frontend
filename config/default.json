@@ -34,6 +34,9 @@
       "health": "https://pcq.aat.platform.hmcts.net/health",
       "token": "xssdssdedd",
       "enabled": "true"
+    },
+    "et1Legacy": {
+      "url": "https://employmenttribunals.service.gov.uk"
     }
   },
   "pact": {

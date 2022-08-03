@@ -18,7 +18,8 @@ export default class AcasMultipleController {
         classes: 'govuk-radios--inline',
         id: 'acas-multiple',
         type: 'radios',
-        label: (l: AnyRecord): string => l.label,
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,

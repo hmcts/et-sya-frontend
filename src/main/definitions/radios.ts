@@ -47,13 +47,13 @@ export type RadioFormFields = {
   classes: string;
   type: string;
   label: (l: AnyRecord) => string;
+  labelHidden?: boolean;
   values: typeof YesNoRadioValues;
   validator: Validator;
 };
 
 export const DefaultRadioFormFields = {
   type: 'radios',
-  label: (l: AnyRecord): string => l.label,
   values: YesNoRadioValues,
   validator: isFieldFilledIn,
 };
@@ -61,7 +61,6 @@ export const DefaultRadioFormFields = {
 export const DefaultInlineRadioFormFields = {
   classes: 'govuk-radios--inline',
   type: 'radios',
-  label: (l: AnyRecord): string => l.label,
   values: YesNoRadioValues,
   validator: isFieldFilledIn,
 };

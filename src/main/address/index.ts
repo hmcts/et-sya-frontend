@@ -34,6 +34,7 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
           POST_TOWN,
           LOCAL_CUSTODIAN_CODE_DESCRIPTION = '',
           POSTCODE,
+          COUNTRY_CODE,
         },
       }) => ({
         fullAddress: ADDRESS,
@@ -49,6 +50,7 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
         town: POST_TOWN,
         county: LOCAL_CUSTODIAN_CODE_DESCRIPTION,
         postcode: POSTCODE,
+        country: countryCodes.get(COUNTRY_CODE),
       })
     );
   } catch (err) {
@@ -64,7 +66,15 @@ export type Address = {
   town: string;
   county?: string;
   postcode: string;
+  country: string;
 };
+
+const countryCodes = new Map([
+  ['E', 'ENGLAND'],
+  ['S', 'SCOTLAND'],
+  ['W', 'WALES'],
+  ['N', 'NORTHERN IRELAND'],
+]);
 
 export interface PostcodeResponse {
   results: {
@@ -81,6 +91,7 @@ export interface PostcodeResponse {
       POST_TOWN: string;
       LOCAL_CUSTODIAN_CODE_DESCRIPTION: string;
       POSTCODE: string;
+      COUNTRY_CODE: string;
     };
   }[];
 }
