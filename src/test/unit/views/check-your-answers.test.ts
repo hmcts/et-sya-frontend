@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { NoAcasNumberReason } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
@@ -14,9 +15,26 @@ const summaryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-h
 const summaryListLinkClass = 'govuk-link';
 
 let htmlRes: Document;
+
 describe('Check your answers confirmation page', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Does',
+              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              acasCertNum: '12345',
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+          // claimantWorkAddressQuestion: 'Yes',
+          // workAddress: 'MINISTRY OF JUSTICE, SIXTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AD',
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');

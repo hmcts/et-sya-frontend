@@ -1,17 +1,30 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-
+import { TellUsWhatYouWant } from '../definitions/definition';
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
     const respondents = req.session.userCase?.respondents;
+    const userCase = req.session?.userCase;
+    const whatYouWant = getTellUsWhatYouWant(userCase);
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       PageUrls,
-      userCase: req.session?.userCase,
+      userCase,
       respondents,
+      whatYouWant,
     });
   }
 }
+const getTellUsWhatYouWant = (userCase: CaseWithId) => {
+  if (userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY) && userCase.compensationOutcome) {
+    return userCase.compensationOutcome + ': ' + userCase.compensationAmount;
+  } else if (userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+    return userCase.tribunalRecommendationRequest;
+  } else {
+    return '';
+  }
+};
