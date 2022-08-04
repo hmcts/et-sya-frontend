@@ -68,12 +68,14 @@ describe('Should return data in api format', () => {
       pastEmployer: YesOrNo.YES,
       isStillWorking: StillWorking.WORKING,
       personalDetailsCheck: YesOrNo.YES,
-      reasonableAdjustments: YesOrNo.YES,
-      reasonableAdjustmentsDetail: 'Adjustments detail test',
+      reasonable_adjustments: YesOrNo.YES,
+      reasonable_adjustments_detail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -123,6 +125,8 @@ describe('Format Case Data to Frontend Model', () => {
         },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
+          employmentAndRespondentCheck: YesOrNo.YES,
+          claimDetailsCheck: YesOrNo.YES,
         },
         claimantContactPreference: {
           claimant_contact_preference: EmailOrPost.EMAIL,
@@ -160,12 +164,14 @@ describe('Format Case Data to Frontend Model', () => {
       isStillWorking: StillWorking.WORKING,
       pastEmployer: YesOrNo.YES,
       personalDetailsCheck: YesOrNo.YES,
-      reasonableAdjustments: YesOrNo.YES,
-      reasonableAdjustmentsDetail: 'Adjustments detail test',
+      reasonable_adjustments: YesOrNo.YES,
+      reasonable_adjustments_detail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     });
   });
 
@@ -204,12 +210,14 @@ describe('Format Case Data to Frontend Model', () => {
       isStillWorking: undefined,
       pastEmployer: undefined,
       personalDetailsCheck: undefined,
-      reasonableAdjustments: undefined,
-      reasonableAdjustmentsDetail: undefined,
+      reasonable_adjustments: undefined,
+      reasonable_adjustments_detail: undefined,
       noticeEnds: undefined,
       hearing_preferences: undefined,
       hearing_assistance: undefined,
       claimant_contact_preference: undefined,
+      employmentAndRespondentCheck: undefined,
+      claimDetailsCheck: undefined,
     });
   });
 

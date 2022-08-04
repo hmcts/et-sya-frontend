@@ -57,6 +57,8 @@ export const mockEt1DataModelUpdate = {
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     },
     claimantContactPreference: {
       claimant_contact_preference: EmailOrPost.EMAIL,
