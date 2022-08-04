@@ -44,7 +44,7 @@ export class Oidc {
     app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
       if (req.session?.user) {
         next();
-      } else if (noSignInRequiredEndpoints.includes(req.url)) {
+      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST) {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);
