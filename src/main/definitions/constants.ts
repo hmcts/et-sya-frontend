@@ -59,6 +59,7 @@ export const TranslationKeys = {
   COMPENSATION: 'compensation',
   TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
+  CLAIM_DETAILS_CHECK: 'claim-details-check',
   TASK_LIST_CHECK: 'tasklist-check',
   FORM: 'form',
   RESPONDENT_NAME: 'respondent-name',
@@ -159,6 +160,36 @@ export const Urls = {
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
+
+export const ALLOWED_FILE_FORMATS = [
+  'pdf',
+  'doc',
+  'docx',
+  'txt',
+  'dot',
+  'jpg',
+  'jpeg',
+  'bmp',
+  'tif',
+  'tiff',
+  'png',
+  'pdf',
+  'xls',
+  'xlt',
+  'xla',
+  'xlsx',
+  'xltx',
+  'xlsb',
+  'ppt',
+  'pot',
+  'pps',
+  'ppa',
+  'pptx',
+  'potx',
+  'ppsx',
+  'rtf',
+  'csv',
+];
 
 export const RedisErrors = {
   REDIS_ERROR: 'redisError',

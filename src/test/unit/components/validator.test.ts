@@ -1,6 +1,9 @@
 import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
+  hasValidFileFormat,
+  isContent2500CharsOrLess,
+  isContentBetween3And100Chars,
   isFieldFilledIn,
   isInvalidPostcode,
   isJobTitleValid,
@@ -35,6 +38,33 @@ describe('Validation', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isContent2500CharsOrLess()', () => {
+    it('should not warn when content is 2500 characters or less', () => {
+      expect(isContent2500CharsOrLess(undefined)).toStrictEqual(undefined);
+      expect(isContent2500CharsOrLess('')).toStrictEqual(undefined);
+      expect(isContent2500CharsOrLess('1'.repeat(2500))).toStrictEqual(undefined);
+    });
+
+    it('should warn when content longer than 2500 characters', () => {
+      expect(isContent2500CharsOrLess('1'.repeat(2501))).toStrictEqual('tooLong');
+    });
+  });
+
+  describe('isContentBetween3And100Chars()', () => {
+    it('should not warn when content is valid length', () => {
+      expect(isContentBetween3And100Chars('abc')).toStrictEqual(undefined);
+      expect(isContentBetween3And100Chars('1'.repeat(100))).toStrictEqual(undefined);
+    });
+
+    it('should warn when content shorter than 3 characters', () => {
+      expect(isContentBetween3And100Chars('12')).toStrictEqual('invalidLength');
+    });
+
+    it('should warn when content longer than 100 characters', () => {
+      expect(isContentBetween3And100Chars('1'.repeat(101))).toStrictEqual('invalidLength');
     });
   });
 
@@ -249,15 +279,42 @@ describe('Validation', () => {
 
   describe('isValidCurrency()', () => {
     it.each([
-      { mockRef: '1', expected: 'minLengthRequired' },
-      { mockRef: '20,00', expected: 'minLengthRequired' },
+      { mockRef: undefined, expected: undefined },
+      { mockRef: '', expected: undefined },
+      { mockRef: '0', expected: undefined },
+      { mockRef: '1', expected: undefined },
       { mockRef: '100', expected: undefined },
       { mockRef: '10,000', expected: undefined },
-      { mockRef: 'a', expected: 'notANumber' },
-      { mockRef: '%', expected: 'notANumber' },
-      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '1,123,456,789.12', expected: undefined },
+      { mockRef: 'a', expected: 'invalidCurrency' },
+      { mockRef: '%', expected: 'invalidCurrency' },
+      { mockRef: '25a', expected: 'invalidCurrency' },
+      { mockRef: '-120', expected: 'invalidCurrency' },
+      { mockRef: '20,00', expected: 'invalidCurrency' },
+      { mockRef: '100,00', expected: 'invalidCurrency' },
+      { mockRef: '123456,890', expected: 'invalidCurrency' },
+      { mockRef: '1234567890123', expected: 'invalidCurrency' },
+      { mockRef: '123456789012.12', expected: 'invalidCurrency' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('hasValidFileFormat()', () => {
+    it.each([
+      { fileName: undefined, expected: undefined },
+      { fileName: '', expected: undefined },
+      { fileName: '.csv', expected: undefined },
+      { fileName: '..csv', expected: undefined },
+      { fileName: 'file.csv', expected: undefined },
+      { fileName: 'file.file.csv', expected: undefined },
+      { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file', expected: 'invalidFileFormat' },
+      { fileName: 'csv', expected: 'invalidFileFormat' },
+      { fileName: 'file.', expected: 'invalidFileFormat' },
+      { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
+    ])('Check file format %o', ({ fileName, expected }) => {
+      expect(hasValidFileFormat(fileName)).toEqual(expected);
     });
   });
 });

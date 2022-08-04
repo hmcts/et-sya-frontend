@@ -1,4 +1,5 @@
 import {
+  getClaimSummaryError,
   getCustomNoticeLengthError,
   getGenderDetailsError,
   getNewJobPartialPayInfoError,
@@ -150,6 +151,54 @@ describe('Custom Notice Length errors', () => {
       );
     }
   );
+});
+
+describe('Claim Summary Error', () => {
+  it('should not return any errors when not on the summary page', () => {
+    const body = {};
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if only text has been provided', () => {
+    const body = { claimSummaryText: 'text' };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if only a file has been provided', () => {
+    const body = { claimSummaryFile: 'file' };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return required error if neither text nor file has been provided', () => {
+    const body = {
+      claimSummaryText: '',
+      claimSummaryFile: '',
+    };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
+  });
+
+  it('should return textAndFile error if neither text nor file has been provided', () => {
+    const body = {
+      claimSummaryText: 'text',
+      claimSummaryFile: 'file',
+    };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
+  });
 });
 
 describe('getSectionStatus()', () => {
