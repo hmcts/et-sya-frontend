@@ -183,6 +183,8 @@ export const isValidCurrency: Validator = value => {
 export const validateTitlePreference: Validator = (value: string) => {
   if (value.trim().length === 0) {
     return 'required';
+  } else if (value.trim().length < 2) {
+    return 'lengthError';
   } else if (/^\d+$/.test(value) || /^\D*\d/.test(value)) {
     return 'numberError';
   }

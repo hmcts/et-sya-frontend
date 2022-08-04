@@ -66,6 +66,7 @@ describe('Validation', () => {
     it.each([
       { title: '', expectedError: 'required' },
       { title: 'ab', expectedError: undefined },
+      { title: 'a', expectedError: 'lengthError' },
       { title: 'a1', expectedError: 'numberError' },
       { title: ' 12', expectedError: 'numberError' },
       { title: '1a', expectedError: 'numberError' },

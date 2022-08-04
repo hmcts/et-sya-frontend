@@ -60,7 +60,7 @@ describe('Gender Details Controller', () => {
       const body = {
         claimantSex: 'Male',
         preferredTitle: GenderTitle.OTHER,
-        otherTitlePreference: '5',
+        otherTitlePreference: '5a',
       };
 
       const req = mockRequest({ body });
@@ -68,6 +68,23 @@ describe('Gender Details Controller', () => {
       new GenderDetailsController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'numberError' }];
+
+      expect(res.redirect).toBeCalledWith(req.path);
+      expect(req.session.errors).toEqual(expectedErrors);
+    });
+
+    it('should not allow one character in other title', () => {
+      const body = {
+        claimantSex: 'Male',
+        preferredTitle: GenderTitle.OTHER,
+        otherTitlePreference: 'a',
+      };
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      new GenderDetailsController().post(req, res);
+
+      const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'lengthError' }];
 
       expect(res.redirect).toBeCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
