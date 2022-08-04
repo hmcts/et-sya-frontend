@@ -7,41 +7,49 @@ import request from 'supertest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const payJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/pay.json'),
+const claimDetailsCheckJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/claim-details-check.json'),
   'utf-8'
 );
-const payJson = JSON.parse(payJsonRaw);
+const claimDetailsCheckJson = JSON.parse(claimDetailsCheckJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = payJson.h1;
+const expectedTitle = claimDetailsCheckJson.heading;
+const radios = 'govuk-radios__item';
+const expectedRadioLabel1 = claimDetailsCheckJson.yes;
+const expectedRadioLabel2 = claimDetailsCheckJson.no;
 const buttonClass = 'govuk-button';
-const radios = 'govuk-radios';
-const inputs = 'govuk-input--width-10';
 
 let htmlRes: Document;
-describe('Pay page', () => {
+
+describe('Claim details check page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.PAY)
+      .get(PageUrls.CLAIM_DETAILS_CHECK)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
   });
-
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should have 2 input fields', () => {
-    const inputFields = htmlRes.getElementsByClassName(inputs);
-    expect(inputFields.length).equal(2, `only ${inputFields.length} found`);
-  });
-
   it('should display radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radios);
-    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
+    expect(radioButtons.length).equal(2, 'radio buttons not found');
+  });
+
+  it('should display radio buttons with valid text', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radios);
+    expect(radioButtons[0].innerHTML).contains(
+      expectedRadioLabel1,
+      'Could not find the radio button with label ' + expectedRadioLabel1
+    );
+    expect(radioButtons[1].innerHTML).contains(
+      expectedRadioLabel2,
+      'Could not find the radio button with label ' + expectedRadioLabel2
+    );
   });
 
   it('should display save and continue button', () => {

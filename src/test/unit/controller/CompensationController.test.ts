@@ -10,10 +10,69 @@ describe('Compensation Controller', () => {
   };
 
   it('should render the compensation page', () => {
-    const controller = new CompensationController();
     const response = mockResponse();
     const request = mockRequest({ t });
-    controller.get(request, response);
+    new CompensationController().get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COMPENSATION, expect.anything());
+  });
+
+  describe('Correct validation', () => {
+    it('should not require input (all fields are optional)', () => {
+      const body = {};
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      new CompensationController().post(req, res);
+
+      expect(req.session.errors).toHaveLength(0);
+    });
+
+    it('should not allow invalid compensation outcome text', () => {
+      const body = {
+        compensationOutcome: '1'.repeat(2501),
+        compensationAmount: '',
+      };
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      new CompensationController().post(req, res);
+
+      const expectedErrors = [{ propertyName: 'compensationOutcome', errorType: 'tooLong' }];
+
+      expect(res.redirect).toBeCalledWith(req.path);
+      expect(req.session.errors).toEqual(expectedErrors);
+    });
+
+    it('should not allow numbers invalid currency input', () => {
+      const body = {
+        compensationOutcome: '',
+        compensationAmount: '-1',
+      };
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      new CompensationController().post(req, res);
+
+      const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalidCurrency' }];
+
+      expect(res.redirect).toBeCalledWith(req.path);
+      expect(req.session.errors).toEqual(expectedErrors);
+    });
+
+    it('should assign userCase from the page form data', () => {
+      const body = {
+        compensationOutcome: 'ab',
+        compensationAmount: '50',
+      };
+      const req = mockRequest({ body });
+      const res = mockResponse();
+
+      new CompensationController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        compensationOutcome: 'ab',
+        compensationAmount: '50',
+      });
+    });
   });
 });
