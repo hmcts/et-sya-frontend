@@ -14,6 +14,9 @@ interface CaseDataApiBody {
   claimantContactPreference?: ClaimantContactPreference;
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
+  personalDetailsCheck?: TaskListCheckType;
+  employmentAndRespondentCheck?: TaskListCheckType;
+  claimDetailsCheck?: TaskListCheckType;
 }
 
 export interface CreateCaseBody {

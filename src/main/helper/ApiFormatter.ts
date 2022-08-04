@@ -52,13 +52,15 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
-    reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
-    reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
+    reasonable_adjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
+    reasonable_adjustments_detail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimant_contact_preference: fromApiCaseData.case_data?.claimantContactPreference?.claimant_contact_preference,
+    employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
+    claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
   };
 }
 
@@ -97,13 +99,15 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
       },
       claimantHearingPreference: {
-        reasonable_adjustments: caseItem.reasonableAdjustments,
-        reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
+        reasonable_adjustments: caseItem.reasonable_adjustments,
+        reasonable_adjustments_detail: caseItem.reasonable_adjustments_detail,
         hearing_preferences: caseItem.hearing_preferences,
         hearing_assistance: caseItem.hearing_assistance,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
+        employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
+        claimDetailsCheck: caseItem.claimDetailsCheck,
       },
       claimantContactPreference: {
         claimant_contact_preference: caseItem.claimant_contact_preference,

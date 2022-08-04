@@ -89,8 +89,8 @@ export interface Case {
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
   claimantPensionWeeklyContribution?: number;
-  reasonableAdjustments?: YesOrNo;
-  reasonableAdjustmentsDetail?: string;
+  reasonable_adjustments?: YesOrNo;
+  reasonable_adjustments_detail?: string;
   hearing_preferences?: HearingPreference[];
   hearing_assistance?: string;
   workPostcode?: string;
