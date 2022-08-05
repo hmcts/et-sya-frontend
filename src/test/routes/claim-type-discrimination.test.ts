@@ -16,6 +16,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
   test('should navigate to the describe what happened page when TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
     await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) }))
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
+      .send({ claimTypeDiscrimination: ['age'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED.toString());
@@ -29,6 +30,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []) })
     )
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
+      .send({ claimTypeDiscrimination: ['age'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_TYPE_PAY.toString());

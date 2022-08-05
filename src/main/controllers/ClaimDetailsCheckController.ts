@@ -15,9 +15,9 @@ export default class ClaimDetailsCheckController {
     fields: {
       claimDetailsCheck: {
         ...DefaultRadioFormFields,
+        id: 'claim-details-check',
         label: 'Have you completed this section?',
         labelHidden: true,
-        id: 'tasklist-check',
         classes: 'govuk-radios',
       },
     },
@@ -38,10 +38,10 @@ export default class ClaimDetailsCheckController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.claimDetailsCheckFormContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.TASK_LIST_CHECK,
+      TranslationKeys.CLAIM_DETAILS_CHECK,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.TASK_LIST_CHECK, {
+    res.render(TranslationKeys.CLAIM_DETAILS_CHECK, {
       ...content,
     });
   };

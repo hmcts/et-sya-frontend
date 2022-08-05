@@ -15,7 +15,7 @@ describe(`POST ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
   test('should go to the tell us what you want page', async () => {
     await request(mockApp({}))
       .post(PageUrls.DESCRIBE_WHAT_HAPPENED)
-      .send({})
+      .send({ claimSummaryText: 'text' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT);

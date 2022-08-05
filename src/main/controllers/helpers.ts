@@ -136,6 +136,23 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
   }
 };
 
+export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError => {
+  if (formData.claimSummaryText === undefined && formData.claimSummaryFile === undefined) {
+    return;
+  }
+
+  const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
+  const fileProvided = isFieldFilledIn(formData.claimSummaryFile) === undefined;
+
+  if (textProvided && fileProvided) {
+    return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };
+  }
+
+  if (!textProvided && !fileProvided) {
+    return { propertyName: 'claimSummaryText', errorType: 'required' };
+  }
+};
+
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
@@ -149,6 +166,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const noticeErrors = getCustomNoticeLengthError(req, formData);
+  const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
 
   if (custErrors) {
@@ -165,6 +183,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (noticeErrors) {
     sessionErrors = [...sessionErrors, noticeErrors];
+  }
+
+  if (claimSummaryError) {
+    sessionErrors = [...sessionErrors, claimSummaryError];
   }
 
   if (hearingPreferenceErrors) {

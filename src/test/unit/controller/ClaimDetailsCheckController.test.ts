@@ -6,7 +6,7 @@ import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Test task List check controller', () => {
+describe('Test claim details check controller', () => {
   const t = {
     claimDetailsCheck: {},
     common: {},
@@ -22,7 +22,7 @@ describe('Test task List check controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_DETAILS_CHECK, expect.anything());
   });
 
   it('should render the claim steps page', () => {
