@@ -1,34 +1,31 @@
+import fs from 'fs';
+import path from 'path';
+
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { NoAcasNumberReason } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
+const claimDetailsCheckJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/claim-details-check.json'),
+  'utf-8'
+);
+const claimDetailsCheckJson = JSON.parse(claimDetailsCheckJsonRaw);
+
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = 'Why do you not have an Acas number?';
+const expectedTitle = claimDetailsCheckJson.heading;
 const radios = 'govuk-radios__item';
-const expectedRadioLabel1 = NoAcasNumberReason.ANOTHER;
-const expectedRadioLabel2 = NoAcasNumberReason.NO_POWER;
-const expectedRadioLabel3 = NoAcasNumberReason.EMPLOYER;
-const expectedRadioLabel4 = NoAcasNumberReason.UNFAIR_DISMISSAL;
+const expectedRadioLabel1 = claimDetailsCheckJson.yes;
+const expectedRadioLabel2 = claimDetailsCheckJson.no;
 const buttonClass = 'govuk-button';
 
 let htmlRes: Document;
 
-describe('Why do you not have an Acas number page', () => {
+describe('Claim details check page', () => {
   beforeAll(async () => {
-    await request(
-      mockApp({
-        userCase: {
-          respondents: [
-            {
-              respondentNumber: 1,
-            },
-          ],
-        },
-      })
-    )
-      .get('/respondent/1/no-acas-reason')
+    await request(mockApp({}))
+      .get(PageUrls.CLAIM_DETAILS_CHECK)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -40,7 +37,7 @@ describe('Why do you not have an Acas number page', () => {
 
   it('should display radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(radios);
-    expect(radioButtons.length).equal(4, 'radio buttons not found');
+    expect(radioButtons.length).equal(2, 'radio buttons not found');
   });
 
   it('should display radio buttons with valid text', () => {
@@ -52,14 +49,6 @@ describe('Why do you not have an Acas number page', () => {
     expect(radioButtons[1].innerHTML).contains(
       expectedRadioLabel2,
       'Could not find the radio button with label ' + expectedRadioLabel2
-    );
-    expect(radioButtons[2].innerHTML).contains(
-      expectedRadioLabel3,
-      'Could not find the radio button with label ' + expectedRadioLabel3
-    );
-    expect(radioButtons[3].innerHTML).contains(
-      expectedRadioLabel4,
-      'Could not find the radio button with label ' + expectedRadioLabel4
     );
   });
 

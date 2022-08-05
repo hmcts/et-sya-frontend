@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isContentBetween3And100Chars } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -27,8 +28,11 @@ export default class WhistleblowingClaimsController {
               whistleblowingEntityName: {
                 id: 'whistleblowing-entity-name',
                 name: 'whistleblowing-entity-name',
+                label: (l: AnyRecord): string => l.forwardClaim,
+                labelHidden: true,
                 type: 'text',
                 hint: (l: AnyRecord): string => l.regOrBodyName,
+                validator: isContentBetween3And100Chars,
               },
             },
           },
@@ -37,7 +41,6 @@ export default class WhistleblowingClaimsController {
             value: YesOrNo.NO,
           },
         ],
-        validator: null,
       },
     },
     submit: submitButton,

@@ -6,8 +6,8 @@
   type: field.type,
   classes: field.classes,
   label: {
-    text: getContent(field.label) if not field.labelHidden else "",
-    classes: labelClasses
+    text: getContent(field.label),
+    classes: "govuk-visually-hidden" if field.labelHidden else labelClasses
   },
   prefix: {
     text: "£"

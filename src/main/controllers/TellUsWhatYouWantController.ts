@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { cloneDeep } from 'lodash';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -16,6 +15,8 @@ export default class TellUsWhatYouWantController {
     fields: {
       tellUsWhatYouWant: {
         id: 'tellUsWhatYouWant',
+        label: l => l.h1,
+        labelHidden: true,
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,
@@ -56,11 +57,9 @@ export default class TellUsWhatYouWantController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    const selectedOptions = this.form.getParsedBody(cloneDeep(req.body), this.form.getFormFields()).tellUsWhatYouWant;
-
-    if (selectedOptions?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
+    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
       handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
-    } else if (selectedOptions?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+    } else if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
     } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
       handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);

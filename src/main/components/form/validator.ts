@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import { CaseDate } from '../../definitions/case';
+import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
 import { InvalidField } from '../../definitions/form';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
@@ -13,6 +14,23 @@ export type DateValidator = (
 export const isFieldFilledIn: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
     return 'required';
+  }
+};
+
+export const isContent2500CharsOrLess: Validator = value => {
+  if (value !== undefined && (value as string).trim().length > 2500) {
+    return 'tooLong';
+  }
+};
+
+export const isContentBetween3And100Chars: Validator = value => {
+  if (!value) {
+    return 'required';
+  }
+
+  const nameLength = (value as string).trim().length;
+  if (nameLength < 3 || nameLength > 100) {
+    return 'invalidLength';
   }
 };
 
@@ -316,23 +334,19 @@ export const isValidPension: Validator = value => {
 };
 
 export const isValidCurrency: Validator = value => {
-  if (!value || (value as string).trim().length === 0) {
+  if (!value) {
     return;
   }
 
-  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
-    return 'notANumber';
-  }
+  value = (value as string).trim();
+  const digitCount = value.replace(/\D/g, '').length;
+  const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
 
-  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
-    return 'minLengthRequired';
-  }
-
-  if (/^\d{1,12}(,\d{3}){0,3}(\.\d{2})?$/.test(value as string)) {
+  if (digitCount <= 12 && correctFormat) {
     return;
-  } else {
-    return 'minLengthRequired';
   }
+
+  return 'invalidCurrency';
 };
 
 let otherGenderTitle: string | string[];
@@ -351,4 +365,19 @@ export const validatePreferredOther: Validator = value => {
     }
     return outcome;
   }
+};
+
+export const hasValidFileFormat: Validator = value => {
+  if (!value) {
+    return;
+  }
+
+  value = (value as string).trim();
+  for (const format of ALLOWED_FILE_FORMATS) {
+    if (value.endsWith('.' + format)) {
+      return;
+    }
+  }
+
+  return 'invalidFileFormat';
 };

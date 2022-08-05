@@ -17,7 +17,7 @@ const titleClass = 'govuk-heading-xl';
 const expectedTitle = compensationJSON.h1;
 const buttonClass = 'govuk-button';
 const textAreaClass = 'govuk-textarea';
-const inputs = 'govuk-input--width-5';
+const inputs = 'govuk-input--width-10';
 
 let htmlRes: Document;
 describe('Compensation page', () => {
@@ -39,7 +39,7 @@ describe('Compensation page', () => {
     expect(textAreaField.length).equal(1, `only ${textAreaField.length} found`);
   });
 
-  it('should have 1 input field', () => {
+  it('should have 1 currency input field', () => {
     const inputField = htmlRes.getElementsByClassName(inputs);
     expect(inputField.length).equal(1, `only ${inputField.length} found`);
   });

@@ -1,6 +1,6 @@
 {
   "title": "Describe what happened to you",
-  "h1": "Describe what happened to you (to do)",
+  "h1": "Describe what happened to you",
   "p1": "This is your opportunity to explain why you are making a claim to an employment tribunal.",
   "p2": "It’s important you focus on setting out what happened to you and explain, as far as you can, why you think what happened was unlawful.",
   "p3": "Your claim will be sent to the respondents who will have a chance to reply through the tribunal.",
@@ -32,5 +32,15 @@
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
     "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
+  },
+  "errors": {
+    "claimSummaryText": {
+      "required": "Tell us what happened to you",
+      "tooLong": "Description must be 2500 characters or less",
+      "textAndFile": "Enter a free text summary or upload as a separate document you cannot have both"
+    },
+    "claimSummaryFile": {
+      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf."
+    }
   }
 }

@@ -11,8 +11,8 @@ export type CurrencyFormFields = {
 };
 
 export const DefaultCurrencyFormFields = {
-  classes: 'govuk-input--width-5',
+  classes: 'govuk-input--width-10',
   type: 'currency',
-  attributes: { maxLength: 12 },
+  attributes: { maxLength: 16 }, // longest amount is of the form x,xxx,xxx,xxx.xx
   validator: isValidCurrency,
 };

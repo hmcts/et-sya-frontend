@@ -6,28 +6,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors } from './helpers';
-
-const pageElements = [
-  {
-    title: (l: AnyRecord): string => l.title,
-    subTitle: (l: AnyRecord): string => l.subTitle,
-    links: [
-      {
-        url: PageUrls.RESPONDENT_NAME,
-        linkTxt: (l: AnyRecord): string => l.name,
-      },
-      {
-        url: PageUrls.RESPONDENT_ADDRESS,
-        linkTxt: (l: AnyRecord): string => l.address,
-      },
-      {
-        url: PageUrls.ACAS_CERT_NUM,
-        linkTxt: (l: AnyRecord): string => l.acasNum,
-      },
-    ],
-  },
-];
+import { assignFormData, getPageContent, getRespondentRedirectUrl, handleSessionErrors } from './helpers';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;
@@ -45,23 +24,19 @@ export default class RespondentDetailsCheckController {
 
   public post = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
-
-    if (respondents.length < 6) {
-      const newRespondentNum = respondents.length + 1;
-      const newRespondent = {
-        respondentNumber: newRespondentNum,
-      };
-      req.session.userCase.respondents.push(newRespondent);
-      req.session.userCase.selectedRespondent = newRespondentNum;
-    } else {
+    const newRespondentNum = respondents.length + 1;
+    if (newRespondentNum > 6) {
       // TODO Error handling
       console.log('Limit reached');
     }
 
-    handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_NAME);
+    const redirectUrl = getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME);
+
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const respondents = req.session.userCase.respondents;
     const content = getPageContent(req, this.addRespondentForm, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_DETAILS_CHECK,
@@ -69,7 +44,7 @@ export default class RespondentDetailsCheckController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_DETAILS_CHECK, {
       ...content,
-      pageElements,
+      respondents,
     });
   };
 }

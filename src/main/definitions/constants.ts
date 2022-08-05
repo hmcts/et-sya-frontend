@@ -59,6 +59,7 @@ export const TranslationKeys = {
   COMPENSATION: 'compensation',
   TRIBUNAL_RECOMMENDATION: 'tribunal-recommendation',
   WHISTLEBLOWING_CLAIMS: 'whistleblowing-claims',
+  CLAIM_DETAILS_CHECK: 'claim-details-check',
   TASK_LIST_CHECK: 'tasklist-check',
   FORM: 'form',
   RESPONDENT_NAME: 'respondent-name',
@@ -68,11 +69,12 @@ export const TranslationKeys = {
   RESPONDENT_DETAILS_CHECK: 'respondent-details-check',
   NO_ACAS_NUMBER: 'no-acas-reason',
   WORK_POSTCODE: 'work-postcode',
+  ENTER_ADDRESS: 'enter-address',
+  PLACE_OF_WORK: 'place-of-work',
 } as const;
 
 export const PageUrls = {
   HOME: '/',
-  INFO: '/info',
   CHECKLIST: '/checklist',
   CLAIM_SAVED: '/your-claim-has-been-saved',
   CLAIM_STEPS: '/steps-to-making-your-claim',
@@ -116,7 +118,6 @@ export const PageUrls = {
   NEW_JOB_START_DATE: '/new-job-start-date',
   NEW_JOB_PAY: '/new-job-pay',
   END_DATE: '/end-date',
-  DOWNLOAD_CLAIM: '/download-claim',
   CLAIM_TYPE_DISCRIMINATION: '/claim-type-discrimination',
   CLAIM_TYPE_PAY: '/claim-type-pay',
   DESCRIBE_WHAT_HAPPENED: '/describe-what-happened',
@@ -133,8 +134,9 @@ export const PageUrls = {
   RESPONDENT_DETAILS_CHECK: '/respondent-details-check',
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
-  PCQ: '/pcq',
   WORK_POSTCODE: '/work-postcode',
+  RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
+  FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
 } as const;
 
 export const AuthUrls = {
@@ -151,7 +153,43 @@ export const JavaApiUrls = {
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
 } as const;
 
+export const Urls = {
+  INFO: '/info',
+  DOWNLOAD_CLAIM: '/download-claim',
+  PCQ: '/pcq',
+} as const;
+
 export const HTTPS_PROTOCOL = 'https://';
+
+export const ALLOWED_FILE_FORMATS = [
+  'pdf',
+  'doc',
+  'docx',
+  'txt',
+  'dot',
+  'jpg',
+  'jpeg',
+  'bmp',
+  'tif',
+  'tiff',
+  'png',
+  'pdf',
+  'xls',
+  'xlt',
+  'xla',
+  'xlsx',
+  'xltx',
+  'xlsb',
+  'ppt',
+  'pot',
+  'pps',
+  'ppa',
+  'pptx',
+  'potx',
+  'ppsx',
+  'rtf',
+  'csv',
+];
 
 export const RedisErrors = {
   REDIS_ERROR: 'redisError',

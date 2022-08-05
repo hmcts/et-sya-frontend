@@ -11,6 +11,7 @@ export interface AppRequest<T = Partial<AnyRecord>> extends Request {
 }
 
 export interface AppSession extends Session {
+  returnUrl: string;
   lang: string | undefined;
   errors: FormError[] | undefined;
   userCase: CaseWithId;

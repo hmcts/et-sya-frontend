@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
@@ -15,10 +16,12 @@ export default class ClaimTypeDiscriminationController {
     fields: {
       claimTypeDiscrimination: {
         id: 'claimTypeDiscrimination',
+        label: l => l.h1,
+        labelHidden: true,
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,
-        validator: null,
+        validator: atLeastOneFieldIsChecked,
         values: [
           {
             id: 'age',
@@ -84,7 +87,7 @@ export default class ClaimTypeDiscriminationController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
-    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
+    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
