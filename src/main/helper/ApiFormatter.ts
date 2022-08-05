@@ -121,12 +121,12 @@ export const formatDate = (date: CaseDate): string => {
   return `${date.year}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}`;
 };
 
-export const parseDateFromString = (dobDate: string): CaseDate => {
-  if (dobDate) {
+export const parseDateFromString = (date: string): CaseDate => {
+  if (date) {
     return {
-      year: dobDate.substring(0, 4),
-      month: dobDate.substring(5, 7),
-      day: dobDate.substring(8),
+      year: date.substring(0, 4),
+      month: date.substring(5, 7),
+      day: date.substring(8),
     };
   }
 };
