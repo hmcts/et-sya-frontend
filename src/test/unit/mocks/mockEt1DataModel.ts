@@ -30,6 +30,7 @@ export const mockEt1DataModelUpdate = {
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
+      claimant_contact_preference: EmailOrPost.EMAIL,
     },
     claimantOtherType: {
       pastEmployer: YesOrNo.YES,
@@ -59,9 +60,6 @@ export const mockEt1DataModelUpdate = {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
-    },
-    claimantContactPreference: {
-      claimant_contact_preference: EmailOrPost.EMAIL,
     },
   },
 };

@@ -1,7 +1,7 @@
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -58,7 +58,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
     hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
-    claimant_contact_preference: fromApiCaseData.case_data?.claimantContactPreference?.claimant_contact_preference,
+    claimant_contact_preference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
   };
@@ -79,10 +79,11 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+        claimant_contact_preference: caseItem.claimant_contact_preference,
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
-        stillWorking: StillWorking.WORKING,
+        stillWorking: caseItem.isStillWorking,
         claimant_occupation: caseItem.jobTitle,
         claimant_employed_from: formatDate(caseItem.startDate),
         claimant_notice_period: caseItem.noticePeriod,
@@ -108,9 +109,6 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         personalDetailsCheck: caseItem.personalDetailsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
-      },
-      claimantContactPreference: {
-        claimant_contact_preference: caseItem.claimant_contact_preference,
       },
     },
   };
