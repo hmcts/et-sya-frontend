@@ -98,6 +98,7 @@ describe('Format Case Data to Frontend Model', () => {
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
+          claimant_contact_preference: EmailOrPost.EMAIL,
         },
         claimantOtherType: {
           pastEmployer: YesOrNo.YES,
@@ -127,9 +128,6 @@ describe('Format Case Data to Frontend Model', () => {
           personalDetailsCheck: YesOrNo.YES,
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,
-        },
-        claimantContactPreference: {
-          claimant_contact_preference: EmailOrPost.EMAIL,
         },
       },
     };
