@@ -40,4 +40,16 @@ describe('New Job Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_START_DATE);
   });
+
+  it('should have required error when nothing is selected', () => {
+    const body = { newJob: '' };
+    const controller = new NewJobController(mockLogger);
+    const expectedErrors = [{ errorType: 'required', propertyName: 'newJob' }];
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.errors).toEqual(expectedErrors);
+  });
 });

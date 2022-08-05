@@ -1,4 +1,5 @@
 import NewJobPayController from '../../../main/controllers/NewJobPayController';
+import { PayInterval } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
@@ -16,5 +17,45 @@ describe('New Job Pay Controller', () => {
     const request = mockRequest({ t });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB_PAY, expect.anything());
+  });
+
+  it('should have error when pay is entered and interval is not entered', () => {
+    const controller = new NewJobPayController(mockLogger);
+    const body = { newJobPay: '6700', newJobPayInterval: '' };
+    const expectedErrors = [{ propertyName: 'newJobPayInterval', errorType: 'required' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have error when pay is not a valid number', () => {
+    const controller = new NewJobPayController(mockLogger);
+    const body = { newJobPay: 'ten', newJobPayInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'notANumber' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have error when no pay is entered and interval is entered', () => {
+    const controller = new NewJobPayController(mockLogger);
+    const body = { newJobPay: '', newJobPayInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'required' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have error when pay is less than two characters', () => {
+    const controller = new NewJobPayController(mockLogger);
+    const body = { newJobPay: '1', newJobPayInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'minLengthRequired' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
   });
 });

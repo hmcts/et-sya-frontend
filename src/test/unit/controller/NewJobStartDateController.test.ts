@@ -54,4 +54,60 @@ describe('New Job Start Date Controller', () => {
     expect(res.redirect).toBeCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
+
+  it('should have error when date more than 10 years in future', () => {
+    const errors = [
+      { propertyName: 'newJobStartDate', errorType: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
+    ];
+    const body = {
+      'newJobStartDate-day': '12',
+      'newJobStartDate-month': '11',
+      'newJobStartDate-year': '2100',
+    };
+
+    const controller = new NewJobStartDateController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should have error when date is in the past', () => {
+    const errors = [{ propertyName: 'newJobStartDate', errorType: 'invalidDateInPast', fieldName: 'day' }];
+    const body = {
+      'newJobStartDate-day': '12',
+      'newJobStartDate-month': '11',
+      'newJobStartDate-year': '2000',
+    };
+
+    const controller = new NewJobStartDateController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should have error when no date is entered', () => {
+    const errors = [{ propertyName: 'newJobStartDate', errorType: 'required', fieldName: 'day' }];
+    const body = {
+      'newJobStartDate-day': '',
+      'newJobStartDate-month': '',
+      'newJobStartDate-year': '',
+    };
+
+    const controller = new NewJobStartDateController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
 });

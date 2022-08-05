@@ -80,7 +80,7 @@ describe('Should return data in api format', () => {
       startDate: { year: '2010', month: '05', day: '11' },
       endDate: { year: '2017', month: '05', day: '11' },
       newJob: YesOrNo.YES,
-      newJobPay: 4000,
+      newJobPay: 4000.0,
       newJobPayInterval: PayInterval.MONTHLY,
       newJobStartDate: { year: '2022', month: '08', day: '11' },
       pastEmployer: YesOrNo.YES,
@@ -146,7 +146,7 @@ describe('Format Case Data to Frontend Model', () => {
           new_job: YesOrNo.YES,
           newly_employed_from: '2010-05-12',
           new_pay_before_tax: 4000,
-          new_pay_interval: PayInterval.MONTHLY,
+          new_job_pay_interval: PayInterval.MONTHLY,
         },
         claimantHearingPreference: {
           reasonable_adjustments: YesOrNo.YES,

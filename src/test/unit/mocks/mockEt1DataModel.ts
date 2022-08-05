@@ -58,7 +58,7 @@ export const mockEt1DataModelUpdate = {
     newEmploymentType: {
       new_job: 'Yes',
       new_pay_before_tax: 4000,
-      new_pay_interval: 'Months',
+      new_job_pay_interval: 'Months',
       newly_employed_from: '2022-08-11',
     },
     claimantHearingPreference: {

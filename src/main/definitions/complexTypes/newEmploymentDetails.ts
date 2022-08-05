@@ -4,5 +4,5 @@ export interface NewEmploymentDetails {
   new_job?: YesOrNo;
   newly_employed_from?: string;
   new_pay_before_tax?: number;
-  new_pay_interval?: PayInterval;
+  new_job_pay_interval?: PayInterval;
 }
