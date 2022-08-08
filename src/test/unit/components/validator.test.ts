@@ -12,6 +12,7 @@ import {
   isValidAvgWeeklyHours,
   isValidCurrency,
   isValidNoticeLength,
+  isValidPay,
   isValidPension,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
@@ -75,6 +76,14 @@ describe('Validation', () => {
 
     it('Should correctly identify an option was not selected', () => {
       expect(isOptionSelected('notSelected')).toStrictEqual('required');
+    });
+
+    it.each([
+      { preferredTitle: undefined, expected: 'required' },
+      { preferredTitle: '', expected: 'required' },
+      { preferredTitle: 'notSelected', expected: 'required' },
+    ])('Check option is selected %o', ({ preferredTitle, expected }) => {
+      expect(isOptionSelected(preferredTitle)).toEqual(expected);
     });
   });
 
@@ -302,6 +311,28 @@ describe('Validation', () => {
     });
   });
 
+  describe('isValidPay()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: '0', expected: 'minLengthRequired' },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '10,000', expected: undefined },
+      { mockRef: '1,123,456,789.12', expected: undefined },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '-120', expected: 'notANumber' },
+      { mockRef: '20,00', expected: 'notANumber' },
+      { mockRef: '100,00', expected: 'notANumber' },
+      { mockRef: '123456,890', expected: 'notANumber' },
+      { mockRef: '1234567890123', expected: 'notANumber' },
+      { mockRef: '123456789012.12', expected: 'minLengthRequired' },
+    ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
+      expect(isValidPay(mockRef)).toEqual(expected);
+    });
+  });
+
   describe('hasValidFileFormat()', () => {
     it.each([
       { fileName: undefined, expected: undefined },
@@ -317,16 +348,6 @@ describe('Validation', () => {
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       expect(hasValidFileFormat(fileName)).toEqual(expected);
-    });
-  });
-
-  describe('isOptionSelected()', () => {
-    it.each([
-      { preferredTitle: undefined, expected: 'required' },
-      { preferredTitle: '', expected: 'required' },
-      { preferredTitle: 'notSelected', expected: 'required' },
-    ])('Check option is selected %o', ({ preferredTitle, expected }) => {
-      expect(isOptionSelected(preferredTitle)).toEqual(expected);
     });
   });
 });
