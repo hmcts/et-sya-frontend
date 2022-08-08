@@ -1,9 +1,15 @@
+import axios from 'axios';
+
 import NewJobPayController from '../../../main/controllers/NewJobPayController';
 import { PayInterval } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('New Job Pay Controller', () => {
   const t = {
@@ -57,5 +63,16 @@ describe('New Job Pay Controller', () => {
     const request = mockRequest({ body });
     controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should run logger in catch block', async () => {
+    const body = { newJobPay: '123', newJobPayInterval: PayInterval.WEEKLY };
+    const controller = new NewJobPayController(mockLogger);
+    const request = mockRequest({ body });
+    const response = mockResponse();
+
+    await controller.post(request, response);
+
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
   });
 });

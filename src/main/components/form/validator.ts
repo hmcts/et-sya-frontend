@@ -203,6 +203,24 @@ export const validateTitlePreference: Validator = (value: string) => {
   } else if (/^\d+$/.test(value) || /^\D*\d/.test(value)) {
     return 'numberError';
   }
+}
+
+export const isValidPay: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
+  if (/^\D+$/.test(value as string) || /^\d+\D+$/.test(value as string)) {
+    return 'notANumber';
+  }
+  if ((value as string).trim().length < 2 || (value as string).trim().length > 12) {
+    return 'minLengthRequired';
+  }
+
+  if (/^\d{1,12}(,\d{3}){0,3}(\.\d{2})?$/.test(value as string)) {
+    return;
+  } else {
+    return 'minLengthRequired';
+  }
 };
 
 export const hasValidFileFormat: Validator = value => {

@@ -246,6 +246,8 @@ describe('Validation', () => {
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
+      { mockRef: undefined, expected: 'required' },
+      { mockRef: '', expected: 'required' },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidPension(mockRef)).toEqual(expected);
     });
@@ -315,6 +317,16 @@ describe('Validation', () => {
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       expect(hasValidFileFormat(fileName)).toEqual(expected);
+    });
+  });
+
+  describe('isOptionSelected()', () => {
+    it.each([
+      { preferredTitle: undefined, expected: 'required' },
+      { preferredTitle: '', expected: 'required' },
+      { preferredTitle: 'notSelected', expected: 'required' },
+    ])('Check option is selected %o', ({ preferredTitle, expected }) => {
+      expect(isOptionSelected(preferredTitle)).toEqual(expected);
     });
   });
 });
