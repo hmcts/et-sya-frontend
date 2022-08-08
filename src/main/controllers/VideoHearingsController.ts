@@ -15,20 +15,20 @@ export default class VideoHearingsController {
   private readonly form: Form;
   private readonly videoHearingsContent: FormContent = {
     fields: {
-      hearing_preferences: {
-        id: 'hearing_preferences',
+      hearingPreferences: {
+        id: 'hearingPreferences',
         label: l => l.h1,
         labelHidden: true,
         type: 'checkboxes',
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            name: 'hearing_preferences',
+            name: 'hearingPreferences',
             label: l => l.checkboxVideo,
             value: HearingPreference.VIDEO,
           },
           {
-            name: 'hearing_preferences',
+            name: 'hearingPreferences',
             label: l => l.checkboxPhone,
             value: HearingPreference.PHONE,
           },
@@ -36,13 +36,13 @@ export default class VideoHearingsController {
             divider: true,
           },
           {
-            name: 'hearing_preferences',
+            name: 'hearingPreferences',
             label: l => l.checkboxNeither,
             exclusive: true,
             hint: l => l.checkboxNeitherHint,
             value: HearingPreference.NEITHER,
             subFields: {
-              hearing_assistance: {
+              hearingAssistance: {
                 id: 'hearing_assistance',
                 type: 'textarea',
                 label: l => l.explain,

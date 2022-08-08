@@ -17,7 +17,7 @@ export default class ReasonableAdjustmentsController {
 
   private readonly reasonableAdjustmentsContent: FormContent = {
     fields: {
-      reasonable_adjustments: {
+      reasonableAdjustments: {
         classes: 'govuk-radios',
         id: 'reasonableAdjustments',
         type: 'radios',
@@ -30,7 +30,7 @@ export default class ReasonableAdjustmentsController {
             value: YesOrNo.YES,
             hint: (l: AnyRecord): string => l.textAreaHint,
             subFields: {
-              reasonable_adjustments_detail: {
+              reasonableAdjustmentsDetail: {
                 id: 'adjustmentDetailText',
                 name: 'adjustmentDetailText',
                 type: 'textarea',

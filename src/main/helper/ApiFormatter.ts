@@ -52,13 +52,13 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
-    reasonable_adjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
-    reasonable_adjustments_detail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
+    reasonableAdjustments: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments,
+    reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
-    hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
-    hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
-    claimant_contact_preference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
+    hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
+    claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
   };
@@ -79,7 +79,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantType: {
         claimant_email_address: caseItem.email,
-        claimant_contact_preference: caseItem.claimant_contact_preference,
+        claimant_contact_preference: caseItem.claimantContactPreference,
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
@@ -100,10 +100,10 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
       },
       claimantHearingPreference: {
-        reasonable_adjustments: caseItem.reasonable_adjustments,
-        reasonable_adjustments_detail: caseItem.reasonable_adjustments_detail,
-        hearing_preferences: caseItem.hearing_preferences,
-        hearing_assistance: caseItem.hearing_assistance,
+        reasonable_adjustments: caseItem.reasonableAdjustments,
+        reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
+        hearing_preferences: caseItem.hearingPreferences,
+        hearing_assistance: caseItem.hearingAssistance,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,

@@ -36,7 +36,7 @@ export interface Case {
   addressCountry?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
-  claimant_contact_preference?: EmailOrPost;
+  claimantContactPreference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;
@@ -89,10 +89,10 @@ export interface Case {
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
   claimantPensionWeeklyContribution?: number;
-  reasonable_adjustments?: YesOrNo;
-  reasonable_adjustments_detail?: string;
-  hearing_preferences?: HearingPreference[];
-  hearing_assistance?: string;
+  reasonableAdjustments?: YesOrNo;
+  reasonableAdjustmentsDetail?: string;
+  hearingPreferences?: HearingPreference[];
+  hearingAssistance?: string;
   workPostcode?: string;
   respondentName?: string;
   respondentAddress1?: string;

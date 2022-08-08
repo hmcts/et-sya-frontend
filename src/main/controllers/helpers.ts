@@ -313,8 +313,8 @@ export const conditionalRedirect = (
 };
 
 export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): FormError => {
-  const hearingPreferenceCheckbox = formData.hearing_preferences;
-  const hearingPreferenceNeitherTextarea = formData.hearing_assistance;
+  const hearingPreferenceCheckbox = formData.hearingPreferences;
+  const hearingPreferenceNeitherTextarea = formData.hearingAssistance;
 
   if (
     (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
@@ -322,7 +322,7 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
   ) {
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
-      return { errorType, propertyName: 'hearing_assistance' };
+      return { errorType, propertyName: 'hearingAssistance' };
     }
   }
 };
