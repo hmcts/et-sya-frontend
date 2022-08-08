@@ -47,7 +47,7 @@ describe('Reasonable Adjustments Controller', () => {
   });
 
   it('should invoke logger in then() block', async () => {
-    const body = { reasonable_adjustments: YesOrNo.NO };
+    const body = { reasonableAdjustments: YesOrNo.NO };
     const controller = new ReasonableAdjustmentsController(mockLogger);
     const request = mockRequest({ body });
     const response = mockResponse();
@@ -66,8 +66,8 @@ describe('Reasonable Adjustments Controller', () => {
 
   it('should add the reasonable adjustments form value to the userCase', () => {
     const body = {
-      reasonable_adjustments: 'Yes',
-      reasonable_adjustments_detail: 'Reasonable adjustments detail test text',
+      reasonableAdjustments: 'Yes',
+      reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
     };
 
     const controller = new ReasonableAdjustmentsController(mockLogger);
@@ -79,8 +79,8 @@ describe('Reasonable Adjustments Controller', () => {
     controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
-      reasonable_adjustments: 'Yes',
-      reasonable_adjustments_detail: 'Reasonable adjustments detail test text',
+      reasonableAdjustments: 'Yes',
+      reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
     });
   });
 });
