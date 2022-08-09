@@ -100,7 +100,6 @@ export interface Case {
   respondentName?: string;
   claimantSex?: string;
   claimantGenderIdentitySame?: string;
-  preferredTitle?: string;
   otherTitlePreference?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
