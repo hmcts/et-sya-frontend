@@ -1,7 +1,12 @@
 {
   "title": "Claim details - tribunal recommendation",
-  "h1": "What tribunal recommendation would you like to make? (to do)",
+  "h1": "What tribunal recommendation would you like to make?",
   "detailsSummaryRecom": "What is a tribunal recommendation?",
   "detailsTextRecom": "If your employer is found to have discriminated against you, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on you",
-  "hint": "Tell us what action you’d like a tribunal to recommend your respondents take to reduce the impact of any discrimination which has occurred."
+  "hint": "Tell us what action you’d like a tribunal to recommend your respondents take to reduce the impact of any discrimination which has occurred.",
+  "errors": {
+    "tribunalRecommendationRequest": {
+      "tooLong": "The action you would like the Tribunal to recommend must be entered as less than 2500 characters"
+    }
+  }
 }

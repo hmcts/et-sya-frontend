@@ -15,6 +15,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_PAY}`, () => {
   test('should navigate to the tell us what you want page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.CLAIM_TYPE_PAY)
+      .send({ claimTypePay: ['holidayPay'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED);

@@ -1,12 +1,14 @@
 import {
+  getClaimSummaryError,
   getCustomNoticeLengthError,
+  getGenderDetailsError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
 import { mockRequest } from '../mocks/mockRequest';
@@ -151,6 +153,54 @@ describe('Custom Notice Length errors', () => {
   );
 });
 
+describe('Claim Summary Error', () => {
+  it('should not return any errors when not on the summary page', () => {
+    const body = {};
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if only text has been provided', () => {
+    const body = { claimSummaryText: 'text' };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if only a file has been provided', () => {
+    const body = { claimSummaryFile: 'file' };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return required error if neither text nor file has been provided', () => {
+    const body = {
+      claimSummaryText: '',
+      claimSummaryFile: '',
+    };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
+  });
+
+  it('should return textAndFile error if neither text nor file has been provided', () => {
+    const body = {
+      claimSummaryText: 'text',
+      claimSummaryFile: 'file',
+    };
+
+    const errors = getClaimSummaryError(body);
+
+    expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
+  });
+});
+
 describe('getSectionStatus()', () => {
   it.each([
     {
@@ -236,5 +286,47 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: 'OL2 5AA', expected: false },
   ])('Check if postcode is an MVP location %o', ({ postcode, expected }) => {
     expect(isPostcodeMVPLocation(postcode)).toEqual(expected);
+  });
+});
+
+describe('getGenderDetailsError()', () => {
+  it('should not return any errors when not on the summary page', () => {
+    const body = {};
+
+    const errors = getGenderDetailsError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it("should not return an error if 'other' title hasn't been selected", () => {
+    const body = { preferredTitle: GenderTitle.MR };
+
+    const errors = getGenderDetailsError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if other title has been provided', () => {
+    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: 'Dr' };
+
+    const errors = getGenderDetailsError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it("should return required error if other title hasn't been provided", () => {
+    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '' };
+
+    const errors = getGenderDetailsError(body);
+
+    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'required' });
+  });
+
+  it("should return number error if other title isn't valid", () => {
+    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '123' };
+
+    const errors = getGenderDetailsError(body);
+
+    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'numberError' });
   });
 });

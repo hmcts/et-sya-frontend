@@ -1,12 +1,16 @@
 import {
   DateValidator,
   areDateFieldsFilledIn,
+  areDates10YearsApartOrMore,
+  convertDateToCaseDate,
+  isDateEmpty,
+  isDateInLastTenYears,
+  isDateInNextTenYears,
+  isDateInPast,
   isDateInputInvalid,
-  isDateTenYearsInFuture,
-  isDateTenYearsInPast,
-  isFutureDate,
-  isPastDate,
-} from '../components/form/validator';
+  isDateNotInPast,
+  isDateNotPartial,
+} from '../components/form/dateValidators';
 
 import { CaseDate } from './case';
 import { InvalidField } from './form';
@@ -46,7 +50,7 @@ export type DateFormFields = {
 
 type DateTypes = string | void | InvalidField;
 
-export const DefaultDateFormFields = {
+export const BirthDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
   label: (l: AnyRecord): string => l.h1,
@@ -54,7 +58,10 @@ export const DefaultDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+    isDateNotPartial(value) ||
+    (isDateEmpty(value) ? '' : isDateInputInvalid(value)) ||
+    isDateInPast(value) ||
+    areDates10YearsApartOrMore(value, convertDateToCaseDate(new Date())),
 };
 
 export const EndDateFormFields = {
@@ -64,7 +71,7 @@ export const EndDateFormFields = {
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value) || isDateTenYearsInPast(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateInPast(value) || isDateInLastTenYears(value),
 };
 
 export const NewJobDateFormFields = {
@@ -74,7 +81,7 @@ export const NewJobDateFormFields = {
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInPast(value) || isDateInNextTenYears(value),
 };
 
 export const NoticeEndDateFormFields = {
@@ -85,7 +92,7 @@ export const NoticeEndDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isPastDate(value) || isDateTenYearsInFuture(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInPast(value) || isDateInNextTenYears(value),
 };
 
 export const StartDateFormFields = {
@@ -96,5 +103,5 @@ export const StartDateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isFutureDate(value),
+    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateInPast(value),
 };
