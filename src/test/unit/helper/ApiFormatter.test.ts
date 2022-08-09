@@ -14,7 +14,13 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
-import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/helper/ApiFormatter';
+import {
+  formatDate,
+  fromApiFormat,
+  parseDateFromString,
+  toApiFormat,
+  toApiFormatCreate,
+} from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 describe('Should return data in api format', () => {
@@ -219,15 +225,43 @@ describe('Format Case Data to Frontend Model', () => {
     });
   });
 
-  it('date formatter should return null when input value is undefined', () => {
+  it('date formatter should return null when date is empty', () => {
     const caseItem: CaseWithId = {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      dobDate: undefined,
-      startDate: undefined,
+      dobDate: { day: '', month: '', year: '' },
+      startDate: { day: '', month: '', year: '' },
+      noticeEnds: { day: '', month: '', year: '' },
     };
     const apiData = toApiFormat(caseItem);
-    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_notice_period).toEqual(null);
+  });
+});
+
+describe('formatDate()', () => {
+  it.each([
+    { date: { day: '30', month: '10', year: '2000' }, expected: '2000-10-30' },
+    { date: { day: '5', month: '10', year: '2000' }, expected: '2000-10-05' },
+    { date: { day: '30', month: '4', year: '2000' }, expected: '2000-04-30' },
+    { date: { day: '5', month: '4', year: '2000' }, expected: '2000-04-05' },
+    { date: { day: '05', month: '04', year: '2000' }, expected: '2000-04-05' },
+    { date: { day: '', month: '', year: '' }, expected: null },
+    { date: undefined, expected: null },
+  ])('Correct formatting of date to string: %o', ({ date, expected }) => {
+    expect(formatDate(date)).toBe(expected);
+  });
+});
+
+describe('parseDateFromString()', () => {
+  it.each([
+    { date: '2000-10-30', expected: { day: '30', month: '10', year: '2000' } },
+    { date: '2000-10-05', expected: { day: '05', month: '10', year: '2000' } },
+    { date: '2000-04-30', expected: { day: '30', month: '04', year: '2000' } },
+    { date: '2000-04-05', expected: { day: '05', month: '04', year: '2000' } },
+    { date: null, expected: undefined },
+  ])('Correct parsing of date from string: %o', ({ date, expected }) => {
+    expect(parseDateFromString(date)).toStrictEqual(expected);
   });
 });

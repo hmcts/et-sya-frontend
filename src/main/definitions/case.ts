@@ -95,6 +95,10 @@ export interface Case {
   hearingAssistance?: string;
   workPostcode?: string;
   respondentName?: string;
+  claimantSex?: string;
+  claimantGenderIdentitySame?: string;
+  preferredTitle?: string;
+  otherTitlePreference?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
