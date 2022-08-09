@@ -117,7 +117,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-             text: "Not Selected" if userCase.preferredTitle
+             text: userCase.preferredTitle if userCase.preferredTitle else "Not Selected"
           },
 
           actions: {
@@ -172,7 +172,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.updatePreference
+            text:  userCase.claimant_contact_preference
           },
           actions: {
             items: [
@@ -208,8 +208,8 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.reasonableAdjustments if (userCase.reasonableAdjustments === "No" and not undefined) else userCase.reasonableAdjustments + ", " + userCase.reasonableAdjustmentsDetail 
-          },
+            text: userCase.reasonableAdjustments + ", " + userCase.reasonableAdjustmentsDetail if userCase.reasonableAdjustmentsDetail else userCase.reasonableAdjustments
+         },
           actions: {
             items: [
               {
@@ -236,7 +236,7 @@
       rows: [
         {
           key: {
-            text: respondentDetails.header,
+            text: "Respondent"+ respondent.respondentNumber + " details",
             classes: "govuk-heading-m"
           }
         },

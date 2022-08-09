@@ -30,8 +30,6 @@ describe('Check your answers confirmation page', () => {
               noAcasReason: NoAcasNumberReason.ANOTHER,
             },
           ],
-          // claimantWorkAddressQuestion: 'Yes',
-          // workAddress: 'MINISTRY OF JUSTICE, SIXTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AD',
         },
       })
     )
