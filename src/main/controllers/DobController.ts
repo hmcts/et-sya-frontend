@@ -6,7 +6,7 @@ import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDate } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DateFormFields, DefaultDateFormFields } from '../definitions/dates';
+import { BirthDateFormFields, DateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { UnknownRecord } from '../definitions/util-types';
@@ -14,7 +14,7 @@ import { UnknownRecord } from '../definitions/util-types';
 import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 const dob_date: DateFormFields = {
-  ...DefaultDateFormFields,
+  ...BirthDateFormFields,
   id: 'dobDate',
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
 };

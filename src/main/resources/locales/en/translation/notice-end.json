@@ -15,7 +15,7 @@
       "yearNotANumber": "Year must only contain numbers. For example, 2014",
       "dayInvalid": "Day must be between 1 and 31",
       "monthInvalid": "Month must be between 1 and 12",
-      "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
+      "yearInvalid": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInPast": "Enter a valid date, date must not be in the past",
       "invalidDateMoreThanTenYearsInFuture": "Enter a valid date, date must not be greater than 10 years from current date"
     }
