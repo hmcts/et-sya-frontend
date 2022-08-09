@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CurrencyFormFields, DefaultCurrencyFormFields } from '../definitions/currency-fields';
@@ -27,7 +26,6 @@ export default class CompensationController {
         type: 'textarea',
         hint: l => l.hint,
         attributes: { title: 'Compensation outcome text area' },
-        validator: isContent2500CharsOrLess,
       },
       compensationAmount: compensation_amount,
     },

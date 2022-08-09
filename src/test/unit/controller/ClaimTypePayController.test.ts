@@ -16,22 +16,4 @@ describe('Claim Type Pay Controller', () => {
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_TYPE_PAY, expect.anything());
   });
-
-  describe('Correct validation', () => {
-    it('should require claimTypePay', () => {
-      const req = mockRequest({ body: {} });
-      new ClaimTypePayController().post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'claimTypePay', errorType: 'required' }]);
-    });
-
-    it('should assign userCase from the page form data', () => {
-      const req = mockRequest({ body: { claimTypePay: ['holidayPay'] } });
-      new ClaimTypePayController().post(req, mockResponse());
-
-      expect(req.session.userCase).toMatchObject({
-        claimTypePay: ['holidayPay'],
-      });
-    });
-  });
 });

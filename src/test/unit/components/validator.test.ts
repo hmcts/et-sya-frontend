@@ -1,13 +1,15 @@
 import {
+  areDateFieldsFilledIn,
   arePayValuesNull,
   atLeastOneFieldIsChecked,
-  hasValidFileFormat,
-  isContent2500CharsOrLess,
-  isContentBetween3And100Chars,
+  isDateInputInvalid,
+  isDateTenYearsInFuture,
+  isDateTenYearsInPast,
   isFieldFilledIn,
+  isFutureDate,
   isInvalidPostcode,
   isJobTitleValid,
-  isOptionSelected,
+  isPastDate,
   isPayIntervalNull,
   isValidAvgWeeklyHours,
   isValidCurrency,
@@ -17,8 +19,10 @@ import {
   isValidUKTelNumber,
   isWorkAddressLineOneValid,
   isWorkAddressTownValid,
-  validateTitlePreference,
+  validateGenderTitle,
+  validatePreferredOther,
 } from '../../../main/components/form/validator';
+import { CaseDate } from '../../../main/definitions/case';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
@@ -29,7 +33,8 @@ describe('Validation', () => {
     });
 
     it('Should check if value does not exist', () => {
-      const isValid = isFieldFilledIn(undefined);
+      let value;
+      const isValid = isFieldFilledIn(value);
 
       expect(isValid).toStrictEqual('required');
     });
@@ -41,40 +46,125 @@ describe('Validation', () => {
     });
   });
 
-  describe('isContent2500CharsOrLess()', () => {
-    it('should not warn when content is 2500 characters or less', () => {
-      expect(isContent2500CharsOrLess(undefined)).toStrictEqual(undefined);
-      expect(isContent2500CharsOrLess('')).toStrictEqual(undefined);
-      expect(isContent2500CharsOrLess('1'.repeat(2500))).toStrictEqual(undefined);
+  describe('areFieldsFilledIn()', () => {
+    it('Should check if values in object exist', () => {
+      const isValid = areDateFieldsFilledIn({
+        day: '1',
+        month: '1',
+        year: '1',
+      });
+
+      expect(isValid).toStrictEqual(undefined);
     });
 
-    it('should warn when content longer than 2500 characters', () => {
-      expect(isContent2500CharsOrLess('1'.repeat(2501))).toStrictEqual('tooLong');
-    });
-  });
+    it('Should check if values in object does not exist', () => {
+      const isValid = areDateFieldsFilledIn({ day: '', month: '', year: '' });
 
-  describe('isContentBetween3And100Chars()', () => {
-    it('should not warn when content is valid length', () => {
-      expect(isContentBetween3And100Chars('abc')).toStrictEqual(undefined);
-      expect(isContentBetween3And100Chars('1'.repeat(100))).toStrictEqual(undefined);
-    });
-
-    it('should warn when content shorter than 3 characters', () => {
-      expect(isContentBetween3And100Chars('12')).toStrictEqual('invalidLength');
-    });
-
-    it('should warn when content longer than 100 characters', () => {
-      expect(isContentBetween3And100Chars('1'.repeat(101))).toStrictEqual('invalidLength');
+      expect(isValid).toStrictEqual({
+        error: 'required',
+        fieldName: 'day',
+      });
     });
   });
 
-  describe('isOptionSelected()', () => {
-    it('Should correctly identify an option was selected', () => {
-      expect(isOptionSelected('anything')).toStrictEqual(undefined);
-    });
+  describe('isFutureDate()', () => {
+    it.each([
+      { dateObj: new Date(), expected: undefined },
+      { dateObj: undefined, expected: undefined },
+    ])('Should check if date entered is future date when %o', ({ dateObj, expected }) => {
+      const date = dateObj
+        ? {
+            day: dateObj.getUTCDate().toString(),
+            month: dateObj.getUTCMonth().toString(),
+            year: (dateObj.getUTCFullYear() - 1).toString(),
+          }
+        : undefined;
+      let isValid = isFutureDate(date);
 
-    it('Should correctly identify an option was not selected', () => {
-      expect(isOptionSelected('notSelected')).toStrictEqual('required');
+      expect(isValid).toStrictEqual(expected);
+
+      if (date) {
+        date.year += '1';
+        isValid = isFutureDate(date);
+
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(isValid).toStrictEqual({
+          error: 'invalidDateInFuture',
+          fieldName: 'day',
+        });
+      }
+    });
+  });
+
+  describe('isDateInputInvalid()', () => {
+    const dateGreaterThan100 = new Date(1922, 3, 17);
+    dateGreaterThan100.setFullYear(dateGreaterThan100.getFullYear() - 100);
+
+    it.each([
+      { date: { day: 1, month: 1, year: 1970 }, expected: undefined },
+      { date: { day: 31, month: 12, year: 2000 }, expected: undefined },
+
+      {
+        date: { day: 31, month: 12, year: 123 },
+        expected: { error: 'invalidYear', fieldName: 'year' },
+      },
+      {
+        date: {
+          day: dateGreaterThan100.getDay(),
+          month: dateGreaterThan100.getMonth(),
+          year: dateGreaterThan100.getFullYear(),
+        },
+        expected: { error: 'invalidDateTooFarInPast', fieldName: 'year' },
+      },
+      {
+        date: { day: 31, month: 12, year: 19 },
+        expected: { error: 'invalidYear', fieldName: 'year' },
+      },
+      {
+        date: { day: 1, month: 1, year: 1 },
+        expected: { error: 'invalidYear', fieldName: 'year' },
+      },
+      {
+        date: { day: -31, month: 12, year: 2000 },
+        expected: { error: 'dayInvalid', fieldName: 'day' },
+      },
+      {
+        date: { day: 31, month: -12, year: 2000 },
+        expected: { error: 'monthInvalid', fieldName: 'month' },
+      },
+      {
+        date: { day: 32, month: 12, year: 2000 },
+        expected: { error: 'dayInvalid', fieldName: 'day' },
+      },
+      {
+        date: { day: 31, month: 13, year: 2000 },
+        expected: { error: 'monthInvalid', fieldName: 'month' },
+      },
+      {
+        date: { day: 'no', month: '!%', year: 'way' },
+        expected: { error: 'dayNotANumber', fieldName: 'day' },
+      },
+      {
+        date: { day: 1, month: '!%', year: 2022 },
+        expected: { error: 'monthNotANumber', fieldName: 'month' },
+      },
+      {
+        date: { day: 1, month: 12, year: 'way' },
+        expected: { error: 'yearNotANumber', fieldName: 'year' },
+      },
+      { date: undefined, expected: 'invalidDate' },
+      {
+        date: { day: 31, month: 11, year: 2000 },
+        expected: { error: 'invalidDate', fieldName: 'month' },
+      },
+      {
+        date: { day: 29, month: 2, year: 2001 },
+        expected: { error: 'invalidDate', fieldName: 'month' },
+      },
+    ])('checks dates validity when %o', ({ date, expected }) => {
+      const isValid = isDateInputInvalid(date as unknown as CaseDate);
+
+      expect(isValid).toStrictEqual(expected);
     });
   });
 
@@ -92,17 +182,20 @@ describe('Validation', () => {
     });
   });
 
-  describe('validateTitlePreference()', () => {
-    it.each([
-      { title: '', expectedError: 'required' },
-      { title: 'ab', expectedError: undefined },
-      { title: 'a', expectedError: 'lengthError' },
-      { title: 'a1', expectedError: 'numberError' },
-      { title: ' 12', expectedError: 'numberError' },
-      { title: '1a', expectedError: 'numberError' },
-    ])('Should check if other title preference is valid: %o', ({ title, expectedError }) => {
-      const isValid = validateTitlePreference(title);
-      expect(isValid).toStrictEqual(expectedError);
+  describe('OtherGenderTitlePreference()', () => {
+    validateGenderTitle('Other');
+    it('Should check if value is not blank', () => {
+      const isValid = validatePreferredOther('');
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value does not contain number', () => {
+      const isValid = validatePreferredOther('1234');
+      expect(isValid).toStrictEqual('numberError');
+    });
+    it('Should check if value has no space is and number', () => {
+      const isValid = validatePreferredOther('  1234');
+      expect(isValid).toStrictEqual('numberError');
     });
   });
 
@@ -251,6 +344,87 @@ describe('Validation', () => {
     });
   });
 
+  describe('isPastDate()', () => {
+    it.each([
+      { dateObj: new Date(), expected: undefined },
+      { dateObj: undefined, expected: undefined },
+    ])('Should check if date entered is past date when %o', ({ dateObj, expected }) => {
+      const date = dateObj
+        ? {
+            day: dateObj.getUTCDate().toString(),
+            month: dateObj.getUTCMonth().toString(),
+            year: (dateObj.getUTCFullYear() + 1).toString(),
+          }
+        : undefined;
+      let isValid = isPastDate(date);
+
+      expect(isValid).toStrictEqual(expected);
+
+      if (date) {
+        date.year = '1';
+        isValid = isPastDate(date);
+
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(isValid).toStrictEqual({
+          error: 'invalidDateInPast',
+          fieldName: 'day',
+        });
+      }
+    });
+  });
+
+  describe('isDateTenYearsInPast()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() - 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the past when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInPast(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
+    });
+  });
+
+  describe('isDateTenYearsInFuture()', () => {
+    const currentDate = new Date();
+
+    it.each([
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 5,
+        },
+        expected: undefined,
+      },
+      {
+        dateObj: {
+          day: currentDate.getDay(),
+          month: currentDate.getMonth(),
+          year: currentDate.getFullYear() + 15,
+        },
+        expected: { error: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
+      },
+    ])('Should check if date entered is ten year in the future when %o', ({ dateObj, expected }) => {
+      const isValid = isDateTenYearsInFuture(dateObj as unknown as CaseDate);
+      expect(isValid).toStrictEqual(expected);
+    });
+  });
+
   describe('isPayIntervalNull()', () => {
     it('Should check if value exists', () => {
       const isValid = isPayIntervalNull('Weekly' || 'Monthly' || 'Annual');
@@ -279,42 +453,15 @@ describe('Validation', () => {
 
   describe('isValidCurrency()', () => {
     it.each([
-      { mockRef: undefined, expected: undefined },
-      { mockRef: '', expected: undefined },
-      { mockRef: '0', expected: undefined },
-      { mockRef: '1', expected: undefined },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: '20,00', expected: 'minLengthRequired' },
       { mockRef: '100', expected: undefined },
       { mockRef: '10,000', expected: undefined },
-      { mockRef: '1,123,456,789.12', expected: undefined },
-      { mockRef: 'a', expected: 'invalidCurrency' },
-      { mockRef: '%', expected: 'invalidCurrency' },
-      { mockRef: '25a', expected: 'invalidCurrency' },
-      { mockRef: '-120', expected: 'invalidCurrency' },
-      { mockRef: '20,00', expected: 'invalidCurrency' },
-      { mockRef: '100,00', expected: 'invalidCurrency' },
-      { mockRef: '123456,890', expected: 'invalidCurrency' },
-      { mockRef: '1234567890123', expected: 'invalidCurrency' },
-      { mockRef: '123456789012.12', expected: 'invalidCurrency' },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
-    });
-  });
-
-  describe('hasValidFileFormat()', () => {
-    it.each([
-      { fileName: undefined, expected: undefined },
-      { fileName: '', expected: undefined },
-      { fileName: '.csv', expected: undefined },
-      { fileName: '..csv', expected: undefined },
-      { fileName: 'file.csv', expected: undefined },
-      { fileName: 'file.file.csv', expected: undefined },
-      { fileName: 'file.csv.csv', expected: undefined },
-      { fileName: 'file', expected: 'invalidFileFormat' },
-      { fileName: 'csv', expected: 'invalidFileFormat' },
-      { fileName: 'file.', expected: 'invalidFileFormat' },
-      { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
-    ])('Check file format %o', ({ fileName, expected }) => {
-      expect(hasValidFileFormat(fileName)).toEqual(expected);
     });
   });
 });

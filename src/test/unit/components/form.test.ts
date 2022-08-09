@@ -1,7 +1,6 @@
-import { areDateFieldsFilledIn } from '../../../main/components/form/dateValidators';
 import { Form } from '../../../main/components/form/form';
 import { convertToDateObject } from '../../../main/components/form/parser';
-import { isFieldFilledIn } from '../../../main/components/form/validator';
+import { areDateFieldsFilledIn, isFieldFilledIn } from '../../../main/components/form/validator';
 import { Case, CaseDate, Checkbox, YesOrNo } from '../../../main/definitions/case';
 import { FormContent, FormFields, FormFieldsFn } from '../../../main/definitions/form';
 
@@ -64,7 +63,7 @@ describe('Form', () => {
   });
 
   it('Should validate a form and return error', async () => {
-    const errors = form.getErrors({ dateField: {} } as unknown as Case);
+    const errors = form.getErrors({});
 
     expect(errors).toStrictEqual([
       {
@@ -73,7 +72,7 @@ describe('Form', () => {
       },
       {
         propertyName: 'dateField',
-        fieldName: 'day',
+        fieldName: undefined,
         errorType: 'required',
       },
       {

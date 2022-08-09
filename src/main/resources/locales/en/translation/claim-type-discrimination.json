@@ -1,6 +1,6 @@
 {
   "title": "Claim details - claim type discrimination",
-  "h1": "What type of discrimination are you claiming?",
+  "h1": "What type of discrimination are you claiming? (to do)",
   "detailsSummary": "What is discrimination?",
   "detailsText": {
     "p1": "Discrimination is when you're treated unfairly and the treatment is related to any of the protected characteristics from the 2010 Equality Act. You have rights at work if you have experienced discrimination.<br><br>",
@@ -45,10 +45,5 @@
   "sexualOrientation": {
     "title": "Sexual orientation claim",
     "checkbox": "Sexual orientation"
-  },
-  "errors": {
-    "claimTypeDiscrimination": {
-      "required": "Tell us what type/s of discrimination you are claiming"
-    }
   }
 }

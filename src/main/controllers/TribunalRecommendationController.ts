@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
@@ -21,7 +20,6 @@ export default class TribunalRecommendationController {
         type: 'textarea',
         hint: l => l.hint,
         maxlength: 2500,
-        validator: isContent2500CharsOrLess,
       },
     },
     submit: submitButton,
@@ -34,7 +32,7 @@ export default class TribunalRecommendationController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+    if (req.session.userCase.typeOfClaim.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
       handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);

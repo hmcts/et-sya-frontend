@@ -1,22 +1,20 @@
 {
   "title": "Date of birth details",
   "h1": "What is your date of birth?",
-  "hint": "These details will be used to help progress your claim.<br><br>For example, 23 04 1981",
+  "hint": "These details will be used to help progress your claim.<br><br>For example, 23 04 1981.",
   "errors": {
     "dobDate": {
+      "required": "Enter your date of birth. For example, 23 04 1981",
       "dayRequired": "Enter a day for your date of birth. For example, 23",
       "monthRequired": "Enter a month for your date of birth. For example, 04",
       "yearRequired": "Enter a year for your date of birth. For example, 1981",
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
       "yearNotANumber": "Year must only contain numbers. For example, 1981",
-      "dayInvalid": "Date of birth must be a real date.",
-      "monthInvalid": "Date of birth must be a real date.",
-      "yearInvalid": "Date of birth must be a real date.",
-      "invalidDate": "Date of birth must be a real date.",
-      "invalidDateInFuture": "Date entered must be in the past.",
-      "invalidDateTooFarInPast": "Date must be between 10 years and 100 years in the past.",
-      "invalidDateTooRecent": "Date must be between 10 years and 100 years in the past."
+      "invalidDate": "You have entered an invalid date. Enter the date using the following format: 23 04 1981",
+      "invalidYear": "You have entered the year in an invalid format. Enter the whole year, for example 1981",
+      "invalidDateInFuture": "You have entered a date that is in the future. Enter a date that is in the past before continuing",
+      "invalidDateTooFarInPast": "You have entered a year which is too far in the past"
     }
   }
 }

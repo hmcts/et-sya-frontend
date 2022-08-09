@@ -16,7 +16,7 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should go to the address details page', async () => {
     await request(mockApp({}))
       .post(PageUrls.GENDER_DETAILS)
-      .send({ claimantSex: YesOrNo.YES, preferredTitle: 'Mr' })
+      .send({ gender: YesOrNo.YES, preferredTitle: 'Mr' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);
@@ -27,10 +27,11 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
 describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should return gender details page if other title preference contains number', async () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
       preferredTitle: 'Other',
-      otherTitlePreference: '7',
+      otherTitlePreference: '234444',
     };
     await request(mockApp({ body }))
       .post(PageUrls.GENDER_DETAILS)
@@ -43,8 +44,9 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
 describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should return gender details page if other title preference is blank', async () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      gender: 'Male',
+      genderIdentitySame: 'Yes',
+      genderIdentity: '',
       preferredTitle: 'Other',
       otherTitlePreference: ' ',
     };

@@ -21,7 +21,7 @@
   },
   "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
-    "claimantSex": {
+    "gender": {
       "required": "Select an option for the \"What is your sex\" question"
     },
     "preferredTitle": {
@@ -29,7 +29,6 @@
     },
     "otherTitlePreference": {
       "required": "Tell us your preferred title",
-      "lengthError": "Your preferred title must be a minimum of 2 characters",
       "numberError": "Tell us your preferred title? This must not include numbers"
     }
   }

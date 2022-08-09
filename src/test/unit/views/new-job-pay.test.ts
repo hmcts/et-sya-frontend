@@ -17,7 +17,7 @@ const titleClass = 'govuk-heading-xl';
 const expectedTitle = newJobPayJson.h1;
 const buttonClass = 'govuk-button';
 const radios = 'govuk-radios';
-const inputs = 'govuk-input--width-10';
+const inputs = 'govuk-input--width-5';
 
 let htmlRes: Document;
 describe('New Job Pay page', () => {

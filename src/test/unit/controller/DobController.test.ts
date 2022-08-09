@@ -45,96 +45,108 @@ describe('Dob Controller', () => {
     });
   });
 
-  describe('Correct validation', () => {
-    it('should redirect to the same screen when errors are present', () => {
-      const req = mockRequest({
-        body: {
-          'dobDate-day': 'a',
-        },
-      });
-      const res = mockResponse();
-      new DobController(mockLogger).post(req, res);
+  it('should redirect to the same screen when errors are present', () => {
+    const errors = [{ propertyName: 'dobDate', errorType: 'dayRequired', fieldName: 'day' }];
+    const body = {
+      'dobDate-day': '',
+      'dobDate-month': '11',
+      'dobDate-year': '2000',
+    };
 
-      expect(res.redirect).toBeCalledWith(req.path);
+    const controller = new DobController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      id: '1234',
+      dobDate: {
+        day: '',
+        month: '11',
+        year: '2000',
+      },
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
+      },
     });
 
-    // No input and one per validator
-    it.each([
-      { body: { 'dobDate-day': '', 'dobDate-month': '', 'dobDate-year': '' }, errors: [] },
-      {
-        body: { 'dobDate-day': '05', 'dobDate-month': '11', 'dobDate-year': '' },
-        errors: [{ errorType: 'yearRequired', fieldName: 'year', propertyName: 'dobDate' }],
+    expect(res.redirect).toBeCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should update draft case when date is submitted', async () => {
+    const body = {
+      'dobDate-day': '05',
+      'dobDate-month': '11',
+      'dobDate-year': '2000',
+    };
+    const dobController = new DobController(mockLogger);
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    dobController.post(request, response);
+
+    expect(request.session.userCase).toEqual({
+      dobDate: {
+        day: '05',
+        month: '11',
+        year: '2000',
       },
-      {
-        body: { 'dobDate-day': '05', 'dobDate-month': '13', 'dobDate-year': '2000' },
-        errors: [{ errorType: 'monthInvalid', fieldName: 'month', propertyName: 'dobDate' }],
-      },
-      {
-        body: { 'dobDate-day': '05', 'dobDate-month': '11', 'dobDate-year': `${new Date().getFullYear() + 1}` },
-        errors: [{ errorType: 'invalidDateInFuture', fieldName: 'day', propertyName: 'dobDate' }],
-      },
-      {
-        body: { 'dobDate-day': '05', 'dobDate-month': '11', 'dobDate-year': `${new Date().getFullYear() - 1}` },
-        errors: [{ errorType: 'invalidDateTooRecent', fieldName: 'day', propertyName: 'dobDate' }],
-      },
-    ])('should return appropriate errors for %o', ({ body, errors }) => {
-      const req = mockRequest({ body });
-      new DobController(mockLogger).post(req, mockResponse());
-
-      expect(req.session.errors).toEqual(errors);
-    });
-
-    it('should update draft case when date is submitted', () => {
-      const request = mockRequest({
-        body: {
-          'dobDate-day': '05',
-          'dobDate-month': '11',
-          'dobDate-year': '2000',
-        },
-      });
-      new DobController(mockLogger).post(request, mockResponse());
-
-      expect(request.session.userCase).toMatchObject({
-        dobDate: {
-          day: '05',
-          month: '11',
-          year: '2000',
-        },
-      });
-    });
-
-    it('should go to the Gender details page when correct date is entered', () => {
-      const req = mockRequest({
-        body: {
-          'dobDate-day': '05',
-          'dobDate-month': '11',
-          'dobDate-year': '2000',
-        },
-      });
-      const res = mockResponse();
-      new DobController(mockLogger).post(req, res);
-
-      expect(res.redirect).toBeCalledWith(PageUrls.GENDER_DETAILS);
+      id: '1234',
+      startDate: { day: '21', month: '04', year: '2019' },
     });
   });
 
+  it('should go to the Gender details page when correct date is entered', () => {
+    const body = {
+      'dobDate-year': '2000',
+      'dobDate-month': '11',
+      'dobDate-day': '24',
+    };
+
+    const controller = new DobController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(req.session.userCase).toEqual({
+      id: '1234',
+      dobDate: {
+        day: '24',
+        month: '11',
+        year: '2000',
+      },
+      startDate: {
+        day: '21',
+        month: '04',
+        year: '2019',
+      },
+    });
+
+    expect(res.redirect).toBeCalledWith(PageUrls.GENDER_DETAILS);
+  });
+
   it('should invoke logger in then() block', async () => {
+    const body = {
+      'dobDate-day': '12',
+      'dobDate-month': '12',
+      'dobDate-year': '2005',
+    };
+    const controller = new DobController(mockLogger);
+    const request = mockRequest({ body });
+    const response = mockResponse();
+    const fetchResponse = Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
+
     (getCaseApiMock as jest.Mock).mockReturnValue({
       updateDraftCase: jest.fn(() => {
-        return Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
+        return fetchResponse;
       }),
     });
 
-    await new DobController(mockLogger).post(
-      mockRequest({
-        body: {
-          'dobDate-day': '12',
-          'dobDate-month': '12',
-          'dobDate-year': '2005',
-        },
-      }),
-      mockResponse()
-    );
+    await controller.post(request, response);
 
     expect(mockLogger.info).toBeCalled();
   });
