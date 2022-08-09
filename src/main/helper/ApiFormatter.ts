@@ -1,3 +1,4 @@
+import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
@@ -112,20 +113,20 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   };
 }
 
-function formatDate(dobDate: CaseDate) {
-  return dobDate ? `${dobDate.year}-${dobDate.month}-${dobDate.day}` : null;
-}
+export const formatDate = (date: CaseDate): string => {
+  if (!date || isDateEmpty(date)) {
+    return null;
+  }
 
-function parseDateFromString(dobDate: string): CaseDate {
-  if (dobDate) {
-    const year = dobDate.substring(0, 4);
-    const month = dobDate.substring(5, 7);
-    const day = dobDate.substring(8);
+  return `${date.year}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}`;
+};
 
+export const parseDateFromString = (date: string): CaseDate => {
+  if (date) {
     return {
-      year,
-      month,
-      day,
+      year: date.substring(0, 4),
+      month: date.substring(5, 7),
+      day: date.substring(8),
     };
   }
-}
+};

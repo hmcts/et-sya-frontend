@@ -1,12 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import {
-  isFieldFilledIn,
-  isOptionSelected,
-  validateGenderTitle,
-  validatePreferredOther,
-} from '../components/form/validator';
+import { isFieldFilledIn, isOptionSelected } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { GenderTitle, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -20,7 +15,7 @@ export default class GenderDetailsController {
   private readonly form: Form;
   private readonly genderDetailsContent: FormContent = {
     fields: {
-      gender: {
+      claimantSex: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'gender',
         type: 'radios',
@@ -42,7 +37,7 @@ export default class GenderDetailsController {
         ],
         validator: isFieldFilledIn,
       },
-      genderIdentitySame: {
+      claimantGenderIdentitySame: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'genderIdentitySame',
         type: 'radios',
@@ -108,7 +103,6 @@ export default class GenderDetailsController {
           {
             value: GenderTitle.OTHER,
             label: (l: AnyRecord): string => l.genderTitle.other,
-            validator: validateGenderTitle,
           },
           {
             value: GenderTitle.PREFER_NOT_TO_SAY,
@@ -123,7 +117,7 @@ export default class GenderDetailsController {
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord) => l.otherTitlePreference,
         labelSize: 's',
-        validator: validatePreferredOther,
+        attributes: { maxLength: 20 },
       },
     },
     submit: submitButton,
