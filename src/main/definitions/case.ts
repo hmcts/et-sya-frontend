@@ -144,7 +144,7 @@ export const enum YesOrNoOrPreferNot {
 export const enum YesOrNoOrNotSure {
   YES = 'Yes',
   NO = 'No',
-  NOT_SURE = 'Not sure',
+  NOT_SURE = 'Not Sure',
 }
 
 export const enum CaseType {

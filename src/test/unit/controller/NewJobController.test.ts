@@ -41,6 +41,24 @@ describe('New Job Controller', () => {
     expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_START_DATE);
   });
 
+  it('should reset new job values if No selected', () => {
+    const body = { newJob: YesOrNo.NO };
+    const controller = new NewJobController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(req.session.userCase).toStrictEqual({
+      newJob: YesOrNo.NO,
+      newJobStartDate: undefined,
+      newJobPay: undefined,
+      newJobPayInterval: undefined,
+    });
+  });
+
   it('should have required error when nothing is selected', () => {
     const body = { newJob: '' };
     const controller = new NewJobController(mockLogger);

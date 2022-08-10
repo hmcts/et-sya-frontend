@@ -107,6 +107,10 @@ export const isWorkAddressLineOneValid: Validator = value => {
   }
 };
 
+export const areBenefitsValid: Validator = value => {
+  return isFieldFilledIn(value) || isContent2500CharsOrLess(value);
+};
+
 export const isWorkAddressTownValid: Validator = value => {
   if (typeof value === 'string') {
     const inputStrLength = (value as string).trim().length;
