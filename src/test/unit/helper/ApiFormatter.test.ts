@@ -77,9 +77,11 @@ describe('Should return data in api format', () => {
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
-      hearing_preferences: [HearingPreference.PHONE],
-      hearing_assistance: 'Hearing assistance test',
-      claimant_contact_preference: EmailOrPost.EMAIL,
+      hearingPreferences: [HearingPreference.PHONE],
+      hearingAssistance: 'Hearing assistance test',
+      claimantContactPreference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -102,6 +104,7 @@ describe('Format Case Data to Frontend Model', () => {
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
+          claimant_contact_preference: EmailOrPost.EMAIL,
         },
         claimantOtherType: {
           pastEmployer: YesOrNo.YES,
@@ -129,9 +132,8 @@ describe('Format Case Data to Frontend Model', () => {
         },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
-        },
-        claimantContactPreference: {
-          claimant_contact_preference: EmailOrPost.EMAIL,
+          employmentAndRespondentCheck: YesOrNo.YES,
+          claimDetailsCheck: YesOrNo.YES,
         },
       },
     };
@@ -169,9 +171,11 @@ describe('Format Case Data to Frontend Model', () => {
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
-      hearing_preferences: [HearingPreference.PHONE],
-      hearing_assistance: 'Hearing assistance test',
-      claimant_contact_preference: EmailOrPost.EMAIL,
+      hearingPreferences: [HearingPreference.PHONE],
+      hearingAssistance: 'Hearing assistance test',
+      claimantContactPreference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     });
   });
 
@@ -213,9 +217,11 @@ describe('Format Case Data to Frontend Model', () => {
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
       noticeEnds: undefined,
-      hearing_preferences: undefined,
-      hearing_assistance: undefined,
-      claimant_contact_preference: undefined,
+      hearingPreferences: undefined,
+      hearingAssistance: undefined,
+      claimantContactPreference: undefined,
+      employmentAndRespondentCheck: undefined,
+      claimDetailsCheck: undefined,
     });
   });
 

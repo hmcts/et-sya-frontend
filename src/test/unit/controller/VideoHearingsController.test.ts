@@ -24,8 +24,8 @@ describe('Hearing Preferences Controller', () => {
   });
 
   it('should render same page if errors are present', () => {
-    const errors = [{ propertyName: 'hearing_preferences', errorType: 'required' }];
-    const body = { hearing_preferences: '' };
+    const errors = [{ propertyName: 'hearingPreferences', errorType: 'required' }];
+    const body = { hearingPreferences: '' };
     const controller = new VideoHearingsController(mockLogger);
 
     const req = mockRequest({ body });
@@ -37,7 +37,7 @@ describe('Hearing Preferences Controller', () => {
   });
 
   it('should add the videoHearings form value to the userCase', () => {
-    const body = { hearing_preferences: 'Phone' };
+    const body = { hearingPreferences: 'Phone' };
 
     const controller = new VideoHearingsController(mockLogger);
 
@@ -47,6 +47,6 @@ describe('Hearing Preferences Controller', () => {
 
     controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ hearing_preferences: ['Phone'] });
+    expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'] });
   });
 });
