@@ -27,8 +27,8 @@ describe('Update Preference Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [{ propertyName: 'claimant_contact_preference', errorType: 'required' }];
-    const body = { claimant_contact_preference: '' };
+    const errors = [{ propertyName: 'claimantContactPreference', errorType: 'required' }];
+    const body = { claimantContactPreference: '' };
 
     const controller = new UpdatePreferenceController(mockLogger);
 
@@ -41,7 +41,7 @@ describe('Update Preference Controller', () => {
   });
 
   it('should add the update preference form value to the userCase', () => {
-    const body = { claimant_contact_preference: 'Email' };
+    const body = { claimantContactPreference: 'Email' };
 
     const controller = new UpdatePreferenceController(mockLogger);
 
@@ -51,6 +51,6 @@ describe('Update Preference Controller', () => {
 
     controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ claimant_contact_preference: 'Email' });
+    expect(req.session.userCase).toStrictEqual({ claimantContactPreference: 'Email' });
   });
 });

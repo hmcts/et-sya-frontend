@@ -13,10 +13,10 @@
   "explain": "Explain why you are unable to take part in video or phone hearings",
   "selectAllHint": "Select all that apply",
   "errors": {
-    "hearing_preferences": {
+    "hearingPreferences": {
       "required": "Tell us if you can take part in a video or phone hearing"
     },
-    "hearing_assistance": {
+    "hearingAssistance": {
       "required": "Tell us why you cannot take part in a video or phone hearing"
     }
   }
