@@ -6,15 +6,24 @@ import {
   CaseTypeId,
   CaseWithId,
   EmailOrPost,
+  GenderTitle,
   HearingPreference,
   PayInterval,
+  Sex,
   StillWorking,
   WeeksOrMonths,
   YesOrNo,
   YesOrNoOrNotSure,
+  YesOrNoOrPreferNot,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
-import { fromApiFormat, toApiFormat, toApiFormatCreate } from '../../../main/helper/ApiFormatter';
+import {
+  formatDate,
+  fromApiFormat,
+  parseDateFromString,
+  toApiFormat,
+  toApiFormatCreate,
+} from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 describe('Should return data in api format', () => {
@@ -52,6 +61,10 @@ describe('Should return data in api format', () => {
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: YesOrNoOrPreferNot.PREFER_NOT,
+      preferredTitle: GenderTitle.MISS,
+      otherTitlePreference: undefined,
       avgWeeklyHrs: 5,
       claimantPensionContribution: YesOrNoOrNotSure.YES,
       claimantPensionWeeklyContribution: 15,
@@ -71,9 +84,11 @@ describe('Should return data in api format', () => {
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
-      hearing_preferences: [HearingPreference.PHONE],
-      hearing_assistance: 'Hearing assistance test',
-      claimant_contact_preference: EmailOrPost.EMAIL,
+      hearingPreferences: [HearingPreference.PHONE],
+      hearingAssistance: 'Hearing assistance test',
+      claimantContactPreference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -93,9 +108,15 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
           claimant_date_of_birth: '2022-10-05',
+          claimant_sex: Sex.MALE,
+          claimant_gender_identity_same: YesOrNoOrPreferNot.PREFER_NOT,
+          claimant_gender_identity: '',
+          claimant_preferred_title: GenderTitle.MISS,
+          claimant_title_other: undefined,
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
+          claimant_contact_preference: EmailOrPost.EMAIL,
         },
         claimantOtherType: {
           pastEmployer: YesOrNo.YES,
@@ -123,9 +144,8 @@ describe('Format Case Data to Frontend Model', () => {
         },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
-        },
-        claimantContactPreference: {
-          claimant_contact_preference: EmailOrPost.EMAIL,
+          employmentAndRespondentCheck: YesOrNo.YES,
+          claimDetailsCheck: YesOrNo.YES,
         },
       },
     };
@@ -137,6 +157,11 @@ describe('Format Case Data to Frontend Model', () => {
         month: '10',
         year: '2022',
       },
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: YesOrNoOrPreferNot.PREFER_NOT,
+      claimantGenderIdentity: '',
+      preferredTitle: GenderTitle.MISS,
+      otherTitlePreference: undefined,
       email: 'janedoe@exmaple.com',
       firstName: 'Jane',
       lastName: 'Doe',
@@ -163,9 +188,11 @@ describe('Format Case Data to Frontend Model', () => {
       reasonableAdjustments: YesOrNo.YES,
       reasonableAdjustmentsDetail: 'Adjustments detail test',
       noticeEnds: { year: '2022', month: '08', day: '11' },
-      hearing_preferences: [HearingPreference.PHONE],
-      hearing_assistance: 'Hearing assistance test',
-      claimant_contact_preference: EmailOrPost.EMAIL,
+      hearingPreferences: [HearingPreference.PHONE],
+      hearingAssistance: 'Hearing assistance test',
+      claimantContactPreference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     });
   });
 
@@ -185,6 +212,11 @@ describe('Format Case Data to Frontend Model', () => {
       caseTypeId: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
       dobDate: undefined,
+      claimantSex: undefined,
+      claimantGenderIdentitySame: undefined,
+      claimantGenderIdentity: undefined,
+      preferredTitle: undefined,
+      otherTitlePreference: undefined,
       email: undefined,
       firstName: undefined,
       lastName: undefined,
@@ -207,21 +239,51 @@ describe('Format Case Data to Frontend Model', () => {
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
       noticeEnds: undefined,
-      hearing_preferences: undefined,
-      hearing_assistance: undefined,
-      claimant_contact_preference: undefined,
+      hearingPreferences: undefined,
+      hearingAssistance: undefined,
+      claimantContactPreference: undefined,
+      employmentAndRespondentCheck: undefined,
+      claimDetailsCheck: undefined,
     });
   });
 
-  it('date formatter should return null when input value is undefined', () => {
+  it('date formatter should return null when date is empty', () => {
     const caseItem: CaseWithId = {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      dobDate: undefined,
-      startDate: undefined,
+      dobDate: { day: '', month: '', year: '' },
+      startDate: { day: '', month: '', year: '' },
+      noticeEnds: { day: '', month: '', year: '' },
     };
     const apiData = toApiFormat(caseItem);
-    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_from).toEqual(null);
+    expect(apiData.case_data.claimantOtherType.claimant_employed_notice_period).toEqual(null);
+  });
+});
+
+describe('formatDate()', () => {
+  it.each([
+    { date: { day: '30', month: '10', year: '2000' }, expected: '2000-10-30' },
+    { date: { day: '5', month: '10', year: '2000' }, expected: '2000-10-05' },
+    { date: { day: '30', month: '4', year: '2000' }, expected: '2000-04-30' },
+    { date: { day: '5', month: '4', year: '2000' }, expected: '2000-04-05' },
+    { date: { day: '05', month: '04', year: '2000' }, expected: '2000-04-05' },
+    { date: { day: '', month: '', year: '' }, expected: null },
+    { date: undefined, expected: null },
+  ])('Correct formatting of date to string: %o', ({ date, expected }) => {
+    expect(formatDate(date)).toBe(expected);
+  });
+});
+
+describe('parseDateFromString()', () => {
+  it.each([
+    { date: '2000-10-30', expected: { day: '30', month: '10', year: '2000' } },
+    { date: '2000-10-05', expected: { day: '05', month: '10', year: '2000' } },
+    { date: '2000-04-30', expected: { day: '30', month: '04', year: '2000' } },
+    { date: '2000-04-05', expected: { day: '05', month: '04', year: '2000' } },
+    { date: null, expected: undefined },
+  ])('Correct parsing of date from string: %o', ({ date, expected }) => {
+    expect(parseDateFromString(date)).toStrictEqual(expected);
   });
 });

@@ -16,7 +16,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ hearing_preferences: HearingPreference.VIDEO })
+      .send({ hearingPreferences: HearingPreference.VIDEO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
@@ -26,7 +26,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should return the reasonable adjustments page when 'phone' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ hearing_preferences: HearingPreference.PHONE })
+      .send({ hearingPreferences: HearingPreference.PHONE })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
@@ -36,7 +36,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ hearing_preferences: HearingPreference.NEITHER, hearing_assistance: 'test' })
+      .send({ hearingPreferences: HearingPreference.NEITHER, hearingAssistance: 'test' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS);
@@ -46,7 +46,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test("should reload the page when 'no' and 'save and continue' are selected, and the 'no' subfield is left blank", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ hearing_preferences: HearingPreference.NEITHER, hearing_assistance: '' })
+      .send({ hearingPreferences: HearingPreference.NEITHER, hearingAssistance: '' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -56,7 +56,7 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
   test('should reload the page when nothing has been selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
-      .send({ hearing_preferences: undefined })
+      .send({ hearingPreferences: undefined })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
