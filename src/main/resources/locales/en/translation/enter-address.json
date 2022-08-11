@@ -7,8 +7,6 @@
   "addressLine1": "Address line 1",
   "addressLine2": "Address line 2 (optional)",
   "selectAddress": "Select an address",
-  "buildingStreet": "Building and street",
-  "addressLine2": "Address line 2",
   "county": "County",
   "country": "Country",
   "town": "Town or city",

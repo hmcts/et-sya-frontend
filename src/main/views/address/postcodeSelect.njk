@@ -1,4 +1,5 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 <div id="selectAddress" class="hidden">
   <h2 class="govuk-heading-m">{{ postcode }}</h2>
@@ -23,4 +24,19 @@
   <p class="govuk-body">
     <a href="#" id="cannotFindAddress" class="govuk-link">{{ cannotFindAddress }}</a>
   </p>
+
+   <div class="govuk-grid-row">
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Save and continue",
+          href: "/telephone-number"
+        }) }}
+
+        {{ govukButton({
+          text: "Save as draft",
+          classes: "govuk-button--secondary",
+          href: "/your-claim-has-been-saved"
+        }) }}
+      </div>
+    </div> 
 </div>
