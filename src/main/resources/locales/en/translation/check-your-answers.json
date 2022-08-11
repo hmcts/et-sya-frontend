@@ -44,7 +44,7 @@
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
-    "noticePeriod": "Do you have a written contrat with notice period?",
+    "noticePeriod": "Do you have a written contract with notice period?",
     "noticeEnds": "Notice period ends",
     "noticeLength": "Is your notice period in weeks or months?",
     "noticePeriodWeeksOrMonths": "[Weeks/Months] in notice period",
@@ -77,7 +77,7 @@
   },
   "claimDetails": {
     "header": "Claim details",
-    "claimType": "What type of descrimination/pay claim are you making?",
+    "claimType": "What type of discrimination/pay claim are you making?",
     "describeWhatHappened": "Describe what happened to you",
     "ifClaimSuccessful": "What do you want if your claim is successful",
     "expectedCompensation": "What compensation are you seeking",
