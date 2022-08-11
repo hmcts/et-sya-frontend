@@ -16,7 +16,7 @@ export default class UpdatePreferenceController {
   private readonly form: Form;
   private readonly updatePrefFormContent: FormContent = {
     fields: {
-      claimant_contact_preference: {
+      claimantContactPreference: {
         classes: 'govuk-radios--inline',
         id: 'update-preference',
         type: 'radios',
