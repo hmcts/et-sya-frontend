@@ -6,3 +6,4 @@ import './go-back';
 govUkFrontend.initAll();
 import './enter-address';
 import './print';
+import './set-styles';
