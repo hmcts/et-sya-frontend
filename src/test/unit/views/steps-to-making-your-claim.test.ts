@@ -26,6 +26,7 @@ const typeOfClaimListElement = 'ul.govuk-list > li';
 
 const headerClass = 'app-task-list__section';
 const titleClass = 'govuk-heading-xl';
+const signOutLink = 'li.govuk-header__navigation-item a.govuk-header__link';
 
 const expectedTitle = stepsToMakingYourClaimJSON.h1;
 const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
@@ -53,6 +54,11 @@ describe('Steps to making your claim page', () => {
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
+  });
+
+  it('should display sign out link', () => {
+    const signoutLink = htmlRes.querySelectorAll(signOutLink);
+    expect(signoutLink[0].innerHTML).contains('Sign out', 'Sign out link does not exist');
   });
 
   it('should display title', () => {
