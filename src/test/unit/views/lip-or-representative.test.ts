@@ -38,7 +38,7 @@ describe('LiP or Representative page', () => {
       });
   });
 
-  it('should not display a sign out link', () => {
+  it('should not display a sign out link as the user is not logged in', () => {
     const signoutLinks = htmlRes.querySelectorAll(signOutLinkSelector);
     expect(signoutLinks.length).equals(0, 'Sign out link should not exist');
   });
