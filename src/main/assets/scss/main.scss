@@ -71,15 +71,31 @@
 }
 
 // IOS
-@media only screen and (min-device-width: 320px) and (max-device-width: 760px) {
+@media only screen and (max-device-width: 760px) {
   * {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
     hyphens: auto;
   }
 }
 
 // Android & Windows-CE
-@media screen and (min-device-width: 320px) and (max-device-width: 760px) {
+@media screen and (max-device-width: 760px) {
   * {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+// Safari
+@media screen and (max-width: 760px) {
+  * {
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
     hyphens: auto;
   }
 }
