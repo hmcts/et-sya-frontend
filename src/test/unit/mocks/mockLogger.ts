@@ -1,6 +1,6 @@
-export const mockLogger = {
-  error: jest.fn(),
-  info: jest.fn(),
-};
+import { LoggerInstance } from 'winston';
 
-export const Logger = { getLogger: jest.fn().mockReturnValue(mockLogger) };
+export const mockLogger = {
+  error: jest.fn().mockImplementation((message: string) => message),
+  info: jest.fn().mockImplementation((message: string) => message),
+} as unknown as LoggerInstance;

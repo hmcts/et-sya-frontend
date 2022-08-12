@@ -12,6 +12,7 @@ import {
   isValidAvgWeeklyHours,
   isValidCurrency,
   isValidNoticeLength,
+  isValidPay,
   isValidPension,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
@@ -75,6 +76,14 @@ describe('Validation', () => {
 
     it('Should correctly identify an option was not selected', () => {
       expect(isOptionSelected('notSelected')).toStrictEqual('required');
+    });
+
+    it.each([
+      { preferredTitle: undefined, expected: 'required' },
+      { preferredTitle: '', expected: 'required' },
+      { preferredTitle: 'notSelected', expected: 'required' },
+    ])('Check option is selected %o', ({ preferredTitle, expected }) => {
+      expect(isOptionSelected(preferredTitle)).toEqual(expected);
     });
   });
 
@@ -246,6 +255,8 @@ describe('Validation', () => {
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
+      { mockRef: undefined, expected: 'required' },
+      { mockRef: '', expected: 'required' },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidPension(mockRef)).toEqual(expected);
     });
@@ -297,6 +308,28 @@ describe('Validation', () => {
       { mockRef: '123456789012.12', expected: 'invalidCurrency' },
     ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
       expect(isValidCurrency(mockRef)).toEqual(expected);
+    });
+  });
+
+  describe('isValidPay()', () => {
+    it.each([
+      { mockRef: '', expected: undefined },
+      { mockRef: '0', expected: 'minLengthRequired' },
+      { mockRef: '1', expected: 'minLengthRequired' },
+      { mockRef: '100', expected: undefined },
+      { mockRef: '10,000', expected: undefined },
+      { mockRef: '1,123,456,789.12', expected: undefined },
+      { mockRef: 'a', expected: 'notANumber' },
+      { mockRef: '%', expected: 'notANumber' },
+      { mockRef: '25a', expected: 'notANumber' },
+      { mockRef: '-120', expected: 'notANumber' },
+      { mockRef: '20,00', expected: 'notANumber' },
+      { mockRef: '100,00', expected: 'notANumber' },
+      { mockRef: '123456,890', expected: 'notANumber' },
+      { mockRef: '1234567890123', expected: 'notANumber' },
+      { mockRef: '123456789012.12', expected: 'minLengthRequired' },
+    ])('Check pay amount is valid when %o', ({ mockRef, expected }) => {
+      expect(isValidPay(mockRef)).toEqual(expected);
     });
   });
 
