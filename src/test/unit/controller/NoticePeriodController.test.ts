@@ -70,6 +70,24 @@ describe('Notice Period Controller', () => {
     });
   });
 
+  it('should reset notice period values if No selected', () => {
+    const body = { noticePeriod: YesOrNo.NO };
+
+    const controller = new NoticePeriodController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual({
+      noticePeriod: YesOrNo.NO,
+      noticePeriodUnit: undefined,
+      noticePeriodLength: undefined,
+    });
+  });
+
   it('should run logger in catch block', async () => {
     const body = { noticePeriod: YesOrNo.YES };
     const controller = new NoticePeriodController(mockLogger);

@@ -36,7 +36,7 @@ export interface Case {
   addressCountry?: string;
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
-  claimant_contact_preference?: EmailOrPost;
+  claimantContactPreference?: EmailOrPost;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;
@@ -60,10 +60,13 @@ export interface Case {
   workAddressCountry?: string;
   workAddressPostcode?: string;
   startDate?: CaseDate;
+  endDate?: CaseDate;
   avgWeeklyHrs?: number;
   payBeforeTax?: number;
   payAfterTax?: number;
   payInterval?: PayInterval;
+  newJob?: YesOrNo;
+  newJobStartDate?: CaseDate;
   newJobPay?: number;
   newJobPayInterval?: PayInterval;
   employeeBenefits?: YesOrNo;
@@ -74,7 +77,6 @@ export interface Case {
   compensationOutcome?: string;
   compensationAmount?: number;
   tribunalRecommendationOutcome?: string;
-  newJob?: YesOrNo;
   claimTypeDiscrimination?: ClaimTypeDiscrimination[];
   claimTypePay?: ClaimTypePay[];
   tellUsWhatYouWant?: TellUsWhatYouWant[];
@@ -91,13 +93,14 @@ export interface Case {
   claimantPensionWeeklyContribution?: number;
   reasonableAdjustments?: YesOrNo;
   reasonableAdjustmentsDetail?: string;
-  hearing_preferences?: HearingPreference[];
-  hearing_assistance?: string;
+  hearingPreferences?: HearingPreference[];
+  hearingAssistance?: string;
   workPostcode?: string;
   respondentName?: string;
-  claimantSex?: string;
-  claimantGenderIdentitySame?: string;
-  preferredTitle?: string;
+  claimantSex?: Sex;
+  claimantGenderIdentitySame?: YesOrNoOrPreferNot;
+  claimantGenderIdentity?: string;
+  preferredTitle?: GenderTitle;
   otherTitlePreference?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
@@ -132,10 +135,16 @@ export const enum YesOrNo {
   NO = 'No',
 }
 
+export const enum YesOrNoOrPreferNot {
+  YES = 'Yes',
+  NO = 'No',
+  PREFER_NOT = 'Prefer not to say',
+}
+
 export const enum YesOrNoOrNotSure {
   YES = 'Yes',
   NO = 'No',
-  NOT_SURE = 'Not sure',
+  NOT_SURE = 'Not Sure',
 }
 
 export const enum CaseType {
@@ -156,6 +165,12 @@ export const enum WeeksOrMonths {
 export const enum EmailOrPost {
   EMAIL = 'Email',
   POST = 'Post',
+}
+
+export const enum Sex {
+  MALE = 'Male',
+  FEMALE = 'Female',
+  PREFER_NOT_TO_SAY = 'Prefer not to say',
 }
 
 export const enum GenderTitle {

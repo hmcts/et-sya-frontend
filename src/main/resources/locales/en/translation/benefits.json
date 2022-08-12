@@ -12,7 +12,9 @@
   "noLongerWorking": "No longer working",
   "errors": {
     "benefitsCharCount": {
-      "required": "Tell us about any benefits received"
+      "required": "Tell us about any benefits received",
+      "tooLong": "Description must be 2500 characters or less",
+      "tooShort": "Description must be one character or more"
     }
   }
 }

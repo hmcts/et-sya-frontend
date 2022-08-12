@@ -1,9 +1,9 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
-import { ClaimantContactPreference } from '../complexTypes/claimantContactPreference';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { CaseState } from '../definition';
 
@@ -32,7 +32,7 @@ export interface CaseData {
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;
   claimantOtherType?: ClaimantEmploymentDetails;
+  newEmploymentType?: NewEmploymentDetails;
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
-  claimantContactPreference?: ClaimantContactPreference;
 }

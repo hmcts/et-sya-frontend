@@ -2,7 +2,7 @@ import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, StillWorking } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -37,8 +37,14 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
+    claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
+    claimantGenderIdentitySame: fromApiCaseData.case_data?.claimantIndType?.claimant_gender_identity_same,
+    claimantGenderIdentity: fromApiCaseData.case_data?.claimantIndType?.claimant_gender_identity,
+    preferredTitle: fromApiCaseData.case_data?.claimantIndType?.claimant_preferred_title,
+    otherTitlePreference: fromApiCaseData.case_data?.claimantIndType?.claimant_title_other,
     jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
     startDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
+    endDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_to),
     noticePeriod: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period,
     noticePeriodUnit: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_unit,
     noticePeriodLength: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_duration,
@@ -50,6 +56,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantPensionWeeklyContribution:
       fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_weekly_contribution,
     employeeBenefits: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits,
+    newJob: fromApiCaseData.case_data?.newEmploymentType?.new_job,
+    newJobStartDate: parseDateFromString(fromApiCaseData.case_data?.newEmploymentType?.newly_employed_from),
+    newJobPay: fromApiCaseData.case_data?.newEmploymentType?.new_pay_before_tax,
+    newJobPayInterval: fromApiCaseData.case_data?.newEmploymentType?.new_job_pay_interval,
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
@@ -57,9 +67,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     reasonableAdjustmentsDetail: fromApiCaseData.case_data?.claimantHearingPreference?.reasonable_adjustments_detail,
     personalDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.personalDetailsCheck,
     noticeEnds: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_notice_period),
-    hearing_preferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
-    hearing_assistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
-    claimant_contact_preference: fromApiCaseData.case_data?.claimantContactPreference?.claimant_contact_preference,
+    hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
+    hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
+    claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
+    claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
   };
 }
 
@@ -75,49 +87,67 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
         claimant_date_of_birth: formatDate(caseItem.dobDate),
+        claimant_sex: caseItem.claimantSex,
+        claimant_gender_identity_same: caseItem.claimantGenderIdentitySame,
+        claimant_gender_identity: caseItem.claimantGenderIdentity,
+        claimant_preferred_title: caseItem.preferredTitle,
+        claimant_title_other: caseItem.otherTitlePreference,
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+        claimant_contact_preference: caseItem.claimantContactPreference,
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
-        stillWorking: StillWorking.WORKING,
+        stillWorking: caseItem.isStillWorking,
         claimant_occupation: caseItem.jobTitle,
         claimant_employed_from: formatDate(caseItem.startDate),
         claimant_notice_period: caseItem.noticePeriod,
         claimant_notice_period_unit: caseItem.noticePeriodUnit,
         claimant_notice_period_duration: caseItem.noticePeriodLength,
         claimant_average_weekly_hours: caseItem.avgWeeklyHrs,
-        claimant_pay_before_tax: caseItem.payBeforeTax,
-        claimant_pay_after_tax: caseItem.payAfterTax,
+        claimant_pay_before_tax: formatToCcdAcceptedNumber(caseItem.payBeforeTax),
+        claimant_pay_after_tax: formatToCcdAcceptedNumber(caseItem.payAfterTax),
         claimant_pay_cycle: caseItem.payInterval,
         claimant_pension_contribution: caseItem.claimantPensionContribution,
         claimant_pension_weekly_contribution: caseItem.claimantPensionWeeklyContribution,
         claimant_benefits: caseItem.employeeBenefits,
         claimant_benefits_detail: caseItem.benefitsCharCount,
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
+        claimant_employed_to: formatDate(caseItem.endDate),
+      },
+      newEmploymentType: {
+        new_job: caseItem.newJob,
+        newly_employed_from: formatDate(caseItem.newJobStartDate),
+        new_pay_before_tax: formatToCcdAcceptedNumber(caseItem.newJobPay),
+        new_job_pay_interval: caseItem.newJobPayInterval,
       },
       claimantHearingPreference: {
         reasonable_adjustments: caseItem.reasonableAdjustments,
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
-        hearing_preferences: caseItem.hearing_preferences,
-        hearing_assistance: caseItem.hearing_assistance,
+        hearing_preferences: caseItem.hearingPreferences,
+        hearing_assistance: caseItem.hearingAssistance,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
-      },
-      claimantContactPreference: {
-        claimant_contact_preference: caseItem.claimant_contact_preference,
+        employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
+        claimDetailsCheck: caseItem.claimDetailsCheck,
       },
     },
   };
 }
 
+export const formatToCcdAcceptedNumber = (amount: number): number => {
+  if (amount === undefined) {
+    return;
+  }
+  return parseFloat(amount.toString().replace(/,/g, ''));
+};
+
 export const formatDate = (date: CaseDate): string => {
   if (!date || isDateEmpty(date)) {
     return null;
   }
-
   return `${date.year}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}`;
 };
 

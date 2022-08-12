@@ -5,7 +5,7 @@
   "email": "Email",
   "post": "Post",
   "errors": {
-    "updatePreference": {
+    "claimantContactPreference": {
       "required": "Tell us whether you want to be contacted by email or by post"
     }
   }
