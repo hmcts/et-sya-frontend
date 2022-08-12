@@ -74,4 +74,47 @@ describe('Pay Controller', () => {
 
     return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
   });
+
+  it('should have error when pay is entered and interval is not entered', () => {
+    const controller = new PayController(mockLogger);
+    const body = { payBeforeTax: '6700', payInterval: '' };
+    const expectedErrors = [{ propertyName: 'payInterval', errorType: 'payBeforeTax' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have error when pay is not a valid number', () => {
+    const controller = new PayController(mockLogger);
+    const body = { payBeforeTax: 'ten', payInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'payBeforeTax', errorType: 'notANumber' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have errors when no pay is entered and interval is entered', () => {
+    const controller = new PayController(mockLogger);
+    const body = { payBeforeTax: '', payAfterTax: '', payInterval: PayInterval.WEEKLY };
+    const expectedErrors = [
+      { propertyName: 'payBeforeTax', errorType: 'required' },
+      { propertyName: 'payAfterTax', errorType: 'required' },
+    ];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
+
+  it('should have error when pay is less than two characters', () => {
+    const controller = new PayController(mockLogger);
+    const body = { payAfterTax: '1', payInterval: PayInterval.WEEKLY };
+    const expectedErrors = [{ propertyName: 'payAfterTax', errorType: 'minLengthRequired' }];
+    const response = mockResponse();
+    const request = mockRequest({ body });
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
 });

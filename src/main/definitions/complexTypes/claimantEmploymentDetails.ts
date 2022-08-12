@@ -17,4 +17,5 @@ export interface ClaimantEmploymentDetails {
   claimant_benefits?: YesOrNo;
   claimant_benefits_detail?: string;
   claimant_employed_notice_period?: string;
+  claimant_employed_to?: string;
 }

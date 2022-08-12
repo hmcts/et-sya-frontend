@@ -10,7 +10,10 @@
       "invalidDateMoreThanTenYearsInPast": "Enter a valid end date, date must not be more than 10 years in the past",
       "dayRequired": "Enter a day for your end date. For example, 23",
       "monthRequired": "Enter a month for your end date. For example, 04",
-      "yearRequired": " Enter the year for your end date. For example, 2022"
+      "yearRequired": "Enter the year for your end date. For example, 2022",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2022"
     }
   }
 }
