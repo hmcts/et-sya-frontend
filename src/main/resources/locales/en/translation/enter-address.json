@@ -3,12 +3,14 @@
   "findAddress": "Find address",
   "cannotFindAddress": "I cannot find the address in the list",
   "change": "Change",
-  "postcode": "Postcode or area code (optional)",
+  "postcode": "Postcode",
   "addressLine1": "Address line 1",
   "addressLine2": "Address line 2 (optional)",
   "selectAddress": "Select an address",
   "county": "County",
   "country": "Country",
   "town": "Town or city",
-  "selectDefault": "Several addresses found..."
+  "selectDefaultSeveral": "Several addresses found",
+  "selectDefaultSingle": "1 address found",
+  "selectDefaultNone": "No addresses found"
 }
