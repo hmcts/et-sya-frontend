@@ -7,12 +7,15 @@ import {
   CaseTypeId,
   CaseWithId,
   EmailOrPost,
+  GenderTitle,
   HearingPreference,
   PayInterval,
+  Sex,
   StillWorking,
   WeeksOrMonths,
   YesOrNo,
   YesOrNoOrNotSure,
+  YesOrNoOrPreferNot,
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
@@ -26,7 +29,7 @@ const token = 'testToken';
 
 const api = new CaseApi(mockedAxios);
 
-describe('Axios post to iniate case', () => {
+describe('Axios post to initiate case', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
     const mockUserDetails: UserDetails = {
       id: '1234',
@@ -61,7 +64,7 @@ describe('Axios post to iniate case', () => {
   });
 });
 
-describe('Axios get to retreive draft cases', () => {
+describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
     api.getDraftCases();
 
@@ -92,6 +95,10 @@ describe('updateDraftCase', () => {
         month: '05',
         day: '11',
       },
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: YesOrNoOrPreferNot.PREFER_NOT,
+      preferredTitle: GenderTitle.MISS,
+      otherTitlePreference: undefined,
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
@@ -107,6 +114,11 @@ describe('updateDraftCase', () => {
       payAfterTax: 120,
       payInterval: PayInterval.WEEKLY,
       startDate: { year: '2010', month: '05', day: '11' },
+      endDate: { year: '2017', month: '05', day: '11' },
+      newJob: YesOrNo.YES,
+      newJobStartDate: { year: '2022', month: '08', day: '11' },
+      newJobPay: 4000,
+      newJobPayInterval: PayInterval.MONTHLY,
       benefitsCharCount: 'Some benefits',
       pastEmployer: YesOrNo.YES,
       isStillWorking: StillWorking.WORKING,

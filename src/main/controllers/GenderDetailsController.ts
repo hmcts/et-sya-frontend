@@ -1,15 +1,16 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn, isOptionSelected } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { GenderTitle, YesOrNo } from '../definitions/case';
+import { GenderTitle, Sex, YesOrNoOrPreferNot } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
 
 export default class GenderDetailsController {
   private readonly form: Form;
@@ -24,15 +25,15 @@ export default class GenderDetailsController {
         values: [
           {
             label: (l: AnyRecord): string => l.female,
-            value: 'Female',
+            value: Sex.FEMALE,
           },
           {
             label: (l: AnyRecord): string => l.male,
-            value: 'Male',
+            value: Sex.MALE,
           },
           {
             label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
-            value: 'Prefer not to say',
+            value: Sex.PREFER_NOT_TO_SAY,
           },
         ],
         validator: isFieldFilledIn,
@@ -42,18 +43,18 @@ export default class GenderDetailsController {
         id: 'genderIdentitySame',
         type: 'radios',
         labelSize: 's',
-        label: (l: AnyRecord): string => l.genderIdentity,
-        hint: (l: AnyRecord): string => l.genderIdentityHint,
+        label: (l: AnyRecord): string => l.genderIdentitySame,
+        hint: (l: AnyRecord): string => l.genderIdentitySameHint,
         values: [
           {
             label: l => l.yes,
-            value: YesOrNo.YES,
+            value: YesOrNoOrPreferNot.YES,
           },
           {
             label: l => l.no,
-            value: YesOrNo.NO,
+            value: YesOrNoOrPreferNot.NO,
             subFields: {
-              genderIdentity: {
+              claimantGenderIdentity: {
                 id: 'genderIdentityText',
                 name: 'genderIdentityText',
                 type: 'text',
@@ -66,7 +67,7 @@ export default class GenderDetailsController {
           },
           {
             label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
-            value: 'Prefer not to say',
+            value: YesOrNoOrPreferNot.PREFER_NOT,
           },
         ],
       },
@@ -124,13 +125,14 @@ export default class GenderDetailsController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.genderDetailsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.ADDRESS_DETAILS);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -68,6 +68,20 @@ describe('Benefits Controller', () => {
   });
 
   it('should add the benefits form value to the userCase', () => {
+    const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
+
+    const controller = new BenefitsController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(req.session.userCase).toStrictEqual(body);
+  });
+
+  it('should reset benefits if No selected', () => {
     const body = { employeeBenefits: YesOrNo.NO };
 
     const controller = new BenefitsController(mockLogger);
@@ -78,7 +92,7 @@ describe('Benefits Controller', () => {
 
     controller.post(req, res);
 
-    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO });
+    expect(req.session.userCase).toStrictEqual({ employeeBenefits: YesOrNo.NO, benefitsCharCount: undefined });
   });
 
   it('should run logger in catch block', async () => {
