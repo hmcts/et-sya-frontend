@@ -49,6 +49,21 @@ describe('Pension controller', () => {
   });
 
   it('should add the pension form value to the userCase', () => {
+    const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: '14' };
+
+    const controller = new PensionController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = undefined;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(req.session.userCase).toStrictEqual(body);
+  });
+
+  it('should reset contribution if No selected', () => {
     const body = { claimantPensionContribution: YesOrNo.NO };
 
     const controller = new PensionController(mockLogger);
@@ -60,7 +75,10 @@ describe('Pension controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
-    expect(req.session.userCase).toStrictEqual({ claimantPensionContribution: YesOrNo.NO });
+    expect(req.session.userCase).toStrictEqual({
+      claimantPensionContribution: YesOrNo.NO,
+      claimantPensionWeeklyContribution: undefined,
+    });
   });
 
   it('should run logger in catch block', async () => {

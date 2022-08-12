@@ -10,7 +10,10 @@
       "monthRequired": "Enter a month for when your New job starts. For example, 08",
       "yearRequired": "Enter a year for when your New job starts. For example, 2022",
       "invalidDateInPast": "Date entered must not be in the past",
-      "invalidDateMoreThanTenYearsInFuture": "Enter a date between now and 10 years in the future"
+      "invalidDateMoreThanTenYearsInFuture": "Enter a date between now and 10 years in the future",
+      "dayNotANumber": "Day must only contain numbers. For example, 23",
+      "monthNotANumber": "Month must only contain numbers. For example, 04",
+      "yearNotANumber": "Year must only contain numbers. For example, 2022"
     }
   }
 }

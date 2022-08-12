@@ -53,6 +53,13 @@ export const mockEt1DataModelUpdate = {
       claimant_benefits: 'Yes',
       claimant_benefits_detail: 'Some benefits',
       claimant_employed_notice_period: '2022-08-11',
+      claimant_employed_to: '2017-05-11',
+    },
+    newEmploymentType: {
+      new_job: 'Yes',
+      new_pay_before_tax: 4000,
+      new_job_pay_interval: 'Months',
+      newly_employed_from: '2022-08-11',
     },
     claimantHearingPreference: {
       reasonable_adjustments: YesOrNo.YES,

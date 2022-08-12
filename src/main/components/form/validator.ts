@@ -107,6 +107,10 @@ export const isWorkAddressLineOneValid: Validator = value => {
   }
 };
 
+export const areBenefitsValid: Validator = value => {
+  return isFieldFilledIn(value) || isContent2500CharsOrLess(value);
+};
+
 export const isWorkAddressTownValid: Validator = value => {
   if (typeof value === 'string') {
     const inputStrLength = (value as string).trim().length;
@@ -183,15 +187,10 @@ export const isValidCurrency: Validator = value => {
   if (!value) {
     return;
   }
-
-  value = (value as string).trim();
-  const digitCount = value.replace(/\D/g, '').length;
-  const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
-
-  if (digitCount <= 12 && correctFormat) {
+  const validatedValues: [digitCount: number, correctFormat: boolean] = currencyValidation(value);
+  if (validatedValues[0] <= 12 && validatedValues[1]) {
     return;
   }
-
   return 'invalidCurrency';
 };
 
@@ -203,6 +202,26 @@ export const validateTitlePreference: Validator = (value: string) => {
   } else if (/^\d+$/.test(value) || /^\D*\d/.test(value)) {
     return 'numberError';
   }
+};
+
+export const isValidPay: Validator = value => {
+  if (!value) {
+    return;
+  }
+  const validatedValues: [digitCount: number, correctFormat: boolean] = currencyValidation(value);
+  if (!validatedValues[1]) {
+    return 'notANumber';
+  }
+  if (validatedValues[0] < 2 || validatedValues[0] > 12) {
+    return 'minLengthRequired';
+  }
+};
+
+export const currencyValidation = (value: string | string[]): [digitCount: number, correctFormat: boolean] => {
+  value = (value as string).trim();
+  const digitCount = value.replace(/\D/g, '').length;
+  const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
+  return [digitCount, correctFormat];
 };
 
 export const hasValidFileFormat: Validator = value => {

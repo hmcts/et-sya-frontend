@@ -44,6 +44,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     otherTitlePreference: fromApiCaseData.case_data?.claimantIndType?.claimant_title_other,
     jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
     startDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
+    endDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_to),
     noticePeriod: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period,
     noticePeriodUnit: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_unit,
     noticePeriodLength: fromApiCaseData.case_data?.claimantOtherType?.claimant_notice_period_duration,
@@ -55,6 +56,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantPensionWeeklyContribution:
       fromApiCaseData.case_data?.claimantOtherType?.claimant_pension_weekly_contribution,
     employeeBenefits: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits,
+    newJob: fromApiCaseData.case_data?.newEmploymentType?.new_job,
+    newJobStartDate: parseDateFromString(fromApiCaseData.case_data?.newEmploymentType?.newly_employed_from),
+    newJobPay: fromApiCaseData.case_data?.newEmploymentType?.new_pay_before_tax,
+    newJobPayInterval: fromApiCaseData.case_data?.newEmploymentType?.new_job_pay_interval,
     benefitsCharCount: fromApiCaseData.case_data?.claimantOtherType?.claimant_benefits_detail,
     pastEmployer: fromApiCaseData.case_data?.claimantOtherType?.pastEmployer,
     isStillWorking: fromApiCaseData.case_data?.claimantOtherType?.stillWorking,
@@ -101,14 +106,21 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_notice_period_unit: caseItem.noticePeriodUnit,
         claimant_notice_period_duration: caseItem.noticePeriodLength,
         claimant_average_weekly_hours: caseItem.avgWeeklyHrs,
-        claimant_pay_before_tax: caseItem.payBeforeTax,
-        claimant_pay_after_tax: caseItem.payAfterTax,
+        claimant_pay_before_tax: formatToCcdAcceptedNumber(caseItem.payBeforeTax),
+        claimant_pay_after_tax: formatToCcdAcceptedNumber(caseItem.payAfterTax),
         claimant_pay_cycle: caseItem.payInterval,
         claimant_pension_contribution: caseItem.claimantPensionContribution,
         claimant_pension_weekly_contribution: caseItem.claimantPensionWeeklyContribution,
         claimant_benefits: caseItem.employeeBenefits,
         claimant_benefits_detail: caseItem.benefitsCharCount,
         claimant_employed_notice_period: formatDate(caseItem.noticeEnds),
+        claimant_employed_to: formatDate(caseItem.endDate),
+      },
+      newEmploymentType: {
+        new_job: caseItem.newJob,
+        newly_employed_from: formatDate(caseItem.newJobStartDate),
+        new_pay_before_tax: formatToCcdAcceptedNumber(caseItem.newJobPay),
+        new_job_pay_interval: caseItem.newJobPayInterval,
       },
       claimantHearingPreference: {
         reasonable_adjustments: caseItem.reasonableAdjustments,
@@ -125,11 +137,17 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   };
 }
 
+export const formatToCcdAcceptedNumber = (amount: number): number => {
+  if (amount === undefined) {
+    return;
+  }
+  return parseFloat(amount.toString().replace(/,/g, ''));
+};
+
 export const formatDate = (date: CaseDate): string => {
   if (!date || isDateEmpty(date)) {
     return null;
   }
-
   return `${date.year}-${date.month.padStart(2, '0')}-${date.day.padStart(2, '0')}`;
 };
 
