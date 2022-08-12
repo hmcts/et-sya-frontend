@@ -70,6 +70,16 @@
   color: govuk-colour('blue');
 }
 
-div * {
-  hyphens: auto;
+// IOS
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 760px) {
+  * { hyphens: auto; }
+}
+
+// Android & Windows-CE
+@media screen
+and (min-device-width: 320px)
+and (max-device-width: 760px) {
+  * { hyphens: auto; }
 }
