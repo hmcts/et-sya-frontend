@@ -5,7 +5,7 @@
     "noLongerWorking": "What were your average weekly hours? (optional)"
   },
   "p1": {
-    "workingOrNotice": "If the number of hours you work changes each week (for example, if you had a zero-hours contract), use your final 12 weeks of payslips to work out your weekly average.",
+    "workingOrNotice": "If the number of hours you worked changed each week (for example, if you had a zero-hours contract), use your final 12 weeks of payslips to work out your weekly average.",
     "noLongerWorking": "If the number of hours you worked changed each week (for example, if you had a zero-hours contract), use your final 3 months of payslips to work out your weekly average."
   },
   "p2": "Do not include overtime hours.",
