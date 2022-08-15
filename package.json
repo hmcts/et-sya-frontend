@@ -52,6 +52,7 @@
     "@types/serve-favicon": "^2.5.1",
     "@types/session-file-store": "^1.2.2",
     "@types/sinon": "^10.0.10",
+    "@hmcts/cookie-manager": "1.0.0",
     "applicationinsights": "^2.2.0",
     "autobind-decorator": "^2.4.0",
     "awilix": "^7.0.0",
