@@ -48,7 +48,6 @@ describe('Check Your answers Controller', () => {
     const req = mockRequest({ userCase });
     const res = mockResponse();
     controller.get(req, res);
-
     expect(res.render).toHaveBeenCalledWith(
       'check-your-answers',
       expect.objectContaining({
