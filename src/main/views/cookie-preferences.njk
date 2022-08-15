@@ -10,6 +10,7 @@
  {% block content %}
    <div class="govuk-grid-row">
      <div class="govuk-grid-column-full">
+     <form class="cookie-preferences-form">
   {{ govukRadios({
     classes: 'govuk-radios',
     idPrefix: 'analytics',
@@ -59,6 +60,7 @@
   {{ govukButton({
     text: 'Save'
   }) }}
+  </form>
 </div>
    </div>
  {% endblock %}

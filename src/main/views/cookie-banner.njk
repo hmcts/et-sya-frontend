@@ -5,28 +5,69 @@
 <p class="govuk-body">We’d also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
 {% endset %}
 
+{% set acceptHtml %}
+  <p class="govuk-body">You’ve accepted additional cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+{% endset %}
+
+{% set rejectHtml %}
+  <p class="govuk-body">You’ve rejected additional cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+{% endset %}
+
 {{ govukCookieBanner({
+  classes: 'cookie-banner',
   ariaLabel: "Cookies on Employment Tribunals",
+  hidden: false,
   messages: [
     {
+      classes: 'cookie-banner-message',
       headingText: "Cookies on Employment Tribunals",
       html: html,
       actions: [
         {
+          classes: 'cookie-banner-accept-button',
           text: "Accept analytics cookies",
-          type: "button",
+          type: "submit",
           name: "cookies",
           value: "accept"
         },
         {
+          classes: 'cookie-banner-reject-button',
           text: "Reject analytics cookies",
-          type: "button",
+          type: "submit",
           name: "cookies",
           value: "reject"
         },
         {
           text: "View cookies",
           href: "/cookies"
+        }
+      ]
+    },
+    {
+      classes: 'cookie-banner-accept-message',
+      html: acceptHtml,
+      role: "alert",
+      hidden: true,
+      actions: [
+        {
+          classes: 'cookie-banner-hide-button',
+          text: "Hide this message",
+          href: "#",
+          type: "button"
+        }
+      ]
+    },
+    {
+      classes: 'cookie-banner-reject-message',
+      html: rejectHtml,
+      role: "alert",
+      hidden: true,
+      actions: [
+        {
+          classes: 'cookie-banner-hide-button',
+          text: "Hide this message",
+          href: "#",
+          type: "button"
         }
       ]
     }
