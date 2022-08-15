@@ -1,0 +1,11 @@
+{
+  "title": "Cookie preferences",
+  "changeCookiesHeading": "Change your cookie settings",
+  "allowAnalyticsCookies": "Allow cookies that measure website use?",
+  "useAnalyticsCookies": "Use cookies that measure my website use",
+  "doNotUseAnalyticsCookies": "Do not use cookies that measure my website use",
+  "apmCookiesHeadings": "Allow cookies that measure website application performance monitoring?",
+  "useApmCookies": "Use cookies that measure website application performance monitoring",
+  "doNotUseApmCookies": "Do not use cookies that measure website application performance monitoring",
+  "save": "Save"
+}

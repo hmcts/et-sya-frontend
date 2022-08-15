@@ -1,0 +1,66 @@
+{% extends "template.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+ {% block content %}
+   <div class="govuk-grid-row">
+     <div class="govuk-grid-column-full">
+  {{ govukRadios({
+    classes: 'govuk-radios',
+    idPrefix: 'analytics',
+    name: 'analytics',
+    fieldset: {
+      legend: {
+        text: "Allow cookies that measure website use?",
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    items: [
+      {
+        value: 'on',
+        text: 'Use cookies that measure my website use'
+      },
+      {
+        value: 'off',
+        text: 'Do not use cookies that measure my website use',
+        checked: true
+      }
+    ]
+  }) }}
+
+  {{ govukRadios({
+    classes: 'govuk-radios',
+    idPrefix: 'apm',
+    name: 'apm',
+    fieldset: {
+      legend: {
+        text: "Allow cookies that measure website application performance monitoring?",
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    items: [
+      {
+        value: 'on',
+        text: 'Use cookies that measure website application performance monitoring'
+      },
+      {
+        value: 'off',
+        text: 'Do not use cookies that measure website application performance monitoring',
+        checked: true
+      }
+    ]
+  }) }}
+
+  {{ govukButton({
+    text: 'Save'
+  }) }}
+</div>
+   </div>
+ {% endblock %}
+
+

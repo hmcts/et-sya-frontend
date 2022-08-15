@@ -36,14 +36,14 @@
 if isLoggedIn %}
 
 {% block header %}
-<!-- Google Tag Manager (noscript) -->
+  <!-- Google Tag Manager (noscript) -->
 
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M29HRGV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
 
   <!-- End Google Tag Manager (noscript) -->
-  
+  {% include "cookie-banner.njk" %}
   {{ govukHeader({
     containerClasses: "govuk-width-container",
     homepageUrl: "https://www.gov.uk",
