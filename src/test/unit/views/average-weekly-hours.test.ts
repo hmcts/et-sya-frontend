@@ -16,7 +16,7 @@ const averageWeeklyHoursJson = JSON.parse(averageWeeklyHoursJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
-const input = 'govuk-input--width-3';
+const input = 'govuk-input--width-10';
 const labelClass = 'govuk-label';
 
 let htmlRes: Document;
