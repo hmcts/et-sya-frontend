@@ -2,7 +2,6 @@ import cookieManager from '@hmcts/cookie-manager';
 
 cookieManager.on('PreferenceFormSubmitted', () => {
   const message = document.querySelector('.cookie-preference-success') as HTMLElement;
-  console.log('doing it');
   message.style.display = 'block';
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
