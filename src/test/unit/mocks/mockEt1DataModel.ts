@@ -1,4 +1,12 @@
-import { EmailOrPost, GenderTitle, HearingPreference, Sex, StillWorking, YesOrNo, YesOrNoOrPreferNot } from '../../../main/definitions/case';
+import {
+  EmailOrPost,
+  GenderTitle,
+  HearingPreference,
+  Sex,
+  StillWorking,
+  YesOrNo,
+  YesOrNoOrPreferNot,
+} from '../../../main/definitions/case';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
