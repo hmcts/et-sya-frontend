@@ -69,3 +69,33 @@
 .tel-link {
   color: govuk-colour('blue');
 }
+
+// IOS
+@media only screen and (max-device-width: 760px) {
+  * {
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+// Android & Windows-CE
+@media screen and (max-device-width: 760px) {
+  * {
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
+
+// Safari
+@media screen and (max-width: 760px) {
+  * {
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
