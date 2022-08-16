@@ -39,12 +39,12 @@ describe('Check your answers confirmation page', () => {
 
   it('should display submit claim button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Submit claim', 'Could not find the submit claim button');
+    expect(button[4].innerHTML).contains('Submit claim', 'Could not find the submit claim button');
   });
 
   it('should display Save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 
   it('should display 8 summery lists', () => {
@@ -192,9 +192,9 @@ describe('Check your answers confirmation page', () => {
 
   it('should display Submit Your Claim texts', () => {
     const title = htmlRes.getElementsByClassName(submitYourClaimBodyClass);
-    expect(title[1].innerHTML).contains(expectedSubmitYourClaimText1, 'Submit Your Claim text does not exist');
-    expect(title[2].innerHTML).contains(expectedSubmitYourClaimText2, 'Submit Your Claim text does not exist');
-    expect(title[3].innerHTML).contains(expectedSubmitYourClaimText3, 'Submit Your Claim text does not exist');
+    expect(title[5].innerHTML).contains(expectedSubmitYourClaimText1, 'Submit Your Claim text does not exist');
+    expect(title[6].innerHTML).contains(expectedSubmitYourClaimText2, 'Submit Your Claim text does not exist');
+    expect(title[7].innerHTML).contains(expectedSubmitYourClaimText3, 'Submit Your Claim text does not exist');
   });
 
   it('should display warning message', () => {
