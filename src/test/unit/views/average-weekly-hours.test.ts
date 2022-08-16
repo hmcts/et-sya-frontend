@@ -44,7 +44,7 @@ describe('Average weekly hours page Still Working', () => {
   it('should display input field label', () => {
     const expectedInputLabel = averageWeeklyHoursJson.enterAverageHours;
     const label = htmlRes.getElementsByClassName(labelClass);
-    expect(label[0].innerHTML).contains(expectedInputLabel, 'Average weekly hour inut label does not exist');
+    expect(label[0].innerHTML).contains(expectedInputLabel, 'Average weekly hour input label does not exist');
   });
 
   it('should display input field', () => {
