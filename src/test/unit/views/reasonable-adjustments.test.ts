@@ -1,12 +1,20 @@
+import fs from 'fs';
+import path from 'path';
+
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const PAGE_URL = '/reasonable-adjustments';
+const reasonableAdjustmentsJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/reasonable-adjustments.json'),
+  'utf-8'
+);
+const reasonableAdjustmentsJson = JSON.parse(reasonableAdjustmentsJsonRaw);
+
 const titleClass = 'govuk-heading-xl';
-const expectedTitle =
-  'Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?';
+const expectedTitle = reasonableAdjustmentsJson.h1;
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-radios__item';
 
@@ -14,7 +22,7 @@ let htmlRes: Document;
 describe('Reasonable Adjustments page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PAGE_URL)
+      .get(PageUrls.REASONABLE_ADJUSTMENTS)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

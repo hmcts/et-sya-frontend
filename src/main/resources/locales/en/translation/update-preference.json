@@ -1,11 +1,11 @@
 {
-  "title": "How would you like to be contacted about your claim?",
+  "title": "Claim update preference",
   "h1": "How would you like to be contacted about your claim?",
   "label": "What format would you like to be contacted in?",
   "email": "Email",
   "post": "Post",
   "errors": {
-    "updatePreference": {
+    "claimantContactPreference": {
       "required": "Tell us whether you want to be contacted by email or by post"
     }
   }

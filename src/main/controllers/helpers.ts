@@ -24,6 +24,7 @@ import {
   Respondent,
   StillWorking,
   YesOrNo,
+  YesOrNoOrNotSure,
 } from '../definitions/case';
 import { PageUrls, mvpLocations } from '../definitions/constants';
 import { sectionStatus } from '../definitions/definition';
@@ -231,6 +232,7 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
+  resetValuesIfNeeded(formData);
   Object.assign(req.session.userCase, formData);
 };
 
@@ -324,8 +326,8 @@ export const conditionalRedirect = (
 };
 
 export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): FormError => {
-  const hearingPreferenceCheckbox = formData.hearing_preferences;
-  const hearingPreferenceNeitherTextarea = formData.hearing_assistance;
+  const hearingPreferenceCheckbox = formData.hearingPreferences;
+  const hearingPreferenceNeitherTextarea = formData.hearingAssistance;
 
   if (
     (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
@@ -333,7 +335,7 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
   ) {
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
-      return { errorType, propertyName: 'hearing_assistance' };
+      return { errorType, propertyName: 'hearingAssistance' };
     }
   }
 };
@@ -378,7 +380,28 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
   }
 };
 
-function handleReturnUrl(req: AppRequest, res: Response, redirectUrl: string) {
+export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
+  if (
+    formData.claimantPensionContribution === YesOrNoOrNotSure.NO ||
+    formData.claimantPensionContribution === YesOrNoOrNotSure.NOT_SURE
+  ) {
+    formData.claimantPensionWeeklyContribution = undefined;
+  }
+  if (formData.employeeBenefits === YesOrNo.NO) {
+    formData.benefitsCharCount = undefined;
+  }
+  if (formData.noticePeriod === YesOrNo.NO) {
+    formData.noticePeriodUnit = undefined;
+    formData.noticePeriodLength = undefined;
+  }
+  if (formData.newJob === YesOrNo.NO) {
+    formData.newJobStartDate = undefined;
+    formData.newJobPay = undefined;
+    formData.newJobPayInterval = undefined;
+  }
+};
+
+export const handleReturnUrl = (req: AppRequest, res: Response, redirectUrl: string): void => {
   if (req.url === PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK || req.url === PageUrls.CLAIM_SUBMITTED) {
     req.session.returnUrl = undefined;
   }
@@ -390,9 +413,9 @@ function handleReturnUrl(req: AppRequest, res: Response, redirectUrl: string) {
   } else {
     req.session.returnUrl = undefined;
   }
-}
+};
 
-function mapSelectedRespondentValuesToCase(selectedRespondentIndex: number, userCase: CaseWithId) {
+export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
   if (typeof selectedRespondentIndex !== 'undefined') {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
     userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
@@ -404,4 +427,4 @@ function mapSelectedRespondentValuesToCase(selectedRespondentIndex: number, user
     userCase.acasCertNum = userCase.respondents[selectedRespondentIndex].acasCertNum;
     userCase.noAcasReason = userCase.respondents[selectedRespondentIndex].noAcasReason;
   }
-}
+};

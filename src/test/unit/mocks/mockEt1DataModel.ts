@@ -1,4 +1,12 @@
-import { EmailOrPost, HearingPreference, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import {
+  EmailOrPost,
+  GenderTitle,
+  HearingPreference,
+  Sex,
+  StillWorking,
+  YesOrNo,
+  YesOrNoOrPreferNot,
+} from '../../../main/definitions/case';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -27,9 +35,14 @@ export const mockEt1DataModelUpdate = {
       claimant_first_names: 'John',
       claimant_last_name: 'Doe',
       claimant_date_of_birth: '2010-05-11',
+      claimant_sex: Sex.MALE,
+      claimant_gender_identity_same: YesOrNoOrPreferNot.PREFER_NOT,
+      claimant_preferred_title: GenderTitle.MISS,
+      claimant_title_other: undefined as string,
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
+      claimant_contact_preference: EmailOrPost.EMAIL,
     },
     claimantOtherType: {
       pastEmployer: YesOrNo.YES,
@@ -48,6 +61,13 @@ export const mockEt1DataModelUpdate = {
       claimant_benefits: 'Yes',
       claimant_benefits_detail: 'Some benefits',
       claimant_employed_notice_period: '2022-08-11',
+      claimant_employed_to: '2017-05-11',
+    },
+    newEmploymentType: {
+      new_job: 'Yes',
+      new_pay_before_tax: 4000,
+      new_job_pay_interval: 'Months',
+      newly_employed_from: '2022-08-11',
     },
     claimantHearingPreference: {
       reasonable_adjustments: YesOrNo.YES,
@@ -57,9 +77,8 @@ export const mockEt1DataModelUpdate = {
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
-    },
-    claimantContactPreference: {
-      claimant_contact_preference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
     },
   },
 };
