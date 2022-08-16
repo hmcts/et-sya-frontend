@@ -16,7 +16,7 @@ export class Session {
   public enableFor(app: Application): void {
     app.use(
       session({
-        name: 'ef-sya-session',
+        name: 'et-sya-session',
         resave: false,
         saveUninitialized: false,
         secret: config.get('session.secret'),
