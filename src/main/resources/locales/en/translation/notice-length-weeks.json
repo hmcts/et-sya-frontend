@@ -9,7 +9,7 @@
   "errors": {
     "noticePeriodLength": {
       "invalid": "Tell us the number of weeks in your notice period",
-      "notANumber": "Number of weeks in notice period must be a number, like 30"
+      "notANumber": "Number of weeks in notice period must be a number, like 4 etc"
     }
   }
 }
