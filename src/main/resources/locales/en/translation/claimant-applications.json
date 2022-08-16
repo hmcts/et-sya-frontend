@@ -1,0 +1,14 @@
+{
+  "title": "ET1 Applications",
+  "h1": "Draft applications",
+  "h2": "Submitted applications",
+  "p1": "<a href=\"#\" class=\"govuk-link\">Start a new claim.</a>",
+  "col1": "Date created",
+  "col2": "Reference",
+  "col3": "Type of claim",
+  "col4": "Respondents",
+  "col5": "Completion status",
+  "col6": "Date last modified",
+  "col7": "Options",
+  "p2": "Draft cases are available to continue for [x] days from date created"
+}

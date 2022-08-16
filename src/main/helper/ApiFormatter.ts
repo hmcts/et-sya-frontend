@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
@@ -72,6 +74,16 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
+    createdDate: fromApiCaseData.created_date.toLocaleDateString(i18next.language, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
+    lastModified: fromApiCaseData.last_modified.toLocaleDateString(i18next.language, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }),
   };
 }
 
@@ -154,7 +166,7 @@ export const parseDateFromString = (date: string): CaseDate => {
     return {
       year: date.substring(0, 4),
       month: date.substring(5, 7),
-      day: date.substring(8),
+      day: date.substring(8, 10),
     };
   }
 };

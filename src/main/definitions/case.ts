@@ -112,6 +112,8 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  createdDate?: string;
+  lastModified?: string;
 }
 
 export const enum StillWorking {

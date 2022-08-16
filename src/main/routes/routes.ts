@@ -156,6 +156,8 @@ export default function (app: Application): void {
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(PageUrls.CHANGE_DETAILS, app.locals.container.cradle.changeDetailsController.get);
   app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
+  app.get(PageUrls.CLAIMANT_APPLICATIONS, app.locals.container.cradle.claimantApplicationsController.get);
+  app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);
   app.get(
     Urls.INFO,
     infoRequestHandler({
