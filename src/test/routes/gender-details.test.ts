@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { YesOrNo } from '../../main/definitions/case';
+import { Sex } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -16,7 +16,7 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should go to the address details page', async () => {
     await request(mockApp({}))
       .post(PageUrls.GENDER_DETAILS)
-      .send({ claimantSex: YesOrNo.YES, preferredTitle: 'Mr' })
+      .send({ claimantSex: Sex.MALE, preferredTitle: 'Mr' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);
@@ -27,8 +27,8 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
 describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should return gender details page if other title preference contains number', async () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Other',
       otherTitlePreference: '7',
     };
@@ -43,8 +43,8 @@ describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
 describe(`POST ${PageUrls.GENDER_DETAILS}`, () => {
   test('should return gender details page if other title preference is blank', async () => {
     const body = {
-      claimantSex: 'Male',
-      claimantGenderIdentitySame: 'Yes',
+      claimantSex: Sex.MALE,
+      claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
       preferredTitle: 'Other',
       otherTitlePreference: ' ',
     };
