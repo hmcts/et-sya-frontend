@@ -8,21 +8,29 @@ export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
     const respondents = req.session.userCase?.respondents;
     const userCase = req.session?.userCase;
-    const whatYouWant = getTellUsWhatYouWant(userCase);
+    const whatYouWantCompensation = getTellUsWhatYouWantCompensation(userCase);
+    const whatYouWantTribunals = getTellUsWhatYouWantTribunals(userCase);
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       PageUrls,
       userCase,
       respondents,
-      whatYouWant,
+      whatYouWantCompensation,
+      whatYouWantTribunals,
     });
   }
 }
-const getTellUsWhatYouWant = (userCase: CaseWithId) => {
+const getTellUsWhatYouWantCompensation = (userCase: CaseWithId) => {
   if (userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY) && userCase.compensationOutcome) {
     return userCase.compensationOutcome + ': ' + userCase.compensationAmount;
-  } else if (userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+  } else {
+    return '';
+  }
+};
+
+const getTellUsWhatYouWantTribunals = (userCase: CaseWithId) => {
+  if (userCase?.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
     return userCase.tribunalRecommendationRequest;
   } else {
     return '';

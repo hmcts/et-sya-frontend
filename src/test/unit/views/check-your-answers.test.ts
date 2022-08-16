@@ -64,7 +64,7 @@ describe('Check your answers confirmation page', () => {
     expect(summaryLists[0].innerHTML).contains('Application details', 'List heading not found');
     expect(summaryLists[1].innerHTML).contains('Your details', 'List heading not found');
     expect(summaryLists[2].innerHTML).contains('Employment details', 'List heading not found');
-    expect(summaryLists[3].innerHTML).contains('Respondent1 details', 'List heading not found');
+    expect(summaryLists[3].innerHTML).contains('Respondent 1 details', 'List heading not found');
     expect(summaryLists[4].innerHTML).contains('Claim details', 'List heading not found');
   });
 

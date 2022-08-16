@@ -33,7 +33,7 @@ describe('Check Your answers Controller', () => {
     expect(res.render).toHaveBeenCalledWith(
       'check-your-answers',
       expect.objectContaining({
-        whatYouWant: 'money: 1',
+        whatYouWantCompensation: 'money: 1',
       })
     );
   });
@@ -51,7 +51,7 @@ describe('Check Your answers Controller', () => {
     expect(res.render).toHaveBeenCalledWith(
       'check-your-answers',
       expect.objectContaining({
-        whatYouWant: 'request',
+        whatYouWantTribunals: 'request',
       })
     );
   });

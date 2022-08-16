@@ -61,7 +61,7 @@
     "workAddress": "Work address"
   },
   "respondentDetails": {
-    "header": "Respondent1 details",
+    "header": "Respondent 1 details",
     "respondentName": "Name of respondent",
     "respondentAddress": "Respondent address",
     "workedAtRespondent": "Did you work at the respondent's address?",
