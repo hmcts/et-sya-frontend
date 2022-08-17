@@ -1,4 +1,5 @@
 import {
+  getACASCertificateNumberError,
   getClaimSummaryError,
   getCustomNoticeLengthError,
   getGenderDetailsError,
@@ -198,6 +199,93 @@ describe('Claim Summary Error', () => {
     const errors = getClaimSummaryError(body);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
+  });
+});
+
+describe('ACAS Certificate Number Errors', () => {
+  it('should not return an error if correct acas number provided', () => {
+    const body = { acasCertNum: 'R1234/5678/12' };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if correct acasCert is No', () => {
+    const body = {
+      acasCertNum: 'R1234/5678/12',
+      acasCert: YesOrNo.NO,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return an error if invalid acas number provided - (//)', () => {
+    const body = {
+      acasCertNum: 'R1234//678/12',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (Not starts with R)', () => {
+    const body = {
+      acasCertNum: '1234//678/12',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (ends with /)', () => {
+    const body = {
+      acasCertNum: '1234/678/12/',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (less than 11 character)', () => {
+    const body = {
+      acasCertNum: 'R1234/6781',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (more than 13 character)', () => {
+    const body = {
+      acasCertNum: 'R1234/67891234',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (has character which is not numeric and / after R)', () => {
+    const body = {
+      acasCertNum: 'R1234/6c91234',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
 });
 
