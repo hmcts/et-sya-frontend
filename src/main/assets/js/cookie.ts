@@ -31,8 +31,6 @@ cookieManager.on('UserPreferencesSaved', (preferences: Preferences) => {
 const config = {
   userPreferences: {
     cookieName: 'et-sya-cookie-preferences',
-    cookieExpiry: 365,
-    cookieSecure: false,
   },
   cookieBanner: {
     class: 'cookie-banner',
@@ -60,8 +58,13 @@ const config = {
   },
   cookieManifest: [
     {
+      categoryName: 'essential',
+      optional: false,
+      cookies: ['et-sya-cookie-preferences'],
+    },
+    {
       categoryName: 'analytics',
-      cookies: ['_ga', '_gid', '_gat_UA-'],
+      cookies: ['_ga', '_gid', 'gat'],
     },
     {
       categoryName: 'apm',
