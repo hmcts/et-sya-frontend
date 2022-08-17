@@ -2,6 +2,7 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasValidFileFormat,
+  isAcasNumberValid,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
   isFieldFilledIn,
@@ -348,6 +349,61 @@ describe('Validation', () => {
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       expect(hasValidFileFormat(fileName)).toEqual(expected);
+    });
+  });
+  describe('isAcasNumberValid()', () => {
+    it('Should check if value exist', () => {
+      const isValid = isAcasNumberValid('R12345/789/12');
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const isValid = isAcasNumberValid(undefined);
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value is only whitespaces', () => {
+      const isValid = isAcasNumberValid('    ');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value has more than 11 characters', () => {
+      const isValid = isAcasNumberValid('R123456/89');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value has less than 14 characters', () => {
+      const isValid = isAcasNumberValid('R123456/890123');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value starts with R', () => {
+      const isValid = isAcasNumberValid('12345/789/123');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any numeric or / character after R', () => {
+      const isValid = isAcasNumberValid('R12345/789a12');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any repeating / character like //', () => {
+      const isValid = isAcasNumberValid('R145//9123112');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any repeating / character like ///', () => {
+      const isValid = isAcasNumberValid('R145///123112');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
     });
   });
 });
