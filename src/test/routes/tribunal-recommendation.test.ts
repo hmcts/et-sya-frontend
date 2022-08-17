@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
 
 describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
   test(
-    'should navigate to PageUrls.CLAIM_DETAILS_CHECK when TypesOfClaim.WHISTLE_BLOWING is not selected and ' +
+    'should navigate to PageUrls.CLAIM_DETAILS_CHECK when TypeOfClaim.WHISTLE_BLOWING is not selected and ' +
       'save and continue button is clicked',
     async () => {
       await request(mockApp({ session: mockSession([], [], []) }))
@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
 
 describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
   test(
-    'should navigate to the whistleblowing claims page when TypesOfClaim.WHISTLE_BLOWING is selected and ' +
+    'should navigate to the whistleblowing claims page when TypeOfClaim.WHISTLE_BLOWING is selected and ' +
       'save and continue button is clicked',
     async () => {
       await request(mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING], [], []) }))

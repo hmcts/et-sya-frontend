@@ -91,7 +91,7 @@ describe('Steps to making your claim page', () => {
 
   it(
     'should have the correct link(PageUrls.CLAIM_TYPE_DISCRIMINATION) on Summarise what happened to you ' +
-      'when TypesOfClaim.DISCRIMINATION selected',
+      'when TypeOfClaim.DISCRIMINATION selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -110,12 +110,16 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
+      for (const key of links) {
+        console.log(key.outerHTML);
+      }
+
       expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
     }
   );
   it(
     'should have the correct link(PageUrls.CLAIM_TYPE_PAY) on Summarise what happened to you ' +
-      'when TypesOfClaim.PAY_RELATED_CLAIM selected and TypesOfClaim.DISCRIMINATION is not selected',
+      'when TypeOfClaim.PAY_RELATED_CLAIM selected and TypeOfClaim.DISCRIMINATION is not selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -139,7 +143,7 @@ describe('Steps to making your claim page', () => {
   );
   it(
     'should have the correct link(PageUrls.STILL_WORKING) on Employment status ' +
-      'when TypesOfClaim.UNFAIR_DISMISSAL is selected',
+      'when TypeOfClaim.UNFAIR_DISMISSAL is selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -163,7 +167,7 @@ describe('Steps to making your claim page', () => {
   );
   it(
     'should have the correct link(PageUrls.PAST_EMPLOYER) on Employment status ' +
-      'when TypesOfClaim.UNFAIR_DISMISSAL is not selected',
+      'when TypeOfClaim.UNFAIR_DISMISSAL is not selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -192,6 +196,7 @@ describe('Steps to making your claim page', () => {
         session: mockSession([], [], []),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -221,6 +226,7 @@ describe('Steps to making your claim page', () => {
       'Whistleblowing',
       'Other type of Claim',
     ];
+    console.log(htmlRes);
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
     expect(foundArr).to.have.members(expected);

@@ -13,7 +13,7 @@ export interface CaseDate {
 }
 
 export interface Respondent {
-  respondentNumber: number;
+  respondentNumber?: number;
   respondentName?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
@@ -194,9 +194,10 @@ export const enum PayInterval {
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
 
 export const enum CaseDataCacheKey {
+  POSTCODE = 'workPostcode',
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
-  TYPES_OF_CLAIM = 'typesOfClaim',
+  TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
 }
 

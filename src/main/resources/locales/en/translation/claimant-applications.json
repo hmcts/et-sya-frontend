@@ -2,7 +2,7 @@
   "title": "ET1 Applications",
   "h1": "Draft applications",
   "h2": "Submitted applications",
-  "p1": "<a href=\"#\" class=\"govuk-link\">Start a new claim.</a>",
+  "p1": "<a href='/claimant-application/newClaim' class=\"govuk-link\">Start a new claim</a>",
   "col1": "Date created",
   "col2": "Reference",
   "col3": "Type of claim",

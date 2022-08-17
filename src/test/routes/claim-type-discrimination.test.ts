@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
-  test('should navigate to the describe what happened page when TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
+  test('should navigate to the describe what happened page when TypeOfClaim.PAY_RELATED_CLAIM not selected', async () => {
     await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) }))
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
       .send({ claimTypeDiscrimination: ['age'] })
@@ -23,9 +23,9 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       });
   });
 });
-// This case occurs only whenTypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
+// This case occurs only whenTypeOfClaim.WHISTLE_BLOWING and TypeOfClaim.PAY_RELATED_CLAIM are selected
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
-  test('should navigate to the claim type pay when TypesOfClaim.PAY_RELATED_CLAIM selected', async () => {
+  test('should navigate to the claim type pay when TypeOfClaim.PAY_RELATED_CLAIM selected', async () => {
     await request(
       mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []) })
     )

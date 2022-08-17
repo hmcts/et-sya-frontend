@@ -146,6 +146,22 @@ describe('Custom Notice Length errors', () => {
 
     expect(errors).toEqual(expectedErrors);
   });
+
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion","No"],["caseType","Multiple"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+      );
+    }
+  );
 });
 
 describe('Claim Summary Error', () => {

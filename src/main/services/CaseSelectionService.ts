@@ -4,8 +4,7 @@ import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
 import { PageUrls, Urls } from '../definitions/constants';
-import { CaseState } from '../definitions/definition';
-import { AnyRecord } from '../definitions/util-types';
+import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { fromApiFormat } from '../helper/ApiFormatter';
 
 import { getCaseApi } from './CaseService';
@@ -13,20 +12,18 @@ import { getCaseApi } from './CaseService';
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
 
-export const getUserApplications = (userCases: CaseWithId[]): AnyRecord[] => {
-  const apps: AnyRecord[] = [];
+export const getUserApplications = (userCases: CaseWithId[]): ApplicationTableRecord[] => {
+  const apps: ApplicationTableRecord[] = [];
 
   for (const uCase of userCases) {
-    const rec: AnyRecord = {
+    const rec: ApplicationTableRecord = {
       userCase: uCase,
-      respondents: uCase.respondents.map(respondent => respondent.respondentName).join('<br />'),
+      respondents: uCase.respondents?.map(respondent => respondent.respondentName).join('<br />'),
       completionStatus: getOverallStatus(uCase),
       url: getRedirectUrl(uCase),
     };
-
     apps.push(rec);
   }
-
   return apps;
 };
 
@@ -67,44 +64,42 @@ export const getOverallStatus = (userCase: CaseWithId): string => {
   return `${sectionCount} of ${totalSections} tasks completed`;
 };
 
-export const getUserCases = (req: AppRequest): CaseWithId[] => {
-  getCaseApi(req.session.user?.accessToken)
-    .getDraftCases()
-    .then(response => {
-      if (response.data.length === 0) {
-        return [];
-      } else {
-        logger.info(`Retrieving cases for ${req.session.user?.email}`);
-        const casesByLastModified: CaseApiDataResponse[] = response.data.sort((a, b) => {
-          const da = new Date(a.last_modified),
-            db = new Date(b.last_modified);
-          return db.valueOf() - da.valueOf();
-        });
-        return casesByLastModified.map(app => fromApiFormat(app));
-      }
-    })
-    .catch(err => {
-      logger.log(err);
+export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseWithId[]> => {
+  try {
+    const cases = await getCaseApi(req.session.user?.accessToken).getUserCases();
+    if (cases.data.length === 0) {
       return [];
-    });
-
-  return [];
+    } else {
+      logger.info(`Retrieving cases for ${req.session.user?.id}`);
+      const casesByLastModified: CaseApiDataResponse[] = cases.data.sort((a, b) => {
+        const da = new Date(a.last_modified),
+          db = new Date(b.last_modified);
+        return db.valueOf() - da.valueOf();
+      });
+      return casesByLastModified.map(app => fromApiFormat(app));
+    }
+  } catch (err) {
+    logger.log(err);
+    return [];
+  }
 };
 
-export const selectUserCase = (req: AppRequest, res: Response, caseId: string): void => {
-  getCaseApi(req.session.user.accessToken)
-    .getUserCase(caseId)
-    .then(response => {
-      if (response.data === undefined || response.data === null) {
-        res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
-      } else {
-        req.session.userCase = fromApiFormat(response.data);
-        req.session.save();
-        res.redirect(PageUrls.CLAIM_STEPS);
-      }
-    })
-    .catch(err => {
-      logger.log(err);
-      res.redirect(PageUrls.HOME);
-    });
+export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
+  if (caseId === 'newClaim') {
+    req.session.userCase = undefined;
+    res.redirect(PageUrls.HOME);
+  }
+  try {
+    const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
+    if (response.data === undefined || response.data === null) {
+      res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
+    } else {
+      req.session.userCase = fromApiFormat(response.data);
+      req.session.save();
+      res.redirect(PageUrls.CLAIM_STEPS);
+    }
+  } catch (err) {
+    logger.log(err);
+    res.redirect(PageUrls.HOME);
+  }
 };

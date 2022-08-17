@@ -15,7 +15,7 @@ describe(`GET ${PageUrls.COMPENSATION}`, () => {
 describe(`on POST ${PageUrls.COMPENSATION}`, () => {
   test(
     'should navigate to claim details check page when ' +
-      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION or TypesOfClaim.WHISTLE_BLOWING not selected',
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION or TypeOfClaim.WHISTLE_BLOWING not selected',
     async () => {
       await request(mockApp({}))
         .post(PageUrls.COMPENSATION)
@@ -54,7 +54,7 @@ describe(`on POST ${PageUrls.COMPENSATION}`, () => {
 describe(`on POST ${PageUrls.COMPENSATION}`, () => {
   test(
     'should navigate to PageUrls.WHISTLEBLOWING_CLAIMS when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
-      'TypesOfClaim.WHISTLE_BLOWING selected and TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION not selected',
+      'TypeOfClaim.WHISTLE_BLOWING selected and TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION not selected',
     async () => {
       await request(
         mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING], [TellUsWhatYouWant.COMPENSATION_ONLY], []) })
