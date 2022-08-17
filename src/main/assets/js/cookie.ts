@@ -6,12 +6,13 @@ cookieManager.on('PreferenceFormSubmitted', () => {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 });
-cookieManager.on('UserPreferencesLoaded', (preferences: { apm: string }) => {
+
+cookieManager.on('UserPreferencesLoaded', (preferences: Preferences) => {
   const dataLayer = window.dataLayer || [];
   dataLayer.push({ event: 'Cookie Preferences', cookiePreferences: preferences });
 });
 
-cookieManager.on('UserPreferencesSaved', (preferences: { apm: string }) => {
+cookieManager.on('UserPreferencesSaved', (preferences: Preferences) => {
   const dataLayer = window.dataLayer || [];
   const dtrum = window.dtrum;
 
@@ -83,4 +84,9 @@ interface DtrumApi {
   enableSessionReplay(): void;
   disable(): void;
   disableSessionReplay(): void;
+}
+
+interface Preferences {
+  analytics: string;
+  apm: string;
 }
