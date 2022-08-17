@@ -7,6 +7,7 @@ import { isFirstDateBeforeSecond } from '../components/form/dateValidators';
 import { Form } from '../components/form/form';
 import {
   arePayValuesNull,
+  isAcasNumberValid,
   isFieldFilledIn,
   isPayIntervalNull,
   isValidNoticeLength,
@@ -176,6 +177,7 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const genderErrors = getGenderDetailsError(formData);
+  const acasCertificateNumberError = getACASCertificateNumberError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -205,6 +207,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
     sessionErrors = [...sessionErrors, genderErrors];
   }
 
+  if (acasCertificateNumberError) {
+    sessionErrors = [...sessionErrors, acasCertificateNumberError];
+  }
+
   req.session.errors = sessionErrors;
 
   const { saveForLater } = req.body;
@@ -225,6 +231,10 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
     handleReturnUrl(req, res, redirectUrl);
     res.redirect(redirectUrl);
   }
+};
+
+export const handleSaveAsDraft = (res: Response): void => {
+  return res.redirect(PageUrls.CLAIM_SAVED);
 };
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
@@ -336,6 +346,23 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
       return { errorType, propertyName: 'hearingAssistance' };
+    }
+  }
+};
+
+export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): FormError => {
+  const certificateRadioButtonSelectedValue = formData.acasCert;
+  const acasCertNum = formData.acasCertNum;
+
+  if ((certificateRadioButtonSelectedValue as string)?.includes(YesOrNo.YES)) {
+    let errorType = isFieldFilledIn(acasCertNum);
+    if (errorType) {
+      return { errorType, propertyName: 'acasCertNum' };
+    } else {
+      errorType = isAcasNumberValid(acasCertNum);
+      if (errorType) {
+        return { errorType, propertyName: 'acasCertNum' };
+      }
     }
   }
 };
