@@ -6,5 +6,5 @@ import './go-back';
 govUkFrontend.initAll();
 import './enter-address';
 import './print';
-import './set-styles';
 import './cookie';
+import './set-focus';
