@@ -136,22 +136,6 @@ describe('Custom Notice Length errors', () => {
 
     expect(errors).toEqual(expectedErrors);
   });
-
-  it(
-    'should set req.session.userCase when setUserCaaseWithRedisData is called with correspondent' +
-      'req, and caseData parameters',
-    () => {
-      const req = mockRequest({ session: mockSession([], [], []) });
-      const caseData =
-        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
-
-      setUserCaseWithRedisData(req, caseData);
-
-      expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
-      );
-    }
-  );
 });
 
 describe('Claim Summary Error', () => {
@@ -220,6 +204,17 @@ describe('ACAS Certificate Number Errors', () => {
     const errors = getACASCertificateNumberError(body);
 
     expect(errors).toEqual(undefined);
+  });
+
+  it('should return an error if acas number not provided', () => {
+    const body = {
+      acasCertNum: '',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'required', propertyName: 'acasCertNum' });
   });
 
   it('should return an error if invalid acas number provided - (//)', () => {
@@ -417,4 +412,39 @@ describe('getGenderDetailsError()', () => {
 
     expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'numberError' });
   });
+});
+
+describe('setUserCaseWithRedisData', () => {
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+      );
+    }
+  );
+
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData, session.usercase is undefined',
+    () => {
+      const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+      req.session.userCase = undefined;
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"claimantRepresentedQuestion":"No","caseType":"Multiple","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
+      );
+    }
+  );
 });
