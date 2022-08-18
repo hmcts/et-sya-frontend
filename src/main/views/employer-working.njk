@@ -1,6 +1,4 @@
-
-
-{{ 
+ {{ 
     govukSummaryList({
       rows: [
         {
@@ -11,10 +9,47 @@
         },
         {
           key: {
-            text: employmentDetails.jobTitle,
-            classes: "govuk-!-font-weight-regular"
+            text: employmentDetails.didYouWorkFor,
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.pastEmployer
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAST_EMPLOYER,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.didYouWorkFor
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.isStillWorking,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.isStillWorking if userCase.pastEmployer === "Yes" else " "
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.STILL_WORKING,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.isStillWorking
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.jobTitle,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.jobTitle if userCase.pastEmployer === "Yes" else " "
           },
           actions: {
             items: [
@@ -29,9 +64,10 @@
         {
           key: {
             text: employmentDetails.startDate,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: "" if userCase.startDate.day === undefined else userCase.startDate.day + "-" + userCase.startDate.month + "-"+ userCase.startDate.year
           },
           actions: {
             items: [
@@ -46,14 +82,15 @@
         {
           key: {
             text: employmentDetails.noticePeriod,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.noticePeriod
           },
           actions: {
             items: [
               {
-                href: PageUrls.NOTICE_END,
+                href: PageUrls.NOTICE_PERIOD,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.noticePeriod
               }
@@ -62,10 +99,47 @@
         },
         {
           key: {
-            text: employmentDetails.weeklyHours,
-            classes: "govuk-!-font-weight-regular"
+            text: employmentDetails.noticeLength,
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.noticePeriodLength
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NOTICE_LENGTH,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.noticeLength
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.noticePeriodWeeksOrMonths,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.noticePeriodUnit
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.NOTICE_TYPE,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.noticePeriodWeeksOrMonths
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.weeklyHours,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.avgWeeklyHrs
           },
           actions: {
             items: [
@@ -80,9 +154,10 @@
         {
           key: {
             text: employmentDetails.payBeforeTax,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.payBeforeTax
           },
           actions: {
             items: [
@@ -97,9 +172,10 @@
         {
           key: {
             text: employmentDetails.payAfterTax,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.payAfterTax
           },
           actions: {
             items: [
@@ -113,10 +189,30 @@
         },
         {
           key: {
-            text: employmentDetails.pensionScheme,
-            classes: "govuk-!-font-weight-regular"
+            text: employmentDetails.payPeriod,
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.payInterval
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAY,
+                text: "Change",
+                visuallyHiddenText: employmentDetails.payPeriod
+              }
+            ]
+          } 
+        },
+        {
+          key: {
+            text: employmentDetails.pensionScheme,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+          value: {
+            text: userCase.claimantPensionContribution  + ": " + userCase.claimantPensionWeeklyContribution if userCase.claimantPensionContribution === "Yes" 
+            else userCase.claimantPensionContribution  
           },
           actions: {
             items: [
@@ -131,9 +227,11 @@
         {
           key: {
             text: employmentDetails.benefits,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.employeeBenefits + ", " + userCase.benefitsCharCount if userCase.employeeBenefits === "Yes"
+            else userCase.employeeBenefits
           },
           actions: {
             items: [
@@ -148,3 +246,4 @@
       ]
     }) 
   }}
+
