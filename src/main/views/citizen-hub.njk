@@ -1,0 +1,138 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% macro sideBar(callEmployer, contactTribunal) %}
+<p class='govuk-body'>
+  {{callEmployer}}
+</p>
+
+<p class='govuk-body'>
+  {{contactText}}<a>{{contactLink}}</a>
+</p>
+
+<h2 class="govuk-heading-s">
+  {{englandWales}}
+</h2>
+
+<p class='govuk-body'>
+  {{ewNumbers}}
+</p>
+
+<h2 class="govuk-heading-s">
+  {{welsh}}
+</h2>
+
+<p class='govuk-body'>
+  {{welshNumber}}
+</p>
+
+<h2 class="govuk-heading-s">
+  {{scotland}}
+</h2>
+
+<p class='govuk-body'>
+  {{scotlandNumbers | safe}}
+</p>
+
+<p class='govuk-body'>
+  {{hours | safe}}
+</p>
+
+<a href="#" class="govuk-link">{{callCharges}}</a>
+
+{% endmacro %}
+
+{% block beforeContent %}
+{{ super() }}
+{% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">
+      {{title}}John Smith vs Version 1
+    </h2>
+    <p class="govuk-body">{{caseNumber}}123456/2022</p>
+    
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ hmctsProgressBar({
+          items: [{
+            label: 
+            {                      
+              text: accepted
+            },
+            complete: true
+          }, {
+            label: {
+              text: received
+            },
+            complete: true
+          }, {
+            label: {
+              text: details
+            },
+            active: true
+          }, {
+            label: {
+              text: decision
+            }  }], classes: ''
+          }) }}
+          
+          <ol class="app-task-list">
+            
+            <li>
+              <h2 class="app-task-list__section">
+                Section 1
+              </h2>
+              <ul class="app-task-list__items">
+                
+                <li class="app-task-list__item">
+                  <span class="app-task-list__task-name">
+                    <a href="#">To section 1</a>
+                  </span>
+                  
+                  {{ govukTag({
+                    text: 'NOT STARTED',
+                    classes: "app-task-list__tag"
+                  }) }}
+                  
+                </li>
+                
+              </ul>
+            </li>
+            
+          </ol>
+          
+        </div>
+        <div class="govuk-grid-column-one-third-from-desktop">
+          <h2 class="govuk-heading-s">
+            I want to...
+          </h2>
+          <p class="govuk-body"> <a href= "#">
+            Contact the tribunal about my case
+          </a></p>
+          
+          <p class="govuk-body"><a href= "#">
+            Find legal advice (opens in new tab)
+          </a></p>
+          
+          {{ govukDetails({
+            summaryText: "Contact",
+            html: sideBar(callEmployer, contactTribunal)
+          }) }}
+          
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  {% endblock %}

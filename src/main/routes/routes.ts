@@ -153,6 +153,7 @@ export default function (app: Application): void {
   app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
+  app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
   app.get(
     Urls.INFO,
     infoRequestHandler({

@@ -99,3 +99,15 @@
     hyphens: auto;
   }
 }
+
+.hmcts-progress-bar__icon {
+  border: 6px solid #1d70b8 !important;
+}
+
+.hmcts-progress-bar__icon--complete {
+  background-color: #1d70b8 !important;
+}
+
+.hmcts-progress-bar__list::before {
+  border-top: 6px solid #1d70b8 !important;
+}
