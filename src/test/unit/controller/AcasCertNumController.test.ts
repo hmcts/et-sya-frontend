@@ -39,7 +39,7 @@ describe('Acas Cert Num Controller', () => {
   });
 
   it('should redirect to no acas number reason when no is selected and remove acas cert num value', () => {
-    const body = { acasCert: YesOrNo.NO };
+    const body = { acasCert: YesOrNo.NO, saveForLater: false };
 
     const controller = new AcasCertNumController();
 
@@ -48,10 +48,28 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/no-acas-reason');
+    expect(res.redirect).toBeCalledWith('/respondent/1' + PageUrls.NO_ACAS_NUMBER);
+    //expect(res.redirect).toBeCalled§With();
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.NO);
   });
+
+  it('should redirect to no acas number reason when nothing is selected and save and continue clicked then should remove acasCertNum and should redirect PageUrls.ACAS_CERT_NUM', () => {
+    const body = { saveForLater: false };
+
+    const controller = new AcasCertNumController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(undefined);
+    //expect(res.redirect).toBeCalled§With();
+    expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
+    expect(req.session.userCase.respondents[0].acasCert).toEqual(undefined);
+  });
+
   it('should redirect to your claim has been saved page when save as draft selected', () => {
     const body = { acasCert: YesOrNo.NO, saveForLater: true };
 
