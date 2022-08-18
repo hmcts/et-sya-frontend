@@ -2,6 +2,7 @@
   "title": "Claim submitted",
   "h1": "Your claim has been submitted (to do)",
   "downloadClaim": "Download your claim<br> <p class=\"govuk-body\">The questions you’ve answered are populated on our prescribed PDF form. This means the questions may appear differently in their wording or order on the version you download. This will not affect how the tribunal deals with your claim.</p>",
+  "downloadClaimHint": "The questions you’ve answered are populated on our prescribed PDF form. This means the questions may appear differently in their wording or order on the version you download. This will not affect how the tribunal deals with your claim.",
   "downloadBtn": "<a href=\"/download-claim\" class=\"govuk-link\">Save a copy of your claim</a>",
   "emailConfirmation": "We've sent you an email confirmation.",
   "whatHappensNext": "What happens next",

@@ -75,8 +75,16 @@ describe('Claim Submitted Confirmation page', () => {
       expect(getTrimmedInnerText(headings[2])).equals(pageJson.claimQuestions);
     });
 
+    it('should display download claim subtext', () => {
+      expect(getTrimmedInnerText(bodyElements[1])).equals(pageJson.downloadClaimHint);
+    });
+
     it('should display subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[1])).equals(pageJson.claimQuestionsText);
+      expect(getTrimmedInnerText(bodyElements[2])).equals(pageJson.claimQuestionsText);
+    });
+
+    it('should display subtext call ET customer care', () => {
+      expect(getTrimmedInnerText(bodyElements[3])).equals(pageJson.processQuestionsText);
     });
 
     it('should have 3 items', () => {
@@ -93,10 +101,6 @@ describe('Claim Submitted Confirmation page', () => {
       expect(getTrimmedInnerText(headings[3])).equals(pageJson.processQuestions);
     });
 
-    it('should display subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[2])).equals(pageJson.processQuestionsText);
-    });
-
     it('should contain correct list items', () => {
       expect(lists[1].children).length(5);
       expect(getLiTextFromUl(lists[1], 0)).equals(pageJson.contactPrimary);
@@ -107,7 +111,7 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should display append', () => {
-      expect(getTrimmedInnerText(bodyElements[3])).equals(pageJson.contactAppend);
+      expect(getTrimmedInnerText(bodyElements[4])).equals(pageJson.contactAppend);
     });
   });
 
