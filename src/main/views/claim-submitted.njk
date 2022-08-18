@@ -17,7 +17,7 @@
   <p class="govuk-body">
     {{ emailConfirmation }}
   </p>
-
+ 
   <h2 class="govuk-heading-m">
     {{ whatHappensNext }}
   </h2>
@@ -39,7 +39,7 @@
   rows: [
     { key: { text: submissionReference  }, value: { text: submissionReferenceText | safe } },
     { key: { text: claimSubmitted  }, value: { text: claimSubmittedText | safe } },
-    { key: { text: downloadClaim  }, value: { text: downloadBtn | safe } },
+    { key: { text: downloadClaim | safe }, value: { text: downloadBtn | safe } },
     { key: { text: attachments }, value: { text: attachmentsText | safe } }
   ]
   }) }}
