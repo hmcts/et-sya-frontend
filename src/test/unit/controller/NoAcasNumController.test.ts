@@ -38,6 +38,19 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
+  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft not selected', () => {
+    const body = { noAcasReason: NoAcasNumberReason.ANOTHER, saveForLater: true };
+
+    const controller = new NoAcasNumberController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+  });
   it('should redirect to your claim has been saved page when save as draft selected and no acas reason selected', () => {
     const body = { saveForLater: true };
 
@@ -49,6 +62,18 @@ describe('No Acas number Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+  });
+  it('should redirect to your claim has been saved page when save as draft not selected and no acas reason selected', () => {
+    const body = { saveForLater: false };
+
+    const controller = new AcasCertNumController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(undefined);
   });
   it('should redirect to undefined saved page when save as draft and no acas reason selected', () => {
     const body = {};
