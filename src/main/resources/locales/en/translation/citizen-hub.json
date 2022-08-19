@@ -15,5 +15,59 @@
   "scotland": "Scotland",
   "scotlandNumbers": "Telephone: 0300 790 6234 <br /> Textphone: 18001 0300 790 6234",
   "hours": "Monday to Thursday, 8.30am to 5pm. <br /> Friday, 8.30am to 4pm. <br /> The centre does not open on bank holidays.",
-  "callCharges": "Find out about call charges (opens in new tab)"
+  "callCharges": "Find out about call charges (opens in new tab)",
+  "section1": {
+    "title": "About you",
+    "link1Text": "View and edit your personal details"
+  },
+  "section2": {
+    "title": "Your claim",
+    "link1Text": "Your ET1 claim form"
+  },
+  "section3": {
+    "title": "The response",
+    "link1Text": "Response from the respodent (ET3)"
+  },
+  "section4": {
+    "title": "Your hearings",
+    "link1Text": "View details of your hearings"
+  },
+  "section5": {
+    "title": "Applications to the tribunal",
+    "link1Text": "Your request and applications",
+    "link2Text": "Respondent's applications",
+    "link3Text": "COntact the tribunal about your case"
+  },
+  "section6": {
+    "title": "Orders from the tribunal",
+    "link1Text": "All orders issued by the tribunal"
+  },
+  "section7": {
+    "title": "Judgments from the tribunal",
+    "link1Text": "View all judgements"
+  },
+  "section8": {
+    "title": "Case documents",
+    "link1Text": "All documents"
+  },
+  "notStarted": {
+    "title": "Not available",
+    "style": "--grey"
+  },
+  "completed": {
+    "title": "Completed",
+    "style": "--green"
+  },
+  "submitted": {
+    "title": "Submitted",
+    "style": "--green"
+  },
+  "viewed": {
+    "title": "Viewed",
+    "style": "--green"
+  },
+  "optional": {
+    "title": "Optional",
+    "style": "--blue"
+  }
 }

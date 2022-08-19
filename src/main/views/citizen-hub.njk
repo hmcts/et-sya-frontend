@@ -18,7 +18,7 @@
 </h2>
 
 <p class='govuk-body'>
-  {{ewNumbers}}
+  {{ewNumbers | safe}}
 </p>
 
 <h2 class="govuk-heading-s">
@@ -42,7 +42,6 @@
 </p>
 
 <a href="#" class="govuk-link">{{callCharges}}</a>
-
 {% endmacro %}
 
 {% block beforeContent %}
@@ -53,7 +52,6 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-  
   <div class="govuk-grid-column-full">
     <h2 class="govuk-heading-l">
       {{title}}John Smith vs Version 1
@@ -86,30 +84,30 @@
           }) }}
           
           <ol class="app-task-list">
-            
+            {% for section in sections %}
             <li>
               <h2 class="app-task-list__section">
-                Section 1
+                {{getContent(section.title)}}
               </h2>
               <ul class="app-task-list__items">
-                
+                {% for link in section.links %}
                 <li class="app-task-list__item">
                   <span class="app-task-list__task-name">
-                    <a href="#">To section 1</a>
-                  </span>
+                    <a href="{{ getContent(link.url) }}" class="govuk-link">                  
+                      {{ getContent(link.linkTxt) }}
+                    </a>
+                  </span>                 
                   
                   {{ govukTag({
-                    text: 'NOT STARTED',
-                    classes: "app-task-list__tag"
+                    text: getContent(link.status),
+                    classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
                   }) }}
-                  
                 </li>
-                
+                {% endfor %}
               </ul>
             </li>
-            
+            {% endfor %}
           </ol>
-          
         </div>
         <div class="govuk-grid-column-one-third-from-desktop">
           <h2 class="govuk-heading-s">
@@ -127,11 +125,8 @@
             summaryText: "Contact",
             html: sideBar(callEmployer, contactTribunal)
           }) }}
-          
-          
         </div>
       </div>
-      
     </div>
   </div>
   
