@@ -1,8 +1,11 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
+import { currentStateFn } from '../helper/state-sequence';
 
 // todo getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate)
 const sections = [
@@ -110,11 +113,21 @@ const sections = [
 
 export default class CitizenHubController {
   public get(req: AppRequest, res: Response): void {
+    //const userCase = req.session?.userCase;
+    const userCase: CaseWithId = {
+      id: '123',
+      state: CaseState.ACCEPTED,
+      et3IsThereAnEt3Response: YesOrNo.YES,
+    };
+
+    const currentState = currentStateFn(userCase);
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       PageUrls,
-      userCase: req.session?.userCase,
+      userCase,
+      currentState,
       sections,
     });
   }

@@ -5,107 +5,115 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% macro sideBar(callEmployer, contactTribunal) %}
-<p class='govuk-body'>
-  {{callEmployer}}
-</p>
+  <p class='govuk-body'>
+    {{callEmployer}}
+  </p>
 
-<p class='govuk-body'>
-  {{contactText}}<a>{{contactLink}}</a>
-</p>
+  <p class='govuk-body'>
+    {{contactText}}
+    <a>{{contactLink}}</a>
+  </p>
 
-<h2 class="govuk-heading-s">
-  {{englandWales}}
-</h2>
+  <h2 class="govuk-heading-s">
+    {{englandWales}}
+  </h2>
 
-<p class='govuk-body'>
-  {{ewNumbers | safe}}
-</p>
+  <p class='govuk-body'>
+    {{ewNumbers | safe}}
+  </p>
 
-<h2 class="govuk-heading-s">
-  {{welsh}}
-</h2>
+  <h2 class="govuk-heading-s">
+    {{welsh}}
+  </h2>
 
-<p class='govuk-body'>
-  {{welshNumber}}
-</p>
+  <p class='govuk-body'>
+    {{welshNumber}}
+  </p>
 
-<h2 class="govuk-heading-s">
-  {{scotland}}
-</h2>
+  <h2 class="govuk-heading-s">
+    {{scotland}}
+  </h2>
 
-<p class='govuk-body'>
-  {{scotlandNumbers | safe}}
-</p>
+  <p class='govuk-body'>
+    {{scotlandNumbers | safe}}
+  </p>
 
-<p class='govuk-body'>
-  {{hours | safe}}
-</p>
+  <p class='govuk-body'>
+    {{hours | safe}}
+  </p>
 
-<a href="#" class="govuk-link">{{callCharges}}</a>
+  <a href="#" class="govuk-link">{{callCharges}}</a>
 {% endmacro %}
 
 {% block beforeContent %}
-{{ super() }}
-{% include "back-link.njk"%}
+  {{ super() }}
+  {% include "back-link.njk"%}
 {% endblock %}
 
 {% block content %}
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h2 class="govuk-heading-l">
-      {{title}}John Smith vs Version 1
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-l">
+        {{header}}John Smith vs Version 1
     </h2>
-    <p class="govuk-body">{{caseNumber}}123456/2022</p>
-    
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        {{ hmctsProgressBar({
+      <p class="govuk-body">{{caseNumber}}123456/2022</p>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+          {{ hmctsProgressBar({
           items: [{
             label: 
             {                      
               text: accepted
-            },
-            complete: true
+            },                        
+            complete: currentState.isAfter('SUBMITTED'),
+            active: currentState == 'ACCEPTED'
           }, {
             label: {
               text: received
             },
-            complete: true
+            complete: currentState.isAfter('ACCEPTED'),
+            active: currentState == 'RESPONSE_RECEIVED'
           }, {
             label: {
               text: details
             },
-            active: true
+           complete: currentState.isAfter('RESPONSE_RECEIVED'),
+            active: currentState == 'HEARING_DETAILS'
           }, {
             label: {
               text: decision
-            }  }], classes: ''
+            },
+            complete: currentState.isAfter('HEARING_DETAILS'),
+            active: currentState == 'CLAIM_DECISION' 
+           }], 
+            classes: ''
           }) }}
-          
+
           <ol class="app-task-list">
             {% for section in sections %}
-            <li>
-              <h2 class="app-task-list__section">
-                {{getContent(section.title)}}
-              </h2>
-              <ul class="app-task-list__items">
-                {% for link in section.links %}
-                <li class="app-task-list__item">
-                  <span class="app-task-list__task-name">
-                    <a href="{{ getContent(link.url) }}" class="govuk-link">                  
-                      {{ getContent(link.linkTxt) }}
-                    </a>
-                  </span>                 
-                  
-                  {{ govukTag({
+              <li>
+                <h2 class="app-task-list__section">
+                  {{getContent(section.title)}}
+                </h2>
+                <ul class="app-task-list__items">
+                  {% for link in section.links %}
+                    <li class="app-task-list__item">
+                      <span class="app-task-list__task-name">
+                        <a href="{{ getContent(link.url) }}" class="govuk-link">
+                          {{ getContent(link.linkTxt) }}
+                        </a>
+                      </span>
+
+                      {{ govukTag({
                     text: getContent(link.status),
                     classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
                   }) }}
-                </li>
-                {% endfor %}
-              </ul>
-            </li>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
             {% endfor %}
           </ol>
         </div>
@@ -113,14 +121,18 @@
           <h2 class="govuk-heading-s">
             I want to...
           </h2>
-          <p class="govuk-body"> <a href= "#">
+          <p class="govuk-body">
+            <a href= "#">
             Contact the tribunal about my case
-          </a></p>
-          
-          <p class="govuk-body"><a href= "#">
+          </a>
+          </p>
+
+          <p class="govuk-body">
+            <a href= "#">
             Find legal advice (opens in new tab)
-          </a></p>
-          
+          </a>
+          </p>
+
           {{ govukDetails({
             summaryText: "Contact",
             html: sideBar(callEmployer, contactTribunal)
@@ -129,5 +141,5 @@
       </div>
     </div>
   </div>
-  
-  {% endblock %}
+
+{% endblock %}

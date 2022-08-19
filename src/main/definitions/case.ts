@@ -110,6 +110,7 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  et3IsThereAnEt3Response?: YesOrNo;
 }
 
 export const enum StillWorking {

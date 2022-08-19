@@ -72,6 +72,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
+    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
   };
 }
 

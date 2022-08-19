@@ -35,4 +35,5 @@ export interface CaseData {
   newEmploymentType?: NewEmploymentDetails;
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
+  et3IsThereAnEt3Response?: YesOrNo;
 }
