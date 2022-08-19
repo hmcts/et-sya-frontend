@@ -2,6 +2,7 @@ import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 
 interface CaseDataApiBody {
@@ -13,9 +14,7 @@ interface CaseDataApiBody {
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
-  personalDetailsCheck?: TaskListCheckType;
-  employmentAndRespondentCheck?: TaskListCheckType;
-  claimDetailsCheck?: TaskListCheckType;
+  newEmploymentType?: NewEmploymentDetails;
 }
 
 export interface CreateCaseBody {
