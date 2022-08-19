@@ -1,4 +1,3 @@
-import AcasCertNumController from '../../../main/controllers/AcasCertNumController';
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import { NoAcasNumberReason } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -38,7 +37,7 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
-  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft not selected', () => {
+  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { noAcasReason: NoAcasNumberReason.ANOTHER, saveForLater: true };
 
     const controller = new NoAcasNumberController();
@@ -51,10 +50,10 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
   });
-  it('should redirect to your claim has been saved page when save as draft selected and no acas reason selected', () => {
+  it('should redirect to your claim has been saved page when save as draft clicked and no acas reason selected', () => {
     const body = { saveForLater: true };
 
-    const controller = new AcasCertNumController();
+    const controller = new NoAcasNumberController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -63,10 +62,10 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
   });
-  it('should redirect to your claim has been saved page when save as draft not selected and no acas reason selected', () => {
+  it('should redirect to undefined when save as draft not clicked and no acas reason selected', () => {
     const body = { saveForLater: false };
 
-    const controller = new AcasCertNumController();
+    const controller = new NoAcasNumberController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -78,7 +77,7 @@ describe('No Acas number Controller', () => {
   it('should redirect to undefined saved page when save as draft and no acas reason selected', () => {
     const body = {};
 
-    const controller = new AcasCertNumController();
+    const controller = new NoAcasNumberController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
