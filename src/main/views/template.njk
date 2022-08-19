@@ -83,7 +83,7 @@ if isLoggedIn %}
 {% endblock %}
 
 {% block footer %}
-  {% if "/" !== currentUrl %}
+  {% if "/" !== currentUrl and hideContactUs === undefined %}
     <div class="govuk-width-container">
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
