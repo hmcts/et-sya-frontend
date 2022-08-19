@@ -162,14 +162,8 @@ export const getGenderDetailsError = (formData: Partial<CaseWithId>): FormError 
 };
 
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
-  return form.getErrors(formData);
-};
-
-export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
-  let sessionErrors = getSessionErrors(req, form, formData);
-
   //call get custom errors and add to session errors
+  let sessionErrors = form.getErrors(formData);
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
@@ -210,6 +204,12 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   if (acasCertificateNumberError) {
     sessionErrors = [...sessionErrors, acasCertificateNumberError];
   }
+  return sessionErrors;
+};
+
+export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  const sessionErrors = getSessionErrors(req, form, formData);
 
   req.session.errors = sessionErrors;
 
