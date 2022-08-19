@@ -9,7 +9,7 @@
   "town": "Town or city",
   "county": "County",
   "country": "Country",
-  "postcode": "Postcode",
+  "postcode": "Postcode or area code (optional)",
   "enterAddressManually": "I don't live in the UK",
   "errors": {
     "address1": {
