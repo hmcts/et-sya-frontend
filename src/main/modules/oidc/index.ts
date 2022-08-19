@@ -43,6 +43,9 @@ export class Oidc {
 
     app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
       if (req.session?.user) {
+        // a nunjucks global variable 'isLoggedIn' has been created for the views
+        // it is assigned the value of res.locals.isLoggedIn
+        res.locals.isLoggedIn = true;
         next();
       } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST) {
         next();
