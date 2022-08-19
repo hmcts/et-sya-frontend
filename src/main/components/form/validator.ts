@@ -10,6 +10,14 @@ export const isFieldFilledIn: Validator = value => {
   }
 };
 
+export const isRespondentNameValid: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return 'required';
+  } else if (!/(=?^.{5,100}$)/.test(value as string)) {
+    return 'invalidLength';
+  }
+};
+
 export const isContent2500CharsOrLess: Validator = value => {
   if (value !== undefined && (value as string).trim().length > 2500) {
     return 'tooLong';
@@ -235,7 +243,6 @@ export const hasValidFileFormat: Validator = value => {
       return;
     }
   }
-
   return 'invalidFileFormat';
 };
 

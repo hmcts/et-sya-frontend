@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isRespondentNameValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -11,6 +12,7 @@ import {
   getPageContent,
   getRespondentIndex,
   getRespondentRedirectUrl,
+  handleSaveAsDraft,
   handleSessionErrors,
   setUserCaseForRespondent,
 } from './helpers';
@@ -23,6 +25,7 @@ export default class RespondentNameController {
         id: 'respondentName',
         name: 'respondentName',
         type: 'text',
+        validator: isRespondentNameValid,
         label: (l: AnyRecord): string => l.label,
       },
     },
@@ -41,9 +44,14 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForRespondent(req, this.form);
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    const { saveForLater } = req.body;
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
+      setUserCaseForRespondent(req, this.form);
+      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+      handleSessionErrors(req, res, this.form, redirectUrl);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
