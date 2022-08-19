@@ -4,13 +4,6 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 
-// const sections: AnyRecord[] = [
-//   {
-//     sectionTitle: 'Section 1',
-//     sectionLinks: ['<a href="#">Link 1</a>'],
-//   },
-// ];
-
 // todo getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate)
 const sections = [
   {
@@ -19,6 +12,95 @@ const sections = [
       {
         url: PageUrls.HOME,
         linkTxt: (l: AnyRecord): string => l.section1.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section2.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section2.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section3.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section3.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section4.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section4.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section5.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section5.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section5.link2Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section5.link3Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section6.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section6.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section7.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section7.link1Text,
+        status: (l: AnyRecord): string => l.completed.title,
+        statusColor: (l: AnyRecord): string => l.completed.style,
+      },
+    ],
+  },
+  {
+    title: (l: AnyRecord): string => l.section8.title,
+    links: [
+      {
+        url: PageUrls.HOME,
+        linkTxt: (l: AnyRecord): string => l.section8.link1Text,
         status: (l: AnyRecord): string => l.completed.title,
         statusColor: (l: AnyRecord): string => l.completed.style,
       },
