@@ -280,7 +280,7 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
     };
     req.session.userCase.respondents.push(respondent);
   }
-  if (formData.acasCert !== undefined || formData.acasCert === YesOrNo.NO) {
+  if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
     formData.acasCertNum = undefined;
   }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);

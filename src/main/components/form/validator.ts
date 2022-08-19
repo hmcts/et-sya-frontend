@@ -240,8 +240,9 @@ export const hasValidFileFormat: Validator = value => {
 };
 
 export const isAcasNumberValid: Validator = value => {
-  const regExp = new RegExp('(=?^R([0-9/](?!.*[\\/]{2})){10,12}$)(?<!\\/)$');
-  if (!regExp.test(value as string)) {
+  //const regExp = new RegExp('(=?^R([0-9/](?!.*[\\/]{2})){10,12}$)(?<!\\/)$');
+
+  if (!/(=?^R([0-9/](?!.*[\\/]{2})){10,12}$)(?<!\/)$/.test(value as string)) {
     return 'invalidAcasNumber';
   }
 };
