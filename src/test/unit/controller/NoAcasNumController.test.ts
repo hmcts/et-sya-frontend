@@ -74,7 +74,7 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toBeCalledWith(undefined);
   });
-  it('should redirect to undefined saved page when save as draft and no acas reason selected', () => {
+  it('should redirect to undefined when save as draft not selected and no acas reason selected', () => {
     const body = {};
 
     const controller = new NoAcasNumberController();
