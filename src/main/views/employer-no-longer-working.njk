@@ -1,195 +1,18 @@
-
-
 {{ 
     govukSummaryList({
       rows: [
         {
           key: {
-            text: employmentDetails.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: employmentDetails.jobTitle,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.JOB_TITLE,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.jobTitle
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.startDate,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.START_DATE,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.startDate
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.noticePeriod,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.NOTICE_END,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.noticePeriod
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.noticeLength,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.NOTICE_END,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.noticeLength
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.noticePaid,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.NOTICE_END,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.noticePaid
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.weeklyHours,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.AVERAGE_WEEKLY_HOURS,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.weeklyHours
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.payBeforeTax,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.PAY,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.payBeforeTax
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.payAfterTax,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.PAY,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.payAfterTax
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.pensionScheme,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.PENSION,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.pensionScheme
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: employmentDetails.benefits,
-            classes: "govuk-!-font-weight-regular"
-          },
-          value: {
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.BENEFITS,
-                text: "Change",
-                visuallyHiddenText: employmentDetails.benefits
-              }
-            ]
-          } 
-        },
-        {
-          key: {
             text: employmentDetails.newJob,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.newJob
           },
           actions: {
             items: [
               {
-                href: PageUrls.PRESENT_EMPLOYER,
+                href: PageUrls.NEW_JOB,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.newJob
               }
@@ -199,14 +22,15 @@
         {
           key: {
             text: employmentDetails.newStartDate,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: "" if userCase.newJobStartDate.day === undefined else userCase.newJobStartDate.day + "-" + userCase.newJobStartDate.month + "-" + userCase.newJobStartDate.year
           },
           actions: {
             items: [
               {
-                href: PageUrls.START_DATE,
+                href: PageUrls.NEW_JOB_START_DATE,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.newStartDate
               }
@@ -216,14 +40,15 @@
         {
           key: {
             text: employmentDetails.newPayBeforeTax,
-            classes: "govuk-!-font-weight-regular"
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.newJobPay
           },
           actions: {
             items: [
               {
-                href: "#",
+                href: PageUrls.NEW_JOB_PAY,
                 text: "Change",
                 visuallyHiddenText: employmentDetails.newPayBeforeTax
               }
@@ -232,17 +57,18 @@
         },
         {
           key: {
-            text: employmentDetails.workAddress,
-            classes: "govuk-!-font-weight-regular"
+            text: employmentDetails.payPeriod,
+            classes: "govuk-!-font-weight-regular-m"
           },
           value: {
+            text: userCase.payInterval
           },
           actions: {
             items: [
               {
-                href: PageUrls.PLACE_OF_WORK,
+                href: PageUrls.PAY,
                 text: "Change",
-                visuallyHiddenText: employmentDetails.workAddress
+                visuallyHiddenText: employmentDetails.payPeriod
               }
             ]
           } 
