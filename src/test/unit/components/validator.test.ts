@@ -10,6 +10,7 @@ import {
   isJobTitleValid,
   isOptionSelected,
   isPayIntervalNull,
+  isRespondentNameValid,
   isValidAvgWeeklyHours,
   isValidCurrency,
   isValidNoticeLength,
@@ -40,6 +41,40 @@ describe('Validation', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isRespondentNameValid()', () => {
+    it('Should check if value exist', () => {
+      const isValid = isRespondentNameValid('Test Respondent Name');
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const isValid = isRespondentNameValid(undefined);
+
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value is only whitespaces', () => {
+      const isValid = isRespondentNameValid('    ');
+
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value is less than 5 characters', () => {
+      const isValid = isRespondentNameValid('123');
+
+      expect(isValid).toStrictEqual('invalidLength');
+    });
+
+    it('Should check if value is greater than 100 characters', () => {
+      const isValid = isRespondentNameValid(
+        '12345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912'
+      );
+
+      expect(isValid).toStrictEqual('invalidLength');
     });
   });
 

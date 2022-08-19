@@ -49,7 +49,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to your claim has been saved page when save as draft selected and no acas reason selected', () => {
     const body = { saveForLater: true };
