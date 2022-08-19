@@ -83,7 +83,7 @@ describe('Acas Cert Num Controller', () => {
     expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should redirect to undefined when save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
+  it('should redirect to your-claim-has-been-saved page when save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
     const body = { acasCert: YesOrNo.YES, saveForLater: true };
 
     const controller = new AcasCertNumController();
