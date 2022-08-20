@@ -1,6 +1,4 @@
 import { isInvalidPostcode } from '../../../components/form/validator';
-import { PageUrls } from '../../../definitions/constants';
-import locales from '../../../resources/locales/en/translation/enter-address.json';
 import { getById, hidden } from '../selectors';
 
 import { hideErrors, showError } from './errors';
@@ -62,36 +60,6 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
         },
         body: JSON.stringify({ _csrf: formData.get('_csrf'), saveForLater: true, postcode }),
       });
-      window.location.href = PageUrls.CLAIM_SAVED;
-      const addresses = await response.json();
-
-      getById('userPostcode').textContent = postcode;
-
-      selectAddress.remove(0);
-      const placeholder = document.createElement('option');
-      placeholder.value = '-1';
-      if (addresses.length === 0) {
-        placeholder.text = locales.selectDefaultNone;
-      } else if (addresses.length === 1) {
-        placeholder.text = locales.selectDefaultSingle;
-      } else {
-        placeholder.text = locales.selectDefaultSeveral;
-      }
-      selectAddress.add(placeholder);
-
-      for (const address of addresses) {
-        const addressOption = document.createElement('option');
-        addressOption.value = JSON.stringify(address);
-        addressOption.text = address.fullAddress;
-        selectAddress.add(addressOption);
-      }
-    } finally {
-      document.body.style.cursor = 'default';
-      findAddressButton.style.cursor = 'pointer';
-
-      getById('enterPostcode').classList.add(hidden);
-      getById('selectAddress').classList.remove(hidden);
-      selectAddress.focus();
     }
   };
 }

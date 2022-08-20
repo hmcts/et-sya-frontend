@@ -21,7 +21,7 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const buttonClass = 'govuk-button';
+const buttonClass = 'govuk-!-margin-right-2';
 const expectedInputLabel = addressJson.enterPostcode;
 const labelClass = 'govuk-label';
 const inputClass = 'govuk-input';

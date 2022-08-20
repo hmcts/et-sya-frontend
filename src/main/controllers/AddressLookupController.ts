@@ -10,9 +10,7 @@ export default class AddressLookupController {
   public async post(req: AppRequest<UnknownRecord>, res: Response): Promise<void> {
     const { saveForLater } = req.body;
 
-    if (saveForLater) {
-      res.json('{}');
-    } else {
+    if (!saveForLater) {
       const postcode = req.body.postcode as string;
 
       const stubbedPostcode = AddressLookupController.checkStubbedPostcode(postcode);
