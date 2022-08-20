@@ -63,11 +63,11 @@ export default class PlaceOfWorkController {
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2 hidden',
+      classes: 'govuk-!-margin-right-2',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary hidden',
+      classes: 'govuk-button--secondary',
     },
   };
 

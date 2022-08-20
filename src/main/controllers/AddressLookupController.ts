@@ -1,25 +1,31 @@
 import autobind from 'autobind-decorator';
 import { Response } from 'express';
 
-import { Address, getAddressesForPostcode } from '../address/index';
+import { Address, getAddressesForPostcode } from '../address';
 import { AppRequest } from '../definitions/appRequest';
 import { UnknownRecord } from '../definitions/util-types';
 
 @autobind
 export default class AddressLookupController {
   public async post(req: AppRequest<UnknownRecord>, res: Response): Promise<void> {
-    const postcode = req.body.postcode as string;
+    const { saveForLater } = req.body;
 
-    const stubbedPostcode = this.checkStubbedPostcode(postcode);
-    if (stubbedPostcode) {
-      res.json(stubbedPostcode);
-      return;
+    if (saveForLater) {
+      res.json('{}');
+    } else {
+      const postcode = req.body.postcode as string;
+
+      const stubbedPostcode = AddressLookupController.checkStubbedPostcode(postcode);
+      if (stubbedPostcode) {
+        res.json(stubbedPostcode);
+        return;
+      }
+
+      res.json(await getAddressesForPostcode(postcode));
     }
-
-    res.json(await getAddressesForPostcode(postcode));
   }
 
-  private checkStubbedPostcode(postcode: string): Address[] | null {
+  private static checkStubbedPostcode(postcode: string): Address[] | null {
     if (postcode === 'SW1A 1AA') {
       return [
         {

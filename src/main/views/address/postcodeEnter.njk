@@ -18,8 +18,19 @@
       },
       text: findAddress,
       type: "submit",
+      classes: "govuk-!-margin-right-2",
       preventDoubleClick: true
     }) }}
+
+    {{ govukButton({
+          attributes: {
+            id: "saveAsDraftButton"
+          },
+          text: saveAsDraft,
+          href: "",
+          classes: "govuk-button--secondary",
+          preventDoubleClick: true
+        }) }}
   </form>
   <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
 </div>
