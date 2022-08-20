@@ -5,12 +5,16 @@ import { Address, getAddressesForPostcode } from '../address';
 import { AppRequest } from '../definitions/appRequest';
 import { UnknownRecord } from '../definitions/util-types';
 
+import { handleSaveAsDraft } from './helpers';
+
 @autobind
 export default class AddressLookupController {
   public async post(req: AppRequest<UnknownRecord>, res: Response): Promise<void> {
     const { saveForLater } = req.body;
 
-    if (!saveForLater) {
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
       const postcode = req.body.postcode as string;
 
       const stubbedPostcode = AddressLookupController.checkStubbedPostcode(postcode);

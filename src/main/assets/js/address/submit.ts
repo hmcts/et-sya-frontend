@@ -1,4 +1,5 @@
 import { isInvalidPostcode } from '../../../components/form/validator';
+import { PageUrls } from '../../../definitions/constants';
 import { getById, hidden } from '../selectors';
 
 import { hideErrors, showError } from './errors';
@@ -53,13 +54,17 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
         selectAddress.focus();
       }
     } else {
-      await fetch('/address-lookup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ _csrf: formData.get('_csrf'), saveForLater: true, postcode }),
-      });
+      try {
+        await fetch('/address-lookup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ _csrf: formData.get('_csrf'), saveForLater: true, postcode }),
+        });
+      } finally {
+        window.location.href = PageUrls.CLAIM_SAVED;
+      }
     }
   };
 }
