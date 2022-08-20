@@ -3,6 +3,7 @@
     "outDir": "./dist/",
     "module": "commonjs",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2020",
     "noImplicitAny": true,
@@ -16,6 +17,7 @@
       "router/*": ["router/*"],
       "routes/*": ["routes/*"]
     },
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "resolveJsonModule": true
   }
 }
