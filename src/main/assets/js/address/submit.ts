@@ -6,6 +6,7 @@ import { hideErrors, showError } from './errors';
 
 const postcodeLookupForm = getById('postcodeLookup') as HTMLFormElement | null;
 const findAddressButton = getById('findAddressButton') as HTMLInputElement | null;
+const saveAsDraftButton = getById('saveAsDraftButton') as HTMLInputElement | null;
 const selectAddress = getById('selectAddressInput') as HTMLSelectElement | null;
 
 if (postcodeLookupForm && findAddressButton && selectAddress) {
@@ -16,6 +17,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
     const postcode = formData.get('postcode')?.toString() || '';
     document.body.style.cursor = 'wait';
     findAddressButton.style.cursor = 'wait';
+    saveAsDraftButton.style.cursor = 'wait';
     if (e.submitter.id !== 'saveAsDraftButton') {
       const isPostCodeInvalid = isInvalidPostcode(postcode);
 
@@ -25,6 +27,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
         } else {
           showError('errorPostCodeInvalid');
         }
+        activateCursorButtons();
         return;
       }
       try {
@@ -46,9 +49,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
           selectAddress.add(addressOption);
         }
       } finally {
-        document.body.style.cursor = 'default';
-        findAddressButton.style.cursor = 'pointer';
-
+        activateCursorButtons();
         getById('enterPostcode').classList.add(hidden);
         getById('selectAddress').classList.remove(hidden);
         selectAddress.focus();
@@ -63,8 +64,15 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
           body: JSON.stringify({ _csrf: formData.get('_csrf'), saveForLater: true, postcode }),
         });
       } finally {
+        activateCursorButtons();
         window.location.href = PageUrls.CLAIM_SAVED;
       }
     }
   };
+}
+
+function activateCursorButtons() {
+  document.body.style.cursor = 'default';
+  findAddressButton.style.cursor = 'pointer';
+  saveAsDraftButton.style.cursor = 'pointer';
 }
