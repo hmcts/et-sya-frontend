@@ -11,6 +11,11 @@
   "town": "Town or city",
   "manualAddress": "The respondent address is outside the UK",
   "errors": {
+    "addressPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "notSelected": "Select an address"
+    },
     "respondentAddress1": {
       "required": "Enter a building and street"
     },
