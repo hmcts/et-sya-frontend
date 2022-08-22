@@ -12,14 +12,21 @@
       }
     }) }}
 
-    {{ govukButton({
-      attributes: {
-        id: "findAddressButton"
-      },
-      text: findAddress,
-      type: "submit",
-      preventDoubleClick: true
-    }) }}
+    <div class="govuk-button-group">
+      {{ govukButton({
+        attributes: {
+          id: "findAddressButton"
+        },
+        text: findAddress,
+        type: "submit",
+        preventDoubleClick: true
+      }) }}
+      {{ govukButton({
+            text: "Save as draft",
+            classes: "govuk-button--secondary",
+            href: "/your-claim-has-been-saved"
+      }) }}
+    </div> 
   </form>
   <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
 </div>
