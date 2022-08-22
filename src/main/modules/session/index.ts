@@ -1,5 +1,6 @@
 import config from 'config';
 import ConnectRedis from 'connect-redis';
+import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
 import { ClientOpts, createClient } from 'redis';
@@ -14,6 +15,9 @@ const cookieMaxAge = 60 * (60 * 1000); // 60 minutes
 
 export class Session {
   public enableFor(app: Application): void {
+    app.use(cookieParser());
+    app.set('trust proxy', 1);
+
     app.use(
       session({
         name: 'et-sya-session',
@@ -23,6 +27,8 @@ export class Session {
         cookie: {
           httpOnly: true,
           maxAge: cookieMaxAge,
+          sameSite: 'lax', // required for the oauth2 redirect
+          secure: !app.locals.developmentMode,
         },
         rolling: true, // Renew the cookie for another 20 minutes on each request
         store: this.getStore(app),
