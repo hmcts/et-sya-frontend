@@ -16,7 +16,6 @@ const hubJsonRaw = fs.readFileSync(
 
 const hubJson = JSON.parse(hubJsonRaw);
 
-//const PAGE_URL = '/citizen-hub';
 const titleClass = 'govuk-heading-l';
 const completedClass = 'hmcts-progress-bar__icon--complete';
 
@@ -46,10 +45,10 @@ describe('Citizen hub page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should show compete', () => {
-    const completedNode = htmlRes.getElementsByClassName(completedClass)[0].nextElementSibling;
-    const completedNode2 = htmlRes.getElementsByClassName(completedClass)[1].nextElementSibling;
-    expect(completedNode.textContent).contains(expectedCompleted[0], 'Page title does not exist');
-    expect(completedNode2.textContent).contains(expectedCompleted[1], 'Page title does not exist');
+  it('should show correct completed progress bar tasks', () => {
+    const completedNodes = htmlRes.getElementsByClassName(completedClass);
+    for (let i = 0; i < completedNodes.length; i++) {
+      expect(expectedCompleted).includes(completedNodes[i].nextElementSibling.textContent);
+    }
   });
 });
