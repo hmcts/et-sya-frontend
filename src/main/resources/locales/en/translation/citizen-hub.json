@@ -51,8 +51,8 @@
     "title": "Case documents",
     "link1Text": "All documents"
   },
-  "notStarted": {
-    "title": "Not available",
+  "notAvailableYet": {
+    "title": "Not available yet",
     "style": "--grey"
   },
   "completed": {
