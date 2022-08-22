@@ -7,7 +7,7 @@ import { CaseState } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { currentStateFn } from '../helper/state-sequence';
 
-// todo getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate)
+// todo apply status and statusColor with a method similar to getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate)
 const sections = [
   {
     title: (l: AnyRecord): string => l.section1.title,
