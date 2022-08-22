@@ -114,6 +114,8 @@ const sections = [
 export default class CitizenHubController {
   public get(req: AppRequest, res: Response): void {
     let userCase = req.session?.userCase;
+
+    // todo remove this.
     if (!userCase) {
       userCase = {
         id: '123',

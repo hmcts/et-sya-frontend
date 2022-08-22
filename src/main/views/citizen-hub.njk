@@ -61,82 +61,86 @@
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds-from-desktop">
-          {{ hmctsProgressBar({
-          items: [{
-            label:
-            {
-              text: accepted
-            },
-            complete: currentState.isAfter('SUBMITTED'),
-            active: currentState.isRightAfter('ACCEPTED')
-          }, {
-            label: {
-              text: received
-            },
-            complete: currentState.isAfter('ACCEPTED'),
-            active: currentState.isRightAfter('RESPONSE_RECEIVED')
-          }, {
-            label: {
-              text: details
-            },
-            complete: currentState.isAfter('RESPONSE_RECEIVED'),
-            active: currentState.isRightAfter('HEARING_DETAILS')
-          }, {
-            label: {
-              text: decision
-            },
-            complete: currentState.isAfter('HEARING_DETAILS'),
-            active: currentState.isRightAfter('CLAIM_DECISION')
-           }],
-            classes: ''
-          }) }}
+          <div class="top-border-blue">
+            {{ hmctsProgressBar({
+            items: [{
+              label:
+              {
+                text: accepted
+              },
+              complete: currentState.isAfter('SUBMITTED'),
+              active: currentState.isRightAfter('ACCEPTED')
+            }, {
+              label: {
+                text: received
+              },
+              complete: currentState.isAfter('ACCEPTED'),
+              active: currentState.isRightAfter('RESPONSE_RECEIVED')
+            }, {
+              label: {
+                text: details
+              },
+              complete: currentState.isAfter('RESPONSE_RECEIVED'),
+              active: currentState.isRightAfter('HEARING_DETAILS')
+            }, {
+              label: {
+                text: decision
+              },
+              complete: currentState.isAfter('HEARING_DETAILS'),
+              active: currentState.isRightAfter('CLAIM_DECISION')
+             }],
+              classes: ''
+            }) }}
 
-          <ol class="app-task-list">
-            {% for section in sections %}
-              <li>
-                <h2 class="app-task-list__section">
-                  {{getContent(section.title)}}
-                </h2>
-                <ul class="app-task-list__items">
-                  {% for link in section.links %}
-                    <li class="app-task-list__item">
-                      <span class="app-task-list__task-name">
-                        <a href="{{ getContent(link.url) }}" class="govuk-link">
-                          {{ getContent(link.linkTxt) }}
-                        </a>
-                      </span>
+            <ol class="app-task-list">
+              {% for section in sections %}
+                <li>
+                  <h2 class="app-task-list__section">
+                    {{getContent(section.title)}}
+                  </h2>
+                  <ul class="app-task-list__items">
+                    {% for link in section.links %}
+                      <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                          <a href="{{ getContent(link.url) }}" class="govuk-link">
+                            {{ getContent(link.linkTxt) }}
+                          </a>
+                        </span>
 
-                      {{ govukTag({
-                    text: getContent(link.status),
-                    classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
-                  }) }}
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% endfor %}
-          </ol>
+                        {{ govukTag({
+                      text: getContent(link.status),
+                      classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
+                    }) }}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endfor %}
+            </ol>
+          </div>
         </div>
         <div class="govuk-grid-column-one-third-from-desktop">
-          <h2 class="govuk-heading-s">
-            I want to...
-          </h2>
-          <p class="govuk-body">
-            <a href= "#">
-            Contact the tribunal about my case
-          </a>
-          </p>
+          <div class="top-border-blue">
+            <h2 class="govuk-heading-s">
+              I want to...
+            </h2>
+            <p class="govuk-body">
+              <a href= "#">
+              Contact the tribunal about my case
+            </a>
+            </p>
 
-          <p class="govuk-body">
-            <a href= "#">
-            Find legal advice (opens in new tab)
-          </a>
-          </p>
+            <p class="govuk-body">
+              <a href= "#">
+              Find legal advice (opens in new tab)
+            </a>
+            </p>
 
-          {{ govukDetails({
-            summaryText: "Contact",
-            html: sideBar(callEmployer, contactTribunal)
-          }) }}
+            {{ govukDetails({
+              summaryText: "Contact",
+              html: sideBar(callEmployer, contactTribunal)
+            }) }}
+          </div>
         </div>
       </div>
     </div>
