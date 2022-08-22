@@ -8,3 +8,4 @@ import './enter-address';
 import './print';
 import './cookie';
 import './set-focus';
+import './data-layer';
