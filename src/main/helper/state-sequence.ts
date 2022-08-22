@@ -19,12 +19,8 @@ export class StateSequence {
     return this.stateIndex > this.states.indexOf(state);
   }
 
-  public isAtOrAfter(state: string): boolean {
-    return this.stateIndex >= this.states.indexOf(state);
-  }
-
-  public isBefore(state: string): boolean {
-    return this.stateIndex < this.states.indexOf(state);
+  public isRightAfter(state: string): boolean {
+    return this.stateIndex + 1 === this.states.indexOf(state);
   }
 
   public toHubState(userCase: Partial<CaseWithId>): HubCaseState {

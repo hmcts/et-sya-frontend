@@ -44,30 +44,36 @@ describe('Citizen hub page', () => {
     expect(title[0].innerHTML).toMatch(expectedTitle);
   });
 
-  describe('Progress bar completed states', () => {
+  describe('Progress bar', () => {
+    const userCases = [
+      {
+        state: CaseState.SUBMITTED,
+        et3IsThereAnEt3Response: YesOrNo.NO,
+      },
+      {
+        state: CaseState.ACCEPTED,
+        et3IsThereAnEt3Response: YesOrNo.NO,
+      },
+      {
+        state: CaseState.ACCEPTED,
+        et3IsThereAnEt3Response: YesOrNo.YES,
+      },
+    ];
+
     it.each([
       {
         expectedCompleted: [],
-        userCase: {
-          state: CaseState.SUBMITTED,
-          et3IsThereAnEt3Response: YesOrNo.NO,
-        },
+        userCase: userCases[0],
       },
       {
         expectedCompleted: statusTexts.slice(0, 1),
-        userCase: {
-          state: CaseState.ACCEPTED,
-          et3IsThereAnEt3Response: YesOrNo.NO,
-        },
+        userCase: userCases[1],
       },
       {
         expectedCompleted: statusTexts.slice(0, 2),
-        userCase: {
-          state: CaseState.ACCEPTED,
-          et3IsThereAnEt3Response: YesOrNo.YES,
-        },
+        userCase: userCases[2],
       },
-    ])('should show correct completed progress bar completed tasks', async ({ expectedCompleted, userCase }) => {
+    ])('should show correct completed progress bar completed tasks: %o', async ({ expectedCompleted, userCase }) => {
       await request(mockApp({ userCase }))
         .get(PageUrls.CITIZEN_HUB)
         .then(res => {
@@ -82,6 +88,31 @@ describe('Citizen hub page', () => {
       }
 
       expect(completedTexts).toStrictEqual(expectedCompleted);
+    });
+
+    it.each([
+      {
+        expectedCurrStep: hubJson.accepted,
+        userCase: userCases[0],
+      },
+      {
+        expectedCurrStep: hubJson.received,
+        userCase: userCases[1],
+      },
+      {
+        expectedCurrStep: hubJson.details,
+        userCase: userCases[2],
+      },
+    ])('should show correct completed progress bar completed tasks: %o', async ({ expectedCurrStep, userCase }) => {
+      await request(mockApp({ userCase }))
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      const currElement = htmlRes.querySelector('.hmcts-progress-bar__list-item[aria-current=step]');
+
+      expect(currElement.textContent.trim()).toStrictEqual(expectedCurrStep);
     });
   });
 });

@@ -63,31 +63,31 @@
         <div class="govuk-grid-column-two-thirds-from-desktop">
           {{ hmctsProgressBar({
           items: [{
-            label: 
-            {                      
+            label:
+            {
               text: accepted
-            },                        
+            },
             complete: currentState.isAfter('SUBMITTED'),
-            active: currentState == 'ACCEPTED'
+            active: currentState.isRightAfter('ACCEPTED')
           }, {
             label: {
               text: received
             },
             complete: currentState.isAfter('ACCEPTED'),
-            active: currentState == 'RESPONSE_RECEIVED'
+            active: currentState.isRightAfter('RESPONSE_RECEIVED')
           }, {
             label: {
               text: details
             },
-           complete: currentState.isAfter('RESPONSE_RECEIVED'),
-            active: currentState == 'HEARING_DETAILS'
+            complete: currentState.isAfter('RESPONSE_RECEIVED'),
+            active: currentState.isRightAfter('HEARING_DETAILS')
           }, {
             label: {
               text: decision
             },
             complete: currentState.isAfter('HEARING_DETAILS'),
-            active: currentState == 'CLAIM_DECISION' 
-           }], 
+            active: currentState.isRightAfter('CLAIM_DECISION')
+           }],
             classes: ''
           }) }}
 
