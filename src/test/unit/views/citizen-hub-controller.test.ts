@@ -3,7 +3,7 @@ import path from 'path';
 
 import request from 'supertest';
 
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
@@ -15,35 +15,15 @@ const hubJsonRaw = fs.readFileSync(
 
 const hubJson = JSON.parse(hubJsonRaw);
 
-const titleClass = 'govuk-heading-l';
 const completedClass = 'hmcts-progress-bar__icon--complete';
+const titleClassSelector = '.govuk-heading-l';
+const caseNumberSelector = '#caseNumber';
+const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
 
-const expectedTitle = hubJson.header;
 const statusTexts = [hubJson.accepted, hubJson.received, hubJson.details, hubJson.decision];
 
 let htmlRes: Document;
 describe('Citizen hub page', () => {
-  beforeAll(async () => {
-    await request(
-      mockApp({
-        userCase: {
-          id: '123',
-          state: CaseState.ACCEPTED,
-          et3IsThereAnEt3Response: YesOrNo.YES,
-        },
-      })
-    )
-      .get(PageUrls.CITIZEN_HUB)
-      .then(res => {
-        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-      });
-  });
-
-  it('should display title', () => {
-    const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).toMatch(expectedTitle);
-  });
-
   describe('Progress bar', () => {
     const userCases = [
       {
@@ -110,9 +90,35 @@ describe('Citizen hub page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
 
-      const currElement = htmlRes.querySelector('.hmcts-progress-bar__list-item[aria-current=step]');
+      const currElement = htmlRes.querySelector(currElementSelector);
 
       expect(currElement.textContent.trim()).toStrictEqual(expectedCurrStep);
+    });
+  });
+
+  describe('Hub content', () => {
+    beforeAll(async () => {
+      await request(
+        mockApp({
+          userCase: {
+            ethosCaseReference: '654321/2022',
+            firstName: 'Paul',
+            lastName: 'Mumbere',
+            respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
+          } as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+    });
+
+    it.each([
+      { selector: titleClassSelector, expectedText: 'Case overview - Paul Mumbere vs Itay' },
+      { selector: caseNumberSelector, expectedText: 'Case number 654321/2022' },
+    ])('should have the correct text for the given selector: %o', ({ selector, expectedText }) => {
+      expect(htmlRes.querySelector(selector).textContent.trim()).toBe(expectedText);
     });
   });
 });

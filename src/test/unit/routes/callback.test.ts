@@ -7,7 +7,7 @@ import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiRespon
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import { idamCallbackHandler } from '../../../main/modules/oidc/index';
+import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -85,7 +85,7 @@ describe('Test responds to /oauth2/callback', function () {
   });
 
   test('Should redirect to NEW_ACCOUNT_LANDING page if successfully created case', async () => {
-    //Given that case is created sucessfully
+    //Given that case is created successfully
     const getCaseApiMock = CaseService.getCaseApi as jest.MockedFunction<(token: string) => CaseApi>;
     getCaseApiMock.mockReturnValue(caseApi);
     caseApi.createCase = jest.fn().mockResolvedValue(

@@ -55,9 +55,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-l">
-        {{header}}John Smith vs Version 1
+        {{ header + userCase.firstName + ' ' + userCase.lastName }} vs {{ userCase.respondents[0].respondentName }}
     </h2>
-      <p class="govuk-body">{{caseNumber}}123456/2022</p>
+      <p id="caseNumber" class="govuk-body">{{ caseNumber + userCase.ethosCaseReference }}</p>
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds-from-desktop">

@@ -26,6 +26,7 @@ export interface CaseApiDataResponse {
 }
 
 export interface CaseData {
+  ethosCaseReference?: string;
   caseType?: CaseType;
   caseSource?: string;
   claimantRepresentedQuestion?: YesOrNo;

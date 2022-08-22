@@ -29,6 +29,7 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,

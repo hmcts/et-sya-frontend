@@ -113,12 +113,18 @@ const sections = [
 
 export default class CitizenHubController {
   public get(req: AppRequest, res: Response): void {
-    //const userCase = req.session?.userCase;
-    const userCase: CaseWithId = {
-      id: '123',
-      state: CaseState.ACCEPTED,
-      et3IsThereAnEt3Response: YesOrNo.YES,
-    };
+    let userCase = req.session?.userCase;
+    if (!userCase) {
+      userCase = {
+        id: '123',
+        ethosCaseReference: '654321/2022',
+        firstName: 'Paul',
+        lastName: 'Mumbere',
+        respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
+        state: CaseState.ACCEPTED,
+        et3IsThereAnEt3Response: YesOrNo.YES,
+      } as CaseWithId;
+    }
 
     const currentState = currentStateFn(userCase);
 

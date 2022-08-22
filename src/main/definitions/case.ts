@@ -26,6 +26,7 @@ export interface Respondent {
 }
 
 export interface Case {
+  ethosCaseReference?: string;
   firstName?: string;
   lastName?: string;
   email?: string;

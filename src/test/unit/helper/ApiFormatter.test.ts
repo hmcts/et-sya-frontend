@@ -107,8 +107,10 @@ describe('Format Case Data to Frontend Model', () => {
       case_type_id: CaseTypeId.ENGLAND_WALES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       case_data: {
+        ethosCaseReference: '123456/2022',
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
+        et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
@@ -169,6 +171,7 @@ describe('Format Case Data to Frontend Model', () => {
         month: '10',
         year: '2022',
       },
+      ethosCaseReference: '123456/2022',
       claimantSex: Sex.MALE,
       claimantGenderIdentitySame: YesOrNoOrPreferNot.PREFER_NOT,
       claimantGenderIdentity: '',
@@ -210,6 +213,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      et3IsThereAnEt3Response: YesOrNo.YES,
     });
   });
 
@@ -224,6 +228,7 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      ethosCaseReference: undefined,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
       caseTypeId: undefined,
@@ -266,6 +271,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
+      et3IsThereAnEt3Response: undefined,
     });
   });
 
