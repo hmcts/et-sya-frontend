@@ -11,4 +11,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.CONTACT_ACAS,
   PageUrls.TYPE_OF_CLAIM,
   Urls.INFO,
+  '/extend-session',
+  '/session-ended',
 ];

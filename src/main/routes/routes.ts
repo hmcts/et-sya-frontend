@@ -4,6 +4,7 @@ import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
 import { PageUrls, Urls } from '../definitions/constants';
+import { getExtendSession, getSessionEnded } from '../helper/session';
 
 export default function (app: Application): void {
   app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
@@ -153,6 +154,8 @@ export default function (app: Application): void {
   app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
+  app.get('/extend-session', getExtendSession);
+  app.get('/session-ended', getSessionEnded);
   app.get(
     Urls.INFO,
     infoRequestHandler({
