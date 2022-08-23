@@ -1,7 +1,6 @@
 import {
   isValidAddressFirstLine,
-  isValidCountry,
-  isValidTownOrCity,
+  isValidCountryTownOrCity,
   isValidUKPostcode,
 } from '../../../main/components/form/address_validator';
 import { ValidationErrors } from '../../../main/definitions/constants';
@@ -49,21 +48,7 @@ describe('Validation', () => {
       { mockRef: "1 King's Road", expected: undefined },
       { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work address town is valid', ({ mockRef, expected }) => {
-      expect(isValidTownOrCity(mockRef, null)).toEqual(expected);
-    });
-  });
-  describe('isValidCountry', () => {
-    it.each([
-      { mockRef: '', expected: ValidationErrors.REQUIRED },
-      { mockRef: 'aa', expected: undefined },
-      {
-        mockRef: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
-        expected: ValidationErrors.INVALID_VALUE,
-      },
-      { mockRef: "1 King's Road", expected: undefined },
-      { mockRef: 'Kingston-upon-Thames', expected: undefined },
-    ])('check work address country is valid', ({ mockRef, expected }) => {
-      expect(isValidCountry(mockRef, null)).toEqual(expected);
+      expect(isValidCountryTownOrCity(mockRef, null)).toEqual(expected);
     });
   });
 });

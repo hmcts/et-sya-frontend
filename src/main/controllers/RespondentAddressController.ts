@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { isValidAddressFirstLine, isValidCountry, isValidTownOrCity } from '../components/form/address_validator';
+import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -55,7 +55,7 @@ export default class RespondentAddressController {
           autocomplete: 'address-level2',
           maxLength: 60,
         },
-        validator: isValidTownOrCity,
+        validator: isValidCountryTownOrCity,
       },
       respondentAddressCountry: {
         id: 'addressCountry',
@@ -67,7 +67,7 @@ export default class RespondentAddressController {
         attributes: {
           maxLength: 60,
         },
-        validator: isValidCountry,
+        validator: isValidCountryTownOrCity,
       },
       respondentAddressPostcode: {
         id: 'addressPostcode',

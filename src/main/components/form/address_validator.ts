@@ -14,16 +14,7 @@ export const isValidAddressFirstLine: AddressValidator = value => {
   }
 };
 
-export const isValidTownOrCity: AddressValidator = value => {
-  if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
-    return ValidationErrors.REQUIRED;
-  }
-  if (!(value as string).match(/(^.{1,60}$)/)) {
-    return ValidationErrors.INVALID_VALUE;
-  }
-};
-
-export const isValidCountry: AddressValidator = value => {
+export const isValidCountryTownOrCity: AddressValidator = value => {
   if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
     return ValidationErrors.REQUIRED;
   }
