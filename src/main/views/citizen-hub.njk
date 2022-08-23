@@ -102,9 +102,13 @@
                     {% for link in section.links %}
                       <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                          <a href="{{ getContent(link.url) }}" class="govuk-link">
+                          {% if getContent(link.status) === "Not available yet" %}
                             {{ getContent(link.linkTxt) }}
-                          </a>
+                          {% else %}
+                            <a href="{{ getContent(link.url) }}" class="govuk-link">
+                              {{ getContent(link.linkTxt) }}
+                            </a>
+                          {% endif %}
                         </span>
 
                         {{ govukTag({

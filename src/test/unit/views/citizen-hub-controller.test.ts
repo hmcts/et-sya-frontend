@@ -149,5 +149,17 @@ describe('Citizen hub page', () => {
 
       expect(Array.from(elements).filter(el => el.textContent.trim() === expectedText)).toHaveLength(expectedCount);
     });
+
+    it.each([
+      { selector: greyTagSelector, tagText: 'Not available yet', showLink: false },
+      { selector: turquoiseTagSelector, tagText: 'Submitted', showLink: true },
+    ])('should not show link iff tag is "Not available yet"', ({ selector, tagText, showLink }) => {
+      const links = Array.from(htmlRes.querySelectorAll(selector))
+        .filter(el => el.textContent.trim() === tagText)
+        .map(tag => tag.previousElementSibling)
+        .flatMap(sibling => Array.from(sibling.getElementsByTagName('a')));
+
+      expect(links.length > 0).toBe(showLink);
+    });
   });
 });
