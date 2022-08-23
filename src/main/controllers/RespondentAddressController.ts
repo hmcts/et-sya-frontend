@@ -12,6 +12,7 @@ import {
   getPageContent,
   getRespondentIndex,
   getRespondentRedirectUrl,
+  handleSaveAsDraft,
   handleSessionErrors,
   setUserCaseForRespondent,
 } from './helpers';
@@ -100,7 +101,12 @@ export default class RespondentAddressController {
     const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
     setUserCaseForRespondent(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    const { saveForLater } = req.body;
+    if (saveForLater) {
+      handleSessionErrors(req, res, this.form, redirectUrl);
+    } else {
+      handleSaveAsDraft(res);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
