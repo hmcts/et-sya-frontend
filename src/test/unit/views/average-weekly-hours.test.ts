@@ -16,7 +16,8 @@ const averageWeeklyHoursJson = JSON.parse(averageWeeklyHoursJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
-const input = 'govuk-input--width-3';
+const input = 'govuk-input--width-10';
+const labelClass = 'govuk-label';
 
 let htmlRes: Document;
 describe('Average weekly hours page Still Working', () => {
@@ -38,6 +39,12 @@ describe('Average weekly hours page Still Working', () => {
     const expectedTitle = averageWeeklyHoursJson.h1.workingOrNotice;
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+  });
+
+  it('should display input field label', () => {
+    const expectedInputLabel = averageWeeklyHoursJson.enterAverageHours;
+    const label = htmlRes.getElementsByClassName(labelClass);
+    expect(label[0].innerHTML).contains(expectedInputLabel, 'Average weekly hour input label does not exist');
   });
 
   it('should display input field', () => {
