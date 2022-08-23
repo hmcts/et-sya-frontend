@@ -5,7 +5,7 @@ import redis from 'redis-mock';
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
-import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { CaseState, HubLinkStatus, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
@@ -74,6 +74,19 @@ export const mockApp = ({
       userCase: {
         id: '1234',
         dobDate: { year: '2000', month: '12', day: '24' },
+        // todo remove
+        hubLinkStatuses: {
+          hubS1LinkStatus: HubLinkStatus.COMPLETED,
+          hubS2LinkStatus: HubLinkStatus.VIEWED,
+          hubS3LinkStatus: HubLinkStatus.NOT_YET_AVAILABLE,
+          hubS4LinkStatus: HubLinkStatus.OPTIONAL,
+          hubS5Link1Status: HubLinkStatus.OPTIONAL,
+          hubS5Link2Status: HubLinkStatus.OPTIONAL,
+          hubS5Link3Status: HubLinkStatus.OPTIONAL,
+          hubS6LinkStatus: HubLinkStatus.SUBMITTED,
+          hubS7LinkStatus: HubLinkStatus.SUBMITTED,
+          hubS8LinkStatus: HubLinkStatus.OPTIONAL,
+        },
         ...userCase,
       } as CaseWithId,
       ...session,

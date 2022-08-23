@@ -24,8 +24,8 @@ export default class CitizenHubController {
         hubLinkStatuses: {
           hubS1LinkStatus: HubLinkStatus.COMPLETED,
           hubS2LinkStatus: HubLinkStatus.VIEWED,
-          hubS3LinkStatus: HubLinkStatus.OPTIONAL,
-          hubS4LinkStatus: HubLinkStatus.OPTIONAL,
+          hubS3LinkStatus: HubLinkStatus.NOT_YET_AVAILABLE,
+          hubS4LinkStatus: HubLinkStatus.SUBMITTED,
           hubS5Link1Status: HubLinkStatus.OPTIONAL,
           hubS5Link2Status: HubLinkStatus.OPTIONAL,
           hubS5Link3Status: HubLinkStatus.OPTIONAL,
@@ -36,7 +36,6 @@ export default class CitizenHubController {
       } as CaseWithId;
     }
 
-    // todo apply status and statusColor with a method similar to getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate)
     const sections = [
       {
         title: (l: AnyRecord): string => l.section1.title,
@@ -139,6 +138,8 @@ export default class CitizenHubController {
         ],
       },
     ];
+
+    //todo maybe set default values to statuses.
 
     const currentState = currentStateFn(userCase);
 

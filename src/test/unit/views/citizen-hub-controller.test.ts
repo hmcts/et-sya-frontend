@@ -16,7 +16,7 @@ const hubJsonRaw = fs.readFileSync(
 const hubJson = JSON.parse(hubJsonRaw);
 
 const completedClass = 'hmcts-progress-bar__icon--complete';
-const completedSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
+const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
 const titleClassSelector = '.govuk-heading-l';
 const caseNumberSelector = '#caseNumber';
 const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
@@ -135,8 +135,8 @@ describe('Citizen hub page', () => {
     });
 
     it.each([
-      { selector: completedSelector, expectedText: 'COMPLETED', expectedCount: 1 },
-      { selector: completedSelector, expectedText: 'VIEWED', expectedCount: 1 },
+      { selector: greenTagSelector, expectedText: 'Completed', expectedCount: 1 },
+      { selector: greenTagSelector, expectedText: 'Viewed', expectedCount: 1 },
     ])('should have the correct statuses: %o', ({ selector, expectedText, expectedCount }) => {
       const elements = htmlRes.querySelectorAll(selector);
 
