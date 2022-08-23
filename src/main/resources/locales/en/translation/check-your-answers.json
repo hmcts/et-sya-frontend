@@ -7,20 +7,27 @@
   "warning": "This is your last opportunity to change any details before you submit your claim.",
   "remember": "Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save as draft’ at the bottom of this page.",
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
-  "submitBtn": "Submit claim",
+  "submitBtn": "Submit",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "typeOfClaim": "Type of claim",
+  "applicationDetails": {
+    "header": "Application details",
+    "typeOfClaim": "Claim type"
+  },
   "personalDetails": {
-    "header": "Personal details",
+    "header": "Your details",
     "dob": "Date of birth",
     "gender": "Sex",
+    "genderIdentity": "Gender Identity",
     "genderSameAsBirth": "Gender same as registered birth sex",
+    "contactOrHomeAddress": "Contact or home address",
+    "howToBeContacted": "How would you like to be contacted?",
+    "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
+    "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
     "title": "Preferred title"
   },
   "contactDetails": {
     "header": "Contact details",
-    "contact": "Contact or home address",
-    "telephone": "UK telephone number"
+    "telephone": "Telephone number"
   },
   "yourPreferences": {
     "header": "Your preferences",
@@ -29,32 +36,39 @@
     "videoHearings": "Video hearings"
   },
   "employer": {
-    "header": "Employer",
-    "didYouWorkFor": "Did you work for the organisation or person",
-    "isStillWorking": "Still working for the organisation or person"
+    "header": "Employer"
   },
   "employmentDetails": {
     "header": "Employment details",
+    "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
+    "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
-    "startDate": "Start date",
-    "noticePeriod": "Notice period",
+    "startDate": "Employment start date",
+    "noticePeriod": "Do you have a written contract with notice period?",
     "noticeEnds": "Notice period ends",
-    "noticeLength": "Notice period length",
+    "noticeLength": "Is your notice period in weeks or months?",
+    "noticePeriodWeeksOrMonths": "[Weeks/Months] in notice period",
     "noticePaid": "Notice being paid for",
-    "weeklyHours": "Average weekly hours",
-    "payBeforeTax": "Pay BEFORE tax",
-    "payAfterTax": "Pay AFTER tax",
-    "pensionScheme": "Pension scheme",
-    "benefits": "Benefits",
-    "newJob": "New job",
+    "weeklyHours": "Average weekly work hours",
+    "payBeforeTax": "Pay before tax and National Insurance",
+    "payAfterTax": "Pay after tax and National Insurance",
+    "payPeriod": "Is this your weekly, monthly or annual pay?",
+    "pensionScheme": "Did the respondent make any contributions to your pension?",
+    "benefits": "Do you or did you receive any employee benefits?",
+    "newJob": "Have you got a new job?",
     "newStartDate": "New job start date",
-    "newPayBeforeTax": "New job pay BEFORE tax",
+    "newPayBeforeTax": "New job pay before tax and National Insurance",
     "workAddress": "Work address"
   },
-  "respodentDetails": {
-    "header": "Respondent details",
+  "respondentDetails": {
+    "header": "Respondent 1 details",
+    "respondentName": "Name of respondent",
+    "respondentAddress": "Respondent address",
+    "workedAtRespondent": "Did you work at the respondent's address?",
+    "addressWorkedAt": "The address you work or worked at",
     "orgOrPerson": "Organisation or person",
-    "acasNumber": "Acas number",
+    "acasNumber": "Do you have an Acas certificate number?",
+    "noAcasReason": "Why do you not have an Acas Number?",
     "acasExemption": "Acas exemption",
     "name": "Name",
     "telephone": "UK telephone number",
@@ -63,8 +77,17 @@
   },
   "claimDetails": {
     "header": "Claim details",
+    "claimType": "What type of discrimination/pay claim are you making?",
+    "describeWhatHappened": "Describe what happened to you",
+    "ifClaimSuccessful": "What do you want if your claim is successful",
+    "expectedCompensation": "What compensation are you seeking",
+    "expectedTribunalsRecommendation": "What tribunal recommendation would you like to make?",
+    "forwardClaim": "Do you want us to forward your whistleblowing claim to a relevant regulation or body?",
     "summary": "Summary of claim",
     "fileUploads": "File uploads",
     "whatYouWant": "What you want"
+  },
+  "answers": {
+    "NA": "Not Provided"
   }
 }

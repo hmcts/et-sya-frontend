@@ -9,10 +9,11 @@
 {% endblock %}
 
 {% set logInOrOut = {
-              href: "/logout",
-              text: signOut,
-              active: false
-} if isLoggedIn %}
+  href: "/logout",
+  text: signOut,
+  active: false
+}
+if isLoggedIn %}
 
 {% block header %}
   {{ govukHeader({
@@ -33,11 +34,9 @@
   {{ govUk }}
 {% endblock %}
 
-
-
 {% block beforeContent %}
 
-  {% set smartSurveyPageInfo =  currentUrl | replace("/", "")  %}
+  {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
 
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
@@ -84,7 +83,7 @@
 {% endblock %}
 
 {% block footer %}
-  {% if "/" !== currentUrl %}
+  {% if "/" !== currentUrl and hideContactUs === undefined %}
     <div class="govuk-width-container">
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
