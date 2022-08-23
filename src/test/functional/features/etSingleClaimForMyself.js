@@ -6,7 +6,9 @@ const commonFlow = require('./commonFlow.js');
 Scenario('Verify ET single claim for myself when there is no acas certificate', async () => {
   commonPages();
 
-  I.see("Do you have an ‘Acas early conciliation certificate’ for each respondent you're making a claim against?");
+  I.see(
+    "Do you have an ‘Acas early conciliation certificate’ for the respondent or respondents you're claiming against?"
+  );
   I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
   I.see('Making a claim can be time-consuming and difficult for everyone involved.');
   I.see('No');
@@ -74,12 +76,12 @@ function commonPages() {
   I.seeElement('#lip-or-representative');
   I.see('I’m representing myself and making my own claim');
   I.click('Who can act as a representative?', 'span[class=govuk-details__summary-text]');
-  I.see('employment advisors – including those from Citizens Advice');
+  //I.see('employment advisors – including those from Citizens Advice');
   I.checkOption('input[id=lip-or-representative]');
   I.click('Continue');
 
   I.seeElement('#single-or-multiple-claim');
-  I.see('Are you making a ‘single’ claim on your own or a ‘multiple’ claim alongside other people?');
+  I.see('Are you making a claim on your own or with others?');
   I.checkOption('input[id=single-or-multiple-claim]');
   I.click('Continue');
 }

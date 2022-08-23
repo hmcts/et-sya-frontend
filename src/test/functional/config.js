@@ -1,26 +1,8 @@
-const testHeadlessBrowser = true;
-const testUrl = process.env.TEST_URL || 'http://localhost:3001';
 module.exports = {
-  testUrl,
-  name: 'et-ui-functional',
-  testHeadlessBrowser: true,
-  tests: './features/**/*js',
-  reportFolder: './functional-output/reports',
-  helpers: {
-    Puppeteer: {
-      url: testUrl,
-      waitForTimeout: 10000,
-      waitForAction: 4000,
-      getPageTimeout: 30000,
-      show: !testHeadlessBrowser,
-      waitForNavigation: 'networkidle0',
-      ignoreHTTPSErrors: true,
-      headless: true,
-      browser: 'chrome',
-      chrome: {
-        ignoreHTTPSErrors: true,
-        args: ['--no-sandbox', '--ignore-certificate-errors'],
-      },
-    },
-  },
+  TestUrl: process.env.TEST_E2E_URL || 'https://et-sya.aat.platform.hmcts.net',
+  TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || true,
+  TestsPathToRun: process.env.E2E_TEST_PATH || './features/**/*js',
+  TestReportFolder: process.env.E2E_OUTPUT_DIR || './functional-output',
+  TestEnvCWUser: process.env.CASEWORKER_E2E_EMAIL || '',
+  TestEnvCWPassword: process.env.CASEWORKER_E2E_PASSWORD || '',
 };
