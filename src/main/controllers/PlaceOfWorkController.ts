@@ -96,9 +96,9 @@ export default class PlaceOfWorkController {
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, redirectUrl);
-    } else {
       handleSaveAsDraft(res);
+    } else {
+      handleSessionErrors(req, res, this.form, redirectUrl);
     }
   };
 
