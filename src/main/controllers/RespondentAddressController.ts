@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { isValidAddressFirstLine, isValidCountry, isValidTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -27,10 +27,11 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        validator: isFieldFilledIn,
         attributes: {
           autocomplete: 'address-line1',
+          maxLength: 100,
         },
+        validator: isValidAddressFirstLine,
       },
       respondentAddress2: {
         id: 'address2',
@@ -52,8 +53,9 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
+          maxLength: 60,
         },
-        validator: isFieldFilledIn,
+        validator: isValidTownOrCity,
       },
       respondentAddressCountry: {
         id: 'addressCountry',
@@ -62,6 +64,10 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        attributes: {
+          maxLength: 60,
+        },
+        validator: isValidCountry,
       },
       respondentAddressPostcode: {
         id: 'addressPostcode',
@@ -71,8 +77,8 @@ export default class RespondentAddressController {
         label: l => l.postcode,
         labelSize: null,
         attributes: {
-          maxLength: 14,
           autocomplete: 'postal-code',
+          maxLength: 14,
         },
       },
     },

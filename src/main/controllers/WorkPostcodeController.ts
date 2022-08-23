@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isInvalidPostcode } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -18,7 +18,7 @@ export default class WorkPostcodeController {
         name: 'workPostcode',
         type: 'text',
         classes: 'govuk-!-width-one-half',
-        validator: isInvalidPostcode,
+        validator: isValidUKPostcode,
         label: (l): string => l.postcode,
       },
     },

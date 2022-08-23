@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { isValidAddressFirstLine, isValidCountry, isValidTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -25,7 +25,11 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        validator: isWorkAddressLineOneValid,
+        attributes: {
+          autocomplete: 'address-line1',
+          maxLength: 100,
+        },
+        validator: isValidAddressFirstLine,
       },
       workAddress2: {
         id: 'address2',
@@ -33,6 +37,9 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
+        attributes: {
+          autocomplete: 'address-line2',
+        },
       },
       workAddressTown: {
         id: 'addressTown',
@@ -40,7 +47,11 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        validator: isWorkAddressTownValid,
+        attributes: {
+          autocomplete: 'address-level2',
+          maxLength: 60,
+        },
+        validator: isValidTownOrCity,
       },
       workAddressCountry: {
         id: 'addressCountry',
@@ -48,6 +59,10 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        attributes: {
+          maxLength: 60,
+        },
+        validator: isValidCountry,
       },
       workAddressPostcode: {
         id: 'addressPostcode',
@@ -56,9 +71,9 @@ export default class PlaceOfWorkController {
         label: l => l.postcode,
         labelSize: null,
         attributes: {
+          autocomplete: 'postal-code',
           maxLength: 14,
         },
-        validator: isInvalidPostcode,
       },
     },
     submit: {

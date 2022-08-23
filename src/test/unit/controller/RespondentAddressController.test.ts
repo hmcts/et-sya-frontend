@@ -17,8 +17,7 @@ describe('Respondent Address Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
 
-    const userCase = userCaseWithRespondent;
-    request.session.userCase = userCase;
+    request.session.userCase = userCaseWithRespondent;
 
     controller.get(request, response);
 
@@ -30,6 +29,7 @@ describe('Respondent Address Controller', () => {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
       respondentAddressPostcode: 'AB1 2CD',
+      respondentAddressCountry: 'Test Country',
     };
     const controller = new RespondentAddressController();
 
@@ -48,6 +48,7 @@ describe('Respondent Address Controller', () => {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
       respondentAddressPostcode: 'AB1 2CD',
+      respondentAddressCountry: 'Test Country',
     };
     const controller = new RespondentAddressController();
 

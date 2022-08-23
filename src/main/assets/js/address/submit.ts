@@ -1,4 +1,4 @@
-import { isInvalidPostcode } from '../../../components/form/validator';
+import { isValidUKPostcode } from '../../../components/form/address_validator';
 import { PageUrls } from '../../../definitions/constants';
 import { getById, hidden } from '../selectors';
 
@@ -19,7 +19,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
     findAddressButton.style.cursor = 'wait';
     saveAsDraftButton.style.cursor = 'wait';
     if (e.submitter.id !== 'saveAsDraftButton') {
-      const isPostCodeInvalid = isInvalidPostcode(postcode);
+      const isPostCodeInvalid = isValidUKPostcode(postcode, null);
 
       if (isPostCodeInvalid) {
         if (isPostCodeInvalid === 'required') {

@@ -139,6 +139,11 @@ export const PageUrls = {
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
 } as const;
 
+export const ValidationErrors = {
+  REQUIRED: 'required',
+  INVALID_VALUE: 'invalid',
+} as const;
+
 export const AuthUrls = {
   CALLBACK: '/oauth2/callback',
   LOGIN: '/login',

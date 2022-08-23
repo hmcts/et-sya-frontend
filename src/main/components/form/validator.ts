@@ -47,17 +47,6 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
-export const isInvalidPostcode: Validator = value => {
-  const fieldNotFilledIn = isFieldFilledIn(value);
-  if (fieldNotFilledIn) {
-    return fieldNotFilledIn;
-  }
-
-  if (!(value as string).match(/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i)) {
-    return 'invalid';
-  }
-};
-
 export const isValidUKTelNumber: Validator = value => {
   if (value === null || value === '') {
     return;
@@ -106,27 +95,8 @@ export const isValidNoticeLength: Validator = value => {
   }
 };
 
-export const isWorkAddressLineOneValid: Validator = value => {
-  if (typeof value === 'string') {
-    const inputStrLength = (value as string).trim().length;
-    if (inputStrLength === 0 || inputStrLength > 100) {
-      return 'required';
-    }
-  }
-};
-
 export const areBenefitsValid: Validator = value => {
   return isFieldFilledIn(value) || isContent2500CharsOrLess(value);
-};
-
-export const isWorkAddressTownValid: Validator = value => {
-  if (typeof value === 'string') {
-    const inputStrLength = (value as string).trim().length;
-
-    if (inputStrLength < 3 || inputStrLength > 60) {
-      return 'required';
-    }
-  }
 };
 
 export const isPayIntervalNull: Validator = (value: string) => {

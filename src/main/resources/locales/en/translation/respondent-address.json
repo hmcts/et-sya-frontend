@@ -17,10 +17,16 @@
       "notSelected": "Select an address"
     },
     "respondentAddress1": {
-      "required": "Enter a building and street"
+      "required": "Enter the first line of the respondent address - up to 100 alphanumeric characters",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 alphanumeric characters"
     },
     "respondentAddressTown": {
-      "required": "Enter a town or city"
+      "required": "Enter a town or city for the respondent address - up to 60 characters",
+      "invalid": "Enter a valid town or city for the respondent address - up to 60 characters"
+    },
+    "respondentAddressCountry": {
+      "required": "Enter a country for the respondent address - up to 60 characters",
+      "invalid": "Enter a valid country for the respondent address - up to 60 characters"
     },
     "respondentAddressPostcode": {
       "required": "Enter a postcode or zip code",
