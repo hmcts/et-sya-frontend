@@ -3,6 +3,9 @@
 @import './utilities/borders';
 @import 'patterns/task-list';
 
+$govuk-grey: #b1b4b6;
+$govuk-blue: #1d70b8;
+
 .govuk-phase-banner__text {
   width: 100%;
 
@@ -101,19 +104,20 @@
 }
 
 .hmcts-progress-bar__icon {
-  border: 1px solid #b1b4b6 !important;
+  border: 1px solid $govuk-grey;
+
+  .hmcts-progress-bar__icon--complete {
+    background-color: $govuk-blue;
+  }
 }
 
-.hmcts-progress-bar__icon--complete {
-  background-color: #1d70b8 !important;
-}
-
-.hmcts-progress-bar__list::before {
-  border-top: 6px solid #b1b4b6 !important;
+.hmcts-progress-bar__list {
+  ::before {
+    border-top: 6px solid $govuk-grey;
+  }
 }
 
 .top-border-blue {
-  color: #0b0c0c;
-  border-top: 2px solid #1d70b8;
+  border-top: 2px solid $govuk-blue;
   padding-top: 40px;
 }
