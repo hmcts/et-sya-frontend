@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { CaseState, HubLinkStatus } from '../definitions/definition';
+import { CaseState, HubLinkStatus, hubLinksMap } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { currentStateFn } from '../helper/state-sequence';
 
@@ -43,8 +43,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section1.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS1LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS1LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS1LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS1LinkStatus),
           },
         ],
       },
@@ -54,8 +54,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS2LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS2LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS2LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS2LinkStatus),
           },
         ],
       },
@@ -65,8 +65,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS3LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS3LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS3LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS3LinkStatus),
           },
         ],
       },
@@ -76,8 +76,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS4LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS4LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS4LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS4LinkStatus),
           },
         ],
       },
@@ -87,20 +87,20 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section5.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link1Status].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link1Status].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link1Status],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS5Link1Status),
           },
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section5.link2Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link2Status].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link2Status].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link2Status],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS5Link2Status),
           },
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section5.link3Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link3Status].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link3Status].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS5Link3Status],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS5Link3Status),
           },
         ],
       },
@@ -110,8 +110,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section6.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS6LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS6LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS6LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS6LinkStatus),
           },
         ],
       },
@@ -121,8 +121,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section7.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS7LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS7LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS7LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS7LinkStatus),
           },
         ],
       },
@@ -132,8 +132,8 @@ export default class CitizenHubController {
           {
             url: PageUrls.HOME,
             linkTxt: (l: AnyRecord): string => l.section8.link1Text,
-            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS8LinkStatus].title,
-            statusColor: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS8LinkStatus].style,
+            status: (l: AnyRecord): string => l[userCase.hubLinkStatuses.hubS8LinkStatus],
+            statusColor: () => hubLinksMap.get(userCase.hubLinkStatuses.hubS8LinkStatus),
           },
         ],
       },

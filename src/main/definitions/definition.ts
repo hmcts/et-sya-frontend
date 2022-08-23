@@ -73,9 +73,9 @@ export const enum HubLinkStatus {
 }
 
 export const hubLinksMap = new Map<HubLinkStatus, string>([
-  [HubLinkStatus.COMPLETED, 'Green'],
-  [HubLinkStatus.SUBMITTED, 'Green'],
-  [HubLinkStatus.VIEWED, 'Green'],
-  [HubLinkStatus.OPTIONAL, 'Blue'],
-  [HubLinkStatus.NOT_YET_AVAILABLE, 'Grey'],
+  [HubLinkStatus.COMPLETED, '--green'],
+  [HubLinkStatus.SUBMITTED, '--turquoise'],
+  [HubLinkStatus.VIEWED, '--turquoise'],
+  [HubLinkStatus.OPTIONAL, '--blue'],
+  [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
 ]);

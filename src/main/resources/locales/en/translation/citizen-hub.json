@@ -51,24 +51,9 @@
     "title": "Case documents",
     "link1Text": "All documents"
   },
-  "notAvailableYet": {
-    "title": "Not available yet",
-    "style": "--grey"
-  },
-  "completed": {
-    "title": "Completed",
-    "style": "--green"
-  },
-  "submitted": {
-    "title": "Submitted",
-    "style": "--green"
-  },
-  "viewed": {
-    "title": "Viewed",
-    "style": "--green"
-  },
-  "optional": {
-    "title": "Optional",
-    "style": "--blue"
-  }
+  "notAvailableYet": "Not available yet",
+  "completed": "Completed",
+  "submitted": "Submitted",
+  "viewed": "Viewed",
+  "optional": "Optional"
 }

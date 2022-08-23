@@ -16,10 +16,14 @@ const hubJsonRaw = fs.readFileSync(
 const hubJson = JSON.parse(hubJsonRaw);
 
 const completedClass = 'hmcts-progress-bar__icon--complete';
-const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
 const titleClassSelector = '.govuk-heading-l';
 const caseNumberSelector = '#caseNumber';
 const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
+
+const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
+const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise';
+const greyTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--grey';
+const blueTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--blue';
 
 const statusTexts = [hubJson.accepted, hubJson.received, hubJson.details, hubJson.decision];
 
@@ -136,7 +140,10 @@ describe('Citizen hub page', () => {
 
     it.each([
       { selector: greenTagSelector, expectedText: 'Completed', expectedCount: 1 },
-      { selector: greenTagSelector, expectedText: 'Viewed', expectedCount: 1 },
+      { selector: turquoiseTagSelector, expectedText: 'Viewed', expectedCount: 1 },
+      { selector: turquoiseTagSelector, expectedText: 'Submitted', expectedCount: 2 },
+      { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 1 },
+      { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 5 },
     ])('should have the correct statuses: %o', ({ selector, expectedText, expectedCount }) => {
       const elements = htmlRes.querySelectorAll(selector);
 
