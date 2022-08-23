@@ -1,5 +1,5 @@
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -73,5 +73,16 @@ describe('Respondent Address Controller', () => {
     controller.post(request, response);
 
     expect(response.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+  });
+  it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
+    const body = { saveForLater: true };
+    const controller = new RespondentAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
   });
 });

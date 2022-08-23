@@ -98,13 +98,13 @@ export default class RespondentAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
       handleSaveAsDraft(res);
     } else {
+      const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
+      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
       handleSessionErrors(req, res, this.form, redirectUrl);
     }
   };
