@@ -83,23 +83,18 @@ export const idamCallbackHandler = async (
     }
     return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
   } else {
-    getPreloginCaseData(redisClient, guid)
-      .then(caseData =>
-        getCaseApi(req.session.user?.accessToken)
-          .createCase(caseData, req.session.user)
-          .then(response => {
-            if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-              logger.info(`Created Draft Case - ${response.data.id}`);
-              req.session.userCase = fromApiFormat(response.data);
-              return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
-            }
-            throw new Error('Draft Case was not created successfully');
-          })
-          .catch(error => {
-            //ToDo - needs to handle different error response
-            logger.info(error);
-          })
-      )
-      .catch(err => next(err));
+    try {
+      const caseData = await getPreloginCaseData(redisClient, guid);
+      const response = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+      if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
+        logger.info(`Created Draft Case - ${response.data.id}`);
+        req.session.userCase = fromApiFormat(response.data);
+        return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+      }
+      throw new Error('Draft Case was not created successfully');
+    } catch (error) {
+      //ToDo - needs to handle different error response
+      logger.info(error);
+    }
   }
 };
