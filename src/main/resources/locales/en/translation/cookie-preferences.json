@@ -75,5 +75,15 @@
   "whenYouCloseYourBrowser": "When you close your browser",
   "dynatraceCookiesAriaDescribedby": "List of dynatrace cookies used.",
   "oneYear": "1 year",
-  "save": "Save"
+  "save": "Save",
+  "on": "on",
+  "off": "off",
+  "analytics": "analytics",
+  "apm": "apm",
+  "allowAnalytics": "Allow cookies that measure website use?",
+  "yesAnalytics": "Use cookies that measure my website use",
+  "noAnalytics": "Do not use cookies that measure my website use",
+  "allowApm": "Allow cookies that measure website application performance monitoring?",
+  "yesApm": "Use cookies that measure website application performance monitoring",
+  "noApm": "Do not use cookies that measure website application performance monitoring"
 }

@@ -198,22 +198,22 @@
       <form class="cookie-preferences-form">
         {{ govukRadios({
     classes: 'govuk-radios',
-    idPrefix: 'analytics',
-    name: 'analytics',
+    idPrefix: analytics,
+    name: analytics,
     fieldset: {
       legend: {
-        text: "Allow cookies that measure website use?",
+        text: allowAnalytics,
         classes: "govuk-fieldset__legend--s"
       }
     },
     items: [
       {
-        value: 'on',
-        text: 'Use cookies that measure my website use'
+        value: on,
+        text: yesAnalytics
       },
       {
-        value: 'off',
-        text: 'Do not use cookies that measure my website use',
+        value: off,
+        text: noAnalytics,
         checked: true
       }
     ]
@@ -221,21 +221,21 @@
 
         {{ govukRadios({
     classes: 'govuk-radios',
-    idPrefix: 'apm',
-    name: 'apm',
+    idPrefix: apm,
+    name: apm,
     fieldset: {
       legend: {
-        text: "Allow cookies that measure website application performance monitoring?",
+        text: allowApm,
         classes: "govuk-fieldset__legend--s"
       }
     },
     items: [
       {
-        value: 'on',
-        text: 'Use cookies that measure website application performance monitoring'
+        value: on,
+        text: yesApm
       },
       {
-        value: 'off',
+        value: off,
         text: 'Do not use cookies that measure website application performance monitoring',
         checked: true
       }
