@@ -5,8 +5,10 @@ import redis from 'redis-mock';
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
-import { CaseState, HubLinkStatus, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { PageUrls } from '../../../main/definitions/constants';
+import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
@@ -74,19 +76,23 @@ export const mockApp = ({
       userCase: {
         id: '1234',
         dobDate: { year: '2000', month: '12', day: '24' },
-        // todo remove
-        hubLinkStatuses: {
-          hubS1LinkStatus: HubLinkStatus.COMPLETED,
-          hubS2LinkStatus: HubLinkStatus.VIEWED,
-          hubS3LinkStatus: HubLinkStatus.NOT_YET_AVAILABLE,
-          hubS4LinkStatus: HubLinkStatus.OPTIONAL,
-          hubS5Link1Status: HubLinkStatus.OPTIONAL,
-          hubS5Link2Status: HubLinkStatus.OPTIONAL,
-          hubS5Link3Status: HubLinkStatus.OPTIONAL,
-          hubS6LinkStatus: HubLinkStatus.SUBMITTED,
-          hubS7LinkStatus: HubLinkStatus.SUBMITTED,
-          hubS8LinkStatus: HubLinkStatus.OPTIONAL,
-        },
+        // todo remove this from the mockapp, only needs to be for the hub content tests.
+        hubLinks: [
+          { links: [{ status: HubLinkStatus.COMPLETED, link: PageUrls.HOME }] },
+          { links: [{ status: HubLinkStatus.VIEWED, link: PageUrls.HOME }] },
+          { links: [{ status: HubLinkStatus.NOT_YET_AVAILABLE, link: PageUrls.HOME }] },
+          { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
+          {
+            links: [
+              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
+              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
+              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
+            ],
+          },
+          { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
+          { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
+          { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
+        ],
         ...userCase,
       } as CaseWithId,
       ...session,

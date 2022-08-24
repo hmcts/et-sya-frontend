@@ -63,19 +63,3 @@ export const enum sectionStatus {
   inProgress = 'IN PROGRESS',
   cannotStartYet = 'CANNOT START YET',
 }
-
-export const enum HubLinkStatus {
-  COMPLETED = 'completed',
-  SUBMITTED = 'submitted',
-  OPTIONAL = 'optional',
-  VIEWED = 'viewed',
-  NOT_YET_AVAILABLE = 'notAvailableYet',
-}
-
-export const hubLinksMap = new Map<HubLinkStatus, string>([
-  [HubLinkStatus.COMPLETED, '--green'],
-  [HubLinkStatus.SUBMITTED, '--turquoise'],
-  [HubLinkStatus.VIEWED, '--turquoise'],
-  [HubLinkStatus.OPTIONAL, '--blue'],
-  [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
-]);

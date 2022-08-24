@@ -1,11 +1,5 @@
-import {
-  CaseState,
-  ClaimOutcomes,
-  ClaimTypeDiscrimination,
-  ClaimTypePay,
-  HubLinkStatus,
-  TellUsWhatYouWant,
-} from './definition';
+import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import { HubSection } from './hub';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -119,18 +113,7 @@ export interface Case {
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
-  hubLinkStatuses?: {
-    hubS1LinkStatus?: HubLinkStatus;
-    hubS2LinkStatus?: HubLinkStatus;
-    hubS3LinkStatus?: HubLinkStatus;
-    hubS4LinkStatus?: HubLinkStatus;
-    hubS5Link1Status?: HubLinkStatus;
-    hubS5Link2Status?: HubLinkStatus;
-    hubS5Link3Status?: HubLinkStatus;
-    hubS6LinkStatus?: HubLinkStatus;
-    hubS7LinkStatus?: HubLinkStatus;
-    hubS8LinkStatus?: HubLinkStatus;
-  };
+  hubLinks?: HubSection[];
 }
 
 export const enum StillWorking {
