@@ -6,7 +6,8 @@ import moment from 'moment';
 export default class SessionTimeout {
   public sessionExpirationTime: string;
   public sessionTimeoutCountdown: number;
-  public bufferSessionExtension: number = 2 * 60 * 1000;
+  // public bufferSessionExtension: number = 2 * 60 * 1000;
+  public bufferSessionExtension: number = 30 * 1000; //length of time modal will appear
   private sessionTimeout: number;
   private modalTimeout: number;
   private modalCountdown: number;
@@ -24,11 +25,11 @@ export default class SessionTimeout {
   constructor() {
     this.init = this.init.bind(this);
     this.modalElement = document.querySelector('#timeout-modal');
-    console.log('modal elemetn is', this.modalElement);
+    console.log('modal element is ', this.modalElement);
     this.modalOverlayElement = document.querySelector('#modal-overlay');
     this.modalCountdownElement = document.querySelector('#dialog-description');
     this.extendSessionElement = document.querySelector('#extend-session');
-    console.log('extend session elemetn is', this.extendSessionElement);
+    console.log('extend session element is ', this.extendSessionElement);
 
     this.body = document.querySelector('body');
     console.log('body is ', this.body);
@@ -42,7 +43,7 @@ export default class SessionTimeout {
   }
 
   init(): void {
-    console.log('####### begin init  ##############');
+    console.log('####### begin init, add listeners ##############');
     this.addListeners();
     void this.extendSession();
   }
@@ -65,12 +66,12 @@ export default class SessionTimeout {
     console.log('start counter is executing');
     const sessionExpirationTimeMoment = moment(this.sessionExpirationTime);
     this.sessionTimeoutCountdown = sessionExpirationTimeMoment.diff(moment());
-    console.log('countdown is - ', this.sessionTimeoutCountdown);
+    console.log('call to /session-ended is set to trigger in ' + this.sessionTimeoutCountdown + ' milliseconds');
     this.sessionTimeout = window.setTimeout(() => {
       this.signOut();
     }, this.sessionTimeoutCountdown);
     this.modalTimeout = window.setTimeout(() => {
-      console.log('setting timeout.. at 2 min?..');
+      console.log('setting modal to open 2 min before session timeout..');
       this.openModal();
       this.startModalCountdown();
     }, this.sessionTimeoutCountdown - (this.bufferSessionExtension + 1));
@@ -84,7 +85,7 @@ export default class SessionTimeout {
   };
 
   resetModalMessage = (): void => {
-    this.modalCountdownElement.innerHTML = 'inner html text content';
+    this.modalCountdownElement.innerHTML = 'RESET MODAL MESSAGE';
   };
 
   restartCounters = (): void => {
@@ -150,7 +151,8 @@ export default class SessionTimeout {
 
   signOut(): void {
     console.log('signout begins');
-    window.location.assign('/session-ended');
+    //  window.location.assign('/session-ended');
+    window.location.assign('/logout');
   }
 
   extendSession = (): Promise<void> => {
@@ -164,7 +166,7 @@ export default class SessionTimeout {
         console.log('begin axios get extend session');
 
         this.sessionExpirationTime = response.data.timeout;
-        console.log('session expiration time is ', this.sessionExpirationTime);
+        console.log('session expiration time is from request is ', this.sessionExpirationTime);
         this.restartCounters();
         this.closeModal();
       })

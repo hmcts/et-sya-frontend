@@ -1,8 +1,6 @@
 const govUkFrontend = require('govuk-frontend');
 
-const sessionJs = require('./session/utils');
-console.log('browser javascript');
-import './session/utils';
+const sessionTimeout = require('./session/utils');
 
 import '../scss/main.scss';
 import './go-back';
@@ -12,4 +10,4 @@ import './enter-address';
 import './print';
 import './set-focus';
 
-sessionJs.ready(sessionJs.initialize);
+sessionTimeout.ready(sessionTimeout.initialize);
