@@ -47,10 +47,10 @@ describe('New Account Landing page', () => {
     expect(p[1].innerHTML).contains(expectedP2, 'Could not find P2 text');
   });
 
-  it('should display two buttons', () => {
+  it('should display save and continue and save as draft buttons', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button.length).equal(2, 'Expected two buttons');
-    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
-    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
+    expect(button.length).equal(6, 'Expected six buttons');
+    expect(button[4].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });

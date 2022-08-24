@@ -71,6 +71,7 @@ export const TranslationKeys = {
   WORK_POSTCODE: 'work-postcode',
   ENTER_ADDRESS: 'enter-address',
   PLACE_OF_WORK: 'place-of-work',
+  COOKIE_PREFERENCES: 'cookie-preferences',
   CITIZEN_HUB: 'citizen-hub',
 } as const;
 
@@ -138,6 +139,7 @@ export const PageUrls = {
   WORK_POSTCODE: '/work-postcode',
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
+  COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub',
 } as const;
 

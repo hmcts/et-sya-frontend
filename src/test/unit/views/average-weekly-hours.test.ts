@@ -54,7 +54,7 @@ describe('Average weekly hours page Still Working', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
   });
 });
 
@@ -86,7 +86,7 @@ describe('Average weekly hours page Notice', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
   });
 });
 
@@ -118,6 +118,6 @@ describe('Average weekly hours page No Longer Working', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
   });
 });
