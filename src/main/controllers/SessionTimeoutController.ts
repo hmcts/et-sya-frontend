@@ -1,5 +1,5 @@
 import config from 'config';
-import { Response } from 'express';
+import { NextFunction, Response } from 'express';
 import moment from 'moment';
 import { LoggerInstance } from 'winston';
 
@@ -21,3 +21,18 @@ export default class SessionTimeoutController {
     req.session.destroy(() => res.redirect(PageUrls.HOME));
   };
 }
+
+export const getSessionEnded = (req: AppRequest, res: Response): void => {
+  console.log('Session ending and being destroyed');
+  res.locals.isLoggedIn = false;
+  req.session.destroy(() => res.redirect(PageUrls.HOME));
+};
+
+export const checkSession = (req: AppRequest, res: Response, next: NextFunction): void | undefined => {
+  if (req.session?.user?.accessToken) {
+    console.log('user has access token');
+    next();
+  }
+  console.log('user does not have access token, returning.... ');
+  return;
+};

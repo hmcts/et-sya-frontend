@@ -3,6 +3,7 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
+import { checkSession, getSessionEnded } from '../controllers/SessionTimeoutController';
 import { PageUrls, Urls } from '../definitions/constants';
 
 export default function (app: Application): void {
@@ -154,7 +155,7 @@ export default function (app: Application): void {
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
-  app.get(Urls.SESSION_ENDED, app.locals.container.cradle.sessionTimeoutController.getSessionEnded);
+  app.get(Urls.SESSION_ENDED, checkSession, getSessionEnded);
   app.get(
     Urls.INFO,
     infoRequestHandler({

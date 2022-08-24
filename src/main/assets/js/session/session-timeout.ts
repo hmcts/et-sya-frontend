@@ -152,8 +152,8 @@ export default class SessionTimeout {
 
   signOut(): void {
     console.log('signout begins');
-    //  window.location.assign('/session-ended');
-    window.location.assign('/logout');
+    window.location.assign('/session-ended');
+    // window.location.assign('/logout');
   }
 
   extendSession = (): Promise<void> => {
