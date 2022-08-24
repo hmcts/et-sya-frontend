@@ -1,6 +1,6 @@
 {
-  "title": "Have you got a notice period",
-  "h1": "Have you got a notice period?",
+  "title": "Do you have a written contract with a notice period?",
+  "h1": "Do you have a written contract with a notice period?",
   "errors": {
     "noticePeriod": {
       "required": "Tell us if you have a notice period"
