@@ -1,5 +1,5 @@
 {
-  "title": "LiP or representative",
+  "title": "My own claim or representative",
   "h1": "Are you making the claim for yourself, or representing someone else?",
   "p1": "A representative is someone who can act on your behalf to complete the claim, write to the employment tribunal or present your case at a hearing.",
   "detailsSummary1": "Who can act as a representative?",
@@ -33,7 +33,7 @@
   "radio2": "I’m making a claim for someone else and acting as their representative",
   "errors": {
     "claimantRepresentedQuestion": {
-      "required": "Select an Option"
+      "required": "Tell us if you are representing yourself or acting as a representative"
     }
   }
 }
