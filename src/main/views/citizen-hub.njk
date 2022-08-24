@@ -4,47 +4,6 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% macro sideBar(callEmployer, contactTribunal) %}
-  <p class='govuk-body'>
-    {{callEmployer}}
-  </p>
-
-  <p class='govuk-body'>
-    {{contactText}}
-    <a>{{contactLink}}</a>
-  </p>
-
-  <h2 class="govuk-heading-s">
-    {{englandWales}}
-  </h2>
-
-  <p class='govuk-body'>
-    {{ewNumbers | safe}}
-  </p>
-
-  <h2 class="govuk-heading-s">
-    {{welsh}}
-  </h2>
-
-  <p class='govuk-body'>
-    {{welshNumber}}
-  </p>
-
-  <h2 class="govuk-heading-s">
-    {{scotland}}
-  </h2>
-
-  <p class='govuk-body'>
-    {{scotlandNumbers | safe}}
-  </p>
-
-  <p class='govuk-body'>
-    {{hours | safe}}
-  </p>
-
-  <a href="#" class="govuk-link">{{callCharges}}</a>
-{% endmacro %}
-
 {% block beforeContent %}
   {{ super() }}
   {% include "back-link.njk"%}
@@ -56,7 +15,7 @@
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-l">
         {{ header + userCase.firstName + ' ' + userCase.lastName }} vs {{ userCase.respondents[0].respondentName }}
-    </h2>
+      </h2>
       <p id="caseNumber" class="govuk-body">{{ caseNumber + userCase.ethosCaseReference }}</p>
 
       <div class="govuk-grid-row">
@@ -140,9 +99,13 @@
             </a>
             </p>
 
+            {% set sideBarContent %}
+            {% include "./citizen-hub-sidebar.njk" %}
+            {% endset %}
+
             {{ govukDetails({
               summaryText: "Contact",
-              html: sideBar(callEmployer, contactTribunal)
+              html: sideBarContent
             }) }}
           </div>
         </div>
