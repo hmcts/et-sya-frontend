@@ -15,7 +15,7 @@ export default class ClaimantApplicationsController {
     ]);
     const userCases = await getUserCasesByLastModified(req);
     if (userCases.length === 0) {
-      res.redirect(PageUrls.HOME);
+      return res.redirect(PageUrls.HOME);
     } else {
       const usersApplications = getUserApplications(userCases);
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {

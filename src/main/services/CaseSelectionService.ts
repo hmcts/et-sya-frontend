@@ -87,19 +87,19 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     req.session.userCase = undefined;
-    res.redirect(PageUrls.HOME);
+    return res.redirect(PageUrls.WORK_POSTCODE);
   }
   try {
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
-      res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
+      return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
     } else {
       req.session.userCase = fromApiFormat(response.data);
       req.session.save();
-      res.redirect(PageUrls.CLAIM_STEPS);
+      return res.redirect(PageUrls.CLAIM_STEPS);
     }
   } catch (err) {
     logger.log(err);
-    res.redirect(PageUrls.HOME);
+    return res.redirect(PageUrls.HOME);
   }
 };
