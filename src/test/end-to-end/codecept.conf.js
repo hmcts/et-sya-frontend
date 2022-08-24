@@ -7,11 +7,11 @@ exports.config = {
     Puppeteer: {
       url: testConfig.TestUrl,
       waitForTimeout: 10000,
-      //waitForAction: 4000,
+      //waitForAction: 2000,
       getPageTimeout: 30000,
       show: testConfig.TestShowBrowserWindow,
       waitForNavigation: 'networkidle0',
-      //headless: true,
+      headless: true,
       chrome: {
         ignoreHTTPSErrors: true,
         defaultViewport: {
@@ -39,7 +39,7 @@ exports.config = {
         stdout: './functional-output/console.log',
         options: {
           includeScreenshots: true,
-          reportDir: testConfig.reportFolder,
+          reportDir: testConfig.TestReportFolder,
           reportFilename: 'ET-sya-functional-tests',
           reportTitle: 'ET SYA Tests',
           inline: true,

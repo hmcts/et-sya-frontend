@@ -1,5 +1,5 @@
 Feature('ET multiple claims for my self');
-const commonFlow = require('./commonFlow.js');
+const commonFlow = require('../../helpers/commonFlow.js');
 const { I } = inject();
 const waitSeconds = 2;
 
@@ -16,4 +16,5 @@ Scenario('Verify ET multiple claim for myself', async () => {
   I.see('Are you making a claim on your own or with others?');
   I.checkOption('input[id=single-or-multiple-claim-2]');
   I.click('Continue');
+  I.seeInCurrentUrl('/application-number');
 }).tag(' @RET-BAT');

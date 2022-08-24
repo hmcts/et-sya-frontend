@@ -1,7 +1,8 @@
 Feature('ET Single claim for my self');
 const { I } = inject();
+const commonFlow = require('../../helpers/commonFlow.js');
+
 const authPage = require('./authPage.js');
-const commonFlow = require('./commonFlow.js');
 
 Scenario('Verify ET single claim for myself when there is no acas certificate', async () => {
   commonPages();
@@ -28,7 +29,7 @@ Scenario('Verify ET single claim myself when claim against one or more responden
   commonPages();
 
   I.seeElement('#acas-multiple-2');
-  I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
+  //I.click('How can ‘early conciliation’ help?', 'span[class=govuk-details__summary-text]');
   I.checkOption('input[id=acas-multiple-2]');
   I.click('Continue');
 
