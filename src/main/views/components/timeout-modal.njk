@@ -1,14 +1,15 @@
 {% macro timeoutModal() %}
   <div class="timeout-modal" id="timeout-modal" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description" aria-hidden="true">
-    <h2 class="govuk-heading-l" id="dialog-title"> 'time out dialog title' </h2>
-    <p id="dialog-description"> 'timeout modal description'</p>
+    <h2 class="govuk-heading-m" id="dialog-title"> {{sessionTimeout.modal.title}} </h2>
+     <p class="govuk-body" id="dialog-description"> </p> 
 
     {{ govukButton({
-      text: 'add text for timeout modal',
+      text: sessionTimeout.modal.extend,
       attributes: {
         id: 'extend-session'
       }
     }) }}
+
   </div>
   <div class="modal-overlay" id="modal-overlay" tabindex="-1" aria-hidden="true"></div>
 {% endmacro %}

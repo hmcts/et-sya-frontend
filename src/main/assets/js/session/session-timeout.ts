@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
+
 //import { paths } from '../app/paths';
-//import i18n from '../locale/en.json';
+import * as i18n from '../../../resources/locales/en/translation/template.json';
 
 export default class SessionTimeout {
   public sessionExpirationTime: string;
@@ -85,7 +86,7 @@ export default class SessionTimeout {
   };
 
   resetModalMessage = (): void => {
-    this.modalCountdownElement.innerHTML = 'RESET MODAL MESSAGE';
+    this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
   };
 
   restartCounters = (): void => {
@@ -108,7 +109,7 @@ export default class SessionTimeout {
       console.log('set interval - minutes', minutes);
       console.log('set interval - seconds', seconds);
 
-      this.modalCountdownElement.innerHTML = `${'time out modal description'} ${minutes}:${seconds} ${'time out modal second description'}`;
+      this.modalCountdownElement.innerHTML = `${i18n.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18n.sessionTimeout.modal.body[1]}`;
       count += 1000;
     }, 1000);
   };
