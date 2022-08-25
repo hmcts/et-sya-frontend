@@ -8,6 +8,7 @@ module.exports = () => {
     authenticateWithIdam: steps.IDAM.signin,
     youCanSaveCard: steps.saveDraft.youCanSaveCard,
     didYouWorkForOrganisation: steps.employmentDetails.didYouWorkForOrg,
+    personalDetails: steps.personalDetails.personalDetails,
   });
 };
 
