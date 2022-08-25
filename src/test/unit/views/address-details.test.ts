@@ -31,7 +31,7 @@ describe('Address details page', () => {
 
   it("should display the 'Find Address' button", () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
+    expect(button[4].innerHTML).contains('Find address', 'Could not find the button');
   });
 
   it('should have 5 input address fields which are conditionally displayed', () => {
