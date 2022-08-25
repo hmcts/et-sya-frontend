@@ -26,6 +26,7 @@ describe('Address details Controller', () => {
       const errors = [
         { propertyName: 'address1', errorType: 'required' },
         { propertyName: 'addressTown', errorType: 'required' },
+        { propertyName: 'addressCountry', errorType: 'required' },
       ];
       const body = { address1: '' };
 
@@ -40,7 +41,12 @@ describe('Address details Controller', () => {
     });
 
     it('should assign userCase from formData', () => {
-      const body = { address1: '10 test street', addressTown: 'test', addressPostcode: 'AB1 2CD' };
+      const body = {
+        address1: '10 test street',
+        addressTown: 'test',
+        addressCountry: 'country',
+        addressPostcode: 'AB1 2CD',
+      };
 
       const controller = new AddressDetailsController();
 
@@ -54,6 +60,7 @@ describe('Address details Controller', () => {
       expect(req.session.userCase).toStrictEqual({
         address1: '10 test street',
         addressTown: 'test',
+        addressCountry: 'country',
         addressPostcode: 'AB1 2CD',
       });
     });

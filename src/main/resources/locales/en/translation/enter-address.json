@@ -1,7 +1,6 @@
 {
   "enterPostcode": "Enter a UK postcode",
   "findAddress": "Find address",
-  "cannotFindAddress": "I cannot find the address in the list",
   "change": "Change",
   "postcode": "Postcode",
   "addressLine1": "Address line 1",
