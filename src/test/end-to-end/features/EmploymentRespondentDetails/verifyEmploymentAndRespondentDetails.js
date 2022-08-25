@@ -8,11 +8,11 @@ Scenario("Did you work for the organisation or person you're making your claim a
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
   await didYouWorkForOrganisation(I, 'No');
-}).tag('@demi');
+}).tag('@RET-WIP');
 
 Scenario("Did you work for the organisation or person you're making your claim against? - YES", async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
   await didYouWorkForOrganisation(I, 'Yes');
-}).tag('@RET-BAT');
+}).tag('@RET-WIP');

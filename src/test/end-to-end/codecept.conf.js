@@ -7,7 +7,7 @@ exports.config = {
     Puppeteer: {
       url: testConfig.TestUrl,
       waitForTimeout: 10000,
-      //waitForAction: 2000,
+      waitForAction: 2000,
       getPageTimeout: 30000,
       show: testConfig.TestShowBrowserWindow,
       waitForNavigation: 'networkidle0',
