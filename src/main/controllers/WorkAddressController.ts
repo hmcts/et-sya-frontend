@@ -44,10 +44,11 @@ export default class WorkAddressController {
     if (saveForLater) {
       handleSaveAsDraft(res);
     } else {
-      const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+      const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
+      const redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
         : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
-      if (YesOrNo.YES) {
+      if (isRespondentAndWorkAddressSame) {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
