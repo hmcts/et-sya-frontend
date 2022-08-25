@@ -110,9 +110,6 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
-      for (const key of links) {
-        console.log(key.outerHTML);
-      }
 
       expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
     }
@@ -226,7 +223,6 @@ describe('Steps to making your claim page', () => {
       'Whistleblowing',
       'Other type of Claim',
     ];
-    console.log(htmlRes);
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
     expect(foundArr).to.have.members(expected);
