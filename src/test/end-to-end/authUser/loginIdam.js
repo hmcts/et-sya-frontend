@@ -1,12 +1,10 @@
 const { I } = inject();
-
-let username = process.env.TEST_CASE_USERNAME;
-let password = process.env.TEST_CASE_PASSWORD;
+const config = require('../config.js');
 
 function signInWithCredentials() {
   I.seeElement('#username');
-  I.fillField('#username', username);
-  I.fillField('#password', password);
+  I.fillField('#username', config.TestEnvETUser);
+  I.fillField('#password', config.TestEnvETPassword);
   I.click('Sign in');
 }
 module.exports = { signInWithCredentials };
