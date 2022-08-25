@@ -103,11 +103,12 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.placeOfWorkContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ENTER_ADDRESS,
-      TranslationKeys.PLACE_OF_WORK,
-    ]);
+    const content = getPageContent(
+      req,
+      this.placeOfWorkContent,
+      [TranslationKeys.COMMON, TranslationKeys.ENTER_ADDRESS, TranslationKeys.PLACE_OF_WORK],
+      0
+    ); // only respondent 1 has work address that is why selected respondent index is 0
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,

@@ -217,7 +217,8 @@ export const hasValidFileFormat: Validator = value => {
 };
 
 export const isAcasNumberValid: Validator = value => {
-  if (!/(=?^R([0-9/](?!.*[\\/]{2})){10,12}$)(?<!\/)$/.test(value as string)) {
+  const regEx = /(R(?![/]{1})([\d/](?!.*[/]{2})){10,12}$)/;
+  if (!regEx.test(value as string)) {
     return 'invalidAcasNumber';
   }
 };
