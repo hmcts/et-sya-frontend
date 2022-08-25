@@ -5,7 +5,26 @@
 {% set submittedApplications = [] %}
 
 {% for app in usersApplications %}
-  {% if app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
+
+{% if app.respondents === 'undefined' %}
+    {% set draftApplications = (draftApplications.push([
+      {
+        text: app.userCase.createdDate
+      }, {
+        text: app.userCase.id
+      }, {
+        text: app.userCase.typeOfClaim
+      }, {
+        text: noRespondents
+      }, {
+        text: app.completionStatus
+      }, {
+        text: app.userCase.lastModified
+      }, {
+        html: "<a href=" +  app.url + ">" + continue + "</a>"
+      }
+    ]), draftApplications) %}
+  {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
     {% set draftApplications = (draftApplications.push([
       {
         text: app.userCase.createdDate
