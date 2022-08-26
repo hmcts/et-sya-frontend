@@ -164,4 +164,15 @@ describe('Axios post to retrieve pdf', () => {
       })
     );
   });
+  describe('Axios post to upload document', () => {
+    it('should send file to api endpoint', () => {
+      const mockType = 'ET_EnglandWales';
+      const mockForm: FormData = new FormData();
+      mockForm.append('document_upload', new Blob(['']));
+      api.uploadDocument(new Blob(['']), mockType);
+      expect(mockedAxios.post).toBeCalledWith(JavaApiUrls.UPLOAD_FILE + mockType, mockForm, {
+        headers: { 'content-type': 'multipart/form-data' },
+      });
+    });
+  });
 });

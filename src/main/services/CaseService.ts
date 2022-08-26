@@ -7,6 +7,8 @@ import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
+const FormData = require('form-data');
+
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
@@ -34,6 +36,15 @@ export class CaseApi {
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
+  };
+
+  uploadDocument = async (document: Blob, caseTypeId: string): Promise<AxiosResponse> => {
+    const formData = new FormData();
+    formData.append('document_upload', document, 'test.txt');
+
+    return this.axio.post(JavaApiUrls.UPLOAD_FILE + caseTypeId, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   };
 }
 
