@@ -1,34 +1,15 @@
 {
   "title": "Sex and gender identity",
-  "h1": "Sex and gender identity",
+  "h1": "Sex and gender identity (Optional)",
   "p": "These details will be used to help progress your claim.",
   "male": "Male",
   "female": "Female",
   "sex": "What is your sex?",
-  "genderIdentitySame": "Is the gender you identify with the same as your sex registered at birth?",
-  "genderIdentitySameHint": "This question is voluntary.",
+  "preferNotToSay": "Prefer not to say",
   "preferredTitle": "What is your preferred title?",
-  "genderIdentityTextLabel": "What is your gender identity?",
-  "genderTitle": {
-    "notSelected": "Please select",
-    "mr": "Mr",
-    "mrs": "Mrs",
-    "miss": "Miss",
-    "ms": "Ms",
-    "mx": "Mx",
-    "other": "Other",
-    "preferNotToSay": "Prefer not to say"
-  },
-  "otherTitlePreference": "If 'other' please enter your preferred title",
   "errors": {
-    "claimantSex": {
-      "required": "Select an option for the \"What is your sex\" question"
-    },
     "preferredTitle": {
-      "required": "Select a list option from the \"What is your preferred title\" dropdown"
-    },
-    "otherTitlePreference": {
-      "required": "Tell us your preferred title",
+      "required": "Select a list option from the \"What is your preferred title\" dropdown",
       "lengthError": "Your preferred title must be a minimum of 2 characters",
       "numberError": "Tell us your preferred title? This must not include numbers"
     }

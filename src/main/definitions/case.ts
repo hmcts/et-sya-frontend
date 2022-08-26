@@ -98,10 +98,7 @@ export interface Case {
   workPostcode?: string;
   respondentName?: string;
   claimantSex?: Sex;
-  claimantGenderIdentitySame?: YesOrNoOrPreferNot;
-  claimantGenderIdentity?: string;
-  preferredTitle?: GenderTitle;
-  otherTitlePreference?: string;
+  preferredTitle?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
@@ -170,16 +167,6 @@ export const enum EmailOrPost {
 export const enum Sex {
   MALE = 'Male',
   FEMALE = 'Female',
-  PREFER_NOT_TO_SAY = 'Prefer not to say',
-}
-
-export const enum GenderTitle {
-  MR = 'Mr',
-  MRS = 'Mrs',
-  MISS = 'Miss',
-  MS = 'Ms',
-  MX = 'Mx',
-  OTHER = 'Other',
   PREFER_NOT_TO_SAY = 'Prefer not to say',
 }
 

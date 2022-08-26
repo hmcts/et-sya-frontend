@@ -1,12 +1,4 @@
-import {
-  EmailOrPost,
-  GenderTitle,
-  HearingPreference,
-  Sex,
-  StillWorking,
-  YesOrNo,
-  YesOrNoOrPreferNot,
-} from '../../../main/definitions/case';
+import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -36,9 +28,7 @@ export const mockEt1DataModelUpdate = {
       claimant_last_name: 'Doe',
       claimant_date_of_birth: '2010-05-11',
       claimant_sex: Sex.MALE,
-      claimant_gender_identity_same: YesOrNoOrPreferNot.PREFER_NOT,
-      claimant_preferred_title: GenderTitle.MISS,
-      claimant_title_other: undefined as string,
+      claimant_title_other: 'Mr',
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
