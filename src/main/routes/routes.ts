@@ -21,6 +21,7 @@ export default function (app: Application): void {
   app.post(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.post);
   app.get(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.get);
   app.post(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.post);
+  app.get(PageUrls.COOKIE_PREFERENCES, app.locals.container.cradle.cookiePreferencesController.get);
   app.get(
     PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
     app.locals.container.cradle.respondentNameController.get

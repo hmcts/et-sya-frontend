@@ -8,8 +8,8 @@ const titleClass = 'govuk-heading-xl';
 const expectedTitle = 'What is your contact or home address?';
 const buttonClass = 'govuk-button';
 const inputs = '[class*="address"]';
-const expectedInputLabel1 = 'Building and street';
-const expectedInputLabel2 = '';
+const expectedInputLabel1 = 'Address line 1';
+const expectedInputLabel2 = 'Address line 2';
 const expectedInputLabel3 = 'Town or city';
 const expectedInputLabel4 = 'Country';
 const expectedInputLabel5 = 'Postcode';
@@ -31,7 +31,7 @@ describe('Address details page', () => {
 
   it("should display the 'Find Address' button", () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
+    expect(button[4].innerHTML).contains('Find address', 'Could not find the button');
   });
 
   it('should have 5 input address fields which are conditionally displayed', () => {
