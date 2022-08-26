@@ -42,12 +42,12 @@ describe('Hearing Preference video or phone Choice page', () => {
 
   it('should display firt paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[4].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p1[5].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('continue', 'Could not find the button');
   });
 
   it('should display 3 checkboxes', () => {

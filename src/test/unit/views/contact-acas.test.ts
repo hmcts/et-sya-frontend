@@ -39,6 +39,6 @@ describe('Contact Acas page', () => {
 
   it('should display contact button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains(contactAcasJson.buttonTxt, 'Could not find the button');
+    expect(button[5].innerHTML).contains(contactAcasJson.buttonTxt, 'Could not find the button');
   });
 });
