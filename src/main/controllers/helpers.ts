@@ -443,7 +443,7 @@ export const handleReturnUrl = (req: AppRequest, res: Response, redirectUrl: str
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
-  if (typeof selectedRespondentIndex !== 'undefined') {
+  if (typeof selectedRespondentIndex !== 'undefined' && userCase.respondents !== undefined) {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
     userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
     userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex].respondentAddress2;
