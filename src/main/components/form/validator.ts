@@ -133,12 +133,6 @@ export const isValidAvgWeeklyHours: Validator = value => {
   } else if (hours < minValue) {
     return 'negativeNumber';
   }
-
-  if (/^\d+$/.test(value as string)) {
-    return;
-  } else {
-    return 'invalid';
-  }
 };
 
 export const isValidPension: Validator = value => {

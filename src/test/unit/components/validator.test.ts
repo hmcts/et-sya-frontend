@@ -388,5 +388,11 @@ describe('Validation', () => {
 
       expect(isValid).toStrictEqual('invalidAcasNumber');
     });
+
+    it('Should check if has / character at the end', () => {
+      const isValid = isAcasNumberValid('R145123112/');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
   });
 });
