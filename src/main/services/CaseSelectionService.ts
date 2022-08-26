@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
 import { PageUrls, Urls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { fromApiFormat } from '../helper/ApiFormatter';
@@ -18,13 +18,20 @@ export const getUserApplications = (userCases: CaseWithId[]): ApplicationTableRe
   for (const uCase of userCases) {
     const rec: ApplicationTableRecord = {
       userCase: uCase,
-      respondents: uCase.respondents?.map(respondent => respondent.respondentName).join('<br />'),
+      respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase),
       url: getRedirectUrl(uCase),
     };
     apps.push(rec);
   }
   return apps;
+};
+
+export const formatRespondents = (respondents?: Respondent[]): string => {
+  if (respondents === undefined) {
+    return 'undefined';
+  }
+  return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
 export const getRedirectUrl = (userCase: CaseWithId): string => {

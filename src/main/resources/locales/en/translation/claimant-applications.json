@@ -3,6 +3,7 @@
   "h1": "Draft applications",
   "h2": "Submitted applications",
   "p1": "<a href='/claimant-application/newClaim' class=\"govuk-link\">Start a new claim</a>",
+  "noRespondents": "Not yet provided",
   "col1": "Date created",
   "col2": "Reference",
   "col3": "Type of claim",

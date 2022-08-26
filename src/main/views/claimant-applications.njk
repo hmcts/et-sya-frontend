@@ -53,11 +53,9 @@
       }, {
         text: app.respondents | safe
       }, {
-        text: app.completionStatus
-      }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" +  app.url + ">" + continue + "</a>"
+        html: "<a href=" +  app.url + ">" + view + "</a>"
       }
     ]), submittedApplications) %}
   {% endif %}
@@ -124,9 +122,6 @@
                     },
                     {
                       text: col4
-                    },
-                    {
-                      text: col5
                     },
                     {
                       text: col6
