@@ -28,7 +28,7 @@ export const mockEt1DataModelUpdate = {
       claimant_last_name: 'Doe',
       claimant_date_of_birth: '2010-05-11',
       claimant_sex: Sex.MALE,
-      claimant_title_other: 'Mr',
+      claimant_preferred_title: 'Mr',
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',

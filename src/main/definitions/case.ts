@@ -170,6 +170,14 @@ export const enum Sex {
   PREFER_NOT_TO_SAY = 'Prefer not to say',
 }
 
+export enum ccdPreferredTitle {
+  MR = 'Mr',
+  MRS = 'Mrs',
+  MISS = 'Miss',
+  MS = 'Ms',
+  OTHER = 'Other',
+}
+
 export const enum PayInterval {
   WEEKLY = 'Weeks',
   MONTHLY = 'Months',

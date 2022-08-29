@@ -18,7 +18,10 @@ import { CaseState } from '../../../main/definitions/definition';
 import {
   formatDate,
   fromApiFormat,
+  isOtherTitle,
+  isValidPreferredTitle,
   parseDateFromString,
+  returnPreferredTitle,
   toApiFormat,
   toApiFormatCreate,
 } from '../../../main/helper/ApiFormatter';
@@ -110,7 +113,8 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_last_name: 'Doe',
           claimant_date_of_birth: '2022-10-05',
           claimant_sex: Sex.MALE,
-          claimant_title_other: 'Mr',
+          claimant_preferred_title: 'Other',
+          claimant_title_other: 'Captain',
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
@@ -163,7 +167,7 @@ describe('Format Case Data to Frontend Model', () => {
         year: '2022',
       },
       claimantSex: Sex.MALE,
-      preferredTitle: 'Mr',
+      preferredTitle: 'Captain',
       email: 'janedoe@exmaple.com',
       firstName: 'Jane',
       lastName: 'Doe',
@@ -282,6 +286,52 @@ describe('formatDate()', () => {
     { date: undefined, expected: null },
   ])('Correct formatting of date to string: %o', ({ date, expected }) => {
     expect(formatDate(date)).toBe(expected);
+  });
+});
+
+describe('isValidPreferredTitle()', () => {
+  it.each([
+    { title: 'Mr', expected: 'Mr' },
+    { title: 'mr', expected: 'Mr' },
+    { title: 'mR', expected: 'Mr' },
+    { title: 'Ms', expected: 'Ms' },
+    { title: 'Miss', expected: 'Miss' },
+    { title: 'Mrs', expected: 'Mrs' },
+    { title: 'Missus', expected: 'Other' },
+    { title: 'Captain', expected: 'Other' },
+    { title: '', expected: undefined },
+    { title: undefined, expected: undefined },
+  ])('Correctly retuns valid preferred title: %o', ({ title, expected }) => {
+    expect(isValidPreferredTitle(title)).toBe(expected);
+  });
+});
+
+describe('isOtherTitle()', () => {
+  it.each([
+    { title: 'Mr', expected: undefined },
+    { title: 'mr', expected: undefined },
+    { title: 'mR', expected: undefined },
+    { title: 'Ms', expected: undefined },
+    { title: 'Miss', expected: undefined },
+    { title: 'Mrs', expected: undefined },
+    { title: 'Missus', expected: 'Missus' },
+    { title: 'Captain', expected: 'Captain' },
+    { title: '', expected: undefined },
+    { title: undefined, expected: undefined },
+  ])('Correctly retuns valid other title: %o', ({ title, expected }) => {
+    expect(isOtherTitle(title)).toBe(expected);
+  });
+});
+
+describe('returnPreferredTitle()', () => {
+  it.each([
+    { preferredTitle: 'Mr', otherTitle: undefined, expected: 'Mr' },
+    { preferredTitle: 'Ms', otherTitle: undefined, expected: 'Ms' },
+    { preferredTitle: 'Other', otherTitle: 'Sir', expected: 'Sir' },
+    { preferredTitle: undefined, otherTitle: 'Doctor', expected: 'Doctor' },
+    { preferredTitle: undefined, otherTitle: undefined, expected: undefined },
+  ])('Returns the correct title: %o', ({ preferredTitle, otherTitle, expected }) => {
+    expect(returnPreferredTitle(preferredTitle, otherTitle)).toBe(expected);
   });
 });
 
