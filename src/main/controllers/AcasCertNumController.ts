@@ -78,6 +78,7 @@ export default class AcasCertNumController {
       if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
         redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
       } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
+        req.session.returnUrl = undefined;
         redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
       } else {
         redirectUrl = PageUrls.ACAS_CERT_NUM;
