@@ -33,14 +33,11 @@ export default class RespondentDetailsCheckController {
     const newRespondentNum = respondents.length + 1;
     if (newRespondentNum > 6) {
       req.session.errors = [{ errorType: 'exceeded', propertyName: 'hiddenErrorField' }];
-      req.session.save(err => {
-        if (err) {
-          throw err;
-        }
-      });
       return res.redirect(req.url);
+    } else {
+      req.session.errors = [];
+      return res.redirect(getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME));
     }
-    return res.redirect(getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME));
   };
 
   public get = (req: AppRequest, res: Response): void => {
