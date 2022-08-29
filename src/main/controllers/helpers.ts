@@ -228,8 +228,8 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
       return res.redirect(req.url);
     });
   } else {
-    handleReturnUrl(req, res, redirectUrl);
-    res.redirect(redirectUrl);
+    const nextPage = handleReturnUrl(req, redirectUrl);
+    return res.redirect(nextPage);
   }
 };
 
@@ -428,18 +428,13 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
   }
 };
 
-export const handleReturnUrl = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  if (req.url === PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK || req.url === PageUrls.CLAIM_SUBMITTED) {
+export const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
+  let nextPage = redirectUrl;
+  if (req.session.returnUrl) {
+    nextPage = req.session.returnUrl;
     req.session.returnUrl = undefined;
   }
-  if (req.session.returnUrl !== undefined) {
-    return res.redirect(req.session.returnUrl);
-  }
-  if (redirectUrl === PageUrls.RESPONDENT_DETAILS_CHECK || redirectUrl === PageUrls.CHECK_ANSWERS) {
-    req.session.returnUrl = redirectUrl;
-  } else {
-    req.session.returnUrl = undefined;
-  }
+  return nextPage;
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {

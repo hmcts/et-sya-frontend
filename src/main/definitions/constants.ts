@@ -139,6 +139,7 @@ export const PageUrls = {
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
   COOKIE_PREFERENCES: '/cookies',
+  CHANGE_DETAILS: '*/change',
 } as const;
 
 export const ValidationErrors = {
