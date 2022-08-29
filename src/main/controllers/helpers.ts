@@ -273,10 +273,15 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
     req.session.userCase = {} as CaseWithId;
   }
   let respondent: Respondent;
-  if (!req.session.userCase.respondents) {
+  if (req.session.userCase.respondents === undefined) {
     req.session.userCase.respondents = [];
     respondent = {
       respondentNumber: 1,
+    };
+    req.session.userCase.respondents.push(respondent);
+  } else if (req.session.userCase.respondents.length <= selectedRespondentIndex) {
+    respondent = {
+      respondentNumber: selectedRespondentIndex + 1,
     };
     req.session.userCase.respondents.push(respondent);
   }
@@ -439,19 +444,19 @@ export const handleReturnUrl = (req: AppRequest, redirectUrl: string): string =>
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
   if (typeof selectedRespondentIndex !== 'undefined' && userCase.respondents !== undefined) {
-    userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
-    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
-    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex].respondentAddress2;
-    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex].respondentAddressTown;
-    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex].respondentAddressCountry;
-    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex].respondentAddressPostcode;
-    userCase.workAddress1 = userCase.respondents[selectedRespondentIndex].workAddress1;
-    userCase.workAddress2 = userCase.respondents[selectedRespondentIndex].workAddress2;
-    userCase.workAddressTown = userCase.respondents[selectedRespondentIndex].workAddressTown;
-    userCase.workAddressCountry = userCase.respondents[selectedRespondentIndex].workAddressCountry;
-    userCase.workAddressPostcode = userCase.respondents[selectedRespondentIndex].workAddressPostcode;
-    userCase.acasCert = userCase.respondents[selectedRespondentIndex].acasCert;
-    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex].acasCertNum;
-    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex].noAcasReason;
+    userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
+    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex]?.respondentAddress1;
+    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex]?.respondentAddress2;
+    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex]?.respondentAddressTown;
+    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex]?.respondentAddressCountry;
+    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex]?.respondentAddressPostcode;
+    userCase.workAddress1 = userCase.respondents[selectedRespondentIndex]?.workAddress1;
+    userCase.workAddress2 = userCase.respondents[selectedRespondentIndex]?.workAddress2;
+    userCase.workAddressTown = userCase.respondents[selectedRespondentIndex]?.workAddressTown;
+    userCase.workAddressCountry = userCase.respondents[selectedRespondentIndex]?.workAddressCountry;
+    userCase.workAddressPostcode = userCase.respondents[selectedRespondentIndex]?.workAddressPostcode;
+    userCase.acasCert = userCase.respondents[selectedRespondentIndex]?.acasCert;
+    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex]?.acasCertNum;
+    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex]?.noAcasReason;
   }
 };
