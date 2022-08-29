@@ -10,6 +10,9 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
@@ -20,7 +23,7 @@
                       key: {
                         text: subTitle + respondent.respondentNumber,
                         classes: "govuk-heading-m"
-                      } 
+                      }
                     },
                     {
                       key: {
@@ -43,8 +46,8 @@
                       key: {
                         text: address
                       },
-                      value: {             
-                          text: respondent.respondentAddress1           
+                      value: {
+                          text: respondent.respondentAddress1
                       },
                       actions: {
                         items: [
@@ -74,13 +77,13 @@
                       }
                     }
                   ]
-                }) 
+                })
               }}
 
             {% endfor %}
 
 
-  
+
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
@@ -99,5 +102,5 @@
           href: "/your-claim-has-been-saved"
         }) }}
       </div>
-    </div> 
+    </div>
 {% endblock %}
