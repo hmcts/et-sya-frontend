@@ -1,8 +1,9 @@
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Document } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -134,6 +135,14 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
     },
+  };
+}
+
+export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  return {
+    document_url: document.uri,
+    document_filename: document.name,
+    document_binary_url: document.uri,
   };
 }
 

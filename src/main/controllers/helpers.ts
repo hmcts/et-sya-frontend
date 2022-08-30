@@ -387,7 +387,7 @@ export const handleUploadDocument = (req: AppRequest, file: UploadedFile, logger
   getCaseApi(req.session.user?.accessToken)
     .uploadDocument(file, 'ET_EnglandWales')
     .then((res: AxiosResponse<DocumentUploadResponse>) => {
-      logger.info(`Uploaded document to: ${res.data.uri.href}`);
+      logger.info(`Uploaded document to: ${res.data}`);
     })
     .catch(err => {
       logger.error(err.message);
