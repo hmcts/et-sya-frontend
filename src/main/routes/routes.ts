@@ -3,7 +3,6 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-//import { checkSession, getSessionEnded } from '../controllers/SessionTimeoutController';
 import { PageUrls, Urls } from '../definitions/constants';
 
 export default function (app: Application): void {
