@@ -13,11 +13,16 @@ export default class CitizenHubController {
     const retrievedCase = await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId);
     try {
       req.session.userCase = fromApiFormat(retrievedCase.data);
-      req.session.save();
+      req.session.save(err => {
+        if (err) {
+          throw err;
+        }
+      });
     } catch (err) {
       const error = new Error(err);
-      error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
+      error.name = CaseApiErrors.FAILED_TO_RETRIEVE_CASE;
       throw error;
+      //todo lead to main page. Check 2086
     }
 
     const userCase = req.session.userCase;

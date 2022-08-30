@@ -105,7 +105,7 @@ export const idamCallbackHandler = async (
       .catch(err => {
         logger.log(err);
         const error = new Error(err);
-        error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
+        error.name = CaseApiErrors.FAILED_TO_RETRIEVE_CASE;
         return next(error);
       });
   } else {

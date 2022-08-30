@@ -201,12 +201,12 @@ export const RedisErrors = {
   DISPLAY_MESSAGE: 'Please try again or return later.',
   FAILED_TO_CONNECT: 'Error when attempting to connect to Redis',
   FAILED_TO_SAVE: 'Error when attempting to save to Redis',
-  FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
+  FAILED_TO_RETRIEVE: 'Error when attempting to retrieve value from Redis',
   CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;
 
 export const CaseApiErrors = {
-  FAILED_TO_RETREIVE_CASE: 'Error when attempting to retreive draft case from sya-api',
+  FAILED_TO_RETRIEVE_CASE: 'Error when attempting to retrieve draft case from sya-api',
 } as const;
 
 export const CcdDataModel = {
