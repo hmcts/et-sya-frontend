@@ -32,7 +32,7 @@ import { PageUrls, mvpLocations } from '../definitions/constants';
 import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getCaseApi } from '../services/CaseService';
+import { UploadedFile, getCaseApi } from '../services/CaseService';
 
 export const getPageContent = (
   req: AppRequest,
@@ -382,10 +382,10 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
   }
 };
 
-export const handleUploadDocument = (req: AppRequest, document: Blob, logger: LoggerInstance): void => {
+export const handleUploadDocument = (req: AppRequest, file: UploadedFile, logger: LoggerInstance): void => {
   //if(!req.session.errors.length) {
   getCaseApi(req.session.user?.accessToken)
-    .uploadDocument(document, 'ET_EnglandWales')
+    .uploadDocument(file, 'ET_EnglandWales')
     .then((res: AxiosResponse<DocumentUploadResponse>) => {
       logger.info(`Uploaded document to: ${res.data.uri.href}`);
     })
