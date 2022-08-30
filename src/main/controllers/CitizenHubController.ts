@@ -1,27 +1,26 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { CaseState } from '../definitions/definition';
+import { CaseApiErrors, PageUrls, TranslationKeys } from '../definitions/constants';
 import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
+import { getCaseApi } from '../services/CaseService';
 
 export default class CitizenHubController {
-  public get(req: AppRequest, res: Response): void {
-    const userCase =
-      req.session?.userCase ||
-      // todo remove this when user case loaded from DB.
-      ({
-        id: '123',
-        ethosCaseReference: '654321/2022',
-        firstName: 'Paul',
-        lastName: 'Mumbere',
-        respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
-        state: CaseState.ACCEPTED,
-        et3IsThereAnEt3Response: YesOrNo.YES,
-      } as CaseWithId);
+  public async get(req: AppRequest, res: Response): Promise<void> {
+    const retrievedCase = await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId);
+    try {
+      req.session.userCase = fromApiFormat(retrievedCase.data);
+      req.session.save();
+    } catch (err) {
+      const error = new Error(err);
+      error.name = CaseApiErrors.FAILED_TO_RETREIVE_CASE;
+      throw error;
+    }
+
+    const userCase = req.session.userCase;
 
     userCase.hubLinks = userCase.hubLinks || new HubLinks();
 

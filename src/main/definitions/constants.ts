@@ -140,7 +140,7 @@ export const PageUrls = {
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
   COOKIE_PREFERENCES: '/cookies',
-  CITIZEN_HUB: '/citizen-hub',
+  CITIZEN_HUB: '/citizen-hub/:caseId',
 } as const;
 
 export const AuthUrls = {
@@ -151,6 +151,7 @@ export const AuthUrls = {
 
 export const JavaApiUrls = {
   GET_CASES: 'cases/user-cases',
+  GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
