@@ -68,8 +68,8 @@ describe('Session Timeout', () => {
       addListenersStub = sandbox.stub(sessionTimeout, 'addListeners');
       extendSessionStub = sandbox.stub(sessionTimeout, 'extendSession');
       sessionTimeout.init();
-      expect(addListenersStub.calledOnce);
-      expect(extendSessionStub.calledOnce);
+      expect(addListenersStub).to.have.been.called.calledOnce;
+      expect(extendSessionStub).to.have.been.called;
     });
   });
 
@@ -85,7 +85,7 @@ describe('Session Timeout', () => {
         clientX: 20,
       });
       extendButton.dispatchEvent(evt);
-      expect(extendSessionStub.calledOnce);
+      expect(extendSessionStub).to.have.been.called.calledOnce;
     });
   });
 
@@ -101,7 +101,7 @@ describe('Session Timeout', () => {
         clientX: 20,
       });
       extendButton.dispatchEvent(evt);
-      expect(extendSessionStub.notCalled);
+      expect(extendSessionStub).not.to.have.been.called.calledOnce;
     });
   });
 
@@ -111,8 +111,8 @@ describe('Session Timeout', () => {
       sinon.spy(clock, 'clearInterval');
       sessionTimeout.stopCounters();
 
-      expect(clock.clearTimeout).calledTwice;
-      expect(clock.clearInterval).calledOnce;
+      expect(clock.clearTimeout).to.have.been.calledTwice;
+      expect(clock.clearInterval).to.have.been.calledOnce;
     });
 
     it('should restart counters', () => {
@@ -213,6 +213,9 @@ describe('Session Timeout', () => {
     });
 
     it('should not extend session and call removeListeners and stopCounters', done => {
+      const rejected = new Promise((_, r) => r());
+      sandbox.stub(axios, 'get').withArgs('/extend-session').returns(rejected);
+
       restartCountersStub = sandbox.stub(sessionTimeout, 'restartCounters');
       sandbox.stub(sessionTimeout, 'closeModal');
       removeListenersStub = sandbox.stub(sessionTimeout, 'removeListeners');
