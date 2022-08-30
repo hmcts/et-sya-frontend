@@ -4,7 +4,7 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Change Details Controller', () => {
-  it('should render the acas cert num controller page', () => {
+  it('should redirect to the same url with request.url and should set request.session.returnUrl to PageUrls.RESPONDENT_DETAILS_CHECK', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
     const request = mockRequest({});
