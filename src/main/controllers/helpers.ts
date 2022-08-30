@@ -32,6 +32,7 @@ import { PageUrls, mvpLocations } from '../definitions/constants';
 import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { UploadedFile, getCaseApi } from '../services/CaseService';
 
 export const getPageContent = (
@@ -387,7 +388,7 @@ export const handleUploadDocument = (req: AppRequest, file: UploadedFile, logger
   getCaseApi(req.session.user?.accessToken)
     .uploadDocument(file, 'ET_EnglandWales')
     .then((res: AxiosResponse<DocumentUploadResponse>) => {
-      logger.info(`Uploaded document to: ${res.data}`);
+      logger.info(`Uploaded document to: ${fromApiFormatDocument(res.data)}`);
     })
     .catch(err => {
       logger.error(err.message);
