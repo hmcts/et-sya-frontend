@@ -10,7 +10,6 @@ Scenario('ET Check your answer: Submit Claim', () => {
   I.seeElement('#main-content');
   I.click('#main-form-submit');
   I.see('Your claim has been submitted');
-
   authPage.logout();
 })
   .tag('@RET-1178')
