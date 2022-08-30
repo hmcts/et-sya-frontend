@@ -11,7 +11,30 @@ export const userCaseWithRespondent = {
   ],
 };
 
-export const userCaseWith6Respondent = {
+export const userCaseWith4Respondents = {
+  id: '12354',
+  state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+  respondents: [
+    {
+      respondentNumber: 1,
+      respondentName: 'Globo Gym 1',
+    },
+    {
+      respondentNumber: 2,
+      respondentName: 'Globo Gym 2',
+    },
+    {
+      respondentNumber: 3,
+      respondentName: 'Globo Gym 3',
+    },
+    {
+      respondentNumber: 4,
+      respondentName: 'Globo Gym 4',
+    },
+  ],
+};
+
+export const userCaseWith6Respondents = {
   id: '12354',
   state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
   respondents: [

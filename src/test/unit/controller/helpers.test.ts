@@ -6,13 +6,24 @@ import {
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
+  handleSessionErrors,
   isPostcodeMVPLocation,
+  setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
 import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
-import { mockRequest } from '../mocks/mockRequest';
+import {
+  mockForm,
+  mockFormField,
+  mockValidationCheckWithOutError,
+  mockValidationCheckWithRequiredError,
+} from '../mocks/mockForm';
+import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+import { userCaseWith4Respondents } from '../mocks/mockUserCaseWithRespondent';
 
 describe('Partial Pay errors', () => {
   it('should return error if pay interval does not exist', () => {
@@ -447,4 +458,70 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
+});
+
+describe('handleSessionErrors', () => {
+  it('return PageUrls.CLAIM_SAVED when saveForLater and requiredErrors exists', () => {
+    const req = mockRequest({
+      session: mockSession([], [], []),
+      body: { saveForLater: true, testFormField: 'test value' },
+    });
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithRequiredError(),
+      'test label'
+    );
+
+    const form = mockForm({ testFormField: formField });
+    const res = mockResponse();
+    handleSessionErrors(req, res, form, '');
+    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+  });
+
+  it('should throw error, when session errors exists and unable to save session', () => {
+    const body = { testFormField: 'test value' };
+    const err = new Error('Something went wrong');
+
+    const req = mockRequestWithSaveException({
+      body,
+    });
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithRequiredError(),
+      'test label'
+    );
+    const form = mockForm({ testFormField: formField });
+    const res = mockResponse();
+    expect(function () {
+      handleSessionErrors(req, res, form, '');
+    }).toThrow(err);
+  });
+});
+
+describe('setUserCaseForRespondent', () => {
+  it('should add new respondent to request when number of respondents is less than selectedRespondentIndex', () => {
+    const req = mockRequest({
+      session: mockSession([], [], []),
+      body: { saveForLater: true, testFormField: 'test value' },
+    });
+    req.session.userCase = userCaseWith4Respondents;
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithOutError(),
+      'test label'
+    );
+    req.params = { respondentNumber: '5' };
+    const form = mockForm({ testFormField: formField });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondents).toHaveLength(5);
+  });
 });
