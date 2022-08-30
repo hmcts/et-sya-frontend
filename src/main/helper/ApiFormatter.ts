@@ -141,8 +141,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
   return {
     document_url: document.uri,
-    document_filename: document.name,
-    document_binary_url: document.uri,
+    document_filename: document.originalDocumentName,
+    document_binary_url: document._links.binary.href,
   };
 }
 
