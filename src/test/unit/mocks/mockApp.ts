@@ -8,7 +8,7 @@ import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
-import { HubLinkStatus } from '../../../main/definitions/hub';
+import { HubLinkStatus, HubLinks } from '../../../main/definitions/hub';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
@@ -69,6 +69,14 @@ export const mockApp = ({
   userCase?: Partial<CaseWithId>;
   session?: AppSession;
 }): Express => {
+  const hubLinks = new HubLinks();
+  Object.keys(hubLinks).forEach(key => {
+    hubLinks[key] = {
+      link: PageUrls.HOME,
+      status: HubLinkStatus.NOT_YET_AVAILABLE,
+    };
+  });
+
   const mock = express();
   mock.all('*', function (req, res, next) {
     req.body = body;
@@ -77,22 +85,7 @@ export const mockApp = ({
         id: '1234',
         dobDate: { year: '2000', month: '12', day: '24' },
         // todo remove this from the mockapp, only needs to be for the hub content tests.
-        hubLinks: [
-          { links: [{ status: HubLinkStatus.COMPLETED, link: PageUrls.HOME }] },
-          { links: [{ status: HubLinkStatus.VIEWED, link: PageUrls.HOME }] },
-          { links: [{ status: HubLinkStatus.NOT_YET_AVAILABLE, link: PageUrls.HOME }] },
-          { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
-          {
-            links: [
-              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-              { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-            ],
-          },
-          { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
-          { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
-          { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
-        ],
+        hubLinks,
         ...userCase,
       } as CaseWithId,
       ...session,

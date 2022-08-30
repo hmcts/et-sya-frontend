@@ -6,7 +6,7 @@ import request from 'supertest';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinkStatus } from '../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinks } from '../../../main/definitions/hub';
 import { mockApp } from '../mocks/mockApp';
 
 const hubJsonRaw = fs.readFileSync(
@@ -104,6 +104,20 @@ describe('Citizen hub page', () => {
 
   describe('Hub content', () => {
     beforeAll(async () => {
+      const hubLinks = new HubLinks();
+      Object.keys(hubLinks).forEach(key => {
+        hubLinks[key] = {
+          link: PageUrls.HOME,
+          status: HubLinkStatus.OPTIONAL,
+        };
+      });
+
+      hubLinks[HubLinkNames.PersonalDetails].status = HubLinkStatus.SUBMITTED;
+      hubLinks[HubLinkNames.Et1ClaimForm].status = HubLinkStatus.SUBMITTED;
+      hubLinks[HubLinkNames.RespondentResponse].status = HubLinkStatus.COMPLETED;
+      hubLinks[HubLinkNames.HearingDetails].status = HubLinkStatus.NOT_YET_AVAILABLE;
+      hubLinks[HubLinkNames.RequestsAndApplications].status = HubLinkStatus.VIEWED;
+
       await request(
         mockApp({
           userCase: {
@@ -111,22 +125,7 @@ describe('Citizen hub page', () => {
             firstName: 'Paul',
             lastName: 'Mumbere',
             respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
-            hubLinks: [
-              { links: [{ status: HubLinkStatus.COMPLETED, link: PageUrls.HOME }] },
-              { links: [{ status: HubLinkStatus.VIEWED, link: PageUrls.HOME }] },
-              { links: [{ status: HubLinkStatus.NOT_YET_AVAILABLE, link: PageUrls.HOME }] },
-              { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
-              {
-                links: [
-                  { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-                  { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-                  { status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME },
-                ],
-              },
-              { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
-              { links: [{ status: HubLinkStatus.SUBMITTED, link: PageUrls.HOME }] },
-              { links: [{ status: HubLinkStatus.OPTIONAL, link: PageUrls.HOME }] },
-            ],
+            hubLinks,
           } as Partial<CaseWithId>,
         })
       )

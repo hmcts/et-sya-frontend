@@ -1,25 +1,24 @@
-export const createHubSections = (): HubSection[] => {
-  const sections: HubSection[] = [];
+export enum HubLinkNames {
+  PersonalDetails = 'personalDetails',
+  Et1ClaimForm = 'et1ClaimForm',
+  RespondentResponse = 'respondentResponse',
+  HearingDetails = 'hearingDetails',
+  RequestsAndApplications = 'requestsAndApplications',
+  RespondentApplications = 'respondentApplications',
+  ContactTribunal = 'contactTribunal',
+  TribunalOrders = 'tribunalOrders',
+  TribunalJudgements = 'tribunalJudgements',
+  Documents = 'documents',
+}
 
-  for (let i = 1; i <= 8; i++) {
-    if (i === 5) {
-      sections.push({
-        links: [
-          { status: HubLinkStatus.NOT_YET_AVAILABLE },
-          { status: HubLinkStatus.NOT_YET_AVAILABLE },
-          { status: HubLinkStatus.NOT_YET_AVAILABLE },
-        ],
-      });
-    } else {
-      sections.push({ links: [{ status: HubLinkStatus.NOT_YET_AVAILABLE }] });
-    }
+export class HubLinks {
+  [linkName: string]: HubLink;
+
+  constructor() {
+    Object.values(HubLinkNames).forEach(name => {
+      this[name] = { status: HubLinkStatus.NOT_YET_AVAILABLE } as HubLink;
+    });
   }
-
-  return sections;
-};
-
-export interface HubSection {
-  links: HubLink[];
 }
 
 export interface HubLink {
@@ -42,3 +41,14 @@ export const hubLinksMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.OPTIONAL, '--blue'],
   [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
 ]);
+
+export const sectionIndexToLinkNames: HubLinkNames[][] = [
+  [HubLinkNames.PersonalDetails],
+  [HubLinkNames.Et1ClaimForm],
+  [HubLinkNames.RespondentResponse],
+  [HubLinkNames.HearingDetails],
+  [HubLinkNames.RequestsAndApplications, HubLinkNames.RespondentApplications, HubLinkNames.ContactTribunal],
+  [HubLinkNames.TribunalOrders],
+  [HubLinkNames.TribunalJudgements],
+  [HubLinkNames.Documents],
+];

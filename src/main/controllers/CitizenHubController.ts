@@ -4,7 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { CaseState } from '../definitions/definition';
-import { createHubSections, hubLinksMap } from '../definitions/hub';
+import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { currentStateFn } from '../helper/state-sequence';
 
@@ -23,18 +23,18 @@ export default class CitizenHubController {
         et3IsThereAnEt3Response: YesOrNo.YES,
       } as CaseWithId);
 
-    userCase.hubLinks = userCase.hubLinks || createHubSections();
+    userCase.hubLinks = userCase.hubLinks || new HubLinks();
 
     const currentState = currentStateFn(userCase);
 
-    const sections = userCase.hubLinks.map((section, sectionIndex) => {
-      const sectionName = `section${sectionIndex + 1}`;
+    const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
-        title: (l: AnyRecord): string => l[sectionName].title,
-        links: section.links.map((link, linkIndex) => {
+        title: (l: AnyRecord): string => l[`section${index + 1}`].title,
+        links: sectionIndexToLinkNames[index].map(linkName => {
+          const link = userCase.hubLinks[linkName];
           return {
             url: link.link,
-            linkTxt: (l: AnyRecord): string => l[sectionName][`link${linkIndex + 1}Text`],
+            linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[link.status],
             statusColor: () => hubLinksMap.get(link.status),
           };
