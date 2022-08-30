@@ -3,8 +3,6 @@ import { addAriaExpandedAttribute, addAriaExpandedEventListener } from './aria-u
 //import { addNationalityEventListener, addStatelessEventListener } from './nationality-utils';
 import SessionTimeout from './session-timeout';
 
-// const govUK = require('govuk-frontend');
-
 const ready = (callback: () => void) => {
   if (document.readyState !== 'loading') {
     callback();
@@ -14,11 +12,7 @@ const ready = (callback: () => void) => {
 };
 
 function initialize() {
-  console.log('######  initialize session timeout ####################');
-  // const cookies: CookiesBanner = new CookiesBanner();
   const sessionTimeout: SessionTimeout = new SessionTimeout();
-  // cookies.init();
-  // govUK.initAll();
   sessionTimeout.init();
   addAriaExpandedAttribute();
   addAriaExpandedEventListener();

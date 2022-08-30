@@ -12,6 +12,4 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.TYPE_OF_CLAIM,
   PageUrls.COOKIE_PREFERENCES,
   Urls.INFO,
-  // '/extend-session',
-  // '/session-ended',
 ];
