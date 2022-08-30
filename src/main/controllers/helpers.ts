@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
@@ -13,6 +14,7 @@ import {
   isValidTwoDigitInteger,
   validateTitlePreference,
 } from '../components/form/validator';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
@@ -378,6 +380,19 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
         logger.error(error);
       });
   }
+};
+
+export const handleUploadDocument = (req: AppRequest, document: Blob, logger: LoggerInstance): void => {
+  //if(!req.session.errors.length) {
+  getCaseApi(req.session.user?.accessToken)
+    .uploadDocument(document, 'ET_EnglandWales')
+    .then((res: AxiosResponse<DocumentUploadResponse>) => {
+      logger.info(`Uploaded document to: ${res.data.uri.href}`);
+    })
+    .catch(err => {
+      logger.error(err.message);
+    });
+  //}
 };
 
 export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
