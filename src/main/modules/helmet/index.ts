@@ -2,7 +2,7 @@ import * as express from 'express';
 import helmet from 'helmet';
 
 export interface HelmetConfig {
-  referrerPolicy: string;
+  referrerPolicy: ReferrerPolicy;
 }
 
 const googleAnalyticsDomain = '*.google-analytics.com';
@@ -65,7 +65,7 @@ export class Helmet {
     );
   }
 
-  private setReferrerPolicy(app: express.Express, policy: string): void {
+  private setReferrerPolicy(app: express.Express, policy: ReferrerPolicy): void {
     if (!policy) {
       throw new Error('Referrer policy configuration is required');
     }
