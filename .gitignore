@@ -29,5 +29,5 @@ package-lock.json
 functional-output/*
 smoke-output/reports
 src/test/api/pact/pacts/
-src/test/functional/functional-output/*
+src/test/end-to-end/functional-output/*
 /dump.rdb
