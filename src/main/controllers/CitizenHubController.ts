@@ -42,6 +42,8 @@ export default class CitizenHubController {
       };
     });
 
+    const hideContactUs = true;
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -49,6 +51,7 @@ export default class CitizenHubController {
       userCase,
       currentState,
       sections,
+      hideContactUs,
     });
   }
 }
