@@ -1,6 +1,5 @@
 import {
   getClaimSummaryError,
-  getCustomNoticeLengthError,
   getGenderDetailsError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
@@ -8,7 +7,7 @@ import {
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { GenderTitle, PayInterval, YesOrNo } from '../../../main/definitions/case';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
 import { mockRequest } from '../mocks/mockRequest';
@@ -98,44 +97,6 @@ describe('New Job Partial Pay errors', () => {
 });
 
 describe('Custom Notice Length errors', () => {
-  it('should return no error', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '12' };
-
-    const req = mockRequest({ body });
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it('should return error with empty notice period length', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'invalid', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
-
-  it('should return error when invalid number is entered', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: 'ab' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'notANumber', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
-
   it(
     'should set req.session.userCase when setUserCaaseWithRedisData is called with correspondent' +
       'req, and caseData parameters',

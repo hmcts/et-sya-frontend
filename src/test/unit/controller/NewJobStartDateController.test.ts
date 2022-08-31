@@ -1,5 +1,5 @@
 import NewJobStartDateController from '../../../main/controllers/NewJobStartDateController';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -93,21 +93,18 @@ describe('New Job Start Date Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should have error when no date is entered', () => {
-    const errors = [{ propertyName: 'newJobStartDate', errorType: 'required', fieldName: 'day' }];
+  it('should render the new job pay page when new job start date is left blank', () => {
     const body = {
       'newJobStartDate-day': '',
       'newJobStartDate-month': '',
       'newJobStartDate-year': '',
     };
-
     const controller = new NewJobStartDateController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
+    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_PAY);
   });
 });

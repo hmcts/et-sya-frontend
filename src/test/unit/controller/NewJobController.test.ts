@@ -19,7 +19,18 @@ describe('New Job Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB, expect.anything());
   });
 
-  it('should render the home page when no radio button is selected', () => {
+  it('should render the respondent name page when neither radio button is selected', () => {
+    const body = { newJob: '' };
+    const controller = new NewJobController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+  });
+
+  it('should render the respondent name page when no radio button is selected', () => {
     const body = { newJob: YesOrNo.NO };
     const controller = new NewJobController(mockLogger);
 
@@ -57,17 +68,5 @@ describe('New Job Controller', () => {
       newJobPay: undefined,
       newJobPayInterval: undefined,
     });
-  });
-
-  it('should have required error when nothing is selected', () => {
-    const body = { newJob: '' };
-    const controller = new NewJobController(mockLogger);
-    const expectedErrors = [{ errorType: 'required', propertyName: 'newJob' }];
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.errors).toEqual(expectedErrors);
   });
 });
