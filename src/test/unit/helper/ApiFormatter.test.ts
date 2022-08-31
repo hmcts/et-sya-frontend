@@ -1,4 +1,5 @@
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseDataCacheKey,
@@ -20,6 +21,7 @@ import { CaseState } from '../../../main/definitions/definition';
 import {
   formatDate,
   fromApiFormat,
+  fromApiFormatDocument,
   parseDateFromString,
   toApiFormat,
   toApiFormatCreate,
@@ -97,6 +99,42 @@ describe('Should return data in api format', () => {
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
+  });
+});
+
+describe('Format document model', () => {
+  it('should format DocumentApiResponse', () => {
+    const mockDocData: DocumentUploadResponse = {
+      originalDocumentName: 'testname',
+      uri: 'test.com',
+      _links: {
+        self: {
+          href: 'test.com',
+        },
+        binary: {
+          href: 'test.com',
+        },
+      },
+      classification: '',
+      size: '',
+      mimeType: '',
+      hashToken: '',
+      createdOn: '',
+      createdBy: '',
+      lastModifiedBy: '',
+      modifiedOn: '',
+      ttl: '',
+      metadata: {
+        case_type_id: '',
+        jurisdiction: '',
+      },
+    };
+    const result = fromApiFormatDocument(mockDocData);
+    expect(result).toStrictEqual({
+      document_filename: 'testname',
+      document_url: 'test.com',
+      document_binary_url: 'test.com',
+    });
   });
 });
 
