@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { hasValidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
@@ -7,7 +8,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { assignFormData, getPageContent, handleSessionErrors, handleUploadDocument, setUserCase } from './helpers';
 
 export default class DescribeWhatHappenedController {
   private readonly form: Form;
@@ -45,13 +46,14 @@ export default class DescribeWhatHappenedController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.describeWhatHappenedFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+    await handleUploadDocument(req, req.body.claimSummaryFile, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

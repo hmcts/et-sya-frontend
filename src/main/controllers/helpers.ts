@@ -32,7 +32,6 @@ import { PageUrls, mvpLocations } from '../definitions/constants';
 import { sectionStatus } from '../definitions/definition';
 import { FormContent, FormError, FormField, FormFields, FormInput, FormOptions } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { UploadedFile, getCaseApi } from '../services/CaseService';
 
 export const getPageContent = (
@@ -383,16 +382,20 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
   }
 };
 
-export const handleUploadDocument = (req: AppRequest, file: UploadedFile, logger: LoggerInstance): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .uploadDocument(file, 'ET_EnglandWales')
-    .then((res: AxiosResponse<DocumentUploadResponse>) => {
-      return fromApiFormatDocument(res.data);
-    })
-    .catch(err => {
-      logger.error(err.message);
-      return null;
-    });
+export const handleUploadDocument = async (
+  req: AppRequest,
+  file: UploadedFile,
+  logger: LoggerInstance
+): Promise<AxiosResponse<DocumentUploadResponse>> => {
+  try {
+    const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
+      req.session.user?.accessToken
+    ).uploadDocument(file, 'ET_EnglandWales');
+    logger.info(`Uploaded document to: ${result.data._links.self.href}`);
+    return result;
+  } catch (err) {
+    logger.error(err.message);
+  }
 };
 
 export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
