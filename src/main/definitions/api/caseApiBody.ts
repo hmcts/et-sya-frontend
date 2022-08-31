@@ -4,6 +4,7 @@ import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPrefer
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
+import { HubLinks } from '../hub';
 
 interface CaseDataApiBody {
   caseType: string;
@@ -15,6 +16,7 @@ interface CaseDataApiBody {
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
   newEmploymentType?: NewEmploymentDetails;
+  hubLinks?: HubLinks;
 }
 
 export interface CreateCaseBody {

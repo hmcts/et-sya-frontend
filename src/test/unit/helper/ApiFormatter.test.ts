@@ -17,6 +17,7 @@ import {
   YesOrNoOrPreferNot,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinks } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -94,6 +95,7 @@ describe('Should return data in api format', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -161,6 +163,7 @@ describe('Format Case Data to Frontend Model', () => {
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,
         },
+        hubLinks: new HubLinks(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -214,6 +217,7 @@ describe('Format Case Data to Frontend Model', () => {
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
       et3IsThereAnEt3Response: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     });
   });
 
@@ -272,6 +276,7 @@ describe('Format Case Data to Frontend Model', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       et3IsThereAnEt3Response: undefined,
+      hubLinks: undefined,
     });
   });
 

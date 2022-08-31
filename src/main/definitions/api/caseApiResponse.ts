@@ -6,6 +6,7 @@ import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { CaseState } from '../definition';
+import { HubLinks } from '../hub';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -37,4 +38,5 @@ export interface CaseData {
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
   et3IsThereAnEt3Response?: YesOrNo;
+  hubLinks?: HubLinks;
 }

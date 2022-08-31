@@ -74,6 +74,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    hubLinks: fromApiCaseData?.case_data?.hubLinks,
   };
 }
 
@@ -135,6 +136,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
+      hubLinks: caseItem.hubLinks,
     },
   };
 }

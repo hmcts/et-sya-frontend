@@ -19,6 +19,7 @@ import {
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinks } from '../../../main/definitions/hub';
 import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
@@ -131,6 +132,7 @@ describe('updateDraftCase', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(

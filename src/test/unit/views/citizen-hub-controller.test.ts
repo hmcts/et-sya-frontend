@@ -1,12 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 
+import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinks } from '../../../main/definitions/hub';
+import * as ApiFormatter from '../../../main/helper/ApiFormatter';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
 
 const hubJsonRaw = fs.readFileSync(
@@ -26,71 +31,97 @@ const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise
 const greyTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--grey';
 const blueTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--blue';
 
-const statusTexts = [hubJson.accepted, hubJson.received, hubJson.details, hubJson.decision];
-//todo fix this file's tests with the replace(:caseID) and undo skipping
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+
+const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+mockClient.mockReturnValue(caseApi);
+
 let htmlRes: Document;
-describe.skip('Citizen hub page', () => {
+describe('Citizen hub page', () => {
   describe('Progress bar', () => {
-    const userCases = [
+    const statusTexts = [hubJson.accepted, hubJson.received, hubJson.details, hubJson.decision];
+    const caseApiDataResponses = [
       {
         state: CaseState.SUBMITTED,
-        et3IsThereAnEt3Response: YesOrNo.NO,
+        case_data: {
+          et3IsThereAnEt3Response: YesOrNo.NO,
+        },
       },
       {
         state: CaseState.ACCEPTED,
-        et3IsThereAnEt3Response: YesOrNo.NO,
+        case_data: {
+          et3IsThereAnEt3Response: YesOrNo.NO,
+        },
       },
       {
         state: CaseState.ACCEPTED,
-        et3IsThereAnEt3Response: YesOrNo.YES,
+        case_data: {
+          et3IsThereAnEt3Response: YesOrNo.YES,
+        },
       },
     ];
 
     it.each([
       {
         expectedCompleted: [],
-        userCase: userCases[0],
+        caseApiDataResponse: caseApiDataResponses[0],
       },
       {
         expectedCompleted: statusTexts.slice(0, 1),
-        userCase: userCases[1],
+        caseApiDataResponse: caseApiDataResponses[1],
       },
       {
         expectedCompleted: statusTexts.slice(0, 2),
-        userCase: userCases[2],
+        caseApiDataResponse: caseApiDataResponses[2],
       },
-    ])('should show correct completed progress bar completed tasks: %o', async ({ expectedCompleted, userCase }) => {
-      await request(mockApp({ userCase }))
-        .get(PageUrls.CITIZEN_HUB)
-        .then(res => {
-          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-        });
+    ])(
+      'should show correct completed tasks in progress bar: %o',
+      async ({ expectedCompleted, caseApiDataResponse }) => {
+        caseApi.getCase = jest.fn().mockResolvedValue(
+          Promise.resolve({
+            data: caseApiDataResponse,
+          } as AxiosResponse<CaseApiDataResponse>)
+        );
 
-      const completedElements = htmlRes.getElementsByClassName(completedClass);
-      const completedTexts = [];
+        await request(mockApp({}))
+          .get(PageUrls.CITIZEN_HUB)
+          .then(res => {
+            htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+          });
 
-      for (const element of completedElements) {
-        completedTexts.push(element.nextElementSibling.textContent);
+        const completedElements = htmlRes.getElementsByClassName(completedClass);
+        const completedTexts = [];
+
+        for (const element of completedElements) {
+          completedTexts.push(element.nextElementSibling.textContent);
+        }
+
+        expect(completedTexts).toStrictEqual(expectedCompleted);
       }
-
-      expect(completedTexts).toStrictEqual(expectedCompleted);
-    });
+    );
 
     it.each([
       {
         expectedCurrStep: hubJson.accepted,
-        userCase: userCases[0],
+        caseApiDataResponse: caseApiDataResponses[0],
       },
       {
         expectedCurrStep: hubJson.received,
-        userCase: userCases[1],
+        caseApiDataResponse: caseApiDataResponses[1],
       },
       {
         expectedCurrStep: hubJson.details,
-        userCase: userCases[2],
+        caseApiDataResponse: caseApiDataResponses[2],
       },
-    ])('should show correct completed progress bar completed tasks: %o', async ({ expectedCurrStep, userCase }) => {
-      await request(mockApp({ userCase }))
+    ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {
+      caseApi.getCase = jest.fn().mockResolvedValue(
+        Promise.resolve({
+          data: caseApiDataResponse,
+        } as AxiosResponse<CaseApiDataResponse>)
+      );
+
+      await request(mockApp({}))
         .get(PageUrls.CITIZEN_HUB)
         .then(res => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -118,15 +149,22 @@ describe.skip('Citizen hub page', () => {
       hubLinks[HubLinkNames.HearingDetails].status = HubLinkStatus.NOT_YET_AVAILABLE;
       hubLinks[HubLinkNames.RequestsAndApplications].status = HubLinkStatus.VIEWED;
 
+      caseApi.getCase = jest.fn().mockResolvedValue({ body: {} });
+
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        id: '123',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        ethosCaseReference: '654321/2022',
+        firstName: 'Paul',
+        lastName: 'Mumbere',
+        respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
+        hubLinks,
+      });
+
       await request(
         mockApp({
-          userCase: {
-            ethosCaseReference: '654321/2022',
-            firstName: 'Paul',
-            lastName: 'Mumbere',
-            respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
-            hubLinks,
-          } as Partial<CaseWithId>,
+          userCase: {} as Partial<CaseWithId>,
         })
       )
         .get(PageUrls.CITIZEN_HUB)
