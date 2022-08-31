@@ -1,8 +1,8 @@
 {
   "title": "Employee benefits",
   "h1": {
-    "workingOrNotice": "Do or did you receive any employee benefits?",
-    "noLongerWorking": "Did you receive any employee benefits?"
+    "workingOrNotice": "Do or did you receive any employee benefits? (Optional)",
+    "noLongerWorking": "Did you receive any employee benefits? (Optional)"
   },
   "label": "Do or did you receive any employee benefits?",
   "p1": "For example, child care, company car, housing and health insurance.",
@@ -12,9 +12,7 @@
   "noLongerWorking": "No longer working",
   "errors": {
     "benefitsCharCount": {
-      "required": "Tell us about any benefits received",
-      "tooLong": "Description must be 2500 characters or less",
-      "tooShort": "Description must be one character or more"
+      "tooLong": "Description must be 2500 characters or less"
     }
   }
 }

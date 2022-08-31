@@ -1,11 +1,10 @@
 {
   "title": "New job start date",
-  "h1": "What's the start date for your new job?",
+  "h1": "What's the start date for your new job? (Optional)",
   "p1": "Tell us about your new job. If you do not know the exact date then enter your best estimate.",
   "hint": "For example, 27 3 2007",
   "errors": {
     "newJobStartDate": {
-      "required": "Tell us when your New job starts. For example, DD MM YYYY",
       "dayRequired": "Enter a day for when your New job starts. For example, 23",
       "monthRequired": "Enter a month for when your New job starts. For example, 08",
       "yearRequired": "Enter a year for when your New job starts. For example, 2022",

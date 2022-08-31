@@ -2,15 +2,10 @@
   "title": "Notice period",
   "labelHidden": "Is your notice period in weeks or months?",
   "h1": {
-    "workingOrNotice": "Is your notice period in weeks or months?",
-    "noLongerWorking": "Was your notice period in weeks or months?"
+    "workingOrNotice": "Is your notice period in weeks or months? (Optional)",
+    "noLongerWorking": "Was your notice period in weeks or months? (Optional)"
   },
   "months": "Months",
   "weeks": "Weeks",
-  "noLongerWorking": "No longer working",
-  "errors": {
-    "noticePeriodUnit": {
-      "required": "Tell us your notice period in weeks or months"
-    }
-  }
+  "noLongerWorking": "No longer working"
 }
