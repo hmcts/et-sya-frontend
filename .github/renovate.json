@@ -39,6 +39,10 @@
     {
       "matchPackageNames": ["@pact-foundation/pact"],
       "allowedVersions": "<=9"
+    },
+    {
+      "matchPackageNames": ["jest-pact"],
+      "allowedVersions": "<=0.9.4"
     }
   ],
   "lockFileMaintenance": {
