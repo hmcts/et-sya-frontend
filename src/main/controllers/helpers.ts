@@ -384,16 +384,15 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
 };
 
 export const handleUploadDocument = (req: AppRequest, file: UploadedFile, logger: LoggerInstance): void => {
-  if (!req.session.errors.length) {
-    getCaseApi(req.session.user?.accessToken)
-      .uploadDocument(file, 'ET_EnglandWales')
-      .then((res: AxiosResponse<DocumentUploadResponse>) => {
-        logger.info(`Uploaded document to: ${fromApiFormatDocument(res.data)}`);
-      })
-      .catch(err => {
-        logger.error(err.message);
-      });
-  }
+  getCaseApi(req.session.user?.accessToken)
+    .uploadDocument(file, 'ET_EnglandWales')
+    .then((res: AxiosResponse<DocumentUploadResponse>) => {
+      return fromApiFormatDocument(res.data);
+    })
+    .catch(err => {
+      logger.error(err.message);
+      return null;
+    });
 };
 
 export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
