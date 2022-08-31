@@ -1,5 +1,5 @@
 const { I } = inject();
-const loginIdam = require('../authUser/loginIdam.js');
+const loginIdam = require('../../authUser/loginIdam.js');
 function login() {
   I.seeElement('#username');
   loginIdam.signInWithCredentials();

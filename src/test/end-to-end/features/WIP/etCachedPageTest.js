@@ -1,5 +1,5 @@
 Feature('ET Homepage');
-const commonFlow = require('./commonFlow.js');
+const commonFlow = require('../../helpers/commonFlow.js');
 const { I } = inject();
 
 Scenario('ET homepage verify cached configuration on a new tab', () => {
