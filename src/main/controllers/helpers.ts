@@ -9,8 +9,6 @@ import {
   arePayValuesNull,
   isFieldFilledIn,
   isPayIntervalNull,
-  isValidNoticeLength,
-  isValidTwoDigitInteger,
   validateTitlePreference,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -22,7 +20,6 @@ import {
   GenderTitle,
   HearingPreference,
   Respondent,
-  StillWorking,
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../definitions/case';
@@ -60,23 +57,6 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
 
   if (startDate && dob && isFirstDateBeforeSecond(startDate, dob)) {
     return { errorType: 'invalidDateBeforeDOB', propertyName: Object.keys(form.getFormFields())[0] };
-  }
-};
-
-export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<CaseWithId>): FormError => {
-  const employmentStatus = req.session.userCase.isStillWorking;
-  const noticeLength = formData.noticePeriodLength;
-
-  if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
-    const invalid = isValidTwoDigitInteger(noticeLength);
-    if (invalid) {
-      return { errorType: invalid, propertyName: 'noticePeriodLength' };
-    }
-  } else {
-    const errorType = isValidNoticeLength(noticeLength);
-    if (errorType) {
-      return { errorType, propertyName: 'noticePeriodLength' };
-    }
   }
 };
 
@@ -172,7 +152,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
-  const noticeErrors = getCustomNoticeLengthError(req, formData);
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const genderErrors = getGenderDetailsError(formData);
@@ -187,10 +166,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (newJobPayErrors) {
     sessionErrors = [...sessionErrors, ...newJobPayErrors];
-  }
-
-  if (noticeErrors) {
-    sessionErrors = [...sessionErrors, noticeErrors];
   }
 
   if (claimSummaryError) {

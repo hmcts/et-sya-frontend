@@ -2,7 +2,6 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -38,7 +37,6 @@ export default class NoticePeriodController {
             value: YesOrNo.NO,
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: {
