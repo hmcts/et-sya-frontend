@@ -5,12 +5,15 @@ import {
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
+  handleUploadDocument,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
 import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { sectionStatus } from '../../../main/definitions/definition';
+import { UploadedFile } from '../../../main/services/CaseService';
 import { mockSession } from '../mocks/mockApp';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 
 describe('Partial Pay errors', () => {
@@ -198,6 +201,17 @@ describe('Claim Summary Error', () => {
     const errors = getClaimSummaryError(body);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
+  });
+});
+
+describe('documentUpload', () => {
+  it('should handle document upload', () => {
+    const body = {};
+    const req = mockRequest(body);
+    const mockFile = { buffer: '123', originalname: 'a-new-file.txt' } as unknown as UploadedFile;
+
+    const response = handleUploadDocument(req, mockFile, mockLogger);
+    expect(response).not.toBeNull();
   });
 });
 
