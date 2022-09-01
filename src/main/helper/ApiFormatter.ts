@@ -151,6 +151,9 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
       },
+      claimantRequests: {
+        claim_description: caseItem.claimSummaryText,
+      },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,

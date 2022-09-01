@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import DescribeWhatHappenedController from '../../../main/controllers/DescribeWhatHappenedController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -9,8 +11,13 @@ describe('Describe-What-Happened Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render describe what happened page', () => {
-    const controller = new DescribeWhatHappenedController();
+    const controller = new DescribeWhatHappenedController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -21,21 +28,21 @@ describe('Describe-What-Happened Controller', () => {
   describe('Correct validation', () => {
     it('should require either summary text or summary file', () => {
       const req = mockRequest({ body: { claimSummaryText: '', claimSummaryFile: '' } });
-      new DescribeWhatHappenedController().post(req, mockResponse());
+      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'required' }]);
     });
 
     it('should not allow both summary text and summary file', () => {
       const req = mockRequest({ body: { claimSummaryText: 'text', claimSummaryFile: 'file.txt' } });
-      new DescribeWhatHappenedController().post(req, mockResponse());
+      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'textAndFile' }]);
     });
 
     it('should only allow valid file formats', () => {
       const req = mockRequest({ body: { claimSummaryFile: 'file.invalidFileFormat' } });
-      new DescribeWhatHappenedController().post(req, mockResponse());
+      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFile', errorType: 'invalidFileFormat' }]);
     });
@@ -44,7 +51,7 @@ describe('Describe-What-Happened Controller', () => {
       const req = mockRequest({ body: { claimSummaryText: 'test' } });
       const res = mockResponse();
 
-      new DescribeWhatHappenedController().post(req, res);
+      new DescribeWhatHappenedController(mockLogger).post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
       expect(req.session.userCase).toMatchObject({
@@ -56,7 +63,7 @@ describe('Describe-What-Happened Controller', () => {
       const req = mockRequest({ body: { claimSummaryFile: 'testFile.txt' } });
       const res = mockResponse();
 
-      new DescribeWhatHappenedController().post(req, res);
+      new DescribeWhatHappenedController(mockLogger).post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
       expect(req.session.userCase).toMatchObject({
