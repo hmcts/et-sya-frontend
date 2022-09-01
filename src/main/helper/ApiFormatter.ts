@@ -3,7 +3,7 @@ import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Document, ccdPreferredTitle } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -39,10 +39,10 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
-    claimantGenderIdentitySame: fromApiCaseData.case_data?.claimantIndType?.claimant_gender_identity_same,
-    claimantGenderIdentity: fromApiCaseData.case_data?.claimantIndType?.claimant_gender_identity,
-    preferredTitle: fromApiCaseData.case_data?.claimantIndType?.claimant_preferred_title,
-    otherTitlePreference: fromApiCaseData.case_data?.claimantIndType?.claimant_title_other,
+    preferredTitle: returnPreferredTitle(
+      fromApiCaseData.case_data?.claimantIndType?.claimant_preferred_title,
+      fromApiCaseData.case_data?.claimantIndType?.claimant_title_other
+    ),
     jobTitle: fromApiCaseData.case_data?.claimantOtherType?.claimant_occupation,
     startDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_from),
     endDate: parseDateFromString(fromApiCaseData.case_data?.claimantOtherType?.claimant_employed_to),
@@ -89,10 +89,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_last_name: caseItem.lastName,
         claimant_date_of_birth: formatDate(caseItem.dobDate),
         claimant_sex: caseItem.claimantSex,
-        claimant_gender_identity_same: caseItem.claimantGenderIdentitySame,
-        claimant_gender_identity: caseItem.claimantGenderIdentity,
-        claimant_preferred_title: caseItem.preferredTitle,
-        claimant_title_other: caseItem.otherTitlePreference,
+        claimant_preferred_title: isValidPreferredTitle(caseItem.preferredTitle),
+        claimant_title_other: isOtherTitle(caseItem.preferredTitle),
       },
       claimantType: {
         claimant_email_address: caseItem.email,
@@ -167,5 +165,39 @@ export const parseDateFromString = (date: string): CaseDate => {
       month: date.substring(5, 7),
       day: date.substring(8),
     };
+  }
+};
+
+export const isValidPreferredTitle = (title: string): string => {
+  if (title === undefined || title === '') {
+    return undefined;
+  }
+  const titleValues = Object.values(ccdPreferredTitle);
+  for (const titleValue of titleValues) {
+    if (title.toLocaleLowerCase() === titleValue.toLocaleLowerCase()) {
+      return titleValue;
+    }
+  }
+  return ccdPreferredTitle.OTHER;
+};
+
+export const isOtherTitle = (title: string): string => {
+  if (title === undefined || title === '') {
+    return undefined;
+  }
+  const titleValues = Object.values(ccdPreferredTitle);
+  for (const titleValue of titleValues) {
+    if (title.toLocaleLowerCase() === titleValue.toLocaleLowerCase()) {
+      return undefined;
+    }
+  }
+  return title;
+};
+
+export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: string): string => {
+  if (otherTitle) {
+    return otherTitle;
+  } else {
+    return preferredTitle;
   }
 };

@@ -12,7 +12,6 @@ import {
   isPayIntervalNull,
   isValidNoticeLength,
   isValidTwoDigitInteger,
-  validateTitlePreference,
 } from '../components/form/validator';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { AppRequest } from '../definitions/appRequest';
@@ -21,7 +20,6 @@ import {
   CaseDate,
   CaseType,
   CaseWithId,
-  GenderTitle,
   HearingPreference,
   Respondent,
   StillWorking,
@@ -153,15 +151,6 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError =
   }
 };
 
-export const getGenderDetailsError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.preferredTitle === GenderTitle.OTHER) {
-    const errorType = validateTitlePreference(formData.otherTitlePreference);
-    if (errorType) {
-      return { errorType, propertyName: 'otherTitlePreference' };
-    }
-  }
-};
-
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   return form.getErrors(formData);
 };
@@ -177,7 +166,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   const noticeErrors = getCustomNoticeLengthError(req, formData);
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
-  const genderErrors = getGenderDetailsError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -201,10 +189,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (hearingPreferenceErrors) {
     sessionErrors = [...sessionErrors, hearingPreferenceErrors];
-  }
-
-  if (genderErrors) {
-    sessionErrors = [...sessionErrors, genderErrors];
   }
 
   req.session.errors = sessionErrors;
