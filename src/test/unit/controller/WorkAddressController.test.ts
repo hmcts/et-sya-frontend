@@ -39,7 +39,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     // TODO Test respondent address is copied to work address
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('Yes');
   });
@@ -55,7 +55,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/place-of-work');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/place-of-work');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
 });

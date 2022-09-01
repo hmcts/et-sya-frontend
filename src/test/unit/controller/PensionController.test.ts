@@ -40,7 +40,7 @@ describe('Pension controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
   });
 
   it('should render the benefits page when yes radio button is selected and amount is left blank', () => {
@@ -54,7 +54,7 @@ describe('Pension controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
   });
 
   it('should render same page if an invalid value is entered', () => {
@@ -66,7 +66,7 @@ describe('Pension controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -81,7 +81,7 @@ describe('Pension controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual(body);
   });
 
@@ -96,7 +96,7 @@ describe('Pension controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual({
       claimantPensionContribution: YesOrNo.NO,
       claimantPensionWeeklyContribution: undefined,
@@ -111,6 +111,6 @@ describe('Pension controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

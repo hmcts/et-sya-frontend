@@ -36,7 +36,7 @@ describe('Tribunal Recommendation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'tribunalRecommendationRequest', errorType: 'tooLong' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 

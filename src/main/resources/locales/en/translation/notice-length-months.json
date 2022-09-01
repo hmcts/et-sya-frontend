@@ -1,7 +1,7 @@
 {
   "title": "Months in Notice period?",
   "h1": {
-    "nonNotice": "How many months in your notice period? (Optional)",
+    "nonNotice": "How many months in your notice period? (optional)",
     "notice": "How many months of your notice period are you being paid for? (optional)"
   },
   "noticeLengthHint": "For example, 4",

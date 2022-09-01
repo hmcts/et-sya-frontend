@@ -1,8 +1,8 @@
 {
   "title": "Employee benefits",
   "h1": {
-    "workingOrNotice": "Do or did you receive any employee benefits? (Optional)",
-    "noLongerWorking": "Did you receive any employee benefits? (Optional)"
+    "workingOrNotice": "Do or did you receive any employee benefits? (optional)",
+    "noLongerWorking": "Did you receive any employee benefits? (optional)"
   },
   "label": "Do or did you receive any employee benefits?",
   "p1": "For example, child care, company car, housing and health insurance.",

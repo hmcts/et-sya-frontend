@@ -35,7 +35,7 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
 
   it('should redirect to no acas number reason when no is selected and remove acas cert num value', () => {
@@ -48,7 +48,7 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/no-acas-reason');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/no-acas-reason');
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.NO);
   });

@@ -27,7 +27,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the respondent name page when no radio button is selected', () => {
@@ -38,7 +38,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the new job start date page when yes radio button is selected', () => {
@@ -49,7 +49,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_START_DATE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB_START_DATE);
   });
 
   it('should reset new job values if No selected', () => {
@@ -61,7 +61,7 @@ describe('New Job Controller', () => {
     req.session.userCase = undefined;
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
     expect(req.session.userCase).toStrictEqual({
       newJob: YesOrNo.NO,
       newJobStartDate: undefined,

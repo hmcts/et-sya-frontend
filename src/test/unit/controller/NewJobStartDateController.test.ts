@@ -51,7 +51,7 @@ describe('New Job Start Date Controller', () => {
       },
     });
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -71,7 +71,7 @@ describe('New Job Start Date Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -89,7 +89,7 @@ describe('New Job Start Date Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -105,6 +105,6 @@ describe('New Job Start Date Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_PAY);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB_PAY);
   });
 });

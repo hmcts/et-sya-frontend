@@ -32,7 +32,7 @@ describe('Respondent Details Check Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/2/respondent-name');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/2/respondent-name');
     expect(request.session.userCase.respondents).toStrictEqual([{ respondentName: 'Globo Gym', respondentNumber: 1 }]);
   });
 });

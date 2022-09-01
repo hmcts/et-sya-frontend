@@ -40,7 +40,7 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/1/work-address');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
   });
 
   it('should render the Acas Cert Num page on post when more than one respondent', () => {
@@ -71,6 +71,6 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
   });
 });

@@ -35,7 +35,7 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -54,7 +54,7 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     expect(req.session.errors).toEqual([]);
   });
 });

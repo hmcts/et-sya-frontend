@@ -31,6 +31,6 @@ describe('Test claim details check controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 });

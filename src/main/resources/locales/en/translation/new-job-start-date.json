@@ -1,6 +1,6 @@
 {
   "title": "New job start date",
-  "h1": "What's the start date for your new job? (Optional)",
+  "h1": "What's the start date for your new job? (optional)",
   "p1": "Tell us about your new job. If you do not know the exact date then enter your best estimate.",
   "hint": "For example, 27 3 2007",
   "errors": {

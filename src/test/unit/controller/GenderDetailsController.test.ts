@@ -39,7 +39,7 @@ describe('Gender Details Controller', () => {
         { propertyName: 'preferredTitle', errorType: 'required' },
       ];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -56,7 +56,7 @@ describe('Gender Details Controller', () => {
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'required' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -73,7 +73,7 @@ describe('Gender Details Controller', () => {
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'numberError' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -90,7 +90,7 @@ describe('Gender Details Controller', () => {
 
       const expectedErrors = [{ propertyName: 'otherTitlePreference', errorType: 'lengthError' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
   });
@@ -108,7 +108,7 @@ describe('Gender Details Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',
@@ -130,7 +130,7 @@ describe('Gender Details Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       claimantGenderIdentitySame: 'YesOrNoOrPreferNot.YES',

@@ -39,7 +39,7 @@ describe('Compensation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'compensationOutcome', errorType: 'tooLong' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -55,7 +55,7 @@ describe('Compensation Controller', () => {
 
       const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalidCurrency' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
