@@ -137,12 +137,12 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
 };
 
 export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.claimSummaryText === undefined && formData.claimSummaryFile === undefined) {
+  if (formData.claimSummaryText === undefined && formData.claimSummaryFileName === undefined) {
     return;
   }
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
-  const fileProvided = isFieldFilledIn(formData.claimSummaryFile) === undefined;
+  const fileProvided = isFieldFilledIn(formData.claimSummaryFileName) === undefined;
 
   if (textProvided && fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };

@@ -7,6 +7,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
 import { assignFormData, getPageContent, handleSessionErrors, handleUploadDocument, setUserCase } from './helpers';
 
@@ -24,7 +25,7 @@ export default class DescribeWhatHappenedController {
         maxlength: 2500,
         validator: isContent2500CharsOrLess,
       },
-      claimSummaryFile: {
+      claimSummaryFileName: {
         id: 'claim-summary-file',
         label: l => l.fileUpload.linkText,
         labelHidden: true,
@@ -53,7 +54,9 @@ export default class DescribeWhatHappenedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-    await handleUploadDocument(req, req.body.claimSummaryFile, this.logger);
+
+    const result = await handleUploadDocument(req, req.body.claimSummaryFileName, this.logger);
+    req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
   };
 
   public get = (req: AppRequest, res: Response): void => {
