@@ -22,7 +22,7 @@ export default class CitizenHubController {
       const error = new Error(err);
       error.name = CaseApiErrors.FAILED_TO_RETRIEVE_CASE;
       throw error;
-      //todo lead to main page. Check 2086
+      //todo lead to main page. Check 2086. Try and return not-found.njk possibly.
     }
 
     const userCase = req.session.userCase;
