@@ -7,7 +7,6 @@ import {
   CaseTypeId,
   CaseWithId,
   EmailOrPost,
-  GenderTitle,
   HearingPreference,
   PayInterval,
   Sex,
@@ -15,7 +14,6 @@ import {
   WeeksOrMonths,
   YesOrNo,
   YesOrNoOrNotSure,
-  YesOrNoOrPreferNot,
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
@@ -96,9 +94,7 @@ describe('updateDraftCase', () => {
         day: '11',
       },
       claimantSex: Sex.MALE,
-      claimantGenderIdentitySame: YesOrNoOrPreferNot.PREFER_NOT,
-      preferredTitle: GenderTitle.MISS,
-      otherTitlePreference: undefined,
+      preferredTitle: 'Mr',
       email: 'tester@test.com',
       firstName: 'John',
       lastName: 'Doe',
