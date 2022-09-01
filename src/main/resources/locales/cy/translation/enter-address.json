@@ -1,0 +1,16 @@
+{
+  "enterPostcode": "",
+  "findAddress": "",
+  "cannotFindAddress": "",
+  "change": "",
+  "postcode": "",
+  "addressLine1": "",
+  "addressLine2": "",
+  "selectAddress": "",
+  "county": "",
+  "country": "",
+  "town": "",
+  "selectDefaultSeveral": "",
+  "selectDefaultSingle": "",
+  "selectDefaultNone": ""
+}
