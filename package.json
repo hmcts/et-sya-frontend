@@ -103,6 +103,7 @@
     "@types/git-rev-sync": "2.0.0",
     "@types/jest": "^29.0.0",
     "@types/redis-mock": "^0.17.1",
+    "@types/sinon-chai": "^3.2.8",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",

@@ -54,11 +54,11 @@ describe('Claim details check page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('Save and continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
   it('should display Save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[5].innerHTML).contains('Save as draft', 'Could not find the button');
+    expect(button[6].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });
