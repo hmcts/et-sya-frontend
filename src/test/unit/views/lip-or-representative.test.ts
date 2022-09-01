@@ -26,6 +26,7 @@ const detailsTextClass = 'govuk-details__text';
 const detailsSummaryTextClass = 'govuk-details__summary-text';
 const detailsSummary1 = 'Who can act as a representative?';
 const detailsSummary2 = 'How to find and get a representative?';
+const signOutLinkSelector = 'li.govuk-header__navigation-item a.govuk-header__link';
 
 let htmlRes: Document;
 describe('LiP or Representative page', () => {
@@ -37,6 +38,11 @@ describe('LiP or Representative page', () => {
       });
   });
 
+  it('should not display a sign out link as the user is not logged in', () => {
+    const signoutLinks = htmlRes.querySelectorAll(signOutLinkSelector);
+    expect(signoutLinks.length).equals(0, 'Sign out link should not exist');
+  });
+
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
@@ -44,12 +50,12 @@ describe('LiP or Representative page', () => {
 
   it('should display firt paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[0].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p1[5].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
   });
 
   it('should display 2 radio buttons', () => {

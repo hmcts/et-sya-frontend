@@ -20,6 +20,7 @@ export default function (app: Application): void {
   app.post(PageUrls.ACAS_MULTIPLE_CLAIM, app.locals.container.cradle.acasMultipleController.post);
   app.get(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.get);
   app.post(PageUrls.VALID_ACAS_REASON, app.locals.container.cradle.validNoAcasReasonController.post);
+  app.get(PageUrls.COOKIE_PREFERENCES, app.locals.container.cradle.cookiePreferencesController.get);
   app.get(
     PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME,
     app.locals.container.cradle.respondentNameController.get
@@ -153,6 +154,7 @@ export default function (app: Application): void {
   app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
+  app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
   app.get(
     Urls.INFO,
     infoRequestHandler({

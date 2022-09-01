@@ -59,6 +59,6 @@ describe('New Job Start Date page', () => {
 
   it('should display Save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 });

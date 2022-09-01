@@ -18,7 +18,7 @@ export default class AddressDetailsController {
         name: 'address-line1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.buildingStreet,
+        label: l => l.addressLine1,
         labelSize: null,
         validator: isFieldFilledIn,
         attributes: {
@@ -31,7 +31,6 @@ export default class AddressDetailsController {
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
-        labelHidden: true,
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',

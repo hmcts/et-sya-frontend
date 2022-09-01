@@ -35,9 +35,9 @@ describe('Whistleblowing Claims page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display 4 paragraphs', () => {
-    const textAreaField = htmlRes.getElementsByClassName(expectedParagraphs);
-    expect(textAreaField.length).equal(4, `only ${textAreaField.length} found`);
+  it('should display 8 paragraphs', () => {
+    const paragraphs = htmlRes.getElementsByClassName(expectedParagraphs);
+    expect(paragraphs.length).equal(9, `only ${paragraphs.length} found`);
   });
 
   it('should display correct radio buttons', () => {
@@ -52,11 +52,11 @@ describe('Whistleblowing Claims page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Save and continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 
   it('should display save as draft button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[1].innerHTML).contains('Save as draft', 'Could not find the button');
+    expect(button[6].innerHTML).contains('Save as draft', 'Could not find the button');
   });
 });

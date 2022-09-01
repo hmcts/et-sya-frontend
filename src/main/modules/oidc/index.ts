@@ -34,7 +34,13 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
+      req.session.destroy(() => {
+        if (req.query.redirectUrl) {
+          return res.redirect(req.query.redirectUrl as string);
+        } else {
+          return res.redirect(PageUrls.CLAIM_SAVED);
+        }
+      });
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
@@ -43,6 +49,9 @@ export class Oidc {
 
     app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
       if (req.session?.user) {
+        // a nunjucks global variable 'isLoggedIn' has been created for the views
+        // it is assigned the value of res.locals.isLoggedIn
+        res.locals.isLoggedIn = true;
         next();
       } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST) {
         next();

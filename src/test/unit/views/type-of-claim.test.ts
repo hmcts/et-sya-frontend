@@ -37,7 +37,7 @@ describe('Type of Claim page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
   });
 
   it('should display checkboxes', () => {

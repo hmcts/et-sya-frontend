@@ -2,19 +2,54 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/timeout-modal.njk" import timeoutModal with context %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer'
+          ? '&l=' + l
+          : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f
+        .parentNode
+        .insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-M29HRGV');
+  </script>
+  <!-- End Google Tag Manager -->
   <meta name="format-detection" content="telephone=no">
 {% endblock %}
 
+{% block bodyStart %}
+  <!-- Google Tag Manager (noscript) -->
+
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M29HRGV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+
+  <!-- End Google Tag Manager (noscript) -->
+{% endblock %}
+
 {% set logInOrOut = {
-              href: "/logout",
-              text: signOut,
-              active: false
-} if isLoggedIn %}
+  href: "/logout",
+  text: signOut,
+  active: false
+}
+if isLoggedIn %}
 
 {% block header %}
+  {% include "cookie-banner.njk" %}
   {{ govukHeader({
     containerClasses: "govuk-width-container",
     homepageUrl: "https://www.gov.uk",
@@ -23,8 +58,8 @@
     navigationClasses: 'govuk-header__navigation--end',
     navigation: [logInOrOut]
   }) }}
-
 {% endblock %}
+
 {% block pageTitle %}
   {{ title }}
   -
@@ -33,11 +68,9 @@
   {{ govUk }}
 {% endblock %}
 
-
-
 {% block beforeContent %}
 
-  {% set smartSurveyPageInfo =  currentUrl | replace("/", "")  %}
+  {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
 
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
@@ -69,6 +102,8 @@
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
   {% endif %}
+
+  {{ timeoutModal() }}
 
   {{ govukPhaseBanner({
       tag: {

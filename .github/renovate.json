@@ -25,12 +25,24 @@
       "allowedVersions": "<=3"
     },
     {
-      "matchPackageNames": ["faker"],
+      "matchPackageNames": ["@faker-js/faker"],
       "allowedVersions": "<=5"
     },
     {
       "matchPackageNames": ["jest", "ts-jest"],
       "allowedVersions": "<=27"
+    },
+    {
+      "matchPackageNames": ["mocha"],
+      "allowedVersions": "<=9"
+    },
+    {
+      "matchPackageNames": ["@pact-foundation/pact"],
+      "allowedVersions": "<=9"
+    },
+    {
+      "matchPackageNames": ["jest-pact"],
+      "allowedVersions": "<=0.9.4"
     }
   ],
   "lockFileMaintenance": {
