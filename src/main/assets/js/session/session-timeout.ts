@@ -7,7 +7,7 @@ import * as i18n from '../../../resources/locales/en/translation/template.json';
 export default class SessionTimeout {
   public sessionExpirationTime: string;
   public sessionTimeoutCountdown: number;
-  public bufferSessionExtension: number = 30 * 1000; //length of time modal will appear
+  public bufferSessionExtension: number = 5 * 60 * 1000; //length of time modal will appear
   private sessionTimeout: number;
   private modalTimeout: number;
   private modalCountdown: number;
