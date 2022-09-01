@@ -1,7 +1,18 @@
-const requireDirectory = require('require-directory');
+'use strict';
 
+const requireDirectory = require('require-directory');
 const steps = requireDirectory(module);
 
+module.exports = () => {
+  return actor({
+    authenticateWithIdam: steps.IDAM.signin,
+    youCanSaveCard: steps.saveDraft.youCanSaveCard,
+    didYouWorkForOrganisation: steps.employmentDetails.didYouWorkForOrg,
+    personalDetails: steps.personalDetails.personalDetails,
+  });
+};
+
+/*
 const actions = {};
 
 function setActorActions(data) {
@@ -34,3 +45,4 @@ module.exports = function () {
   // console.log('actions : '+JSON.stringify(actions));
   return actor(actions);
 };
+*/

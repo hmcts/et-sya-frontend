@@ -107,21 +107,21 @@ describe('Cookie preferences page', () => {
 
   it('should display 18 paragraphs', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(18, `${p.length} paragraphs found - expected 18`);
-    expect(p[4].innerHTML).contains(expectedParagraph1, paragraphDoesNotExist);
-    expect(p[5].innerHTML).contains(expectedHowAreCookiesUsedParagraph1, paragraphDoesNotExist);
-    expect(p[6].innerHTML).contains(expectedHowAreCookiesUsedParagraph2, paragraphDoesNotExist);
-    expect(p[7].innerHTML).contains(expectedWebsiteUsageCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[8].innerHTML).contains(expectedWebsiteUsageCookiesParagraph2, paragraphDoesNotExist);
-    expect(p[9].innerHTML).contains(expectedWebsiteUsageCookiesParagraph3, paragraphDoesNotExist);
-    expect(p[10].innerHTML).contains(expectedWebsiteUsageCookiesParagraph4, paragraphDoesNotExist);
-    expect(p[11].innerHTML).contains(expectedWebsiteUsageCookiesParagraph5, paragraphDoesNotExist);
-    expect(p[12].innerHTML).contains(expectedIntroMessageCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[13].innerHTML).contains(expectedSessionCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[14].innerHTML).contains(expectedIdentityCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[15].innerHTML).contains(expectedSecurityCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[16].innerHTML).contains(expectedDynatraceCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[17].innerHTML).contains(expectedDynatraceCookiesParagraph2, paragraphDoesNotExist);
+    expect(p.length).equal(19, `${p.length} paragraphs found - expected 19`);
+    expect(p[5].innerHTML).contains(expectedParagraph1, paragraphDoesNotExist);
+    expect(p[6].innerHTML).contains(expectedHowAreCookiesUsedParagraph1, paragraphDoesNotExist);
+    expect(p[7].innerHTML).contains(expectedHowAreCookiesUsedParagraph2, paragraphDoesNotExist);
+    expect(p[8].innerHTML).contains(expectedWebsiteUsageCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[9].innerHTML).contains(expectedWebsiteUsageCookiesParagraph2, paragraphDoesNotExist);
+    expect(p[10].innerHTML).contains(expectedWebsiteUsageCookiesParagraph3, paragraphDoesNotExist);
+    expect(p[11].innerHTML).contains(expectedWebsiteUsageCookiesParagraph4, paragraphDoesNotExist);
+    expect(p[12].innerHTML).contains(expectedWebsiteUsageCookiesParagraph5, paragraphDoesNotExist);
+    expect(p[13].innerHTML).contains(expectedIntroMessageCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[14].innerHTML).contains(expectedSessionCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[15].innerHTML).contains(expectedIdentityCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[16].innerHTML).contains(expectedSecurityCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[17].innerHTML).contains(expectedDynatraceCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[18].innerHTML).contains(expectedDynatraceCookiesParagraph2, paragraphDoesNotExist);
   });
 
   it('should display 3 bullet lists', () => {
@@ -131,8 +131,8 @@ describe('Cookie preferences page', () => {
 
   it('should display 1 h2 heading excluding banner', () => {
     const h2 = htmlRes.getElementsByClassName(h2Class);
-    expect(h2.length).equal(2, `${h2.length} h2 headings found - expected 2`);
-    expect(h2[1].innerHTML).contains(expectedHowAreCookiesUsedHeading2, h2DoesNotExist);
+    expect(h2.length).equal(3, `${h2.length} h2 headings found - expected 3`);
+    expect(h2[2].innerHTML).contains(expectedHowAreCookiesUsedHeading2, h2DoesNotExist);
   });
 
   it('should display 6 h3 headings', () => {
@@ -235,6 +235,6 @@ describe('Cookie preferences page', () => {
 
   it('should display save button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains(expectedSave, 'Could not find the button');
+    expect(button[5].innerHTML).contains(expectedSave, 'Could not find the button');
   });
 });
