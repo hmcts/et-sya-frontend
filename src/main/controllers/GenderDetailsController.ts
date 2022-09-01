@@ -2,9 +2,9 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn, isOptionSelected } from '../components/form/validator';
+import { validateTitlePreference } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { GenderTitle, Sex, YesOrNoOrPreferNot } from '../definitions/case';
+import { Sex } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -32,93 +32,19 @@ export default class GenderDetailsController {
             value: Sex.MALE,
           },
           {
-            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
+            label: (l: AnyRecord): string => l.preferNotToSay,
             value: Sex.PREFER_NOT_TO_SAY,
-          },
-        ],
-        validator: isFieldFilledIn,
-      },
-      claimantGenderIdentitySame: {
-        classes: 'govuk-radios govuk-!-margin-bottom-6',
-        id: 'genderIdentitySame',
-        type: 'radios',
-        labelSize: 's',
-        label: (l: AnyRecord): string => l.genderIdentitySame,
-        hint: (l: AnyRecord): string => l.genderIdentitySameHint,
-        values: [
-          {
-            label: l => l.yes,
-            value: YesOrNoOrPreferNot.YES,
-          },
-          {
-            label: l => l.no,
-            value: YesOrNoOrPreferNot.NO,
-            subFields: {
-              claimantGenderIdentity: {
-                id: 'genderIdentityText',
-                name: 'genderIdentityText',
-                type: 'text',
-                label: (l: AnyRecord): string => l.genderIdentityTextLabel,
-                classes: 'govuk-input--width-10',
-                labelSize: 's',
-                attributes: { maxLength: 2500 },
-              },
-            },
-          },
-          {
-            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
-            value: YesOrNoOrPreferNot.PREFER_NOT,
           },
         ],
       },
       preferredTitle: {
         id: 'preferredTitle',
-        type: 'option',
-        label: (l: AnyRecord): string => l.preferredTitle,
-        labelSize: 's',
-        values: [
-          {
-            value: 'notSelected',
-            label: (l: AnyRecord): string => l.genderTitle.notSelected,
-          },
-          {
-            value: GenderTitle.MR,
-            label: (l: AnyRecord): string => l.genderTitle.mr,
-          },
-          {
-            value: GenderTitle.MRS,
-            label: (l: AnyRecord): string => l.genderTitle.mrs,
-          },
-          {
-            value: GenderTitle.MISS,
-            label: (l: AnyRecord): string => l.genderTitle.miss,
-          },
-          {
-            value: GenderTitle.MS,
-            label: (l: AnyRecord): string => l.genderTitle.ms,
-          },
-          {
-            value: GenderTitle.MX,
-            label: (l: AnyRecord): string => l.genderTitle.mx,
-          },
-          {
-            value: GenderTitle.OTHER,
-            label: (l: AnyRecord): string => l.genderTitle.other,
-          },
-          {
-            value: GenderTitle.PREFER_NOT_TO_SAY,
-            label: (l: AnyRecord): string => l.genderTitle.preferNotToSay,
-          },
-        ],
-        validator: isOptionSelected,
-      },
-      otherTitlePreference: {
-        id: 'otherTitlePreference',
         type: 'text',
         classes: 'govuk-input--width-10',
-        label: (l: AnyRecord) => l.otherTitlePreference,
+        label: (l: AnyRecord) => l.preferredTitle,
         labelSize: 's',
         attributes: { maxLength: 20 },
+        validator: validateTitlePreference,
       },
     },
     submit: submitButton,
