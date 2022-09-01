@@ -34,7 +34,13 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => res.redirect(PageUrls.CLAIM_SAVED));
+      req.session.destroy(() => {
+        if (req.query.redirectUrl) {
+          return res.redirect(req.query.redirectUrl as string);
+        } else {
+          return res.redirect(PageUrls.CLAIM_SAVED);
+        }
+      });
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {

@@ -36,7 +36,7 @@ describe('Do you have an acas number many resps page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
   });
 
   it('should display radio buttons', () => {

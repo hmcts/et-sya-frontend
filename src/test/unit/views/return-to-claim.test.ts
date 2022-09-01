@@ -42,7 +42,7 @@ describe('Return to existing claim page', () => {
 
   it('should display save and continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains(expectedButtonText, 'Could not find the button');
+    expect(button[5].innerHTML).contains(expectedButtonText, 'Could not find the button');
   });
 
   it('should display 2 radio buttons', () => {
