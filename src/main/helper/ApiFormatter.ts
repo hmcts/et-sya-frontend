@@ -153,6 +153,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantRequests: {
         claim_description: caseItem.claimSummaryText,
+        claimant_compensation_amount: formatToCcdAcceptedNumber(caseItem.compensationAmount),
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
