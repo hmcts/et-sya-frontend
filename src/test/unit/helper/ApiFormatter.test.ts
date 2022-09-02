@@ -14,7 +14,12 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { CaseState } from '../../../main/definitions/definition';
+import {
+  CaseState,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+} from '../../../main/definitions/definition';
 import { HubLinks } from '../../../main/definitions/hub';
 import {
   formatDate,
@@ -101,6 +106,15 @@ describe('Should return data in api format', () => {
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
+      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
+      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
+      claimSummaryText: 'Claim summary text',
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      compensationOutcome: 'Compensation outcome',
+      compensationAmount: 123,
+      tribunalRecommendationRequest: 'Tribunal recommendation request',
+      whistleblowingClaim: YesOrNo.YES,
+      whistleblowingEntityName: 'Whistleblowing entity name',
       claimDetailsCheck: YesOrNo.YES,
       respondents: [
         {

@@ -1,5 +1,6 @@
 import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { HubLinkStatus } from '../../../main/definitions/hub';
+import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -75,6 +76,17 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
+    },
+    claimantRequests: {
+      discrimination_claims: [ClaimTypeDiscrimination.RACE],
+      pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
+      claim_description: 'Claim summary text',
+      claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      claimant_compensation_text: 'Compensation outcome',
+      claimant_compensation_amount: 123,
+      claimant_tribunal_recommendation: 'Tribunal recommendation request',
+      whistleblowing: YesOrNo.YES,
+      whistleblowing_authority: 'Whistleblowing entity name',
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
