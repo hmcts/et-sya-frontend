@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isContentBetween3And100Chars } from '../components/form/validator';
@@ -9,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { setUserCase, handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -49,13 +50,14 @@ export default class WhistleblowingClaimsController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.whistleblowingClaimsFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

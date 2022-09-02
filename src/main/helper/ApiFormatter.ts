@@ -152,8 +152,15 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         hearing_assistance: caseItem.hearingAssistance,
       },
       claimantRequests: {
+        discrimination_claims: caseItem.claimTypeDiscrimination,
+        pay_claims: caseItem.claimTypePay,
         claim_description: caseItem.claimSummaryText,
+        claim_outcome: caseItem.tellUsWhatYouWant,
+        claimant_compensation_text: caseItem.compensationOutcome,
         claimant_compensation_amount: formatToCcdAcceptedNumber(caseItem.compensationAmount),
+        claimant_tribunal_recommendation: caseItem.tribunalRecommendationRequest,
+        whistleblowing: caseItem.whistleblowingClaim,
+        whistleblowing_authority: caseItem.whistleblowingEntityName,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
