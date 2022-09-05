@@ -11,8 +11,8 @@
       "notSelected": "Select an address"
     },
     "workAddress1": {
-      "required": "Enter the first line of the respondent address - up to 100 alphanumeric characters",
-      "invalid": "Enter a valid first line of the respondent address - up to 100 alphanumeric characters"
+      "required": "Enter the first line of the respondent address - up to 100 characters",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 characters"
     },
     "workAddressTown": {
       "required": "Enter a town or city for the respondent address - up to 60 characters",

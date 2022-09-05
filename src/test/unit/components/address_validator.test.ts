@@ -31,8 +31,8 @@ describe('Validation', () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al',
         expected: ValidationErrors.INVALID_VALUE,
       },
-      { mockRef: "1 King's Road", expected: ValidationErrors.INVALID_VALUE },
-      { mockRef: 'Kingston-upon-Thames', expected: ValidationErrors.INVALID_VALUE },
+      { mockRef: "1 King's Road", expected: undefined },
+      { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work address line one is valid', ({ mockRef, expected }) => {
       expect(isValidAddressFirstLine(mockRef, null)).toEqual(expected);
     });
