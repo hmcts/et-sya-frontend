@@ -2,7 +2,6 @@ import {
   getACASCertificateNumberError,
   getClaimSummaryError,
   getCustomNoticeLengthError,
-  getGenderDetailsError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
@@ -11,8 +10,10 @@ import {
   setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
+
 import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
+import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
 import {
@@ -382,7 +383,6 @@ describe('isPostcodeMVPLocation()', () => {
     expect(isPostcodeMVPLocation(postcode)).toEqual(expected);
   });
 });
-
 describe('getGenderDetailsError()', () => {
   it('should not return any errors when not on the summary page', () => {
     const body = {};

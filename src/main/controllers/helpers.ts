@@ -12,7 +12,6 @@ import {
   isPayIntervalNull,
   isValidNoticeLength,
   isValidTwoDigitInteger,
-  validateTitlePreference,
 } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import {
@@ -20,7 +19,6 @@ import {
   CaseDate,
   CaseType,
   CaseWithId,
-  GenderTitle,
   HearingPreference,
   Respondent,
   StillWorking,
@@ -149,15 +147,6 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError =
 
   if (!textProvided && !fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'required' };
-  }
-};
-
-export const getGenderDetailsError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.preferredTitle === GenderTitle.OTHER) {
-    const errorType = validateTitlePreference(formData.otherTitlePreference);
-    if (errorType) {
-      return { errorType, propertyName: 'otherTitlePreference' };
-    }
   }
 };
 

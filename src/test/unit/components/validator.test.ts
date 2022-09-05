@@ -110,14 +110,6 @@ describe('Validation', () => {
     it('Should correctly identify an option was not selected', () => {
       expect(isOptionSelected('notSelected')).toStrictEqual('required');
     });
-
-    it.each([
-      { preferredTitle: undefined, expected: 'required' },
-      { preferredTitle: '', expected: 'required' },
-      { preferredTitle: 'notSelected', expected: 'required' },
-    ])('Check option is selected %o', ({ preferredTitle, expected }) => {
-      expect(isOptionSelected(preferredTitle)).toEqual(expected);
-    });
   });
 
   describe('atLeastOneFieldIsChecked()', () => {
@@ -136,7 +128,7 @@ describe('Validation', () => {
 
   describe('validateTitlePreference()', () => {
     it.each([
-      { title: '', expectedError: 'required' },
+      { title: '', expectedError: undefined },
       { title: 'ab', expectedError: undefined },
       { title: 'a', expectedError: 'lengthError' },
       { title: 'a1', expectedError: 'numberError' },
