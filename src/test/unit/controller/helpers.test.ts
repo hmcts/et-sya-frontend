@@ -10,10 +10,8 @@ import {
   setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-
-import { GenderTitle, PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
 import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
 import {
@@ -383,47 +381,6 @@ describe('isPostcodeMVPLocation()', () => {
     expect(isPostcodeMVPLocation(postcode)).toEqual(expected);
   });
 });
-describe('getGenderDetailsError()', () => {
-  it('should not return any errors when not on the summary page', () => {
-    const body = {};
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it("should not return an error if 'other' title hasn't been selected", () => {
-    const body = { preferredTitle: GenderTitle.MR };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it('should not return an error if other title has been provided', () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: 'Dr' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it("should return required error if other title hasn't been provided", () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'required' });
-  });
-
-  it("should return number error if other title isn't valid", () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '123' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'numberError' });
-  });
-});
 
 describe('setUserCaseWithRedisData', () => {
   it(
@@ -478,7 +435,7 @@ describe('handleSessionErrors', () => {
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
     handleSessionErrors(req, res, form, '');
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
   it('should throw error, when session errors exists and unable to save session', () => {

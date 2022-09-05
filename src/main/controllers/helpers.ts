@@ -159,7 +159,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const noticeErrors = getCustomNoticeLengthError(req, formData);
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
-  const genderErrors = getGenderDetailsError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
 
   if (custErrors) {
@@ -184,10 +183,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
 
   if (hearingPreferenceErrors) {
     sessionErrors = [...sessionErrors, hearingPreferenceErrors];
-  }
-
-  if (genderErrors) {
-    sessionErrors = [...sessionErrors, genderErrors];
   }
 
   if (acasCertificateNumberError) {
