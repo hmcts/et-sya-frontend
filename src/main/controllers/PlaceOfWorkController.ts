@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
+import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isInvalidPostcode, isWorkAddressLineOneValid, isWorkAddressTownValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -11,6 +11,7 @@ import {
   assignFormData,
   getPageContent,
   getRespondentRedirectUrl,
+  handleSaveAsDraft,
   handleSessionErrors,
   setUserCaseForRespondent,
 } from './helpers';
@@ -25,7 +26,11 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        validator: isWorkAddressLineOneValid,
+        attributes: {
+          autocomplete: 'address-line1',
+          maxLength: 100,
+        },
+        validator: isValidAddressFirstLine,
       },
       workAddress2: {
         id: 'address2',
@@ -33,6 +38,9 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
+        attributes: {
+          autocomplete: 'address-line2',
+        },
       },
       workAddressTown: {
         id: 'addressTown',
@@ -40,7 +48,11 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        validator: isWorkAddressTownValid,
+        attributes: {
+          autocomplete: 'address-level2',
+          maxLength: 60,
+        },
+        validator: isValidCountryTownOrCity,
       },
       workAddressCountry: {
         id: 'addressCountry',
@@ -48,6 +60,10 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        attributes: {
+          maxLength: 60,
+        },
+        validator: isValidCountryTownOrCity,
       },
       workAddressPostcode: {
         id: 'addressPostcode',
@@ -56,18 +72,18 @@ export default class PlaceOfWorkController {
         label: l => l.postcode,
         labelSize: null,
         attributes: {
+          autocomplete: 'postal-code',
           maxLength: 14,
         },
-        validator: isInvalidPostcode,
       },
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2 hidden',
+      classes: 'govuk-!-margin-right-2',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary hidden',
+      classes: 'govuk-button--secondary',
     },
   };
 
@@ -78,15 +94,21 @@ export default class PlaceOfWorkController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
     setUserCaseForRespondent(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    const { saveForLater } = req.body;
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
+      handleSessionErrors(req, res, this.form, redirectUrl);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.placeOfWorkContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ENTER_ADDRESS,
-      TranslationKeys.PLACE_OF_WORK,
-    ]);
+    const content = getPageContent(
+      req,
+      this.placeOfWorkContent,
+      [TranslationKeys.COMMON, TranslationKeys.ENTER_ADDRESS, TranslationKeys.PLACE_OF_WORK],
+      0
+    ); // only respondent 1 has work address that is why selected respondent index is 0
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,

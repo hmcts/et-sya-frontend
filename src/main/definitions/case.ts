@@ -21,6 +21,11 @@ export interface Respondent {
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCountry?: string;
+  workAddressPostcode?: string;
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
@@ -100,10 +105,7 @@ export interface Case {
   workPostcode?: string;
   respondentName?: string;
   claimantSex?: Sex;
-  claimantGenderIdentitySame?: YesOrNoOrPreferNot;
-  claimantGenderIdentity?: string;
-  preferredTitle?: GenderTitle;
-  otherTitlePreference?: string;
+  preferredTitle?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
@@ -123,8 +125,8 @@ export const enum StillWorking {
 }
 
 export const enum NoAcasNumberReason {
-  ANOTHER = "Another person I'm making the claim with has an early conciliation certificate number",
-  NO_POWER = "Acas doesn't have the power to conciliate on some or all of my cliam",
+  ANOTHER = 'Another person I’m making a claim with has an Acas early conciliation certificate number',
+  NO_POWER = 'Acas doesn’t have the power to conciliate on some or all of my claim',
   EMPLOYER = 'My employer has already been in touch with Acas',
   UNFAIR_DISMISSAL = 'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',
 }
@@ -177,14 +179,12 @@ export const enum Sex {
   PREFER_NOT_TO_SAY = 'Prefer not to say',
 }
 
-export const enum GenderTitle {
+export enum ccdPreferredTitle {
   MR = 'Mr',
   MRS = 'Mrs',
   MISS = 'Miss',
   MS = 'Ms',
-  MX = 'Mx',
   OTHER = 'Other',
-  PREFER_NOT_TO_SAY = 'Prefer not to say',
 }
 
 export const enum PayInterval {

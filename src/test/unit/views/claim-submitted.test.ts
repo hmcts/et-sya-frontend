@@ -45,7 +45,7 @@ describe('Claim Submitted Confirmation page', () => {
 
   describe('What happens next', () => {
     it('should display title', () => {
-      expect(getTrimmedInnerText(headings[1])).equals(pageJson.whatHappensNext);
+      expect(getTrimmedInnerText(headings[2])).equals(pageJson.whatHappensNext);
     });
 
     it('should contain correct bullet points', () => {
@@ -57,7 +57,7 @@ describe('Claim Submitted Confirmation page', () => {
 
   describe('Submission details', () => {
     it('should display title', () => {
-      expect(getTrimmedInnerText(headings[2])).equals(pageJson.submissionDetails);
+      expect(getTrimmedInnerText(headings[3])).equals(pageJson.submissionDetails);
     });
 
     it('should have 4 items', () => {
@@ -72,19 +72,19 @@ describe('Claim Submitted Confirmation page', () => {
 
   describe('Tribunal details', () => {
     it('should display title', () => {
-      expect(getTrimmedInnerText(headings[3])).equals(pageJson.claimQuestions);
+      expect(getTrimmedInnerText(headings[4])).equals(pageJson.claimQuestions);
     });
 
     it('should display download claim subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[5])).equals(pageJson.downloadClaimHint);
+      expect(getTrimmedInnerText(bodyElements[6])).equals(pageJson.downloadClaimHint);
     });
 
     it('should display subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[6])).equals(pageJson.claimQuestionsText);
+      expect(getTrimmedInnerText(bodyElements[7])).equals(pageJson.claimQuestionsText);
     });
 
     it('should display subtext call ET customer care', () => {
-      expect(getTrimmedInnerText(bodyElements[7])).equals(pageJson.processQuestionsText);
+      expect(getTrimmedInnerText(bodyElements[8])).equals(pageJson.processQuestionsText);
     });
 
     it('should have 3 items', () => {
@@ -98,7 +98,7 @@ describe('Claim Submitted Confirmation page', () => {
 
   describe('Further questions', () => {
     it('should display title', () => {
-      expect(getTrimmedInnerText(headings[4])).equals(pageJson.processQuestions);
+      expect(getTrimmedInnerText(headings[5])).equals(pageJson.processQuestions);
     });
 
     it('should contain correct list items', () => {
@@ -111,7 +111,7 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should display append', () => {
-      expect(getTrimmedInnerText(bodyElements[8])).equals(pageJson.contactAppend);
+      expect(getTrimmedInnerText(bodyElements[9])).equals(pageJson.contactAppend);
     });
   });
 

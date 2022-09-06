@@ -10,14 +10,10 @@ import { getCaseApi } from '../services/CaseService';
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
-    const retrievedCase = await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId);
     try {
-      req.session.userCase = fromApiFormat(retrievedCase.data);
-      req.session.save(err => {
-        if (err) {
-          throw err;
-        }
-      });
+      req.session.userCase = fromApiFormat(
+        (await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId)).data
+      );
     } catch (err) {
       const error = new Error(err);
       error.name = CaseApiErrors.FAILED_TO_RETRIEVE_CASE;

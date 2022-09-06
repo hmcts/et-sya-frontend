@@ -143,6 +143,12 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
+  CHANGE_DETAILS: '*/change',
+} as const;
+
+export const ValidationErrors = {
+  REQUIRED: 'required',
+  INVALID_VALUE: 'invalid',
 } as const;
 
 export const AuthUrls = {
@@ -164,6 +170,7 @@ export const Urls = {
   INFO: '/info',
   DOWNLOAD_CLAIM: '/download-claim',
   PCQ: '/pcq',
+  EXTEND_SESSION: '/extend-session',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
