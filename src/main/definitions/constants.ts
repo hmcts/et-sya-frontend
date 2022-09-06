@@ -141,6 +141,12 @@ export const PageUrls = {
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CHANGE_DETAILS: '*/change',
+} as const;
+
+export const ValidationErrors = {
+  REQUIRED: 'required',
+  INVALID_VALUE: 'invalid',
 } as const;
 
 export const AuthUrls = {
