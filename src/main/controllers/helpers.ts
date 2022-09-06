@@ -5,19 +5,13 @@ import { LoggerInstance } from 'winston';
 
 import { isFirstDateBeforeSecond } from '../components/form/dateValidators';
 import { Form } from '../components/form/form';
-import {
-  arePayValuesNull,
-  isFieldFilledIn,
-  isPayIntervalNull,
-  validateTitlePreference,
-} from '../components/form/validator';
+import { arePayValuesNull, isAcasNumberValid, isFieldFilledIn, isPayIntervalNull } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
   CaseDate,
   CaseType,
   CaseWithId,
-  GenderTitle,
   HearingPreference,
   Respondent,
   YesOrNo,
@@ -131,30 +125,15 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError =
   }
 };
 
-export const getGenderDetailsError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.preferredTitle === GenderTitle.OTHER) {
-    const errorType = validateTitlePreference(formData.otherTitlePreference);
-    if (errorType) {
-      return { errorType, propertyName: 'otherTitlePreference' };
-    }
-  }
-};
-
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
-  return form.getErrors(formData);
-};
-
-export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
-  let sessionErrors = getSessionErrors(req, form, formData);
-
   //call get custom errors and add to session errors
+  let sessionErrors = form.getErrors(formData);
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
-  const genderErrors = getGenderDetailsError(formData);
+  const acasCertificateNumberError = getACASCertificateNumberError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -176,9 +155,15 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
     sessionErrors = [...sessionErrors, hearingPreferenceErrors];
   }
 
-  if (genderErrors) {
-    sessionErrors = [...sessionErrors, genderErrors];
+  if (acasCertificateNumberError) {
+    sessionErrors = [...sessionErrors, acasCertificateNumberError];
   }
+  return sessionErrors;
+};
+
+export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  const sessionErrors = getSessionErrors(req, form, formData);
 
   req.session.errors = sessionErrors;
 
@@ -197,9 +182,13 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
       return res.redirect(req.url);
     });
   } else {
-    handleReturnUrl(req, res, redirectUrl);
-    res.redirect(redirectUrl);
+    const nextPage = handleReturnUrl(req, redirectUrl);
+    return res.redirect(nextPage);
   }
+};
+
+export const handleSaveAsDraft = (res: Response): void => {
+  return res.redirect(PageUrls.CLAIM_SAVED);
 };
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
@@ -238,10 +227,15 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
     req.session.userCase = {} as CaseWithId;
   }
   let respondent: Respondent;
-  if (!req.session.userCase.respondents) {
+  if (req.session.userCase.respondents === undefined) {
     req.session.userCase.respondents = [];
     respondent = {
       respondentNumber: 1,
+    };
+    req.session.userCase.respondents.push(respondent);
+  } else if (req.session.userCase.respondents.length <= selectedRespondentIndex) {
+    respondent = {
+      respondentNumber: selectedRespondentIndex + 1,
     };
     req.session.userCase.respondents.push(respondent);
   }
@@ -315,6 +309,23 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
   }
 };
 
+export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): FormError => {
+  const certificateRadioButtonSelectedValue = formData.acasCert;
+  const acasCertNum = formData.acasCertNum;
+
+  if ((certificateRadioButtonSelectedValue as string)?.includes(YesOrNo.YES)) {
+    let errorType = isFieldFilledIn(acasCertNum);
+    if (errorType) {
+      return { errorType, propertyName: 'acasCertNum' };
+    } else {
+      errorType = isAcasNumberValid(acasCertNum);
+      if (errorType) {
+        return { errorType, propertyName: 'acasCertNum' };
+      }
+    }
+  }
+};
+
 export const getSectionStatus = (
   detailsCheckValue: YesOrNo,
   sessionValue: string | CaseDate | number
@@ -376,30 +387,30 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
   }
 };
 
-export const handleReturnUrl = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  if (req.url === PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK || req.url === PageUrls.CLAIM_SUBMITTED) {
+export const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
+  let nextPage = redirectUrl;
+  if (req.session.returnUrl) {
+    nextPage = req.session.returnUrl;
     req.session.returnUrl = undefined;
   }
-  if (req.session.returnUrl !== undefined) {
-    return res.redirect(req.session.returnUrl);
-  }
-  if (redirectUrl === PageUrls.RESPONDENT_DETAILS_CHECK || redirectUrl === PageUrls.CHECK_ANSWERS) {
-    req.session.returnUrl = redirectUrl;
-  } else {
-    req.session.returnUrl = undefined;
-  }
+  return nextPage;
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
-  if (typeof selectedRespondentIndex !== 'undefined') {
-    userCase.respondentName = userCase.respondents[selectedRespondentIndex].respondentName;
-    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex].respondentAddress1;
-    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex].respondentAddress2;
-    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex].respondentAddressTown;
-    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex].respondentAddressCountry;
-    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex].respondentAddressPostcode;
-    userCase.acasCert = userCase.respondents[selectedRespondentIndex].acasCert;
-    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex].acasCertNum;
-    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex].noAcasReason;
+  if (typeof selectedRespondentIndex !== 'undefined' && userCase.respondents !== undefined) {
+    userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
+    userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex]?.respondentAddress1;
+    userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex]?.respondentAddress2;
+    userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex]?.respondentAddressTown;
+    userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex]?.respondentAddressCountry;
+    userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex]?.respondentAddressPostcode;
+    userCase.workAddress1 = userCase.respondents[selectedRespondentIndex]?.workAddress1;
+    userCase.workAddress2 = userCase.respondents[selectedRespondentIndex]?.workAddress2;
+    userCase.workAddressTown = userCase.respondents[selectedRespondentIndex]?.workAddressTown;
+    userCase.workAddressCountry = userCase.respondents[selectedRespondentIndex]?.workAddressCountry;
+    userCase.workAddressPostcode = userCase.respondents[selectedRespondentIndex]?.workAddressPostcode;
+    userCase.acasCert = userCase.respondents[selectedRespondentIndex]?.acasCert;
+    userCase.acasCertNum = userCase.respondents[selectedRespondentIndex]?.acasCertNum;
+    userCase.noAcasReason = userCase.respondents[selectedRespondentIndex]?.noAcasReason;
   }
 };

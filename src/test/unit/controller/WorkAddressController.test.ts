@@ -1,8 +1,8 @@
 import WorkAddressController from '../../../main/controllers/WorkAddressController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
@@ -57,5 +57,74 @@ describe('Update Work Address Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/place-of-work');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
+  });
+  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.NO, saveForLater: true };
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+  });
+  it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
+    const body = { saveForLater: true };
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+  });
+  it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
+    const body = { saveForLater: false };
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
+  });
+  it('should redirect to undefined when save as draft not selected and no answer', () => {
+    const body = {};
+
+    const controller = new WorkAddressController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
+    expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
+  });
+  it('should throw error, when session errors exists and unable to save session', () => {
+    const body = { saveForLater: false };
+
+    const controller = new WorkAddressController();
+    const err = new Error('Something went wrong');
+
+    const req = mockRequestWithSaveException({
+      body,
+    });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+    expect(function () {
+      controller.post(req, res);
+    }).toThrow(err);
   });
 });

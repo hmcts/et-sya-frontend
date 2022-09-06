@@ -50,19 +50,4 @@ describe('Test task List check controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
-
-  it('should render the claim steps page when there is a return url', () => {
-    const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const controller = new EmploymentAndRespondentCheckController(mockLogger);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-
-    req.url = PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK;
-    req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
-
-    controller.post(req, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
-    expect(req.session.returnUrl).toBeUndefined();
-  });
 });

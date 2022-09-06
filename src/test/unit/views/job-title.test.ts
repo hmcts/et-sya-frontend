@@ -29,14 +29,14 @@ describe('Job Title page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display firt paragraph', () => {
+  it('should display first paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[4].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p1[5].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display second paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[5].innerHTML).contains(expectedP2, 'P2 does not exist');
+    expect(p1[6].innerHTML).contains(expectedP2, 'P2 does not exist');
   });
 
   it('should display 1 input field', () => {
@@ -54,6 +54,6 @@ describe('Job Title page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('continue', 'Could not find the button');
   });
 });

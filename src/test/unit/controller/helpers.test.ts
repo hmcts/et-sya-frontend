@@ -1,16 +1,27 @@
 import {
+  getACASCertificateNumberError,
   getClaimSummaryError,
-  getGenderDetailsError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
+  handleSessionErrors,
   isPostcodeMVPLocation,
+  setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { GenderTitle, PayInterval, YesOrNo } from '../../../main/definitions/case';
+import { PayInterval, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
-import { mockRequest } from '../mocks/mockRequest';
+import {
+  mockForm,
+  mockFormField,
+  mockValidationCheckWithOutError,
+  mockValidationCheckWithRequiredError,
+} from '../mocks/mockForm';
+import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+import { userCaseWith4Respondents } from '../mocks/mockUserCaseWithRespondent';
 
 describe('Partial Pay errors', () => {
   it('should return error if pay interval does not exist', () => {
@@ -162,6 +173,104 @@ describe('Claim Summary Error', () => {
   });
 });
 
+describe('ACAS Certificate Number Errors', () => {
+  it('should not return an error if correct acas number provided', () => {
+    const body = { acasCertNum: 'R1234/5678/12' };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if correct acasCert is No', () => {
+    const body = {
+      acasCertNum: 'R1234/5678/12',
+      acasCert: YesOrNo.NO,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return an error if acas number not provided', () => {
+    const body = {
+      acasCertNum: '',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'required', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (//)', () => {
+    const body = {
+      acasCertNum: 'R1234//678/12',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (Not starts with R)', () => {
+    const body = {
+      acasCertNum: '1234//678/12',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (ends with /)', () => {
+    const body = {
+      acasCertNum: '1234/678/12/',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (less than 11 character)', () => {
+    const body = {
+      acasCertNum: 'R1234/6781',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (more than 13 character)', () => {
+    const body = {
+      acasCertNum: 'R1234/67891234',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+
+  it('should return an error if invalid acas number provided - (has character which is not numeric and / after R)', () => {
+    const body = {
+      acasCertNum: 'R1234/6c91234',
+      acasCert: YesOrNo.YES,
+    };
+
+    const errors = getACASCertificateNumberError(body);
+
+    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+  });
+});
+
 describe('getSectionStatus()', () => {
   it.each([
     {
@@ -250,44 +359,103 @@ describe('isPostcodeMVPLocation()', () => {
   });
 });
 
-describe('getGenderDetailsError()', () => {
-  it('should not return any errors when not on the summary page', () => {
-    const body = {};
+describe('setUserCaseWithRedisData', () => {
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
-    const errors = getGenderDetailsError(body);
+      setUserCaseWithRedisData(req, caseData);
 
-    expect(errors).toEqual(undefined);
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+      );
+    }
+  );
+
+  it(
+    'should set req.session.userCase when setUserCaseWithRedisData is called with correspondent' +
+      'req, and caseData, session.usercase is undefined',
+    () => {
+      const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+      req.session.userCase = undefined;
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+
+      setUserCaseWithRedisData(req, caseData);
+
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"claimantRepresentedQuestion":"No","caseType":"Multiple","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"]}'
+      );
+    }
+  );
+});
+
+describe('handleSessionErrors', () => {
+  it('return PageUrls.CLAIM_SAVED when saveForLater and requiredErrors exists', () => {
+    const req = mockRequest({
+      session: mockSession([], [], []),
+      body: { saveForLater: true, testFormField: 'test value' },
+    });
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithRequiredError(),
+      'test label'
+    );
+
+    const form = mockForm({ testFormField: formField });
+    const res = mockResponse();
+    handleSessionErrors(req, res, form, '');
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it("should not return an error if 'other' title hasn't been selected", () => {
-    const body = { preferredTitle: GenderTitle.MR };
+  it('should throw error, when session errors exists and unable to save session', () => {
+    const body = { testFormField: 'test value' };
+    const err = new Error('Something went wrong');
 
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual(undefined);
+    const req = mockRequestWithSaveException({
+      body,
+    });
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithRequiredError(),
+      'test label'
+    );
+    const form = mockForm({ testFormField: formField });
+    const res = mockResponse();
+    expect(function () {
+      handleSessionErrors(req, res, form, '');
+    }).toThrow(err);
   });
+});
 
-  it('should not return an error if other title has been provided', () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: 'Dr' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it("should return required error if other title hasn't been provided", () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'required' });
-  });
-
-  it("should return number error if other title isn't valid", () => {
-    const body = { preferredTitle: GenderTitle.OTHER, otherTitlePreference: '123' };
-
-    const errors = getGenderDetailsError(body);
-
-    expect(errors).toEqual({ propertyName: 'otherTitlePreference', errorType: 'numberError' });
+describe('setUserCaseForRespondent', () => {
+  it('should add new respondent to request when number of respondents is less than selectedRespondentIndex', () => {
+    const req = mockRequest({
+      session: mockSession([], [], []),
+      body: { saveForLater: true, testFormField: 'test value' },
+    });
+    req.session.userCase = userCaseWith4Respondents;
+    const formField = mockFormField(
+      'testFormField',
+      'test name',
+      'text',
+      'test value',
+      mockValidationCheckWithOutError(),
+      'test label'
+    );
+    req.params = { respondentNumber: '5' };
+    const form = mockForm({ testFormField: formField });
+    setUserCaseForRespondent(req, form);
+    expect(req.session.userCase.respondents).toHaveLength(5);
   });
 });

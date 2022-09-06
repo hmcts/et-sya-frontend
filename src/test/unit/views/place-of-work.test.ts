@@ -21,7 +21,7 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const buttonClass = 'govuk-button';
+const buttonClass = 'govuk-!-margin-right-2';
 const expectedInputLabel = addressJson.enterPostcode;
 const labelClass = 'govuk-label';
 const inputClass = 'govuk-input';
@@ -50,7 +50,7 @@ describe('Place Of Work Page', () => {
 
   it('should display find address button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('Find address', 'Could not find the button');
+    expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
   });
 });
 
