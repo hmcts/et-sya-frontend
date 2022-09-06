@@ -57,6 +57,9 @@ export const isValidUKTelNumber: Validator = value => {
 
   try {
     const phoneUtil = PhoneNumberUtil.getInstance();
+    if (!/^[+()\- \d]+$/.test(value as string)) {
+      return 'invalid';
+    }
     if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(value as string, 'GB'), 'GB')) {
       return 'invalid';
     }
