@@ -4,7 +4,9 @@ import { app } from '../../main/app';
 import { AuthUrls, PageUrls } from '../../main/definitions/constants';
 import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
 
-const authenticatedRoutes = Object.values(PageUrls).filter(url => !noSignInRequiredEndpoints.includes(url));
+const authenticatedRoutes = Object.values(PageUrls).filter(
+  url => !noSignInRequiredEndpoints.includes(url) && url !== PageUrls.CHANGE_DETAILS
+);
 
 describe('GET unauthenticated routes', () => {
   it.each(noSignInRequiredEndpoints)('should redirect to %p', async (url: string) => {

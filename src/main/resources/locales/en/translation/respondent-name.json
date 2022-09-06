@@ -4,5 +4,11 @@
   "p1": "Enter the name of the organisation. If there's no organisation involved - for example, because you were employed by an individual acting as a sole trader - enter the individual's name.",
   "p2": "This should be the same as the name of the respondent(s) on the ACAS certificate. If they are not the same your claim might be rejected.",
   "insetText": "You'll be able to add more respondents later if you need to.",
-  "label": "Enter name of respondent"
+  "label": "Enter name of respondent",
+  "errors": {
+    "respondentName": {
+      "required": "Tell us the name of the respondent",
+      "invalidLength": "Enter a respondent name of between 5-100 characters"
+    }
+  }
 }
