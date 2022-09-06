@@ -94,6 +94,15 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantType: {
         claimant_email_address: caseItem.email,
         claimant_contact_preference: caseItem.claimantContactPreference,
+        claimant_addressUK: {
+          AddressLine1: caseItem.address1,
+          AddressLine2: caseItem.address2,
+          PostTown: caseItem.addressTown,
+          PostCode: caseItem.addressPostcode,
+          Country: caseItem.addressCountry,
+          County: '',
+          AddressLine3: '',
+        },
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
