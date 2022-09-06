@@ -2,6 +2,8 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/timeout-modal.njk" import timeoutModal with context %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
@@ -100,6 +102,8 @@ if isLoggedIn %}
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
   {% endif %}
+
+  {{ timeoutModal() }}
 
   {{ govukPhaseBanner({
       tag: {

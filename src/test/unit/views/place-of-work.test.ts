@@ -50,7 +50,7 @@ describe('Place Of Work Page', () => {
 
   it('should display find address button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('Find address', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Find address', 'Could not find the button');
   });
 });
 

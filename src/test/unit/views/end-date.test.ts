@@ -59,6 +59,6 @@ describe('End date page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[4].innerHTML).contains('continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('continue', 'Could not find the button');
   });
 });

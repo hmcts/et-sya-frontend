@@ -162,6 +162,7 @@ export const Urls = {
   INFO: '/info',
   DOWNLOAD_CLAIM: '/download-claim',
   PCQ: '/pcq',
+  EXTEND_SESSION: '/extend-session',
 } as const;
 
 export const HTTPS_PROTOCOL = 'https://';
