@@ -3,7 +3,7 @@ import { AnyRecord } from './util-types';
 
 type LanguageLookup = (lang: AnyRecord) => string;
 
-type ValidationCheck = (
+export type ValidationCheck = (
   value: string | string[] | CaseDate | undefined | Case,
   formData: AnyRecord
 ) => void | string | InvalidField;

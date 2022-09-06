@@ -9,7 +9,7 @@ const hideSelectAddress = () => getById('selectAddress').classList.add(hidden);
 
 const resetSelectAddress = () => {
   const selectAddress = getById('selectAddressInput') as HTMLSelectElement | null;
-  if (selectAddress) {
+  if (selectAddress && selectAddress.length > 0) {
     const defaultOpt = selectAddress[0];
     while (selectAddress.options.length > 0) {
       selectAddress.remove(0);
