@@ -129,9 +129,9 @@ describe('Validation', () => {
       { mockRef: '', expected: undefined },
       { mockRef: null, expected: undefined },
       { mockRef: '12345', expected: 'invalid' },
-      { mockRef: '@£$£@$%', expected: 'invalid' },
-      { mockRef: 'not a phone number', expected: 'invalid' },
-      { mockRef: '01234!567890', expected: 'invalid' },
+      { mockRef: '@£$£@$%', expected: 'nonnumeric' },
+      { mockRef: 'not a phone number', expected: 'nonnumeric' },
+      { mockRef: '01234!567890', expected: 'nonnumeric' },
       { mockRef: '00361234567890', expected: 'invalid' },
       { mockRef: '01234 567 890', expected: undefined },
       { mockRef: '01234 567890', expected: undefined },
@@ -141,6 +141,9 @@ describe('Validation', () => {
       { mockRef: '004401234567890', expected: undefined },
       { mockRef: '01234567890', expected: undefined },
       { mockRef: '1234567890', expected: undefined },
+      { mockRef: '+44 (07500) 900 983', expected: undefined },
+      { mockRef: '(01629) 900 983', expected: undefined },
+      { mockRef: '01234567B90', expected: 'nonnumeric' },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
     });
