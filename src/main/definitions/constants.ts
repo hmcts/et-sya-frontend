@@ -73,6 +73,7 @@ export const TranslationKeys = {
   PLACE_OF_WORK: 'place-of-work',
   COOKIE_PREFERENCES: 'cookie-preferences',
   CITIZEN_HUB: 'citizen-hub',
+  CITIZEN_HUB_ACKNOWLEDGEMENT: 'citizen-hub-acknowledgement',
 } as const;
 
 export const PageUrls = {
@@ -141,6 +142,7 @@ export const PageUrls = {
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
 } as const;
 
 export const AuthUrls = {

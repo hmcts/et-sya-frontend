@@ -1,0 +1,69 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">
+        Acknowledgement of Claim
+      </h1>
+      {{ govukTable({
+  caption: "Notice of Claim",
+  captionClasses: "govuk-table__caption--m",
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: "Date uploaded"
+    },
+    {
+      text: "Document"
+    }
+  ],
+rows: [
+    [
+      {
+        text: "22 May 22"
+      },
+      {
+        html: "<a href=\"/getCaseDocument\" class=\"govuk-link\">Acknowledgement of Claim (PDF, [XX]MB)</a>"
+      }
+    ],
+    [
+      {
+        text: "22 May 22"
+      },
+      {
+        html: "<a href=\"#\" class=\"govuk-link\">Notice of hearing (PDF, [XX]MB)</a>"
+      }
+    ]
+  ]
+}) }}
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+              summaryText: "Contact",
+              html: sideBarContent
+            }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -155,6 +155,9 @@ export default function (app: Application): void {
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
   app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
+  app.get(PageUrls.CITIZEN_HUB_ACKNOWLEDGEMENT, app.locals.container.cradle.citizenHubAcknowledgementController.get);
+  app.get('/getCaseDocument', app.locals.container.cradle.caseDocumentController.get);
+
   app.get(
     Urls.INFO,
     infoRequestHandler({

@@ -3,6 +3,7 @@
 {% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -14,7 +15,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-l">
-        {{ header + userCase.firstName + ' ' + userCase.lastName }} vs {{ userCase.respondents[0].respondentName }}
+        {{ header + userCase.firstName + ' ' + userCase.lastName }}
+        vs
+        {{ userCase.respondents[0].respondentName }}
       </h2>
       <p id="caseNumber" class="govuk-body">{{ caseNumber + userCase.ethosCaseReference }}</p>
 
@@ -49,6 +52,17 @@
               active: currentState.isRightAfter('CLAIM_DECISION')
              }],
               classes: ''
+            }) }}
+
+            {% set htmlForNotification %}
+            <p class="govuk-notification-banner__heading">
+              The tribunal has acknowledged your cliaim.
+              <a class="govuk-notification-banner__link" href="/acknowledgement">View the acknowledgement of claim</a>.
+            </p>
+            {% endset %}
+
+            {{ govukNotificationBanner({
+             html: htmlForNotification
             }) }}
 
             <ol class="app-task-list">
@@ -88,15 +102,15 @@
               I want to...
             </h2>
             <p class="govuk-body">
-              <a href= "#">
-              Contact the tribunal about my case
-            </a>
+              <a href="#">
+                Contact the tribunal about my case
+              </a>
             </p>
 
             <p class="govuk-body">
-              <a href= "#">
-              Find legal advice (opens in new tab)
-            </a>
+              <a href="#">
+                Find legal advice (opens in new tab)
+              </a>
             </p>
 
             {% set sideBarContent %}
