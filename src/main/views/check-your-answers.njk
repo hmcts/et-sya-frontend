@@ -77,7 +77,7 @@
         },
         {
           key: {
-            text: personalDetails.gender,
+            text: personalDetails.sex,
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
@@ -86,27 +86,9 @@
           actions: {
             items: [
               {
-                href: PageUrls.GENDER_DETAILS,
+                href: PageUrls.SEX_AND_TITLE,
                 text: "Change",
-                visuallyHiddenText: personalDetails.gender
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.genderIdentity,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: "TO BE REMOVED"
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.GENDER_DETAILS,
-                text: "Change",
-                visuallyHiddenText: personalDetails.genderIdentity
+                visuallyHiddenText: personalDetails.sex
               }
             ]
           } 
@@ -123,7 +105,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.GENDER_DETAILS,
+                href: PageUrls.SEX_AND_TITLE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.title
               }
