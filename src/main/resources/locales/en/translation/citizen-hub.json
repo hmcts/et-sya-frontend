@@ -7,6 +7,10 @@
   "details": "Your hearing details",
   "decision": "Your claim decision",
 
+  "iWantTo": "I want to...",
+  "contactTribunalMyCase": "Contact the tribunal about my case",
+  "findLegalAdvice": "Find legal advice (opens in new tab)",
+
   "callEmployer": "Call the Employment Tribunal customer contact centre if you have any questions about your claim. They cannot give you legal advice or process any updates to your case.",
   "contactText": "You can also ",
   "contactLink": "contact the tribunal about your case.",
