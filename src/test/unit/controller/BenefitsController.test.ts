@@ -40,7 +40,7 @@ describe('Benefits Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB);
   });
 
   it('should render the respondent name page when working or notice and no radio button is selected', () => {
@@ -52,7 +52,7 @@ describe('Benefits Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the have you got a new job page when no longer working radio button is selected', () => {
@@ -64,7 +64,7 @@ describe('Benefits Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB);
   });
 
   it('should add the benefits form value to the userCase', () => {
@@ -103,6 +103,6 @@ describe('Benefits Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

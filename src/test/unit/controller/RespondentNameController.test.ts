@@ -45,7 +45,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globo Gym',
@@ -64,7 +64,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/respondent-address');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-address');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globe Gym',
@@ -83,7 +83,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
   it('should redirect to your claim has been saved page and save respondent name when a a name is entered and save as draft clicked', () => {
     const body = { respondentName: 'Globe Gym', saveForLater: true };
@@ -96,7 +96,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to your claim has been saved page when save as draft selected and no respondent name entered', () => {
     const body = { saveForLater: true };
@@ -108,7 +108,7 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to undefined when save as draft not selected and no respondent name entered', () => {
     const body = { saveForLater: false };
@@ -120,6 +120,6 @@ describe('Respondent Name Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
   });
 });

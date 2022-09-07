@@ -43,7 +43,7 @@ describe('Pay Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.PENSION);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.PENSION);
   });
 
   it('should add payBeforeTax, payAfterTax and payInterval to the session userCase', () => {
@@ -72,7 +72,7 @@ describe('Pay Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 
   it('should have error when pay is entered and interval is not entered', () => {

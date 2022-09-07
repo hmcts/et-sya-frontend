@@ -40,7 +40,7 @@ describe('Are you still working controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
   });
 
   it('should render the job title page when the page submitted', () => {
@@ -51,7 +51,7 @@ describe('Are you still working controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
   });
 
   it('should add isStillWorking to the session userCase', () => {
@@ -64,7 +64,7 @@ describe('Are you still working controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.JOB_TITLE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
     expect(req.session.userCase).toStrictEqual({
       isStillWorking: StillWorking.WORKING,
     });
@@ -82,7 +82,7 @@ describe('Are you still working controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -93,6 +93,6 @@ describe('Are you still working controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

@@ -55,7 +55,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -77,7 +77,7 @@ describe('Type Of Claim Controller', () => {
       req.session.userCase = undefined;
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
+      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [
           TypesOfClaim.BREACH_OF_CONTRACT,
@@ -102,7 +102,7 @@ describe('Type Of Claim Controller', () => {
       req.session.userCase = undefined;
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
       expect(req.session.userCase).toStrictEqual({
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       });
@@ -167,7 +167,7 @@ describe('Type Of Claim Controller', () => {
 
       expect(() => {
         controller.post(req, res);
-      }).toThrowError(RedisErrors.CLIENT_NOT_FOUND);
+      }).toThrow(RedisErrors.CLIENT_NOT_FOUND);
     });
 
     it('should redirect to ET1_BASE page if Breach of Contract is selected', () => {

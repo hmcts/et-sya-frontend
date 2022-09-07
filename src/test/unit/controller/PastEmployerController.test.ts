@@ -41,7 +41,7 @@ describe('Update Past Employer Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -53,7 +53,7 @@ describe('Update Past Employer Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.STILL_WORKING);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.STILL_WORKING);
   });
 
   it('should add pastEmployer to the session userCase', () => {
@@ -80,6 +80,6 @@ describe('Update Past Employer Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

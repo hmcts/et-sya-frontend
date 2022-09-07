@@ -39,7 +39,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     // TODO Test respondent address is copied to work address
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('Yes');
   });
@@ -55,7 +55,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/place-of-work');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/place-of-work');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
   it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
@@ -69,7 +69,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
     const body = { saveForLater: true };
@@ -82,7 +82,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
     const body = { saveForLater: false };
@@ -95,7 +95,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
   it('should redirect to undefined when save as draft not selected and no answer', () => {
@@ -109,7 +109,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
   });
   it('should throw error, when session errors exists and unable to save session', () => {

@@ -40,7 +40,7 @@ describe('Notice Period Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_TYPE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_TYPE);
   });
 
   it('should render the average weekly hours page when no radio button is selected', () => {
@@ -51,7 +51,7 @@ describe('Notice Period Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
   });
 
   it('should add the notice period selected value to the session userCase', () => {
@@ -96,6 +96,6 @@ describe('Notice Period Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

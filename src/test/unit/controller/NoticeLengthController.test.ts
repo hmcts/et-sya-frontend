@@ -30,7 +30,7 @@ describe('Notice length Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_LENGTH, expect.anything());
   });
 
-  it('should render the average weekly hours page when value is submitted', () => {
+  it('should render the average weekly hours page when valid value is submitted', () => {
     const body = { noticePeriodLength: '2' };
     const controller = new NoticeLengthController(mockLogger);
 
@@ -38,7 +38,31 @@ describe('Notice length Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
+  });
+
+  it('should render same page if an invalid value is entered', () => {
+    const errors = [{ propertyName: 'noticePeriodLength', errorType: 'notANumber' }];
+    const body = { noticePeriodLength: 'a' };
+    const controller = new NoticeLengthController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should render the average weekly hours page when notice period length is left blank', () => {
+    const body = { noticePeriodLength: '' };
+    const controller = new NoticeLengthController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
   });
 
   it('should add the notice period length to the session userCase', () => {
@@ -65,6 +89,6 @@ describe('Notice length Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });
