@@ -82,8 +82,8 @@ export default function (app: Application): void {
   app.get(PageUrls.CONTACT_ACAS, app.locals.container.cradle.contactAcasController.get);
   app.get(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.get);
   app.post(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.post);
-  app.get(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.get);
-  app.post(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.post);
+  app.get(PageUrls.SEX_AND_TITLE, app.locals.container.cradle.sexAndTitleController.get);
+  app.post(PageUrls.SEX_AND_TITLE, app.locals.container.cradle.sexAndTitleController.post);
   app.get(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.get);
   app.post(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.post);
   app.get(PageUrls.TELEPHONE_NUMBER, app.locals.container.cradle.telNumberController.get);

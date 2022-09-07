@@ -35,7 +35,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
   it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { noAcasReason: NoAcasNumberReason.ANOTHER, saveForLater: true };
@@ -48,7 +48,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to your claim has been saved page when save as draft clicked and no acas reason selected', () => {
     const body = { saveForLater: true };
@@ -60,7 +60,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
   it('should redirect to undefined when save as draft not clicked and no acas reason selected', () => {
     const body = { saveForLater: false };
@@ -72,7 +72,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
   });
   it('should redirect to undefined when save as draft not selected and no acas reason selected', () => {
     const body = {};
@@ -84,7 +84,7 @@ describe('No Acas number Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
   });
   it('should throw error, when session errors exists and unable to save session', () => {
     const body = { saveForLater: false };

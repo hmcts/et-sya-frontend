@@ -1,7 +1,6 @@
 import {
   getACASCertificateNumberError,
   getClaimSummaryError,
-  getCustomNoticeLengthError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
@@ -10,7 +9,7 @@ import {
   setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PayInterval, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
@@ -109,43 +108,21 @@ describe('New Job Partial Pay errors', () => {
 });
 
 describe('Custom Notice Length errors', () => {
-  it('should return no error', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '12' };
+  it(
+    'should set req.session.userCase when setUserCaaseWithRedisData is called with correspondent' +
+      'req, and caseData parameters',
+    () => {
+      const req = mockRequest({ session: mockSession([], [], []) });
+      const caseData =
+        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
-    const req = mockRequest({ body });
-    const errors = getCustomNoticeLengthError(req, formData);
+      setUserCaseWithRedisData(req, caseData);
 
-    expect(errors).toEqual(undefined);
-  });
-
-  it('should return error with empty notice period length', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'invalid', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
-
-  it('should return error when invalid number is entered', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: 'ab' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'notANumber', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
+      expect(JSON.stringify(req.session.userCase)).toEqual(
+        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+      );
+    }
+  );
 });
 
 describe('Claim Summary Error', () => {

@@ -35,7 +35,7 @@ describe('Address details Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -50,7 +50,7 @@ describe('Address details Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.TELEPHONE_NUMBER);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELEPHONE_NUMBER);
       expect(req.session.userCase).toStrictEqual({
         address1: '10 test street',
         addressTown: 'test',

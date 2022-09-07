@@ -35,7 +35,7 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
 
   it('should redirect to no acas number reason when no is selected and remove acas cert num value', () => {
@@ -48,8 +48,8 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1' + PageUrls.NO_ACAS_NUMBER);
-    //expect(res.redirect).toBeCalled§With();
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1' + PageUrls.NO_ACAS_NUMBER);
+
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.NO);
   });
@@ -64,8 +64,8 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(undefined);
-    //expect(res.redirect).toBeCalled§With();
+    expect(res.redirect).toHaveBeenCalledWith(undefined);
+
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(undefined);
   });
@@ -80,7 +80,7 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
   it('should redirect to your-claim-has-been-saved page when save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
@@ -93,7 +93,7 @@ describe('Acas Cert Num Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
   it('should throw error, when session errors exists and unable to save session', () => {

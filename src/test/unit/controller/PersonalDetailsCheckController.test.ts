@@ -39,7 +39,7 @@ describe('Test task List check controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 
   it('should render same page if nothing selected', () => {
@@ -51,7 +51,7 @@ describe('Test task List check controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -70,6 +70,6 @@ describe('Test task List check controller', () => {
 
     await controller.post(request, response);
 
-    expect(mockLogger.info).toBeCalled();
+    expect(mockLogger.info).toHaveBeenCalled();
   });
 });

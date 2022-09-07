@@ -46,7 +46,7 @@ describe('Describe-What-Happened Controller', () => {
 
       new DescribeWhatHappenedController().post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
       expect(req.session.userCase).toMatchObject({
         claimSummaryText: 'test',
       });
@@ -58,7 +58,7 @@ describe('Describe-What-Happened Controller', () => {
 
       new DescribeWhatHappenedController().post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
       expect(req.session.userCase).toMatchObject({
         claimSummaryFile: 'testFile.txt',
       });
