@@ -8,16 +8,10 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  getRespondentIndex,
-  getRespondentRedirectUrl,
-  handleSaveAsDraft,
-  handleSessionErrors,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelper';
 
 export default class AcasCertNumController {
   private readonly form: Form;

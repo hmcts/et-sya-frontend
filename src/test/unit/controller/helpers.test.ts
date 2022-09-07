@@ -1,14 +1,16 @@
 import {
+  getSectionStatus,
+  isPostcodeMVPLocation,
+  setUserCaseWithRedisData,
+} from '../../../main/controllers/helpers/CaseHelpers';
+import {
   getACASCertificateNumberError,
   getClaimSummaryError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
-  getSectionStatus,
   handleSessionErrors,
-  isPostcodeMVPLocation,
-  setUserCaseForRespondent,
-  setUserCaseWithRedisData,
-} from '../../../main/controllers/helpers';
+} from '../../../main/controllers/helpers/ErrorHelpers';
+import { setUserCaseForRespondent } from '../../../main/controllers/helpers/RespondentHelpers';
 import { PayInterval, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';

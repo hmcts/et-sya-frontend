@@ -7,14 +7,10 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  getPageContent,
-  getRespondentRedirectUrl,
-  handleSaveAsDraft,
-  handleSessionErrors,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { handleSaveAsDraft } from './helpers/RouterHelper';
 
 export default class PlaceOfWorkController {
   private readonly form: Form;
