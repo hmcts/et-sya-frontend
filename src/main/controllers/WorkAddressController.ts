@@ -12,7 +12,7 @@ import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelper';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class WorkAddressController {
   private readonly form: Form;

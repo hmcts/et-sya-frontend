@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelper';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;

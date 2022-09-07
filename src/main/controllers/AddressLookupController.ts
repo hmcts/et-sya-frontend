@@ -5,7 +5,7 @@ import { Address, getAddressesForPostcode } from '../address';
 import { AppRequest } from '../definitions/appRequest';
 import { UnknownRecord } from '../definitions/util-types';
 
-import { handleSaveAsDraft } from './helpers/RouterHelper';
+import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 @autobind
 export default class AddressLookupController {

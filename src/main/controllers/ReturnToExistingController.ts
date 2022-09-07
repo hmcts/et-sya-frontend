@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelper';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class ReturnToExistingController {
   private readonly form: Form;

@@ -13,7 +13,7 @@ import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
-import { handleReturnUrl } from './RouterHelper';
+import { handleReturnUrl } from './RouterHelpers';
 
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   //call get custom errors and add to session errors

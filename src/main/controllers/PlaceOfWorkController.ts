@@ -10,7 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelper';
+import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class PlaceOfWorkController {
   private readonly form: Form;
