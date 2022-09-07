@@ -11,11 +11,22 @@
   "town": "Town or city",
   "manualAddress": "The respondent address is outside the UK",
   "errors": {
+    "addressPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "notSelected": "Select an address"
+    },
     "respondentAddress1": {
-      "required": "Enter a building and street"
+      "required": "Enter the first line of the respondent address - up to 100 characters",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 characters"
     },
     "respondentAddressTown": {
-      "required": "Enter a town or city"
+      "required": "Enter a town or city for the respondent address - up to 60 characters",
+      "invalid": "Enter a valid town or city for the respondent address - up to 60 characters"
+    },
+    "respondentAddressCountry": {
+      "required": "Enter a country for the respondent address - up to 60 characters",
+      "invalid": "Enter a valid country for the respondent address - up to 60 characters"
     },
     "respondentAddressPostcode": {
       "required": "Enter a postcode or zip code",
