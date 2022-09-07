@@ -33,7 +33,7 @@ export default class DobController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.GENDER_DETAILS);
+    handleSessionErrors(req, res, this.form, PageUrls.SEX_AND_TITLE);
     handleUpdateDraftCase(req, this.logger);
   };
 
