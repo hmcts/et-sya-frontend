@@ -103,7 +103,7 @@ describe('Dob Controller', () => {
       });
     });
 
-    it('should go to the Gender details page when correct date is entered', () => {
+    it('should go to the Sex and Title page when correct date is entered', () => {
       const req = mockRequest({
         body: {
           'dobDate-day': '05',
@@ -114,7 +114,7 @@ describe('Dob Controller', () => {
       const res = mockResponse();
       new DobController(mockLogger).post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.GENDER_DETAILS);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.SEX_AND_TITLE);
     });
   });
 
