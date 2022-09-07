@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
+import { isValidNoticeLength } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -23,6 +24,7 @@ export default class NoticeLengthController {
         classes: 'govuk-input--width-3',
         hint: (l: AnyRecord): string => l.noticeLengthHint,
         attributes: { maxLength: 2 },
+        validator: isValidNoticeLength,
       },
     },
     submit: {

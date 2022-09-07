@@ -47,7 +47,7 @@ describe('Job Title Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.START_DATE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -62,7 +62,7 @@ describe('Job Title Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.START_DATE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
       expect(req.session.userCase).toStrictEqual({
         jobTitle: 'Vice President Branch Co-Manager',
       });
@@ -76,7 +76,7 @@ describe('Job Title Controller', () => {
 
       await controller.post(request, response);
 
-      return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+      return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
     });
   });
 
@@ -92,6 +92,6 @@ describe('Job Title Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 });

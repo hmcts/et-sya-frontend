@@ -25,7 +25,7 @@ describe('Claim Type Discrimination Controller', () => {
 
       const expectedErrors = [{ propertyName: 'claimTypeDiscrimination', errorType: 'required' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 

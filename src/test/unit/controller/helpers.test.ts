@@ -1,7 +1,6 @@
 import {
   getACASCertificateNumberError,
   getClaimSummaryError,
-  getCustomNoticeLengthError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   getSectionStatus,
@@ -10,7 +9,7 @@ import {
   setUserCaseForRespondent,
   setUserCaseWithRedisData,
 } from '../../../main/controllers/helpers';
-import { PayInterval, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PayInterval, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { sectionStatus } from '../../../main/definitions/definition';
 import { mockSession } from '../mocks/mockApp';
@@ -103,46 +102,6 @@ describe('New Job Partial Pay errors', () => {
     const formData = { newJobPayInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ errorType: 'required', propertyName: 'newJobPay' }];
     const errors = getNewJobPartialPayInfoError(formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
-});
-
-describe('Custom Notice Length errors', () => {
-  it('should return no error', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '12' };
-
-    const req = mockRequest({ body });
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(undefined);
-  });
-
-  it('should return error with empty notice period length', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: '' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'invalid', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
-
-    expect(errors).toEqual(expectedErrors);
-  });
-
-  it('should return error when invalid number is entered', () => {
-    const body = {
-      employmentStatus: StillWorking.NOTICE,
-    };
-    const formData = { noticePeriodLength: 'ab' };
-
-    const req = mockRequest({ body });
-    const expectedErrors = { errorType: 'notANumber', propertyName: 'noticePeriodLength' };
-    const errors = getCustomNoticeLengthError(req, formData);
 
     expect(errors).toEqual(expectedErrors);
   });

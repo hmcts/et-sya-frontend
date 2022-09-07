@@ -42,8 +42,8 @@ describe('Address Lookup Controller', () => {
     mockGetAddressesFromPostcode.mockImplementation(() => Promise.resolve(addressLookupResponse));
     await controller.post(mockReq, mockRes);
 
-    expect(mockGetAddressesFromPostcode).toBeCalledWith('TEST POSTCODE');
-    expect(mockRes.json).toBeCalledWith(addressLookupResponse);
+    expect(mockGetAddressesFromPostcode).toHaveBeenCalledWith('TEST POSTCODE');
+    expect(mockRes.json).toHaveBeenCalledWith(addressLookupResponse);
   });
 
   it.each([

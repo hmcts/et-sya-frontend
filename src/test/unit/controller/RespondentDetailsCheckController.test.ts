@@ -32,7 +32,7 @@ describe('Respondent Details Check Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/2/respondent-name');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/2/respondent-name');
     expect(request.session.userCase.respondents).toStrictEqual([{ respondentName: 'Globo Gym', respondentNumber: 1 }]);
   });
   it('should render the respondent-details-check page and increment the respondent number on post', () => {
@@ -46,7 +46,7 @@ describe('Respondent Details Check Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
     expect(request.session.userCase.respondents).toHaveLength(6);
   });
 });
