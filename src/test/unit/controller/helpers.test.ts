@@ -107,24 +107,6 @@ describe('New Job Partial Pay errors', () => {
   });
 });
 
-describe('Custom Notice Length errors', () => {
-  it(
-    'should set req.session.userCase when setUserCaaseWithRedisData is called with correspondent' +
-      'req, and caseData parameters',
-    () => {
-      const req = mockRequest({ session: mockSession([], [], []) });
-      const caseData =
-        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
-
-      setUserCaseWithRedisData(req, caseData);
-
-      expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
-      );
-    }
-  );
-});
-
 describe('Claim Summary Error', () => {
   it('should not return any errors when not on the summary page', () => {
     const body = {};
@@ -366,12 +348,12 @@ describe('setUserCaseWithRedisData', () => {
     () => {
       const req = mockRequest({ session: mockSession([], [], []) });
       const caseData =
-        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+        '[["claimantRepresentedQuestion","No"],["caseType","Multiple"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
       setUserCaseWithRedisData(req, caseData);
 
       expect(JSON.stringify(req.session.userCase)).toEqual(
-        '{"id":"testUserCaseId","state":"Draft","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
+        '{"id":"testUserCaseId","state":"AWAITING_SUBMISSION_TO_HMCTS","typeOfClaim":["breachOfContract","discrimination","payRelated","unfairDismissal","whistleBlowing"],"tellUsWhatYouWant":[],"claimantRepresentedQuestion":"No","caseType":"Multiple"}'
       );
     }
   );
@@ -383,7 +365,7 @@ describe('setUserCaseWithRedisData', () => {
       const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
       req.session.userCase = undefined;
       const caseData =
-        '[["claimantRepresentedQuestion",null],["caseType",null],["typesOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+        '[["claimantRepresentedQuestion","No"],["caseType","Multiple"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
       setUserCaseWithRedisData(req, caseData);
 

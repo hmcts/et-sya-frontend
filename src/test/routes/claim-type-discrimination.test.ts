@@ -23,7 +23,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       });
   });
 });
-// This case occurs only whenTypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
+// This case occurs only when TypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
   test('should navigate to the claim type pay when TypesOfClaim.PAY_RELATED_CLAIM selected', async () => {
     await request(

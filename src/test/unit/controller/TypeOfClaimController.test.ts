@@ -47,7 +47,7 @@ describe('Type Of Claim Controller', () => {
   describe('post()', () => {
     it('should redirect back to Type of Claim page when errors are present', () => {
       const errors = [{ propertyName: 'typeOfClaim', errorType: 'required' }];
-      const body = { typesOfClaim: [''] };
+      const body = { typeOfClaim: [''] };
 
       const controller = new TypeOfClaimController();
 
@@ -119,6 +119,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
+        [CaseDataCacheKey.POSTCODE, undefined],
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
@@ -142,6 +143,7 @@ describe('Type Of Claim Controller', () => {
       const res = mockResponse();
 
       const cacheMap = new Map<CaseDataCacheKey, string>([
+        [CaseDataCacheKey.POSTCODE, undefined],
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],

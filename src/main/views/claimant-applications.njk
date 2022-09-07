@@ -1,0 +1,138 @@
+{% extends "template.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% set draftApplications = [] %}
+{% set submittedApplications = [] %}
+
+{% for app in usersApplications %}
+
+{% if app.respondents === 'undefined' %}
+    {% set draftApplications = (draftApplications.push([
+      {
+        text: app.userCase.createdDate
+      }, {
+        text: app.userCase.id
+      }, {
+        text: app.userCase.typeOfClaim
+      }, {
+        text: noRespondents
+      }, {
+        text: app.completionStatus
+      }, {
+        text: app.userCase.lastModified
+      }, {
+        html: "<a href=" +  app.url + ">" + continue + "</a>"
+      }
+    ]), draftApplications) %}
+  {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
+    {% set draftApplications = (draftApplications.push([
+      {
+        text: app.userCase.createdDate
+      }, {
+        text: app.userCase.id
+      }, {
+        text: app.userCase.typeOfClaim
+      }, {
+        text: app.respondents | safe
+      }, {
+        text: app.completionStatus
+      }, {
+        text: app.userCase.lastModified
+      }, {
+        html: "<a href=" +  app.url + ">" + continue + "</a>"
+      }
+    ]), draftApplications) %}
+  {% else %}
+    {% set submittedApplications = (submittedApplications.push([
+      {
+        text: app.userCase.createdDate
+      }, {
+        text: app.userCase.id
+      }, {
+        text: app.userCase.typeOfClaim
+      }, {
+        text: app.respondents | safe
+      }, {
+        text: app.userCase.lastModified
+      }, {
+        html: "<a href=" +  app.url + ">" + view + "</a>"
+      }
+    ]), submittedApplications) %}
+  {% endif %}
+{% endfor %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h1></br>
+        <p class="govuk-body">{{ p1 | safe }}</p>
+
+        {% if draftApplications.length != 0 %}
+          <h2 class="govuk-heading-l">{{ h1 }}</h2>
+          <p class="govuk-body">{{ p2 }}</p>
+
+          {{ govukTable({
+                    caption: h1,
+                    captionClasses: "govuk-visually-hidden",
+                    firstCellIsHeader: false,
+                    head: [
+                      {
+                        text: col1 
+                      },
+                      {
+                        text: col2
+                      },
+                      {
+                        text: col3
+                      },
+                      {
+                        text: col4
+                      },
+                      {
+                        text: col5
+                      },
+                      {
+                        text: col6
+                      },
+                      {
+                        text: col7
+                      }
+                    ],
+                    rows: draftApplications
+                  }) }}
+        {% endif %}
+
+      {% if submittedApplications.length != 0 %}
+        <h2 class="govuk-heading-l">{{ h2 }}</h2>
+
+        {{ govukTable({
+                  caption: h2,
+                  captionClasses: "govuk-visually-hidden",
+                  firstCellIsHeader: false,
+                  head: [
+                    {
+                      text: col1 
+                    },
+                    {
+                      text: col2
+                    },
+                    {
+                      text: col3
+                    },
+                    {
+                      text: col4
+                    },
+                    {
+                      text: col6
+                    },
+                    {
+                      text: col7
+                    }
+                  ],
+                  rows: submittedApplications
+                }) }}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

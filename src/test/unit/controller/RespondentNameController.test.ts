@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -10,9 +12,13 @@ describe('Respondent Name Controller', () => {
     respondentName: {},
     common: {},
   };
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
 
   it('should render the Respondent Name controller page when respondents empty', () => {
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -23,7 +29,7 @@ describe('Respondent Name Controller', () => {
   });
 
   it('should render the Respondent Name controller page when respondent exists', () => {
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -37,7 +43,7 @@ describe('Respondent Name Controller', () => {
   it('should create new respondent and add the respondent name to the session', () => {
     const body = { respondentName: 'Globo Gym' };
 
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -55,7 +61,7 @@ describe('Respondent Name Controller', () => {
   it('should update selected respondent with new respondent name', () => {
     const body = { respondentName: 'Globe Gym' };
 
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -74,7 +80,7 @@ describe('Respondent Name Controller', () => {
   it('should redirect to respondent details check if there is a returnUrl', () => {
     const body = { respondentName: 'Globe Gym' };
 
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -88,7 +94,7 @@ describe('Respondent Name Controller', () => {
   it('should redirect to your claim has been saved page and save respondent name when a a name is entered and save as draft clicked', () => {
     const body = { respondentName: 'Globe Gym', saveForLater: true };
 
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();

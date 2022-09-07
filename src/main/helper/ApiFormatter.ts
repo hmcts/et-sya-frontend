@@ -1,8 +1,10 @@
+import i18next from 'i18next';
+
 import { isDateEmpty } from '../components/form/dateValidators';
-import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
+import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, ccdPreferredTitle } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Respondent, ccdPreferredTitle } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -10,10 +12,11 @@ export function toApiFormatCreate(
   userDetails: UserDetails
 ): CreateCaseBody {
   return {
-    post_code: 'SW1A 1AA', // TODO Replace with value from new postcode triage page
+    post_code: userDataMap.get(CaseDataCacheKey.POSTCODE),
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+      typeOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
@@ -36,6 +39,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
+    typeOfClaim: fromApiCaseData.case_data?.typeOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
     preferredTitle: returnPreferredTitle(
@@ -72,6 +76,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
+    createdDate: convertFromTimestampString(fromApiCaseData.created_date),
+    lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
+    respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
   };
 }
 
@@ -83,6 +90,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
+      typeOfClaim: caseItem.typeOfClaim,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
@@ -131,6 +139,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
+      respondentCollection: setRespondentApiFormat(caseItem.respondents),
     },
   };
 }
@@ -154,7 +163,7 @@ export const parseDateFromString = (date: string): CaseDate => {
     return {
       year: date.substring(0, 4),
       month: date.substring(5, 7),
-      day: date.substring(8),
+      day: date.substring(8, 10),
     };
   }
 };
@@ -191,4 +200,39 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
   } else {
     return preferredTitle;
   }
+};
+
+function convertFromTimestampString(responseDate: string) {
+  const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
+  return new Date(dateComponent).toLocaleDateString(i18next.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {
+  if (respondents === undefined) {
+    return;
+  }
+  const caseRespondents: Respondent[] = respondents.map(respondent => {
+    return {
+      respondentName: respondent.value.respondent_name,
+    };
+  });
+  return caseRespondents;
+};
+
+export const setRespondentApiFormat = (respondents: Respondent[]): RespondentRequestBody[] => {
+  if (respondents === undefined) {
+    return;
+  }
+  const apiFormatRespondents = respondents.map(respondent => {
+    return {
+      value: {
+        respondent_name: respondent.respondentName,
+      },
+    };
+  });
+  return apiFormatRespondents;
 };
