@@ -94,7 +94,7 @@ describe('Respondent Name Controller', () => {
   it('should redirect to your claim has been saved page and save respondent name when a a name is entered and save as draft clicked', () => {
     const body = { respondentName: 'Globe Gym', saveForLater: true };
 
-    const controller = new RespondentNameController();
+    const controller = new RespondentNameController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();

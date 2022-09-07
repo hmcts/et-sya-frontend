@@ -63,7 +63,7 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
 describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the whistle blowing claims page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
-      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypeOfClaim.WHISTLE_BLOWING selected ' +
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING selected ' +
       'and save and continue button is clicked',
     async () => {
       await request(mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING], [], []) }))
@@ -79,7 +79,7 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
 describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the PageUrls.CLAIM_DETAILS_CHECK page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
-      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypeOfClaim.WHISTLE_BLOWING is not selected ' +
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING is not selected ' +
       'and save and continue button is clicked',
     async () => {
       await request(mockApp({ session: mockSession([], [], []) }))

@@ -100,6 +100,23 @@ describe('Case Selection Service using Case Api', () => {
     expect(result).toStrictEqual([]);
   });
 
+  test('Should hit error block and return empty array', async () => {
+    const response = {
+      data: [{ invalidData: 1234 }],
+      status: 500,
+      statusText: '',
+    };
+
+    const req = mockRequest({});
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCases = jest.fn().mockResolvedValue(response);
+
+    const result = await getUserCasesByLastModified(req);
+
+    expect(result).toStrictEqual([]);
+  });
+
   test('Should select User Case and redirect to Claim Steps', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {

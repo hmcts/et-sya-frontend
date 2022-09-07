@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Response } from 'express';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
@@ -78,11 +79,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
       return [];
     } else {
       logger.info(`Retrieving cases for ${req.session.user?.id}`);
-      const casesByLastModified: CaseApiDataResponse[] = cases.data.sort((a, b) => {
-        const da = new Date(a.last_modified),
-          db = new Date(b.last_modified);
-        return db.valueOf() - da.valueOf();
-      });
+      const casesByLastModified: CaseApiDataResponse[] = sortCasesByLastModified(cases);
       return casesByLastModified.map(app => fromApiFormat(app));
     }
   } catch (err) {
@@ -109,4 +106,12 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
     logger.log(err);
     return res.redirect(PageUrls.HOME);
   }
+};
+
+export const sortCasesByLastModified = (cases: AxiosResponse<CaseApiDataResponse[]>): CaseApiDataResponse[] => {
+  return cases.data.sort((a, b) => {
+    const da = new Date(a.last_modified),
+      db = new Date(b.last_modified);
+    return db.valueOf() - da.valueOf();
+  });
 };
