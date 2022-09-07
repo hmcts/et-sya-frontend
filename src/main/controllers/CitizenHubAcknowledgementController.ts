@@ -9,6 +9,7 @@ export default class CitizenHubAcknowledgementController {
 
     res.render(TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t('acknowledgement-of-claim', { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       PageUrls,
       userCase,

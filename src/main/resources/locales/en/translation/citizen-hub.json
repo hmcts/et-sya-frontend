@@ -6,11 +6,9 @@
   "received": "Response received",
   "details": "Your hearing details",
   "decision": "Your claim decision",
-
   "iWantTo": "I want to...",
   "contactTribunalMyCase": "Contact the tribunal about my case",
   "findLegalAdvice": "Find legal advice (opens in new tab)",
-
   "callEmployer": "Call the Employment Tribunal customer contact centre if you have any questions about your claim. They cannot give you legal advice or process any updates to your case.",
   "contactText": "You can also ",
   "contactLink": "contact the tribunal about your case.",
@@ -22,7 +20,6 @@
   "scotlandNumbers": "Telephone: 0300 790 6234 <br /> Textphone: 18001 0300 790 6234",
   "hours": "Monday to Thursday, 8.30am to 5pm. <br /> Friday, 8.30am to 4pm. <br /> The centre does not open on bank holidays.",
   "callCharges": "Find out about call charges (opens in new tab)",
-
   "section1": "About you",
   "section2": "Your claim",
   "section3": "The response",
@@ -31,7 +28,6 @@
   "section6": "Orders from the tribunal",
   "section7": "Judgments from the tribunal",
   "section8": "Case documents",
-
   "personalDetails": "View and edit your personal details",
   "et1ClaimForm": "Your ET1 claim form",
   "respondentResponse": "Response from the respondent (ET3)",
@@ -42,10 +38,18 @@
   "tribunalOrders": "All orders issued by the tribunal",
   "tribunalJudgements": "View all judgements",
   "documents": "All documents",
-
   "notAvailableYet": "Not available yet",
   "completed": "Completed",
   "submitted": "Submitted",
   "viewed": "Viewed",
-  "optional": "Optional"
+  "optional": "Optional",
+  "notificationBanner": {
+    "acknowledgement": {
+      "header": "The tribunal has acknowledged your claim",
+      "link": "View the Acknowledgement of Claim",
+      "p1": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
+      "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">What happens next</span><br>The tribunal has asked the respondent to respond to your claim by",
+      "p3": "We will contact you by "
+    }
+  }
 }

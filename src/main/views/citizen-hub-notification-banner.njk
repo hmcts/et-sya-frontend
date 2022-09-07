@@ -1,0 +1,31 @@
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set htmlForNotification %}
+
+<h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.acknowledgement.header}}
+</h3>
+
+<p class="govuk-body">
+    <a class="govuk-notification-banner__link" href="/acknowledgement">{{notificationBanner.acknowledgement.link}}</a>.
+</p>
+
+<p class="govuk-body">
+    {{notificationBanner.acknowledgement.p1}}
+</p>
+
+<p class="govuk-body">
+    {{notificationBanner.acknowledgement.p2 | safe}}
+    [X date].
+</p>
+
+<p class="govuk-body">
+    {{notificationBanner.acknowledgement.p3}}
+    [X date].</p>
+</p>
+
+{% endset %}
+
+{{ govukNotificationBanner({
+   html: htmlForNotification
+  }) }}

@@ -16,35 +16,41 @@
 
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-xl">
-        Acknowledgement of Claim
+        {{h1}}
       </h1>
       {{ govukTable({
-  caption: "Notice of Claim",
-  captionClasses: "govuk-table__caption--m",
-  firstCellIsHeader: false,
-  head: [
-    {
-      text: "Date uploaded"
-    },
-    {
-      text: "Document"
-    }
-  ],
-rows: [
+  firstCellIsHeader: true,
+  rows: [
     [
       {
-        text: "22 May 22"
+        text: description.firstCell
       },
       {
-        html: "<a href=\"/getCaseDocument\" class=\"govuk-link\">Acknowledgement of Claim (PDF, [XX]MB)</a>"
+        text: description.secondCell
       }
     ],
     [
       {
-        text: "22 May 22"
+        text: document
       },
       {
-        html: "<a href=\"#\" class=\"govuk-link\">Notice of hearing (PDF, [XX]MB)</a>"
+        html: "<a href=\"/getCaseDocument\" class=\"govuk-link\">Claim Acknowledgement.pdf</a>"
+      }
+    ],
+        [
+      {
+        text: documentDetails
+      },
+      {
+        html: "{details to be added}"
+      }
+    ],
+        [
+      {
+        text: date
+      },
+      {
+        html: "{date to be added}"
       }
     ]
   ]
