@@ -3,10 +3,12 @@ import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDet
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
+import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 
 interface CaseDataApiBody {
   caseType: string;
+  typeOfClaim: string[];
   claimantRepresentedQuestion: string;
   caseSource: string;
   claimantIndType?: ClaimantIndividual;
@@ -15,6 +17,7 @@ interface CaseDataApiBody {
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
   newEmploymentType?: NewEmploymentDetails;
+  respondentCollection?: RespondentRequestBody[];
 }
 
 export interface CreateCaseBody {
@@ -26,4 +29,8 @@ export interface UpdateCaseBody {
   case_id: string;
   case_type_id: string;
   case_data: CaseDataApiBody;
+}
+
+export interface RespondentRequestBody {
+  value: RespondentType;
 }

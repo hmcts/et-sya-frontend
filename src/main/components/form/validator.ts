@@ -99,7 +99,7 @@ export const isValidNoticeLength: Validator = value => {
 };
 
 export const areBenefitsValid: Validator = value => {
-  return isFieldFilledIn(value) || isContent2500CharsOrLess(value);
+  return isContent2500CharsOrLess(value);
 };
 
 export const isPayIntervalNull: Validator = (value: string) => {
@@ -140,7 +140,7 @@ export const isValidAvgWeeklyHours: Validator = value => {
 
 export const isValidPension: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
-    return 'required';
+    return;
   }
 
   if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
