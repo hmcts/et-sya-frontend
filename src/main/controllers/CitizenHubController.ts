@@ -1,12 +1,16 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseApiErrors, PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import { getCaseApi } from '../services/CaseService';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('app');
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -14,11 +18,9 @@ export default class CitizenHubController {
       req.session.userCase = fromApiFormat(
         (await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId)).data
       );
-    } catch (err) {
-      const error = new Error(err);
-      error.name = CaseApiErrors.FAILED_TO_RETRIEVE_CASE;
-      throw error;
-      //todo lead to main page. Check 2086. Try and return not-found.njk possibly.
+    } catch (error) {
+      logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
+      return res.redirect('/not-found');
     }
 
     const userCase = req.session.userCase;
