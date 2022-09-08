@@ -11,16 +11,20 @@
   "country": "Country",
   "postcode": "Postcode or area code (optional)",
   "enterAddressManually": "I don't live in the UK",
+  "cannotFindAddress": "I cannot find my address in the list",
   "errors": {
     "address1": {
-      "required": "Enter a building and street"
+      "required": "Enter the first line of your contact or home address - up to 100 characters"
     },
     "addressTown": {
-      "required": "Enter a town or city"
+      "required": "Enter a town or city for your contact or home address - up to 60 characters"
+    },
+    "addressCountry": {
+      "required": "Enter a Country for your contact or home address - up to 60 characters"
     },
     "addressPostcode": {
-      "required": "Enter a postcode",
-      "invalid": "Enter a valid UK postcode",
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
       "notSelected": "Select an address"
     }
   }

@@ -1,11 +1,12 @@
 {
   "title": "Telephone number",
-  "h1": "What is your telephone number?",
+  "h1": "What is your telephone number? (optional)",
   "hint": "We'll use this to contact you if we have any questions about your claim.",
-  "telNumber": "UK telephone number (optional)",
+  "telNumber": "Enter your mobile or home phone number",
   "errors": {
     "telNumber": {
-      "invalid": "Enter a valid UK telephone number or input field can be left blank"
+      "invalid": "Enter a valid UK telephone number or input field can be left blank",
+      "nonnumeric": "Enter a UK telephone number, like 01623 960 001, 07700 900 983 or input field can be left blank"
     }
   }
 }
