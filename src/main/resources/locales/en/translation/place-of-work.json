@@ -3,6 +3,7 @@
   "h1": "What address did you work at?",
   "enterPostcode": "Enter a UK postcode",
   "manualAddress": "I worked outside the UK",
+  "cannotFindAddress": "I cannot find the address in the list",
   "findAddress": "Find address",
   "errors": {
     "addressPostcode": {
