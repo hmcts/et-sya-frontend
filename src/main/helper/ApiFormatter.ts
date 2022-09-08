@@ -36,6 +36,12 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
+    telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
+    address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
+    addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
+    addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
+    addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
     preferredTitle: returnPreferredTitle(
