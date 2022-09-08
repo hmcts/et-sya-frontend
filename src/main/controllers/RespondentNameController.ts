@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isRespondentNameValid } from '../components/form/validator';
@@ -14,6 +15,7 @@ import {
   getRespondentRedirectUrl,
   handleSaveAsDraft,
   handleSessionErrors,
+  handleUpdateDraftCase,
   setUserCaseForRespondent,
 } from './helpers';
 
@@ -39,7 +41,7 @@ export default class RespondentNameController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.respondentNameContent.fields);
   }
 
@@ -51,6 +53,7 @@ export default class RespondentNameController {
       setUserCaseForRespondent(req, this.form);
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
       handleSessionErrors(req, res, this.form, redirectUrl);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 

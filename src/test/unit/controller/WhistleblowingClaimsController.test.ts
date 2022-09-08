@@ -34,7 +34,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'required' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -50,7 +50,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
-      expect(Res.redirect).toBeCalledWith(Req.path);
+      expect(Res.redirect).toHaveBeenCalledWith(Req.path);
 
       expect(Req.session.errors).toEqual(expectedErrors);
     });
@@ -67,7 +67,7 @@ describe('Whistleblowing Claims Controller', () => {
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
-      expect(Res.redirect).toBeCalledWith(Req.path);
+      expect(Res.redirect).toHaveBeenCalledWith(Req.path);
 
       expect(Req.session.errors).toEqual(expectedErrors);
     });

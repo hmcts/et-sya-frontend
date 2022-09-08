@@ -15,7 +15,7 @@ export const TranslationKeys = {
   ACAS_MULTIPLE_CLAIM: 'acas-multiple',
   ADDRESS_DETAILS: 'address-details',
   DATE_OF_BIRTH: 'date-of-birth',
-  GENDER_DETAILS: 'gender-details',
+  SEX_AND_TITLE: 'sex-and-title',
   RETURN_TO_EXISTING: 'return-to-existing',
   TELEPHONE_NUMBER: 'telephone-number',
   UPDATE_PREFERENCE: 'update-preference',
@@ -72,6 +72,7 @@ export const TranslationKeys = {
   ENTER_ADDRESS: 'enter-address',
   PLACE_OF_WORK: 'place-of-work',
   COOKIE_PREFERENCES: 'cookie-preferences',
+  CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
 } as const;
 
@@ -94,7 +95,7 @@ export const PageUrls = {
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',
   TELEPHONE_NUMBER: '/telephone-number',
-  GENDER_DETAILS: '/gender-details',
+  SEX_AND_TITLE: '/sex-and-title',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
@@ -139,6 +140,8 @@ export const PageUrls = {
   WORK_POSTCODE: '/work-postcode',
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
+  CLAIMANT_APPLICATIONS: '/claimant-applications',
+  SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CHANGE_DETAILS: '*/change',
@@ -158,6 +161,7 @@ export const AuthUrls = {
 export const JavaApiUrls = {
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
+  GET_INDIVIDUAL_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',

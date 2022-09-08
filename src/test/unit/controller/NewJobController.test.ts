@@ -19,7 +19,18 @@ describe('New Job Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB, expect.anything());
   });
 
-  it('should render the home page when no radio button is selected', () => {
+  it('should render the respondent name page when neither radio button is selected', () => {
+    const body = { newJob: '' };
+    const controller = new NewJobController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+  });
+
+  it('should render the respondent name page when no radio button is selected', () => {
     const body = { newJob: YesOrNo.NO };
     const controller = new NewJobController(mockLogger);
 
@@ -27,7 +38,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
   });
 
   it('should render the new job start date page when yes radio button is selected', () => {
@@ -38,7 +49,7 @@ describe('New Job Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NEW_JOB_START_DATE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB_START_DATE);
   });
 
   it('should reset new job values if No selected', () => {
@@ -50,24 +61,12 @@ describe('New Job Controller', () => {
     req.session.userCase = undefined;
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);
     expect(req.session.userCase).toStrictEqual({
       newJob: YesOrNo.NO,
       newJobStartDate: undefined,
       newJobPay: undefined,
       newJobPayInterval: undefined,
     });
-  });
-
-  it('should have required error when nothing is selected', () => {
-    const body = { newJob: '' };
-    const controller = new NewJobController(mockLogger);
-    const expectedErrors = [{ errorType: 'required', propertyName: 'newJob' }];
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.errors).toEqual(expectedErrors);
   });
 });

@@ -42,7 +42,7 @@ describe('Reasonable Adjustments Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
   });
 
@@ -61,7 +61,7 @@ describe('Reasonable Adjustments Controller', () => {
 
     await controller.post(request, response);
 
-    expect(mockLogger.info).toBeCalled();
+    expect(mockLogger.info).toHaveBeenCalled();
   });
 
   it('should add the reasonable adjustments form value to the userCase', () => {

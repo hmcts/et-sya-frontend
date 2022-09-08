@@ -66,7 +66,7 @@ describe('PCQGetController', () => {
     );
 
     await controller.get(req, res);
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if PCQ Health is DOWN', async () => {
@@ -86,7 +86,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if PCQ is not enabled', async () => {
@@ -97,7 +97,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if config cannot be loaded', async () => {
@@ -106,6 +106,6 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 });

@@ -8,6 +8,6 @@ describe('Session Controller', () => {
     const req = mockRequest({});
     const res = mockResponse();
     controller.getExtendSession(req, res);
-    expect(res.send).toBeCalledWith({ timeout: expect.any(Object) });
+    expect(res.send).toHaveBeenCalledWith({ timeout: expect.any(Object) });
   });
 });

@@ -92,6 +92,8 @@ describe('Test responds to /oauth2/callback', function () {
       Promise.resolve({
         data: {
           state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          last_modified: '2019-02-12T14:25:39.015',
+          created_date: '2019-02-12T14:25:39.015',
         },
         status: 200,
       } as AxiosResponse<CaseApiDataResponse>)
@@ -103,30 +105,13 @@ describe('Test responds to /oauth2/callback', function () {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING);
   });
 
-  test('Should get the existing draft case if it is a existing user', async () => {
+  test('Should redirect to Claimant applications page if it is a existing user', async () => {
     //Given that the state param is 'existingUser'
     req.query = { code: 'testCode', state: existingUser };
-    caseApi.getDraftCases = jest.fn().mockResolvedValue(Promise.resolve({} as AxiosResponse<CaseApiDataResponse[]>));
-
-    //Then it should call getCaseApi
-    jest.spyOn(caseApi, 'getDraftCases');
-    return idamCallbackHandler(req, res, next, serviceUrl).then(() => expect(caseApi.getDraftCases).toHaveBeenCalled());
-  });
-
-  test('Should redirect to CLAIM_STEPS page if an existing draft case is retrieved', async () => {
-    //Given that an existing draft case is retrieved
-    req.query = { code: 'testCode', state: existingUser };
-    caseApi.getDraftCases = jest
-      .fn()
-      .mockResolvedValue(
-        Promise.resolve({ data: [{ id: 'testId', state: CaseState.AWAITING_SUBMISSION_TO_HMCTS }] } as AxiosResponse<
-          CaseApiDataResponse[]
-        >)
-      );
 
     //Then it should redirect to CLAIM_STEPS page
     idamCallbackHandler(req, res, next, serviceUrl);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });
 });

@@ -39,7 +39,7 @@ describe('Axios post to initiate case', () => {
       isCitizen: true,
     };
     const caseData =
-      '[["claimantRepresentedQuestion","Yes"],["caseType","Single"], ["typesOfClaim", "[\\"discrimination\\"]"]]';
+      '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
     api.createCase(caseData, mockUserDetails);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
@@ -47,6 +47,7 @@ describe('Axios post to initiate case', () => {
       expect.objectContaining({
         post_code: 'SW1A 1AA',
         case_data: {
+          typeOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           caseSource: CcdDataModel.CASE_SOURCE,
           caseType: 'Single',
           claimantRepresentedQuestion: 'Yes',
@@ -63,9 +64,22 @@ describe('Axios post to initiate case', () => {
   });
 });
 
+describe('Retrieve individual case', () => {
+  it('Should call java api for case id', async () => {
+    const caseId = '12334578';
+    api.getUserCase(caseId);
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      JavaApiUrls.GET_INDIVIDUAL_CASE,
+      expect.objectContaining({
+        case_id: caseId,
+      })
+    );
+  });
+});
+
 describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
-    api.getDraftCases();
+    api.getUserCases();
 
     expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases');
   });
@@ -89,6 +103,7 @@ describe('updateDraftCase', () => {
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      typeOfClaim: ['discrimination', 'payRelated'],
       dobDate: {
         year: '2010',
         month: '05',
@@ -128,6 +143,11 @@ describe('updateDraftCase', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      respondents: [
+        {
+          respondentName: 'Globo Corp',
+        },
+      ],
       hubLinks: new HubLinks(),
     };
     api.updateDraftCase(caseItem);
