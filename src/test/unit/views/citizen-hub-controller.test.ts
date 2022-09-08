@@ -81,7 +81,11 @@ describe('Citizen hub page', () => {
       async ({ expectedCompleted, caseApiDataResponse }) => {
         caseApi.getCase = jest.fn().mockResolvedValue(
           Promise.resolve({
-            data: caseApiDataResponse,
+            data: {
+              ...caseApiDataResponse,
+              created_date: '2022-08-19T09:19:25.79202',
+              last_modified: '2022-08-19T09:19:25.817549',
+            },
           } as AxiosResponse<CaseApiDataResponse>)
         );
 
@@ -118,7 +122,11 @@ describe('Citizen hub page', () => {
     ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {
       caseApi.getCase = jest.fn().mockResolvedValue(
         Promise.resolve({
-          data: caseApiDataResponse,
+          data: {
+            ...caseApiDataResponse,
+            created_date: '2022-08-19T09:19:25.79202',
+            last_modified: '2022-08-19T09:19:25.817549',
+          },
         } as AxiosResponse<CaseApiDataResponse>)
       );
 
@@ -160,6 +168,8 @@ describe('Citizen hub page', () => {
         firstName: 'Paul',
         lastName: 'Mumbere',
         respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
         hubLinks,
       });
 

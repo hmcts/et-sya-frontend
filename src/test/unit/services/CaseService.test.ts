@@ -148,6 +148,8 @@ describe('updateDraftCase', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
       hubLinks: new HubLinks(),
     };
     api.updateDraftCase(caseItem);

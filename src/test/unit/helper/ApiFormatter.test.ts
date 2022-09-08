@@ -101,6 +101,9 @@ describe('Should return data in api format', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      et3IsThereAnEt3Response: YesOrNo.YES,
       hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
@@ -309,6 +312,8 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: { day: '', month: '', year: '' },
       startDate: { day: '', month: '', year: '' },
       noticeEnds: { day: '', month: '', year: '' },
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);
