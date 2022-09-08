@@ -72,6 +72,7 @@ export const TranslationKeys = {
   ENTER_ADDRESS: 'enter-address',
   PLACE_OF_WORK: 'place-of-work',
   COOKIE_PREFERENCES: 'cookie-preferences',
+  CLAIMANT_APPLICATIONS: 'claimant-applications',
 } as const;
 
 export const PageUrls = {
@@ -138,6 +139,8 @@ export const PageUrls = {
   WORK_POSTCODE: '/work-postcode',
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
+  CLAIMANT_APPLICATIONS: '/claimant-applications',
+  SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CHANGE_DETAILS: '*/change',
 } as const;
@@ -155,6 +158,7 @@ export const AuthUrls = {
 
 export const JavaApiUrls = {
   GET_CASES: 'cases/user-cases',
+  GET_INDIVIDUAL_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',

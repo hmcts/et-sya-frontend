@@ -40,7 +40,7 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/1/work-address');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
   });
 
   it('should render the Acas Cert Num page on post when more than one respondent', () => {
@@ -72,7 +72,7 @@ describe('Respondent Address Controller', () => {
 
     controller.post(request, response);
 
-    expect(response.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
   });
   it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
     const body = { saveForLater: true };
@@ -83,6 +83,6 @@ describe('Respondent Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 });

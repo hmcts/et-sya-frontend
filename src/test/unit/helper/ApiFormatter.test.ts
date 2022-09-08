@@ -30,9 +30,10 @@ import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataMo
 describe('Should return data in api format', () => {
   it('should transform triage and Idam credentials to api format', () => {
     const userDataMap: Map<CaseDataCacheKey, string> = new Map<CaseDataCacheKey, string>([
+      [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
       [CaseDataCacheKey.CLAIMANT_REPRESENTED, 'Yes'],
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
-      [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify('discrimination')],
+      [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(['discrimination', 'payRelated'])],
     ]);
 
     const mockUserDetails: UserDetails = {
@@ -54,6 +55,7 @@ describe('Should return data in api format', () => {
       caseType: CaseType.SINGLE,
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      typeOfClaim: ['discrimination', 'payRelated'],
       dobDate: {
         year: '2010',
         month: '05',
@@ -93,6 +95,11 @@ describe('Should return data in api format', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      respondents: [
+        {
+          respondentName: 'Globo Corp',
+        },
+      ],
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -105,9 +112,12 @@ describe('Format Case Data to Frontend Model', () => {
       id: '1234',
       case_type_id: CaseTypeId.ENGLAND_WALES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
+        typeOfClaim: ['discrimination', 'payRelated'],
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
@@ -156,11 +166,21 @@ describe('Format Case Data to Frontend Model', () => {
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,
         },
+        respondentCollection: [
+          {
+            value: {
+              respondent_name: 'Globo Corp',
+            },
+          },
+        ],
       },
     };
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      typeOfClaim: ['discrimination', 'payRelated'],
       dobDate: {
         day: '05',
         month: '10',
@@ -204,6 +224,11 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      respondents: [
+        {
+          respondentName: 'Globo Corp',
+        },
+      ],
     });
   });
 
@@ -211,6 +236,8 @@ describe('Format Case Data to Frontend Model', () => {
     const mockedApiData: CaseApiDataResponse = {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      created_date: '2022-08-19T09:19:25.817549',
+      last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
         claimantRepresentedQuestion: YesOrNo.YES,
       },
@@ -218,8 +245,11 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
+      typeOfClaim: undefined,
       caseTypeId: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
       dobDate: undefined,
@@ -257,6 +287,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
+      respondents: undefined,
     });
   });
 

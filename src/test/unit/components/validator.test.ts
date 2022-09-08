@@ -231,8 +231,8 @@ describe('Validation', () => {
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
-      { mockRef: undefined, expected: 'required' },
-      { mockRef: '', expected: 'required' },
+      { mockRef: undefined, expected: undefined },
+      { mockRef: '', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidPension(mockRef)).toEqual(expected);
     });

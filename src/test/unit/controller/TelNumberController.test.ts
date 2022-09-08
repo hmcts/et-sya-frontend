@@ -31,7 +31,7 @@ describe('Telephone number Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -46,7 +46,7 @@ describe('Telephone number Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.UPDATE_PREFERENCES);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.UPDATE_PREFERENCES);
       expect(req.session.userCase).toStrictEqual({
         telNumber: '01234567890',
       });

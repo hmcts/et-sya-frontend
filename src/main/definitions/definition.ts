@@ -1,3 +1,4 @@
+import { CaseWithId } from './case';
 export const enum TypesOfClaim {
   BREACH_OF_CONTRACT = 'breachOfContract',
   DISCRIMINATION = 'discrimination',
@@ -53,4 +54,11 @@ export const enum sectionStatus {
   completed = 'COMPLETED',
   inProgress = 'IN PROGRESS',
   cannotStartYet = 'CANNOT START YET',
+}
+
+export interface ApplicationTableRecord {
+  userCase: CaseWithId;
+  respondents: string;
+  completionStatus: string;
+  url: string;
 }

@@ -39,8 +39,14 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate) => {
   }
 
   for (const [fieldName, value] of Object.entries(date)) {
-    if (isNaN(+value)) {
+    if (isNaN(+value) && value) {
       return { error: `${fieldName}NotANumber`, fieldName };
+    }
+  }
+
+  for (const [fieldName, value] of Object.entries(date)) {
+    if (!value) {
+      return { error: `${fieldName}Required`, fieldName };
     }
   }
 
@@ -48,15 +54,15 @@ export const isDateInputInvalid: DateValidator = (date: CaseDate) => {
   const month = parseInt(date.month, 10) || 0;
   const day = parseInt(date.day, 10) || 0;
 
-  if (day < 1 || day > 31) {
+  if ((day && day < 1) || day > 31) {
     return { error: 'dayInvalid', fieldName: 'day' };
   }
 
-  if (month < 1 || month > 12) {
+  if ((month && month < 1) || month > 12) {
     return { error: 'monthInvalid', fieldName: 'month' };
   }
 
-  if (year < 1000) {
+  if (month && year < 1000) {
     return { error: 'yearInvalid', fieldName: 'year' };
   }
 

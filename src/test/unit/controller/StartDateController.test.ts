@@ -76,7 +76,7 @@ describe('Start date Controller', () => {
       id: '1234',
     });
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -112,7 +112,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.WORKING,
     });
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_PERIOD);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
   });
 
   it('should redirect to notice end when NOTICE is selected', () => {
@@ -147,7 +147,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NOTICE,
     });
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_END);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
   });
 
   it('should redirect to employment end date when NO_LONGER_WORKING is selected', () => {
@@ -182,7 +182,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     });
 
-    expect(res.redirect).toBeCalledWith(PageUrls.END_DATE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });
 
   it('should run logger in catch block', async () => {
@@ -197,6 +197,6 @@ describe('Start date Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

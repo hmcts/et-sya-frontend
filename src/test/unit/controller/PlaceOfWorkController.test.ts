@@ -36,7 +36,7 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -55,7 +55,7 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith('/respondent/1/acas-cert-num');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     expect(req.session.errors).toEqual([]);
   });
   it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
@@ -67,6 +67,6 @@ describe('Place Of Work Controller Tests', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 });

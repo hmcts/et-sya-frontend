@@ -5,14 +5,7 @@ import { LoggerInstance } from 'winston';
 
 import { isFirstDateBeforeSecond } from '../components/form/dateValidators';
 import { Form } from '../components/form/form';
-import {
-  arePayValuesNull,
-  isAcasNumberValid,
-  isFieldFilledIn,
-  isPayIntervalNull,
-  isValidNoticeLength,
-  isValidTwoDigitInteger,
-} from '../components/form/validator';
+import { arePayValuesNull, isAcasNumberValid, isFieldFilledIn, isPayIntervalNull } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
@@ -21,7 +14,6 @@ import {
   CaseWithId,
   HearingPreference,
   Respondent,
-  StillWorking,
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../definitions/case';
@@ -59,23 +51,6 @@ export const getCustomStartDateError = (req: AppRequest, form: Form, formData: P
 
   if (startDate && dob && isFirstDateBeforeSecond(startDate, dob)) {
     return { errorType: 'invalidDateBeforeDOB', propertyName: Object.keys(form.getFormFields())[0] };
-  }
-};
-
-export const getCustomNoticeLengthError = (req: AppRequest, formData: Partial<CaseWithId>): FormError => {
-  const employmentStatus = req.session.userCase.isStillWorking;
-  const noticeLength = formData.noticePeriodLength;
-
-  if (employmentStatus !== StillWorking.NOTICE && noticeLength === '') {
-    const invalid = isValidTwoDigitInteger(noticeLength);
-    if (invalid) {
-      return { errorType: invalid, propertyName: 'noticePeriodLength' };
-    }
-  } else {
-    const errorType = isValidNoticeLength(noticeLength);
-    if (errorType) {
-      return { errorType, propertyName: 'noticePeriodLength' };
-    }
   }
 };
 
@@ -156,7 +131,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
-  const noticeErrors = getCustomNoticeLengthError(req, formData);
   const claimSummaryError = getClaimSummaryError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
@@ -171,10 +145,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
 
   if (newJobPayErrors) {
     sessionErrors = [...sessionErrors, ...newJobPayErrors];
-  }
-
-  if (noticeErrors) {
-    sessionErrors = [...sessionErrors, noticeErrors];
   }
 
   if (claimSummaryError) {

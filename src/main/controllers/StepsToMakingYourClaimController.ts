@@ -6,9 +6,14 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { getPreloginCaseData } from '../services/CacheService';
+import { getCaseApi } from '../services/CaseService';
 
 import { getPageContent, getSectionStatus, setUserCaseWithRedisData } from './helpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+const logger = Logger.getLogger('app');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -16,12 +21,18 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
+    const { userCase } = req.session;
     if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
+      if (userCase.id === undefined) {
+        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+        logger.info(`Created Draft Case - ${newCase.data.id}`);
+        req.session.userCase = fromApiFormat(newCase.data);
+      }
       setUserCaseWithRedisData(req, caseData);
     }
-    const { userCase } = req.session;
+
     const allSectionsCompleted = !!(
       userCase?.personalDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
