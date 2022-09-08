@@ -10,7 +10,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const compensation_amount: CurrencyFormFields = {
   ...DefaultCompensationCurrencyFormFields,

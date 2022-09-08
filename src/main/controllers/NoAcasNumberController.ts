@@ -8,14 +8,10 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  getPageContent,
-  getRespondentIndex,
-  handleSaveAsDraft,
-  handleSessionErrors,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
