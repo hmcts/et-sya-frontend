@@ -5,6 +5,7 @@ export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
   case_data: {
     caseType: 'Single',
+    typeOfClaim: ['discrimination', 'payRelated'],
     claimantRepresentedQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {
@@ -22,6 +23,7 @@ export const mockEt1DataModelUpdate = {
   case_type_id: 'ET_EnglandWales',
   case_data: {
     caseType: 'Single',
+    typeOfClaim: ['discrimination', 'payRelated'],
     claimantRepresentedQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {
@@ -71,6 +73,13 @@ export const mockEt1DataModelUpdate = {
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
+    respondentCollection: [
+      {
+        value: {
+          respondent_name: 'Globo Corp',
+        },
+      },
+    ],
     hubLinks: {
       contactTribunal: {
         status: HubLinkStatus.NOT_YET_AVAILABLE,

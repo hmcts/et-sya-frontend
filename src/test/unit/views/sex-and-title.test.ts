@@ -6,20 +6,20 @@ import request from 'supertest';
 
 import { mockApp } from '../mocks/mockApp';
 
-const genderJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/gender-details.json'),
+const sexAndTitleJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/sex-and-title.json'),
   'utf-8'
 );
-const genderJson = JSON.parse(genderJsonRaw);
+const sexAndTitleJson = JSON.parse(sexAndTitleJsonRaw);
 
-const PAGE_URL = '/gender-details';
+const PAGE_URL = '/sex-and-title';
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = genderJson.h1;
+const expectedTitle = sexAndTitleJson.h1;
 const radios = 'govuk-radios';
 const input = 'govuk-input--width-10';
 
 let htmlRes: Document;
-describe('Gender details page', () => {
+describe('Sex and preferred title page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
       .get(PAGE_URL)

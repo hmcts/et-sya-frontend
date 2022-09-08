@@ -62,6 +62,6 @@ describe('Download claim Controller', () => {
     });
     await controller.get(request, response);
 
-    expect(response.redirect).toBeCalledWith('not-found');
+    expect(response.redirect).toHaveBeenCalledWith('not-found');
   });
 });

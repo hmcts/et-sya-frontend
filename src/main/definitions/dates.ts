@@ -81,7 +81,7 @@ export const NewJobDateFormFields = {
   labelHidden: true,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
-    areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateNotInPast(value) || isDateInNextTenYears(value),
+    isDateInputInvalid(value) || isDateNotInPast(value) || isDateInNextTenYears(value),
 };
 
 export const NoticeEndDateFormFields = {

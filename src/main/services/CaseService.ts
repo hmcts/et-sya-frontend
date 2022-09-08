@@ -16,7 +16,7 @@ export class CaseApi {
     return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 
-  getDraftCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
+  getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     return this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
   };
 
@@ -38,6 +38,10 @@ export class CaseApi {
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
+  };
+
+  getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.post(JavaApiUrls.GET_INDIVIDUAL_CASE, { case_id: id });
   };
 }
 

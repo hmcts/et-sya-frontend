@@ -14,7 +14,7 @@ export interface CaseDate {
 }
 
 export interface Respondent {
-  respondentNumber: number;
+  respondentNumber?: number;
   respondentName?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
@@ -114,6 +114,8 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  createdDate?: string;
+  lastModified?: string;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
 }
@@ -196,9 +198,10 @@ export const enum PayInterval {
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
 
 export const enum CaseDataCacheKey {
+  POSTCODE = 'workPostcode',
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
-  TYPES_OF_CLAIM = 'typesOfClaim',
+  TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
 }
 

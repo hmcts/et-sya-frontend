@@ -38,7 +38,7 @@ describe('Average weekly hours Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.PAY);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.PAY);
   });
 
   it('should add average weekly hours to the session userCase', () => {
@@ -65,6 +65,6 @@ describe('Average weekly hours Controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

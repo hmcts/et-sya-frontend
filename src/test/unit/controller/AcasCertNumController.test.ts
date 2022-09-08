@@ -49,7 +49,6 @@ describe('Acas Cert Num Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1' + PageUrls.NO_ACAS_NUMBER);
-    //expect(res.redirect).toBeCalled§With();
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(YesOrNo.NO);
   });
@@ -65,7 +64,6 @@ describe('Acas Cert Num Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
-    //expect(res.redirect).toBeCalled§With();
     expect(req.session.userCase.respondents[0].acasCertNum).toEqual(undefined);
     expect(req.session.userCase.respondents[0].acasCert).toEqual(undefined);
   });

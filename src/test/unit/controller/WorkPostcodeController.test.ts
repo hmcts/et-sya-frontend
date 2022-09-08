@@ -29,7 +29,7 @@ describe('Work Postcode Controller', () => {
       const res = mockResponse();
       new WorkPostcodeController().post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -41,7 +41,7 @@ describe('Work Postcode Controller', () => {
       const res = mockResponse();
       new WorkPostcodeController().post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
 
     it('should render the legacy ET1 service when a non mvp location is given', () => {
@@ -51,7 +51,7 @@ describe('Work Postcode Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
       new WorkPostcodeController().post(req, res);
-      expect(res.redirect).toBeCalledWith(LegacyUrls.ET1);
+      expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1);
     });
   });
 });
