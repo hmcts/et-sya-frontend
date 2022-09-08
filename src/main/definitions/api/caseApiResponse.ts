@@ -1,3 +1,4 @@
+import { DocumentElement } from '../../helper/ApiFormatter';
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -25,6 +26,7 @@ export interface CaseApiDataResponse {
   case_data?: CaseData;
   security_classification?: string;
   callback_response_status?: string | null;
+  servingDocumentCollection?: DocumentElement[];
 }
 
 export interface CaseData {
@@ -42,6 +44,7 @@ export interface CaseData {
   respondentCollection?: RespondentApiModel[];
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
+  servingDocumentCollection?: DocumentElement[];
 }
 
 export interface RespondentApiModel {

@@ -82,6 +82,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinks: fromApiCaseData?.case_data?.hubLinks,
+    acknowledgementOfClaimLetterId: getAcknowledgementOfClaimLetterId(
+      fromApiCaseData?.case_data?.servingDocumentCollection
+    ),
   };
 }
 
@@ -239,4 +242,27 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
     };
   });
   return apiFormatRespondents;
+};
+
+export interface DocumentElement {
+  id: string;
+  value: DocumentValue;
+}
+
+export interface DocumentValue {
+  typeOfDocument: string;
+  shortDescription: string;
+  uploadedDocument: UploadedDocument;
+}
+
+export interface UploadedDocument {
+  document_url: string;
+  document_filename: string;
+  document_binary_url: string;
+}
+
+export const getAcknowledgementOfClaimLetterId = (servingDocumentCollection: DocumentElement[]): string => {
+  const foundDocument = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1');
+  const docUrl = foundDocument.value.uploadedDocument.document_url;
+  return docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length);
 };
