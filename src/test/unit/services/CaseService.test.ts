@@ -69,7 +69,7 @@ describe('Retrieve individual case', () => {
     const caseId = '12334578';
     api.getUserCase(caseId);
     expect(mockedAxios.post).toHaveBeenCalledWith(
-      JavaApiUrls.GET_INDIVIDUAL_CASE,
+      JavaApiUrls.GET_CASE,
       expect.objectContaining({
         case_id: caseId,
       })

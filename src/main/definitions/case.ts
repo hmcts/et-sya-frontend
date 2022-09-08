@@ -32,6 +32,8 @@ export interface Respondent {
 }
 
 export interface Case {
+  createdDate: string;
+  lastModified: string;
   ethosCaseReference?: string;
   firstName?: string;
   lastName?: string;
@@ -114,8 +116,6 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
-  createdDate: string;
-  lastModified: string;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
 }

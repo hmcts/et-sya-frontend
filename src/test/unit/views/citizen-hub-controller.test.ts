@@ -79,7 +79,7 @@ describe('Citizen hub page', () => {
     ])(
       'should show correct completed tasks in progress bar: %o',
       async ({ expectedCompleted, caseApiDataResponse }) => {
-        caseApi.getCase = jest.fn().mockResolvedValue(
+        caseApi.getUserCase = jest.fn().mockResolvedValue(
           Promise.resolve({
             data: {
               ...caseApiDataResponse,
@@ -120,7 +120,7 @@ describe('Citizen hub page', () => {
         caseApiDataResponse: caseApiDataResponses[2],
       },
     ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {
-      caseApi.getCase = jest.fn().mockResolvedValue(
+      caseApi.getUserCase = jest.fn().mockResolvedValue(
         Promise.resolve({
           data: {
             ...caseApiDataResponse,
@@ -158,7 +158,7 @@ describe('Citizen hub page', () => {
       hubLinks[HubLinkNames.HearingDetails].status = HubLinkStatus.NOT_YET_AVAILABLE;
       hubLinks[HubLinkNames.RequestsAndApplications].status = HubLinkStatus.VIEWED;
 
-      caseApi.getCase = jest.fn().mockResolvedValue({ body: {} });
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue({
