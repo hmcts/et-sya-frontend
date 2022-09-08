@@ -19,7 +19,7 @@ const expectedTitle = telNumberJSON.h1;
 const expectedHelperText = telNumberJSON.hint;
 const buttonClass = 'govuk-button';
 const inputs = '[class*="telephone-number"]';
-const expectedInputLabel = 'UK telephone number';
+const expectedInputLabel = 'telephone-number';
 
 let htmlRes: Document;
 describe('Telephone number page', () => {

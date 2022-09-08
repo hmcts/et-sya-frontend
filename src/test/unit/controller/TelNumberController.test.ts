@@ -22,7 +22,7 @@ describe('Telephone number Controller', () => {
 
   describe('post()', () => {
     it('should redirect to the same screen when errors are present', () => {
-      const errors = [{ propertyName: 'telNumber', errorType: 'invalid' }];
+      const errors = [{ propertyName: 'telNumber', errorType: 'nonnumeric' }];
       const body = { telNumber: 'not valid' };
 
       const controller = new TelNumberController();
