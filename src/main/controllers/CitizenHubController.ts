@@ -29,7 +29,7 @@ export default class CitizenHubController {
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
-        title: (l: AnyRecord): string => l[`section${index + 1}`].title,
+        title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {
           const link = userCase.hubLinks[linkName];
           return {
