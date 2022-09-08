@@ -50,7 +50,7 @@ export default class ReturnToExistingController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? LegacyUrls.ET1_BASE
-      : PageUrls.CLAIM_STEPS;
+      : PageUrls.CLAIMANT_APPLICATIONS;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

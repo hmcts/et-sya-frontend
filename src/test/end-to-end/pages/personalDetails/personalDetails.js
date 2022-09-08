@@ -9,9 +9,7 @@ module.exports = async function () {
   I.fillField('#dobDate-month', '01');
   I.fillField('#dobDate-year', '2000');
   I.click('#main-form-submit');
-  I.see('Sex and gender identity');
-  I.checkOption('#gender-2');
-  I.selectOption({ css: 'form select[name=preferredTitle]' }, 'Mr');
+  I.see('Sex and preferred title');
   I.click('#main-form-submit');
   I.see('What is your contact or home address?');
   I.fillField('#postcode', 'ss11aa');

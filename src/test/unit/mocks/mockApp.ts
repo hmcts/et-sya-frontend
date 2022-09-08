@@ -33,7 +33,7 @@ export function mockSession(
     },
     userCase: {
       id: 'testUserCaseId',
-      state: CaseState.DRAFT,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: typeOfClaimList,
       tellUsWhatYouWant: tellUsWhatYouWantList,
     },
@@ -50,6 +50,12 @@ export function mockSession(
     returnUrl: undefined,
   };
 }
+
+export const mockSessionWithUserCase = (userCase: CaseWithId): AppSession => {
+  const session = mockSession([], [], []);
+  session.userCase = userCase;
+  return session;
+};
 
 export function mockRedisClient(cacheMap: Map<CaseDataCacheKey, string>): RedisClient {
   const redisClient = redis.createClient();
