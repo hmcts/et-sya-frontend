@@ -7,7 +7,9 @@ import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants'
 import { FormContent, FormFields } from '../definitions/form';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { assignFormData, getPageContent, handleSessionErrors, isPostcodeMVPLocation, setUserCase } from './helpers';
+import { isPostcodeMVPLocation, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class WorkPostcodeController {
   private readonly form: Form;

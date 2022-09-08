@@ -8,17 +8,11 @@ import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  getRespondentIndex,
-  getRespondentRedirectUrl,
-  handleSaveAsDraft,
-  handleSessionErrors,
-  setUserCase,
-  updateWorkAddress,
-} from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class WorkAddressController {
   private readonly form: Form;

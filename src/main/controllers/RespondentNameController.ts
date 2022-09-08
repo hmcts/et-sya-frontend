@@ -8,16 +8,11 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  getPageContent,
-  getRespondentIndex,
-  getRespondentRedirectUrl,
-  handleSaveAsDraft,
-  handleSessionErrors,
-  handleUpdateDraftCase,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleUpdateDraftCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class RespondentNameController {
   private readonly form: Form;
