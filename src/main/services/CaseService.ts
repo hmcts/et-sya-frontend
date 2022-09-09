@@ -7,6 +7,22 @@ import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
+export interface DocumentDetailsResponse {
+  classification: string;
+  size: number;
+  mimeType: string;
+  originalDocumentName: string;
+  createdOn: string;
+  createdBy: string;
+  lastModifiedBy: string;
+  modifiedOn: string;
+  metadata: {
+    jurisdiction: string;
+    case_id: string;
+    case_type_id: string;
+  };
+}
+
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
 
@@ -43,6 +59,10 @@ export class CaseApi {
         'Content-Type': 'application/pdf',
       },
     });
+  };
+
+  getDocumentDetails = async (docId: string): Promise<AxiosResponse<DocumentDetailsResponse>> => {
+    return this.axio.get(`/document/details/${docId}`);
   };
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {

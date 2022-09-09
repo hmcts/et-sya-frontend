@@ -1,4 +1,11 @@
-import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import {
+  AcknowledgementOfClaimLetterDetail,
+  CaseState,
+  ClaimOutcomes,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+} from './definition';
 import { HubLinks } from './hub';
 import { UnknownRecord } from './util-types';
 
@@ -118,7 +125,7 @@ export interface Case {
   lastModified?: string;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
-  acknowledgementOfClaimLetterId?: string;
+  acknowledgementOfClaimLetterDetail?: AcknowledgementOfClaimLetterDetail;
 }
 
 export const enum StillWorking {

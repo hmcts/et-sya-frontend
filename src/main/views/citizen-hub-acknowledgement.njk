@@ -34,7 +34,7 @@
         text: document
       },
       {
-        html: "<a href=\"/getCaseDocument\" target=\"_blank\" class=\"govuk-link\">Claim Acknowledgement.pdf</a>"
+        html: "<a href=\"/getCaseDocument\" target=\"_blank\" class=\"govuk-link\">" + retrievedDoc.originalDocumentName + " [" +retrievedDoc.size/1000000 +"MB]" + "</a>"
       }
     ],
         [
@@ -42,7 +42,7 @@
         text: documentDetails
       },
       {
-        html: "{details to be added}"
+        html: shortDesc
       }
     ],
         [
@@ -50,7 +50,7 @@
         text: date
       },
       {
-        html: "{date to be added}"
+        html: retrievedDoc.createdOn
       }
     ]
   ]

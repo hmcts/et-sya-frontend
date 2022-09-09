@@ -24,7 +24,6 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
-    logger.info('the document id is ', userCase.acknowledgementOfClaimLetterId);
 
     userCase.hubLinks = userCase.hubLinks || new HubLinks();
 

@@ -71,3 +71,8 @@ export interface ApplicationTableRecord {
   completionStatus: string;
   url: string;
 }
+
+export interface AcknowledgementOfClaimLetterDetail {
+  id: string;
+  description: string;
+}
