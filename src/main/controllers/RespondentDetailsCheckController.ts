@@ -6,12 +6,19 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, getRespondentRedirectUrl, handleSessionErrors } from './helpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;
   private readonly addRespondentForm: FormContent = {
-    fields: {},
+    fields: {
+      hiddenErrorField: {
+        id: 'hiddenErrorField',
+        type: 'text',
+        hidden: true,
+      },
+    },
     submit: {
       text: (l: AnyRecord): string => l.submit,
       classes: 'govuk-button--secondary',
@@ -26,13 +33,12 @@ export default class RespondentDetailsCheckController {
     const respondents = req.session.userCase.respondents;
     const newRespondentNum = respondents.length + 1;
     if (newRespondentNum > 6) {
-      // TODO Error handling
-      console.log('Limit reached');
+      req.session.errors = [{ errorType: 'exceeded', propertyName: 'hiddenErrorField' }];
+      return res.redirect(req.url);
+    } else {
+      req.session.errors = [];
+      return res.redirect(getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME));
     }
-
-    const redirectUrl = getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME);
-
-    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

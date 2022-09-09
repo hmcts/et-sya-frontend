@@ -2,13 +2,16 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
+import { isValidNoticeLength } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class NoticeLengthController {
   private readonly form: Form;
@@ -23,6 +26,7 @@ export default class NoticeLengthController {
         classes: 'govuk-input--width-3',
         hint: (l: AnyRecord): string => l.noticeLengthHint,
         attributes: { maxLength: 2 },
+        validator: isValidNoticeLength,
       },
     },
     submit: {

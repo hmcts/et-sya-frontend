@@ -77,7 +77,7 @@ describe('Check your answers confirmation page', () => {
   it('should display 9 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {
@@ -110,18 +110,16 @@ describe('Check your answers confirmation page', () => {
     const yourDetailsList = summaryListSections[1].getElementsByClassName(summaryListLinkClass);
     const dobDetailsLink = yourDetailsList[0].getAttribute('href');
     const sexDetailsLink = yourDetailsList[1].getAttribute('href');
-    const genderIdentityLink = yourDetailsList[2].getAttribute('href');
-    const preferredTitleLink = yourDetailsList[3].getAttribute('href');
-    const homeAddressLink = yourDetailsList[4].getAttribute('href');
-    const telephoneLink = yourDetailsList[5].getAttribute('href');
-    const howToContactLink = yourDetailsList[6].getAttribute('href');
-    const hearingsLink = yourDetailsList[7].getAttribute('href');
-    const disabilityLink = yourDetailsList[8].getAttribute('href');
+    const preferredTitleLink = yourDetailsList[2].getAttribute('href');
+    const homeAddressLink = yourDetailsList[3].getAttribute('href');
+    const telephoneLink = yourDetailsList[4].getAttribute('href');
+    const howToContactLink = yourDetailsList[5].getAttribute('href');
+    const hearingsLink = yourDetailsList[6].getAttribute('href');
+    const disabilityLink = yourDetailsList[7].getAttribute('href');
 
     expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS, 'Incorrect href found');
-    expect(sexDetailsLink).equals(PageUrls.GENDER_DETAILS, 'Incorrect href found');
-    expect(genderIdentityLink).equals(PageUrls.GENDER_DETAILS, 'Incorrect href found');
-    expect(preferredTitleLink).equals(PageUrls.GENDER_DETAILS, 'Incorrect href found');
+    expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE, 'Incorrect href found');
+    expect(preferredTitleLink).equals(PageUrls.SEX_AND_TITLE, 'Incorrect href found');
     expect(homeAddressLink).equals(PageUrls.ADDRESS_DETAILS, 'Incorrect href found');
     expect(telephoneLink).equals(PageUrls.TELEPHONE_NUMBER, 'Incorrect href found');
     expect(howToContactLink).equals(PageUrls.UPDATE_PREFERENCES, 'Incorrect href found');

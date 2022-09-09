@@ -10,26 +10,28 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
-export default class GenderDetailsController {
+export default class SexAndTitleController {
   private readonly form: Form;
-  private readonly genderDetailsContent: FormContent = {
+  private readonly sexAndTitleContent: FormContent = {
     fields: {
       claimantSex: {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
-        id: 'gender',
+        id: 'sex',
         type: 'radios',
         labelSize: 's',
         label: (l: AnyRecord): string => l.sex,
         values: [
           {
-            label: (l: AnyRecord): string => l.female,
-            value: Sex.FEMALE,
-          },
-          {
             label: (l: AnyRecord): string => l.male,
             value: Sex.MALE,
+          },
+          {
+            label: (l: AnyRecord): string => l.female,
+            value: Sex.FEMALE,
           },
           {
             label: (l: AnyRecord): string => l.preferNotToSay,
@@ -52,7 +54,7 @@ export default class GenderDetailsController {
   };
 
   constructor(private logger: LoggerInstance) {
-    this.form = new Form(<FormFields>this.genderDetailsContent.fields);
+    this.form = new Form(<FormFields>this.sexAndTitleContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
@@ -62,12 +64,12 @@ export default class GenderDetailsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.genderDetailsContent, [
+    const content = getPageContent(req, this.sexAndTitleContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.GENDER_DETAILS,
+      TranslationKeys.SEX_AND_TITLE,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render(TranslationKeys.GENDER_DETAILS, {
+    res.render(TranslationKeys.SEX_AND_TITLE, {
       ...content,
     });
   };

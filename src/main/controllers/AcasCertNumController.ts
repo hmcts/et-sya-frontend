@@ -1,21 +1,17 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  getRespondentIndex,
-  getRespondentRedirectUrl,
-  handleSessionErrors,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -38,7 +34,7 @@ export default class AcasCertNumController {
                 type: 'text',
                 label: (l: AnyRecord): string => l.acasCertNum,
                 classes: 'govuk-textarea',
-                attributes: { maxLength: 20 },
+                attributes: { maxLength: 13 },
               },
             },
           },
@@ -48,6 +44,7 @@ export default class AcasCertNumController {
             value: YesOrNo.NO,
           },
         ],
+        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -65,11 +62,23 @@ export default class AcasCertNumController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? PageUrls.RESPONDENT_DETAILS_CHECK
-      : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
-    setUserCaseForRespondent(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    const { saveForLater } = req.body;
+
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
+      let redirectUrl;
+      setUserCaseForRespondent(req, this.form);
+      if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
+        redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+      } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
+        req.session.returnUrl = undefined;
+        redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
+      } else {
+        redirectUrl = PageUrls.ACAS_CERT_NUM;
+      }
+      handleSessionErrors(req, res, this.form, redirectUrl);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

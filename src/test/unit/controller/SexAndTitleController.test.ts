@@ -1,26 +1,21 @@
 import { LoggerInstance } from 'winston';
 
-import GenderDetailsController from '../../../main/controllers/GenderDetailsController';
+import SexAndTitleController from '../../../main/controllers/SexAndTitleController';
 import { Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Gender Details Controller', () => {
-  const t = {
-    'gender-details': {},
-    common: {},
-  };
-
+describe('Sex and Title Controller', () => {
   const mockLogger = {} as unknown as LoggerInstance;
 
-  it('should render gender details page', () => {
-    const genderDetailsController = new GenderDetailsController(mockLogger);
+  it('should render sex and preferred title page', () => {
+    const sexAndTitleController = new SexAndTitleController(mockLogger);
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequest({});
 
-    genderDetailsController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.GENDER_DETAILS, expect.anything());
+    sexAndTitleController.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.SEX_AND_TITLE, expect.anything());
   });
 
   describe('Correct validation', () => {
@@ -32,11 +27,11 @@ describe('Gender Details Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController(mockLogger).post(req, res);
+      new SexAndTitleController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'numberError' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -48,11 +43,11 @@ describe('Gender Details Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new GenderDetailsController(mockLogger).post(req, res);
+      new SexAndTitleController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'lengthError' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
   });
@@ -62,14 +57,14 @@ describe('Gender Details Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     };
-    const controller = new GenderDetailsController(mockLogger);
+    const controller = new SexAndTitleController(mockLogger);
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
@@ -81,14 +76,14 @@ describe('Gender Details Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     };
-    const controller = new GenderDetailsController(mockLogger);
+    const controller = new SexAndTitleController(mockLogger);
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',

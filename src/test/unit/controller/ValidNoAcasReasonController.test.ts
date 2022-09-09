@@ -31,7 +31,7 @@ describe('Valid no acas reason Controller', () => {
       const res = mockResponse();
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
@@ -46,7 +46,7 @@ describe('Valid no acas reason Controller', () => {
 
       controller.post(req, res);
 
-      expect(res.redirect).toBeCalledWith(PageUrls.TYPE_OF_CLAIM);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TYPE_OF_CLAIM);
       expect(req.session.userCase).toStrictEqual({
         validNoAcasReason: YesOrNo.YES,
       });

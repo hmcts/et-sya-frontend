@@ -9,7 +9,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { assignFormData, getPageContent, handleSessionErrors, handleUploadDocument, setUserCase } from './helpers';
+import { handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class DescribeWhatHappenedController {
   private readonly form: Form;

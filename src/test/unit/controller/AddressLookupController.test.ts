@@ -3,12 +3,35 @@ import AddressLookupController from '../../../main/controllers/AddressLookupCont
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { addressLookupResponse } from '../mocks/mockedAddressLookupResponse';
-
 const mockGetAddressesFromPostcode = jest.spyOn(app, 'getAddressesForPostcode');
 
 describe('Address Lookup Controller', () => {
   afterEach(() => {
     mockGetAddressesFromPostcode.mockClear();
+  });
+
+  it('should have empty response body json value when saveForLater selected and no post code entered', () => {
+    const body = { saveForLater: true };
+
+    const controller = new AddressLookupController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(JSON.stringify(res.json)).toEqual(undefined);
+  });
+
+  it('should have postcode response body json value when saveForLater selected and no post code entered', () => {
+    const body = { postcode: 'SL6 3NY', saveForLater: true };
+
+    const controller = new AddressLookupController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(JSON.stringify(res.json)).toEqual(undefined);
   });
 
   it('calls getAddressesFromPostcode and returns json', async () => {
@@ -19,8 +42,8 @@ describe('Address Lookup Controller', () => {
     mockGetAddressesFromPostcode.mockImplementation(() => Promise.resolve(addressLookupResponse));
     await controller.post(mockReq, mockRes);
 
-    expect(mockGetAddressesFromPostcode).toBeCalledWith('TEST POSTCODE');
-    expect(mockRes.json).toBeCalledWith(addressLookupResponse);
+    expect(mockGetAddressesFromPostcode).toHaveBeenCalledWith('TEST POSTCODE');
+    expect(mockRes.json).toHaveBeenCalledWith(addressLookupResponse);
   });
 
   it.each([

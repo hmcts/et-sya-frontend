@@ -1,19 +1,17 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { NoAcasNumberReason } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  getPageContent,
-  getRespondentIndex,
-  handleSessionErrors,
-  setUserCaseForRespondent,
-} from './helpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
@@ -25,30 +23,35 @@ export default class NoAcasNumberController {
         type: 'radios',
         label: (l: AnyRecord): string => l.h1,
         labelHidden: true,
-        hint: (l: AnyRecord): string => l.hint,
+        hint: (l: AnyRecord): string =>
+          l.hint +
+          ' <a href=\'https://www.acas.org.uk/early-conciliation\' class="govuk-link" rel="noreferrer noopener" target="_blank">' +
+          l.linkText +
+          '</a>.',
         values: [
           {
             name: 'another',
-            label: NoAcasNumberReason.ANOTHER,
+            label: (l: AnyRecord): string => l.another,
             value: NoAcasNumberReason.ANOTHER,
           },
           {
             name: 'no_power',
-            label: NoAcasNumberReason.NO_POWER,
+            label: (l: AnyRecord): string => l.no_power,
             value: NoAcasNumberReason.NO_POWER,
           },
           {
             name: 'employer',
-            label: NoAcasNumberReason.EMPLOYER,
+            label: (l: AnyRecord): string => l.employer,
             value: NoAcasNumberReason.EMPLOYER,
           },
           {
             name: 'unfair_dismissal',
-            label: NoAcasNumberReason.UNFAIR_DISMISSAL,
+            label: (l: AnyRecord): string => l.unfair_dismissal,
             value: NoAcasNumberReason.UNFAIR_DISMISSAL,
-            hint: (l: AnyRecord): string => l.dismissalhint,
+            hint: (l: AnyRecord): string => l.dismissalHint,
           },
         ],
+        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -66,8 +69,13 @@ export default class NoAcasNumberController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForRespondent(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
+    const { saveForLater } = req.body;
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
+      setUserCaseForRespondent(req, this.form);
+      handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

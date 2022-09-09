@@ -2,13 +2,14 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasValidFileFormat,
+  isAcasNumberValid,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
   isFieldFilledIn,
-  isInvalidPostcode,
   isJobTitleValid,
   isOptionSelected,
   isPayIntervalNull,
+  isRespondentNameValid,
   isValidAvgWeeklyHours,
   isValidCurrency,
   isValidNoticeLength,
@@ -16,8 +17,6 @@ import {
   isValidPension,
   isValidTwoDigitInteger,
   isValidUKTelNumber,
-  isWorkAddressLineOneValid,
-  isWorkAddressTownValid,
   validateTitlePreference,
 } from '../../../main/components/form/validator';
 
@@ -39,6 +38,40 @@ describe('Validation', () => {
       const isValid = isFieldFilledIn('    ');
 
       expect(isValid).toStrictEqual('required');
+    });
+  });
+
+  describe('isRespondentNameValid()', () => {
+    it('Should check if value exist', () => {
+      const isValid = isRespondentNameValid('Test Respondent Name');
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const isValid = isRespondentNameValid(undefined);
+
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value is only whitespaces', () => {
+      const isValid = isRespondentNameValid('    ');
+
+      expect(isValid).toStrictEqual('required');
+    });
+
+    it('Should check if value is less than 5 characters', () => {
+      const isValid = isRespondentNameValid('123');
+
+      expect(isValid).toStrictEqual('invalidLength');
+    });
+
+    it('Should check if value is greater than 100 characters', () => {
+      const isValid = isRespondentNameValid(
+        '12345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912'
+      );
+
+      expect(isValid).toStrictEqual('invalidLength');
     });
   });
 
@@ -106,32 +139,14 @@ describe('Validation', () => {
       expect(isValid).toStrictEqual(expectedError);
     });
   });
-
-  describe('isInvalidPostcode()', () => {
-    it.each([
-      { mockRef: '', expected: 'required' },
-      { mockRef: '1', expected: 'invalid' },
-      { mockRef: '12345', expected: 'invalid' },
-      { mockRef: '@£$£@$%', expected: 'invalid' },
-      { mockRef: 'not a postcode', expected: 'invalid' },
-      { mockRef: 'SW1A 1AA', expected: undefined },
-      { mockRef: 'SW1A1AA', expected: undefined },
-      { mockRef: 'sw1a1aa', expected: undefined },
-      { mockRef: 'sw1a 1aa', expected: undefined },
-      { mockRef: 'SW1A!1AA', expected: 'invalid' },
-    ])('validates the help with fees ref when %o', ({ mockRef, expected }) => {
-      expect(isInvalidPostcode(mockRef)).toEqual(expected);
-    });
-  });
-
   describe('isValidUKTelNumber()', () => {
     it.each([
       { mockRef: '', expected: undefined },
       { mockRef: null, expected: undefined },
       { mockRef: '12345', expected: 'invalid' },
-      { mockRef: '@£$£@$%', expected: 'invalid' },
-      { mockRef: 'not a phone number', expected: 'invalid' },
-      { mockRef: '01234!567890', expected: 'invalid' },
+      { mockRef: '@£$£@$%', expected: 'nonnumeric' },
+      { mockRef: 'not a phone number', expected: 'nonnumeric' },
+      { mockRef: '01234!567890', expected: 'nonnumeric' },
       { mockRef: '00361234567890', expected: 'invalid' },
       { mockRef: '01234 567 890', expected: undefined },
       { mockRef: '01234 567890', expected: undefined },
@@ -141,6 +156,9 @@ describe('Validation', () => {
       { mockRef: '004401234567890', expected: undefined },
       { mockRef: '01234567890', expected: undefined },
       { mockRef: '1234567890', expected: undefined },
+      { mockRef: '+44 (07500) 900 983', expected: undefined },
+      { mockRef: '(01629) 900 983', expected: undefined },
+      { mockRef: '01234567B90', expected: 'nonnumeric' },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
     });
@@ -190,37 +208,6 @@ describe('Validation', () => {
     });
   });
 
-  describe('isWorkAddressLineOneValid', () => {
-    it.each([
-      { mockRef: '', expected: 'required' },
-      { mockRef: 'a', expected: undefined },
-      {
-        mockRef:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al.',
-        expected: 'required',
-      },
-      { mockRef: "1 King's Road", expected: undefined },
-      { mockRef: 'Kingston-upon-Thames', expected: undefined },
-    ])('check work address line one is valid', ({ mockRef, expected }) => {
-      expect(isWorkAddressLineOneValid(mockRef)).toEqual(expected);
-    });
-  });
-
-  describe('isWorkAddressTownValid', () => {
-    it.each([
-      { mockRef: '', expected: 'required' },
-      { mockRef: 'aa', expected: 'required' },
-      {
-        mockRef: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
-        expected: 'required',
-      },
-      { mockRef: "1 King's Road", expected: undefined },
-      { mockRef: 'Kingston-upon-Thames', expected: undefined },
-    ])('check work addrss town is valid', ({ mockRef, expected }) => {
-      expect(isWorkAddressTownValid(mockRef)).toEqual(expected);
-    });
-  });
-
   describe('isValidAvgWeeklyHours()', () => {
     it.each([
       { mockRef: '00', expected: 'invalid' },
@@ -247,8 +234,8 @@ describe('Validation', () => {
       { mockRef: '20.', expected: 'invalid' },
       { mockRef: '100', expected: undefined },
       { mockRef: '20.00', expected: undefined },
-      { mockRef: undefined, expected: 'required' },
-      { mockRef: '', expected: 'required' },
+      { mockRef: undefined, expected: undefined },
+      { mockRef: '', expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidPension(mockRef)).toEqual(expected);
     });
@@ -340,6 +327,67 @@ describe('Validation', () => {
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       expect(hasValidFileFormat(fileName)).toEqual(expected);
+    });
+  });
+  describe('isAcasNumberValid()', () => {
+    it('Should check if value exist', () => {
+      const isValid = isAcasNumberValid('R12345/789/12');
+
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should check if value does not exist', () => {
+      const isValid = isAcasNumberValid(undefined);
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value is only whitespaces', () => {
+      const isValid = isAcasNumberValid('    ');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value has more than 11 characters', () => {
+      const isValid = isAcasNumberValid('R123456/89');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value has less than 14 characters', () => {
+      const isValid = isAcasNumberValid('R123456/890123');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if value starts with R', () => {
+      const isValid = isAcasNumberValid('12345/789/123');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any numeric or / character after R', () => {
+      const isValid = isAcasNumberValid('R12345/789a12');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any repeating / character like //', () => {
+      const isValid = isAcasNumberValid('R145//9123112');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has any repeating / character like ///', () => {
+      const isValid = isAcasNumberValid('R145///123112');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should check if has / character at the end', () => {
+      const isValid = isAcasNumberValid('R145123112/');
+
+      expect(isValid).toStrictEqual('invalidAcasNumber');
     });
   });
 });

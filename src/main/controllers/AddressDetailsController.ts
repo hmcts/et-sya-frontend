@@ -7,7 +7,9 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class AddressDetailsController {
   private readonly form: Form;
@@ -23,6 +25,7 @@ export default class AddressDetailsController {
         validator: isFieldFilledIn,
         attributes: {
           autocomplete: 'address-line1',
+          maxLength: 100,
         },
       },
       address2: {
@@ -45,6 +48,7 @@ export default class AddressDetailsController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
+          maxLength: 60,
         },
         validator: isFieldFilledIn,
       },
@@ -55,6 +59,10 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        validator: isFieldFilledIn,
+        attributes: {
+          maxLength: 60,
+        },
       },
       addressPostcode: {
         id: 'addressPostcode',

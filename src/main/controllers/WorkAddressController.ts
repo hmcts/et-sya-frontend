@@ -8,16 +8,11 @@ import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  getRespondentIndex,
-  getRespondentRedirectUrl,
-  handleSessionErrors,
-  setUserCase,
-  updateWorkAddress,
-} from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
+import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class WorkAddressController {
   private readonly form: Form;
@@ -38,15 +33,22 @@ export default class WorkAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
-      : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
-    if (YesOrNo.YES) {
-      const respondentIndex = getRespondentIndex(req);
-      updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
+    const { saveForLater } = req.body;
+
+    if (saveForLater) {
+      handleSaveAsDraft(res);
+    } else {
+      const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
+      const redirectUrl = isRespondentAndWorkAddressSame
+        ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
+        : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
+      if (isRespondentAndWorkAddressSame) {
+        const respondentIndex = getRespondentIndex(req);
+        updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
+      }
+      setUserCase(req, this.form);
+      handleSessionErrors(req, res, this.form, redirectUrl);
     }
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -16,9 +16,7 @@
   "personalDetails": {
     "header": "Your details",
     "dob": "Date of birth",
-    "gender": "Sex",
-    "genderIdentity": "Gender Identity",
-    "genderSameAsBirth": "Gender same as registered birth sex",
+    "sex": "Sex",
     "contactOrHomeAddress": "Contact or home address",
     "howToBeContacted": "How would you like to be contacted?",
     "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
