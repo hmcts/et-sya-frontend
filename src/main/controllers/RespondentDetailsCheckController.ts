@@ -6,7 +6,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, getRespondentRedirectUrl } from './helpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;

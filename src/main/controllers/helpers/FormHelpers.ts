@@ -1,0 +1,76 @@
+import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
+import { PageUrls } from '../../definitions/constants';
+import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
+import { mapSelectedRespondentValuesToCase } from '.././helpers/RespondentHelpers';
+
+export const getPageContent = (
+  req: AppRequest,
+  formContent: FormContent,
+  translations: string[] = [],
+  selectedRespondentIndex?: number
+): AnyRecord => {
+  const sessionErrors = req.session?.errors || [];
+  const userCase = req.session?.userCase;
+  mapSelectedRespondentValuesToCase(selectedRespondentIndex, userCase);
+
+  let content = {
+    form: formContent,
+    sessionErrors,
+    userCase,
+    PageUrls,
+  };
+  translations.forEach(t => {
+    content = { ...content, ...req.t(t, { returnObjects: true }) };
+  });
+  return content;
+};
+
+export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFields): void => {
+  if (!userCase) {
+    userCase = <CaseWithId>{};
+    return;
+  }
+
+  Object.entries(fields).forEach(([name, field]: [string, FormOptions]) => {
+    const caseName = (userCase as AnyRecord)[name];
+    if (caseName) {
+      field.values = field.values?.map(v => {
+        Object.keys(caseName).forEach(key => {
+          if (v.name === key) {
+            v.value = caseName[key];
+          }
+        });
+        return v;
+      });
+      for (const [, value] of Object.entries(fields)) {
+        (value as FormOptions)?.values
+          ?.filter((option: FormInput) => option.subFields !== undefined)
+          .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
+          .forEach((subField: Record<string, FormField>) => assignFormData(caseName, subField));
+      }
+    }
+  });
+};
+
+export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
+  if (
+    formData.claimantPensionContribution === YesOrNoOrNotSure.NO ||
+    formData.claimantPensionContribution === YesOrNoOrNotSure.NOT_SURE
+  ) {
+    formData.claimantPensionWeeklyContribution = undefined;
+  }
+  if (formData.employeeBenefits === YesOrNo.NO) {
+    formData.benefitsCharCount = undefined;
+  }
+  if (formData.noticePeriod === YesOrNo.NO) {
+    formData.noticePeriodUnit = undefined;
+    formData.noticePeriodLength = undefined;
+  }
+  if (formData.newJob === YesOrNo.NO) {
+    formData.newJobStartDate = undefined;
+    formData.newJobPay = undefined;
+    formData.newJobPayInterval = undefined;
+  }
+};

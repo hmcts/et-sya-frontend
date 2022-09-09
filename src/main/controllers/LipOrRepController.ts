@@ -9,7 +9,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class LipOrRepController {
   private readonly form: Form;

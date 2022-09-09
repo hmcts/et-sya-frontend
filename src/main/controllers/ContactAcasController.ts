@@ -4,7 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { LegacyUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 
-import { getPageContent } from './helpers';
+import { getPageContent } from './helpers/FormHelpers';
 
 export default class ContactAcasController {
   public get(req: AppRequest, res: Response): void {
