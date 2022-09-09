@@ -115,8 +115,6 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
           PostTown: caseItem.addressTown,
           PostCode: caseItem.addressPostcode,
           Country: caseItem.addressCountry,
-          County: '',
-          AddressLine3: '',
         },
       },
       claimantOtherType: {

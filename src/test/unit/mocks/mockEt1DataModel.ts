@@ -42,8 +42,6 @@ export const mockEt1DataModelUpdate = {
         PostTown: 'Test',
         PostCode: 'TEST',
         Country: 'United',
-        County: '',
-        AddressLine3: '',
       },
     },
     claimantOtherType: {

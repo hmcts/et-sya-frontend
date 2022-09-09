@@ -142,8 +142,6 @@ describe('Format Case Data to Frontend Model', () => {
             PostTown: 'Test',
             PostCode: 'TEST',
             Country: 'United',
-            County: '',
-            AddressLine3: '',
           },
         },
         claimantOtherType: {
