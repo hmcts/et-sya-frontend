@@ -36,6 +36,15 @@ export class CaseApi {
     });
   };
 
+  getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
+    return this.axio.get(`/document/download/${docId}`, {
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/pdf',
+      },
+    });
+  };
+
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
   };

@@ -262,7 +262,7 @@ export interface UploadedDocument {
 }
 
 export const getAcknowledgementOfClaimLetterId = (servingDocumentCollection: DocumentElement[]): string => {
-  const foundDocument = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1');
-  const docUrl = foundDocument.value.uploadedDocument.document_url;
+  const docUrl = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1').value.uploadedDocument
+    .document_url;
   return docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length);
 };
