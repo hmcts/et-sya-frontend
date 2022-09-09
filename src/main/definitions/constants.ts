@@ -143,6 +143,7 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CHANGE_DETAILS: '*/change',
+  PCQ: '/pcq',
 } as const;
 
 export const ValidationErrors = {
