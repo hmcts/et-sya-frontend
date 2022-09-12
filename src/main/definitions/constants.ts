@@ -74,6 +74,7 @@ export const TranslationKeys = {
   COOKIE_PREFERENCES: 'cookie-preferences',
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
+  CLAIM_DETAILS: 'claim-details',
 } as const;
 
 export const PageUrls = {
@@ -144,6 +145,7 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
+  CLAIM_DETAILS: '/claim-details',
   CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',
 } as const;
