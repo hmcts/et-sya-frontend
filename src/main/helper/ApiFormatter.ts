@@ -251,6 +251,9 @@ export const getAcknowledgementOfClaimLetterValues = (
     return;
   }
   const foundDocument = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1');
+  if (!foundDocument) {
+    return;
+  }
   const docUrl = foundDocument.value.uploadedDocument.document_url;
   return {
     id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
