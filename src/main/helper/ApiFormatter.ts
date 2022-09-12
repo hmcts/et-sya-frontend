@@ -246,17 +246,18 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
 
 export const getAcknowledgementOfClaimLetterValues = (
   servingDocumentCollection: ServingDocument[]
-): { id: string; description: string } => {
+): { id: string; description: string }[] => {
   if (!servingDocumentCollection) {
     return;
   }
-  const foundDocument = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1');
-  if (!foundDocument) {
-    return;
-  }
-  const docUrl = foundDocument.value.uploadedDocument.document_url;
-  return {
-    id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
-    description: foundDocument.value.shortDescription,
-  };
+  const foundDocuments = servingDocumentCollection
+    .filter(doc => doc.value.typeOfDocument === '1.1')
+    .map(doc => {
+      const docUrl = doc.value?.uploadedDocument?.document_url;
+      return {
+        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        description: doc.value.shortDescription,
+      };
+    });
+  return foundDocuments.length ? foundDocuments : undefined;
 };

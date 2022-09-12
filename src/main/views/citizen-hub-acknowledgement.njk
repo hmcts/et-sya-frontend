@@ -18,7 +18,8 @@
       <h1 class="govuk-heading-xl">
         {{h1}}
       </h1>
-      {{ govukTable({
+      {% for doc in acknowledgeDocs %}
+        {{ govukTable({
   firstCellIsHeader: true,
   rows: [
     [
@@ -34,7 +35,7 @@
         text: document
       },
       {
-        html: "<a href=\"/getCaseDocument\" target=\"_blank\" class=\"govuk-link\">" + retrievedDoc.originalDocumentName + " [" +retrievedDoc.size/1000000 +"MB]" + "</a>"
+        html: "<a href=\"/getCaseDocument\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
       }
     ],
         [
@@ -42,7 +43,7 @@
         text: documentDetails
       },
       {
-        html: shortDesc
+        html: doc.description
       }
     ],
         [
@@ -50,11 +51,13 @@
         text: date
       },
       {
-        html: retrievedDoc.createdOn
+        html: doc.createdOn
       }
     ]
   ]
 }) }}
+      {% endfor %}
+
     </div>
 
     <div class="govuk-grid-column-one-third-from-desktop">

@@ -8,31 +8,34 @@ export default class CitizenHubAcknowledgementController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
     interface DocumentDetails {
-      size: number;
+      size: string;
       mimeType: string;
       originalDocumentName: string;
       createdOn: string;
+      description: string;
     }
-    let retrievedDoc: DocumentDetails;
+    const acknowledgeDocs: DocumentDetails[] = [];
     try {
-      if (!req.session?.userCase?.acknowledgementOfClaimLetterDetail?.id) {
+      if (!req.session?.userCase?.acknowledgementOfClaimLetterDetail.length) {
         return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
       }
-      const docDetails = await getCaseApi(req.session.user?.accessToken).getDocumentDetails(
-        req.session?.userCase?.acknowledgementOfClaimLetterDetail?.id
-      );
-      const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
-      const date = new Date(createdOn);
-      const dateTimeFormat = new Intl.DateTimeFormat('en-GB', {
-        dateStyle: 'long',
-      });
-      const readableDate = dateTimeFormat.format(date);
-      retrievedDoc = {
-        size,
-        mimeType,
-        originalDocumentName,
-        createdOn: readableDate,
-      };
+
+      for await (const document of req.session.userCase.acknowledgementOfClaimLetterDetail) {
+        const docDetails = await getCaseApi(req.session.user?.accessToken).getDocumentDetails(document.id);
+        const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
+        const date = new Date(createdOn);
+        const dateTimeFormat = new Intl.DateTimeFormat('en-GB', {
+          dateStyle: 'long',
+        });
+        const readableDate = dateTimeFormat.format(date);
+        acknowledgeDocs.push({
+          size: (size / 1000000).toFixed(3),
+          mimeType,
+          originalDocumentName,
+          createdOn: readableDate,
+          description: document.description,
+        });
+      }
     } catch (error) {
       console.log('error on acknowledge page', error);
       return res.redirect('/not-found');
@@ -44,8 +47,7 @@ export default class CitizenHubAcknowledgementController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      retrievedDoc,
-      shortDesc: req.session?.userCase?.acknowledgementOfClaimLetterDetail?.description,
+      acknowledgeDocs,
     });
   };
 }
