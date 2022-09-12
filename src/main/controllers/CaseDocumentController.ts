@@ -2,7 +2,6 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { getCaseApi } from '../services/CaseService';
-//let fs = require('fs');
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -12,7 +11,7 @@ export default class CaseDocumentController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     try {
       const pdf = await getCaseApi(req.session.user?.accessToken).getCaseDocument(
-        req.session.userCase.acknowledgementOfClaimLetterDetail.id
+        req.session?.userCase?.acknowledgementOfClaimLetterDetail?.id
       );
       res.setHeader('Content-Type', 'application/pdf');
       //res.setHeader('Content-Disposition', 'attachment; filename=submitted-claim.pdf');

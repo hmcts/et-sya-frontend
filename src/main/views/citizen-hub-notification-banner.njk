@@ -26,6 +26,8 @@
 
 {% endset %}
 
+{% if showAcknowledgementAlert %}
 {{ govukNotificationBanner({
    html: htmlForNotification
   }) }}
+{% endif %}

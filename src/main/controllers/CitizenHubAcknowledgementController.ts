@@ -15,8 +15,11 @@ export default class CitizenHubAcknowledgementController {
     }
     let retrievedDoc: DocumentDetails;
     try {
+      if (!req.session?.userCase?.acknowledgementOfClaimLetterDetail?.id) {
+        return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
+      }
       const docDetails = await getCaseApi(req.session.user?.accessToken).getDocumentDetails(
-        req.session.userCase.acknowledgementOfClaimLetterDetail.id
+        req.session?.userCase?.acknowledgementOfClaimLetterDetail?.id
       );
       const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
       const date = new Date(createdOn);
@@ -31,6 +34,7 @@ export default class CitizenHubAcknowledgementController {
         createdOn: readableDate,
       };
     } catch (error) {
+      console.log('error on acknowledge page', error);
       return res.redirect('/not-found');
     }
     res.render(TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT, {
@@ -41,7 +45,7 @@ export default class CitizenHubAcknowledgementController {
       userCase,
       hideContactUs: true,
       retrievedDoc,
-      shortDesc: req.session.userCase.acknowledgementOfClaimLetterDetail.description,
+      shortDesc: req.session?.userCase?.acknowledgementOfClaimLetterDetail?.description,
     });
   };
 }

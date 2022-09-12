@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, RespondentApiModel, ServingDocument } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Respondent, ccdPreferredTitle } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
@@ -244,22 +244,12 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   return apiFormatRespondents;
 };
 
-export interface DocumentElement {
-  id: string;
-  value: {
-    typeOfDocument: string;
-    shortDescription: string;
-    uploadedDocument: {
-      document_url: string;
-      document_filename: string;
-      document_binary_url: string;
-    };
-  };
-}
-
 export const getAcknowledgementOfClaimLetterValues = (
-  servingDocumentCollection: DocumentElement[]
+  servingDocumentCollection: ServingDocument[]
 ): { id: string; description: string } => {
+  if (!servingDocumentCollection) {
+    return;
+  }
   const foundDocument = servingDocumentCollection.find(doc => doc.value.typeOfDocument === '1.1');
   const docUrl = foundDocument.value.uploadedDocument.document_url;
   return {

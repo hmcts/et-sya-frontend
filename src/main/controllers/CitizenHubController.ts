@@ -29,6 +29,8 @@ export default class CitizenHubController {
 
     const currentState = currentStateFn(userCase);
 
+    const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail?.id;
+
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
@@ -44,6 +46,7 @@ export default class CitizenHubController {
       };
     });
 
+    console.log('showAlert is ', showAcknowledgementAlert);
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -52,6 +55,7 @@ export default class CitizenHubController {
       currentState,
       sections,
       hideContactUs: true,
+      showAcknowledgementAlert,
     });
   }
 }
