@@ -430,9 +430,8 @@ describe('setAcknowledgementOfClaimDocumentValues()', () => {
 
   it('should return undefined when there are no serving documents', () => {
     const servingDocumentCollection: ServingDocument[] = [];
-    const expected = undefined;
 
     const result = setAcknowledgementOfClaimDocumentValues(servingDocumentCollection);
-    expect(result).toEqual(expected);
+    expect(result).toEqual(undefined);
   });
 });

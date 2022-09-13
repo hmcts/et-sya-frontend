@@ -73,6 +73,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
             originalDocumentName: 'sample.pdf',
             createdOn: '8 September 2022',
             description: 'description',
+            id: '1',
           },
         ],
       })
