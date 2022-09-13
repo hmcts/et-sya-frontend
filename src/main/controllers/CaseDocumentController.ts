@@ -5,16 +5,16 @@ import { getCaseApi } from '../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
-const logger = Logger.getLogger('app');
+const logger = Logger.getLogger('CaseDocumentController');
 
 export default class CaseDocumentController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     try {
       const docId = req.params.docId;
-      const pdf = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', 'attachment; filename=submitted-claim.pdf');
-      res.status(200).send(Buffer.from(pdf.data, 'binary'));
+      const sessionDoc = req.session.userCase.acknowledgementOfClaimLetterDetail.find(doc => doc.id === docId);
+      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
+      res.setHeader('Content-Type', sessionDoc.mimeType);
+      res.status(200).send(Buffer.from(document.data, 'binary'));
     } catch (error) {
       logger.info(error);
       res.redirect('not-found');

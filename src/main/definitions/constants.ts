@@ -74,7 +74,7 @@ export const TranslationKeys = {
   COOKIE_PREFERENCES: 'cookie-preferences',
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
-  CITIZEN_HUB_ACKNOWLEDGEMENT: 'citizen-hub-acknowledgement',
+  CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
 } as const;
 
 export const PageUrls = {
@@ -146,6 +146,7 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
+  GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
 } as const;
 

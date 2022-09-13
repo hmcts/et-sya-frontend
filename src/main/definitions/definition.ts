@@ -75,4 +75,8 @@ export interface ApplicationTableRecord {
 export interface AcknowledgementOfClaimLetterDetail {
   id: string;
   description: string;
+  size?: string;
+  mimeType?: string;
+  originalDocumentName?: string;
+  createdOn?: string;
 }

@@ -7,11 +7,11 @@ import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/acknowledgement';
 const titleClass = 'govuk-heading-xl';
+const documentLinkSelector = 'td.govuk-table__cell a.govuk-link';
 
 let htmlRes: Document;
 
 jest.mock('axios');
-const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
 const axiosResponse: AxiosResponse = {
   data: {
     classification: 'PUBLIC',
@@ -34,6 +34,7 @@ const axiosResponse: AxiosResponse = {
   config: undefined,
 };
 
+const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 getCaseApiClientMock.mockReturnValue(caseApi);
 caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
@@ -43,10 +44,7 @@ describe('Citizen Hub acknowledgement of Claim', () => {
     await request(
       mockApp({
         userCase: {
-          acknowledgementOfClaimLetterDetail: [
-            { id: 'abc123', description: 'text' },
-            { id: 'xyz123', description: 'a sentence' },
-          ],
+          acknowledgementOfClaimLetterDetail: [{ id: 'abc123', description: 'text' }],
         },
       })
     )
@@ -59,5 +57,11 @@ describe('Citizen Hub acknowledgement of Claim', () => {
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
     expect(title[0].innerHTML).toContain('Acknowledgement of Claim');
+  });
+
+  it('should display clickable links to download the documents', () => {
+    const documentLinks = htmlRes.querySelectorAll(documentLinkSelector);
+    expect(documentLinks).toHaveLength(1);
+    expect(documentLinks[0].innerHTML).toContain('sample.pdf');
   });
 });
