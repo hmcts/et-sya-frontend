@@ -29,7 +29,7 @@ export default class CitizenHubController {
 
     const currentState = currentStateFn(userCase);
 
-    const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail.length;
+    const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {

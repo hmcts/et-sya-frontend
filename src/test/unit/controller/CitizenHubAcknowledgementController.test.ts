@@ -23,7 +23,7 @@ const axiosResponse: AxiosResponse = {
     lastModifiedBy: '7',
     modifiedOn: '2022-09-08T14:40:49.000+00:00',
     metadata: {
-      jurisdiction: 'EMPLOYMENT',
+      jurisdiction: '',
       case_id: '1',
       case_type_id: '',
     },
@@ -96,13 +96,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
   });
 
   it('should redirect back to the citizen hub when the acknowledment documents are not found in the userCase', async () => {
-    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-    getCaseApiClientMock.mockReturnValue(caseApi);
-
-    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
-
     const userCase: Partial<CaseWithId> = { id: '1' };
-
     const request = mockRequest({ userCase });
     const response = mockResponse();
 

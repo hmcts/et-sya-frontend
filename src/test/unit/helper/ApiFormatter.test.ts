@@ -1,4 +1,4 @@
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApiDataResponse, ServingDocument } from '../../../main/definitions/api/caseApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseDataCacheKey,
@@ -23,6 +23,7 @@ import {
   isValidPreferredTitle,
   parseDateFromString,
   returnPreferredTitle,
+  setAcknowledgementOfClaimDocumentValues,
   toApiFormat,
   toApiFormatCreate,
 } from '../../../main/helper/ApiFormatter';
@@ -386,5 +387,52 @@ describe('parseDateFromString()', () => {
     { date: null, expected: undefined },
   ])('Correct parsing of date from string: %o', ({ date, expected }) => {
     expect(parseDateFromString(date)).toStrictEqual(expected);
+  });
+});
+
+describe('setAcknowledgementOfClaimDocumentValues()', () => {
+  it('should retrieve serving Document id and description from ccd response', () => {
+    const servingDocumentCollection = [
+      {
+        id: '10',
+        value: {
+          typeOfDocument: '1.1',
+          shortDescription: 'text',
+          uploadedDocument: {
+            document_url: 'http://address/documents/abc123',
+            document_filename: 'sample.pdf',
+            document_binary_url: 'http://address/documents/abc123/binary',
+          },
+        },
+      },
+      {
+        id: '11',
+        value: {
+          typeOfDocument: '1.1',
+          shortDescription: 'a sentence',
+          uploadedDocument: {
+            document_url: 'http://address/documents/xyz123',
+            document_filename: 'letter.png',
+            document_binary_url: 'http://address/documents/xyz123/binary',
+          },
+        },
+      },
+    ];
+
+    const expected = [
+      { id: 'abc123', description: 'text' },
+      { id: 'xyz123', description: 'a sentence' },
+    ];
+
+    const result = setAcknowledgementOfClaimDocumentValues(servingDocumentCollection);
+    expect(result).toEqual(expected);
+  });
+
+  it('should return undefined when there are no serving documents', () => {
+    const servingDocumentCollection: ServingDocument[] = [];
+    const expected = undefined;
+
+    const result = setAcknowledgementOfClaimDocumentValues(servingDocumentCollection);
+    expect(result).toEqual(expected);
   });
 });

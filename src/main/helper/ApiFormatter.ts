@@ -82,7 +82,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinks: fromApiCaseData?.case_data?.hubLinks,
-    acknowledgementOfClaimLetterDetail: getAcknowledgementOfClaimLetterValues(
+    acknowledgementOfClaimLetterDetail: setAcknowledgementOfClaimDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection
     ),
   };
@@ -244,7 +244,7 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   return apiFormatRespondents;
 };
 
-export const getAcknowledgementOfClaimLetterValues = (
+export const setAcknowledgementOfClaimDocumentValues = (
   servingDocumentCollection: ServingDocument[]
 ): { id: string; description: string }[] => {
   if (!servingDocumentCollection) {

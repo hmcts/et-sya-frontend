@@ -12,6 +12,7 @@ export default class CitizenHubAcknowledgementController {
       originalDocumentName: string;
       createdOn: string;
       description: string;
+      id: string;
     }
     const acknowledgeDocs: DocumentDetails[] = [];
     try {
@@ -31,6 +32,7 @@ export default class CitizenHubAcknowledgementController {
             dateStyle: 'long',
           }).format(new Date(createdOn)),
           description: document.description,
+          id: document.id,
         });
       }
       console.log('docs is ', acknowledgeDocs);
