@@ -26,6 +26,9 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
     formData.acasCertNum = undefined;
   }
+  if (formData.acasCert === YesOrNo.YES) {
+    formData.noAcasReason = undefined;
+  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
