@@ -25,7 +25,6 @@ const completedClass = 'hmcts-progress-bar__icon--complete';
 const titleClassSelector = '.govuk-heading-l';
 const caseNumberSelector = '#caseNumber';
 const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
-const sectionTitleSelector = '.app-task-list__section';
 
 const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
 const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise';
@@ -201,21 +200,6 @@ describe('Citizen hub page', () => {
       const elements = htmlRes.querySelectorAll(selector);
 
       expect(Array.from(elements).filter(el => el.textContent.trim() === expectedText)).toHaveLength(expectedCount);
-    });
-
-    it('should have the correct titles on the page', () => {
-      const titles = Array.from(htmlRes.querySelectorAll(sectionTitleSelector)).map(el => el.textContent.trim());
-
-      expect(titles).toEqual([
-        'About you',
-        'Your claim',
-        'The response',
-        'Your hearings',
-        'Applications to the tribunal',
-        'Orders from the tribunal',
-        'Judgments from the tribunal',
-        'Case documents',
-      ]);
     });
 
     it.each([
