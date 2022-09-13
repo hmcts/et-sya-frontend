@@ -15,9 +15,13 @@ export class HubLinksStatuses {
   [linkName: string]: HubLinkStatus;
 
   constructor() {
-    Object.values(HubLinkNames).forEach(name => {
-      this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
-    });
+    Object.values(HubLinkNames)
+      .filter(name => name !== HubLinkNames.Et1ClaimForm)
+      .forEach(name => {
+        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+      });
+
+    this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
   }
 }
 
