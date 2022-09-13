@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
@@ -7,6 +8,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
@@ -88,7 +90,7 @@ export default class RespondentAddressController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
   }
 
@@ -101,6 +103,7 @@ export default class RespondentAddressController {
       const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
       handleSessionErrors(req, res, this.form, redirectUrl);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 
