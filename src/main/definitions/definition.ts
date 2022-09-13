@@ -18,8 +18,8 @@ export const enum ClaimOutcomes {
 export const enum CaseState {
   DRAFT = 'Draft',
   AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
-  SUBMITTED = 'SUBMITTED',
-  ACCEPTED = 'ACCEPTED',
+  SUBMITTED = 'Submitted',
+  ACCEPTED = 'Accepted',
 }
 
 export const enum HubCaseState {
