@@ -36,6 +36,14 @@ export const mockEt1DataModelUpdate = {
     claimantType: {
       claimant_email_address: 'tester@test.com',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      claimant_phone_number: '075',
+      claimant_addressUK: {
+        AddressLine1: 'address 1',
+        AddressLine2: 'address 2',
+        PostTown: 'Test',
+        PostCode: 'TEST',
+        Country: 'United',
+      },
     },
     claimantOtherType: {
       pastEmployer: YesOrNo.YES,
