@@ -24,6 +24,7 @@ export default class RespondentNameController {
         type: 'text',
         validator: isRespondentNameValid,
         label: (l: AnyRecord): string => l.label,
+        attributes: { maxLength: 100 },
       },
     },
     submit: {
