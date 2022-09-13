@@ -1,3 +1,5 @@
+import { PageUrls } from './constants';
+
 export enum HubLinkNames {
   PersonalDetails = 'personalDetails',
   Et1ClaimForm = 'et1ClaimForm',
@@ -15,9 +17,16 @@ export class HubLinks {
   [linkName: string]: HubLink;
 
   constructor() {
-    Object.values(HubLinkNames).forEach(name => {
-      this[name] = { status: HubLinkStatus.NOT_YET_AVAILABLE } as HubLink;
-    });
+    Object.values(HubLinkNames)
+      .filter(name => name !== HubLinkNames.Et1ClaimForm)
+      .forEach(name => {
+        this[name] = { status: HubLinkStatus.NOT_YET_AVAILABLE } as HubLink;
+      });
+
+    this[HubLinkNames.Et1ClaimForm] = {
+      status: HubLinkStatus.SUBMITTED,
+      link: PageUrls.CLAIM_DETAILS,
+    } as HubLink;
   }
 }
 
