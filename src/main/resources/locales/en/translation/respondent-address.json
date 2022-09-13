@@ -6,7 +6,7 @@
   "selectDefault": "Several addresses found...",
   "cannotFindAddress": "I cannot find the address in the list",
   "findAddress": "Find address",
-  "pageText": "You should be able to find this text on your payslips, contract or other official documents.",
+  "pageText": "You should be able to find the address on your payslips, contract or other official documents.",
   "insetText": "This should be the same respondent address given to Acas.",
   "town": "Town or city",
   "manualAddress": "The respondent address is outside the UK",

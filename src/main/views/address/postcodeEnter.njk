@@ -11,6 +11,11 @@
         text: enterPostcode
       }
     }) }}
+
+    <p class="govuk-body">
+      <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
+    </p>
+    
     {{ govukButton({
       attributes: {
         id: "findAddressButton"
@@ -31,5 +36,4 @@
           preventDoubleClick: true
         }) }}
   </form>
-  <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
 </div>
