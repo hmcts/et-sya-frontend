@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  {{ 
+  {{
     govukSummaryList({
       rows: [
         {
@@ -42,10 +42,10 @@
                 visuallyHiddenText: applicationDetails.typeOfClaim
               }
             ]
-          } 
+          }
         }
       ]
-    }) 
+    })
   }}
 
   {{
@@ -73,7 +73,7 @@
                 visuallyHiddenText: personalDetails.dob
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -91,7 +91,7 @@
                 visuallyHiddenText: personalDetails.sex
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -101,7 +101,6 @@
           value: {
              text: userCase.preferredTitle if userCase.preferredTitle else "Not Selected"
           },
-
           actions: {
             items: [
               {
@@ -110,7 +109,7 @@
                 visuallyHiddenText: personalDetails.title
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -146,7 +145,7 @@
                 visuallyHiddenText: contactDetails.telephone
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -164,7 +163,7 @@
                 visuallyHiddenText: personalDetails.howToBeContacted
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -182,7 +181,7 @@
                 visuallyHiddenText: personalDetails.takePartInHearing
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -200,20 +199,20 @@
                 visuallyHiddenText: personalDetails.disability
               }
             ]
-          } 
+          }
         }
       ]
-    }) 
+    })
   }}
- 
+
  {% include "employer-working.njk" %}
 
  {% if userCase.isStillWorking === "No longer working" %}
     {% include "employer-no-longer-working.njk" %}
   {% endif %}
-  
+
   {% for respondent in respondents %}
-  {{ 
+  {{
     govukSummaryList({
       rows: [
         {
@@ -232,13 +231,13 @@
           },
           actions: {
             items: [
-              { 
+              {
                 href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.respondentName
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -247,7 +246,7 @@
           },
           value: {
             text: userCase.respondentAddress1+", "+userCase.respondentAddressCountry+", "+userCase.respondentAddressPostcode+" "+userCase.respondentAddressTown
-            if userCase.respondentAddress1 
+            if userCase.respondentAddress1
           },
           actions: {
             items: [
@@ -257,7 +256,7 @@
                 visuallyHiddenText: respondentDetails.respondentAddress
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -275,7 +274,7 @@
                 visuallyHiddenText: respondentDetails.workedAtRespondent
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -294,7 +293,7 @@
                 visuallyHiddenText: respondentDetails.addressWorkedAt
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -313,7 +312,7 @@
                 visuallyHiddenText: respondentDetails.acasNumber
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -331,14 +330,14 @@
                 visuallyHiddenText: respondentDetails.noAcasReason
               }
             ]
-          } 
+          }
         }
       ]
-    }) 
+    })
   }}
   {% endfor %}
 
-  {{ 
+  {{
     govukSummaryList({
       rows: [
         {
@@ -363,7 +362,7 @@
                 visuallyHiddenText: claimDetails.claimType
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -381,7 +380,7 @@
                 visuallyHiddenText: claimDetails.describeWhatHappened
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -399,7 +398,7 @@
                 visuallyHiddenText: yourPreferences.ifClaimSuccessful
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -417,7 +416,7 @@
                 visuallyHiddenText: yourPreferences.expectedCompensation
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -435,7 +434,7 @@
                 visuallyHiddenText: yourPreferences.expectedTribunalsRecommendation
               }
             ]
-          } 
+          }
         },
         {
           key: {
@@ -443,7 +442,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.whistleblowingClaim +": "+userCase.whistleblowingEntityName if userCase.whistleblowingClaim === "Yes" 
+            text: userCase.whistleblowingClaim +": "+userCase.whistleblowingEntityName if userCase.whistleblowingClaim === "Yes"
             else userCase.whistleblowingClaim
           },
           actions: {
@@ -454,15 +453,15 @@
                 visuallyHiddenText: yourPreferences.forwardClaim
               }
             ]
-          } 
+          }
         }
       ]
-    }) 
+    })
   }}
 
 
   <div class="govuk-form-group">
-    {{ 
+    {{
       govukButton({
         text: submitBtn,
         classes: 'govuk-!-margin-right-2',
@@ -472,10 +471,10 @@
         attributes: {
           id: 'main-form-submit'
         }
-      }) 
+      })
     }}
 
-    {{ 
+    {{
       govukButton({
         text: saveForLater,
         classes: 'govuk-button--secondary',
@@ -487,7 +486,7 @@
           id: 'main-form-save-for-later'
         },
         value: true
-      }) 
+      })
     }}
 
   </div>
