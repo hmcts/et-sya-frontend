@@ -32,6 +32,7 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -39,6 +40,12 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
+    telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
+    address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
+    addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
+    addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
+    addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
     typeOfClaim: fromApiCaseData.case_data?.typeOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
@@ -85,6 +92,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address.PostTown,
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address.PostCode,
+    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    hubLinks: fromApiCaseData?.case_data?.hubLinks,
   };
 }
 
@@ -107,7 +116,15 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+        claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
+        claimant_addressUK: {
+          AddressLine1: caseItem.address1,
+          AddressLine2: caseItem.address2,
+          PostTown: caseItem.addressTown,
+          PostCode: caseItem.addressPostcode,
+          Country: caseItem.addressCountry,
+        },
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
@@ -156,6 +173,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
+      hubLinks: caseItem.hubLinks,
     },
   };
 }
