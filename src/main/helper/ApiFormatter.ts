@@ -32,6 +32,7 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -85,6 +86,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
     lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
+    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    hubLinks: fromApiCaseData?.case_data?.hubLinks,
   };
 }
 
@@ -154,6 +157,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
+      hubLinks: caseItem.hubLinks,
     },
   };
 }

@@ -68,6 +68,8 @@ describe('Respondent Address Controller', () => {
           respondentName: 'Enron',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
 
     controller.post(request, response);

@@ -16,7 +16,7 @@ export const getPreloginCaseData = (redisClient: RedisClient, guid: string): Pro
     redisClient.get(guid, (err: Error, userData: string) => {
       if (err || !userData) {
         const error = new Error(err ? err.message : RedisErrors.REDIS_ERROR);
-        error.name = RedisErrors.FAILED_TO_RETREIVE;
+        error.name = RedisErrors.FAILED_TO_RETRIEVE;
         if (err?.stack) {
           error.stack = err.stack;
         }
