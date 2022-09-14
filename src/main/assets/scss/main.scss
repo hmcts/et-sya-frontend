@@ -5,6 +5,9 @@
 @import 'patterns/timeout-modal';
 @import './cookies/cookie-banner';
 
+$govuk-grey: #b1b4b6;
+$govuk-blue: #1d70b8;
+
 .govuk-phase-banner__text {
   width: 100%;
 
@@ -100,4 +103,23 @@
     -webkit-hyphens: auto;
     hyphens: auto;
   }
+}
+
+.hmcts-progress-bar__icon {
+  border: 1px solid $govuk-grey;
+
+  .hmcts-progress-bar__icon--complete {
+    background-color: $govuk-blue;
+  }
+}
+
+.hmcts-progress-bar__list {
+  &::before {
+    border-top: 6px solid $govuk-grey;
+  }
+}
+
+.top-border-blue {
+  border-top: 2px solid $govuk-blue;
+  padding-top: 40px;
 }

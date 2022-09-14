@@ -158,6 +158,7 @@ export default function (app: Application): void {
   app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
   app.get(PageUrls.CLAIMANT_APPLICATIONS, app.locals.container.cradle.claimantApplicationsController.get);
   app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);
+  app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
   app.get(
     Urls.INFO,
     infoRequestHandler({

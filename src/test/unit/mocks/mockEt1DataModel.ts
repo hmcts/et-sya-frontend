@@ -6,6 +6,7 @@ import {
   StillWorking,
   YesOrNo,
 } from '../../../main/definitions/case';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -43,6 +44,14 @@ export const mockEt1DataModelUpdate = {
     claimantType: {
       claimant_email_address: 'tester@test.com',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      claimant_phone_number: '075',
+      claimant_addressUK: {
+        AddressLine1: 'address 1',
+        AddressLine2: 'address 2',
+        PostTown: 'Test',
+        PostCode: 'TEST',
+        Country: 'United',
+      },
     },
     claimantOtherType: {
       pastEmployer: YesOrNo.YES,
@@ -113,5 +122,37 @@ export const mockEt1DataModelUpdate = {
         },
       },
     ],
+    hubLinks: {
+      contactTribunal: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      documents: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      et1ClaimForm: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      hearingDetails: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      personalDetails: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      requestsAndApplications: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      respondentApplications: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      respondentResponse: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      tribunalJudgements: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+      tribunalOrders: {
+        status: HubLinkStatus.NOT_YET_AVAILABLE,
+      },
+    },
   },
 };
