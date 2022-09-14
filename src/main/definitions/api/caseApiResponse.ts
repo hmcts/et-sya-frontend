@@ -30,6 +30,7 @@ export interface CaseApiDataResponse {
 export interface CaseData {
   ethosCaseReference?: string;
   caseType?: CaseType;
+  ClaimantPcqId?: string;
   typeOfClaim?: string[];
   caseSource?: string;
   claimantRepresentedQuestion?: YesOrNo;

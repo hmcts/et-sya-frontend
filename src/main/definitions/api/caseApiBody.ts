@@ -10,6 +10,7 @@ import { HubLinks } from '../hub';
 interface CaseDataApiBody {
   caseType: string;
   typeOfClaim: string[];
+  ClaimantPcqId?: string;
   claimantRepresentedQuestion: string;
   caseSource: string;
   claimantIndType?: ClaimantIndividual;
