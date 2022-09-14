@@ -22,9 +22,9 @@
     "fortifyScan": "./src/test/java/gradlew -p src/test/java fortifyScan",
     "test:pact:run-and-publish": "yarn test:pact && yarn publish-pact",
     "sonar-scan": "sonar-scanner",
-    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
+    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-TEMP",
     "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
-    "test:crossbrowser": "codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} --steps -c src/test/end-to-end/saucelabs.conf.js --steps --reporter mocha-multi --verbose --grep @RET-1235",
+    "test:crossbrowser": "codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} --steps -c src/test/end-to-end/saucelabs.conf.js --steps --reporter mocha-multi --verbose --grep @RET-TEMP",
     "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js run-workers 2 parallel",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn tests:a11y",
     "prepare": "husky install"
