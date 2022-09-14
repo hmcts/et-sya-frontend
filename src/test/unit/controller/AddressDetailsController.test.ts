@@ -1,6 +1,7 @@
 import AddressDetailsController from '../../../main/controllers/AddressDetailsController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,7 +12,7 @@ describe('Address details Controller', () => {
   };
 
   it('should render the Address details controller page', () => {
-    const addressDetailsController = new AddressDetailsController();
+    const addressDetailsController = new AddressDetailsController(mockLogger);
 
     const response = mockResponse();
     const userCase = { address1: '10 test street' };
@@ -30,7 +31,7 @@ describe('Address details Controller', () => {
       ];
       const body = { address1: '' };
 
-      const controller = new AddressDetailsController();
+      const controller = new AddressDetailsController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -48,7 +49,7 @@ describe('Address details Controller', () => {
         addressPostcode: 'AB1 2CD',
       };
 
-      const controller = new AddressDetailsController();
+      const controller = new AddressDetailsController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();

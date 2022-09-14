@@ -16,6 +16,8 @@ describe('Claimant Applications Controller', () => {
     {
       id: '12454',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     },
   ];
 

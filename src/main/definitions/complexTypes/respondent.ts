@@ -1,6 +1,6 @@
 import { NoAcasNumberReason, YesOrNo } from '../../definitions/case';
 
-import { Et1Address } from './ET1Address';
+import { Et1Address } from './et1Address';
 
 export interface RespondentType {
   respondent_name?: string;

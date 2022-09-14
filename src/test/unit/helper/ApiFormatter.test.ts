@@ -16,6 +16,7 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinks } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -64,6 +65,12 @@ describe('Should return data in api format', () => {
         day: '11',
       },
       email: 'tester@test.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
       firstName: 'John',
       lastName: 'Doe',
       claimantSex: Sex.MALE,
@@ -120,6 +127,10 @@ describe('Should return data in api format', () => {
           workAddressPostcode: 'SW1H 9AQ',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      et3IsThereAnEt3Response: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -135,10 +146,12 @@ describe('Format Case Data to Frontend Model', () => {
       created_date: '2022-08-19T09:19:25.79202',
       last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
+        ethosCaseReference: '123456/2022',
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
         typeOfClaim: ['discrimination', 'payRelated'],
+        et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
@@ -150,6 +163,14 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
+          claimant_phone_number: '075',
+          claimant_addressUK: {
+            AddressLine1: 'address 1',
+            AddressLine2: 'address 2',
+            PostTown: 'Test',
+            PostCode: 'TEST',
+            Country: 'United',
+          },
         },
         claimantOtherType: {
           pastEmployer: YesOrNo.YES,
@@ -213,6 +234,7 @@ describe('Format Case Data to Frontend Model', () => {
             },
           },
         ],
+        hubLinks: new HubLinks(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -226,9 +248,16 @@ describe('Format Case Data to Frontend Model', () => {
         month: '10',
         year: '2022',
       },
+      ethosCaseReference: '123456/2022',
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
       email: 'janedoe@exmaple.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
       firstName: 'Jane',
       lastName: 'Doe',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -284,6 +313,8 @@ describe('Format Case Data to Frontend Model', () => {
           respondentAddressPostcode: 'SW1H 9AQ',
         },
       ],
+      et3IsThereAnEt3Response: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     });
   });
 
@@ -300,6 +331,7 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      ethosCaseReference: undefined,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -311,6 +343,12 @@ describe('Format Case Data to Frontend Model', () => {
       claimantSex: undefined,
       preferredTitle: undefined,
       email: undefined,
+      address1: undefined,
+      address2: undefined,
+      addressPostcode: undefined,
+      addressCountry: undefined,
+      addressTown: undefined,
+      telNumber: undefined,
       firstName: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
@@ -349,6 +387,8 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressTown: undefined,
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
+      et3IsThereAnEt3Response: undefined,
+      hubLinks: undefined,
     });
   });
 
@@ -359,6 +399,8 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: { day: '', month: '', year: '' },
       startDate: { day: '', month: '', year: '' },
       noticeEnds: { day: '', month: '', year: '' },
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);

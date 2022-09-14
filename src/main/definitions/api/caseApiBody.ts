@@ -6,6 +6,7 @@ import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
+import { HubLinks } from '../hub';
 
 interface CaseDataApiBody {
   caseType: string;
@@ -21,6 +22,7 @@ interface CaseDataApiBody {
   respondentCollection?: RespondentRequestBody[];
   claimantWorkAddressQuestion?: string;
   claimantWorkAddress?: WorkAddressDetails;
+  hubLinks?: HubLinks;
 }
 
 export interface CreateCaseBody {

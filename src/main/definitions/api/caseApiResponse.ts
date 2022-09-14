@@ -8,6 +8,7 @@ import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
+import { HubLinks } from '../hub';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -15,11 +16,11 @@ export interface CreateCaseResponse {
 
 export interface CaseApiDataResponse {
   id: string;
+  created_date: string;
+  last_modified: string;
   jurisdiction?: string;
   state: CaseState;
   case_type_id?: CaseTypeId;
-  created_date?: string;
-  last_modified?: string;
   locked_by_user_id?: boolean | null;
   security_level?: string | null;
   case_data?: CaseData;
@@ -28,6 +29,7 @@ export interface CaseApiDataResponse {
 }
 
 export interface CaseData {
+  ethosCaseReference?: string;
   caseType?: CaseType;
   typeOfClaim?: string[];
   caseSource?: string;
@@ -41,6 +43,8 @@ export interface CaseData {
   respondentCollection?: RespondentApiModel[];
   claimantWorkAddressQuestion?: YesOrNo;
   claimantWorkAddress?: WorkAddressDetails;
+  et3IsThereAnEt3Response?: YesOrNo;
+  hubLinks?: HubLinks;
 }
 
 export interface RespondentApiModel {

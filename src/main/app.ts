@@ -98,8 +98,8 @@ app.use((error: HTTPError, request: Request, response: Response, next: NextFunct
   if (
     error.name === RedisErrors.FAILED_TO_CONNECT ||
     error.name === RedisErrors.FAILED_TO_SAVE ||
-    error.name === RedisErrors.FAILED_TO_RETREIVE ||
-    error.name === CaseApiErrors.FAILED_TO_RETREIVE_CASE
+    error.name === RedisErrors.FAILED_TO_RETRIEVE ||
+    error.name === CaseApiErrors.FAILED_TO_RETRIEVE_CASE
   ) {
     request.app.set(RedisErrors.REDIS_ERROR, RedisErrors.DISPLAY_MESSAGE);
     response.redirect(PageUrls.TYPE_OF_CLAIM);
