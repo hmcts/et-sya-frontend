@@ -145,6 +145,7 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CHANGE_DETAILS: '*/change',
+  PCQ: '/pcq',
 } as const;
 
 export const ValidationErrors = {

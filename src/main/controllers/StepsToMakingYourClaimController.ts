@@ -107,7 +107,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: (): string => (allSectionsCompleted ? PageUrls.CHECK_ANSWERS.toString() : ''),
+            url: (): string => (allSectionsCompleted ? PageUrls.PCQ.toString() : ''),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
