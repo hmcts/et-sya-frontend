@@ -19,15 +19,10 @@
     [X date].
 </p>
 
-<p class="govuk-body">
-    {{notificationBanner.acknowledgement.p3}}
-    [X date].</p>
-</p>
-
 {% endset %}
 
 {% if showAcknowledgementAlert %}
-{{ govukNotificationBanner({
+    {{ govukNotificationBanner({
    html: htmlForNotification
   }) }}
 {% endif %}

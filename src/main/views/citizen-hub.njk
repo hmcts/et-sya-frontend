@@ -14,13 +14,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h2 class="govuk-heading-l">
-<<<<<<< HEAD
         {{ header + userCase.firstName + ' ' + userCase.lastName }}
         vs
         {{ userCase.respondents[0].respondentName }}
-=======
-        {{ header + userCase.firstName + ' ' + userCase.lastName }} vs {{ userCase.respondents[0].respondentName }}
->>>>>>> origin/master
       </h2>
       <p id="caseNumber" class="govuk-body">{{ caseNumber + userCase.ethosCaseReference }}</p>
 
@@ -57,11 +53,8 @@
               classes: ''
             }) }}
 
-<<<<<<< HEAD
             {% include "./citizen-hub-notification-banner.njk" %}
 
-=======
->>>>>>> origin/master
             <ol class="app-task-list">
               {% for section in sections %}
                 <li>
@@ -99,27 +92,15 @@
               {{iWantTo}}
             </h2>
             <p class="govuk-body">
-<<<<<<< HEAD
               <a href="#">
                 {{contactTribunalMyCase}}
               </a>
             </p>
 
             <p class="govuk-body">
-              <a href="#">
+              <a href="https://www.gov.uk/find-legal-advice" target="_blank">
                 {{findLegalAdvice}}
               </a>
-=======
-              <a href= "#">
-              {{contactTribunalMyCase}}
-            </a>
-            </p>
-
-            <p class="govuk-body">
-              <a href= "https://www.gov.uk/find-legal-advice" target="_blank">
-              {{findLegalAdvice}}
-            </a>
->>>>>>> origin/master
             </p>
 
             {% set sideBarContent %}
@@ -136,8 +117,4 @@
     </div>
   </div>
 
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> origin/master

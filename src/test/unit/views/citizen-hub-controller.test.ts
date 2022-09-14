@@ -225,6 +225,8 @@ describe('Citizen hub page', () => {
       mockFromApiFormat.mockReturnValue({
         id: '123',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
         acknowledgementOfClaimLetterDetail: [
           {
             id: '10',
