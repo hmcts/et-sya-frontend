@@ -1,4 +1,5 @@
 import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
@@ -97,7 +98,8 @@ export const mockEt1DataModelUpdate = {
         status: HubLinkStatus.NOT_YET_AVAILABLE,
       },
       et1ClaimForm: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: HubLinkStatus.SUBMITTED,
+        link: PageUrls.CLAIM_DETAILS,
       },
       hearingDetails: {
         status: HubLinkStatus.NOT_YET_AVAILABLE,
