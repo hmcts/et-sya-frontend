@@ -251,7 +251,7 @@ export const setAcknowledgementOfClaimDocumentValues = (
     return;
   }
   const foundDocuments = servingDocumentCollection
-    .filter(doc => doc.value.typeOfDocument === '1.1')
+    .filter(doc => doc.value.typeOfDocument === '1.1' || doc.value.typeOfDocument === 'Acknowledgement of Claim')
     .map(doc => {
       const docUrl = doc.value?.uploadedDocument?.document_url;
       return {

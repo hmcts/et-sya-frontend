@@ -32,6 +32,8 @@ const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise
 const greyTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--grey';
 const blueTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--blue';
 
+const notificationBannerSelector = 'div.govuk-notification-banner__content a.govuk-link';
+
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
@@ -218,6 +220,42 @@ describe('Citizen hub page', () => {
         .flatMap(sibling => Array.from(sibling.getElementsByTagName('a')));
 
       expect(links.length > 0).toBe(showLink);
+    });
+  });
+
+  describe('Alert containing a link to view the acknowledgement documents on the citizen hub page', () => {
+    it('should render link to Acknowledgement Documents Page', async () => {
+      caseApi.getCase = jest.fn().mockResolvedValue({ body: {} });
+
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        id: '123',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        acknowledgementOfClaimLetterDetail: [
+          {
+            id: '10',
+            description: 'asdf',
+          },
+          {
+            id: '11',
+            description: 'asdf',
+          },
+        ],
+      });
+
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      expect(htmlRes.querySelector(notificationBannerSelector).innerHTML).toContain(
+        'View the Acknowledgement of Claim'
+      );
     });
   });
 });
