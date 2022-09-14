@@ -13,12 +13,12 @@ export default class CaseDocumentController {
       if (!req.params || !req.params.docId || req.params.docId === '') {
         throw new Error('bad request paramater');
       }
+      const docId = req.params.docId;
       const { mimeType } = req.session.userCase.acknowledgementOfClaimLetterDetail.find(doc => doc.id === docId);
 
       if (!mimeType) {
         throw new Error('details of document not found in session');
       }
-      const docId = req.params.docId;
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
       res.setHeader('Content-Type', mimeType);
