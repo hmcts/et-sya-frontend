@@ -1,10 +1,17 @@
+import axios from 'axios';
+
 import WorkAddressController from '../../../main/controllers/WorkAddressController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Update Work Address Controller', () => {
   const t = {
@@ -18,7 +25,7 @@ describe('Update Work Address Controller', () => {
   };
 
   it('should render the Work Address page', () => {
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
     const response = mockResponse();
     const req = <AppRequest>mockRequest({ t });
 
@@ -31,7 +38,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to acas cert num page when yes is selected', () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.YES };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -47,7 +54,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to place of work page when no is selected', () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -61,7 +68,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO, saveForLater: true };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -74,7 +81,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
     const body = { saveForLater: true };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -87,7 +94,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
     const body = { saveForLater: false };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -101,7 +108,7 @@ describe('Update Work Address Controller', () => {
   it('should redirect to undefined when save as draft not selected and no answer', () => {
     const body = {};
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -115,7 +122,7 @@ describe('Update Work Address Controller', () => {
   it('should throw error, when session errors exists and unable to save session', () => {
     const body = { saveForLater: false };
 
-    const controller = new WorkAddressController();
+    const controller = new WorkAddressController(mockLogger);
     const err = new Error('Something went wrong');
 
     const req = mockRequestWithSaveException({
@@ -126,5 +133,26 @@ describe('Update Work Address Controller', () => {
     expect(function () {
       controller.post(req, res);
     }).toThrow(err);
+  });
+
+  it('should add work address question answer to the session userCase', () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.NO };
+    const controller = new WorkAddressController(mockLogger);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual(YesOrNo.NO);
+  });
+
+  it('should run logger in catch block', async () => {
+    const body = { claimantWorkAddressQuestion: YesOrNo.NO };
+    const controller = new WorkAddressController(mockLogger);
+    const request = mockRequest({ body });
+    const response = mockResponse();
+
+    await controller.post(request, response);
+
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

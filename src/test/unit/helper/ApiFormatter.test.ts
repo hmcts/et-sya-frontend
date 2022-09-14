@@ -7,6 +7,7 @@ import {
   CaseWithId,
   EmailOrPost,
   HearingPreference,
+  NoAcasNumberReason,
   PayInterval,
   Sex,
   StillWorking,
@@ -54,6 +55,7 @@ describe('Should return data in api format', () => {
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       caseType: CaseType.SINGLE,
       claimantRepresentedQuestion: YesOrNo.YES,
+      claimantWorkAddressQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: ['discrimination', 'payRelated'],
       dobDate: {
@@ -95,9 +97,27 @@ describe('Should return data in api format', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      workAddress1: 'Respondent Address',
+      workAddress2: 'That Road',
+      workAddressTown: 'Anytown',
+      workAddressCountry: 'England',
+      workAddressPostcode: 'SW1H 9AQ',
       respondents: [
         {
           respondentName: 'Globo Corp',
+          acasCert: YesOrNo.YES,
+          acasCertNum: 'R111111111111',
+          noAcasReason: NoAcasNumberReason.ANOTHER,
+          respondentAddress1: 'Respondent Address',
+          respondentAddress2: 'That Road',
+          respondentAddressTown: 'Anytown',
+          respondentAddressCountry: 'England',
+          respondentAddressPostcode: 'SW1H 9AQ',
+          workAddress1: 'Respondent Address',
+          workAddress2: 'That Road',
+          workAddressTown: 'Anytown',
+          workAddressCountry: 'England',
+          workAddressPostcode: 'SW1H 9AQ',
         },
       ],
     };
@@ -117,14 +137,15 @@ describe('Format Case Data to Frontend Model', () => {
       case_data: {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
+        claimantWorkAddressQuestion: YesOrNo.YES,
         typeOfClaim: ['discrimination', 'payRelated'],
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
           claimant_date_of_birth: '2022-10-05',
           claimant_sex: Sex.MALE,
-          claimant_preferred_title: 'Other',
-          claimant_title_other: 'Captain',
+          claimant_preferred_title: 'Mr',
+          // claimant_title_other: 'Captain',
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
@@ -166,10 +187,29 @@ describe('Format Case Data to Frontend Model', () => {
           employmentAndRespondentCheck: YesOrNo.YES,
           claimDetailsCheck: YesOrNo.YES,
         },
+        claimantWorkAddress: {
+          claimant_work_address: {
+            AddressLine1: 'Respondent Address',
+            AddressLine2: 'That Road',
+            PostTown: 'Anytown',
+            Country: 'England',
+            PostCode: 'SW1H 9AQ',
+          },
+        },
         respondentCollection: [
           {
             value: {
               respondent_name: 'Globo Corp',
+              respondent_ACAS_question: YesOrNo.YES,
+              respondent_ACAS: 'R111111111111',
+              respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
+              respondent_address: {
+                AddressLine1: 'Respondent Address',
+                AddressLine2: 'That Road',
+                PostTown: 'Anytown',
+                Country: 'England',
+                PostCode: 'SW1H 9AQ',
+              },
             },
           },
         ],
@@ -187,7 +227,7 @@ describe('Format Case Data to Frontend Model', () => {
         year: '2022',
       },
       claimantSex: Sex.MALE,
-      preferredTitle: 'Captain',
+      preferredTitle: 'Mr',
       email: 'janedoe@exmaple.com',
       firstName: 'Jane',
       lastName: 'Doe',
@@ -224,9 +264,24 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      claimantWorkAddressQuestion: YesOrNo.YES,
+      workAddress1: 'Respondent Address',
+      workAddress2: 'That Road',
+      workAddressTown: 'Anytown',
+      workAddressCountry: 'England',
+      workAddressPostcode: 'SW1H 9AQ',
+
       respondents: [
         {
           respondentName: 'Globo Corp',
+          acasCert: YesOrNo.YES,
+          acasCertNum: 'R111111111111',
+          noAcasReason: NoAcasNumberReason.ANOTHER,
+          respondentAddress1: 'Respondent Address',
+          respondentAddress2: 'That Road',
+          respondentAddressTown: 'Anytown',
+          respondentAddressCountry: 'England',
+          respondentAddressPostcode: 'SW1H 9AQ',
         },
       ],
     });
@@ -288,6 +343,12 @@ describe('Format Case Data to Frontend Model', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
+      claimantWorkAddressQuestion: undefined,
+      workAddress1: undefined,
+      workAddress2: undefined,
+      workAddressTown: undefined,
+      workAddressCountry: undefined,
+      workAddressPostcode: undefined,
     });
   });
 
