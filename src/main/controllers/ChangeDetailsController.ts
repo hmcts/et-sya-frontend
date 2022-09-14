@@ -7,7 +7,11 @@ export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
     const changeString = '/change';
     const redirectUrl = req.url.replace(changeString, '');
-    req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+    if (req.query.redirect === 'answers') {
+      req.session.returnUrl = PageUrls.CHECK_ANSWERS;
+    } else {
+      req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+    }
 
     return res.redirect(redirectUrl);
   };
