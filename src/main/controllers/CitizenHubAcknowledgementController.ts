@@ -4,6 +4,10 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { getCaseApi } from '../services/CaseService';
 
+const { Logger } = require('@hmcts/nodejs-logging');
+
+const logger = Logger.getLogger('CitizenHubAcknowledgementController');
+
 export default class CitizenHubAcknowledgementController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
@@ -27,7 +31,8 @@ export default class CitizenHubAcknowledgementController {
           retrievedValues
         );
       }
-    } catch (error) {
+    } catch (err) {
+      logger.error(err.response?.status, err.response?.data, err);
       return res.redirect('/not-found');
     }
     res.render(TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT, {
