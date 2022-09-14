@@ -3,7 +3,7 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-import { PageUrls, Urls } from '../definitions/constants';
+import { ChangeUrls, PageUrls, Urls } from '../definitions/constants';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -165,7 +165,7 @@ export default function (app: Application): void {
   app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
-  app.get(PageUrls.CHANGE_DETAILS, app.locals.container.cradle.changeDetailsController.get);
+  app.get(ChangeUrls.CHANGE_DETAILS, app.locals.container.cradle.changeDetailsController.get);
   app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
   app.get(PageUrls.CLAIMANT_APPLICATIONS, app.locals.container.cradle.claimantApplicationsController.get);
   app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);

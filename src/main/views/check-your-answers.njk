@@ -17,6 +17,24 @@
     </div>
   </div>
 
+  {% set typeOfClaim = '' %}
+    {% for item in userCase.typeOfClaim %}
+      {% if item === 'discrimination' %}
+        {% set typeOfClaim = typeOfClaim + discrimination + ', ' %}
+      {% elif item === 'payRelated' %}
+        {% set typeOfClaim = typeOfClaim + payRelated + ', ' %}
+      {% elif item === 'unfairDismissal' %}
+        {% set typeOfClaim = typeOfClaim + unfairDismissal + ', ' %}
+      {% elif item === 'whistleBlowing' %}
+        {% set typeOfClaim = typeOfClaim + whistleBlowing  + ', ' %}
+      {% elif item === 'breachOfContract' %}
+        {% set typeOfClaim = typeOfClaim + breachOfContract  + ', ' %}
+      {% elif item === 'otherClaim' %}
+        {% set typeOfClaim = typeOfClaim + otherClaim  + ', ' %}          
+      {% endif %}
+        
+    {% endfor %}
+
   {{ 
     govukSummaryList({
       rows: [
@@ -32,12 +50,12 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.typeOfClaim
+            text: typeOfClaim.toString()
           },
           actions: {
             items: [
               {
-                href: PageUrls.TYPE_OF_CLAIM,
+                href: PageUrls.TYPE_OF_CLAIM + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: applicationDetails.typeOfClaim
               }
@@ -68,7 +86,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.DOB_DETAILS,
+                href: PageUrls.DOB_DETAILS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.dob
               }
@@ -86,7 +104,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.SEX_AND_TITLE,
+                href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.sex
               }
@@ -105,7 +123,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.SEX_AND_TITLE,
+                href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.title
               }
@@ -118,12 +136,12 @@
           classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: "" if userCase.address1 === undefined else userCase.address1+", "+userCase.addressCounty+", "+userCase.addressPostcode+", "+userCase.addressTown
+            text: "" if userCase.address1 === undefined else userCase.address1+", "+userCase.addressPostcode+", "+userCase.addressTown
           },
           actions: {
             items: [
               {
-                href: PageUrls.ADDRESS_DETAILS,
+                href: PageUrls.ADDRESS_DETAILS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.contactOrHomeAddress
               }
@@ -141,7 +159,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.TELEPHONE_NUMBER,
+                href: PageUrls.TELEPHONE_NUMBER + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: contactDetails.telephone
               }
@@ -159,7 +177,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.UPDATE_PREFERENCES,
+                href: PageUrls.UPDATE_PREFERENCES + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.howToBeContacted
               }
@@ -177,7 +195,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.VIDEO_HEARINGS,
+                href: PageUrls.VIDEO_HEARINGS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.takePartInHearing
               }
@@ -195,7 +213,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.REASONABLE_ADJUSTMENTS,
+                href: PageUrls.REASONABLE_ADJUSTMENTS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: personalDetails.disability
               }
@@ -233,7 +251,7 @@
           actions: {
             items: [
               { 
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.respondentName
               }
@@ -252,7 +270,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.respondentAddress
               }
@@ -270,7 +288,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.workedAtRespondent
               }
@@ -283,13 +301,13 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.workAddress1+", "+userCase.workAddressCounty+", "+
-            userCase.workAddressPostcode+", "+userCase.workAddressTown if userCase.claimantWorkAddressQuestion === "No" else ""
+            text: userCase.workAddress1+", "+
+            userCase.workAddressPostcode+", "+userCase.workAddressTown
           },
           actions: {
             items: [
               {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.addressWorkedAt
               }
@@ -308,7 +326,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.acasNumber
               }
@@ -326,7 +344,7 @@
           actions: {
             items: [
               {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER,
+                href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: respondentDetails.noAcasReason
               }
@@ -358,7 +376,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.CLAIM_TYPE_DISCRIMINATION,
+                href: PageUrls.CLAIM_TYPE_DISCRIMINATION + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: claimDetails.claimType
               }
@@ -376,7 +394,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.DESCRIBE_WHAT_HAPPENED,
+                href: PageUrls.DESCRIBE_WHAT_HAPPENED + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: claimDetails.describeWhatHappened
               }
@@ -394,7 +412,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.TELL_US_WHAT_YOU_WANT,
+                href: PageUrls.TELL_US_WHAT_YOU_WANT + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: yourPreferences.ifClaimSuccessful
               }
@@ -412,7 +430,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.COMPENSATION,
+                href: PageUrls.COMPENSATION + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: yourPreferences.expectedCompensation
               }
@@ -430,7 +448,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.TRIBUNAL_RECOMMENDATION,
+                href: PageUrls.TRIBUNAL_RECOMMENDATION + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: yourPreferences.expectedTribunalsRecommendation
               }
@@ -449,7 +467,7 @@
           actions: {
             items: [
               {
-                href: PageUrls.WHISTLEBLOWING_CLAIMS,
+                href: PageUrls.WHISTLEBLOWING_CLAIMS + ChangeUrls.ANSWERS_CHANGE,
                 text: "Change",
                 visuallyHiddenText: yourPreferences.forwardClaim
               }
@@ -467,7 +485,7 @@
         text: submitBtn,
         classes: 'govuk-!-margin-right-2',
         type: "submit",
-        href: PageUrls.CLAIM_SUBMITTED,
+        href: PageUrls.CLAIM_SUBMITTED ,
         preventDoubleClick: true,
         attributes: {
           id: 'main-form-submit'
