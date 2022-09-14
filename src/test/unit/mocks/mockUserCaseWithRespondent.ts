@@ -9,6 +9,8 @@ export const userCaseWithRespondent = {
       respondentName: 'Globo Gym',
     },
   ],
+  createdDate: 'August 19, 2022',
+  lastModified: 'August 19, 2022',
 };
 
 export const userCaseWith4Respondents = {
@@ -32,6 +34,8 @@ export const userCaseWith4Respondents = {
       respondentName: 'Globo Gym 4',
     },
   ],
+  createdDate: 'August 19, 2022',
+  lastModified: 'August 19, 2022',
 };
 
 export const userCaseWith6Respondents = {
@@ -63,4 +67,6 @@ export const userCaseWith6Respondents = {
       respondentName: 'Globo Gym 6',
     },
   ],
+  createdDate: 'August 19, 2022',
+  lastModified: 'August 19, 2022',
 };

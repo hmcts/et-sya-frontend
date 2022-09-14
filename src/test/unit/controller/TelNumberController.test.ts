@@ -1,6 +1,7 @@
 import TelNumberController from '../../../main/controllers/TelNumberController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
+import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -11,7 +12,7 @@ describe('Telephone number Controller', () => {
   };
 
   it('should render the Address details controller page', () => {
-    const telNumberController = new TelNumberController();
+    const telNumberController = new TelNumberController(mockLogger);
     const response = mockResponse();
     const userCase = { telNumber: '01234567890' };
     const request = <AppRequest>mockRequest({ t, userCase });
@@ -22,10 +23,10 @@ describe('Telephone number Controller', () => {
 
   describe('post()', () => {
     it('should redirect to the same screen when errors are present', () => {
-      const errors = [{ propertyName: 'telNumber', errorType: 'invalid' }];
+      const errors = [{ propertyName: 'telNumber', errorType: 'nonnumeric' }];
       const body = { telNumber: 'not valid' };
 
-      const controller = new TelNumberController();
+      const controller = new TelNumberController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -38,7 +39,7 @@ describe('Telephone number Controller', () => {
     it('should assign userCase from formData', () => {
       const body = { telNumber: '01234567890' };
 
-      const controller = new TelNumberController();
+      const controller = new TelNumberController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();

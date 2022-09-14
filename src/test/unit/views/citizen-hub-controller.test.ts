@@ -25,7 +25,6 @@ const completedClass = 'hmcts-progress-bar__icon--complete';
 const titleClassSelector = '.govuk-heading-l';
 const caseNumberSelector = '#caseNumber';
 const currElementSelector = '.hmcts-progress-bar__list-item[aria-current=step]';
-const sectionTitleSelector = '.app-task-list__section';
 
 const greenTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--green';
 const turquoiseTagSelector = '.govuk-tag.app-task-list__tag.govuk-tag--turquoise';
@@ -81,9 +80,13 @@ describe('Citizen hub page', () => {
     ])(
       'should show correct completed tasks in progress bar: %o',
       async ({ expectedCompleted, caseApiDataResponse }) => {
-        caseApi.getCase = jest.fn().mockResolvedValue(
+        caseApi.getUserCase = jest.fn().mockResolvedValue(
           Promise.resolve({
-            data: caseApiDataResponse,
+            data: {
+              ...caseApiDataResponse,
+              created_date: '2022-08-19T09:19:25.79202',
+              last_modified: '2022-08-19T09:19:25.817549',
+            },
           } as AxiosResponse<CaseApiDataResponse>)
         );
 
@@ -118,9 +121,13 @@ describe('Citizen hub page', () => {
         caseApiDataResponse: caseApiDataResponses[2],
       },
     ])('should show correct current progress bar task: %o', async ({ expectedCurrStep, caseApiDataResponse }) => {
-      caseApi.getCase = jest.fn().mockResolvedValue(
+      caseApi.getUserCase = jest.fn().mockResolvedValue(
         Promise.resolve({
-          data: caseApiDataResponse,
+          data: {
+            ...caseApiDataResponse,
+            created_date: '2022-08-19T09:19:25.79202',
+            last_modified: '2022-08-19T09:19:25.817549',
+          },
         } as AxiosResponse<CaseApiDataResponse>)
       );
 
@@ -152,7 +159,7 @@ describe('Citizen hub page', () => {
       hubLinks[HubLinkNames.HearingDetails].status = HubLinkStatus.NOT_YET_AVAILABLE;
       hubLinks[HubLinkNames.RequestsAndApplications].status = HubLinkStatus.VIEWED;
 
-      caseApi.getCase = jest.fn().mockResolvedValue({ body: {} });
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue({
@@ -162,6 +169,8 @@ describe('Citizen hub page', () => {
         firstName: 'Paul',
         lastName: 'Mumbere',
         respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
         hubLinks,
       });
 
@@ -193,21 +202,6 @@ describe('Citizen hub page', () => {
       const elements = htmlRes.querySelectorAll(selector);
 
       expect(Array.from(elements).filter(el => el.textContent.trim() === expectedText)).toHaveLength(expectedCount);
-    });
-
-    it('should have the correct titles on the page', () => {
-      const titles = Array.from(htmlRes.querySelectorAll(sectionTitleSelector)).map(el => el.textContent.trim());
-
-      expect(titles).toEqual([
-        'About you',
-        'Your claim',
-        'The response',
-        'Your hearings',
-        'Applications to the tribunal',
-        'Orders from the tribunal',
-        'Judgments from the tribunal',
-        'Case documents',
-      ]);
     });
 
     it.each([

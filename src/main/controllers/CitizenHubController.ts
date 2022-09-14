@@ -16,7 +16,7 @@ export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     try {
       req.session.userCase = fromApiFormat(
-        (await getCaseApi(req.session.user?.accessToken).getCase(req.params.caseId)).data
+        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
       );
     } catch (error) {
       logger.error(`Could not access /citizen-hub/${req.params.caseId}`);

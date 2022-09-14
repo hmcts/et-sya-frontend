@@ -10,7 +10,8 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
-import { getPageContent, getSectionStatus, setUserCaseWithRedisData } from './helpers';
+import { getSectionStatus, setUserCaseWithRedisData } from './helpers/CaseHelpers';
+import { getPageContent } from './helpers/FormHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -106,7 +107,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: (): string => (allSectionsCompleted ? PageUrls.CHECK_ANSWERS.toString() : ''),
+            url: (): string => (allSectionsCompleted ? PageUrls.PCQ.toString() : ''),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },

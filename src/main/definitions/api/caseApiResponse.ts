@@ -15,11 +15,11 @@ export interface CreateCaseResponse {
 
 export interface CaseApiDataResponse {
   id: string;
+  created_date: string;
+  last_modified: string;
   jurisdiction?: string;
   state: CaseState;
   case_type_id?: CaseTypeId;
-  created_date?: string;
-  last_modified?: string;
   locked_by_user_id?: boolean | null;
   security_level?: string | null;
   case_data?: CaseData;

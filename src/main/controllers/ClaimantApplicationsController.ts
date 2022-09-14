@@ -5,7 +5,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { getUserApplications, getUserCasesByLastModified } from '../services/CaseSelectionService';
 
-import { getPageContent } from './helpers';
+import { getPageContent } from './helpers/FormHelpers';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {

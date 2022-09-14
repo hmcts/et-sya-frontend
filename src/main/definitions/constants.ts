@@ -148,6 +148,7 @@ export const PageUrls = {
   CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
+  PCQ: '/pcq',
 } as const;
 
 export const ValidationErrors = {
@@ -164,7 +165,6 @@ export const AuthUrls = {
 export const JavaApiUrls = {
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
-  GET_INDIVIDUAL_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',

@@ -64,6 +64,12 @@ describe('Should return data in api format', () => {
         day: '11',
       },
       email: 'tester@test.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
       firstName: 'John',
       lastName: 'Doe',
       claimantSex: Sex.MALE,
@@ -102,6 +108,9 @@ describe('Should return data in api format', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      et3IsThereAnEt3Response: YesOrNo.YES,
       hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
@@ -134,6 +143,14 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
+          claimant_phone_number: '075',
+          claimant_addressUK: {
+            AddressLine1: 'address 1',
+            AddressLine2: 'address 2',
+            PostTown: 'Test',
+            PostCode: 'TEST',
+            Country: 'United',
+          },
         },
         claimantOtherType: {
           pastEmployer: YesOrNo.YES,
@@ -196,6 +213,12 @@ describe('Format Case Data to Frontend Model', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Captain',
       email: 'janedoe@exmaple.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
       firstName: 'Jane',
       lastName: 'Doe',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -266,6 +289,12 @@ describe('Format Case Data to Frontend Model', () => {
       claimantSex: undefined,
       preferredTitle: undefined,
       email: undefined,
+      address1: undefined,
+      address2: undefined,
+      addressPostcode: undefined,
+      addressCountry: undefined,
+      addressTown: undefined,
+      telNumber: undefined,
       firstName: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
@@ -310,6 +339,8 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: { day: '', month: '', year: '' },
       startDate: { day: '', month: '', year: '' },
       noticeEnds: { day: '', month: '', year: '' },
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);

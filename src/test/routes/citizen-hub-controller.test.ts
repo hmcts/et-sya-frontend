@@ -9,9 +9,12 @@ import { mockApp } from '../unit/mocks/mockApp';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-caseApi.getCase = jest.fn().mockResolvedValue(
+caseApi.getUserCase = jest.fn().mockResolvedValue(
   Promise.resolve({
-    data: {},
+    data: {
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
   } as AxiosResponse<CaseApiDataResponse>)
 );
 
@@ -24,6 +27,6 @@ describe(`GET ${PageUrls.CITIZEN_HUB}`, () => {
 
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);
-    expect(caseApi.getCase).toBeCalledWith('1111222233334444');
+    expect(caseApi.getUserCase).toHaveBeenCalledWith('1111222233334444');
   });
 });
