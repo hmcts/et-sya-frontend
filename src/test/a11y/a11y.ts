@@ -50,7 +50,7 @@ function testAccessibility(url: string): void {
 }
 
 describe('Accessibility', () => {
-  Object.values(PageUrls).forEach(url => {
+  Object.values({ ...PageUrls, CITIZEN_HUB: '/citizen-hub/a11y' }).forEach(url => {
     testAccessibility(url);
   });
 });
