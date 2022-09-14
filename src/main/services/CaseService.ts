@@ -2,26 +2,11 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
-
-export interface DocumentDetailsResponse {
-  classification: string;
-  size: number;
-  mimeType: string;
-  originalDocumentName: string;
-  createdOn: string;
-  createdBy: string;
-  lastModifiedBy: string;
-  modifiedOn: string;
-  metadata: {
-    jurisdiction: string;
-    case_id: string;
-    case_type_id: string;
-  };
-}
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
@@ -55,9 +40,6 @@ export class CaseApi {
   getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
     return this.axio.get(`/document/download/${docId}`, {
       responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/pdf',
-      },
     });
   };
 
