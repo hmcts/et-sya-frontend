@@ -12,6 +12,7 @@ export default class CheckYourAnswersController {
     const whatYouWantTribunals = getTellUsWhatYouWantTribunals(userCase);
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.ET1_FIELD_NAMES, { returnObjects: true }),
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       PageUrls,
       userCase,

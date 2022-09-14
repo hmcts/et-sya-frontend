@@ -13,26 +13,6 @@
     "header": "Application details",
     "typeOfClaim": "Claim type"
   },
-  "personalDetails": {
-    "header": "Your details",
-    "dob": "Date of birth",
-    "sex": "Sex",
-    "title": "Preferred title",
-    "contactOrHomeAddress": "Contact or home address",
-    "howToBeContacted": "How would you like to be contacted?",
-    "takePartInHearing": "Would you be able to take part in hearings by video or phone?",
-    "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?"
-  },
-  "contactDetails": {
-    "header": "Contact details",
-    "telephone": "Telephone number"
-  },
-  "yourPreferences": {
-    "header": "Your preferences",
-    "requireAsistence": "Disability or assistance needed",
-    "updatePreference": "Update preference",
-    "videoHearings": "Video hearings"
-  },
   "employer": {
     "header": "Employer"
   },

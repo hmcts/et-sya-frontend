@@ -75,6 +75,7 @@ export const TranslationKeys = {
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
   CLAIM_DETAILS: 'claim-details',
+  ET1_FIELD_NAMES: 'et1-field-names',
 } as const;
 
 export const PageUrls = {
