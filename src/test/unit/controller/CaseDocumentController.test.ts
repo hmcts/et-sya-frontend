@@ -70,7 +70,7 @@ describe('Case Document Controller', () => {
       getCaseDocument: jest.fn().mockRejectedValue(new Error('test error message')),
     });
     await new CaseDocumentController().get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith('not-found');
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 
   it('should redirect to not-found on bad request parameter', async () => {
@@ -78,6 +78,6 @@ describe('Case Document Controller', () => {
     const request = mockRequest({ t });
     request.params.docId = '';
     await new CaseDocumentController().get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith('not-found');
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 });

@@ -263,6 +263,7 @@ describe('Format Case Data to Frontend Model', () => {
       et3IsThereAnEt3Response: YesOrNo.YES,
       hubLinks: new HubLinks(),
       acknowledgementOfClaimLetterDetail: undefined,
+      respondentResponseDeadline: undefined,
     });
   });
 
@@ -332,6 +333,7 @@ describe('Format Case Data to Frontend Model', () => {
       et3IsThereAnEt3Response: undefined,
       hubLinks: undefined,
       acknowledgementOfClaimLetterDetail: undefined,
+      respondentResponseDeadline: undefined,
     });
   });
 

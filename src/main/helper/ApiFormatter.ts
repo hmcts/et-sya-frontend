@@ -92,7 +92,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
     ),
-    claimServedDate: convertStringToDate(fromApiCaseData.case_data?.claimServedDate),
+    respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
   };
 }
 
@@ -234,14 +234,20 @@ function convertFromTimestampString(responseDate: string) {
   });
 }
 
-function convertStringToDate(date: string) {
-  return date
-    ? new Intl.DateTimeFormat(i18next.language + '-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(new Date(date))
-    : undefined;
+function convertClaimServedDateToRespondentDeadline(date: string) {
+  if (!date) {
+    return;
+  }
+  const deadline = new Date(date);
+  if (deadline instanceof Date && !isNaN(deadline.getTime())) {
+    deadline.setDate(deadline.getDate() + 28);
+    return new Intl.DateTimeFormat(i18next.language + '-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(deadline));
+  }
+  return;
 }
 
 export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {

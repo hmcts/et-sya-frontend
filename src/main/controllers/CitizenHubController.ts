@@ -19,6 +19,7 @@ export default class CitizenHubController {
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
       );
     } catch (error) {
+      console.log(error?.status, error?.message);
       logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
       return res.redirect('/not-found');
     }
@@ -30,11 +31,12 @@ export default class CitizenHubController {
     const currentState = currentStateFn(userCase);
 
     const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
-    let showClaimServedDate = false;
-    const { claimServedDate } = userCase;
 
-    if (claimServedDate) {
-      showClaimServedDate = true;
+    let showRespondentResponseDeadline = false;
+    const { respondentResponseDeadline } = userCase;
+
+    if (respondentResponseDeadline) {
+      showRespondentResponseDeadline = true;
     }
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
@@ -61,8 +63,8 @@ export default class CitizenHubController {
       sections,
       hideContactUs: true,
       showAcknowledgementAlert,
-      claimServedDate,
-      showClaimServedDate,
+      respondentResponseDeadline,
+      showRespondentResponseDeadline,
     });
   }
 }
