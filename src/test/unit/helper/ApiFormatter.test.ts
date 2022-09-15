@@ -14,6 +14,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { acceptanceDocTypes } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinks } from '../../../main/definitions/hub';
 import {
@@ -23,7 +24,7 @@ import {
   isValidPreferredTitle,
   parseDateFromString,
   returnPreferredTitle,
-  setAcknowledgementOfClaimDocumentValues,
+  setServingDocumentValues,
   toApiFormat,
   toApiFormatCreate,
 } from '../../../main/helper/ApiFormatter';
@@ -423,7 +424,7 @@ describe('parseDateFromString()', () => {
   });
 });
 
-describe('setAcknowledgementOfClaimDocumentValues()', () => {
+describe('set Serving Document Values()', () => {
   it('should retrieve serving Document id and description from ccd response', () => {
     const servingDocumentCollection = [
       {
@@ -457,14 +458,14 @@ describe('setAcknowledgementOfClaimDocumentValues()', () => {
       { id: 'xyz123', description: 'a sentence' },
     ];
 
-    const result = setAcknowledgementOfClaimDocumentValues(servingDocumentCollection);
+    const result = setServingDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(expected);
   });
 
   it('should return undefined when there are no serving documents', () => {
     const servingDocumentCollection: ServingDocument[] = [];
 
-    const result = setAcknowledgementOfClaimDocumentValues(servingDocumentCollection);
+    const result = setServingDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(undefined);
   });
 });

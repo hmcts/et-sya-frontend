@@ -44,6 +44,7 @@ export interface CaseData {
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
   servingDocumentCollection?: ServingDocument[];
+  claimServedDate?: string;
 }
 
 export interface RespondentApiModel {

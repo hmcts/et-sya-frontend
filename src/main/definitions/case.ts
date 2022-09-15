@@ -126,6 +126,7 @@ export interface Case {
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
   acknowledgementOfClaimLetterDetail?: AcknowledgementOfClaimLetterDetail[];
+  claimServedDate?: string;
 }
 
 export const enum StillWorking {

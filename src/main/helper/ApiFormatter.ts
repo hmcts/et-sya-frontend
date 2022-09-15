@@ -5,7 +5,7 @@ import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../defini
 import { CaseApiDataResponse, RespondentApiModel, ServingDocument } from '../definitions/api/caseApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel } from '../definitions/constants';
+import { CcdDataModel, acceptanceDocTypes } from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -88,9 +88,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinks: fromApiCaseData?.case_data?.hubLinks,
-    acknowledgementOfClaimLetterDetail: setAcknowledgementOfClaimDocumentValues(
-      fromApiCaseData?.case_data?.servingDocumentCollection
+    acknowledgementOfClaimLetterDetail: setServingDocumentValues(
+      fromApiCaseData?.case_data?.servingDocumentCollection,
+      acceptanceDocTypes
     ),
+    claimServedDate: convertStringToDate(fromApiCaseData.case_data?.claimServedDate),
   };
 }
 
@@ -232,6 +234,16 @@ function convertFromTimestampString(responseDate: string) {
   });
 }
 
+function convertStringToDate(date: string) {
+  return date
+    ? new Intl.DateTimeFormat(i18next.language + '-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(new Date(date))
+    : undefined;
+}
+
 export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {
   if (respondents === undefined) {
     return;
@@ -258,14 +270,15 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   return apiFormatRespondents;
 };
 
-export const setAcknowledgementOfClaimDocumentValues = (
-  servingDocumentCollection: ServingDocument[]
+export const setServingDocumentValues = (
+  servingDocumentCollection: ServingDocument[],
+  docType: string[]
 ): { id: string; description: string }[] => {
   if (!servingDocumentCollection) {
     return;
   }
   const foundDocuments = servingDocumentCollection
-    .filter(doc => doc.value.typeOfDocument === '1.1' || doc.value.typeOfDocument === 'Acknowledgement of Claim')
+    .filter(doc => docType.includes(doc.value.typeOfDocument))
     .map(doc => {
       const docUrl = doc.value?.uploadedDocument?.document_url;
       return {

@@ -272,3 +272,5 @@ export const mvpLocations = [
   'DN',
   'BD',
 ];
+
+export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];

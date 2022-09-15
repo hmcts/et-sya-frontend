@@ -30,6 +30,12 @@ export default class CitizenHubController {
     const currentState = currentStateFn(userCase);
 
     const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
+    let showClaimServedDate = false;
+    const { claimServedDate } = userCase;
+
+    if (claimServedDate) {
+      showClaimServedDate = true;
+    }
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
@@ -55,6 +61,8 @@ export default class CitizenHubController {
       sections,
       hideContactUs: true,
       showAcknowledgementAlert,
+      claimServedDate,
+      showClaimServedDate,
     });
   }
 }

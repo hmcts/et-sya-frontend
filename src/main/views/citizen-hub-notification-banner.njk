@@ -14,10 +14,12 @@
     {{notificationBanner.acknowledgement.p1}}
 </p>
 
-<p class="govuk-body">
-    {{notificationBanner.acknowledgement.p2 | safe}}
-    [X date].
-</p>
+{% if showClaimServedDate %}
+    <p class="govuk-body">
+        {{notificationBanner.acknowledgement.p2 | safe}}
+        {{claimServedDate}}.
+    </p>
+{% endif %}
 
 {% endset %}
 
