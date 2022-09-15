@@ -104,6 +104,7 @@ describe('updateDraftCase', () => {
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: ['discrimination', 'payRelated'],
+      ClaimantPcqId: '1234',
       dobDate: {
         year: '2010',
         month: '05',
