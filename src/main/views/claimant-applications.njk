@@ -6,7 +6,7 @@
 
 {% for app in usersApplications %}
 
-{% if app.respondents === 'undefined' %}
+{% if app.respondents === 'undefined' and app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
     {% set draftApplications = (draftApplications.push([
       {
         text: app.userCase.createdDate
@@ -78,7 +78,7 @@
                     firstCellIsHeader: false,
                     head: [
                       {
-                        text: col1 
+                        text: col1
                       },
                       {
                         text: col2
@@ -112,7 +112,7 @@
                   firstCellIsHeader: false,
                   head: [
                     {
-                      text: col1 
+                      text: col1
                     },
                     {
                       text: col2
