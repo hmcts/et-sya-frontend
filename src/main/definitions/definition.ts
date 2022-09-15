@@ -18,7 +18,16 @@ export const enum ClaimOutcomes {
 export const enum CaseState {
   DRAFT = 'Draft',
   AWAITING_SUBMISSION_TO_HMCTS = 'AWAITING_SUBMISSION_TO_HMCTS',
+  SUBMITTED = 'Submitted',
+  ACCEPTED = 'Accepted',
+}
+
+export const enum HubCaseState {
   SUBMITTED = 'SUBMITTED',
+  ACCEPTED = 'ACCEPTED',
+  RESPONSE_RECEIVED = 'RESPONSE_RECEIVED',
+  HEARING_DETAILS = 'HEARING_DETAILS',
+  CLAIM_DECISION = 'CLAIM_DECISION',
 }
 
 export const enum ClaimTypeDiscrimination {

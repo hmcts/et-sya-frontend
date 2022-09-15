@@ -17,6 +17,7 @@ import {
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinks } from '../../../main/definitions/hub';
 import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
@@ -68,7 +69,7 @@ describe('Retrieve individual case', () => {
     const caseId = '12334578';
     api.getUserCase(caseId);
     expect(mockedAxios.post).toHaveBeenCalledWith(
-      JavaApiUrls.GET_INDIVIDUAL_CASE,
+      JavaApiUrls.GET_CASE,
       expect.objectContaining({
         case_id: caseId,
       })
@@ -103,6 +104,7 @@ describe('updateDraftCase', () => {
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: ['discrimination', 'payRelated'],
+      ClaimantPcqId: '1234',
       dobDate: {
         year: '2010',
         month: '05',
@@ -111,6 +113,12 @@ describe('updateDraftCase', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
       email: 'tester@test.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
       firstName: 'John',
       lastName: 'Doe',
       avgWeeklyHrs: 5,
@@ -147,6 +155,9 @@ describe('updateDraftCase', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinks: new HubLinks(),
     };
     api.updateDraftCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
