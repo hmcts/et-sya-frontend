@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from 'config';
 
 import PcqController from '../../../main/controllers/PcqController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -33,6 +34,8 @@ describe('PCQGetController', () => {
 
     const redirectMock = jest.fn();
     res.redirect = redirectMock;
+
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
 
     mockedAxios.get.mockImplementationOnce(() =>
       Promise.resolve({

@@ -1,13 +1,15 @@
+import { AxiosResponse } from 'axios';
 import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../../components/form/form';
+import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, YesOrNo } from '../../definitions/case';
 import { mvpLocations } from '../../definitions/constants';
 import { sectionStatus } from '../../definitions/definition';
-import { getCaseApi } from '../../services/CaseService';
+import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { resetValuesIfNeeded } from './FormHelpers';
 
@@ -70,4 +72,20 @@ export const isPostcodeMVPLocation = (postCode: string): boolean => {
     }
   }
   return false;
+};
+
+export const handleUploadDocument = async (
+  req: AppRequest,
+  file: UploadedFile,
+  logger: LoggerInstance
+): Promise<AxiosResponse<DocumentUploadResponse>> => {
+  try {
+    const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
+      req.session.user?.accessToken
+    ).uploadDocument(file, 'ET_EnglandWales');
+    logger.info(`Uploaded document to: ${result.data._links.self.href}`);
+    return result;
+  } catch (err) {
+    logger.error(err.message);
+  }
 };

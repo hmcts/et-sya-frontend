@@ -169,6 +169,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+  UPLOAD_FILE: '/documents/upload/',
 } as const;
 
 export const Urls = {

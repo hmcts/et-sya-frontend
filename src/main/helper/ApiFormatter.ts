@@ -3,8 +3,9 @@ import i18next from 'i18next';
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse, RespondentApiModel, ServingDocument } from '../definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Respondent, ccdPreferredTitle } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
 import { CcdDataModel, acceptanceDocTypes } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -32,6 +33,7 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
@@ -105,6 +107,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
       typeOfClaim: caseItem.typeOfClaim,
+      ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
@@ -164,6 +167,14 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       hubLinks: caseItem.hubLinks,
     },
+  };
+}
+
+export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  return {
+    document_url: document.uri,
+    document_filename: document.originalDocumentName,
+    document_binary_url: document._links.binary.href,
   };
 }
 

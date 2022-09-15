@@ -90,7 +90,7 @@ export default class StepsToMakingYourClaimController {
             status: (): string =>
               getSectionStatus(
                 userCase?.claimDetailsCheck,
-                userCase?.claimSummaryFile ||
+                userCase?.claimSummaryFileName ||
                   userCase?.claimSummaryText ||
                   userCase?.claimTypeDiscrimination?.length ||
                   userCase?.claimTypePay?.length
