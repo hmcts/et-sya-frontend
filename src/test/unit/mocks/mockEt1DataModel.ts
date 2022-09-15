@@ -1,6 +1,6 @@
 import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
-import { HubLinkStatus } from '../../../main/definitions/hub';
 import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -25,6 +25,7 @@ export const mockEt1DataModelUpdate = {
   case_data: {
     caseType: 'Single',
     typeOfClaim: ['discrimination', 'payRelated'],
+    ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {

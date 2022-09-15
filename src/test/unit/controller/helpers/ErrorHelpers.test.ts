@@ -114,7 +114,7 @@ describe('Claim Summary Error', () => {
   });
 
   it('should not return an error if only a file has been provided', () => {
-    const body = { claimSummaryFile: 'file' };
+    const body = { claimSummaryFileName: 'file' };
 
     const errors = getClaimSummaryError(body);
 
@@ -124,7 +124,7 @@ describe('Claim Summary Error', () => {
   it('should return required error if neither text nor file has been provided', () => {
     const body = {
       claimSummaryText: '',
-      claimSummaryFile: '',
+      claimSummaryFileName: '',
     };
 
     const errors = getClaimSummaryError(body);
@@ -135,7 +135,7 @@ describe('Claim Summary Error', () => {
   it('should return textAndFile error if neither text nor file has been provided', () => {
     const body = {
       claimSummaryText: 'text',
-      claimSummaryFile: 'file',
+      claimSummaryFileName: 'file',
     };
 
     const errors = getClaimSummaryError(body);
