@@ -30,15 +30,6 @@ export default class CitizenHubController {
 
     const currentState = currentStateFn(userCase);
 
-    const showAcknowledgementAlert = !!userCase?.acknowledgementOfClaimLetterDetail?.length;
-
-    let showRespondentResponseDeadline = false;
-    const { respondentResponseDeadline } = userCase;
-
-    if (respondentResponseDeadline) {
-      showRespondentResponseDeadline = true;
-    }
-
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
@@ -62,9 +53,8 @@ export default class CitizenHubController {
       currentState,
       sections,
       hideContactUs: true,
-      showAcknowledgementAlert,
-      respondentResponseDeadline,
-      showRespondentResponseDeadline,
+      showAcknowledgementAlert: !!userCase?.acknowledgementOfClaimLetterDetail?.length,
+      respondentResponseDeadline: userCase?.respondentResponseDeadline,
     });
   }
 }
