@@ -4,6 +4,7 @@ import { Response } from 'express';
 import i18next from 'i18next';
 import { uuid } from 'uuidv4';
 
+import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { HTTPS_PROTOCOL, PageUrls } from '../definitions/constants';
 
@@ -63,6 +64,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
       req.session.userCase.ClaimantPcqId = claimantPcqId;
       req.session.save();
+      handleUpdateDraftCase(req, logger);
 
       res.redirect(`${pcqUrl}?${qs}`);
     } else {
