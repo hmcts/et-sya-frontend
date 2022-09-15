@@ -30,10 +30,14 @@ describe('Claimant Applications page', () => {
     {
       id: '12454',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     },
     {
       id: '12454',
       state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     },
   ];
   beforeAll(async () => {

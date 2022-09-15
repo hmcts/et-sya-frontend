@@ -39,7 +39,7 @@ export class CaseApi {
   };
 
   getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axio.post(JavaApiUrls.GET_INDIVIDUAL_CASE, { case_id: id });
+    return this.axio.post(JavaApiUrls.GET_CASE, { case_id: id });
   };
 
   uploadDocument = async (file: UploadedFile, caseTypeId: string): Promise<AxiosResponse<DocumentUploadResponse>> => {

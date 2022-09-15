@@ -16,6 +16,7 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinks } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -55,6 +56,7 @@ describe('Should return data in api format', () => {
       id: '1234',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       caseType: CaseType.SINGLE,
+      ClaimantPcqId: '1234',
       claimantRepresentedQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: ['discrimination', 'payRelated'],
@@ -108,6 +110,10 @@ describe('Should return data in api format', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      et3IsThereAnEt3Response: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -159,9 +165,12 @@ describe('Format Case Data to Frontend Model', () => {
       created_date: '2022-08-19T09:19:25.79202',
       last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
+        ethosCaseReference: '123456/2022',
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         typeOfClaim: ['discrimination', 'payRelated'],
+        ClaimantPcqId: '1234',
+        et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
@@ -225,6 +234,7 @@ describe('Format Case Data to Frontend Model', () => {
             },
           },
         ],
+        hubLinks: new HubLinks(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -238,6 +248,8 @@ describe('Format Case Data to Frontend Model', () => {
         month: '10',
         year: '2022',
       },
+      ethosCaseReference: '123456/2022',
+      ClaimantPcqId: '1234',
       claimantSex: Sex.MALE,
       preferredTitle: 'Captain',
       email: 'janedoe@exmaple.com',
@@ -287,6 +299,8 @@ describe('Format Case Data to Frontend Model', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      et3IsThereAnEt3Response: YesOrNo.YES,
+      hubLinks: new HubLinks(),
     });
   });
 
@@ -303,6 +317,7 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      ethosCaseReference: undefined,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -310,6 +325,7 @@ describe('Format Case Data to Frontend Model', () => {
       typeOfClaim: undefined,
       caseTypeId: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
+      ClaimantPcqId: undefined,
       dobDate: undefined,
       claimantSex: undefined,
       preferredTitle: undefined,
@@ -352,6 +368,8 @@ describe('Format Case Data to Frontend Model', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
+      et3IsThereAnEt3Response: undefined,
+      hubLinks: undefined,
     });
   });
 
@@ -362,6 +380,8 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: { day: '', month: '', year: '' },
       startDate: { day: '', month: '', year: '' },
       noticeEnds: { day: '', month: '', year: '' },
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);

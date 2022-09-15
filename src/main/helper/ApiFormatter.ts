@@ -33,6 +33,8 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
+    ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -86,6 +88,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
     lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
+    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    hubLinks: fromApiCaseData?.case_data?.hubLinks,
   };
 }
 
@@ -98,6 +102,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
       typeOfClaim: caseItem.typeOfClaim,
+      ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
@@ -155,6 +160,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
+      hubLinks: caseItem.hubLinks,
     },
   };
 }

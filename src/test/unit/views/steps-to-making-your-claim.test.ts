@@ -247,6 +247,8 @@ describe('Steps to making your claim page tags', () => {
       id: '12234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       personalDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     await request(
       mockAppWithRedisClient({
@@ -290,6 +292,8 @@ describe('Steps to making your claim page tags', () => {
       id: '12234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       employmentAndRespondentCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     await request(
       mockAppWithRedisClient({
@@ -332,6 +336,8 @@ describe('Steps to making your claim page tags', () => {
       id: '12234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       claimDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     await request(
       mockAppWithRedisClient({
@@ -376,6 +382,8 @@ describe('Steps to making your claim page tags', () => {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     await request(
       mockAppWithRedisClient({
@@ -419,6 +427,8 @@ describe('Steps to making your claim page tags', () => {
       personalDetailsCheck: YesOrNo.NO,
       employmentAndRespondentCheck: YesOrNo.NO,
       claimDetailsCheck: YesOrNo.NO,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     };
     await request(
       mockAppWithRedisClient({
