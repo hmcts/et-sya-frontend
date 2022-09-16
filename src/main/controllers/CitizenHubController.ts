@@ -19,7 +19,6 @@ export default class CitizenHubController {
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
       );
     } catch (error) {
-      console.log(error?.status, error?.message);
       logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
       return res.redirect('/not-found');
     }

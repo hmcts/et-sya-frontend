@@ -17,7 +17,7 @@ export default class CaseDocumentController {
       const { mimeType } = req.session.userCase.acknowledgementOfClaimLetterDetail.find(doc => doc.id === docId);
 
       if (!mimeType) {
-        throw new Error('details of document not found in session');
+        throw new Error('requested document not found in userCase');
       }
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
