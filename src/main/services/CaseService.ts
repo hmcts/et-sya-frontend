@@ -23,10 +23,6 @@ export class CaseApi {
     return this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
   };
 
-  getCase = async (caseId: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
-    return this.axio.post<CaseApiDataResponse>(JavaApiUrls.GET_CASE, toApiFormat({ id: caseId } as CaseWithId));
-  };
-
   downloadClaimPdf = async (caseId: string): Promise<AxiosResponse> => {
     const data = {
       caseId,

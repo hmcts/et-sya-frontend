@@ -219,7 +219,7 @@ describe('Citizen hub page', () => {
 
   describe('Alert containing a link to view the acknowledgement documents on the citizen hub page', () => {
     it('should render link to Acknowledgement Documents Page', async () => {
-      caseApi.getCase = jest.fn().mockResolvedValue({ body: {} });
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue({
