@@ -86,7 +86,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
-    // claimSummaryFile: fromApiCaseData.case_data?.claimantRequests.
+    claimSummaryFile: fromApiCaseData.case_data?.claimantRequests.claim_description_document,
     tellUsWhatYouWant: fromApiCaseData.case_data?.claimantRequests?.claim_outcome,
     tribunalRecommendationRequest: fromApiCaseData.case_data?.claimantRequests?.claimant_tribunal_recommendation,
     whistleblowingClaim: fromApiCaseData.case_data?.claimantRequests?.whistleblowing,
@@ -174,6 +174,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_tribunal_recommendation: caseItem.tribunalRecommendationRequest,
         whistleblowing: caseItem.whistleblowingClaim,
         whistleblowing_authority: caseItem.whistleblowingEntityName,
+        claim_description_document: caseItem.claimSummaryFile,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,

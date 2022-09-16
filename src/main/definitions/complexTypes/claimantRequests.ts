@@ -1,4 +1,4 @@
-import { YesOrNo } from '../../definitions/case';
+import { Document, YesOrNo } from '../../definitions/case';
 import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../definitions/definition';
 
 export interface ClaimantRequests {
@@ -11,4 +11,5 @@ export interface ClaimantRequests {
   claimant_tribunal_recommendation?: string;
   whistleblowing?: YesOrNo;
   whistleblowing_authority?: string;
+  claim_description_document?: Document;
 }
