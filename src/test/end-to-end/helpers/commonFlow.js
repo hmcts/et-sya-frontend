@@ -6,7 +6,7 @@ async function initialPageFlow() {
   await I.see('Before you continue');
   await I.click('Continue');
   await I.seeElement('#workPostcode');
-  await I.fillField('#workPostcode', 'G2 1DU');
+  await I.fillField('#workPostcode', 'LS9 6EP');
   await I.click('Continue');
 }
 
