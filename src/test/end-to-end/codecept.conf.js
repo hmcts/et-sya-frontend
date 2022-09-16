@@ -2,24 +2,17 @@ const testConfig = require('./config.js');
 
 exports.config = {
   tests: testConfig.TestsPathToRun,
-  output: testConfig.TestReportFolder,
+  output: `${process.cwd()}/${testConfig.TestReportFolder}`,
   helpers: {
-    Puppeteer: {
+    Playwright: {
       url: testConfig.TestUrl,
-      waitForTimeout: 10000,
-      waitForAction: 2000,
-      getPageTimeout: 30000,
       show: testConfig.TestShowBrowserWindow,
-      waitForNavigation: 'networkidle0',
-      headless: true,
-      chrome: {
-        ignoreHTTPSErrors: true,
-        defaultViewport: {
-          width: 1280,
-          height: 960,
-        },
-        args: ['--no-sandbox', '--ignore-certificate-errors', '--window-size=1440,1400'],
-      },
+      restart: false,
+      timeout: 5000,
+      waitForNavigation: 'domcontentloaded',
+      waitForTimeout: 10000,
+      ignoreHTTPSErrors: true,
+      windowSize: '1920x1080',
     },
   },
   include: {
