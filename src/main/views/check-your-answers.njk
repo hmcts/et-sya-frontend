@@ -17,23 +17,6 @@
     </div>
   </div>
 
-  {% set typeOfClaim = '' %}
-    {% for item in userCase.typeOfClaim %}
-      {% if item === 'discrimination' %}
-        {% set typeOfClaim = typeOfClaim + discrimination + ', ' %}
-      {% elif item === 'payRelated' %}
-        {% set typeOfClaim = typeOfClaim + payRelated + ', ' %}
-      {% elif item === 'unfairDismissal' %}
-        {% set typeOfClaim = typeOfClaim + unfairDismissal + ', ' %}
-      {% elif item === 'whistleBlowing' %}
-        {% set typeOfClaim = typeOfClaim + whistleBlowing  + ', ' %}
-      {% elif item === 'breachOfContract' %}
-        {% set typeOfClaim = typeOfClaim + breachOfContract  + ', ' %}
-      {% elif item === 'otherClaim' %}
-        {% set typeOfClaim = typeOfClaim + otherClaim  + ', ' %}          
-      {% endif %}
-        
-    {% endfor %}
 
   {{ 
     govukSummaryList({
@@ -50,7 +33,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: typeOfClaim.toString()
+            text : userCase.typeOfClaim
           },
           actions: {
             items: [
@@ -264,7 +247,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.respondentAddress1+", "+userCase.respondentAddressCountry+", "+userCase.respondentAddressPostcode+" "+userCase.respondentAddressTown
+            text: userCase.respondentAddress1+", "+userCase.respondentAddressCountry+", "+userCase.respondentAddressTown
             if userCase.respondentAddress1 
           },
           actions: {
@@ -301,8 +284,7 @@
             classes: "govuk-!-font-weight-regular-m"
           },
           value: {
-            text: userCase.workAddress1+", "+
-            userCase.workAddressPostcode+", "+userCase.workAddressTown
+            text: userCase.workAddress1+", "+ userCase.workAddressTown+", "+userCase.workAddressCountry
           },
           actions: {
             items: [
