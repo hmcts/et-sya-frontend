@@ -9,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
+import { handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -56,7 +56,6 @@ export default class DescribeWhatHappenedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-    handleUpdateDraftCase(req, this.logger);
 
     const result = await handleUploadDocument(req, req.body.claimSummaryFileName, this.logger);
     if (result) {
