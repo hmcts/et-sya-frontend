@@ -36,13 +36,13 @@ export class CaseApi {
   };
 
   getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
-    return this.axio.get(`/document/download/${docId}`, {
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
       responseType: 'arraybuffer',
     });
   };
 
   getDocumentDetails = async (docId: string): Promise<AxiosResponse<DocumentDetailsResponse>> => {
-    return this.axio.get(`/document/details/${docId}`);
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
   };
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {

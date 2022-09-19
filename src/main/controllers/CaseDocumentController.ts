@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { DocumentDetail } from '../definitions/definition';
 import { getCaseApi } from '../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -15,10 +16,17 @@ export default class CaseDocumentController {
         return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
       }
       const docId = req.params.docId;
-      const allDocumentSets = [
-        ...req.session.userCase.acknowledgementOfClaimLetterDetail,
-        ...req.session.userCase.rejectionOfClaimDocumentDetail,
-      ];
+
+      const { userCase } = req.session;
+
+      let allDocumentSets: DocumentDetail[] = [];
+      if (userCase?.acknowledgementOfClaimLetterDetail) {
+        allDocumentSets = [...userCase.acknowledgementOfClaimLetterDetail];
+      }
+      if (userCase?.rejectionOfClaimDocumentDetail) {
+        allDocumentSets = [...userCase.rejectionOfClaimDocumentDetail];
+      }
+
       const { mimeType } = allDocumentSets.find(doc => doc.id === docId);
 
       if (!mimeType) {

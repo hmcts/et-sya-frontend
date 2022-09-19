@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import CitizenHubAcknowledgementController from '../../../main/controllers/CitizenHubAcknowledgementController';
+import CitizenHubRejectionController from '../../../main/controllers/CitizenHubRejectionController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { DocumentDetail } from '../../../main/definitions/definition';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -33,19 +33,19 @@ const axiosResponse: AxiosResponse = {
   config: undefined,
 };
 
-describe('Citizen Hub Acknowledgement Controller', () => {
-  it('should render Acknowledgement Documents Page', async () => {
+describe('Citizen Hub Rejection Controller', () => {
+  it('should render Rejection Documents Page', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
-    const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
+    const rejectionDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
+    const userCase: Partial<CaseWithId> = { rejectionOfClaimDocumentDetail: rejectionDocuments };
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
 
-    await new CitizenHubAcknowledgementController().get(request, response);
+    await new CitizenHubRejectionController().get(request, response);
     expect(response.render).toHaveBeenCalledWith('document-view', expect.anything());
   });
 
@@ -54,13 +54,13 @@ describe('Citizen Hub Acknowledgement Controller', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
-    const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
+    const rejectionDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
+    const userCase: Partial<CaseWithId> = { rejectionOfClaimDocumentDetail: rejectionDocuments };
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
 
-    await new CitizenHubAcknowledgementController().get(request, response);
+    await new CitizenHubRejectionController().get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       'document-view',
@@ -84,13 +84,13 @@ describe('Citizen Hub Acknowledgement Controller', () => {
 
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(new Error('test error message'));
 
-    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
-    const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
+    const rejectionDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
+    const userCase: Partial<CaseWithId> = { rejectionOfClaimDocumentDetail: rejectionDocuments };
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
 
-    await new CitizenHubAcknowledgementController().get(request, response);
+    await new CitizenHubRejectionController().get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
@@ -100,7 +100,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
     const request = mockRequest({ userCase });
     const response = mockResponse();
 
-    await new CitizenHubAcknowledgementController().get(request, response);
+    await new CitizenHubRejectionController().get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1');
   });

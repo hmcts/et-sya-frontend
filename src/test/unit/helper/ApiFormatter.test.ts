@@ -305,6 +305,7 @@ describe('Format Case Data to Frontend Model', () => {
       hubLinks: new HubLinks(),
       acknowledgementOfClaimLetterDetail: undefined,
       respondentResponseDeadline: undefined,
+      rejectionOfClaimDocumentDetail: undefined,
     });
   });
 
@@ -376,6 +377,7 @@ describe('Format Case Data to Frontend Model', () => {
       hubLinks: undefined,
       acknowledgementOfClaimLetterDetail: undefined,
       respondentResponseDeadline: undefined,
+      rejectionOfClaimDocumentDetail: undefined,
     });
   });
 

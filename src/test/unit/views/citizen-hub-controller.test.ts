@@ -254,4 +254,40 @@ describe('Citizen hub page', () => {
       );
     });
   });
+
+  describe('Alert containing a link to view the rejection documents on the citizen hub page', () => {
+    it('should render link to Rejection Documents Page', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        id: '123',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
+        rejectionOfClaimDocumentDetail: [
+          {
+            id: '10',
+            description: 'asdf',
+          },
+          {
+            id: '11',
+            description: 'asdf',
+          },
+        ],
+      });
+
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      expect(htmlRes.querySelector(notificationBannerSelector).innerHTML).toContain('View the claim rejection');
+    });
+  });
 });
