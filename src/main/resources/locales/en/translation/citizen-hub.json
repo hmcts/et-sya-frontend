@@ -49,6 +49,11 @@
       "link": "View the Acknowledgement of Claim",
       "p1": "The tribunal has also served a Notice of Claim to the respondent and set a hearing date.",
       "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">What happens next</span><br>The tribunal has asked the respondent to respond to your claim by"
+    },
+    "rejection": {
+      "header": "The tribunal has rejected all or part of your claim",
+      "link": "View the claim rejection",
+      "p1": "The tribunal will close your claim."
     }
   }
 }

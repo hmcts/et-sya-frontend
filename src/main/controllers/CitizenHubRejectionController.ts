@@ -9,24 +9,23 @@ const { Logger } = require('@hmcts/nodejs-logging');
 
 const logger = Logger.getLogger('CitizenHubAcknowledgementController');
 
-export default class CitizenHubAcknowledgementController {
+export default class CitizenHubRejectionController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    if (!req.session?.userCase?.acknowledgementOfClaimLetterDetail?.length) {
+    if (!req.session?.userCase?.rejectionOfClaimDocumentDetail) {
       return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
     }
     try {
-      await getDocumentDetails(req.session.userCase.acknowledgementOfClaimLetterDetail, req.session.user?.accessToken);
+      await getDocumentDetails(req.session.userCase.rejectionOfClaimDocumentDetail, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.response?.status, err.response?.data, err);
       return res.redirect('/not-found');
     }
-
     res.render('document-view', {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB_REJECTION, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
-      docs: req.session.userCase.acknowledgementOfClaimLetterDetail,
+      docs: req.session.userCase.rejectionOfClaimDocumentDetail,
     });
   };
 }

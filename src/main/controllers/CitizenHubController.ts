@@ -53,6 +53,7 @@ export default class CitizenHubController {
       sections,
       hideContactUs: true,
       showAcknowledgementAlert: !!userCase?.acknowledgementOfClaimLetterDetail?.length,
+      showRejectionAlert: !!userCase?.rejectionOfClaimDocumentDetail?.length,
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
     });
   }

@@ -2,28 +2,45 @@
 
 {% set htmlForNotification %}
 
-<h3 class="govuk-notification-banner__heading">
-    {{notificationBanner.acknowledgement.header}}
-</h3>
+{% if showAcknowledgementAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.acknowledgement.header}}
+    </h3>
 
-<p class="govuk-body">
-    <a class="govuk-link" href="/acknowledgement">{{notificationBanner.acknowledgement.link}}</a>.
-</p>
-
-<p class="govuk-body">
-    {{notificationBanner.acknowledgement.p1}}
-</p>
-
-{% if respondentResponseDeadline %}
     <p class="govuk-body">
-        {{notificationBanner.acknowledgement.p2 | safe}}
-        {{respondentResponseDeadline}}.
+        <a class="govuk-link" href="/acknowledgement">{{notificationBanner.acknowledgement.link}}</a>.
     </p>
+
+    <p class="govuk-body">
+        {{notificationBanner.acknowledgement.p1}}
+    </p>
+
+    {% if respondentResponseDeadline %}
+        <p class="govuk-body">
+            {{notificationBanner.acknowledgement.p2 | safe}}
+            {{respondentResponseDeadline}}.
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if showRejectionAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.rejection.header}}
+    </h3>
+
+    <p class="govuk-body">
+        {{notificationBanner.rejection.p1}}
+    </p>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/rejection">{{notificationBanner.rejection.link}}</a>.
+    </p>
+
 {% endif %}
 
 {% endset %}
 
-{% if showAcknowledgementAlert %}
+{% if showAcknowledgementAlert or showRejectionAlert %}
     {{ govukNotificationBanner({
    html: htmlForNotification
   }) }}

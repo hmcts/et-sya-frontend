@@ -94,6 +94,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
     ),
+    rejectionOfClaimDocumentDetail: setServingDocumentValues(fromApiCaseData?.case_data?.servingDocumentCollection, [
+      '2.6',
+    ]),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
   };
 }

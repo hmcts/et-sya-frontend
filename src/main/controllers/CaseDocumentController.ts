@@ -15,7 +15,11 @@ export default class CaseDocumentController {
         return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
       }
       const docId = req.params.docId;
-      const { mimeType } = req.session.userCase.acknowledgementOfClaimLetterDetail.find(doc => doc.id === docId);
+      const allDocumentSets = [
+        ...req.session.userCase.acknowledgementOfClaimLetterDetail,
+        ...req.session.userCase.rejectionOfClaimDocumentDetail,
+      ];
+      const { mimeType } = allDocumentSets.find(doc => doc.id === docId);
 
       if (!mimeType) {
         logger.info('requested document not found in userCase');

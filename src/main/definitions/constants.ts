@@ -75,6 +75,7 @@ export const TranslationKeys = {
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
   CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
+  CITIZEN_HUB_REJECTION: 'rejection-of-claim',
 } as const;
 
 export const PageUrls = {
@@ -146,6 +147,7 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
+  CITIZEN_HUB_REJECTION: '/rejection',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',

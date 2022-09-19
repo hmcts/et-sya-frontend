@@ -72,7 +72,7 @@ export interface ApplicationTableRecord {
   url: string;
 }
 
-export interface AcknowledgementOfClaimLetterDetail {
+export interface DocumentDetail {
   id: string;
   description: string;
   size?: string;

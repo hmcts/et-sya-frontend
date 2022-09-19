@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import CitizenHubAcknowledgementController from '../../../main/controllers/CitizenHubAcknowledgementController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { AcknowledgementOfClaimLetterDetail } from '../../../main/definitions/definition';
+import { DocumentDetail } from '../../../main/definitions/definition';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -40,7 +40,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-    const servingDocuments: AcknowledgementOfClaimLetterDetail[] = [{ id: '1', description: 'description' }];
+    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
@@ -55,7 +55,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-    const servingDocuments: AcknowledgementOfClaimLetterDetail[] = [{ id: '1', description: 'description' }];
+    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
@@ -85,7 +85,7 @@ describe('Citizen Hub Acknowledgement Controller', () => {
 
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(new Error('test error message'));
 
-    const servingDocuments: AcknowledgementOfClaimLetterDetail[] = [{ id: '1', description: 'description' }];
+    const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });

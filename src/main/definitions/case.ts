@@ -1,9 +1,9 @@
 import {
-  AcknowledgementOfClaimLetterDetail,
   CaseState,
   ClaimOutcomes,
   ClaimTypeDiscrimination,
   ClaimTypePay,
+  DocumentDetail,
   TellUsWhatYouWant,
 } from './definition';
 import { HubLinks } from './hub';
@@ -126,7 +126,8 @@ export interface Case {
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
-  acknowledgementOfClaimLetterDetail?: AcknowledgementOfClaimLetterDetail[];
+  acknowledgementOfClaimLetterDetail?: DocumentDetail[];
+  rejectionOfClaimDocumentDetail?: DocumentDetail[];
   respondentResponseDeadline?: string;
 }
 
