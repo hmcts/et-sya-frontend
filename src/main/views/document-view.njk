@@ -18,10 +18,11 @@
       <h1 class="govuk-heading-xl">
         {{h1}}
       </h1>
+
       {% for doc in docs %}
-        {{ govukTable({
-  firstCellIsHeader: true,
-  rows: [
+
+        {% if doc.description %}
+          {% set row = [
     [
       {
         text: description.firstCell
@@ -54,7 +55,41 @@
         html: doc.createdOn
       }
     ]
-  ]
+  ] %}
+        {% else %}
+
+          {% set row = [
+    [
+      {
+        text: description.firstCell
+      },
+      {
+        text: description.secondCell
+      }
+    ],
+    [
+      {
+        text: document
+      },
+      {
+        html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
+      }
+    ],
+        [
+      {
+        text: date
+      },
+      {
+        html: doc.createdOn
+      }
+    ]
+  ] %}
+
+        {% endif %}
+
+        {{ govukTable({
+  firstCellIsHeader: true,
+  rows: row
 }) }}
       {% endfor %}
 
