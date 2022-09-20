@@ -47,6 +47,17 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
   }
 };
 
+export const handleUpdateSubmittedCase = (req: AppRequest, logger: LoggerInstance): void => {
+  getCaseApi(req.session.user?.accessToken)
+    .updateSubmittedCase(req.session.userCase)
+    .then(() => {
+      logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
+    })
+    .catch(error => {
+      logger.error(error);
+    });
+};
+
 export const getSectionStatus = (
   detailsCheckValue: YesOrNo,
   sessionValue: string | CaseDate | number
