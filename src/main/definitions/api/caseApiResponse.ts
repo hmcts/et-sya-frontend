@@ -25,7 +25,8 @@ export interface CaseApiDataResponse {
   case_data?: CaseData;
   security_classification?: string;
   callback_response_status?: string | null;
-  servingDocumentCollection?: ServingDocument[];
+  servingDocumentCollection?: DocumentApiModel[];
+  documentCollection?: DocumentApiModel[];
 }
 
 export interface CaseData {
@@ -44,9 +45,9 @@ export interface CaseData {
   respondentCollection?: RespondentApiModel[];
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinks?: HubLinks;
-  servingDocumentCollection?: ServingDocument[];
+  servingDocumentCollection?: DocumentApiModel[];
+  documentCollection?: DocumentApiModel[];
   claimServedDate?: string;
-  docMarkUp?: string;
 }
 
 export interface RespondentApiModel {
@@ -54,11 +55,11 @@ export interface RespondentApiModel {
   id?: string;
 }
 
-export interface ServingDocument {
+export interface DocumentApiModel {
   id: string;
   value: {
     typeOfDocument: string;
-    shortDescription: string;
+    shortDescription?: string;
     uploadedDocument: {
       document_url: string;
       document_filename: string;

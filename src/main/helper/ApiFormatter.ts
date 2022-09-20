@@ -2,11 +2,11 @@ import i18next from 'i18next';
 
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, RespondentApiModel, ServingDocument } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel, acceptanceDocTypes } from '../definitions/constants';
+import { CcdDataModel, acceptanceDocTypes, rejectionDocTypes } from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -90,11 +90,14 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinks: fromApiCaseData?.case_data?.hubLinks,
-    acknowledgementOfClaimLetterDetail: setServingDocumentValues(
+    acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
     ),
-    rejectionOfClaimDocumentDetail: setRejectionDocumentValues(fromApiCaseData?.case_data?.docMarkUp),
+    rejectionOfClaimDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.documentCollection,
+      rejectionDocTypes
+    ),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
   };
 }
@@ -288,37 +291,21 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   return apiFormatRespondents;
 };
 
-export const setServingDocumentValues = (
-  servingDocumentCollection: ServingDocument[],
+export const setDocumentValues = (
+  documentCollection: DocumentApiModel[],
   docType: string[]
 ): { id: string; description: string }[] => {
-  if (!servingDocumentCollection) {
+  if (!documentCollection) {
     return;
   }
-  const foundDocuments = servingDocumentCollection
+  const foundDocuments = documentCollection
     .filter(doc => docType.includes(doc.value.typeOfDocument))
     .map(doc => {
       const docUrl = doc.value?.uploadedDocument?.document_url;
       return {
         id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
-        description: doc.value.shortDescription,
+        description: doc.value?.shortDescription,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
-};
-
-export const setRejectionDocumentValues = (docMarkUp: string): { id: string; description: string }[] => {
-  if (!docMarkUp) {
-    return;
-  }
-  const id = docMarkUp.substring(docMarkUp.lastIndexOf('.net/documents/') + 15, docMarkUp.lastIndexOf('/binary'));
-  if (id) {
-    return [
-      {
-        id,
-        description: '',
-      },
-    ];
-  }
-  return;
 };
