@@ -13,7 +13,7 @@ export default class CaseDocumentController {
     try {
       if (!req.params?.docId) {
         logger.info('bad request parameter');
-        return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
+        return res.redirect('/not-found');
       }
       const docId = req.params.docId;
 
@@ -24,14 +24,14 @@ export default class CaseDocumentController {
         allDocumentSets = [...userCase.acknowledgementOfClaimLetterDetail];
       }
       if (userCase?.rejectionOfClaimDocumentDetail) {
-        allDocumentSets = [...userCase.rejectionOfClaimDocumentDetail];
+        allDocumentSets = [...allDocumentSets, ...userCase.rejectionOfClaimDocumentDetail];
       }
 
       const { mimeType } = allDocumentSets.find(doc => doc.id === docId);
 
       if (!mimeType) {
         logger.info('requested document not found in userCase');
-        return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
+        return res.redirect('/not-found');
       }
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
