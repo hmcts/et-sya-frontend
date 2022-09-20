@@ -26,6 +26,7 @@ import {
   isValidPreferredTitle,
   parseDateFromString,
   returnPreferredTitle,
+  setRejectionDocumentValues,
   setServingDocumentValues,
   toApiFormat,
   toApiFormatCreate,
@@ -512,6 +513,24 @@ describe('set Serving Document Values()', () => {
     const servingDocumentCollection: ServingDocument[] = [];
 
     const result = setServingDocumentValues(servingDocumentCollection, acceptanceDocTypes);
+    expect(result).toEqual(undefined);
+  });
+});
+
+describe('set Rejection of claim Document Values()', () => {
+  it('should retrieve serving Document id from the ccd response', () => {
+    const docMarkUp = '<a target="_blank" href="https://url.net/documents/54321-abc/binary">Document</a>';
+
+    const expected = [{ id: '54321-abc', description: '' }];
+
+    const result = setRejectionDocumentValues(docMarkUp);
+    expect(result).toEqual(expected);
+  });
+
+  it('should return undefined when there are no serving documents', () => {
+    const docMarkUp = '';
+
+    const result = setRejectionDocumentValues(docMarkUp);
     expect(result).toEqual(undefined);
   });
 });

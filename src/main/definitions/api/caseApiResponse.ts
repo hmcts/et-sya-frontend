@@ -46,6 +46,7 @@ export interface CaseData {
   hubLinks?: HubLinks;
   servingDocumentCollection?: ServingDocument[];
   claimServedDate?: string;
+  docMarkUp?: string;
 }
 
 export interface RespondentApiModel {

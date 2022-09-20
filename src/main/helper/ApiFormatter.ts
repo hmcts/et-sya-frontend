@@ -94,9 +94,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
     ),
-    rejectionOfClaimDocumentDetail: setServingDocumentValues(fromApiCaseData?.case_data?.servingDocumentCollection, [
-      '2.6',
-    ]),
+    rejectionOfClaimDocumentDetail: setRejectionDocumentValues(fromApiCaseData?.case_data?.docMarkUp),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
   };
 }
@@ -307,4 +305,16 @@ export const setServingDocumentValues = (
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
+};
+
+export const setRejectionDocumentValues = (docMarkUp: string): { id: string; description: string }[] => {
+  if (!docMarkUp) {
+    return;
+  }
+  return [
+    {
+      id: docMarkUp.substring(docMarkUp.lastIndexOf('.net/documents/') + 15, docMarkUp.lastIndexOf('/binary')),
+      description: '',
+    },
+  ];
 };
