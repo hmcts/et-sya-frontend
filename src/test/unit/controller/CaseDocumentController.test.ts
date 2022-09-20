@@ -73,11 +73,11 @@ describe('Case Document Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 
-  it('should redirect to not-found on bad request parameter', async () => {
+  it('should redirect to citizen hub on bad request parameter', async () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     request.params.docId = '';
     await new CaseDocumentController().get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+    expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234');
   });
 });
