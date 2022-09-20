@@ -88,6 +88,11 @@ export const mockEt1DataModelUpdate = {
       claimant_tribunal_recommendation: 'Tribunal recommendation request',
       whistleblowing: YesOrNo.YES,
       whistleblowing_authority: 'Whistleblowing entity name',
+      claim_description_document: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,

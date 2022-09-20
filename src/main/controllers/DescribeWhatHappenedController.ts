@@ -7,9 +7,9 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormatDocument } from '../helper/ApiFormatter';
+//import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -55,13 +55,19 @@ export default class DescribeWhatHappenedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-    handleUpdateDraftCase(req, this.logger);
 
-    const result = await handleUploadDocument(req, req.file, this.logger);
-    if (result) {
-      req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
-    }
+    // try {
+    //   const result = await handleUploadDocument(req, req.file, this.logger);
+    //   req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+    //   req.session.userCase.claimSummaryFileName = result.data.originalDocumentName
+
+    // } catch (error) {
+
+    // }
+
+    handleUpdateDraftCase(req, this.logger);
+    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+    console.log(req.session.userCase.claimSummaryFile);
   };
 
   public get = (req: AppRequest, res: Response): void => {
