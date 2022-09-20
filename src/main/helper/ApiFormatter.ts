@@ -6,7 +6,13 @@ import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../de
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel, acceptanceDocTypes, rejectionDocTypes } from '../definitions/constants';
+import {
+  CcdDataModel,
+  acceptanceDocTypes,
+  rejectionDocTypes,
+  responseAcceptedDocTypes,
+  responseRejectedDocTypes,
+} from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -98,6 +104,17 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.documentCollection,
       rejectionDocTypes
     ),
+    responseAcknowledgementDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.et3NotificationDocCollection,
+      responseAcceptedDocTypes
+    ),
+    responseRejectionDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.et3NotificationDocCollection,
+      responseRejectedDocTypes
+    ),
+    respondentResponseET3DocumentDetail: setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, [
+      'todo: please add doc types here',
+    ]),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
   };
 }

@@ -76,6 +76,9 @@ export const TranslationKeys = {
   CITIZEN_HUB: 'citizen-hub',
   CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
   CITIZEN_HUB_REJECTION: 'rejection-of-claim',
+  CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
+  CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
+  CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
 } as const;
 
 export const PageUrls = {
@@ -148,6 +151,9 @@ export const PageUrls = {
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CITIZEN_HUB_ACKNOWLEDGEMENT: '/acknowledgement',
   CITIZEN_HUB_REJECTION: '/rejection',
+  CITIZEN_HUB_RESPONSE_REJECTION: '/response-rejection',
+  CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: '/response-acknowledgement',
+  CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: '/response-from-respondent',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',
@@ -280,3 +286,5 @@ export const mvpLocations = [
 
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
+export const responseAcceptedDocTypes = ['2.11'];
+export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];

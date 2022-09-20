@@ -54,6 +54,14 @@
       "header": "The tribunal has rejected all or part of your claim",
       "link": "View the claim rejection",
       "p1": "The tribunal will close your claim."
+    },
+    "respondentRejection": {
+      "header": "The tribunal has rejected the respondent's response.",
+      "link": "View the rejection letter"
+    },
+    "respondentAcknowledgement": {
+      "header": "The tribunal has acknowledged the respondent's response.",
+      "link": "View the response"
     }
   }
 }

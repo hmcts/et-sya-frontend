@@ -47,6 +47,7 @@ export interface CaseData {
   hubLinks?: HubLinks;
   servingDocumentCollection?: DocumentApiModel[];
   documentCollection?: DocumentApiModel[];
+  et3NotificationDocCollection?: DocumentApiModel[];
   claimServedDate?: string;
 }
 

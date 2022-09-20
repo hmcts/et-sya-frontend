@@ -38,9 +38,31 @@
 
 {% endif %}
 
+{% if showRespondentRejection %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.respondentRejection.header}}
+    </h3>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/response-rejection">{{notificationBanner.respondentRejection.link}}</a>.
+    </p>
+
+{% endif %}
+
+{% if showRespondentAcknowledgement %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.respondentAcknowledgement.header}}
+    </h3>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/response-acknowledgement">{{notificationBanner.respondentAcknowledgement.link}}</a>.
+    </p>
+
+{% endif %}
+
 {% endset %}
 
-{% if showAcknowledgementAlert or showRejectionAlert %}
+{% if showAcknowledgementAlert or showRejectionAlert or showRespondentRejection or showRespondentAcknowledgement %}
     {{ govukNotificationBanner({
    html: htmlForNotification
   }) }}

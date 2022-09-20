@@ -128,6 +128,9 @@ export interface Case {
   hubLinks?: HubLinks;
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
   rejectionOfClaimDocumentDetail?: DocumentDetail[];
+  responseAcknowledgementDocumentDetail?: DocumentDetail[];
+  responseRejectionDocumentDetail?: DocumentDetail[];
+  respondentResponseET3DocumentDetail?: DocumentDetail[];
   respondentResponseDeadline?: string;
 }
 

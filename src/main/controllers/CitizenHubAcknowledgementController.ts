@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 
-import { getDocumentDetails } from './helpers/DocumentFetchHelper';
+import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
