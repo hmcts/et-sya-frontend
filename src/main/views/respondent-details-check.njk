@@ -18,71 +18,12 @@
         <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
             {% for respondent in respondents %}
               {{ govukSummaryList({
-                  rows: [
-                    {
-                      key: {
-                        text: subTitle + loop.index,
-                        classes: "govuk-heading-m"
-                      }
-                    },
-                    {
-                      key: {
-                        text: name
-                      },
-                      value: {
-                        text: respondent.respondentName
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + loop.index + PageUrls.RESPONDENT_NAME + '/change',
-                            text: "Change",
-                            visuallyHiddenText: "name"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      key: {
-                        text: address
-                      },
-                      value: {
-                          text: respondent.respondentAddress1
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + loop.index + PageUrls.RESPONDENT_ADDRESS + '/change',
-                            text: "Change",
-                            visuallyHiddenText: "address"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      key: {
-                        text: acasNum
-                      },
-                      value: {
-                        html: respondent.acasCertNum
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + loop.index + PageUrls.ACAS_CERT_NUM + '/change',
-                            text: "Change",
-                            visuallyHiddenText: "acasCertNum"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                })
+                rows: getRespondentDetailsSection(respondent, translations)
+              })
+
               }}
 
             {% endfor %}
-
-
 
       {% block form %}
         {% include "form/form.njk"%}

@@ -1,15 +1,16 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { ChangeUrls, PageUrls } from '../definitions/constants';
 
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
-    const changeString = '/change';
-    const redirectUrl = req.url.replace(changeString, '');
+    let redirectUrl = req.url;
     if (req.query.redirect === 'answers') {
+      redirectUrl = req.url.replace(ChangeUrls.ANSWERS_CHANGE, '');
       req.session.returnUrl = PageUrls.CHECK_ANSWERS;
-    } else {
+    } else if (req.query.redirect === 'respondent') {
+      redirectUrl = req.url.replace(ChangeUrls.RESPONDENT_CHANGE, '');
       req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     }
 

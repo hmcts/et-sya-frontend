@@ -19,6 +19,7 @@
     "header": "Application details",
     "typeOfClaim": "Claim type"
   },
+  "change": "Change",
   "personalDetails": {
     "header": "Your details",
     "dob": "Date of birth",
@@ -27,11 +28,13 @@
     "howToBeContacted": "How would you like to be contacted?",
     "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
     "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
-    "title": "Preferred title"
+    "title": "Preferred title",
+    "notSelected": "Not selected"
   },
   "contactDetails": {
     "header": "Contact details",
-    "telephone": "Telephone number"
+    "telephone": "Telephone number",
+    "notProvided": "Not provided"
   },
   "yourPreferences": {
     "header": "Your preferences",
@@ -65,7 +68,8 @@
     "workAddress": "Work address"
   },
   "respondentDetails": {
-    "header": "Respondent 1 details",
+    "header": "Respondent ",
+    "details": " details",
     "respondentName": "Name of respondent",
     "respondentAddress": "Respondent address",
     "workedAtRespondent": "Did you work at the respondent's address?",
@@ -81,7 +85,8 @@
   },
   "claimDetails": {
     "header": "Claim details",
-    "claimType": "What type of discrimination/pay claim are you making?",
+    "claimTypeDiscrimination": "What type of discrimination claim are you making?",
+    "claimTypePay": "What type of pay claim are you making?",
     "describeWhatHappened": "Describe what happened to you",
     "ifClaimSuccessful": "What do you want if your claim is successful",
     "expectedCompensation": "What compensation are you seeking",
@@ -90,6 +95,39 @@
     "summary": "Summary of claim",
     "fileUploads": "File uploads",
     "whatYouWant": "What you want"
+  },
+  "discriminationClaims": {
+    "age": "Age",
+    "disability": "Disability",
+    "ethnicity": "Ethnicity",
+    "genderReassignment": "Gender reassignment",
+    "marriageOrCivilPartnership": "Marriage or civil parntership",
+    "pregnancyOrMaternity": "Pregnancy or maternity",
+    "race": "Race",
+    "religionOrBelief": "Religion or belief",
+    "Sex (Including equal pay)": "Sex (Including equal pay)",
+    "sexualOrientation": "Sexual Orientation"
+  },
+  "payClaims": {
+    "arrears": "Arrears",
+    "holidayPay": "Holiday pay",
+    "noticePay": "Notice pay",
+    "redundancyPay": "Redundancy pay",
+    "otherPayments": "Other payments"
+  },
+  "claimTypes": {
+    "breachOfContract": "Breach of contract",
+    "discrimination": "Discrimination",
+    "payRelated": "Pay-related",
+    "unfairDismissal": "Unfair dismissal",
+    "whistleBlowing": "Whistleblowing",
+    "otherClaim": "Other type of claim"
+  },
+  "tellUsWhatYouWant": {
+    "compensationOnly": "Compensation only",
+    "tribunalRecommendation": "Tribunal recommendation",
+    "oldJob": "Old job back",
+    "anotherJob": "Another job"
   },
   "answers": {
     "NA": "Not Provided"
