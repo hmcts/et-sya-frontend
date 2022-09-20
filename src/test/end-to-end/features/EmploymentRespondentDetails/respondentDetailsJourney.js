@@ -10,7 +10,7 @@ Scenario('Respondent details - worked at address with acas certificate', async (
   I.amOnPage(testUrl);
   await enterRespondentDetailsJourney(I, 'Yes', 'Yes');
   authPage.logout();
-}).tag('@RET-DH');
+}).tag('@RET-WIP');
 
 Scenario('Respondent details - worked at a different address without acas certificate', async ({ I }) => {
   I.amOnPage(testUrl);
@@ -18,4 +18,4 @@ Scenario('Respondent details - worked at a different address without acas certif
   I.amOnPage(testUrl);
   await enterRespondentDetailsJourney(I, 'No', 'No');
   authPage.logout();
-}).tag('@RET-DH');
+}).tag('@RET-WIP');
