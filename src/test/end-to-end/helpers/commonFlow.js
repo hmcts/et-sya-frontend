@@ -14,7 +14,7 @@ async function createSingleMyselfCase() {
   /* Journey for creating a case for yourself
   includes:
   * with ACAS certificate
-  * type of claim = discrimination
+  * type of claim = discrimination and whistleBlowing
   */
   await initialPageFlow();
   //representing yourself
