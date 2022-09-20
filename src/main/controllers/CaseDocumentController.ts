@@ -1,8 +1,9 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { DocumentDetail } from '../definitions/definition';
 import { getCaseApi } from '../services/CaseService';
+
+import { combineDocuments } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -19,15 +20,7 @@ export default class CaseDocumentController {
 
       const { userCase } = req.session;
 
-      // let allDocumentSets: DocumentDetail[] = [];
-      // if (userCase?.acknowledgementOfClaimLetterDetail) {
-      //   allDocumentSets = [...userCase.acknowledgementOfClaimLetterDetail];
-      // }
-      // if (userCase?.rejectionOfClaimDocumentDetail) {
-      //   allDocumentSets = [...allDocumentSets, ...userCase.rejectionOfClaimDocumentDetail];
-      // }
-      const combineDocumentSetsHelper = (...arrays: DocumentDetail[][]) => [].concat(...arrays.filter(Array.isArray));
-      const allDocumentSets = combineDocumentSetsHelper(
+      const allDocumentSets = combineDocuments(
         userCase?.acknowledgementOfClaimLetterDetail,
         userCase?.rejectionOfClaimDocumentDetail
       );

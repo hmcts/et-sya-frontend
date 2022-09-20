@@ -20,3 +20,6 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
     );
   }
 };
+
+export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
+  [].concat(...arrays.filter(Array.isArray));
