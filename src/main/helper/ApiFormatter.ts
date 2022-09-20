@@ -311,10 +311,14 @@ export const setRejectionDocumentValues = (docMarkUp: string): { id: string; des
   if (!docMarkUp) {
     return;
   }
-  return [
-    {
-      id: docMarkUp.substring(docMarkUp.lastIndexOf('.net/documents/') + 15, docMarkUp.lastIndexOf('/binary')),
-      description: '',
-    },
-  ];
+  const id = docMarkUp.substring(docMarkUp.lastIndexOf('.net/documents/') + 15, docMarkUp.lastIndexOf('/binary'));
+  if (id) {
+    return [
+      {
+        id,
+        description: '',
+      },
+    ];
+  }
+  return;
 };
