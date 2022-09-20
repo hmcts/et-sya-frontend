@@ -1,12 +1,12 @@
 import { Response } from 'express';
 
-import mockUserCaseWithCitizenHubLinks from '../../test/unit/mocks/mockUserCaseWithCitizenHubLinks';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
+import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');

@@ -1,6 +1,6 @@
-import { PageUrls } from '../../../main/definitions/constants';
-import { CaseState } from '../../../main/definitions/definition';
-import { HubLinkNames, HubLinkStatus, HubLinks } from '../../../main/definitions/hub';
+import { PageUrls } from '../../definitions/constants';
+import { CaseState } from '../../definitions/definition';
+import { HubLinkNames, HubLinkStatus, HubLinks } from '../../definitions/hub';
 
 const hubLinks = new HubLinks();
 Object.keys(hubLinks).forEach(key => {

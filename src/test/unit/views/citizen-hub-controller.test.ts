@@ -9,10 +9,10 @@ import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
+import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
-import mockUserCaseWithCitizenHubLinks from '../mocks/mockUserCaseWithCitizenHubLinks';
 
 const hubJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/citizen-hub.json'),
