@@ -19,13 +19,18 @@ export default class CaseDocumentController {
 
       const { userCase } = req.session;
 
-      let allDocumentSets: DocumentDetail[] = [];
-      if (userCase?.acknowledgementOfClaimLetterDetail) {
-        allDocumentSets = [...userCase.acknowledgementOfClaimLetterDetail];
-      }
-      if (userCase?.rejectionOfClaimDocumentDetail) {
-        allDocumentSets = [...allDocumentSets, ...userCase.rejectionOfClaimDocumentDetail];
-      }
+      // let allDocumentSets: DocumentDetail[] = [];
+      // if (userCase?.acknowledgementOfClaimLetterDetail) {
+      //   allDocumentSets = [...userCase.acknowledgementOfClaimLetterDetail];
+      // }
+      // if (userCase?.rejectionOfClaimDocumentDetail) {
+      //   allDocumentSets = [...allDocumentSets, ...userCase.rejectionOfClaimDocumentDetail];
+      // }
+      const combineDocumentSetsHelper = (...arrays: DocumentDetail[][]) => [].concat(...arrays.filter(Array.isArray));
+      const allDocumentSets = combineDocumentSetsHelper(
+        userCase?.acknowledgementOfClaimLetterDetail,
+        userCase?.rejectionOfClaimDocumentDetail
+      );
 
       const { mimeType } = allDocumentSets.find(doc => doc.id === docId);
 

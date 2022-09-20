@@ -12,7 +12,7 @@ const logger = Logger.getLogger('CitizenHubAcknowledgementController');
 export default class CitizenHubAcknowledgementController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     if (!req.session?.userCase?.acknowledgementOfClaimLetterDetail?.length) {
-      return res.redirect('/citizen-hub/' + req.session?.userCase?.id);
+      return res.redirect('/not-found');
     }
     try {
       await getDocumentDetails(req.session.userCase.acknowledgementOfClaimLetterDetail, req.session.user?.accessToken);
