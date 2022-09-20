@@ -1,5 +1,5 @@
 import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
-import { ChangeUrls, PageUrls } from '../../definitions/constants';
+import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): unknown => {
@@ -79,7 +79,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.JOB_TITLE + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.jobTitle,
             },
@@ -100,7 +100,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.START_DATE + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.startDate,
             },
@@ -118,7 +118,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.NOTICE_PERIOD + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.noticePeriod,
             },
@@ -139,7 +139,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           actions: {
             items: [
               {
-                href: PageUrls.NOTICE_TYPE + ChangeUrls.ANSWERS_CHANGE,
+                href: PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE,
                 text: translations.change,
                 visuallyHiddenText: translations.employmentDetails.noticePeriodWeeksOrMonths,
               },
@@ -157,7 +157,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
           actions: {
             items: [
               {
-                href: PageUrls.NOTICE_LENGTH + ChangeUrls.ANSWERS_CHANGE,
+                href: PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE,
                 text: translations.change,
                 visuallyHiddenText: translations.employmentDetails.noticeLength,
               },
@@ -178,7 +178,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.AVERAGE_WEEKLY_HOURS + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.weeklyHours,
             },
@@ -196,7 +196,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.PAY + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.payBeforeTax,
             },
@@ -214,7 +214,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.PAY + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.payAfterTax,
             },
@@ -232,7 +232,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.PAY + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.payPeriod,
             },
@@ -253,7 +253,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.PENSION + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.PENSION + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.pensionScheme,
             },
@@ -274,7 +274,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.BENEFITS + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.BENEFITS + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.benefits,
             },
@@ -294,7 +294,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         actions: {
           items: [
             {
-              href: PageUrls.NEW_JOB + ChangeUrls.ANSWERS_CHANGE,
+              href: PageUrls.NEW_JOB + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.newJob,
             },
@@ -321,7 +321,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
             actions: {
               items: [
                 {
-                  href: PageUrls.NEW_JOB_START_DATE + ChangeUrls.ANSWERS_CHANGE,
+                  href: PageUrls.NEW_JOB_START_DATE + InterceptPaths.ANSWERS_CHANGE,
                   text: translations.change,
                   visuallyHiddenText: translations.employmentDetails.newStartDate,
                 },
@@ -339,7 +339,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
             actions: {
               items: [
                 {
-                  href: PageUrls.NEW_JOB_PAY + ChangeUrls.ANSWERS_CHANGE,
+                  href: PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
                   text: translations.change,
                   visuallyHiddenText: translations.employmentDetails.newPayBeforeTax,
                 },
@@ -357,7 +357,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
             actions: {
               items: [
                 {
-                  href: PageUrls.PAY + ChangeUrls.ANSWERS_CHANGE,
+                  href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
                   text: translations.change,
                   visuallyHiddenText: translations.employmentDetails.payPeriod,
                 },

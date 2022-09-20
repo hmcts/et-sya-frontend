@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ChangeUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -23,7 +23,7 @@ export default class CheckYourAnswersController {
       PageUrls,
       userCase,
       respondents: req.session.userCase?.respondents,
-      ChangeUrls,
+      InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       showCompensationRequest,
       showTribunalRequest,

@@ -1,5 +1,5 @@
 import ChangeDetailsController from '../../../main/controllers/ChangeDetailsController';
-import { ChangeUrls, PageUrls } from '../../../main/definitions/constants';
+import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -8,7 +8,7 @@ describe('Change Details Controller', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.url = PageUrls.RESPONDENT_ADDRESS + ChangeUrls.RESPONDENT_CHANGE;
+    request.url = PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE;
     request.query = {
       redirect: 'respondent',
     };
@@ -21,7 +21,7 @@ describe('Change Details Controller', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.url = PageUrls.DOB_DETAILS + ChangeUrls.ANSWERS_CHANGE;
+    request.url = PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE;
     request.query = {
       redirect: 'answers',
     };

@@ -147,10 +147,11 @@ export const PageUrls = {
   PCQ: '/pcq',
 } as const;
 
-export const ChangeUrls = {
+export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
+  SUBMIT_CASE: '/submitDraftCase',
 } as const;
 
 export const ValidationErrors = {
@@ -276,3 +277,5 @@ export const mvpLocations = [
   'DN',
   'BD',
 ];
+
+export const SUBMITTED_CLAIM_FILE_PREFIX = 'ET1_CASE_DOCUMENT';

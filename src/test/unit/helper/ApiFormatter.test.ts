@@ -306,6 +306,16 @@ describe('Format Case Data to Frontend Model', () => {
           },
         ],
         hubLinksStatuses: new HubLinksStatuses(),
+        managingOffice: 'Leeds',
+        tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
+        tribunalCorrespondenceTelephone: '0300 123 1024',
+        documentCollection: [
+          {
+            document_binary_url: '101010101010101010',
+            document_filename: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf',
+            document_url: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf.documentstore.co.uk',
+          },
+        ],
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -402,6 +412,21 @@ describe('Format Case Data to Frontend Model', () => {
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
       hubLinksStatuses: new HubLinksStatuses(),
+      managingOffice: 'Leeds',
+      tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
+      tribunalCorrespondenceTelephone: '0300 123 1024',
+      documentCollection: [
+        {
+          document_binary_url: '101010101010101010',
+          document_filename: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf',
+          document_url: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf.documentstore.co.uk',
+        },
+      ],
+      et1SubmittedForm: {
+        document_binary_url: '101010101010101010',
+        document_filename: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf',
+        document_url: 'ET1_CASE_DOCUMENTjoe_bloggs.pdf.documentstore.co.uk',
+      },
     });
   });
 
@@ -487,6 +512,11 @@ describe('Format Case Data to Frontend Model', () => {
       et3IsThereAnEt3Response: undefined,
       claimSummaryFile: undefined,
       hubLinksStatuses: undefined,
+      documentCollection: undefined,
+      managingOffice: undefined,
+      et1SubmittedForm: undefined,
+      tribunalCorrespondenceEmail: undefined,
+      tribunalCorrespondenceTelephone: undefined,
     });
   });
 

@@ -6,7 +6,7 @@ import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/case
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel } from '../definitions/constants';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_PREFIX } from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -35,6 +35,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
+    managingOffice: fromApiCaseData.case_data?.managingOffice,
+    tribunalCorrespondenceEmail: fromApiCaseData.case_data?.tribunalCorrespondenceEmail,
+    tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
+    et1SubmittedForm: returnSubmitttedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    documentCollection: fromApiCaseData.case_data?.documentCollection,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -320,4 +325,11 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
       id: respondent.ccdId,
     };
   });
+};
+
+export const returnSubmitttedEt1Form = (documentCollection?: Document[]): Document => {
+  if (documentCollection === undefined) {
+    return;
+  }
+  return documentCollection.find(({ document_filename }) => document_filename.startsWith(SUBMITTED_CLAIM_FILE_PREFIX));
 };

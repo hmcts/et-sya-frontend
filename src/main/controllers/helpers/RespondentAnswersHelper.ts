@@ -1,5 +1,5 @@
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ChangeUrls, PageUrls } from '../../definitions/constants';
+import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -29,7 +29,8 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + ChangeUrls.ANSWERS_CHANGE,
+            href:
+              '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.respondentName,
           },
@@ -54,7 +55,10 @@ export const getRespondentSection = (
         items: [
           {
             href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
+              '/respondent/' +
+              respondent.respondentNumber +
+              PageUrls.RESPONDENT_ADDRESS +
+              InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.respondentAddress,
           },
@@ -74,7 +78,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
+            href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.workedAtRespondent,
           },
@@ -101,7 +105,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK + ChangeUrls.ANSWERS_CHANGE,
+            href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.addressWorkedAt,
           },
@@ -121,7 +125,7 @@ export const getRespondentSection = (
     actions: {
       items: [
         {
-          href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + ChangeUrls.ANSWERS_CHANGE,
+          href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + InterceptPaths.ANSWERS_CHANGE,
           text: translations.change,
           visuallyHiddenText: translations.respondentDetails.acasNumber,
         },
@@ -140,7 +144,8 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER + ChangeUrls.ANSWERS_CHANGE,
+            href:
+              '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.noAcasReason,
           },
@@ -172,7 +177,10 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
         items: [
           {
             href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + ChangeUrls.RESPONDENT_CHANGE,
+              '/respondent/' +
+              respondent.respondentNumber +
+              PageUrls.RESPONDENT_NAME +
+              InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.name,
           },
@@ -190,7 +198,10 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
         items: [
           {
             href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS + ChangeUrls.RESPONDENT_CHANGE,
+              '/respondent/' +
+              respondent.respondentNumber +
+              PageUrls.RESPONDENT_ADDRESS +
+              InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.address,
           },
@@ -207,7 +218,8 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + ChangeUrls.RESPONDENT_CHANGE,
+            href:
+              '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.acasNum,
           },

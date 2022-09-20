@@ -137,6 +137,11 @@ export interface Case {
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  et1SubmittedForm?: Document;
+  documentCollection?: Document[];
 }
 
 export const enum StillWorking {
