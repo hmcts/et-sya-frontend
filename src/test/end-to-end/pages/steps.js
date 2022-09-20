@@ -13,6 +13,7 @@ module.exports = () => {
     stillWorkingJourney: steps.employmentDetails.stillWorkingPages,
     workingNoticePeriodJourney: steps.employmentDetails.workingNoticePeriodPages,
     noLongerWorkingJourney: steps.employmentDetails.noLongerWorkingPages,
+    respondentDetailsJourney: steps.employmentDetails.respondentDetailsPages,
   });
 };
 

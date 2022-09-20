@@ -26,6 +26,10 @@ async function noLongerWorkingForRespondentJourney(I, noticePeriod, newJob, noti
   await I.noLongerWorkingJourney(noticePeriod, newJob, noticePeriodLength);
 }
 
+async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas) {
+  await I.respondentDetailsJourney(workAddress, doYouHaveAcas);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -34,4 +38,5 @@ module.exports = {
   stillWorkingForRespondentJourney,
   workingNoticePeriodForRespondentJourney,
   noLongerWorkingForRespondentJourney,
+  enterRespondentDetailsJourney,
 };
