@@ -8,8 +8,8 @@ import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiRespon
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinkNames, HubLinkStatus, HubLinks } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
+import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
@@ -143,34 +143,9 @@ describe('Citizen hub page', () => {
 
   describe('Hub content', () => {
     beforeAll(async () => {
-      const hubLinks = new HubLinks();
-      Object.keys(hubLinks).forEach(key => {
-        hubLinks[key] = {
-          link: PageUrls.HOME,
-          status: HubLinkStatus.OPTIONAL,
-        };
-      });
-
-      hubLinks[HubLinkNames.PersonalDetails].status = HubLinkStatus.SUBMITTED;
-      hubLinks[HubLinkNames.Et1ClaimForm].status = HubLinkStatus.SUBMITTED;
-      hubLinks[HubLinkNames.RespondentResponse].status = HubLinkStatus.COMPLETED;
-      hubLinks[HubLinkNames.HearingDetails].status = HubLinkStatus.NOT_YET_AVAILABLE;
-      hubLinks[HubLinkNames.RequestsAndApplications].status = HubLinkStatus.VIEWED;
-
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
-
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
-      mockFromApiFormat.mockReturnValue({
-        id: '123',
-        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-        ethosCaseReference: '654321/2022',
-        firstName: 'Paul',
-        lastName: 'Mumbere',
-        respondents: [{ respondentNumber: 1, respondentName: 'Itay' }],
-        createdDate: 'August 19, 2022',
-        lastModified: 'August 19, 2022',
-        hubLinks,
-      });
+      mockFromApiFormat.mockReturnValue(mockUserCaseWithCitizenHubLinks);
 
       await request(
         mockApp({
