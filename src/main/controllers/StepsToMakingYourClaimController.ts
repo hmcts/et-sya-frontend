@@ -26,7 +26,6 @@ export default class StepsToMakingYourClaimController {
     if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
-      // userCase.id = '13';
       if (userCase.id === undefined) {
         const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
         logger.info(`Created Draft Case - ${newCase.data.id}`);

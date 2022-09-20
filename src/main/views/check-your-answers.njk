@@ -17,478 +17,207 @@
     </div>
   </div>
 
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key govuk-heading-m">
+          {{ applicationDetails.header }}
+      </dt>
+    </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      {{ applicationDetails.typeOfClaim }}
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list">
+          {% for item in typesOfClaim %}
+          <li>{{getContent(claimTypes[item])}}</li>
+          {% endfor %}
+        </ul>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="/type-of-claim/change?redirect=answers">
+        {{ change }}<span class="govuk-visually-hidden"> name</span>
+      </a>
+    </dd>
+  </div>
+  </dl>
 
-  {{ 
-    govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: applicationDetails.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: applicationDetails.typeOfClaim,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text : userCase.typeOfClaim
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.TYPE_OF_CLAIM + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: applicationDetails.typeOfClaim
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
+  {{
+    govukSummaryList({ 
+      rows: yourDetails
+    })
   }}
 
   {{
-    govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: personalDetails.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: personalDetails.dob,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: "" if userCase.dobDate.day === undefined else userCase.dobDate.day+"-"+userCase.dobDate.month+"-"+userCase.dobDate.year
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.DOB_DETAILS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.dob
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.sex,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.claimantSex
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.sex
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.title,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-             text: userCase.preferredTitle if userCase.preferredTitle else "Not Selected"
-          },
-
-          actions: {
-            items: [
-              {
-                href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.title
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-          text: personalDetails.contactOrHomeAddress,
-          classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: "" if userCase.address1 === undefined else userCase.address1+", "+userCase.addressPostcode+", "+userCase.addressTown
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.ADDRESS_DETAILS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.contactOrHomeAddress
-              }
-            ]
-          }
-        },
-        {
-          key: {
-            text: contactDetails.telephone,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: "Not Provided" if userCase.telNumber.length === 0 else userCase.telNumber
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.TELEPHONE_NUMBER + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: contactDetails.telephone
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.howToBeContacted,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text:  userCase.claimantContactPreference
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.UPDATE_PREFERENCES + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.howToBeContacted
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.takePartInHearing,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.hearingPreferences
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.VIDEO_HEARINGS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.takePartInHearing
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: personalDetails.disability,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.reasonableAdjustments + ", " + userCase.reasonableAdjustmentsDetail if userCase.reasonableAdjustmentsDetail else userCase.reasonableAdjustments
-         },
-          actions: {
-            items: [
-              {
-                href: PageUrls.REASONABLE_ADJUSTMENTS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: personalDetails.disability
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
-  }}
- 
- {% include "employer-working.njk" %}
-
- {% if userCase.isStillWorking === "No longer working" %}
-    {% include "employer-no-longer-working.njk" %}
-  {% endif %}
-  
-  {% for respondent in respondents %}
-  {{ 
-    govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: "Respondent " + respondent.respondentNumber + " details",
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: respondentDetails.respondentName,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: respondent.respondentName
-          },
-          actions: {
-            items: [
-              { 
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.respondentName
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: respondentDetails.respondentAddress,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.respondentAddress1+", "+userCase.respondentAddressCountry+", "+userCase.respondentAddressTown
-            if userCase.respondentAddress1 
-          },
-          actions: {
-            items: [
-              {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.respondentAddress
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: respondentDetails.workedAtRespondent,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.claimantWorkAddressQuestion
-          },
-          actions: {
-            items: [
-              {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.workedAtRespondent
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: respondentDetails.addressWorkedAt,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.workAddress1+", "+ userCase.workAddressTown+", "+userCase.workAddressCountry
-          },
-          actions: {
-            items: [
-              {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.addressWorkedAt
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: respondentDetails.acasNumber,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.acasCert+": "+userCase.acasCertNum if userCase.acasCert === "Yes"
-            else userCase.acasCert
-          },
-          actions: {
-            items: [
-              {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.acasNumber
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: respondentDetails.noAcasReason,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.noAcasReason if userCase.acasCert === "No"
-          },
-          actions: {
-            items: [
-              {
-                href: '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: respondentDetails.noAcasReason
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
-  }}
-  {% endfor %}
-
-  {{ 
-    govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: claimDetails.header,
-            classes: "govuk-heading-m"
-          }
-        },
-        {
-          key: {
-            text: claimDetails.claimType,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.claimTypeDiscrimination
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.CLAIM_TYPE_DISCRIMINATION + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: claimDetails.claimType
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: claimDetails.describeWhatHappened,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.claimSummaryText
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.DESCRIBE_WHAT_HAPPENED + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: claimDetails.describeWhatHappened
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: claimDetails.ifClaimSuccessful,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.tellUsWhatYouWant
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.TELL_US_WHAT_YOU_WANT + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.ifClaimSuccessful
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: claimDetails.expectedCompensation,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: whatYouWantCompensation
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.COMPENSATION + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.expectedCompensation
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: claimDetails.expectedTribunalsRecommendation,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: whatYouWantTribunals
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.TRIBUNAL_RECOMMENDATION + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.expectedTribunalsRecommendation
-              }
-            ]
-          } 
-        },
-        {
-          key: {
-            text: claimDetails.forwardClaim,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-          value: {
-            text: userCase.whistleblowingClaim +": "+userCase.whistleblowingEntityName if userCase.whistleblowingClaim === "Yes" 
-            else userCase.whistleblowingClaim
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.WHISTLEBLOWING_CLAIMS + ChangeUrls.ANSWERS_CHANGE,
-                text: "Change",
-                visuallyHiddenText: yourPreferences.forwardClaim
-              }
-            ]
-          } 
-        }
-      ]
-    }) 
+    govukSummaryList({ 
+      rows: employmentSection
+    })
   }}
 
+{% for respondent in respondents %}  
+  {{
+    govukSummaryList({ 
+      rows: getRespondentSection(userCase, respondent, translations)
+    })
+  }}
+{% endfor %}
 
-  <div class="govuk-form-group">
-    {{ 
-      govukButton({
-        text: submitBtn,
-        classes: 'govuk-!-margin-right-2',
-        type: "submit",
-        href: PageUrls.CLAIM_SUBMITTED ,
-        preventDoubleClick: true,
-        attributes: {
-          id: 'main-form-submit'
-        }
-      }) 
-    }}
-
-    {{ 
-      govukButton({
-        text: saveForLater,
-        classes: 'govuk-button--secondary',
-        preventDoubleClick: true,
-        name: 'saveForLater',
-        href: PageUrls.CLAIM_SAVED,
-        value: true,
-        attributes: {
-          id: 'main-form-save-for-later'
-        },
-        value: true
-      }) 
-    }}
-
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-heading-m">
+        {{ claimDetails.header }}
+    </dt>
   </div>
+  {% if userCase.claimTypeDiscrimination %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        {{ claimDetails.claimTypeDiscrimination }}
+      </dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list">
+          {% for item in userCase.claimTypeDiscrimination %}
+          <li>{{getContent(discriminationClaims[item])}}</li>
+          {% endfor %}
+        </ul>
+    </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="/claim-type-discrimination/change?redirect=answers">
+          {{ change }}<span class="govuk-visually-hidden"> name</span>
+        </a>
+      </dd>
+    </div>
+  {% endif%}
+
+  {% if userCase.claimTypePay %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        {{ claimDetails.claimTypePay }}
+      </dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list">
+        {% for item in userCase.claimTypePay %}
+        <li>{{getContent(payClaims[item])}}</li>
+        {% endfor %}
+      </ul>
+    </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="/claim-type-pay/change?redirect=answers">
+          {{ change }}<span class="govuk-visually-hidden"> name</span>
+        </a>
+      </dd>
+    </div>
+  {% endif%}
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+      {{ claimDetails.describeWhatHappened }}
+    </dt>
+    <dd class="govuk-summary-list__value">
+      {{ userCase.claimSummaryText }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="/describe-what-happened/change?redirect=answers">
+          {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.describeWhatHappened }}</span>
+        </a>
+    </dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+      {{ claimDetails.ifClaimSuccessful }}
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <ul class="govuk-list">
+        {% for item in userCase.tellUsWhatYouWant %}
+        <li>{{getContent(tellUsWhatYouWant[item])}}</li>
+        {% endfor %}
+      </ul>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" href="/tell-us-what-you-want/change?redirect=answers">
+        {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.ifClaimSuccessful }}</span>
+      </a>
+    </dd>
+  </div>
+
+  {% if showCompensationRequest %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+        {{ claimDetails.expectedCompensation }}
+      </dt>
+      <dd class="govuk-summary-list__value">
+          {{ userCase.compensationOutcome}}: {{userCase.compensationAmount}}
+      </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="/compensation/change?redirect=answers">
+            {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.expectedCompensation }}</span>
+          </a>           
+        </dd>
+    </div>
+  {% endif %}
+
+  {% if showTribunalRequest %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+        {{ claimDetails.expectedTribunalsRecommendation }}
+      </dt>
+      <dd class="govuk-summary-list__value">
+          {{ userCase.tribunalRecommendationRequest }}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="/tribunal-recommendation/change?redirect=answers">
+          {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.tribunalRecommendationRequest }}</span>
+        </a>           
+      </dd>
+    </div>
+  {% endif %}
+
+  {% if showWhistleBlowingRequest %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+        {{ claimDetails.forwardClaim }}
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {{ userCase.whistleblowingClaim }} - {{ userCase.whistleblowingEntityName }}
+      </dd>
+      <dd class="govuk-summary-list__actions"> 
+        <a class="govuk-link" href="/whistleblowing-claims/change?redirect=answers">
+          {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.forwardClaim }}</span>
+        </a>
+      </dd>
+    </div>
+  {% endif %}
+
+</dl>
+
+<div class="govuk-form-group">
+  {{ 
+    govukButton({
+      text: submitBtn,
+      classes: 'govuk-!-margin-right-2',
+      type: "submit",
+      href: '/submitCase' ,
+      preventDoubleClick: true,
+      attributes: {
+        id: 'main-form-submit'
+      }
+    }) 
+  }}
+
+  {{ 
+    govukButton({
+      text: saveForLater,
+      classes: 'govuk-button--secondary',
+      preventDoubleClick: true,
+      name: 'saveForLater',
+      href: PageUrls.CLAIM_SAVED,
+      value: true,
+      attributes: {
+        id: 'main-form-save-for-later'
+      },
+      value: true
+    }) 
+  }}
+
+</div>
 {% endblock %}
