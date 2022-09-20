@@ -1,4 +1,4 @@
-import { CaseType, CaseTypeId, YesOrNo } from '../case';
+import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -48,6 +48,10 @@ export interface CaseData {
   claimantWorkAddress?: WorkAddressDetails;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  documentCollection?: Document[];
 }
 
 export interface RespondentApiModel {

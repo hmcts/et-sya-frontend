@@ -1,5 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { ChangeUrls, PageUrls } from '../../definitions/constants';
+import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -26,7 +26,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.DOB_DETAILS + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.dob,
           },
@@ -44,7 +44,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.sex,
           },
@@ -64,7 +64,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.SEX_AND_TITLE + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.title,
           },
@@ -88,7 +88,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.ADDRESS_DETAILS + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.contactOrHomeAddress,
           },
@@ -106,7 +106,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.TELEPHONE_NUMBER + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.contactDetails.telephone,
           },
@@ -124,7 +124,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.UPDATE_PREFERENCES + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.howToBeContacted,
           },
@@ -142,7 +142,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.VIDEO_HEARINGS + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.takePartInHearing,
           },
@@ -163,7 +163,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
       actions: {
         items: [
           {
-            href: PageUrls.REASONABLE_ADJUSTMENTS + ChangeUrls.ANSWERS_CHANGE,
+            href: PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.personalDetails.disability,
           },
