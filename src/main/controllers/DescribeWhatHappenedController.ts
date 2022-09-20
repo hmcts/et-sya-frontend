@@ -58,7 +58,7 @@ export default class DescribeWhatHappenedController {
     handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
     handleUpdateDraftCase(req, this.logger);
 
-    const result = await handleUploadDocument(req, req.body.claimSummaryFileName, this.logger);
+    const result = await handleUploadDocument(req, req.file, this.logger);
     if (result) {
       req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
     }
