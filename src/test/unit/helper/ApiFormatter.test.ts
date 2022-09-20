@@ -1,4 +1,4 @@
-import { CaseApiDataResponse, ServingDocument } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApiDataResponse, DocumentApiModel } from '../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -509,7 +509,7 @@ describe('set Serving Document Values()', () => {
   });
 
   it('should return undefined when there are no serving documents', () => {
-    const servingDocumentCollection: ServingDocument[] = [];
+    const servingDocumentCollection: DocumentApiModel[] = [];
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(undefined);
