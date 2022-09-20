@@ -6,6 +6,7 @@ import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/h
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
+import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -14,20 +15,23 @@ const logger = Logger.getLogger('app');
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
-    try {
-      req.session.userCase = fromApiFormat(
-        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
-      );
-    } catch (error) {
-      logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
-      return res.redirect('/not-found');
+    // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
+    if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
+      req.session.userCase = mockUserCaseWithCitizenHubLinks;
+    } else {
+      try {
+        req.session.userCase = fromApiFormat(
+          (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
+        );
+      } catch (error) {
+        logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
+        return res.redirect('/not-found');
+      }
     }
 
     const userCase = req.session.userCase;
-
-    userCase.hubLinks = userCase.hubLinks || new HubLinks();
-
     const currentState = currentStateFn(userCase);
+    userCase.hubLinks = userCase.hubLinks || new HubLinks();
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
