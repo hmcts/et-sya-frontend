@@ -99,7 +99,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
-    hubLinks: fromApiCaseData?.case_data?.hubLinks,
+    hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
   };
 }
 
@@ -182,7 +182,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
-      hubLinks: caseItem.hubLinks,
+      hubLinksStatuses: caseItem.hubLinksStatuses,
     },
   };
 }
@@ -266,24 +266,22 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   if (respondents === undefined) {
     return;
   }
-  const caseRespondents: Respondent[] = respondents.map(respondent => {
+  return respondents.map(respondent => {
     return {
       respondentName: respondent.value.respondent_name,
     };
   });
-  return caseRespondents;
 };
 
 export const setRespondentApiFormat = (respondents: Respondent[]): RespondentRequestBody[] => {
   if (respondents === undefined) {
     return;
   }
-  const apiFormatRespondents = respondents.map(respondent => {
+  return respondents.map(respondent => {
     return {
       value: {
         respondent_name: respondent.respondentName,
       },
     };
   });
-  return apiFormatRespondents;
 };

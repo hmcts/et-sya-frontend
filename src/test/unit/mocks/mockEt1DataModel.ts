@@ -106,37 +106,23 @@ export const mockEt1DataModelUpdate = {
         },
       },
     ],
-    hubLinks: {
-      contactTribunal: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      documents: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      et1ClaimForm: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      hearingDetails: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      personalDetails: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      requestsAndApplications: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      respondentApplications: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      respondentResponse: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      tribunalJudgements: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
-      tribunalOrders: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
-      },
+  },
+};
+
+export const mockEt1DataModelSubmittedUpdate = {
+  case_id: '1234',
+  case_data: {
+    hubLinksStatuses: {
+      contactTribunal: HubLinkStatus.NOT_YET_AVAILABLE,
+      documents: HubLinkStatus.NOT_YET_AVAILABLE,
+      et1ClaimForm: HubLinkStatus.NOT_YET_AVAILABLE,
+      hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
+      personalDetails: HubLinkStatus.NOT_YET_AVAILABLE,
+      requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,
+      respondentApplications: HubLinkStatus.NOT_YET_AVAILABLE,
+      respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
+      tribunalJudgements: HubLinkStatus.NOT_YET_AVAILABLE,
+      tribunalOrders: HubLinkStatus.NOT_YET_AVAILABLE,
     },
   },
 };

@@ -8,7 +8,7 @@ import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { CaseState } from '../definition';
-import { HubLinks } from '../hub';
+import { HubLinksStatuses } from '../hub';
 
 export interface CreateCaseResponse {
   data: CaseApiDataResponse;
@@ -44,7 +44,7 @@ export interface CaseData {
   claimantTaskListChecks?: TaskListCheckType;
   respondentCollection?: RespondentApiModel[];
   et3IsThereAnEt3Response?: YesOrNo;
-  hubLinks?: HubLinks;
+  hubLinksStatuses?: HubLinksStatuses;
 }
 
 export interface RespondentApiModel {

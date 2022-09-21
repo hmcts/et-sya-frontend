@@ -21,7 +21,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
-import { HubLinks } from '../../../main/definitions/hub';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -127,7 +127,6 @@ describe('Should return data in api format', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
       claimSummaryFile: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
@@ -269,7 +268,7 @@ describe('Format Case Data to Frontend Model', () => {
             },
           },
         ],
-        hubLinks: new HubLinks(),
+        hubLinksStatuses: new HubLinksStatuses(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -344,12 +343,12 @@ describe('Format Case Data to Frontend Model', () => {
         },
       ],
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
       claimSummaryFile: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
+      hubLinksStatuses: new HubLinksStatuses(),
     });
   });
 
@@ -427,8 +426,8 @@ describe('Format Case Data to Frontend Model', () => {
       whistleblowingEntityName: undefined,
       respondents: undefined,
       et3IsThereAnEt3Response: undefined,
-      hubLinks: undefined,
       claimSummaryFile: undefined,
+      hubLinksStatuses: undefined,
     });
   });
 

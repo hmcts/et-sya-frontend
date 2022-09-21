@@ -1,5 +1,5 @@
 import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
-import { HubLinks } from './hub';
+import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -117,7 +117,7 @@ export interface Case {
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
-  hubLinks?: HubLinks;
+  hubLinksStatuses?: HubLinksStatuses;
 }
 
 export const enum StillWorking {
