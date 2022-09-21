@@ -20,13 +20,13 @@ import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinks } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
-import { mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
+import { mockEt1DataModelSubmittedUpdate, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
+
+const token = 'testToken';
 
 jest.mock('config');
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-const token = 'testToken';
-
 const api = new CaseApi(mockedAxios);
 
 describe('Axios post to initiate case', () => {
@@ -96,7 +96,11 @@ describe('getCaseApi', () => {
   });
 });
 
-describe('updateDraftCase', () => {
+describe('update case', () => {
+  beforeEach(() => {
+    mockedAxios.put.mockClear();
+  });
+
   it('should update draft case data', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
@@ -158,13 +162,27 @@ describe('updateDraftCase', () => {
       ],
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
-      hubLinks: new HubLinks(),
     };
-    api.updateDraftCase(caseItem);
+    await api.updateDraftCase(caseItem);
+
     expect(mockedAxios.put).toHaveBeenCalledWith(
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
     );
+  });
+
+  it('should update submitted case data', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinks: new HubLinks(),
+    };
+    await api.updateSubmittedCase(caseItem);
+
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockEt1DataModelSubmittedUpdate);
   });
 });
 
