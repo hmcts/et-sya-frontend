@@ -116,13 +116,18 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     ),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
     responseEt3FormDocumentDetail: [
-      ...setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
-      ...setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
-      ...setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
-      ...setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true),
+      ...concatArrays(
+        setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
+      ),
     ],
   };
 }
+
+// merge arrays but make sure they are not undefined
+const concatArrays = (...arrays: DocumentDetail[][]) => [].concat(...arrays.filter(Array.isArray));
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return {
