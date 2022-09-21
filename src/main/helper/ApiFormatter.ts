@@ -5,8 +5,16 @@ import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../defini
 import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel, SUBMITTED_CLAIM_FILE_PREFIX } from '../definitions/constants';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseWithId,
+  Document,
+  DocumentCollection,
+  Respondent,
+  ccdPreferredTitle,
+} from '../definitions/case';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE } from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -327,9 +335,13 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   });
 };
 
-export const returnSubmitttedEt1Form = (documentCollection?: Document[]): Document => {
+export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): Document => {
   if (documentCollection === undefined) {
     return;
   }
-  return documentCollection.find(({ document_filename }) => document_filename.startsWith(SUBMITTED_CLAIM_FILE_PREFIX));
+  for (const document of documentCollection) {
+    if (document.value.typeOfDocument === SUBMITTED_CLAIM_FILE_TYPE) {
+      return document.value.uploadedDocument;
+    }
+  }
 };

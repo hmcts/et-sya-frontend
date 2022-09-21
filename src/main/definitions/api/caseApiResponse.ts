@@ -1,4 +1,4 @@
-import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
+import { CaseType, CaseTypeId, DocumentCollection, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -51,7 +51,7 @@ export interface CaseData {
   managingOffice?: string;
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
-  documentCollection?: Document[];
+  documentCollection?: DocumentCollection[];
 }
 
 export interface RespondentApiModel {

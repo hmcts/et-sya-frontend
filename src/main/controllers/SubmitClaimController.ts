@@ -14,8 +14,11 @@ export default class SubmitCaseController {
       const submittedClaim = await getCaseApi(req.session.user?.accessToken).submitCase(req.session.userCase);
       logger.info(`Submitted Case - ${submittedClaim.data.id}`);
       req.session.userCase = fromApiFormat(submittedClaim.data);
+      req.session.errors = [];
     } catch (error) {
-      logger.info(error.message);
+      logger.info(`Case failed to submit with error - ${error}`);
+      req.session.errors = [{ errorType: 'api', propertyName: 'hiddenErrorField' }];
+      return res.redirect(PageUrls.CHECK_ANSWERS);
     }
     return res.redirect(PageUrls.CLAIM_SUBMITTED);
   };

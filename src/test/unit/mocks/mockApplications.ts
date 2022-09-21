@@ -1,5 +1,4 @@
 import { YesOrNo } from '../../../main/definitions/case';
-import { Urls } from '../../../main/definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../../../main/definitions/definition';
 
 export const mockApplications: ApplicationTableRecord[] = [
@@ -50,9 +49,14 @@ export const mockApplications: ApplicationTableRecord[] = [
           respondentName: 'Globo Corp',
         },
       ],
+      et1SubmittedForm: {
+        document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+        document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
+        document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+      },
     },
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
-    url: Urls.DOWNLOAD_CLAIM,
+    url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
   },
 ];

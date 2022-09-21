@@ -32,6 +32,7 @@ export default class CheckYourAnswersController {
       yourDetails,
       getRespondentSection,
       employmentSection: getEmploymentDetails(userCase, translations),
+      errors: req.session.errors,
     });
   }
 }

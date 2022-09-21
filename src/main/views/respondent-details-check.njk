@@ -18,7 +18,7 @@
         <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
             {% for respondent in respondents %}
               {{ govukSummaryList({
-                rows: getRespondentDetailsSection(respondent, translations)
+                rows: getRespondentDetailsSection(respondent, loop.index, translations)
               })
 
               }}

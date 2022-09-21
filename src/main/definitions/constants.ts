@@ -278,4 +278,4 @@ export const mvpLocations = [
   'BD',
 ];
 
-export const SUBMITTED_CLAIM_FILE_PREFIX = 'ET1_CASE_DOCUMENT';
+export const SUBMITTED_CLAIM_FILE_TYPE = 'Notice of a claim';
