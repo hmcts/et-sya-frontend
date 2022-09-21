@@ -1,5 +1,4 @@
 import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
-import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
@@ -89,36 +88,42 @@ export const mockEt1DataModelUpdate = {
         },
       },
     ],
+  },
+};
+
+export const mockEt1DataModelSubmittedUpdate = {
+  case_id: '1234',
+  case_data: {
     hubLinks: {
       contactTribunal: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       documents: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       et1ClaimForm: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       hearingDetails: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       personalDetails: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       requestsAndApplications: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       respondentApplications: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       respondentResponse: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       tribunalJudgements: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
       tribunalOrders: {
-        status: HubLinkStatus.NOT_YET_AVAILABLE,
+        status: 'notAvailableYet',
       },
     },
   },
