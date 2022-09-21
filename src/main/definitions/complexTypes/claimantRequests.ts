@@ -12,5 +12,4 @@ export interface ClaimantRequests {
   whistleblowing?: YesOrNo;
   whistleblowing_authority?: string;
   claim_description_document?: Document;
-  document_filename?: string;
 }

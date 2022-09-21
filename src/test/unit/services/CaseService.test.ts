@@ -170,6 +170,11 @@ describe('updateDraftCase', () => {
           respondentName: 'Globo Corp',
         },
       ],
+      claimSummaryFile: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       hubLinks: new HubLinks(),

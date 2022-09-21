@@ -87,7 +87,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
     claimSummaryFile: fromApiCaseData.case_data?.claimantRequests?.claim_description_document,
-    claimSummaryFileName: fromApiCaseData.case_data?.claimantRequests?.claim_description_document?.document_filename,
     tellUsWhatYouWant: fromApiCaseData.case_data?.claimantRequests?.claim_outcome,
     tribunalRecommendationRequest: fromApiCaseData.case_data?.claimantRequests?.claimant_tribunal_recommendation,
     whistleblowingClaim: fromApiCaseData.case_data?.claimantRequests?.whistleblowing,

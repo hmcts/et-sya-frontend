@@ -4,6 +4,7 @@ import DescribeWhatHappenedController from '../../../main/controllers/DescribeWh
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -45,32 +46,34 @@ describe('Describe-What-Happened Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should require either summary text or summary file', () => {
-      const req = mockRequest({ body: { claimSummaryText: '', claimSummaryFileName: '' } });
-      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
+    it('should require either summary text or summary file', async () => {
+      const req = mockRequest({ body: { claimSummaryText: '' } });
+      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'required' }]);
     });
 
-    it('should not allow both summary text and summary file', () => {
-      const req = mockRequest({ body: { claimSummaryText: 'text', claimSummaryFileName: 'file.txt' } });
-      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
+    it('should not allow both summary text and summary file', async () => {
+      const req = mockRequest({ body: { claimSummaryText: 'text' }, file: mockFile });
+      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'textAndFile' }]);
     });
 
-    it('should only allow valid file formats', () => {
-      const req = mockRequest({ body: { claimSummaryFileName: 'file.invalidFileFormat' } });
-      new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
+    it('should only allow valid file formats', async () => {
+      const newFile = mockFile;
+      newFile.filename = 'file.invalidFileFormat';
+      const req = mockRequest({ body: {}, file: newFile });
+      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileFormat' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'invalidFileFormat' }]);
     });
 
-    it('should assign userCase from summary text', () => {
+    it('should assign userCase from summary text', async () => {
       const req = mockRequest({ body: { claimSummaryText: 'test' } });
       const res = mockResponse();
 
-      new DescribeWhatHappenedController(mockLogger).post(req, res);
+      await new DescribeWhatHappenedController(mockLogger).post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
       expect(req.session.userCase).toMatchObject({

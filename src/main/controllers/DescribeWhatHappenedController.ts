@@ -36,7 +36,6 @@ export default class DescribeWhatHappenedController {
         hint: l => l.fileUpload.hint,
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
-        //validator: hasValidFileFormat,
       },
     },
     submit: {
@@ -59,7 +58,6 @@ export default class DescribeWhatHappenedController {
     try {
       const result = await handleUploadDocument(req, req.file, this.logger);
       req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
-      req.session.userCase.claimSummaryFileName = req.session.userCase.claimSummaryFile.document_filename;
     } catch (error) {
       this.logger.info(error);
     } finally {

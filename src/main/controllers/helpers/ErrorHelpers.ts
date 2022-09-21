@@ -4,6 +4,7 @@ import { isFirstDateBeforeSecond } from '../../components/form/dateValidators';
 import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
+  hasValidFileFormat,
   isAcasNumberValid,
   isFieldFilledIn,
   isPayIntervalNull,
@@ -179,6 +180,7 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined; //isFieldFilledIn(formData.claimSummaryFileName) === undefined;
+  const fileFormatValid = hasValidFileFormat(file);
 
   if (textProvided && fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };
@@ -186,5 +188,9 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
 
   if (!textProvided && !fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'required' };
+  }
+
+  if (fileFormatValid) {
+    return { propertyName: 'claimSummaryText', errorType: fileFormatValid };
   }
 };
