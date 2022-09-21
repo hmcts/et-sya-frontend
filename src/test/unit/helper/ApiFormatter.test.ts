@@ -115,7 +115,6 @@ describe('Should return data in api format', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);

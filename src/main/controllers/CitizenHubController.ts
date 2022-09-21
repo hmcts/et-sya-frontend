@@ -9,6 +9,8 @@ import { currentStateFn } from '../helper/state-sequence';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
+import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
+
 const { Logger } = require('@hmcts/nodejs-logging');
 
 const logger = Logger.getLogger('app');
@@ -31,7 +33,11 @@ export default class CitizenHubController {
 
     const userCase = req.session.userCase;
     const currentState = currentStateFn(userCase);
-    userCase.hubLinks = userCase.hubLinks || new HubLinks();
+
+    if (!userCase.hubLinks) {
+      userCase.hubLinks = new HubLinks();
+      handleUpdateSubmittedCase(req, logger);
+    }
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
