@@ -2,12 +2,14 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
+import { HubLinksStatuses, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
+
+import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -31,18 +33,21 @@ export default class CitizenHubController {
 
     const userCase = req.session.userCase;
     const currentState = currentStateFn(userCase);
-    userCase.hubLinks = userCase.hubLinks || new HubLinks();
+
+    if (!userCase.hubLinksStatuses) {
+      userCase.hubLinksStatuses = new HubLinksStatuses();
+      handleUpdateSubmittedCase(req, logger);
+    }
 
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {
-          const link = userCase.hubLinks[linkName];
+          const status = userCase.hubLinksStatuses[linkName];
           return {
-            url: link.link,
             linkTxt: (l: AnyRecord): string => l[linkName],
-            status: (l: AnyRecord): string => l[link.status],
-            statusColor: () => hubLinksMap.get(link.status),
+            status: (l: AnyRecord): string => l[status],
+            statusColor: () => hubLinksMap.get(status),
           };
         }),
       };
