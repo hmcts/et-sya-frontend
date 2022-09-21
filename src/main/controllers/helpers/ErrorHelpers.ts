@@ -21,7 +21,7 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
-  const claimSummaryError = getClaimSummaryError(formData);
+  const claimSummaryError = getClaimSummaryError(formData, req.file);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
 
@@ -172,13 +172,13 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
   }
 };
 
-export const getClaimSummaryError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.claimSummaryText === undefined && formData.claimSummaryFileName === undefined) {
+export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Express.Multer.File): FormError => {
+  if (formData.claimSummaryText === undefined && file === undefined) {
     return;
   }
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
-  const fileProvided = isFieldFilledIn(formData.claimSummaryFileName) === undefined;
+  const fileProvided = file !== undefined; //isFieldFilledIn(formData.claimSummaryFileName) === undefined;
 
   if (textProvided && fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };

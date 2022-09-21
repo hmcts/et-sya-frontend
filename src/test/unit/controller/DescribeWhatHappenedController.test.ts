@@ -77,17 +77,5 @@ describe('Describe-What-Happened Controller', () => {
         claimSummaryText: 'test',
       });
     });
-
-    it('should assign userCase from summary file', () => {
-      const req = mockRequest({ body: { claimSummaryFileName: 'testFile.txt' } });
-      const res = mockResponse();
-
-      new DescribeWhatHappenedController(mockLogger).post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
-      expect(req.session.userCase).toMatchObject({
-        claimSummaryFileName: 'testFile.txt',
-      });
-    });
   });
 });

@@ -2,14 +2,14 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { hasValidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-//import { fromApiFormatDocument } from '../helper/ApiFormatter';
+import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -36,7 +36,7 @@ export default class DescribeWhatHappenedController {
         hint: l => l.fileUpload.hint,
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
-        validator: hasValidFileFormat,
+        // validator: hasValidFileFormat,
       },
     },
     submit: {
@@ -56,18 +56,16 @@ export default class DescribeWhatHappenedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
 
-    // try {
-    //   const result = await handleUploadDocument(req, req.file, this.logger);
-    //   req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
-    //   req.session.userCase.claimSummaryFileName = result.data.originalDocumentName
-
-    // } catch (error) {
-
-    // }
-
-    handleUpdateDraftCase(req, this.logger);
-    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-    console.log(req.session.userCase.claimSummaryFile);
+    try {
+      const result = await handleUploadDocument(req, req.file, this.logger);
+      req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+      req.session.userCase.claimSummaryFileName = req.session.userCase.claimSummaryFile.document_filename;
+    } catch (error) {
+      // api call failed
+    } finally {
+      handleUpdateDraftCase(req, this.logger);
+      handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
