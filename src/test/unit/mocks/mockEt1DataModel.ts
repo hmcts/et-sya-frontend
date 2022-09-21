@@ -31,6 +31,7 @@ export const mockEt1DataModelUpdate = {
   case_data: {
     caseType: 'Single',
     typeOfClaim: ['discrimination', 'payRelated'],
+    ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
     claimantWorkAddressQuestion: 'Yes',
     caseSource: 'ET1 Online',

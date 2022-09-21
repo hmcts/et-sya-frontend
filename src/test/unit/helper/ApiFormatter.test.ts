@@ -1,4 +1,5 @@
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseDataCacheKey,
@@ -20,6 +21,7 @@ import { HubLinks } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
+  fromApiFormatDocument,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
@@ -55,6 +57,7 @@ describe('Should return data in api format', () => {
       id: '1234',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
       caseType: CaseType.SINGLE,
+      ClaimantPcqId: '1234',
       claimantRepresentedQuestion: YesOrNo.YES,
       claimantWorkAddressQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
@@ -137,6 +140,42 @@ describe('Should return data in api format', () => {
   });
 });
 
+describe('Format document model', () => {
+  it('should format DocumentApiResponse', () => {
+    const mockDocData: DocumentUploadResponse = {
+      originalDocumentName: 'testname',
+      uri: 'test.com',
+      _links: {
+        self: {
+          href: 'test.com',
+        },
+        binary: {
+          href: 'test.com',
+        },
+      },
+      classification: '',
+      size: '',
+      mimeType: '',
+      hashToken: '',
+      createdOn: '',
+      createdBy: '',
+      lastModifiedBy: '',
+      modifiedOn: '',
+      ttl: '',
+      metadata: {
+        case_type_id: '',
+        jurisdiction: '',
+      },
+    };
+    const result = fromApiFormatDocument(mockDocData);
+    expect(result).toStrictEqual({
+      document_filename: 'testname',
+      document_url: 'test.com',
+      document_binary_url: 'test.com',
+    });
+  });
+});
+
 describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
     const mockedApiData: CaseApiDataResponse = {
@@ -151,6 +190,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
         typeOfClaim: ['discrimination', 'payRelated'],
+        ClaimantPcqId: '1234',
         et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {
           claimant_first_names: 'Jane',
@@ -249,6 +289,7 @@ describe('Format Case Data to Frontend Model', () => {
         year: '2022',
       },
       ethosCaseReference: '123456/2022',
+      ClaimantPcqId: '1234',
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
       email: 'janedoe@exmaple.com',
@@ -339,6 +380,7 @@ describe('Format Case Data to Frontend Model', () => {
       typeOfClaim: undefined,
       caseTypeId: undefined,
       claimantRepresentedQuestion: YesOrNo.YES,
+      ClaimantPcqId: undefined,
       dobDate: undefined,
       claimantSex: undefined,
       preferredTitle: undefined,

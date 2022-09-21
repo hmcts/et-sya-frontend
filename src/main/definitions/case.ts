@@ -99,7 +99,8 @@ export interface Case {
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
-  claimSummaryFile?: string; //TODO: implement proper upload document object when connecting to api
+  claimSummaryFileName?: string;
+  claimSummaryFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -227,4 +228,10 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export interface Document {
+  document_url: string;
+  document_filename: string;
+  document_binary_url: string;
 }

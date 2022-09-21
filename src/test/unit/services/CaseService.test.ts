@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import FormData from 'form-data';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -19,7 +20,7 @@ import {
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinks } from '../../../main/definitions/hub';
-import { CaseApi, getCaseApi } from '../../../main/services/CaseService';
+import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
 jest.mock('config');
@@ -106,6 +107,7 @@ describe('updateDraftCase', () => {
       claimantWorkAddressQuestion: YesOrNo.YES,
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: ['discrimination', 'payRelated'],
+      ClaimantPcqId: '1234',
       dobDate: {
         year: '2010',
         month: '05',
@@ -209,5 +211,15 @@ describe('Axios post to retrieve pdf', () => {
         responseType: 'arraybuffer',
       })
     );
+  });
+  describe('Axios post to upload document', () => {
+    it('should send file to api endpoint', () => {
+      const mockFile = { buffer: '123', originalname: 'a-new-file.txt' } as unknown as UploadedFile;
+      const mockType = 'ET_EnglandWales';
+      const mockForm: FormData = new FormData();
+      mockForm.append('document_upload', mockFile.buffer, mockFile.filename);
+      api.uploadDocument(mockFile, mockType);
+      expect(mockedAxios.post).toHaveBeenCalled();
+    });
   });
 });
