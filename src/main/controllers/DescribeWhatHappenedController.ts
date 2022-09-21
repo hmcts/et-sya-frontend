@@ -36,7 +36,7 @@ export default class DescribeWhatHappenedController {
         hint: l => l.fileUpload.hint,
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
-        // validator: hasValidFileFormat,
+        //validator: hasValidFileFormat,
       },
     },
     submit: {
@@ -61,10 +61,10 @@ export default class DescribeWhatHappenedController {
       req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
       req.session.userCase.claimSummaryFileName = req.session.userCase.claimSummaryFile.document_filename;
     } catch (error) {
-      // api call failed
+      this.logger.info(error);
     } finally {
-      handleUpdateDraftCase(req, this.logger);
       handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 
