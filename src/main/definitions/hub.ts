@@ -11,19 +11,14 @@ export enum HubLinkNames {
   Documents = 'documents',
 }
 
-export class HubLinks {
-  [linkName: string]: HubLink;
+export class HubLinksStatuses {
+  [linkName: string]: HubLinkStatus;
 
   constructor() {
     Object.values(HubLinkNames).forEach(name => {
-      this[name] = { status: HubLinkStatus.NOT_YET_AVAILABLE } as HubLink;
+      this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
     });
   }
-}
-
-export interface HubLink {
-  status: HubLinkStatus;
-  link?: string;
 }
 
 export const enum HubLinkStatus {

@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { HubLinks, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
+import { HubLinksStatuses, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
@@ -34,8 +34,8 @@ export default class CitizenHubController {
     const userCase = req.session.userCase;
     const currentState = currentStateFn(userCase);
 
-    if (!userCase.hubLinks) {
-      userCase.hubLinks = new HubLinks();
+    if (!userCase.hubLinksStatuses) {
+      userCase.hubLinksStatuses = new HubLinksStatuses();
       handleUpdateSubmittedCase(req, logger);
     }
 
@@ -43,12 +43,11 @@ export default class CitizenHubController {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {
-          const link = userCase.hubLinks[linkName];
+          const status = userCase.hubLinksStatuses[linkName];
           return {
-            url: link.link,
             linkTxt: (l: AnyRecord): string => l[linkName],
-            status: (l: AnyRecord): string => l[link.status],
-            statusColor: () => hubLinksMap.get(link.status),
+            status: (l: AnyRecord): string => l[status],
+            statusColor: () => hubLinksMap.get(status),
           };
         }),
       };

@@ -18,7 +18,7 @@ import {
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinks } from '../../../main/definitions/hub';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelSubmittedUpdate, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
@@ -177,7 +177,7 @@ describe('update case', () => {
       state: CaseState.SUBMITTED,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
-      hubLinks: new HubLinks(),
+      hubLinksStatuses: new HubLinksStatuses(),
     };
     await api.updateSubmittedCase(caseItem);
 
