@@ -3,8 +3,9 @@ import i18next from 'i18next';
 import { isDateEmpty } from '../components/form/dateValidators';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Respondent, ccdPreferredTitle } from '../definitions/case';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
 import { CcdDataModel } from '../definitions/constants';
 
 export function toApiFormatCreate(
@@ -161,6 +162,14 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       hubLinks: caseItem.hubLinks,
     },
+  };
+}
+
+export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  return {
+    document_url: document.uri,
+    document_filename: document.originalDocumentName,
+    document_binary_url: document._links.binary.href,
   };
 }
 
