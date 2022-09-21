@@ -37,6 +37,16 @@ export default class DescribeWhatHappenedController {
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
       },
+      claimSummaryAcceptedType: {
+        id: 'claim-summary-file-accepted-type',
+        label: l => l.acceptedFormats.label,
+        labelHidden: true,
+        type: 'readonly',
+        classes: 'govuk-label',
+        isCollapsable: true,
+        collapsableTitle: l => l.acceptedFormats.label,
+        hint: l => l.acceptedFormats.p1,
+      },
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
