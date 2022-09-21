@@ -5,7 +5,7 @@ import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
 
-const PAGE_URL = '/rejection';
+const PAGE_URL = '/case-document/rejection-of-claim';
 const titleClass = 'govuk-heading-xl';
 const documentLinkSelector = 'td.govuk-table__cell a.govuk-link';
 

@@ -13,36 +13,21 @@ export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const mapParamToDoc = (docId: string) => {
       switch (docId) {
-        case 'acknowledgement':
+        case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
           return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
-        case 'rejection':
+        case TranslationKeys.CITIZEN_HUB_REJECTION:
           return req.session?.userCase?.rejectionOfClaimDocumentDetail;
-        case 'response-rejection':
+        case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
           return req.session?.userCase?.responseRejectionDocumentDetail;
-        case 'response-acknowledgement':
+        case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
           return req.session?.userCase?.responseAcknowledgementDocumentDetail;
-        case 'response-from-respondent':
+        case TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT:
           return req.session?.userCase?.respondentResponseET3DocumentDetail;
         default:
           return undefined;
       }
     };
-    const mapParamToTranslation = (docId: string) => {
-      switch (docId) {
-        case 'acknowledgement':
-          return TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT;
-        case 'rejection':
-          return TranslationKeys.CITIZEN_HUB_REJECTION;
-        case 'response-rejection':
-          return TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION;
-        case 'response-acknowledgement':
-          return TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT;
-        case 'response-from-respondent':
-          return TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT;
-        default:
-          return undefined;
-      }
-    };
+
     const documents = mapParamToDoc(req?.params?.documentId);
     if (!documents) {
       logger.info('no documents found for ', req?.params?.documentId);
@@ -56,7 +41,7 @@ export default class CitizenHubDocumentController {
     }
     res.render('document-view', {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(mapParamToTranslation(req?.params?.documentId), { returnObjects: true }),
+      ...req.t(req?.params?.documentId, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
