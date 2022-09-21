@@ -97,8 +97,8 @@ describe('getCaseApi', () => {
 });
 
 describe('update case', () => {
-  afterEach(() => {
-    mockedAxios.post.mockClear();
+  beforeEach(() => {
+    mockedAxios.put.mockClear();
   });
 
   it('should update draft case data', async () => {
@@ -163,7 +163,8 @@ describe('update case', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     };
-    api.updateDraftCase(caseItem);
+    await api.updateDraftCase(caseItem);
+
     expect(mockedAxios.put).toHaveBeenCalledWith(
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
@@ -178,7 +179,7 @@ describe('update case', () => {
       lastModified: 'August 19, 2022',
       hubLinks: new HubLinks(),
     };
-    api.updateSubmittedCase(caseItem);
+    await api.updateSubmittedCase(caseItem);
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockEt1DataModelSubmittedUpdate);
