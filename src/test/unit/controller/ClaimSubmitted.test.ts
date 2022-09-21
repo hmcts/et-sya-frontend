@@ -15,4 +15,17 @@ describe('Claim Submitted Controller', () => {
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('claim-submitted', expect.anything());
   });
+
+  it('should render the Claim Submitted page with file name', () => {
+    const controller = new ClaimSubmittedController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.claimSummaryFile = {
+      document_binary_url: '1010101',
+      document_filename: 'document.pdf',
+      document_url: 'document.com',
+    };
+    controller.get(request, response);
+    expect(response.render).toHaveBeenCalledWith('claim-submitted', expect.anything());
+  });
 });

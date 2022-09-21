@@ -12,7 +12,7 @@ export default class ClaimSubmittedController {
       hideContactUs: true,
       submissionReferenceText: userCase.ethosCaseReference,
       claimSubmittedText: formatClaimSubmittedDate(),
-      attachmentsText: formatAttachmentsText(userCase.claimSummaryFileName),
+      attachmentsText: formatAttachmentsText(userCase.et1SubmittedForm?.document_filename),
       tribunalOfficeText: userCase.managingOffice,
       emailText: userCase.tribunalCorrespondenceEmail,
       telephoneText: userCase.tribunalCorrespondenceTelephone,

@@ -3,6 +3,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -10,6 +11,18 @@
 {% endblock %}
 
 {% block content %}
+
+{{ govukErrorSummary({
+    titleText: errorSummaryTitle,
+    errorList: [
+      {
+        text: submitError | safe,
+        href: "#main-form-submit"
+      }
+    ]
+  }) if errors.length > 0
+}}
+
   <div class="govuk-grid-row ">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
@@ -57,7 +70,7 @@
 {% for respondent in respondents %}  
   {{
     govukSummaryList({ 
-      rows: getRespondentSection(userCase, respondent, translations)
+      rows: getRespondentSection(userCase, respondent, loop.index, translations)
     })
   }}
 {% endfor %}

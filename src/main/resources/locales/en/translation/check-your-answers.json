@@ -97,23 +97,23 @@
     "whatYouWant": "What you want"
   },
   "discriminationClaims": {
-    "age": "Age",
-    "disability": "Disability",
-    "ethnicity": "Ethnicity",
-    "genderReassignment": "Gender reassignment",
-    "marriageOrCivilPartnership": "Marriage or civil parntership",
-    "pregnancyOrMaternity": "Pregnancy or maternity",
-    "race": "Race",
-    "religionOrBelief": "Religion or belief",
-    "Sex (Including equal pay)": "Sex (Including equal pay)",
-    "sexualOrientation": "Sexual Orientation"
+    "Age": "Age",
+    "Disability": "Disability",
+    "Ethnicity": "Ethnicity",
+    "Gender reassignment": "Gender reassignment",
+    "Marriage or civil partnership": "Marriage or civil parntership",
+    "Pregnancy or maternity": "Pregnancy or maternity",
+    "Race": "Race",
+    "Religion or belief": "Religion or belief",
+    "Sex": "Sex (Including equal pay)",
+    "Sexual orientation": "Sexual Orientation"
   },
   "payClaims": {
-    "arrears": "Arrears",
-    "holidayPay": "Holiday pay",
-    "noticePay": "Notice pay",
-    "redundancyPay": "Redundancy pay",
-    "otherPayments": "Other payments"
+    "Arrears": "Arrears",
+    "Holiday pay": "Holiday pay",
+    "Notice pay": "Notice pay",
+    "Redundancy pay": "Redundancy pay",
+    "Other payments": "Other payments"
   },
   "claimTypes": {
     "breachOfContract": "Breach of contract",
@@ -124,12 +124,13 @@
     "otherClaim": "Other type of claim"
   },
   "tellUsWhatYouWant": {
-    "compensationOnly": "Compensation only",
-    "tribunalRecommendation": "Tribunal recommendation",
+    "compensation": "Compensation only",
+    "tribunal": "Tribunal recommendation",
     "oldJob": "Old job back",
     "anotherJob": "Another job"
   },
   "answers": {
     "NA": "Not Provided"
-  }
+  },
+  "submitError": "Sorry, we’re having technical problems procesing your application. Please try again in a few minutes."
 }

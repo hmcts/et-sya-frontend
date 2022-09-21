@@ -7,14 +7,14 @@ import { answersAddressFormatter } from './PageContentHelpers';
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
+  index: number,
   translations: AnyRecord
 ): unknown => {
   const respondentSections = [];
   respondentSections.push(
     {
       key: {
-        text:
-          translations.respondentDetails.header + respondent.respondentNumber + translations.respondentDetails.details,
+        text: translations.respondentDetails.header + index + translations.respondentDetails.details,
         classes: 'govuk-heading-m',
       },
     },
@@ -29,8 +29,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.respondentName,
           },
@@ -54,11 +53,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href:
-              '/respondent/' +
-              respondent.respondentNumber +
-              PageUrls.RESPONDENT_ADDRESS +
-              InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.respondentAddress,
           },
@@ -66,7 +61,7 @@ export const getRespondentSection = (
       },
     }
   );
-  if (respondent.respondentNumber === 1) {
+  if (index === 1) {
     respondentSections.push({
       key: {
         text: translations.respondentDetails.workedAtRespondent,
@@ -78,7 +73,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.workedAtRespondent,
           },
@@ -87,7 +82,7 @@ export const getRespondentSection = (
     });
   }
 
-  if (userCase.claimantWorkAddressQuestion === YesOrNo.NO) {
+  if (index === 1 && userCase.claimantWorkAddressQuestion === YesOrNo.NO) {
     respondentSections.push({
       key: {
         text: translations.respondentDetails.addressWorkedAt,
@@ -105,7 +100,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href: '/respondent/' + respondent.respondentNumber + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.addressWorkedAt,
           },
@@ -125,7 +120,7 @@ export const getRespondentSection = (
     actions: {
       items: [
         {
-          href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + InterceptPaths.ANSWERS_CHANGE,
+          href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.ANSWERS_CHANGE,
           text: translations.change,
           visuallyHiddenText: translations.respondentDetails.acasNumber,
         },
@@ -144,8 +139,7 @@ export const getRespondentSection = (
       actions: {
         items: [
           {
-            href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
+            href: '/respondent/' + index + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.respondentDetails.noAcasReason,
           },
@@ -157,12 +151,16 @@ export const getRespondentSection = (
   return respondentSections;
 };
 
-export const getRespondentDetailsSection = (respondent: Respondent, translations: AnyRecord): unknown => {
+export const getRespondentDetailsSection = (
+  respondent: Respondent,
+  index: string,
+  translations: AnyRecord
+): unknown => {
   const respondentSections = [];
   respondentSections.push(
     {
       key: {
-        text: translations.subTitle + respondent.respondentNumber,
+        text: translations.subTitle + index,
         classes: 'govuk-heading-m',
       },
     },
@@ -176,11 +174,7 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
       actions: {
         items: [
           {
-            href:
-              '/respondent/' +
-              respondent.respondentNumber +
-              PageUrls.RESPONDENT_NAME +
-              InterceptPaths.RESPONDENT_CHANGE,
+            href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.name,
           },
@@ -197,11 +191,7 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
       actions: {
         items: [
           {
-            href:
-              '/respondent/' +
-              respondent.respondentNumber +
-              PageUrls.RESPONDENT_ADDRESS +
-              InterceptPaths.RESPONDENT_CHANGE,
+            href: '/respondent/' + index + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.address,
           },
@@ -218,8 +208,7 @@ export const getRespondentDetailsSection = (respondent: Respondent, translations
       actions: {
         items: [
           {
-            href:
-              '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
+            href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
             visuallyHiddenText: translations.acasNum,
           },
