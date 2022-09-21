@@ -16,7 +16,7 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinks } from '../../../main/definitions/hub';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -233,7 +233,7 @@ describe('Format Case Data to Frontend Model', () => {
             },
           },
         ],
-        hubLinks: new HubLinks(),
+        hubLinksStatuses: new HubLinksStatuses(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -299,7 +299,7 @@ describe('Format Case Data to Frontend Model', () => {
         },
       ],
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
+      hubLinksStatuses: new HubLinksStatuses(),
     });
   });
 
@@ -368,7 +368,7 @@ describe('Format Case Data to Frontend Model', () => {
       claimDetailsCheck: undefined,
       respondents: undefined,
       et3IsThereAnEt3Response: undefined,
-      hubLinks: undefined,
+      hubLinksStatuses: undefined,
     });
   });
 
