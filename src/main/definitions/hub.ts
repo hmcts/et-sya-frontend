@@ -1,3 +1,5 @@
+import { PageUrls } from './constants';
+
 export enum HubLinkNames {
   PersonalDetails = 'personalDetails',
   Et1ClaimForm = 'et1ClaimForm',
@@ -33,7 +35,9 @@ export const enum HubLinkStatus {
   NOT_YET_AVAILABLE = 'notAvailableYet',
 }
 
-export const hubLinksMap = new Map<HubLinkStatus, string>([
+export const hubLinksUrlMap = new Map<string, string>([[HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS]]);
+
+export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
   [HubLinkStatus.SUBMITTED, '--turquoise'],
   [HubLinkStatus.VIEWED, '--turquoise'],

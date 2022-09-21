@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { HubLinksStatuses, hubLinksMap, sectionIndexToLinkNames } from '../definitions/hub';
+import { HubLinksStatuses, hubLinksColorMap, hubLinksUrlMap, sectionIndexToLinkNames } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
@@ -47,7 +47,8 @@ export default class CitizenHubController {
           return {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
-            statusColor: () => hubLinksMap.get(status),
+            url: () => hubLinksUrlMap.get(linkName),
+            statusColor: () => hubLinksColorMap.get(status),
           };
         }),
       };
