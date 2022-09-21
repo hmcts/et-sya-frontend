@@ -305,6 +305,9 @@ describe('Format Case Data to Frontend Model', () => {
       acknowledgementOfClaimLetterDetail: undefined,
       respondentResponseDeadline: undefined,
       rejectionOfClaimDocumentDetail: undefined,
+      responseAcknowledgementDocumentDetail: undefined,
+      responseRejectionDocumentDetail: undefined,
+      respondentResponseET3DocumentDetail: undefined,
     });
   });
 
@@ -377,6 +380,9 @@ describe('Format Case Data to Frontend Model', () => {
       acknowledgementOfClaimLetterDetail: undefined,
       respondentResponseDeadline: undefined,
       rejectionOfClaimDocumentDetail: undefined,
+      responseAcknowledgementDocumentDetail: undefined,
+      responseRejectionDocumentDetail: undefined,
+      respondentResponseET3DocumentDetail: undefined,
     });
   });
 

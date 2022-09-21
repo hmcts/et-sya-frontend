@@ -44,7 +44,7 @@ describe('Citizen Hub Document Controller', () => {
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
-    request.params.documentId = 'acknowledgement';
+    request.params.documentId = 'acknowledgement-of-claim';
     await new CitizenHubDocumentController().get(request, response);
     expect(response.render).toHaveBeenCalledWith('document-view', expect.anything());
   });
@@ -59,7 +59,7 @@ describe('Citizen Hub Document Controller', () => {
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
-    request.params.documentId = 'acknowledgement';
+    request.params.documentId = 'acknowledgement-of-claim';
 
     await new CitizenHubDocumentController().get(request, response);
 

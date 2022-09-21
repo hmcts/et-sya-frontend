@@ -39,6 +39,9 @@ export default class CitizenHubDocumentController {
       logger.error(err.response?.status, err.response?.data, err);
       return res.redirect('/not-found');
     }
+
+    // Todo: add in hublinks
+
     res.render('document-view', {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(req?.params?.documentId, { returnObjects: true }),
