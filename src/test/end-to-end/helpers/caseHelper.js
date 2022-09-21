@@ -6,12 +6,37 @@ async function didYouWorkForOrganisation(I, orgOption) {
   await I.didYouWorkForOrganisation(orgOption);
 }
 
-async function personalDetails(I) {
+async function enterPersonalDetails(I) {
   await I.personalDetails();
+}
+
+async function areYouStillWorkingForOrg(I, workingOption) {
+  await I.areYouStillWorkingForOrganisation(workingOption);
+}
+
+async function stillWorkingForRespondentJourney(I, noticePeriodContract, noticePeriod) {
+  await I.stillWorkingJourney(noticePeriodContract, noticePeriod);
+}
+
+async function workingNoticePeriodForRespondentJourney(I, noticePeriodLength) {
+  await I.workingNoticePeriodJourney(noticePeriodLength);
+}
+
+async function noLongerWorkingForRespondentJourney(I, noticePeriod, newJob, noticePeriodLength) {
+  await I.noLongerWorkingJourney(noticePeriod, newJob, noticePeriodLength);
+}
+
+async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas) {
+  await I.respondentDetailsJourney(workAddress, doYouHaveAcas);
 }
 
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
-  personalDetails,
+  enterPersonalDetails,
+  areYouStillWorkingForOrg,
+  stillWorkingForRespondentJourney,
+  workingNoticePeriodForRespondentJourney,
+  noLongerWorkingForRespondentJourney,
+  enterRespondentDetailsJourney,
 };
