@@ -22,11 +22,11 @@ import { HubLinks } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelSubmittedUpdate, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 
+const token = 'testToken';
+
 jest.mock('config');
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-const token = 'testToken';
-
 const api = new CaseApi(mockedAxios);
 
 describe('Axios post to initiate case', () => {
@@ -97,6 +97,10 @@ describe('getCaseApi', () => {
 });
 
 describe('update case', () => {
+  afterEach(() => {
+    mockedAxios.post.mockClear();
+  });
+
   it('should update draft case data', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
