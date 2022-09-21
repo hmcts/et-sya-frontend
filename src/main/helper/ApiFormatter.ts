@@ -9,10 +9,12 @@ import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPrefer
 import {
   CcdDataModel,
   acceptanceDocTypes,
+  et3FormDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
   responseRejectedDocTypes,
 } from '../definitions/constants';
+import { DocumentDetail } from '../definitions/definition';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -112,10 +114,13 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.et3NotificationDocCollection,
       responseRejectedDocTypes
     ),
-    respondentResponseET3DocumentDetail: setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, [
-      'todo: please add doc types here',
-    ]),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
+    responseEt3FormDocumentDetail: [
+      ...setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
+      ...setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
+      ...setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
+      ...setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true),
+    ],
   };
 }
 
@@ -310,18 +315,21 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
 
 export const setDocumentValues = (
   documentCollection: DocumentApiModel[],
-  docType: string[]
-): { id: string; description: string }[] => {
+  docType?: string[],
+  isEt3Supporting?: boolean
+): DocumentDetail[] => {
   if (!documentCollection) {
     return;
   }
+
   const foundDocuments = documentCollection
-    .filter(doc => docType.includes(doc.value.typeOfDocument))
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
     .map(doc => {
       const docUrl = doc.value?.uploadedDocument?.document_url;
       return {
         id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
-        description: doc.value?.shortDescription,
+        description: !docType ? '' : doc.value?.shortDescription,
+        type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;

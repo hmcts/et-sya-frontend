@@ -48,6 +48,7 @@ export interface CaseData {
   servingDocumentCollection?: DocumentApiModel[];
   documentCollection?: DocumentApiModel[];
   et3NotificationDocCollection?: DocumentApiModel[];
+  et3ResponseContestClaimDocument?: DocumentApiModel[];
   claimServedDate?: string;
 }
 
@@ -59,7 +60,7 @@ export interface RespondentApiModel {
 export interface DocumentApiModel {
   id: string;
   value: {
-    typeOfDocument: string;
+    typeOfDocument?: string;
     shortDescription?: string;
     uploadedDocument: {
       document_url: string;

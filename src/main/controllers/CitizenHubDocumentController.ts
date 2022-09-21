@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
 
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 
@@ -22,7 +22,7 @@ export default class CitizenHubDocumentController {
         case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
           return req.session?.userCase?.responseAcknowledgementDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT:
-          return req.session?.userCase?.respondentResponseET3DocumentDetail;
+          return req.session?.userCase?.responseEt3FormDocumentDetail;
         default:
           return undefined;
       }
@@ -39,12 +39,22 @@ export default class CitizenHubDocumentController {
       logger.error(err.response?.status, err.response?.data, err);
       return res.redirect('/not-found');
     }
-    res.render('document-view', {
+
+    let view = 'document-view';
+    if (req?.params?.documentId === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
+      view = 'response-from-respondent-view';
+    }
+
+    res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(req?.params?.documentId, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
+      et3Form: documents.find(d => d.type === 'ET3'),
+      et3SupportingDoc: documents.find(d => d.type === 'et3Supporting'),
+      et3AcceptedDoc: documents.find(d => d.type === '2.11'),
+      et3RejectionDoc: documents.find(d => responseRejectedDocTypes.includes(d.type)),
     });
   };
 }

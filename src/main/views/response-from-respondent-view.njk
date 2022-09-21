@@ -1,0 +1,115 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">
+        {{h1}}
+      </h1>
+
+      {% if et3AcceptedDoc %}
+        {{ govukTable({
+          caption: h2,
+          captionClasses: "govuk-table__caption--m",
+          firstCellIsHeader: true,
+          rows: [
+            [
+              {
+                text: et3AcceptedDoc.createdOn
+              },
+              {
+                text: responseEt3
+              },
+              {
+                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
+              }
+            ]
+          ]
+        }) }}
+      {% endif %}
+
+      {% if et3RejectionDoc %}
+        {{ govukTable({
+          caption: h2,
+          captionClasses: "govuk-table__caption--m",
+          firstCellIsHeader: true,
+          rows: [
+            [
+              {
+                text: et3RejectionDoc.createdOn
+              },
+              {
+                text: rejectionLetter
+              },
+              {
+                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
+              }
+            ]
+          ]
+        }) }}
+      {% endif %}
+
+      {% if et3Form %}
+        {{ govukTable({
+          captionClasses: "govuk-table__caption--m",
+          firstCellIsHeader: true,
+          rows: [
+            [
+              {
+                text: et3Form
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
+              }
+            ]
+          ]
+        }) }}
+      {% endif %}
+
+      {# {% if et3SupportingDoc %}
+      {{ govukTable({
+        captionClasses: "govuk-table__caption--m",
+        firstCellIsHeader: true,
+        rows: [
+          [
+            {
+              text: supportingMaterials
+            },
+            {
+              html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3SupportingDoc.originalDocumentName + "</a>"
+            }
+          ],
+        ]
+      }) }}
+    {% endif %} #}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+              summaryText: "Contact",
+              html: sideBarContent
+            }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -2,11 +2,8 @@
   "title": "Response from the respondent (ET3)",
   "h1": "Response from the respondent (ET3)",
   "h2": "Response related information",
-  "description": {
-    "firstCell": "Description",
-    "secondCell": "Rejection of Claim"
-  },
-  "document": "Document",
-  "documentDetails": "Details",
-  "date": "Date"
+  "rejectionLetter": "Rejection letter",
+  "responseEt3": "Response(ET3)",
+  "et3Form": "ET3 Form",
+  "supportingMaterials": "Supporting materials"
 }

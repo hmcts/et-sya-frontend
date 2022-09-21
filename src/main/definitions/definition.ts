@@ -79,4 +79,5 @@ export interface DocumentDetail {
   mimeType?: string;
   originalDocumentName?: string;
   createdOn?: string;
+  type?: string;
 }
