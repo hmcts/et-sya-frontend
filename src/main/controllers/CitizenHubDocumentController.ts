@@ -7,7 +7,7 @@ import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
-const logger = Logger.getLogger('CitizenHubAcknowledgementController');
+const logger = Logger.getLogger('CitizenHubDocumentController');
 
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {

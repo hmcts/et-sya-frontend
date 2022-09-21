@@ -159,11 +159,6 @@ export default function (app: Application): void {
   app.get(PageUrls.CLAIMANT_APPLICATIONS, app.locals.container.cradle.claimantApplicationsController.get);
   app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);
   app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
-  // app.get(PageUrls.CITIZEN_HUB_ACKNOWLEDGEMENT, app.locals.container.cradle.citizenHubAcknowledgementController.get);
-  // app.get(PageUrls.CITIZEN_HUB_REJECTION, app.locals.container.cradle.citizenHubRejectionController.get);
-  // app.get(PageUrls.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT, app.locals.container.cradle.citizenHubDocumentController.get);
-  // app.get(PageUrls.CITIZEN_HUB_RESPONSE_REJECTION, app.locals.container.cradle.citizenHubDocumentController.get);
-  // app.get(PageUrls.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT, app.locals.container.cradle.citizenHubDocumentController.get);
   app.get(PageUrls.CITIZEN_HUB_DOCUMENT, app.locals.container.cradle.citizenHubDocumentController.get);
   app.get(PageUrls.GET_CASE_DOCUMENT, app.locals.container.cradle.caseDocumentController.get);
 
