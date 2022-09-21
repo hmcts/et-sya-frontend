@@ -11,33 +11,41 @@ const logger = Logger.getLogger('CitizenHubAcknowledgementController');
 
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const mapRouteToDoc = (path: string) => {
-      switch (path) {
-        case '/response-rejection':
+    const mapParamToDoc = (docId: string) => {
+      switch (docId) {
+        case 'acknowledgement':
+          return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
+        case 'rejection':
+          return req.session?.userCase?.rejectionOfClaimDocumentDetail;
+        case 'response-rejection':
           return req.session?.userCase?.responseRejectionDocumentDetail;
-        case '/response-acknowledgement':
+        case 'response-acknowledgement':
           return req.session?.userCase?.responseAcknowledgementDocumentDetail;
-        case '/response-from-respondent':
+        case 'response-from-respondent':
           return req.session?.userCase?.respondentResponseET3DocumentDetail;
         default:
           return undefined;
       }
     };
-    const mapRouteToTranslation = (path: string) => {
-      switch (path) {
-        case '/response-rejection':
+    const mapParamToTranslation = (docId: string) => {
+      switch (docId) {
+        case 'acknowledgement':
+          return TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT;
+        case 'rejection':
+          return TranslationKeys.CITIZEN_HUB_REJECTION;
+        case 'response-rejection':
           return TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION;
-        case '/response-acknowledgement':
+        case 'response-acknowledgement':
           return TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT;
-        case '/response-from-respondent':
+        case 'response-from-respondent':
           return TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT;
         default:
           return undefined;
       }
     };
-    const documents = mapRouteToDoc(req.path);
+    const documents = mapParamToDoc(req?.params?.documentId);
     if (!documents) {
-      logger.info('no documents found for ', req.path);
+      logger.info('no documents found for ', req?.params?.documentId);
       return res.redirect('/not-found');
     }
     try {
@@ -48,7 +56,7 @@ export default class CitizenHubDocumentController {
     }
     res.render('document-view', {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(mapRouteToTranslation(req.path), { returnObjects: true }),
+      ...req.t(mapParamToTranslation(req?.params?.documentId), { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
