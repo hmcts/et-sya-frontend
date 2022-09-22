@@ -27,12 +27,13 @@
   "tribunalOrders": "All orders and requests issued by the tribunal",
   "tribunalJudgements": "View all judgements",
   "documents": "All documents",
-  "notAvailableYet": "Not available yet",
   "completed": "Completed",
   "submitted": "Submitted",
-  "notViewedYet": "Not viewed yet",
-  "viewed": "Viewed",
   "optional": "Optional",
+  "viewed": "Viewed",
+  "notViewedYet": "Not viewed yet",
+  "notAvailableYet": "Not available yet",
+  "waitingForTheTribunal": "Waiting for the tribunal",
   "submittedAndViewed": "Submitted",
   "notificationBanner": {
     "acknowledgement": {
@@ -45,6 +46,10 @@
       "header": "The tribunal has rejected all or part of your claim",
       "link": "View the claim rejection",
       "p1": "The tribunal will close your claim."
+    },
+    "respondentReceived": {
+      "header": "The tribunal has received a response from the respondent",
+      "p1": "We will process the response and contact you soon to tell you what will happen next."
     },
     "respondentRejection": {
       "header": "The tribunal has rejected the respondent's response.",
