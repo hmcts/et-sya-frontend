@@ -16,6 +16,50 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
       <p class="govuk-body govuk-!-margin-bottom-4">{{ amendClaim }}</p>
 
+      {% if userCase.acknowledgementOfClaimLetterDetail.length %}
+        {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
+          {{ govukTable({
+        firstCellIsHeader: false,
+        caption: "Claim related information",
+        rows: [
+          [
+            {
+              text: doc.createdOn
+            },
+                        {
+              text: 'Acknowledgement of Claim'
+            },
+            {
+                html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
+            }
+          ]
+        ]
+      }) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if userCase.rejectionOfClaimDocumentDetail.length %}
+        {% for doc in userCase.rejectionOfClaimDocumentDetail %}
+          {{ govukTable({
+        firstCellIsHeader: false,
+        caption: "Claim related information",
+        rows: [
+          [
+            {
+              text: doc.createdOn
+            },
+                        {
+              text: 'Rejection of claim'
+            },
+            {
+                html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
+            }
+          ]
+        ]
+      }) }}
+        {% endfor %}
+      {% endif %}
+
       {{ govukTable({
         firstCellIsHeader: false,
         head: [
@@ -101,7 +145,6 @@
           ]
         ]
       }) }}
-
 
     </div>
   </div>
