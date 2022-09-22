@@ -61,28 +61,6 @@
       {% endif %}
 
       {{ govukTable({
-        firstCellIsHeader: false,
-        head: [
-          {
-            text: "Date uploaded"
-          },
-          {
-            text: "Document"
-          }
-        ],
-        rows: [
-          [
-            {
-              text: "22 April 2022"
-            },
-            {
-              text: getContentSafe(link)
-            }
-          ]
-        ]
-      }) }}
-
-      {{ govukTable({
         caption: "Application details",
         captionClasses: "govuk-table__caption--m",
         firstCellIsHeader: true,
@@ -141,6 +119,36 @@
             },
             {
               text: "[selection]"
+            }
+          ]
+        ]
+      }) }}
+
+      {{ govukTable({
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Date uploaded"
+          },
+          {
+            text: "Document"
+          }
+        ],
+        rows: [
+          [
+            {
+              text: "22 April 2022"
+            },
+            {
+              text: getContentSafe(docs.et1Form)
+            }
+          ],
+          [
+            {
+              text: "22 April 2022"
+            },
+            {
+              text: getContentSafe(docs.et1Support)
             }
           ]
         ]
