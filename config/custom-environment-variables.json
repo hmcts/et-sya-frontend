@@ -15,7 +15,9 @@
       "host": "ET_SYA_API_HOST"
     },
     "pcq": {
-      "enabled": "PCQ_ENABLED"
+      "enabled": "PCQ_ENABLED",
+      "url": "PCQ_URL",
+      "health": "PCQ_HEALTH_URL"
     }
   },
   "session": {
