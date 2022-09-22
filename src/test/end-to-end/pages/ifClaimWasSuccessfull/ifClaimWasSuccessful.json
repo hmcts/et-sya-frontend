@@ -1,0 +1,9 @@
+{
+  "compensation_what_can_a_tribunal_award": "//span[.='Compensation - what can a tribunal award?']",
+  "what_is_a_tribunal_recommendation": "//span[.='What is a tribunal recommendation?']",
+  "compensation_only": "//input[@id='compensationOnly']",
+  "tribunal_recommendation": "//input[@id='tribunalRecommendation']",
+  "get_your_old_job_back": "//input[@id='oldJob']",
+  "get_another_job": "//input[@id='anotherJob']",
+  "contact_us": "//span[contains(.,'Contact us')]"
+}

@@ -14,6 +14,10 @@ module.exports = () => {
     workingNoticePeriodJourney: steps.employmentDetails.workingNoticePeriodPages,
     noLongerWorkingJourney: steps.employmentDetails.noLongerWorkingPages,
     respondentDetailsJourney: steps.employmentDetails.respondentDetailsPages,
+    stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
+    typeOfDiscrimination: steps.typeOfDiscrimination.typeOfDisc,
+    whatHappenedToYou: steps.whatHappenedToYou.whatHappened,
+    ifClaimWasSuccessfull: steps.ifClaimWasSuccessfull.ifClaimWasSuccessfull,
   });
 };
 
