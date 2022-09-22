@@ -276,21 +276,20 @@ function convertFromTimestampString(responseDate: string) {
   });
 }
 
-function convertClaimServedDateToRespondentDeadline(date: string) {
+export const convertClaimServedDateToRespondentDeadline = (date: string): string => {
   if (!date) {
     return;
   }
   const deadline = new Date(date);
   if (deadline instanceof Date && !isNaN(deadline.getTime())) {
     deadline.setDate(deadline.getDate() + 28);
-    return new Intl.DateTimeFormat(i18next.language + '-GB', {
+    return new Intl.DateTimeFormat('en-GB', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     }).format(new Date(deadline));
   }
-  return;
-}
+};
 
 export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {
   if (respondents === undefined) {
