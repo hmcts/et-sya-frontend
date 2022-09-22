@@ -9,6 +9,10 @@ module.exports = () => {
     youCanSaveCard: steps.saveDraft.youCanSaveCard,
     didYouWorkForOrganisation: steps.employmentDetails.didYouWorkForOrg,
     personalDetails: steps.personalDetails.personalDetails,
+    stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
+    typeOfDiscrimination: steps.typeOfDiscrimination.typeOfDisc,
+    whatHappenedToYou: steps.whatHappenedToYou.whatHappened,
+    ifClaimWasSuccessfull: steps.ifClaimWasSuccessfull.ifClaimWasSuccessfull,
   });
 };
 

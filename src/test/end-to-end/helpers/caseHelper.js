@@ -10,8 +10,28 @@ async function personalDetails(I) {
   await I.personalDetails();
 }
 
+async function stepsToMakingYourClaim(I) {
+  await I.stepsToMakingYourClaim();
+}
+
+async function typeOfDiscrimination(I) {
+  await I.typeOfDiscrimination();
+}
+
+async function whatHappenedToYou(I) {
+  await I.whatHappenedToYou();
+}
+
+async function ifClaimWasSuccessfull(I) {
+  await I.ifClaimWasSuccessfull();
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
   personalDetails,
+  stepsToMakingYourClaim,
+  typeOfDiscrimination,
+  whatHappenedToYou,
+  ifClaimWasSuccessfull,
 };

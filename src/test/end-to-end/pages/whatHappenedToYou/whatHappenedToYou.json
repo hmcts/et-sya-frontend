@@ -1,0 +1,9 @@
+{
+  "what_to_write_for_discrimination_claims": "//span[contains(.,'What to write for discrimination claims')]",
+  "what_to_write_for_dismissal_claims": "//span[contains(.,'What to write for dismissal claims')]",
+  "what_to_write_for_whistle_blower_claims": "//span[contains(.,'What to write for whistleblower claims')]",
+  "what_to_write_for_other_claims": "//span[contains(.,\"What to write for 'other' claims\")]",
+  "claim_summary_notes": "//textarea[@id='claim-summary-text']",
+  "upload_your_summary_as_a_separate": "//span[contains(.,'Or upload your summary as a separate document (optional)')]",
+  "contact_us": "//span[contains(.,'Contact us')]"
+}
