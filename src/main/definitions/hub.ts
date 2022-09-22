@@ -24,6 +24,10 @@ export class HubLinksStatuses {
       });
 
     this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
+
+    if (this[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED) {
+      this[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
+    }
   }
 }
 
@@ -33,9 +37,13 @@ export const enum HubLinkStatus {
   OPTIONAL = 'optional',
   VIEWED = 'viewed',
   NOT_YET_AVAILABLE = 'notAvailableYet',
+  NOT_VIEWED = 'notViewedYet',
 }
 
-export const hubLinksUrlMap = new Map<string, string>([[HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS]]);
+export const hubLinksUrlMap = new Map<string, string>([
+  [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+  [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+]);
 
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
@@ -43,6 +51,7 @@ export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.VIEWED, '--turquoise'],
   [HubLinkStatus.OPTIONAL, '--blue'],
   [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
+  [HubLinkStatus.NOT_VIEWED, '--red'],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

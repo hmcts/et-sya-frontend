@@ -152,6 +152,7 @@ export const PageUrls = {
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CLAIM_DETAILS: '/claim-details',
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
+  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',
