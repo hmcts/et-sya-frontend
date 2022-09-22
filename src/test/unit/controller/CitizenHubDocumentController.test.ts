@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import CitizenHubDocumentController from '../../../main/controllers/CitizenHubDocumentController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { DocumentDetail } from '../../../main/definitions/definition';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -43,8 +44,9 @@ describe('Citizen Hub Document Controller', () => {
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     const response = mockResponse();
-    request.params.documentId = 'acknowledgement-of-claim';
+    request.params.documentType = 'acknowledgement-of-claim';
     await new CitizenHubDocumentController().get(request, response);
     expect(response.render).toHaveBeenCalledWith('document-view', expect.anything());
   });
@@ -58,8 +60,10 @@ describe('Citizen Hub Document Controller', () => {
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+
     const response = mockResponse();
-    request.params.documentId = 'acknowledgement-of-claim';
+    request.params.documentType = 'acknowledgement-of-claim';
 
     await new CitizenHubDocumentController().get(request, response);
 
@@ -90,7 +94,7 @@ describe('Citizen Hub Document Controller', () => {
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
-    request.params.documentId = 'unknown';
+    request.params.documentType = 'unknown';
 
     await new CitizenHubDocumentController().get(request, response);
 

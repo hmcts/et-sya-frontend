@@ -307,6 +307,7 @@ describe('Format Case Data to Frontend Model', () => {
       rejectionOfClaimDocumentDetail: undefined,
       responseAcknowledgementDocumentDetail: undefined,
       responseRejectionDocumentDetail: undefined,
+      responseEt3FormDocumentDetail: [],
     });
   });
 
@@ -381,6 +382,7 @@ describe('Format Case Data to Frontend Model', () => {
       rejectionOfClaimDocumentDetail: undefined,
       responseAcknowledgementDocumentDetail: undefined,
       responseRejectionDocumentDetail: undefined,
+      responseEt3FormDocumentDetail: [],
     });
   });
 
@@ -505,10 +507,10 @@ describe('set Serving Document Values()', () => {
     const expected = [
       { id: 'abc123', description: 'text', type: '1.1' },
       { id: 'xyz123', description: 'a sentence', type: '1.1' },
-      { id: 'xyz123', description: 'a sentence', type: '1.1' },
     ];
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
+    console.log('result is ', result);
     expect(result).toEqual(expected);
   });
 

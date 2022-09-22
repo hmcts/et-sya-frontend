@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
@@ -45,6 +46,7 @@ describe('Citizen Hub rejection of Claim', () => {
       mockApp({
         userCase: {
           rejectionOfClaimDocumentDetail: [{ id: 'abc123', description: 'text' }],
+          hubLinksStatuses: new HubLinksStatuses(),
         },
       })
     )
