@@ -6,7 +6,11 @@ import { Application } from 'express';
 import { PageUrls, Urls } from '../definitions/constants';
 
 const multer = require('multer');
-const handleUploads = multer();
+const handleUploads = multer({
+  limits: {
+    fileSize: 8000000,
+  },
+});
 
 export default function (app: Application): void {
   app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
