@@ -53,18 +53,6 @@ export default class CitizenHubDocumentController {
       view = 'response-from-respondent-view';
     }
 
-    // const userCase = req.session.userCase;
-    // if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION
-    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT
-    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
-    //     userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
-    // }
-
-    // if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT
-    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_REJECTION) {
-    //     userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
-    // }
-
     handleUpdateSubmittedCase(req, logger);
 
     res.render(view, {

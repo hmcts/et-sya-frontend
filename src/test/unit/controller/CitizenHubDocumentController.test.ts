@@ -65,6 +65,7 @@ describe('Citizen Hub Document Controller', () => {
     const response = mockResponse();
     request.params.documentType = 'acknowledgement-of-claim';
 
+    await new CitizenHubDocumentController().get(request, response);
     expect(response.render).toHaveBeenCalledWith(
       'document-view',
       expect.objectContaining({
