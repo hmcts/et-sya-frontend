@@ -28,7 +28,7 @@
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
-      "token": "TO BE PICKED UP FROM ENV"
+      "token": "Da8zarIOqLo6AYwRxN7TuyGrv6neZJAy"
     },
     "pcq": {
       "url": "https://pcq.aat.platform.hmcts.net/service-endpoint",
