@@ -1,4 +1,5 @@
 'use strict';
+const commonConfig = require('../../features/Data/commonConfig.json');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -8,31 +9,33 @@ module.exports = async function () {
   I.fillField('#dobDate-day', '01');
   I.fillField('#dobDate-month', '01');
   I.fillField('#dobDate-year', '2000');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see('Sex and preferred title');
-  I.click('#main-form-submit');
+  I.checkOption('#sex-3');
+  I.click(commonConfig.saveAndContinue);
   I.see('What is your contact or home address?');
-  I.fillField('#postcode', 'ss11aa');
+  I.fillField('#postcode', 'LS9 9HE');
   I.click('#findAddressButton');
+  I.waitForVisible('#selectAddressInput');
   I.selectOption(
-    { css: 'select[name=selectAddress]' },
-    'ROYAL MAIL, SOUTHEND-ON-SEA M L O, SHORT STREET, SOUTHEND-ON-SEA, SS1 1AA'
+    '#selectAddressInput',
+    '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
   );
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see('What is your telephone number?');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see('How would you like to be contacted about your claim?');
   I.checkOption('#update-preference');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.checkOption('#hearingPreferences');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see(
     'Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?'
   );
   I.checkOption('#reasonableAdjustments-2');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see('Have you completed this section?');
   I.checkOption('#tasklist-check');
-  I.click('#main-form-submit');
+  I.click(commonConfig.saveAndContinue);
   I.see('Steps to making your claim');
 };

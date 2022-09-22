@@ -95,7 +95,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address.PostCode,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
-    hubLinks: fromApiCaseData?.case_data?.hubLinks,
+    hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
   };
 }
 
@@ -176,7 +176,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
-      hubLinks: caseItem.hubLinks,
+      hubLinksStatuses: caseItem.hubLinksStatuses,
     },
   };
 }
@@ -260,7 +260,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   if (respondents === undefined) {
     return;
   }
-  const caseRespondents: Respondent[] = respondents.map(respondent => {
+  return respondents.map(respondent => {
     return {
       respondentName: respondent.value.respondent_name,
       respondentAddress1: respondent.value.respondent_address.AddressLine1,
@@ -273,14 +273,13 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       noAcasReason: respondent.value.respondent_ACAS_no,
     };
   });
-  return caseRespondents;
 };
 
 export const setRespondentApiFormat = (respondents: Respondent[]): RespondentRequestBody[] => {
   if (respondents === undefined) {
     return;
   }
-  const apiFormatRespondents = respondents.map(respondent => {
+  return respondents.map(respondent => {
     return {
       value: {
         respondent_name: respondent.respondentName,
@@ -304,5 +303,4 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
       },
     };
   });
-  return apiFormatRespondents;
 };
