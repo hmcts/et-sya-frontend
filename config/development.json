@@ -9,7 +9,7 @@
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",
-      "token": "Da8zarIOqLo6AYwRxN7TuyGrv6neZJAy"
+      "token": "TO BE PICKED UP FROM ENV"
     },
     "etSyaApi": {
       "host": "http://localhost:4550/"

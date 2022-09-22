@@ -29,6 +29,7 @@ export interface Respondent {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  ccdId?: string;
 }
 
 export interface RespondentApiModel {

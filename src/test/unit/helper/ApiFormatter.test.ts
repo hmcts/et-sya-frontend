@@ -52,7 +52,7 @@ describe('Should return data in api format', () => {
     expect(apiData).toEqual(mockEt1DataModel);
   });
 
-  it('should transform case date to api format', () => {
+  it('should transform case data to api format', () => {
     const caseItem: CaseWithId = {
       id: '1234',
       caseTypeId: CaseTypeId.ENGLAND_WALES,
@@ -128,6 +128,7 @@ describe('Should return data in api format', () => {
           workAddressTown: 'Anytown',
           workAddressCountry: 'England',
           workAddressPostcode: 'SW1H 9AQ',
+          ccdId: '3453xaa',
         },
       ],
       createdDate: 'August 19, 2022',
@@ -271,6 +272,7 @@ describe('Format Case Data to Frontend Model', () => {
                 PostCode: 'SW1H 9AQ',
               },
             },
+            id: '3453xaa',
           },
         ],
         hubLinksStatuses: new HubLinksStatuses(),
@@ -351,6 +353,7 @@ describe('Format Case Data to Frontend Model', () => {
           respondentAddressTown: 'Anytown',
           respondentAddressCountry: 'England',
           respondentAddressPostcode: 'SW1H 9AQ',
+          ccdId: '3453xaa',
         },
       ],
       et3IsThereAnEt3Response: YesOrNo.YES,

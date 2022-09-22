@@ -60,8 +60,8 @@ describe('Validation', () => {
       expect(isValid).toStrictEqual('required');
     });
 
-    it('Should check if value is less than 5 characters', () => {
-      const isValid = isRespondentNameValid('123');
+    it('Should check if value is at least two characters', () => {
+      const isValid = isRespondentNameValid('a');
 
       expect(isValid).toStrictEqual('invalidLength');
     });

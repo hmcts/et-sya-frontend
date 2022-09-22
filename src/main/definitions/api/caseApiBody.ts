@@ -39,4 +39,5 @@ export interface UpdateCaseBody {
 
 export interface RespondentRequestBody {
   value: RespondentType;
+  id?: string;
 }

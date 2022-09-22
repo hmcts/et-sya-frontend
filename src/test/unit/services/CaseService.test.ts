@@ -178,6 +178,7 @@ describe('update case', () => {
           workAddressTown: 'Anytown',
           workAddressCountry: 'England',
           workAddressPostcode: 'SW1H 9AQ',
+          ccdId: '3453xaa',
         },
       ],
       createdDate: 'August 19, 2022',
