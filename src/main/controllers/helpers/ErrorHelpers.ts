@@ -191,6 +191,6 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
   }
 
   if (fileFormatValid) {
-    return { propertyName: 'claimSummaryText', errorType: fileFormatValid };
+    return { propertyName: 'claimSummaryFile', errorType: fileFormatValid };
   }
 };

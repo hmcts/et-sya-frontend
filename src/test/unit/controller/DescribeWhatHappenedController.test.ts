@@ -66,7 +66,7 @@ describe('Describe-What-Happened Controller', () => {
       const req = mockRequest({ body: {}, file: newFile });
       await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'invalidFileFormat' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFile', errorType: 'invalidFileFormat' }]);
     });
 
     it('should assign userCase from summary text', async () => {
