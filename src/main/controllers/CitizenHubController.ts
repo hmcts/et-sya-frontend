@@ -2,7 +2,14 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { HubLinksStatuses, hubLinksColorMap, hubLinksUrlMap, sectionIndexToLinkNames } from '../definitions/hub';
+import {
+  HubLinkNames,
+  HubLinkStatus,
+  HubLinksStatuses,
+  hubLinksColorMap,
+  hubLinksUrlMap,
+  sectionIndexToLinkNames,
+} from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
@@ -62,10 +69,18 @@ export default class CitizenHubController {
       currentState,
       sections,
       hideContactUs: true,
-      showAcknowledgementAlert: !!userCase?.acknowledgementOfClaimLetterDetail?.length,
-      showRejectionAlert: !!userCase?.rejectionOfClaimDocumentDetail?.length,
-      showRespondentRejection: !!userCase?.responseRejectionDocumentDetail?.length,
-      showRespondentAcknowledgement: !!userCase?.responseAcknowledgementDocumentDetail?.length,
+      showAcknowledgementAlert:
+        !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED,
+      showRejectionAlert:
+        !!userCase?.rejectionOfClaimDocumentDetail?.length &&
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED,
+      showRespondentRejection:
+        !!userCase?.responseRejectionDocumentDetail?.length &&
+        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.VIEWED,
+      showRespondentAcknowledgement:
+        !!userCase?.responseAcknowledgementDocumentDetail?.length &&
+        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.VIEWED,
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
     });
   }

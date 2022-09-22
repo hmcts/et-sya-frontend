@@ -2,7 +2,9 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
+import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 
+import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -12,16 +14,22 @@ const logger = Logger.getLogger('CitizenHubDocumentController');
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const mapParamToDoc = (documentType: string) => {
+      const userCase = req.session.userCase;
       switch (documentType) {
         case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
         case TranslationKeys.CITIZEN_HUB_REJECTION:
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.rejectionOfClaimDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
+          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseRejectionDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
+          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseAcknowledgementDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT:
+          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseEt3FormDocumentDetail;
         default:
           return undefined;
@@ -45,16 +53,30 @@ export default class CitizenHubDocumentController {
       view = 'response-from-respondent-view';
     }
 
+    // const userCase = req.session.userCase;
+    // if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION
+    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT
+    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
+    //     userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
+    // }
+
+    // if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT
+    //   || req?.params?.documentType === TranslationKeys.CITIZEN_HUB_REJECTION) {
+    //     userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
+    // }
+
+    handleUpdateSubmittedCase(req, logger);
+
     res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(req?.params?.documentType, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
-      et3Form: documents.find(d => d.type === 'ET3'),
-      et3SupportingDoc: documents.find(d => d.type === 'et3Supporting'),
-      et3AcceptedDoc: documents.find(d => d.type === '2.11'),
-      et3RejectionDoc: documents.find(d => responseRejectedDocTypes.includes(d.type)),
+      et3Forms: documents.filter(d => d.type === 'ET3'),
+      et3SupportingDocs: documents.filter(d => d.type === 'et3Supporting'),
+      et3AcceptedDocs: documents.filter(d => d.type === '2.11'),
+      et3RejectionDocs: documents.filter(d => responseRejectedDocTypes.includes(d.type)),
     });
   };
 }
