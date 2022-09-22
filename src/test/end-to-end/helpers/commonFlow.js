@@ -6,7 +6,7 @@ async function initialPageFlow() {
   await I.see('Before you continue');
   await I.click('Continue');
   await I.seeElement('#workPostcode');
-  await I.fillField('#workPostcode', 'G2 1DU');
+  await I.fillField('#workPostcode', 'LS9 6EP');
   await I.click('Continue');
 }
 
@@ -14,7 +14,7 @@ async function createSingleMyselfCase() {
   /* Journey for creating a case for yourself
   includes:
   * with ACAS certificate
-  * type of claim = discrimination
+  * type of claim = discrimination and whistleBlowing
   */
   await initialPageFlow();
   //representing yourself
