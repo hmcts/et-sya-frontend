@@ -1,0 +1,50 @@
+{
+  "port": 3001,
+  "useCSRFProtection": true,
+  "security": {
+    "referrerPolicy": "origin"
+  },
+  "appInsights": {
+    "instrumentationKey": false,
+    "roleName": "et-sya"
+  },
+  "featureFlags": {
+    "welsh": "true"
+  },
+  "session": {
+    "maxAgeInMs": "3600000",
+    "secret": "local",
+    "redis": {
+      "host": "",
+      "key": ""
+    }
+  },
+  "services": {
+    "idam": {
+      "clientID": "et-sya",
+      "authorizationURL": "https://idam-web-public.perftest.platform.hmcts.net/login",
+      "clientSecret": "TO BE PICKED UP FROM ENV",
+      "tokenURL": "https://idam-api.perftest.platform.hmcts.net/o/token"
+    },
+    "addressLookup": {
+      "url": "https://api.os.uk/search/places/v1/postcode",
+      "token": "TO BE PICKED UP FROM ENV"
+    },
+    "pcq": {
+      "url": "https://pcq.perftest.platform.hmcts.net/service-endpoint",
+      "health": "https://pcq.perftest.platform.hmcts.net/health",
+      "token": "xssdssdedd",
+      "enabled": "true"
+    },
+    "et1Legacy": {
+      "url": "https://employmenttribunals.service.gov.uk"
+    }
+  },
+  "pact": {
+    "branchName": "master",
+    "brokerUrl": "https://pact-broker.platform.hmcts.net",
+    "consumerVersion": "",
+    "brokerUsername": "",
+    "brokerPassword": ""
+  }
+}

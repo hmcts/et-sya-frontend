@@ -17,7 +17,7 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CaseState } from '../../../main/definitions/definition';
-import { HubLinks } from '../../../main/definitions/hub';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -133,7 +133,6 @@ describe('Should return data in api format', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -274,7 +273,7 @@ describe('Format Case Data to Frontend Model', () => {
             },
           },
         ],
-        hubLinks: new HubLinks(),
+        hubLinksStatuses: new HubLinksStatuses(),
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -355,7 +354,7 @@ describe('Format Case Data to Frontend Model', () => {
         },
       ],
       et3IsThereAnEt3Response: YesOrNo.YES,
-      hubLinks: new HubLinks(),
+      hubLinksStatuses: new HubLinksStatuses(),
     });
   });
 
@@ -430,7 +429,7 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
       et3IsThereAnEt3Response: undefined,
-      hubLinks: undefined,
+      hubLinksStatuses: undefined,
     });
   });
 
