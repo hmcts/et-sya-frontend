@@ -8,7 +8,7 @@ import { PageUrls, Urls } from '../definitions/constants';
 const multer = require('multer');
 const handleUploads = multer({
   limits: {
-    fileSize: 200000000,
+    fileSize: 8000000,
   },
 });
 
