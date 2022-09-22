@@ -151,7 +151,7 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   CLAIM_DETAILS: '/claim-details',
-  CITIZEN_HUB_DOCUMENT: '/case-document/:documentId',
+  CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',

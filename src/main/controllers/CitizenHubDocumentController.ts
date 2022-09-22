@@ -11,8 +11,8 @@ const logger = Logger.getLogger('CitizenHubDocumentController');
 
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const mapParamToDoc = (docId: string) => {
-      switch (docId) {
+    const mapParamToDoc = (documentType: string) => {
+      switch (documentType) {
         case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
           return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
         case TranslationKeys.CITIZEN_HUB_REJECTION:
@@ -28,9 +28,9 @@ export default class CitizenHubDocumentController {
       }
     };
 
-    const documents = mapParamToDoc(req?.params?.documentId);
+    const documents = mapParamToDoc(req?.params?.documentType);
     if (!documents) {
-      logger.info('no documents found for ', req?.params?.documentId);
+      logger.info('no documents found for ', req?.params?.documentType);
       return res.redirect('/not-found');
     }
     try {
@@ -41,13 +41,13 @@ export default class CitizenHubDocumentController {
     }
 
     let view = 'document-view';
-    if (req?.params?.documentId === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
+    if (req?.params?.documentType === TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT) {
       view = 'response-from-respondent-view';
     }
 
     res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(req?.params?.documentId, { returnObjects: true }),
+      ...req.t(req?.params?.documentType, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
