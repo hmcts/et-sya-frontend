@@ -27,9 +27,9 @@ export default class NoAcasNumberController {
         labelHidden: true,
         hint: (l: AnyRecord): string =>
           l.hint +
-          ' <a href=\'https://www.acas.org.uk/early-conciliation\' class="govuk-link" rel="noreferrer noopener" target="_blank">' +
+          ' <a href=\'https://www.acas.org.uk/contact\' class="govuk-link" rel="noreferrer noopener" target="_blank">' +
           l.linkText +
-          '</a>.',
+          '</a>',
         values: [
           {
             name: 'another',
