@@ -130,7 +130,6 @@ export interface Case {
   rejectionOfClaimDocumentDetail?: DocumentDetail[];
   responseAcknowledgementDocumentDetail?: DocumentDetail[];
   responseRejectionDocumentDetail?: DocumentDetail[];
-  respondentResponseET3DocumentDetail?: DocumentDetail[];
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
 }

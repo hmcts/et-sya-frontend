@@ -24,8 +24,7 @@ export default class CaseDocumentController {
         userCase?.acknowledgementOfClaimLetterDetail,
         userCase?.rejectionOfClaimDocumentDetail,
         userCase?.responseAcknowledgementDocumentDetail,
-        userCase?.responseRejectionDocumentDetail,
-        userCase?.respondentResponseET3DocumentDetail
+        userCase?.responseRejectionDocumentDetail
       );
 
       const { mimeType } = allDocumentSets.find(doc => doc.id === docId);

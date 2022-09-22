@@ -307,7 +307,6 @@ describe('Format Case Data to Frontend Model', () => {
       rejectionOfClaimDocumentDetail: undefined,
       responseAcknowledgementDocumentDetail: undefined,
       responseRejectionDocumentDetail: undefined,
-      respondentResponseET3DocumentDetail: undefined,
     });
   });
 
@@ -382,7 +381,6 @@ describe('Format Case Data to Frontend Model', () => {
       rejectionOfClaimDocumentDetail: undefined,
       responseAcknowledgementDocumentDetail: undefined,
       responseRejectionDocumentDetail: undefined,
-      respondentResponseET3DocumentDetail: undefined,
     });
   });
 
@@ -476,7 +474,7 @@ describe('parseDateFromString()', () => {
 });
 
 describe('set Serving Document Values()', () => {
-  it('should retrieve serving Document id and description from ccd response', () => {
+  it('should retrieve serving Document id, type and description from ccd response', () => {
     const servingDocumentCollection = [
       {
         id: '10',
@@ -505,8 +503,9 @@ describe('set Serving Document Values()', () => {
     ];
 
     const expected = [
-      { id: 'abc123', description: 'text' },
-      { id: 'xyz123', description: 'a sentence' },
+      { id: 'abc123', description: 'text', type: '1.1' },
+      { id: 'xyz123', description: 'a sentence', type: '1.1' },
+      { id: 'xyz123', description: 'a sentence', type: '1.1' },
     ];
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
