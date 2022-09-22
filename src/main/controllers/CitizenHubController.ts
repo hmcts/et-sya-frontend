@@ -71,16 +71,16 @@ export default class CitizenHubController {
       hideContactUs: true,
       showAcknowledgementAlert:
         !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED,
       showRejectionAlert:
         !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] === HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED,
       showRespondentRejection:
         !!userCase?.responseRejectionDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
       showRespondentAcknowledgement:
         !!userCase?.responseAcknowledgementDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
     });
   }
