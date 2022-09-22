@@ -44,9 +44,9 @@ describe('Citizen Hub Document Controller', () => {
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     const response = mockResponse();
     request.params.documentType = 'acknowledgement-of-claim';
-    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     await new CitizenHubDocumentController().get(request, response);
     expect(response.render).toHaveBeenCalledWith('document-view', expect.anything());
   });
@@ -60,10 +60,10 @@ describe('Citizen Hub Document Controller', () => {
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
 
     const request = mockRequest({ userCase });
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+
     const response = mockResponse();
     request.params.documentType = 'acknowledgement-of-claim';
-    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    await new CitizenHubDocumentController().get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       'document-view',
@@ -92,7 +92,7 @@ describe('Citizen Hub Document Controller', () => {
 
     const request = mockRequest({ userCase });
     const response = mockResponse();
-    request.params.documentId = 'unknown';
+    request.params.documentType = 'unknown';
 
     await new CitizenHubDocumentController().get(request, response);
 
