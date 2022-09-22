@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -48,6 +49,16 @@ export default class CitizenHubController {
       handleUpdateSubmittedCase(req, logger);
     }
 
+    const hubLinksStatuses = userCase.hubLinksStatuses;
+
+    // Mark respondent's response as waiting for the tribunal
+    if (
+      hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
+      userCase.et3IsThereAnEt3Response === YesOrNo.YES
+    ) {
+      hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
+    }
+
     if (
       userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
       (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
@@ -66,10 +77,11 @@ export default class CitizenHubController {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {
-          const status = userCase.hubLinksStatuses[linkName];
+          const status = hubLinksStatuses[linkName];
           return {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
+            shouldShow: status !== HubLinkStatus.NOT_YET_AVAILABLE && status !== HubLinkStatus.WAITING_FOR_TRIBUNAL,
             url: () => hubLinksUrlMap.get(linkName),
             statusColor: () => hubLinksColorMap.get(status),
           };
@@ -91,18 +103,20 @@ export default class CitizenHubController {
         !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length,
       showAcknowledgementAlert:
         !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
       showRejectionAlert:
         !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
+      showRespondentResponseReceived:
+        hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL,
       showRespondentRejection:
         !!userCase?.responseRejectionDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
+        hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
       showRespondentAcknowledgement:
         !!userCase?.responseAcknowledgementDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
+        hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
     });
   }

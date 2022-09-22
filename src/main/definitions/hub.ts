@@ -32,8 +32,9 @@ export const enum HubLinkStatus {
   SUBMITTED = 'submitted',
   OPTIONAL = 'optional',
   VIEWED = 'viewed',
-  NOT_YET_AVAILABLE = 'notAvailableYet',
   NOT_VIEWED = 'notViewedYet',
+  NOT_YET_AVAILABLE = 'notAvailableYet',
+  WAITING_FOR_TRIBUNAL = 'waitingForTheTribunal',
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
 }
 
@@ -45,10 +46,11 @@ export const hubLinksUrlMap = new Map<string, string>([
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
   [HubLinkStatus.SUBMITTED, '--turquoise'],
-  [HubLinkStatus.VIEWED, '--turquoise'],
   [HubLinkStatus.OPTIONAL, '--blue'],
-  [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
+  [HubLinkStatus.VIEWED, '--turquoise'],
   [HubLinkStatus.NOT_VIEWED, '--red'],
+  [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
+  [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
   [HubLinkStatus.SUBMITTED_AND_VIEWED, '--turquoise'],
 ]);
 
