@@ -1,7 +1,7 @@
 'use strict';
 const contactUs = require('../../helpers/contactUs.js');
 
-const whatTribunalRecommendationConfig = require('./whatTribunalReccomendation.json');
+const whatTribunalRecommendationConfig = require('./whatTribunalRecommendation.json');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
