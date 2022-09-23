@@ -9,7 +9,7 @@ import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
-import { setUserCase, handleUpdateDraftCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -35,11 +35,6 @@ export default class ClaimTypeDiscriminationController {
             id: 'disability',
             label: l => l.disability.checkbox,
             value: ClaimTypeDiscrimination.DISABILITY,
-          },
-          {
-            id: 'ethnicity',
-            label: l => l.ethnicity.checkbox,
-            value: ClaimTypeDiscrimination.ETHNICITY,
           },
           {
             id: 'genderReassignment',
