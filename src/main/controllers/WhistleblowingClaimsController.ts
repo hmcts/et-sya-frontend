@@ -10,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { setUserCase, handleUpdateDraftCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -57,7 +57,7 @@ export default class WhistleblowingClaimsController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -70,4 +70,11 @@ export default class WhistleblowingClaimsController {
       ...content,
     });
   };
+
+  private checkWhistleBlowingClaimYesNo(req: AppRequest): AppRequest {
+    if (req.session.userCase.whistleblowingClaim === YesOrNo.NO) {
+      req.session.userCase.whistleblowingEntityName = undefined;
+    }
+    return req;
+  }
 }
