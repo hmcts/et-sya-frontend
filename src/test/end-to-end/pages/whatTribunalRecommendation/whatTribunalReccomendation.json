@@ -1,0 +1,5 @@
+{
+  "what_is_a_tribunal_recommendation": "//span[.='What is a tribunal recommendation?']",
+  "tribunal_recommendation_request": "//textarea[@id='tribunalRecommendationRequest']",
+  "contact_us": "//span[contains(.,'Contact us')]"
+}

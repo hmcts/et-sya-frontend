@@ -1,0 +1,6 @@
+{
+  "compensation_what_can_a_tribunal_award": "//span[.='Compensation - what can a tribunal award?']",
+  "compensation_outcome": "//textarea[@id='compensationOutcome']",
+  "compensation_amount": "//input[@id='compensation-amount']",
+  "contact_us": "//span[contains(.,'Contact us')]"
+}

@@ -4,6 +4,7 @@ const {
   typeOfDiscrimination,
   whatHappenedToYou,
   ifClaimWasSuccessfull,
+  whatCompensationAreYouSeeking,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 const { I } = inject();
@@ -19,4 +20,5 @@ Scenario('Navigate Claim Details', async () => {
   await typeOfDiscrimination(I);
   await whatHappenedToYou(I);
   await ifClaimWasSuccessfull(I);
+  await whatCompensationAreYouSeeking(I);
 }).tag('@pats');
