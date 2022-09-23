@@ -91,6 +91,7 @@ export default class RespondentAddressController {
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
       handleUpdateDraftCase(req, this.logger);
       return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
