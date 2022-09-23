@@ -17,10 +17,10 @@ export default class CitizenHubDocumentController {
       const userCase = req.session.userCase;
       switch (documentType) {
         case TranslationKeys.CITIZEN_HUB_ACKNOWLEDGEMENT:
-          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
           return req.session?.userCase?.acknowledgementOfClaimLetterDetail;
         case TranslationKeys.CITIZEN_HUB_REJECTION:
-          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.VIEWED;
+          userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
           return req.session?.userCase?.rejectionOfClaimDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
           userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;

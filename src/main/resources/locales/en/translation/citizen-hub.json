@@ -44,6 +44,7 @@
   "notViewedYet": "Not viewed yet",
   "viewed": "Viewed",
   "optional": "Optional",
+  "submittedAndViewed": "Submitted",
   "notificationBanner": {
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",
