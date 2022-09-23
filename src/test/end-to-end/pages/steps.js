@@ -13,6 +13,7 @@ module.exports = () => {
     typeOfDiscrimination: steps.typeOfDiscrimination.typeOfDisc,
     whatHappenedToYou: steps.whatHappenedToYou.whatHappened,
     ifClaimWasSuccessfull: steps.ifClaimWasSuccessfull.ifClaimWasSuccessfull,
+    whatCompensationAreYouSeeking: steps.whatCompensationAreYouSeeking.whatCompensation,
   });
 };
 

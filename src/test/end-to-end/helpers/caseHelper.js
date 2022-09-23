@@ -26,6 +26,10 @@ async function ifClaimWasSuccessfull(I) {
   await I.ifClaimWasSuccessfull();
 }
 
+async function whatCompensationAreYouSeeking(I) {
+  await I.whatCompensationAreYouSeeking(I);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -34,4 +38,5 @@ module.exports = {
   typeOfDiscrimination,
   whatHappenedToYou,
   ifClaimWasSuccessfull,
+  whatCompensationAreYouSeeking,
 };
