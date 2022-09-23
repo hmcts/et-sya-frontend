@@ -6,13 +6,12 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -80,14 +79,8 @@ export default class RespondentAddressController {
         },
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor(private logger: LoggerInstance) {
@@ -98,7 +91,8 @@ export default class RespondentAddressController {
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleUpdateDraftCase(req, this.logger);
+      return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
       const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
