@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 
+import logger from '@pact-foundation/pact/src/common/logger';
 import config from 'config';
 
 import { PCQRequest } from '.';
@@ -22,6 +23,7 @@ export const createToken = (params: PCQRequest): string => {
 
     const paramsJson: string = JSON.stringify(params);
     const cipher = crypto.createCipheriv(algorithm, key, iv);
+    logger.info(cipher);
     encrypted = cipher.update(paramsJson, 'utf-8', 'hex');
     encrypted += cipher.final('hex');
   }
