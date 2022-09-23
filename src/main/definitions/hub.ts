@@ -24,10 +24,6 @@ export class HubLinksStatuses {
       });
 
     this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
-
-    if (this[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED) {
-      this[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
-    }
   }
 }
 

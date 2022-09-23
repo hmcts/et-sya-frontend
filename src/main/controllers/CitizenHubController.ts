@@ -46,6 +46,13 @@ export default class CitizenHubController {
       handleUpdateSubmittedCase(req, logger);
     }
 
+    if (
+      userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
+      (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
+    ) {
+      userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
+    }
+
     const sections = Array.from(Array(8)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
