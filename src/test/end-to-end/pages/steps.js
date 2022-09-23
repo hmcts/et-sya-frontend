@@ -19,6 +19,9 @@ module.exports = () => {
     whatHappenedToYou: steps.whatHappenedToYou.whatHappened,
     ifClaimWasSuccessfull: steps.ifClaimWasSuccessfull.ifClaimWasSuccessfull,
     whatCompensationAreYouSeeking: steps.whatCompensationAreYouSeeking.whatCompensation,
+    whatTribunalRecommendation: steps.whatTribunalRecommendation.whatTribunalRec,
+    whistleBlowingClaims: steps.whistleBlowingClaims.whistleBlow,
+    haveYouCompletedThisSection: steps.haveYouCompleted.haveYouCompletedThisSection,
   });
 };
 

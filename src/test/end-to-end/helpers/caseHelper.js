@@ -50,6 +50,18 @@ async function whatCompensationAreYouSeeking(I) {
   await I.whatCompensationAreYouSeeking(I);
 }
 
+async function whatTribunalRecommendation(I) {
+  I.whatTribunalRecommendation(I);
+}
+
+async function whistleBlowingClaims(I) {
+  I.whistleBlowingClaims(I);
+}
+
+async function haveYouCompletedThisSection(I) {
+  I.haveYouCompletedThisSection(I);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -64,4 +76,7 @@ module.exports = {
   whatHappenedToYou,
   ifClaimWasSuccessfull,
   whatCompensationAreYouSeeking,
+  whatTribunalRecommendation,
+  whistleBlowingClaims,
+  haveYouCompletedThisSection,
 };
