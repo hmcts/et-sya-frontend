@@ -36,6 +36,11 @@ export default class ClaimTypeDiscriminationController {
             value: ClaimTypeDiscrimination.DISABILITY,
           },
           {
+            id: 'ethnicity',
+            label: l => l.ethnicity.checkbox,
+            value: ClaimTypeDiscrimination.ETHNICITY,
+          },
+          {
             id: 'genderReassignment',
             label: l => l.genderReassignment.checkbox,
             value: ClaimTypeDiscrimination.GENDER_REASSIGNMENT,
