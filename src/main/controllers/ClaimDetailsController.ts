@@ -27,8 +27,10 @@ export default class ClaimDetailsController {
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       PageUrls,
       userCase,
+      hideContactUs: true,
       docs: {
         et1Form: '<a href="#" target="_blank" class="govuk-link">ET1 Form</a>',
         et1Support: `<a href="${req.session.userCase.claimSummaryFile?.document_binary_url}" target="_blank" class="govuk-link">ET1 support document</a>`,

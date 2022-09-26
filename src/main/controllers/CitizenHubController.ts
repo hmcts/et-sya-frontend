@@ -78,6 +78,7 @@ export default class CitizenHubController {
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       PageUrls,
       userCase,
       currentState,
