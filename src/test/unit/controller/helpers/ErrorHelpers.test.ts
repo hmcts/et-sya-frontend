@@ -8,6 +8,7 @@ import {
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { mockSession } from '../../mocks/mockApp';
+import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
 import { mockRequest, mockRequestWithSaveException } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
@@ -100,7 +101,7 @@ describe('Claim Summary Error', () => {
   it('should not return any errors when not on the summary page', () => {
     const body = {};
 
-    const errors = getClaimSummaryError(body);
+    const errors = getClaimSummaryError(body, undefined);
 
     expect(errors).toEqual(undefined);
   });
@@ -108,15 +109,15 @@ describe('Claim Summary Error', () => {
   it('should not return an error if only text has been provided', () => {
     const body = { claimSummaryText: 'text' };
 
-    const errors = getClaimSummaryError(body);
+    const errors = getClaimSummaryError(body, undefined);
 
     expect(errors).toEqual(undefined);
   });
 
   it('should not return an error if only a file has been provided', () => {
-    const body = { claimSummaryFileName: 'file' };
+    const body = {};
 
-    const errors = getClaimSummaryError(body);
+    const errors = getClaimSummaryError(body, mockFile);
 
     expect(errors).toEqual(undefined);
   });
@@ -127,7 +128,7 @@ describe('Claim Summary Error', () => {
       claimSummaryFileName: '',
     };
 
-    const errors = getClaimSummaryError(body);
+    const errors = getClaimSummaryError(body, undefined);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
   });
@@ -135,10 +136,9 @@ describe('Claim Summary Error', () => {
   it('should return textAndFile error if neither text nor file has been provided', () => {
     const body = {
       claimSummaryText: 'text',
-      claimSummaryFileName: 'file',
     };
 
-    const errors = getClaimSummaryError(body);
+    const errors = getClaimSummaryError(body, mockFile);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
   });

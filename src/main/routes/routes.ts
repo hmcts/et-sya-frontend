@@ -5,6 +5,13 @@ import { Application } from 'express';
 
 import { PageUrls, Urls } from '../definitions/constants';
 
+const multer = require('multer');
+const handleUploads = multer({
+  limits: {
+    fileSize: 40000000,
+  },
+});
+
 export default function (app: Application): void {
   app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
   app.get(PageUrls.HOME, app.locals.container.cradle.homeController.get);
@@ -140,7 +147,11 @@ export default function (app: Application): void {
   app.get(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.get);
   app.post(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.post);
   app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.get);
-  app.post(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.post);
+  app.post(
+    PageUrls.DESCRIBE_WHAT_HAPPENED,
+    handleUploads.single('claimSummaryFileName'),
+    app.locals.container.cradle.describeWhatHappenedController.post
+  );
   app.get(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.get);
   app.post(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.post);
   app.get(PageUrls.COMPENSATION, app.locals.container.cradle.compensationController.get);

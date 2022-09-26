@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import WhistleblowingClaimsController from '../../../main/controllers/WhistleblowingClaimsController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -10,8 +12,13 @@ describe('Whistleblowing Claims Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render the whistleblowing claims page', () => {
-    const controller = new WhistleblowingClaimsController();
+    const controller = new WhistleblowingClaimsController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -22,7 +29,7 @@ describe('Whistleblowing Claims Controller', () => {
     it('should not require input for forwarding whistleblower claim input', () => {
       const req = mockRequest({ body: {} });
       const res = mockResponse();
-      new WhistleblowingClaimsController().post(req, res);
+      new WhistleblowingClaimsController(mockLogger).post(req, res);
 
       expect(req.session.errors).toHaveLength(0);
     });
@@ -30,7 +37,7 @@ describe('Whistleblowing Claims Controller', () => {
     it('should require regulator or body name if selected yes for forwarding', () => {
       const req = mockRequest({ body: { whistleblowingClaim: YesOrNo.YES } });
       const res = mockResponse();
-      new WhistleblowingClaimsController().post(req, res);
+      new WhistleblowingClaimsController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'required' }];
 
@@ -46,7 +53,7 @@ describe('Whistleblowing Claims Controller', () => {
         },
       });
       const Res = mockResponse();
-      new WhistleblowingClaimsController().post(Req, Res);
+      new WhistleblowingClaimsController(mockLogger).post(Req, Res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
@@ -63,7 +70,7 @@ describe('Whistleblowing Claims Controller', () => {
         },
       });
       const Res = mockResponse();
-      new WhistleblowingClaimsController().post(Req, Res);
+      new WhistleblowingClaimsController(mockLogger).post(Req, Res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
@@ -81,7 +88,7 @@ describe('Whistleblowing Claims Controller', () => {
       });
       const res = mockResponse();
 
-      new WhistleblowingClaimsController().post(req, res);
+      new WhistleblowingClaimsController(mockLogger).post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         whistleblowingClaim: YesOrNo.YES,
