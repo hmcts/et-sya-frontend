@@ -59,20 +59,6 @@ describe('Validation', () => {
 
       expect(isValid).toStrictEqual('required');
     });
-
-    it('Should check if value is at least two characters', () => {
-      const isValid = isRespondentNameValid('a');
-
-      expect(isValid).toStrictEqual('invalidLength');
-    });
-
-    it('Should check if value is greater than 100 characters', () => {
-      const isValid = isRespondentNameValid(
-        '12345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912'
-      );
-
-      expect(isValid).toStrictEqual('invalidLength');
-    });
   });
 
   describe('isContent2500CharsOrLess()', () => {

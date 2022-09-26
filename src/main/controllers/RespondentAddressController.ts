@@ -39,6 +39,7 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 100,
         },
       },
       respondentAddressTown: {
