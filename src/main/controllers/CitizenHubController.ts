@@ -85,10 +85,12 @@ export default class CitizenHubController {
       hideContactUs: true,
       showAcknowledgementAlert:
         !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
       showRejectionAlert:
         !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED,
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+        userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
       showRespondentRejection:
         !!userCase?.responseRejectionDocumentDetail?.length &&
         userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,

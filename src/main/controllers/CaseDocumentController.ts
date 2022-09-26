@@ -23,8 +23,7 @@ export default class CaseDocumentController {
       const allDocumentSets = combineDocuments(
         userCase?.acknowledgementOfClaimLetterDetail,
         userCase?.rejectionOfClaimDocumentDetail,
-        userCase?.responseAcknowledgementDocumentDetail,
-        userCase?.responseRejectionDocumentDetail
+        userCase?.responseEt3FormDocumentDetail
       );
 
       const { mimeType } = allDocumentSets.find(doc => doc.id === docId);

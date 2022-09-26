@@ -8,6 +8,7 @@ import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiRespon
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
 import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -263,6 +264,108 @@ describe('Citizen hub page', () => {
         });
 
       expect(htmlRes.querySelector(notificationBannerSelector).innerHTML).toContain('View the claim rejection');
+    });
+  });
+  describe('Alert containing a link to view the response acknowledgement documents on the citizen hub page', () => {
+    it('should render link to Rejection of response document Page', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        id: '123',
+        state: CaseState.SUBMITTED,
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
+        responseAcknowledgementDocumentDetail: [
+          {
+            id: 'responseAcknowledgeId1',
+            description: 'asdf',
+          },
+          {
+            id: 'responseAcknowledgeId2',
+            description: 'asdf',
+          },
+        ],
+      });
+
+      await request(
+        mockApp({
+          userCase: {
+            hubLinksStatuses: {
+              documents: 'notAvailableYet',
+              et1ClaimForm: 'submitted',
+              hearingDetails: 'notAvailableYet',
+              tribunalOrders: 'notAvailableYet',
+              contactTribunal: 'notAvailableYet',
+              personalDetails: 'notAvailableYet',
+              respondentResponse: 'notAvailableYet',
+              tribunalJudgements: 'notAvailableYet',
+              respondentApplications: 'notAvailableYet',
+              requestsAndApplications: 'notAvailableYet',
+            },
+          } as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      expect(htmlRes.querySelector(notificationBannerSelector).innerHTML).toContain('View the response');
+    });
+  });
+
+  describe('Should not show the alert when the corresponding hublink has been viewed', () => {
+    it('Notification banner should not appear - the notificaiton banner selector should return null', async () => {
+      caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
+
+      const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
+      mockFromApiFormat.mockReturnValue({
+        id: '123',
+        state: CaseState.SUBMITTED,
+        createdDate: 'August 19, 2022',
+        lastModified: 'August 19, 2022',
+        responseAcknowledgementDocumentDetail: [
+          {
+            id: 'responseAcknowledgeId1',
+            description: 'asdf',
+          },
+          {
+            id: 'responseAcknowledgeId2',
+            description: 'asdf',
+          },
+        ],
+        acknowledgementOfClaimLetterDetail: [
+          {
+            id: 'claimAcknowledgeId1',
+            description: 'asdf',
+          },
+        ],
+        hubLinksStatuses: {
+          documents: HubLinkStatus.VIEWED,
+          et1ClaimForm: HubLinkStatus.SUBMITTED_AND_VIEWED,
+          hearingDetails: HubLinkStatus.VIEWED,
+          tribunalOrders: HubLinkStatus.VIEWED,
+          contactTribunal: HubLinkStatus.VIEWED,
+          personalDetails: HubLinkStatus.VIEWED,
+          respondentResponse: HubLinkStatus.VIEWED,
+          tribunalJudgements: HubLinkStatus.VIEWED,
+          respondentApplications: HubLinkStatus.VIEWED,
+          requestsAndApplications: HubLinkStatus.VIEWED,
+        },
+      });
+
+      await request(
+        mockApp({
+          userCase: {} as Partial<CaseWithId>,
+        })
+      )
+        .get(PageUrls.CITIZEN_HUB)
+        .then(res => {
+          htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        });
+
+      expect(htmlRes.querySelector(notificationBannerSelector)).toBe(null);
     });
   });
 });
