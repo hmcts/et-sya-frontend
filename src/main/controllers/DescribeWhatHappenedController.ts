@@ -2,14 +2,14 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { hasValidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
@@ -36,7 +36,16 @@ export default class DescribeWhatHappenedController {
         hint: l => l.fileUpload.hint,
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
-        validator: hasValidFileFormat,
+      },
+      claimSummaryAcceptedType: {
+        id: 'claim-summary-file-accepted-type',
+        label: l => l.acceptedFormats.label,
+        labelHidden: true,
+        type: 'readonly',
+        classes: 'govuk-label',
+        isCollapsable: true,
+        collapsableTitle: l => l.acceptedFormats.label,
+        hint: l => l.acceptedFormats.p1,
       },
     },
     submit: {
@@ -55,11 +64,15 @@ export default class DescribeWhatHappenedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
 
-    const result = await handleUploadDocument(req, req.body.claimSummaryFileName, this.logger);
-    if (result) {
+    try {
+      const result = await handleUploadDocument(req, req.file, this.logger);
       req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+    } catch (error) {
+      this.logger.info(error);
+    } finally {
+      handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 

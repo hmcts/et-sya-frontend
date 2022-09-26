@@ -33,6 +33,10 @@
     "linkText": "Or upload your summary as a separate document (optional)",
     "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
   },
+  "acceptedFormats": {
+    "label": "Accepted formats",
+    "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+  },
   "errors": {
     "claimSummaryText": {
       "required": "Tell us what happened to you",

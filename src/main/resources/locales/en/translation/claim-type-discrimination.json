@@ -32,7 +32,7 @@
   },
   "race": {
     "title": "Race claim",
-    "checkbox": "Race"
+    "checkbox": "Race (including colour, nationality, and ethnic or national origins)"
   },
   "religionOrBelief": {
     "title": "Religion or belief claim",
@@ -40,7 +40,7 @@
   },
   "sex": {
     "title": "Sex claim",
-    "checkbox": "Sex"
+    "checkbox": "Sex (including equal pay)"
   },
   "sexualOrientation": {
     "title": "Sexual orientation claim",
