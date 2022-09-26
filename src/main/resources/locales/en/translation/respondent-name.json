@@ -8,7 +8,7 @@
   "errors": {
     "respondentName": {
       "required": "Enter the name of the respondent",
-      "invalidLength": "Enter a respondent name of between 2-100 characters"
+      "invalidLength": "Enter a respondent name of between 1-100 characters"
     }
   }
 }
