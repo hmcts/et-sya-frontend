@@ -18,6 +18,8 @@ nodejs:
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
     REDIS_HOST: 'et-sya-session-storage-{{ .Values.global.environment }}.redis.cache.windows.net'
     ET_SYA_API_HOST: 'http://et-sya-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal'
+    PCQ_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/service-endpoint'
+    PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
     PCQ_ENABLED: 'true'
 idam-pr:
   enabled: false
