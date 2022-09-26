@@ -7,11 +7,13 @@ export const mockRequest = ({
   userCase,
   session,
   t,
+  file,
 }: {
   body?: AnyRecord;
   userCase?: Partial<CaseWithId>;
   session?: AnyRecord;
   t?: AnyRecord;
+  file?: Express.Multer.File;
 }): AppRequest => {
   const req = {
     t: () => t,
@@ -19,6 +21,7 @@ export const mockRequest = ({
 
   req.t = jest.fn().mockReturnValue(req);
   req.body = body;
+  req.file = file;
   req.params = {
     respondentNumber: '1',
   };

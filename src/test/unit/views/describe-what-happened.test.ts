@@ -38,7 +38,7 @@ describe('Describe What Happened page', () => {
 
   it('should display expandable details section', () => {
     const details = htmlRes.getElementsByClassName(detailsClass);
-    expect(details.length).equals(6, 'Incorrect number of expandable details sections');
+    expect(details.length).equals(7, 'Incorrect number of expandable details sections');
   });
 
   it('should display textarea', () => {
