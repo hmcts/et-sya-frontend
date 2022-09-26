@@ -333,12 +333,6 @@ describe('Validation', () => {
     });
   });
   describe('isAcasNumberValid()', () => {
-    it('Should check if value exist', () => {
-      const isValid = isAcasNumberValid('R12345/789/12');
-
-      expect(isValid).toStrictEqual('invalidAcasNumber');
-    });
-
     it('Should check if value does not exist', () => {
       const isValid = isAcasNumberValid(undefined);
 
@@ -422,6 +416,11 @@ describe('Validation', () => {
     it('Should not allow the slashes in any position', () => {
       const isValid = isAcasNumberValid('R123/45678/12');
       expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should allow a small r at the beginning', () => {
+      const isValid = isAcasNumberValid('r123455/79/12');
+      expect(isValid).toStrictEqual(undefined);
     });
 
     it('Should validate corect RNNNNNN/NN/NN format', () => {
