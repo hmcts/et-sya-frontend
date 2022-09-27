@@ -13,7 +13,6 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class NoAcasNumberController {
   private readonly form: Form;
@@ -71,11 +70,13 @@ export default class NoAcasNumberController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
+
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleUpdateDraftCase(req, this.logger);
     } else {
-      setUserCaseForRespondent(req, this.form);
       handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
       handleUpdateDraftCase(req, this.logger);
     }

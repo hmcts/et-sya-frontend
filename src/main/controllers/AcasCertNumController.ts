@@ -13,7 +13,7 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -64,13 +64,14 @@ export default class AcasCertNumController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleUpdateDraftCase(req, this.logger);
     } else {
       let redirectUrl;
-      setUserCaseForRespondent(req, this.form);
       if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
         redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
       } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {

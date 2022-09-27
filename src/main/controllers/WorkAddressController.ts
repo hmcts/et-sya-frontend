@@ -13,7 +13,7 @@ import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class WorkAddressController {
   private readonly form: Form;
@@ -34,10 +34,12 @@ export default class WorkAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    setUserCase(req, this.form);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleUpdateDraftCase(req, this.logger);
     } else {
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrl = isRespondentAndWorkAddressSame
