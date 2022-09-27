@@ -125,14 +125,14 @@
       }) }}
 
       {% set documentsRows = [] %}
-      {% for document in docs %}
+      {% for document in et1Documents %}
         {% set documentsRows = (documentsRows.push(
           [
             {
               text: document.date
             },
             {
-              text: getContentSafe(document.text)
+              html: "<a href=\"/getCaseDocument/" + document.id + "\" target=\"_blank\" class=\"govuk-link\">" + document.name + "</a>"
             }
           ]
           ), documentsRows) %}

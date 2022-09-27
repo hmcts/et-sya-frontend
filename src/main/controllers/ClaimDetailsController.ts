@@ -32,14 +32,15 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      docs: [
+      et1Documents: [
         {
           date: '1st Jan',
-          text: '<a href="#" target="_blank" class="govuk-link">ET1 Form</a>',
+          name: 'ET1 Form',
         },
         {
           date: et1DocumentDetails.createdOn,
-          text: `<a href="/getCaseDocument/${et1SupportId}" target="_blank" class="govuk-link">ET1 support document</a>`,
+          id: et1SupportId,
+          name: 'ET1 support document',
         },
       ],
     });
