@@ -113,13 +113,6 @@ export const mockEt1DataModelUpdate = {
             Country: 'England',
             PostCode: 'SW1H 9AQ',
           },
-          claimant_work_address: {
-            AddressLine1: 'Respondent Address',
-            AddressLine2: 'That Road',
-            PostTown: 'Anytown',
-            Country: 'England',
-            PostCode: 'SW1H 9AQ',
-          },
         },
         id: '3453xaa',
       },
