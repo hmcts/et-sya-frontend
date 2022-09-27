@@ -90,13 +90,11 @@ describe('Place Of Work Controller Tests', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(req.session.userCase.respondents[0].workAddress1).toStrictEqual('31 The Street');
-    expect(req.session.userCase.respondents[0].workAddress2).toStrictEqual('');
-    expect(req.session.userCase.respondents[0].workAddressTown).toStrictEqual('Exeter');
-    expect(req.session.userCase.respondents[0].workAddressCountry).toStrictEqual('United Kingdom');
-    expect(req.session.userCase.respondents[0].workAddressPostcode).toStrictEqual('EX7 8KK');
-
-    expect(req.session.userCase.respondents[0].respondentNumber).toStrictEqual(1);
+    expect(req.session.userCase.workAddress1).toStrictEqual('31 The Street');
+    expect(req.session.userCase.workAddress2).toStrictEqual('');
+    expect(req.session.userCase.workAddressTown).toStrictEqual('Exeter');
+    expect(req.session.userCase.workAddressCountry).toStrictEqual('United Kingdom');
+    expect(req.session.userCase.workAddressPostcode).toStrictEqual('EX7 8KK');
   });
 
   it('should run logger in catch block', async () => {
