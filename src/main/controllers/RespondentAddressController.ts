@@ -118,6 +118,7 @@ export default class RespondentAddressController {
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,
       respondentName: selectedRespondent.respondentName,
+      previousPostcode: selectedRespondent.respondentAddressPostcode,
     });
   };
 }

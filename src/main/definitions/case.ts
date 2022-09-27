@@ -100,7 +100,6 @@ export interface Case {
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
-  claimSummaryFileName?: string;
   claimSummaryFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;

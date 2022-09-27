@@ -19,6 +19,7 @@ import {
   isValidUKTelNumber,
   validateTitlePreference,
 } from '../../../main/components/form/validator';
+import { mockFile } from '../mocks/mockFile';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
@@ -312,7 +313,9 @@ describe('Validation', () => {
       { fileName: 'file.', expected: 'invalidFileFormat' },
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
-      expect(hasValidFileFormat(fileName)).toEqual(expected);
+      const newFile = mockFile;
+      newFile.filename = fileName;
+      expect(hasValidFileFormat(newFile)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {
