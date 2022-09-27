@@ -6,6 +6,7 @@ import {
   StillWorking,
   YesOrNo,
 } from '../../../main/definitions/case';
+import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
@@ -84,6 +85,22 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
+    },
+    claimantRequests: {
+      discrimination_claims: [ClaimTypeDiscrimination.RACE],
+      pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
+      claim_description: 'Claim summary text',
+      claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      claimant_compensation_text: 'Compensation outcome',
+      claimant_compensation_amount: 123,
+      claimant_tribunal_recommendation: 'Tribunal recommendation request',
+      whistleblowing: YesOrNo.YES,
+      whistleblowing_authority: 'Whistleblowing entity name',
+      claim_description_document: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,

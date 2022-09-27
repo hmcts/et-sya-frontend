@@ -37,7 +37,7 @@ describe('Claim Type Discrimination page', () => {
 
   it('should display checkboxes', () => {
     const checkboxes = htmlRes.getElementsByClassName(inputs);
-    expect(checkboxes.length).equal(10, `only ${checkboxes.length} found`);
+    expect(checkboxes.length).equal(9, `only ${checkboxes.length} found`);
   });
 
   it('should display inputs with valid labels', () => {

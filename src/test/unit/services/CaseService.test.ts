@@ -18,7 +18,12 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
-import { CaseState } from '../../../main/definitions/definition';
+import {
+  CaseState,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+} from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelSubmittedUpdate, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
@@ -156,6 +161,15 @@ describe('update case', () => {
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
+      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
+      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
+      claimSummaryText: 'Claim summary text',
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      compensationOutcome: 'Compensation outcome',
+      compensationAmount: 123,
+      tribunalRecommendationRequest: 'Tribunal recommendation request',
+      whistleblowingClaim: YesOrNo.YES,
+      whistleblowingEntityName: 'Whistleblowing entity name',
       claimDetailsCheck: YesOrNo.YES,
       workAddress1: 'Respondent Address',
       workAddress2: 'That Road',
@@ -181,6 +195,11 @@ describe('update case', () => {
           ccdId: '3453xaa',
         },
       ],
+      claimSummaryFile: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     };
