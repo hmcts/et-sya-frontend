@@ -9,7 +9,13 @@ export const isValidAddressFirstLine: AddressValidator = value => {
   if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
     return ValidationErrors.REQUIRED;
   }
-  if (!(value as string).match(/(^.{1,100}$)/)) {
+  if (!(value as string).match(/(^.{1,50}$)/)) {
+    return ValidationErrors.INVALID_VALUE;
+  }
+};
+
+export const isValidAddressSecondLine: AddressValidator = value => {
+  if (!(value as string).match(/(^.{1,50}$)/)) {
     return ValidationErrors.INVALID_VALUE;
   }
 };
@@ -18,7 +24,7 @@ export const isValidCountryTownOrCity: AddressValidator = value => {
   if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
     return ValidationErrors.REQUIRED;
   }
-  if (!(value as string).match(/(^.{1,60}$)/)) {
+  if (!(value as string).match(/(^.{1,50}$)/)) {
     return ValidationErrors.INVALID_VALUE;
   }
 };

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
+import { isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -26,7 +27,7 @@ export default class AddressDetailsController {
         validator: isFieldFilledIn,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 100,
+          maxLength: 50,
         },
       },
       address2: {
@@ -38,6 +39,7 @@ export default class AddressDetailsController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
       },
       addressTown: {
@@ -49,9 +51,9 @@ export default class AddressDetailsController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
-        validator: isFieldFilledIn,
+        validator: isValidCountryTownOrCity,
       },
       addressCountry: {
         id: 'addressCountry',
@@ -60,9 +62,9 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isValidCountryTownOrCity,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
       },
       addressPostcode: {

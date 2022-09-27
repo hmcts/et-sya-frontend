@@ -71,14 +71,13 @@ export default class NoAcasNumberController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCaseForRespondent(req, this.form);
+    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, this.logger);
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
-      handleUpdateDraftCase(req, this.logger);
     }
   };
 

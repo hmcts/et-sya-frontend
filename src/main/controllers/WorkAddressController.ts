@@ -35,11 +35,11 @@ export default class WorkAddressController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, this.logger);
     } else {
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrl = isRespondentAndWorkAddressSame
@@ -49,9 +49,7 @@ export default class WorkAddressController {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
-      setUserCase(req, this.form);
       handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
     }
   };
 

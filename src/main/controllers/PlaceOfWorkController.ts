@@ -1,8 +1,9 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import { isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -25,9 +26,9 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 100,
+          maxLength: 50,
         },
-        validator: isValidAddressFirstLine,
+        validator: isFieldFilledIn,
       },
       workAddress2: {
         id: 'address2',
@@ -37,6 +38,7 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
       },
       workAddressTown: {
@@ -47,7 +49,7 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -58,7 +60,7 @@ export default class PlaceOfWorkController {
         label: l => l.country,
         labelSize: null,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -91,6 +93,7 @@ export default class PlaceOfWorkController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
     setUserCase(req, this.form);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     const { saveForLater } = req.body;
     if (saveForLater) {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);

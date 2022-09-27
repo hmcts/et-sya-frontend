@@ -65,11 +65,11 @@ export default class AcasCertNumController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCaseForRespondent(req, this.form);
+    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, this.logger);
     } else {
       let redirectUrl;
       if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
@@ -81,7 +81,6 @@ export default class AcasCertNumController {
         redirectUrl = PageUrls.ACAS_CERT_NUM;
       }
       handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
     }
   };
 

@@ -1,8 +1,9 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import { isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -26,9 +27,9 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 100,
+          maxLength: 50,
         },
-        validator: isValidAddressFirstLine,
+        validator: isFieldFilledIn,
       },
       respondentAddress2: {
         id: 'address2',
@@ -39,7 +40,7 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
-          maxLength: 100,
+          maxLength: 50,
         },
       },
       respondentAddressTown: {
@@ -51,7 +52,7 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -63,7 +64,7 @@ export default class RespondentAddressController {
         label: l => l.country,
         labelSize: null,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
