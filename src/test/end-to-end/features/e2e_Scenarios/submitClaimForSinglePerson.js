@@ -6,6 +6,7 @@ const {
   enterRespondentDetailsJourney,
   enterPersonalDetails,
   stepsToMakingYourClaim,
+  claimDetails,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
@@ -21,4 +22,6 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
   await stillWorkingForRespondentJourney(I, 'Yes written contract with notice period', 'Months');
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
+  I.click("//a[contains(.,'Describe what happened to you')]");
+  await claimDetails(I);
 }).tag('@RET-WIP');
