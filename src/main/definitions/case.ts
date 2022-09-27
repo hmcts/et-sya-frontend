@@ -125,6 +125,7 @@ export interface Case {
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  et1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
   rejectionOfClaimDocumentDetail?: DocumentDetail[];
   responseAcknowledgementDocumentDetail?: DocumentDetail[];

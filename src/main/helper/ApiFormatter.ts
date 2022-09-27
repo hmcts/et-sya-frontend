@@ -349,12 +349,15 @@ export const setDocumentValues = (
   const foundDocuments = documentCollection
     .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
     .map(doc => {
-      const docUrl = doc.value?.uploadedDocument?.document_url;
       return {
-        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
         type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
+};
+
+export const getDocId = (url: string): string => {
+  return url.substring(url.lastIndexOf('/') + 1, url.length);
 };

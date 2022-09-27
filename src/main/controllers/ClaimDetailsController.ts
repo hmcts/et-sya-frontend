@@ -2,8 +2,10 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { DocumentDetail } from '../definitions/definition';
+import { getDocId } from '../helper/ApiFormatter';
 
-import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
+import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -13,16 +15,15 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
+    const et1SupportId = getDocId(req.session.userCase.claimSummaryFile.document_url);
+
+    const et1DocumentDetails = [{ id: et1SupportId, description: '' }] as DocumentDetail[];
     try {
-      await getDocumentDetails(
-        combineDocuments(userCase?.acknowledgementOfClaimLetterDetail, userCase?.rejectionOfClaimDocumentDetail),
-        req.session.user?.accessToken
-      );
+      await getDocumentDetails(et1DocumentDetails, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.response?.status, err.response?.data, err);
     }
-
-    // et1SupportId = req.session.userCase.claimSummaryFile.document_binary_url;
+    req.session.userCase.et1DocumentDetails = et1DocumentDetails;
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -33,7 +34,7 @@ export default class ClaimDetailsController {
       hideContactUs: true,
       docs: {
         et1Form: '<a href="#" target="_blank" class="govuk-link">ET1 Form</a>',
-        et1Support: `<a href="${req.session.userCase.claimSummaryFile?.document_binary_url}" target="_blank" class="govuk-link">ET1 support document</a>`,
+        et1Support: `<a href="/getCaseDocument/${et1SupportId}" target="_blank" class="govuk-link">ET1 support document</a>`,
       },
     });
   };

@@ -27,6 +27,7 @@ import {
   formatDate,
   fromApiFormat,
   fromApiFormatDocument,
+  getDocId,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
@@ -569,7 +570,6 @@ describe('set Serving Document Values()', () => {
     ];
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
-    console.log('result is ', result);
     expect(result).toEqual(expected);
   });
 
@@ -578,5 +578,9 @@ describe('set Serving Document Values()', () => {
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
     expect(result).toEqual(undefined);
+  });
+
+  it('should get the document id correctly from the url', () => {
+    expect(getDocId('http://address/documents/abc123')).toBe('abc123');
   });
 });
