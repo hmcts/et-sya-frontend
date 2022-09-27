@@ -15,15 +15,15 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
-    const et1SupportId = getDocId(req.session.userCase.claimSummaryFile.document_url);
+    const et1SupportId = getDocId(req.session.userCase.claimSummaryFile?.document_url);
+    const et1DocumentDetails = { id: et1SupportId, description: '' } as DocumentDetail;
+    userCase.et1DocumentDetails = [et1DocumentDetails];
 
-    const et1DocumentDetails = [{ id: et1SupportId, description: '' }] as DocumentDetail[];
     try {
-      await getDocumentDetails(et1DocumentDetails, req.session.user?.accessToken);
+      await getDocumentDetails(userCase.et1DocumentDetails, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.response?.status, err.response?.data, err);
     }
-    req.session.userCase.et1DocumentDetails = et1DocumentDetails;
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -32,10 +32,16 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      docs: {
-        et1Form: '<a href="#" target="_blank" class="govuk-link">ET1 Form</a>',
-        et1Support: `<a href="/getCaseDocument/${et1SupportId}" target="_blank" class="govuk-link">ET1 support document</a>`,
-      },
+      docs: [
+        {
+          date: '1st Jan',
+          text: '<a href="#" target="_blank" class="govuk-link">ET1 Form</a>',
+        },
+        {
+          date: et1DocumentDetails.createdOn,
+          text: `<a href="/getCaseDocument/${et1SupportId}" target="_blank" class="govuk-link">ET1 support document</a>`,
+        },
+      ],
     });
   };
 }

@@ -124,6 +124,20 @@
         ]
       }) }}
 
+      {% set documentsRows = [] %}
+      {% for document in docs %}
+        {% set documentsRows = (documentsRows.push(
+          [
+            {
+              text: document.date
+            },
+            {
+              text: getContentSafe(document.text)
+            }
+          ]
+          ), documentsRows) %}
+      {% endfor %}
+
       {{ govukTable({
         firstCellIsHeader: false,
         head: [
@@ -134,24 +148,7 @@
             text: "Document"
           }
         ],
-        rows: [
-          [
-            {
-              text: "22 April 2022"
-            },
-            {
-              text: getContentSafe(docs.et1Form)
-            }
-          ],
-          [
-            {
-              text: "22 April 2022"
-            },
-            {
-              text: getContentSafe(docs.et1Support)
-            }
-          ]
-        ]
+        rows: documentsRows
       }) }}
 
       {% set contactContent %}
