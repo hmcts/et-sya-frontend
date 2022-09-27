@@ -25,7 +25,7 @@ describe('Acas Cert Num Controller', () => {
   });
 
   it('should redirect to respondent details check when yes is selected', () => {
-    const body = { acasCert: YesOrNo.YES, acasCertNum: 'R123453/121' };
+    const body = { acasCert: YesOrNo.YES, acasCertNum: 'R123453/12/21' };
 
     const controller = new AcasCertNumController();
 
