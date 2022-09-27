@@ -5,6 +5,7 @@ const {
   stillWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
   enterPersonalDetails,
+  stepsToMakingYourClaim,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
@@ -14,6 +15,7 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
+  await stepsToMakingYourClaim(I);
   await enterPersonalDetails(I);
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');

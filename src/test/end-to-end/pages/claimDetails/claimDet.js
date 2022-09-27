@@ -83,6 +83,7 @@ module.exports = async function (allClaimDetailsPages) {
     await contactUs.verifyContactUs();
     I.click('Save and continue');
   }
+
   //If your claim was successfull page.
   I.see('What do you want if your claim is successful?');
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
