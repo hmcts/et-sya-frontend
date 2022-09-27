@@ -11,7 +11,7 @@ Scenario('Navigate Claim Details - Describe What happenned to you', async () => 
   await stepsToMakingYourClaim(I);
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
-}).tag('@pats');
+}).tag('@RET-BAT');
 
 Scenario('Navigate Claim Details - Tell us what you want from your claim', async () => {
   await commonFlow.createSingleMyselfCase();
@@ -20,4 +20,4 @@ Scenario('Navigate Claim Details - Tell us what you want from your claim', async
   await stepsToMakingYourClaim(I);
   I.click("//a[contains(.,'Tell us what you want from your claim')]");
   await claimDetails(I, false);
-}).tag('@pats');
+}).tag('@RET-BAT');
