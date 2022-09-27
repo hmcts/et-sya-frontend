@@ -15,14 +15,30 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
-    const et1SupportId = getDocId(req.session.userCase.claimSummaryFile?.document_url);
-    const et1DocumentDetails = { id: et1SupportId, description: '' } as DocumentDetail;
-    userCase.et1DocumentDetails = [et1DocumentDetails];
+    const et1Documents = [
+      {
+        date: '1st Jan',
+        id: '',
+        name: 'ET1 Form',
+      },
+    ];
 
-    try {
-      await getDocumentDetails(userCase.et1DocumentDetails, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
+    if (userCase.claimSummaryFile?.document_url) {
+      const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
+      const et1DocumentDetails = { id: et1SupportId, description: '' } as DocumentDetail;
+      userCase.et1DocumentDetails = [et1DocumentDetails];
+
+      try {
+        await getDocumentDetails(userCase.et1DocumentDetails, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.response?.status, err.response?.data, err);
+      }
+
+      et1Documents.push({
+        date: et1DocumentDetails.createdOn,
+        id: et1SupportId,
+        name: 'ET1 support document',
+      });
     }
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
@@ -32,17 +48,7 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      et1Documents: [
-        {
-          date: '1st Jan',
-          name: 'ET1 Form',
-        },
-        {
-          date: et1DocumentDetails.createdOn,
-          id: et1SupportId,
-          name: 'ET1 support document',
-        },
-      ],
+      et1Documents,
     });
   };
 }
