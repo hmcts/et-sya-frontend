@@ -291,13 +291,6 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
           Country: respondent.respondentAddressCountry,
           PostCode: respondent.respondentAddressPostcode,
         },
-        claimant_work_address: {
-          AddressLine1: respondent.workAddress1,
-          AddressLine2: respondent.workAddress2,
-          PostTown: respondent.workAddressTown,
-          Country: respondent.workAddressCountry,
-          PostCode: respondent.workAddressPostcode,
-        },
         respondent_ACAS_question: respondent.acasCert,
         respondent_ACAS: respondent.acasCertNum,
         respondent_ACAS_no: respondent.noAcasReason,
