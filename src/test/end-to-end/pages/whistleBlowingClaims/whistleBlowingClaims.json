@@ -1,5 +1,0 @@
-{
-  "whistle_blowing_claims": "//input[@id='whistleblowing-claim']",
-  "whistle_blowing_entity_name": "//input[@id='whistleblowing-entity-name']",
-  "contact_us": "//span[contains(.,'Contact us')]"
-}

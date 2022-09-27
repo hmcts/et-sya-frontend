@@ -15,13 +15,7 @@ module.exports = () => {
     noLongerWorkingJourney: steps.employmentDetails.noLongerWorkingPages,
     respondentDetailsJourney: steps.employmentDetails.respondentDetailsPages,
     stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
-    typeOfDiscrimination: steps.typeOfDiscrimination.typeOfDisc,
-    whatHappenedToYou: steps.whatHappenedToYou.whatHappened,
-    ifClaimWasSuccessfull: steps.ifClaimWasSuccessfull.ifClaimWasSuccessfull,
-    whatCompensationAreYouSeeking: steps.whatCompensationAreYouSeeking.whatCompensation,
-    whatTribunalRecommendation: steps.whatTribunalRecommendation.whatTribunalRec,
-    whistleBlowingClaims: steps.whistleBlowingClaims.whistleBlow,
-    haveYouCompletedThisSection: steps.haveYouCompleted.haveYouCompletedThisSection,
+    claimDetails: steps.claimDetails.claimDet,
   });
 };
 

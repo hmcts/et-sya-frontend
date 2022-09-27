@@ -34,6 +34,10 @@ async function stepsToMakingYourClaim(I) {
   await I.stepsToMakingYourClaim();
 }
 
+async function claimDetails(I, allClaimDetailsPages = true) {
+  await I.claimDetails(allClaimDetailsPages);
+}
+
 async function typeOfDiscrimination(I) {
   await I.typeOfDiscrimination();
 }
@@ -79,4 +83,5 @@ module.exports = {
   whatTribunalRecommendation,
   whistleBlowingClaims,
   haveYouCompletedThisSection,
+  claimDetails,
 };
