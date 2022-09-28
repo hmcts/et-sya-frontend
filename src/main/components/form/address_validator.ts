@@ -15,6 +15,9 @@ export const isValidAddressFirstLine: AddressValidator = value => {
 };
 
 export const isValidAddressSecondLine: AddressValidator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return;
+  }
   if (!(value as string).match(/(^.{1,50}$)/)) {
     return ValidationErrors.INVALID_VALUE;
   }

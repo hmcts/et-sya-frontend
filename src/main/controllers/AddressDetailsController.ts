@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidCountryTownOrCity } from '../components/form/address_validator';
+import { isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -41,6 +41,7 @@ export default class AddressDetailsController {
           autocomplete: 'address-line2',
           maxLength: 50,
         },
+        validator: isValidAddressSecondLine,
       },
       addressTown: {
         id: 'addressTown',
