@@ -31,7 +31,7 @@ describe('Place Of Work Controller Tests', () => {
     const errors = [{ propertyName: 'workAddress1', errorType: 'required' }];
     const body = {
       workAddress1: '',
-      workAddress12: '',
+      workAddress2: '',
       workAddressTown: 'Exeter',
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',
@@ -50,7 +50,7 @@ describe('Place Of Work Controller Tests', () => {
   it('should redirect to Acas number page if no errors', () => {
     const body = {
       workAddress1: '31 The Street',
-      workAddress12: '',
+      workAddress2: '',
       workAddressTown: 'Exeter',
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',
@@ -100,7 +100,7 @@ describe('Place Of Work Controller Tests', () => {
   it('should run logger in catch block', async () => {
     const body = {
       workAddress1: '31 The Street',
-      workAddress12: '',
+      workAddress2: '',
       workAddressTown: 'Exeter',
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',

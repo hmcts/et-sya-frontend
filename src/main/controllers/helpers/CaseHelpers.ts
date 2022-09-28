@@ -36,7 +36,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
 };
 
 export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
-  if (!req.session.errors.length) {
+  if (!req.session.errors?.length) {
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
       .then(response => {
