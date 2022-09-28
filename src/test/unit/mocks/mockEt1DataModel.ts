@@ -1,4 +1,11 @@
-import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import {
+  EmailOrPost,
+  HearingPreference,
+  NoAcasNumberReason,
+  Sex,
+  StillWorking,
+  YesOrNo,
+} from '../../../main/definitions/case';
 import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
@@ -27,6 +34,7 @@ export const mockEt1DataModelUpdate = {
     typeOfClaim: ['discrimination', 'payRelated'],
     ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
+    claimantWorkAddressQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'John',
@@ -99,11 +107,31 @@ export const mockEt1DataModelUpdate = {
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
+    claimantWorkAddress: {
+      claimant_work_address: {
+        AddressLine1: 'Respondent Address',
+        AddressLine2: 'That Road',
+        PostTown: 'Anytown',
+        Country: 'England',
+        PostCode: 'SW1H 9AQ',
+      },
+    },
     respondentCollection: [
       {
         value: {
           respondent_name: 'Globo Corp',
+          respondent_ACAS_question: YesOrNo.YES,
+          respondent_ACAS: 'R111111111111',
+          respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
+          respondent_address: {
+            AddressLine1: 'Respondent Address',
+            AddressLine2: 'That Road',
+            PostTown: 'Anytown',
+            Country: 'England',
+            PostCode: 'SW1H 9AQ',
+          },
         },
+        id: '3453xaa',
       },
     ],
   },

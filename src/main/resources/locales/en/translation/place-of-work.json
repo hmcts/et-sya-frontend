@@ -12,16 +12,20 @@
       "notSelected": "Select an address"
     },
     "workAddress1": {
-      "required": "Enter the first line of the respondent address - up to 100 characters",
-      "invalid": "Enter a valid first line of the respondent address - up to 100 characters"
+      "required": "Enter the first line of the address you worked at - up to 100 characters",
+      "invalid": "Enter a valid first line of the address you worked at - up to 100 characters"
+    },
+    "workAddress2": {
+      "required": "Enter the second line of the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid second line of the address you worked at - up to 50 characters"
     },
     "workAddressTown": {
-      "required": "Enter a town or city for the respondent address - up to 60 characters",
-      "invalid": "Enter a valid town or city for the respondent address - up to 60 characters"
+      "required": "Enter a town or city for the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid town or city for the address you worked at - up to 50 characters"
     },
     "workAddressCountry": {
-      "required": "Enter a country for the respondent address - up to 60 characters",
-      "invalid": "Enter a valid country for the respondent address - up to 60 characters"
+      "required": "Enter a country for the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid country for the address you worked at - up to 50 characters"
     },
     "workAddressPostcode": {
       "required": "Enter a postcode. For example, SW1 1AA",

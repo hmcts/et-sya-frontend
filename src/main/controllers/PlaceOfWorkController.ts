@@ -1,16 +1,17 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import { isValidAddressFirstLine, isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelpers';
+import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class PlaceOfWorkController {
   private readonly form: Form;
@@ -36,7 +37,9 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
+        validator: isValidAddressSecondLine,
       },
       workAddressTown: {
         id: 'addressTown',
@@ -46,7 +49,7 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -57,7 +60,7 @@ export default class PlaceOfWorkController {
         label: l => l.country,
         labelSize: null,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -83,18 +86,20 @@ export default class PlaceOfWorkController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.placeOfWorkContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
-    setUserCaseForRespondent(req, this.form);
+    setUserCase(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleUpdateDraftCase(req, this.logger);
     } else {
       handleSessionErrors(req, res, this.form, redirectUrl);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 
@@ -108,6 +113,7 @@ export default class PlaceOfWorkController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
+      previousPostcode: req.session.userCase.workAddressPostcode,
     });
   };
 }

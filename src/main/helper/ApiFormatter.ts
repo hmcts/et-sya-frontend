@@ -98,6 +98,12 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
     lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
+    claimantWorkAddressQuestion: fromApiCaseData.case_data?.claimantWorkAddressQuestion,
+    workAddress1: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine1,
+    workAddress2: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine2,
+    workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
+    workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
+    workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
   };
@@ -181,7 +187,17 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
+      claimantWorkAddress: {
+        claimant_work_address: {
+          AddressLine1: caseItem.workAddress1,
+          AddressLine2: caseItem.workAddress2,
+          PostTown: caseItem.workAddressTown,
+          Country: caseItem.workAddressCountry,
+          PostCode: caseItem.workAddressPostcode,
+        },
+      },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
+      claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
     },
   };
@@ -268,7 +284,16 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   }
   return respondents.map(respondent => {
     return {
-      respondentName: respondent.value.respondent_name,
+      respondentName: respondent.value?.respondent_name,
+      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      acasCert: respondent.value?.respondent_ACAS_question,
+      acasCertNum: respondent.value?.respondent_ACAS,
+      noAcasReason: respondent.value?.respondent_ACAS_no,
+      ccdId: respondent?.id,
     };
   });
 };
@@ -281,7 +306,18 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
     return {
       value: {
         respondent_name: respondent.respondentName,
+        respondent_address: {
+          AddressLine1: respondent.respondentAddress1,
+          AddressLine2: respondent.respondentAddress2,
+          PostTown: respondent.respondentAddressTown,
+          Country: respondent.respondentAddressCountry,
+          PostCode: respondent.respondentAddressPostcode,
+        },
+        respondent_ACAS_question: respondent.acasCert,
+        respondent_ACAS: respondent.acasCertNum,
+        respondent_ACAS_no: respondent.noAcasReason,
       },
+      id: respondent.ccdId,
     };
   });
 };

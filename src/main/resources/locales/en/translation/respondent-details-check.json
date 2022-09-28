@@ -7,7 +7,7 @@
   "submit": "Add another respondent",
   "errors": {
     "hiddenErrorField": {
-      "exceeded": "You can only add up to 6 respondents in this claim. Contact the tribunal after submitting you claim to discuss more respondents."
+      "exceeded": "You can only add up to 6 respondents in this claim. Contact the tribunal after submitting your claim to discuss more respondents."
     }
   }
 }
