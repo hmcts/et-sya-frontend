@@ -1,9 +1,8 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import { isValidAddressFirstLine, isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -26,9 +25,9 @@ export default class PlaceOfWorkController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 50,
+          maxLength: 100,
         },
-        validator: isFieldFilledIn,
+        validator: isValidAddressFirstLine,
       },
       workAddress2: {
         id: 'address2',

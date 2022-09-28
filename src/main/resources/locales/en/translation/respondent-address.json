@@ -17,8 +17,12 @@
       "notSelected": "Select an address"
     },
     "respondentAddress1": {
-      "required": "Enter the first line of the respondent address - up to 50 characters",
-      "invalid": "Enter a valid first line of the respondent address - up to 50 characters"
+      "required": "Enter the first line of the respondent address - up to 100 characters",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 characters"
+    },
+    "respondentAddress2": {
+      "required": "Enter the second line of the respondent address - up to 50 characters",
+      "invalid": "Enter a valid second line of the respondent address - up to 50 characters"
     },
     "respondentAddressTown": {
       "required": "Enter a town or city for the respondent address - up to 50 characters",
