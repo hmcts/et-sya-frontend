@@ -7,8 +7,8 @@ module.exports = async function () {
   I.see('Steps to making your claim');
   I.see('Application Details');
   I.see('Claim type');
-  /*I.see('Discrimination');
-  I.see('Whistleblowing');*/
+  I.see('Discrimination');
+  I.see('Whistleblowing');
 
   //Your details
   I.see('Your details');

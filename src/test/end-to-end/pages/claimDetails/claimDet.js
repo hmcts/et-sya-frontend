@@ -8,8 +8,7 @@ module.exports = async function (allClaimDetailsPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   if (allClaimDetailsPages) {
-    //This page only takes effect when discriminaiton is selected as part of an End to End Flow during Case Creation.
-    /*I.see('What type of discrimination are you');
+    I.see('What type of discrimination are you');
     I.see('claiming?');
     I.see('What is discrimination?');
     I.see('Select all that apply.');
@@ -41,7 +40,7 @@ module.exports = async function (allClaimDetailsPages) {
     I.checkOption(claimDetailsConfig.sex);
     I.checkOption(claimDetailsConfig.sexual_orientation);
 
-    I.click('Save and continue');*/
+    I.click('Save and continue');
 
     //What happened to you Page.
     I.see('Describe what happened to you');
@@ -57,30 +56,30 @@ module.exports = async function (allClaimDetailsPages) {
     I.see('Or upload your summary as a separate document (optional)');
 
     I.click(claimDetailsConfig.what_to_write_for_discrimination_claims);
-    I.wait(1);
+    //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     await claimDetailsContentHelper.verifyWhatToWriteForDiscriminationClaims();
 
     I.click(claimDetailsConfig.what_to_write_for_dismissal_claims);
-    I.wait(1);
+    //I.wait(1);  //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     await claimDetailsContentHelper.verifyWhatToWriteForDismissalClaims();
 
     I.click(claimDetailsConfig.what_to_write_for_whistle_blower_claims);
-    I.wait(1);
+    //I.wait(1);  //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     await claimDetailsContentHelper.verifyWhatToWriteForWhistleBlowerClaims();
 
     I.click(claimDetailsConfig.what_to_write_for_other_claims);
-    I.wait(1);
+    //I.wait(1);  //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     await claimDetailsContentHelper.verifyWhatToWriteForOtherClaims();
 
     I.click(claimDetailsConfig.upload_your_summary_as_a_separate);
-    I.wait(1);
+    //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     I.see('You can only upload 1 document.');
     I.see('Upload a file');
 
     I.fillField(claimDetailsConfig.claim_summary_notes, 'Discrimination, Dismissal and Pay Cut.');
 
     I.click(claimDetailsConfig.contact_us);
-    I.wait(1);
+    //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
     await contactUs.verifyContactUs();
     I.click('Save and continue');
   }
@@ -90,11 +89,11 @@ module.exports = async function (allClaimDetailsPages) {
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await claimDetailsContentHelper.verifyIfATribunalDecidesYouveBeenUnfairlyDismissed();
 
   I.click(claimDetailsConfig.what_is_a_tribunal_recommendation);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await claimDetailsContentHelper.verifyIfYourEmployerIsFound();
 
   I.checkOption(claimDetailsConfig.compensation_only);
@@ -103,7 +102,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.checkOption(claimDetailsConfig.get_another_job);
 
   I.click(claimDetailsConfig.contact_us);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
@@ -113,14 +112,14 @@ module.exports = async function (allClaimDetailsPages) {
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await claimDetailsContentHelper.verifyIfATribunalDecidesYouveBeenUnfairlyDismissed();
 
   I.fillField(claimDetailsConfig.compensation_outcome, 'Discrimination, Dismissal and Pay Cut.');
   I.fillField(claimDetailsConfig.compensation_amount, '1000.00');
 
   I.click(claimDetailsConfig.contact_us);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
@@ -131,18 +130,18 @@ module.exports = async function (allClaimDetailsPages) {
   await claimDetailsContentHelper.verifyWhatIsATribunalReccomendation();
 
   I.click(claimDetailsConfig.what_is_a_tribunal_recommendation);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await claimDetailsContentHelper.verifyIfYourEmployerIsFoundDiscriminated();
 
   I.fillField(claimDetailsConfig.tribunal_recommendation_request, 'Discrimination, Dismissal and Pay Cut.');
 
   I.click(claimDetailsConfig.contact_us);
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
 
-  /*//Whistle Blowing Claims Page (Commented this Code Block as this would be only useful once thw Whistleblower and Discrimination is selected as part of the Case creation)
+  //Whistle Blowing Claims Page (Commented this Code Block as this would be only useful once thw Whistleblower and Discrimination is selected as part of the Case creation)
   I.see('Whistleblowing claims');
   await claimDetailsContentHelper.verifyWhistleBlowingClaims();
 
@@ -153,7 +152,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.wait(1);
   await contactUs.verifyContactUs();
 
-  I.click('Save and continue');*/
+  I.click('Save and continue');
 
   //Have you completed this Section
   I.see('Have you completed this section?');
@@ -164,7 +163,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.checkOption("//input[@id='claim-details-check']");
 
   I.click("//span[contains(.,'Contact us')]");
-  I.wait(1);
+  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
