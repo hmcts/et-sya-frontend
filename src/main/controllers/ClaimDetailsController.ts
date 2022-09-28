@@ -15,7 +15,7 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
-    const et1DocumentDetails = userCase.et1DocumentDetails;
+    const et1DocumentDetails = userCase.et1DocumentDetails || [];
     if (userCase.claimSummaryFile?.document_url) {
       const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
       const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
