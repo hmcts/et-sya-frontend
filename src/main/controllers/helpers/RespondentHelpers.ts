@@ -26,6 +26,9 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
     formData.acasCertNum = undefined;
   }
+  if (formData.acasCert === YesOrNo.YES) {
+    formData.noAcasReason = undefined;
+  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
@@ -45,11 +48,6 @@ export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: numbe
     userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex]?.respondentAddressTown;
     userCase.respondentAddressCountry = userCase.respondents[selectedRespondentIndex]?.respondentAddressCountry;
     userCase.respondentAddressPostcode = userCase.respondents[selectedRespondentIndex]?.respondentAddressPostcode;
-    userCase.workAddress1 = userCase.respondents[selectedRespondentIndex]?.workAddress1;
-    userCase.workAddress2 = userCase.respondents[selectedRespondentIndex]?.workAddress2;
-    userCase.workAddressTown = userCase.respondents[selectedRespondentIndex]?.workAddressTown;
-    userCase.workAddressCountry = userCase.respondents[selectedRespondentIndex]?.workAddressCountry;
-    userCase.workAddressPostcode = userCase.respondents[selectedRespondentIndex]?.workAddressPostcode;
     userCase.acasCert = userCase.respondents[selectedRespondentIndex]?.acasCert;
     userCase.acasCertNum = userCase.respondents[selectedRespondentIndex]?.acasCertNum;
     userCase.noAcasReason = userCase.respondents[selectedRespondentIndex]?.noAcasReason;

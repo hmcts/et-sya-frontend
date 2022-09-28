@@ -7,8 +7,8 @@
   "label": "Enter name of respondent",
   "errors": {
     "respondentName": {
-      "required": "Tell us the name of the respondent",
-      "invalidLength": "Enter a respondent name of between 5-100 characters"
+      "required": "Enter a respondent name between 1-100 characters",
+      "invalidLength": "Enter a respondent name between 1-100 characters"
     }
   }
 }

@@ -1,11 +1,16 @@
+import axios from 'axios';
 import { LoggerInstance } from 'winston';
 
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Respondent Name Controller', () => {
   const t = {
@@ -107,7 +112,7 @@ describe('Respondent Name Controller', () => {
   it('should redirect to your claim has been saved page when save as draft selected and no respondent name entered', () => {
     const body = { saveForLater: true };
 
-    const controller = new NoAcasNumberController();
+    const controller = new NoAcasNumberController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -119,7 +124,7 @@ describe('Respondent Name Controller', () => {
   it('should redirect to undefined when save as draft not selected and no respondent name entered', () => {
     const body = { saveForLater: false };
 
-    const controller = new NoAcasNumberController();
+    const controller = new NoAcasNumberController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -127,5 +132,27 @@ describe('Respondent Name Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
+  });
+
+  it('should add respondent name to the session userCase', () => {
+    const body = { respondentName: 'Globe Gym' };
+    const controller = new RespondentNameController(mockLogger);
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    controller.post(req, res);
+    expect(req.session.userCase.respondents[0].respondentName).toStrictEqual('Globe Gym');
+    expect(req.session.userCase.respondents[0].respondentNumber).toStrictEqual(1);
+  });
+
+  it('should run logger in catch block', async () => {
+    const body = { respondentName: 'MegaCorp' };
+    const controller = new RespondentNameController(mockLogger);
+    const request = mockRequest({ body });
+    const response = mockResponse();
+
+    await controller.post(request, response);
+
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

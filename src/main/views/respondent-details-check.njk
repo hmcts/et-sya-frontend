@@ -21,7 +21,7 @@
                   rows: [
                     {
                       key: {
-                        text: subTitle + respondent.respondentNumber,
+                        text: subTitle + loop.index,
                         classes: "govuk-heading-m"
                       }
                     },
@@ -35,7 +35,7 @@
                       actions: {
                         items: [
                           {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME + '/change',
+                            href: '/respondent/' + loop.index + PageUrls.RESPONDENT_NAME + '/change',
                             text: "Change",
                             visuallyHiddenText: "name"
                           }
@@ -52,7 +52,7 @@
                       actions: {
                         items: [
                           {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS + '/change',
+                            href: '/respondent/' + loop.index + PageUrls.RESPONDENT_ADDRESS + '/change',
                             text: "Change",
                             visuallyHiddenText: "address"
                           }
@@ -69,7 +69,7 @@
                       actions: {
                         items: [
                           {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM + '/change',
+                            href: '/respondent/' + loop.index + PageUrls.ACAS_CERT_NUM + '/change',
                             text: "Change",
                             visuallyHiddenText: "acasCertNum"
                           }

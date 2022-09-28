@@ -5,7 +5,7 @@ const waitSeconds = 2;
 
 Scenario('Verify ET multiple claim for myself', async () => {
   await commonFlow.initialPageFlow();
-
+  I.wait(3);
   I.waitForText('I’m representing myself and making my own claim', waitSeconds);
   I.click('Who can act as a representative?', 'span[class=govuk-details__summary-text]');
   I.see('Citizens Advice advisers');
