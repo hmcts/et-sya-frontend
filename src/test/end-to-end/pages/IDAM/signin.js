@@ -8,5 +8,6 @@ module.exports = async function () {
   I.waitForText('Sign in');
   I.fillField('username', testConfig.TestEnvETUser);
   I.fillField('password', testConfig.TestEnvETPassword);
-  I.click('input[value="Sign in"]');
+  I.click('Sign in');
+  //I.click('input[value="Sign in"]');
 };
