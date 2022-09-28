@@ -41,7 +41,7 @@
     rows: [
       { key: { text: submissionReference  }, value: { text: submissionReferenceText | safe } },
       { key: { text: claimSubmitted  }, value: { text: claimSubmittedText | safe } },
-      { key: { text: downloadClaim | safe }, value: { html: downloadBtn | safe } },
+      { key: { text: downloadClaim | safe }, value: { html: '<a href=\"' + downloadLink + '\"class=\"govuk-link\">' + downloadBtnText +  '</a>' | safe } },
       { key: { text: attachments }, value: { text: attachmentsText | safe } }
     ]
     }) }}
