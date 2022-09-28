@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 
 import { isDateEmpty } from '../components/form/dateValidators';
+import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
@@ -109,7 +110,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
-    et1DocumentDetails: setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et1DocTypes),
+    et1FormDetails: setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et1DocTypes),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
@@ -128,7 +129,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     ),
     respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
     responseEt3FormDocumentDetail: [
-      ...concatArrays(
+      ...combineDocuments(
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
@@ -137,9 +138,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     ],
   };
 }
-
-// merge arrays but make sure they are not undefined
-const concatArrays = (...arrays: DocumentDetail[][]) => [].concat(...arrays.filter(Array.isArray));
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   return {
