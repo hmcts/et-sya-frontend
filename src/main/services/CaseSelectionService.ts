@@ -39,7 +39,7 @@ export const getRedirectUrl = (userCase: CaseWithId): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
     return `/claimant-application/${userCase.id}`;
   } else {
-    return userCase.et1SubmittedForm.document_url;
+    return userCase.et1SubmittedForm?.document_url;
   }
 };
 
