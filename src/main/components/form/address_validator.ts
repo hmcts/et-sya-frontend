@@ -9,7 +9,7 @@ export const isValidAddressFirstLine: AddressValidator = value => {
   if (isFieldFilledIn(value) === ValidationErrors.REQUIRED) {
     return ValidationErrors.REQUIRED;
   }
-  if (!(value as string).match(/(^.{1,50}$)/)) {
+  if (!(value as string).match(/(^.{1,100}$)/)) {
     return ValidationErrors.INVALID_VALUE;
   }
 };

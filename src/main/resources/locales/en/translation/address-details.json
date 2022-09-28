@@ -14,8 +14,8 @@
   "cannotFindAddress": "I cannot find my address in the list",
   "errors": {
     "address1": {
-      "required": "Enter the first line of your contact or home address - up to 50 characters",
-      "invalid": "Enter the first line of your contact or home address - up to 50 characters"
+      "required": "Enter the first line of your contact or home address - up to 100 characters",
+      "invalid": "Enter the first line of your contact or home address - up to 100 characters"
     },
     "addressTown": {
       "required": "Enter a town or city for your contact or home address - up to 50 characters",
