@@ -15,7 +15,7 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
-    const et1DocumentDetails = userCase.et1DocumentDetails || [];
+    const et1DocumentDetails = userCase.et1DocumentDetails;
     if (userCase.claimSummaryFile?.document_url) {
       const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
       const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
@@ -29,7 +29,7 @@ export default class ClaimDetailsController {
     }
 
     const et1Documents = [];
-    for (const doc of et1DocumentDetails) {
+    for (const doc of et1DocumentDetails || []) {
       et1Documents.push({
         date: doc.createdOn,
         id: doc.id,
