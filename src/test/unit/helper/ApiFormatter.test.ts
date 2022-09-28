@@ -15,7 +15,12 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { CaseState } from '../../../main/definitions/definition';
+import {
+  CaseState,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  TellUsWhatYouWant,
+} from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
   formatDate,
@@ -104,6 +109,15 @@ describe('Should return data in api format', () => {
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
+      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
+      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
+      claimSummaryText: 'Claim summary text',
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      compensationOutcome: 'Compensation outcome',
+      compensationAmount: 123,
+      tribunalRecommendationRequest: 'Tribunal recommendation request',
+      whistleblowingClaim: YesOrNo.YES,
+      whistleblowingEntityName: 'Whistleblowing entity name',
       claimDetailsCheck: YesOrNo.YES,
       respondents: [
         {
@@ -113,6 +127,11 @@ describe('Should return data in api format', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
       et3IsThereAnEt3Response: YesOrNo.YES,
+      claimSummaryFile: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -221,6 +240,22 @@ describe('Format Case Data to Frontend Model', () => {
           hearing_preferences: [HearingPreference.PHONE],
           hearing_assistance: 'Hearing assistance test',
         },
+        claimantRequests: {
+          claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
+          claimant_compensation_text: 'Compensation outcome',
+          claimant_compensation_amount: 123,
+          claimant_tribunal_recommendation: 'Tribunal recommendation request',
+          whistleblowing: YesOrNo.YES,
+          whistleblowing_authority: 'Whistleblowing entity name',
+          claim_description: 'Claim summary text',
+          claim_description_document: {
+            document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+            document_filename: 'document.pdf',
+            document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+          },
+          discrimination_claims: [ClaimTypeDiscrimination.RACE],
+          pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
+        },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
           employmentAndRespondentCheck: YesOrNo.YES,
@@ -292,6 +327,15 @@ describe('Format Case Data to Frontend Model', () => {
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
       employmentAndRespondentCheck: YesOrNo.YES,
+      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
+      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
+      claimSummaryText: 'Claim summary text',
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      compensationOutcome: 'Compensation outcome',
+      compensationAmount: 123,
+      tribunalRecommendationRequest: 'Tribunal recommendation request',
+      whistleblowingClaim: YesOrNo.YES,
+      whistleblowingEntityName: 'Whistleblowing entity name',
       claimDetailsCheck: YesOrNo.YES,
       respondents: [
         {
@@ -299,6 +343,11 @@ describe('Format Case Data to Frontend Model', () => {
         },
       ],
       et3IsThereAnEt3Response: YesOrNo.YES,
+      claimSummaryFile: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
       hubLinksStatuses: new HubLinksStatuses(),
     });
   });
@@ -366,8 +415,18 @@ describe('Format Case Data to Frontend Model', () => {
       claimantContactPreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
+      claimSummaryText: undefined,
+      claimTypeDiscrimination: undefined,
+      claimTypePay: undefined,
+      tellUsWhatYouWant: undefined,
+      tribunalRecommendationRequest: undefined,
+      compensationAmount: undefined,
+      compensationOutcome: undefined,
+      whistleblowingClaim: undefined,
+      whistleblowingEntityName: undefined,
       respondents: undefined,
       et3IsThereAnEt3Response: undefined,
+      claimSummaryFile: undefined,
       hubLinksStatuses: undefined,
     });
   });

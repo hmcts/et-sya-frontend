@@ -199,14 +199,13 @@ export const currencyValidation = (value: string | string[]): [digitCount: numbe
   return [digitCount, correctFormat];
 };
 
-export const hasValidFileFormat: Validator = value => {
-  if (!value) {
+export const hasValidFileFormat = (value: Express.Multer.File): string => {
+  if (!value || !value.filename) {
     return;
   }
 
-  value = (value as string).trim();
   for (const format of ALLOWED_FILE_FORMATS) {
-    if (value.endsWith('.' + format)) {
+    if (value.filename.endsWith('.' + format)) {
       return;
     }
   }
