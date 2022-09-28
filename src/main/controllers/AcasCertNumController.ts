@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -8,10 +9,11 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { conditionalRedirect, handleSaveAsDraft } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -57,18 +59,19 @@ export default class AcasCertNumController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.acasCertNumContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    setUserCaseForRespondent(req, this.form);
+    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
     } else {
       let redirectUrl;
-      setUserCaseForRespondent(req, this.form);
       if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
         redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
       } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
