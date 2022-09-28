@@ -30,6 +30,42 @@ async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas) {
   await I.respondentDetailsJourney(workAddress, doYouHaveAcas);
 }
 
+async function stepsToMakingYourClaim(I) {
+  await I.stepsToMakingYourClaim();
+}
+
+async function claimDetails(I, allClaimDetailsPages = true) {
+  await I.claimDetails(allClaimDetailsPages);
+}
+
+async function typeOfDiscrimination(I) {
+  await I.typeOfDiscrimination();
+}
+
+async function whatHappenedToYou(I) {
+  await I.whatHappenedToYou();
+}
+
+async function ifClaimWasSuccessfull(I) {
+  await I.ifClaimWasSuccessfull();
+}
+
+async function whatCompensationAreYouSeeking(I) {
+  await I.whatCompensationAreYouSeeking(I);
+}
+
+async function whatTribunalRecommendation(I) {
+  I.whatTribunalRecommendation(I);
+}
+
+async function whistleBlowingClaims(I) {
+  I.whistleBlowingClaims(I);
+}
+
+async function haveYouCompletedThisSection(I) {
+  I.haveYouCompletedThisSection(I);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -39,4 +75,13 @@ module.exports = {
   workingNoticePeriodForRespondentJourney,
   noLongerWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
+  stepsToMakingYourClaim,
+  typeOfDiscrimination,
+  whatHappenedToYou,
+  ifClaimWasSuccessfull,
+  whatCompensationAreYouSeeking,
+  whatTribunalRecommendation,
+  whistleBlowingClaims,
+  haveYouCompletedThisSection,
+  claimDetails,
 };
