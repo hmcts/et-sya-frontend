@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.ACAS_CERT_NUM}`, () => {
   test('should go to the types of claim page when the Yes radio button is selected', async () => {
     await request(mockApp({}))
       .post(pageUrl)
-      .send({ acasCertNum: 'R123222/2131', acasCert: YesOrNo.YES })
+      .send({ acasCertNum: 'R123222/21/31', acasCert: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.RESPONDENT_DETAILS_CHECK);
