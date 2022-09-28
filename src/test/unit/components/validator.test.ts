@@ -314,7 +314,7 @@ describe('Validation', () => {
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       const newFile = mockFile;
-      newFile.filename = fileName;
+      newFile.originalname = fileName;
       expect(hasValidFileFormat(newFile)).toEqual(expected);
     });
   });
