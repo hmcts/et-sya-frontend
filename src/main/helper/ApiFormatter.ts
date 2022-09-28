@@ -9,6 +9,7 @@ import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPrefer
 import {
   CcdDataModel,
   acceptanceDocTypes,
+  et1DocTypes,
   et3FormDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
@@ -108,6 +109,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
+    et1DocumentDetails: setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et1DocTypes),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes

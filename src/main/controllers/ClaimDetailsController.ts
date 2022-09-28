@@ -15,29 +15,25 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
-    const et1Documents = [
-      {
-        date: '1st Jan',
-        id: '',
-        name: 'ET1 Form',
-      },
-    ];
-
+    const et1DocumentDetails = userCase.et1DocumentDetails;
     if (userCase.claimSummaryFile?.document_url) {
       const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
-      const et1DocumentDetails = { id: et1SupportId, description: '' } as DocumentDetail;
-      userCase.et1DocumentDetails = [et1DocumentDetails];
+      const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
+      et1DocumentDetails.push(supportDocDetails);
 
       try {
-        await getDocumentDetails(userCase.et1DocumentDetails, req.session.user?.accessToken);
+        await getDocumentDetails(et1DocumentDetails, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.response?.status, err.response?.data, err);
       }
+    }
 
+    const et1Documents = [];
+    for (const doc of et1DocumentDetails) {
       et1Documents.push({
-        date: et1DocumentDetails.createdOn,
-        id: et1SupportId,
-        name: 'ET1 support document',
+        date: doc.createdOn,
+        id: doc.id,
+        name: doc.originalDocumentName,
       });
     }
 
