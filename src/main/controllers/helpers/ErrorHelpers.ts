@@ -179,7 +179,7 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
   }
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
-  const fileProvided = file !== undefined; //isFieldFilledIn(formData.claimSummaryFileName) === undefined;
+  const fileProvided = file !== undefined;
   const fileFormatValid = hasValidFileFormat(file);
 
   if (textProvided && fileProvided) {
