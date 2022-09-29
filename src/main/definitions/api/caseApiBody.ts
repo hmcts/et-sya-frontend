@@ -14,6 +14,7 @@ interface CaseDataApiBody {
   typesOfClaim: string[];
   ClaimantPcqId?: string;
   claimantRepresentedQuestion: string;
+  claimant_TypeOfClaimant?: string;
   caseSource: string;
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;

@@ -249,6 +249,7 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+export const TYPE_OF_CLAIMANT = 'Individual';
 
 export const mvpLocations = [
   'ZE',

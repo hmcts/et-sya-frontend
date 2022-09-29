@@ -9,6 +9,7 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
 import {
   CcdDataModel,
+  TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
   et3FormDocTypes,
@@ -29,6 +30,7 @@ export function toApiFormatCreate(
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
       typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
         claimant_last_name: userDetails.familyName,
@@ -156,6 +158,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
