@@ -206,7 +206,7 @@ describe('Format Case Data to Frontend Model', () => {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
-        typeOfClaim: ['discrimination', 'payRelated'],
+        typesOfClaim: ['discrimination', 'payRelated'],
         ClaimantPcqId: '1234',
         et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {

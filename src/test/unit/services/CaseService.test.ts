@@ -54,7 +54,7 @@ describe('Axios post to initiate case', () => {
       expect.objectContaining({
         post_code: 'SW1A 1AA',
         case_data: {
-          typeOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
+          typesOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           caseSource: CcdDataModel.CASE_SOURCE,
           caseType: 'Single',
           claimantRepresentedQuestion: 'Yes',

@@ -35,7 +35,7 @@ export interface CaseData {
   ethosCaseReference?: string;
   caseType?: CaseType;
   ClaimantPcqId?: string;
-  typeOfClaim?: string[];
+  typesOfClaim?: string[];
   caseSource?: string;
   claimantRepresentedQuestion?: YesOrNo;
   claimantIndType?: ClaimantIndividual;

@@ -11,7 +11,7 @@ import { HubLinksStatuses } from '../hub';
 
 interface CaseDataApiBody {
   caseType: string;
-  typeOfClaim: string[];
+  typesOfClaim: string[];
   ClaimantPcqId?: string;
   claimantRepresentedQuestion: string;
   caseSource: string;
