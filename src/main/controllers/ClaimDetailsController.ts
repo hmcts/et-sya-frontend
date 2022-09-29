@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
 import { getDocId } from '../helper/ApiFormatter';
@@ -20,28 +21,13 @@ export default class ClaimDetailsController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
-    const et1DocumentDetails = [];
-
-    if (userCase.et1FormDetails) {
-      et1DocumentDetails.push(...userCase.et1FormDetails);
-    }
-
-    if (userCase.claimSummaryFile?.document_url) {
-      const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
-      const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
-      et1DocumentDetails.push(supportDocDetails);
-    }
-
-    try {
-      await getDocumentDetails(et1DocumentDetails, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
-    }
-
-    userCase.allEt1DocumentDetails = et1DocumentDetails;
+    userCase.allEt1DocumentDetails = await ClaimDetailsController.getET1Documents(
+      userCase,
+      req.session.user?.accessToken
+    );
 
     const et1Documents = [];
-    for (const doc of et1DocumentDetails) {
+    for (const doc of userCase.allEt1DocumentDetails) {
       et1Documents.push({
         date: doc.createdOn,
         id: doc.id,
@@ -59,4 +45,26 @@ export default class ClaimDetailsController {
       et1Documents,
     });
   };
+
+  private static async getET1Documents(userCase: CaseWithId, accessToken: string) {
+    const et1DocumentDetails = [];
+
+    if (userCase.et1FormDetails) {
+      et1DocumentDetails.push(...userCase.et1FormDetails);
+    }
+
+    if (userCase.claimSummaryFile?.document_url) {
+      const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
+      const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
+      et1DocumentDetails.push(supportDocDetails);
+    }
+
+    try {
+      await getDocumentDetails(et1DocumentDetails, accessToken);
+    } catch (err) {
+      logger.error(err.response?.status, err.response?.data, err);
+    }
+
+    return et1DocumentDetails;
+  }
 }
