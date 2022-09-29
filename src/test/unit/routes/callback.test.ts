@@ -52,11 +52,6 @@ describe('Test responds to /oauth2/callback', function () {
     //Given that both the code and state param exist
     req.query = { code: 'testCode', state: guid };
 
-    const getUserDetailsMock = authIndex.getUserDetails as jest.MockedFunction<
-      (serviceUrl: string, rawCode: string, callbackUrlPageLink: string) => Promise<UserDetails>
-    >;
-    getUserDetailsMock.mockReturnValue(Promise.resolve(mockUserDetails as UserDetails));
-
     //Then it should call getUserDetails
     jest.spyOn(authIndex, 'getUserDetails');
     return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
