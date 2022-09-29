@@ -155,8 +155,14 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
-  CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',
+} as const;
+
+export const InterceptPaths = {
+  CHANGE_DETAILS: '*/change',
+  ANSWERS_CHANGE: '/change?redirect=answers',
+  RESPONDENT_CHANGE: '/change?redirect=respondent',
+  SUBMIT_CASE: '/submitDraftCase',
 } as const;
 
 export const ValidationErrors = {
@@ -285,6 +291,7 @@ export const mvpLocations = [
   'BD',
 ];
 
+export const SUBMITTED_CLAIM_FILE_TYPE = 'Notice of a claim';
 export const et1DocTypes = ['Notice of a claim'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];

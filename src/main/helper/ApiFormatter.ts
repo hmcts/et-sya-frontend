@@ -6,9 +6,25 @@ import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../defini
 import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
+import {
+  CaseDataCacheKey,
+  CaseDataCacheKey,
+  CaseDate,
+  CaseDate,
+  CaseWithId,
+  CaseWithId,
+  Document,
+  Document,
+  DocumentCollection,
+  Respondent,
+  Respondent,
+  ccdPreferredTitle,
+  ccdPreferredTitle,
+} from '../definitions/case';
 import {
   CcdDataModel,
+  CcdDataModel,
+  SUBMITTED_CLAIM_FILE_TYPE,
   acceptanceDocTypes,
   et1DocTypes,
   et3FormDocTypes,
@@ -45,6 +61,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
+    managingOffice: fromApiCaseData.case_data?.managingOffice,
+    tribunalCorrespondenceEmail: fromApiCaseData.case_data?.tribunalCorrespondenceEmail,
+    tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
+    et1SubmittedForm: returnSubmitttedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    documentCollection: fromApiCaseData.case_data?.documentCollection,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -396,4 +417,15 @@ export const setDocumentValues = (
 
 export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
+};
+
+export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): Document => {
+  if (documentCollection === undefined) {
+    return;
+  }
+  for (const document of documentCollection) {
+    if (document.value.typeOfDocument === SUBMITTED_CLAIM_FILE_TYPE) {
+      return document.value.uploadedDocument;
+    }
+  }
 };

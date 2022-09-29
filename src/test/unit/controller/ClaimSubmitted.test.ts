@@ -8,10 +8,20 @@ describe('Claim Submitted Controller', () => {
     common: {},
   };
 
-  it('should render the Claim Submitted page', () => {
+  it('should render the Claim Submitted page with file name', () => {
     const controller = new ClaimSubmittedController();
     const response = mockResponse();
     const request = mockRequest({ t });
+    request.session.userCase.claimSummaryFile = {
+      document_binary_url: '1010101',
+      document_filename: 'document.pdf',
+      document_url: 'document.com',
+    };
+    request.session.userCase.et1SubmittedForm = {
+      document_binary_url: '1010101',
+      document_filename: 'ET1Form_Joe_Bloggs.pdf',
+      document_url: 'ET1Form_Joe_Bloggs.com',
+    };
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('claim-submitted', expect.anything());
   });

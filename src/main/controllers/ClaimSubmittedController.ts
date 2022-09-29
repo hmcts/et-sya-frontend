@@ -5,16 +5,18 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
+    const { userCase } = req.session;
     res.render(TranslationKeys.CLAIM_SUBMITTED, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
       hideContactUs: true,
-      submissionReferenceText: '[Submission Reference]',
+      submissionReferenceText: userCase.ethosCaseReference,
       claimSubmittedText: formatClaimSubmittedDate(),
-      attachmentsText: 'None',
-      tribunalOfficeText: '[Tribunal Office]',
-      emailText: '[Email]',
-      telephoneText: '[Telephone]',
+      attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename),
+      downloadLink: userCase.et1SubmittedForm?.document_url,
+      tribunalOfficeText: userCase.managingOffice,
+      emailText: userCase.tribunalCorrespondenceEmail,
+      telephoneText: userCase.tribunalCorrespondenceTelephone,
       PageUrls,
     });
   }
@@ -27,3 +29,10 @@ function formatClaimSubmittedDate(date: Date = new Date()) {
 
   return `${day} ${month} ${year}`;
 }
+
+const formatAttachmentsText = (fileName: string) => {
+  if (fileName === undefined || fileName.length < 1) {
+    return 'None';
+  }
+  return fileName;
+};

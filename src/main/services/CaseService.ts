@@ -57,6 +57,10 @@ export class CaseApi {
     return this.axio.post(JavaApiUrls.GET_CASE, { case_id: id });
   };
 
+  submitCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
+  };
+
   uploadDocument = async (file: UploadedFile, caseTypeId: string): Promise<AxiosResponse<DocumentUploadResponse>> => {
     const formData: FormData = new FormData();
     formData.append('document_upload', file.buffer, file.originalname);

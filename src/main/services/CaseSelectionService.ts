@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { PageUrls, Urls } from '../definitions/constants';
+import { PageUrls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { fromApiFormat } from '../helper/ApiFormatter';
 
@@ -39,7 +39,7 @@ export const getRedirectUrl = (userCase: CaseWithId): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
     return `/claimant-application/${userCase.id}`;
   } else {
-    return Urls.DOWNLOAD_CLAIM;
+    return userCase.et1SubmittedForm?.document_url;
   }
 };
 

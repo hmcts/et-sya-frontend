@@ -226,6 +226,111 @@ describe('update case', () => {
   });
 });
 
+describe('submitCase', () => {
+  it('should submit draft case data', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseType: CaseType.SINGLE,
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      claimantRepresentedQuestion: YesOrNo.YES,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      typeOfClaim: ['discrimination', 'payRelated'],
+      ClaimantPcqId: '1234',
+      dobDate: {
+        year: '2010',
+        month: '05',
+        day: '11',
+      },
+      claimantSex: Sex.MALE,
+      preferredTitle: 'Mr',
+      email: 'tester@test.com',
+      address1: 'address 1',
+      address2: 'address 2',
+      addressPostcode: 'TEST',
+      addressCountry: 'United',
+      addressTown: 'Test',
+      telNumber: '075',
+      firstName: 'John',
+      lastName: 'Doe',
+      avgWeeklyHrs: 5,
+      claimantPensionContribution: YesOrNoOrNotSure.YES,
+      claimantPensionWeeklyContribution: 15,
+      employeeBenefits: YesOrNo.YES,
+      jobTitle: 'Developer',
+      noticePeriod: YesOrNo.YES,
+      noticePeriodLength: '1',
+      noticePeriodUnit: WeeksOrMonths.WEEKS,
+      payBeforeTax: 123,
+      payAfterTax: 120,
+      payInterval: PayInterval.WEEKLY,
+      startDate: { year: '2010', month: '05', day: '11' },
+      endDate: { year: '2017', month: '05', day: '11' },
+      newJob: YesOrNo.YES,
+      newJobStartDate: { year: '2022', month: '08', day: '11' },
+      newJobPay: 4000,
+      newJobPayInterval: PayInterval.MONTHLY,
+      benefitsCharCount: 'Some benefits',
+      pastEmployer: YesOrNo.YES,
+      isStillWorking: StillWorking.WORKING,
+      personalDetailsCheck: YesOrNo.YES,
+      reasonableAdjustments: YesOrNo.YES,
+      reasonableAdjustmentsDetail: 'Adjustments detail test',
+      noticeEnds: { year: '2022', month: '08', day: '11' },
+      hearingPreferences: [HearingPreference.PHONE],
+      hearingAssistance: 'Hearing assistance test',
+      claimantContactPreference: EmailOrPost.EMAIL,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
+      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
+      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
+      claimSummaryText: 'Claim summary text',
+      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      compensationOutcome: 'Compensation outcome',
+      compensationAmount: 123,
+      tribunalRecommendationRequest: 'Tribunal recommendation request',
+      whistleblowingClaim: YesOrNo.YES,
+      whistleblowingEntityName: 'Whistleblowing entity name',
+      claimSummaryFile: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
+      workAddress1: 'Respondent Address',
+      workAddress2: 'That Road',
+      workAddressTown: 'Anytown',
+      workAddressCountry: 'England',
+      workAddressPostcode: 'SW1H 9AQ',
+      claimantWorkAddressQuestion: YesOrNo.YES,
+      respondents: [
+        {
+          respondentName: 'Globo Corp',
+          acasCert: YesOrNo.YES,
+          acasCertNum: 'R111111111111',
+          noAcasReason: NoAcasNumberReason.ANOTHER,
+          respondentAddress1: 'Respondent Address',
+          respondentAddress2: 'That Road',
+          respondentAddressTown: 'Anytown',
+          respondentAddressCountry: 'England',
+          respondentAddressPostcode: 'SW1H 9AQ',
+          workAddress1: 'Respondent Address',
+          workAddress2: 'That Road',
+          workAddressTown: 'Anytown',
+          workAddressCountry: 'England',
+          workAddressPostcode: 'SW1H 9AQ',
+          ccdId: '3453xaa',
+        },
+      ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    api.submitCase(caseItem);
+    expect(mockedAxios.put).toHaveBeenCalledWith(
+      JavaApiUrls.SUBMIT_CASE,
+      expect.objectContaining(mockEt1DataModelUpdate)
+    );
+  });
+});
+
 describe('Axios post to retrieve pdf', () => {
   it('should send post request to the correct api endpoint with the case id passed in the request body', async () => {
     const mockUserDetails: UserDetails = {
