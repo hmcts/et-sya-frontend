@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Application, NextFunction, Response } from 'express';
-import redis, { RedisClient } from 'redis-mock';
+import redis from 'redis-mock';
 
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
@@ -40,6 +40,11 @@ describe('Test responds to /oauth2/callback', function () {
     req.app.locals.redisClient = redisClient;
     req.query = {};
 
+    const getUserDetailsMock = authIndex.getUserDetails as jest.MockedFunction<
+      (serviceUrl: string, rawCode: string, callbackUrlPageLink: string) => Promise<UserDetails>
+    >;
+    getUserDetailsMock.mockReturnValue(Promise.resolve(mockUserDetails as UserDetails));
+
     jest.spyOn(res, 'redirect');
   });
 
@@ -60,7 +65,7 @@ describe('Test responds to /oauth2/callback', function () {
   });
 
   test('Should get prelogin case data from redis if it is a new user', () => {
-    //Given that the query state is not 'existingUser'
+    //Given that both the code and state param exist
     req.query = { code: 'testCode', state: guid };
 
     //Then it should call getPreloginCaseData
@@ -71,11 +76,11 @@ describe('Test responds to /oauth2/callback', function () {
   });
 
   test('Should call sya-api to create draft case if prelogin data successfully retreived', () => {
+    //Given that both the code and state param exist
+    req.query = { code: 'testCode', state: guid };
+
     //Given that prelogin data is successfully retreived
-    const getPreloginCaseDataMock = CacheService.getPreloginCaseData as jest.MockedFunction<
-      (redisClient: RedisClient, guid: string) => Promise<string>
-    >;
-    getPreloginCaseDataMock.mockReturnValue(Promise.resolve(caseType));
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
 
     //Then it should call getCaseApi to create draft case
     jest.spyOn(CaseService, 'getCaseApi');
@@ -85,9 +90,14 @@ describe('Test responds to /oauth2/callback', function () {
   });
 
   test('Should redirect to NEW_ACCOUNT_LANDING page if successfully created case', async () => {
+    //Given that both the code and state param exist
+    req.query = { code: 'testCode', state: guid };
+
+    //Given that prelogin data is successfully retreived
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
+
     //Given that case is created successfully
-    const getCaseApiMock = CaseService.getCaseApi as jest.MockedFunction<(token: string) => CaseApi>;
-    getCaseApiMock.mockReturnValue(caseApi);
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
     caseApi.createCase = jest.fn().mockResolvedValue(
       Promise.resolve({
         data: {
