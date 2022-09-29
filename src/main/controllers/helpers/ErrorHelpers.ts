@@ -58,7 +58,7 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
 
   if (
     (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
-    (!hearingPreferenceNeitherTextarea || (hearingPreferenceNeitherTextarea as string).trim().length === 0)
+    (!hearingPreferenceNeitherTextarea || hearingPreferenceNeitherTextarea.trim().length === 0)
   ) {
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
