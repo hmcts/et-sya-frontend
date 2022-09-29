@@ -9,6 +9,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, YesOrNo } from '../../definitions/case';
 import { mvpLocations } from '../../definitions/constants';
 import { sectionStatus } from '../../definitions/definition';
+import { fromApiFormat } from '../../helper/ApiFormatter';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { resetValuesIfNeeded } from './FormHelpers';
@@ -35,11 +36,13 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
 };
 
 export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
-  if (!req.session.errors.length) {
+  if (!req.session.errors?.length) {
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
-      .then(() => {
+      .then(response => {
         logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+        req.session.userCase = fromApiFormat(response.data);
+        req.session.save();
       })
       .catch(error => {
         logger.error(error);
