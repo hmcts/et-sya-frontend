@@ -50,7 +50,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.seeElement('#acasCert');
     I.checkOption('#acasCert');
     I.waitForVisible('#acasCertNum');
-    I.fillField('#acasCertNum', 'R123456/12234');
+    I.fillField('#acasCertNum', 'R123456/12/23');
     I.click(commonConfig.saveAndContinue);
   } else if (doYouHaveAcas === 'No') {
     I.checkOption('#acasCert-2');
