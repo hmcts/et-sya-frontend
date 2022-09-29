@@ -75,6 +75,7 @@ export const TranslationKeys = {
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
   CLAIM_DETAILS: 'claim-details',
+  ET1_DETAILS: 'et1-details',
   SIDEBAR_CONTACT_US: 'sidebar-contact-us',
   CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
   CITIZEN_HUB_REJECTION: 'rejection-of-claim',

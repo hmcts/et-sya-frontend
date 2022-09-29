@@ -4,9 +4,11 @@ import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
+import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 
 import { getDocumentDetails } from './helpers/DocumentHelpers';
+import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -35,13 +37,20 @@ export default class ClaimDetailsController {
       });
     }
 
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
+      ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
+    };
+
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       PageUrls,
       userCase,
       hideContactUs: true,
+      yourDetails: getYourDetails(userCase, translations),
       et1Documents,
     });
   };

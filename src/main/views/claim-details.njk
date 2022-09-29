@@ -76,29 +76,11 @@
         ]
       }) }}
 
-      {{ govukTable({
-        caption: "Your details",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: true,
-        rows: [
-          [
-            {
-              text: "Date of birth"
-            },
-            {
-              text: "[DOB]"
-            }
-          ],
-          [
-            {
-              text: "Sex"
-            },
-            {
-              text: "[selection]"
-            }
-          ]
-        ]
-      }) }}
+      {{
+        govukSummaryList({
+          rows: yourDetails
+        })
+      }}
 
       {{ govukTable({
         caption: "Employment details",

@@ -1,0 +1,18 @@
+{
+  "personalDetails": {
+    "header": "Your details",
+    "dob": "Date of birth",
+    "sex": "Sex",
+    "contactOrHomeAddress": "Contact or home address",
+    "howToBeContacted": "How would you like to be contacted?",
+    "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
+    "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
+    "title": "Preferred title",
+    "notSelected": "Not selected"
+  },
+  "contactDetails": {
+    "header": "Contact details",
+    "telephone": "Telephone number",
+    "notProvided": "Not provided"
+  }
+}
