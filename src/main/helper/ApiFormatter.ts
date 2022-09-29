@@ -14,7 +14,7 @@ import {
   Respondent,
   ccdPreferredTitle,
 } from '../definitions/case';
-import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE } from '../definitions/constants';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE, TYPE_OF_CLAIMANT } from '../definitions/constants';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -27,6 +27,7 @@ export function toApiFormatCreate(
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
       typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
         claimant_last_name: userDetails.familyName,
@@ -130,6 +131,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {

@@ -16,6 +16,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -203,6 +204,7 @@ describe('Format Case Data to Frontend Model', () => {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
+        claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
         typesOfClaim: ['discrimination', 'payRelated'],
         ClaimantPcqId: '1234',
         et3IsThereAnEt3Response: YesOrNo.YES,
@@ -212,7 +214,6 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_date_of_birth: '2022-10-05',
           claimant_sex: Sex.MALE,
           claimant_preferred_title: 'Mr',
-          // claimant_title_other: 'Captain',
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
