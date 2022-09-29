@@ -101,7 +101,7 @@
     "Disability": "Disability",
     "Ethnicity": "Ethnicity",
     "Gender reassignment": "Gender reassignment",
-    "Marriage or civil partnership": "Marriage or civil parntership",
+    "Marriage or civil partnership": "Marriage or civil partnership",
     "Pregnancy or maternity": "Pregnancy or maternity",
     "Race": "Race",
     "Religion or belief": "Religion or belief",
@@ -132,5 +132,5 @@
   "answers": {
     "NA": "Not Provided"
   },
-  "submitError": "Sorry, we’re having technical problems procesing your application. Please try again in a few minutes."
+  "submitError": "Sorry, we’re having technical problems processing your application. Please try again in a few minutes."
 }
