@@ -18,9 +18,9 @@ describe('Claim Submitted Controller', () => {
       document_url: 'document.com',
     };
     request.session.userCase.et1SubmittedForm = {
-      document_binary_url: '1010101',
-      document_filename: 'ET1Form_Joe_Bloggs.pdf',
-      document_url: 'ET1Form_Joe_Bloggs.com',
+      id: '1010101',
+      description: 'ET1Form_Joe_Bloggs.pdf',
+      type: 'ET1Form_Joe_Bloggs.com',
     };
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('claim-submitted', expect.anything());

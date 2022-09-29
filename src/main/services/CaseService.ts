@@ -62,6 +62,12 @@ export class CaseApi {
       maxBodyLength: Infinity,
     });
   };
+
+  getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
+      responseType: 'arraybuffer',
+    });
+  };
 }
 
 export const getCaseApi = (token: string): CaseApi => {

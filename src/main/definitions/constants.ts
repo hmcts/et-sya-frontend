@@ -145,6 +145,7 @@ export const PageUrls = {
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
   PCQ: '/pcq',
+  GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
 } as const;
 
 export const InterceptPaths = {
@@ -174,6 +175,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
 } as const;
 
 export const Urls = {
@@ -235,6 +237,7 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+export const TYPE_OF_CLAIMANT = 'Individual';
 
 export const mvpLocations = [
   'ZE',

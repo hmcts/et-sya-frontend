@@ -14,7 +14,8 @@ import {
   Respondent,
   ccdPreferredTitle,
 } from '../definitions/case';
-import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE } from '../definitions/constants';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE, TYPE_OF_CLAIMANT } from '../definitions/constants';
+import { DocumentDetail } from '../definitions/definition';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -27,6 +28,7 @@ export function toApiFormatCreate(
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
       typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
         claimant_last_name: userDetails.familyName,
@@ -130,6 +132,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
@@ -335,13 +338,34 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   });
 };
 
-export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): Document => {
+export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): DocumentDetail => {
   if (documentCollection === undefined) {
     return;
   }
-  for (const document of documentCollection) {
-    if (document.value.typeOfDocument === SUBMITTED_CLAIM_FILE_TYPE) {
-      return document.value.uploadedDocument;
-    }
+
+  const documentDetailCollection: DocumentDetail[] = setDocumentValues(documentCollection, [SUBMITTED_CLAIM_FILE_TYPE]);
+
+  if (documentDetailCollection === undefined) {
+    return;
+  } else {
+    return documentDetailCollection[0];
   }
+};
+
+export const setDocumentValues = (documentCollection: DocumentCollection[], docType?: string[]): DocumentDetail[] => {
+  if (!documentCollection) {
+    return;
+  }
+
+  const foundDocuments = documentCollection
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
+    .map(doc => {
+      const docUrl = doc.value?.uploadedDocument?.document_url;
+      return {
+        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        description: !docType ? '' : doc.value?.shortDescription,
+        type: doc.value.typeOfDocument,
+      };
+    });
+  return foundDocuments.length ? foundDocuments : undefined;
 };

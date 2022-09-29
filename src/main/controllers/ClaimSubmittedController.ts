@@ -13,7 +13,7 @@ export default class ClaimSubmittedController {
       submissionReferenceText: userCase.ethosCaseReference,
       claimSubmittedText: formatClaimSubmittedDate(),
       attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename),
-      downloadLink: userCase.et1SubmittedForm?.document_url,
+      downloadLink: '/getCaseDocument/' + userCase.et1SubmittedForm?.id,
       tribunalOfficeText: userCase.managingOffice,
       emailText: userCase.tribunalCorrespondenceEmail,
       telephoneText: userCase.tribunalCorrespondenceTelephone,

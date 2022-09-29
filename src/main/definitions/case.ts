@@ -1,4 +1,11 @@
-import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import {
+  CaseState,
+  ClaimOutcomes,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  DocumentDetail,
+  TellUsWhatYouWant,
+} from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
 
@@ -140,7 +147,7 @@ export interface Case {
   managingOffice?: string;
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
-  et1SubmittedForm?: Document;
+  et1SubmittedForm?: DocumentDetail;
   documentCollection?: DocumentCollection[];
 }
 

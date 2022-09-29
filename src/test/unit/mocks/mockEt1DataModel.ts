@@ -6,6 +6,7 @@ import {
   StillWorking,
   YesOrNo,
 } from '../../../main/definitions/case';
+import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
@@ -15,6 +16,7 @@ export const mockEt1DataModel = {
     caseType: 'Single',
     typesOfClaim: ['discrimination', 'payRelated'],
     claimantRepresentedQuestion: 'Yes',
+    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'Bobby',
@@ -35,6 +37,7 @@ export const mockEt1DataModelUpdate = {
     ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
     claimantWorkAddressQuestion: 'Yes',
+    claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'John',
@@ -149,6 +152,7 @@ export const submittedCaseResponse = {
       typesOfClaim: ['discrimination', 'payRelated'],
       ClaimantPcqId: '1234',
       claimantRepresentedQuestion: 'Yes',
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       caseSource: 'ET1 Online',
       claimantIndType: {
         claimant_first_names: 'John',

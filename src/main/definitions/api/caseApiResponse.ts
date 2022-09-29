@@ -36,6 +36,7 @@ export interface CaseData {
   typesOfClaim?: string[];
   caseSource?: string;
   claimantRepresentedQuestion?: YesOrNo;
+  claimant_TypeOfClaimant?: string;
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;
   claimantOtherType?: ClaimantEmploymentDetails;

@@ -17,7 +17,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { CcdDataModel, JavaApiUrls } from '../../../main/definitions/constants';
+import { CcdDataModel, JavaApiUrls, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -58,6 +58,7 @@ describe('Axios post to initiate case', () => {
           caseSource: CcdDataModel.CASE_SOURCE,
           caseType: 'Single',
           claimantRepresentedQuestion: 'Yes',
+          claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
           claimantIndType: {
             claimant_first_names: 'Bobby',
             claimant_last_name: 'Ryan',

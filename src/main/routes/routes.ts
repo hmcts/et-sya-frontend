@@ -171,6 +171,7 @@ export default function (app: Application): void {
   app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);
   app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
   app.get(InterceptPaths.SUBMIT_CASE, app.locals.container.cradle.submitClaimController.get);
+  app.get(PageUrls.GET_CASE_DOCUMENT, app.locals.container.cradle.caseDocumentController.get);
   app.get(
     Urls.INFO,
     infoRequestHandler({

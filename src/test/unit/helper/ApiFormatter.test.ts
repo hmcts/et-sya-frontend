@@ -16,6 +16,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -203,6 +204,7 @@ describe('Format Case Data to Frontend Model', () => {
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
+        claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
         typesOfClaim: ['discrimination', 'payRelated'],
         ClaimantPcqId: '1234',
         et3IsThereAnEt3Response: YesOrNo.YES,
@@ -212,7 +214,6 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_date_of_birth: '2022-10-05',
           claimant_sex: Sex.MALE,
           claimant_preferred_title: 'Mr',
-          // claimant_title_other: 'Captain',
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
@@ -435,9 +436,9 @@ describe('Format Case Data to Frontend Model', () => {
       tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
       tribunalCorrespondenceTelephone: '0300 123 1024',
       et1SubmittedForm: {
-        document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
-        document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
-        document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+        id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+        description: 'Case Details - Sunday Ayeni',
+        type: 'Notice of a claim',
       },
       documentCollection: [
         {
