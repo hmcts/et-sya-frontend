@@ -1,5 +1,6 @@
 const { I } = inject();
 const commonFlowContentHelper = require('./commonFlowContent');
+const commonFlowLocators = require('./commonFlowLocators.json');
 const contactUs = require('./contactUs.js');
 
 async function initialPageFlow() {
@@ -12,7 +13,7 @@ async function initialPageFlow() {
   //Before You Continue Page....
   await I.see('Before you continue');
   await commonFlowContentHelper.verifyBeforeYouContinueGuidanceText();
-  I.click("//span[contains(text(),'Contact us')]");
+  I.click(commonFlowLocators.contact_us);
   await contactUs.verifyContactUs();
   await I.click('Continue');
 
@@ -22,7 +23,7 @@ async function initialPageFlow() {
   I.see('work?');
   await commonFlowContentHelper.verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText();
   I.see('Postcode');
-  I.click("//span[contains(text(),'Contact us')]");
+  I.click(commonFlowLocators.contact_us);
   await contactUs.verifyContactUs();
   await I.fillField('#workPostcode', 'LS9 6EP');
   await I.click('Continue');
@@ -35,17 +36,59 @@ async function createSingleMyselfCase() {
   * type of claim = discrimination and whistleBlowing
   */
   await initialPageFlow();
+  I.see('Are you making the claim for yourself,');
+  I.see('or representing someone else?');
+  await commonFlowContentHelper.verifyARepresentativeGuidanceText();
+  I.see('Who can act as a representative?');
+  I.see('How to find and get a representative?');
+  I.see('I’m representing myself and making my own claim');
+  I.see('I’m making a claim for someone else and acting as their representative');
+  I.click(commonFlowLocators.who_can_act_as_a_representative);
+  await commonFlowContentHelper.verifyWhoCanActAsARepresentativeGuidanceText();
+  I.click(commonFlowLocators.how_can_i_find_and_get_a_representative);
+  await commonFlowContentHelper.verifyHowToFindARepresentativeGuidanceText();
   //representing yourself
+  I.click(commonFlowLocators.contact_us);
+  await contactUs.verifyContactUs();
   I.checkOption('input[id=lip-or-representative]');
   I.click('Continue');
-  //Claiming on my own
+
+  //Are you making a claim on your own oe with others Page
   I.see('Are you making a claim on your own or with others?');
+  await commonFlowContentHelper.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
+  I.see('I’m claiming on my own');
+  I.see('I’m claiming with another person or other people');
+  I.click(commonFlowLocators.contact_us);
+  await contactUs.verifyContactUs();
   I.checkOption('input[id=single-or-multiple-claim]');
   I.click('Continue');
+
+  //Do you have an ACAS Early Conciliation certificate
+  I.see('Do you have an ‘Acas early conciliation');
+  I.see('certificate’ for the respondent or');
+  I.see("respondents you're claiming against?");
+  await commonFlowContentHelper.verifyACASConciliationGuidanceText();
+  I.click(commonFlowLocators.contact_us);
+  await contactUs.verifyContactUs();
   //Yes Acas certificate
   I.checkOption('input[id=acas-multiple]');
   I.click('Continue');
+
   //Type of claim = discrimination
+  I.see('What type of claim are you making?');
+  I.see('You can choose all that apply to you. Further information will be asked for later in the claim.');
+  I.see('Select all that apply');
+  I.see('Breach of contract - including notice pay');
+  I.see('Discrimination of any type');
+  I.see('for example because of your sex, ethnicity, disability or other characteristic');
+  I.see('Pay-related claim');
+  I.see('Unfair dismissal');
+  I.see('including constructive dismissal');
+  I.see('WhistleBlowing');
+  I.see('including dismissal or any other unfair treatment after whistleblowing');
+  I.see('Other type of claim');
+  I.click(commonFlowLocators.contact_us);
+  await contactUs.verifyContactUs();
   I.checkOption('input[value=discrimination]');
   I.checkOption('input[value=whistleBlowing]');
   I.click('#main-form-submit');

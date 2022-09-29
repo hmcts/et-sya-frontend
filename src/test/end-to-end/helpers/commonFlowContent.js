@@ -50,8 +50,70 @@ async function verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText() {
   I.see('If you’re claiming against someone you’ve not worked for - as best');
   I.see('as you can, enter the postcode of where they’re based.');
 }
+
+async function verifyARepresentativeGuidanceText() {
+  I.see('A representative is someone who can act on your behalf to complete the claim, write to the');
+  I.see('employment tribunal or present your case at a hearing.');
+}
+
+async function verifyWhoCanActAsARepresentativeGuidanceText() {
+  I.see('Free representation can include:');
+  I.see('friends');
+  I.see('colleagues');
+  I.see('family members');
+  I.see('trade unions (if one is available to you)');
+  I.see('Citizens Advice advisers');
+  I.see('advisers from law clinics or law centres');
+  I.see('Paid representation be through legal professionals, including:');
+  I.see('solicitors');
+  I.see("barristers (called 'advocates' in Scotland)");
+  I.see('legal executives');
+  I.see('claims management companies (regulated by the Financial Conduct Authority (FCA))');
+}
+
+async function verifyHowToFindARepresentativeGuidanceText() {
+  I.see('Use the following to find and get a legal representative:');
+  I.see('Find a solicitor in England and Wales – list of solicitors run by The Law Society');
+  I.see('Find a solicitor in Scotland – database of solicitors run The Law Society of Scotland');
+  I.see('Free Representation Unit (FRU) – charity providing legal advice, case preparation and advocacy');
+  I.see('for people not eligible for legal aid or who cannot afford lawyers (this service is not available in');
+  I.see('Scotland)');
+  I.see('In Scotland, some university law clinics can provide advice and represenation. You can find a list');
+  I.see('at The Scottish University Law Clinic Network (SULCN)');
+  I.see('local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford');
+  I.see('lawyers.');
+  I.see('A trade union may also be able to pay for a solicitor and free legal advice is available from Citizens');
+  I.see('Advice or Citizens Advice Scotland.');
+  I.see('The Equality Advisory and Support Service can help with discrimination claims.');
+  I.see('Some people may also be able to get help to pay for legal advice through legal aid.');
+}
+
+async function verifyAreYouMakingAClaimOnYourOwnGuidanceText() {
+  I.see('You can make a claim to an employment tribunal on your own, where you are the only claimant. You can');
+  I.see('also make a claim alongside another person, or a group of people who have been treated in the same');
+  I.see('way.');
+  I.see('It helps the employment tribunal to know which type it is. If you do not know, choose the first option.');
+  I.see('If you’re claiming with other people, you will be asked to tell us their names (if you know them).');
+}
+
+async function verifyACASConciliationGuidanceText() {
+  I.see('To make a claim you usually need to get an Acas early conciliation certificate (or give a valid reason why');
+  I.see('you do not have one) for each respondent you’re making your claim against.');
+
+  I.see('Acas will have sent you certificates after you initially contacted them to try and settle your dispute');
+  I.see('through early conciliation.');
+
+  I.see('The certificates include the details of the respondents you’re making your claim against along with a');
+  I.see('number to identify them. You’ll need to provide these later as part of your claim.');
+}
+
 module.exports = {
   verifyMakeAClaimToAnEmploymentTribunal,
   verifyBeforeYouContinueGuidanceText,
   verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText,
+  verifyARepresentativeGuidanceText,
+  verifyWhoCanActAsARepresentativeGuidanceText,
+  verifyHowToFindARepresentativeGuidanceText,
+  verifyAreYouMakingAClaimOnYourOwnGuidanceText,
+  verifyACASConciliationGuidanceText,
 };
