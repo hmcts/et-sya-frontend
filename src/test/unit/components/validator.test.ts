@@ -19,6 +19,7 @@ import {
   isValidUKTelNumber,
   validateTitlePreference,
 } from '../../../main/components/form/validator';
+import { mockFile } from '../mocks/mockFile';
 
 describe('Validation', () => {
   describe('isFieldFilledIn()', () => {
@@ -58,20 +59,6 @@ describe('Validation', () => {
       const isValid = isRespondentNameValid('    ');
 
       expect(isValid).toStrictEqual('required');
-    });
-
-    it('Should check if value is less than 5 characters', () => {
-      const isValid = isRespondentNameValid('123');
-
-      expect(isValid).toStrictEqual('invalidLength');
-    });
-
-    it('Should check if value is greater than 100 characters', () => {
-      const isValid = isRespondentNameValid(
-        '12345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912345678912'
-      );
-
-      expect(isValid).toStrictEqual('invalidLength');
     });
   });
 
@@ -326,16 +313,12 @@ describe('Validation', () => {
       { fileName: 'file.', expected: 'invalidFileFormat' },
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
-      expect(hasValidFileFormat(fileName)).toEqual(expected);
+      const newFile = mockFile;
+      newFile.filename = fileName;
+      expect(hasValidFileFormat(newFile)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {
-    it('Should check if value exist', () => {
-      const isValid = isAcasNumberValid('R12345/789/12');
-
-      expect(isValid).toStrictEqual(undefined);
-    });
-
     it('Should check if value does not exist', () => {
       const isValid = isAcasNumberValid(undefined);
 
@@ -361,9 +344,13 @@ describe('Validation', () => {
     });
 
     it('Should check if value starts with R', () => {
-      const isValid = isAcasNumberValid('12345/789/123');
+      const beginsWithT = isAcasNumberValid('T123458/89/13');
+      const beginsWithQ = isAcasNumberValid('q123456/78/12');
+      const beginsWithDigit = isAcasNumberValid('1234556/79/12');
 
-      expect(isValid).toStrictEqual('invalidAcasNumber');
+      expect(beginsWithT).toStrictEqual('invalidAcasNumber');
+      expect(beginsWithQ).toStrictEqual('invalidAcasNumber');
+      expect(beginsWithDigit).toStrictEqual('invalidAcasNumber');
     });
 
     it('Should check if has any numeric or / character after R', () => {
@@ -388,6 +375,43 @@ describe('Validation', () => {
       const isValid = isAcasNumberValid('R145123112/');
 
       expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should not allow incorrect number of characters in the first digit block', () => {
+      const fiveDigits = isAcasNumberValid('R12345/78/12');
+      const sevenDigits = isAcasNumberValid('R1234567/78/12');
+
+      expect(fiveDigits).toStrictEqual('invalidAcasNumber');
+      expect(sevenDigits).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should not allow incorrect number of digits in the middle digit block', () => {
+      const oneDigit = isAcasNumberValid('R123456/321/12');
+      const threeDigits = isAcasNumberValid('R123456/7/12');
+
+      expect(oneDigit).toStrictEqual('invalidAcasNumber');
+      expect(threeDigits).toStrictEqual('invalidAcasNumber');
+    });
+    it('Should not allow incorrect number of digits in the last digit block', () => {
+      const oneDigit = isAcasNumberValid('R123456/32/1');
+      const threeDigits = isAcasNumberValid('R123456/47/124');
+
+      expect(oneDigit).toStrictEqual('invalidAcasNumber');
+      expect(threeDigits).toStrictEqual('invalidAcasNumber');
+    });
+    it('Should not allow the slashes in any position', () => {
+      const isValid = isAcasNumberValid('R123/45678/12');
+      expect(isValid).toStrictEqual('invalidAcasNumber');
+    });
+
+    it('Should allow a small r at the beginning', () => {
+      const isValid = isAcasNumberValid('r123455/79/12');
+      expect(isValid).toStrictEqual(undefined);
+    });
+
+    it('Should validate corect RNNNNNN/NN/NN format', () => {
+      const isValid = isAcasNumberValid('R123456/78/12');
+      expect(isValid).toStrictEqual(undefined);
     });
   });
 });

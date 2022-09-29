@@ -3,9 +3,11 @@ import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
+import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
 import { HubLinksStatuses } from '../hub';
 
@@ -40,9 +42,12 @@ export interface CaseData {
   claimantType?: ClaimantCorrespondence;
   claimantOtherType?: ClaimantEmploymentDetails;
   newEmploymentType?: NewEmploymentDetails;
+  claimantRequests?: ClaimantRequests;
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
   respondentCollection?: RespondentApiModel[];
+  claimantWorkAddressQuestion?: YesOrNo;
+  claimantWorkAddress?: WorkAddressDetails;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
   servingDocumentCollection?: DocumentApiModel[];

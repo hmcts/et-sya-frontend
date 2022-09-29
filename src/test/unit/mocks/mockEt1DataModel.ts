@@ -1,4 +1,12 @@
-import { EmailOrPost, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import {
+  EmailOrPost,
+  HearingPreference,
+  NoAcasNumberReason,
+  Sex,
+  StillWorking,
+  YesOrNo,
+} from '../../../main/definitions/case';
+import { ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const mockEt1DataModel = {
@@ -26,6 +34,7 @@ export const mockEt1DataModelUpdate = {
     typeOfClaim: ['discrimination', 'payRelated'],
     ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
+    claimantWorkAddressQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'John',
@@ -77,16 +86,52 @@ export const mockEt1DataModelUpdate = {
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
     },
+    claimantRequests: {
+      discrimination_claims: [ClaimTypeDiscrimination.RACE],
+      pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
+      claim_description: 'Claim summary text',
+      claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
+      claimant_compensation_text: 'Compensation outcome',
+      claimant_compensation_amount: 123,
+      claimant_tribunal_recommendation: 'Tribunal recommendation request',
+      whistleblowing: YesOrNo.YES,
+      whistleblowing_authority: 'Whistleblowing entity name',
+      claim_description_document: {
+        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
+        document_filename: 'document.pdf',
+        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
+      },
+    },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
     },
+    claimantWorkAddress: {
+      claimant_work_address: {
+        AddressLine1: 'Respondent Address',
+        AddressLine2: 'That Road',
+        PostTown: 'Anytown',
+        Country: 'England',
+        PostCode: 'SW1H 9AQ',
+      },
+    },
     respondentCollection: [
       {
         value: {
           respondent_name: 'Globo Corp',
+          respondent_ACAS_question: YesOrNo.YES,
+          respondent_ACAS: 'R111111111111',
+          respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
+          respondent_address: {
+            AddressLine1: 'Respondent Address',
+            AddressLine2: 'That Road',
+            PostTown: 'Anytown',
+            Country: 'England',
+            PostCode: 'SW1H 9AQ',
+          },
         },
+        id: '3453xaa',
       },
     ],
   },

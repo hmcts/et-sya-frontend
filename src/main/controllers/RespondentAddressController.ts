@@ -1,16 +1,21 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import {
+  isValidAddressFirstLine,
+  isValidAddressSecondLine,
+  isValidCountryTownOrCity,
+} from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { AnyRecord } from '../definitions/util-types';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 
+import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -38,7 +43,9 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
+        validator: isValidAddressSecondLine,
       },
       respondentAddressTown: {
         id: 'addressTown',
@@ -49,7 +56,7 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -61,7 +68,7 @@ export default class RespondentAddressController {
         label: l => l.country,
         labelSize: null,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
         validator: isValidCountryTownOrCity,
       },
@@ -78,17 +85,11 @@ export default class RespondentAddressController {
         },
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
-    },
-    saveForLater: {
-      text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
-    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
   }
 
@@ -96,11 +97,14 @@ export default class RespondentAddressController {
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleUpdateDraftCase(req, this.logger);
+      return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
       const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
       handleSessionErrors(req, res, this.form, redirectUrl);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 
@@ -119,6 +123,7 @@ export default class RespondentAddressController {
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,
       respondentName: selectedRespondent.respondentName,
+      previousPostcode: selectedRespondent.respondentAddressPostcode,
     });
   };
 }

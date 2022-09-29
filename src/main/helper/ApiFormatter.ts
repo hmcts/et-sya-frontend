@@ -91,11 +91,27 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
+    claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
+    claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
+    claimSummaryFile: fromApiCaseData.case_data?.claimantRequests?.claim_description_document,
+    tellUsWhatYouWant: fromApiCaseData.case_data?.claimantRequests?.claim_outcome,
+    tribunalRecommendationRequest: fromApiCaseData.case_data?.claimantRequests?.claimant_tribunal_recommendation,
+    whistleblowingClaim: fromApiCaseData.case_data?.claimantRequests?.whistleblowing,
+    whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
+    compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
+    compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
     lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
+    claimantWorkAddressQuestion: fromApiCaseData.case_data?.claimantWorkAddressQuestion,
+    workAddress1: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine1,
+    workAddress2: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine2,
+    workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
+    workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
+    workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     acknowledgementOfClaimLetterDetail: setDocumentValues(
@@ -190,12 +206,34 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
       },
+      claimantRequests: {
+        discrimination_claims: caseItem.claimTypeDiscrimination,
+        pay_claims: caseItem.claimTypePay,
+        claim_description: caseItem.claimSummaryText,
+        claim_outcome: caseItem.tellUsWhatYouWant,
+        claimant_compensation_text: caseItem.compensationOutcome,
+        claimant_compensation_amount: formatToCcdAcceptedNumber(caseItem.compensationAmount),
+        claimant_tribunal_recommendation: caseItem.tribunalRecommendationRequest,
+        whistleblowing: caseItem.whistleblowingClaim,
+        whistleblowing_authority: caseItem.whistleblowingEntityName,
+        claim_description_document: caseItem.claimSummaryFile,
+      },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
+      claimantWorkAddress: {
+        claimant_work_address: {
+          AddressLine1: caseItem.workAddress1,
+          AddressLine2: caseItem.workAddress2,
+          PostTown: caseItem.workAddressTown,
+          Country: caseItem.workAddressCountry,
+          PostCode: caseItem.workAddressPostcode,
+        },
+      },
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
+      claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
     },
   };
@@ -297,7 +335,16 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   }
   return respondents.map(respondent => {
     return {
-      respondentName: respondent.value.respondent_name,
+      respondentName: respondent.value?.respondent_name,
+      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      acasCert: respondent.value?.respondent_ACAS_question,
+      acasCertNum: respondent.value?.respondent_ACAS,
+      noAcasReason: respondent.value?.respondent_ACAS_no,
+      ccdId: respondent?.id,
     };
   });
 };
@@ -310,7 +357,18 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
     return {
       value: {
         respondent_name: respondent.respondentName,
+        respondent_address: {
+          AddressLine1: respondent.respondentAddress1,
+          AddressLine2: respondent.respondentAddress2,
+          PostTown: respondent.respondentAddressTown,
+          Country: respondent.respondentAddressCountry,
+          PostCode: respondent.respondentAddressPostcode,
+        },
+        respondent_ACAS_question: respondent.acasCert,
+        respondent_ACAS: respondent.acasCertNum,
+        respondent_ACAS_no: respondent.noAcasReason,
       },
+      id: respondent.ccdId,
     };
   });
 };

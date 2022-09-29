@@ -2,9 +2,11 @@ import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
+import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
+import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
 
 interface CaseDataApiBody {
@@ -18,8 +20,11 @@ interface CaseDataApiBody {
   claimantHearingPreference?: ClaimantHearingPreference;
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
+  claimantRequests?: ClaimantRequests;
   newEmploymentType?: NewEmploymentDetails;
   respondentCollection?: RespondentRequestBody[];
+  claimantWorkAddressQuestion?: string;
+  claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
 }
 
@@ -36,4 +41,5 @@ export interface UpdateCaseBody {
 
 export interface RespondentRequestBody {
   value: RespondentType;
+  id?: string;
 }
