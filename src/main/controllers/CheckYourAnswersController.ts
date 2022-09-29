@@ -17,25 +17,21 @@ export default class CheckYourAnswersController {
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
     };
 
-    const showCompensationRequest = !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY);
-    const showTribunalRequest = !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION);
-    const showWhistleBlowingRequest = !!userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING);
-    const yourDetails = getYourDetails(userCase, translations);
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...translations,
       PageUrls,
       userCase,
-      respondents: req.session.userCase?.respondents,
+      respondents: userCase?.respondents,
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
-      showCompensationRequest,
-      showTribunalRequest,
-      showWhistleBlowingRequest,
+      showCompensationRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY),
+      showTribunalRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION),
+      showWhistleBlowingRequest: !!userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING),
       translations,
-      yourDetails,
-      getRespondentSection,
+      yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
+      getRespondentSection,
       errors: req.session.errors,
     });
   }
