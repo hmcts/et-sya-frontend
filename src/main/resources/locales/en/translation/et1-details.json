@@ -14,5 +14,27 @@
     "header": "Contact details",
     "telephone": "Telephone number",
     "notProvided": "Not provided"
+  },
+  "employmentDetails": {
+    "header": "Employment details",
+    "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
+    "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
+    "jobTitle": "Job title",
+    "startDate": "Employment start date",
+    "noticePeriod": "Do you have a written contract with notice period?",
+    "noticeEnds": "Notice period ends",
+    "noticePeriodWeeksOrMonths": "Is your notice period in weeks or months?",
+    "noticeLength": "[Weeks/Months] in notice period",
+    "noticePaid": "Notice being paid for",
+    "weeklyHours": "Average weekly work hours",
+    "payBeforeTax": "Pay before tax and National Insurance",
+    "payAfterTax": "Pay after tax and National Insurance",
+    "payPeriod": "Is this your weekly, monthly or annual pay?",
+    "pensionScheme": "Did the respondent make any contributions to your pension?",
+    "benefits": "Do you or did you receive any employee benefits?",
+    "newJob": "Have you got a new job?",
+    "newStartDate": "New job start date",
+    "newPayBeforeTax": "New job pay before tax and National Insurance",
+    "workAddress": "Work address"
   }
 }

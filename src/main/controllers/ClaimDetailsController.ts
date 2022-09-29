@@ -8,6 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 
 import { getDocumentDetails } from './helpers/DocumentHelpers';
+import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -38,7 +39,7 @@ export default class ClaimDetailsController {
     }
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
+      ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }), //todo remove once change button isn't being used anymore.
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
     };
 
@@ -51,6 +52,7 @@ export default class ClaimDetailsController {
       userCase,
       hideContactUs: true,
       yourDetails: getYourDetails(userCase, translations),
+      employmentSection: getEmploymentDetails(userCase, translations),
       et1Documents,
     });
   };

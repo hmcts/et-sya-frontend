@@ -82,29 +82,11 @@
         })
       }}
 
-      {{ govukTable({
-        caption: "Employment details",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: true,
-        rows: [
-          [
-            {
-              text: "Did you work ..."
-            },
-            {
-              text: "[DOB]"
-            }
-          ],
-          [
-            {
-              text: "Sex"
-            },
-            {
-              text: "[selection]"
-            }
-          ]
-        ]
-      }) }}
+      {{
+        govukSummaryList({
+          rows: employmentSection
+        })
+      }}
 
       {% set documentsRows = [] %}
       {% for document in et1Documents %}
