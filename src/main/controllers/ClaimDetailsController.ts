@@ -15,6 +15,11 @@ export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
 
+    if (!userCase) {
+      logger.error('A userCase was not found');
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
+
     const et1DocumentDetails = [];
 
     if (userCase.et1FormDetails) {
