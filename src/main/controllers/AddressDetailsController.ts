@@ -1,8 +1,8 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
+import { isValidAddressFirstLine, isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -23,7 +23,7 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isValidAddressFirstLine,
         attributes: {
           autocomplete: 'address-line1',
           maxLength: 100,
@@ -38,7 +38,9 @@ export default class AddressDetailsController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
+        validator: isValidAddressSecondLine,
       },
       addressTown: {
         id: 'addressTown',
@@ -49,9 +51,9 @@ export default class AddressDetailsController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-level2',
-          maxLength: 60,
+          maxLength: 50,
         },
-        validator: isFieldFilledIn,
+        validator: isValidCountryTownOrCity,
       },
       addressCountry: {
         id: 'addressCountry',
@@ -60,9 +62,9 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isValidCountryTownOrCity,
         attributes: {
-          maxLength: 60,
+          maxLength: 50,
         },
       },
       addressPostcode: {

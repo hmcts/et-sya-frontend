@@ -12,7 +12,6 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { handleSaveAsDraft } from './helpers/RouterHelpers';
 
 export default class RespondentNameController {
   private readonly form: Form;
@@ -24,6 +23,7 @@ export default class RespondentNameController {
         type: 'text',
         validator: isRespondentNameValid,
         label: (l: AnyRecord): string => l.label,
+        attributes: { maxLength: 100 },
       },
     },
     submit: {
@@ -41,14 +41,14 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    setUserCaseForRespondent(req, this.form);
+    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSaveAsDraft(res);
+      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
     } else {
-      setUserCaseForRespondent(req, this.form);
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
       handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
     }
   };
 

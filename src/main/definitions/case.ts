@@ -29,6 +29,25 @@ export interface Respondent {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  ccdId?: string;
+}
+
+export interface RespondentApiModel {
+  respondentNumber?: number;
+  respondentName?: string;
+  respondentAddress1?: string;
+  respondentAddress2?: string;
+  respondentAddressTown?: string;
+  respondentAddressCountry?: string;
+  respondentAddressPostcode?: string;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCountry?: string;
+  workAddressPostcode?: string;
+  acasCert?: YesOrNo;
+  acasCertNum?: string;
+  noAcasReason?: NoAcasNumberReason;
 }
 
 export interface Case {
@@ -127,10 +146,10 @@ export const enum StillWorking {
 }
 
 export const enum NoAcasNumberReason {
-  ANOTHER = 'Another person I’m making a claim with has an Acas early conciliation certificate number',
-  NO_POWER = 'Acas doesn’t have the power to conciliate on some or all of my claim',
-  EMPLOYER = 'My employer has already been in touch with Acas',
-  UNFAIR_DISMISSAL = 'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',
+  ANOTHER = 'Another person',
+  NO_POWER = 'No Power',
+  EMPLOYER = 'Employer already in touch',
+  UNFAIR_DISMISSAL = 'Unfair Dismissal',
 }
 
 export interface CaseWithId extends Case {

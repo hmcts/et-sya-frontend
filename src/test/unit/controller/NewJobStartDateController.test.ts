@@ -75,24 +75,6 @@ describe('New Job Start Date Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should have error when date is in the past', () => {
-    const errors = [{ propertyName: 'newJobStartDate', errorType: 'invalidDateInPast', fieldName: 'day' }];
-    const body = {
-      'newJobStartDate-day': '12',
-      'newJobStartDate-month': '11',
-      'newJobStartDate-year': '2000',
-    };
-
-    const controller = new NewJobStartDateController(mockLogger);
-
-    const req = mockRequest({ body });
-    const res = mockResponse();
-    controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith(req.path);
-    expect(req.session.errors).toEqual(errors);
-  });
-
   it('should render the new job pay page when new job start date is left blank', () => {
     const body = {
       'newJobStartDate-day': '',
