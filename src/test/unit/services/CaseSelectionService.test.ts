@@ -238,6 +238,7 @@ describe('get User applications', () => {
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
         typeOfClaim: ['discrimination'],
+        ethosCaseReference: '654321/2022',
         respondents: [
           {
             respondentName: 'Globo Corp',

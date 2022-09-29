@@ -158,7 +158,10 @@ describe('Claimant Applications page', () => {
       mockApplications[2].userCase.createdDate,
       'Date created does not exist'
     );
-    expect(rowDataClassData[15].innerHTML).contains(mockApplications[2].userCase.id, 'Reference does not exist');
+    expect(rowDataClassData[15].innerHTML).contains(
+      mockApplications[2].userCase.ethosCaseReference,
+      'Reference does not exist'
+    );
     expect(rowDataClassData[16].innerHTML).contains(
       mockApplications[2].userCase.typeOfClaim[0],
       'Type of claim does not exist'
