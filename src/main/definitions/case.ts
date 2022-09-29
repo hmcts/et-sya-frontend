@@ -146,7 +146,6 @@ export interface Case {
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: Document;
-  documentCollection?: DocumentCollection[];
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
   et1FormDetails?: DocumentDetail[];
@@ -254,15 +253,4 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
-}
-
-export interface DocumentCollectionValue {
-  typeOfDocument?: string;
-  uploadedDocument?: Document;
-  shortDescription?: string;
-}
-
-export interface DocumentCollection {
-  id?: string;
-  value: DocumentCollectionValue;
 }

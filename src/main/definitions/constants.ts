@@ -291,7 +291,6 @@ export const mvpLocations = [
   'BD',
 ];
 
-export const SUBMITTED_CLAIM_FILE_TYPE = 'Notice of a claim';
 export const et1DocTypes = ['Notice of a claim'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
