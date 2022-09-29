@@ -45,7 +45,7 @@ describe('Case Selection Service using Case Api', () => {
           created_date: '2019-02-12T14:25:39.015',
           case_data: {
             caseType: CaseType.SINGLE,
-            typeOfClaim: ['discrimination', 'payRelated'],
+            typesOfClaim: ['discrimination', 'payRelated'],
             claimantRepresentedQuestion: YesOrNo.YES,
             caseSource: 'ET1 Online',
           },
@@ -57,7 +57,7 @@ describe('Case Selection Service using Case Api', () => {
           created_date: '2019-02-12T14:25:39.015',
           case_data: {
             caseType: CaseType.SINGLE,
-            typeOfClaim: ['discrimination', 'payRelated'],
+            typesOfClaim: ['discrimination', 'payRelated'],
             claimantRepresentedQuestion: YesOrNo.YES,
             caseSource: 'ET1 Online',
           },
@@ -126,7 +126,7 @@ describe('Case Selection Service using Case Api', () => {
         created_date: '2019-02-12T14:25:39.015',
         case_data: {
           caseType: CaseType.SINGLE,
-          typeOfClaim: ['discrimination', 'payRelated'],
+          typesOfClaim: ['discrimination', 'payRelated'],
           claimantRepresentedQuestion: YesOrNo.YES,
           caseSource: 'ET1 Online',
         },

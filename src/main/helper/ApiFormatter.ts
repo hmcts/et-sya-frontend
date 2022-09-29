@@ -25,7 +25,7 @@ export function toApiFormatCreate(
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
-      typeOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
+      typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
@@ -61,7 +61,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
     addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
     addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
-    typeOfClaim: fromApiCaseData.case_data?.typeOfClaim,
+    typeOfClaim: fromApiCaseData.case_data?.typesOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
     preferredTitle: returnPreferredTitle(
@@ -130,7 +130,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
-      typeOfClaim: caseItem.typeOfClaim,
+      typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,

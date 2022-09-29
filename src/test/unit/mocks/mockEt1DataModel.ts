@@ -13,7 +13,7 @@ export const mockEt1DataModel = {
   post_code: 'SW1A 1AA',
   case_data: {
     caseType: 'Single',
-    typeOfClaim: ['discrimination', 'payRelated'],
+    typesOfClaim: ['discrimination', 'payRelated'],
     claimantRepresentedQuestion: 'Yes',
     caseSource: 'ET1 Online',
     claimantIndType: {
@@ -31,7 +31,7 @@ export const mockEt1DataModelUpdate = {
   case_type_id: 'ET_EnglandWales',
   case_data: {
     caseType: 'Single',
-    typeOfClaim: ['discrimination', 'payRelated'],
+    typesOfClaim: ['discrimination', 'payRelated'],
     ClaimantPcqId: '1234',
     claimantRepresentedQuestion: 'Yes',
     claimantWorkAddressQuestion: 'Yes',
@@ -146,7 +146,7 @@ export const submittedCaseResponse = {
     last_modified: '2022-08-19T09:19:25.817549',
     case_data: {
       caseType: 'Single',
-      typeOfClaim: ['discrimination', 'payRelated'],
+      typesOfClaim: ['discrimination', 'payRelated'],
       ClaimantPcqId: '1234',
       claimantRepresentedQuestion: 'Yes',
       caseSource: 'ET1 Online',
