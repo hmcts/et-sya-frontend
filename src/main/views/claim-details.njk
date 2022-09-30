@@ -60,22 +60,6 @@
         {% endfor %}
       {% endif %}
 
-      {{ govukTable({
-        caption: "Application details",
-        captionClasses: "govuk-table__caption--m",
-        firstCellIsHeader: true,
-        rows: [
-          [
-            {
-              text: "Claim type"
-            },
-            {
-              text: "[Selected claim types]"
-            }
-          ]
-        ]
-      }) }}
-
       {{
         govukSummaryList({
           rows: yourDetails
