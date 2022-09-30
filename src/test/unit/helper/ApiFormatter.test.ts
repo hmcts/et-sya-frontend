@@ -25,11 +25,11 @@ import {
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
-  convertClaimServedDateToRespondentDeadline,
   formatDate,
   fromApiFormat,
   fromApiFormatDocument,
   getDocId,
+  getDueDate,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
@@ -576,6 +576,6 @@ describe('testDeadlineCalculatingAndFormatting', () => {
     { mockRef: 'aa', expected: undefined },
     { mockRef: '2022-09-15T08:48:58.613343', expected: '13 October 2022' },
   ])('convert claim served date to respondent deadline', ({ mockRef, expected }) => {
-    expect(convertClaimServedDateToRespondentDeadline(mockRef)).toEqual(expected);
+    expect(getDueDate(mockRef, 28)).toEqual(expected);
   });
 });

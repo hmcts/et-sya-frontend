@@ -50,6 +50,7 @@ export interface CaseData {
   claimantWorkAddressQuestion?: YesOrNo;
   claimantWorkAddress?: WorkAddressDetails;
   et3IsThereAnEt3Response?: YesOrNo;
+  receiptDate?: string;
   hubLinksStatuses?: HubLinksStatuses;
   managingOffice?: string;
   tribunalCorrespondenceEmail?: string;

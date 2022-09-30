@@ -11,7 +11,7 @@ import {
   sectionIndexToLinkNames,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormat } from '../helper/ApiFormatter';
+import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
@@ -21,6 +21,8 @@ import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 const { Logger } = require('@hmcts/nodejs-logging');
 
 const logger = Logger.getLogger('app');
+
+const DAYS_FOR_PROCESSING = 5;
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -84,6 +86,7 @@ export default class CitizenHubController {
       currentState,
       sections,
       hideContactUs: true,
+      processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert:
         !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length,
       showAcknowledgementAlert:

@@ -120,6 +120,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     et1FormDetails: setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et1DocTypes),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
@@ -138,7 +139,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
       fromApiCaseData?.case_data?.et3NotificationDocCollection,
       responseRejectedDocTypes
     ),
-    respondentResponseDeadline: convertClaimServedDateToRespondentDeadline(fromApiCaseData.case_data?.claimServedDate),
+    respondentResponseDeadline: getDueDate(fromApiCaseData.case_data?.claimServedDate, 28),
     responseEt3FormDocumentDetail: [
       ...combineDocuments(
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
@@ -312,6 +313,10 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string) {
+  if (!responseDate) {
+    return;
+  }
+
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return new Date(dateComponent).toLocaleDateString(i18next.language, {
     year: 'numeric',
@@ -320,13 +325,13 @@ function convertFromTimestampString(responseDate: string) {
   });
 }
 
-export const convertClaimServedDateToRespondentDeadline = (date: string): string => {
+export const getDueDate = (date: string, daysUntilDue: number): string => {
   if (!date) {
     return;
   }
   const deadline = new Date(date);
   if (deadline instanceof Date && !isNaN(deadline.getTime())) {
-    deadline.setDate(deadline.getDate() + 28);
+    deadline.setDate(deadline.getDate() + daysUntilDue);
     return new Intl.DateTimeFormat('en-GB', {
       day: 'numeric',
       month: 'long',

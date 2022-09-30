@@ -146,6 +146,7 @@ export interface Case {
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: Document;
+  submittedDate?: CaseDate;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
   et1FormDetails?: DocumentDetail[];
