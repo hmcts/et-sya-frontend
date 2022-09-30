@@ -24,10 +24,7 @@ export default class ClaimDetailsController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
-    userCase.allEt1DocumentDetails = await ClaimDetailsController.getET1Documents(
-      userCase,
-      req.session.user?.accessToken
-    );
+    userCase.allEt1DocumentDetails = await getET1Documents(userCase, req.session.user?.accessToken);
 
     const et1Documents = [];
     for (const doc of userCase.allEt1DocumentDetails) {
@@ -51,31 +48,40 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      yourDetails: getYourDetails(userCase, translations),
-      employmentSection: getEmploymentDetails(userCase, translations),
+      yourDetails: removeActions(getYourDetails(userCase, translations)),
+      employmentSection: removeActions(getEmploymentDetails(userCase, translations)),
       et1Documents,
     });
   };
+}
 
-  private static async getET1Documents(userCase: CaseWithId, accessToken: string) {
-    const et1DocumentDetails = [];
+async function getET1Documents(userCase: CaseWithId, accessToken: string) {
+  const et1DocumentDetails = [];
 
-    if (userCase.et1FormDetails) {
-      et1DocumentDetails.push(...userCase.et1FormDetails);
-    }
-
-    if (userCase.claimSummaryFile?.document_url) {
-      const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
-      const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
-      et1DocumentDetails.push(supportDocDetails);
-    }
-
-    try {
-      await getDocumentDetails(et1DocumentDetails, accessToken);
-    } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
-    }
-
-    return et1DocumentDetails;
+  if (userCase.et1FormDetails) {
+    et1DocumentDetails.push(...userCase.et1FormDetails);
   }
+
+  if (userCase.claimSummaryFile?.document_url) {
+    const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
+    const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
+    et1DocumentDetails.push(supportDocDetails);
+  }
+
+  try {
+    await getDocumentDetails(et1DocumentDetails, accessToken);
+  } catch (err) {
+    logger.error(err.response?.status, err.response?.data, err);
+  }
+
+  return et1DocumentDetails;
+}
+
+// For now, as we utilise the same details as the CYA page, we need to alter them slightly to our needs.
+// TODO remove this later.
+function removeActions(details: { key: unknown; value?: unknown; actions?: unknown }[]) {
+  for (const item of details) {
+    delete item['actions'];
+  }
+  return details;
 }
