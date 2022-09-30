@@ -43,6 +43,7 @@ describe('Should return data in api format', () => {
       [CaseDataCacheKey.CLAIMANT_REPRESENTED, 'Yes'],
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
       [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(['discrimination', 'payRelated'])],
+      [CaseDataCacheKey.OTHER_CLAIM_TYPE, 'other claim description'],
     ]);
 
     const mockUserDetails: UserDetails = {
@@ -148,6 +149,7 @@ describe('Should return data in api format', () => {
         document_filename: 'document.pdf',
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
+      otherClaim: 'other claim description',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);

@@ -65,6 +65,9 @@ describe('Axios post to initiate case', () => {
           claimantType: {
             claimant_email_address: 'bobby@gmail.com',
           },
+          claimantRequests: {
+            other_claim: undefined,
+          },
         },
       })
     );
@@ -202,6 +205,7 @@ describe('update case', () => {
       },
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
+      otherClaim: 'other claim description',
     };
     await api.updateDraftCase(caseItem);
 

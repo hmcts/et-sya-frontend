@@ -23,6 +23,9 @@ export const mockEt1DataModel = {
     claimantType: {
       claimant_email_address: 'bobby@gmail.com',
     },
+    claimantRequests: {
+      other_claim: 'other claim description',
+    },
   },
 };
 
@@ -101,6 +104,7 @@ export const mockEt1DataModelUpdate = {
         document_filename: 'document.pdf',
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
+      other_claim: 'other claim description',
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,

@@ -26,6 +26,9 @@ export function toApiFormatCreate(
       claimantType: {
         claimant_email_address: userDetails.email,
       },
+      claimantRequests: {
+        other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
+      },
     },
   };
 }
