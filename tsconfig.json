@@ -18,5 +18,6 @@
       "routes/*": ["routes/*"]
     },
     "typeRoots": ["./node_modules/@types"]
-  }
+  },
+  "resolveJsonModule": true
 }
