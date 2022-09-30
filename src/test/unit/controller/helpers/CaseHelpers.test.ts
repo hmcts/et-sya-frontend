@@ -1,8 +1,12 @@
+import { nextTick } from 'process';
+
 import axios, { AxiosResponse } from 'axios';
+//import { update } from 'lodash';
 
 import {
   getSectionStatus,
   handleUpdateDraftCase,
+  handleUpdateSubmittedCase,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../../main/controllers/helpers/CaseHelpers';
@@ -18,14 +22,6 @@ import { mockRequest } from '../../mocks/mockRequest';
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 caseApi.getUserCase = jest.fn().mockResolvedValue(
-  Promise.resolve({
-    data: {
-      created_date: '2022-08-19T09:19:25.79202',
-      last_modified: '2022-08-19T09:19:25.817549',
-    },
-  } as AxiosResponse<CaseApiDataResponse>)
-);
-caseApi.updateDraftCase = jest.fn().mockResolvedValue(
   Promise.resolve({
     data: {
       created_date: '2022-08-19T09:19:25.79202',
@@ -159,11 +155,55 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
-  describe('handle update draft case', () => {
-    it('should successfully save case draft', () => {
-      const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+});
 
-      handleUpdateDraftCase(req, mockLogger);
-    });
+describe('handle update draft case', () => {
+  it('should successfully save case draft', () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          case_data: {
+            caseType: 'Single',
+            typeOfClaim: ['discrimination', 'payRelated'],
+            claimantRepresentedQuestion: 'Yes',
+            caseSource: 'ET1 Online',
+          },
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+});
+describe('handle update submitted case', () => {
+  it('should successfully save case', async () => {
+    caseApi.updateSubmittedCase = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          case_data: {
+            caseType: 'Single',
+            typeOfClaim: ['discrimination', 'payRelated'],
+            claimantRepresentedQuestion: 'Yes',
+            caseSource: 'ET1 Online',
+          },
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateSubmittedCase(req, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case id: testUserCaseId');
+  });
+  it('should catch failure when updating case', async () => {
+    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce('test error');
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateSubmittedCase(req, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });
