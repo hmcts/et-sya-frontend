@@ -1,12 +1,42 @@
+import axios, { AxiosResponse } from 'axios';
+
 import {
   getSectionStatus,
+  handleUpdateDraftCase,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../../main/controllers/helpers/CaseHelpers';
+import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { sectionStatus } from '../../../../main/definitions/definition';
+import * as CaseService from '../../../../main/services/CaseService';
+import { CaseApi } from '../../../../main/services/CaseService';
 import { mockSession } from '../../mocks/mockApp';
+import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+caseApi.updateDraftCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+
+const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+
+mockClient.mockReturnValue(caseApi);
 
 describe('getSectionStatus()', () => {
   it.each([
@@ -129,4 +159,11 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
+  describe('handle update draft case', () => {
+    it('should successfully save case draft', () => {
+      const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+
+      handleUpdateDraftCase(req, mockLogger);
+    });
+  });
 });
