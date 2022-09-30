@@ -36,7 +36,6 @@ export default class ClaimDetailsController {
     }
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }), //todo remove once change button isn't being used anymore.
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
     };
 
