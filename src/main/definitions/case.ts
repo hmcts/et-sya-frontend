@@ -137,6 +137,7 @@ export interface Case {
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  otherClaim?: string;
 }
 
 export const enum StillWorking {

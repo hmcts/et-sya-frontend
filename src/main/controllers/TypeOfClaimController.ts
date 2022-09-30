@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -9,7 +10,7 @@ import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { cachePreloginCaseData } from '../services/CacheService';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
@@ -82,7 +83,7 @@ export default class TypeOfClaimController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.typeOfClaimFormContent.fields);
   }
 
@@ -108,6 +109,7 @@ export default class TypeOfClaimController {
           [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
           [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
           [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+          [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
         ]);
         try {
           req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
@@ -127,6 +129,7 @@ export default class TypeOfClaimController {
     }
 
     handleSessionErrors(req, res, this.form, redirectUrl);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

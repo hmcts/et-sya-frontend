@@ -93,6 +93,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
+    otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
@@ -181,6 +182,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         whistleblowing: caseItem.whistleblowingClaim,
         whistleblowing_authority: caseItem.whistleblowingEntityName,
         claim_description_document: caseItem.claimSummaryFile,
+        other_claim: caseItem.otherClaim,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,

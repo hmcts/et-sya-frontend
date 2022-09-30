@@ -1,6 +1,7 @@
 // import { handleSessionErrors } from '../../../main/controllers/helpers';
 import express from 'express';
 import redis from 'redis-mock';
+import { LoggerInstance } from 'winston';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
@@ -24,8 +25,13 @@ describe('Type Of Claim Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render the Type Of Claim controller page', () => {
-    const typeOfController = new TypeOfClaimController();
+    const typeOfController = new TypeOfClaimController(mockLogger);
 
     const response = mockResponse();
     const userCase = {
@@ -49,7 +55,7 @@ describe('Type Of Claim Controller', () => {
       const errors = [{ propertyName: 'typeOfClaim', errorType: 'required' }];
       const body = { typeOfClaim: [''] };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -70,7 +76,7 @@ describe('Type Of Claim Controller', () => {
         otherClaim: 'Help',
       };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -95,7 +101,7 @@ describe('Type Of Claim Controller', () => {
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -113,7 +119,7 @@ describe('Type Of Claim Controller', () => {
         typeOfClaim: [TypesOfClaim.OTHER_TYPES],
       };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -123,6 +129,7 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
+        [CaseDataCacheKey.OTHER_CLAIM_TYPE, undefined],
       ]);
       req.app = app;
       req.app.locals = {
@@ -137,7 +144,7 @@ describe('Type Of Claim Controller', () => {
         typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
       };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -147,6 +154,7 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
+        [CaseDataCacheKey.OTHER_CLAIM_TYPE, undefined],
       ]);
       req.app = app;
       req.app.locals = {
@@ -159,7 +167,7 @@ describe('Type Of Claim Controller', () => {
     it('should throw error if Redis client not found', () => {
       const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
 
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
 
       const req = mockRequest({ body });
       const res = mockResponse();
@@ -174,7 +182,7 @@ describe('Type Of Claim Controller', () => {
 
     it('should redirect to ET1_BASE page if Breach of Contract is selected', () => {
       const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
       const req = mockRequest({ body });
       const res = mockResponse();
 
@@ -186,7 +194,7 @@ describe('Type Of Claim Controller', () => {
 
     it('should redirect to LOGIN page if Discrimination is selected', () => {
       const body = { typeOfClaim: [TypesOfClaim.DISCRIMINATION] };
-      const controller = new TypeOfClaimController();
+      const controller = new TypeOfClaimController(mockLogger);
       const req = mockRequest({ body });
       const res = mockResponse();
 

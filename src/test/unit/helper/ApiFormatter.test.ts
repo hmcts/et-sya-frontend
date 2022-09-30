@@ -272,6 +272,7 @@ describe('Format Case Data to Frontend Model', () => {
           },
           discrimination_claims: [ClaimTypeDiscrimination.RACE],
           pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
+          other_claim: 'other type of claims',
         },
         claimantTaskListChecks: {
           personalDetailsCheck: YesOrNo.YES,
@@ -380,6 +381,7 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressTown: 'Anytown',
       workAddressCountry: 'England',
       workAddressPostcode: 'SW1H 9AQ',
+      otherClaim: 'other type of claims',
 
       respondents: [
         {
@@ -487,6 +489,7 @@ describe('Format Case Data to Frontend Model', () => {
       et3IsThereAnEt3Response: undefined,
       claimSummaryFile: undefined,
       hubLinksStatuses: undefined,
+      otherClaim: undefined,
     });
   });
 
