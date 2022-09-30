@@ -62,11 +62,11 @@ describe('Describe-What-Happened Controller', () => {
 
     it('should only allow valid file formats', async () => {
       const newFile = mockFile;
-      newFile.filename = 'file.invalidFileFormat';
+      newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
       await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFile', errorType: 'invalidFileFormat' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileFormat' }]);
     });
 
     it('should assign userCase from summary text', async () => {
