@@ -9,6 +9,7 @@ import { getDocId } from '../helper/ApiFormatter';
 
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
+import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -51,6 +52,8 @@ export default class ClaimDetailsController {
       hideContactUs: true,
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
+      translations,
+      getRespondentSection,
       et1Documents,
     });
   };

@@ -67,7 +67,7 @@
     })
   }}
 
-  {% for respondent in respondents %}
+  {% for respondent in userCase.respondents %}
     {{
       govukSummaryList({
         rows: getRespondentSection(userCase, respondent, loop.index, translations)

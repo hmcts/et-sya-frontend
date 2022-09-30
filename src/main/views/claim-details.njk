@@ -88,6 +88,14 @@
         })
       }}
 
+      {% for respondent in userCase.respondents %}
+        {{
+          govukSummaryList({
+            rows: getRespondentSection(userCase, respondent, loop.index, translations)
+          })
+        }}
+      {% endfor %}
+
       {% set documentsRows = [] %}
       {% for document in et1Documents %}
         {% set documentsRows = (documentsRows.push(

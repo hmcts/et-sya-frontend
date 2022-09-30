@@ -29,22 +29,6 @@
   "employer": {
     "header": "Employer"
   },
-  "respondentDetails": {
-    "header": "Respondent ",
-    "details": " details",
-    "respondentName": "Name of respondent",
-    "respondentAddress": "Respondent address",
-    "workedAtRespondent": "Did you work at the respondent's address?",
-    "addressWorkedAt": "The address you work or worked at",
-    "orgOrPerson": "Organisation or person",
-    "acasNumber": "Do you have an Acas certificate number?",
-    "noAcasReason": "Why do you not have an Acas Number?",
-    "acasExemption": "Acas exemption",
-    "name": "Name",
-    "telephone": "UK telephone number",
-    "officeAddress": "Registered or head office address",
-    "workAddress": "Work address"
-  },
   "claimDetails": {
     "header": "Claim details",
     "claimTypeDiscrimination": "What type of discrimination claim are you making?",

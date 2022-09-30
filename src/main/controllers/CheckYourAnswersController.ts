@@ -22,7 +22,6 @@ export default class CheckYourAnswersController {
       ...translations,
       PageUrls,
       userCase,
-      respondents: userCase?.respondents,
       InterceptPaths,
       typesOfClaim: userCase.typeOfClaim,
       showCompensationRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY),
