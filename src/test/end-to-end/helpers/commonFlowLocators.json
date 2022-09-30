@@ -1,0 +1,6 @@
+{
+  "contact_us": "//span[contains(.,'Contact us')]",
+
+  "who_can_act_as_a_representative": "//span[.='Who can act as a representative?']",
+  "how_can_i_find_and_get_a_representative": "//span[contains(.,'How to find and get a representative?')]"
+}
