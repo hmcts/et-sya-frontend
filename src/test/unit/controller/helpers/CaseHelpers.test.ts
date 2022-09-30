@@ -1,21 +1,23 @@
 import { nextTick } from 'process';
 
 import axios, { AxiosResponse } from 'axios';
-//import { update } from 'lodash';
 
 import {
   getSectionStatus,
   handleUpdateDraftCase,
   handleUpdateSubmittedCase,
+  handleUploadDocument,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../../main/definitions/case';
 import { sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
 import { mockSession } from '../../mocks/mockApp';
+import { mockFile } from '../../mocks/mockFile';
 import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
 
@@ -205,5 +207,24 @@ describe('handle update submitted case', () => {
     handleUpdateSubmittedCase(req, mockLogger);
     await new Promise(nextTick);
     expect(mockLogger.error).toHaveBeenCalledWith('test error');
+  });
+});
+describe('handle file upload', () => {
+  it('should succesfully handle file upload', async () => {
+    caseApi.uploadDocument = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          _links: {
+            self: {
+              href: 'test.pdf',
+            },
+          },
+        },
+      } as AxiosResponse<DocumentUploadResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUploadDocument(req, mockFile, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.info).toHaveBeenCalledWith('Uploaded document to: test.pdf');
   });
 });
