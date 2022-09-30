@@ -8,45 +8,55 @@ const englishTranslationFiles = fs.readdirSync(path.resolve(__dirname, englishDi
 
 const welshTranslationFiles = fs.readdirSync(path.resolve(__dirname, welshDirectory));
 
-describe('Read all translation files', () => {
+const findMissingKeys = function (
+  original: Record<string, unknown>,
+  toCheck: Record<string, unknown>,
+  previousPath = '',
+  output: string[] = []
+) {
+  for (const key in original) {
+    const currentPath = previousPath ? `${previousPath}.${key}` : key;
+
+    if (typeof original[key] === 'object') {
+      if (toCheck !== undefined) {
+        findMissingKeys(
+          original[key] as Record<string, unknown>,
+          toCheck[key] as Record<string, unknown>,
+          currentPath,
+          output
+        );
+      } else {
+        findMissingKeys(original[key] as Record<string, unknown>, {}, currentPath, output);
+      }
+    } else {
+      if (toCheck === undefined || toCheck[key] === undefined) {
+        output.push(`No match for: ${currentPath}`);
+      }
+    }
+  }
+  return output;
+};
+
+describe('Check missing keys in translation files', () => {
   it('should have equal number of translation files', () => {
     expect(englishTranslationFiles).toHaveLength(welshTranslationFiles.length);
   });
 
-  it('should have equal keys in welsh and england files', () => {
-    const unmatchedArray = [];
-    let data = '';
-    for (const file of englishTranslationFiles) {
-      const englishFile = fs.readFileSync(path.resolve(__dirname, englishDirectory + file), 'utf-8');
-      const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+  test.each(welshTranslationFiles)('Check english translation file %s has no missing keys', file => {
+    const englishFile = fs.readFileSync(path.resolve(__dirname, englishDirectory + file), 'utf-8');
+    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+    const englishContents = JSON.parse(englishFile) as Record<string, unknown>;
+    const welshContents = JSON.parse(welshFile) as Record<string, unknown>;
 
-      const englishContents = JSON.parse(englishFile);
-      const welshContents = JSON.parse(welshFile);
+    expect(findMissingKeys(welshContents, englishContents)).toMatchObject([]);
+  });
 
-      const englandKeys = [];
-      const welshKeys = [];
+  test.each(englishTranslationFiles)('Check welsh translation file %s has no missing keys', file => {
+    const englishFile = fs.readFileSync(path.resolve(__dirname, englishDirectory + file), 'utf-8');
+    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+    const englishContents = JSON.parse(englishFile);
+    const welshContents = JSON.parse(welshFile);
 
-      for (const k in englishContents) {
-        englandKeys.push(k);
-      }
-
-      for (const k in welshContents) {
-        welshKeys.push(k);
-      }
-
-      for (let index = 0; index < englandKeys.length; index++) {
-        if (welshKeys.includes(englandKeys[index])) {
-          continue;
-        }
-        unmatchedArray.push(englandKeys[index]);
-        data = data.concat(` File: '${file}' Missing key: '${englandKeys[index]}'\n`);
-      }
-      fs.writeFile('missingTranslationKeys.txt', data, err => {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
-    expect(unmatchedArray).toHaveLength(0);
+    expect(findMissingKeys(englishContents, welshContents)).toMatchObject([]);
   });
 });
