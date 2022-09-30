@@ -43,7 +43,7 @@
       "tooLong": "Description must be 2500 characters or less",
       "textAndFile": "Enter a free text summary or upload as a separate document you cannot have both"
     },
-    "claimSummaryFile": {
+    "claimSummaryFileName": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf."
     }
   }

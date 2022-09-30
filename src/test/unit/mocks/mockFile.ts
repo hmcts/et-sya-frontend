@@ -2,13 +2,13 @@ import { Readable } from 'stream';
 
 export const mockFile = {
   fieldname: 'test',
-  originalname: 'test',
+  filename: 'test',
   encoding: 'txt',
   mimetype: 'test',
   size: 2046,
   stream: new Readable(),
   destination: '',
-  filename: 'testFile.txt',
+  originalname: 'testFile.txt',
   path: '',
   buffer: Buffer.from('test'),
 };
