@@ -35,6 +35,8 @@ export default class ClaimDetailsController {
       });
     }
 
+    // Because these translations don't have the CYA 'change' translation, they don't show the change action.
+    // However, this is just a quick fix to make it look like a table rather than the summary details that it actually is.
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
     };
@@ -47,8 +49,8 @@ export default class ClaimDetailsController {
       PageUrls,
       userCase,
       hideContactUs: true,
-      yourDetails: removeActions(getYourDetails(userCase, translations)),
-      employmentSection: removeActions(getEmploymentDetails(userCase, translations)),
+      yourDetails: getYourDetails(userCase, translations),
+      employmentSection: getEmploymentDetails(userCase, translations),
       et1Documents,
     });
   };
@@ -74,13 +76,4 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   }
 
   return et1DocumentDetails;
-}
-
-// For now, as we utilise the same details as the CYA page, we need to alter them slightly to our needs.
-// TODO remove this later.
-function removeActions(details: { key: unknown; value?: unknown; actions?: unknown }[]) {
-  for (const item of details) {
-    delete item['actions'];
-  }
-  return details;
 }

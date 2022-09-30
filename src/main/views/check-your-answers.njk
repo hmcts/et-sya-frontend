@@ -56,24 +56,24 @@
   </dl>
 
   {{
-    govukSummaryList({ 
+    govukSummaryList({
       rows: yourDetails
     })
   }}
 
   {{
-    govukSummaryList({ 
+    govukSummaryList({
       rows: employmentSection
     })
   }}
 
-{% for respondent in respondents %}  
-  {{
-    govukSummaryList({ 
-      rows: getRespondentSection(userCase, respondent, loop.index, translations)
-    })
-  }}
-{% endfor %}
+  {% for respondent in respondents %}
+    {{
+      govukSummaryList({
+        rows: getRespondentSection(userCase, respondent, loop.index, translations)
+      })
+    }}
+  {% endfor %}
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
@@ -164,7 +164,7 @@
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link" href="/compensation/change?redirect=answers">
             {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.expectedCompensation }}</span>
-          </a>           
+          </a>
         </dd>
     </div>
   {% endif %}
@@ -180,7 +180,7 @@
       <dd class="govuk-summary-list__actions">
         <a class="govuk-link" href="/tribunal-recommendation/change?redirect=answers">
           {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.tribunalRecommendationRequest }}</span>
-        </a>           
+        </a>
       </dd>
     </div>
   {% endif %}
@@ -193,7 +193,7 @@
       <dd class="govuk-summary-list__value">
         {{ userCase.whistleblowingClaim }} - {{ userCase.whistleblowingEntityName }}
       </dd>
-      <dd class="govuk-summary-list__actions"> 
+      <dd class="govuk-summary-list__actions">
         <a class="govuk-link" href="/whistleblowing-claims/change?redirect=answers">
           {{ change }}<span class="govuk-visually-hidden"> {{ claimDetails.forwardClaim }}</span>
         </a>
@@ -204,7 +204,7 @@
 </dl>
 
 <div class="govuk-form-group">
-  {{ 
+  {{
     govukButton({
       text: submitBtn,
       classes: 'govuk-!-margin-right-2',
@@ -214,10 +214,10 @@
       attributes: {
         id: 'main-form-submit'
       }
-    }) 
+    })
   }}
 
-  {{ 
+  {{
     govukButton({
       text: saveForLater,
       classes: 'govuk-button--secondary',
@@ -229,7 +229,7 @@
         id: 'main-form-save-for-later'
       },
       value: true
-    }) 
+    })
   }}
 
 </div>
