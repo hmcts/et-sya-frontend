@@ -15,7 +15,8 @@ const findMissingKeys = function (
   output: string[] = []
 ) {
   for (const key in original) {
-    const currentPath = previousPath ? `${previousPath} -> ${key}` : key;
+
+    const currentPath = previousPath ? `${previousPath}.${key}` : key;
 
     if (typeof original[key] === 'object') {
       if (toCheck !== undefined) {
@@ -38,14 +39,8 @@ const findMissingKeys = function (
 };
 
 describe('Check missing keys in translation files', () => {
-  it('There should not be any missing translation files for welsh translations', () => {
-    const missingFiles = englishTranslationFiles.filter(x => !welshTranslationFiles.includes(x));
-    expect(missingFiles).toEqual([]);
-  });
-
-  it('There should not be any missing translation files for english translations', () => {
-    const missingFiles = welshTranslationFiles.filter(x => !englishTranslationFiles.includes(x));
-    expect(missingFiles).toEqual([]);
+  it('should have equal number of translation files', () => {
+    expect(englishTranslationFiles).toHaveLength(welshTranslationFiles.length);
   });
 
   test.each(welshTranslationFiles)('Check english translation file %s has no missing keys', file => {
@@ -54,7 +49,7 @@ describe('Check missing keys in translation files', () => {
     const englishContents = JSON.parse(englishFile) as Record<string, unknown>;
     const welshContents = JSON.parse(welshFile) as Record<string, unknown>;
 
-    expect(findMissingKeys(welshContents, englishContents)).toEqual([]);
+    expect(findMissingKeys(welshContents, englishContents)).toMatchObject([]);
   });
 
   test.each(englishTranslationFiles)('Check welsh translation file %s has no missing keys', file => {
@@ -63,6 +58,6 @@ describe('Check missing keys in translation files', () => {
     const englishContents = JSON.parse(englishFile);
     const welshContents = JSON.parse(welshFile);
 
-    expect(findMissingKeys(englishContents, welshContents)).toEqual([]);
+    expect(findMissingKeys(englishContents, welshContents)).toMatchObject([]);
   });
 });
