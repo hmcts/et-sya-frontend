@@ -71,3 +71,13 @@ export interface ApplicationTableRecord {
   completionStatus: string;
   url: string;
 }
+
+export interface DocumentDetail {
+  id: string;
+  description: string;
+  size?: string;
+  mimeType?: string;
+  originalDocumentName?: string;
+  createdOn?: string;
+  type?: string;
+}
