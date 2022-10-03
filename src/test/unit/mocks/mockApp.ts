@@ -66,6 +66,22 @@ export function mockRedisClient(cacheMap: Map<CaseDataCacheKey, string>): RedisC
   return redisClient;
 }
 
+// Logged in but with an empty userCase.
+export const mockEmptyApp = (): Express => {
+  const mock = express();
+  mock.all('*', function (req, res, next) {
+    req.session = {
+      save: jest.fn(done => done()),
+      lang: 'en',
+      errors: undefined,
+      user: mockUserDetails,
+    } as unknown as AppSession;
+    next();
+  });
+  mock.use(app);
+  return mock;
+};
+
 export const mockApp = ({
   body,
   userCase,
