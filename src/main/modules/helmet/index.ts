@@ -35,7 +35,12 @@ export class Helmet {
       'https://idam-web-public.aat.platform.hmcts.net/',
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain, 'https://localhost:5000/'];
+    const connectSrc = [
+      self,
+      googleAnalyticsDomain,
+      'https://localhost:5000/',
+      'https://idam-web-public.aat.platform.hmcts.net',
+    ];
 
     const imgSrc = [
       self,
