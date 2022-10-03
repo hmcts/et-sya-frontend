@@ -1,8 +1,9 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { NoAcasNumberReason } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
+import { NoAcasNumberReason, YesOrNo } from '../../../main/definitions/case';
+import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
+import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/check-your-answers';
@@ -21,15 +22,22 @@ describe('Check your answers confirmation page', () => {
     await request(
       mockApp({
         userCase: {
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
+          claimantWorkAddressQuestion: YesOrNo.NO,
+          pastEmployer: YesOrNo.YES,
+          noticePeriod: YesOrNo.YES,
           respondents: [
             {
               respondentNumber: 1,
               respondentName: 'John Does',
               respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
             },
           ],
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
         },
       })
     )
@@ -102,7 +110,7 @@ describe('Check your answers confirmation page', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const typeOfClaimList = summaryListSections[0].getElementsByClassName(summaryListLinkClass);
     const typeOfClaimLink = typeOfClaimList[0].getAttribute('href');
-    expect(typeOfClaimLink).equals(PageUrls.TYPE_OF_CLAIM, 'Incorrect href found');
+    expect(typeOfClaimLink).equals(PageUrls.TYPE_OF_CLAIM + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
   });
 
   it('should display correct url in the change buttons for Your details row', () => {
@@ -117,14 +125,20 @@ describe('Check your answers confirmation page', () => {
     const hearingsLink = yourDetailsList[6].getAttribute('href');
     const disabilityLink = yourDetailsList[7].getAttribute('href');
 
-    expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS, 'Incorrect href found');
-    expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE, 'Incorrect href found');
-    expect(preferredTitleLink).equals(PageUrls.SEX_AND_TITLE, 'Incorrect href found');
-    expect(homeAddressLink).equals(PageUrls.ADDRESS_DETAILS, 'Incorrect href found');
-    expect(telephoneLink).equals(PageUrls.TELEPHONE_NUMBER, 'Incorrect href found');
-    expect(howToContactLink).equals(PageUrls.UPDATE_PREFERENCES, 'Incorrect href found');
-    expect(hearingsLink).equals(PageUrls.VIDEO_HEARINGS, 'Incorrect href found');
-    expect(disabilityLink).equals(PageUrls.REASONABLE_ADJUSTMENTS, 'Incorrect href found');
+    expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(preferredTitleLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(homeAddressLink).equals(PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(telephoneLink).equals(PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(howToContactLink).equals(
+      PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(hearingsLink).equals(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(disabilityLink).equals(
+      PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
   });
 
   it('should display correct url in the change buttons for respondent details row', () => {
@@ -137,12 +151,30 @@ describe('Check your answers confirmation page', () => {
     const haveAcasLink = respondentDetailsList[4].getAttribute('href');
     const whyNoAcasLength = respondentDetailsList[5].getAttribute('href');
     const respondentPartialUrl = '/respondent/1';
-    expect(respondentNameLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_NAME, 'Incorrect href found');
-    expect(respondentAddressLink).equals(respondentPartialUrl + PageUrls.RESPONDENT_ADDRESS, 'Incorrect href found');
-    expect(workedForRespondentLink).equals(respondentPartialUrl + PageUrls.WORK_ADDRESS, 'Incorrect href found');
-    expect(addressWorkedAtLink).equals(respondentPartialUrl + PageUrls.PLACE_OF_WORK, 'Incorrect href found');
-    expect(haveAcasLink).equals(respondentPartialUrl + PageUrls.ACAS_CERT_NUM, 'Incorrect href found');
-    expect(whyNoAcasLength).equals(respondentPartialUrl + PageUrls.NO_ACAS_NUMBER, 'Incorrect href found');
+    expect(respondentNameLink).equals(
+      respondentPartialUrl + PageUrls.RESPONDENT_NAME + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(respondentAddressLink).equals(
+      respondentPartialUrl + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(workedForRespondentLink).equals(
+      respondentPartialUrl + PageUrls.WORK_ADDRESS + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(addressWorkedAtLink).equals(
+      respondentPartialUrl + PageUrls.PLACE_OF_WORK + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(haveAcasLink).equals(
+      respondentPartialUrl + PageUrls.ACAS_CERT_NUM + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(whyNoAcasLength).equals(
+      respondentPartialUrl + PageUrls.NO_ACAS_NUMBER + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
   });
 
   it('should display correct url in the change buttons for employment details row', () => {
@@ -153,8 +185,8 @@ describe('Check your answers confirmation page', () => {
     const jobTitleLink = employmentDetailsList[2].getAttribute('href');
     const employmentStartDateLink = employmentDetailsList[3].getAttribute('href');
     const contractNoticePeriodLink = employmentDetailsList[4].getAttribute('href');
-    const noticePeriodLength = employmentDetailsList[5].getAttribute('href');
-    const noticePeriodType = employmentDetailsList[6].getAttribute('href');
+    const noticePeriodType = employmentDetailsList[5].getAttribute('href');
+    const noticePeriodLength = employmentDetailsList[6].getAttribute('href');
     const averageWeeklyHoursLink = employmentDetailsList[7].getAttribute('href');
     const payBeforeTaxLink = employmentDetailsList[8].getAttribute('href');
     const payAfterTaxLink = employmentDetailsList[9].getAttribute('href');
@@ -164,17 +196,23 @@ describe('Check your answers confirmation page', () => {
 
     expect(pastEmployerLink).equals(PageUrls.PAST_EMPLOYER, 'Incorrect href found');
     expect(stillWorkingLink).equals(PageUrls.STILL_WORKING, 'Incorrect href found');
-    expect(jobTitleLink).equals(PageUrls.JOB_TITLE, 'Incorrect href found');
-    expect(employmentStartDateLink).equals(PageUrls.START_DATE, 'Incorrect href found');
-    expect(contractNoticePeriodLink).equals(PageUrls.NOTICE_PERIOD, 'Incorrect href found');
-    expect(noticePeriodLength).equals(PageUrls.NOTICE_LENGTH, 'Incorrect href found');
-    expect(noticePeriodType).equals(PageUrls.NOTICE_TYPE, 'Incorrect href found');
-    expect(averageWeeklyHoursLink).equals(PageUrls.AVERAGE_WEEKLY_HOURS, 'Incorrect href found');
-    expect(payBeforeTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
-    expect(payAfterTaxLink).equals(PageUrls.PAY, 'Incorrect href found');
-    expect(payIntervalLink).equals(PageUrls.PAY, 'Incorrect href found');
-    expect(pensionLink).equals(PageUrls.PENSION, 'Incorrect href found');
-    expect(benefitLink).equals(PageUrls.BENEFITS, 'Incorrect href found');
+    expect(jobTitleLink).equals(PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(employmentStartDateLink).equals(PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(contractNoticePeriodLink).equals(
+      PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(noticePeriodLength).equals(PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(noticePeriodType).equals(PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(averageWeeklyHoursLink).equals(
+      PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(payBeforeTaxLink).equals(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(payAfterTaxLink).equals(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(payIntervalLink).equals(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(pensionLink).equals(PageUrls.PENSION + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(benefitLink).equals(PageUrls.BENEFITS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
   });
 
   it('should display correct url in the change buttons for claim details row', () => {
@@ -187,11 +225,26 @@ describe('Check your answers confirmation page', () => {
     const tribunalRecommendationLink = claimDetailsList[4].getAttribute('href');
     const whistleBlowingLink = claimDetailsList[5].getAttribute('href');
 
-    expect(typeOfDescriminationList).equals(PageUrls.CLAIM_TYPE_DISCRIMINATION, 'Incorrect href found');
-    expect(whatHappenedLink).equals(PageUrls.DESCRIBE_WHAT_HAPPENED, 'Incorrect href found');
-    expect(whatYouWantLink).equals(PageUrls.TELL_US_WHAT_YOU_WANT, 'Incorrect href found');
-    expect(compensationLink).equals(PageUrls.COMPENSATION, 'Incorrect href found');
-    expect(tribunalRecommendationLink).equals(PageUrls.TRIBUNAL_RECOMMENDATION, 'Incorrect href found');
-    expect(whistleBlowingLink).equals(PageUrls.WHISTLEBLOWING_CLAIMS, 'Incorrect href found');
+    expect(typeOfDescriminationList).equals(
+      PageUrls.CLAIM_TYPE_DISCRIMINATION + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(whatHappenedLink).equals(
+      PageUrls.DESCRIBE_WHAT_HAPPENED + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(whatYouWantLink).equals(
+      PageUrls.TELL_US_WHAT_YOU_WANT + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(compensationLink).equals(PageUrls.COMPENSATION + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(tribunalRecommendationLink).equals(
+      PageUrls.TRIBUNAL_RECOMMENDATION + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(whistleBlowingLink).equals(
+      PageUrls.WHISTLEBLOWING_CLAIMS + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
   });
 });
