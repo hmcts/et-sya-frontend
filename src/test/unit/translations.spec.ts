@@ -15,8 +15,7 @@ const findMissingKeys = function (
   output: string[] = []
 ) {
   for (const key in original) {
-
-    const currentPath = previousPath ? `${previousPath}.${key}` : key;
+    const currentPath = previousPath ? `${previousPath} -> ${key}` : key;
 
     if (typeof original[key] === 'object') {
       if (toCheck !== undefined) {
@@ -49,7 +48,7 @@ describe('Check missing keys in translation files', () => {
     const englishContents = JSON.parse(englishFile) as Record<string, unknown>;
     const welshContents = JSON.parse(welshFile) as Record<string, unknown>;
 
-    expect(findMissingKeys(welshContents, englishContents)).toMatchObject([]);
+    expect(findMissingKeys(welshContents, englishContents)).toEqual([]);
   });
 
   test.each(englishTranslationFiles)('Check welsh translation file %s has no missing keys', file => {
@@ -58,6 +57,6 @@ describe('Check missing keys in translation files', () => {
     const englishContents = JSON.parse(englishFile);
     const welshContents = JSON.parse(welshFile);
 
-    expect(findMissingKeys(englishContents, welshContents)).toMatchObject([]);
+    expect(findMissingKeys(englishContents, welshContents)).toEqual([]);
   });
 });
