@@ -10,7 +10,7 @@ export default class ClaimSubmittedController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
       hideContactUs: true,
-      submissionReferenceText: userCase.ethosCaseReference,
+      submissionReferenceText: userCase.id,
       claimSubmittedText: formatClaimSubmittedDate(),
       attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename),
       downloadLink: '/getCaseDocument/' + userCase.et1SubmittedForm?.id,
