@@ -30,6 +30,7 @@ export default {
     year: '2022',
   },
   ethosCaseReference: '123456/2022',
+  feeGroupReference: '1234',
   ClaimantPcqId: '1234',
   claimantSex: Sex.MALE,
   preferredTitle: 'Mr',

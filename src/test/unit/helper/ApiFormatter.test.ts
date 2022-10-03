@@ -205,6 +205,7 @@ describe('Format Case Data to Frontend Model', () => {
       last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
         ethosCaseReference: '123456/2022',
+        feeGroupReference: '1234',
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
@@ -350,6 +351,7 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      feeGroupReference: undefined,
       ethosCaseReference: undefined,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
