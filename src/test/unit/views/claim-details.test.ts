@@ -63,19 +63,21 @@ describe('Claim details page', () => {
   it('should display 4 summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
 
-    expect(summaryLists).toHaveLength(4);
+    expect(summaryLists).toHaveLength(5);
   });
 
   it('should display correct headings in the summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
 
-    expect(summaryLists[0].innerHTML).toMatch('Your details');
-    expect(summaryLists[1].innerHTML).toMatch('Employment details');
-    expect(summaryLists[2].innerHTML).toMatch('Respondent 1 details');
-    expect(summaryLists[3].innerHTML).toMatch('Respondent 2 details');
+    expect(summaryLists[0].innerHTML).toMatch('Application details');
+    expect(summaryLists[1].innerHTML).toMatch('Your details');
+    expect(summaryLists[2].innerHTML).toMatch('Employment details');
+    expect(summaryLists[3].innerHTML).toMatch('Respondent 1 details');
+    expect(summaryLists[4].innerHTML).toMatch('Respondent 2 details');
   });
 
   it.each([
+    { sectionName: 'Application details', numberOfEntries: 1 },
     { sectionName: 'Your details', numberOfEntries: 8 },
     { sectionName: 'Employment details', numberOfEntries: 13 },
     { sectionName: 'Respondent 1 details', numberOfEntries: 4 },
