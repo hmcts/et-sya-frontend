@@ -8,7 +8,7 @@ module.exports = async function (allClaimDetailsPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   if (allClaimDetailsPages) {
-    I.see('What type of discrimination are you');
+    /*I.see('What type of discrimination are you');
     I.see('claiming?');
     I.see('What is discrimination?');
     I.see('Select all that apply.');
@@ -40,7 +40,7 @@ module.exports = async function (allClaimDetailsPages) {
     I.checkOption(claimDetailsConfig.sex);
     I.checkOption(claimDetailsConfig.sexual_orientation);
 
-    I.click('Save and continue');
+    I.click('Save and continue');*/
 
     //What happened to you Page.
     I.see('Describe what happened to you');
@@ -142,7 +142,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //Whistle Blowing Claims Page (Commented this Code Block as this would be only useful once thw Whistleblower and Discrimination is selected as part of the Case creation)
-  I.see('Whistleblowing claims');
+  /*I.see('Whistleblowing claims');
   await claimDetailsContentHelper.verifyWhistleBlowingClaims();
 
   I.checkOption(claimDetailsConfig.whistle_blowing_claims);
@@ -153,7 +153,7 @@ module.exports = async function (allClaimDetailsPages) {
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
-
+*/
   //Have you completed this Section
   I.see('Have you completed this section?');
   I.see('You can change your answers later.');

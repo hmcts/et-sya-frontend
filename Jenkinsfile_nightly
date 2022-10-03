@@ -33,7 +33,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFullFunctionalTest()
-    //enableCrossBrowserTest()
+    enableCrossBrowserTest()
     //enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
