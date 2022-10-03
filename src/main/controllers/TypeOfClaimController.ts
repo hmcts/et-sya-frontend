@@ -68,12 +68,13 @@ export default class TypeOfClaimController {
             label: l => l.otherTypesOfClaims.checkbox,
             subFields: {
               otherClaim: {
+                id: 'otherTypesOfClaims',
                 type: 'textarea',
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
               },
             },
-            value: 'otherClaim',
+            value: 'otherTypesOfClaims',
           },
         ],
       },
