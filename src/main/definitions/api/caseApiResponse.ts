@@ -1,4 +1,4 @@
-import { CaseType, CaseTypeId, YesOrNo } from '../case';
+import { CaseType, CaseTypeId, DocumentCollection, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -31,11 +31,13 @@ export interface CaseApiDataResponse {
 
 export interface CaseData {
   ethosCaseReference?: string;
+  feeGroupReference?: string;
   caseType?: CaseType;
   ClaimantPcqId?: string;
-  typeOfClaim?: string[];
+  typesOfClaim?: string[];
   caseSource?: string;
   claimantRepresentedQuestion?: YesOrNo;
+  claimant_TypeOfClaimant?: string;
   claimantIndType?: ClaimantIndividual;
   claimantType?: ClaimantCorrespondence;
   claimantOtherType?: ClaimantEmploymentDetails;
@@ -48,6 +50,10 @@ export interface CaseData {
   claimantWorkAddress?: WorkAddressDetails;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  documentCollection?: DocumentCollection[];
 }
 
 export interface RespondentApiModel {
