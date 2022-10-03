@@ -32,9 +32,10 @@ export class Helmet {
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
       "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
+      'https://idam-web-public.aat.platform.hmcts.net/',
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain];
+    const connectSrc = [self, googleAnalyticsDomain, 'https://localhost:5000/'];
 
     const imgSrc = [
       self,
