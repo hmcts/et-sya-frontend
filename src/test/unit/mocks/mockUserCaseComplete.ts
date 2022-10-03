@@ -122,6 +122,7 @@ export default {
     document_filename: 'document.pdf',
     document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
   },
+  submittedDate: { day: '03', month: '10', year: '2022' },
   hubLinksStatuses: new HubLinksStatuses(),
   et1FormDetails: undefined,
   acknowledgementOfClaimLetterDetail: undefined,
