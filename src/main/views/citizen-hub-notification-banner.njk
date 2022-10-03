@@ -2,6 +2,16 @@
 
 {% set htmlForNotification %}
 
+{% if showSubmittedAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        You have submitted your claim to the tribunal
+    </h3>
+
+    <p class="govuk-body">
+        We aim to process your claim within 5 days. In busy periods it may take longer.
+    </p>
+{% endif %}
+
 {% if showAcknowledgementAlert %}
     <h3 class="govuk-notification-banner__heading">
         {{notificationBanner.acknowledgement.header}}
@@ -62,7 +72,7 @@
 
 {% endset %}
 
-{% if showAcknowledgementAlert or showRejectionAlert or showRespondentRejection or showRespondentAcknowledgement %}
+{% if showSubmittedAlert or showAcknowledgementAlert or showRejectionAlert or showRespondentRejection or showRespondentAcknowledgement %}
     {{ govukNotificationBanner({
    html: htmlForNotification
   }) }}

@@ -84,6 +84,8 @@ export default class CitizenHubController {
       currentState,
       sections,
       hideContactUs: true,
+      showSubmittedAlert:
+        !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length,
       showAcknowledgementAlert:
         !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
         userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
