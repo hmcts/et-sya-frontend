@@ -144,8 +144,15 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
-  CHANGE_DETAILS: '*/change',
   PCQ: '/pcq',
+  GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+} as const;
+
+export const InterceptPaths = {
+  CHANGE_DETAILS: '*/change',
+  ANSWERS_CHANGE: '/change?redirect=answers',
+  RESPONDENT_CHANGE: '/change?redirect=respondent',
+  SUBMIT_CASE: '/submitDraftCase',
 } as const;
 
 export const ValidationErrors = {
@@ -168,6 +175,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
 } as const;
 
 export const Urls = {
@@ -229,6 +237,7 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+export const TYPE_OF_CLAIMANT = 'Individual';
 
 export const mvpLocations = [
   'ZE',
@@ -271,3 +280,5 @@ export const mvpLocations = [
   'DN',
   'BD',
 ];
+
+export const SUBMITTED_CLAIM_FILE_TYPE = 'Notice of a claim';
