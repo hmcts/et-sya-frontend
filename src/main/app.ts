@@ -24,8 +24,6 @@ import routes from './routes/routes';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
-const { helmet } = require('./modules/helmet');
-
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
 
@@ -51,25 +49,6 @@ new Helmet(config.get('security'), [
   config.get('services.pcq.url'),
   config.get('services.et1Legacy.url'),
 ]).enableFor(app);
-
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: [
-        "'self'",
-        "'*.googletagmanager.com'",
-        "'https://tagmanager.google.com'",
-        "'*.google-analytics.com'",
-        "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
-        "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
-        "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
-      ],
-      objectSrc: ["'none'"],
-      upgradeInsecureRequests: [],
-    },
-  })
-);
 
 logger.info('Helmet');
 logMemUsage();

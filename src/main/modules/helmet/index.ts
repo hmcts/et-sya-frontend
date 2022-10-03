@@ -34,8 +34,6 @@ export class Helmet {
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain];
-
     const imgSrc = [
       self,
       azureBlob,
@@ -45,14 +43,11 @@ export class Helmet {
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
     ];
-
-    if (app.locals.developmentMode) {
-      scriptSrc.push("'unsafe-eval'");
-    }
+    scriptSrc.push("'unsafe-eval'");
     app.use(
       helmet.contentSecurityPolicy({
         directives: {
-          connectSrc,
+          connectSrc: ["'self'", '*.google-analytics.com'],
           defaultSrc: ["'none'"],
           fontSrc: [self, 'data:'],
           imgSrc,
