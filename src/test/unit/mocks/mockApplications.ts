@@ -45,7 +45,6 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaim: ['discrimination'],
       createdDate: 'September 1, 2022',
       lastModified: 'September 1, 2022',
-      ethosCaseReference: '654321/2022',
       respondents: [
         {
           respondentName: 'Globo Corp',
