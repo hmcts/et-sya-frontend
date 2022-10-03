@@ -31,6 +31,7 @@ export interface CaseApiDataResponse {
 
 export interface CaseData {
   ethosCaseReference?: string;
+  feeGroupReference?: string;
   caseType?: CaseType;
   ClaimantPcqId?: string;
   typesOfClaim?: string[];

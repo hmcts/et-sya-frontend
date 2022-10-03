@@ -61,6 +61,7 @@ export interface Case {
   createdDate: string;
   lastModified: string;
   ethosCaseReference?: string;
+  feeGroupReference?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
