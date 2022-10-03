@@ -1,4 +1,8 @@
 {
+  "applicationDetails": {
+    "header": "Application details",
+    "typeOfClaim": "Claim type"
+  },
   "personalDetails": {
     "header": "Your details",
     "dob": "Date of birth",

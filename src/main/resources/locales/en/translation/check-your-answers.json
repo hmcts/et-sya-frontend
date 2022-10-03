@@ -15,10 +15,6 @@
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
   "submitBtn": "Submit",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "applicationDetails": {
-    "header": "Application details",
-    "typeOfClaim": "Claim type"
-  },
   "change": "Change",
   "yourPreferences": {
     "header": "Your preferences",

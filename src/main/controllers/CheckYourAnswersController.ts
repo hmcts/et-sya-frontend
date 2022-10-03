@@ -15,10 +15,10 @@ export default class CheckYourAnswersController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     res.render(TranslationKeys.CHECK_ANSWERS, {
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...translations,
       PageUrls,
       userCase,

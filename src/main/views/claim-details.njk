@@ -60,6 +60,26 @@
         {% endfor %}
       {% endif %}
 
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key govuk-heading-m">
+              {{ applicationDetails.header }}
+          </dt>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ applicationDetails.typeOfClaim }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <ul class="govuk-list">
+              {% for item in userCase.typeOfClaim %}
+               <li>{{getContent(claimTypes[item])}}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+
       {{
         govukSummaryList({
           rows: yourDetails
