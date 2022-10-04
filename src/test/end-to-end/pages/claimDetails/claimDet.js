@@ -86,6 +86,7 @@ module.exports = async function (allClaimDetailsPages) {
   }
 
   //If your claim was successfull page.
+  I.wait(5);
   I.see('What do you want if your claim is successful?');
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
 
