@@ -3,9 +3,9 @@
   "services": {
     "idam": {
       "clientID": "et-sya",
-      "authorizationURL": "http://localhost:5000/login",
+      "authorizationURL": "https://localhost:5000/login",
       "clientSecret": "test1234",
-      "tokenURL": "http://localhost:5000/o/token"
+      "tokenURL": "https://localhost:5000/o/token"
     },
     "addressLookup": {
       "url": "https://api.os.uk/search/places/v1/postcode",

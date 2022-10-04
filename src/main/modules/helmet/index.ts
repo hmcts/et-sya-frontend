@@ -37,7 +37,7 @@ export class Helmet {
       idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain, 'https://localhost:5000/', idamUrl];
+    const connectSrc = [self, googleAnalyticsDomain, idamUrl];
 
     const imgSrc = [
       self,
