@@ -36,7 +36,7 @@ function getBrowserConfig(browserGroup) {
 }
 
 const setupConfig = {
-  tests: './features/*.js',
+  tests: './features/**/*.js',
   output: './functional-output/',
   helpers: {
     WebDriver: {
