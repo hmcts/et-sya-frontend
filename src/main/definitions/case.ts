@@ -1,4 +1,11 @@
-import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import {
+  CaseState,
+  ClaimOutcomes,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  DocumentDetail,
+  TellUsWhatYouWant,
+} from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
 
@@ -54,6 +61,7 @@ export interface Case {
   createdDate: string;
   lastModified: string;
   ethosCaseReference?: string;
+  feeGroupReference?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -137,6 +145,11 @@ export interface Case {
   noAcasReason?: NoAcasNumberReason;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  et1SubmittedForm?: DocumentDetail;
+  documentCollection?: DocumentCollection[];
   otherClaim?: string;
 }
 
@@ -235,4 +248,15 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
+}
+
+export interface DocumentCollectionValue {
+  typeOfDocument?: string;
+  uploadedDocument?: Document;
+  shortDescription?: string;
+}
+
+export interface DocumentCollection {
+  id?: string;
+  value: DocumentCollectionValue;
 }

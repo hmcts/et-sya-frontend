@@ -16,6 +16,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -202,10 +203,12 @@ describe('Format Case Data to Frontend Model', () => {
       last_modified: '2022-08-19T09:19:25.817549',
       case_data: {
         ethosCaseReference: '123456/2022',
+        feeGroupReference: '1234',
         caseType: CaseType.SINGLE,
         claimantRepresentedQuestion: YesOrNo.YES,
         claimantWorkAddressQuestion: YesOrNo.YES,
-        typeOfClaim: ['discrimination', 'payRelated'],
+        claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+        typesOfClaim: ['discrimination', 'payRelated'],
         ClaimantPcqId: '1234',
         et3IsThereAnEt3Response: YesOrNo.YES,
         claimantIndType: {
@@ -214,7 +217,6 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_date_of_birth: '2022-10-05',
           claimant_sex: Sex.MALE,
           claimant_preferred_title: 'Mr',
-          // claimant_title_other: 'Captain',
         },
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
@@ -309,6 +311,35 @@ describe('Format Case Data to Frontend Model', () => {
           },
         ],
         hubLinksStatuses: new HubLinksStatuses(),
+        managingOffice: 'Leeds',
+        tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
+        tribunalCorrespondenceTelephone: '0300 123 1024',
+        documentCollection: [
+          {
+            id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
+            value: {
+              typeOfDocument: 'Notice of a claim',
+              uploadedDocument: {
+                document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+                document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
+                document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+              },
+              shortDescription: 'Case Details - Sunday Ayeni',
+            },
+          },
+          {
+            id: '3db71007-d42c-43d5-a51b-57957f78ced3',
+            value: {
+              typeOfDocument: 'ACAS Certificate',
+              uploadedDocument: {
+                document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+                document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
+                document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+              },
+              shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+            },
+          },
+        ],
       },
     };
     const result = fromApiFormat(mockedApiData);
@@ -323,6 +354,7 @@ describe('Format Case Data to Frontend Model', () => {
         year: '2022',
       },
       ethosCaseReference: '123456/2022',
+      feeGroupReference: '1234',
       ClaimantPcqId: '1234',
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
@@ -406,6 +438,40 @@ describe('Format Case Data to Frontend Model', () => {
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
       hubLinksStatuses: new HubLinksStatuses(),
+      managingOffice: 'Leeds',
+      tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
+      tribunalCorrespondenceTelephone: '0300 123 1024',
+      et1SubmittedForm: {
+        id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+        description: 'Case Details - Sunday Ayeni',
+        type: 'Notice of a claim',
+      },
+      documentCollection: [
+        {
+          id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
+          value: {
+            typeOfDocument: 'Notice of a claim',
+            uploadedDocument: {
+              document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+              document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
+              document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+            },
+            shortDescription: 'Case Details - Sunday Ayeni',
+          },
+        },
+        {
+          id: '3db71007-d42c-43d5-a51b-57957f78ced3',
+          value: {
+            typeOfDocument: 'ACAS Certificate',
+            uploadedDocument: {
+              document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+              document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
+              document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+            },
+            shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+          },
+        },
+      ],
     });
   });
 
@@ -422,6 +488,7 @@ describe('Format Case Data to Frontend Model', () => {
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual({
       id: '1234',
+      feeGroupReference: undefined,
       ethosCaseReference: undefined,
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
@@ -491,6 +558,11 @@ describe('Format Case Data to Frontend Model', () => {
       et3IsThereAnEt3Response: undefined,
       claimSummaryFile: undefined,
       hubLinksStatuses: undefined,
+      documentCollection: undefined,
+      managingOffice: undefined,
+      et1SubmittedForm: undefined,
+      tribunalCorrespondenceEmail: undefined,
+      tribunalCorrespondenceTelephone: undefined,
       otherClaim: undefined,
     });
   });

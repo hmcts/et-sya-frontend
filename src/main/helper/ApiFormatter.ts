@@ -5,8 +5,17 @@ import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../defini
 import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel } from '../definitions/constants';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseWithId,
+  Document,
+  DocumentCollection,
+  Respondent,
+  ccdPreferredTitle,
+} from '../definitions/case';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE, TYPE_OF_CLAIMANT } from '../definitions/constants';
+import { DocumentDetail } from '../definitions/definition';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -17,8 +26,9 @@ export function toApiFormatCreate(
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
-      typeOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
+      typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
         claimant_last_name: userDetails.familyName,
@@ -38,6 +48,12 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
     ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
+    feeGroupReference: fromApiCaseData.case_data?.feeGroupReference,
+    managingOffice: fromApiCaseData.case_data?.managingOffice,
+    tribunalCorrespondenceEmail: fromApiCaseData.case_data?.tribunalCorrespondenceEmail,
+    tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
+    et1SubmittedForm: returnSubmitttedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    documentCollection: fromApiCaseData.case_data?.documentCollection,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -51,7 +67,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
     addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
     addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
-    typeOfClaim: fromApiCaseData.case_data?.typeOfClaim,
+    typeOfClaim: fromApiCaseData.case_data?.typesOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
     preferredTitle: returnPreferredTitle(
@@ -121,7 +137,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
-      typeOfClaim: caseItem.typeOfClaim,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+      typesOfClaim: caseItem.typeOfClaim,
       ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
@@ -325,4 +342,36 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
       id: respondent.ccdId,
     };
   });
+};
+
+export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): DocumentDetail => {
+  if (documentCollection === undefined) {
+    return;
+  }
+
+  const documentDetailCollection: DocumentDetail[] = setDocumentValues(documentCollection, [SUBMITTED_CLAIM_FILE_TYPE]);
+
+  if (documentDetailCollection === undefined) {
+    return;
+  } else {
+    return documentDetailCollection[0];
+  }
+};
+
+export const setDocumentValues = (documentCollection: DocumentCollection[], docType?: string[]): DocumentDetail[] => {
+  if (!documentCollection) {
+    return;
+  }
+
+  const foundDocuments = documentCollection
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
+    .map(doc => {
+      const docUrl = doc.value?.uploadedDocument?.document_url;
+      return {
+        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        description: !docType ? '' : doc.value?.shortDescription,
+        type: doc.value.typeOfDocument,
+      };
+    });
+  return foundDocuments.length ? foundDocuments : undefined;
 };
