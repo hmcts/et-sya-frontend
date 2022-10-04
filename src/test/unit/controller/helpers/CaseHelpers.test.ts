@@ -13,7 +13,7 @@ import {
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { sectionStatus } from '../../../../main/definitions/definition';
+import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
 import { mockSession } from '../../mocks/mockApp';
@@ -166,12 +166,8 @@ describe('handle update draft case', () => {
         data: {
           created_date: '2022-08-19T09:19:25.79202',
           last_modified: '2022-08-19T09:19:25.817549',
-          case_data: {
-            caseType: 'Single',
-            typeOfClaim: ['discrimination', 'payRelated'],
-            claimantRepresentedQuestion: 'Yes',
-            caseSource: 'ET1 Online',
-          },
+          state: CaseState.DRAFT,
+          case_data: {},
         },
       } as AxiosResponse<CaseApiDataResponse>)
     );
@@ -187,12 +183,8 @@ describe('handle update submitted case', () => {
         data: {
           created_date: '2022-08-19T09:19:25.79202',
           last_modified: '2022-08-19T09:19:25.817549',
-          case_data: {
-            caseType: 'Single',
-            typeOfClaim: ['discrimination', 'payRelated'],
-            claimantRepresentedQuestion: 'Yes',
-            caseSource: 'ET1 Online',
-          },
+          state: CaseState.DRAFT,
+          case_data: {},
         },
       } as AxiosResponse<CaseApiDataResponse>)
     );
