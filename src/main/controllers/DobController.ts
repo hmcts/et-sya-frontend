@@ -9,7 +9,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { BirthDateFormFields, DateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { UnknownRecord } from '../definitions/util-types';
+import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
@@ -40,6 +40,27 @@ export default class DobController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    dob_date.values = [
+      {
+        label: (l: AnyRecord): string => l.dateFormat.day,
+        name: 'day',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.month,
+        name: 'month',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.year,
+        name: 'year',
+        classes: 'govuk-input--width-4',
+        attributes: { maxLength: 4 },
+      },
+    ];
+    this.dobFormContent.fields = { dobDate: dob_date };
     const content = getPageContent(req, this.dobFormContent, [TranslationKeys.COMMON, TranslationKeys.DATE_OF_BIRTH]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.DATE_OF_BIRTH, {

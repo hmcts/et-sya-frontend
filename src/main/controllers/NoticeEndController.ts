@@ -43,6 +43,27 @@ export default class NoticeEndController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    notice_dates.values = [
+      {
+        label: (l: AnyRecord): string => l.dateFormat.day,
+        name: 'day',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.month,
+        name: 'month',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.year,
+        name: 'year',
+        classes: 'govuk-input--width-4',
+        attributes: { maxLength: 4 },
+      },
+    ];
+    this.noticeEndContent.fields = { noticeEnds: notice_dates };
     const content = getPageContent(req, this.noticeEndContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_END]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NOTICE_END, {

@@ -55,6 +55,27 @@ export default class StartDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    start_date.values = [
+      {
+        label: (l: AnyRecord): string => l.dateFormat.day,
+        name: 'day',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.month,
+        name: 'month',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.year,
+        name: 'year',
+        classes: 'govuk-input--width-4',
+        attributes: { maxLength: 4 },
+      },
+    ];
+    this.startDateContent.fields = { startDate: start_date };
     const content = getPageContent(req, this.startDateContent, [TranslationKeys.COMMON, TranslationKeys.START_DATE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.START_DATE, {
