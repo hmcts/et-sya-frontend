@@ -146,11 +146,10 @@ export interface Case {
   managingOffice?: string;
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
-  et1SubmittedForm?: Document;
+  et1SubmittedForm?: DocumentDetail;
   submittedDate?: CaseDate;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
-  et1FormDetails?: DocumentDetail[];
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
   rejectionOfClaimDocumentDetail?: DocumentDetail[];

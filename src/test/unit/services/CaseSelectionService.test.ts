@@ -245,9 +245,9 @@ describe('get User applications', () => {
           },
         ],
         et1SubmittedForm: {
-          document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
-          document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
-          document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+          id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+          description: 'Test',
+          type: 'Notice of a claim',
         },
       },
     ];

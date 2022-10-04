@@ -1,7 +1,11 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import {
+  isValidAddressFirstLine,
+  isValidAddressSecondLine,
+  isValidCountryTownOrCity,
+} from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';

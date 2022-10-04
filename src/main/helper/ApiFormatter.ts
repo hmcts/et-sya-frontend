@@ -123,7 +123,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
-    et1FormDetails: setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et1DocTypes),
+    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.documentCollection),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
@@ -314,10 +314,6 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 };
 
 function convertFromTimestampString(responseDate: string) {
-  if (!responseDate) {
-    return;
-  }
-
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
   return new Date(dateComponent).toLocaleDateString(i18next.language, {
     year: 'numeric',
@@ -383,6 +379,18 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
       id: respondent.ccdId,
     };
   });
+};
+
+export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]): DocumentDetail => {
+  if (documentCollection === undefined) {
+    return;
+  }
+
+  const documentDetailCollection = setDocumentValues(documentCollection, et1DocTypes);
+
+  if (documentDetailCollection !== undefined) {
+    return documentDetailCollection[0];
+  }
 };
 
 export const setDocumentValues = (

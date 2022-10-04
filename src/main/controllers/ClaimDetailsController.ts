@@ -62,8 +62,8 @@ export default class ClaimDetailsController {
 async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   const et1DocumentDetails = [];
 
-  if (userCase.et1FormDetails) {
-    et1DocumentDetails.push(...userCase.et1FormDetails);
+  if (userCase.et1SubmittedForm) {
+    et1DocumentDetails.push(userCase.et1SubmittedForm);
   }
 
   if (userCase.claimSummaryFile?.document_url) {
