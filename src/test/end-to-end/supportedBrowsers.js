@@ -1,4 +1,4 @@
-const LATEST_WINDOWS = 'Windows 10';
+//const LATEST_WINDOWS = 'Windows 10';
 const supportedBrowsers = {
   // edge: {
   //     edge: {
@@ -14,7 +14,7 @@ const supportedBrowsers = {
   //         }
   //     }
   // },
-  microsoftIE11: {
+  /*microsoftIE11: {
     ie11: {
       browserName: 'internet explorer',
       platformName: LATEST_WINDOWS,
@@ -34,7 +34,7 @@ const supportedBrowsers = {
         name: 'Edge_Win10',
       },
     },
-  },
+  },*/
   chrome: {
     chrome_win_latest: {
       browserName: 'chrome',
