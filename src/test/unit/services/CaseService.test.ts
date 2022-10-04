@@ -295,6 +295,8 @@ describe('submitCase', () => {
       tribunalRecommendationRequest: 'Tribunal recommendation request',
       whistleblowingClaim: YesOrNo.YES,
       whistleblowingEntityName: 'Whistleblowing entity name',
+      otherClaim: 'other claim description',
+      hubLinksStatuses: undefined,
       claimSummaryFile: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
