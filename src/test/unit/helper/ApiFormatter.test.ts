@@ -448,7 +448,6 @@ describe('Format Case Data to Frontend Model', () => {
       claimSummaryFile: undefined,
       submittedDate: undefined,
       hubLinksStatuses: undefined,
-      documentCollection: undefined,
       managingOffice: undefined,
       et1SubmittedForm: undefined,
       tribunalCorrespondenceEmail: undefined,
