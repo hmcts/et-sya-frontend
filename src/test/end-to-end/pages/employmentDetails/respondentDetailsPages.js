@@ -12,7 +12,10 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.click(commonConfig.saveAndContinue);
 
   //Enters Postcode for the respondent
-  I.seeElement('#postcode');
+  //I.seeElement('#postcode');
+  I.refreshPage();
+  I.waitToHide('#address1', 5);
+  I.dontSeeElement('#address1');
   I.fillField('#postcode', 'LS7 4QE');
   I.click('#findAddressButton');
   I.waitForVisible('#selectAddressInput');

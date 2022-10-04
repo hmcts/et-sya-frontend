@@ -16,6 +16,7 @@ module.exports = () => {
     respondentDetailsJourney: steps.employmentDetails.respondentDetailsPages,
     stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
     claimDetails: steps.claimDetails.claimDet,
+    submitClaim: steps.submitClaim.submitClaimPages,
   });
 };
 

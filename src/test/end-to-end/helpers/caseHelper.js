@@ -66,6 +66,10 @@ async function haveYouCompletedThisSection(I) {
   I.haveYouCompletedThisSection(I);
 }
 
+async function submittingClaim(I) {
+  I.submitClaim(I);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -84,4 +88,5 @@ module.exports = {
   whistleBlowingClaims,
   haveYouCompletedThisSection,
   claimDetails,
+  submittingClaim,
 };
