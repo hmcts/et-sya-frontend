@@ -46,14 +46,14 @@ module.exports = async function (allClaimDetailsPages) {
     I.see('Describe what happened to you');
     await claimDetailsContentHelper.verifyThisIsYourOppurtunityToExplain();
 
-    I.wait(1); //Required as sometimes the guidance text
     //The various Links on this page...
     I.see('What to write for discrimination claims');
     I.see('What to write for dismissal claims');
     I.see('What to write for whistleblower claims');
     I.see("What to write for 'other' claims");
-    I.see('Use this box to describe the events around your dispute, or add to your claim by uploading a document');
-    I.see('You have 2500 characters remaining');
+    //Due to Delays in getting the text loaded....
+    //I.see('Use this box to describe the events around your dispute, or add to your claim by uploading a document');
+    //I.see('You have 2500 characters remaining');
     I.see('Or upload your summary as a separate document (optional)');
 
     I.click(claimDetailsConfig.what_to_write_for_discrimination_claims);
