@@ -23,4 +23,4 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 
 // merge arrays but make sure they are not undefined
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
-  [].concat(...arrays.filter(Array.isArray));
+  [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);

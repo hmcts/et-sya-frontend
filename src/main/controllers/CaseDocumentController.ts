@@ -25,6 +25,7 @@ export default class CaseDocumentController {
       const { userCase } = req.session;
 
       const allDocumentSets = combineDocuments(
+        [userCase?.et1SubmittedForm],
         userCase?.allEt1DocumentDetails,
         userCase?.acknowledgementOfClaimLetterDetail,
         userCase?.rejectionOfClaimDocumentDetail,
