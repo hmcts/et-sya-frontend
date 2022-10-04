@@ -60,10 +60,10 @@ describe('Claim details page', () => {
     expect(title[0].innerHTML).toMatch(expectedTitle);
   });
 
-  it('should display 4 summary lists', () => {
+  it('should display correct number of summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
 
-    expect(summaryLists).toHaveLength(5);
+    expect(summaryLists).toHaveLength(6);
   });
 
   it('should display correct headings in the summary lists', () => {
@@ -74,6 +74,7 @@ describe('Claim details page', () => {
     expect(summaryLists[2].innerHTML).toMatch('Employment details');
     expect(summaryLists[3].innerHTML).toMatch('Respondent 1 details');
     expect(summaryLists[4].innerHTML).toMatch('Respondent 2 details');
+    expect(summaryLists[5].innerHTML).toMatch('Claim details');
   });
 
   it.each([
@@ -82,6 +83,7 @@ describe('Claim details page', () => {
     { sectionName: 'Employment details', numberOfEntries: 13 },
     { sectionName: 'Respondent 1 details', numberOfEntries: 4 },
     { sectionName: 'Respondent 2 details', numberOfEntries: 3 },
+    { sectionName: 'Claim details', numberOfEntries: 5 },
   ])('should display correct number of entries for section: $sectionName', ({ sectionName, numberOfEntries }) => {
     const sections = Array.from(htmlRes.getElementsByClassName(summaryListClass)).filter(el => {
       const titles = el.getElementsByClassName(summaryListHeadingClass);

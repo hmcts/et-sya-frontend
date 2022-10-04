@@ -56,5 +56,51 @@
     "telephone": "UK telephone number",
     "officeAddress": "Registered or head office address",
     "workAddress": "Work address"
+  },
+  "claimDetails": {
+    "header": "Claim details",
+    "claimTypeDiscrimination": "What type of discrimination claim are you making?",
+    "claimTypePay": "What type of pay claim are you making?",
+    "describeWhatHappened": "Describe what happened to you",
+    "ifClaimSuccessful": "What do you want if your claim is successful",
+    "expectedCompensation": "What compensation are you seeking",
+    "expectedTribunalsRecommendation": "What tribunal recommendation would you like to make?",
+    "forwardClaim": "Do you want us to forward your whistleblowing claim to a relevant regulation or body?",
+    "summary": "Summary of claim",
+    "fileUploads": "File uploads",
+    "whatYouWant": "What you want"
+  },
+  "payClaims": {
+    "Arrears": "Arrears",
+    "Holiday pay": "Holiday pay",
+    "Notice pay": "Notice pay",
+    "Redundancy pay": "Redundancy pay",
+    "Other payments": "Other payments"
+  },
+  "claimTypes": {
+    "breachOfContract": "Breach of contract",
+    "discrimination": "Discrimination",
+    "payRelated": "Pay-related",
+    "unfairDismissal": "Unfair dismissal",
+    "whistleBlowing": "Whistleblowing",
+    "otherClaim": "Other type of claim"
+  },
+  "tellUsWhatYouWant": {
+    "compensation": "Compensation only",
+    "tribunal": "Tribunal recommendation",
+    "oldJob": "Old job back",
+    "anotherJob": "Another job"
+  },
+  "discriminationClaims": {
+    "Age": "Age",
+    "Disability": "Disability",
+    "Ethnicity": "Ethnicity",
+    "Gender reassignment": "Gender reassignment",
+    "Marriage or civil partnership": "Marriage or civil partnership",
+    "Pregnancy or maternity": "Pregnancy or maternity",
+    "Race": "Race",
+    "Religion or belief": "Religion or belief",
+    "Sex": "Sex (Including equal pay)",
+    "Sexual orientation": "Sexual Orientation"
   }
 }

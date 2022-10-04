@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { DocumentDetail } from '../definitions/definition';
+import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 
@@ -54,6 +54,9 @@ export default class ClaimDetailsController {
       employmentSection: getEmploymentDetails(userCase, translations),
       translations,
       getRespondentSection,
+      showCompensationRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY),
+      showTribunalRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION),
+      showWhistleBlowingRequest: !!userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING),
       et1Documents,
     });
   };
