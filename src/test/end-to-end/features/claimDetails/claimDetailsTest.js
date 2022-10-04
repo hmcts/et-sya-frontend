@@ -21,4 +21,4 @@ Scenario('Navigate Claim Details - Tell us what you want from your claim', async
   await stepsToMakingYourClaim(I);
   I.click("//a[contains(.,'Tell us what you want from your claim')]");
   await claimDetails(I, false);
-}).tag('@RET-XB');
+}).tag('@RET-WIP');
