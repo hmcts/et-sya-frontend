@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 
 import { PageUrls } from '../../../definitions/constants';
+import { noSignInRequiredEndpoints } from '../../../modules/oidc/noSignInRequiredEndpoints';
 import * as i18n from '../../../resources/locales/en/translation/template.json';
 
 export default class SessionTimeout {
@@ -137,17 +138,19 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
-    return axios
-      .get('/extend-session')
-      .then((response: AxiosResponse): void => {
-        this.sessionExpirationTime = response.data.timeout;
-        this.restartCounters();
-        this.closeModal();
-      })
-      .catch(() => {
-        this.removeListeners();
-        this.stopCounters();
-      });
+    if (!noSignInRequiredEndpoints.includes(window.location.pathname)) {
+      return axios
+        .get('/extend-session')
+        .then((response: AxiosResponse): void => {
+          this.sessionExpirationTime = response.data.timeout;
+          this.restartCounters();
+          this.closeModal();
+        })
+        .catch(() => {
+          this.removeListeners();
+          this.stopCounters();
+        });
+    }
   };
 
   keyDownEventListener = (event: KeyboardEvent): void => {
