@@ -46,6 +46,7 @@ module.exports = async function (allClaimDetailsPages) {
     I.see('Describe what happened to you');
     await claimDetailsContentHelper.verifyThisIsYourOppurtunityToExplain();
 
+    I.wait(1); //Required as sometimes the guidance text
     //The various Links on this page...
     I.see('What to write for discrimination claims');
     I.see('What to write for dismissal claims');
