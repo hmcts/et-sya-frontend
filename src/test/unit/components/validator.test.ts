@@ -1,7 +1,7 @@
 import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
-  hasValidFileFormat,
+  hasInvalidFileFormat,
   isAcasNumberValid,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
@@ -315,7 +315,7 @@ describe('Validation', () => {
     ])('Check file format %o', ({ fileName, expected }) => {
       const newFile = mockFile;
       newFile.originalname = fileName;
-      expect(hasValidFileFormat(newFile)).toEqual(expected);
+      expect(hasInvalidFileFormat(newFile)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {

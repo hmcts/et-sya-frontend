@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { isContent2500CharsOrLess } from '../components/form/validator';
+import { hasInvalidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -64,17 +64,23 @@ export default class DescribeWhatHappenedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    req.session.errors = [];
 
-    try {
-      const result = await handleUploadDocument(req, req.file, this.logger);
-      if (result?.data) {
-        req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+    if (!hasInvalidFileFormat(req.file)) {
+      try {
+        const result = await handleUploadDocument(req, req.file, this.logger);
+        if (result?.data) {
+          req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+        }
+      } catch (error) {
+        this.logger.info(error);
+      } finally {
+        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+        handleUpdateDraftCase(req, this.logger);
       }
-    } catch (error) {
-      this.logger.info(error);
-    } finally {
-      handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-      handleUpdateDraftCase(req, this.logger);
+    } else {
+      req.session.errors.push({ propertyName: 'claimSummaryFileName', errorType: 'invalidFileFormat' });
+      return res.redirect(req.url);
     }
   };
 

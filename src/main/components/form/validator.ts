@@ -198,7 +198,7 @@ export const currencyValidation = (value: string | string[]): [digitCount: numbe
   const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
   return [digitCount, correctFormat];
 };
-export const hasValidFileFormat = (value: Express.Multer.File): string => {
+export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
   if (!value || !value.originalname) {
     return;
   }
