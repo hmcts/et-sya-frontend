@@ -1,12 +1,40 @@
+import { nextTick } from 'process';
+
+import axios, { AxiosResponse } from 'axios';
+
 import {
   getSectionStatus,
+  handleUpdateDraftCase,
+  handleUpdateSubmittedCase,
+  handleUploadDocument,
   isPostcodeMVPLocation,
   setUserCaseWithRedisData,
 } from '../../../../main/controllers/helpers/CaseHelpers';
+import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { sectionStatus } from '../../../../main/definitions/definition';
+import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
+import * as CaseService from '../../../../main/services/CaseService';
+import { CaseApi } from '../../../../main/services/CaseService';
 import { mockSession } from '../../mocks/mockApp';
+import { mockFile } from '../../mocks/mockFile';
+import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+
+const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+
+mockClient.mockReturnValue(caseApi);
 
 describe('getSectionStatus()', () => {
   it.each([
@@ -129,4 +157,66 @@ describe('setUserCaseWithRedisData', () => {
       );
     }
   );
+});
+
+describe('handle update draft case', () => {
+  it('should successfully save case draft', () => {
+    caseApi.updateDraftCase = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.DRAFT,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateDraftCase(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+});
+describe('handle update submitted case', () => {
+  it('should successfully save case', async () => {
+    caseApi.updateSubmittedCase = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.DRAFT,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateSubmittedCase(req, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case id: testUserCaseId');
+  });
+  it('should catch failure when updating case', async () => {
+    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce('test error');
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUpdateSubmittedCase(req, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.error).toHaveBeenCalledWith('test error');
+  });
+});
+describe('handle file upload', () => {
+  it('should succesfully handle file upload', async () => {
+    caseApi.uploadDocument = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          _links: {
+            self: {
+              href: 'test.pdf',
+            },
+          },
+        },
+      } as AxiosResponse<DocumentUploadResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    handleUploadDocument(req, mockFile, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.info).toHaveBeenCalledWith('Uploaded document to: test.pdf');
+  });
 });
