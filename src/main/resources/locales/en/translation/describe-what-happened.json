@@ -32,7 +32,7 @@
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
     "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>",
-    "hintExisting": "<p>You can only upload 1 document.</p><p>Selected file:</p><b>{{filename}}</b>"
+    "hintExisting": "<p>You can only upload 1 document.</p><p>Uploaded file:</p><b>{{filename}}</b>"
   },
   "acceptedFormats": {
     "label": "Accepted formats",
