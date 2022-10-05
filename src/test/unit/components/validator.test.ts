@@ -4,6 +4,7 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasInvalidFileFormat,
+  hasInvalidName,
   isAcasNumberValid,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
@@ -351,6 +352,17 @@ describe('Validation', () => {
       const newFile = mockFile;
       newFile.originalname = fileName;
       expect(hasInvalidFileFormat(newFile)).toEqual(expected);
+    });
+    it.each([
+      { fileName: 'file Copy(0).csv', expected: undefined },
+      { fileName: 'file_with_underscore.txt', expected: undefined },
+      { fileName: 'file.file.csv', expected: undefined },
+      { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file?.csv', expected: 'invalidFileName' },
+      { fileName: '..file.csv', expected: 'invalidFileName' },
+      { fileName: 'file<1>.csv', expected: 'invalidFileName' },
+    ])('Check filename %o', ({ fileName, expected }) => {
+      expect(hasInvalidName(fileName)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {

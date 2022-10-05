@@ -198,6 +198,23 @@ export const currencyValidation = (value: string | string[]): [digitCount: numbe
   const correctFormat = /^\d{1,3}((,\d{3}){0,3}|(\d{3}){0,3})(\.\d{2})?$/.test(value);
   return [digitCount, correctFormat];
 };
+
+export const hasInvalidName = (fileName: string): string => {
+  if (!fileName) {
+    return;
+  }
+
+  const fileNameRegExPattern = new RegExp(
+    '^(?!\\.)(?!com\\d$)(?!con$)(?!fa!_!lV1.txt$)(?!lpt\\d$)(?!nul$)(?!prn$)[^\\|*\\?\\:<>\\/$"]*[^\\.\\|\\*\\?\\:<>\\/$"]+$'
+  );
+
+  if (fileNameRegExPattern.test(fileName)) {
+    return;
+  } else {
+    return 'invalidFileName';
+  }
+};
+
 export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
   if (!value || !value.originalname) {
     return;

@@ -5,6 +5,7 @@ import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
   hasInvalidFileFormat,
+  hasInvalidName,
   isAcasNumberValid,
   isFieldFilledIn,
   isPayIntervalNull,
@@ -181,6 +182,7 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
   const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (textProvided && fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };
@@ -192,5 +194,8 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
 
   if (fileFormatInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
   }
 };
