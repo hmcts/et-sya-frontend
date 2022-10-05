@@ -31,7 +31,8 @@
   "textInputHint": "Use this box to describe the events around your dispute, or add to your claim by uploading a document",
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
-    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
+    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>",
+    "hintExisting": "<p>You can only upload 1 document.</p><p>Selected file:</p><b>{{filename}}</b>"
   },
   "acceptedFormats": {
     "label": "Accepted formats",
