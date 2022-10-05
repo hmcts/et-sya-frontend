@@ -1,3 +1,4 @@
+import envConfig from 'config';
 import * as express from 'express';
 import helmet from 'helmet';
 
@@ -25,6 +26,7 @@ export class Helmet {
   }
 
   private setContentSecurityPolicy(app: express.Express, formActionUrls: string[]): void {
+    const idamUrl = envConfig.get('services.idam.authorizationURL').toString();
     const scriptSrc = [
       self,
       ...tagManager,
@@ -32,9 +34,10 @@ export class Helmet {
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
       "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
+      idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain];
+    const connectSrc = [self, googleAnalyticsDomain, idamUrl];
 
     const imgSrc = [
       self,
