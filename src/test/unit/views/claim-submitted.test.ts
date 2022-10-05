@@ -22,7 +22,22 @@ let bodyElements: HTMLCollectionOf<Element>;
 
 describe('Claim Submitted Confirmation page', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(
+      mockApp({
+        userCase: {
+          et1SubmittedForm: {
+            id: '1010101',
+            description: 'ET1Form_Joe_Bloggs.pdf',
+            type: 'ET1Form_Joe_Bloggs.com',
+          },
+          claimSummaryFile: {
+            document_filename: 'describe.pdf',
+            document_url: 'describe.com',
+            document_binary_url: '034034034',
+          },
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -67,6 +82,9 @@ describe('Claim Submitted Confirmation page', () => {
       expect(getKeyFromSummaryList(summaryLists[0], 1)).equals(pageJson.claimSubmitted);
       expect(getKeyFromSummaryList(summaryLists[0], 2)).equals(pageJson.downloadClaim);
       expect(getKeyFromSummaryList(summaryLists[0], 3)).equals(pageJson.attachments);
+    });
+    it('should display the file name', () => {
+      expect(summaryLists[0].children[3].innerHTML).contains('describe.pdf');
     });
   });
 

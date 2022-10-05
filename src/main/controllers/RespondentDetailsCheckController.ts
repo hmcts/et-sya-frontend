@@ -7,6 +7,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class RespondentDetailsCheckController {
@@ -43,6 +44,7 @@ export default class RespondentDetailsCheckController {
 
   public get = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
+    const translations: AnyRecord = { ...req.t(TranslationKeys.RESPONDENT_DETAILS_CHECK, { returnObjects: true }) };
     const content = getPageContent(req, this.addRespondentForm, [
       TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_DETAILS_CHECK,
@@ -51,6 +53,8 @@ export default class RespondentDetailsCheckController {
     res.render(TranslationKeys.RESPONDENT_DETAILS_CHECK, {
       ...content,
       respondents,
+      translations,
+      getRespondentDetailsSection,
     });
   };
 }
