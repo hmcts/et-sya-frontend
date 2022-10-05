@@ -67,7 +67,9 @@ export default class DescribeWhatHappenedController {
 
     try {
       const result = await handleUploadDocument(req, req.file, this.logger);
-      req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+      if (result?.data) {
+        req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+      }
     } catch (error) {
       this.logger.info(error);
     } finally {
