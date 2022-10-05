@@ -26,11 +26,11 @@ export default class LipOrRepController {
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
-            value: YesOrNo.YES,
+            value: YesOrNo.NO,
           },
           {
             label: (l: AnyRecord): string => l.radio2,
-            value: YesOrNo.NO,
+            value: YesOrNo.YES,
           },
         ],
         validator: isFieldFilledIn,
