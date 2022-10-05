@@ -50,6 +50,8 @@ export class Helmet {
     ];
 
     if (app.locals.developmentMode) {
+      connectSrc.push('https://localhost:5000/login');
+      scriptSrc.push('https://localhost:5000/login');
       scriptSrc.push("'unsafe-eval'");
     }
     app.use(
