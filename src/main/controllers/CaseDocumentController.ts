@@ -40,10 +40,10 @@ export default class CaseDocumentController {
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
       if (!details.mimeType) {
-        res.setHeader('Content-Type', details.mimeType);
-      } else {
         res.setHeader('Content-Type', 'application/pdf');
-        logger.log(details.originalDocumentName);
+        logger.log('Failed document name: ' + details.originalDocumentName);
+      } else {
+        res.setHeader('Content-Type', details.mimeType);
       }
 
       res.status(200).send(Buffer.from(document.data, 'binary'));
