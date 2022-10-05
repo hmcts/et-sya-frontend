@@ -87,7 +87,7 @@ module.exports = async function (allClaimDetailsPages) {
 
   //If your claim was successfull page.
   I.wait(5);
-  I.see('What do you want if your claim is successful?');
+  I.see('What do you want if your claim is successful? (optional)');
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
@@ -110,6 +110,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Compensation are you seeking...
+  I.wait(5);
   I.see('What compensation are you seeking? (optional)');
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 

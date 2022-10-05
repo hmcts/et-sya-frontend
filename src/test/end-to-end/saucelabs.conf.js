@@ -91,9 +91,9 @@ const setupConfig = {
     firefox: {
       browsers: getBrowserConfig('firefox'),
     },
-    /*safari: {
+    safari: {
       browsers: getBrowserConfig('safari'),
-    },*/
+    },
   },
   name: 'Employment Tribunal Crossbrowser Tests',
 };

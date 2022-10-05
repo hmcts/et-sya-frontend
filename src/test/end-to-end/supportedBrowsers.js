@@ -71,7 +71,7 @@ const supportedBrowsers = {
       },
     },
   },
-  /*safari: {
+  safari: {
     safari_mac_latest: {
       browserName: 'safari',
       platformName: 'macOS 11.00',
@@ -81,7 +81,7 @@ const supportedBrowsers = {
         seleniumVersion: '3.141.59',
       },
     },
-  },*/
+  },
 };
 
 module.exports = supportedBrowsers;
