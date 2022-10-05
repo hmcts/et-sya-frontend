@@ -16,12 +16,12 @@ module.exports = async function () {
   I.see('What is your contact or home address?');
   I.fillField('#postcode', 'LS9 9HE');
   I.click('#findAddressButton');
-  I.waitForVisible('#selectAddressInput');
+  /* I.waitForVisible('#selectAddressInput');
   I.selectOption(
     '#selectAddressInput',
     '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
   );
-  I.click(commonConfig.saveAndContinue);
+  I.click(commonConfig.saveAndContinue);*/
   I.see('What is your telephone number?');
   I.click(commonConfig.saveAndContinue);
   I.see('How would you like to be contacted about your claim?');
