@@ -1,4 +1,4 @@
-const {
+/*const {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
   areYouStillWorkingForOrg,
@@ -25,3 +25,4 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
 }).tag('@RET-BAT');
+*/
