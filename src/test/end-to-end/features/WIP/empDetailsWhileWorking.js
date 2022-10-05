@@ -3,7 +3,7 @@ const testUrl = '/are-you-still-working';
 const authPage = require('./authPage.js');
 const { I } = inject();
 
-Scenario('Claim while working for organisation when notice period is for 3 months', () => {
+/* Scenario('Claim while working for organisation when notice period is for 3 months', () => {
   I.amOnPage(testUrl);
   authPage.login();
   I.amOnPage(testUrl);
@@ -57,7 +57,7 @@ Scenario('Claim while working for organisation when notice period is for 3 month
 })
   .tag('@RET-1130')
   .tag(' @RET-BAT');
-
+*/
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);
   authPage.login();
