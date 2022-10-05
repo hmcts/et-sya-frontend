@@ -48,9 +48,9 @@ export default class LipOrRepController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl;
-    if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
+    if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
+    } else if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
