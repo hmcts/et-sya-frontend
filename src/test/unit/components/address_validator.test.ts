@@ -1,5 +1,6 @@
 import {
   isValidAddressFirstLine,
+  isValidAddressSecondLine,
   isValidCountryTownOrCity,
   isValidUKPostcode,
 } from '../../../main/components/form/address_validator';
@@ -35,6 +36,20 @@ describe('Validation', () => {
       { mockRef: 'Kingston-upon-Thames', expected: undefined },
     ])('check work address line one is valid', ({ mockRef, expected }) => {
       expect(isValidAddressFirstLine(mockRef, null)).toEqual(expected);
+    });
+  });
+  describe('isValidAddressSecondLine', () => {
+    it.each([
+      { mockRef: 'a', expected: undefined },
+      {
+        mockRef:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al',
+        expected: ValidationErrors.INVALID_VALUE,
+      },
+      { mockRef: "1 King's Road", expected: undefined },
+      { mockRef: 'Kingston-upon-Thames', expected: undefined },
+    ])('check work address line one is valid', ({ mockRef, expected }) => {
+      expect(isValidAddressSecondLine(mockRef, null)).toEqual(expected);
     });
   });
   describe('isValidTownOrCity', () => {

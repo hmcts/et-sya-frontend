@@ -1,3 +1,5 @@
+import { PhoneNumberUtil } from 'google-libphonenumber';
+
 import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
@@ -43,22 +45,15 @@ describe('Validation', () => {
   });
 
   describe('isRespondentNameValid()', () => {
-    it('Should check if value exist', () => {
-      const isValid = isRespondentNameValid('Test Respondent Name');
+    it.each([
+      { name: 'Test Respondent Name', result: undefined },
+      { name: undefined, result: 'required' },
+      { name: '     ', result: 'required' },
+      { name: 'a'.repeat(101), result: 'invalidLength' },
+    ])('check respondent name passes validation: %o', ({ name, result }) => {
+      const isValid = isRespondentNameValid(name);
 
-      expect(isValid).toStrictEqual(undefined);
-    });
-
-    it('Should check if value does not exist', () => {
-      const isValid = isRespondentNameValid(undefined);
-
-      expect(isValid).toStrictEqual('required');
-    });
-
-    it('Should check if value is only whitespaces', () => {
-      const isValid = isRespondentNameValid('    ');
-
-      expect(isValid).toStrictEqual('required');
+      expect(isValid).toStrictEqual(result);
     });
   });
 
@@ -148,6 +143,13 @@ describe('Validation', () => {
       { mockRef: '01234567B90', expected: 'nonnumeric' },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
+    });
+    it('should catch exception from phone number util', () => {
+      const spy = jest.spyOn(PhoneNumberUtil, 'getInstance');
+      spy.mockImplementationOnce(() => {
+        throw new Error();
+      });
+      expect(isValidUKTelNumber('01234567890')).toEqual('invalid');
     });
   });
 

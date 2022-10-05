@@ -58,7 +58,7 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
 
   if (
     (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
-    (!hearingPreferenceNeitherTextarea || (hearingPreferenceNeitherTextarea as string).trim().length === 0)
+    (!hearingPreferenceNeitherTextarea || hearingPreferenceNeitherTextarea.trim().length === 0)
   ) {
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
@@ -179,7 +179,7 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
   }
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
-  const fileProvided = file !== undefined; //isFieldFilledIn(formData.claimSummaryFileName) === undefined;
+  const fileProvided = file !== undefined;
   const fileFormatInvalid = hasInvalidFileFormat(file);
 
   if (textProvided && fileProvided) {

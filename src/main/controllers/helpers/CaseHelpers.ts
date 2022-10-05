@@ -80,8 +80,8 @@ export const isPostcodeMVPLocation = (postCode: string): boolean => {
     area, // => "SW"
     district, // => "SW1"
   } = parse(postCode);
-  for (let i = 0; i < mvpLocations.length; i++) {
-    if (mvpLocations[i] === outcode || mvpLocations[i] === area || mvpLocations[i] === district) {
+  for (const mvpLocation of mvpLocations) {
+    if (mvpLocation === outcode || mvpLocation === area || mvpLocation === district) {
       return true;
     }
   }
