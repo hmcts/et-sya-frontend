@@ -39,7 +39,13 @@ export default class CaseDocumentController {
       }
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
-      res.setHeader('Content-Type', details.mimeType);
+      if (!details.mimeType) {
+        res.setHeader('Content-Type', details.mimeType);
+      } else {
+        res.setHeader('Content-Type', 'application/pdf');
+        logger.log(details.originalDocumentName);
+      }
+
       res.status(200).send(Buffer.from(document.data, 'binary'));
     } catch (err) {
       logger.error(err.response?.status, err.response?.data, err?.message, err);
