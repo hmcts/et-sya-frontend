@@ -202,7 +202,7 @@ describe('Session Timeout', () => {
       sandbox.stub(sessionTimeout, 'closeModal');
       removeListenersStub = sandbox.stub(sessionTimeout, 'removeListeners');
       stopCountersStub = sandbox.stub(sessionTimeout, 'stopCounters');
-
+      sessionTimeout.setUserAccessToken('testAccessToken');
       sessionTimeout
         .extendSession()
         .then(() => {
@@ -220,7 +220,7 @@ describe('Session Timeout', () => {
       sandbox.stub(sessionTimeout, 'closeModal');
       removeListenersStub = sandbox.stub(sessionTimeout, 'removeListeners');
       stopCountersStub = sandbox.stub(sessionTimeout, 'stopCounters');
-
+      sessionTimeout.setUserAccessToken('testAccessToken');
       sessionTimeout
         .extendSession()
         .catch(() => {

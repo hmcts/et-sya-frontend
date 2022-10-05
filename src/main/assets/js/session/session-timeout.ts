@@ -22,6 +22,7 @@ export default class SessionTimeout {
   private previousFocusedElement: HTMLElement = null;
   private scrollPosition: number = null;
   private body: HTMLElement = null;
+  private userAccessToken: string;
 
   constructor() {
     this.init = this.init.bind(this);
@@ -36,6 +37,14 @@ export default class SessionTimeout {
 
     this.firstFocusableElement = this.focusableElements[0] as HTMLElement;
     this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1] as HTMLElement;
+  }
+
+  public setUserAccessToken(userAccessToken: string): void {
+    this.userAccessToken = userAccessToken;
+  }
+
+  public getUserAccessToken(): string {
+    return this.userAccessToken;
   }
 
   init(): void {
@@ -138,7 +147,7 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
-    if (!noSignInRequiredEndpoints.includes(window.location.pathname)) {
+    if (!noSignInRequiredEndpoints.includes(window.location.pathname) || this.getUserAccessToken() !== null) {
       return axios
         .get('/extend-session')
         .then((response: AxiosResponse): void => {
