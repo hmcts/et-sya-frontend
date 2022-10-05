@@ -22,7 +22,7 @@ export default class SessionTimeout {
   private previousFocusedElement: HTMLElement = null;
   private scrollPosition: number = null;
   private body: HTMLElement = null;
-  private userAccessToken: string;
+  private userAccessToken: string = null;
 
   constructor() {
     this.init = this.init.bind(this);
