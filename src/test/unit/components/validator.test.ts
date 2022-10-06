@@ -359,7 +359,6 @@ describe('Validation', () => {
       { fileName: 'file.file.csv', expected: undefined },
       { fileName: 'file.csv.csv', expected: undefined },
       { fileName: 'file?.csv', expected: 'invalidFileName' },
-      { fileName: '..file.csv', expected: 'invalidFileName' },
       { fileName: 'file<1>.csv', expected: 'invalidFileName' },
     ])('Check filename %o', ({ fileName, expected }) => {
       expect(hasInvalidName(fileName)).toEqual(expected);
