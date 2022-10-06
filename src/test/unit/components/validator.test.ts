@@ -3,7 +3,8 @@ import { PhoneNumberUtil } from 'google-libphonenumber';
 import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
-  hasValidFileFormat,
+  hasInvalidFileFormat,
+  hasInvalidName,
   isAcasNumberValid,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
@@ -308,16 +309,59 @@ describe('Validation', () => {
       { fileName: '.csv', expected: undefined },
       { fileName: '..csv', expected: undefined },
       { fileName: 'file.csv', expected: undefined },
+      { fileName: 'file.pdf', expected: undefined },
+      { fileName: 'file.doc', expected: undefined },
+      { fileName: 'file.docx', expected: undefined },
+      { fileName: 'file.txt', expected: undefined },
+      { fileName: 'file.dot', expected: undefined },
+      { fileName: 'file.jpg', expected: undefined },
+      { fileName: 'file.jpeg', expected: undefined },
+      { fileName: 'file.bmp', expected: undefined },
+      { fileName: 'file.tif', expected: undefined },
+      { fileName: 'file.tiff', expected: undefined },
+      { fileName: 'file.png', expected: undefined },
+      { fileName: 'file.xls', expected: undefined },
+      { fileName: 'file.xlt', expected: undefined },
+      { fileName: 'file.xla', expected: undefined },
+      { fileName: 'file.xlsx', expected: undefined },
+      { fileName: 'file.xltx', expected: undefined },
+      { fileName: 'file.xlsb', expected: undefined },
+      { fileName: 'file.ppt', expected: undefined },
+      { fileName: 'file.pot', expected: undefined },
+      { fileName: 'file.pps', expected: undefined },
+      { fileName: 'file.ppa', expected: undefined },
+      { fileName: 'file.pptx', expected: undefined },
+      { fileName: 'file.potx', expected: undefined },
+      { fileName: 'file.ppsx', expected: undefined },
+      { fileName: 'file.rtf', expected: undefined },
+      { fileName: 'file Copy(0).csv', expected: undefined },
+      { fileName: 'file_with_underscore.txt', expected: undefined },
       { fileName: 'file.file.csv', expected: undefined },
       { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file.msg', expected: 'invalidFileFormat' },
+      { fileName: 'file.csv.msg', expected: 'invalidFileFormat' },
+      { fileName: 'file.json', expected: 'invalidFileFormat' },
       { fileName: 'file', expected: 'invalidFileFormat' },
+      { fileName: 'file.pfsz', expected: 'invalidFileFormat' },
+      { fileName: 'file.pj', expected: 'invalidFileFormat' },
+      { fileName: 'file.gjp', expected: 'invalidFileFormat' },
       { fileName: 'csv', expected: 'invalidFileFormat' },
       { fileName: 'file.', expected: 'invalidFileFormat' },
       { fileName: 'file.invalidFormat', expected: 'invalidFileFormat' },
     ])('Check file format %o', ({ fileName, expected }) => {
       const newFile = mockFile;
       newFile.originalname = fileName;
-      expect(hasValidFileFormat(newFile)).toEqual(expected);
+      expect(hasInvalidFileFormat(newFile)).toEqual(expected);
+    });
+    it.each([
+      { fileName: 'file Copy(0).csv', expected: undefined },
+      { fileName: 'file_with_underscore.txt', expected: undefined },
+      { fileName: 'file.file.csv', expected: undefined },
+      { fileName: 'file.csv.csv', expected: undefined },
+      { fileName: 'file?.csv', expected: 'invalidFileName' },
+      { fileName: 'file<1>.csv', expected: 'invalidFileName' },
+    ])('Check filename %o', ({ fileName, expected }) => {
+      expect(hasInvalidName(fileName)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {
