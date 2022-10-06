@@ -44,5 +44,5 @@ export const currentStateFn = (userCase: Partial<CaseWithId>): StateSequence => 
 
   const currentHubState = stateSequence.toHubState(userCase);
 
-  return stateSequence.at(currentHubState as HubCaseState);
+  return stateSequence.at(currentHubState);
 };
