@@ -158,7 +158,7 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): u
         text:
           userCase.reasonableAdjustments === YesOrNo.YES
             ? userCase.reasonableAdjustments + ', ' + userCase.reasonableAdjustmentsDetail
-            : userCase.reasonableAdjustmentsDetail,
+            : userCase.reasonableAdjustments,
       },
       actions: {
         items: [
