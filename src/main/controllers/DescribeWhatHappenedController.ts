@@ -10,10 +10,19 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
 import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class DescribeWhatHappenedController {
+  private uploadedFileName: string;
+  private getHint = (label: AnyRecord): string => {
+    if (this.uploadedFileName) {
+      return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
+    } else {
+      return label.fileUpload.hint;
+    }
+  };
+
   private readonly form: Form;
   private readonly describeWhatHappenedFormContent: FormContent = {
     fields: {
@@ -33,7 +42,7 @@ export default class DescribeWhatHappenedController {
         labelHidden: true,
         type: 'upload',
         classes: 'govuk-label',
-        hint: l => l.fileUpload.hint,
+        hint: l => this.getHint(l),
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
       },
@@ -64,21 +73,31 @@ export default class DescribeWhatHappenedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-
-    try {
-      const result = await handleUploadDocument(req, req.file, this.logger);
-      if (result?.data) {
-        req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+    req.session.errors = [];
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const claimSummaryError = getClaimSummaryError(formData, req.file);
+    if (!claimSummaryError) {
+      try {
+        const result = await handleUploadDocument(req, req.file, this.logger);
+        if (result?.data) {
+          req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+        }
+      } catch (error) {
+        this.logger.info(error);
+      } finally {
+        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+        handleUpdateDraftCase(req, this.logger);
       }
-    } catch (error) {
-      this.logger.info(error);
-    } finally {
-      handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-      handleUpdateDraftCase(req, this.logger);
+    } else {
+      req.session.errors.push(claimSummaryError);
+      return res.redirect(req.url);
     }
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.session?.userCase?.claimSummaryFile?.document_filename) {
+      this.uploadedFileName = req.session.userCase.claimSummaryFile.document_filename;
+    }
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,
