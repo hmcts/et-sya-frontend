@@ -46,7 +46,7 @@
     },
     "claimSummaryFileName": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
-      "invalidFileName": "The name of the file provided is invalid. A file name can't contain any of the following characters: \\/:*?\"|<> (Max 100 characters)"
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 100 characters or contain any of the following characters: \\/:*?\"|<>"
     }
   }
 }
