@@ -32,7 +32,7 @@ export default class ClaimDetailsController {
       et1Documents.push({
         date: doc.createdOn,
         id: doc.id,
-        name: doc.type === 'Notice of a claim' ? 'ET1 Form' : 'ET1 support document',
+        name: doc.type === 'ET1' ? 'ET1 Form' : 'ET1 support document',
       });
     }
 

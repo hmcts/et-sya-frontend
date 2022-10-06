@@ -293,7 +293,7 @@ export const mvpLocations = [
   'BD',
 ];
 
-export const et1DocTypes = ['Notice of a claim'];
+export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];

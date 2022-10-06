@@ -336,7 +336,7 @@ describe('Format Case Data to Frontend Model', () => {
           {
             id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
             value: {
-              typeOfDocument: 'Notice of a claim',
+              typeOfDocument: 'ET1',
               uploadedDocument: {
                 document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
                 document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
