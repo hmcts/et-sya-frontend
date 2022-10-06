@@ -161,7 +161,7 @@ export const getYourDetails = (
         text:
           userCase.reasonableAdjustments === YesOrNo.YES
             ? userCase.reasonableAdjustments + ', ' + userCase.reasonableAdjustmentsDetail
-            : userCase.reasonableAdjustmentsDetail,
+            : userCase.reasonableAdjustments,
       },
       actions: {
         items: [
