@@ -205,7 +205,7 @@ export const hasInvalidName = (fileName: string): string => {
   }
 
   const fileNameRegExPattern =
-    /^(?!\\.)(?!com\\d$)(?!con$)(?!fa!_!lV1.txt$)(?!lpt\\d$)(?!nul$)(?!prn$)[^\\|*\\?\\:<>\\/$"]*[^\\.\\|\\*\\?\\:<>\\/$"]+$/;
+    /^(?!\.)(?!com\d$)(?!con$)(?!fa!_!lV1.txt$)(?!lpt\d$)(?!nul$)(?!prn$)[^|*?:<>/$"]*[^.|*?:<>/$"]+$/;
 
   if (fileNameRegExPattern.test(fileName)) {
     return;
