@@ -39,6 +39,9 @@
   </noscript>
 
   <!-- End Google Tag Manager (noscript) -->
+  <!-- Hidden session object for user already logged in check -->
+  <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="{{isLoggedIn}}">
+  <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
 {% set logInOrOut = {
