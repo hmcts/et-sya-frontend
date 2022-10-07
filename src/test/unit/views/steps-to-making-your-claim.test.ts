@@ -216,7 +216,7 @@ describe('Steps to making your claim page', () => {
                 TypesOfClaim.DISCRIMINATION,
                 'otherClaim',
                 TypesOfClaim.UNFAIR_DISMISSAL,
-                'whistleBlowing',
+                TypesOfClaim.WHISTLE_BLOWING,
               ]),
             ],
           ])
