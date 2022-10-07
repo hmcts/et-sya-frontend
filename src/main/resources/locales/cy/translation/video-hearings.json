@@ -12,5 +12,12 @@
   "checkboxNeitherHint": "",
   "explain": "",
   "selectAllHint": "",
-  "errors": ""
+  "errors": {
+    "hearingPreferences": {
+      "required": ""
+    },
+    "hearingAssistance": {
+      "required": ""
+    }
+  }
 }

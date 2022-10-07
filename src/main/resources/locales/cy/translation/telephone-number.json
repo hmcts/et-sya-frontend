@@ -3,5 +3,9 @@
   "h1": "",
   "hint": "",
   "telNumber": "",
-  "errors": ""
+  "errors": {
+    "telNumber": {
+      "invalid": ""
+    }
+  }
 }

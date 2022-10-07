@@ -6,5 +6,9 @@
   "p3": "",
   "optionText1": "",
   "optionText2": "",
-  "errors": ""
+  "errors": {
+    "returnToExisting": {
+      "required": ""
+    }
+  }
 }

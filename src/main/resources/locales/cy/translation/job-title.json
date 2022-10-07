@@ -5,5 +5,9 @@
   "p2": "",
   "hint": "",
   "jobTitle": "",
-  "errors": ""
+  "errors": {
+    "jobTitle": {
+      "required": ""
+    }
+  }
 }

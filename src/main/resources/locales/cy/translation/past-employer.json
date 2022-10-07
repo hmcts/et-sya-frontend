@@ -1,5 +1,9 @@
 {
   "title": "",
   "heading": "",
-  "errors": ""
+  "errors": {
+    "pastEmployer": {
+      "required": ""
+    }
+  }
 }

@@ -6,5 +6,9 @@
   "p3": "",
   "radio1": "",
   "radio2": "",
-  "errors": ""
+  "errors": {
+    "caseType": {
+      "required": ""
+    }
+  }
 }

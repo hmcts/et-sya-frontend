@@ -5,5 +5,9 @@
   "optionText1": "",
   "optionText2": "",
   "optionText3": "",
-  "errors": ""
+  "errors": {
+    "isStillWorking": {
+      "required": ""
+    }
+  }
 }

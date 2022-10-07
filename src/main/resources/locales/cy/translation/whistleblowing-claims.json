@@ -7,5 +7,11 @@
   "p4": "",
   "forwardClaim": "",
   "regOrBodyName": "",
-  "errors": ""
+  "errors": {
+    "whistleblowingEntityName": {
+      "required": "",
+      "invalid": "",
+      "invalidLength": ""
+    }
+  }
 }

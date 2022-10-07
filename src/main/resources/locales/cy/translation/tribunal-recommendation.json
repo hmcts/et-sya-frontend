@@ -4,5 +4,10 @@
   "detailsSummaryRecom": "",
   "detailsTextRecom": "",
   "hint": "",
-  "errors": ""
+  "errors": {
+    "tribunalRecommendationRequest": {
+      "required": "",
+      "tooLong": ""
+    }
+  }
 }

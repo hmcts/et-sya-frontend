@@ -4,5 +4,9 @@
   "yes": "",
   "no": "",
   "p": "",
-  "errors": ""
+  "errors": {
+    "personalDetailsCheck": {
+      "required": ""
+    }
+  }
 }

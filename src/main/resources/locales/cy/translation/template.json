@@ -7,9 +7,25 @@
   "stage": "",
   "signOut": "",
   "logIn": "",
-  "phaseBanner": "",
+  "phaseBanner": {
+    "feedback": "",
+    "smartSurveyFeedbackUrl": "",
+    "additionalText": "",
+    "languageToggle": ""
+  },
   "contactUsTitle": "",
   "contactUsForHelp": "",
   "noticeLengthInsetText": "",
-  "sessionTimeout": ""
+  "sessionTimeout": {
+    "modal": {
+      "title": "",
+      "body": {
+        "0": "",
+        "1": ""
+      },
+      "info": "",
+      "extend": "",
+      "cancel": ""
+    }
+  }
 }

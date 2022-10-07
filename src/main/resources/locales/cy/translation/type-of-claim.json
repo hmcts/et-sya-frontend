@@ -3,11 +3,37 @@
   "h1": "",
   "hints": "",
   "hint": "",
-  "breachOfContract": "",
-  "discrimination": "",
-  "payRelated": "",
-  "unfairDismissal": "",
-  "whistleBlowing": "",
-  "otherTypesOfClaims": "",
-  "errors": ""
+  "breachOfContract": {
+    "title": "",
+    "checkbox": ""
+  },
+  "discrimination": {
+    "title": "",
+    "checkbox": "",
+    "hint": ""
+  },
+  "payRelated": {
+    "title": "",
+    "checkbox": ""
+  },
+  "unfairDismissal": {
+    "title": "",
+    "checkbox": "",
+    "hint": ""
+  },
+  "whistleBlowing": {
+    "title": "",
+    "checkbox": "",
+    "hint": ""
+  },
+  "otherTypesOfClaims": {
+    "title": "",
+    "checkbox": "",
+    "explain": ""
+  },
+  "errors": {
+    "typeOfClaim": {
+      "required": ""
+    }
+  }
 }

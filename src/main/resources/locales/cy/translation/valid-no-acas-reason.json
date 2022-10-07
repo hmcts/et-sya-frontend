@@ -9,5 +9,9 @@
   "li4": "",
   "warningTxt1": "",
   "insetText1": "",
-  "errors": ""
+  "errors": {
+    "validNoAcasReason": {
+      "required": ""
+    }
+  }
 }

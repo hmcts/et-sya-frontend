@@ -1,5 +1,9 @@
 {
   "title": "",
   "h1": "",
-  "errors": ""
+  "errors": {
+    "noticePeriod": {
+      "required": ""
+    }
+  }
 }
