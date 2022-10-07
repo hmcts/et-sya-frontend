@@ -13,7 +13,8 @@
       "yearRequired": "Enter the year for your end date. For example, 2022",
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
-      "yearNotANumber": "Year must only contain numbers. For example, 2022"
+      "yearNotANumber": "Year must only contain numbers. For example, 2022",
+      "invalidDate": "Employment end date must be a real date."
     }
   }
 }
