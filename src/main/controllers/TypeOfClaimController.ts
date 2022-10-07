@@ -99,9 +99,6 @@ export default class TypeOfClaimController {
       redirectUrl = LegacyUrls.ET1_BASE;
     }
     setUserCase(req, this.form);
-    if (req.body.otherClaim) {
-      req.session.userCase.typeOfClaim.push(req.body.otherClaim);
-    }
     if (req.app?.locals) {
       const redisClient = req.app.locals?.redisClient;
       if (redisClient) {
