@@ -23,7 +23,7 @@
   },
   "whistleBlowing": {
     "title": "whistleblowing",
-    "checkbox": "WhistleBlowing",
+    "checkbox": "Whistleblowing",
     "hint": "including dismissal or any other unfair treatment after whistleblowing"
   },
   "otherTypesOfClaims": {
