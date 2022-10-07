@@ -137,6 +137,7 @@ export default {
   et1SubmittedForm: {
     id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
     description: 'Case Details - Sunday Ayeni',
+    originalDocumentName: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
     type: 'ET1',
   },
 };

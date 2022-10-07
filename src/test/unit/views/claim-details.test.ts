@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -15,38 +15,9 @@ const summaryListKeyExcludeHeadingClass = '.govuk-summary-list__key:not(.govuk-h
 const tableSelector = 'govuk-table';
 const rowSelector = 'govuk-table__row';
 const cellSelector = 'govuk-table__cell';
-const tableHeaderSelector = 'govuk-table__header';
-
-const axiosResponse: AxiosResponse = {
-  data: {
-    classification: 'PUBLIC',
-    size: 10575,
-    mimeType: 'application/pdf',
-    originalDocumentName: 'sample.pdf',
-    createdOn: '2022-09-08T14:39:32.000+00:00',
-    createdBy: '7',
-    lastModifiedBy: '7',
-    modifiedOn: '2022-09-08T14:40:49.000+00:00',
-    metadata: {
-      jurisdiction: '',
-      case_id: '1',
-      case_type_id: '',
-    },
-  },
-  status: 200,
-  statusText: '',
-  headers: undefined,
-  config: undefined,
-};
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-caseApi.getDocumentDetails = jest.fn(caseId => {
-  if (caseId === 'a0c113ec-eede-472a-a59c-f2614b48177c') {
-    return Promise.resolve({ ...axiosResponse, data: { createdOn: '2022-09-09T14:39:32.000+00:00' } });
-  }
-  return Promise.resolve(axiosResponse);
-});
 jest.spyOn(caseService, 'getCaseApi').mockReturnValue(caseApi);
 
 let htmlRes: Document;
@@ -103,22 +74,11 @@ describe('ET1 details', () => {
 });
 
 describe('ET1 documents', () => {
-  it('Shows Date uploaded and Document columns', async () => {
-    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, claimSummaryFile: undefined }, PAGE_URL);
-
-    const table = htmlRes.getElementsByClassName(tableSelector)[0];
-    const headerRow = Array.from(table.getElementsByClassName(rowSelector))[0];
-    const columns = Array.from(headerRow.getElementsByClassName(tableHeaderSelector)).map(column => column.textContent);
-
-    expect(columns).toStrictEqual(['Date uploaded', 'Document']);
-  });
-
   it.each([
     {
       caseDocumentsModifier: { claimSummaryFile: undefined },
       expectedDocuments: [
         {
-          date: '8 September 2022',
           link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
           linkText: 'ET1 Form',
         },
@@ -128,12 +88,10 @@ describe('ET1 documents', () => {
       caseDocumentsModifier: {},
       expectedDocuments: [
         {
-          date: '8 September 2022',
           link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
           linkText: 'ET1 Form',
         },
         {
-          date: '9 September 2022',
           link: '/getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c',
           linkText: 'ET1 support document',
         },
@@ -150,10 +108,10 @@ describe('ET1 documents', () => {
 
       const documents = rows.map(row => {
         const cells = Array.from(row.getElementsByClassName(cellSelector));
+        expect(cells).toHaveLength(1);
         return {
-          date: cells[0].textContent,
-          link: cells[1].getElementsByTagName('a')[0].href,
-          linkText: cells[1].textContent,
+          link: cells[0].getElementsByTagName('a')[0].href,
+          linkText: cells[0].textContent,
         };
       });
 

@@ -7,7 +7,6 @@ import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 
-import { getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
@@ -25,12 +24,11 @@ export default class ClaimDetailsController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
 
-    userCase.allEt1DocumentDetails = await getET1Documents(userCase, req.session.user?.accessToken);
+    userCase.allEt1DocumentDetails = await getET1Documents(userCase);
 
     const et1Documents = [];
     for (const doc of userCase.allEt1DocumentDetails) {
       et1Documents.push({
-        date: doc.createdOn,
         id: doc.id,
         name: doc.type === 'ET1' ? 'ET1 Form' : 'ET1 support document',
       });
@@ -62,7 +60,7 @@ export default class ClaimDetailsController {
   };
 }
 
-async function getET1Documents(userCase: CaseWithId, accessToken: string) {
+async function getET1Documents(userCase: CaseWithId) {
   const et1DocumentDetails = [];
 
   if (userCase.et1SubmittedForm) {
@@ -70,15 +68,9 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   }
 
   if (userCase.claimSummaryFile?.document_url) {
-    const et1SupportId = getDocId(userCase.claimSummaryFile.document_url);
-    const supportDocDetails = { id: et1SupportId, description: '' } as DocumentDetail;
-    et1DocumentDetails.push(supportDocDetails);
-  }
-
-  try {
-    await getDocumentDetails(et1DocumentDetails, accessToken);
-  } catch (err) {
-    logger.error(err.response?.status, err.response?.data, err);
+    et1DocumentDetails.push({
+      id: getDocId(userCase.claimSummaryFile.document_url),
+    } as DocumentDetail);
   }
 
   return et1DocumentDetails;

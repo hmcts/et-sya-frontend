@@ -408,8 +408,9 @@ export const setDocumentValues = (
       return {
         id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
+        originalDocumentName: doc.value?.uploadedDocument?.document_filename,
         type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
-      };
+      } as DocumentDetail;
     });
   return foundDocuments.length ? foundDocuments : undefined;
 };

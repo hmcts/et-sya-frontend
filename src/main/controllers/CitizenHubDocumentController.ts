@@ -5,7 +5,6 @@ import { TranslationKeys, responseRejectedDocTypes } from '../definitions/consta
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
-import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 
@@ -39,12 +38,6 @@ export default class CitizenHubDocumentController {
     const documents = mapParamToDoc(req?.params?.documentType);
     if (!documents) {
       logger.info('no documents found for ', req?.params?.documentType);
-      return res.redirect('/not-found');
-    }
-    try {
-      await getDocumentDetails(documents, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
       return res.redirect('/not-found');
     }
 

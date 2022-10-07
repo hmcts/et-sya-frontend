@@ -24,13 +24,10 @@
             rows: [
               [
                 {
-                  text: doc.createdOn
-                },
-                            {
                   text: 'ET1 (Claim)'
                 },
                 {
-                    html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                  html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
                 }
               ]
             ]
@@ -46,13 +43,10 @@
             rows: [
               [
                 {
-                  text: doc.createdOn
-                },
-                            {
                   text: 'ET1 (Claim)'
                 },
                 {
-                    html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                  html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
                 }
               ]
             ]
@@ -197,9 +191,6 @@
         {% set documentsRows = (documentsRows.push(
           [
             {
-              text: document.date
-            },
-            {
               html: "<a href=\"/getCaseDocument/" + document.id + "\" target=\"_blank\" class=\"govuk-link\">" + document.name + "</a>"
             }
           ]
@@ -209,9 +200,6 @@
       {{ govukTable({
         firstCellIsHeader: false,
         head: [
-          {
-            text: getContent(dateUploaded)
-          },
           {
             text: getContent(document)
           }

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import CitizenHubDocumentController from '../../../main/controllers/CitizenHubDocumentController';
 import { CaseWithId } from '../../../main/definitions/case';
@@ -12,33 +12,10 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
 
-const axiosResponse: AxiosResponse = {
-  data: {
-    classification: 'PUBLIC',
-    size: 10575,
-    mimeType: 'application/pdf',
-    originalDocumentName: 'sample.pdf',
-    createdOn: '2022-09-08T14:39:32.000+00:00',
-    createdBy: '7',
-    lastModifiedBy: '7',
-    modifiedOn: '2022-09-08T14:40:49.000+00:00',
-    metadata: {
-      jurisdiction: '',
-      case_id: '1',
-      case_type_id: '',
-    },
-  },
-  status: 200,
-  statusText: '',
-  headers: undefined,
-  config: undefined,
-};
-
 describe('Citizen Hub Document Controller', () => {
   it('should render Acknowledgement Documents Page', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
@@ -54,7 +31,6 @@ describe('Citizen Hub Document Controller', () => {
   it('should call render and pass an object containing the correctly formatted document details', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
@@ -71,10 +47,6 @@ describe('Citizen Hub Document Controller', () => {
       expect.objectContaining({
         docs: [
           {
-            size: '0.011',
-            mimeType: 'application/pdf',
-            originalDocumentName: 'sample.pdf',
-            createdOn: '8 September 2022',
             description: 'description',
             id: '1',
           },
@@ -85,8 +57,6 @@ describe('Citizen Hub Document Controller', () => {
   it('should redirect to not-found when the document request returns an error', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
-
-    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(new Error('test error message'));
 
     const servingDocuments: DocumentDetail[] = [{ id: '1', description: 'description' }];
     const userCase: Partial<CaseWithId> = { acknowledgementOfClaimLetterDetail: servingDocuments };
