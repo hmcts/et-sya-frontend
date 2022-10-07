@@ -307,11 +307,11 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
-      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
-      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
-      respondentAddressTown: respondent.value.respondent_address?.PostTown,
-      respondentAddressCountry: respondent.value.respondent_address?.Country,
-      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value?.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value?.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
