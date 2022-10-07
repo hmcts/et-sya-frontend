@@ -13,5 +13,10 @@
       "lengthError": "Your preferred title must be a minimum of 2 characters",
       "numberError": "Tell us your preferred title? This must not include numbers"
     }
-  }
+  },
+  "genderIdentitySame": "",
+  "genderIdentitySameHint": "",
+  "genderIdentityTextLabel": "",
+  "genderTitle": "",
+  "otherTitlePreference": ""
 }

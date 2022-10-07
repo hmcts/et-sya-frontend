@@ -12,5 +12,11 @@
   "genderTitle": "",
   "preferNotToSay": "",
   "otherTitlePreference": "",
-  "errors": ""
+  "errors": {
+    "preferredTitle": {
+      "required": "",
+      "lengthError": "",
+      "numberError": ""
+    }
+  }
 }
