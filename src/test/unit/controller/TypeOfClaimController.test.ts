@@ -90,7 +90,6 @@ describe('Type Of Claim Controller', () => {
           TypesOfClaim.OTHER_TYPES,
           TypesOfClaim.PAY_RELATED_CLAIM,
           TypesOfClaim.UNFAIR_DISMISSAL,
-          'Help',
         ],
         otherClaim: 'Help',
       });
