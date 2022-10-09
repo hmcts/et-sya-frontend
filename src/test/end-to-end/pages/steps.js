@@ -17,6 +17,8 @@ module.exports = () => {
     stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
     claimDetails: steps.claimDetails.claimDet,
     submitClaim: steps.submitClaim.submitClaimPages,
+    checkYourAnswers: steps.checkYourAnswers.checkYourAnswers,
+    claimSubmitted: steps.claimSubmitted.claimSubmitted,
   });
 };
 

@@ -14,7 +14,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   //Enters Postcode for the respondent
   //I.seeElement('#postcode');
   I.refreshPage();
-  I.waitToHide('#address1', 5);
+  I.waitToHide('#address1', 2);
   I.dontSeeElement('#address1');
   I.fillField('#postcode', 'LS7 4QE');
   I.click('#findAddressButton');

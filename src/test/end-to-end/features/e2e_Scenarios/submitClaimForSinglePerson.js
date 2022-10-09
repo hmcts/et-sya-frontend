@@ -8,6 +8,7 @@ const {
   stepsToMakingYourClaim,
   claimDetails,
   submittingClaim,
+  checkYourAnswers,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
@@ -26,6 +27,7 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
   await submittingClaim(I);
+  await checkYourAnswers(I);
 })
   .tag('@RET-DH')
   .tag('@RET-1178');

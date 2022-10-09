@@ -121,7 +121,7 @@ async function verifyWhistleBlowingClaims() {
   I.see('body.');
   I.see('We will notify the respondent if you choose for us to forward your claim but this');
   I.see('will not affect how we process your claim');
-  I.see('Not all whistleblowing claims will have an appropriate regular or body');
+  I.see('Not all whistleblowing claims will have an appropriate regulator or body');
   I.see('Find the relevant regulator or body (opens in a new window) for your type of');
   I.see('claim from this list');
   I.see('Do you want us to forward your whistleblowing claim to a relevant');

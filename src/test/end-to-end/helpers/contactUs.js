@@ -13,4 +13,8 @@ async function verifyContactUs() {
   I.see('Monday to Friday, 9am to 5pm');
   I.see('Find out about call charges');
 }
-module.exports = { verifyContactUs };
+
+async function clickSubmit() {
+  await I.click("//a[@id='main-form-submit']");
+}
+module.exports = { verifyContactUs, clickSubmit };
