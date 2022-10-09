@@ -25,6 +25,5 @@ module.exports = async function () {
   //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
-  //await contactUs.clickSubmit();
   I.forceClick("//a[@id='main-form-submit']");
 };

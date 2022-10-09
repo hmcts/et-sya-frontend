@@ -14,7 +14,4 @@ async function verifyContactUs() {
   I.see('Find out about call charges');
 }
 
-async function clickSubmit() {
-  await I.click("//a[@id='main-form-submit']");
-}
-module.exports = { verifyContactUs, clickSubmit };
+module.exports = { verifyContactUs };
