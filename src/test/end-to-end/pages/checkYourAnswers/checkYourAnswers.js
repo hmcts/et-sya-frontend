@@ -26,6 +26,5 @@ module.exports = async function () {
   await contactUs.verifyContactUs();
 
   //await contactUs.clickSubmit();
-  //await I.click('//a[@id=\'main-form-submit\']');
-  //I.waitForText('Your claim has been submitted',60);
+  I.forceClick("//a[@id='main-form-submit']");
 };

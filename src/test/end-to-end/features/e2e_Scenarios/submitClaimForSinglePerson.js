@@ -9,6 +9,7 @@ const {
   claimDetails,
   submittingClaim,
   checkYourAnswers,
+  claimSubmitted,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
@@ -28,6 +29,7 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   await claimDetails(I);
   await submittingClaim(I);
   await checkYourAnswers(I);
+  await claimSubmitted(I);
 })
   .tag('@RET-DH')
   .tag('@RET-1178');

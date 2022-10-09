@@ -74,6 +74,10 @@ async function checkYourAnswers(I) {
   await I.checkYourAnswers(I);
 }
 
+async function claimSubmitted(I) {
+  await I.claimSubmitted(I);
+}
+
 module.exports = {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
@@ -94,4 +98,5 @@ module.exports = {
   claimDetails,
   submittingClaim,
   checkYourAnswers,
+  claimSubmitted,
 };
