@@ -150,6 +150,7 @@ export interface Case {
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: DocumentDetail;
   documentCollection?: DocumentCollection[];
+  otherClaim?: string;
 }
 
 export const enum StillWorking {

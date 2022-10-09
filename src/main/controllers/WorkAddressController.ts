@@ -35,7 +35,6 @@ export default class WorkAddressController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
@@ -50,6 +49,7 @@ export default class WorkAddressController {
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
       handleSessionErrors(req, res, this.form, redirectUrl);
+      handleUpdateDraftCase(req, this.logger);
     }
   };
 
