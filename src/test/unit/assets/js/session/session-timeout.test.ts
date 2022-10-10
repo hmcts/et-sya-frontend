@@ -41,6 +41,7 @@ describe('Session Timeout', () => {
       <p id="dialog-description">the countdown</p>
       <button id="extend-session">Extend</button>
     </div>
+    <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="true">
     <div class="modal-overlay" id="modal-overlay" tabindex="-1" aria-hidden="true"></div>`;
     modalElement = document.querySelector('#timeout-modal');
     modalOverlayElement = document.querySelector('#modal-overlay');
@@ -202,7 +203,6 @@ describe('Session Timeout', () => {
       sandbox.stub(sessionTimeout, 'closeModal');
       removeListenersStub = sandbox.stub(sessionTimeout, 'removeListeners');
       stopCountersStub = sandbox.stub(sessionTimeout, 'stopCounters');
-
       sessionTimeout
         .extendSession()
         .then(() => {

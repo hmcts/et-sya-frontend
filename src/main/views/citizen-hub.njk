@@ -51,6 +51,8 @@
               classes: ''
             }) }}
 
+            {% include "./citizen-hub-notification-banner.njk" %}
+
             <ol class="app-task-list">
               {% for section in sections %}
                 <li>
@@ -61,12 +63,12 @@
                     {% for link in section.links %}
                       <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                          {% if getContent(link.status) === "Not available yet" %}
-                            {{ getContent(link.linkTxt) }}
-                          {% else %}
+                          {% if link.shouldShow %}
                             <a href="{{ getContent(link.url) }}" class="govuk-link">
                               {{ getContent(link.linkTxt) }}
                             </a>
+                          {% else %}
+                            {{ getContent(link.linkTxt) }}
                           {% endif %}
                         </span>
 
@@ -88,15 +90,15 @@
               {{iWantTo}}
             </h2>
             <p class="govuk-body">
-              <a href= "#">
-              {{contactTribunalMyCase}}
-            </a>
+              <a href="#">
+                {{contactTribunalMyCase}}
+              </a>
             </p>
 
             <p class="govuk-body">
-              <a href= "https://www.gov.uk/find-legal-advice" target="_blank">
-              {{findLegalAdvice}}
-            </a>
+              <a href="https://www.gov.uk/find-legal-advice" target="_blank">
+                {{findLegalAdvice}}
+              </a>
             </p>
 
             {% set sideBarContent %}

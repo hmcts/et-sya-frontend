@@ -59,7 +59,7 @@ describe('Steps to Making your claim Controller', () => {
         created_date: '2019-02-12T14:25:39.015',
         case_data: {
           caseType: CaseType.SINGLE,
-          typeOfClaim: ['discrimination', 'payRelated'],
+          typesOfClaim: ['discrimination', 'payRelated'],
           claimantRepresentedQuestion: YesOrNo.YES,
           caseSource: 'ET1 Online',
         },
@@ -128,6 +128,12 @@ describe('Steps to Making your claim Controller', () => {
       personalDetailsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
+      rejectionOfClaimDocumentDetail: undefined,
+      respondentResponseDeadline: undefined,
+      responseAcknowledgementDocumentDetail: undefined,
+      responseEt3FormDocumentDetail: [],
+      responseRejectionDocumentDetail: undefined,
+      telNumber: undefined,
       noticeEnds: undefined,
       hearingPreferences: undefined,
       hearingAssistance: undefined,
@@ -135,6 +141,7 @@ describe('Steps to Making your claim Controller', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
+      otherClaim: undefined,
     });
   });
 

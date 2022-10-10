@@ -214,9 +214,9 @@ describe('Steps to making your claim page', () => {
                 TypesOfClaim.PAY_RELATED_CLAIM,
                 TypesOfClaim.BREACH_OF_CONTRACT,
                 TypesOfClaim.DISCRIMINATION,
-                'otherClaim',
                 TypesOfClaim.UNFAIR_DISMISSAL,
                 TypesOfClaim.WHISTLE_BLOWING,
+                TypesOfClaim.OTHER_TYPES,
               ]),
             ],
           ])
@@ -233,7 +233,7 @@ describe('Steps to making your claim page', () => {
       'Pay-related',
       'Unfair dismissal',
       'Whistleblowing',
-      'Other type of Claim',
+      'Other type of claim',
     ];
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
@@ -279,12 +279,12 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
+    expect(notStartedTags.length).equal(4, 'number of tags found is not 4');
     expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
     expect(tasklistTags[0].innerHTML).contains(sectionStatus.completed);
     expect(tasklistTags[1].innerHTML).contains(sectionStatus.completed);
     expect(tasklistTags[2].innerHTML).contains(sectionStatus.completed);
-    expect(notStartedTags[4].innerHTML).contains(sectionStatus.cannotStartYet);
+    expect(notStartedTags[3].innerHTML).contains(sectionStatus.cannotStartYet);
   });
 
   it('should show employment and respondent section as completed', async () => {
@@ -354,7 +354,6 @@ describe('Steps to making your claim page tags', () => {
                 TypesOfClaim.BREACH_OF_CONTRACT,
                 TypesOfClaim.DISCRIMINATION,
                 'otherClaim',
-                TypesOfClaim.UNFAIR_DISMISSAL,
                 TypesOfClaim.WHISTLE_BLOWING,
               ]),
             ],

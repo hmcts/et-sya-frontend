@@ -20,8 +20,8 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(response.render).toHaveBeenCalledWith('lip-or-representative', expect.anything());
   });
 
-  it("should render the Single or Multiple claims page when 'representing myself' is selected", () => {
-    const body = { claimantRepresentedQuestion: YesOrNo.YES };
+  it("should render the Single or Multiple claims page when (No) 'representing myself' is selected", () => {
+    const body = { claimantRepresentedQuestion: YesOrNo.NO };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });
@@ -31,8 +31,8 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/single-or-multiple-claim');
   });
 
-  it("should render the legacy ET1 service when the 'making a claim for someone else' option is selected", () => {
-    const body = { claimantRepresentedQuestion: YesOrNo.NO };
+  it("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
+    const body = { claimantRepresentedQuestion: YesOrNo.YES };
     const controller = new LipOrRepController();
 
     const req = mockRequest({ body });

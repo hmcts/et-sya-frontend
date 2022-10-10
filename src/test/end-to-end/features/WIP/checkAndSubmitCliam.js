@@ -11,9 +11,7 @@ Scenario('ET Check your answer: Submit Claim', () => {
   I.click('#main-form-submit');
   I.see('Your claim has been submitted');
   authPage.logout();
-})
-  .tag('@RET-1178')
-  .tag(' @RET-BAT');
+}).tag('@RET-1178');
 
 Scenario('ET Check your answer: Save as draft', () => {
   I.amOnPage(test_url);

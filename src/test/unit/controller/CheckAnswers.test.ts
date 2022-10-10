@@ -1,58 +1,19 @@
 import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswersController';
-import { CaseWithId } from '../../../main/definitions/case';
-import { TellUsWhatYouWant } from '../../../main/definitions/definition';
-import { mockRequest } from '../mocks/mockRequest';
+import checkAnswersJsonRaw from '../../../main/resources/locales/en/translation/check-your-answers.json';
+import et1DetailsJsonRaw from '../../../main/resources/locales/en/translation/et1-details.json';
+import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Check Your answers Controller', () => {
-  const t = {
-    'check-your-answers': {},
-    common: {},
-  };
+  const translationJsons = { ...checkAnswersJsonRaw, ...et1DetailsJsonRaw };
 
   it('should render the Check your answers page', () => {
     const controller = new CheckYourAnswersController();
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequestWithTranslation({}, translationJsons);
+
     controller.get(request, response);
+
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
-  });
-
-  it('should render the Check your answers page with Compensation outcome', () => {
-    const userCase: Partial<CaseWithId> = {
-      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
-      compensationOutcome: 'money',
-      compensationAmount: 1,
-    };
-    const controller = new CheckYourAnswersController();
-
-    const req = mockRequest({ userCase });
-    const res = mockResponse();
-    controller.get(req, res);
-
-    expect(res.render).toHaveBeenCalledWith(
-      'check-your-answers',
-      expect.objectContaining({
-        whatYouWantCompensation: 'money: 1',
-      })
-    );
-  });
-
-  it('should render the Check your answers page with tribunal recommendation', () => {
-    const userCase: Partial<CaseWithId> = {
-      tellUsWhatYouWant: [TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
-      tribunalRecommendationRequest: 'request',
-    };
-    const controller = new CheckYourAnswersController();
-
-    const req = mockRequest({ userCase });
-    const res = mockResponse();
-    controller.get(req, res);
-    expect(res.render).toHaveBeenCalledWith(
-      'check-your-answers',
-      expect.objectContaining({
-        whatYouWantTribunals: 'request',
-      })
-    );
   });
 });

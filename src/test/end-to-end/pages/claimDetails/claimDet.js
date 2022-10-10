@@ -8,7 +8,7 @@ module.exports = async function (allClaimDetailsPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   if (allClaimDetailsPages) {
-    /*I.see('What type of discrimination are you');
+    I.see('What type of discrimination are you');
     I.see('claiming?');
     I.see('What is discrimination?');
     I.see('Select all that apply.');
@@ -40,7 +40,7 @@ module.exports = async function (allClaimDetailsPages) {
     I.checkOption(claimDetailsConfig.sex);
     I.checkOption(claimDetailsConfig.sexual_orientation);
 
-    I.click('Save and continue');*/
+    I.click('Save and continue');
 
     //What happened to you Page.
     I.see('Describe what happened to you');
@@ -51,9 +51,8 @@ module.exports = async function (allClaimDetailsPages) {
     I.see('What to write for dismissal claims');
     I.see('What to write for whistleblower claims');
     I.see("What to write for 'other' claims");
-    //Due to Delays in getting the text loaded....
-    //I.see('Use this box to describe the events around your dispute, or add to your claim by uploading a document');
-    //I.see('You have 2500 characters remaining');
+    I.see('Use this box to describe the events around your dispute, or add to your claim by uploading a document');
+    I.see('You have 2500 characters remaining');
     I.see('Or upload your summary as a separate document (optional)');
 
     I.click(claimDetailsConfig.what_to_write_for_discrimination_claims);
@@ -143,7 +142,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //Whistle Blowing Claims Page (Commented this Code Block as this would be only useful once thw Whistleblower and Discrimination is selected as part of the Case creation)
-  /*I.see('Whistleblowing claims');
+  I.see('Whistleblowing claims');
   await claimDetailsContentHelper.verifyWhistleBlowingClaims();
 
   I.checkOption(claimDetailsConfig.whistle_blowing_claims);
@@ -154,7 +153,7 @@ module.exports = async function (allClaimDetailsPages) {
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
-*/
+
   //Have you completed this Section
   await I.waitForText('Have you completed this section?', 30);
   I.see('You can change your answers later.');

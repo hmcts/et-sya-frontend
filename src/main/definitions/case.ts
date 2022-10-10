@@ -1,4 +1,11 @@
-import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import {
+  CaseState,
+  ClaimOutcomes,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  DocumentDetail,
+  TellUsWhatYouWant,
+} from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
 
@@ -54,6 +61,7 @@ export interface Case {
   createdDate: string;
   lastModified: string;
   ethosCaseReference?: string;
+  feeGroupReference?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -135,8 +143,21 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  et1SubmittedForm?: DocumentDetail;
+  submittedDate?: CaseDate;
   et3IsThereAnEt3Response?: YesOrNo;
   hubLinksStatuses?: HubLinksStatuses;
+  allEt1DocumentDetails?: DocumentDetail[];
+  acknowledgementOfClaimLetterDetail?: DocumentDetail[];
+  rejectionOfClaimDocumentDetail?: DocumentDetail[];
+  responseAcknowledgementDocumentDetail?: DocumentDetail[];
+  responseRejectionDocumentDetail?: DocumentDetail[];
+  respondentResponseDeadline?: string;
+  responseEt3FormDocumentDetail?: DocumentDetail[];
+  otherClaim?: string;
 }
 
 export const enum StillWorking {

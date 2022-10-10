@@ -1,5 +1,4 @@
 import { YesOrNo } from '../../../main/definitions/case';
-import { Urls } from '../../../main/definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../../../main/definitions/definition';
 
 export const mockApplications: ApplicationTableRecord[] = [
@@ -45,14 +44,20 @@ export const mockApplications: ApplicationTableRecord[] = [
       typeOfClaim: ['discrimination'],
       createdDate: 'September 1, 2022',
       lastModified: 'September 1, 2022',
+      ethosCaseReference: '654321/2022',
       respondents: [
         {
           respondentName: 'Globo Corp',
         },
       ],
+      et1SubmittedForm: {
+        id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+        description: 'Test',
+        type: 'ET1',
+      },
     },
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
-    url: Urls.DOWNLOAD_CLAIM,
+    url: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
   },
 ];

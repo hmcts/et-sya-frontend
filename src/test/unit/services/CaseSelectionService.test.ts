@@ -45,7 +45,7 @@ describe('Case Selection Service using Case Api', () => {
           created_date: '2019-02-12T14:25:39.015',
           case_data: {
             caseType: CaseType.SINGLE,
-            typeOfClaim: ['discrimination', 'payRelated'],
+            typesOfClaim: ['discrimination', 'payRelated'],
             claimantRepresentedQuestion: YesOrNo.YES,
             caseSource: 'ET1 Online',
           },
@@ -57,7 +57,7 @@ describe('Case Selection Service using Case Api', () => {
           created_date: '2019-02-12T14:25:39.015',
           case_data: {
             caseType: CaseType.SINGLE,
-            typeOfClaim: ['discrimination', 'payRelated'],
+            typesOfClaim: ['discrimination', 'payRelated'],
             claimantRepresentedQuestion: YesOrNo.YES,
             caseSource: 'ET1 Online',
           },
@@ -126,7 +126,7 @@ describe('Case Selection Service using Case Api', () => {
         created_date: '2019-02-12T14:25:39.015',
         case_data: {
           caseType: CaseType.SINGLE,
-          typeOfClaim: ['discrimination', 'payRelated'],
+          typesOfClaim: ['discrimination', 'payRelated'],
           claimantRepresentedQuestion: YesOrNo.YES,
           caseSource: 'ET1 Online',
         },
@@ -238,11 +238,17 @@ describe('get User applications', () => {
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
         typeOfClaim: ['discrimination'],
+        ethosCaseReference: '654321/2022',
         respondents: [
           {
             respondentName: 'Globo Corp',
           },
         ],
+        et1SubmittedForm: {
+          id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+          description: 'Test',
+          type: 'ET1',
+        },
       },
     ];
     const result = getUserApplications(userCases);

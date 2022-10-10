@@ -74,6 +74,14 @@ export const TranslationKeys = {
   COOKIE_PREFERENCES: 'cookie-preferences',
   CLAIMANT_APPLICATIONS: 'claimant-applications',
   CITIZEN_HUB: 'citizen-hub',
+  CLAIM_DETAILS: 'claim-details',
+  ET1_DETAILS: 'et1-details',
+  SIDEBAR_CONTACT_US: 'sidebar-contact-us',
+  CITIZEN_HUB_ACKNOWLEDGEMENT: 'acknowledgement-of-claim',
+  CITIZEN_HUB_REJECTION: 'rejection-of-claim',
+  CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
+  CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
+  CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
 } as const;
 
 export const PageUrls = {
@@ -144,8 +152,18 @@ export const PageUrls = {
   SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
   CITIZEN_HUB: '/citizen-hub/:caseId',
-  CHANGE_DETAILS: '*/change',
+  CLAIM_DETAILS: '/claim-details',
+  CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
+  CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
+  GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   PCQ: '/pcq',
+} as const;
+
+export const InterceptPaths = {
+  CHANGE_DETAILS: '*/change',
+  ANSWERS_CHANGE: '/change?redirect=answers',
+  RESPONDENT_CHANGE: '/change?redirect=respondent',
+  SUBMIT_CASE: '/submitDraftCase',
 } as const;
 
 export const ValidationErrors = {
@@ -168,6 +186,8 @@ export const JavaApiUrls = {
   UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_DETAILS: '/document/details/',
 } as const;
 
 export const Urls = {
@@ -229,6 +249,7 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+export const TYPE_OF_CLAIMANT = 'Individual';
 
 export const mvpLocations = [
   'ZE',
@@ -271,3 +292,10 @@ export const mvpLocations = [
   'DN',
   'BD',
 ];
+
+export const et1DocTypes = ['ET1'];
+export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
+export const rejectionDocTypes = ['Rejection of claim'];
+export const responseAcceptedDocTypes = ['2.11'];
+export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
+export const et3FormDocTypes = ['ET3'];

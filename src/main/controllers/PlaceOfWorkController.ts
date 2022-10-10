@@ -1,7 +1,11 @@
 import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
-import { isValidAddressFirstLine, isValidAddressSecondLine, isValidCountryTownOrCity } from '../components/form/address_validator';
+import {
+  isValidAddressFirstLine,
+  isValidAddressSecondLine,
+  isValidCountryTownOrCity,
+} from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -23,6 +27,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'address-line1',
           maxLength: 100,
@@ -35,6 +40,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'address-line2',
           maxLength: 50,
@@ -47,6 +53,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'address-level2',
           maxLength: 50,
@@ -59,6 +66,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        hidden: true,
         attributes: {
           maxLength: 50,
         },
@@ -70,6 +78,7 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'postal-code',
           maxLength: 14,
@@ -78,11 +87,11 @@ export default class PlaceOfWorkController {
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
+      classes: 'govuk-!-margin-right-2 hidden',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
+      classes: 'govuk-button--secondary hidden',
     },
   };
 

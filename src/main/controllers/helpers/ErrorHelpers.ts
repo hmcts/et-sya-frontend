@@ -4,7 +4,8 @@ import { isFirstDateBeforeSecond } from '../../components/form/dateValidators';
 import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
-  hasValidFileFormat,
+  hasInvalidFileFormat,
+  hasInvalidName,
   isAcasNumberValid,
   isFieldFilledIn,
   isPayIntervalNull,
@@ -58,7 +59,7 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
 
   if (
     (hearingPreferenceCheckbox as string[])?.includes(HearingPreference.NEITHER) &&
-    (!hearingPreferenceNeitherTextarea || (hearingPreferenceNeitherTextarea as string).trim().length === 0)
+    (!hearingPreferenceNeitherTextarea || hearingPreferenceNeitherTextarea.trim().length === 0)
   ) {
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
@@ -179,8 +180,9 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
   }
 
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
-  const fileProvided = file !== undefined; //isFieldFilledIn(formData.claimSummaryFileName) === undefined;
-  const fileFormatValid = hasValidFileFormat(file);
+  const fileProvided = file !== undefined;
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (textProvided && fileProvided) {
     return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };
@@ -190,7 +192,10 @@ export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Expres
     return { propertyName: 'claimSummaryText', errorType: 'required' };
   }
 
-  if (fileFormatValid) {
-    return { propertyName: 'claimSummaryFileName', errorType: fileFormatValid };
+  if (fileFormatInvalid) {
+    return { propertyName: 'claimSummaryFileName', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
   }
 };
