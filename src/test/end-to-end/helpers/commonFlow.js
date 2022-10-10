@@ -54,7 +54,7 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Are you making a claim on your own oe with others Page
-  I.see('Are you making a claim on your own or with others?');
+  I.waitForText('Are you making a claim on your own or with others?', 30);
   await commonFlowContentHelper.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
   I.see('I’m claiming on my own');
   I.see('I’m claiming with another person or other people');
@@ -64,7 +64,7 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Do you have an ACAS Early Conciliation certificate
-  I.see('Do you have an ‘Acas early conciliation');
+  I.waitForText('Do you have an ‘Acas early conciliation', 30);
   I.see('certificate’ for the respondent or');
   I.see("respondents you're claiming against?");
   await commonFlowContentHelper.verifyACASConciliationGuidanceText();
@@ -75,7 +75,7 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Type of claim = discrimination
-  I.see('What type of claim are you making?');
+  I.waitForText('What type of claim are you making?', 30);
   I.see('You can choose all that apply to you. Further information will be asked for later in the claim.');
   I.see('Select all that apply');
   I.see('Breach of contract - including notice pay');
