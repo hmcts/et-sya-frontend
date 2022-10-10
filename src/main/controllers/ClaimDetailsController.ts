@@ -7,7 +7,7 @@ import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 
-import { getDocumentDetails } from './helpers/DocumentHelpers';
+import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
@@ -34,6 +34,15 @@ export default class ClaimDetailsController {
         id: doc.id,
         name: doc.type === 'ET1' ? 'ET1 Form' : 'ET1 support document',
       });
+    }
+
+    try {
+      await getDocumentDetails(
+        combineDocuments(userCase?.acknowledgementOfClaimLetterDetail, userCase?.rejectionOfClaimDocumentDetail),
+        req.session.user?.accessToken
+      );
+    } catch (err) {
+      logger.error(err.response?.status, err.response?.data, err);
     }
 
     // Because these translations don't have the CYA 'change' translation, they don't show the change action.
