@@ -4,7 +4,7 @@ const contactUs = require('../../helpers/contactUs.js');
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  I.see('Steps to making your claim');
+  I.waitForText('Steps to making your claim', 30);
   I.see('Application Details');
   I.see('Claim type');
   /*I.see('Discrimination');
