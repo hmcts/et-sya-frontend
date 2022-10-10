@@ -141,6 +141,7 @@ describe('Steps to Making your claim Controller', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
+      otherClaim: undefined,
     });
   });
 

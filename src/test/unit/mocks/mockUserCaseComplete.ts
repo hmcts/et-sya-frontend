@@ -91,6 +91,7 @@ export default {
   workAddressTown: 'Anytown',
   workAddressCountry: 'England',
   workAddressPostcode: 'SW1H 9AQ',
+  otherClaim: 'other type of claims',
   respondents: [
     {
       respondentName: 'Globo Corp',

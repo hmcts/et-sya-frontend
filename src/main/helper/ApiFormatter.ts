@@ -38,6 +38,9 @@ export function toApiFormatCreate(
       claimantType: {
         claimant_email_address: userDetails.email,
       },
+      claimantRequests: {
+        other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
+      },
     },
   };
 }
@@ -109,6 +112,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
+    otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
@@ -225,6 +229,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         whistleblowing: caseItem.whistleblowingClaim,
         whistleblowing_authority: caseItem.whistleblowingEntityName,
         claim_description_document: caseItem.claimSummaryFile,
+        other_claim: caseItem.otherClaim,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
@@ -344,11 +349,11 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
-      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
-      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
-      respondentAddressTown: respondent.value.respondent_address?.PostTown,
-      respondentAddressCountry: respondent.value.respondent_address?.Country,
-      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value?.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value?.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,

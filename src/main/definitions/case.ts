@@ -157,6 +157,7 @@ export interface Case {
   responseRejectionDocumentDetail?: DocumentDetail[];
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
+  otherClaim?: string;
 }
 
 export const enum StillWorking {
