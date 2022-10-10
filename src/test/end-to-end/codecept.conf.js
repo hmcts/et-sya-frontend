@@ -14,33 +14,6 @@ exports.config = {
       ignoreHTTPSErrors: true,
       windowSize: '1920x1080',
     },
-    /*Puppeteer: {
-      url: testConfig.TestUrl,
-      waitForTimeout: 40000,
-      getPageTimeout: 40000,
-      //waitForAction: 1000,
-      show: testConfig.TestShowBrowserWindow,
-      waitForNavigation: ['domcontentloaded'],
-      restart: true,
-      keepCookies: false,
-      keepBrowserState: false,
-      chrome: {
-        ignoreHTTPSErrors: true,
-        'ignore-certificate-errors': true,
-        'defaultViewport': {
-          'width': 1280,
-          'height': 960
-        },
-        args: [
-          //'--headless',
-          '--disable-gpu',
-          '--no-sandbox',
-          '--allow-running-insecure-content',
-          '--ignore-certificate-errors',
-          '--window-size=1440,1400'
-        ]
-      },
-    },*/
   },
   include: {
     I: './pages/steps.js',
