@@ -11,14 +11,14 @@ async function initialPageFlow() {
   await I.click('Start now');
 
   //Before You Continue Page....
-  await I.see('Before you continue');
+  await I.waitForText('Before you continue', 30);
   await commonFlowContentHelper.verifyBeforeYouContinueGuidanceText();
   I.click(commonFlowLocators.contact_us);
   await contactUs.verifyContactUs();
   await I.click('Continue');
 
   //What is the postcode where you have worked for Page....
-  I.see('What’s the postcode');
+  I.waitForText('What’s the postcode', 30);
   I.see('where you worked or');
   I.see('work?');
   await commonFlowContentHelper.verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText();
