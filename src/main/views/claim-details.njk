@@ -1,0 +1,235 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row ">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+
+      {% if userCase.acknowledgementOfClaimLetterDetail.length %}
+        {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
+          {{ govukTable({
+            firstCellIsHeader: false,
+            caption: "Claim related information",
+            rows: [
+              [
+                {
+                  text: doc.createdOn
+                },
+                            {
+                  text: 'ET1 (Claim)'
+                },
+                {
+                    html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                }
+              ]
+            ]
+          }) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if userCase.rejectionOfClaimDocumentDetail.length %}
+        {% for doc in userCase.rejectionOfClaimDocumentDetail %}
+          {{ govukTable({
+            firstCellIsHeader: false,
+            caption: "Claim related information",
+            rows: [
+              [
+                {
+                  text: doc.createdOn
+                },
+                            {
+                  text: 'ET1 (Claim)'
+                },
+                {
+                    html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                }
+              ]
+            ]
+          }) }}
+        {% endfor %}
+      {% endif %}
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key govuk-heading-m">
+            {{ applicationDetails.header }}
+          </dt>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            {{ applicationDetails.typeOfClaim }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <ul class="govuk-list">
+              {% for item in userCase.typeOfClaim %}
+                <li>{{getContent(claimTypes[item])}}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+
+      {{
+        govukSummaryList({
+          rows: yourDetails
+        })
+      }}
+
+      {{
+        govukSummaryList({
+          rows: employmentSection
+        })
+      }}
+
+      {% for respondent in userCase.respondents %}
+        {{
+          govukSummaryList({
+            rows: getRespondentSection(userCase, respondent, loop.index, translations)
+          })
+        }}
+      {% endfor %}
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key govuk-heading-m">
+            {{ claimDetails.header }}
+          </dt>
+        </div>
+        {% if userCase.claimTypeDiscrimination %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              {{ claimDetails.claimTypeDiscrimination }}
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <ul class="govuk-list">
+                {% for item in userCase.claimTypeDiscrimination %}
+                  <li>{{getContent(discriminationClaims[item])}}</li>
+                {% endfor %}
+              </ul>
+            </dd>
+          </div>
+          {% endif%}
+
+          {% if userCase.claimTypePay %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ claimDetails.claimTypePay }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list">
+                  {% for item in userCase.claimTypePay %}
+                    <li>{{getContent(payClaims[item])}}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            </div>
+            {% endif%}
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+                {{ claimDetails.describeWhatHappened }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ userCase.claimSummaryText }}
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+                {{ claimDetails.ifClaimSuccessful }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list">
+                  {% for item in userCase.tellUsWhatYouWant %}
+                    <li>{{getContent(tellUsWhatYouWant[item])}}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            </div>
+
+            {% if showCompensationRequest %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+                  {{ claimDetails.expectedCompensation }}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ userCase.compensationOutcome}}:
+                  {{userCase.compensationAmount}}
+                </dd>
+              </div>
+            {% endif %}
+
+            {% if showTribunalRequest %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+                  {{ claimDetails.expectedTribunalsRecommendation }}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ userCase.tribunalRecommendationRequest }}
+                </dd>
+              </div>
+            {% endif %}
+
+            {% if showWhistleBlowingRequest %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+                  {{ claimDetails.forwardClaim }}
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ userCase.whistleblowingClaim }}
+                  -
+                  {{ userCase.whistleblowingEntityName }}
+                </dd>
+              </div>
+            {% endif %}
+          </dl>
+
+          {% set documentsRows = [] %}
+          {% for document in et1Documents %}
+            {% set documentsRows = (documentsRows.push(
+          [
+            {
+              text: document.date
+            },
+            {
+              html: "<a href=\"/getCaseDocument/" + document.id + "\" target=\"_blank\" class=\"govuk-link\">" + document.name + "</a>"
+            }
+          ]
+          ), documentsRows) %}
+          {% endfor %}
+
+          {{ govukTable({
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: getContent(dateUploaded)
+          },
+          {
+            text: getContent(document)
+          }
+        ],
+        rows: documentsRows
+      }) }}
+
+          {% set contactContent %}
+          {% include "./citizen-hub-sidebar.njk" %}
+          {% endset %}
+
+          {{ govukDetails({
+        summaryText: "Contact",
+        html: contactContent
+      }) }}
+        </div>
+      </div>
+    {% endblock %}

@@ -26,13 +26,5 @@
   "section4": {
     "title": "Check and submit",
     "link1Text": "Check your answers"
-  },
-  "claimTypes": {
-    "breachOfContract": "Breach of contract",
-    "discrimination": "Discrimination",
-    "payRelated": "Pay-related",
-    "unfairDismissal": "Unfair dismissal",
-    "whistleBlowing": "Whistleblowing",
-    "otherClaim": "Other type of Claim"
   }
 }

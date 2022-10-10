@@ -1,4 +1,4 @@
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { CaseApiDataResponse, DocumentApiModel } from '../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -16,7 +16,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { TYPE_OF_CLAIMANT, acceptanceDocTypes } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -28,14 +28,18 @@ import {
   formatDate,
   fromApiFormat,
   fromApiFormatDocument,
+  getDocId,
+  getDueDate,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
   returnPreferredTitle,
+  setDocumentValues,
   toApiFormat,
   toApiFormatCreate,
 } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
+import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 
 describe('Should return data in api format', () => {
   it('should transform triage and Idam credentials to api format', () => {
@@ -309,7 +313,24 @@ describe('Format Case Data to Frontend Model', () => {
             },
             id: '3453xaa',
           },
+          {
+            value: {
+              respondent_name: 'Version1',
+              respondent_ACAS_question: YesOrNo.YES,
+              respondent_ACAS: 'R111111111112',
+              respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
+              respondent_address: {
+                AddressLine1: 'Ad1',
+                AddressLine2: 'Ad2',
+                PostTown: 'Town2',
+                Country: 'Country2',
+                PostCode: 'SW1A 1AA',
+              },
+            },
+            id: '3454xaa',
+          },
         ],
+        receiptDate: '2022-10-03',
         hubLinksStatuses: new HubLinksStatuses(),
         managingOffice: 'Leeds',
         tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
@@ -318,7 +339,7 @@ describe('Format Case Data to Frontend Model', () => {
           {
             id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
             value: {
-              typeOfDocument: 'Notice of a claim',
+              typeOfDocument: 'ET1',
               uploadedDocument: {
                 document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
                 document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
@@ -343,136 +364,7 @@ describe('Format Case Data to Frontend Model', () => {
       },
     };
     const result = fromApiFormat(mockedApiData);
-    expect(result).toStrictEqual({
-      id: '1234',
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
-      typeOfClaim: ['discrimination', 'payRelated'],
-      dobDate: {
-        day: '05',
-        month: '10',
-        year: '2022',
-      },
-      ethosCaseReference: '123456/2022',
-      feeGroupReference: '1234',
-      ClaimantPcqId: '1234',
-      claimantSex: Sex.MALE,
-      preferredTitle: 'Mr',
-      email: 'janedoe@exmaple.com',
-      address1: 'address 1',
-      address2: 'address 2',
-      addressPostcode: 'TEST',
-      addressCountry: 'United',
-      addressTown: 'Test',
-      telNumber: '075',
-      firstName: 'Jane',
-      lastName: 'Doe',
-      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      caseType: 'Single',
-      caseTypeId: CaseTypeId.ENGLAND_WALES,
-      claimantRepresentedQuestion: 'Yes',
-      avgWeeklyHrs: 5,
-      claimantPensionContribution: YesOrNoOrNotSure.YES,
-      claimantPensionWeeklyContribution: 15,
-      employeeBenefits: YesOrNo.YES,
-      jobTitle: 'Developer',
-      noticePeriod: YesOrNo.YES,
-      noticePeriodLength: '1',
-      noticePeriodUnit: WeeksOrMonths.WEEKS,
-      payBeforeTax: 123,
-      payAfterTax: 120,
-      payInterval: PayInterval.WEEKLY,
-      startDate: { year: '2010', month: '05', day: '11' },
-      endDate: { year: '2017', month: '05', day: '11' },
-      benefitsCharCount: 'Some benefits',
-      newJob: YesOrNo.YES,
-      newJobStartDate: { year: '2010', month: '05', day: '12' },
-      newJobPay: 4000,
-      newJobPayInterval: PayInterval.MONTHLY,
-      isStillWorking: StillWorking.WORKING,
-      pastEmployer: YesOrNo.YES,
-      personalDetailsCheck: YesOrNo.YES,
-      reasonableAdjustments: YesOrNo.YES,
-      reasonableAdjustmentsDetail: 'Adjustments detail test',
-      noticeEnds: { year: '2022', month: '08', day: '11' },
-      hearingPreferences: [HearingPreference.PHONE],
-      hearingAssistance: 'Hearing assistance test',
-      claimantContactPreference: EmailOrPost.EMAIL,
-      employmentAndRespondentCheck: YesOrNo.YES,
-      claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
-      claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
-      claimSummaryText: 'Claim summary text',
-      tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY],
-      compensationOutcome: 'Compensation outcome',
-      compensationAmount: 123,
-      tribunalRecommendationRequest: 'Tribunal recommendation request',
-      whistleblowingClaim: YesOrNo.YES,
-      whistleblowingEntityName: 'Whistleblowing entity name',
-      claimDetailsCheck: YesOrNo.YES,
-      claimantWorkAddressQuestion: YesOrNo.YES,
-      workAddress1: 'Respondent Address',
-      workAddress2: 'That Road',
-      workAddressTown: 'Anytown',
-      workAddressCountry: 'England',
-      workAddressPostcode: 'SW1H 9AQ',
-      otherClaim: 'other type of claims',
-
-      respondents: [
-        {
-          respondentName: 'Globo Corp',
-          acasCert: YesOrNo.YES,
-          acasCertNum: 'R111111111111',
-          noAcasReason: NoAcasNumberReason.ANOTHER,
-          respondentAddress1: 'Respondent Address',
-          respondentAddress2: 'That Road',
-          respondentAddressTown: 'Anytown',
-          respondentAddressCountry: 'England',
-          respondentAddressPostcode: 'SW1H 9AQ',
-          ccdId: '3453xaa',
-        },
-      ],
-      et3IsThereAnEt3Response: YesOrNo.YES,
-      claimSummaryFile: {
-        document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
-        document_filename: 'document.pdf',
-        document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
-      },
-      hubLinksStatuses: new HubLinksStatuses(),
-      managingOffice: 'Leeds',
-      tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
-      tribunalCorrespondenceTelephone: '0300 123 1024',
-      et1SubmittedForm: {
-        id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-        description: 'Case Details - Sunday Ayeni',
-        type: 'Notice of a claim',
-      },
-      documentCollection: [
-        {
-          id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
-          value: {
-            typeOfDocument: 'Notice of a claim',
-            uploadedDocument: {
-              document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
-              document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
-              document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-            },
-            shortDescription: 'Case Details - Sunday Ayeni',
-          },
-        },
-        {
-          id: '3db71007-d42c-43d5-a51b-57957f78ced3',
-          value: {
-            typeOfDocument: 'ACAS Certificate',
-            uploadedDocument: {
-              document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
-              document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
-              document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
-            },
-            shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
-          },
-        },
-      ],
-    });
+    expect(result).toStrictEqual(mockUserCaseComplete);
   });
 
   it('should return undefined for empty field`', () => {
@@ -557,12 +449,18 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressPostcode: undefined,
       et3IsThereAnEt3Response: undefined,
       claimSummaryFile: undefined,
+      submittedDate: undefined,
       hubLinksStatuses: undefined,
-      documentCollection: undefined,
       managingOffice: undefined,
       et1SubmittedForm: undefined,
       tribunalCorrespondenceEmail: undefined,
       tribunalCorrespondenceTelephone: undefined,
+      acknowledgementOfClaimLetterDetail: undefined,
+      respondentResponseDeadline: undefined,
+      rejectionOfClaimDocumentDetail: undefined,
+      responseAcknowledgementDocumentDetail: undefined,
+      responseRejectionDocumentDetail: undefined,
+      responseEt3FormDocumentDetail: [],
       otherClaim: undefined,
     });
   });
@@ -653,5 +551,65 @@ describe('parseDateFromString()', () => {
     { date: null, expected: undefined },
   ])('Correct parsing of date from string: %o', ({ date, expected }) => {
     expect(parseDateFromString(date)).toStrictEqual(expected);
+  });
+});
+
+describe('set Serving Document Values()', () => {
+  it('should retrieve serving Document id, type and description from ccd response', () => {
+    const servingDocumentCollection = [
+      {
+        id: '10',
+        value: {
+          typeOfDocument: '1.1',
+          shortDescription: 'text',
+          uploadedDocument: {
+            document_url: 'http://address/documents/abc123',
+            document_filename: 'sample.pdf',
+            document_binary_url: 'http://address/documents/abc123/binary',
+          },
+        },
+      },
+      {
+        id: '11',
+        value: {
+          typeOfDocument: '1.1',
+          shortDescription: 'a sentence',
+          uploadedDocument: {
+            document_url: 'http://address/documents/xyz123',
+            document_filename: 'letter.png',
+            document_binary_url: 'http://address/documents/xyz123/binary',
+          },
+        },
+      },
+    ];
+
+    const expected = [
+      { id: 'abc123', description: 'text', type: '1.1' },
+      { id: 'xyz123', description: 'a sentence', type: '1.1' },
+    ];
+
+    const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
+    expect(result).toEqual(expected);
+  });
+
+  it('should return undefined when there are no serving documents', () => {
+    const servingDocumentCollection: DocumentApiModel[] = [];
+
+    const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
+    expect(result).toEqual(undefined);
+  });
+
+  it('should get the document id correctly from the url', () => {
+    expect(getDocId('http://address/documents/abc123')).toBe('abc123');
+  });
+});
+
+describe('testDeadlineCalculatingAndFormatting', () => {
+  it.each([
+    { mockRef: '', expected: undefined },
+    { mockRef: 'aa', expected: undefined },
+    { mockRef: '2022-09-15T08:48:58.613343', expected: '13 October 2022' },
+  ])('convert claim served date to respondent deadline', ({ mockRef, expected }) => {
+    expect(getDueDate(mockRef, 28)).toEqual(expected);
   });
 });

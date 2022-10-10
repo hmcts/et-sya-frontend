@@ -8,9 +8,10 @@ Object.keys(hubLinksStatuses).forEach(key => {
 
 hubLinksStatuses[HubLinkNames.PersonalDetails] = HubLinkStatus.SUBMITTED;
 hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
-hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.COMPLETED;
+hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
 hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.NOT_YET_AVAILABLE;
 hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.VIEWED;
+hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.COMPLETED;
 
 export default {
   id: '123',

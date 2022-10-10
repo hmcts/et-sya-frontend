@@ -372,4 +372,18 @@ describe('Axios post to retrieve pdf', () => {
       expect(mockedAxios.post).toHaveBeenCalled();
     });
   });
+
+  describe('Axios get to download case document', () => {
+    it('should send get request to the correct api endpoint with the document id passed in the param', () => {
+      api.getCaseDocument('docId');
+      expect(mockedAxios.get).toHaveBeenCalled();
+    });
+  });
+
+  describe('Axios get to get case document details', () => {
+    it('should send get request to the correct api endpoint with the document id passed in the param', () => {
+      api.getDocumentDetails('docId');
+      expect(mockedAxios.get).toHaveBeenCalled();
+    });
+  });
 });

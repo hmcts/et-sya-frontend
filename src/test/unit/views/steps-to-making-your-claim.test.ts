@@ -214,9 +214,9 @@ describe('Steps to making your claim page', () => {
                 TypesOfClaim.PAY_RELATED_CLAIM,
                 TypesOfClaim.BREACH_OF_CONTRACT,
                 TypesOfClaim.DISCRIMINATION,
-                'otherClaim',
                 TypesOfClaim.UNFAIR_DISMISSAL,
                 TypesOfClaim.WHISTLE_BLOWING,
+                TypesOfClaim.OTHER_TYPES,
               ]),
             ],
           ])
@@ -233,7 +233,7 @@ describe('Steps to making your claim page', () => {
       'Pay-related',
       'Unfair dismissal',
       'Whistleblowing',
-      'Other type of Claim',
+      'Other type of claim',
     ];
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();

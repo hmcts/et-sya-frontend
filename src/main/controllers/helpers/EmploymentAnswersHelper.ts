@@ -2,7 +2,10 @@ import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../defin
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): unknown => {
+export const getEmploymentDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord
+): { key: unknown; value?: unknown; actions?: unknown }[] => {
   const employmentDetails = [];
   employmentDetails.push({
     key: {
