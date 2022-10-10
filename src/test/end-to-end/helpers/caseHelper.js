@@ -66,8 +66,8 @@ async function haveYouCompletedThisSection(I) {
   await I.haveYouCompletedThisSection(I);
 }
 
-async function submittingClaim(I) {
-  I.submitClaim(I);
+async function submittingClaim(I, allEqualityPages = true) {
+  I.submitClaim(I, allEqualityPages);
 }
 
 async function checkYourAnswers(I) {
