@@ -231,7 +231,7 @@ export const mockEt1DataModelSubmittedUpdate = {
     hubLinksStatuses: {
       contactTribunal: HubLinkStatus.NOT_YET_AVAILABLE,
       documents: HubLinkStatus.NOT_YET_AVAILABLE,
-      et1ClaimForm: HubLinkStatus.NOT_YET_AVAILABLE,
+      et1ClaimForm: HubLinkStatus.SUBMITTED,
       hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
       personalDetails: HubLinkStatus.NOT_YET_AVAILABLE,
       requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,

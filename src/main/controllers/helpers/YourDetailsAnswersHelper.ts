@@ -4,7 +4,10 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
-export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): unknown => {
+export const getYourDetails = (
+  userCase: CaseWithId,
+  translations: AnyRecord
+): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
     {
       key: {

@@ -4,6 +4,7 @@ import FormData from 'form-data';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
+import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
@@ -34,6 +35,16 @@ export class CaseApi {
     });
   };
 
+  getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
+      responseType: 'arraybuffer',
+    });
+  };
+
+  getDocumentDetails = async (docId: string): Promise<AxiosResponse<DocumentDetailsResponse>> => {
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
+  };
+
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
   };
@@ -60,12 +71,6 @@ export class CaseApi {
       },
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
-    });
-  };
-
-  getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
-    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
-      responseType: 'arraybuffer',
     });
   };
 }
