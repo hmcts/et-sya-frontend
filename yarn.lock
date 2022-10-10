@@ -2925,13 +2925,22 @@ axios@^0.21.4:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@^0.27.0, axios@^0.27.2:
+axios@^0.27.2:
   version "0.27.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.27.2.tgz#207658cc8621606e586c85db4b41a750e756d972"
   integrity sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==
   dependencies:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
+
+axios@^1.0.0:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.2.tgz#8b6f6c540abf44ab98d9904e8daf55351ca4a331"
+  integrity sha512-bznQyETwElsXl2RK7HLLwb5GPpOLlycxHCtrpDR/4RqqBzjARaOTo3jz4IgtntWUYee7Ne4S8UHd92VCuzPaWA==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
 babel-jest@^27.5.1:
   version "27.5.1"
@@ -3664,10 +3673,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==
 
-codeceptjs@3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/codeceptjs/-/codeceptjs-3.3.5.tgz#19656d20a199f006d0568b37a06f0990a466ea53"
-  integrity sha512-ieyqJ+EfFdb9YMp+z5viWpjfhUWwPfEEaoZxHNhFw+V+6xj8RApKvUJ3KnXWH6wjhff+YfID0tU6ZTDpVssbRA==
+codeceptjs@3.3.6:
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/codeceptjs/-/codeceptjs-3.3.6.tgz#3631c7e7e9bd9ff7c41e61296e4ca45403359efc"
+  integrity sha512-NYDY8Iuwr/RMfME1Ho75TmmtnDUzuMhB4USCAZWtxtxpC0IhuczdX3QqYlkyrOTe3/XGed8hbx3V10q1Z0NYrQ==
   dependencies:
     "@codeceptjs/configure" "^0.8.0"
     "@codeceptjs/helper" "^1.0.2"
@@ -3702,6 +3711,7 @@ codeceptjs@3.3.5:
     promise-retry "^1.1.1"
     requireg "^0.2.2"
     resq "^1.10.2"
+    semver "^6.3.0"
     sprintf-js "^1.1.1"
     uuid "^8.3.2"
 
@@ -5417,6 +5427,11 @@ follow-redirects@^1.0.0, follow-redirects@^1.14.0, follow-redirects@^1.14.9:
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
+
+follow-redirects@^1.15.0:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
+  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
 
 forever-agent@~0.6.1:
   version "0.6.1"
