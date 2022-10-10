@@ -5,7 +5,7 @@ module.exports = async function () {
   const I = this;
 
   //Application Details Section
-  I.see('Your claim has been submitted');
+  I.waitForText('Your claim has been submitted', 30);
   I.see('What happens next');
   I.see('Submission details');
   I.see('Submission reference');
