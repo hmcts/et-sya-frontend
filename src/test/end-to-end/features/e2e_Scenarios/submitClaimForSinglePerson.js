@@ -30,4 +30,6 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-}).tag('@RET-BAT');
+})
+  .tag('@RET-BAT')
+  .tag('@RET-XB');
