@@ -84,7 +84,7 @@ async function createSingleMyselfCase() {
   I.see('Pay-related claim');
   I.see('Unfair dismissal');
   I.see('including constructive dismissal');
-  I.see('WhistleBlowing');
+  I.see('Whistleblowing');
   I.see('including dismissal or any other unfair treatment after whistleblowing');
   I.see('Other type of claim');
   I.click(commonFlowLocators.contact_us);

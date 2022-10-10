@@ -108,6 +108,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Compensation are you seeking...
+  I.waitForVisible('#main-form-submit');
   I.see('What compensation are you seeking? (optional)');
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 
