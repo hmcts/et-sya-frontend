@@ -6,5 +6,21 @@
   "payBeforeTax": "",
   "payAfterTax": "",
   "weeklyMonthlyAnnual": "",
-  "errors": ""
+  "errors": {
+    "payBeforeTax": {
+      "required": "",
+      "minLengthRequired": "",
+      "notANumber": ""
+    },
+    "payAfterTax": {
+      "required": "",
+      "minLengthRequired": "",
+      "notANumber": ""
+    },
+    "payInterval": {
+      "payBeforeTax": "",
+      "payAfterTax": "",
+      "required": ""
+    }
+  }
 }

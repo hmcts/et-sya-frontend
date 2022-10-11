@@ -6,11 +6,41 @@
   "p3": "",
   "p4": "",
   "insetText": "",
-  "collapsibleSection1": "",
-  "collapsibleSection2": "",
-  "collapsibleSection3": "",
-  "collapsibleSection4": "",
+  "collapsibleSection1": {
+    "linkText": "",
+    "p1": "",
+    "p2": ""
+  },
+  "collapsibleSection2": {
+    "linkText": "",
+    "p1": "",
+    "p2": ""
+  },
+  "collapsibleSection3": {
+    "linkText": "",
+    "li1": "",
+    "li2": "",
+    "li3": "",
+    "li4": ""
+  },
+  "collapsibleSection4": {
+    "linkText": "",
+    "li1": "",
+    "li2": ""
+  },
   "textInputHint": "",
-  "fileUpload": "",
-  "errors": ""
+  "fileUpload": {
+    "linkText": "",
+    "hint": ""
+  },
+  "errors": {
+    "claimSummaryText": {
+      "required": "",
+      "tooLong": "",
+      "textAndFile": ""
+    },
+    "claimSummaryFile": {
+      "invalidFileFormat": ""
+    }
+  }
 }

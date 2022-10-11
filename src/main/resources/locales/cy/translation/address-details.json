@@ -11,5 +11,17 @@
   "country": "",
   "postcode": "",
   "enterAddressManually": "",
-  "errors": ""
+  "errors": {
+    "address1": {
+      "required": ""
+    },
+    "addressTown": {
+      "required": ""
+    },
+    "addressPostcode": {
+      "required": "",
+      "invalid": "",
+      "notSelected": ""
+    }
+  }
 }

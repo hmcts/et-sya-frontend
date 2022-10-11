@@ -9,13 +9,85 @@
   "emailConfirmation": "",
   "submitBtn": "",
   "printLinkTxt": "",
-  "applicationDetails": "",
-  "personalDetails": "",
-  "contactDetails": "",
-  "yourPreferences": "",
-  "employer": "",
-  "employmentDetails": "",
-  "respondentDetails": "",
-  "claimDetails": "",
-  "answers": ""
+  "applicationDetails": {
+    "header": "",
+    "typeOfClaim": ""
+  },
+  "personalDetails": {
+    "header": "",
+    "dob": "",
+    "gender": "",
+    "genderIdentity": "",
+    "genderSameAsBirth": "",
+    "contactOrHomeAddress": "",
+    "howToBeContacted": "",
+    "takePartInHearing": "",
+    "disability": "",
+    "title": ""
+  },
+  "contactDetails": {
+    "header": "",
+    "telephone": ""
+  },
+  "yourPreferences": {
+    "header": "",
+    "requireAsistence": "",
+    "updatePreference": "",
+    "videoHearings": ""
+  },
+  "employer": {
+    "header": ""
+  },
+  "employmentDetails": {
+    "header": "",
+    "didYouWorkFor": "",
+    "isStillWorking": "",
+    "jobTitle": "",
+    "startDate": "",
+    "noticePeriod": "",
+    "noticeEnds": "",
+    "noticeLength": "",
+    "noticePeriodWeeksOrMonths": "",
+    "noticePaid": "",
+    "weeklyHours": "",
+    "payBeforeTax": "",
+    "payAfterTax": "",
+    "payPeriod": "",
+    "pensionScheme": "",
+    "benefits": "",
+    "newJob": "",
+    "newStartDate": "",
+    "newPayBeforeTax": "",
+    "workAddress": ""
+  },
+  "respondentDetails": {
+    "header": "",
+    "respondentName": "",
+    "respondentAddress": "",
+    "workedAtRespondent": "",
+    "addressWorkedAt": "",
+    "orgOrPerson": "",
+    "acasNumber": "",
+    "noAcasReason": "",
+    "acasExemption": "",
+    "name": "",
+    "telephone": "",
+    "officeAddress": "",
+    "workAddress": ""
+  },
+  "claimDetails": {
+    "header": "",
+    "claimType": "",
+    "describeWhatHappened": "",
+    "ifClaimSuccessful": "",
+    "expectedCompensation": "",
+    "expectedTribunalsRecommendation": "",
+    "forwardClaim": "",
+    "summary": "",
+    "fileUploads": "",
+    "whatYouWant": ""
+  },
+  "answers": {
+    "NA": ""
+  }
 }

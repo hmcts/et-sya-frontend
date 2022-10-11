@@ -1,7 +1,15 @@
 {
   "title": "",
-  "h1": "",
+  "h1": {
+    "nonNotice": "",
+    "notice": ""
+  },
   "noticeLengthHint": "",
   "onNotice": "",
-  "errors": ""
+  "errors": {
+    "noticePeriodLength": {
+      "invalid": "",
+      "notANumber": ""
+    }
+  }
 }

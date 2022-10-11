@@ -3,10 +3,24 @@
   "h1": "",
   "detailsSummary": "",
   "detailsText": "",
-  "arrears": "",
-  "holidayPay": "",
-  "noticePay": "",
-  "redundancyPay": "",
-  "otherPayments": "",
-  "errors": ""
+  "arrears": {
+    "title": ""
+  },
+  "holidayPay": {
+    "title": ""
+  },
+  "noticePay": {
+    "title": ""
+  },
+  "redundancyPay": {
+    "title": ""
+  },
+  "otherPayments": {
+    "title": ""
+  },
+  "errors": {
+    "claimTypePay": {
+      "required": ""
+    }
+  }
 }

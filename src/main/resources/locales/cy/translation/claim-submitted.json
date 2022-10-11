@@ -25,5 +25,10 @@
   "contactEngland": "",
   "contactScotland2": "",
   "contactAppend": "",
-  "survey": ""
+  "survey": {
+    "titleText": "",
+    "text": "",
+    "linkText": "",
+    "url": ""
+  }
 }

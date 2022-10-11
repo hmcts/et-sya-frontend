@@ -2,5 +2,21 @@
   "title": "",
   "h1": "",
   "hint": "",
-  "errors": ""
+  "errors": {
+    "dobDate": {
+      "dayRequired": "",
+      "monthRequired": "",
+      "yearRequired": "",
+      "dayNotANumber": "",
+      "monthNotANumber": "",
+      "yearNotANumber": "",
+      "dayInvalid": "",
+      "monthInvalid": "",
+      "yearInvalid": "",
+      "invalidDate": "",
+      "invalidDateInFuture": "",
+      "invalidDateTooFarInPast": "",
+      "invalidDateTooRecent": ""
+    }
+  }
 }

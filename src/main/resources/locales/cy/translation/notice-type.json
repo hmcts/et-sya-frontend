@@ -1,9 +1,16 @@
 {
   "title": "",
   "labelHidden": "",
-  "h1": "",
+  "h1": {
+    "workingOrNotice": "",
+    "noLongerWorking": ""
+  },
   "months": "",
   "weeks": "",
   "noLongerWorking": "",
-  "errors": ""
+  "errors": {
+    "noticePeriodUnit": {
+      "required": ""
+    }
+  }
 }

@@ -8,8 +8,25 @@
   "notAnswered": "",
   "errorSaving": "",
   "errorSummaryTitle": "",
-  "months": "",
-  "dateFormat": "",
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "dateFormat": {
+    "day": "",
+    "month": "",
+    "year": ""
+  },
   "yes": "",
   "no": "",
   "notSure": "",

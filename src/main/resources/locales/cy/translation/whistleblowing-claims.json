@@ -9,8 +9,8 @@
   "regOrBodyName": "",
   "errors": {
     "whistleblowingEntityName": {
-      "required": "",
       "invalid": "",
+      "required": "",
       "invalidLength": ""
     }
   }

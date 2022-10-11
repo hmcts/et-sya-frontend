@@ -4,5 +4,14 @@
   "p1": "",
   "payBeforeTax": "",
   "weeklyMonthlyAnnual": "",
-  "errors": ""
+  "errors": {
+    "newJobPay": {
+      "required": "",
+      "minLengthRequired": "",
+      "notANumber": ""
+    },
+    "newJobPayInterval": {
+      "required": ""
+    }
+  }
 }

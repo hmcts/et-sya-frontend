@@ -2,16 +2,53 @@
   "title": "",
   "h1": "",
   "detailsSummary": "",
-  "detailsText": "",
-  "age": "",
-  "disability": "",
-  "ethnicity": "",
-  "genderReassignment": "",
-  "marriageOrCivilPartnership": "",
-  "pregnancyOrMaternity": "",
-  "race": "",
-  "religionOrBelief": "",
-  "sex": "",
-  "sexualOrientation": "",
-  "errors": ""
+  "detailsText": {
+    "p1": "",
+    "p2": ""
+  },
+  "age": {
+    "title": "",
+    "checkbox": ""
+  },
+  "disability": {
+    "title": "",
+    "checkbox": ""
+  },
+  "ethnicity": {
+    "title": "",
+    "checkbox": ""
+  },
+  "genderReassignment": {
+    "title": "",
+    "checkbox": ""
+  },
+  "marriageOrCivilPartnership": {
+    "title": "",
+    "checkbox": ""
+  },
+  "pregnancyOrMaternity": {
+    "title": "",
+    "checkbox": ""
+  },
+  "race": {
+    "title": "",
+    "checkbox": ""
+  },
+  "religionOrBelief": {
+    "title": "",
+    "checkbox": ""
+  },
+  "sex": {
+    "title": "",
+    "checkbox": ""
+  },
+  "sexualOrientation": {
+    "title": "",
+    "checkbox": ""
+  },
+  "errors": {
+    "claimTypeDiscrimination": {
+      "required": ""
+    }
+  }
 }

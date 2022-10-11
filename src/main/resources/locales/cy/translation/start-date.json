@@ -5,5 +5,22 @@
   "p1": "",
   "p2": "",
   "hint": "",
-  "errors": ""
+  "errors": {
+    "startDate": {
+      "required": "",
+      "dayRequired": "",
+      "monthRequired": "",
+      "yearRequired": "",
+      "dayNotANumber": "",
+      "monthNotANumber": "",
+      "yearNotANumber": "",
+      "dayInvalid": "",
+      "monthInvalid": "",
+      "invalidDate": "",
+      "yearInvalid": "",
+      "invalidDateInFuture": "",
+      "invalidDateTooFarInPast": "",
+      "invalidDateBeforeDOB": ""
+    }
+  }
 }

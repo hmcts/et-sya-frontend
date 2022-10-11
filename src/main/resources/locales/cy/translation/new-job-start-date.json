@@ -3,5 +3,17 @@
   "h1": "",
   "p1": "",
   "hint": "",
-  "errors": ""
+  "errors": {
+    "newJobStartDate": {
+      "required": "",
+      "dayRequired": "",
+      "monthRequired": "",
+      "yearRequired": "",
+      "invalidDateInPast": "",
+      "invalidDateMoreThanTenYearsInFuture": "",
+      "dayNotANumber": "",
+      "monthNotANumber": "",
+      "yearNotANumber": ""
+    }
+  }
 }

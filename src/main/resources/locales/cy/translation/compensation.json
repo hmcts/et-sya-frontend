@@ -2,8 +2,23 @@
   "title": "",
   "h1": "",
   "detailsSummaryComp": "",
-  "detailsTextComp": "",
+  "detailsTextComp": {
+    "p1": "",
+    "li1": "",
+    "li2": "",
+    "p2": "",
+    "p3": "",
+    "p4": "",
+    "p5": ""
+  },
   "hint": "",
   "amountLabel": "",
-  "errors": ""
+  "errors": {
+    "compensationOutcome": {
+      "tooLong": ""
+    },
+    "compensationAmount": {
+      "invalidCurrency": ""
+    }
+  }
 }

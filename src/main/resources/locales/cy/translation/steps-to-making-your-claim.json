@@ -7,9 +7,32 @@
   "completed": "",
   "inProgress": "",
   "cannotStartYet": "",
-  "section1": "",
-  "section2": "",
-  "section3": "",
-  "section4": "",
-  "claimTypes": ""
+  "section1": {
+    "title": "",
+    "link1Text": "",
+    "link2Text": "",
+    "link3Text": ""
+  },
+  "section2": {
+    "title": "",
+    "link1Text": "",
+    "link2Text": ""
+  },
+  "section3": {
+    "title": "",
+    "link1Text": "",
+    "link2Text": ""
+  },
+  "section4": {
+    "title": "",
+    "link1Text": ""
+  },
+  "claimTypes": {
+    "breachOfContract": "",
+    "discrimination": "",
+    "payRelated": "",
+    "unfairDismissal": "",
+    "whistleBlowing": "",
+    "otherClaim": ""
+  }
 }

@@ -19,10 +19,7 @@
   "sessionTimeout": {
     "modal": {
       "title": "",
-      "body": {
-        "0": "",
-        "1": ""
-      },
+      "body": ["For security reasons, you will be signed out of this service in ", "minutes."],
       "info": "",
       "extend": "",
       "cancel": ""

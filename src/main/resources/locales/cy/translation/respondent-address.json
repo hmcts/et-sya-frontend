@@ -10,5 +10,16 @@
   "insetText": "",
   "town": "",
   "manualAddress": "",
-  "errors": ""
+  "errors": {
+    "respondentAddress1": {
+      "required": ""
+    },
+    "respondentAddressTown": {
+      "required": ""
+    },
+    "respondentAddressPostcode": {
+      "required": "",
+      "invalid": ""
+    }
+  }
 }

@@ -2,10 +2,20 @@
   "title": "",
   "h1": "",
   "p": "",
-  "detailsSummary": "",
+  "detailsSummary": {
+    "heading": "",
+    "p": "",
+    "bullet1": "",
+    "bullet2": "",
+    "bullet3": ""
+  },
   "yes": "",
   "noSupport": "",
   "adjustmentDetailTextLabel": "",
   "textAreaHint": "",
-  "errors": ""
+  "errors": {
+    "reasonableAdjustmentsDetail": {
+      "required": ""
+    }
+  }
 }

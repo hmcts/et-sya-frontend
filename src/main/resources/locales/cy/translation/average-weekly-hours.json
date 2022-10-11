@@ -1,9 +1,22 @@
 {
   "title": "",
-  "h1": "",
-  "p1": "",
+  "h1": {
+    "workingOrNotice": "",
+    "noLongerWorking": ""
+  },
+  "p1": {
+    "workingOrNotice": "",
+    "noLongerWorking": ""
+  },
   "p2": "",
   "notWorking": "",
   "enterAverageHours": "",
-  "errors": ""
+  "errors": {
+    "avgWeeklyHrs": {
+      "invalid": "",
+      "exceeded": "",
+      "notANumber": "",
+      "negativeNumber": ""
+    }
+  }
 }

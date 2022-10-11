@@ -3,5 +3,21 @@
   "h1": "",
   "enterPostcode": "",
   "manualAddress": "",
-  "errors": ""
+  "errors": {
+    "addressPostcode": {
+      "invalid": "",
+      "required": "",
+      "notSelected": ""
+    },
+    "workAddress1": {
+      "required": ""
+    },
+    "workAddressTown": {
+      "required": ""
+    },
+    "workAddressPostcode": {
+      "required": "",
+      "invalid": ""
+    }
+  }
 }

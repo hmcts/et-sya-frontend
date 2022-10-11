@@ -3,5 +3,17 @@
   "h1": "",
   "p1": "",
   "hint": "",
-  "errors": ""
+  "errors": {
+    "endDate": {
+      "required": "",
+      "invalidDateInFuture": "",
+      "invalidDateMoreThanTenYearsInPast": "",
+      "dayRequired": "",
+      "monthRequired": "",
+      "yearRequired": "",
+      "dayNotANumber": "",
+      "monthNotANumber": "",
+      "yearNotANumber": ""
+    }
+  }
 }
