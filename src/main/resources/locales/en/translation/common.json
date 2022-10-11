@@ -39,5 +39,13 @@
   "weekly": "Weekly",
   "monthly": "Monthly",
   "annual": "Annual",
-  "selectAllHint": "Select all that apply."
+  "selectAllHint": "Select all that apply.",
+  "claimTypes": {
+    "breachOfContract": "Breach of contract",
+    "discrimination": "Discrimination",
+    "payRelated": "Pay-related",
+    "unfairDismissal": "Unfair dismissal",
+    "whistleBlowing": "Whistleblowing",
+    "otherTypesOfClaims": "Other type of claim"
+  }
 }

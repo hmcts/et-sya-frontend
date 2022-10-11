@@ -25,6 +25,9 @@ export const mockEt1DataModel = {
     claimantType: {
       claimant_email_address: 'bobby@gmail.com',
     },
+    claimantRequests: {
+      other_claim: 'other claim description',
+    },
   },
 };
 
@@ -45,6 +48,7 @@ export const mockEt1DataModelUpdate = {
       claimant_date_of_birth: '2010-05-11',
       claimant_sex: Sex.MALE,
       claimant_preferred_title: 'Mr',
+      claimant_title_other: undefined as unknown,
     },
     claimantType: {
       claimant_email_address: 'tester@test.com',
@@ -104,6 +108,7 @@ export const mockEt1DataModelUpdate = {
         document_filename: 'document.pdf',
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
+      other_claim: 'other claim description',
     },
     claimantTaskListChecks: {
       personalDetailsCheck: YesOrNo.YES,
@@ -226,7 +231,7 @@ export const mockEt1DataModelSubmittedUpdate = {
     hubLinksStatuses: {
       contactTribunal: HubLinkStatus.NOT_YET_AVAILABLE,
       documents: HubLinkStatus.NOT_YET_AVAILABLE,
-      et1ClaimForm: HubLinkStatus.NOT_YET_AVAILABLE,
+      et1ClaimForm: HubLinkStatus.SUBMITTED,
       hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
       personalDetails: HubLinkStatus.NOT_YET_AVAILABLE,
       requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,

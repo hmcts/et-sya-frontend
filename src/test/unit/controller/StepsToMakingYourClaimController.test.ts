@@ -128,6 +128,12 @@ describe('Steps to Making your claim Controller', () => {
       personalDetailsCheck: undefined,
       reasonableAdjustments: undefined,
       reasonableAdjustmentsDetail: undefined,
+      rejectionOfClaimDocumentDetail: undefined,
+      respondentResponseDeadline: undefined,
+      responseAcknowledgementDocumentDetail: undefined,
+      responseEt3FormDocumentDetail: [],
+      responseRejectionDocumentDetail: undefined,
+      telNumber: undefined,
       noticeEnds: undefined,
       hearingPreferences: undefined,
       hearingAssistance: undefined,
@@ -135,6 +141,7 @@ describe('Steps to Making your claim Controller', () => {
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
+      otherClaim: undefined,
     });
   });
 

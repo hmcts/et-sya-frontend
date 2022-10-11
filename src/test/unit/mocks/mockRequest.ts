@@ -1,15 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
 import { CaseWithId } from '../../../main/definitions/case';
 import { AnyRecord } from '../../../main/definitions/util-types';
-
-const checkAnswersJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/check-your-answers.json'),
-  'utf-8'
-);
-const checkAnswersJson = JSON.parse(checkAnswersJsonRaw);
 
 export const mockRequest = ({
   body,
@@ -49,22 +40,25 @@ export const mockRequest = ({
   return req;
 };
 
-export const mockRequestWithTranslation = ({
-  body,
-  userCase,
-  session,
-  t,
-}: {
-  body?: AnyRecord;
-  userCase?: Partial<CaseWithId>;
-  session?: AnyRecord;
-  t?: AnyRecord;
-}): AppRequest => {
+export const mockRequestWithTranslation = (
+  {
+    body,
+    userCase,
+    session,
+    t,
+  }: {
+    body?: AnyRecord;
+    userCase?: Partial<CaseWithId>;
+    session?: AnyRecord;
+    t?: AnyRecord;
+  },
+  translations: AnyRecord
+): AppRequest => {
   const req = {
     t: () => t,
   } as unknown as AppRequest;
 
-  req.t = jest.fn().mockReturnValue(checkAnswersJson);
+  req.t = jest.fn().mockReturnValue(translations);
   req.body = body;
   req.params = {
     respondentNumber: '1',

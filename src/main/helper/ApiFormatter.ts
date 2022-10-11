@@ -1,20 +1,22 @@
 import i18next from 'i18next';
 
 import { isDateEmpty } from '../components/form/dateValidators';
+import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
+import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
 import {
-  CaseDataCacheKey,
-  CaseDate,
-  CaseWithId,
-  Document,
-  DocumentCollection,
-  Respondent,
-  ccdPreferredTitle,
-} from '../definitions/case';
-import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE, TYPE_OF_CLAIMANT } from '../definitions/constants';
+  CcdDataModel,
+  TYPE_OF_CLAIMANT,
+  acceptanceDocTypes,
+  et1DocTypes,
+  et3FormDocTypes,
+  rejectionDocTypes,
+  responseAcceptedDocTypes,
+  responseRejectedDocTypes,
+} from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
 
 export function toApiFormatCreate(
@@ -36,6 +38,9 @@ export function toApiFormatCreate(
       claimantType: {
         claimant_email_address: userDetails.email,
       },
+      claimantRequests: {
+        other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
+      },
     },
   };
 }
@@ -49,8 +54,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     managingOffice: fromApiCaseData.case_data?.managingOffice,
     tribunalCorrespondenceEmail: fromApiCaseData.case_data?.tribunalCorrespondenceEmail,
     tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
-    et1SubmittedForm: returnSubmitttedEt1Form(fromApiCaseData.case_data?.documentCollection),
-    documentCollection: fromApiCaseData.case_data?.documentCollection,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -109,6 +112,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
     compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
     compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
+    otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
     createdDate: convertFromTimestampString(fromApiCaseData.created_date),
@@ -121,7 +125,34 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
+    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    acknowledgementOfClaimLetterDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.servingDocumentCollection,
+      acceptanceDocTypes
+    ),
+    rejectionOfClaimDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.documentCollection,
+      rejectionDocTypes
+    ),
+    responseAcknowledgementDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.et3NotificationDocCollection,
+      responseAcceptedDocTypes
+    ),
+    responseRejectionDocumentDetail: setDocumentValues(
+      fromApiCaseData?.case_data?.et3NotificationDocCollection,
+      responseRejectedDocTypes
+    ),
+    respondentResponseDeadline: getDueDate(fromApiCaseData.case_data?.claimServedDate, 28),
+    responseEt3FormDocumentDetail: [
+      ...combineDocuments(
+        setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
+      ),
+    ],
   };
 }
 
@@ -198,6 +229,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         whistleblowing: caseItem.whistleblowingClaim,
         whistleblowing_authority: caseItem.whistleblowingEntityName,
         claim_description_document: caseItem.claimSummaryFile,
+        other_claim: caseItem.otherClaim,
       },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
@@ -295,6 +327,21 @@ function convertFromTimestampString(responseDate: string) {
   });
 }
 
+export const getDueDate = (date: string, daysUntilDue: number): string => {
+  if (!date) {
+    return;
+  }
+  const deadline = new Date(date);
+  if (deadline instanceof Date && !isNaN(deadline.getTime())) {
+    deadline.setDate(deadline.getDate() + daysUntilDue);
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(deadline));
+  }
+};
+
 export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {
   if (respondents === undefined) {
     return;
@@ -302,11 +349,11 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
-      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
-      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
-      respondentAddressTown: respondent.value.respondent_address?.PostTown,
-      respondentAddressCountry: respondent.value.respondent_address?.Country,
-      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value?.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value?.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
@@ -339,21 +386,23 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   });
 };
 
-export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): DocumentDetail => {
+export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]): DocumentDetail => {
   if (documentCollection === undefined) {
     return;
   }
 
-  const documentDetailCollection: DocumentDetail[] = setDocumentValues(documentCollection, [SUBMITTED_CLAIM_FILE_TYPE]);
+  const documentDetailCollection = setDocumentValues(documentCollection, et1DocTypes);
 
-  if (documentDetailCollection === undefined) {
-    return;
-  } else {
+  if (documentDetailCollection !== undefined) {
     return documentDetailCollection[0];
   }
 };
 
-export const setDocumentValues = (documentCollection: DocumentCollection[], docType?: string[]): DocumentDetail[] => {
+export const setDocumentValues = (
+  documentCollection: DocumentApiModel[],
+  docType?: string[],
+  isEt3Supporting?: boolean
+): DocumentDetail[] => {
   if (!documentCollection) {
     return;
   }
@@ -361,12 +410,15 @@ export const setDocumentValues = (documentCollection: DocumentCollection[], docT
   const foundDocuments = documentCollection
     .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
     .map(doc => {
-      const docUrl = doc.value?.uploadedDocument?.document_url;
       return {
-        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        id: getDocId(doc.value?.uploadedDocument?.document_url),
         description: !docType ? '' : doc.value?.shortDescription,
-        type: doc.value.typeOfDocument,
+        type: isEt3Supporting ? 'et3Supporting' : doc.value.typeOfDocument,
       };
     });
   return foundDocuments.length ? foundDocuments : undefined;
+};
+
+export const getDocId = (url: string): string => {
+  return url.substring(url.lastIndexOf('/') + 1, url.length);
 };

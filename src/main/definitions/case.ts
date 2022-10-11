@@ -143,13 +143,21 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
-  et3IsThereAnEt3Response?: YesOrNo;
-  hubLinksStatuses?: HubLinksStatuses;
   managingOffice?: string;
   tribunalCorrespondenceEmail?: string;
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: DocumentDetail;
-  documentCollection?: DocumentCollection[];
+  submittedDate?: CaseDate;
+  et3IsThereAnEt3Response?: YesOrNo;
+  hubLinksStatuses?: HubLinksStatuses;
+  allEt1DocumentDetails?: DocumentDetail[];
+  acknowledgementOfClaimLetterDetail?: DocumentDetail[];
+  rejectionOfClaimDocumentDetail?: DocumentDetail[];
+  responseAcknowledgementDocumentDetail?: DocumentDetail[];
+  responseRejectionDocumentDetail?: DocumentDetail[];
+  respondentResponseDeadline?: string;
+  responseEt3FormDocumentDetail?: DocumentDetail[];
+  otherClaim?: string;
 }
 
 export const enum StillWorking {
@@ -247,15 +255,4 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
-}
-
-export interface DocumentCollectionValue {
-  typeOfDocument?: string;
-  uploadedDocument?: Document;
-  shortDescription?: string;
-}
-
-export interface DocumentCollection {
-  id?: string;
-  value: DocumentCollectionValue;
 }
