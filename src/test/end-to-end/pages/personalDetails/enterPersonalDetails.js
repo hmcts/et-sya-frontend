@@ -21,7 +21,7 @@ module.exports = async function () {
   I.dontSeeElement('#address1');
   I.fillField('#postcode', 'LS9 9HE');
   I.click('#findAddressButton');
-  I.waitForElementVisible('#selectAddressInput', 120);
+  I.waitForElement('#selectAddressInput', 120);
   I.selectOption(
     '#selectAddressInput',
     '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
