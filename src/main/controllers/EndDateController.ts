@@ -40,6 +40,27 @@ export default class EndDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    end_date.values = [
+      {
+        label: (l: AnyRecord): string => l.dateFormat.day,
+        name: 'day',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.month,
+        name: 'month',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.year,
+        name: 'year',
+        classes: 'govuk-input--width-4',
+        attributes: { maxLength: 4 },
+      },
+    ];
+    this.endDateFormContent.fields = { endDate: end_date };
     const content = getPageContent(req, this.endDateFormContent, [TranslationKeys.COMMON, TranslationKeys.END_DATE]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.END_DATE, {

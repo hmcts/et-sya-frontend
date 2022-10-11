@@ -1,0 +1,11 @@
+{
+  "title": "Acknowledgement of Claim",
+  "h1": "Acknowledgement of Claim",
+  "description": {
+    "firstCell": "Description",
+    "secondCell": "Acknowledgement of Claim"
+  },
+  "document": "Document",
+  "documentDetails": "Details",
+  "date": "Date"
+}

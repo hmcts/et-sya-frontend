@@ -14,6 +14,9 @@ module.exports = async function () {
   I.checkOption('#sex-3');
   I.click(commonConfig.saveAndContinue);
   I.see('What is your contact or home address?');
+  I.refreshPage();
+  I.waitToHide('#address1', 10);
+  I.dontSeeElement('#address1');
   I.fillField('#postcode', 'LS9 9HE');
   I.click('#findAddressButton');
   I.waitForVisible('#selectAddressInput');

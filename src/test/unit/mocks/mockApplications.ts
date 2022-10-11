@@ -53,7 +53,7 @@ export const mockApplications: ApplicationTableRecord[] = [
       et1SubmittedForm: {
         id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673',
         description: 'Test',
-        type: 'Notice of a claim',
+        type: 'ET1',
       },
     },
     respondents: 'Globo Corp',

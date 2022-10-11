@@ -6,7 +6,7 @@
   "discrimination": "Discrimination of any type",
   "payRelated": "Pay-related",
   "unfairDismissal": "Unfair dismissal",
-  "whistleBlowing": "WhistleBlowing",
+  "whistleBlowing": "Whistleblowing",
   "otherClaim": "Other",
   "breachOfContract": "Breach of contract",
   "checkAllAnswers": "Check all the answers you’ve provided and details you have entered are correct.",
@@ -15,122 +15,6 @@
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
   "submitBtn": "Submit",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "applicationDetails": {
-    "header": "Application details",
-    "typeOfClaim": "Claim type"
-  },
   "change": "Change",
-  "personalDetails": {
-    "header": "Your details",
-    "dob": "Date of birth",
-    "sex": "Sex",
-    "contactOrHomeAddress": "Contact or home address",
-    "howToBeContacted": "How would you like to be contacted?",
-    "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
-    "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
-    "title": "Preferred title",
-    "notSelected": "Not selected"
-  },
-  "contactDetails": {
-    "header": "Contact details",
-    "telephone": "Telephone number",
-    "notProvided": "Not provided"
-  },
-  "yourPreferences": {
-    "header": "Your preferences",
-    "requireAsistence": "Disability or assistance needed",
-    "updatePreference": "Update preference",
-    "videoHearings": "Video hearings"
-  },
-  "employer": {
-    "header": "Employer"
-  },
-  "employmentDetails": {
-    "header": "Employment details",
-    "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
-    "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
-    "jobTitle": "Job title",
-    "startDate": "Employment start date",
-    "noticePeriod": "Do you have a written contract with notice period?",
-    "noticeEnds": "Notice period ends",
-    "noticePeriodWeeksOrMonths": "Is your notice period in weeks or months?",
-    "noticeLength": "[Weeks/Months] in notice period",
-    "noticePaid": "Notice being paid for",
-    "weeklyHours": "Average weekly work hours",
-    "payBeforeTax": "Pay before tax and National Insurance",
-    "payAfterTax": "Pay after tax and National Insurance",
-    "payPeriod": "Is this your weekly, monthly or annual pay?",
-    "pensionScheme": "Did the respondent make any contributions to your pension?",
-    "benefits": "Do you or did you receive any employee benefits?",
-    "newJob": "Have you got a new job?",
-    "newStartDate": "New job start date",
-    "newPayBeforeTax": "New job pay before tax and National Insurance",
-    "workAddress": "Work address"
-  },
-  "respondentDetails": {
-    "header": "Respondent ",
-    "details": " details",
-    "respondentName": "Name of respondent",
-    "respondentAddress": "Respondent address",
-    "workedAtRespondent": "Did you work at the respondent's address?",
-    "addressWorkedAt": "The address you work or worked at",
-    "orgOrPerson": "Organisation or person",
-    "acasNumber": "Do you have an Acas certificate number?",
-    "noAcasReason": "Why do you not have an Acas Number?",
-    "acasExemption": "Acas exemption",
-    "name": "Name",
-    "telephone": "UK telephone number",
-    "officeAddress": "Registered or head office address",
-    "workAddress": "Work address"
-  },
-  "claimDetails": {
-    "header": "Claim details",
-    "claimTypeDiscrimination": "What type of discrimination claim are you making?",
-    "claimTypePay": "What type of pay claim are you making?",
-    "describeWhatHappened": "Describe what happened to you",
-    "ifClaimSuccessful": "What do you want if your claim is successful",
-    "expectedCompensation": "What compensation are you seeking",
-    "expectedTribunalsRecommendation": "What tribunal recommendation would you like to make?",
-    "forwardClaim": "Do you want us to forward your whistleblowing claim to a relevant regulation or body?",
-    "summary": "Summary of claim",
-    "fileUploads": "File uploads",
-    "whatYouWant": "What you want"
-  },
-  "discriminationClaims": {
-    "Age": "Age",
-    "Disability": "Disability",
-    "Ethnicity": "Ethnicity",
-    "Gender reassignment": "Gender reassignment",
-    "Marriage or civil partnership": "Marriage or civil parntership",
-    "Pregnancy or maternity": "Pregnancy or maternity",
-    "Race": "Race",
-    "Religion or belief": "Religion or belief",
-    "Sex": "Sex (Including equal pay)",
-    "Sexual orientation": "Sexual Orientation"
-  },
-  "payClaims": {
-    "Arrears": "Arrears",
-    "Holiday pay": "Holiday pay",
-    "Notice pay": "Notice pay",
-    "Redundancy pay": "Redundancy pay",
-    "Other payments": "Other payments"
-  },
-  "claimTypes": {
-    "breachOfContract": "Breach of contract",
-    "discrimination": "Discrimination",
-    "payRelated": "Pay-related",
-    "unfairDismissal": "Unfair dismissal",
-    "whistleBlowing": "Whistleblowing",
-    "otherClaim": "Other type of claim"
-  },
-  "tellUsWhatYouWant": {
-    "compensation": "Compensation only",
-    "tribunal": "Tribunal recommendation",
-    "oldJob": "Old job back",
-    "anotherJob": "Another job"
-  },
-  "answers": {
-    "NA": "Not Provided"
-  },
-  "submitError": "Sorry, we’re having technical problems procesing your application. Please try again in a few minutes."
+  "submitError": "Sorry, we’re having technical problems processing your application. Please try again in a few minutes."
 }
