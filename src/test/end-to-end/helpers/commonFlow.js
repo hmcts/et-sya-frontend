@@ -36,7 +36,7 @@ async function createSingleMyselfCase() {
   * type of claim = discrimination and whistleBlowing
   */
   await initialPageFlow();
-  I.waitForText('Are you making the claim for yourself,');
+  I.waitForText('Are you making the claim for yourself,', 30);
   I.see('or representing someone else?');
   await commonFlowContentHelper.verifyARepresentativeGuidanceText();
   I.see('Who can act as a representative?');
