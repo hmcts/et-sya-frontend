@@ -68,7 +68,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
 
   //confirm completed section
   I.see('Have you completed this section?');
-  I.seeElement('#tasklist-check');
+  I.waitForElement('#tasklist-check', 30);
   I.checkOption('#tasklist-check');
   I.click(commonConfig.saveAndContinue);
 };
