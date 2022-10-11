@@ -14,7 +14,8 @@
   "detailsSummaryRecom": "",
   "detailsTextRecom": "",
   "compensationOnly": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "compensationOnlyHint": "",
   "tribunalRecommendation": {

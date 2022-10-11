@@ -4,19 +4,24 @@
   "detailsSummary": "",
   "detailsText": "",
   "arrears": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "holidayPay": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "noticePay": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "redundancyPay": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "otherPayments": {
-    "title": ""
+    "title": "",
+    "checkbox": ""
   },
   "errors": {
     "claimTypePay": {
