@@ -39,18 +39,18 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.seeElement('#postcode');
     I.fillField('#postcode', 'LS14 1AR');
     I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput');
+    I.waitForEnabled('#selectAddressInput', 120);
     I.selectOption(
       '#selectAddressInput',
       '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25 RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
     );
     I.click(commonConfig.saveAndContinue);
-    I.waitForElement('#acasCert', 30);
+    I.waitForEnabled('#acasCert', 30);
   }
 
   //select yes or no for acas certificate
   if (doYouHaveAcas === 'Yes') {
-    I.seeElement('#acasCert');
+    //I.seeElement('#acasCert');
     I.checkOption('#acasCert');
     I.waitForVisible('#acasCertNum');
     I.fillField('#acasCertNum', 'R123456/12/23');
