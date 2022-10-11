@@ -1,0 +1,17 @@
+{
+  "title": "Sex and preferred title",
+  "h1": "Sex and preferred title (optional)",
+  "p": "Fe ddefnyddir y manylion hyn i’n helpu i symud eich hawliad yn ei flaen.",
+  "male": "Gwryw",
+  "female": "Benyw",
+  "sex": "Beth yw eich rhyw?",
+  "preferNotToSay": "Prefer not to say",
+  "preferredTitle": "Beth yw eich teitl o ddewis?",
+  "errors": {
+    "preferredTitle": {
+      "required": "Select a list option from the \"What is your preferred title\" dropdown",
+      "lengthError": "Your preferred title must be a minimum of 2 characters",
+      "numberError": "Tell us your preferred title? This must not include numbers"
+    }
+  }
+}
