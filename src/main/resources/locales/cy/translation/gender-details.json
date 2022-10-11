@@ -5,18 +5,18 @@
   "male": "",
   "female": "",
   "sex": "",
-  "genderIdentitySame": "",
-  "genderIdentitySameHint": "",
-  "preferredTitle": "",
-  "genderIdentityTextLabel": "",
-  "genderTitle": "",
   "preferNotToSay": "",
-  "otherTitlePreference": "",
+  "preferredTitle": "",
   "errors": {
     "preferredTitle": {
       "required": "",
       "lengthError": "",
       "numberError": ""
     }
-  }
+  },
+  "genderIdentitySame": "",
+  "genderIdentitySameHint": "",
+  "genderIdentityTextLabel": "",
+  "genderTitle": "",
+  "otherTitlePreference": ""
 }
