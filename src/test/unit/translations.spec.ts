@@ -38,8 +38,14 @@ const findMissingKeys = function (
 };
 
 describe('Check missing keys in translation files', () => {
-  it('should have equal number of translation files', () => {
-    expect(englishTranslationFiles).toHaveLength(welshTranslationFiles.length);
+  it('There should not be any missing translation files for welsh translations', () => {
+    const missingFiles = englishTranslationFiles.filter(x => !welshTranslationFiles.includes(x));
+    expect(missingFiles).toEqual([]);
+  });
+
+  it('There should not be any missing translation files for english translations', () => {
+    const missingFiles = welshTranslationFiles.filter(x => !englishTranslationFiles.includes(x));
+    expect(missingFiles).toEqual([]);
   });
 
   test.each(welshTranslationFiles)('Check english translation file %s has no missing keys', file => {
