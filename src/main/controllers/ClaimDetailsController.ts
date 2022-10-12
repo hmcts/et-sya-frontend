@@ -6,15 +6,14 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('ClaimDetailsController');
+const logger = getLogger('ClaimDetailsController');
 
 export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {

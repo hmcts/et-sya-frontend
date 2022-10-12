@@ -1,13 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { combineDocuments } from './helpers/DocumentHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('CaseDocumentController');
+const logger = getLogger('CaseDocumentController');
 
 /**
  * Displays a document given its docId.
@@ -41,7 +40,7 @@ export default class CaseDocumentController {
 
       if (!details.mimeType) {
         res.setHeader('Content-Type', 'application/pdf');
-        logger.log('Failed document name: ' + details.originalDocumentName);
+        logger.warn('Failed document name: ' + details.originalDocumentName);
       } else {
         res.setHeader('Content-Type', details.mimeType);
       }

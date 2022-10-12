@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import TribunalRecommendationController from '../../../main/controllers/TribunalRecommendationController';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -11,13 +9,8 @@ describe('Tribunal Recommendation Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the tribunal recommendation page', () => {
-    const controller = new TribunalRecommendationController(mockLogger);
+    const controller = new TribunalRecommendationController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -27,7 +20,7 @@ describe('Tribunal Recommendation Controller', () => {
   describe('Correct validation', () => {
     it('should not require any input', () => {
       const req = mockRequest({ body: {} });
-      new TribunalRecommendationController(mockLogger).post(req, mockResponse());
+      new TribunalRecommendationController().post(req, mockResponse());
 
       expect(req.session.errors).toHaveLength(0);
     });
@@ -39,7 +32,7 @@ describe('Tribunal Recommendation Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new TribunalRecommendationController(mockLogger).post(req, res);
+      new TribunalRecommendationController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'tribunalRecommendationRequest', errorType: 'tooLong' }];
 
@@ -51,7 +44,7 @@ describe('Tribunal Recommendation Controller', () => {
       const req = mockRequest({
         body: { tribunalRecommendationRequest: 'tribunal recommendation text' },
       });
-      new TribunalRecommendationController(mockLogger).post(req, mockResponse());
+      new TribunalRecommendationController().post(req, mockResponse());
 
       expect(req.session.userCase).toMatchObject({
         tribunalRecommendationRequest: 'tribunal recommendation text',

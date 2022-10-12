@@ -6,10 +6,9 @@ import * as path from 'path';
 import config from 'config';
 
 import { app } from './app';
+import { getLogger } from './logger';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('server');
+const logger = getLogger('server');
 
 const port: number = parseInt(process.env.PORT, 10) || config.get('port');
 

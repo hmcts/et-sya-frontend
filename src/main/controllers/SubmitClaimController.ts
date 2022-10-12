@@ -3,10 +3,10 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
