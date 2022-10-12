@@ -27,3 +27,11 @@ export const answersAddressFormatter = (
   }
   return addresstring;
 };
+
+export const getUploadedFileName = (fileName?: string): string => {
+  if (fileName) {
+    return fileName;
+  } else {
+    return '';
+  }
+};

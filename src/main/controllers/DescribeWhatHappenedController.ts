@@ -12,6 +12,7 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getUploadedFileName } from './helpers/PageContentHelpers';
 
 export default class DescribeWhatHappenedController {
   private uploadedFileName = '';
@@ -75,7 +76,11 @@ export default class DescribeWhatHappenedController {
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const claimSummaryError = getClaimSummaryError(formData, req.file);
+    const claimSummaryError = getClaimSummaryError(
+      formData,
+      req.file,
+      req.session.userCase?.claimSummaryFile?.document_filename
+    );
     if (!claimSummaryError) {
       try {
         const result = await handleUploadDocument(req, req.file, this.logger);
@@ -85,6 +90,7 @@ export default class DescribeWhatHappenedController {
       } catch (error) {
         this.logger.info(error);
       } finally {
+        this.uploadedFileName = '';
         handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
         handleUpdateDraftCase(req, this.logger);
       }
@@ -95,11 +101,8 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (req.session?.userCase?.claimSummaryFile?.document_filename) {
-      this.uploadedFileName = req.session.userCase.claimSummaryFile.document_filename;
-    } else {
-      this.uploadedFileName = '';
-    }
+    const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
+    this.uploadedFileName = fileName;
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,
