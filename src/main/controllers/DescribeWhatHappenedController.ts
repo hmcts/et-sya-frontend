@@ -14,7 +14,7 @@ import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelper
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class DescribeWhatHappenedController {
-  private uploadedFileName: string;
+  private uploadedFileName = '';
   private getHint = (label: AnyRecord): string => {
     if (this.uploadedFileName !== '') {
       return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
