@@ -39,5 +39,13 @@
   "weekly": "",
   "monthly": "",
   "annual": "",
-  "selectAllHint": ""
+  "selectAllHint": "",
+  "claimTypes": {
+    "breachOfContract": "",
+    "discrimination": "",
+    "payRelated": "",
+    "unfairDismissal": "",
+    "whistleBlowing": "",
+    "otherTypesOfClaims": ""
+  }
 }

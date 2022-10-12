@@ -12,7 +12,8 @@
       "invalidDateMoreThanTenYearsInFuture": "",
       "dayNotANumber": "",
       "monthNotANumber": "",
-      "yearNotANumber": ""
+      "yearNotANumber": "",
+      "invalidDate": ""
     }
   }
 }

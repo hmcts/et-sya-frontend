@@ -6,23 +6,9 @@
   "received": "",
   "details": "",
   "decision": "",
-
   "iWantTo": "",
   "contactTribunalMyCase": "",
   "findLegalAdvice": "",
-
-  "callEmployer": "",
-  "contactText": "",
-  "contactLink": "",
-  "englandWales": "",
-  "ewNumbers": "",
-  "welsh": "",
-  "welshNumber": "",
-  "scotland": "",
-  "scotlandNumbers": "",
-  "hours": "",
-  "callCharges": "",
-
   "section1": "",
   "section2": "",
   "section3": "",
@@ -31,7 +17,6 @@
   "section6": "",
   "section7": "",
   "section8": "",
-
   "personalDetails": "",
   "et1ClaimForm": "",
   "respondentResponse": "",
@@ -42,10 +27,37 @@
   "tribunalOrders": "",
   "tribunalJudgements": "",
   "documents": "",
-
-  "notAvailableYet": "",
   "completed": "",
   "submitted": "",
+  "optional": "",
   "viewed": "",
-  "optional": ""
+  "notViewedYet": "",
+  "notAvailableYet": "",
+  "waitingForTheTribunal": "",
+  "submittedAndViewed": "",
+  "notificationBanner": {
+    "acknowledgement": {
+      "header": "",
+      "link": "",
+      "p1": "",
+      "p2": ""
+    },
+    "rejection": {
+      "header": "",
+      "link": "",
+      "p1": ""
+    },
+    "respondentReceived": {
+      "header": "",
+      "p1": ""
+    },
+    "respondentRejection": {
+      "header": "",
+      "link": ""
+    },
+    "respondentAcknowledgement": {
+      "header": "",
+      "link": ""
+    }
+  }
 }

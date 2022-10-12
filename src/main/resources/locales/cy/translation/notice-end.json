@@ -17,7 +17,8 @@
       "monthInvalid": "",
       "yearInvalid": "",
       "invalidDateInPast": "",
-      "invalidDateMoreThanTenYearsInFuture": ""
+      "invalidDateMoreThanTenYearsInFuture": "",
+      "invalidDate": ""
     }
   }
 }
