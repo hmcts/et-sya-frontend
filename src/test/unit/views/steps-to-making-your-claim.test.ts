@@ -7,10 +7,10 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
+import { CaseDataCacheKey, CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { TypesOfClaim } from '../../../main/definitions/definition';
-import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../mocks/mockApp';
+import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
+import { mockAppWithRedisClient, mockRedisClient, mockSession, mockSessionWithUserCase } from '../mocks/mockApp';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),
@@ -33,6 +33,9 @@ const expectedHeader1 = stepsToMakingYourClaimJSON.section1.title;
 const expectedHeader2 = stepsToMakingYourClaimJSON.section2.title;
 const expectedHeader3 = stepsToMakingYourClaimJSON.section3.title;
 const expectedHeader4 = stepsToMakingYourClaimJSON.section4.title;
+
+const taskListTag = 'govuk-tag app-task-list__tag';
+const notStartedTaskTag = 'govuk-tag app-task-list__tag govuk-tag--grey';
 
 let htmlRes: Document;
 
@@ -81,6 +84,15 @@ describe('Steps to making your claim page', () => {
     expect(header.length).equal(4, 'number of table headers found is not 4');
   });
 
+  it('should display the correct task list tags', () => {
+    const tags = htmlRes.getElementsByClassName(notStartedTaskTag);
+    expect(tags.length).equal(8, 'number of table headers found is not 8');
+    for (let index = 0; index < tags.length - 2; index++) {
+      expect(tags[index].innerHTML).contains(sectionStatus.notStarted);
+    }
+    expect(tags[7].innerHTML).contains(sectionStatus.cannotStartYet);
+  });
+
   it('should display the correct table header texts', () => {
     const header = htmlRes.getElementsByClassName(headerClass);
     expect(header[0].innerHTML).contains(expectedHeader1, 'could not find table 1 header text');
@@ -91,7 +103,7 @@ describe('Steps to making your claim page', () => {
 
   it(
     'should have the correct link(PageUrls.CLAIM_TYPE_DISCRIMINATION) on Summarise what happened to you ' +
-      'when TypesOfClaim.DISCRIMINATION selected',
+      'when TypeOfClaim.DISCRIMINATION selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -110,12 +122,13 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
+
       expect(links[5].outerHTML).contains(PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
     }
   );
   it(
     'should have the correct link(PageUrls.CLAIM_TYPE_PAY) on Summarise what happened to you ' +
-      'when TypesOfClaim.PAY_RELATED_CLAIM selected and TypesOfClaim.DISCRIMINATION is not selected',
+      'when TypeOfClaim.PAY_RELATED_CLAIM selected and TypeOfClaim.DISCRIMINATION is not selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -139,7 +152,7 @@ describe('Steps to making your claim page', () => {
   );
   it(
     'should have the correct link(PageUrls.STILL_WORKING) on Employment status ' +
-      'when TypesOfClaim.UNFAIR_DISMISSAL is selected',
+      'when TypeOfClaim.UNFAIR_DISMISSAL is selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -163,7 +176,7 @@ describe('Steps to making your claim page', () => {
   );
   it(
     'should have the correct link(PageUrls.PAST_EMPLOYER) on Employment status ' +
-      'when TypesOfClaim.UNFAIR_DISMISSAL is not selected',
+      'when TypeOfClaim.UNFAIR_DISMISSAL is not selected',
     async () => {
       await request(
         mockAppWithRedisClient({
@@ -192,6 +205,7 @@ describe('Steps to making your claim page', () => {
         session: mockSession([], [], []),
         redisClient: mockRedisClient(
           new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
             [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
             [
@@ -224,5 +238,229 @@ describe('Steps to making your claim page', () => {
     const typeOfClaimListElements = Array.from(htmlRes.querySelectorAll(typeOfClaimListElement));
     const foundArr = typeOfClaimListElements.map(el => el.innerHTML).sort();
     expect(foundArr).to.have.members(expected);
+  });
+});
+
+describe('Steps to making your claim page tags', () => {
+  it('should show your details section as completed', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      personalDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [
+              CaseDataCacheKey.TYPES_OF_CLAIM,
+              JSON.stringify([
+                TypesOfClaim.PAY_RELATED_CLAIM,
+                TypesOfClaim.BREACH_OF_CONTRACT,
+                TypesOfClaim.DISCRIMINATION,
+                'otherClaim',
+                TypesOfClaim.UNFAIR_DISMISSAL,
+                TypesOfClaim.WHISTLE_BLOWING,
+              ]),
+            ],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(notStartedTags.length).equal(4, 'number of tags found is not 4');
+    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    expect(tasklistTags[0].innerHTML).contains(sectionStatus.completed);
+    expect(tasklistTags[1].innerHTML).contains(sectionStatus.completed);
+    expect(tasklistTags[2].innerHTML).contains(sectionStatus.completed);
+    expect(notStartedTags[3].innerHTML).contains(sectionStatus.cannotStartYet);
+  });
+
+  it('should show employment and respondent section as completed', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [
+              CaseDataCacheKey.TYPES_OF_CLAIM,
+              JSON.stringify([
+                TypesOfClaim.PAY_RELATED_CLAIM,
+                TypesOfClaim.BREACH_OF_CONTRACT,
+                TypesOfClaim.DISCRIMINATION,
+                'otherClaim',
+                TypesOfClaim.UNFAIR_DISMISSAL,
+                TypesOfClaim.WHISTLE_BLOWING,
+              ]),
+            ],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
+    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    expect(tasklistTags[3].innerHTML).contains(sectionStatus.completed);
+    expect(tasklistTags[4].innerHTML).contains(sectionStatus.completed);
+    expect(notStartedTags[5].innerHTML).contains(sectionStatus.cannotStartYet);
+  });
+
+  it('should show claim details section as completed', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      claimDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [
+              CaseDataCacheKey.TYPES_OF_CLAIM,
+              JSON.stringify([
+                TypesOfClaim.PAY_RELATED_CLAIM,
+                TypesOfClaim.BREACH_OF_CONTRACT,
+                TypesOfClaim.DISCRIMINATION,
+                'otherClaim',
+                TypesOfClaim.WHISTLE_BLOWING,
+              ]),
+            ],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(notStartedTags.length).equal(6, 'number of tags found is not 6');
+    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    expect(tasklistTags[5].innerHTML).contains(sectionStatus.completed);
+    expect(tasklistTags[6].innerHTML).contains(sectionStatus.completed);
+    expect(notStartedTags[5].innerHTML).contains(sectionStatus.cannotStartYet);
+  });
+
+  it('should show check your answers section as ready to start', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      personalDetailsCheck: YesOrNo.YES,
+      employmentAndRespondentCheck: YesOrNo.YES,
+      claimDetailsCheck: YesOrNo.YES,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [
+              CaseDataCacheKey.TYPES_OF_CLAIM,
+              JSON.stringify([
+                TypesOfClaim.PAY_RELATED_CLAIM,
+                TypesOfClaim.BREACH_OF_CONTRACT,
+                TypesOfClaim.DISCRIMINATION,
+                'otherClaim',
+                TypesOfClaim.UNFAIR_DISMISSAL,
+                TypesOfClaim.WHISTLE_BLOWING,
+              ]),
+            ],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    for (let index = 0; index < tasklistTags.length - 2; index++) {
+      expect(tasklistTags[index].innerHTML).contains(sectionStatus.completed);
+    }
+    expect(tasklistTags[7].innerHTML).contains(sectionStatus.notStarted);
+  });
+
+  it('should show section as in progress', async () => {
+    const userCase: CaseWithId = {
+      id: '12234',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      personalDetailsCheck: YesOrNo.NO,
+      employmentAndRespondentCheck: YesOrNo.NO,
+      claimDetailsCheck: YesOrNo.NO,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+    await request(
+      mockAppWithRedisClient({
+        session: mockSessionWithUserCase(userCase),
+        redisClient: mockRedisClient(
+          new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, 'SW1A 1AA'],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, YesOrNo.YES],
+            [CaseDataCacheKey.CASE_TYPE, CaseType.SINGLE],
+            [
+              CaseDataCacheKey.TYPES_OF_CLAIM,
+              JSON.stringify([
+                TypesOfClaim.PAY_RELATED_CLAIM,
+                TypesOfClaim.BREACH_OF_CONTRACT,
+                TypesOfClaim.DISCRIMINATION,
+                'otherClaim',
+                TypesOfClaim.UNFAIR_DISMISSAL,
+                TypesOfClaim.WHISTLE_BLOWING,
+              ]),
+            ],
+          ])
+        ),
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+    const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
+    expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
+    for (let index = 0; index < tasklistTags.length - 2; index++) {
+      expect(tasklistTags[index].innerHTML).contains(sectionStatus.inProgress);
+    }
+    expect(tasklistTags[7].innerHTML).contains(sectionStatus.cannotStartYet);
   });
 });

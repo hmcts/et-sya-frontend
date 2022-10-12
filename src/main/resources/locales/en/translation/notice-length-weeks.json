@@ -1,14 +1,13 @@
 {
   "title": "Weeks in Notice period?",
   "h1": {
-    "nonNotice": "How many weeks in your notice period?",
+    "nonNotice": "How many weeks in your notice period? (optional)",
     "notice": "How many weeks of your notice period are you being paid for? (optional)"
   },
   "noticeLengthHint": "For example, 4",
   "onNotice": "Notice",
   "errors": {
     "noticePeriodLength": {
-      "invalid": "Tell us the number of weeks in your notice period",
       "notANumber": "Number of weeks in notice period must be a number, like 4 etc."
     }
   }

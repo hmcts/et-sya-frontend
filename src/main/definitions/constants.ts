@@ -15,7 +15,7 @@ export const TranslationKeys = {
   ACAS_MULTIPLE_CLAIM: 'acas-multiple',
   ADDRESS_DETAILS: 'address-details',
   DATE_OF_BIRTH: 'date-of-birth',
-  GENDER_DETAILS: 'gender-details',
+  SEX_AND_TITLE: 'sex-and-title',
   RETURN_TO_EXISTING: 'return-to-existing',
   TELEPHONE_NUMBER: 'telephone-number',
   UPDATE_PREFERENCE: 'update-preference',
@@ -72,6 +72,8 @@ export const TranslationKeys = {
   ENTER_ADDRESS: 'enter-address',
   PLACE_OF_WORK: 'place-of-work',
   COOKIE_PREFERENCES: 'cookie-preferences',
+  CLAIMANT_APPLICATIONS: 'claimant-applications',
+  CITIZEN_HUB: 'citizen-hub',
 } as const;
 
 export const PageUrls = {
@@ -93,7 +95,7 @@ export const PageUrls = {
   CONTACT_ACAS: '/contact-acas',
   VIDEO_HEARINGS: '/would-you-want-to-take-part-in-video-hearings',
   TELEPHONE_NUMBER: '/telephone-number',
-  GENDER_DETAILS: '/gender-details',
+  SEX_AND_TITLE: '/sex-and-title',
   UPDATE_PREFERENCES: '/how-would-you-like-to-be-updated-about-your-claim',
   JOB_TITLE: '/job-title',
   PAST_EMPLOYER: '/past-employer',
@@ -138,7 +140,24 @@ export const PageUrls = {
   WORK_POSTCODE: '/work-postcode',
   RESPONDENT_REST_PREFIX: '/respondent/:respondentNumber',
   FIRST_RESPONDENT_NAME: '/respondent/1/respondent-name',
+  CLAIMANT_APPLICATIONS: '/claimant-applications',
+  SELECTED_APPLICATION: '/claimant-application/:caseId',
   COOKIE_PREFERENCES: '/cookies',
+  CITIZEN_HUB: '/citizen-hub/:caseId',
+  PCQ: '/pcq',
+  GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+} as const;
+
+export const InterceptPaths = {
+  CHANGE_DETAILS: '*/change',
+  ANSWERS_CHANGE: '/change?redirect=answers',
+  RESPONDENT_CHANGE: '/change?redirect=respondent',
+  SUBMIT_CASE: '/submitDraftCase',
+} as const;
+
+export const ValidationErrors = {
+  REQUIRED: 'required',
+  INVALID_VALUE: 'invalid',
 } as const;
 
 export const AuthUrls = {
@@ -149,10 +168,14 @@ export const AuthUrls = {
 
 export const JavaApiUrls = {
   GET_CASES: 'cases/user-cases',
+  GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
+  UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+  UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
 } as const;
 
 export const Urls = {
@@ -199,12 +222,12 @@ export const RedisErrors = {
   DISPLAY_MESSAGE: 'Please try again or return later.',
   FAILED_TO_CONNECT: 'Error when attempting to connect to Redis',
   FAILED_TO_SAVE: 'Error when attempting to save to Redis',
-  FAILED_TO_RETREIVE: 'Error when attempting to retreive value from Redis',
+  FAILED_TO_RETRIEVE: 'Error when attempting to retrieve value from Redis',
   CLIENT_NOT_FOUND: 'Redis client does not exist',
 } as const;
 
 export const CaseApiErrors = {
-  FAILED_TO_RETREIVE_CASE: 'Error when attempting to retreive draft case from sya-api',
+  FAILED_TO_RETRIEVE_CASE: 'Error when attempting to retrieve draft case from sya-api',
 } as const;
 
 export const CcdDataModel = {
@@ -214,6 +237,7 @@ export const CcdDataModel = {
 export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
+export const TYPE_OF_CLAIMANT = 'Individual';
 
 export const mvpLocations = [
   'ZE',
@@ -256,3 +280,5 @@ export const mvpLocations = [
   'DN',
   'BD',
 ];
+
+export const SUBMITTED_CLAIM_FILE_TYPE = 'Notice of a claim';

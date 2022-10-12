@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
@@ -10,7 +11,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const compensation_amount: CurrencyFormFields = {
   ...DefaultCompensationCurrencyFormFields,
@@ -35,7 +38,7 @@ export default class CompensationController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.compensationFormContent.fields);
   }
 
@@ -48,6 +51,7 @@ export default class CompensationController {
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     }
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

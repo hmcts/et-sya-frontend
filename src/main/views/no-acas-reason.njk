@@ -8,6 +8,9 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>

@@ -1,4 +1,12 @@
-import { CaseState, ClaimOutcomes, ClaimTypeDiscrimination, ClaimTypePay, TellUsWhatYouWant } from './definition';
+import {
+  CaseState,
+  ClaimOutcomes,
+  ClaimTypeDiscrimination,
+  ClaimTypePay,
+  DocumentDetail,
+  TellUsWhatYouWant,
+} from './definition';
+import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
 
 export enum Checkbox {
@@ -13,19 +21,47 @@ export interface CaseDate {
 }
 
 export interface Respondent {
-  respondentNumber: number;
+  respondentNumber?: number;
   respondentName?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
   respondentAddressCountry?: string;
   respondentAddressPostcode?: string;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCountry?: string;
+  workAddressPostcode?: string;
+  acasCert?: YesOrNo;
+  acasCertNum?: string;
+  noAcasReason?: NoAcasNumberReason;
+  ccdId?: string;
+}
+
+export interface RespondentApiModel {
+  respondentNumber?: number;
+  respondentName?: string;
+  respondentAddress1?: string;
+  respondentAddress2?: string;
+  respondentAddressTown?: string;
+  respondentAddressCountry?: string;
+  respondentAddressPostcode?: string;
+  workAddress1?: string;
+  workAddress2?: string;
+  workAddressTown?: string;
+  workAddressCountry?: string;
+  workAddressPostcode?: string;
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
 }
 
 export interface Case {
+  createdDate: string;
+  lastModified: string;
+  ethosCaseReference?: string;
+  feeGroupReference?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -72,7 +108,7 @@ export interface Case {
   employeeBenefits?: YesOrNo;
   benefitsCharCount?: string;
   claimSummaryText?: string;
-  claimSummaryFile?: string; //TODO: implement proper upload document object when connecting to api
+  claimSummaryFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -107,6 +143,13 @@ export interface Case {
   acasCert?: YesOrNo;
   acasCertNum?: string;
   noAcasReason?: NoAcasNumberReason;
+  et3IsThereAnEt3Response?: YesOrNo;
+  hubLinksStatuses?: HubLinksStatuses;
+  managingOffice?: string;
+  tribunalCorrespondenceEmail?: string;
+  tribunalCorrespondenceTelephone?: string;
+  et1SubmittedForm?: DocumentDetail;
+  documentCollection?: DocumentCollection[];
 }
 
 export const enum StillWorking {
@@ -116,10 +159,10 @@ export const enum StillWorking {
 }
 
 export const enum NoAcasNumberReason {
-  ANOTHER = "Another person I'm making the claim with has an early conciliation certificate number",
-  NO_POWER = "Acas doesn't have the power to conciliate on some or all of my cliam",
-  EMPLOYER = 'My employer has already been in touch with Acas',
-  UNFAIR_DISMISSAL = 'The claim consists only of a complaint of unfair dismissal which contains an application for interim relief',
+  ANOTHER = 'Another person',
+  NO_POWER = 'No Power',
+  EMPLOYER = 'Employer already in touch',
+  UNFAIR_DISMISSAL = 'Unfair Dismissal',
 }
 
 export interface CaseWithId extends Case {
@@ -187,9 +230,10 @@ export const enum PayInterval {
 export type DateParser = (property: string, body: UnknownRecord) => CaseDate;
 
 export const enum CaseDataCacheKey {
+  POSTCODE = 'workPostcode',
   CLAIMANT_REPRESENTED = 'claimantRepresentedQuestion',
   CASE_TYPE = 'caseType',
-  TYPES_OF_CLAIM = 'typesOfClaim',
+  TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
 }
 
@@ -197,4 +241,21 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export interface Document {
+  document_url: string;
+  document_filename: string;
+  document_binary_url: string;
+}
+
+export interface DocumentCollectionValue {
+  typeOfDocument?: string;
+  uploadedDocument?: Document;
+  shortDescription?: string;
+}
+
+export interface DocumentCollection {
+  id?: string;
+  value: DocumentCollectionValue;
 }

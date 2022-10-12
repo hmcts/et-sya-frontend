@@ -6,30 +6,35 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
-import { DefaultInlineRadioFormFields, RadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  handleSessionErrors,
-  handleUpdateDraftCase,
-  setUserCase,
-} from './helpers';
-
-const new_job: RadioFormFields = {
-  ...DefaultInlineRadioFormFields,
-  label: (l: AnyRecord): string => l.h1,
-  labelHidden: true,
-  id: 'new-job',
-};
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class NewJobController {
   private readonly form: Form;
   private readonly newJobContent: FormContent = {
     fields: {
-      newJob: new_job,
+      newJob: {
+        id: 'new-job',
+        type: 'radios',
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
+        classes: 'govuk-radios--inline',
+        values: [
+          {
+            label: (l: AnyRecord): string => l.yes,
+            value: YesOrNo.YES,
+          },
+          {
+            label: (l: AnyRecord): string => l.no,
+            value: YesOrNo.NO,
+          },
+        ],
+      },
     },
     submit: submitButton,
     saveForLater: saveForLaterButton,

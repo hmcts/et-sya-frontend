@@ -10,77 +10,21 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+   {% include "error-summary.njk" %}
+  {% endblock %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
             {% for respondent in respondents %}
               {{ govukSummaryList({
-                  rows: [
-                    {
-                      key: {
-                        text: subTitle + respondent.respondentNumber,
-                        classes: "govuk-heading-m"
-                      } 
-                    },
-                    {
-                      key: {
-                        text: name
-                      },
-                      value: {
-                        text: respondent.respondentName
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_NAME,
-                            text: "Change",
-                            visuallyHiddenText: "name"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      key: {
-                        text: address
-                      },
-                      value: {             
-                          text: respondent.respondentAddress1           
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.RESPONDENT_ADDRESS,
-                            text: "Change",
-                            visuallyHiddenText: "address"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      key: {
-                        text: acasNum
-                      },
-                      value: {
-                        html: respondent.acasCertNum
-                      },
-                      actions: {
-                        items: [
-                          {
-                            href: '/respondent/' + respondent.respondentNumber + PageUrls.ACAS_CERT_NUM,
-                            text: "Change",
-                            visuallyHiddenText: "acasCertNum"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }) 
+                rows: getRespondentDetailsSection(respondent, loop.index, translations)
+              })
+
               }}
 
             {% endfor %}
 
-
-  
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
@@ -99,5 +43,5 @@
           href: "/your-claim-has-been-saved"
         }) }}
       </div>
-    </div> 
+    </div>
 {% endblock %}

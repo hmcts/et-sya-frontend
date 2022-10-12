@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import CompensationController from '../../../main/controllers/CompensationController';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -9,10 +11,15 @@ describe('Compensation Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render the compensation page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    new CompensationController().get(request, response);
+    new CompensationController(mockLogger).get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COMPENSATION, expect.anything());
   });
 
@@ -22,7 +29,7 @@ describe('Compensation Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new CompensationController().post(req, res);
+      new CompensationController(mockLogger).post(req, res);
 
       expect(req.session.errors).toHaveLength(0);
     });
@@ -35,11 +42,11 @@ describe('Compensation Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new CompensationController().post(req, res);
+      new CompensationController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'compensationOutcome', errorType: 'tooLong' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -51,11 +58,11 @@ describe('Compensation Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new CompensationController().post(req, res);
+      new CompensationController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'compensationAmount', errorType: 'invalidCurrency' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -67,7 +74,7 @@ describe('Compensation Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
 
-      new CompensationController().post(req, res);
+      new CompensationController(mockLogger).post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         compensationOutcome: 'ab',

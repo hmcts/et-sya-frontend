@@ -3,7 +3,14 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 
-import { PageUrls, Urls } from '../definitions/constants';
+import { InterceptPaths, PageUrls, Urls } from '../definitions/constants';
+
+const multer = require('multer');
+const handleUploads = multer({
+  limits: {
+    fileSize: 40000000,
+  },
+});
 
 export default function (app: Application): void {
   app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
@@ -82,8 +89,8 @@ export default function (app: Application): void {
   app.get(PageUrls.CONTACT_ACAS, app.locals.container.cradle.contactAcasController.get);
   app.get(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.get);
   app.post(PageUrls.DOB_DETAILS, app.locals.container.cradle.dobController.post);
-  app.get(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.get);
-  app.post(PageUrls.GENDER_DETAILS, app.locals.container.cradle.genderDetailsController.post);
+  app.get(PageUrls.SEX_AND_TITLE, app.locals.container.cradle.sexAndTitleController.get);
+  app.post(PageUrls.SEX_AND_TITLE, app.locals.container.cradle.sexAndTitleController.post);
   app.get(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.get);
   app.post(PageUrls.ADDRESS_DETAILS, app.locals.container.cradle.addressDetailsController.post);
   app.get(PageUrls.TELEPHONE_NUMBER, app.locals.container.cradle.telNumberController.get);
@@ -140,7 +147,11 @@ export default function (app: Application): void {
   app.get(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.get);
   app.post(PageUrls.CLAIM_TYPE_PAY, app.locals.container.cradle.claimTypePayController.post);
   app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.get);
-  app.post(PageUrls.DESCRIBE_WHAT_HAPPENED, app.locals.container.cradle.describeWhatHappenedController.post);
+  app.post(
+    PageUrls.DESCRIBE_WHAT_HAPPENED,
+    handleUploads.single('claimSummaryFileName'),
+    app.locals.container.cradle.describeWhatHappenedController.post
+  );
   app.get(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.get);
   app.post(PageUrls.TELL_US_WHAT_YOU_WANT, app.locals.container.cradle.tellUsWhatYouWantController.post);
   app.get(PageUrls.COMPENSATION, app.locals.container.cradle.compensationController.get);
@@ -154,7 +165,13 @@ export default function (app: Application): void {
   app.get(Urls.DOWNLOAD_CLAIM, app.locals.container.cradle.downloadClaimController.get);
   app.get(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.get);
   app.post(PageUrls.WORK_POSTCODE, app.locals.container.cradle.workPostcodeController.post);
+  app.get(InterceptPaths.CHANGE_DETAILS, app.locals.container.cradle.changeDetailsController.get);
   app.get(Urls.EXTEND_SESSION, app.locals.container.cradle.sessionTimeoutController.getExtendSession);
+  app.get(PageUrls.CLAIMANT_APPLICATIONS, app.locals.container.cradle.claimantApplicationsController.get);
+  app.get(PageUrls.SELECTED_APPLICATION, app.locals.container.cradle.selectedApplicationController.get);
+  app.get(PageUrls.CITIZEN_HUB, app.locals.container.cradle.citizenHubController.get);
+  app.get(InterceptPaths.SUBMIT_CASE, app.locals.container.cradle.submitClaimController.get);
+  app.get(PageUrls.GET_CASE_DOCUMENT, app.locals.container.cradle.caseDocumentController.get);
   app.get(
     Urls.INFO,
     infoRequestHandler({

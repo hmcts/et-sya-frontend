@@ -1,13 +1,20 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
+import {
+  isValidAddressFirstLine,
+  isValidAddressSecondLine,
+  isValidCountryTownOrCity,
+} from '../components/form/address_validator';
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class AddressDetailsController {
   private readonly form: Form;
@@ -20,9 +27,11 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        validator: isFieldFilledIn,
+        validator: isValidAddressFirstLine,
+        hidden: true,
         attributes: {
           autocomplete: 'address-line1',
+          maxLength: 100,
         },
       },
       address2: {
@@ -32,9 +41,12 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'address-line2',
+          maxLength: 50,
         },
+        validator: isValidAddressSecondLine,
       },
       addressTown: {
         id: 'addressTown',
@@ -43,10 +55,12 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
+        hidden: true,
         attributes: {
           autocomplete: 'address-level2',
+          maxLength: 50,
         },
-        validator: isFieldFilledIn,
+        validator: isValidCountryTownOrCity,
       },
       addressCountry: {
         id: 'addressCountry',
@@ -55,6 +69,11 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
+        hidden: true,
+        attributes: {
+          maxLength: 50,
+        },
+        validator: isValidCountryTownOrCity,
       },
       addressPostcode: {
         id: 'addressPostcode',
@@ -63,6 +82,7 @@ export default class AddressDetailsController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
+        hidden: true,
         attributes: {
           maxLength: 14,
           autocomplete: 'postal-code',
@@ -71,21 +91,22 @@ export default class AddressDetailsController {
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2',
+      classes: 'govuk-!-margin-right-2 hidden',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary',
+      classes: 'govuk-button--secondary hidden',
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.addressDetailsContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.TELEPHONE_NUMBER);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

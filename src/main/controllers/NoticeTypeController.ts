@@ -2,14 +2,16 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, getPageContent, handleSessionErrors, handleUpdateDraftCase, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class NoticeTypeController {
   private readonly form: Form;
@@ -31,7 +33,6 @@ export default class NoticeTypeController {
             value: WeeksOrMonths.MONTHS,
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -49,8 +50,17 @@ export default class NoticeTypeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    let redirectUrl;
+    if (
+      conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
+      conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.MONTHS)
+    ) {
+      redirectUrl = PageUrls.NOTICE_LENGTH;
+    } else {
+      redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
+    }
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_LENGTH);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

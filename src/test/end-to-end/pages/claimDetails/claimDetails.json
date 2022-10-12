@@ -1,0 +1,38 @@
+{
+  "contact_us": "//span[contains(.,'Contact us')]",
+
+  "what_is_discrimination": "//span[.='What is discrimination?']",
+  "age": "//input[@id='age']",
+  "disability": "//input[@id='disability']",
+  "gender_reassignment": "//input[@id='genderReassignment']",
+  "marriage_or_civil_partnership": "//input[@id='marriageOrCivilPartnership']",
+  "pregnancy_or_maternity": "//input[@id='pregnancyOrMaternity']",
+  "race": "//input[@id='race']",
+  "religion_or_belief": "//input[@id='religionOrBelief']",
+  "sex": "//input[@id='sex']",
+  "sexual_orientation": "//input[@id='sexualOrientation']",
+
+  "what_to_write_for_discrimination_claims": "//span[contains(.,'What to write for discrimination claims')]",
+  "what_to_write_for_dismissal_claims": "//span[contains(.,'What to write for dismissal claims')]",
+  "what_to_write_for_whistle_blower_claims": "//span[contains(.,'What to write for whistleblower claims')]",
+  "what_to_write_for_other_claims": "//span[contains(.,\"What to write for 'other' claims\")]",
+  "claim_summary_notes": "//textarea[@id='claim-summary-text']",
+  "upload_your_summary_as_a_separate": "//span[contains(.,'Or upload your summary as a separate document (optional)')]",
+
+  "compensation_what_can_a_tribunal_award": "//span[.='Compensation - what can a tribunal award?']",
+  "what_is_a_tribunal_recommendation": "//span[.='What is a tribunal recommendation?']",
+  "compensation_only": "//input[@id='compensationOnly']",
+  "tribunal_recommendation": "//input[@id='tribunalRecommendation']",
+  "get_your_old_job_back": "//input[@id='oldJob']",
+  "get_another_job": "//input[@id='anotherJob']",
+
+  "compensation_what_can_a_tribunal_award": "//span[.='Compensation - what can a tribunal award?']",
+  "compensation_outcome": "//textarea[@id='compensationOutcome']",
+  "compensation_amount": "//input[@id='compensation-amount']",
+
+  "what_is_a_tribunal_recommendation": "//span[.='What is a tribunal recommendation?']",
+  "tribunal_recommendation_request": "//textarea[@id='tribunalRecommendationRequest']",
+
+  "whistle_blowing_claims": "//input[@id='whistleblowing-claim']",
+  "whistle_blowing_entity_name": "//input[@id='whistleblowing-entity-name']"
+}

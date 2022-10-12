@@ -1,20 +1,34 @@
+import i18next from 'i18next';
+
 import { isDateEmpty } from '../components/form/dateValidators';
-import { CreateCaseBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
+import { CaseApiDataResponse, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, ccdPreferredTitle } from '../definitions/case';
-import { CcdDataModel } from '../definitions/constants';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseWithId,
+  Document,
+  DocumentCollection,
+  Respondent,
+  ccdPreferredTitle,
+} from '../definitions/case';
+import { CcdDataModel, SUBMITTED_CLAIM_FILE_TYPE, TYPE_OF_CLAIMANT } from '../definitions/constants';
+import { DocumentDetail } from '../definitions/definition';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
   userDetails: UserDetails
 ): CreateCaseBody {
   return {
-    post_code: 'SW1A 1AA', // TODO Replace with value from new postcode triage page
+    post_code: userDataMap.get(CaseDataCacheKey.POSTCODE),
     case_data: {
       caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
       claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+      typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
       claimantIndType: {
         claimant_first_names: userDetails.givenName,
         claimant_last_name: userDetails.familyName,
@@ -29,6 +43,14 @@ export function toApiFormatCreate(
 export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
   return {
     id: fromApiCaseData.id,
+    ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
+    ethosCaseReference: fromApiCaseData.case_data?.ethosCaseReference,
+    feeGroupReference: fromApiCaseData.case_data?.feeGroupReference,
+    managingOffice: fromApiCaseData.case_data?.managingOffice,
+    tribunalCorrespondenceEmail: fromApiCaseData.case_data?.tribunalCorrespondenceEmail,
+    tribunalCorrespondenceTelephone: fromApiCaseData.case_data?.tribunalCorrespondenceTelephone,
+    et1SubmittedForm: returnSubmitttedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    documentCollection: fromApiCaseData.case_data?.documentCollection,
     state: fromApiCaseData.state,
     caseTypeId: fromApiCaseData.case_type_id,
     claimantRepresentedQuestion: fromApiCaseData.case_data?.claimantRepresentedQuestion,
@@ -36,6 +58,13 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     firstName: fromApiCaseData.case_data?.claimantIndType?.claimant_first_names,
     lastName: fromApiCaseData.case_data?.claimantIndType?.claimant_last_name,
     email: fromApiCaseData.case_data?.claimantType?.claimant_email_address,
+    telNumber: fromApiCaseData.case_data?.claimantType?.claimant_phone_number,
+    address1: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine1,
+    address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
+    addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
+    addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
+    addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
+    typeOfClaim: fromApiCaseData.case_data?.typesOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
     claimantSex: fromApiCaseData.case_data?.claimantIndType?.claimant_sex,
     preferredTitle: returnPreferredTitle(
@@ -70,8 +99,29 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
+    claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
+    claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
+    claimSummaryFile: fromApiCaseData.case_data?.claimantRequests?.claim_description_document,
+    tellUsWhatYouWant: fromApiCaseData.case_data?.claimantRequests?.claim_outcome,
+    tribunalRecommendationRequest: fromApiCaseData.case_data?.claimantRequests?.claimant_tribunal_recommendation,
+    whistleblowingClaim: fromApiCaseData.case_data?.claimantRequests?.whistleblowing,
+    whistleblowingEntityName: fromApiCaseData.case_data?.claimantRequests?.whistleblowing_authority,
+    compensationOutcome: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_text,
+    compensationAmount: fromApiCaseData.case_data?.claimantRequests?.claimant_compensation_amount,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
+    createdDate: convertFromTimestampString(fromApiCaseData.created_date),
+    lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
+    respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
+    claimantWorkAddressQuestion: fromApiCaseData.case_data?.claimantWorkAddressQuestion,
+    workAddress1: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine1,
+    workAddress2: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine2,
+    workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
+    workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
+    workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
+    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
   };
 }
 
@@ -83,6 +133,9 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       caseType: caseItem.caseType,
       claimantRepresentedQuestion: caseItem.claimantRepresentedQuestion,
       caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+      typesOfClaim: caseItem.typeOfClaim,
+      ClaimantPcqId: caseItem.ClaimantPcqId,
       claimantIndType: {
         claimant_first_names: caseItem.firstName,
         claimant_last_name: caseItem.lastName,
@@ -93,7 +146,15 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       },
       claimantType: {
         claimant_email_address: caseItem.email,
+        claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
+        claimant_addressUK: {
+          AddressLine1: caseItem.address1,
+          AddressLine2: caseItem.address2,
+          PostTown: caseItem.addressTown,
+          PostCode: caseItem.addressPostcode,
+          Country: caseItem.addressCountry,
+        },
       },
       claimantOtherType: {
         pastEmployer: caseItem.pastEmployer,
@@ -126,12 +187,44 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
       },
+      claimantRequests: {
+        discrimination_claims: caseItem.claimTypeDiscrimination,
+        pay_claims: caseItem.claimTypePay,
+        claim_description: caseItem.claimSummaryText,
+        claim_outcome: caseItem.tellUsWhatYouWant,
+        claimant_compensation_text: caseItem.compensationOutcome,
+        claimant_compensation_amount: formatToCcdAcceptedNumber(caseItem.compensationAmount),
+        claimant_tribunal_recommendation: caseItem.tribunalRecommendationRequest,
+        whistleblowing: caseItem.whistleblowingClaim,
+        whistleblowing_authority: caseItem.whistleblowingEntityName,
+        claim_description_document: caseItem.claimSummaryFile,
+      },
       claimantTaskListChecks: {
         personalDetailsCheck: caseItem.personalDetailsCheck,
         employmentAndRespondentCheck: caseItem.employmentAndRespondentCheck,
         claimDetailsCheck: caseItem.claimDetailsCheck,
       },
+      claimantWorkAddress: {
+        claimant_work_address: {
+          AddressLine1: caseItem.workAddress1,
+          AddressLine2: caseItem.workAddress2,
+          PostTown: caseItem.workAddressTown,
+          Country: caseItem.workAddressCountry,
+          PostCode: caseItem.workAddressPostcode,
+        },
+      },
+      respondentCollection: setRespondentApiFormat(caseItem.respondents),
+      claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
+      hubLinksStatuses: caseItem.hubLinksStatuses,
     },
+  };
+}
+
+export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  return {
+    document_url: document.uri,
+    document_filename: document.originalDocumentName,
+    document_binary_url: document._links.binary.href,
   };
 }
 
@@ -154,7 +247,7 @@ export const parseDateFromString = (date: string): CaseDate => {
     return {
       year: date.substring(0, 4),
       month: date.substring(5, 7),
-      day: date.substring(8),
+      day: date.substring(8, 10),
     };
   }
 };
@@ -191,4 +284,89 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
   } else {
     return preferredTitle;
   }
+};
+
+function convertFromTimestampString(responseDate: string) {
+  const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
+  return new Date(dateComponent).toLocaleDateString(i18next.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] => {
+  if (respondents === undefined) {
+    return;
+  }
+  return respondents.map(respondent => {
+    return {
+      respondentName: respondent.value?.respondent_name,
+      respondentAddress1: respondent.value.respondent_address?.AddressLine1,
+      respondentAddress2: respondent.value.respondent_address?.AddressLine2,
+      respondentAddressTown: respondent.value.respondent_address?.PostTown,
+      respondentAddressCountry: respondent.value.respondent_address?.Country,
+      respondentAddressPostcode: respondent.value.respondent_address?.PostCode,
+      acasCert: respondent.value?.respondent_ACAS_question,
+      acasCertNum: respondent.value?.respondent_ACAS,
+      noAcasReason: respondent.value?.respondent_ACAS_no,
+      ccdId: respondent?.id,
+    };
+  });
+};
+
+export const setRespondentApiFormat = (respondents: Respondent[]): RespondentRequestBody[] => {
+  if (respondents === undefined) {
+    return;
+  }
+  return respondents.map(respondent => {
+    return {
+      value: {
+        respondent_name: respondent.respondentName,
+        respondent_address: {
+          AddressLine1: respondent.respondentAddress1,
+          AddressLine2: respondent.respondentAddress2,
+          PostTown: respondent.respondentAddressTown,
+          Country: respondent.respondentAddressCountry,
+          PostCode: respondent.respondentAddressPostcode,
+        },
+        respondent_ACAS_question: respondent.acasCert,
+        respondent_ACAS: respondent.acasCertNum,
+        respondent_ACAS_no: respondent.noAcasReason,
+      },
+      id: respondent.ccdId,
+    };
+  });
+};
+
+export const returnSubmitttedEt1Form = (documentCollection?: DocumentCollection[]): DocumentDetail => {
+  if (documentCollection === undefined) {
+    return;
+  }
+
+  const documentDetailCollection: DocumentDetail[] = setDocumentValues(documentCollection, [SUBMITTED_CLAIM_FILE_TYPE]);
+
+  if (documentDetailCollection === undefined) {
+    return;
+  } else {
+    return documentDetailCollection[0];
+  }
+};
+
+export const setDocumentValues = (documentCollection: DocumentCollection[], docType?: string[]): DocumentDetail[] => {
+  if (!documentCollection) {
+    return;
+  }
+
+  const foundDocuments = documentCollection
+    .filter(doc => !docType || docType.includes(doc.value.typeOfDocument))
+    .map(doc => {
+      const docUrl = doc.value?.uploadedDocument?.document_url;
+      return {
+        id: docUrl.substring(docUrl.lastIndexOf('/') + 1, docUrl.length),
+        description: !docType ? '' : doc.value?.shortDescription,
+        type: doc.value.typeOfDocument,
+      };
+    });
+  return foundDocuments.length ? foundDocuments : undefined;
 };

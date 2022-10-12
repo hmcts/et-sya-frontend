@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
@@ -8,7 +9,9 @@ import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class TribunalRecommendationController {
   private readonly form: Form;
@@ -28,7 +31,7 @@ export default class TribunalRecommendationController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.tribunalRecommendationFormContent.fields);
   }
 
@@ -39,6 +42,7 @@ export default class TribunalRecommendationController {
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     }
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

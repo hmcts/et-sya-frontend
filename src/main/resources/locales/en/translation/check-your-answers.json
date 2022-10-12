@@ -3,6 +3,12 @@
   "h1": "Check your answers",
   "des": "Check your answers before submitting your claim.",
   "submitYourClaim": "Submit your claim",
+  "discrimination": "Discrimination of any type",
+  "payRelated": "Pay-related",
+  "unfairDismissal": "Unfair dismissal",
+  "whistleBlowing": "WhistleBlowing",
+  "otherClaim": "Other",
+  "breachOfContract": "Breach of contract",
   "checkAllAnswers": "Check all the answers you’ve provided and details you have entered are correct.",
   "warning": "This is your last opportunity to change any details before you submit your claim.",
   "remember": "Remember, if you’re not sure about anything, you can save and return to your claim at any time by selecting ‘Save as draft’ at the bottom of this page.",
@@ -13,21 +19,22 @@
     "header": "Application details",
     "typeOfClaim": "Claim type"
   },
+  "change": "Change",
   "personalDetails": {
     "header": "Your details",
     "dob": "Date of birth",
-    "gender": "Sex",
-    "genderIdentity": "Gender Identity",
-    "genderSameAsBirth": "Gender same as registered birth sex",
+    "sex": "Sex",
     "contactOrHomeAddress": "Contact or home address",
     "howToBeContacted": "How would you like to be contacted?",
     "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
     "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
-    "title": "Preferred title"
+    "title": "Preferred title",
+    "notSelected": "Not selected"
   },
   "contactDetails": {
     "header": "Contact details",
-    "telephone": "Telephone number"
+    "telephone": "Telephone number",
+    "notProvided": "Not provided"
   },
   "yourPreferences": {
     "header": "Your preferences",
@@ -46,8 +53,8 @@
     "startDate": "Employment start date",
     "noticePeriod": "Do you have a written contract with notice period?",
     "noticeEnds": "Notice period ends",
-    "noticeLength": "Is your notice period in weeks or months?",
-    "noticePeriodWeeksOrMonths": "[Weeks/Months] in notice period",
+    "noticePeriodWeeksOrMonths": "Is your notice period in weeks or months?",
+    "noticeLength": "[Weeks/Months] in notice period",
     "noticePaid": "Notice being paid for",
     "weeklyHours": "Average weekly work hours",
     "payBeforeTax": "Pay before tax and National Insurance",
@@ -61,7 +68,8 @@
     "workAddress": "Work address"
   },
   "respondentDetails": {
-    "header": "Respondent 1 details",
+    "header": "Respondent ",
+    "details": " details",
     "respondentName": "Name of respondent",
     "respondentAddress": "Respondent address",
     "workedAtRespondent": "Did you work at the respondent's address?",
@@ -77,7 +85,8 @@
   },
   "claimDetails": {
     "header": "Claim details",
-    "claimType": "What type of discrimination/pay claim are you making?",
+    "claimTypeDiscrimination": "What type of discrimination claim are you making?",
+    "claimTypePay": "What type of pay claim are you making?",
     "describeWhatHappened": "Describe what happened to you",
     "ifClaimSuccessful": "What do you want if your claim is successful",
     "expectedCompensation": "What compensation are you seeking",
@@ -87,7 +96,41 @@
     "fileUploads": "File uploads",
     "whatYouWant": "What you want"
   },
+  "discriminationClaims": {
+    "Age": "Age",
+    "Disability": "Disability",
+    "Ethnicity": "Ethnicity",
+    "Gender reassignment": "Gender reassignment",
+    "Marriage or civil partnership": "Marriage or civil parntership",
+    "Pregnancy or maternity": "Pregnancy or maternity",
+    "Race": "Race",
+    "Religion or belief": "Religion or belief",
+    "Sex": "Sex (Including equal pay)",
+    "Sexual orientation": "Sexual Orientation"
+  },
+  "payClaims": {
+    "Arrears": "Arrears",
+    "Holiday pay": "Holiday pay",
+    "Notice pay": "Notice pay",
+    "Redundancy pay": "Redundancy pay",
+    "Other payments": "Other payments"
+  },
+  "claimTypes": {
+    "breachOfContract": "Breach of contract",
+    "discrimination": "Discrimination",
+    "payRelated": "Pay-related",
+    "unfairDismissal": "Unfair dismissal",
+    "whistleBlowing": "Whistleblowing",
+    "otherClaim": "Other type of claim"
+  },
+  "tellUsWhatYouWant": {
+    "compensation": "Compensation only",
+    "tribunal": "Tribunal recommendation",
+    "oldJob": "Old job back",
+    "anotherJob": "Another job"
+  },
   "answers": {
     "NA": "Not Provided"
-  }
+  },
+  "submitError": "Sorry, we’re having technical problems procesing your application. Please try again in a few minutes."
 }

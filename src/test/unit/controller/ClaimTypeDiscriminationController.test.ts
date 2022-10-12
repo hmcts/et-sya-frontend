@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import ClaimTypeDiscriminationController from '../../../main/controllers/ClaimTypeDiscriminationController';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -9,8 +11,13 @@ describe('Claim Type Discrimination Controller', () => {
     common: {},
   };
 
+  const mockLogger = {
+    error: jest.fn().mockImplementation((message: string) => message),
+    info: jest.fn().mockImplementation((message: string) => message),
+  } as unknown as LoggerInstance;
+
   it('should render the claim type discrimination page', () => {
-    const controller = new ClaimTypeDiscriminationController();
+    const controller = new ClaimTypeDiscriminationController(mockLogger);
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -21,11 +28,11 @@ describe('Claim Type Discrimination Controller', () => {
     it('should require input', () => {
       const req = mockRequest({ body: {} });
       const res = mockResponse();
-      new ClaimTypeDiscriminationController().post(req, res);
+      new ClaimTypeDiscriminationController(mockLogger).post(req, res);
 
       const expectedErrors = [{ propertyName: 'claimTypeDiscrimination', errorType: 'required' }];
 
-      expect(res.redirect).toBeCalledWith(req.path);
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
@@ -37,7 +44,7 @@ describe('Claim Type Discrimination Controller', () => {
       });
       const res = mockResponse();
 
-      new ClaimTypeDiscriminationController().post(req, res);
+      new ClaimTypeDiscriminationController(mockLogger).post(req, res);
 
       expect(req.session.userCase).toMatchObject({ claimTypeDiscrimination: ['age', 'sex'] });
     });

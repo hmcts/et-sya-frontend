@@ -52,7 +52,7 @@ describe('Notice end Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.NOTICE_TYPE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_TYPE);
   });
 
   it('should redirect to the same screen when errors are present', () => {
@@ -63,7 +63,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -81,7 +81,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -97,7 +97,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -113,7 +113,7 @@ describe('Notice end Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -136,6 +136,6 @@ describe('Notice end Controller', () => {
 
     await controller.post(request, response);
 
-    expect(mockLogger.info).toBeCalled();
+    expect(mockLogger.info).toHaveBeenCalled();
   });
 });

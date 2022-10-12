@@ -1,9 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import config from 'config';
 import { Response } from 'express';
 import i18next from 'i18next';
 import { uuid } from 'uuidv4';
 
+import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { AppRequest } from '../definitions/appRequest';
 import { HTTPS_PROTOCOL, PageUrls } from '../definitions/constants';
 
@@ -34,9 +35,10 @@ const isEnabled = (): boolean => {
 export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> => {
   if (isEnabled()) {
     const healthResp = await callPCQHealth();
+
     const pcqUrl: string = config.get('services.pcq.url');
 
-    if (!req.session.userCase?.ClaimantPcqId && healthResp.data.status === 'UP') {
+    if (!req.session.userCase?.ClaimantPcqId && healthResp === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
       const returnurl = HTTPS_PROTOCOL + req.headers.host + PageUrls.CHECK_ANSWERS;
@@ -63,6 +65,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
       req.session.userCase.ClaimantPcqId = claimantPcqId;
       req.session.save();
+      handleUpdateDraftCase(req, logger);
 
       res.redirect(`${pcqUrl}?${qs}`);
     } else {
@@ -75,8 +78,23 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
   }
 };
 
-export const callPCQHealth = (): Promise<AxiosResponse> => {
+export const callPCQHealth = (): Promise<string> => {
   const url: string = config.get('services.pcq.health');
   logger.info(`PCQ health ${url}`);
-  return axios.get(url);
+
+  return axios
+    .get(url)
+    .then(resp => {
+      return resp.data.status;
+    })
+    .catch(error => {
+      if (error.response) {
+        logger.info(`PCQ health error status: ${error.response.status}`);
+      } else if (error.request) {
+        logger.info(`PCQ health error request: ${error.request}`);
+      } else {
+        logger.info(`PCQ health error message: ${error.message}`);
+      }
+      return 'DOWN';
+    });
 };

@@ -31,7 +31,12 @@
   "textInputHint": "Use this box to describe the events around your dispute, or add to your claim by uploading a document",
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
-    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>"
+    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>",
+    "hintExisting": "<p>You can only upload 1 document.</p><p>Uploaded file:</p><b>{{filename}}</b>"
+  },
+  "acceptedFormats": {
+    "label": "Accepted formats",
+    "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
@@ -39,8 +44,9 @@
       "tooLong": "Description must be 2500 characters or less",
       "textAndFile": "Enter a free text summary or upload as a separate document you cannot have both"
     },
-    "claimSummaryFile": {
-      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf."
+    "claimSummaryFileName": {
+      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>"
     }
   }
 }

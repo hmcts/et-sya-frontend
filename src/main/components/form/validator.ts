@@ -10,6 +10,14 @@ export const isFieldFilledIn: Validator = value => {
   }
 };
 
+export const isRespondentNameValid: Validator = value => {
+  if (!value || (value as string).trim().length === 0) {
+    return 'required';
+  } else if (!/(=?^.{1,100}$)/.test(value as string)) {
+    return 'invalidLength';
+  }
+};
+
 export const isContent2500CharsOrLess: Validator = value => {
   if (value !== undefined && (value as string).trim().length > 2500) {
     return 'tooLong';
@@ -39,17 +47,6 @@ export const atLeastOneFieldIsChecked: Validator = (fields: string[]) => {
   }
 };
 
-export const isInvalidPostcode: Validator = value => {
-  const fieldNotFilledIn = isFieldFilledIn(value);
-  if (fieldNotFilledIn) {
-    return fieldNotFilledIn;
-  }
-
-  if (!(value as string).match(/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i)) {
-    return 'invalid';
-  }
-};
-
 export const isValidUKTelNumber: Validator = value => {
   if (value === null || value === '') {
     return;
@@ -57,6 +54,9 @@ export const isValidUKTelNumber: Validator = value => {
 
   try {
     const phoneUtil = PhoneNumberUtil.getInstance();
+    if (!/^[+()\- \d]+$/.test(value as string)) {
+      return 'nonnumeric';
+    }
     if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(value as string, 'GB'), 'GB')) {
       return 'invalid';
     }
@@ -98,27 +98,8 @@ export const isValidNoticeLength: Validator = value => {
   }
 };
 
-export const isWorkAddressLineOneValid: Validator = value => {
-  if (typeof value === 'string') {
-    const inputStrLength = (value as string).trim().length;
-    if (inputStrLength === 0 || inputStrLength > 100) {
-      return 'required';
-    }
-  }
-};
-
 export const areBenefitsValid: Validator = value => {
-  return isFieldFilledIn(value) || isContent2500CharsOrLess(value);
-};
-
-export const isWorkAddressTownValid: Validator = value => {
-  if (typeof value === 'string') {
-    const inputStrLength = (value as string).trim().length;
-
-    if (inputStrLength < 3 || inputStrLength > 60) {
-      return 'required';
-    }
-  }
+  return isContent2500CharsOrLess(value);
 };
 
 export const isPayIntervalNull: Validator = (value: string) => {
@@ -155,17 +136,11 @@ export const isValidAvgWeeklyHours: Validator = value => {
   } else if (hours < minValue) {
     return 'negativeNumber';
   }
-
-  if (/^\d+$/.test(value as string)) {
-    return;
-  } else {
-    return 'invalid';
-  }
 };
 
 export const isValidPension: Validator = value => {
   if (!value || (value as string).trim().length === 0) {
-    return 'required';
+    return;
   }
 
   if (/^\D+$/.test(value as string) || /^\d+[^\d.]+$/.test(value as string)) {
@@ -224,17 +199,36 @@ export const currencyValidation = (value: string | string[]): [digitCount: numbe
   return [digitCount, correctFormat];
 };
 
-export const hasValidFileFormat: Validator = value => {
-  if (!value) {
+export const hasInvalidName = (fileName: string): string => {
+  if (!fileName) {
     return;
   }
 
-  value = (value as string).trim();
+  const fileNameRegExPattern = /^(?!\.)[^|*?:<>/$"]{1,150}$/;
+
+  if (fileNameRegExPattern.test(fileName)) {
+    return;
+  } else {
+    return 'invalidFileName';
+  }
+};
+
+export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
+  if (!value || !value.originalname) {
+    return;
+  }
+
   for (const format of ALLOWED_FILE_FORMATS) {
-    if (value.endsWith('.' + format)) {
+    if (value.originalname.endsWith('.' + format)) {
       return;
     }
   }
-
   return 'invalidFileFormat';
+};
+
+export const isAcasNumberValid: Validator = value => {
+  const valueAsString = value as string;
+  if (!/^[rR]\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {
+    return 'invalidAcasNumber';
+  }
 };

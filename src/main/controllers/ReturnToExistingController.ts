@@ -8,7 +8,10 @@ import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants'
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { assignFormData, conditionalRedirect, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class ReturnToExistingController {
   private readonly form: Form;
@@ -50,7 +53,7 @@ export default class ReturnToExistingController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? LegacyUrls.ET1_BASE
-      : PageUrls.CLAIM_STEPS;
+      : PageUrls.CLAIMANT_APPLICATIONS;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

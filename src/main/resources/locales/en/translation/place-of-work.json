@@ -3,17 +3,29 @@
   "h1": "What address did you work at?",
   "enterPostcode": "Enter a UK postcode",
   "manualAddress": "I worked outside the UK",
+  "cannotFindAddress": "I cannot find the address in the list",
+  "findAddress": "Find address",
   "errors": {
     "addressPostcode": {
-      "invalid": "You have not entered a valid UK postcode. Enter a valid UK postcode before continuing.",
-      "required": "A postcode is required.",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA",
       "notSelected": "Select an address"
     },
     "workAddress1": {
-      "required": "Enter a building and street for your work address up to 100 characters"
+      "required": "Enter the first line of the address you worked at - up to 100 characters",
+      "invalid": "Enter a valid first line of the address you worked at - up to 100 characters"
+    },
+    "workAddress2": {
+      "required": "Enter the second line of the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid second line of the address you worked at - up to 50 characters"
     },
     "workAddressTown": {
-      "required": "Enter a town or city for your work address up to 60 characters"
+      "required": "Enter a town or city for the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid town or city for the address you worked at - up to 50 characters"
+    },
+    "workAddressCountry": {
+      "required": "Enter a country for the address you worked at - up to 50 characters",
+      "invalid": "Enter a valid country for the address you worked at - up to 50 characters"
     },
     "workAddressPostcode": {
       "required": "Enter a postcode. For example, SW1 1AA",

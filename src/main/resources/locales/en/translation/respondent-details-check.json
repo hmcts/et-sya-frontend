@@ -4,5 +4,12 @@
   "name": "Name",
   "address": "Address",
   "acasNum": "Acas certificate number",
-  "submit": "Add another respondent"
+  "submit": "Add another respondent",
+  "change": "Change",
+  "unProvided": "Not provided",
+  "errors": {
+    "hiddenErrorField": {
+      "exceeded": "You can only add up to 6 respondents in this claim. Contact the tribunal after submitting your claim to discuss more respondents."
+    }
+  }
 }

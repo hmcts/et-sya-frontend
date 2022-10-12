@@ -29,7 +29,7 @@ describe('Return To Existing Controller', () => {
     const res = mockResponse();
 
     controller.post(req, res);
-    expect(res.redirect).toBeCalledWith(req.path);
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -42,7 +42,7 @@ describe('Return To Existing Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(LegacyUrls.ET1_BASE);
+    expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
     expect(req.session.errors).toEqual([]);
   });
 });

@@ -4,7 +4,6 @@ import { LoggerInstance } from 'winston';
 import PensionController from '../../../main/controllers/PensionController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormError } from '../../../main/definitions/form';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -31,20 +30,43 @@ describe('Pension controller', () => {
     expect(response.render).toHaveBeenCalledWith('pension', expect.anything());
   });
 
-  it('should not return an error when no radio buttons are selected', () => {
+  it('should render the benefits page when no radio buttons are selected', () => {
     const body = {
-      pension: '',
+      claimantPensionContribution: '',
     };
-    const errors: FormError[] = [];
     const controller = new PensionController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
-
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
+  });
+
+  it('should render the benefits page when yes radio button is selected and amount is left blank', () => {
+    const body = {
+      claimantPensionContribution: YesOrNo.YES,
+      claimantPensionWeeklyContribution: '',
+    };
+    const controller = new PensionController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
+  });
+
+  it('should render same page if an invalid value is entered', () => {
+    const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'notANumber' }];
+    const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: 'a' };
+    const controller = new PensionController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -59,7 +81,7 @@ describe('Pension controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual(body);
   });
 
@@ -74,7 +96,7 @@ describe('Pension controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.BENEFITS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual({
       claimantPensionContribution: YesOrNo.NO,
       claimantPensionWeeklyContribution: undefined,
@@ -89,6 +111,6 @@ describe('Pension controller', () => {
 
     await controller.post(request, response);
 
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toBeCalled());
+    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

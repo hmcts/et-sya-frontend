@@ -2,21 +2,16 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import {
-  assignFormData,
-  conditionalRedirect,
-  getPageContent,
-  handleSessionErrors,
-  handleUpdateDraftCase,
-  setUserCase,
-} from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class NoticePeriodController {
   private readonly form: Form;
@@ -38,7 +33,6 @@ export default class NoticePeriodController {
             value: YesOrNo.NO,
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: {

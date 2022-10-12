@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from 'config';
 
 import PcqController from '../../../main/controllers/PcqController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -34,6 +35,8 @@ describe('PCQGetController', () => {
     const redirectMock = jest.fn();
     res.redirect = redirectMock;
 
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+
     mockedAxios.get.mockImplementationOnce(() =>
       Promise.resolve({
         data: {
@@ -43,6 +46,7 @@ describe('PCQGetController', () => {
     );
 
     await controller.get(req, res);
+    await new Promise(process.nextTick);
     expect(redirectMock.mock.calls[0][0]).toContain('/service-endpoint');
   });
 
@@ -66,7 +70,8 @@ describe('PCQGetController', () => {
     );
 
     await controller.get(req, res);
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    await new Promise(process.nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if PCQ Health is DOWN', async () => {
@@ -86,7 +91,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if PCQ is not enabled', async () => {
@@ -96,8 +101,9 @@ describe('PCQGetController', () => {
     const res = mockResponse();
 
     await controller.get(req, res);
+    await new Promise(process.nextTick);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 
   test('Should redirect to Check Your Answers if config cannot be loaded', async () => {
@@ -106,6 +112,57 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toBeCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
+  test('Should redirect to Check Your Answers if health error (response received)', async () => {
+    mockedConfig.get.mockReturnValueOnce('true');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+
+    const req = mockRequest({});
+    const res = mockResponse();
+
+    mockedAxios.get.mockRejectedValueOnce({
+      response: { message: 'Bad Gateway', status: 504 },
+    });
+
+    await controller.get(req, res);
+    await new Promise(process.nextTick);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
+  test('Should redirect to Check Your Answers if health error (response not received)', async () => {
+    mockedConfig.get.mockReturnValueOnce('true');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+
+    const req = mockRequest({});
+    const res = mockResponse();
+
+    mockedAxios.get.mockRejectedValueOnce({
+      request: 'some input',
+    });
+
+    await controller.get(req, res);
+    await new Promise(process.nextTick);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+  });
+
+  test('Should redirect to Check Your Answers if health error (all others)', async () => {
+    mockedConfig.get.mockReturnValueOnce('true');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+
+    const req = mockRequest({});
+    const res = mockResponse();
+
+    mockedAxios.get.mockRejectedValueOnce({
+      message: 'Something went wrong',
+    });
+
+    await controller.get(req, res);
+    await new Promise(process.nextTick);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
 });

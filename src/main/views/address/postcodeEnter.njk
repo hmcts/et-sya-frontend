@@ -9,24 +9,32 @@
       classes: "govuk-input--width-10",
       label: {
         text: enterPostcode
-      }
+      },
+      value: previousPostcode
     }) }}
 
-    <div class="govuk-button-group">
-      {{ govukButton({
-        attributes: {
-          id: "findAddressButton"
-        },
-        text: findAddress,
-        type: "submit",
-        preventDoubleClick: true
-      }) }}
-      {{ govukButton({
-            text: "Save as draft",
-            classes: "govuk-button--secondary",
-            href: "/your-claim-has-been-saved"
-      }) }}
-    </div> 
+    <p class="govuk-body">
+      <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
+    </p>
+    
+    {{ govukButton({
+      attributes: {
+        id: "findAddressButton"
+      },
+      text: findAddress,
+      type: "submit",
+      classes: "govuk-!-margin-right-2",
+      preventDoubleClick: true
+    }) }}
+
+    {{ govukButton({
+          attributes: {
+            id: "saveAsDraftButton"
+          },
+          text: saveAsDraft,
+          type: submit,
+          classes: "govuk-button--secondary",
+          preventDoubleClick: true
+        }) }}
   </form>
-  <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
 </div>

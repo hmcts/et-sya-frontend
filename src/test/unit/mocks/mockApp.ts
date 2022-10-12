@@ -33,9 +33,11 @@ export function mockSession(
     },
     userCase: {
       id: 'testUserCaseId',
-      state: CaseState.DRAFT,
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       typeOfClaim: typeOfClaimList,
       tellUsWhatYouWant: tellUsWhatYouWantList,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
     },
     errors: errorList,
     guid: 'kedicik6-l0v3-y0u2-t1h3-mehmet9c3d68',
@@ -50,6 +52,12 @@ export function mockSession(
     returnUrl: undefined,
   };
 }
+
+export const mockSessionWithUserCase = (userCase: CaseWithId): AppSession => {
+  const session = mockSession([], [], []);
+  session.userCase = userCase;
+  return session;
+};
 
 export function mockRedisClient(cacheMap: Map<CaseDataCacheKey, string>): RedisClient {
   const redisClient = redis.createClient();

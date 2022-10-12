@@ -21,9 +21,9 @@ describe(`on POST ${PageUrls.PLACE_OF_WORK}`, () => {
       .post(pageUrl)
       .send({
         workAddress1: '31 The Street',
-        workAddress12: '',
+        workAddress2: '',
         workAddressTown: 'Exeter',
-        workAddressCountry: '',
+        workAddressCountry: 'United Kingdom',
         workAddressPostcode: 'EX7 8KK',
       })
       .expect(res => {

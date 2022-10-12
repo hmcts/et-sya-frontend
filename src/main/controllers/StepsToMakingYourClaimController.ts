@@ -6,9 +6,15 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { getPreloginCaseData } from '../services/CacheService';
+import { getCaseApi } from '../services/CaseService';
 
-import { getPageContent, getSectionStatus, setUserCaseWithRedisData } from './helpers';
+import { getSectionStatus, setUserCaseWithRedisData } from './helpers/CaseHelpers';
+import { getPageContent } from './helpers/FormHelpers';
+
+const { Logger } = require('@hmcts/nodejs-logging');
+const logger = Logger.getLogger('app');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -16,12 +22,18 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
+    const { userCase } = req.session;
     if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
+      if (userCase.id === undefined) {
+        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+        logger.info(`Created Draft Case - ${newCase.data.id}`);
+        req.session.userCase = fromApiFormat(newCase.data);
+      }
       setUserCaseWithRedisData(req, caseData);
     }
-    const { userCase } = req.session;
+
     const allSectionsCompleted = !!(
       userCase?.personalDetailsCheck === YesOrNo.YES &&
       userCase?.employmentAndRespondentCheck === YesOrNo.YES &&
@@ -78,8 +90,7 @@ export default class StepsToMakingYourClaimController {
             status: (): string =>
               getSectionStatus(
                 userCase?.claimDetailsCheck,
-                userCase?.claimSummaryFile ||
-                  userCase?.claimSummaryText ||
+                userCase?.claimSummaryText ||
                   userCase?.claimTypeDiscrimination?.length ||
                   userCase?.claimTypePay?.length
               ),
@@ -95,7 +106,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: (): string => (allSectionsCompleted ? PageUrls.CHECK_ANSWERS.toString() : ''),
+            url: (): string => (allSectionsCompleted ? PageUrls.PCQ.toString() : ''),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
@@ -110,6 +121,7 @@ export default class StepsToMakingYourClaimController {
       sections[2].links[0].url = PageUrls.CLAIM_TYPE_PAY;
     }
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+      req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = PageUrls.STILL_WORKING;
     }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {

@@ -1,15 +1,28 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { hasValidFileFormat, isContent2500CharsOrLess } from '../components/form/validator';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormatDocument } from '../helper/ApiFormatter';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
+import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class DescribeWhatHappenedController {
+  private uploadedFileName: string;
+  private getHint = (label: AnyRecord): string => {
+    if (this.uploadedFileName) {
+      return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
+    } else {
+      return label.fileUpload.hint;
+    }
+  };
+
   private readonly form: Form;
   private readonly describeWhatHappenedFormContent: FormContent = {
     fields: {
@@ -23,16 +36,25 @@ export default class DescribeWhatHappenedController {
         maxlength: 2500,
         validator: isContent2500CharsOrLess,
       },
-      claimSummaryFile: {
+      claimSummaryFileName: {
         id: 'claim-summary-file',
         label: l => l.fileUpload.linkText,
         labelHidden: true,
         type: 'upload',
         classes: 'govuk-label',
-        hint: l => l.fileUpload.hint,
+        hint: l => this.getHint(l),
         isCollapsable: true,
         collapsableTitle: l => l.fileUpload.linkText,
-        validator: hasValidFileFormat,
+      },
+      claimSummaryAcceptedType: {
+        id: 'claim-summary-file-accepted-type',
+        label: l => l.acceptedFormats.label,
+        labelHidden: true,
+        type: 'readonly',
+        classes: 'govuk-label',
+        isCollapsable: true,
+        collapsableTitle: l => l.acceptedFormats.label,
+        hint: l => l.acceptedFormats.p1,
       },
     },
     submit: {
@@ -45,16 +67,37 @@ export default class DescribeWhatHappenedController {
     },
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.describeWhatHappenedFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+    req.session.errors = [];
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const claimSummaryError = getClaimSummaryError(formData, req.file);
+    if (!claimSummaryError) {
+      try {
+        const result = await handleUploadDocument(req, req.file, this.logger);
+        if (result?.data) {
+          req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+        }
+      } catch (error) {
+        this.logger.info(error);
+      } finally {
+        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+        handleUpdateDraftCase(req, this.logger);
+      }
+    } else {
+      req.session.errors.push(claimSummaryError);
+      return res.redirect(req.url);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.session?.userCase?.claimSummaryFile?.document_filename) {
+      this.uploadedFileName = req.session.userCase.claimSummaryFile.document_filename;
+    }
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,

@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -8,7 +9,9 @@ import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class ClaimTypeDiscriminationController {
   private readonly form: Form;
@@ -32,11 +35,6 @@ export default class ClaimTypeDiscriminationController {
             id: 'disability',
             label: l => l.disability.checkbox,
             value: ClaimTypeDiscrimination.DISABILITY,
-          },
-          {
-            id: 'ethnicity',
-            label: l => l.ethnicity.checkbox,
-            value: ClaimTypeDiscrimination.ETHNICITY,
           },
           {
             id: 'genderReassignment',
@@ -80,7 +78,7 @@ export default class ClaimTypeDiscriminationController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor() {
+  constructor(private logger: LoggerInstance) {
     this.form = new Form(<FormFields>this.claimTypeDiscriminationFormContent.fields);
   }
 
@@ -91,6 +89,7 @@ export default class ClaimTypeDiscriminationController {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
+    handleUpdateDraftCase(req, this.logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

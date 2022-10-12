@@ -8,7 +8,14 @@ module.exports = () => {
     authenticateWithIdam: steps.IDAM.signin,
     youCanSaveCard: steps.saveDraft.youCanSaveCard,
     didYouWorkForOrganisation: steps.employmentDetails.didYouWorkForOrg,
-    personalDetails: steps.personalDetails.personalDetails,
+    personalDetails: steps.personalDetails.enterPersonalDetails,
+    areYouStillWorkingForOrganisation: steps.employmentDetails.areYouStillWorkingForOrg,
+    stillWorkingJourney: steps.employmentDetails.stillWorkingPages,
+    workingNoticePeriodJourney: steps.employmentDetails.workingNoticePeriodPages,
+    noLongerWorkingJourney: steps.employmentDetails.noLongerWorkingPages,
+    respondentDetailsJourney: steps.employmentDetails.respondentDetailsPages,
+    stepsToMakingYourClaim: steps.stepsToMakingYourClaim.stepsToMakingYourClaim,
+    claimDetails: steps.claimDetails.claimDet,
   });
 };
 

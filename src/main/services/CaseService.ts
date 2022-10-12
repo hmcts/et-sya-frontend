@@ -1,7 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
+import FormData from 'form-data';
 
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
@@ -16,7 +18,7 @@ export class CaseApi {
     return this.axio.post(JavaApiUrls.INITIATE_CASE_DRAFT, body);
   };
 
-  getDraftCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
+  getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     return this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
   };
 
@@ -35,6 +37,37 @@ export class CaseApi {
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
   };
+
+  updateSubmittedCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, toApiFormat(caseItem));
+  };
+
+  getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.post(JavaApiUrls.GET_CASE, { case_id: id });
+  };
+
+  submitCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axio.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
+  };
+
+  uploadDocument = async (file: UploadedFile, caseTypeId: string): Promise<AxiosResponse<DocumentUploadResponse>> => {
+    const formData: FormData = new FormData();
+    formData.append('document_upload', file.buffer, file.originalname);
+
+    return this.axio.post(JavaApiUrls.UPLOAD_FILE + caseTypeId, formData, {
+      headers: {
+        ...formData.getHeaders(),
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity,
+    });
+  };
+
+  getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
+    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
+      responseType: 'arraybuffer',
+    });
+  };
 }
 
 export const getCaseApi = (token: string): CaseApi => {
@@ -49,3 +82,9 @@ export const getCaseApi = (token: string): CaseApi => {
     })
   );
 };
+
+export type UploadedFile =
+  | {
+      [fieldname: string]: Express.Multer.File;
+    }
+  | Express.Multer.File;

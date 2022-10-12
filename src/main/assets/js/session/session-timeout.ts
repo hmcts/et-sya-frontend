@@ -11,6 +11,7 @@ export default class SessionTimeout {
   private sessionTimeout: number;
   private modalTimeout: number;
   private modalCountdown: number;
+  private isLoggedIn: HTMLInputElement = null;
   private extendSessionElement: HTMLElement = null;
   private modalElement: HTMLElement = null;
   private modalOverlayElement: HTMLElement = null;
@@ -28,6 +29,7 @@ export default class SessionTimeout {
     this.modalOverlayElement = document.querySelector('#modal-overlay');
     this.modalCountdownElement = document.querySelector('#dialog-description');
     this.extendSessionElement = document.querySelector('#extend-session');
+    this.isLoggedIn = document.querySelector('#isLoggedIn');
     this.body = document.querySelector('body');
     this.focusableElements = this.modalElement.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -137,17 +139,19 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
-    return axios
-      .get('/extend-session')
-      .then((response: AxiosResponse): void => {
-        this.sessionExpirationTime = response.data.timeout;
-        this.restartCounters();
-        this.closeModal();
-      })
-      .catch(() => {
-        this.removeListeners();
-        this.stopCounters();
-      });
+    if (this.isLoggedIn.value === 'true') {
+      return axios
+        .get('/extend-session')
+        .then((response: AxiosResponse): void => {
+          this.sessionExpirationTime = response.data.timeout;
+          this.restartCounters();
+          this.closeModal();
+        })
+        .catch(() => {
+          this.removeListeners();
+          this.stopCounters();
+        });
+    }
   };
 
   keyDownEventListener = (event: KeyboardEvent): void => {

@@ -9,7 +9,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { assignFormData, getPageContent, handleSessionErrors, setUserCase } from './helpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class LipOrRepController {
   private readonly form: Form;
@@ -24,11 +26,11 @@ export default class LipOrRepController {
         values: [
           {
             label: (l: AnyRecord): string => l.radio1,
-            value: YesOrNo.YES,
+            value: YesOrNo.NO,
           },
           {
             label: (l: AnyRecord): string => l.radio2,
-            value: YesOrNo.NO,
+            value: YesOrNo.YES,
           },
         ],
         validator: isFieldFilledIn,
@@ -46,9 +48,9 @@ export default class LipOrRepController {
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     let redirectUrl;
-    if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
+    if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
-    } else if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
+    } else if (req.body.claimantRepresentedQuestion === YesOrNo.YES) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
