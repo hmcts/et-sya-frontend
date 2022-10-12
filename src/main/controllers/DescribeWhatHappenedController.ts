@@ -16,7 +16,7 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 export default class DescribeWhatHappenedController {
   private uploadedFileName: string;
   private getHint = (label: AnyRecord): string => {
-    if (this.uploadedFileName) {
+    if (this.uploadedFileName !== '') {
       return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
     } else {
       return label.fileUpload.hint;
