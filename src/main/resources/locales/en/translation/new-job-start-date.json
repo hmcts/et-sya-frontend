@@ -12,7 +12,8 @@
       "invalidDateMoreThanTenYearsInFuture": "Enter a date between now and 10 years in the future",
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
-      "yearNotANumber": "Year must only contain numbers. For example, 2022"
+      "yearNotANumber": "Year must only contain numbers. For example, 2022",
+      "invalidDate": "New job start date must be a real date."
     }
   }
 }

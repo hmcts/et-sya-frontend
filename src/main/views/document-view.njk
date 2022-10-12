@@ -1,0 +1,113 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">
+        {{h1}}
+      </h1>
+
+      {% for doc in docs %}
+
+        {% if doc.description %}
+          {% set row = [
+    [
+      {
+        text: description.firstCell
+      },
+      {
+        text: description.secondCell
+      }
+    ],
+    [
+      {
+        text: document
+      },
+      {
+        html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
+      }
+    ],
+        [
+      {
+        text: documentDetails
+      },
+      {
+        html: doc.description
+      }
+    ],
+        [
+      {
+        text: date
+      },
+      {
+        html: doc.createdOn
+      }
+    ]
+  ] %}
+        {% else %}
+
+          {% set row = [
+    [
+      {
+        text: description.firstCell
+      },
+      {
+        text: description.secondCell
+      }
+    ],
+    [
+      {
+        text: document
+      },
+      {
+        html: "<a href=\"/getCaseDocument/" + doc.id + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + " [" + doc.size +"MB]" + "</a>"
+      }
+    ],
+        [
+      {
+        text: date
+      },
+      {
+        html: doc.createdOn
+      }
+    ]
+  ] %}
+
+        {% endif %}
+
+        {{ govukTable({
+  firstCellIsHeader: true,
+  rows: row
+}) }}
+      {% endfor %}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+              summaryText: "Contact",
+              html: sideBarContent
+            }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}

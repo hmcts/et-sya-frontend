@@ -1,0 +1,85 @@
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% set htmlForNotification %}
+
+  {% if showSubmittedAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        You have submitted your claim to the tribunal
+    </h3>
+
+    <p class="govuk-body">
+        We aim to process your claim by {{processingDueDate}}. In busy periods it may take longer.
+    </p>
+  {% endif %}
+
+  {% if showAcknowledgementAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.acknowledgement.header}}
+    </h3>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{notificationBanner.acknowledgement.link}}</a>.
+    </p>
+
+    <p class="govuk-body">
+        {{notificationBanner.acknowledgement.p1}}
+    </p>
+
+    {% if respondentResponseDeadline %}
+        <p class="govuk-body">
+            {{notificationBanner.acknowledgement.p2 | safe}}
+            {{respondentResponseDeadline}}.
+        </p>
+    {% endif %}
+  {% endif %}
+
+  {% if showRejectionAlert %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.rejection.header}}
+    </h3>
+
+    <p class="govuk-body">
+        {{notificationBanner.rejection.p1}}
+    </p>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/case-document/rejection-of-claim">{{notificationBanner.rejection.link}}</a>.
+    </p>
+  {% endif %}
+
+  {% if showRespondentResponseReceived %}
+    <h3 class="govuk-notification-banner__heading">
+      {{notificationBanner.respondentReceived.header}}
+    </h3>
+    <p class="govuk-body">
+      {{notificationBanner.respondentReceived.p1}}
+    </p>
+  {% endif %}
+
+  {% if showRespondentRejection %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.respondentRejection.header}}
+    </h3>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/case-document/response-rejection">{{notificationBanner.respondentRejection.link}}</a>.
+    </p>
+  {% endif %}
+
+  {% if showRespondentAcknowledgement %}
+    <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.respondentAcknowledgement.header}}
+    </h3>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/case-document/response-acknowledgement">{{notificationBanner.respondentAcknowledgement.link}}</a>.
+    </p>
+  {% endif %}
+
+{% endset %}
+
+{% if showSubmittedAlert or showAcknowledgementAlert or showRejectionAlert or showRespondentResponseReceived or showRespondentRejection or showRespondentAcknowledgement %}
+    {{ govukNotificationBanner({
+   html: htmlForNotification
+  }) }}
+{% endif %}

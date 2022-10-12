@@ -7,17 +7,18 @@
   "errors": {
     "noticeEnds": {
       "required": "Tell us when your notice period ends. For example, DD MM YYYY",
-      "dayRequired": "Enter a day for your start date. For example, 23",
-      "monthRequired": "Enter a month for your start date. For example, 04",
-      "yearRequired": " Enter a year for your start date. For example, 2014",
+      "dayRequired": "Enter a day for your notice period end date. For example, 23",
+      "monthRequired": "Enter a month for your notice period end date. For example, 04",
+      "yearRequired": " Enter the year when your notice period ends. For example, 2022",
       "dayNotANumber": "Day must only contain numbers. For example, 23",
       "monthNotANumber": "Month must only contain numbers. For example, 04",
-      "yearNotANumber": "Year must only contain numbers. For example, 2014",
+      "yearNotANumber": "Year must only contain numbers. For example, 2022",
       "dayInvalid": "Day must be between 1 and 31",
       "monthInvalid": "Month must be between 1 and 12",
       "yearInvalid": "You have entered the year in an invalid format. Enter the whole year, for example 2014",
       "invalidDateInPast": "Enter a valid date, date must not be in the past",
-      "invalidDateMoreThanTenYearsInFuture": "Enter a valid date, date must not be greater than 10 years from current date"
+      "invalidDateMoreThanTenYearsInFuture": "Enter a valid date, date must not be greater than 10 years from current date",
+      "invalidDate": "Employment notice end date must be a real date."
     }
   }
 }

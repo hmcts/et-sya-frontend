@@ -55,15 +55,27 @@ async function whatCompensationAreYouSeeking(I) {
 }
 
 async function whatTribunalRecommendation(I) {
-  I.whatTribunalRecommendation(I);
+  await I.whatTribunalRecommendation(I);
 }
 
 async function whistleBlowingClaims(I) {
-  I.whistleBlowingClaims(I);
+  await I.whistleBlowingClaims(I);
 }
 
 async function haveYouCompletedThisSection(I) {
-  I.haveYouCompletedThisSection(I);
+  await I.haveYouCompletedThisSection(I);
+}
+
+async function submittingClaim(I) {
+  I.submitClaim(I);
+}
+
+async function checkYourAnswers(I) {
+  await I.checkYourAnswers(I);
+}
+
+async function claimSubmitted(I) {
+  await I.claimSubmitted(I);
 }
 
 module.exports = {
@@ -84,4 +96,7 @@ module.exports = {
   whistleBlowingClaims,
   haveYouCompletedThisSection,
   claimDetails,
+  submittingClaim,
+  checkYourAnswers,
+  claimSubmitted,
 };

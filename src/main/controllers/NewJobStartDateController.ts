@@ -41,6 +41,27 @@ export default class NewJobStartDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    new_job_start_date.values = [
+      {
+        label: (l: AnyRecord): string => l.dateFormat.day,
+        name: 'day',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.month,
+        name: 'month',
+        classes: 'govuk-input--width-2',
+        attributes: { maxLength: 2 },
+      },
+      {
+        label: (l: AnyRecord): string => l.dateFormat.year,
+        name: 'year',
+        classes: 'govuk-input--width-4',
+        attributes: { maxLength: 4 },
+      },
+    ];
+    this.newJobStartDateContent.fields = { newJobStartDate: new_job_start_date };
     const content = getPageContent(req, this.newJobStartDateContent, [
       TranslationKeys.COMMON,
       TranslationKeys.NEW_JOB_START_DATE,

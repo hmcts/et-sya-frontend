@@ -1,0 +1,129 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <h1 class="govuk-heading-xl">
+        {{h1}}
+      </h1>
+
+      
+
+      {% if et3AcceptedDocs.length %}
+        {% set documentsRows = [] %}
+        {% for et3AcceptedDoc in et3AcceptedDocs %}
+          {% set documentsRows = (documentsRows.push(
+            [
+              {
+                text: et3AcceptedDoc.createdOn
+              },
+              {
+                text: responseEt3
+              },
+              {
+                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
+              }
+            ]
+            ), documentsRows) %}
+        {% endfor %}
+
+        {{ govukTable({
+          caption: h2,
+          captionClasses: "govuk-table__caption--m",
+          firstCellIsHeader: true,
+          rows: documentsRows
+        }) }}
+      {% endif %}
+
+      {% if et3RejectionDocs.length %}
+        {% set documentsRows = [] %}
+        {% for et3RejectionDoc in et3RejectionDocs %}
+          {% set documentsRows = (documentsRows.push(
+            [
+              {
+                text: et3RejectionDoc.createdOn
+              },
+              {
+                text: rejectionLetter
+              },
+              {
+                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
+              }
+            ]
+            ), documentsRows) %}
+        {% endfor %}
+
+        {{ govukTable({
+          caption: h2,
+          captionClasses: "govuk-table__caption--m",
+          firstCellIsHeader: true,
+          rows: documentsRows
+        }) }}
+      {% endif %}
+
+
+      {% set documentsRows = [] %}
+      {% if et3Forms.length %}
+       {% for et3Form in et3Forms %}
+          {% set documentsRows = (documentsRows.push(
+            [
+              {
+                text: et3FormText
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
+              }
+            ]
+            ), documentsRows) %}
+        {% endfor %}
+      {% endif %}
+      {% if et3SupportingDocs.length %}
+        {% for et3SupportingDoc in et3SupportingDocs %}
+          {% set documentsRows = (documentsRows.push(
+            [
+              {
+                text: supportingMaterials
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3SupportingDoc.originalDocumentName + "</a>"
+              }
+            ]
+            ), documentsRows) %}
+        {% endfor %}
+      {% endif %}
+
+      {{ govukTable({
+        captionClasses: "govuk-table__caption--m",
+        rows: documentsRows
+      }) }}
+
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+              summaryText: "Contact",
+              html: sideBarContent
+            }) }}
+
+    </div>
+
+  </div>
+
+{% endblock %}
