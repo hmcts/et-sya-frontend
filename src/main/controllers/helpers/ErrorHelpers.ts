@@ -26,7 +26,7 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const claimSummaryError = getClaimSummaryError(formData, req.file);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
-
+  const otherClaimTypeError = getOtherClaimDescriptionError(formData);
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
   }
@@ -50,6 +50,10 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   if (acasCertificateNumberError) {
     sessionErrors = [...sessionErrors, acasCertificateNumberError];
   }
+
+  if (otherClaimTypeError) {
+    sessionErrors = [...sessionErrors, otherClaimTypeError];
+  }
   return sessionErrors;
 };
 
@@ -64,6 +68,21 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
       return { errorType, propertyName: 'hearingAssistance' };
+    }
+  }
+};
+
+export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): FormError => {
+  const claimTypesCheckbox = formData.typeOfClaim;
+  const otherClaimTextarea = formData.otherClaim;
+
+  if (
+    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
+    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
+  ) {
+    const errorType = isFieldFilledIn(otherClaimTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'otherClaim' };
     }
   }
 };
