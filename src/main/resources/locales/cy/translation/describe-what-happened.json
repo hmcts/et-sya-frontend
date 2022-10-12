@@ -31,7 +31,12 @@
   "textInputHint": "",
   "fileUpload": {
     "linkText": "",
-    "hint": ""
+    "hint": "",
+    "hintExisting": ""
+  },
+  "acceptedFormats": {
+    "label": "",
+    "p1": ""
   },
   "errors": {
     "claimSummaryText": {
@@ -39,8 +44,9 @@
       "tooLong": "",
       "textAndFile": ""
     },
-    "claimSummaryFile": {
-      "invalidFileFormat": ""
+    "claimSummaryFileName": {
+      "invalidFileFormat": "",
+      "invalidFileName": ""
     }
   }
 }

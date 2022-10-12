@@ -7,10 +7,5 @@
   },
   "months": "",
   "weeks": "",
-  "noLongerWorking": "",
-  "errors": {
-    "noticePeriodUnit": {
-      "required": ""
-    }
-  }
+  "noLongerWorking": ""
 }

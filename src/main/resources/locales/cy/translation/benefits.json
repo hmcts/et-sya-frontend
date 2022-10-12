@@ -12,9 +12,7 @@
   "noLongerWorking": "",
   "errors": {
     "benefitsCharCount": {
-      "required": "",
-      "tooLong": "",
-      "tooShort": ""
+      "tooLong": ""
     }
   }
 }

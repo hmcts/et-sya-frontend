@@ -3,6 +3,8 @@
   "h1": "",
   "enterPostcode": "",
   "manualAddress": "",
+  "cannotFindAddress": "",
+  "findAddress": "",
   "errors": {
     "addressPostcode": {
       "invalid": "",
@@ -10,10 +12,20 @@
       "notSelected": ""
     },
     "workAddress1": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "workAddress2": {
+      "required": "",
+      "invalid": ""
     },
     "workAddressTown": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "workAddressCountry": {
+      "required": "",
+      "invalid": ""
     },
     "workAddressPostcode": {
       "required": "",

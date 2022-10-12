@@ -11,12 +11,23 @@
   "country": "",
   "postcode": "",
   "enterAddressManually": "",
+  "cannotFindAddress": "",
   "errors": {
     "address1": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "address2": {
+      "required": "",
+      "invalid": ""
     },
     "addressTown": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "addressCountry": {
+      "required": "",
+      "invalid": ""
     },
     "addressPostcode": {
       "required": "",

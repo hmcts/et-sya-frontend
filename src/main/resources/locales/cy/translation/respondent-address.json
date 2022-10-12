@@ -11,11 +11,26 @@
   "town": "",
   "manualAddress": "",
   "errors": {
+    "addressPostcode": {
+      "invalid": "",
+      "required": "",
+      "notSelected": ""
+    },
     "respondentAddress1": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "respondentAddress2": {
+      "required": "",
+      "invalid": ""
     },
     "respondentAddressTown": {
-      "required": ""
+      "required": "",
+      "invalid": ""
+    },
+    "respondentAddressCountry": {
+      "required": "",
+      "invalid": ""
     },
     "respondentAddressPostcode": {
       "required": "",

@@ -3,6 +3,12 @@
   "h1": "",
   "des": "",
   "submitYourClaim": "",
+  "discrimination": "",
+  "payRelated": "",
+  "unfairDismissal": "",
+  "whistleBlowing": "",
+  "otherClaim": "",
+  "breachOfContract": "",
   "checkAllAnswers": "",
   "warning": "",
   "remember": "",
@@ -13,21 +19,22 @@
     "header": "",
     "typeOfClaim": ""
   },
+  "change": "",
   "personalDetails": {
     "header": "",
     "dob": "",
-    "gender": "",
-    "genderIdentity": "",
-    "genderSameAsBirth": "",
+    "sex": "",
     "contactOrHomeAddress": "",
     "howToBeContacted": "",
     "takePartInHearing": "",
     "disability": "",
-    "title": ""
+    "title": "",
+    "notSelected": ""
   },
   "contactDetails": {
     "header": "",
-    "telephone": ""
+    "telephone": "",
+    "notProvided": ""
   },
   "yourPreferences": {
     "header": "",
@@ -46,8 +53,8 @@
     "startDate": "",
     "noticePeriod": "",
     "noticeEnds": "",
-    "noticeLength": "",
     "noticePeriodWeeksOrMonths": "",
+    "noticeLength": "",
     "noticePaid": "",
     "weeklyHours": "",
     "payBeforeTax": "",
@@ -62,6 +69,7 @@
   },
   "respondentDetails": {
     "header": "",
+    "details": "",
     "respondentName": "",
     "respondentAddress": "",
     "workedAtRespondent": "",
@@ -77,7 +85,8 @@
   },
   "claimDetails": {
     "header": "",
-    "claimType": "",
+    "claimTypeDiscrimination": "",
+    "claimTypePay": "",
     "describeWhatHappened": "",
     "ifClaimSuccessful": "",
     "expectedCompensation": "",
@@ -87,7 +96,41 @@
     "fileUploads": "",
     "whatYouWant": ""
   },
+  "discriminationClaims": {
+    "Age": "",
+    "Disability": "",
+    "Ethnicity": "",
+    "Gender reassignment": "",
+    "Marriage or civil partnership": "",
+    "Pregnancy or maternity": "",
+    "Race": "",
+    "Religion or belief": "",
+    "Sex": "",
+    "Sexual orientation": ""
+  },
+  "payClaims": {
+    "Arrears": "",
+    "Holiday pay": "",
+    "Notice pay": "",
+    "Redundancy pay": "",
+    "Other payments": ""
+  },
+  "claimTypes": {
+    "breachOfContract": "",
+    "discrimination": "",
+    "payRelated": "",
+    "unfairDismissal": "",
+    "whistleBlowing": "",
+    "otherClaim": ""
+  },
+  "tellUsWhatYouWant": {
+    "compensation": "",
+    "tribunal": "",
+    "oldJob": "",
+    "anotherJob": ""
+  },
   "answers": {
     "NA": ""
-  }
+  },
+  "submitError": ""
 }

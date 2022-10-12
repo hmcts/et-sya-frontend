@@ -5,5 +5,14 @@
   "hintText": "",
   "linkText": "",
   "yes": "",
-  "no": ""
+  "no": "",
+  "errors": {
+    "acasCert": {
+      "required": ""
+    },
+    "acasCertNum": {
+      "required": "",
+      "invalidAcasNumber": ""
+    }
+  }
 }

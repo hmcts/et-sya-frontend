@@ -5,7 +5,6 @@
   "hint": "",
   "errors": {
     "newJobStartDate": {
-      "required": "",
       "dayRequired": "",
       "monthRequired": "",
       "yearRequired": "",

@@ -2,5 +2,15 @@
   "title": "",
   "h1": "",
   "hint": "",
-  "dismissalhint": ""
+  "linkText": "",
+  "dismissalHint": "",
+  "another": "",
+  "no_power": "",
+  "employer": "",
+  "unfair_dismissal": "",
+  "errors": {
+    "noAcasReason": {
+      "required": ""
+    }
+  }
 }

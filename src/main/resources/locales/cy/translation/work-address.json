@@ -1,4 +1,9 @@
 {
   "title": "",
-  "hintText": ""
+  "hintText": "",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": ""
+    }
+  }
 }

@@ -6,7 +6,6 @@
   "errors": {
     "claimantPensionWeeklyContribution": {
       "invalid": "",
-      "required": "",
       "notANumber": ""
     }
   }

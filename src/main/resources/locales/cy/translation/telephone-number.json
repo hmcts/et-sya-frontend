@@ -5,7 +5,8 @@
   "telNumber": "",
   "errors": {
     "telNumber": {
-      "invalid": ""
+      "invalid": "",
+      "nonnumeric": ""
     }
   }
 }
