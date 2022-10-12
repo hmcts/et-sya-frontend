@@ -97,6 +97,8 @@ export default class DescribeWhatHappenedController {
   public get = (req: AppRequest, res: Response): void => {
     if (req.session?.userCase?.claimSummaryFile?.document_filename) {
       this.uploadedFileName = req.session.userCase.claimSummaryFile.document_filename;
+    } else {
+      this.uploadedFileName = '';
     }
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
