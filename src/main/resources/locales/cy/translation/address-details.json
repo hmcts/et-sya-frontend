@@ -1,0 +1,38 @@
+{
+  "title": "Address details",
+  "pageHeader": "Beth yw eich cyfeiriad cyswllt neu gyfeiriad cartref?",
+  "manualAddress": "I live outside the UK",
+  "pageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
+  "enterPostcode": "Rhowch god post yn y DU",
+  "addressLine1": "Address line 1",
+  "addressLine2": "Address line 2",
+  "town": "Town or city",
+  "county": "County",
+  "country": "Country",
+  "postcode": "Postcode or area code (optional)",
+  "enterAddressManually": "Nid wyf yn byw yn y DU",
+  "cannotFindAddress": "Ni allaf ddod o hyd i fy nghyfeiriad yn y rhestr",
+  "errors": {
+    "address1": {
+      "required": "Enter the first line of your contact or home address - up to 100 characters",
+      "invalid": "Enter the first line of your contact or home address - up to 100 characters"
+    },
+    "address2": {
+      "required": "Enter the second line of your contact or home address - up to 50 characters",
+      "invalid": "Enter the second line of your contact or home address - up to 50 characters"
+    },
+    "addressTown": {
+      "required": "Enter a town or city for your contact or home address - up to 50 characters",
+      "invalid": "Enter a town or city for your contact or home address - up to 50 characters"
+    },
+    "addressCountry": {
+      "required": "Enter a Country for your contact or home address - up to 50 characters",
+      "invalid": "Enter a Country for your contact or home address - up to 50 characters"
+    },
+    "addressPostcode": {
+      "required": "Enter a postcode. For example, SW1 1AA",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "notSelected": "Select an address"
+    }
+  }
+}
