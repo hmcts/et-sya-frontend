@@ -12,7 +12,6 @@ import { AppRequest } from './definitions/appRequest';
 import { CaseApiErrors, PageUrls, RedisErrors } from './definitions/constants';
 import setupDev from './development';
 import { AppInsights } from './modules/appinsights';
-import { Container } from './modules/awilix';
 import { HealthCheck } from './modules/health';
 import { Helmet } from './modules/helmet';
 import { I18Next } from './modules/i18next';
@@ -40,8 +39,6 @@ new Helmet(config.get('security'), [
   config.get('services.pcq.url'),
   config.get('services.et1Legacy.url'),
 ]).enableFor(app);
-
-new Container().enableFor(app);
 
 new I18Next().enableFor(app);
 
