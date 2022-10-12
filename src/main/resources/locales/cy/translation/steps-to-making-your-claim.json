@@ -1,0 +1,38 @@
+{
+  "title": "Camau i wneud eich hawliad",
+  "h1": "Camau i wneud eich hawliad",
+  "applicationDetails": "Welsh Translation required",
+  "claimType": "Welsh Translation required",
+  "notStarted": "Welsh Translation required",
+  "completed": "Welsh Translation required",
+  "inProgress": "Welsh Translation required",
+  "cannotStartYet": "Welsh Translation required",
+  "section1": {
+    "title": "Eich manylion",
+    "link1Text": "Manylion personol",
+    "link2Text": "Manylion cyswllt",
+    "link3Text": "Eich dewisiadau"
+  },
+  "section2": {
+    "title": "Manylion cyflogaeth a manylion yr Atebydd",
+    "link1Text": "Statws Cyflogaeth",
+    "link2Text": "Manylion yr Atebydd"
+  },
+  "section3": {
+    "title": "Manylion yr hawliad",
+    "link1Text": "Disgrifiwch beth ddigwyddodd i chi",
+    "link2Text": "Dywedwch wrthym beth yr ydych eisiau ei gael gan eich hawliad"
+  },
+  "section4": {
+    "title": "Welsh Translation required",
+    "link1Text": "Welsh Translation required"
+  },
+  "claimTypes": {
+    "breachOfContract": "Torri contract",
+    "discrimination": "Gwahaniaethu",
+    "payRelated": "Ymwneud â thâl",
+    "unfairDismissal": "Diswyddo annheg",
+    "whistleBlowing": "Chwythu’r chwiban",
+    "otherClaim": "Math arall o hawliad"
+  }
+}

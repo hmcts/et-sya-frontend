@@ -1,0 +1,21 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "p": "Welsh Translation required",
+  "detailsSummary": {
+    "heading": "Welsh Translation required",
+    "p": "Welsh Translation required",
+    "bullet1": "Welsh Translation required",
+    "bullet2": "Welsh Translation required",
+    "bullet3": "Welsh Translation required"
+  },
+  "yes": "Oes",
+  "noSupport": "Welsh Translation required",
+  "adjustmentDetailTextLabel": "Welsh Translation required",
+  "textAreaHint": "Welsh Translation required",
+  "errors": {
+    "reasonableAdjustmentsDetail": {
+      "required": "Welsh Translation required"
+    }
+  }
+}

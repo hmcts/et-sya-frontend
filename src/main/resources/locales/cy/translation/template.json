@@ -1,7 +1,28 @@
 {
+  "serviceName": "Welsh Translation required",
+  "guide": "Welsh Translation required",
+  "termsAndConditions": "Welsh Translation required",
+  "cookiePolicy": "Welsh Translation required",
+  "contact": "Cysylltu â ni",
+  "stage": "Welsh Translation required",
+  "signOut": "Welsh Translation required",
+  "logIn": "Login",
   "phaseBanner": {
     "feedback": "Bydd eich adborth",
+    "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
     "additionalText": "yn ein helpu i wella’r gwasanaeth.",
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
+  },
+  "contactUsTitle": "Cysylltu â ni",
+  "contactUsForHelp": "Welsh Translation required",
+  "noticeLengthInsetText": "Welsh Translation required",
+  "sessionTimeout": {
+    "modal": {
+      "title": "Welsh Translation required",
+      "body": ["Welsh Translation required"],
+      "info": "Welsh Translation required",
+      "extend": "Welsh Translation required",
+      "cancel": "Allgofnodi"
+    }
   }
 }

@@ -52,6 +52,11 @@
   @include govuk-media-query($from: 450px) {
     float: left;
   }
+  &--300px {
+    @extend .app-task-list__task-name;
+    max-width: 300px;
+    word-wrap: break-word;
+  }
 }
 
 // The `app-task-list__task-completed` class was previously used on the task

@@ -1,0 +1,14 @@
+{
+  "title": "Dychwelyd i hawliad presennol",
+  "h1": "Dychwelyd i hawliad presennol",
+  "p1": "Bydd arnoch angen defnyddio <span class=\"govuk-!-font-weight-bold\">‘rhif cadw a dychwelyd’</span> neu eich newydd <span class=\"govuk-!-font-weight-bold\">‘Cyfrif Tribiwnlys Cyflogaeth’</span> ddychwelyd i hawliad presennol.",
+  "p2": "Welsh Translation required",
+  "p3": "Nid yw’r manylion hyn gennych <a href='/work-postcode' class=\"govuk-link\">Cychwyn hawliad newydd.</a>",
+  "optionText1": "Mae gen i <span class=\"govuk-!-font-weight-bold\">‘rif cadw a dychwelyd’</span>",
+  "optionText2": "Mae gen i newydd <span class=\"govuk-!-font-weight-bold\">‘Gyfrif Tribiwnlys Cyflogaeth’</span>",
+  "errors": {
+    "returnToExisting": {
+      "required": "Welsh Translation required"
+    }
+  }
+}

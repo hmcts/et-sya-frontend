@@ -1,0 +1,39 @@
+{
+  "title": "Type of claim",
+  "h1": "Pa fath o hawliad ydych chi’n ei wneud?",
+  "hints": "Welsh Translation required",
+  "hint": "Gallwch ddewis bob un sy’n berthnasol i chi. Fe ofynnir am ragor o wybodaeth yn hwyrach ymlaen yn yr hawliad. <br><br><span class=\"govuk-!-font-weight\">Dewiswch bob un sy'n berthnasol </span>",
+  "breachOfContract": {
+    "title": "Welsh Translation required",
+    "checkbox": "Torri contract - gan gynnwys tâl cyfnod rhybudd"
+  },
+  "discrimination": {
+    "title": "Discrimination claim",
+    "checkbox": "Gwahaniaethu o unrhyw fath",
+    "hint": "er enghraifft oherwydd eich rhyw, ethnigrwydd, anabledd neu nodwedd arall"
+  },
+  "payRelated": {
+    "title": "Hawliad yn ymwneud â thâl",
+    "checkbox": "Hawliad yn ymwneud â thâl"
+  },
+  "unfairDismissal": {
+    "title": "Diswyddo Annheg",
+    "checkbox": "Diswyddo annheg",
+    "hint": "Hawliad yn ymwneud â thâl"
+  },
+  "whistleBlowing": {
+    "title": "Chwythu’r chwiban",
+    "checkbox": "Chwythu’r chwiban",
+    "hint": "gan gynnwys diswyddo neu unrhyw fath arall o driniaeth annheg yn dilyn chwythu’r chwiban"
+  },
+  "otherTypesOfClaims": {
+    "title": "Welsh Translation required",
+    "checkbox": "Math arall o hawliad",
+    "explain": "Disgrifiwch pa fath o hawliad ydych chi eisiau ei wneud"
+  },
+  "errors": {
+    "typeOfClaim": {
+      "required": "Welsh Translation required"
+    }
+  }
+}

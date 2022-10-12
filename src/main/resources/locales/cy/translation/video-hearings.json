@@ -1,0 +1,23 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "p1": "Welsh Translation required",
+  "bullet1": "Welsh Translation required",
+  "bullet2": "Welsh Translation required",
+  "bullet3": "Welsh Translation required",
+  "p2": "Welsh Translation required",
+  "checkboxVideo": "Welsh Translation required",
+  "checkboxPhone": "Welsh Translation required",
+  "checkboxNeither": "Welsh Translation required",
+  "checkboxNeitherHint": "Welsh Translation required",
+  "explain": "Welsh Translation required",
+  "selectAllHint": "Dewiswch bob un sy'n berthnasol",
+  "errors": {
+    "hearingPreferences": {
+      "required": "Welsh Translation required"
+    },
+    "hearingAssistance": {
+      "required": "Welsh Translation required"
+    }
+  }
+}
