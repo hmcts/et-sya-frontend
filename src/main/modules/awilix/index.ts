@@ -26,7 +26,7 @@ export class Container {
         const asClazz = asClass(clazz.default);
         jsonObject[registerName] = asClazz;
       });
-    jsonObject['logger'] = asValue(logger);
+    jsonObject['logger'] = asValue(logger); // todo remove along with moving all controllers into routes.ts and uninstalling awilix
     app.locals.container = createContainer({ injectionMode: InjectionMode.CLASSIC }).register(jsonObject);
   }
 }

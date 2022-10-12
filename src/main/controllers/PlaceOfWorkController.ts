@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import {
   isValidAddressFirstLine,
@@ -11,11 +10,14 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+const logger = getLogger('PlaceOfWorkController');
 
 export default class PlaceOfWorkController {
   private readonly form: Form;
@@ -95,7 +97,7 @@ export default class PlaceOfWorkController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.placeOfWorkContent.fields);
   }
 
@@ -105,10 +107,10 @@ export default class PlaceOfWorkController {
     const { saveForLater } = req.body;
     if (saveForLater) {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, this.logger);
+      handleUpdateDraftCase(req, logger);
     } else {
       handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
+      handleUpdateDraftCase(req, logger);
     }
   };
 

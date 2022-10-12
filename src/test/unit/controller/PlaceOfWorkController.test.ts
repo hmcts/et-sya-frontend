@@ -1,14 +1,7 @@
-import axios from 'axios';
-
 import PlaceOfWorkController from '../../../main/controllers/PlaceOfWorkController';
 import { PageUrls } from '../../../main/definitions/constants';
-import { CaseApi } from '../../../main/services/CaseService';
-import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Place Of Work Controller Tests', () => {
   const t = {
@@ -18,7 +11,7 @@ describe('Place Of Work Controller Tests', () => {
   };
 
   it('should render place of work page', () => {
-    const controller = new PlaceOfWorkController(mockLogger);
+    const controller = new PlaceOfWorkController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -36,7 +29,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',
     };
-    const controller = new PlaceOfWorkController(mockLogger);
+    const controller = new PlaceOfWorkController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -55,7 +48,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',
     };
-    const controller = new PlaceOfWorkController(mockLogger);
+    const controller = new PlaceOfWorkController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -67,7 +60,7 @@ describe('Place Of Work Controller Tests', () => {
   });
   it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
     const body = { saveForLater: true };
-    const controller = new PlaceOfWorkController(mockLogger);
+    const controller = new PlaceOfWorkController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -85,7 +78,7 @@ describe('Place Of Work Controller Tests', () => {
       workAddressCountry: 'United Kingdom',
       workAddressPostcode: 'EX7 8KK',
     };
-    const controller = new PlaceOfWorkController(mockLogger);
+    const controller = new PlaceOfWorkController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
@@ -95,22 +88,5 @@ describe('Place Of Work Controller Tests', () => {
     expect(req.session.userCase.workAddressTown).toStrictEqual('Exeter');
     expect(req.session.userCase.workAddressCountry).toStrictEqual('United Kingdom');
     expect(req.session.userCase.workAddressPostcode).toStrictEqual('EX7 8KK');
-  });
-
-  it('should run logger in catch block', async () => {
-    const body = {
-      workAddress1: '31 The Street',
-      workAddress2: '',
-      workAddressTown: 'Exeter',
-      workAddressCountry: 'United Kingdom',
-      workAddressPostcode: 'EX7 8KK',
-    };
-    const controller = new PlaceOfWorkController(mockLogger);
-    const request = mockRequest({ body });
-    const response = mockResponse();
-
-    await controller.post(request, response);
-
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

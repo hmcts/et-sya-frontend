@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -10,6 +9,7 @@ import { BirthDateFormFields, DateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
@@ -21,6 +21,8 @@ const dob_date: DateFormFields = {
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
 };
 
+const logger = getLogger('DobController');
+
 export default class DobController {
   private readonly form: Form;
   private readonly dobFormContent: FormContent = {
@@ -29,14 +31,14 @@ export default class DobController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.dobFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.SEX_AND_TITLE);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

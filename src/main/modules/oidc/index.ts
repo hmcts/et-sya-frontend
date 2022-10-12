@@ -6,13 +6,13 @@ import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
+import { getLogger } from '../../logger';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
 import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('app');
 
 export class Oidc {
   public enableFor(app: Application): void {

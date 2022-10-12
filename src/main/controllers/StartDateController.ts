@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -9,6 +8,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
@@ -20,6 +20,8 @@ const start_date: DateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
 };
+
+const logger = getLogger('StartDateController');
 
 export default class StartDateController {
   private readonly form: Form;
@@ -35,7 +37,7 @@ export default class StartDateController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.startDateContent.fields);
   }
 
@@ -51,7 +53,7 @@ export default class StartDateController {
     }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -8,12 +7,15 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('WorkAddressController');
 
 export default class WorkAddressController {
   private readonly form: Form;
@@ -29,7 +31,7 @@ export default class WorkAddressController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.workAddressFormContent.fields);
   }
 
@@ -49,7 +51,7 @@ export default class WorkAddressController {
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
       handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
+      handleUpdateDraftCase(req, logger);
     }
   };
 

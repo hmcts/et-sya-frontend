@@ -14,14 +14,13 @@ import {
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
+import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
+const logger = getLogger('CitizenHubController');
 
 const DAYS_FOR_PROCESSING = 5;
 

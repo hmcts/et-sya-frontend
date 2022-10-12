@@ -7,14 +7,14 @@ import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
 import { getSectionStatus, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('StepsToMakingYourClaimController');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
