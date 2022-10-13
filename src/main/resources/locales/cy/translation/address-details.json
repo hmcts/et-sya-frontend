@@ -1,38 +1,38 @@
 {
-  "title": "Address details",
+  "title": "Address details - Update Required",
   "pageHeader": "Beth yw eich cyfeiriad cyswllt neu gyfeiriad cartref?",
-  "manualAddress": "I live outside the UK",
+  "manualAddress": "I live outside the UK - REQUIRES UPDATE",
   "pageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
   "enterPostcode": "Rhowch god post yn y DU",
-  "addressLine1": "Address line 1",
-  "addressLine2": "Address line 2",
-  "town": "Town or city",
-  "county": "County",
-  "country": "Country",
-  "postcode": "Postcode or area code (optional)",
+  "addressLine1": "Address line 1 - REQUIRES UPDATE",
+  "addressLine2": "Address line 2 - REQUIRES UPDATE",
+  "town": "Tref neu ddinas",
+  "county": "Sir neu dalaith (dewisol)",
+  "country": "Gwlad",
+  "postcode": "Cod post neu god zip",
   "enterAddressManually": "Nid wyf yn byw yn y DU",
   "cannotFindAddress": "Ni allaf ddod o hyd i fy nghyfeiriad yn y rhestr",
   "errors": {
     "address1": {
-      "required": "Enter the first line of your contact or home address - up to 100 characters",
-      "invalid": "Enter the first line of your contact or home address - up to 100 characters"
+      "required": "Enter the first line of your contact or home address - up to 100 characters - REQUIRES UPDATE",
+      "invalid": "Enter the first line of your contact or home address - up to 100 characters - REQUIRES UPDATE"
     },
     "address2": {
-      "required": "Enter the second line of your contact or home address - up to 50 characters",
-      "invalid": "Enter the second line of your contact or home address - up to 50 characters"
+      "required": "Enter the second line of your contact or home address - up to 50 characters - REQUIRES UPDATE",
+      "invalid": "Enter the second line of your contact or home address - up to 50 characters - REQUIRES UPDATE"
     },
     "addressTown": {
-      "required": "Enter a town or city for your contact or home address - up to 50 characters",
-      "invalid": "Enter a town or city for your contact or home address - up to 50 characters"
+      "required": "Enter a town or city for your contact or home address - up to 50 characters - REQUIRES UPDATE",
+      "invalid": "Enter a town or city for your contact or home address - up to 50 characters - REQUIRES UPDATE"
     },
     "addressCountry": {
-      "required": "Enter a Country for your contact or home address - up to 50 characters",
-      "invalid": "Enter a Country for your contact or home address - up to 50 characters"
+      "required": "Enter a Country for your contact or home address - up to 50 characters - REQUIRES UPDATE",
+      "invalid": "Enter a Country for your contact or home address - up to 50 characters - REQUIRES UPDATE"
     },
     "addressPostcode": {
-      "required": "Enter a postcode. For example, SW1 1AA",
-      "invalid": "Enter a valid postcode. For example, SW1 1AA",
-      "notSelected": "Select an address"
+      "required": "Enter a postcode. For example, SW1 1AA - REQUIRES UPDATE",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA - REQUIRES UPDATE",
+      "notSelected": "Select an address - REQUIRES UPDATE"
     }
   }
 }
