@@ -35,10 +35,12 @@ const isEnabled = (): boolean => {
 export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> => {
   if (isEnabled()) {
     const healthResp = await callPCQHealth();
+    logger.info(`PCQ status is ${healthResp}`);
 
     const pcqUrl: string = config.get('services.pcq.url');
+    const pcqId = req.session.userCase?.ClaimantPcqId;
 
-    if (!req.session.userCase?.ClaimantPcqId && healthResp === 'UP') {
+    if (!pcqId && healthResp === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
       const returnurl = HTTPS_PROTOCOL + req.headers.host + PageUrls.CHECK_ANSWERS;
@@ -70,10 +72,12 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
       res.redirect(`${pcqUrl}?${qs}`);
     } else {
       //skip pcq
+      logger.info(`PCQ status is ${healthResp} and PCQ ID is ${pcqId}`);
       res.redirect(PageUrls.CHECK_ANSWERS);
     }
   } else {
     //skip pcq
+    logger.info(`PCQ enabled: ${isEnabled().toString()}`);
     res.redirect(PageUrls.CHECK_ANSWERS);
   }
 };
