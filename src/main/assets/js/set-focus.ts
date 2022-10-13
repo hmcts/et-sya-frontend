@@ -5,6 +5,7 @@
     document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
   );
   if (govUKErrors !== null && govUKErrors !== undefined && govUKErrors.length > 0) {
+    document.title = 'Error: ' + document.title;
     govUKErrors[0].focus();
   }
 }
