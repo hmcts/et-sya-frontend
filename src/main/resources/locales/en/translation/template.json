@@ -13,7 +13,7 @@
     "additionalText": "helps us to improve this service."
   },
   "contactUsTitle": "Contact us",
-  "contactUsForHelp": "Telephone: <a href=\"tel:03001231024\" class=\"tel-link\">0300 123 1024</a><br> Telephone: <a href=\"tel:03003035176\" class=\"tel-link\">0300 303 5176</a> (Welsh language)<br>Telephone: <a href=\"tel:03007906234\" class=\"tel-link\">0300 790 6234</a> (Scotland)<br>Textphone: <a href=\"tel:1800103001231024\" class=\"tel-link\">18001 0300 123 1024</a> (England and Wales)<br> Textphone: <a href=\"tel:1800103007906234\" class=\"tel-link\">18001 0300 790 6234</a> (Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out about call charges</a>",
+  "contactUsForHelp": "Call the Employment Tribunal customer contact centre if you have any questions about your claim. They cannot give you legal advice or process any updates to your case.<br><br>Telephone: <a href=\"tel:03001231024\" class=\"tel-link\">0300 123 1024</a><br> Telephone: <a href=\"tel:03003035176\" class=\"tel-link\">0300 303 5176</a> (Welsh language)<br>Telephone: <a href=\"tel:03007906234\" class=\"tel-link\">0300 790 6234</a> (Scotland)<br>Textphone: <a href=\"tel:1800103001231024\" class=\"tel-link\">18001 0300 123 1024</a> (England and Wales)<br> Textphone: <a href=\"tel:1800103007906234\" class=\"tel-link\">18001 0300 790 6234</a> (Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out about call charges</a>",
   "noticeLengthInsetText": "If you're not sure, check the terms and conditions of your employment contract.",
   "sessionTimeout": {
     "modal": {
