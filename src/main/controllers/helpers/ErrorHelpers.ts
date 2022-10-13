@@ -5,6 +5,7 @@ import { Form } from '../../components/form/form';
 import {
   arePayValuesNull,
   hasInvalidFileFormat,
+  hasInvalidFileSize,
   hasInvalidName,
   isAcasNumberValid,
   isFieldFilledIn,
@@ -178,6 +179,7 @@ export const getClaimSummaryError = (
   const fileProvided = file !== undefined;
   const fileFormatInvalid = hasInvalidFileFormat(file);
   const fileNameInvalid = hasInvalidName(file?.originalname);
+  const fileSizeInvalid = hasInvalidFileSize(file);
 
   if (!textProvided && !fileProvided) {
     if (fileProvided || fileName) {
@@ -192,5 +194,8 @@ export const getClaimSummaryError = (
   }
   if (fileNameInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
+  }
+  if (fileSizeInvalid) {
+    return { propertyName: 'claimSummaryFileName', errorType: fileSizeInvalid };
   }
 };

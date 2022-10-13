@@ -4,6 +4,7 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasInvalidFileFormat,
+  hasInvalidFileSize,
   hasInvalidName,
   isAcasNumberValid,
   isContent2500CharsOrLess,
@@ -362,6 +363,17 @@ describe('Validation', () => {
       { fileName: 'file<1>.csv', expected: 'invalidFileName' },
     ])('Check filename %o', ({ fileName, expected }) => {
       expect(hasInvalidName(fileName)).toEqual(expected);
+    });
+  });
+
+  describe('hasValidFileSize()', () => {
+    it.each([
+      { fileSize: Number(314572700), expected: undefined },
+      { fileSize: Number(314572801), expected: 'invalidFileSize' },
+    ])('Check file size %o', ({ fileSize, expected }) => {
+      const newFile = mockFile;
+      newFile.size = fileSize;
+      expect(hasInvalidFileSize(newFile)).toEqual(expected);
     });
   });
   describe('isAcasNumberValid()', () => {
