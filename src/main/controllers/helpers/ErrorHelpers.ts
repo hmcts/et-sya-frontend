@@ -23,7 +23,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
-  const claimSummaryError = getClaimSummaryError(formData, req.file);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
@@ -37,10 +36,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
 
   if (newJobPayErrors) {
     sessionErrors = [...sessionErrors, ...newJobPayErrors];
-  }
-
-  if (claimSummaryError) {
-    sessionErrors = [...sessionErrors, claimSummaryError];
   }
 
   if (hearingPreferenceErrors) {
@@ -193,22 +188,22 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
   }
 };
 
-export const getClaimSummaryError = (formData: Partial<CaseWithId>, file: Express.Multer.File): FormError => {
-  if (formData.claimSummaryText === undefined && file === undefined) {
-    return;
-  }
-
+export const getClaimSummaryError = (
+  formData: Partial<CaseWithId>,
+  file: Express.Multer.File,
+  fileName: string
+): FormError => {
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
   const fileFormatInvalid = hasInvalidFileFormat(file);
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
-  if (textProvided && fileProvided) {
-    return { propertyName: 'claimSummaryText', errorType: 'textAndFile' };
-  }
-
   if (!textProvided && !fileProvided) {
-    return { propertyName: 'claimSummaryText', errorType: 'required' };
+    if (fileProvided || fileName) {
+      return;
+    } else {
+      return { propertyName: 'claimSummaryText', errorType: 'required' };
+    }
   }
 
   if (fileFormatInvalid) {
