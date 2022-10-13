@@ -6,7 +6,12 @@ import { Application } from 'express';
 import { InterceptPaths, PageUrls, Urls } from '../definitions/constants';
 
 const multer = require('multer');
-const handleUploads = multer();
+const handleUploads = multer({
+  //must be set to prevent ddos
+  limits: {
+    fileSize: 500000000,
+  },
+});
 
 export default function (app: Application): void {
   app.get(Urls.PCQ, app.locals.container.cradle.pcqController.get);
