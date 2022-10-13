@@ -21,7 +21,7 @@ const stepsToMakingYourClaimJSON = JSON.parse(stepsToMakingYourClaimJSONRaw);
 const PAGE_URL = '/steps-to-making-your-claim';
 const sectionClass = 'app-task-list__items';
 const listItemClass = 'app-task-list__item';
-const linkClass = 'span.app-task-list__task-name > a';
+const linkClass = 'span.app-task-list__task-name--300px > a';
 const typeOfClaimListElement = 'ul.govuk-list > li';
 
 const headerClass = 'app-task-list__section';
