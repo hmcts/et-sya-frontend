@@ -39,5 +39,13 @@
   "weekly": "Welsh Translation required",
   "monthly": "Welsh Translation required",
   "annual": "Welsh Translation required",
-  "selectAllHint": "Dewiswch bob un sy'n berthnasol."
+  "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
+  "claimTypes": {
+    "breachOfContract": "Torri contract",
+    "discrimination": "Gwahaniaethu",
+    "payRelated": "Ymwneud â thâl",
+    "unfairDismissal": "Diswyddo annheg",
+    "whistleBlowing": "Chwythu’r chwiban",
+    "otherClaim": "Math arall o hawliad"
+  }
 }
