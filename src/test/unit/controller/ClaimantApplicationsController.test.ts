@@ -1,5 +1,5 @@
 import ClaimantApplicationsController from '../../../main/controllers/ClaimantApplicationsController';
-import * as translateTypesOfClaim from '../../../main/controllers/helpers/TranslateTypesOfClaim';
+import * as translateTypesOfClaim from '../../../main/controllers/helpers/TranslateTypesOfClaimHelper';
 import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
