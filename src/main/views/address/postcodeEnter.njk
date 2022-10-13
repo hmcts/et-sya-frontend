@@ -1,8 +1,10 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "macros/csrf.njk" import csrfProtection %}
 
 <div id="enterPostcode">
   <form id="postcodeLookup">
+    {{ csrfProtection() }}>
     {{ govukInput({
       id: "postcode",
       name: "postcode",
@@ -16,7 +18,7 @@
     <p class="govuk-body">
       <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
     </p>
-    
+
     {{ govukButton({
       attributes: {
         id: "findAddressButton"

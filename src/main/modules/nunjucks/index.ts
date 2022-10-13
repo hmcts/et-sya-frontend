@@ -1,3 +1,4 @@
+import { randomBytes } from 'crypto';
 import * as path from 'path';
 
 import config from 'config';
@@ -25,6 +26,8 @@ export class Nunjucks {
         express: app,
       }
     );
+
+    nunEnv.addGlobal('generateCsrf', () => randomBytes(100).toString('base64'));
 
     nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 

@@ -129,7 +129,7 @@ included in this template app. Your njk file would look like this:
 ...
 <form ...>
   ...
-    {{ csrfProtection(csrfToken) }}
+    {{ csrfProtection() }}
   ...
 </form>
 ...
@@ -150,9 +150,11 @@ There is a configuration section related with those headers, where you can speci
 Here's an example setup:
 
 ```json
-    "security": {
-      "referrerPolicy": "origin",
-    }
+{
+  "security": {
+    "referrerPolicy": "origin"
+  }
+}
 ```
 
 Make sure you have those values set correctly for your application.
@@ -161,7 +163,7 @@ Make sure you have those values set correctly for your application.
 
 The application exposes a health endpoint (https://localhost:3001/health), created with the use of
 [Nodejs Healthcheck](https://github.com/hmcts/nodejs-healthcheck) library. This endpoint is defined
-in [health.ts](src/main/routes/health.ts) file. Make sure you adjust it correctly in your application.
+in [health.ts](src/main/modules/health/index.ts) file. Make sure you adjust it correctly in your application.
 In particular, remember to replace the sample check with checks specific to your frontend app,
 e.g. the ones verifying the state of each service it depends on.
 
