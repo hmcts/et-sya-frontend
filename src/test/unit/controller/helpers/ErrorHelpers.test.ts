@@ -98,18 +98,10 @@ describe('New Job Partial Pay errors', () => {
 });
 
 describe('Claim Summary Error', () => {
-  it('should not return any errors when not on the summary page', () => {
-    const body = {};
-
-    const errors = getClaimSummaryError(body, undefined);
-
-    expect(errors).toEqual(undefined);
-  });
-
   it('should not return an error if only text has been provided', () => {
     const body = { claimSummaryText: 'text' };
 
-    const errors = getClaimSummaryError(body, undefined);
+    const errors = getClaimSummaryError(body, undefined, undefined);
 
     expect(errors).toEqual(undefined);
   });
@@ -117,30 +109,28 @@ describe('Claim Summary Error', () => {
   it('should not return an error if only a file has been provided', () => {
     const body = {};
 
-    const errors = getClaimSummaryError(body, mockFile);
+    const errors = getClaimSummaryError(body, mockFile, undefined);
 
     expect(errors).toEqual(undefined);
   });
 
-  it('should return required error if neither text nor file has been provided', () => {
+  it('should not return an error if file has previously been uploaded', () => {
+    const body = { claimSummaryText: '' };
+
+    const errors = getClaimSummaryError(body, undefined, 'testfile.pdf');
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return required error if neither text, file or previous file has been provided', () => {
     const body = {
       claimSummaryText: '',
       claimSummaryFileName: '',
     };
 
-    const errors = getClaimSummaryError(body, undefined);
+    const errors = getClaimSummaryError(body, undefined, undefined);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
-  });
-
-  it('should return textAndFile error if neither text nor file has been provided', () => {
-    const body = {
-      claimSummaryText: 'text',
-    };
-
-    const errors = getClaimSummaryError(body, mockFile);
-
-    expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'textAndFile' });
   });
 });
 
