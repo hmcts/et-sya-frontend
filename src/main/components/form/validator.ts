@@ -227,7 +227,7 @@ export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
 };
 
 export const hasInvalidFileSize = (value: Express.Multer.File): string => {
-  if (Number(value.size) <= Number(314572800)) {
+  if (!value || Number(value.size) <= Number(314572800)) {
     return;
   }
   return 'invalidFileSize';
