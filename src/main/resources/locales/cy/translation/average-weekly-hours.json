@@ -1,0 +1,22 @@
+{
+  "title": "Welsh Translation required",
+  "h1": {
+    "workingOrNotice": "Beth yw eich oriau gwaith ar gyfartaledd bob wythnos? (dewisol)",
+    "noLongerWorking": "Beth yw eich oriau gwaith ar gyfartaledd bob wythnos? (dewisol)"
+  },
+  "p1": {
+    "workingOrNotice": "Os yw nifer yr oriau rydych yn gweithio yn newid bob wythnos (er enghraifft, os ydych ar gontract dim oriau), defnyddiwch eich 3 mis olaf o slipiau cyflog i gyfrifo’ch cyfartaledd wythnosol. - REQUIRES UPDATE",
+    "noLongerWorking": "Os yw nifer yr oriau rydych yn gweithio yn newid bob wythnos (er enghraifft, os ydych ar gontract dim oriau), defnyddiwch eich 3 mis olaf o slipiau cyflog i gyfrifo’ch cyfartaledd wythnosol. - REQUIRES UPDATE"
+  },
+  "p2": "Peidiwch â chynnwys unrhyw oriau goramser.",
+  "notWorking": "Welsh Translation required",
+  "enterAverageHours": "Welsh Translation required",
+  "errors": {
+    "avgWeeklyHrs": {
+      "invalid": "Welsh Translation required",
+      "exceeded": "Welsh Translation required",
+      "notANumber": "Welsh Translation required",
+      "negativeNumber": "Welsh Translation required"
+    }
+  }
+}
