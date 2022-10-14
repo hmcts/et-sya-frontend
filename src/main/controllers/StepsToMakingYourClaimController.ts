@@ -10,7 +10,7 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
-import { getSectionStatus, setUserCaseWithRedisData } from './helpers/CaseHelpers';
+import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
 const { Logger } = require('@hmcts/nodejs-logging');
@@ -68,9 +68,10 @@ export default class StepsToMakingYourClaimController {
             url: PageUrls.PAST_EMPLOYER,
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
             status: (): string =>
-              getSectionStatus(
+              getSectionStatusForEmployment(
                 userCase?.employmentAndRespondentCheck,
-                userCase?.pastEmployer || userCase?.isStillWorking
+                userCase?.pastEmployer || userCase?.isStillWorking,
+                req.session.userCase?.typeOfClaim
               ),
           },
           {

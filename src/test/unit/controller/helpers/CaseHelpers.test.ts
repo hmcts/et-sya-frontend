@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import {
   getSectionStatus,
+  getSectionStatusForEmployment,
   handleUpdateDraftCase,
   handleUpdateSubmittedCase,
   handleUploadDocument,
@@ -72,6 +73,49 @@ describe('getSectionStatus()', () => {
     const providedStatus = getSectionStatus(detailsCheckValue, sessionValue);
     expect(providedStatus).toStrictEqual(expected);
   });
+});
+
+describe('getSectionStatusForEmployment()', () => {
+  it.each([
+    {
+      detailsCheckValue: YesOrNo.YES,
+      sessionValue: undefined,
+      expected: sectionStatus.completed,
+    },
+    {
+      detailsCheckValue: YesOrNo.NO,
+      sessionValue: undefined,
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 'a string',
+      typesOfClaim: ['payRelated'],
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 1,
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: undefined,
+      typesOfClaim: ['unfairDismissal', 'payRelated'],
+      expected: sectionStatus.notStarted,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 0,
+      expected: sectionStatus.notStarted,
+    },
+  ])(
+    'checks section status for employment section when %o',
+    ({ detailsCheckValue, sessionValue, typesOfClaim, expected }) => {
+      const providedStatus = getSectionStatusForEmployment(detailsCheckValue, sessionValue, typesOfClaim);
+      expect(providedStatus).toStrictEqual(expected);
+    }
+  );
 });
 
 describe('isPostcodeMVPLocation()', () => {

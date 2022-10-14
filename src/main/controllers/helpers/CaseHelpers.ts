@@ -8,7 +8,7 @@ import { DocumentUploadResponse } from '../../definitions/api/documentApiRespons
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, YesOrNo } from '../../definitions/case';
 import { mvpLocations } from '../../definitions/constants';
-import { sectionStatus } from '../../definitions/definition';
+import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
@@ -68,6 +68,23 @@ export const getSectionStatus = (
   if (detailsCheckValue === YesOrNo.YES) {
     return sectionStatus.completed;
   } else if (detailsCheckValue === YesOrNo.NO || !!sessionValue) {
+    return sectionStatus.inProgress;
+  } else {
+    return sectionStatus.notStarted;
+  }
+};
+
+export const getSectionStatusForEmployment = (
+  detailsCheckValue: YesOrNo,
+  sessionValue: string | CaseDate | number,
+  typesOfClaim: string[]
+): sectionStatus => {
+  if (detailsCheckValue === YesOrNo.YES) {
+    return sectionStatus.completed;
+  } else if (
+    detailsCheckValue === YesOrNo.NO ||
+    (!!sessionValue && !typesOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL))
+  ) {
     return sectionStatus.inProgress;
   } else {
     return sectionStatus.notStarted;
