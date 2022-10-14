@@ -5,7 +5,7 @@
   "view": "Welsh Translation required",
   "change": "Welsh Translation required",
   "saveForLater": "Cadw fel drafft",
-  "submit": "Welsh Translation required",
+  "submit": "Cadw a pharhau",
   "required": "Welsh Translation required",
   "notAnswered": "Welsh Translation required",
   "errorSaving": "Welsh Translation required",
@@ -25,20 +25,20 @@
     "Welsh Translation required"
   ],
   "dateFormat": {
-    "day": "Welsh Translation required",
-    "month": "Welsh Translation required",
-    "year": "Welsh Translation required"
+    "day": "Diwrnod",
+    "month": "Mis",
+    "year": "Blwyddyn"
   },
-  "yes": "Oes",
-  "no": "Nac oes",
+  "yes": "Do",
+  "no": "Naddo",
   "notSure": "Welsh Translation required",
   "english": "Welsh Translation required",
   "welsh": "Welsh Translation required",
   "govUk": "GOV.UK",
   "warningTxt": "Welsh Translation required",
-  "weekly": "Welsh Translation required",
-  "monthly": "Welsh Translation required",
-  "annual": "Welsh Translation required",
+  "weekly": "Wythnosol",
+  "monthly": "Misol",
+  "annual": "Blynyddol",
   "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
   "claimTypes": {
     "breachOfContract": "Torri contract",
