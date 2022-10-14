@@ -73,6 +73,11 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.fileTooLarge) {
+      req.fileTooLarge = false;
+      req.session.errors.push({ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' });
+      return res.redirect(req.url);
+    }
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -101,6 +106,11 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    //   if (req.session.fileTooLarge) {
+    //       req.session.fileTooLarge = false;
+    //       req.session.errors.push({ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' });
+    //       return res.redirect(req.url);
+    //   }
     const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     this.uploadedFileName = fileName;
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [

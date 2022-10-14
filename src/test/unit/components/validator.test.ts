@@ -4,7 +4,6 @@ import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasInvalidFileFormat,
-  hasInvalidFileSize,
   hasInvalidName,
   isAcasNumberValid,
   isContent2500CharsOrLess,
@@ -366,16 +365,6 @@ describe('Validation', () => {
     });
   });
 
-  describe('hasValidFileSize()', () => {
-    it.each([
-      { fileSize: Number(314572700), expected: undefined },
-      { fileSize: Number(314572801), expected: 'invalidFileSize' },
-    ])('Check file size %o', ({ fileSize, expected }) => {
-      const newFile = mockFile;
-      newFile.size = fileSize;
-      expect(hasInvalidFileSize(newFile)).toEqual(expected);
-    });
-  });
   describe('isAcasNumberValid()', () => {
     it('Should check if value does not exist', () => {
       const isValid = isAcasNumberValid(undefined);

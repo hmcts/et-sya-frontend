@@ -2,14 +2,24 @@ import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
+import { FileFilterCallback } from 'multer';
 
+import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, Urls } from '../definitions/constants';
 
 const multer = require('multer');
 const handleUploads = multer({
-  //must be set to prevent ddos
   limits: {
-    fileSize: 500000000,
+    fileSize: 314572800,
+  },
+  fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
+    const fileSize = parseInt(req.headers['content-length']);
+    if (fileSize > 314572800) {
+      req.fileTooLarge = true;
+      return callback(null, false);
+    } else {
+      return callback(null, true);
+    }
   },
 });
 
