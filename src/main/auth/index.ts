@@ -8,7 +8,7 @@ import { CITIZEN_ROLE } from '../definitions/constants';
 export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid: string): string => {
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
-  const callbackUrl = encodeURI('https://localhost:3001' + callbackUrlPage); //todo remove http*s*
+  const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
   return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}`;
 };
 
@@ -22,7 +22,7 @@ export const getUserDetails = async (
   const tokenUrl: string = config.get('services.idam.tokenURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
   const code = encodeURIComponent(rawCode);
-  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}&scope=roles&username=citizen2@testmail.com&password=Pa55word11`;
+  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',

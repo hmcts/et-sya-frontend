@@ -364,7 +364,6 @@ describe('Validation', () => {
       expect(hasInvalidName(fileName)).toEqual(expected);
     });
   });
-
   describe('isAcasNumberValid()', () => {
     it('Should check if value does not exist', () => {
       const isValid = isAcasNumberValid(undefined);

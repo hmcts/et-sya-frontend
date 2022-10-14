@@ -106,11 +106,6 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    //   if (req.session.fileTooLarge) {
-    //       req.session.fileTooLarge = false;
-    //       req.session.errors.push({ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' });
-    //       return res.redirect(req.url);
-    //   }
     const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     this.uploadedFileName = fileName;
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
