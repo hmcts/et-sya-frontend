@@ -75,7 +75,7 @@ export default class DescribeWhatHappenedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
-      req.session.errors.push({ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' });
+      req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(req.url);
     }
     setUserCase(req, this.form);
