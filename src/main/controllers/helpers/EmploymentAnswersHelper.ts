@@ -137,7 +137,7 @@ export const getEmploymentDetails = (
         },
       });
     }
-    if (userCase.noticePeriod === YesOrNo.YES) {
+    if (userCase.noticePeriod === YesOrNo.YES || userCase.isStillWorking === StillWorking.NOTICE) {
       employmentDetails.push(
         {
           key: {
