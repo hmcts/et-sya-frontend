@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { NoAcasNumberReason, YesOrNo } from '../../../main/definitions/case';
+import { NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
@@ -26,6 +26,7 @@ describe('Check your answers confirmation page', () => {
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
           noticePeriod: YesOrNo.YES,
+          isStillWorking: StillWorking.WORKING,
           respondents: [
             {
               respondentNumber: 1,
