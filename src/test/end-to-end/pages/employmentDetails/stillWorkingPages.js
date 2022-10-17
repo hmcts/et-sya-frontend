@@ -11,7 +11,7 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
   I.click(commonConfig.saveAndContinue);
 
   //employment start date page
-  I.waitForElement('#startDate-day', 30);
+  I.waitForElement('#startDate-day', 40);
   I.fillField('#startDate-day', '20');
   I.fillField('#startDate-month', '04');
   I.fillField('#startDate-year', '2014');

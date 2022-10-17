@@ -45,7 +45,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
       '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25 RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
     );
     I.click(commonConfig.saveAndContinue);
-    I.waitForElement('#acasCert', 30);
+    I.waitForElement('#acasCert', 40);
   }
 
   //select yes or no for acas certificate
@@ -68,7 +68,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
 
   //confirm completed section
   I.see('Have you completed this section?');
-  I.waitForElement('#tasklist-check', 30);
+  I.waitForElement('#tasklist-check', 40);
   I.checkOption('#tasklist-check');
   I.click(commonConfig.saveAndContinue);
 };
