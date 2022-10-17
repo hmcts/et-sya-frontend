@@ -38,7 +38,7 @@ export const userCaseWith4Respondents = {
   lastModified: 'August 19, 2022',
 };
 
-export const userCaseWith6Respondents = {
+export const userCaseWith5Respondents = {
   id: '12354',
   state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
   respondents: [
@@ -61,10 +61,6 @@ export const userCaseWith6Respondents = {
     {
       respondentNumber: 5,
       respondentName: 'Globo Gym 5',
-    },
-    {
-      respondentNumber: 6,
-      respondentName: 'Globo Gym 6',
     },
   ],
   createdDate: 'August 19, 2022',
