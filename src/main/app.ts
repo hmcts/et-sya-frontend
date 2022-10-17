@@ -13,7 +13,7 @@ import { CaseApiErrors, PageUrls, RedisErrors } from './definitions/constants';
 import setupDev from './development';
 import { AppInsights } from './modules/appinsights';
 import { Container } from './modules/awilix';
-import { CSRFToken } from './modules/csrf';
+import CSRFToken from './modules/csrf';
 import { HealthCheck } from './modules/health';
 import { Helmet } from './modules/helmet';
 import { I18Next } from './modules/i18next';
