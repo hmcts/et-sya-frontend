@@ -1,11 +1,11 @@
 'use strict';
-
+const testConfig = require('../../config.js');
 module.exports = async function (allEqualityPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
   //user clicks check your answers link
-  I.waitForElement("//a[contains(.,'Check your answers')]", 40);
+  I.waitForElement("//a[contains(.,'Check your answers')]", testConfig.TestWaitForTextTimeLimit);
   I.click('[href="/pcq"]');
 
   //User will see the equality and diversity Pages
@@ -14,7 +14,7 @@ module.exports = async function (allEqualityPages) {
     I.click("//button[contains(text(),'Continue to the questions')]");
 
     //Main Language Page
-    I.waitForText('What is your main language?', 30);
+    I.waitForText('What is your main language?', testConfig.TestWaitForTextTimeLimit);
     I.see('English or Welsh');
     I.see('Other');
     I.see('Prefer not to say');
@@ -32,13 +32,13 @@ module.exports = async function (allEqualityPages) {
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.waitForText(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).',
-      30
+      testConfig.TestWaitForTextTimeLimit
     );
     I.checkOption("//input[@value='0']"); //Prefer Not to Say Option
     I.click('Continue');
 
     //Are you married or in a Civil Partnership
-    I.waitForText('Are you married or in a legally registered civil partnership?', 30);
+    I.waitForText('Are you married or in a legally registered civil partnership?', testConfig.TestWaitForTextTimeLimit);
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.see(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).'
@@ -47,7 +47,7 @@ module.exports = async function (allEqualityPages) {
     I.click('Continue');
 
     //Ethnic Group Page
-    I.waitForText('What is your ethnic group?', 30);
+    I.waitForText('What is your ethnic group?', testConfig.TestWaitForTextTimeLimit);
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.see(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).'
@@ -56,7 +56,7 @@ module.exports = async function (allEqualityPages) {
     I.click('Continue');
 
     //Religion Page
-    I.waitForText('What is your religion?', 30);
+    I.waitForText('What is your religion?', testConfig.TestWaitForTextTimeLimit);
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.see(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).'
@@ -67,7 +67,7 @@ module.exports = async function (allEqualityPages) {
     //Physical or Mental Conditions Page
     I.waitForText(
       'Do you have any physical or mental health conditions or illnesses lasting or expected to last 12 months or more?',
-      30
+      testConfig.TestWaitForTextTimeLimit
     );
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.see(
@@ -77,7 +77,7 @@ module.exports = async function (allEqualityPages) {
     I.click('Continue');
 
     //Pregnant Page
-    I.waitForText('Are you pregnant or have you been pregnant in the last year?', 30);
+    I.waitForText('Are you pregnant or have you been pregnant in the last year?', testConfig.TestWaitForTextTimeLimit);
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.see(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).'
@@ -86,7 +86,7 @@ module.exports = async function (allEqualityPages) {
     I.click('Continue');
 
     //You have answered the equality questions
-    I.waitForText('You have answered the equality questions', 40);
+    I.waitForText('You have answered the equality questions', testConfig.TestWaitForTextTimeLimit);
     I.see('The next steps are to check your claim details.');
     I.click('Continue to the next steps');
   } else {

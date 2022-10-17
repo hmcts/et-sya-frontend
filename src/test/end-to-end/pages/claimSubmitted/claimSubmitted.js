@@ -1,11 +1,11 @@
 'use strict';
-
+const testConfig = require('../../config');
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
   //Application Details Section
-  I.waitForText('Your claim has been submitted', 40);
+  I.waitForText('Your claim has been submitted', testConfig.TestWaitForTextTimeLimit);
   I.see('What happens next');
   I.see('Submission details');
   I.see('Submission reference');

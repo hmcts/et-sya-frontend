@@ -1,4 +1,5 @@
 'use strict';
+const testConfig = require('../../config.js');
 const commonConfig = require('../../features/Data/commonConfig.json');
 
 module.exports = async function (workAddress, doYouHaveAcas) {
@@ -39,13 +40,13 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.seeElement('#postcode');
     I.fillField('#postcode', 'LS14 1AR');
     I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput', 120);
+    I.waitForVisible('#selectAddressInput', testConfig.TestWaitForTextTimeLimit);
     I.selectOption(
       '#selectAddressInput',
       '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25 RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
     );
     I.click(commonConfig.saveAndContinue);
-    I.waitForElement('#acasCert', 40);
+    I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
   }
 
   //select yes or no for acas certificate
@@ -68,7 +69,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
 
   //confirm completed section
   I.see('Have you completed this section?');
-  I.waitForElement('#tasklist-check', 40);
+  I.waitForElement('#tasklist-check', testConfig.TestWaitForTextTimeLimit);
   I.checkOption('#tasklist-check');
   I.click(commonConfig.saveAndContinue);
 };

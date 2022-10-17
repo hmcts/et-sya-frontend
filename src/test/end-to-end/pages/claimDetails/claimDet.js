@@ -1,4 +1,5 @@
 'use strict';
+const testConfig = require('../../config.js');
 const contactUs = require('../../helpers/contactUs.js');
 
 const claimDetailsConfig = require('./claimDetails.json');
@@ -85,7 +86,7 @@ module.exports = async function (allClaimDetailsPages) {
   }
 
   //If your claim was successfull page.
-  await I.waitForText('What do you want if your claim is successful? (optional)', 40);
+  await I.waitForText('What do you want if your claim is successful? (optional)', testConfig.TestWaitForTextTimeLimit);
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
@@ -108,7 +109,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Compensation are you seeking...
-  await I.waitForText('What compensation are you seeking? (optional)', 40);
+  await I.waitForText('What compensation are you seeking? (optional)', testConfig.TestWaitForTextTimeLimit);
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
@@ -125,7 +126,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Tribunal Recommendation Page.
-  await I.waitForText('What tribunal recommendation would', 40);
+  await I.waitForText('What tribunal recommendation would', testConfig.TestWaitForTextTimeLimit);
   I.see('you like to make?');
   await claimDetailsContentHelper.verifyWhatIsATribunalReccomendation();
 
@@ -155,7 +156,7 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //Have you completed this Section
-  await I.waitForText('Have you completed this section?', 40);
+  await I.waitForText('Have you completed this section?', testConfig.TestWaitForTextTimeLimit);
   I.see('You can change your answers later.');
   I.see("Yes, I've completed this section");
   I.see("No, I'll come back to it later");

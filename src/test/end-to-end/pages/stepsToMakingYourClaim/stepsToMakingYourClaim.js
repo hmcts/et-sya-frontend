@@ -1,10 +1,11 @@
 'use strict';
+const testConfig = require('../../config.js');
 const contactUs = require('../../helpers/contactUs.js');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  I.waitForText('Steps to making your claim', 30);
+  I.waitForText('Steps to making your claim', testConfig.TestWaitForTextTimeLimit);
   I.see('Application Details');
   I.see('Claim type');
   /*I.see('Discrimination');
