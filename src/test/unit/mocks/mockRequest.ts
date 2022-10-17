@@ -1,5 +1,5 @@
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
-import { CaseWithId } from '../../../main/definitions/case';
+import { CaseWithId, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 export const mockRequest = ({
@@ -68,6 +68,9 @@ export const mockRequestWithTranslation = (
       id: '1234',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
+      noticeEnds: { year: '2019', month: '04', day: '21' },
+      newJob: YesOrNo.YES,
+      isStillWorking: StillWorking.NOTICE,
       typeOfClaim: [],
       ...userCase,
     } as CaseWithId,
