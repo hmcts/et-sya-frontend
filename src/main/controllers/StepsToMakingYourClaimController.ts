@@ -70,8 +70,9 @@ export default class StepsToMakingYourClaimController {
             status: (): string =>
               getSectionStatusForEmployment(
                 userCase?.employmentAndRespondentCheck,
-                userCase?.pastEmployer || userCase?.isStillWorking,
-                req.session.userCase?.typeOfClaim
+                userCase?.pastEmployer,
+                req.session.userCase?.typeOfClaim,
+                userCase?.isStillWorking
               ),
           },
           {
