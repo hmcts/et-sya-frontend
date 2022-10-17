@@ -13,8 +13,11 @@ const INVALID_CSRF_CODE = 'EBADCSRFTOKEN';
 const csrf = csurf({ cookie: false }); // DON'T ENABLE COOKIE, VULNERABILITY WITH CSURF
 
 // todo
-// test multiple forms on preview (get1, get2, post1, post2)
-// Error page & tests (for error page, and for csrf using an app that enables this Token class)
+// Test multiple forms on preview (get1, get2, post1, post2)
+// Tests (csrf works, csrf altered)
+
+// Todo also think of everywhere we switched an app to a mockapp, maybe we want to check more closely that
+// having more information doesn't defeat the purpose of the test.
 export default class CSRFToken {
   public enableFor(app: Application): void {
     app.use(csrf, (req, res, next) => {
