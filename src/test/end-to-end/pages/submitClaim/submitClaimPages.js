@@ -85,7 +85,7 @@ module.exports = async function (allEqualityPages) {
     I.click('Continue');
 
     //You have answered the equality questions
-    I.waitForText('You have answered the equality questions', 30);
+    I.waitForText('You have answered the equality questions', 40);
     I.see('The next steps are to check your claim details.');
     I.click('Continue to the next steps');
   } else {
