@@ -94,6 +94,7 @@ export default class DescribeWhatHappenedController {
         }
       } catch (error) {
         this.logger.info(error);
+        req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
         handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
