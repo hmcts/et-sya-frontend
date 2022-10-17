@@ -10,9 +10,11 @@ const logger = Logger.getLogger('CSRF');
 
 const INVALID_CSRF_CODE = 'EBADCSRFTOKEN';
 
+const csrf = csurf({ cookie: false });
+
 export class CSRFToken {
   public enableFor(app: Application): void {
-    app.use(csurf(), (req, res, next) => {
+    app.use(csrf, (req, res, next) => {
       res.locals.csrfToken = req.csrfToken();
       next();
     });

@@ -1,10 +1,9 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "macros/csrf.njk" import csrfProtection %}
 
 <div id="enterPostcode">
   <form id="postcodeLookup">
-    {{ csrfProtection() }}>
+    <input type="hidden" name="_csrf" value={{ csrfToken }}>
     {{ govukInput({
       id: "postcode",
       name: "postcode",

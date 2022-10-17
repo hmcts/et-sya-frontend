@@ -1,9 +1,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "macros/csrf.njk" import csrfProtection %}
 
 <form class="form" id="main-form" method="post" action="" novalidate="novalidate" enctype="multipart/form-data">
-  {{ csrfProtection() }}
+  <input type="hidden" name="_csrf" value={{ csrfToken }}>
   {% block form_content %}
     {% include "./fields.njk" %}
     {% if "got-a-notice-period" in currentUrl %}
