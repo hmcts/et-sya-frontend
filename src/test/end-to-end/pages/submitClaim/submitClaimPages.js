@@ -5,6 +5,7 @@ module.exports = async function (allEqualityPages) {
   const I = this;
 
   //user clicks check your answers link
+  I.waitForElement("//a[contains(.,'Check your answers')]", 40);
   I.click('[href="/pcq"]');
 
   //User will see the equality and diversity Pages
