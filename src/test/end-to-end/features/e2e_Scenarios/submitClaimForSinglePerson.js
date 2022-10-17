@@ -49,6 +49,4 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await submittingClaim(I, false);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-})
-  .tag('@RET-BAT')
-  .tag('@RET-XB');
+}).tag('@RET-BAT');
