@@ -46,7 +46,8 @@ module.exports = async function (workAddress, doYouHaveAcas) {
       '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25 RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
     );
     I.click(commonConfig.saveAndContinue);
-    I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
+    //I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
+    await I.waitForVisible("//span[contains(text(),'Contact us')]");
   }
 
   //select yes or no for acas certificate
