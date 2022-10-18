@@ -73,6 +73,11 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.fileTooLarge) {
+      req.fileTooLarge = false;
+      req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
+      return res.redirect(req.url);
+    }
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -89,6 +94,7 @@ export default class DescribeWhatHappenedController {
         }
       } catch (error) {
         this.logger.info(error);
+        req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
         handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
