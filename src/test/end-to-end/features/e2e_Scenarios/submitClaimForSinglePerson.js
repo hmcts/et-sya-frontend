@@ -6,7 +6,7 @@ const {
   areYouStillWorkingForOrg,
   stillWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
-  //claimDetails,
+  claimDetails,
   //submittingClaim,
   //checkYourAnswers,
   //claimSubmitted,
@@ -27,8 +27,8 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await stillWorkingForRespondentJourney(I, 'Yes written contract with notice period', 'Months');
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
   I.click("//a[contains(.,'Describe what happened to you')]");
-  /*
   await claimDetails(I);
+  /*
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);*/
