@@ -1,16 +1,17 @@
-/*const {
+const {
   doNotHaveToCompleteCard,
+  stepsToMakingYourClaim,
+  /*
   didYouWorkForOrganisation,
   areYouStillWorkingForOrg,
   stillWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
   enterPersonalDetails,
-  stepsToMakingYourClaim,
   claimDetails,
   submittingClaim,
   checkYourAnswers,
-  claimSubmitted,
-} = require('../../helpers/caseHelper');*/
+  claimSubmitted,*/
+} = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
 Feature('End to end journey for submitting a case');
@@ -18,9 +19,10 @@ Feature('End to end journey for submitting a case');
 Scenario('Submit a single claim for myself with the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
   I.wait(1);
-  /*await I.authenticateWithIdam();
+  await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
   await stepsToMakingYourClaim(I);
+  /*
   await enterPersonalDetails(I);
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
