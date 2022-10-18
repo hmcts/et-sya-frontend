@@ -1,12 +1,12 @@
 const {
   doNotHaveToCompleteCard,
   stepsToMakingYourClaim,
+  enterPersonalDetails,
   /*
   didYouWorkForOrganisation,
   areYouStillWorkingForOrg,
   stillWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
-  enterPersonalDetails,
   claimDetails,
   submittingClaim,
   checkYourAnswers,
@@ -22,8 +22,8 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
   await stepsToMakingYourClaim(I);
-  /*
   await enterPersonalDetails(I);
+  /*
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
   await stillWorkingForRespondentJourney(I, 'Yes written contract with notice period', 'Months');
