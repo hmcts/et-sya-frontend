@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-  
+
   <div class="cookie-preference-success">
     <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
@@ -196,7 +196,8 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <form class="cookie-preferences-form">
-        {{ govukRadios({
+       <input type="hidden" name="_csrf" value={{ csrfToken }}>
+       {{ govukRadios({
     classes: 'govuk-radios',
     idPrefix: analytics,
     name: analytics,
