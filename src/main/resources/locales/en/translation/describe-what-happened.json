@@ -31,8 +31,8 @@
   "textInputHint": "Use this box to describe the events around your dispute, or add to your claim by uploading a document",
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
-    "hint": "<p>You can only upload 1 document.</p><p>Upload a file</p>",
-    "hintExisting": "<p>You can only upload 1 document.</p><p>Uploaded file:</p><b>{{filename}}</b>"
+    "hint": "<p>You can only upload 1 document.</p><p>If you want to upload an email, download and convert from your email client first. Most email clients will give the option of downloading as pdf or PostScript.</p><p>Upload a file</p>",
+    "hintExisting": "<b><p>You can only upload 1 document.</p><p>You have previously uploaded: {{filename}}</p></b>"
   },
   "acceptedFormats": {
     "label": "Accepted formats",
@@ -46,7 +46,9 @@
     },
     "claimSummaryFileName": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
-      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>"
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",
+      "invalidFileSize": "The file you are trying to upload has exceeded the maximum file size limit, please reduce the size of the file.",
+      "backEndError": "There was an error uploading your file. Please try again. If this error persists please contact support."
     }
   }
 }

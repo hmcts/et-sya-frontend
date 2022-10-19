@@ -8,6 +8,7 @@ import { AnyRecord } from './util-types';
 export interface AppRequest<T = Partial<AnyRecord>> extends Request {
   session: AppSession;
   body: T;
+  fileTooLarge?: boolean;
 }
 
 export interface AppSession extends Session {
@@ -17,6 +18,7 @@ export interface AppSession extends Session {
   userCase: CaseWithId;
   user: UserDetails;
   guid: string | undefined;
+  fileTooLarge?: boolean;
 }
 
 export interface UserDetails {

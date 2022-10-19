@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import {
   getSectionStatus,
+  getSectionStatusForEmployment,
   handleUpdateDraftCase,
   handleUpdateSubmittedCase,
   handleUploadDocument,
@@ -12,7 +13,7 @@ import {
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
-import { YesOrNo } from '../../../../main/definitions/case';
+import { StillWorking, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState, sectionStatus } from '../../../../main/definitions/definition';
 import * as CaseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -72,6 +73,56 @@ describe('getSectionStatus()', () => {
     const providedStatus = getSectionStatus(detailsCheckValue, sessionValue);
     expect(providedStatus).toStrictEqual(expected);
   });
+});
+
+describe('getSectionStatusForEmployment()', () => {
+  it.each([
+    {
+      detailsCheckValue: YesOrNo.YES,
+      sessionValue: undefined,
+      expected: sectionStatus.completed,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 'a string',
+      typesOfClaim: ['payRelated'],
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 1,
+      typesOfClaim: ['unfairDismissal'],
+      isStillWorking: StillWorking.WORKING,
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: YesOrNo.NO,
+      sessionValue: undefined,
+      expected: sectionStatus.inProgress,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: undefined,
+      typesOfClaim: ['unfairDismissal', 'payRelated'],
+      expected: sectionStatus.notStarted,
+    },
+    {
+      detailsCheckValue: undefined,
+      sessionValue: 0,
+      expected: sectionStatus.notStarted,
+    },
+  ])(
+    'checks section status for employment section when %o',
+    ({ detailsCheckValue, sessionValue, typesOfClaim, isStillWorking, expected }) => {
+      const providedStatus = getSectionStatusForEmployment(
+        detailsCheckValue,
+        sessionValue,
+        typesOfClaim,
+        isStillWorking
+      );
+      expect(providedStatus).toStrictEqual(expected);
+    }
+  );
 });
 
 describe('isPostcodeMVPLocation()', () => {
