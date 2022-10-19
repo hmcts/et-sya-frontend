@@ -129,7 +129,11 @@ export default class TypeOfClaimController {
     }
 
     handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+
+    // Only called when returning from CYA page
+    if (req.session.userCase.id) {
+      handleUpdateDraftCase(req, logger);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

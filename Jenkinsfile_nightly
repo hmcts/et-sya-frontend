@@ -41,7 +41,7 @@ withNightlyPipeline(type, product, component) {
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-        enableSlackNotification('#et-testers')
+        enableSlackNotification('#et-builds')
     }
 
     after('fullFunctionalTest') {

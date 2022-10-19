@@ -1,5 +1,6 @@
 import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { TypesOfClaim } from '../../definitions/definition';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getEmploymentDetails = (
@@ -34,8 +35,8 @@ export const getEmploymentDetails = (
       },
     });
   } else {
-    employmentDetails.push(
-      {
+    if (!userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+      employmentDetails.push({
         key: {
           text: translations.employmentDetails.didYouWorkFor,
           classes: 'govuk-!-font-weight-regular-m',
@@ -52,7 +53,9 @@ export const getEmploymentDetails = (
             },
           ],
         },
-      },
+      });
+    }
+    employmentDetails.push(
       {
         key: {
           text: translations.employmentDetails.isStillWorking,
@@ -109,8 +112,13 @@ export const getEmploymentDetails = (
             },
           ],
         },
-      },
-      {
+      }
+    );
+    if (
+      userCase.isStillWorking === StillWorking.WORKING ||
+      userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
+    ) {
+      employmentDetails.push({
         key: {
           text: translations.employmentDetails.noticePeriod,
           classes: 'govuk-!-font-weight-regular-m',
@@ -127,9 +135,31 @@ export const getEmploymentDetails = (
             },
           ],
         },
-      }
-    );
-    if (userCase.noticePeriod === YesOrNo.YES) {
+      });
+    } else {
+      employmentDetails.push({
+        key: {
+          text: translations.employmentDetails.noticeEnds,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text:
+            userCase.noticeEnds === undefined
+              ? ''
+              : userCase.noticeEnds.day + '-' + userCase.noticeEnds.month + '-' + userCase.noticeEnds.year,
+        },
+        actions: {
+          items: [
+            {
+              href: PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE,
+              text: translations.change,
+              visuallyHiddenText: translations.employmentDetails.noticeEnds,
+            },
+          ],
+        },
+      });
+    }
+    if (userCase.noticePeriod === YesOrNo.YES || userCase.isStillWorking === StillWorking.NOTICE) {
       employmentDetails.push(
         {
           key: {
@@ -355,12 +385,12 @@ export const getEmploymentDetails = (
               classes: 'govuk-!-font-weight-regular-m',
             },
             value: {
-              text: userCase.payInterval,
+              text: userCase.newJobPayInterval,
             },
             actions: {
               items: [
                 {
-                  href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
+                  href: PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
                   text: translations.change,
                   visuallyHiddenText: translations.employmentDetails.payPeriod,
                 },

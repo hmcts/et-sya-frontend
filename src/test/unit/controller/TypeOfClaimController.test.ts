@@ -1,3 +1,4 @@
+import axios from 'axios';
 import express from 'express';
 import redis from 'redis-mock';
 
@@ -6,6 +7,8 @@ import { CaseDataCacheKey } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
+import * as CaseService from '../../../main/services/CaseService';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -194,6 +197,34 @@ describe('Type Of Claim Controller', () => {
 
       controller.post(req, res);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+    });
+  });
+
+  describe('Updating draft case', () => {
+    jest.mock('axios');
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    beforeEach(() => {
+      caseApi.updateDraftCase = jest.fn().mockResolvedValue([]);
+    });
+
+    it('should update draft case when case exists', () => {
+      new TypeOfClaimController().post(
+        mockRequest({ body: { typeOfClaim: [TypesOfClaim.DISCRIMINATION] }, userCase: {} }),
+        mockResponse()
+      );
+
+      expect(caseApi.updateDraftCase).toHaveBeenCalled();
+    });
+
+    it("should not update draft case when case hasn't been created yet", () => {
+      new TypeOfClaimController().post(
+        mockRequest({ body: { typeOfClaim: [TypesOfClaim.DISCRIMINATION] }, userCase: { id: undefined } }),
+        mockResponse()
+      );
+
+      expect(caseApi.updateDraftCase).toHaveBeenCalledTimes(0);
     });
   });
 });

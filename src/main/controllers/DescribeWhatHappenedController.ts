@@ -75,6 +75,11 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.fileTooLarge) {
+      req.fileTooLarge = false;
+      req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
+      return res.redirect(req.url);
+    }
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -91,6 +96,7 @@ export default class DescribeWhatHappenedController {
         }
       } catch (error) {
         logger.info(error);
+        req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
         handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
@@ -103,8 +109,7 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
-    this.uploadedFileName = fileName;
+    this.uploadedFileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,
@@ -112,6 +117,7 @@ export default class DescribeWhatHappenedController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.DESCRIBE_WHAT_HAPPENED, {
       ...content,
+      postAddress: PageUrls.DESCRIBE_WHAT_HAPPENED,
     });
   };
 }
