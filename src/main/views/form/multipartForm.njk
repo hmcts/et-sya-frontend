@@ -1,7 +1,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-<form class="form" id="main-form" method="post" action="" novalidate="novalidate" enctype="multipart/form-data">
+<!--  Ehe form body will not be parsed until after the request passes that middleware, we need to send the csrf in the action -->
+<form class="form" id="main-form" method="post" action="{{postAddress}}?_csrf={{ csrfToken }}" novalidate="novalidate" enctype="multipart/form-data">
   <input type="hidden" name="_csrf" value={{ csrfToken }}>
   {% block form_content %}
     {% include "./fields.njk" %}
