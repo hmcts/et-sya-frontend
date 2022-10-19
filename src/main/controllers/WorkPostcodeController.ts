@@ -10,6 +10,7 @@ import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 import { isPostcodeMVPLocation, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class WorkPostcodeController {
   private readonly form: Form;
@@ -39,6 +40,7 @@ export default class WorkPostcodeController {
     if (isPostcodeMVPLocation(req.body.workPostcode)) {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

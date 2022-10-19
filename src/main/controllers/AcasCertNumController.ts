@@ -12,6 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
@@ -80,6 +81,7 @@ export default class AcasCertNumController {
       } else {
         redirectUrl = PageUrls.ACAS_CERT_NUM;
       }
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       handleSessionErrors(req, res, this.form, redirectUrl);
     }
   };

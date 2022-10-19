@@ -15,6 +15,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class AddressDetailsController {
   private readonly form: Form;
@@ -104,8 +105,9 @@ export default class AddressDetailsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.TELEPHONE_NUMBER);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.TELEPHONE_NUMBER);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

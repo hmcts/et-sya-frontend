@@ -10,6 +10,7 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class ClaimDetailsCheckController {
   private readonly form: Form;
@@ -32,8 +33,9 @@ export default class ClaimDetailsCheckController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_STEPS);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

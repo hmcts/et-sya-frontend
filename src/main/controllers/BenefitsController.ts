@@ -12,6 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class BenefitsController {
   private readonly form: Form;
@@ -71,6 +72,7 @@ export default class BenefitsController {
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };

@@ -12,6 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class ClaimTypeDiscriminationController {
   private readonly form: Form;
@@ -88,6 +89,7 @@ export default class ClaimTypeDiscriminationController {
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };

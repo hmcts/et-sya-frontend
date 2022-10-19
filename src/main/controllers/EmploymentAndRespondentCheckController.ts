@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
@@ -21,6 +22,7 @@ export default class EmploymentAndRespondentCheckController {
         labelHidden: true,
         id: 'tasklist-check',
         classes: 'govuk-radios',
+        validator: isFieldFilledIn,
       },
     },
     submit: submitButton,

@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls } from '../definitions/constants';
 
+import { setUrlLanguage } from './helpers/LanguageHelper';
+
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
     let redirectUrl = req.url;
@@ -13,7 +15,7 @@ export default class ChangeDetailsController {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, '');
       req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     }
-
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     return res.redirect(redirectUrl);
   };
 }

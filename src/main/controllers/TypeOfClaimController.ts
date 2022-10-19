@@ -13,6 +13,7 @@ import { cachePreloginCaseData } from '../services/CacheService';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class TypeOfClaimController {
@@ -125,7 +126,7 @@ export default class TypeOfClaimController {
         throw err;
       }
     }
-
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     handleSessionErrors(req, res, this.form, redirectUrl);
 
     // Only called when returning from CYA page
