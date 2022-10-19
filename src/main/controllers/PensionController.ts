@@ -21,8 +21,9 @@ export default class PensionController {
         id: 'pension',
         type: 'radios',
         classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.label,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'xl',
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
@@ -33,9 +34,8 @@ export default class PensionController {
                 name: 'pension-contributions',
                 type: 'currency',
                 classes: 'govuk-input--width-5',
-                label: (l: AnyRecord): string => l.label,
-                labelHidden: true,
-                hint: (l: AnyRecord): string => l.pensionContributions,
+                label: (l: AnyRecord): string => l.pensionContributions,
+                labelSize: 's',
                 attributes: { maxLength: 12 },
                 validator: isValidPension,
               },
