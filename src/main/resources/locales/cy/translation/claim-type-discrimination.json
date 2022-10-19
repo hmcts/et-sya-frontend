@@ -1,5 +1,5 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Math o hawliad",
   "h1": "Pa fath o wahaniaethu ydych chi’n ei hawlio?",
   "detailsSummary": "Beth yw gwahaniaethu?",
   "detailsText": {
@@ -20,7 +20,7 @@
   },
   "genderReassignment": {
     "title": "Welsh Translation required",
-    "checkbox": "Ailbennu rhywedd "
+    "checkbox": "Ailbennu rhywedd"
   },
   "marriageOrCivilPartnership": {
     "title": "Welsh Translation required",
