@@ -107,8 +107,7 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
-    this.uploadedFileName = fileName;
+    this.uploadedFileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,
@@ -116,6 +115,7 @@ export default class DescribeWhatHappenedController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.DESCRIBE_WHAT_HAPPENED, {
       ...content,
+      postAddress: PageUrls.DESCRIBE_WHAT_HAPPENED,
     });
   };
 }
