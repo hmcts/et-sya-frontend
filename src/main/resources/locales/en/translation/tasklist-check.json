@@ -7,6 +7,9 @@
   "errors": {
     "personalDetailsCheck": {
       "required": "Tell us if you have completed this section"
+    },
+    "employmentAndRespondentCheck": {
+      "required": "Tell us if you have completed this section"
     }
   }
 }

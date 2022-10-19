@@ -156,6 +156,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+  GET_SUBMITTED_CASE_DOCUMENT: '/getSubmittedCaseDocument/:docId',
   PCQ: '/pcq',
 } as const;
 
@@ -250,6 +251,7 @@ export const EXISTING_USER = 'existingUser';
 export const LOCAL_REDIS_SERVER = '127.0.0.1';
 export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
+export const FILE_SIZE_LIMIT = 83886500;
 
 export const mvpLocations = [
   'ZE',
