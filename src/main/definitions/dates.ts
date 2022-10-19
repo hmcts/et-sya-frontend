@@ -100,8 +100,9 @@ export const NoticeEndDateFormFields = {
 export const StartDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
