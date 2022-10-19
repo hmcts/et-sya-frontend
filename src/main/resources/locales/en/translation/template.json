@@ -10,6 +10,7 @@
   "phaseBanner": {
     "feedback": "Your feedback",
     "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">Cymraeg</a>",
     "additionalText": "helps us to improve this service."
   },
   "contactUsTitle": "Contact us",
