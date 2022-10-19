@@ -12,11 +12,12 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getUploadedFileName } from './helpers/PageContentHelpers';
 
 export default class DescribeWhatHappenedController {
-  private uploadedFileName: string;
+  private uploadedFileName = '';
   private getHint = (label: AnyRecord): string => {
-    if (this.uploadedFileName) {
+    if (this.uploadedFileName !== '') {
       return (label.fileUpload.hintExisting as string).replace('{{filename}}', this.uploadedFileName);
     } else {
       return label.fileUpload.hint;
@@ -72,10 +73,19 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.fileTooLarge) {
+      req.fileTooLarge = false;
+      req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
+      return res.redirect(req.url);
+    }
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const claimSummaryError = getClaimSummaryError(formData, req.file);
+    const claimSummaryError = getClaimSummaryError(
+      formData,
+      req.file,
+      req.session.userCase?.claimSummaryFile?.document_filename
+    );
     if (!claimSummaryError) {
       try {
         const result = await handleUploadDocument(req, req.file, this.logger);
@@ -84,7 +94,9 @@ export default class DescribeWhatHappenedController {
         }
       } catch (error) {
         this.logger.info(error);
+        req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
+        this.uploadedFileName = '';
         handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
         handleUpdateDraftCase(req, this.logger);
       }
@@ -95,9 +107,8 @@ export default class DescribeWhatHappenedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (req.session?.userCase?.claimSummaryFile?.document_filename) {
-      this.uploadedFileName = req.session.userCase.claimSummaryFile.document_filename;
-    }
+    const fileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);
+    this.uploadedFileName = fileName;
     const content = getPageContent(req, this.describeWhatHappenedFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.DESCRIBE_WHAT_HAPPENED,
