@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import { atLeastOneFieldIsChecked, isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { HearingPreference } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -49,6 +49,10 @@ export default class VideoHearingsController {
                 type: 'textarea',
                 label: l => l.explain,
                 labelSize: 'normal',
+                attributes: {
+                  maxLength: 2500,
+                },
+                validator: isContent2500CharsOrLess,
               },
             },
           },

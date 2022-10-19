@@ -53,13 +53,6 @@ describe('Describe-What-Happened Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'required' }]);
     });
 
-    it('should not allow both summary text and summary file', async () => {
-      const req = mockRequest({ body: { claimSummaryText: 'text' }, file: mockFile });
-      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
-
-      expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'textAndFile' }]);
-    });
-
     it('should only allow valid file formats', async () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
