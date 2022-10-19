@@ -1,16 +1,16 @@
 {
-  "title": "Claim details - whistleblowing claims",
-  "h1": "Whistleblowing claims (optional)",
-  "p1": "You've selected a whistleblowing claim, so you can request that we forward a copy of your claim to a relevant regulator (also known as 'prescribed person') or body.",
-  "p2": "We will notify the respondent if you choose for us to forward your claim but this will not affect how we process your claim",
-  "p3": "Not all whistleblowing claims will have an appropriate regulator or body",
-  "p4": "<a href=\"https://www.gov.uk/government/publications/blowing-the-whistle-list-of-prescribed-people-and-bodies--2/whistleblowing-list-of-prescribed-people-and-bodies\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Find the relevant regulator or body (opens in a new window)</a> for your type of claim from this list",
-  "forwardClaim": "Do you want us to forward your whistleblowing claim to a relevant regulator or body?",
-  "regOrBodyName": "Enter the name of the relevant regulator or body. If you cannot find one, enter 'N/A',",
+  "title": "Welsh translation required - hawliadau chwythu’r chwiban",
+  "h1": "Hawliadau chwythu’r chwiban (dewisol)",
+  "p1": "Rydych wedi dewis hawliad chwythu’r chwiban, felly gallwch ofyn i ni anfon copi o’ch hawliad i reoleiddiwr neu gorff perthnasol (a elwir hefyd yn ‘unigolyn penodedig’).",
+  "p2": "Byddwn yn hysbysu’r atebydd os byddwch yn gofyn i ni anfon eich hawliad ymlaen, ond ni fydd hyn yn effeithio ar sut byddwn yn prosesu eich hawliad",
+  "p3": "Ni fydd gan bob hawliad chwythu’r chwiban reoleiddiwr neu gorff perthnasol",
+  "p4": "<a href=\"https://www.gov.uk/government/publications/blowing-the-whistle-list-of-prescribed-people-and-bodies--2/whistleblowing-list-of-prescribed-people-and-bodies\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Dod o hyd i’r rheoleiddiwr neu gorff perthnasol (agor mewn ffenestr newydd)</a> ar gyfer eich math chi o hawliad o’r rhestr hon",
+  "forwardClaim": "Ydych chi eisiau i ni anfon eich hawliad chwythu’r chwiban i reoleiddiwr neu gorff perthnasol?",
+  "regOrBodyName": "Nodwch enw’r rheoleiddiwr neu gorff perthnasol. Os na allwch ddod o hyd i un, rhowch ‘AMH’,",
   "errors": {
     "whistleblowingEntityName": {
-      "required": "Tell us the name of the relevant regulator or body. If you cannot find one enter as 'N/A' ",
-      "invalidLength": "Name entered for regulator or body must be between 3 characters and 100 characters. If you cannot find one enter as 'N/A'"
+      "required": "Welsh translation required",
+      "invalidLength": "Welsh translation required"
     }
   }
 }
