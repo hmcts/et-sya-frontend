@@ -3,6 +3,7 @@
 
 <div id="enterPostcode">
   <form id="postcodeLookup">
+    <input type="hidden" name="_csrf" value={{ csrfToken }}>
     {{ govukInput({
       id: "postcode",
       name: "postcode",
@@ -16,7 +17,7 @@
     <p class="govuk-body">
       <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
     </p>
-    
+
     {{ govukButton({
       attributes: {
         id: "findAddressButton"
