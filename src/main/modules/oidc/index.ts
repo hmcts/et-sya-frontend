@@ -12,7 +12,7 @@ import { getCaseApi } from '../../services/CaseService';
 
 import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
 
-const logger = getLogger('app');
+const logger = getLogger('oidc');
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -20,7 +20,7 @@ export class Oidc {
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
-      let stateParam = '';
+      let stateParam;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
     });

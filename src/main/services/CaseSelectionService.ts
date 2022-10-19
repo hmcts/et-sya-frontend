@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { getCaseApi } from './CaseService';
 
-const logger = getLogger('app');
+const logger = getLogger('CaseSelectionService');
 
 export const getUserApplications = (userCases: CaseWithId[]): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];

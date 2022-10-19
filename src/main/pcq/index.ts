@@ -26,7 +26,7 @@ export interface PCQRequest {
   token?: string;
 }
 
-const logger = getLogger('app');
+const logger = getLogger('pcq');
 
 const isEnabled = (): boolean => {
   return process.env.PCQ_ENABLED === 'true' || config.get('services.pcq.enabled') === 'true';

@@ -19,8 +19,8 @@ import { I18Next } from './modules/i18next';
 import { Nunjucks } from './modules/nunjucks';
 import { Oidc } from './modules/oidc';
 import { PropertiesVolume } from './modules/properties-volume';
+import { Routes } from './modules/routes/routes';
 import { Session } from './modules/session';
-import routes from './routes/routes';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 
 new CSRFToken().enableFor(app);
 new Oidc().enableFor(app);
-routes(app); // be consistent with enableFor
+new Routes().enableFor(app);
 
 setupDev(app, developmentMode);
 // returning "not found" page for requests with paths not resolved by the router
