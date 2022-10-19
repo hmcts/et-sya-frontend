@@ -279,12 +279,12 @@ describe('Steps to making your claim page tags', () => {
       });
     const notStartedTags = htmlRes.getElementsByClassName(notStartedTaskTag);
     const tasklistTags = htmlRes.getElementsByClassName(taskListTag);
-    expect(notStartedTags.length).equal(4, 'number of tags found is not 4');
+    expect(notStartedTags.length).equal(5, 'number of tags found is not 5');
     expect(tasklistTags.length).equal(8, 'number of tags found is not 8');
     expect(tasklistTags[0].innerHTML).contains(sectionStatus.completed);
     expect(tasklistTags[1].innerHTML).contains(sectionStatus.completed);
     expect(tasklistTags[2].innerHTML).contains(sectionStatus.completed);
-    expect(notStartedTags[3].innerHTML).contains(sectionStatus.cannotStartYet);
+    expect(notStartedTags[4].innerHTML).contains(sectionStatus.cannotStartYet);
   });
 
   it('should show employment and respondent section as completed', async () => {
