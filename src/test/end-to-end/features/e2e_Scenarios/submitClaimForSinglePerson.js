@@ -7,9 +7,9 @@ const {
   stillWorkingForRespondentJourney,
   enterRespondentDetailsJourney,
   claimDetails,
-  //submittingClaim,
-  //checkYourAnswers,
-  //claimSubmitted,
+  submittingClaim,
+  checkYourAnswers,
+  claimSubmitted,
 } = require('../../helpers/caseHelper');
 const commonFlow = require('../../helpers/commonFlow.js');
 
@@ -17,7 +17,6 @@ Feature('End to end journey for submitting a case');
 
 Scenario('Submit a single claim for myself with the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
-  I.wait(1);
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
   await stepsToMakingYourClaim(I);
@@ -28,10 +27,9 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
-  /*
   await submittingClaim(I);
   await checkYourAnswers(I);
-  await claimSubmitted(I);*/
+  await claimSubmitted(I);
 })
   .tag('@RET-BAT-TEST')
   .tag('@RET-XB');

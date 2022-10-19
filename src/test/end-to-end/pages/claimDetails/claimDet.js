@@ -159,7 +159,7 @@ module.exports = async function (allClaimDetailsPages) {
 
   //Have you completed this Section
   await I.waitForVisible("//span[contains(text(),'Contact us')]");
-  await I.waitForText('Have you completed this section?');
+  await I.see('Have you completed this section?');
   I.see('You can change your answers later.');
   I.see("Yes, I've completed this section");
   I.see("No, I'll come back to it later");

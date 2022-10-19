@@ -5,6 +5,7 @@ module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
+  await I.waitForVisible("//span[contains(text(),'Contact us')]");
   //Application Details Section
   I.see('Check your answers');
   I.see('Application details');
