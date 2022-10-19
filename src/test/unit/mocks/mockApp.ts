@@ -98,6 +98,7 @@ export const mockApp = ({
       userCase: {
         id: '1234',
         dobDate: { year: '2000', month: '12', day: '24' },
+        typeOfClaim: [],
         ...userCase,
       } as CaseWithId,
       ...session,
@@ -109,6 +110,8 @@ export const mockApp = ({
     next();
   });
   mock.use(app);
+  app.locals.CSRF_DISABLED = true;
+
   return mock;
 };
 
