@@ -13,8 +13,8 @@ const stillWorkingJsonRaw = fs.readFileSync(
 );
 const stillWorkingJson = JSON.parse(stillWorkingJsonRaw);
 
-const titleClass = 'govuk-heading-xl';
-const expectedTitle = stillWorkingJson.h1;
+const titleClass = 'govuk-fieldset__legend';
+const expectedTitle = stillWorkingJson.legend;
 const radios = 'govuk-radios__item';
 const expectedRadioLabel1 = stillWorkingJson.optionText1;
 const expectedRadioLabel2 = stillWorkingJson.optionText2;
