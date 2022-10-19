@@ -1,20 +1,15 @@
 {
-  "phaseBanner": {
-    "feedback": "Bydd eich adborth",
-    "additionalText": "Welsh Translation required",
-    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
-  },
   "startNow": "Welsh Translation required",
-  "continue": "pharhau",
   "back": "Welsh Translation required",
+  "continue": "Parhau",
+  "view": "Welsh Translation required",
+  "change": "Welsh Translation required",
   "saveForLater": "Cadw fel drafft",
   "submit": "Cadw a pharhau",
   "required": "Welsh Translation required",
   "notAnswered": "Welsh Translation required",
   "errorSaving": "Welsh Translation required",
   "errorSummaryTitle": "Welsh Translation required",
-  "contactUsTitle": "Cysylltwch â ni i gael cymorth",
-  "contactUsForHelp": "Ffôn: <a href=\"tel:03001231024\" class=\"tel-link\">0300 123 1024</a><br> Ffôn: <a href=\"tel:03003035176\" class=\"tel-link\">0300 303 5176</a> (Llinell Iaith Gymraeg)<br>Ffôn: <a href=\"tel:03007906234\" class=\"tel-link\">0300 790 6234</a> (Yr Alban)<br>Ffôn Testun: <a href=\"tel:1800103001231024\" class=\"tel-link\">18001 0300 123 1024</a> (Cymru a Lloegr)<br> Ffôn Testun: <a href=\"tel:1800103007906234\" class=\"tel-link\">18001 0300 790 6234</a> (Yr Alban)<br>Dydd Llun i ddydd Gwener, 9am - 5pm.<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "months": [
     "Welsh Translation required",
     "Welsh Translation required",
@@ -36,17 +31,21 @@
   },
   "yes": "Do",
   "no": "Naddo",
+  "notSure": "Welsh Translation required",
   "english": "Welsh Translation required",
   "welsh": "Welsh Translation required",
-  "govUk": "Welsh Translation required",
+  "govUk": "GOV.UK",
   "warningTxt": "Welsh Translation required",
-  "serviceName": "Welsh Translation required",
-  "guide": "Welsh Translation required",
-  "termsAndConditions": "Welsh Translation required",
-  "cookiePolicy": "Welsh Translation required",
-  "contact": "Welsh Translation required",
-  "stage": "Welsh Translation required",
   "weekly": "Wythnosol",
   "monthly": "Misol",
-  "annual": "Blynyddol"
+  "annual": "Blynyddol",
+  "selectAllHint": "Dewiswch bob un sy'n berthnasol.",
+  "claimTypes": {
+    "breachOfContract": "Torri contract",
+    "discrimination": "Gwahaniaethu",
+    "payRelated": "Ymwneud â thâl",
+    "unfairDismissal": "Diswyddo annheg",
+    "whistleBlowing": "Chwythu’r chwiban",
+    "otherClaim": "Math arall o hawliad"
+  }
 }

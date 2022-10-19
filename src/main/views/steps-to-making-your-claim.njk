@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
- 
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl"> {{h1}} </h1>
@@ -42,7 +42,7 @@
 
             {% for link in section.links %}
             <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
+              <span class="app-task-list__task-name--300px">
                   {% if getContent(link.url) !="" %}
                   <a href= "{{ getContent(link.url) }}">
                   {{ getContent(link.linkTxt) }}
