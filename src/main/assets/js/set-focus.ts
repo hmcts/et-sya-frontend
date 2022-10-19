@@ -5,7 +5,21 @@
     document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
   );
   if (govUKErrors !== null && govUKErrors !== undefined && govUKErrors.length > 0) {
-    document.title = 'Error: ' + document.title;
-    govUKErrors[0].focus();
+    if (!isHidden(govUKErrors[0])) {
+      document.title = 'Error: ' + document.title;
+      govUKErrors[0].focus();
+    }
+  }
+}
+
+function isHidden(el: HTMLElement): boolean {
+  const govUKErrorsDivHidden = Array.from(
+    document.getElementsByClassName('govuk-error-summary hidden') as HTMLCollectionOf<HTMLElement>
+  );
+  if (govUKErrorsDivHidden !== null && govUKErrorsDivHidden !== undefined && govUKErrorsDivHidden.length > 0) {
+    return true;
+  } else {
+    const style = window.getComputedStyle(el);
+    return style.display === 'none';
   }
 }
