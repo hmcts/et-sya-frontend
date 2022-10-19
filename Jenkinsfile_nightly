@@ -52,8 +52,8 @@ withNightlyPipeline(type, product, component) {
                 alwaysLinkToLastBuild: true,
                 keepAll : true,
                 reportDir : "functional-output/reports/",
-                reportFiles : "et-functional-result.html",
-                reportName : "ET functional tests result"
+                reportFiles : "ET-sya-functional-tests.html",
+                reportName : "ET SYA Functional Tests Report"
         ]
     }
 
