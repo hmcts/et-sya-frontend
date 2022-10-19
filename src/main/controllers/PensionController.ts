@@ -35,7 +35,7 @@ export default class PensionController {
                 type: 'currency',
                 classes: 'govuk-input--width-5',
                 label: (l: AnyRecord): string => l.pensionContributions,
-                labelSize: 's',
+                labelAsHint: true,
                 attributes: { maxLength: 12 },
                 validator: isValidPension,
               },
