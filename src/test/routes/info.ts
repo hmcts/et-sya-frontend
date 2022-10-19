@@ -1,11 +1,11 @@
 import request from 'supertest';
 
-import { app } from '../../main/app';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe('Info page', () => {
   describe('on GET', () => {
     test('should return sample info page', async () => {
-      await request(app)
+      await request(mockApp({}))
         .get('/info')
         .expect(res => expect(res.status).toStrictEqual(200));
     });
