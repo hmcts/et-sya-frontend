@@ -1,4 +1,4 @@
-const {
+/*const {
   doNotHaveToCompleteCard,
   didYouWorkForOrganisation,
   areYouStillWorkingForOrg,
@@ -30,4 +30,4 @@ Scenario('Submit a single claim for myself', async ({ I }) => {
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-}).tag('@RET-VIP'); // It needs to be updated as @RET-BAT
+}).tag('@RET-VIP'); // It needs to be updated as @RET-BAT*/
