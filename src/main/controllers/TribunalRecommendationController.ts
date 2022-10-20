@@ -12,6 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class TribunalRecommendationController {
   private readonly form: Form;
@@ -36,11 +37,13 @@ export default class TribunalRecommendationController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrlWhistleblowing = setUrlLanguage(req, PageUrls.WHISTLEBLOWING_CLAIMS);
+    const redirectUrlNonWhistleblowing = setUrlLanguage(req, PageUrls.CLAIM_DETAILS_CHECK);
     setUserCase(req, this.form);
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+      handleSessionErrors(req, res, this.form, redirectUrlWhistleblowing);
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+      handleSessionErrors(req, res, this.form, redirectUrlNonWhistleblowing);
     }
     handleUpdateDraftCase(req, this.logger);
   };

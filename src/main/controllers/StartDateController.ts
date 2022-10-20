@@ -13,6 +13,7 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -40,14 +41,17 @@ export default class StartDateController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrlWorking = setUrlLanguage(req, PageUrls.NOTICE_PERIOD);
+    const redirectUrlNotice = setUrlLanguage(req, PageUrls.NOTICE_END);
+    const redirectUrlNoLongerWorking = setUrlLanguage(req, PageUrls.END_DATE);
     let redirectUrl = '';
     const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
-      redirectUrl = PageUrls.NOTICE_PERIOD;
+      redirectUrl = redirectUrlWorking;
     } else if (stillWorking === StillWorking.NOTICE) {
-      redirectUrl = PageUrls.NOTICE_END;
+      redirectUrl = redirectUrlNotice;
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
-      redirectUrl = PageUrls.END_DATE;
+      redirectUrl = redirectUrlNoLongerWorking;
     }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);

@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class TelNumberController {
   private readonly form: Form;
@@ -43,8 +44,9 @@ export default class TelNumberController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.UPDATE_PREFERENCES);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

@@ -12,6 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class VideoHearingsController {
   private readonly form: Form;
@@ -68,8 +69,9 @@ export default class VideoHearingsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.REASONABLE_ADJUSTMENTS);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

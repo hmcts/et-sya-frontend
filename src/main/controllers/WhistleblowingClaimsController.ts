@@ -13,6 +13,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class WhistleblowingClaimsController {
   private readonly form: Form;
@@ -55,8 +56,9 @@ export default class WhistleblowingClaimsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_DETAILS_CHECK);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), this.logger);
   };
 
