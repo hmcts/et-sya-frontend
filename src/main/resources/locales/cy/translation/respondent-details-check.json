@@ -1,0 +1,15 @@
+{
+  "title": "Welsh Translation required",
+  "subTitle": "Welsh Translation required",
+  "name": "Enw",
+  "address": "Cyfeiriad",
+  "acasNum": "Welsh Translation required",
+  "submit": "Welsh Translation required",
+  "change": "Welsh Translation required",
+  "unProvided": "Welsh Translation required",
+  "errors": {
+    "hiddenErrorField": {
+      "exceeded": "Welsh Translation required"
+    }
+  }
+}

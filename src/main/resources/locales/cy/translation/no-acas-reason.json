@@ -1,0 +1,16 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Pam nad oes gennych rif ACAS?",
+  "hint": "Welsh Translation required",
+  "linkText": "Welsh Translation required",
+  "dismissalHint": "Welsh Translation required",
+  "another": "Welsh Translation required",
+  "no_power": "Welsh Translation required",
+  "employer": "Welsh Translation required",
+  "unfair_dismissal": "Welsh Translation required",
+  "errors": {
+    "noAcasReason": {
+      "required": "Welsh Translation required"
+    }
+  }
+}
