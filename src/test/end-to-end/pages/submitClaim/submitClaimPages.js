@@ -3,12 +3,10 @@ const testConfig = require('../../config.js');
 module.exports = async function (allEqualityPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  allEqualityPages = true;
   //user clicks check your answers link
   await I.waitForVisible("//span[contains(text(),'Contact us')]");
-  //console.log("The value of the Flag : "+allEqualityPages)
+  console.log('The value of the Flag : ' + allEqualityPages);
   I.click('[href="/pcq"]');
-  //pause();
 
   //User will see the equality and diversity Pages
   I.see('Equality and diversity questions');
