@@ -34,4 +34,4 @@ Scenario('Verify returing to an existing claim flow when got a new ET account', 
   I.checkOption('input[id=return_number_or_account-2]');
   I.click('Continue');
   authPage.logout();
-}).tag(' @RET-BAT');
+}).tag(' @RET-WIP');
