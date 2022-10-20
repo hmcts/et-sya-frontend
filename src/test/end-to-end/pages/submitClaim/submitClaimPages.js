@@ -5,7 +5,8 @@ module.exports = async function (allEqualityPages) {
   const I = this;
   //user clicks check your answers link
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  console.log('The value of the Flag : ' + allEqualityPages);
+  await I.waitForVisible("//a[contains(.,'Check your answers')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //console.log('The value of the Flag : ' + allEqualityPages);
   I.click('[href="/pcq"]');
 
   //User will see the equality and diversity Pages
