@@ -1,0 +1,18 @@
+{
+  "title": "Acas certificate number - Requires Update",
+  "acasCertNum": "Enter an Acas early conciliation certificate number - Requires Update",
+  "h1": "A oes gennych rif tystysgrif ACAS ar gyfer ",
+  "hintText": "Nearly everyone should have this number before they fill in a claim form. You can find it on your Acas certificate. Read more about the - Requires Update",
+  "linkText": "Acas early conciliation service(opens in new tab) - Requires Update",
+  "yes": "Oes",
+  "no": "Nac oes",
+  "errors": {
+    "acasCert": {
+      "required": "Tell us if you have an Acas early conciliation number for Respondent - Requires Update"
+    },
+    "acasCertNum": {
+      "required": "Tell us if you have an Acas early conciliation number for Respondent - Requires Update",
+      "invalidAcasNumber": "Enter Acas number in correct format. For example R123456/12/34 - Requires Update"
+    }
+  }
+}
