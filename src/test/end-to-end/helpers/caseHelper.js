@@ -30,8 +30,8 @@ async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas) {
   await I.respondentDetailsJourney(workAddress, doYouHaveAcas);
 }
 
-async function stepsToMakingYourClaim(I) {
-  await I.stepsToMakingYourClaim();
+async function stepsToMakingYourClaim(I, clickCheckYourAnswers = false) {
+  await I.stepsToMakingYourClaim(clickCheckYourAnswers);
 }
 
 async function claimDetails(I, allClaimDetailsPages = true) {

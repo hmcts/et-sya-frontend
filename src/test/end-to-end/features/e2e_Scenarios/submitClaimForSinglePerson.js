@@ -19,7 +19,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await commonFlow.createSingleMyselfCase();
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
-  await stepsToMakingYourClaim(I);
+  await stepsToMakingYourClaim(I, false);
   await enterPersonalDetails(I);
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
@@ -27,7 +27,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
-  await stepsToMakingYourClaim(I);
+  await stepsToMakingYourClaim(I, true);
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
@@ -39,7 +39,7 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await commonFlow.createSingleMyselfCase();
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
-  await stepsToMakingYourClaim(I);
+  await stepsToMakingYourClaim(I, false);
   await enterPersonalDetails(I);
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
@@ -47,6 +47,7 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
+  await stepsToMakingYourClaim(I, true);
   await submittingClaim(I, false);
   await checkYourAnswers(I);
   await claimSubmitted(I);

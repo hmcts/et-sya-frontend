@@ -2,7 +2,7 @@
 const testConfig = require('../../config');
 const contactUs = require('../../helpers/contactUs.js');
 
-module.exports = async function () {
+module.exports = async function (clickCheckYourAnswers) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
@@ -35,4 +35,8 @@ module.exports = async function () {
   I.click("//span[@class='govuk-details__summary-text']"); //As there are 2 Contact us Links on the Page...
   I.wait(1);
   await contactUs.verifyContactUs();
+
+  if (clickCheckYourAnswers) {
+    I.click("//a[contains(.,'Check your answers')]");
+  }
 };
