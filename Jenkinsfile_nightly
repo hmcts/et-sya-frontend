@@ -54,7 +54,7 @@ withNightlyPipeline(type, product, component) {
                 reportFiles : "ET-sya-functional-tests.html",
                 reportName : "ET SYA Functional Tests Report"
         ]
-        enableSlackNotification('#et-builds')
+        //enableSlackNotification('#et-builds')
     }
 
     after('fortify-scan') {
