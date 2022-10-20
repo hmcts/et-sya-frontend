@@ -82,8 +82,9 @@ export const EndDateFormFields = {
 export const NewJobDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.h1,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   values: DateValues,
   validator: (value: CaseDate): DateTypes => isDateInputInvalid(value) || isDateInNextTenYears(value),
 };
