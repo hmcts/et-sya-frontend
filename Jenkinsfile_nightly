@@ -41,7 +41,6 @@ withNightlyPipeline(type, product, component) {
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-        enableSlackNotification('#et-builds')
     }
 
     after('fullFunctionalTest') {
@@ -55,6 +54,7 @@ withNightlyPipeline(type, product, component) {
                 reportFiles : "ET-sya-functional-tests.html",
                 reportName : "ET SYA Functional Tests Report"
         ]
+        enableSlackNotification('#et-builds')
     }
 
     after('fortify-scan') {
