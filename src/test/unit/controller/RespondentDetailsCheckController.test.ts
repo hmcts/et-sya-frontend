@@ -2,7 +2,7 @@ import RespondentDetailsCheckController from '../../../main/controllers/Responde
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import { userCaseWith6Respondents, userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
+import { userCaseWith5Respondents, userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
 describe('Respondent Details Check Controller', () => {
   const t = {
@@ -42,11 +42,11 @@ describe('Respondent Details Check Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ body });
     request.url = PageUrls.RESPONDENT_DETAILS_CHECK;
-    request.session.userCase = userCaseWith6Respondents;
+    request.session.userCase = userCaseWith5Respondents;
 
     controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
-    expect(request.session.userCase.respondents).toHaveLength(6);
+    expect(request.session.userCase.respondents).toHaveLength(5);
   });
 });
