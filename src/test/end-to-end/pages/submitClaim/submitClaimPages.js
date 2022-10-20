@@ -4,7 +4,7 @@ module.exports = async function (allEqualityPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   //user clicks check your answers link
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   console.log('The value of the Flag : ' + allEqualityPages);
   I.click('[href="/pcq"]');
 
@@ -14,7 +14,10 @@ module.exports = async function (allEqualityPages) {
     I.click("//button[contains(text(),'Continue to the questions')]");
 
     //Main Language Page
-    I.waitForVisible("//span[contains(text(),'Why we are asking this question')]");
+    I.waitForVisible(
+      "//span[contains(text(),'Why we are asking this question')]",
+      testConfig.TestWaitForVisibilityTimeLimit
+    );
     I.see('What is your main language?');
     I.see('English or Welsh');
     I.see('Other');
@@ -33,7 +36,7 @@ module.exports = async function (allEqualityPages) {
     I.click("//span[contains(.,'Why we are asking this question')]");
     I.waitForText(
       'This information helps us check that we’re treating people equally and fairly. It helps us to meet our commitment to equality (under the Equality Act 2010).',
-      testConfig.TestWaitForTextTimeLimit
+      testConfig.TestWaitForVisibilityTimeLimit
     );
     I.checkOption("//input[@value='0']"); //Prefer Not to Say Option
     I.click('Continue');

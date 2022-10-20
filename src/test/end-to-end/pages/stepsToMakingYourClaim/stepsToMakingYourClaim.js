@@ -1,10 +1,11 @@
 'use strict';
+const testConfig = require('../../config');
 const contactUs = require('../../helpers/contactUs.js');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Steps to making your claim');
   I.see('Application Details');
   I.see('Claim type');

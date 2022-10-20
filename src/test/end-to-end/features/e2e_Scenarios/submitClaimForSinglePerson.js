@@ -31,7 +31,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await checkYourAnswers(I);
   await claimSubmitted(I);
 })
-  .tag('@RET-BAT')
+  .tag('@RET-BAT-TEST')
   .tag('@RET-XB');
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality', async ({ I }) => {
