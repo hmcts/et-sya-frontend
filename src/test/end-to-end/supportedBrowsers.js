@@ -62,16 +62,16 @@ const supportedBrowsers = {
         name: 'WIN_FIREFOX_LATEST_ET',
       },
     },
-    /*firefox_mac_latest: {
+    firefox_mac_latest: {
       browserName: 'firefox',
       platformName: 'macOS 10.15',
       browserVersion: 'latest',
       'sauce:options': {
         name: 'MAC_FIREFOX_LATEST_ET',
       },
-    },*/
+    },
   },
-  safari: {
+  /*safari: {
     safari_mac_latest: {
       browserName: 'safari',
       platformName: 'macOS 11.00',
@@ -81,7 +81,7 @@ const supportedBrowsers = {
         seleniumVersion: '3.141.59',
       },
     },
-  },
+  },*/
 };
 
 module.exports = supportedBrowsers;
