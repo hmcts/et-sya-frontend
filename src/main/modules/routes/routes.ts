@@ -94,6 +94,9 @@ const handleUploads = multer({
 
 export class Routes {
   public enableFor(app: Application): void {
+    // Singleton controllers:
+    const describeWhatHappenedController = new DescribeWhatHappenedController();
+
     app.get(Urls.PCQ, new PcqController().get);
     app.get(PageUrls.HOME, new HomeController().get);
     app.get(PageUrls.CHECKLIST, new ChecklistController().get);
@@ -154,9 +157,9 @@ export class Routes {
     app.get(PageUrls.NOTICE_PERIOD, new NoticePeriodController().get);
     app.post(PageUrls.NOTICE_PERIOD, new NoticePeriodController().post);
     app.get(PageUrls.NOTICE_TYPE, new NoticeTypeController().get);
+    app.post(PageUrls.NOTICE_TYPE, new NoticeTypeController().post);
     app.get(PageUrls.NOTICE_LENGTH, new NoticeLengthController().get);
     app.post(PageUrls.NOTICE_LENGTH, new NoticeLengthController().post);
-    app.post(PageUrls.NOTICE_TYPE, new NoticeTypeController().post);
     app.get(PageUrls.PENSION, new PensionController().get);
     app.post(PageUrls.PENSION, new PensionController().post);
     app.get(PageUrls.START_DATE, new StartDateController().get);
@@ -185,11 +188,11 @@ export class Routes {
     app.post(PageUrls.CLAIM_TYPE_DISCRIMINATION, new ClaimTypeDiscriminationController().post);
     app.get(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().get);
     app.post(PageUrls.CLAIM_TYPE_PAY, new ClaimTypePayController().post);
-    app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, new DescribeWhatHappenedController().get);
+    app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, describeWhatHappenedController.get);
     app.post(
       PageUrls.DESCRIBE_WHAT_HAPPENED,
       handleUploads.single('claimSummaryFileName'),
-      new DescribeWhatHappenedController().post
+      describeWhatHappenedController.post
     );
     app.get(PageUrls.TELL_US_WHAT_YOU_WANT, new TellUsWhatYouWantController().get);
     app.post(PageUrls.TELL_US_WHAT_YOU_WANT, new TellUsWhatYouWantController().post);
