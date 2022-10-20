@@ -5,10 +5,9 @@ export const setUrlLanguage = (req: AppRequest, redirectUrl: string): string => 
   const welsh = '?lng=cy';
   if ((req.url as string)?.includes(english)) {
     redirectUrl += english;
-  } else {
-    if ((req.url as string)?.includes(welsh)) {
-      redirectUrl += welsh;
-    }
-    return redirectUrl;
   }
+  if ((req.url as string)?.includes(welsh)) {
+    redirectUrl += welsh;
+  }
+  return redirectUrl;
 };
