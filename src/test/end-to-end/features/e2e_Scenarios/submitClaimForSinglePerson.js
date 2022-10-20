@@ -27,6 +27,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await enterRespondentDetailsJourney(I, 'No', 'Yes');
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
+  await stepsToMakingYourClaim(I);
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);

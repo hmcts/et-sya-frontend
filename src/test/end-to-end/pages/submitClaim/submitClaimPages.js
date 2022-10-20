@@ -4,10 +4,10 @@ module.exports = async function (allEqualityPages) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   //user clicks check your answers link
-  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   await I.waitForVisible("//a[contains(.,'Check your answers')]", testConfig.TestWaitForVisibilityTimeLimit);
   //console.log('The value of the Flag : ' + allEqualityPages);
-  I.click('[href="/pcq"]');
+  //I.click('[href="/pcq"]');
+  I.click("//a[contains(.,'Check your answers')]");
 
   //User will see the equality and diversity Pages
   I.see('Equality and diversity questions');
