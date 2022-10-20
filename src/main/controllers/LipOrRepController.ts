@@ -12,6 +12,7 @@ import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class LipOrRepController {
   private readonly form: Form;
@@ -55,6 +56,7 @@ export default class LipOrRepController {
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

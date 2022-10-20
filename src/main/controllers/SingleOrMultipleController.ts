@@ -12,6 +12,7 @@ import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class SingleOrMultipleController {
   private readonly form: Form;
@@ -47,13 +48,15 @@ export default class SingleOrMultipleController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    const redirectUrlAcasMultiple = setUrlLanguage(req, PageUrls.ACAS_MULTIPLE_CLAIM);
+    const redirectUrlSingleOrMultiple = setUrlLanguage(req, PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
     let redirectUrl = '';
     if (req.body.caseType === CaseType.SINGLE) {
-      redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
+      redirectUrl = redirectUrlAcasMultiple;
     } else if (req.body.caseType === CaseType.MULTIPLE) {
       redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     } else {
-      redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
+      redirectUrl = redirectUrlSingleOrMultiple;
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
   };

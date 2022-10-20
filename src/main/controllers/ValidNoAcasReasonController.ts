@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class ValidNoAcasReasonController {
@@ -60,10 +61,11 @@ export default class ValidNoAcasReasonController {
   };
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+    const redirectUrlConditional = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.TYPE_OF_CLAIM
       : PageUrls.CONTACT_ACAS;
 
+    const redirectUrl = setUrlLanguage(req, redirectUrlConditional);
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
