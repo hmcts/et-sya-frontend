@@ -4,7 +4,6 @@
     "idam": {
       "clientID": "IDAM_CLIENT_ID",
       "authorizationURL": "IDAM_WEB_URL",
-      "clientSecret": "IDAM_CLIENT_SECRET",
       "tokenURL": "IDAM_API_URL"
     },
     "addressLookup": {
