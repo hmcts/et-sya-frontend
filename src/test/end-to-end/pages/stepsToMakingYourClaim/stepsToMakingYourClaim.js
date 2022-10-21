@@ -5,6 +5,7 @@ const contactUs = require('../../helpers/contactUs.js');
 module.exports = async function (clickCheckYourAnswers) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Steps to making your claim');
   I.see('Application Details');
