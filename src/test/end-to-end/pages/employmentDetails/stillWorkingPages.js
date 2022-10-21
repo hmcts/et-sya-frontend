@@ -20,6 +20,7 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
   I.click(commonConfig.saveAndContinue);
 
   //employment if statement to select notice period within contract
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   //I.waitForElement('#notice-period', testConfig.TestWaitForTextTimeLimit);
   if (noticePeriodContract === 'Yes written contract with notice period') {
