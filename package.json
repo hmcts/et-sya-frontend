@@ -22,7 +22,7 @@
     "fortifyScan": "./src/test/java/gradlew -p src/test/java fortifyScan",
     "test:pact:run-and-publish": "yarn test:pact && yarn publish-pact",
     "sonar-scan": "sonar-scanner",
-    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT  ",
+    "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:crossbrowser": "./bin/run-crossbrowser-tests.sh",
     "test-crossbrowser-e2e": "IGNORE_SESSION_VALIDATION=true NODE_ENV=testing LOG_LEVEL=OFF NODE_PATH=. node_modules/.bin/codeceptjs run-multiple  ${BROWSER_GROUP:-'--all'} -c src/test/end-to-end/saucelabs.conf.js --grep @RET-XB --steps --reporter mocha-multi",
@@ -157,7 +157,8 @@
     "**/**/shelljs": ">=0.8.5",
     "**/**/merge": ">=2.1.1",
     "**/**/glob-parent": ">=6.0.1",
-    "**/**/scss-tokenizer": ">=0.4.3"
+    "**/**/scss-tokenizer": ">=0.4.3",
+    "**/**/minimatch": ">=3.0.5"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
