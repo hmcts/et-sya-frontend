@@ -1,0 +1,9 @@
+{
+  "title": "Welsh Translation required",
+  "hintText": "Welsh Translation required",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": "Welsh Translation required"
+    }
+  }
+}
