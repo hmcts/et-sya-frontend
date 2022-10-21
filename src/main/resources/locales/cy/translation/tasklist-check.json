@@ -7,6 +7,9 @@
   "errors": {
     "personalDetailsCheck": {
       "required": "Welsh Translation required"
+    },
+    "employmentAndRespondentCheck": {
+      "required": "Welsh Translation required"
     }
   }
 }

@@ -7,7 +7,6 @@
   "jobTitle": "Job title (optional)",
   "errors": {
     "jobTitle": {
-      "required": "",
       "invalid-length": "Job title must be between 2 and 100 characters"
     }
   }
