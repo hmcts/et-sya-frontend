@@ -33,7 +33,10 @@
   },
   "errors": {
     "typeOfClaim": {
-      "required": "Select if you're making breach of contract claim"
+      "required": "Please select at least one of the options below to choose your type of claim."
+    },
+    "otherClaim": {
+      "required": "Please describe the type of claim"
     }
   }
 }

@@ -1,35 +1,35 @@
 {
-  "title": "",
-  "h1": "",
-  "enterPostcode": "",
-  "manualAddress": "",
-  "cannotFindAddress": "",
-  "findAddress": "",
+  "title": "Welsh Translation required",
+  "h1": "Ym mha gyfeiriad wnaethoch chi weithio?",
+  "enterPostcode": "Welsh Translation required",
+  "manualAddress": "Welsh Translation required",
+  "cannotFindAddress": "Welsh Translation required",
+  "findAddress": "Welsh Translation required",
   "errors": {
     "addressPostcode": {
-      "invalid": "",
-      "required": "",
-      "notSelected": ""
+      "invalid": "Welsh Translation required",
+      "required": "Welsh Translation required",
+      "notSelected": "Welsh Translation required"
     },
     "workAddress1": {
-      "required": "",
-      "invalid": ""
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
     },
     "workAddress2": {
-      "required": "",
-      "invalid": ""
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
     },
     "workAddressTown": {
-      "required": "",
-      "invalid": ""
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
     },
     "workAddressCountry": {
-      "required": "",
-      "invalid": ""
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
     },
     "workAddressPostcode": {
-      "required": "",
-      "invalid": ""
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
     }
   }
 }

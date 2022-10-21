@@ -1,31 +1,16 @@
 {
-  "title": "",
-  "h1": "",
-  "detailsSummary": "",
-  "detailsText": "",
-  "arrears": {
-    "title": "",
-    "checkbox": ""
-  },
-  "holidayPay": {
-    "title": "",
-    "checkbox": ""
-  },
-  "noticePay": {
-    "title": "",
-    "checkbox": ""
-  },
-  "redundancyPay": {
-    "title": "",
-    "checkbox": ""
-  },
-  "otherPayments": {
-    "title": "",
-    "checkbox": ""
-  },
+  "title": "Welsh Translation required",
+  "h1": "Pa fath o hawliad yn ymwneud â thâl ydych chi’n ei wneud?",
+  "detailsSummary": "Beth yw hawliadau yn ymwneud â thâl?",
+  "detailsText": "Mae’n erbyn y gyfraith i gyflogwr ddal tâl yn ôl ar ôl i weithiwr wneud gwaith iddynt. Gall hyn hefyd gynnwys didynnu tâl yn anghyfreithlon.",
+  "arrears": { "title": "Welsh Translation required", "checkbox": "Ôl-daliadau (tâl sy’n ddyledus i chi)" },
+  "holidayPay": { "title": "Welsh Translation required", "checkbox": "Tâl gwyliau" },
+  "noticePay": { "title": "Welsh Translation required", "checkbox": "Tâl cyfnod rhybudd" },
+  "redundancyPay": { "title": "Welsh Translation required", "checkbox": "Tâl dileu swydd" },
+  "otherPayments": { "title": "Welsh Translation required", "checkbox": "Taliadau eraill" },
   "errors": {
     "claimTypePay": {
-      "required": ""
+      "required": "Welsh Translation required"
     }
   }
 }

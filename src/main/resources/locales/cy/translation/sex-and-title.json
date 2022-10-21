@@ -1,22 +1,17 @@
 {
-  "title": "",
-  "h1": "",
-  "p": "",
-  "male": "",
-  "female": "",
-  "sex": "",
-  "preferNotToSay": "",
-  "preferredTitle": "",
+  "title": "Sex and preferred title - Welsh translation required",
+  "h1": "Sex and preferred title (optional) - Welsh translation required",
+  "p": "Fe ddefnyddir y manylion hyn i’n helpu i symud eich hawliad yn ei flaen.",
+  "male": "Gwryw",
+  "female": "Benyw",
+  "sex": "Beth yw eich rhyw?",
+  "preferNotToSay": "Prefer not to say - Welsh translation required",
+  "preferredTitle": "Beth yw eich teitl o ddewis?",
   "errors": {
     "preferredTitle": {
-      "required": "",
-      "lengthError": "",
-      "numberError": ""
+      "required": "Select a list option from the \"What is your preferred title\" dropdown - Welsh translation required",
+      "lengthError": "Your preferred title must be a minimum of 2 characters - Welsh translation required",
+      "numberError": "Tell us your preferred title? This must not include numbers - Welsh translation required"
     }
-  },
-  "genderIdentitySame": "",
-  "genderIdentitySameHint": "",
-  "genderIdentityTextLabel": "",
-  "genderTitle": "",
-  "otherTitlePreference": ""
+  }
 }

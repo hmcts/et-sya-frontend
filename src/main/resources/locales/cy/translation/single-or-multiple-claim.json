@@ -1,14 +1,14 @@
 {
-  "title": "",
-  "h1": "",
-  "p1": "",
-  "p2": "",
-  "p3": "",
-  "radio1": "",
-  "radio2": "",
+  "title": "Welsh Translation required",
+  "h1": "Ydych chi’n gwneud hawliad ar eich pen eich hun neu gydag eraill?",
+  "p1": "Gallwch wneud hawliad i dribiwnlys cyflogaeth ar eich pen eich hun os mai chi yw’r unig hawlydd. Gallwch hefyd wneud hawliad gydag unigolyn arall, neu gyda grŵp o bobl sydd wedi’u trin yr un ffordd.",
+  "p2": "Mae’n helpu’r tribiwnlys cyflogaeth i wybod pa fath o hawliad a wneir. Os nad ydych yn gwybod, dewiswch yr opsiwn cyntaf.",
+  "p3": "Os ydych yn gwneud hawliad gyda phobl eraill, fe ofynnir i chi ddweud wrthym beth yw eu henwau (os ydych yn gwybod hynny).",
+  "radio1": "Welsh Translation required",
+  "radio2": "Welsh Translation required",
   "errors": {
     "caseType": {
-      "required": ""
+      "required": "Welsh Translation required"
     }
   }
 }

@@ -1,12 +1,12 @@
 {
-  "title": "",
-  "h1": "",
-  "hint": "",
-  "telNumber": "",
+  "title": "Telephone number",
+  "h1": "Beth yw eich rhif ffôn? (dewisol)",
+  "hint": "Byddwn yn ei ddefnyddio i gysylltu â chi os oes gennym unrhyw gwestiynau am eich hawliad.",
+  "telNumber": "Rhowch eich rhif ffôn symudol neu rif ffôn cartref",
   "errors": {
     "telNumber": {
-      "invalid": "",
-      "nonnumeric": ""
+      "invalid": "Enter a valid UK telephone number or input field can be left blank - REQUIRES UPDATE",
+      "nonnumeric": "Enter a UK telephone number, like 01623 960 001, 07700 900 983 or input field can be left blank - REQUIRES UPDATE"
     }
   }
 }

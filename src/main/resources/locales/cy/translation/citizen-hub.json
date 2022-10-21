@@ -1,63 +1,51 @@
 {
-  "title": "",
-  "header": "",
-  "caseNumber": "",
-  "accepted": "",
-  "received": "",
-  "details": "",
-  "decision": "",
-  "iWantTo": "",
-  "contactTribunalMyCase": "",
-  "findLegalAdvice": "",
-  "section1": "",
-  "section2": "",
-  "section3": "",
-  "section4": "",
-  "section5": "",
-  "section6": "",
-  "section7": "",
-  "section8": "",
-  "personalDetails": "",
-  "et1ClaimForm": "",
-  "respondentResponse": "",
-  "hearingDetails": "",
-  "requestsAndApplications": "",
-  "respondentApplications": "",
-  "contactTribunal": "",
-  "tribunalOrders": "",
-  "tribunalJudgements": "",
-  "documents": "",
-  "completed": "",
-  "submitted": "",
-  "optional": "",
-  "viewed": "",
-  "notViewedYet": "",
-  "notAvailableYet": "",
-  "waitingForTheTribunal": "",
-  "submittedAndViewed": "",
-  "notificationBanner": {
-    "acknowledgement": {
-      "header": "",
-      "link": "",
-      "p1": "",
-      "p2": ""
-    },
-    "rejection": {
-      "header": "",
-      "link": "",
-      "p1": ""
-    },
-    "respondentReceived": {
-      "header": "",
-      "p1": ""
-    },
-    "respondentRejection": {
-      "header": "",
-      "link": ""
-    },
-    "respondentAcknowledgement": {
-      "header": "",
-      "link": ""
-    }
-  }
+  "title": "Welsh Translation required",
+  "header": "Welsh Translation required",
+  "caseNumber": "Welsh Translation required",
+  "accepted": "Welsh Translation required",
+  "received": "Welsh Translation required",
+  "details": "Welsh Translation required",
+  "decision": "Welsh Translation required",
+
+  "iWantTo": "Welsh Translation required",
+  "contactTribunalMyCase": "Welsh Translation required",
+  "findLegalAdvice": "Welsh Translation required",
+
+  "callEmployer": "Welsh Translation required",
+  "contactText": "Welsh Translation required",
+  "contactLink": "Welsh Translation required",
+  "englandWales": "Cymru & Lloegr",
+  "ewNumbers": "Rhif ffôn: 0300 123 1024 <br /> Ffôn Testun: 18001 0300 123 1024",
+  "welsh": "Cymraeg",
+  "welshNumber": "Rhif ffôn: 0300 303 5176",
+  "scotland": "Alban",
+  "scotlandNumbers": "Rhif ffôn: 0300 790 6234 <br /> Ffôn Testun: 18001 0300 790 6234",
+  "hours": "Welsh Translation required",
+  "callCharges": "Welsh Translation required",
+
+  "section1": "Welsh Translation required",
+  "section2": "Welsh Translation required",
+  "section3": "Welsh Translation required",
+  "section4": "Welsh Translation required",
+  "section5": "Welsh Translation required",
+  "section6": "Welsh Translation required",
+  "section7": "Welsh Translation required",
+  "section8": "Welsh Translation required",
+
+  "personalDetails": "Welsh Translation required",
+  "et1ClaimForm": "Welsh Translation required",
+  "respondentResponse": "Welsh Translation required",
+  "hearingDetails": "Welsh Translation required",
+  "requestsAndApplications": "Welsh Translation required",
+  "respondentApplications": "Welsh Translation required",
+  "contactTribunal": "Welsh Translation required",
+  "tribunalOrders": "Welsh Translation required",
+  "tribunalJudgements": "Welsh Translation required",
+  "documents": "Welsh Translation required",
+
+  "notAvailableYet": "Welsh Translation required",
+  "completed": "Welsh Translation required",
+  "submitted": "Welsh Translation required",
+  "viewed": "Welsh Translation required",
+  "optional": "Welsh Translation required"
 }

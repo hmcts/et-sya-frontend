@@ -1,15 +1,15 @@
 {
-  "title": "",
-  "subTitle": "",
-  "name": "",
-  "address": "",
-  "acasNum": "",
-  "submit": "",
-  "change": "",
-  "unProvided": "",
+  "title": "Gwiriwch fanylion yr atebydd",
+  "subTitle": "Atebydd ",
+  "name": "Enw",
+  "address": "Cyfeiriad",
+  "acasNum": "Rhif tystysgrif Acas",
+  "submit": "Ychwanegu atebydd arall",
+  "change": "Newid",
+  "unProvided": "Welsh Translation required",
   "errors": {
     "hiddenErrorField": {
-      "exceeded": ""
+      "exceeded": "Welsh Translation required"
     }
   }
 }

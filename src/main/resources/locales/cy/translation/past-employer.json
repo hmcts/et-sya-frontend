@@ -1,9 +1,9 @@
 {
-  "title": "",
-  "heading": "",
+  "title": "Welsh Translation required",
+  "heading": "A wnaethoch weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
   "errors": {
     "pastEmployer": {
-      "required": ""
+      "required": "Welsh Translation required"
     }
   }
 }

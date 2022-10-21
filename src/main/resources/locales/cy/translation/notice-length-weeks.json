@@ -1,14 +1,14 @@
 {
-  "title": "",
+  "title": "Welsh Translation required",
   "h1": {
-    "nonNotice": "",
-    "notice": ""
+    "nonNotice": "Welsh Translation required",
+    "notice": "Am sawl wythnos o’ch cyfnod rhybudd y byddwch yn cael eich talu? (dewisol)"
   },
-  "noticeLengthHint": "",
-  "onNotice": "",
+  "noticeLengthHint": "Er enghraifft, 4",
+  "onNotice": "Welsh Translation required",
   "errors": {
     "noticePeriodLength": {
-      "notANumber": ""
+      "notANumber": "Welsh Translation required"
     }
   }
 }
