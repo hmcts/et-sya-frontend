@@ -34,7 +34,7 @@ withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFullFunctionalTest()
     enableCrossBrowserTest()
-    //enableFortifyScan('et-aat')
+    enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
