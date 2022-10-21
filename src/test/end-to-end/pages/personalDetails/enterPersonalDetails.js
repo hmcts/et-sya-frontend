@@ -6,6 +6,8 @@ module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
   I.click('[href="/dob-details"]');
+
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What is your date of birth?');
   I.fillField('#dobDate-day', '01');
@@ -13,11 +15,13 @@ module.exports = async function () {
   I.fillField('#dobDate-year', '2000');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Sex and preferred title');
   I.checkOption('#sex-3');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What is your contact or home address?');
   I.refreshPage();
@@ -32,19 +36,23 @@ module.exports = async function () {
   );
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What is your telephone number?');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('How would you like to be contacted about your claim?');
   I.checkOption('#update-preference');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.checkOption('#hearingPreferences');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see(
     'Do you have a physical, mental or learning disability or long term health condition that means you need support during your case?'
@@ -52,6 +60,7 @@ module.exports = async function () {
   I.checkOption('#reasonableAdjustments-2');
   I.click(commonConfig.saveAndContinue);
 
+  await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Have you completed this section?');
   I.checkOption('#tasklist-check');
