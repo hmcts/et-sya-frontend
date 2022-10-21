@@ -1,5 +1,5 @@
 const { I } = inject();
-//const testConfig = require('../config');
+const testConfig = require('../config');
 
 const commonFlowContentHelper = require('./commonFlowContent');
 const commonFlowLocators = require('./commonFlowLocators.json');
@@ -13,7 +13,8 @@ async function initialPageFlow() {
   await I.click('Start now');
 
   //Before You Continue Page....
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Before you continue');
   await commonFlowContentHelper.verifyBeforeYouContinueGuidanceText();
   I.click(commonFlowLocators.contact_us);
@@ -21,7 +22,8 @@ async function initialPageFlow() {
   await I.click('Continue');
 
   //What is the postcode where you have worked for Page....
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What’s the postcode');
   I.see('where you worked or');
   I.see('work?');
@@ -40,7 +42,9 @@ async function createSingleMyselfCase() {
   * type of claim = discrimination and whistleBlowing
   */
   await initialPageFlow();
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Are you making the claim for yourself,');
   I.see('or representing someone else?');
   await commonFlowContentHelper.verifyARepresentativeGuidanceText();
@@ -59,7 +63,8 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Are you making a claim on your own or with others Page
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Are you making a claim on your own or with others?');
   await commonFlowContentHelper.verifyAreYouMakingAClaimOnYourOwnGuidanceText();
   I.see('I’m claiming on my own');
@@ -70,7 +75,8 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Do you have an ACAS Early Conciliation certificate
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Do you have an ‘Acas early conciliation');
   I.see('certificate’ for the respondent or');
   I.see("respondents you're claiming against?");
@@ -82,7 +88,8 @@ async function createSingleMyselfCase() {
   I.click('Continue');
 
   //Type of claim = discrimination
-  await I.waitForVisible("//span[contains(text(),'Contact us')]");
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What type of claim are you making?');
   I.see('You can choose all that apply to you. Further information will be asked for later in the claim.');
   I.see('Select all that apply');
