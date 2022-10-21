@@ -1,0 +1,40 @@
+{
+  "title": "Address details",
+  "h1": "Beth yw cyfeiriad ",
+  "change": "Change - Requires Update",
+  "selectAddress": "Dewiswch gyfeiriad",
+  "selectDefault": "Several addresses found... - Requires Update",
+  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
+  "findAddress": "Find address - Requires Update",
+  "pageText": "Dylai’r cyfeiriad fod ar eich slipiau cyflog, contract neu ddogfennau swyddogol eraill.",
+  "insetText": "This should be the same respondent address given to Acas. - Requires Update",
+  "town": "Town or city - Requires Update",
+  "manualAddress": "The respondent address is outside the UK - Requires Update",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA - Requires Update",
+      "required": "Enter a postcode. For example, SW1 1AA - Requires Update",
+      "notSelected": "Select an address - Requires Update"
+    },
+    "respondentAddress1": {
+      "required": "Enter the first line of the respondent address - up to 100 characters - Requires Update",
+      "invalid": "Enter a valid first line of the respondent address - up to 100 characters - Requires Update"
+    },
+    "respondentAddress2": {
+      "required": "Enter the second line of the respondent address - up to 50 characters - Requires Update",
+      "invalid": "Enter a valid second line of the respondent address - up to 50 characters - Requires Update"
+    },
+    "respondentAddressTown": {
+      "required": "Enter a town or city for the respondent address - up to 50 characters - Requires Update",
+      "invalid": "Enter a valid town or city for the respondent address - up to 50 characters - Requires Update"
+    },
+    "respondentAddressCountry": {
+      "required": "Enter a country for the respondent address - up to 50 characters - Requires Update",
+      "invalid": "Enter a valid country for the respondent address - up to 50 characters - Requires Update"
+    },
+    "respondentAddressPostcode": {
+      "required": "Enter a postcode. For example, SW1 1AA - Requires Update",
+      "invalid": "Enter a valid postcode. For example, SW1 1AA - Requires Update"
+    }
+  }
+}
