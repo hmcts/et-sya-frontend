@@ -21,7 +21,7 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
 
   //employment if statement to select notice period within contract
   await I.scrollPageToBottom();
-  await I.waitForElement("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.waitForVisible('[class=‘govuk-details__summary-text’]', testConfig.TestWaitForVisibilityTimeLimit);
   //I.waitForElement('#notice-period', testConfig.TestWaitForTextTimeLimit);
   if (noticePeriodContract === 'Yes written contract with notice period') {
     I.checkOption('input[id=notice-period]');
