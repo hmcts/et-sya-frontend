@@ -25,7 +25,7 @@
     "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:crossbrowser": "codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} --steps -c src/test/end-to-end/saucelabs.conf.js --steps --reporter mocha-multi --verbose --grep @RET-TEMP",
-    "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js",
+    "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/smoke/codecept.smoke.conf.js",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn tests:a11y",
     "prepare": "husky install"
   },
