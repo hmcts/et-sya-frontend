@@ -155,7 +155,9 @@
     "**/**/minimist": ">=1.2.6",
     "**/**/shelljs": ">=0.8.5",
     "**/**/merge": ">=2.1.1",
-    "**/**/glob-parent": ">=6.0.1"
+    "**/**/glob-parent": ">=6.0.1",
+    "**/**/scss-tokenizer": ">=0.4.3",
+    "**/**/ajv": ">=6.12.3"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
