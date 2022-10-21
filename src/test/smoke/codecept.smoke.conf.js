@@ -5,6 +5,6 @@ exports.config = {
   output: testConfig.reportFolder,
   helpers: testConfig.helpers,
   include: {
-    I: './pages/steps.js',
+    // I: './pages/steps.js',
   },
 };
