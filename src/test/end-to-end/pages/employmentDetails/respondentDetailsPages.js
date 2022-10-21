@@ -17,6 +17,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.refreshPage();
   I.waitToHide('#address1', 2);
   I.dontSeeElement('#address1');
+  I.waitForElement('#postcode', testConfig.TestWaitForVisibilityTimeLimit);
   I.fillField('#postcode', 'LS7 4QE');
   I.click('#findAddressButton');
   I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
