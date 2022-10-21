@@ -37,6 +37,7 @@ module.exports = async function (clickCheckYourAnswers) {
   await contactUs.verifyContactUs();
 
   if (clickCheckYourAnswers) {
+    await I.waitForVisible("//a[contains(.,'Check your answers')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.click("//a[contains(.,'Check your answers')]");
   }
 };
