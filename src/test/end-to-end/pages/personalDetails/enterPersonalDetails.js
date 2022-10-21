@@ -49,6 +49,7 @@ module.exports = async function () {
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.waitForElement('#hearingPreferences', testConfig.TestWaitForVisibilityTimeLimit);
   I.checkOption('#hearingPreferences');
   I.click(commonConfig.saveAndContinue);
 
