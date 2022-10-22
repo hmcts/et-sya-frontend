@@ -158,7 +158,8 @@
     "**/**/glob-parent": ">=6.0.1",
     "**/**/scss-tokenizer": ">=0.4.3",
     "**/**/minimatch": ">=3.0.5",
-    "**/**/ajv": ">=6.12.3"
+    "**/**/ajv": ">=6.12.3",
+    "**/**/ajv-keywords": ">=5.1.0"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
