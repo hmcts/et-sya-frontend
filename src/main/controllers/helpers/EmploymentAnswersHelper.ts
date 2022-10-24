@@ -35,7 +35,7 @@ export const getEmploymentDetails = (
       },
     });
   } else {
-    if (!userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+    if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       employmentDetails.push({
         key: {
           text: translations.employmentDetails.didYouWorkFor,
