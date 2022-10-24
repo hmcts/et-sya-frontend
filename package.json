@@ -45,7 +45,6 @@
     "@types/es6-promisify": "^6.0.1",
     "@types/express": "^4.17.9",
     "@types/express-session": "^1.17.4",
-    "@types/glob": "^8.0.0",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/lodash": "^4.14.179",
     "@types/node": "^18.0.0",
@@ -69,7 +68,6 @@
     "express": "^4.17.3",
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
-    "glob": "^8.0.3",
     "google-libphonenumber": "^3.2.26",
     "govuk-frontend": "4.3.1",
     "helmet": "^6.0.0",
@@ -156,6 +154,7 @@
     "**/**/shelljs": ">=0.8.5",
     "**/**/merge": ">=2.1.1",
     "**/**/glob-parent": ">=6.0.1",
+    "**/**/glob": ">=8.0.3",
     "**/**/scss-tokenizer": ">=0.4.3",
     "**/**/minimatch": ">=3.0.5"
   },
