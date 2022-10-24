@@ -69,7 +69,7 @@
     "express": "^4.17.3",
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
-    "glob": "^8.0.1",
+    "glob": "^8.0.3",
     "google-libphonenumber": "^3.2.26",
     "govuk-frontend": "4.3.1",
     "helmet": "^6.0.0",
