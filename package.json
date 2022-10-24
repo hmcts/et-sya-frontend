@@ -57,7 +57,7 @@
     "applicationinsights": "^2.2.0",
     "autobind-decorator": "^2.4.0",
     "awilix": "^8.0.0",
-    "axios": "^1.0.0",
+    "axios": "^0.27.0",
     "codeceptjs": "3.3.6",
     "config": "^3.3.7",
     "connect-redis": "^6.1.1",
