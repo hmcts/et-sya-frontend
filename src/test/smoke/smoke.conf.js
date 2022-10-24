@@ -1,5 +1,7 @@
+const logger = require('@pact-foundation/pact/src/common/logger');
 const testHeadlessBrowser = true;
 const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+logger.info('Setting up tests');
 module.exports = {
   testUrl,
   name: 'et-smoke-test',
@@ -24,3 +26,4 @@ module.exports = {
     },
   },
 };
+logger.info('Tests set up');
