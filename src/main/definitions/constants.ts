@@ -84,6 +84,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
 } as const;
 
 export const PageUrls = {

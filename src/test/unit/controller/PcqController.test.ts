@@ -3,7 +3,7 @@ import config from 'config';
 
 import PcqController from '../../../main/controllers/PcqController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -71,7 +71,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if PCQ Health is DOWN', async () => {
@@ -91,7 +91,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if PCQ is not enabled', async () => {
@@ -103,7 +103,7 @@ describe('PCQGetController', () => {
     await controller.get(req, res);
     await new Promise(process.nextTick);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if config cannot be loaded', async () => {
@@ -112,7 +112,7 @@ describe('PCQGetController', () => {
 
     await controller.get(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if health error (response received)', async () => {
@@ -129,7 +129,7 @@ describe('PCQGetController', () => {
     await controller.get(req, res);
     await new Promise(process.nextTick);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if health error (response not received)', async () => {
@@ -146,7 +146,7 @@ describe('PCQGetController', () => {
     await controller.get(req, res);
     await new Promise(process.nextTick);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Check Your Answers if health error (all others)', async () => {
@@ -163,6 +163,6 @@ describe('PCQGetController', () => {
     await controller.get(req, res);
     await new Promise(process.nextTick);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS + TranslationKeys.ENGLISH_URL_PARAMETER);
   });
 });
