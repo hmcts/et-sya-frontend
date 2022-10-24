@@ -1,13 +1,13 @@
 {
   "title": "Welsh Translation required",
   "h1": "Pam nad oes gennych rif ACAS?",
-  "hint": "Welsh Translation required",
-  "linkText": "Welsh Translation required",
+  "hint": "Noder: gall hawlio esemptiad yn anghywir arwain at wrthod eich hawliad. Os oes gennych unrhyw amheuon, ",
+  "linkText": "cysylltwch ag Acas.",
   "dismissalHint": "Welsh Translation required",
-  "another": "Welsh Translation required",
-  "no_power": "Welsh Translation required",
-  "employer": "Welsh Translation required",
-  "unfair_dismissal": "Welsh Translation required",
+  "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
+  "no_power": "Nid oes gan Acas y pŵer i gymodi ar fy hawliad neu ran o fy hawliad.",
+  "employer": "Mae fy nghyflogwr eisoes wedi bod mewn cysylltiad ag Acas",
+  "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim.",
   "errors": {
     "noAcasReason": {
       "required": "Welsh Translation required"
