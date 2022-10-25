@@ -26,6 +26,7 @@
 
 if (document.addEventListener) {
   document.addEventListener('load', onElementFocused, true);
+  document.addEventListener('DOMContentLoaded', onElementFocused, true);
 }
 
 function onElementFocused() {
