@@ -1,6 +1,6 @@
 // Autofocus section
 // Code below automatically focuses to errors, in case any error exists on the page for accessibility
-{
+/*{
   const govUKErrors = Array.from(
     document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
   );
@@ -19,6 +19,36 @@
       }
       document.title = 'Error: ' + document.title;
       govUKErrors[0].focus();
+    }
+  }
+
+}*/
+
+if (document.addEventListener) {
+  document.addEventListener('load', onElementFocused, true);
+}
+
+function onElementFocused() {
+  if (document.hasFocus()) {
+    const govUKErrors = Array.from(
+      document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
+    );
+
+    if (govUKErrors !== null && govUKErrors !== undefined && govUKErrors.length > 0) {
+      if (!isHidden(govUKErrors[0])) {
+        const govUKErrorsSkipLinkArray = Array.from(
+          document.getElementsByClassName('govuk-skip-link') as HTMLCollectionOf<HTMLElement>
+        );
+        if (
+          govUKErrorsSkipLinkArray !== null &&
+          govUKErrorsSkipLinkArray !== undefined &&
+          govUKErrorsSkipLinkArray.length > 0
+        ) {
+          govUKErrorsSkipLinkArray[0].classList.add('hidden');
+        }
+        document.title = 'Error: ' + document.title;
+        govUKErrors[0].focus();
+      }
     }
   }
 }
