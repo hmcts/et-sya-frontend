@@ -31,7 +31,7 @@ if (document.addEventListener) {
 function onElementFocused() {
   if (document.hasFocus()) {
     const govUKErrors = Array.from(
-      document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
+      document.getElementsByClassName('govuk-template__body') as HTMLCollectionOf<HTMLElement>
     );
 
     if (govUKErrors !== null && govUKErrors !== undefined && govUKErrors.length > 0) {
