@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
@@ -9,6 +9,9 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
+
+const logger = getLogger('Case Api');
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
@@ -36,13 +39,23 @@ export class CaseApi {
   };
 
   getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
-    return this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
-      responseType: 'arraybuffer',
-    });
+    try {
+      const result = await this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}/bad-url/${docId}`, {
+        responseType: 'arraybuffer',
+      });
+      return result;
+    } catch (error) {
+      logAxiosError(error);
+      throw new Error('case service: error fetching document');
+    }
   };
 
   getDocumentDetails = async (docId: string): Promise<AxiosResponse<DocumentDetailsResponse>> => {
-    return this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
+    try {
+      return await this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
+    } catch (error) {
+      logAxiosError(error);
+    }
   };
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
@@ -74,6 +87,16 @@ export class CaseApi {
     });
   };
 }
+
+export const logAxiosError = (error: AxiosError): void => {
+  if (error.response) {
+    logger.error(`API Error with response: ${error.config.method} ${error.config.url} ${error.response.status}`);
+    logger.info('Response data: ', error.response.data);
+  } else if (error.request) {
+    logger.error(`API Error, failed request: ${error.config.method} ${error.config.url}`);
+  }
+  logger.info('Message: ', error.message);
+};
 
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
