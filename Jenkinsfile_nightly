@@ -33,15 +33,15 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
     enableFullFunctionalTest()
-    //enableCrossBrowserTest()
-    //enableFortifyScan('et-aat')
+    enableCrossBrowserTest()
+    enableFortifyScan('et-aat')
 
     env.TEST_URL = params.TEST_URL
     env.RUNNING_ENV = params.ENVIRONMENT
 
     after('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
-        enableSlackNotification('#et-testers')
+        enableSlackNotification('#et-builds')
     }
 
     after('fullFunctionalTest') {
