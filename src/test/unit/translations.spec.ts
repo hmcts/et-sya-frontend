@@ -69,7 +69,8 @@ describe('Check missing keys in translation files', () => {
   function checkWelshTranlationFile(obj: { [index: string]: unknown }, full_key: string) {
     for (const k in obj) {
       if (typeof obj[k] === 'string') {
-        if (obj[k] === 'Welsh Translation required' || obj[k] === '') {
+        const val: string = obj[k] as string;
+        if (val.includes('Welsh Translation required') || val === '') {
           console.warn(`${full_key}.${k} Does not have welsh translation`);
         }
       } else {
