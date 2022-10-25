@@ -31,7 +31,7 @@ if (document.addEventListener) {
 function onElementFocused() {
   if (document.hasFocus()) {
     const govUKErrors = Array.from(
-      document.getElementsByClassName('govuk-template__body') as HTMLCollectionOf<HTMLElement>
+      document.getElementsByClassName('govuk-error-summary__title') as HTMLCollectionOf<HTMLElement>
     );
 
     if (govUKErrors !== null && govUKErrors !== undefined && govUKErrors.length > 0) {
@@ -49,7 +49,10 @@ function onElementFocused() {
         if (!document.title.includes('Error')) {
           document.title = 'Error: ' + document.title;
         }
-        govUKErrors[0].focus();
+        const govUKBody = Array.from(
+          document.getElementsByClassName('govuk-template__body') as HTMLCollectionOf<HTMLElement>
+        );
+        govUKBody[0].focus();
       }
     }
   }
