@@ -24,7 +24,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await didYouWorkForOrganisation(I, 'Yes');
   await areYouStillWorkingForOrg(I, 'Still working for respondent');
   await stillWorkingForRespondentJourney(I, 'Yes written contract with notice period', 'Months');
-  await enterRespondentDetailsJourney(I, 'No', 'Yes');
+  await enterRespondentDetailsJourney(I, 'No', 'No');
   I.click("//a[contains(.,'Describe what happened to you')]");
   await claimDetails(I);
   await stepsToMakingYourClaim(I, true);
