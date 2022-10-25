@@ -26,7 +26,6 @@
 
 if (document.addEventListener) {
   document.addEventListener('load', onElementFocused, true);
-  document.addEventListener('DOMContentLoaded', onElementFocused, true);
 }
 
 function onElementFocused() {
@@ -47,7 +46,9 @@ function onElementFocused() {
         ) {
           govUKErrorsSkipLinkArray[0].classList.add('hidden');
         }
-        document.title = 'Error: ' + document.title;
+        if (!document.title.includes('Error')) {
+          document.title = 'Error: ' + document.title;
+        }
         govUKErrors[0].focus();
       }
     }
