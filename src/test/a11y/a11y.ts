@@ -30,7 +30,7 @@ function expectNoErrors(messages: PallyIssue[]): void {
 
 function testAccessibility(url: string): void {
   describe(`Page ${url}`, () => {
-    it('should have no accessibility errors', async () => {
+    it.concurrent('should have no accessibility errors', async () => {
       if (!ignoredPages.includes(url)) {
         const pageUrl = envUrl + url;
         const messages = await pa11y(pageUrl, {
