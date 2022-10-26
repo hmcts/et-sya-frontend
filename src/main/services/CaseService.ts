@@ -40,10 +40,9 @@ export class CaseApi {
 
   getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
     try {
-      const result = await this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}/bad-url/${docId}`, {
+      return await this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
         responseType: 'arraybuffer',
       });
-      return result;
     } catch (error) {
       logAxiosError(error);
       throw new Error('case service: error fetching document');
@@ -55,6 +54,7 @@ export class CaseApi {
       return await this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
     } catch (error) {
       logAxiosError(error);
+      throw new Error('case service: error fetching document details');
     }
   };
 
