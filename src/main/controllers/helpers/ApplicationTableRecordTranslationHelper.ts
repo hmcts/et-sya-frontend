@@ -1,14 +1,11 @@
 import { ApplicationTableRecord, TypesOfClaim } from '../../definitions/definition';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const translateTypesOfClaimHelper = (records: ApplicationTableRecord[], translations: AnyRecord): void => {
-  records.forEach(record => {
-    record.userCase.typeOfClaim = record?.userCase?.typeOfClaim?.map(toc => retrieveTypeOfClaim(toc, translations));
-  });
+export const translateTypesOfClaims = (rec: ApplicationTableRecord, translations: AnyRecord): void => {
+  rec.userCase.typeOfClaim = rec?.userCase?.typeOfClaim?.map(toc => translateTypeOfClaim(toc, translations));
 };
 
-export const retrieveTypeOfClaim = (typeOfClaims: string, translations: AnyRecord): string => {
-  console.log(translations);
+export const translateTypeOfClaim = (typeOfClaims: string, translations: AnyRecord): string => {
   switch (typeOfClaims) {
     case TypesOfClaim.UNFAIR_DISMISSAL.toString():
       return translations.claimTypes.unfairDismissal;
@@ -25,4 +22,13 @@ export const retrieveTypeOfClaim = (typeOfClaims: string, translations: AnyRecor
     default:
       return undefined;
   }
+};
+
+export const translateOverallStatus = (status: AnyRecord, translations: AnyRecord): string => {
+  return `${status.sectionCount} ${translations.of} ${status.totalSections} ${translations.tasksCompleted}`;
+};
+
+// TODO: 10/26/2022 Ivan Kirsanov: Probably instead of this function we need to use i18next.language(currently not working)
+export const retrieveCurrentLocale = (url: string): string => {
+  return url && url.includes('?lng=cy') ? 'cy' : 'en-GB';
 };
