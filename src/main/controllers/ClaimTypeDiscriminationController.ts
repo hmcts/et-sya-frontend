@@ -23,7 +23,6 @@ export default class ClaimTypeDiscriminationController {
         labelHidden: false,
         labelSize: 'l',
         type: 'checkboxes',
-        isPageHeading: true,
         hint: l => l.selectAllHint,
         validator: atLeastOneFieldIsChecked,
         values: [
