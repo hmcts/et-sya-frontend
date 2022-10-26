@@ -35,7 +35,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const api = new CaseApi(mockedAxios);
 
-describe('Axios post to initiate case', () => {
+describe('createCase', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
     const mockUserDetails: UserDetails = {
       id: '1234',
@@ -72,6 +72,12 @@ describe('Axios post to initiate case', () => {
         },
       })
     );
+  });
+
+  it('should rethrow error if creating case fails', async () => {
+    mockedAxios.post.mockRejectedValue({});
+
+    await expect(api.createCase('', {} as UserDetails)).rejects.toThrow('Error creating case: ');
   });
 });
 
