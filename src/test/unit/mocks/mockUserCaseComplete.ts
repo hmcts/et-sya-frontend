@@ -21,8 +21,8 @@ import { HubLinksStatuses } from '../../../main/definitions/hub';
 
 export default {
   id: '1234',
-  createdDate: 'August 19, 2022',
-  lastModified: 'August 19, 2022',
+  createdDate: '19 August 2022',
+  lastModified: '19 August 2022',
   typeOfClaim: ['discrimination', 'payRelated'],
   dobDate: {
     day: '05',

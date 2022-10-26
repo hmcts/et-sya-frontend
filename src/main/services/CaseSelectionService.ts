@@ -1,11 +1,16 @@
 import { AxiosResponse } from 'axios';
 import { Response } from 'express';
 
+import {
+  translateOverallStatus,
+  translateTypesOfClaims,
+} from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
+import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 
 import { getCaseApi } from './CaseService';
@@ -13,16 +18,17 @@ import { getCaseApi } from './CaseService';
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
 
-export const getUserApplications = (userCases: CaseWithId[]): ApplicationTableRecord[] => {
+export const getUserApplications = (userCases: CaseWithId[], translations: AnyRecord): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
   for (const uCase of userCases) {
     const rec: ApplicationTableRecord = {
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
-      completionStatus: getOverallStatus(uCase),
+      completionStatus: getOverallStatus(uCase, translations),
       url: getRedirectUrl(uCase),
     };
+    translateTypesOfClaims(rec, translations);
     apps.push(rec);
   }
   return apps;
@@ -43,7 +49,7 @@ export const getRedirectUrl = (userCase: CaseWithId): string => {
   }
 };
 
-export const getOverallStatus = (userCase: CaseWithId): string => {
+export const getOverallStatus = (userCase: CaseWithId, translations: AnyRecord): string => {
   const totalSections = 4;
   let sectionCount = 0;
 
@@ -69,7 +75,12 @@ export const getOverallStatus = (userCase: CaseWithId): string => {
     sectionCount++;
   }
 
-  return `${sectionCount} of ${totalSections} tasks completed`;
+  const overallStatus: AnyRecord = {
+    sectionCount,
+    totalSections,
+  };
+
+  return translateOverallStatus(overallStatus, translations);
 };
 
 export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseWithId[]> => {
@@ -80,7 +91,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
     } else {
       logger.info(`Retrieving cases for ${req.session.user?.id}`);
       const casesByLastModified: CaseApiDataResponse[] = sortCasesByLastModified(cases);
-      return casesByLastModified.map(app => fromApiFormat(app));
+      return casesByLastModified.map(app => fromApiFormat(app, req));
     }
   } catch (err) {
     logger.log(err);

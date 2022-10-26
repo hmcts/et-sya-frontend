@@ -47,5 +47,7 @@
     "unfairDismissal": "Unfair dismissal",
     "whistleBlowing": "Whistleblowing",
     "otherTypesOfClaims": "Other type of claim"
-  }
+  },
+  "of": "of",
+  "tasksCompleted": "tasks completed"
 }

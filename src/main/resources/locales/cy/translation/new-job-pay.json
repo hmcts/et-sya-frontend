@@ -1,0 +1,17 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "p1": "Welsh Translation required",
+  "payBeforeTax": "Welsh Translation required",
+  "weeklyMonthlyAnnual": "Ai dyma eich cyflog wythnosol, misol neu flynyddol?",
+  "errors": {
+    "newJobPay": {
+      "required": "Welsh Translation required",
+      "minLengthRequired": "Welsh Translation required",
+      "notANumber": "Welsh Translation required"
+    },
+    "newJobPayInterval": {
+      "required": "Welsh Translation required"
+    }
+  }
+}
