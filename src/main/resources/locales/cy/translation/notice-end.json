@@ -1,9 +1,9 @@
 {
   "title": "Welsh Translation required",
-  "label": "Pa bryd y bydd eich cyfnod rhybudd yn dod i ben?",
-  "h1": "Pa bryd y bydd eich cyfnod rhybudd yn dod i ben?",
-  "p1": "Welsh Translation required",
-  "hint": "Welsh Translation required, 27 3 2007",
+  "label": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "h1": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "p1": "Dywedwch wrthym pryd fyddych yn rhoi’r gorau i weithio gyda’r atebydd.",
+  "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "noticeEnds": {
       "required": "Welsh Translation required",

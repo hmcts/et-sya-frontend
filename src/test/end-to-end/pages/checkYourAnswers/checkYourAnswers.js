@@ -1,10 +1,12 @@
 'use strict';
+const testConfig = require('../../config');
 const contactUs = require('../../helpers/contactUs.js');
 
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   //Application Details Section
   I.see('Check your answers');
   I.see('Application details');
@@ -22,7 +24,6 @@ module.exports = async function () {
   I.see('Telephone number');
 
   I.click("//span[contains(.,'Contact us')]");
-  //I.wait(1); //Commenting out the Explicit Waits and seeing if this works during pipeline execution....
   await contactUs.verifyContactUs();
 
   I.forceClick("//a[@id='main-form-submit']");

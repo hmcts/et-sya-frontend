@@ -11,18 +11,6 @@
   "contactTribunalMyCase": "Welsh Translation required",
   "findLegalAdvice": "Welsh Translation required",
 
-  "callEmployer": "Welsh Translation required",
-  "contactText": "Welsh Translation required",
-  "contactLink": "Welsh Translation required",
-  "englandWales": "Cymru & Lloegr",
-  "ewNumbers": "Rhif ffôn: 0300 123 1024 <br /> Ffôn Testun: 18001 0300 123 1024",
-  "welsh": "Cymraeg",
-  "welshNumber": "Rhif ffôn: 0300 303 5176",
-  "scotland": "Alban",
-  "scotlandNumbers": "Rhif ffôn: 0300 790 6234 <br /> Ffôn Testun: 18001 0300 790 6234",
-  "hours": "Welsh Translation required",
-  "callCharges": "Welsh Translation required",
-
   "section1": "Welsh Translation required",
   "section2": "Welsh Translation required",
   "section3": "Welsh Translation required",
@@ -43,9 +31,37 @@
   "tribunalJudgements": "Welsh Translation required",
   "documents": "Welsh Translation required",
 
+  "notViewedYet": "Welsh Translation required",
   "notAvailableYet": "Welsh Translation required",
   "completed": "Welsh Translation required",
   "submitted": "Welsh Translation required",
   "viewed": "Welsh Translation required",
-  "optional": "Welsh Translation required"
+  "optional": "Welsh Translation required",
+  "waitingForTheTribunal": "Waiting for the tribunal",
+  "submittedAndViewed": "Welsh Translation required",
+  "notificationBanner": {
+    "acknowledgement": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required",
+      "p1": "Welsh Translation required",
+      "p2": "Welsh Translation required"
+    },
+    "rejection": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required",
+      "p1": "Welsh Translation required"
+    },
+    "respondentReceived": {
+      "header": "Welsh Translation required",
+      "p1": "Welsh Translation required"
+    },
+    "respondentRejection": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "respondentAcknowledgement": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    }
+  }
 }

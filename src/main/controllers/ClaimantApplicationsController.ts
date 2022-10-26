@@ -7,7 +7,6 @@ import { AnyRecord } from '../definitions/util-types';
 import { getUserApplications, getUserCasesByLastModified } from '../services/CaseSelectionService';
 
 import { getPageContent } from './helpers/FormHelpers';
-import { translateTypesOfClaimHelper } from './helpers/TranslateTypesOfClaimHelper';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -22,8 +21,7 @@ export default class ClaimantApplicationsController {
     if (userCases.length === 0) {
       return res.redirect(PageUrls.HOME);
     } else {
-      const usersApplications = getUserApplications(userCases);
-      translateTypesOfClaimHelper(usersApplications, translations);
+      const usersApplications = getUserApplications(userCases, translations);
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,

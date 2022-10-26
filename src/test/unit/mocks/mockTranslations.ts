@@ -1,6 +1,6 @@
 import { AnyRecord } from '../../../main/definitions/util-types';
 
-export const mockTranslations: AnyRecord = {
+export const mockWelshClaimTypesTranslations: AnyRecord = {
   claimTypes: {
     breachOfContract: 'Torri contract',
     discrimination: 'Gwahaniaethu',
@@ -9,4 +9,14 @@ export const mockTranslations: AnyRecord = {
     whistleBlowing: 'Chwythu’r chwiban',
     otherClaim: 'Math arall o hawliad',
   },
+  of: 'o',
+  tasksCompleted: "tasg wedi'u cwblhau",
+};
+
+export const mockEnglishClaimTypesTranslations: AnyRecord = {
+  claimTypes: {
+    discrimination: 'discrimination',
+  },
+  of: 'of',
+  tasksCompleted: 'tasks completed',
 };
