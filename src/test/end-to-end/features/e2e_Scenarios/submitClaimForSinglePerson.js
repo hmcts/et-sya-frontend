@@ -1,4 +1,4 @@
-const {
+/*const {
   doNotHaveToCompleteCard,
   stepsToMakingYourClaim,
   enterPersonalDetails,
@@ -68,4 +68,4 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality Cro
   await checkYourAnswers(I);
   await claimSubmitted(I);
 }).tag('@RET-XB');
-
+*/
