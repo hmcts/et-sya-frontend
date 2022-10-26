@@ -11,6 +11,18 @@ const saveAsDraftButton = getById('saveAsDraftButton') as HTMLInputElement | nul
 const selectAddress = getById('selectAddressInput') as HTMLSelectElement | null;
 
 if (postcodeLookupForm && findAddressButton && selectAddress) {
+  const addressErrorSummary = document.getElementById('addressErrorSummary');
+  if (addressErrorSummary.classList.contains('hidden')) {
+    const govUkFormGroups = document.getElementsByClassName('govuk-form-group');
+    if (govUkFormGroups !== null && govUkFormGroups.length > 0) {
+      govUkFormGroups[0]?.classList?.remove('govuk-form-group--error');
+    }
+    const postCode = document.getElementById('postcode');
+    postCode?.classList?.remove('govuk-input--error');
+    const postcodeError = document.getElementById('postcode-error');
+    postcodeError?.classList?.add('hidden');
+  }
+
   postcodeLookupForm.onsubmit = async function (e) {
     e.preventDefault();
     hideErrors();
