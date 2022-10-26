@@ -19,7 +19,7 @@
   "sessionTimeout": {
     "modal": {
       "title": "Welsh Translation required",
-      "body": ["Welsh Translation required"],
+      "body": ["Welsh Translation required", "Welsh Translation required"],
       "info": "Welsh Translation required",
       "extend": "Welsh Translation required",
       "cancel": "Allgofnodi"

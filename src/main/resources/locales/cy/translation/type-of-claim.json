@@ -34,6 +34,9 @@
   "errors": {
     "typeOfClaim": {
       "required": "Welsh Translation required"
+    },
+    "otherClaim": {
+      "required": "Welsh Translation required"
     }
   }
 }
