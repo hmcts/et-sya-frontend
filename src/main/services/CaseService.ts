@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
@@ -13,11 +13,11 @@ import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 import { axiosErrorDetails } from './AxiosErrorAdapter';
 
 export class CaseApi {
-  constructor(private readonly axio: AxiosInstance) {}
+  constructor(private readonly axios: AxiosInstance) {}
 
   createCase = async (caseData: string, userDetails: UserDetails): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axio.post(
+      return await this.axios.post(
         JavaApiUrls.INITIATE_CASE_DRAFT,
         toApiFormatCreate(new Map(JSON.parse(caseData)), userDetails)
       );
@@ -28,7 +28,7 @@ export class CaseApi {
 
   getUserCases = async (): Promise<AxiosResponse<CaseApiDataResponse[]>> => {
     try {
-      return await this.axio.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
+      return await this.axios.get<CaseApiDataResponse[]>(JavaApiUrls.GET_CASES);
     } catch (error) {
       throw new Error('Error getting user cases: ' + axiosErrorDetails(error));
     }
@@ -36,7 +36,7 @@ export class CaseApi {
 
   downloadClaimPdf = async (caseId: string): Promise<AxiosResponse> => {
     try {
-      return await this.axio.post(
+      return await this.axios.post(
         `${JavaApiUrls.DOWNLOAD_CLAIM_PDF}`,
         {
           caseId,
@@ -55,7 +55,7 @@ export class CaseApi {
 
   getCaseDocument = async (docId: string): Promise<AxiosResponse> => {
     try {
-      return await this.axio.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
+      return await this.axios.get(`${JavaApiUrls.DOCUMENT_DOWNLOAD}${docId}`, {
         responseType: 'arraybuffer',
       });
     } catch (error) {
@@ -65,7 +65,7 @@ export class CaseApi {
 
   getDocumentDetails = async (docId: string): Promise<AxiosResponse<DocumentDetailsResponse>> => {
     try {
-      return await this.axio.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
+      return await this.axios.get(`${JavaApiUrls.DOCUMENT_DETAILS}${docId}`);
     } catch (error) {
       throw new Error('Error fetching document details: ' + axiosErrorDetails(error));
     }
@@ -73,7 +73,7 @@ export class CaseApi {
 
   updateDraftCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axio.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_DRAFT, toApiFormat(caseItem));
     } catch (error) {
       throw new Error('Error updating draft case: ' + axiosErrorDetails(error));
     }
@@ -81,7 +81,7 @@ export class CaseApi {
 
   updateSubmittedCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axio.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, toApiFormat(caseItem));
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, toApiFormat(caseItem));
     } catch (error) {
       throw new Error('Error updating submitted case: ' + axiosErrorDetails(error));
     }
@@ -89,7 +89,7 @@ export class CaseApi {
 
   getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axio.post(JavaApiUrls.GET_CASE, { case_id: id });
+      return await this.axios.post(JavaApiUrls.GET_CASE, { case_id: id });
     } catch (error) {
       throw new Error('Error getting user case: ' + axiosErrorDetails(error));
     }
@@ -97,7 +97,7 @@ export class CaseApi {
 
   submitCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axio.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
+      return await this.axios.put(JavaApiUrls.SUBMIT_CASE, toApiFormat(caseItem));
     } catch (error) {
       throw new Error('Error submitting case: ' + axiosErrorDetails(error));
     }
@@ -108,7 +108,7 @@ export class CaseApi {
       const formData: FormData = new FormData();
       formData.append('document_upload', file.buffer, file.originalname);
 
-      return await this.axio.post(JavaApiUrls.UPLOAD_FILE + caseTypeId, formData, {
+      return await this.axios.post(JavaApiUrls.UPLOAD_FILE + caseTypeId, formData, {
         headers: {
           ...formData.getHeaders(),
         },
@@ -123,7 +123,7 @@ export class CaseApi {
 
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
-    axios.create({
+    axiosService.create({
       baseURL: config.get('services.etSyaApi.host'),
       headers: {
         Authorization: 'Bearer ' + token,
