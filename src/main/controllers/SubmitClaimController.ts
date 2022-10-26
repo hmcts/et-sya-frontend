@@ -16,7 +16,7 @@ export default class SubmitCaseController {
       req.session.userCase = fromApiFormat(submittedClaim.data);
       req.session.errors = [];
     } catch (error) {
-      logger.info(`Case failed to submit with error - ${error}`);
+      logger.info(error.message);
       req.session.errors = [{ errorType: 'api', propertyName: 'hiddenErrorField' }];
       return res.redirect(PageUrls.CHECK_ANSWERS);
     }

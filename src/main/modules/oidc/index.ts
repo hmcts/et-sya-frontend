@@ -91,10 +91,10 @@ export const idamCallbackHandler = async (
         req.session.userCase = fromApiFormat(response.data);
         return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
       }
-      throw new Error('Draft Case was not created successfully');
+      logger.error('Draft Case was not created successfully');
     } catch (error) {
       //ToDo - needs to handle different error response
-      logger.info(error);
+      logger.error(error.message);
     }
   }
 };

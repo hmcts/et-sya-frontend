@@ -45,7 +45,7 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: Logger): void => 
         req.session.save();
       })
       .catch(error => {
-        logger.error(error);
+        logger.error(error.message);
       });
   }
 };
@@ -57,7 +57,7 @@ export const handleUpdateSubmittedCase = (req: AppRequest, logger: Logger): void
       logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
     })
     .catch(error => {
-      logger.error(error);
+      logger.error(error.message);
     });
 };
 

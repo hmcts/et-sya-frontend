@@ -41,7 +41,7 @@ export default class ClaimDetailsController {
         req.session.user?.accessToken
       );
     } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
+      logger.error(err.message);
     }
 
     // Because these translations don't have the CYA 'change' translation, they don't show the change action.
@@ -86,7 +86,7 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   try {
     await getDocumentDetails(et1DocumentDetails, accessToken);
   } catch (err) {
-    logger.error(err.response?.status, err.response?.data, err);
+    logger.error(err.message);
   }
 
   return et1DocumentDetails;
