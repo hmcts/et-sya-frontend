@@ -1,14 +1,17 @@
 'use strict';
+const testConfig = require('../../config');
 const contactUs = require('../../helpers/contactUs.js');
 
-module.exports = async function () {
+module.exports = async function (clickCheckYourAnswers) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
+  await I.scrollPageToBottom();
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Steps to making your claim');
   I.see('Application Details');
   I.see('Claim type');
-  I.see('Discrimination');
-  I.see('Whistleblowing');
+  /*I.see('Discrimination');
+  I.see('Whistleblowing');*/
 
   //Your details
   I.see('Your details');
@@ -33,4 +36,9 @@ module.exports = async function () {
   I.click("//span[@class='govuk-details__summary-text']"); //As there are 2 Contact us Links on the Page...
   I.wait(1);
   await contactUs.verifyContactUs();
+
+  if (clickCheckYourAnswers) {
+    await I.waitForVisible("//a[contains(.,'Check your answers')]", testConfig.TestWaitForVisibilityTimeLimit);
+    I.click("//a[contains(.,'Check your answers')]");
+  }
 };

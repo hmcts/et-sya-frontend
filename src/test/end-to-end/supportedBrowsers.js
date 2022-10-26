@@ -1,3 +1,4 @@
+//const LATEST_WINDOWS = 'Windows 10';
 const supportedBrowsers = {
   // edge: {
   //     edge: {
@@ -13,6 +14,27 @@ const supportedBrowsers = {
   //         }
   //     }
   // },
+  /*microsoftIE11: {
+    ie11: {
+      browserName: 'internet explorer',
+      platformName: LATEST_WINDOWS,
+      browserVersion: 'latest',
+      'sauce:options': {
+        name: 'IE11',
+        screenResolution: '1400x1050',
+      },
+    },
+  },
+  microsoftEdge: {
+    edge: {
+      browserName: 'MicrosoftEdge',
+      platformName: LATEST_WINDOWS,
+      browserVersion: 'latest',
+      'sauce:options': {
+        name: 'Edge_Win10',
+      },
+    },
+  },*/
   chrome: {
     chrome_win_latest: {
       browserName: 'chrome',
@@ -49,7 +71,7 @@ const supportedBrowsers = {
       },
     },
   },
-  safari: {
+  /*safari: {
     safari_mac_latest: {
       browserName: 'safari',
       platformName: 'macOS 11.00',
@@ -59,7 +81,7 @@ const supportedBrowsers = {
         seleniumVersion: '3.141.59',
       },
     },
-  },
+  },*/
 };
 
 module.exports = supportedBrowsers;
