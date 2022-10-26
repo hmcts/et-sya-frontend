@@ -47,7 +47,7 @@ describe('Axios post to initiate case', () => {
     };
     const caseData =
       '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
-    api.createCase(caseData, mockUserDetails);
+    await api.createCase(caseData, mockUserDetails);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.INITIATE_CASE_DRAFT,
@@ -78,7 +78,7 @@ describe('Axios post to initiate case', () => {
 describe('Retrieve individual case', () => {
   it('Should call java api for case id', async () => {
     const caseId = '12334578';
-    api.getUserCase(caseId);
+    await api.getUserCase(caseId);
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.GET_CASE,
       expect.objectContaining({
@@ -90,7 +90,7 @@ describe('Retrieve individual case', () => {
 
 describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
-    api.getUserCases();
+    await api.getUserCases();
 
     expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases');
   });
@@ -330,7 +330,7 @@ describe('submitCase', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     };
-    api.submitCase(caseItem);
+    await api.submitCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
       JavaApiUrls.SUBMIT_CASE,
       expect.objectContaining(mockEt1DataModelUpdate)
@@ -349,7 +349,7 @@ describe('Axios post to retrieve pdf', () => {
       isCitizen: true,
     };
 
-    api.downloadClaimPdf(mockUserDetails.id);
+    await api.downloadClaimPdf(mockUserDetails.id);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.DOWNLOAD_CLAIM_PDF,
