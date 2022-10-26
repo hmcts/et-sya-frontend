@@ -70,7 +70,12 @@ describe('Check missing keys in translation files', () => {
     for (const k in obj) {
       if (typeof obj[k] === 'string') {
         const val: string = obj[k] as string;
-        if (val.includes('Welsh Translation required') || val === '') {
+        if (
+          val.includes('Welsh Translation required') ||
+          val.includes('Requires Update') ||
+          val.includes('Update Required') ||
+          val === ''
+        ) {
           console.warn(`${full_key}.${k} Does not have welsh translation`);
         }
       } else {
