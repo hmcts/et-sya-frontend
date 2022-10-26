@@ -160,12 +160,6 @@ export const getRespondentDetailsSection = (
   respondentSections.push(
     {
       key: {
-        text: translations.subTitle + index,
-        classes: 'govuk-heading-m',
-      },
-    },
-    {
-      key: {
         text: translations.name,
       },
       value: {

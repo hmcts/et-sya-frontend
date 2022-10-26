@@ -98,7 +98,7 @@ export default class AcasCertNumController {
       [TranslationKeys.COMMON, TranslationKeys.ACAS_CERT_NUM],
       respondentIndex
     );
-    const acasCert = Object.entries(this.form.getFormFields()).at(0).at(1) as FormInput;
+    const acasCert = Object.entries(this.form.getFormFields())[0][1] as FormInput;
     acasCert.label = (l: AnyRecord): string => l.legend + currentRespondentName + '?';
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_CERT_NUM, {
