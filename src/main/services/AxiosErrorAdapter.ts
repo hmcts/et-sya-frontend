@@ -4,8 +4,7 @@ import { AxiosError } from 'axios';
 export const axiosErrorDetails = (axiosError: AxiosError<{ error: string; path: string }>): string => {
   let errorMessage = axiosError.message;
   if (axiosError.response) {
-    const { error, path } = axiosError.response.data;
-    errorMessage += `, error: ${error}, path: ${path}`;
+    errorMessage += `, ${axiosError.response.data?.error}`;
   }
   return errorMessage;
 };
