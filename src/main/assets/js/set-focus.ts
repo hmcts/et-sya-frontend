@@ -25,7 +25,9 @@
 }*/
 
 if (document.addEventListener) {
-  document.addEventListener('load', onElementFocused, true);
+  document.addEventListener('load', onElementFocused);
+  document.addEventListener('pageshow', onElementFocused);
+  document.addEventListener('DOMContentLoaded', onElementFocused, true);
 }
 
 function onElementFocused() {
@@ -52,7 +54,12 @@ function onElementFocused() {
         const govUKBody = Array.from(
           document.getElementsByClassName('govuk-template__body') as HTMLCollectionOf<HTMLElement>
         );
-        govUKBody[0].focus();
+        const errorSummary = govUKBody[0];
+        errorSummary.focus();
+        errorSummary.setAttribute('tabindex', '-1');
+        errorSummary.addEventListener('blur', function () {
+          errorSummary.removeAttribute('tabindex');
+        });
       }
     }
   }
