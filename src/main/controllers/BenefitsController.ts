@@ -79,7 +79,7 @@ export default class BenefitsController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
     const employmentStatus = req.session.userCase.isStillWorking;
-    const employeeBenefits = Object.entries(this.form.getFormFields()).at(0).at(1) as FormInput;
+    const employeeBenefits = Object.entries(this.form.getFormFields())[0][1] as FormInput;
     employeeBenefits.label =
       employmentStatus === 'Working' || employmentStatus === 'Notice'
         ? l => l.workingOrNoticeLegend

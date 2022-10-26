@@ -68,7 +68,7 @@ export default class NoticeTypeController {
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
     const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const noticePeriodUnit = Object.entries(this.form.getFormFields()).at(0).at(1) as FormInput;
+    const noticePeriodUnit = Object.entries(this.form.getFormFields())[0][1] as FormInput;
     noticePeriodUnit.label =
       employmentStatus === 'Working' || employmentStatus === 'Notice'
         ? l => l.workingHeader
