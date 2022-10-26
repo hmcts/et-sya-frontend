@@ -1,4 +1,5 @@
 'use strict';
+const testConfig = require('../../config');
 const commonConfig = require('../../features/Data/commonConfig.json');
 
 module.exports = async function (noticePeriodContract, noticePeriod) {
@@ -11,31 +12,38 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
   I.click(commonConfig.saveAndContinue);
 
   //employment start date page
-  I.seeElement('#startDate-day');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#startDate-day', testConfig.TestWaitForTextTimeLimit);
   I.fillField('#startDate-day', '20');
   I.fillField('#startDate-month', '04');
   I.fillField('#startDate-year', '2014');
   I.click(commonConfig.saveAndContinue);
 
   //employment if statement to select notice period within contract
-  I.seeElement('#notice-period');
+  await I.scrollPageToBottom();
+  await I.waitForVisible('.govuk-details__summary-text', testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#notice-period', testConfig.TestWaitForTextTimeLimit);
   if (noticePeriodContract === 'Yes written contract with notice period') {
     I.checkOption('input[id=notice-period]');
     I.click(commonConfig.saveAndContinue);
     if (noticePeriod === 'Weeks') {
-      I.seeElement('#notice-type');
+      await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+      //I.waitForElement('#notice-type', testConfig.TestWaitForTextTimeLimit);
       I.checkOption('input[id=notice-type]');
       I.click(commonConfig.saveAndContinue);
 
-      I.seeElement('#notice-length');
+      await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+      //I.waitForElement('#notice-length', testConfig.TestWaitForTextTimeLimit);
       I.fillField('input[id=notice-length]', '4');
       I.click(commonConfig.saveAndContinue);
     } else if (noticePeriod === 'Months') {
-      I.seeElement('#notice-type-2');
+      await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+      //I.waitForElement('#notice-type-2', testConfig.TestWaitForTextTimeLimit);
       I.checkOption('input[id=notice-type-2]');
       I.click(commonConfig.saveAndContinue);
 
-      I.seeElement('#notice-length');
+      await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+      //I.waitForElement('#notice-length', testConfig.TestWaitForTextTimeLimit);
       I.fillField('input[id=notice-length]', '1');
       I.click(commonConfig.saveAndContinue);
     }
@@ -43,22 +51,26 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
     I.checkOption('input[id=notice-period-2]');
     I.click(commonConfig.saveAndContinue);
   }
-  I.seeElement('#avg-weekly-hrs');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#avg-weekly-hrs', testConfig.TestWaitForTextTimeLimit);
   I.fillField('#avg-weekly-hrs', '20');
   I.click(commonConfig.saveAndContinue);
 
-  I.seeElement('#pay-before-tax');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#pay-before-tax', testConfig.TestWaitForTextTimeLimit);
   I.fillField('#pay-before-tax', '40000');
   I.fillField('#pay-after-tax', '35000');
   I.checkOption('input[id=pay-interval]');
   I.click(commonConfig.saveAndContinue);
 
-  I.seeElement('#pension');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#pension', testConfig.TestWaitForTextTimeLimit);
   I.checkOption('input[id=pension]');
   I.fillField('#pension-contributions', '200');
   I.click(commonConfig.saveAndContinue);
 
-  I.seeElement('#employee-benefits');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  //I.waitForElement('#employee-benefits', testConfig.TestWaitForTextTimeLimit);
   I.see('Do or did you receive any employee benefits?');
   I.checkOption('input[id=employee-benefits]');
   I.click(commonConfig.saveAndContinue);

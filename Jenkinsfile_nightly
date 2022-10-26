@@ -51,10 +51,11 @@ withNightlyPipeline(type, product, component) {
                 allowMissing : true,
                 alwaysLinkToLastBuild: true,
                 keepAll : true,
-                reportDir : "functional-output",
-                reportFiles : "et-functional-result.html",
-                reportName : "ET functional tests result"
+                reportDir : "functional-output/reports/",
+                reportFiles : "ET-sya-functional-tests.html",
+                reportName : "ET SYA Functional Tests Report"
         ]
+        //enableSlackNotification('#et-builds')
     }
 
     after('fortify-scan') {
