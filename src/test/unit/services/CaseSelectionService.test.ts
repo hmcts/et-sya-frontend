@@ -14,6 +14,7 @@ import * as caseService from '../../../main/services/CaseService';
 import { mockApplications } from '../mocks/mockApplications';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { mockEnglishClaimTypesTranslations } from '../mocks/mockTranslations';
 
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
@@ -77,8 +78,8 @@ describe('Case Selection Service using Case Api', () => {
     const userCases = await getUserCasesByLastModified(req);
 
     expect(userCases).toHaveLength(2);
-    expect(userCases[0].lastModified).toStrictEqual('February 13, 2019');
-    expect(userCases[1].lastModified).toStrictEqual('February 12, 2019');
+    expect(userCases[0].lastModified).toStrictEqual('13 February 2019');
+    expect(userCases[1].lastModified).toStrictEqual('12 February 2019');
   });
 
   test('Should return empty array', async () => {
@@ -251,7 +252,7 @@ describe('get User applications', () => {
         },
       },
     ];
-    const result = getUserApplications(userCases);
+    const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations);
     expect(result).toStrictEqual(mockApplications);
   });
 });
