@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
@@ -9,6 +9,8 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
+
+import { axiosErrorDetails } from './AxiosErrorAdapter';
 
 export class CaseApi {
   constructor(private readonly axio: AxiosInstance) {}
@@ -118,12 +120,6 @@ export class CaseApi {
     }
   };
 }
-
-const axiosErrorDetails = (axiosError: AxiosError<{ error: string; path: string }>): string => {
-  const { error, path } = axiosError.response.data;
-
-  return `${axiosError.message}, error: ${error}, path: ${path}`;
-};
 
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
