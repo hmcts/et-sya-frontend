@@ -85,7 +85,7 @@
     "playwright": "^1.25.2",
     "postcode": "^5.1.0",
     "prettier": "^2.5.1",
-    "puppeteer": "^19.0.0",
+    "puppeteer": "^18.0.0",
     "redis": "^3.1.2",
     "redis-mock": "^0.56.3",
     "require-directory": "^2.1.1",
