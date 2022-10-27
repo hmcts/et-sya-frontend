@@ -12,7 +12,15 @@
     "takePartInHearing": "Would you be able to take part in hearings by video pr phone",
     "disability": "Do you have a physical, mental or learning disability or health condition that means you need support during your case?",
     "title": "Preferred title",
-    "notSelected": "Not selected"
+    "notSelected": "Not selected",
+    "male": "Male",
+    "female": "Female",
+    "preferNotToSay": "Prefer not to say",
+    "email": "Email",
+    "post": "Post",
+    "video": "Video",
+    "phone": "Phone",
+    "neither": "Neither"
   },
   "contactDetails": {
     "header": "Contact details",
@@ -39,7 +47,15 @@
     "newJob": "Have you got a new job?",
     "newStartDate": "New job start date",
     "newPayBeforeTax": "New job pay before tax and National Insurance",
-    "workAddress": "Work address"
+    "workAddress": "Work address",
+    "working": "Working",
+    "notice": "Notice",
+    "noLongerWorking": "No longer working",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "months": "Months",
+    "weeks": "Weeks"
   },
   "respondentDetails": {
     "header": "Respondent ",
@@ -55,7 +71,9 @@
     "name": "Name",
     "telephone": "UK telephone number",
     "officeAddress": "Registered or head office address",
-    "workAddress": "Work address"
+    "workAddress": "Work address",
+    "yes": "Yes",
+    "no": "No"
   },
   "claimDetails": {
     "header": "Claim details",
