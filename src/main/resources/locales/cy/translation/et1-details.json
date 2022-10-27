@@ -12,7 +12,15 @@
     "takePartInHearing": "Welsh Translation required",
     "disability": "A oes gennych anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu bod angen cymorth arnoch yn ystod eich achos?",
     "title": "Teitl o ddewis",
-    "notSelected": "Welsh Translation required"
+    "notSelected": "Welsh Translation required",
+    "male": "Gwryw",
+    "female": "Benyw",
+    "preferNotToSay": "Prefer not to say - Welsh translation required",
+    "email": "E-bost",
+    "post": "Trwy’r post",
+    "video": "Welsh Translation Required",
+    "phone": "Welsh Translation Required",
+    "neither": "Welsh Translation Required"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",
@@ -39,7 +47,15 @@
     "newJob": "Welsh Translation required",
     "newStartDate": "Welsh Translation required",
     "newPayBeforeTax": "Welsh Translation required",
-    "workAddress": "Welsh Translation required"
+    "workAddress": "Welsh Translation required",
+    "working": "Welsh Translation required",
+    "notice": "Welsh Translation required",
+    "noLongerWorking": "Welsh Translation required",
+    "weekly": "Wythnosol",
+    "monthly": "Misol",
+    "annual": "Blynyddol",
+    "months": "Misoedd",
+    "weeks": "Wythnosau"
   },
   "respondentDetails": {
     "header": "Welsh Translation required ",
@@ -55,7 +71,9 @@
     "name": "Enw",
     "telephone": "Rhif ffôn yn y DU",
     "officeAddress": "Welsh Translation required",
-    "workAddress": "Welsh Translation required"
+    "workAddress": "Welsh Translation required",
+    "yes": "Do",
+    "no": "Naddo"
   },
   "claimDetails": {
     "header": "Manylion yr hawliad",
