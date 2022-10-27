@@ -1,5 +1,5 @@
 import ClaimantApplicationsController from '../../../main/controllers/ClaimantApplicationsController';
-import * as translateTypesOfClaim from '../../../main/controllers/helpers/TranslateTypesOfClaimHelper';
+import * as translateTypesOfClaim from '../../../main/controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
@@ -38,7 +38,7 @@ describe('Claimant Applications Controller', () => {
     const claimantApplicationsController = new ClaimantApplicationsController();
     const request = mockRequest({});
     const response = mockResponse();
-    const mockHelper = jest.spyOn(translateTypesOfClaim, 'retrieveTypeOfClaim');
+    const mockHelper = jest.spyOn(translateTypesOfClaim, 'translateTypeOfClaim');
     mockHelper.mockReturnValue(undefined);
 
     await claimantApplicationsController.get(request, response);

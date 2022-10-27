@@ -1,9 +1,15 @@
+const testConfig = require('./config.js');
 const supportedBrowsers = require('./supportedBrowsers');
 const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+
+const waitForTimeout = parseInt(testConfig.saucelabs.waitForTimeout);
+const smartWait = parseInt(testConfig.saucelabs.smartWait);
+const browser = process.env.SAUCE_BROWSER || testConfig.saucelabs.browser;
+
 const defaultSauceOptions = {
-  username: process.env.SAUCE_USERNAME,
-  accessKey: process.env.SAUCE_ACCESS_KEY,
-  tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || 'reformtunnel',
+  username: process.env.SAUCE_USERNAME || testConfig.saucelabs.username,
+  accessKey: process.env.SAUCE_ACCESS_KEY || testConfig.saucelabs.key,
+  tunnelIdentifier: process.env.TUNNEL_IDENTIFIER || testConfig.saucelabs.tunnelId,
   acceptSslCerts: true,
   tags: ['ET'],
 };
@@ -30,13 +36,16 @@ function getBrowserConfig(browserGroup) {
 }
 
 const setupConfig = {
-  tests: '../functional/features/*.js',
+  tests: './features/**/*.js',
   output: './functional-output/',
   helpers: {
     WebDriver: {
       url: testUrl,
-      browser: process.env.SAUCE_BROWSER || '',
+      //browser: process.env.SAUCE_BROWSER || '',
       //host: process.env.HOST || 'saucelabs',
+      browser,
+      waitForTimeout,
+      smartWait,
       cssSelectorsEnabled: 'true',
       host: 'ondemand.eu-central-1.saucelabs.com',
       port: 80,
@@ -52,6 +61,7 @@ const setupConfig = {
     I: './pages/steps.js',
   },
   bootstrap: null,
+
   mocha: {
     reporterOptions: {
       'codeceptjs-cli-reporter': {
@@ -69,15 +79,21 @@ const setupConfig = {
     },
   },
   multiple: {
+    /* microsoftIE11: {
+      browsers: getBrowserConfig('microsoftIE11'),
+    },
+    microsoftEdge: {
+      browsers: getBrowserConfig('microsoftEdge'),
+    },*/
     chrome: {
       browsers: getBrowserConfig('chrome'),
     },
     firefox: {
       browsers: getBrowserConfig('firefox'),
     },
-    safari: {
+    /* safari: {
       browsers: getBrowserConfig('safari'),
-    },
+    },*/
   },
   name: 'Employment Tribunal Crossbrowser Tests',
 };

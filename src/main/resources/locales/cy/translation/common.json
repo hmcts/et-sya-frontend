@@ -47,5 +47,7 @@
     "unfairDismissal": "Diswyddo annheg",
     "whistleBlowing": "Chwythu’r chwiban",
     "otherTypesOfClaims": "Math arall o hawliad"
-  }
+  },
+  "of": "o",
+  "tasksCompleted": "tasg wedi'u cwblhau"
 }

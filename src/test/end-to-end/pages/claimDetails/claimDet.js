@@ -1,4 +1,5 @@
 'use strict';
+const testConfig = require('../../config.js');
 const contactUs = require('../../helpers/contactUs.js');
 
 const claimDetailsConfig = require('./claimDetails.json');
@@ -85,7 +86,8 @@ module.exports = async function (allClaimDetailsPages) {
   }
 
   //If your claim was successfull page.
-  I.see('What do you want if your claim is successful?');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.see('What do you want if your claim is successful? (optional)');
   await claimDetailsContentHelper.verifyWhatCanATribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
@@ -108,8 +110,8 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Compensation are you seeking...
-  I.waitForVisible('#main-form-submit');
-  I.see('What compensation are you seeking? (optional)');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.see('What compensation are you seeking? (optional)');
   await claimDetailsContentHelper.verifyWhatCanACompensationTribunalAward();
 
   I.click(claimDetailsConfig.compensation_what_can_a_tribunal_award);
@@ -126,7 +128,8 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //What Tribunal Recommendation Page.
-  I.see('What tribunal recommendation would');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.see('What tribunal recommendation would');
   I.see('you like to make?');
   await claimDetailsContentHelper.verifyWhatIsATribunalReccomendation();
 
@@ -142,7 +145,7 @@ module.exports = async function (allClaimDetailsPages) {
 
   I.click('Save and continue');
 
-  //Whistle Blowing Claims Page (Commented this Code Block as this would be only useful once thw Whistleblower and Discrimination is selected as part of the Case creation)
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Whistleblowing claims');
   await claimDetailsContentHelper.verifyWhistleBlowingClaims();
 
@@ -156,7 +159,8 @@ module.exports = async function (allClaimDetailsPages) {
   I.click('Save and continue');
 
   //Have you completed this Section
-  I.see('Have you completed this section?');
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.see('Have you completed this section?');
   I.see('You can change your answers later.');
   I.see("Yes, I've completed this section");
   I.see("No, I'll come back to it later");
