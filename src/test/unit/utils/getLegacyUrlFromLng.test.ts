@@ -1,10 +1,10 @@
-import { LegacyUrls } from '../../../main/definitions/constants';
+import { LegacyUrls, languages } from '../../../main/definitions/constants';
 import getLegacyUrl from '../../../main/utils/getLegacyUrlFromLng';
 
 const expectedEnUrl = LegacyUrls.ET1;
 const expectedCyUrl = 'https://employmenttribunals.service.gov.uk/cy/apply/application-number';
-const en = 'en';
-const cy = 'cy';
+const en = languages.ENGLISH;
+const cy = languages.WELSH;
 
 describe('Get Legacy Url with correct language', () => {
   it('should return en url when language is English', () => {

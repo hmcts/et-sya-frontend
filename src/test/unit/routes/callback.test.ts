@@ -5,7 +5,7 @@ import redis from 'redis-mock';
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
@@ -39,6 +39,9 @@ describe('Test responds to /oauth2/callback', function () {
     req.app.locals = {};
     req.app.locals.redisClient = redisClient;
     req.query = {};
+    req.cookies = {
+      i18next: languages.ENGLISH,
+    };
 
     const getUserDetailsMock = authIndex.getUserDetails as jest.MockedFunction<
       (serviceUrl: string, rawCode: string, callbackUrlPageLink: string) => Promise<UserDetails>
@@ -107,7 +110,7 @@ describe('Test responds to /oauth2/callback', function () {
     //Then it should redirect to NEW_ACCOUNT_LANDING page
     idamCallbackHandler(req, res, next, serviceUrl);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Claimant applications page if it is a existing user', async () => {

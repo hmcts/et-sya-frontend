@@ -5,6 +5,7 @@ import redis from 'redis-mock';
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
+import { languages } from '../../../main/definitions/constants';
 import { CaseState, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
@@ -18,7 +19,7 @@ export function mockSession(
 ): AppSession {
   return {
     id: 'testSessionId',
-    lang: 'en',
+    lang: languages.ENGLISH,
     regenerate: this,
     destroy: this,
     reload: this,
@@ -72,7 +73,7 @@ export const mockEmptyApp = (): Express => {
   mock.all('*', function (req, res, next) {
     req.session = {
       save: jest.fn(done => done()),
-      lang: 'en',
+      lang: languages.ENGLISH,
       errors: undefined,
       user: mockUserDetails,
     } as unknown as AppSession;
@@ -103,7 +104,7 @@ export const mockApp = ({
       } as CaseWithId,
       ...session,
       save: jest.fn(done => done()),
-      lang: 'en',
+      lang: languages.ENGLISH,
       errors: undefined,
       user: mockUserDetails,
     } as unknown as AppSession;
@@ -137,7 +138,7 @@ export const mockAppWithRedisClient = ({
       } as CaseWithId,
       ...session,
       save: jest.fn(done => done()),
-      lang: 'en',
+      lang: languages.ENGLISH,
       errors: undefined,
       user: mockUserDetails,
     } as unknown as AppSession;

@@ -1,5 +1,6 @@
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
 import { CaseWithId, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { languages } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 export const mockRequest = ({
@@ -24,6 +25,9 @@ export const mockRequest = ({
   req.file = file;
   req.params = {
     respondentNumber: '1',
+  };
+  req.cookies = {
+    i18next: languages.ENGLISH,
   };
   req.session = {
     userCase: {
@@ -76,7 +80,7 @@ export const mockRequestWithTranslation = (
     } as CaseWithId,
     ...session,
     save: jest.fn(done => (done ? done() : true)),
-    lang: 'en',
+    lang: languages.ENGLISH,
     errors: undefined,
   } as unknown as AppSession;
   return req;
@@ -113,7 +117,7 @@ export const mockRequestWithSaveException = ({
     save: jest.fn(() => {
       throw new Error('Something went wrong');
     }),
-    lang: 'en',
+    lang: languages.ENGLISH,
     errors: undefined,
   } as unknown as AppSession;
   return req;
