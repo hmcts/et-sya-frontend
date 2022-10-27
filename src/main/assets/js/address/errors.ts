@@ -1,9 +1,9 @@
 import { getById, hidden } from '../selectors';
 
 export const showError = (id: string): void => {
-  getById('addressErrorSummary')?.classList.remove(hidden);
+  const addressErrorSummary = getById('addressErrorSummary');
+  addressErrorSummary?.classList.remove(hidden);
   getById(id)?.classList.remove(hidden);
-
   const address1 = document.getElementsByClassName('address1');
   if (address1[0].classList.contains('hidden')) {
     const govUkFormGroup = getPostCodeInputForm();
@@ -14,6 +14,10 @@ export const showError = (id: string): void => {
     postCode?.classList?.add('govuk-input--error');
     const postcodeError = document.getElementById('postcode-error');
     postcodeError?.classList?.remove('hidden');
+  }
+  addressErrorSummary?.focus();
+  if (addressErrorSummary !== null) {
+    addressErrorSummary.autofocus = true;
   }
 };
 
