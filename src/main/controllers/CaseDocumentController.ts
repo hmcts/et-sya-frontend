@@ -40,7 +40,7 @@ export default class CaseDocumentController {
 
       if (!details.mimeType) {
         res.setHeader('Content-Type', 'application/pdf');
-        logger.warn('Failed document name: ' + details.originalDocumentName);
+        logger.warn('Failed document name: ' + details.id);
       } else {
         res.setHeader('Content-Type', details.mimeType);
       }
