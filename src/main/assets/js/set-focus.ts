@@ -1,24 +1,10 @@
 // Autofocus section
 // Code below automatically focuses to errors, in case any error exists on the page for accessibility
 
-function focusToErrorSummary() {
-  if (!govUKErrorSummary.classList.contains('hidden')) {
-    const govUKErrorsSkipLink = findFirstElementByClassName('govuk-skip-link');
-    if (govUKErrorsSkipLink !== null) {
-      govUKErrorsSkipLink.classList.add('hidden');
-    }
-    if (!document.title.includes('Error')) {
-      document.title = 'Error: ' + document.title;
-    }
-    govUKErrorSummary.focus();
-    govUKErrorSummary.setAttribute('tabindex', '-1');
-  }
-}
-
 if (document.addEventListener) {
-  document.addEventListener('load', focusToErrorSummary);
-  document.addEventListener('pageshow', focusToErrorSummary);
-  document.addEventListener('DOMContentLoaded', focusToErrorSummary, true);
+  document.addEventListener('load', focusToGovUKErrorDiv);
+  document.addEventListener('pageshow', focusToGovUKErrorDiv);
+  document.addEventListener('DOMContentLoaded', focusToGovUKErrorDiv);
 }
 
 export const findFirstElementByClassName = (className: string): HTMLElement => {
@@ -28,8 +14,18 @@ export const findFirstElementByClassName = (className: string): HTMLElement => {
   }
   return null;
 };
-const govUKErrorSummary = findFirstElementByClassName('govuk-error-summary');
 
-{
-  focusToErrorSummary();
+export function focusToGovUKErrorDiv(): void {
+  const govUKErrorDiv = findFirstElementByClassName('govuk-error-summary');
+  if (govUKErrorDiv !== null && govUKErrorDiv !== undefined) {
+    if (!govUKErrorDiv.classList.contains('hidden')) {
+      if (!document.title.includes('Error')) {
+        document.title = 'Error: ' + document.title;
+      }
+      govUKErrorDiv.focus();
+      govUKErrorDiv.setAttribute('tabindex', '-1');
+    }
+  }
 }
+
+focusToGovUKErrorDiv();

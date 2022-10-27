@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { PageUrls } from '../../../definitions/constants';
 import * as i18n from '../../../resources/locales/en/translation/template.json';
+import { focusToGovUKErrorDiv } from '../set-focus';
 
 export default class SessionTimeout {
   public sessionExpirationTime: string;
@@ -42,17 +43,18 @@ export default class SessionTimeout {
   init(): void {
     this.addListeners();
     void this.extendSession();
+    focusToGovUKErrorDiv();
   }
 
   addListeners = (): void => {
     if (this.extendSessionElement) {
-      this.extendSessionElement.addEventListener('click', this.extendSession);
+      this.extendSessionElement.addEventListener('DOMContentLoaded', this.extendSession);
     }
   };
 
   removeListeners = (): void => {
     if (this.extendSessionElement) {
-      this.extendSessionElement.removeEventListener('click', this.extendSession);
+      this.extendSessionElement.removeEventListener('DOMContentLoaded', this.extendSession);
     }
   };
 
@@ -146,10 +148,12 @@ export default class SessionTimeout {
           this.sessionExpirationTime = response.data.timeout;
           this.restartCounters();
           this.closeModal();
+          focusToGovUKErrorDiv();
         })
         .catch(() => {
           this.removeListeners();
           this.stopCounters();
+          focusToGovUKErrorDiv();
         });
     }
   };
