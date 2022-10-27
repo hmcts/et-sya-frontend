@@ -36,50 +36,53 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
       const isPostCodeInvalid = isValidUKPostcode(postcode, null);
 
       if (isPostCodeInvalid) {
+        e.submitter.blur();
+        addressErrorSummary.tabIndex = -1;
         if (isPostCodeInvalid === 'required') {
           showError('errorPostCodeRequired');
         } else {
           showError('errorPostCodeInvalid');
         }
         activateCursorButtons();
+
         focusToGovUKErrorDiv();
-        return;
-      }
-      try {
-        const response = await fetch('/address-lookup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ _csrf: formData.get('_csrf'), postcode }),
-        });
-        const addresses = await response.json();
+      } else {
+        try {
+          const response = await fetch('/address-lookup', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ _csrf: formData.get('_csrf'), postcode }),
+          });
+          const addresses = await response.json();
 
-        getById('userPostcode').textContent = postcode;
+          getById('userPostcode').textContent = postcode;
 
-        selectAddress.remove(0);
-        const placeholder = document.createElement('option');
-        placeholder.value = '-1';
-        if (addresses.length === 0) {
-          placeholder.text = locales.selectDefaultNone;
-        } else if (addresses.length === 1) {
-          placeholder.text = locales.selectDefaultSingle;
-        } else {
-          placeholder.text = locales.selectDefaultSeveral;
+          selectAddress.remove(0);
+          const placeholder = document.createElement('option');
+          placeholder.value = '-1';
+          if (addresses.length === 0) {
+            placeholder.text = locales.selectDefaultNone;
+          } else if (addresses.length === 1) {
+            placeholder.text = locales.selectDefaultSingle;
+          } else {
+            placeholder.text = locales.selectDefaultSeveral;
+          }
+          selectAddress.add(placeholder);
+
+          for (const address of addresses) {
+            const addressOption = document.createElement('option');
+            addressOption.value = JSON.stringify(address);
+            addressOption.text = address.fullAddress;
+            selectAddress.add(addressOption);
+          }
+        } finally {
+          activateCursorButtons();
+          getById('enterPostcode').classList.add(hidden);
+          getById('selectAddress').classList.remove(hidden);
+          selectAddress.focus();
         }
-        selectAddress.add(placeholder);
-
-        for (const address of addresses) {
-          const addressOption = document.createElement('option');
-          addressOption.value = JSON.stringify(address);
-          addressOption.text = address.fullAddress;
-          selectAddress.add(addressOption);
-        }
-      } finally {
-        activateCursorButtons();
-        getById('enterPostcode').classList.add(hidden);
-        getById('selectAddress').classList.remove(hidden);
-        selectAddress.focus();
       }
     } else {
       try {
