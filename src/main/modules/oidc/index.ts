@@ -19,10 +19,10 @@ export class Oidc {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
-    app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
+    app.get(AuthUrls.LOGIN, (req: AppRequest, res: Response) => {
       let stateParam = '';
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
-      if (!noSignInRequiredEndpoints.includes(req.url)) {
+      if (!noSignInRequiredEndpoints.includes(req.url) && res.locals.isLoggedIn) {
         res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
       }
     });
@@ -42,6 +42,7 @@ export class Oidc {
     });
 
     app.use(async (req: AppRequest, res: Response, next: NextFunction) => {
+      console.log('MANUAL LOG: Request.URL = ' + req.url);
       if (req.session?.user) {
         // a nunjucks global variable 'isLoggedIn' has been created for the views
         // it is assigned the value of res.locals.isLoggedIn
