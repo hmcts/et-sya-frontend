@@ -20,7 +20,9 @@
     "post": "Trwy’r post",
     "video": "Welsh Translation Required",
     "phone": "Welsh Translation Required",
-    "neither": "Welsh Translation Required"
+    "neither": "Welsh Translation Required",
+    "yes": "Oes",
+    "no": "Nac oes"
   },
   "contactDetails": {
     "header": "Manylion cyswllt",
@@ -55,7 +57,9 @@
     "monthly": "Misol",
     "annual": "Blynyddol",
     "months": "Misoedd",
-    "weeks": "Wythnosau"
+    "weeks": "Wythnosau",
+    "yes": "Oes",
+    "no": "Nac oes"
   },
   "respondentDetails": {
     "header": "Welsh Translation required ",

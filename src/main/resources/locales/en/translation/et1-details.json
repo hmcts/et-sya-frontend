@@ -20,7 +20,9 @@
     "post": "Post",
     "video": "Video",
     "phone": "Phone",
-    "neither": "Neither"
+    "neither": "Neither",
+    "yes": "YES",
+    "no": "NO"
   },
   "contactDetails": {
     "header": "Contact details",
@@ -55,7 +57,9 @@
     "monthly": "Monthly",
     "annual": "Annual",
     "months": "Months",
-    "weeks": "Weeks"
+    "weeks": "Weeks",
+    "yes": "YES",
+    "no": "NO"
   },
   "respondentDetails": {
     "header": "Respondent ",

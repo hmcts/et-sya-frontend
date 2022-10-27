@@ -43,7 +43,7 @@ export const getEmploymentDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.pastEmployer,
+        text: translations.employmentDetails.no,
       },
       actions: {
         items: [
@@ -63,7 +63,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.pastEmployer,
+          text: translations.employmentDetails.yes,
         },
         actions: {
           items: [
@@ -302,8 +302,8 @@ export const getEmploymentDetails = (
         value: {
           text:
             userCase?.claimantPensionContribution === YesOrNoOrNotSure.YES
-              ? userCase.claimantPensionContribution + ': ' + userCase.claimantPensionWeeklyContribution
-              : userCase.claimantPensionContribution,
+              ? translations.employmentDetails.yes + ': ' + userCase.claimantPensionWeeklyContribution
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [
@@ -323,8 +323,8 @@ export const getEmploymentDetails = (
         value: {
           text:
             userCase?.employeeBenefits === YesOrNo.YES
-              ? userCase.employeeBenefits + ': ' + userCase.benefitsCharCount
-              : userCase.employeeBenefits,
+              ? translations.employmentDetails.yes + ': ' + userCase.benefitsCharCount
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [
