@@ -1,4 +1,4 @@
-import Axios, { AxiosStatic } from 'axios';
+import AxiosForMock, { AxiosStatic } from 'axios';
 import config from 'config';
 
 import { getRedirectUrl, getUserDetails } from '../../../main/auth';
@@ -6,7 +6,7 @@ import { AuthUrls } from '../../../main/definitions/constants';
 
 jest.mock('axios');
 
-const mockedAxios = Axios as jest.Mocked<AxiosStatic>;
+const mockedAxios = AxiosForMock as jest.Mocked<AxiosStatic>;
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZ2l2ZW5fbmFtZSI6IkpvaG4iLCJmYW1pbHlfbmFtZSI6IkRvcmlhbiIsInVpZCI6IjEyMyJ9.KaDIFSDdD3ZIYCl_qavvYbQ3a4abk47iBOZhB1-9mUQ';
 const citizenToken =
