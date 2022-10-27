@@ -22,6 +22,7 @@ export class Oidc {
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam = '';
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
     });
 
