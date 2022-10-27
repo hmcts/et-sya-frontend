@@ -1,10 +1,11 @@
 'use strict';
-
+const testConfig = require('../../config');
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
   //Application Details Section
+  await I.waitForVisible("//a[contains(text(),'Give feedback')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Your claim has been submitted');
   I.see('What happens next');
   I.see('Submission details');

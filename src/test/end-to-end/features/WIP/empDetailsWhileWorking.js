@@ -175,9 +175,7 @@ Scenario('Claim while working for organisation and not submitted details', () =>
   I.checkOption('input[id=notice-period]');
   I.click('#main-form-submit');
   authPage.logout();
-})
-  .tag('@RET-1130')
-  .tag(' @RET-BAT');
+}).tag('@RET-1130');
 
 // No validation for Save as draft button at the moment
 Scenario('Save as Draft: Still working for organisation', () => {
