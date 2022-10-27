@@ -2,16 +2,21 @@ import axios from 'axios';
 import config from 'config';
 import jwtDecode from 'jwt-decode';
 
-import { UserDetails } from '../definitions/appRequest';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CITIZEN_ROLE } from '../definitions/constants';
 
-export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid: string): string => {
+export const getRedirectUrl = (
+  req: AppRequest,
+  serviceUrl: string,
+  callbackUrlPage: string,
+  guid: string,
+  languageParam: string
+): string => {
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
-  const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
-  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}`;
+  const callbackUrl = encodeURI('https://localhost:3001' + callbackUrlPage);
+  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`;
 };
-
 export const getUserDetails = async (
   serviceUrl: string,
   rawCode: string,
@@ -22,7 +27,7 @@ export const getUserDetails = async (
   const tokenUrl: string = config.get('services.idam.tokenURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
   const code = encodeURIComponent(rawCode);
-  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
+  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}&scope=roles&username=et.dev@hmcts.net&password=Pa55word11`;
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',

@@ -2,8 +2,9 @@ import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
+import { setI18nLanguageCookie } from '../../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getPreloginCaseData } from '../../services/CacheService';
@@ -21,11 +22,13 @@ export class Oidc {
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam = '';
+      let languageParam = '';
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
+      languageParam = setI18nLanguageCookie(req, req.cookies.i18next);
+      res.redirect(getRedirectUrl(req, serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
-    app.get(AuthUrls.LOGOUT, (req, res) => {
+    app.get(AuthUrls.LOGOUT, (req, res: Response) => {
       req.session.destroy(() => {
         if (req.query.redirectUrl) {
           return res.redirect(req.query.redirectUrl as string);
@@ -89,7 +92,11 @@ export const idamCallbackHandler = async (
       if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
         logger.info(`Created Draft Case - ${response.data.id}`);
         req.session.userCase = fromApiFormat(response.data);
-        return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+        const redirectUrl =
+          req.session.lang === languages.ENGLISH
+            ? PageUrls.NEW_ACCOUNT_LANDING_ENGLISH
+            : PageUrls.NEW_ACCOUNT_LANDING_WELSH;
+        return res.redirect(redirectUrl);
       }
       throw new Error('Draft Case was not created successfully');
     } catch (error) {
