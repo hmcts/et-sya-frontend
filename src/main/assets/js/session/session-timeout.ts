@@ -141,6 +141,7 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
+    focusToGovUKErrorDiv();
     if (
       this.isLoggedIn !== null &&
       this.isLoggedIn !== undefined &&
