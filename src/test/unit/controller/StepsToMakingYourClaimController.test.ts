@@ -25,7 +25,7 @@ describe('Steps to Making your claim Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) });
     stepsToMakingYourClaimController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CLAIM_STEPS, expect.anything());
   });
 
   it('should render page with claim type DISCRIMINATION', () => {
