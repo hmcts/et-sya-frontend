@@ -37,7 +37,7 @@ export const TranslationKeys = {
   NOTICE_PERIOD: 'notice-period',
   NOTICE_PERIOD_WORKING: 'notice-period-working',
   NOTICE_PERIOD_NO_LONGER_WORKING: 'notice-period-no-longer-working',
-  STEPS_TO_MAKING_YOUR_CLAIM: 'steps-to-making-your-claim',
+  CLAIM_STEPS: 'steps-to-making-your-claim',
   TYPE_OF_CLAIM: 'type-of-claim',
   REASONABLE_ADJUSTMENTS: 'reasonable-adjustments',
   DOCUMENTS: 'documents',
@@ -112,6 +112,8 @@ export const PageUrls = {
   TYPE_OF_CLAIM_ENGLISH: '/type-of-claim?lng=en',
   TYPE_OF_CLAIM_WELSH: '/type-of-claim?lng=cy',
   NEW_ACCOUNT_LANDING: '/new-account-landing',
+  NEW_ACCOUNT_LANDING_ENGLISH: '/new-account-landing?lng=en',
+  NEW_ACCOUNT_LANDING_WELSH: '/new-account-landing?lng=cy',
   DOB_DETAILS: '/dob-details',
   ADDRESS_DETAILS: '/address-details',
   CONTACT_ACAS: '/contact-acas',
@@ -321,3 +323,12 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+
+export const languages = {
+  WELSH: 'cy',
+  ENGLISH: 'en',
+  WELSH_LOCALE: '&ui_locales=cy',
+  ENGLISH_LOCALE: '&ui_locales=en',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
+};
