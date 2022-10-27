@@ -1,11 +1,11 @@
 {
-  "title": "Welsh Translation required",
-  "subTitle": "Welsh Translation required",
+  "title": "Gwiriwch fanylion yr atebydd",
+  "subTitle": "Atebydd ",
   "name": "Enw",
   "address": "Cyfeiriad",
-  "acasNum": "Welsh Translation required",
-  "submit": "Welsh Translation required",
-  "change": "Welsh Translation required",
+  "acasNum": "Rhif tystysgrif Acas",
+  "submit": "Ychwanegu atebydd arall",
+  "change": "Newid",
   "unProvided": "Welsh Translation required",
   "errors": {
     "hiddenErrorField": {

@@ -1,0 +1,14 @@
+{
+  "title": "Name of the respondent - Requires Update",
+  "h1": "Beth yw enw’r atebydd rydych yn gwneud yr hawliad yn ei erbyn?",
+  "p1": "Rhowch enw’r sefydliad. Os nad yw’n sefydliad - er enghraifft, oherwydd roeddech yn cael eich cyflogi gan unigolyn a oedd yn gweithredu fel unig fasnachwr - rhowch enw’r unigolyn.",
+  "p2": "This should be the same as the name of the respondent(s) on the Acas certificate. If they are not the same your claim might be rejected. - Requires Update",
+  "insetText": "Byddwch yn gallu ychwanegu rhagor o atebwyr yn hwyrach ymlaen os ydych angen.",
+  "label": "Rhowch enw’r atebydd",
+  "errors": {
+    "respondentName": {
+      "required": "Enter a respondent name between 1-100 characters - Requires Update",
+      "invalidLength": "Enter a respondent name between 1-100 characters - Requires Update"
+    }
+  }
+}

@@ -46,7 +46,9 @@
     },
     "claimSummaryFileName": {
       "invalidFileFormat": "Welsh translation required",
-      "invalidFileName": "Welsh translation required"
+      "invalidFileName": "Welsh translation required",
+      "invalidFileSize": "Welsh translation required",
+      "backEndError": "Welsh translation required"
     }
   }
 }
