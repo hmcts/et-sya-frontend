@@ -1,7 +1,28 @@
-import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
-import { InterceptPaths, PageUrls } from '../../definitions/constants';
-import { TypesOfClaim } from '../../definitions/definition';
-import { AnyRecord } from '../../definitions/util-types';
+import {CaseWithId, PayInterval, StillWorking, WeeksOrMonths, YesOrNo, YesOrNoOrNotSure} from '../../definitions/case';
+import {InterceptPaths, PageUrls} from '../../definitions/constants';
+import {TypesOfClaim} from '../../definitions/definition';
+import {AnyRecord} from '../../definitions/util-types';
+
+let getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+  var translation = translations.employmentDetails.working;
+  if (userCase.isStillWorking === StillWorking.NOTICE) {
+    translation = translations.employmentDetails.notice;
+  } else if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    translation = translations.employmentDetails.noLongerWorking;
+  }
+  return translation;
+};
+
+let getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+  var translation = translations.employmentDetails.annual;
+  if (userCase.payInterval === PayInterval.MONTHLY) {
+    translation = translations.employmentDetails.monthly;
+  } else if (userCase.payInterval === PayInterval.WEEKLY) {
+    translation = translations.employmentDetails.weekly;
+  }
+  return translation;
+};
+
 
 export const getEmploymentDetails = (
   userCase: CaseWithId,
@@ -62,7 +83,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.isStillWorking,
+          text: getTranslationsForStillWorkingEnum(userCase,translations),
         },
         actions: {
           items: [
@@ -167,7 +188,8 @@ export const getEmploymentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            text: userCase.noticePeriodUnit,
+            text: userCase.noticePeriodUnit === WeeksOrMonths.MONTHS ?
+              translations.employmentDetails.months : translations.employmentDetails.weeks
           },
           actions: {
             items: [
@@ -260,7 +282,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.payInterval,
+          text: getTranslationsForPayIntervalEnum(userCase, translations),
         },
         actions: {
           items: [
@@ -346,10 +368,10 @@ export const getEmploymentDetails = (
                 userCase.newJobStartDate.day === undefined
                   ? ''
                   : userCase.newJobStartDate.day +
-                    '-' +
-                    userCase.newJobStartDate.month +
-                    '-' +
-                    userCase.newJobStartDate.year,
+                  '-' +
+                  userCase.newJobStartDate.month +
+                  '-' +
+                  userCase.newJobStartDate.year,
             },
             actions: {
               items: [
