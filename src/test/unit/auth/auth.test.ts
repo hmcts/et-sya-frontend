@@ -14,14 +14,16 @@ const citizenToken =
 const loginUrl = config.get('services.idam.authorizationURL');
 const guid = '4e3cac74-d8cf-4de9-ad20-cf6248ba99aa';
 const languageParam = languages.ENGLISH;
-const redirect_uri = 'https://localhost:3001/oauth2/callback';
+const redirect_uri = 'https://localhost:3001';
+const callback = AuthUrls.CALLBACK;
+const callbackUrl = encodeURI(redirect_uri + callback);
 
 describe('getRedirectUrl', () => {
   test('should create a valid URL to redirect to the login screen', () => {
     expect(
-      getRedirectUrl(config.get('services.idam.authorizationURL'), redirect_uri, AuthUrls.CALLBACK, guid, languageParam)
+      getRedirectUrl(config.get('services.idam.authorizationURL'), redirect_uri, callback, guid, languageParam)
     ).toBe(
-      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=${redirect_uri}&state=${guid}&ui_locales=${languageParam}`
+      `${loginUrl}?client_id=et-sya&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`
     );
   });
 });
