@@ -48,13 +48,13 @@ export default class SessionTimeout {
 
   addListeners = (): void => {
     if (this.extendSessionElement) {
-      this.extendSessionElement.addEventListener('DOMContentLoaded', this.extendSession);
+      this.extendSessionElement.addEventListener('click', this.extendSession);
     }
   };
 
   removeListeners = (): void => {
     if (this.extendSessionElement) {
-      this.extendSessionElement.removeEventListener('DOMContentLoaded', this.extendSession);
+      this.extendSessionElement.removeEventListener('click', this.extendSession);
     }
   };
 
@@ -141,7 +141,14 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
-    if (this.isLoggedIn.value === 'true') {
+    if (
+      this.isLoggedIn !== null &&
+      this.isLoggedIn !== undefined &&
+      this.isLoggedIn.value !== null &&
+      this.isLoggedIn.value !== '' &&
+      this.isLoggedIn.value !== undefined &&
+      this.isLoggedIn.value === 'true'
+    ) {
       return axios
         .get('/extend-session')
         .then((response: AxiosResponse): void => {
