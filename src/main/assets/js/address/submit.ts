@@ -2,6 +2,7 @@ import { isValidUKPostcode } from '../../../components/form/address_validator';
 import { PageUrls } from '../../../definitions/constants';
 import locales from '../../../resources/locales/en/translation/enter-address.json';
 import { getById, hidden } from '../selectors';
+import { focusToGovUKErrorDiv } from '../set-focus';
 
 import { hideErrors, showError } from './errors';
 
@@ -41,6 +42,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
           showError('errorPostCodeInvalid');
         }
         activateCursorButtons();
+        focusToGovUKErrorDiv();
         return;
       }
       try {
