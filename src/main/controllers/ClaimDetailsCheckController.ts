@@ -22,6 +22,7 @@ export default class ClaimDetailsCheckController {
         label: (l: AnyRecord): string => l.heading,
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         hint: (l: AnyRecord): string => l.p,
         classes: 'govuk-radios',
       },

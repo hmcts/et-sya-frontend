@@ -23,6 +23,7 @@ export default class PastEmployerController {
         label: (l: AnyRecord): string => l.heading,
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         id: 'past-employer',
         classes: 'govuk-radios--inline',
       },

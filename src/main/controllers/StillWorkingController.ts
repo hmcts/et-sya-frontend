@@ -24,6 +24,7 @@ export default class StillWorkingController {
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         values: [
           {
             name: 'working',

@@ -24,6 +24,7 @@ export default class PensionController {
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,

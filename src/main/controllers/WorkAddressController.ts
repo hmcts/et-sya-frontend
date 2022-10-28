@@ -23,6 +23,7 @@ export default class WorkAddressController {
         label: (l: AnyRecord): string => l.legend,
         labelSize: 'xl',
         labelHidden: false,
+        isPageHeading: true,
         ...DefaultInlineRadioFormFields,
         hint: (l: AnyRecord): string => l.hintText,
         id: 'work-address',

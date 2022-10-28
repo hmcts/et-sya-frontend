@@ -23,6 +23,7 @@ export default class NoticeTypeController {
         classes: 'govuk-radios--inline',
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         values: [
           {
             label: (l: AnyRecord): string => l.weeks,

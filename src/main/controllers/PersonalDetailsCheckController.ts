@@ -22,6 +22,7 @@ export default class PersonalDetailsCheckController {
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
         labelSize: 'xl',
+        isPageHeading: true,
         hint: (l: AnyRecord): string => l.hint,
         id: 'tasklist-check',
         classes: 'govuk-radios',
