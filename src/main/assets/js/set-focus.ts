@@ -16,6 +16,9 @@ export const findFirstElementByClassName = (className: string): HTMLElement => {
 };
 
 export function focusToGovUKErrorDiv(): void {
+  if (window.location.href.indexOf('#') > 0) {
+    window.location.href = window.location.href.substring(0, window.location.href.indexOf('#'));
+  }
   const govUKErrorDiv = findFirstElementByClassName('govuk-error-summary');
   if (govUKErrorDiv !== null && govUKErrorDiv !== undefined) {
     if (!govUKErrorDiv.classList.contains('hidden')) {
