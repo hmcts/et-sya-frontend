@@ -5,7 +5,7 @@ import {AnyRecord} from '../../definitions/util-types';
 import {answersAddressFormatter} from './PageContentHelpers';
 
 let getTranslationsForSexEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  var translation = translations.personalDetails.preferNotToSay;
+  let translation = translations.personalDetails.preferNotToSay;
   if (userCase.claimantSex === Sex.MALE) {
     translation = translations.personalDetails.male;
   } else if (userCase.claimantSex === Sex.FEMALE) {

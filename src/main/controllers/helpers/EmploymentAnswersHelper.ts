@@ -4,7 +4,7 @@ import {TypesOfClaim} from '../../definitions/definition';
 import {AnyRecord} from '../../definitions/util-types';
 
 let getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  var translation = translations.employmentDetails.working;
+  let translation = translations.employmentDetails.working;
   if (userCase.isStillWorking === StillWorking.NOTICE) {
     translation = translations.employmentDetails.notice;
   } else if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
@@ -14,7 +14,7 @@ let getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, transla
 };
 
 let getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
-  var translation = translations.employmentDetails.annual;
+  let translation = translations.employmentDetails.annual;
   if (userCase.payInterval === PayInterval.MONTHLY) {
     translation = translations.employmentDetails.monthly;
   } else if (userCase.payInterval === PayInterval.WEEKLY) {
