@@ -104,14 +104,8 @@ export default class PlaceOfWorkController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
     setUserCase(req, this.form);
-    const { saveForLater } = req.body;
-    if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, logger);
-    } else {
-      handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, logger);
-    }
+    handleSessionErrors(req, res, this.form, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
