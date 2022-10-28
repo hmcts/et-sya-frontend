@@ -1,6 +1,6 @@
-import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
-import { CaseWithId, StillWorking, YesOrNo } from '../../../main/definitions/case';
-import { AnyRecord } from '../../../main/definitions/util-types';
+import {AppRequest, AppSession} from '../../../main/definitions/appRequest';
+import {CaseWithId, HearingPreference, Sex, StillWorking, YesOrNo} from '../../../main/definitions/case';
+import {AnyRecord} from '../../../main/definitions/util-types';
 
 export const mockRequest = ({
   body,
@@ -72,6 +72,8 @@ export const mockRequestWithTranslation = (
       newJob: YesOrNo.YES,
       isStillWorking: StillWorking.NOTICE,
       typeOfClaim: [],
+      claimantSex: Sex.FEMALE,
+      hearingPreferences: [HearingPreference.NEITHER],
       ...userCase,
     } as CaseWithId,
     ...session,
