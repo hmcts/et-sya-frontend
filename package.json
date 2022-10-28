@@ -24,7 +24,8 @@
     "sonar-scan": "sonar-scanner",
     "test:functional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
     "test:fullfunctional": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs run --steps -c src/test/end-to-end/codecept.conf.js --steps --reporter mocha-multi --verbose --grep @RET-BAT",
-    "test:crossbrowser": "codeceptjs run-multiple ${BROWSER_GROUP:-'--all'} --steps -c src/test/end-to-end/saucelabs.conf.js --steps --reporter mocha-multi --verbose --grep @RET-TEMP",
+    "test:crossbrowser": "./bin/run-crossbrowser-tests.sh",
+    "test-crossbrowser-e2e": "IGNORE_SESSION_VALIDATION=true NODE_ENV=testing LOG_LEVEL=OFF NODE_PATH=. node_modules/.bin/codeceptjs run-multiple  ${BROWSER_GROUP:-'--all'} -c src/test/end-to-end/saucelabs.conf.js --grep @RET-XB --steps --reporter mocha-multi",
     "test:smoke": "NODE_TLS_REJECT_UNAUTHORIZED=0 codeceptjs --config ./src/test/smoke/codecept.smoke.conf.js run-workers 2 parallel",
     "cichecks": "yarn && yarn build && yarn lint && yarn test && yarn tests:a11y",
     "prepare": "husky install"
@@ -45,7 +46,6 @@
     "@types/es6-promisify": "^6.0.1",
     "@types/express": "^4.17.9",
     "@types/express-session": "^1.17.4",
-    "@types/glob": "^8.0.0",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/lodash": "^4.14.179",
     "@types/node": "^18.0.0",
@@ -69,7 +69,6 @@
     "express": "^4.17.3",
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
-    "glob": "^8.0.1",
     "google-libphonenumber": "^3.2.26",
     "govuk-frontend": "4.3.1",
     "helmet": "^6.0.0",
@@ -155,7 +154,10 @@
     "**/**/minimist": ">=1.2.6",
     "**/**/shelljs": ">=0.8.5",
     "**/**/merge": ">=2.1.1",
-    "**/**/glob-parent": ">=6.0.1"
+    "**/**/glob-parent": ">=6.0.1",
+    "**/**/glob": ">=8.0.3",
+    "**/**/scss-tokenizer": ">=0.4.3",
+    "**/**/minimatch": ">=3.0.5"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
