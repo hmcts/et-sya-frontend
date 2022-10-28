@@ -17,7 +17,13 @@ export const findFirstElementByClassName = (className: string): HTMLElement => {
 
 export function focusToGovUKErrorDiv(): void {
   if (window.location.href.indexOf('#') > 0) {
-    window.location.href = window.location.href.substring(0, window.location.href.indexOf('#'));
+    if (
+      !window.location.href.includes('address-details') &&
+      !window.location.href.includes('respondent-address') &&
+      !window.location.href.includes('place-of-work')
+    ) {
+      window.location.href = window.location.href.substring(0, window.location.href.indexOf('#'));
+    }
   }
   const govUKErrorDiv = findFirstElementByClassName('govuk-error-summary');
   if (govUKErrorDiv !== null && govUKErrorDiv !== undefined) {
