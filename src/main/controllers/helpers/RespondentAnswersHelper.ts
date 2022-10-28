@@ -1,8 +1,8 @@
-import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { InterceptPaths, PageUrls } from '../../definitions/constants';
-import { AnyRecord } from '../../definitions/util-types';
+import {CaseWithId, Respondent, YesOrNo} from '../../definitions/case';
+import {InterceptPaths, PageUrls} from '../../definitions/constants';
+import {AnyRecord} from '../../definitions/util-types';
 
-import { answersAddressFormatter } from './PageContentHelpers';
+import {answersAddressFormatter} from './PageContentHelpers';
 
 export const getRespondentSection = (
   userCase: CaseWithId,
@@ -68,7 +68,8 @@ export const getRespondentSection = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.claimantWorkAddressQuestion,
+        text: userCase.claimantWorkAddressQuestion === YesOrNo.YES
+          ? translations.respondentDetails.YES : translations.respondentDetails.NO,
       },
       actions: {
         items: [

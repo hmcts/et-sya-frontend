@@ -65,4 +65,32 @@ describe('Check missing keys in translation files', () => {
 
     expect(findMissingKeys(englishContents, welshContents)).toEqual([]);
   });
+
+  function checkWelshTranlationFile(obj: { [index: string]: unknown }, full_key: string) {
+    for (const k in obj) {
+      if (typeof obj[k] === 'string') {
+        const val: string = obj[k] as string;
+        if (
+          val.includes('Welsh Translation required') ||
+          val.includes('Requires Update') ||
+          val.includes('Update Required') ||
+          val === ''
+        ) {
+          console.warn(`${full_key}.${k} Does not have welsh translation`);
+        }
+      } else {
+        if (typeof obj[k] === 'object') {
+          const val: { [index: string]: unknown } = obj[k] as { [index: string]: unknown };
+          checkWelshTranlationFile(val, `${full_key}.${k}`);
+        }
+      }
+    }
+  }
+
+  test.each(englishTranslationFiles)('Check welsh translation file %s has no unfinished translations', file => {
+    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+    const welshContents = JSON.parse(welshFile);
+
+    checkWelshTranlationFile(welshContents, file.replace(/\.json/, ''));
+  });
 });
