@@ -16,17 +16,19 @@ let getTranslationsForSexEnum = function (userCase: CaseWithId, translations: An
 
 let getTranslationsForHearingPreferences = function (userCase: CaseWithId, translations: AnyRecord) {
   let hearingPreferences: string[] = [];
-  userCase.hearingPreferences.forEach(function (item) {
-    if (item === HearingPreference.VIDEO) {
-      hearingPreferences.push(translations.personalDetails.video);
-    }
-    if (item === HearingPreference.PHONE) {
-      hearingPreferences.push(translations.personalDetails.phone);
-    }
-    if (item === HearingPreference.NEITHER) {
-      hearingPreferences.push(translations.personalDetails.neither);
-    }
-  });
+  if (userCase.hearingPreferences !== undefined) {
+    userCase.hearingPreferences.forEach(function (item) {
+      if (item === HearingPreference.VIDEO) {
+        hearingPreferences.push(translations.personalDetails.video);
+      }
+      if (item === HearingPreference.PHONE) {
+        hearingPreferences.push(translations.personalDetails.phone);
+      }
+      if (item === HearingPreference.NEITHER) {
+        hearingPreferences.push(translations.personalDetails.neither);
+      }
+    });
+  }
   return hearingPreferences;
 };
 
