@@ -15,7 +15,7 @@ const commonFlow = require('../../helpers/commonFlow.js');
 
 Feature('End to end journey for submitting a case');
 
-Scenario('Submit a single claim for myself with the Complete PCQ/Equality', async ({ I }) => {
+/*Scenario('Submit a single claim for myself with the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
   await I.authenticateWithIdam();
   await doNotHaveToCompleteCard(I);
@@ -31,7 +31,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-}).tag('@RET-BAT');
+}).tag('@RET-BAT');*/
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
