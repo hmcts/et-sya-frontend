@@ -11,12 +11,6 @@ export const getYourDetails = (
   return [
     {
       key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-heading-m',
-      },
-    },
-    {
-      key: {
         text: translations.personalDetails.dob,
         classes: 'govuk-!-font-weight-regular-m',
       },

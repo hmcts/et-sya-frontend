@@ -31,6 +31,8 @@ export default class CompensationController {
       compensationOutcome: {
         id: 'compensationOutcome',
         type: 'textarea',
+        label: l => l.legend,
+        labelSize: 'l',
         hint: l => l.hint,
         attributes: { title: 'Compensation outcome text area' },
         validator: isContent2500CharsOrLess,
