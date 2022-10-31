@@ -19,8 +19,9 @@ export default class LipOrRepController {
     fields: {
       claimantRepresentedQuestion: {
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelSize: 'l',
+        labelHidden: false,
         classes: 'govuk-radios',
         id: 'lip-or-representative',
         values: [

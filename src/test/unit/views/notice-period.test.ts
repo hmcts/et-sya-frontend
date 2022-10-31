@@ -19,9 +19,9 @@ const noticePeriodNoLongerWorkingJsonRaw = fs.readFileSync(
 const noticePeriodWorkingJson = JSON.parse(noticePeriodWorkingJsonRaw);
 const noticePeriodNoLongerWorkingJson = JSON.parse(noticePeriodNoLongerWorkingJsonRaw);
 
-const titleClass = 'govuk-heading-xl';
-const expectedTitleWorkingOrNotice = noticePeriodWorkingJson.h1;
-const expectedTitleNoLongerWorking = noticePeriodNoLongerWorkingJson.h1;
+const titleClass = 'govuk-fieldset__legend';
+const expectedTitleWorkingOrNotice = noticePeriodWorkingJson.legend;
+const expectedTitleNoLongerWorking = noticePeriodNoLongerWorkingJson.legend;
 const radios = 'govuk-radios';
 const buttonClass = 'govuk-button';
 

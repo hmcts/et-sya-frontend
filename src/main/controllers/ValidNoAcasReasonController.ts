@@ -21,8 +21,9 @@ export default class ValidNoAcasReasonController {
         classes: 'govuk-radios--inline',
         id: 'valid-no-acas-reason',
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelSize: 'l',
+        labelHidden: false,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
