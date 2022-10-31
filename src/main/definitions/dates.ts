@@ -42,6 +42,8 @@ export type DateFormFields = {
   classes: string;
   type: string;
   label: (l: AnyRecord) => string;
+  labelSize?: string;
+  labelHidden: boolean;
   hint: (l: AnyRecord) => string;
   values: typeof DateValues;
   parser: (body: UnknownRecord) => CaseDate;
@@ -53,8 +55,9 @@ type DateTypes = string | void | InvalidField;
 export const BirthDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.h1,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
@@ -67,8 +70,10 @@ export const BirthDateFormFields = {
 export const EndDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.h1,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
+  hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
     areDateFieldsFilledIn(value) || isDateInputInvalid(value) || isDateInPast(value) || isDateInLastTenYears(value),
@@ -77,8 +82,9 @@ export const EndDateFormFields = {
 export const NewJobDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.h1,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   values: DateValues,
   validator: (value: CaseDate): DateTypes => isDateInputInvalid(value) || isDateInNextTenYears(value),
 };
@@ -86,8 +92,9 @@ export const NewJobDateFormFields = {
 export const NoticeEndDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
@@ -97,8 +104,9 @@ export const NoticeEndDateFormFields = {
 export const StartDateFormFields = {
   classes: 'govuk-date-input',
   type: 'date',
-  label: (l: AnyRecord): string => l.label,
-  labelHidden: true,
+  label: (l: AnyRecord): string => l.legend,
+  labelHidden: false,
+  labelSize: 'l',
   hint: (l: AnyRecord): string => l.hint,
   values: DateValues,
   validator: (value: CaseDate): DateTypes =>
