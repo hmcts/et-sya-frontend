@@ -1,0 +1,13 @@
+{
+  "title": "Manylion cyflogaeth",
+  "h1": "Manylion cyflogaeth",
+  "p1": "Dywedwch fanylion wrthym am weithio i’r sefydliad neu’r unigolyn rydych yn gwneud eich hawliad yn ei erbyn.",
+  "p2": "Bydd y manylion hyn yn ein helpu i symud eich hawliad yn ei flaen.",
+  "hint": "Dywedwch wrthym pa rôl oedd gennych ar adeg eich anghydfod",
+  "jobTitle": "Teitl y swydd (dewisol)",
+  "errors": {
+    "jobTitle": {
+      "invalid-length": "Welsh Translation required"
+    }
+  }
+}

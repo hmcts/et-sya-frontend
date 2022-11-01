@@ -1,11 +1,10 @@
-import i18next from 'i18next';
-
 import { isDateEmpty } from '../components/form/dateValidators';
+import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
-import { UserDetails } from '../definitions/appRequest';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
 import {
   CcdDataModel,
@@ -45,7 +44,7 @@ export function toApiFormatCreate(
   };
 }
 
-export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
+export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   return {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
@@ -115,8 +114,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
-    createdDate: convertFromTimestampString(fromApiCaseData.created_date),
-    lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
+    createdDate: convertFromTimestampString(fromApiCaseData.created_date, req),
+    lastModified: convertFromTimestampString(fromApiCaseData.last_modified, req),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     claimantWorkAddressQuestion: fromApiCaseData.case_data?.claimantWorkAddressQuestion,
     workAddress1: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine1,
@@ -318,13 +317,14 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
   }
 };
 
-function convertFromTimestampString(responseDate: string) {
+function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  return new Date(dateComponent).toLocaleDateString(i18next.language, {
+  const newDate = new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
+  return newDate;
 }
 
 export const getDueDate = (date: string, daysUntilDue: number): string => {

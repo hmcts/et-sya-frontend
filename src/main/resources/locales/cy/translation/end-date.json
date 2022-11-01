@@ -1,0 +1,20 @@
+{
+  "title": "Dyddiad terfyn y gyflogaeth",
+  "h1": "Dyddiad terfyn y gyflogaeth",
+  "p1": "Dywedwch wrthym pryd wnaethoch chi roi’r gorau i weithio gyda’r atebydd.",
+  "hint": "Er enghraifft, 27 3 2007",
+  "errors": {
+    "endDate": {
+      "required": "Welsh Translation required",
+      "invalidDateInFuture": "Welsh Translation required",
+      "invalidDateMoreThanTenYearsInPast": "Welsh Translation required",
+      "dayRequired": "Welsh Translation required",
+      "monthRequired": "Welsh Translation required",
+      "yearRequired": "Welsh Translation required",
+      "dayNotANumber": "Welsh Translation required",
+      "monthNotANumber": "Welsh Translation required",
+      "yearNotANumber": "Welsh Translation required",
+      "invalidDate": "Welsh Translation required"
+    }
+  }
+}

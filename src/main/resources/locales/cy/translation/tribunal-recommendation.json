@@ -1,0 +1,12 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Pa argymhelliad tribiwnlys yr hoffech wneud cais amdano? (dewisol)",
+  "detailsSummaryRecom": "Beth yw argymhelliad tribiwnlys?",
+  "detailsTextRecom": "Os penderfynir bod eich cyflogwr wedi gwahaniaethu yn eich erbyn, gall tribiwnlys wneud argymhelliad bod yr atebydd yn cymryd camau penodol i leihau effaith y gwahaniaethu arnoch",
+  "hint": "Dywedwch wrthym pa gamau gweithredu yr hoffech i’r tribiwnlys eu hargymell y dylai eich atebwyr eu cymryd i leihau effaith y gwahaniaethu sydd wedi digwydd.",
+  "errors": {
+    "tribunalRecommendationRequest": {
+      "tooLong": "Welsh translation required"
+    }
+  }
+}

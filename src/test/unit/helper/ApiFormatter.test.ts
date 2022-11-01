@@ -146,8 +146,8 @@ describe('Should return data in api format', () => {
           ccdId: '3453xaa',
         },
       ],
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
       et3IsThereAnEt3Response: YesOrNo.YES,
       claimSummaryFile: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
@@ -382,8 +382,8 @@ describe('Format Case Data to Frontend Model', () => {
       id: '1234',
       feeGroupReference: undefined,
       ethosCaseReference: undefined,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: undefined,
       typeOfClaim: undefined,
@@ -472,8 +472,8 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: { day: '', month: '', year: '' },
       startDate: { day: '', month: '', year: '' },
       noticeEnds: { day: '', month: '', year: '' },
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: '19 August 2022',
+      lastModified: '19 August 2022',
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData.case_data.claimantIndType.claimant_date_of_birth).toEqual(null);

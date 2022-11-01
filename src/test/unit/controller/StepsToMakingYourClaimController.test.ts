@@ -71,6 +71,7 @@ describe('Steps to Making your claim Controller', () => {
     };
     const res = mockResponse();
     const req = mockRequest({});
+    req.url = '/testPageUrl?lng=cy';
     req.session.userCase.id = undefined;
     req.app = {} as Application;
     req.app.locals = {};
@@ -89,8 +90,8 @@ describe('Steps to Making your claim Controller', () => {
 
     expect(req.session.userCase).toEqual({
       id: '12234',
-      createdDate: 'February 12, 2019',
-      lastModified: 'February 12, 2019',
+      createdDate: '12 February 2019',
+      lastModified: '12 February 2019',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: CaseType.SINGLE,
       caseTypeId: undefined,
@@ -142,7 +143,40 @@ describe('Steps to Making your claim Controller', () => {
       claimDetailsCheck: undefined,
       respondents: undefined,
       otherClaim: undefined,
+      ClaimantPcqId: undefined,
+      acknowledgementOfClaimLetterDetail: undefined,
+      address1: undefined,
+      address2: undefined,
+      addressCountry: undefined,
+      addressPostcode: undefined,
+      addressTown: undefined,
+      claimSummaryFile: undefined,
+      claimSummaryText: undefined,
+      claimTypeDiscrimination: undefined,
+      claimTypePay: undefined,
+      claimantWorkAddressQuestion: undefined,
+      compensationAmount: undefined,
+      compensationOutcome: undefined,
+      et1SubmittedForm: undefined,
+      et3IsThereAnEt3Response: undefined,
+      ethosCaseReference: undefined,
+      feeGroupReference: undefined,
+      hubLinksStatuses: undefined,
+      managingOffice: undefined,
+      submittedDate: undefined,
+      tellUsWhatYouWant: undefined,
+      tribunalCorrespondenceEmail: undefined,
+      tribunalCorrespondenceTelephone: undefined,
+      tribunalRecommendationRequest: undefined,
+      whistleblowingClaim: undefined,
+      whistleblowingEntityName: undefined,
+      workAddress1: undefined,
+      workAddress2: undefined,
+      workAddressCountry: undefined,
+      workAddressPostcode: undefined,
+      workAddressTown: undefined,
     });
+    expect(req.language).toEqual('cy');
   });
 
   it('should render page with all claim types', () => {

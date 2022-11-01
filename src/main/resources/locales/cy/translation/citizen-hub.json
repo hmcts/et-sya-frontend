@@ -1,0 +1,67 @@
+{
+  "title": "Welsh Translation required",
+  "header": "Welsh Translation required",
+  "caseNumber": "Welsh Translation required",
+  "accepted": "Welsh Translation required",
+  "received": "Welsh Translation required",
+  "details": "Welsh Translation required",
+  "decision": "Welsh Translation required",
+
+  "iWantTo": "Welsh Translation required",
+  "contactTribunalMyCase": "Welsh Translation required",
+  "findLegalAdvice": "Welsh Translation required",
+
+  "section1": "Welsh Translation required",
+  "section2": "Welsh Translation required",
+  "section3": "Welsh Translation required",
+  "section4": "Welsh Translation required",
+  "section5": "Welsh Translation required",
+  "section6": "Welsh Translation required",
+  "section7": "Welsh Translation required",
+  "section8": "Welsh Translation required",
+
+  "personalDetails": "Welsh Translation required",
+  "et1ClaimForm": "Welsh Translation required",
+  "respondentResponse": "Welsh Translation required",
+  "hearingDetails": "Welsh Translation required",
+  "requestsAndApplications": "Welsh Translation required",
+  "respondentApplications": "Welsh Translation required",
+  "contactTribunal": "Welsh Translation required",
+  "tribunalOrders": "Welsh Translation required",
+  "tribunalJudgements": "Welsh Translation required",
+  "documents": "Welsh Translation required",
+
+  "notViewedYet": "Welsh Translation required",
+  "notAvailableYet": "Welsh Translation required",
+  "completed": "Welsh Translation required",
+  "submitted": "Welsh Translation required",
+  "viewed": "Welsh Translation required",
+  "optional": "Welsh Translation required",
+  "waitingForTheTribunal": "Waiting for the tribunal",
+  "submittedAndViewed": "Welsh Translation required",
+  "notificationBanner": {
+    "acknowledgement": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required",
+      "p1": "Welsh Translation required",
+      "p2": "Welsh Translation required"
+    },
+    "rejection": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required",
+      "p1": "Welsh Translation required"
+    },
+    "respondentReceived": {
+      "header": "Welsh Translation required",
+      "p1": "Welsh Translation required"
+    },
+    "respondentRejection": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "respondentAcknowledgement": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    }
+  }
+}
