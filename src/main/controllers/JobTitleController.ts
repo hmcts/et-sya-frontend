@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class JobTitleController {
   private readonly form: Form;
@@ -44,8 +45,9 @@ export default class JobTitleController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.START_DATE);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.START_DATE);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

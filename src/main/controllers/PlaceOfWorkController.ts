@@ -15,6 +15,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 export default class PlaceOfWorkController {
@@ -100,13 +101,15 @@ export default class PlaceOfWorkController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
     setUserCase(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      const redirectUrlClaimSaved = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      handleSessionErrors(req, res, this.form, redirectUrlClaimSaved);
       handleUpdateDraftCase(req, this.logger);
     } else {
+      let redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, this.logger);
     }

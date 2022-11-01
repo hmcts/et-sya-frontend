@@ -55,8 +55,8 @@ export default class AcasMultipleController {
     const redirectUrlConditional = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.TYPE_OF_CLAIM
       : PageUrls.VALID_ACAS_REASON;
-    setUserCase(req, this.form);
     const redirectUrl = setUrlLanguage(req, redirectUrlConditional);
+    setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
 

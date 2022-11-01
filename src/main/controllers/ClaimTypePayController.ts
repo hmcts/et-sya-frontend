@@ -12,6 +12,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class ClaimTypePayController {
   private readonly form: Form;
@@ -63,8 +64,9 @@ export default class ClaimTypePayController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.DESCRIBE_WHAT_HAPPENED);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DESCRIBE_WHAT_HAPPENED);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

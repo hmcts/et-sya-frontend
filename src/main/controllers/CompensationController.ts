@@ -14,6 +14,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const compensation_amount: CurrencyFormFields = {
   ...DefaultCompensationCurrencyFormFields,
@@ -44,13 +45,16 @@ export default class CompensationController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
+    let redirectUrl;
     if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
+      redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
     } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+      redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

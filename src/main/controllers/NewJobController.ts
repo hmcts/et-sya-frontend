@@ -12,6 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class NewJobController {
@@ -45,9 +46,10 @@ export default class NewJobController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
+    const redirectUrlConditional = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
       : PageUrls.FIRST_RESPONDENT_NAME;
+    const redirectUrl = setUrlLanguage(req, redirectUrlConditional);
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);

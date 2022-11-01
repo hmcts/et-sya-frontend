@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
 
 export default class RespondentNameController {
@@ -45,9 +46,11 @@ export default class RespondentNameController {
     handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      handleSessionErrors(req, res, this.form, redirectUrl);
     } else {
-      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+      let redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       handleSessionErrors(req, res, this.form, redirectUrl);
     }
   };

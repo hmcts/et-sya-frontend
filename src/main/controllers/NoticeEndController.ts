@@ -14,6 +14,7 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const notice_dates: DateFormFields = {
   ...NoticeEndDateFormFields,
@@ -37,8 +38,9 @@ export default class NoticeEndController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.NOTICE_TYPE);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NOTICE_TYPE);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 

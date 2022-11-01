@@ -39,7 +39,8 @@ export default class WorkAddressController {
     const { saveForLater } = req.body;
 
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      handleSessionErrors(req, res, this.form, redirectUrl);
     } else {
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrlConditional = isRespondentAndWorkAddressSame

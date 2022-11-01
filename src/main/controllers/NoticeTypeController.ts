@@ -11,6 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class NoticeTypeController {
@@ -59,6 +60,7 @@ export default class NoticeTypeController {
     } else {
       redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);

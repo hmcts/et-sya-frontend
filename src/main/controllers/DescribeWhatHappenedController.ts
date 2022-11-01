@@ -4,7 +4,7 @@ import { LoggerInstance } from 'winston';
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -12,6 +12,7 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
 import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setClaimSavedLanguage, setUrlLanguage } from './helpers/LanguageHelper';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
 
 export default class DescribeWhatHappenedController {
@@ -81,6 +82,9 @@ export default class DescribeWhatHappenedController {
     setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const { saveForLater } = req.body;
+    let redirectUrl;
+
     const claimSummaryError = getClaimSummaryError(
       formData,
       req.file,
@@ -97,11 +101,22 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+        if (saveForLater) {
+          redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+          redirectUrl = setClaimSavedLanguage(req, redirectUrl);
+        } else {
+          redirectUrl = setUrlLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
+          redirectUrl = setClaimSavedLanguage(req, redirectUrl);
+        }
+        handleSessionErrors(req, res, this.form, redirectUrl);
         handleUpdateDraftCase(req, this.logger);
       }
     } else {
       req.session.errors.push(claimSummaryError);
+
+      req.session.lang === languages.WELSH || (req.url as string)?.includes(languages.WELSH_URL_PARAMETER)
+        ? (req.url = req.url + languages.WELSH_URL_PARAMETER)
+        : (req.url = req.url + languages.ENGLISH_URL_PARAMETER);
       return res.redirect(req.url);
     }
   };

@@ -15,6 +15,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
 
 export default class RespondentAddressController {
@@ -108,12 +109,14 @@ export default class RespondentAddressController {
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, this.logger);
-      return res.redirect(PageUrls.CLAIM_SAVED);
+      return res.redirect(redirectUrl);
     } else {
       const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
-      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
+      let redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, this.logger);
     }

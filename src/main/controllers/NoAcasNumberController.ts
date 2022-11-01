@@ -12,6 +12,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, setUserCaseForRespondent } from './helpers/RespondentHelpers';
 
 export default class NoAcasNumberController {
@@ -73,12 +74,15 @@ export default class NoAcasNumberController {
     setUserCaseForRespondent(req, this.form);
     handleUpdateDraftCase(req, this.logger);
     const { saveForLater } = req.body;
+    let redirectUrl;
 
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      redirectUrl = PageUrls.CLAIM_SAVED;
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
+      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     }
+    redirectUrl = setUrlLanguage(req, redirectUrl);
+    handleSessionErrors(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

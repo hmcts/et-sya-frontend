@@ -14,6 +14,7 @@ import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const new_job_start_date: DateFormFields = {
   ...NewJobDateFormFields,
@@ -35,8 +36,9 @@ export default class NewJobStartDateController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    const redirectUrl = setUrlLanguage(req, PageUrls.NEW_JOB_PAY);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NEW_JOB_PAY);
+    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, this.logger);
   };
 
