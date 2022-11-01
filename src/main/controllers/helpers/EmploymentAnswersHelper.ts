@@ -1,7 +1,34 @@
-import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
+import {
+  CaseWithId,
+  PayInterval,
+  StillWorking,
+  WeeksOrMonths,
+  YesOrNo,
+  YesOrNoOrNotSure,
+} from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { TypesOfClaim } from '../../definitions/definition';
 import { AnyRecord } from '../../definitions/util-types';
+
+const getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+  let translation = translations.employmentDetails.working;
+  if (userCase.isStillWorking === StillWorking.NOTICE) {
+    translation = translations.employmentDetails.notice;
+  } else if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    translation = translations.employmentDetails.noLongerWorking;
+  }
+  return translation;
+};
+
+const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+  let translation = translations.employmentDetails.annual;
+  if (userCase.payInterval === PayInterval.MONTHLY) {
+    translation = translations.employmentDetails.monthly;
+  } else if (userCase.payInterval === PayInterval.WEEKLY) {
+    translation = translations.employmentDetails.weekly;
+  }
+  return translation;
+};
 
 export const getEmploymentDetails = (
   userCase: CaseWithId,
@@ -22,7 +49,7 @@ export const getEmploymentDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.pastEmployer,
+        text: translations.employmentDetails.no,
       },
       actions: {
         items: [
@@ -35,14 +62,14 @@ export const getEmploymentDetails = (
       },
     });
   } else {
-    if (!userCase.typeOfClaim.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+    if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       employmentDetails.push({
         key: {
           text: translations.employmentDetails.didYouWorkFor,
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.pastEmployer,
+          text: translations.employmentDetails.yes,
         },
         actions: {
           items: [
@@ -62,7 +89,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.isStillWorking,
+          text: getTranslationsForStillWorkingEnum(userCase, translations),
         },
         actions: {
           items: [
@@ -167,7 +194,10 @@ export const getEmploymentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            text: userCase.noticePeriodUnit,
+            text:
+              userCase.noticePeriodUnit === WeeksOrMonths.MONTHS
+                ? translations.employmentDetails.months
+                : translations.employmentDetails.weeks,
           },
           actions: {
             items: [
@@ -260,7 +290,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.payInterval,
+          text: getTranslationsForPayIntervalEnum(userCase, translations),
         },
         actions: {
           items: [
@@ -280,8 +310,8 @@ export const getEmploymentDetails = (
         value: {
           text:
             userCase?.claimantPensionContribution === YesOrNoOrNotSure.YES
-              ? userCase.claimantPensionContribution + ': ' + userCase.claimantPensionWeeklyContribution
-              : userCase.claimantPensionContribution,
+              ? translations.employmentDetails.yes + ': ' + userCase.claimantPensionWeeklyContribution
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [
@@ -301,8 +331,8 @@ export const getEmploymentDetails = (
         value: {
           text:
             userCase?.employeeBenefits === YesOrNo.YES
-              ? userCase.employeeBenefits + ': ' + userCase.benefitsCharCount
-              : userCase.employeeBenefits,
+              ? translations.employmentDetails.yes + ': ' + userCase.benefitsCharCount
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [

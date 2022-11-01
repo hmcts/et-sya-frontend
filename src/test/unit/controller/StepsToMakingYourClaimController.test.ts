@@ -71,6 +71,7 @@ describe('Steps to Making your claim Controller', () => {
     };
     const res = mockResponse();
     const req = mockRequest({});
+    req.url = '/testPageUrl?lng=cy';
     req.session.userCase.id = undefined;
     req.app = {} as Application;
     req.app.locals = {};
@@ -175,6 +176,7 @@ describe('Steps to Making your claim Controller', () => {
       workAddressPostcode: undefined,
       workAddressTown: undefined,
     });
+    expect(req.language).toEqual('cy');
   });
 
   it('should render page with all claim types', () => {

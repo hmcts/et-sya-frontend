@@ -68,7 +68,10 @@ export const getRespondentSection = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.claimantWorkAddressQuestion,
+        text:
+          userCase.claimantWorkAddressQuestion === YesOrNo.YES
+            ? translations.respondentDetails.YES
+            : translations.respondentDetails.NO,
       },
       actions: {
         items: [

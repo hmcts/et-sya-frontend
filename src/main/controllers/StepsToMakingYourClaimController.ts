@@ -125,6 +125,10 @@ export default class StepsToMakingYourClaimController {
       req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
     }
+    if (req.url?.includes(TranslationKeys.WELSH_URL_PARAMETER)) {
+      req.language = TranslationKeys.WELSH;
+      sections[3].links[0].url = setUrlLanguage(req, PageUrls.PCQ.toString());
+    }
     res.render(TranslationKeys.CLAIM_STEPS, {
       ...content,
       sections,
