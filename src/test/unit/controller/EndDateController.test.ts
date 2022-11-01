@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import EndDateController from '../../../main/controllers/EndDateController';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -11,13 +9,8 @@ describe('End date Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render end date page', () => {
-    const endDateController = new EndDateController(mockLogger);
+    const endDateController = new EndDateController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -33,7 +26,7 @@ describe('End date Controller', () => {
       'endDate-year': '2039',
     };
 
-    const controller = new EndDateController(mockLogger);
+    const controller = new EndDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -70,7 +63,7 @@ describe('End date Controller', () => {
       'endDate-year': '2000',
     };
 
-    const controller = new EndDateController(mockLogger);
+    const controller = new EndDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -107,7 +100,7 @@ describe('End date Controller', () => {
       'endDate-year': '2000',
     };
 
-    const controller = new EndDateController(mockLogger);
+    const controller = new EndDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -144,7 +137,7 @@ describe('End date Controller', () => {
       'endDate-year': '',
     };
 
-    const controller = new EndDateController(mockLogger);
+    const controller = new EndDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();

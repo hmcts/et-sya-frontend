@@ -22,7 +22,7 @@ export default class SubmittedCaseDocumentController {
       res.setHeader('Content-Type', mimeType);
       res.status(200).send(Buffer.from(document.data, 'binary'));
     } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err?.message, err);
+      logger.error(err.message);
       return res.redirect('/not-found');
     }
   }

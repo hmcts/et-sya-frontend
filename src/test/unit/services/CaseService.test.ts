@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from 'config';
-import FormData from 'form-data';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -35,19 +34,25 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const api = new CaseApi(mockedAxios);
 
-describe('Axios post to initiate case', () => {
+const mockFile = { buffer: Buffer.alloc(10, 1), originalname: 'a-new-file.txt' } as UploadedFile;
+const mockType = 'ET_EnglandWales';
+
+const caseData =
+  '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
+const mockUserDetails: UserDetails = {
+  id: '1234',
+  givenName: 'Bobby',
+  familyName: 'Ryan',
+  email: 'bobby@gmail.com',
+  accessToken: 'xxxx',
+  isCitizen: true,
+};
+
+const error = { message: 'error message' };
+
+describe('createCase', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
-    const mockUserDetails: UserDetails = {
-      id: '1234',
-      givenName: 'Bobby',
-      familyName: 'Ryan',
-      email: 'bobby@gmail.com',
-      accessToken: 'xxxx',
-      isCitizen: true,
-    };
-    const caseData =
-      '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
-    api.createCase(caseData, mockUserDetails);
+    await api.createCase(caseData, mockUserDetails);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.INITIATE_CASE_DRAFT,
@@ -78,7 +83,7 @@ describe('Axios post to initiate case', () => {
 describe('Retrieve individual case', () => {
   it('Should call java api for case id', async () => {
     const caseId = '12334578';
-    api.getUserCase(caseId);
+    await api.getUserCase(caseId);
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.GET_CASE,
       expect.objectContaining({
@@ -90,7 +95,7 @@ describe('Retrieve individual case', () => {
 
 describe('Axios get to retrieve draft cases', () => {
   it('should send get request to the correct api endpoint and return an array of draft cases', async () => {
-    api.getUserCases();
+    await api.getUserCases();
 
     expect(mockedAxios.get).toHaveBeenCalledWith('cases/user-cases');
   });
@@ -330,7 +335,7 @@ describe('submitCase', () => {
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     };
-    api.submitCase(caseItem);
+    await api.submitCase(caseItem);
     expect(mockedAxios.put).toHaveBeenCalledWith(
       JavaApiUrls.SUBMIT_CASE,
       expect.objectContaining(mockEt1DataModelUpdate)
@@ -340,16 +345,7 @@ describe('submitCase', () => {
 
 describe('Axios post to retrieve pdf', () => {
   it('should send post request to the correct api endpoint with the case id passed in the request body', async () => {
-    const mockUserDetails: UserDetails = {
-      id: '1234',
-      givenName: 'Bobby',
-      familyName: 'Ryan',
-      email: 'bobby@gmail.com',
-      accessToken: 'xxxx',
-      isCitizen: true,
-    };
-
-    api.downloadClaimPdf(mockUserDetails.id);
+    await api.downloadClaimPdf(mockUserDetails.id);
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       JavaApiUrls.DOWNLOAD_CLAIM_PDF,
@@ -362,12 +358,9 @@ describe('Axios post to retrieve pdf', () => {
       })
     );
   });
+
   describe('Axios post to upload document', () => {
     it('should send file to api endpoint', () => {
-      const mockFile = { buffer: '123', originalname: 'a-new-file.txt' } as unknown as UploadedFile;
-      const mockType = 'ET_EnglandWales';
-      const mockForm: FormData = new FormData();
-      mockForm.append('document_upload', mockFile.buffer, mockFile.filename);
       api.uploadDocument(mockFile, mockType);
       expect(mockedAxios.post).toHaveBeenCalled();
     });
@@ -385,5 +378,71 @@ describe('Axios post to retrieve pdf', () => {
       api.getDocumentDetails('docId');
       expect(mockedAxios.get).toHaveBeenCalled();
     });
+  });
+});
+
+describe('Rethrowing errors when axios requests fail', () => {
+  const caseItem = { id: 123 };
+
+  beforeAll(() => {
+    mockedAxios.get.mockRejectedValue(error);
+    mockedAxios.post.mockRejectedValue(error);
+    mockedAxios.put.mockRejectedValue(error);
+  });
+
+  afterAll(() => {
+    mockedAxios.get.mockReset();
+    mockedAxios.post.mockReset();
+    mockedAxios.put.mockReset();
+  });
+
+  it.each([
+    {
+      serviceMethod: api.createCase,
+      parameters: [caseData, mockUserDetails],
+      errorMessage: 'Error creating case: ' + error.message,
+    },
+    {
+      serviceMethod: api.getUserCases,
+      errorMessage: 'Error getting user cases: ' + error.message,
+    },
+    {
+      serviceMethod: api.downloadClaimPdf,
+      errorMessage: 'Error downloading claim pdf: ' + error.message,
+    },
+    {
+      serviceMethod: api.getCaseDocument,
+      errorMessage: 'Error fetching document: ' + error.message,
+    },
+    {
+      serviceMethod: api.getDocumentDetails,
+      errorMessage: 'Error fetching document details: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateDraftCase,
+      parameters: [caseItem],
+      errorMessage: 'Error updating draft case: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateSubmittedCase,
+      parameters: [caseItem],
+      errorMessage: 'Error updating submitted case: ' + error.message,
+    },
+    {
+      serviceMethod: api.getUserCase,
+      errorMessage: 'Error getting user case: ' + error.message,
+    },
+    {
+      serviceMethod: api.submitCase,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting case: ' + error.message,
+    },
+    {
+      serviceMethod: api.uploadDocument,
+      parameters: [mockFile, mockType],
+      errorMessage: 'Error uploading document: ' + error.message,
+    },
+  ])('should rethrow error if service method number $# fails', async ({ serviceMethod, parameters, errorMessage }) => {
+    await expect(serviceMethod.apply(this, parameters)).rejects.toThrow(errorMessage);
   });
 });

@@ -7,11 +7,11 @@ import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
 import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 
 import { getCaseApi } from './CaseService';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('CaseSelectionService');
 
 export const getUserApplications = (userCases: CaseWithId[]): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
@@ -83,7 +83,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
       return casesByLastModified.map(app => fromApiFormat(app));
     }
   } catch (err) {
-    logger.log(err);
+    logger.error(err.message);
     return [];
   }
 };
@@ -103,7 +103,7 @@ export const selectUserCase = async (req: AppRequest, res: Response, caseId: str
       return res.redirect(PageUrls.CLAIM_STEPS);
     }
   } catch (err) {
-    logger.log(err);
+    logger.error(err.message);
     return res.redirect(PageUrls.HOME);
   }
 };

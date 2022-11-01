@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import ClaimDetailsCheckController from '../../../main/controllers/ClaimDetailsCheckController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -12,13 +10,8 @@ describe('Test claim details check controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the task list check page', () => {
-    const controller = new ClaimDetailsCheckController(mockLogger);
+    const controller = new ClaimDetailsCheckController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -27,7 +20,7 @@ describe('Test claim details check controller', () => {
 
   it('should render the claim steps page', () => {
     const body = { claimDetailsCheck: YesOrNo.YES };
-    const controller = new ClaimDetailsCheckController(mockLogger);
+    const controller = new ClaimDetailsCheckController();
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);

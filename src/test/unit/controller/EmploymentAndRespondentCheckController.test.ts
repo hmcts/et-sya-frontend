@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import EmploymentAndRespondentCheckController from '../../../main/controllers/EmploymentAndRespondentCheckController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -12,13 +10,8 @@ describe('Test task List check controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the task list check page', () => {
-    const controller = new EmploymentAndRespondentCheckController(mockLogger);
+    const controller = new EmploymentAndRespondentCheckController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -30,7 +23,7 @@ describe('Test task List check controller', () => {
 
   it('should render the claim steps page', () => {
     const body = { employmentAndRespondentCheck: YesOrNo.YES };
-    const controller = new EmploymentAndRespondentCheckController(mockLogger);
+    const controller = new EmploymentAndRespondentCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -41,7 +34,7 @@ describe('Test task List check controller', () => {
   it('should render same page if nothing selected', () => {
     const errors = [{ propertyName: 'employmentAndRespondentCheck', errorType: 'required' }];
     const body = { employmentAndRespondentCheck: '' };
-    const controller = new EmploymentAndRespondentCheckController(mockLogger);
+    const controller = new EmploymentAndRespondentCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
