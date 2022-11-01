@@ -30,17 +30,23 @@
       {% endblock %}
     </div>
   </div>
+   {% set languageParam = "" %}
+  {% if "lng=cy" in currentUrl %}
+      {% set languageParam = "?lng=cy" %}
+      {% else %}
+      {% set languageParam = "?lng=en" %}
+    {% endif %}
   <div class="govuk-grid-row">
       <div class="govuk-button-group">
         {{ govukButton({
-          text: "Save and continue",
-          href: "/employment-respondent-task-check"
+          text: saveAndContinue,
+          href: "/employment-respondent-task-check" + languageParam
         }) }}
 
         {{ govukButton({
-          text: "Save as draft",
+          text: saveForLater,
           classes: "govuk-button--secondary",
-          href: "/your-claim-has-been-saved"
+          href: "/your-claim-has-been-saved" + languageParam
         }) }}
       </div>
     </div>
