@@ -15,6 +15,7 @@ import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
+import { setClaimSavedLanguage } from './LanguageHelper';
 import { handleReturnUrl } from './RouterHelpers';
 
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
@@ -110,7 +111,8 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
 
   if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
     req.session.errors = [];
-    return res.redirect(PageUrls.CLAIM_SAVED);
+    redirectUrl = setClaimSavedLanguage(req, PageUrls.CLAIM_SAVED);
+    return res.redirect(redirectUrl);
   }
   if (sessionErrors.length) {
     req.session.save(err => {
