@@ -110,7 +110,7 @@ describe('Test responds to /oauth2/callback', function () {
     //Then it should redirect to NEW_ACCOUNT_LANDING page
     idamCallbackHandler(req, res, next, serviceUrl);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING_ENGLISH);
   });
 
   test('Should redirect to Claimant applications page if it is a existing user', async () => {

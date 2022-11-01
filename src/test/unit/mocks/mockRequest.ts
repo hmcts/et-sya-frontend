@@ -38,7 +38,7 @@ export const mockRequest = ({
     } as CaseWithId,
     ...session,
     save: jest.fn(done => (done ? done() : true)),
-    lang: 'en',
+    lang: languages.ENGLISH,
     errors: undefined,
   } as unknown as AppSession;
   return req;
