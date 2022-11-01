@@ -12,6 +12,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('app');
@@ -125,6 +126,10 @@ export default class StepsToMakingYourClaimController {
     if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
       sections[1].links[0].url = PageUrls.STILL_WORKING;
+    }
+    if (req.url?.includes(TranslationKeys.WELSH_URL_PARAMETER)) {
+      req.language = TranslationKeys.WELSH;
+      sections[3].links[0].url = setUrlLanguage(req, PageUrls.PCQ.toString());
     }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,
