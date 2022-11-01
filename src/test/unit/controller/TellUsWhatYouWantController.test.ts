@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import TellUsWhatYouWantController from '../../../main/controllers/TellUsWhatYouWantController';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -11,13 +9,8 @@ describe('Tell Us What You Want Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the tell us what you want page', () => {
-    const controller = new TellUsWhatYouWantController(mockLogger);
+    const controller = new TellUsWhatYouWantController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
@@ -27,7 +20,7 @@ describe('Tell Us What You Want Controller', () => {
   describe('Correct validation', () => {
     it('should not require input (all fields are optional)', () => {
       const req = mockRequest({ body: {} });
-      new TellUsWhatYouWantController(mockLogger).post(req, mockResponse());
+      new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.errors).toHaveLength(0);
     });
@@ -38,7 +31,7 @@ describe('Tell Us What You Want Controller', () => {
           tellUsWhatYouWant: ['compensationOnly'],
         },
       });
-      new TellUsWhatYouWantController(mockLogger).post(req, mockResponse());
+      new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.userCase).toMatchObject({ tellUsWhatYouWant: ['compensationOnly'] });
     });

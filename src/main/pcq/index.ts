@@ -7,6 +7,7 @@ import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../definitions/appRequest';
 import { HTTPS_PROTOCOL, PageUrls } from '../definitions/constants';
+import { getLogger } from '../logger';
 
 import { createToken } from './createToken';
 
@@ -25,8 +26,7 @@ export interface PCQRequest {
   token?: string;
 }
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('pcq');
 
 const isEnabled = (): boolean => {
   return process.env.PCQ_ENABLED === 'true' || config.get('services.pcq.enabled') === 'true';

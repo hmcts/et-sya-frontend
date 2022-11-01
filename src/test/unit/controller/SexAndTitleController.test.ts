@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import SexAndTitleController from '../../../main/controllers/SexAndTitleController';
 import { Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -7,10 +5,8 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Sex and Title Controller', () => {
-  const mockLogger = {} as unknown as LoggerInstance;
-
   it('should render sex and preferred title page', () => {
-    const sexAndTitleController = new SexAndTitleController(mockLogger);
+    const sexAndTitleController = new SexAndTitleController();
     const response = mockResponse();
     const request = mockRequest({});
 
@@ -27,7 +23,7 @@ describe('Sex and Title Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new SexAndTitleController(mockLogger).post(req, res);
+      new SexAndTitleController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'numberError' }];
 
@@ -43,7 +39,7 @@ describe('Sex and Title Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      new SexAndTitleController(mockLogger).post(req, res);
+      new SexAndTitleController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'preferredTitle', errorType: 'lengthError' }];
 
@@ -57,7 +53,7 @@ describe('Sex and Title Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     };
-    const controller = new SexAndTitleController(mockLogger);
+    const controller = new SexAndTitleController();
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
@@ -76,7 +72,7 @@ describe('Sex and Title Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     };
-    const controller = new SexAndTitleController(mockLogger);
+    const controller = new SexAndTitleController();
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = undefined;
