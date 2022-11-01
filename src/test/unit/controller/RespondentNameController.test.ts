@@ -3,7 +3,7 @@ import { LoggerInstance } from 'winston';
 
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -96,7 +96,8 @@ describe('Respondent Name Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
-  it('should redirect to your claim has been saved page and save respondent name when a a name is entered and save as draft clicked', () => {
+
+  it('should redirect to your claim has been saved (English language) page when the current language is English, save respondent name when a name is entered and save as draft clicked', () => {
     const body = { respondentName: 'Globe Gym', saveForLater: true };
 
     const controller = new RespondentNameController(mockLogger);
@@ -104,23 +105,56 @@ describe('Respondent Name Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
+    req.url = PageUrls.RESPONDENT_NAME + languages.ENGLISH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
-  it('should redirect to your claim has been saved page when save as draft selected and no respondent name entered', () => {
+
+  it('should redirect to your claim has been saved (Welsh language) page when the current language is Welsh, save respondent name when a name is entered and save as draft clicked', () => {
+    const body = { respondentName: 'Globe Gym', saveForLater: true };
+
+    const controller = new RespondentNameController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+    req.url = PageUrls.RESPONDENT_NAME + languages.WELSH_URL_PARAMETER;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
+  });
+
+  it('should redirect to your claim has been saved (Welsh language) page when the current language is Welsh, save as draft selected and no respondent name entered', () => {
     const body = { saveForLater: true };
 
     const controller = new NoAcasNumberController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.url = PageUrls.RESPONDENT_NAME + languages.WELSH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
   });
+
+  it('should redirect to your claim has been saved (English language) page when the current language is English, save as draft selected and no respondent name entered', () => {
+    const body = { saveForLater: true };
+
+    const controller = new NoAcasNumberController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.url = PageUrls.RESPONDENT_NAME + languages.ENGLISH_URL_PARAMETER;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
+  });
+
   it('should redirect to undefined when save as draft not selected and no respondent name entered', () => {
     const body = { saveForLater: false };
 

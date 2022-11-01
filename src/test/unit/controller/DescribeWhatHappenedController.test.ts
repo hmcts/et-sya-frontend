@@ -3,7 +3,7 @@ import { LoggerInstance } from 'winston';
 import DescribeWhatHappenedController from '../../../main/controllers/DescribeWhatHappenedController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -64,11 +64,12 @@ describe('Describe-What-Happened Controller', () => {
 
     it('should assign userCase from summary text', async () => {
       const req = mockRequest({ body: { claimSummaryText: 'test' } });
+      req.url = PageUrls.DESCRIBE_WHAT_HAPPENED + languages.WELSH_URL_PARAMETER;
       const res = mockResponse();
 
       await new DescribeWhatHappenedController(mockLogger).post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT + languages.WELSH_URL_PARAMETER);
       expect(req.session.userCase).toMatchObject({
         claimSummaryText: 'test',
       });

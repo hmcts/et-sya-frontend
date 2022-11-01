@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import PlaceOfWorkController from '../../../main/controllers/PlaceOfWorkController';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest } from '../mocks/mockRequest';
@@ -65,16 +65,30 @@ describe('Place Of Work Controller Tests', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
     expect(req.session.errors).toEqual([]);
   });
-  it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
+  it('should redirect to your claim has been saved (Welsh language) page when the current language is Welsh, save as draft selected and nothing is entered', () => {
     const body = { saveForLater: true };
     const controller = new PlaceOfWorkController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.url = PageUrls.PLACE_OF_WORK + languages.WELSH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
+  });
+
+  it('should redirect to your claim has been saved (English language) page when the current language is English, save as draft selected and nothing is entered', () => {
+    const body = { saveForLater: true };
+    const controller = new PlaceOfWorkController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.url = PageUrls.PLACE_OF_WORK + languages.ENGLISH_URL_PARAMETER;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should add place of work to the session userCase', () => {

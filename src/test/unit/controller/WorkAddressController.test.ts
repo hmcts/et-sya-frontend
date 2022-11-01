@@ -3,7 +3,7 @@ import axios from 'axios';
 import WorkAddressController from '../../../main/controllers/WorkAddressController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
@@ -65,7 +65,7 @@ describe('Update Work Address Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/place-of-work');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
-  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
+  it('should redirect to your claim has been saved page (English language) page when the current language is English, save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { claimantWorkAddressQuestion: YesOrNo.NO, saveForLater: true };
 
     const controller = new WorkAddressController(mockLogger);
@@ -73,12 +73,14 @@ describe('Update Work Address Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
+    req.url = PageUrls.WORK_ADDRESS + languages.ENGLISH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
-  it('should redirect to your claim has been saved page when save as draft clicked and no answer selected', () => {
+
+  it('should redirect to your claim has been saved page (Welsh language) page when the current language is Welsh and save as draft clicked and no answer selected', () => {
     const body = { saveForLater: true };
 
     const controller = new WorkAddressController(mockLogger);
@@ -86,10 +88,26 @@ describe('Update Work Address Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
+    req.url = PageUrls.WORK_ADDRESS + languages.WELSH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
+  });
+
+  it('should redirect to your claim has been saved (English language) page when the current language is English, save as draft clicked and no answer selected', () => {
+    const body = { saveForLater: true };
+
+    const controller = new WorkAddressController(mockLogger);
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+    req.url = PageUrls.WORK_ADDRESS + languages.ENGLISH_URL_PARAMETER;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
   it('should redirect to undefined when save as draft not clicked and no answer selected', () => {
     const body = { saveForLater: false };

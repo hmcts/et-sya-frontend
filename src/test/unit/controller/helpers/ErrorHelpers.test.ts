@@ -6,7 +6,7 @@ import {
   handleSessionErrors,
 } from '../../../../main/controllers/helpers/ErrorHelpers';
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
-import { PageUrls } from '../../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../../main/definitions/constants';
 import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
@@ -250,7 +250,7 @@ describe('handleSessionErrors', () => {
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
     handleSessionErrors(req, res, form, '');
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should throw error, when session errors exists and unable to save session', () => {

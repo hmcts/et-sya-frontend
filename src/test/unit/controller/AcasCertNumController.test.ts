@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import AcasCertNumController from '../../../main/controllers/AcasCertNumController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
@@ -75,30 +75,46 @@ describe('Acas Cert Num Controller', () => {
     expect(req.session.userCase.respondents[0].acasCert).toEqual(undefined);
   });
 
-  it('should redirect to your claim has been saved page when save as draft selected', () => {
+  it('should redirect to your claim has been saved page (English language) when current language is English and save as draft selected', () => {
     const body = { acasCert: YesOrNo.NO, saveForLater: true };
 
     const controller = new AcasCertNumController(mockLogger);
 
     const req = mockRequest({ body });
+    req.url = PageUrls.ACAS_CERT_NUM + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
 
-  it('should redirect to your-claim-has-been-saved page when save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
+  it('should redirect to your-claim-has-been-saved page (English language) when current language is English, save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
+    const body = { acasCert: YesOrNo.YES, saveForLater: true };
+
+    const controller = new AcasCertNumController(mockLogger);
+
+    const req = mockRequest({ body });
+    req.url = PageUrls.ACAS_CERT_NUM + languages.ENGLISH_URL_PARAMETER;
+    const res = mockResponse();
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  it('should redirect to your-claim-has-been-saved (Welsh language) page when the current language is Welsh and save as draft selected, acasCert is Yes and No acas certificate number entered', () => {
     const body = { acasCert: YesOrNo.YES, saveForLater: true };
 
     const controller = new AcasCertNumController(mockLogger);
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.url = PageUrls.ACAS_CERT_NUM + languages.WELSH_URL_PARAMETER;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
   });
 
   it('should throw error, when session errors exists and unable to save session', () => {

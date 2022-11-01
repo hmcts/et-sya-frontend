@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import { NoAcasNumberReason } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockLogger } from '../mocks/mockLogger';
 import { mockRequest, mockRequestWithSaveException } from '../mocks/mockRequest';
@@ -44,31 +44,51 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
-  it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
+
+  it('should redirect to your claim has been saved page (English language) when current language is English, save respondent details when an answer is selected and save as draft clicked', () => {
     const body = { noAcasReason: NoAcasNumberReason.ANOTHER, saveForLater: true };
 
     const controller = new NoAcasNumberController(mockLogger);
 
     const req = mockRequest({ body });
+    req.url = PageUrls.NO_ACAS_NUMBER + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
-  it('should redirect to your claim has been saved page when save as draft clicked and no acas reason selected', () => {
+
+  it('should redirect to your claim has been saved page (Welsh language) when current language is Welsh, save respondent details when an answer is selected and save as draft clicked', () => {
+    const body = { noAcasReason: NoAcasNumberReason.ANOTHER, saveForLater: true };
+
+    const controller = new NoAcasNumberController(mockLogger);
+
+    const req = mockRequest({ body });
+    req.url = PageUrls.NO_ACAS_NUMBER + languages.WELSH_URL_PARAMETER;
+    const res = mockResponse();
+    req.session.userCase = userCaseWithRespondent;
+
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.WELSH_URL_PARAMETER);
+  });
+
+  it('should redirect to your claim has been saved page (English language) when current language is English, save as draft clicked and no acas reason selected', () => {
     const body = { saveForLater: true };
 
     const controller = new NoAcasNumberController(mockLogger);
 
     const req = mockRequest({ body });
+    req.url = PageUrls.NO_ACAS_NUMBER + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
   });
+
   it('should redirect to undefined when save as draft not clicked and no acas reason selected', () => {
     const body = { saveForLater: false };
 
@@ -81,6 +101,7 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
   });
+
   it('should redirect to undefined when save as draft not selected and no acas reason selected', () => {
     const body = {};
 
@@ -93,6 +114,7 @@ describe('No Acas number Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(undefined);
   });
+
   it('should throw error, when session errors exists and unable to save session', () => {
     const body = { saveForLater: false };
 
