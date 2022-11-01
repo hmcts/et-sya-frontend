@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { HearingPreference } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
@@ -33,6 +33,16 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       });
   });
 
+  test("should return the reasonable adjustments (Welsh language) page when the current language is Welsh and 'phone' and 'save and continue' are selected", async () => {
+    await request(mockApp({}))
+      .post(PageUrls.VIDEO_HEARINGS + languages.WELSH_URL_PARAMETER)
+      .send({ hearingPreferences: HearingPreference.PHONE })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.REASONABLE_ADJUSTMENTS + languages.WELSH_URL_PARAMETER);
+      });
+  });
+
   test("should return the reasonable adjustments page when 'no' and 'save and continue' are selected, and text is entered in the 'no' subfield", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)
@@ -60,6 +70,16 @@ describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+      });
+  });
+
+  test('should reload the page (Welsh language) when the current language is Welsh and nothing has been selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.VIDEO_HEARINGS + languages.WELSH_URL_PARAMETER)
+      .send({ hearingPreferences: undefined })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS + languages.WELSH_URL_PARAMETER);
       });
   });
 });

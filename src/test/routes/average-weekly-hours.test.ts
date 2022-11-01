@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
@@ -25,6 +25,15 @@ describe(`on POST ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.PAY);
+      });
+  });
+
+  test('should navigate to the pay before tax (Welsh language) page when current language is Welsh and save and continue button is clicked', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.AVERAGE_WEEKLY_HOURS + languages.WELSH_URL_PARAMETER)
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.PAY + languages.WELSH_URL_PARAMETER);
       });
   });
 });

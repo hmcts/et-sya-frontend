@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.BENEFITS}`, () => {
@@ -32,6 +32,22 @@ describe(`on POST ${PageUrls.BENEFITS}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.FIRST_RESPONDENT_NAME);
+      });
+  });
+
+  test('should navigate to the respondent name (Welsh language) when current language is Welsh and either working or notice and save and continue button is clicked', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE,
+        },
+      })
+    )
+      .post(PageUrls.BENEFITS + languages.WELSH_URL_PARAMETER)
+      .send({})
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.FIRST_RESPONDENT_NAME + languages.WELSH_URL_PARAMETER);
       });
   });
 });

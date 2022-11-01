@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
@@ -13,13 +13,23 @@ describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
 });
 
 describe(`on POST ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
-  test('should go to the types of claim page when the Yes radio button is selected', async () => {
+  test('should go to the types of claim page (English language) when current language is English and the Yes radio button is selected', async () => {
     await request(mockApp({}))
-      .post(PageUrls.ACAS_MULTIPLE_CLAIM)
+      .post(PageUrls.ACAS_MULTIPLE_CLAIM + languages.ENGLISH_URL_PARAMETER)
       .send({ acasMultiple: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM);
+        expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM + languages.ENGLISH_URL_PARAMETER);
+      });
+  });
+
+  test('should go to the types of claim page (Welsh language) when current language is Welsh and the Yes radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.ACAS_MULTIPLE_CLAIM + languages.WELSH_URL_PARAMETER)
+      .send({ acasMultiple: YesOrNo.YES })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.TYPE_OF_CLAIM + languages.WELSH_URL_PARAMETER);
       });
   });
 

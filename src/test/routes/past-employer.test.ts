@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.PAST_EMPLOYER}`, () => {
@@ -30,6 +30,16 @@ describe(`on POST ${PageUrls.PAST_EMPLOYER}`, () => {
       .expect(res => {
         expect(res.status).toEqual(302);
         expect(res.header['location']).toEqual(PageUrls.FIRST_RESPONDENT_NAME);
+      });
+  });
+
+  test('should reload the current (Welsh language) page when the current language is Welsh and the No radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.PAST_EMPLOYER + languages.WELSH_URL_PARAMETER)
+      .send({ pastEmployer: YesOrNo.NO })
+      .expect(res => {
+        expect(res.status).toEqual(302);
+        expect(res.header['location']).toEqual(PageUrls.FIRST_RESPONDENT_NAME + languages.WELSH_URL_PARAMETER);
       });
   });
 });

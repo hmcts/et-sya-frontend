@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 const pageUrl = '/respondent/1/acas-cert-num';
@@ -46,13 +46,13 @@ describe(`on POST ${PageUrls.ACAS_CERT_NUM}`, () => {
       });
   });
 
-  test('should navigage to your claim has been saved page when save as draft clicked', async () => {
+  test('should navigage to your claim has been saved page (English language) when current language is English and save as draft clicked', async () => {
     await request(mockApp({}))
       .post(pageUrl)
-      .send({ saveForLater: true })
+      .send({ saveForLater: true, session: { lang: languages.ENGLISH } })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_SAVED);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_SAVED + languages.ENGLISH_URL_PARAMETER);
       });
   });
 

@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
+import { LegacyUrls, PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
@@ -20,6 +20,16 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM);
+      });
+  });
+
+  test("should return the Single or Multiple claims (Welsh language) page when the current language is Welsh and (no) 'representing myself' is selected", async () => {
+    await request(mockApp({}))
+      .post(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER)
+      .send({ claimantRepresentedQuestion: YesOrNo.NO })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.SINGLE_OR_MULTIPLE_CLAIM + languages.WELSH_URL_PARAMETER);
       });
   });
 

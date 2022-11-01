@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking, YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.PENSION}`, () => {
@@ -44,6 +44,18 @@ describe(`on POST ${PageUrls.PENSION}`, () => {
       });
   });
 
+  test("should return the benefits (Welsh language) page when the current language is Welsh and 'no' and 'save and continue' are selected", async () => {
+    await request(mockApp({}))
+      .post(PageUrls.PENSION + languages.WELSH_URL_PARAMETER)
+      .send({
+        pension: YesOrNo.NO,
+      })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.BENEFITS + languages.WELSH_URL_PARAMETER);
+      });
+  });
+
   test('should return the benefits page when no radio buttons are selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.PENSION)
@@ -51,6 +63,16 @@ describe(`on POST ${PageUrls.PENSION}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.BENEFITS);
+      });
+  });
+
+  test('should return the benefits (Welsh language) page when the current language is Welsh and no radio buttons are selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.PENSION + languages.WELSH_URL_PARAMETER)
+      .send({ employmentDetailsPension: undefined })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.BENEFITS + languages.WELSH_URL_PARAMETER);
       });
   });
 });

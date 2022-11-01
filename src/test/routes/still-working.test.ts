@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.STILL_WORKING}`, () => {
@@ -20,6 +20,16 @@ describe(`on POST ${PageUrls.STILL_WORKING}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.JOB_TITLE);
+      });
+  });
+
+  test('should return the employment details - job title page (Welsh language) page when the current language is Welsh and Still working for them button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.STILL_WORKING + languages.WELSH_URL_PARAMETER)
+      .send({ isStillWorking: StillWorking.WORKING })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.JOB_TITLE + languages.WELSH_URL_PARAMETER);
       });
   });
   test('should return the employment details - job title page when notice period button is selected', async () => {

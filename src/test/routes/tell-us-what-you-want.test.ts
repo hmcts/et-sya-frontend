@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
 
@@ -71,6 +71,20 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         .expect(res => {
           expect(res.status).toStrictEqual(302);
           expect(res.header['location']).toStrictEqual(PageUrls.WHISTLEBLOWING_CLAIMS);
+        });
+    }
+  );
+
+  test(
+    'should navigate to the whistle blowing claims (Welsh language) page when the current language is Welsh, both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
+      'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING selected ' +
+      'and save and continue button is clicked',
+    async () => {
+      await request(mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING], [], []) }))
+        .post(PageUrls.TELL_US_WHAT_YOU_WANT + languages.WELSH_URL_PARAMETER)
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.WHISTLEBLOWING_CLAIMS + languages.WELSH_URL_PARAMETER);
         });
     }
   );

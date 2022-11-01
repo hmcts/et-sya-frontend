@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { CaseType } from '../../main/definitions/case';
-import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
+import { LegacyUrls, PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
@@ -20,6 +20,16 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ACAS_MULTIPLE_CLAIM);
+      });
+  });
+
+  test('should go to the multiple respondent check (Welsh language) page when the current language is Welsh and single is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM + languages.WELSH_URL_PARAMETER)
+      .send({ caseType: CaseType.SINGLE })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.ACAS_MULTIPLE_CLAIM + languages.WELSH_URL_PARAMETER);
       });
   });
 

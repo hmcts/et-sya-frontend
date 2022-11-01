@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
@@ -12,13 +12,23 @@ describe(`GET ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
 });
 
 describe(`POST ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
-  test('should go to the tell us what you want page', async () => {
+  test('should go to the tell us what you want (English language) page when current language is English', async () => {
     await request(mockApp({}))
-      .post(PageUrls.DESCRIBE_WHAT_HAPPENED)
+      .post(PageUrls.DESCRIBE_WHAT_HAPPENED + languages.ENGLISH_URL_PARAMETER)
       .send({ claimSummaryText: 'text' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT);
+        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT + languages.ENGLISH_URL_PARAMETER);
+      });
+  });
+
+  test('should go to the tell us what you want (Welsh language) page when current language is Welsh', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.DESCRIBE_WHAT_HAPPENED + languages.WELSH_URL_PARAMETER)
+      .send({ claimSummaryText: 'text' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT + languages.WELSH_URL_PARAMETER);
       });
   });
 });

@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.UPDATE_PREFERENCES}`, () => {
@@ -19,6 +19,16 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+      });
+  });
+
+  test('should go to the video hearing (Welsh language) page when the current language is Welsh and the Email radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.UPDATE_PREFERENCES + languages.WELSH_URL_PARAMETER)
+      .send({ claimantContactPreference: 'Email' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS + languages.WELSH_URL_PARAMETER);
       });
   });
 

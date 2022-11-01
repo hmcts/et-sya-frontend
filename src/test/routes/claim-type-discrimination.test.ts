@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
 
@@ -20,6 +20,18 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED.toString());
+      });
+  });
+
+  test('should navigate to the describe what happened (Welsh language) page when current language is Welsh and TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
+    await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) }))
+      .post(PageUrls.CLAIM_TYPE_DISCRIMINATION + languages.WELSH_URL_PARAMETER)
+      .send({ claimTypeDiscrimination: ['age'] })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(
+          PageUrls.DESCRIBE_WHAT_HAPPENED.toString() + languages.WELSH_URL_PARAMETER
+        );
       });
   });
 });

@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.END_DATE}`, () => {
@@ -19,6 +19,16 @@ describe(`on POST ${PageUrls.END_DATE}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_PERIOD);
+      });
+  });
+
+  test('should navigate to the notice period (Welsh language) page when the current language is Welsh and save and continue button is clicked', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.END_DATE + languages.WELSH_URL_PARAMETER)
+      .send({ 'endDate-day': '10', 'endDate-month': '10', 'endDate-year': '2020' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_PERIOD + languages.WELSH_URL_PARAMETER);
       });
   });
 });

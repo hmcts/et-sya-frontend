@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.CLAIM_TYPE_PAY}`, () => {
@@ -19,6 +19,16 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_PAY}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED);
+      });
+  });
+
+  test('should navigate to the tell us what you want (Welsh language) page when current language is Welsh and save and continue button is clicked', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.CLAIM_TYPE_PAY + languages.WELSH_URL_PARAMETER)
+      .send({ claimTypePay: ['holidayPay'] })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED + languages.WELSH_URL_PARAMETER);
       });
   });
 });

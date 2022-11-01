@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking, WeeksOrMonths } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.NOTICE_LENGTH}`, () => {
@@ -34,6 +34,24 @@ describe(`on POST ${PageUrls.NOTICE_LENGTH}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
+      });
+  });
+
+  test('should navigate to the average weekly hours (Welsh language) page when the current language is Welsh, a valid notice length is entered and save and continue button is clicked', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          isStillWorking: StillWorking.WORKING || StillWorking.NOTICE || StillWorking.NO_LONGER_WORKING,
+        },
+      })
+    )
+      .post(PageUrls.NOTICE_LENGTH + languages.WELSH_URL_PARAMETER)
+      .send({
+        noticePeriodLength: '2',
+      })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.AVERAGE_WEEKLY_HOURS + languages.WELSH_URL_PARAMETER);
       });
   });
 });

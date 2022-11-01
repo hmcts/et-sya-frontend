@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { Sex } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.SEX_AND_TITLE}`, () => {
@@ -20,6 +20,16 @@ describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);
+      });
+  });
+
+  test('should go to the address details (Welsh language) page when the current language is Welsh', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.SEX_AND_TITLE + languages.WELSH_URL_PARAMETER)
+      .send({ claimantSex: Sex.MALE, preferredTitle: 'Mr' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS + languages.WELSH_URL_PARAMETER);
       });
   });
 });

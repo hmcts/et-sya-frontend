@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 const pageUrl = '/respondent/1/work-address';
@@ -44,6 +44,27 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
       .expect(res => {
         expect(res.status).toEqual(302);
         expect(res.header['location']).toEqual('/respondent/1/acas-cert-num');
+      });
+  });
+
+  test('should load acas number page (Welsh language) page when the current language is Welsh and yes is selected', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'Name',
+            },
+          ],
+        },
+      })
+    )
+      .post(pageUrl + languages.WELSH_URL_PARAMETER)
+      .send({ claimantWorkAddressQuestion: YesOrNo.YES })
+      .expect(res => {
+        expect(res.status).toEqual(302);
+        expect(res.header['location']).toEqual('/respondent/1/acas-cert-num' + languages.WELSH_URL_PARAMETER);
       });
   });
 

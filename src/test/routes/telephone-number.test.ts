@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.TELEPHONE_NUMBER}`, () => {
@@ -22,6 +22,18 @@ describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
       .expect(res => {
         expect(res.status).equal(302);
         expect(res.header['location']).equal(PageUrls.UPDATE_PREFERENCES);
+      });
+  });
+
+  test('should go to update preferences (Welsh language) page when the current language is Welsh and phone number has been entered', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.TELEPHONE_NUMBER + languages.WELSH_URL_PARAMETER)
+      .send({
+        telNumber: '01234567890',
+      })
+      .expect(res => {
+        expect(res.status).equal(302);
+        expect(res.header['location']).equal(PageUrls.UPDATE_PREFERENCES + languages.WELSH_URL_PARAMETER);
       });
   });
 });

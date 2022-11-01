@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.NEW_JOB}`, () => {
@@ -20,6 +20,16 @@ describe(`on POST ${PageUrls.NEW_JOB} with Yes`, () => {
       .expect(res => {
         expect(res.status).toEqual(302);
         expect(res.header['location']).toEqual(PageUrls.NEW_JOB_START_DATE);
+      });
+  });
+
+  test('should return the new job (Welsh language) page when the current language is Welsh and Yes radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(`${PageUrls.NEW_JOB + languages.WELSH_URL_PARAMETER}`)
+      .send({ newJob: YesOrNo.YES })
+      .expect(res => {
+        expect(res.status).toEqual(302);
+        expect(res.header['location']).toEqual(PageUrls.NEW_JOB_START_DATE + languages.WELSH_URL_PARAMETER);
       });
   });
 });

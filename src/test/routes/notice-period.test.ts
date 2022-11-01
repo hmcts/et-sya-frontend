@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { StillWorking, YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
@@ -38,6 +38,16 @@ describe(`on POST ${PageUrls.NOTICE_PERIOD} with No`, () => {
       .expect(res => {
         expect(res.status).toEqual(302);
         expect(res.header['location']).toEqual(PageUrls.AVERAGE_WEEKLY_HOURS);
+      });
+  });
+
+  test('should return the Average Weekly Hours (Welsh language) page when the current language is Welsh and the No radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(`${PageUrls.NOTICE_PERIOD + languages.WELSH_URL_PARAMETER}`)
+      .send({ noticePeriod: YesOrNo.NO })
+      .expect(res => {
+        expect(res.status).toEqual(302);
+        expect(res.header['location']).toEqual(PageUrls.AVERAGE_WEEKLY_HOURS + languages.WELSH_URL_PARAMETER);
       });
   });
 });

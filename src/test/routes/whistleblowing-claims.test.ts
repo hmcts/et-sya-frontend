@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { YesOrNo } from '../../main/definitions/case';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.WHISTLEBLOWING_CLAIMS}`, () => {
@@ -20,6 +20,16 @@ describe(`on POST ${PageUrls.WHISTLEBLOWING_CLAIMS}`, () => {
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_DETAILS_CHECK);
+      });
+  });
+
+  test('should navigate to the claim details check (Welsh language) page when the current language is Welsh and save and continue button is clicked', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.WHISTLEBLOWING_CLAIMS + languages.WELSH_URL_PARAMETER)
+      .send({ whistleblowingClaim: YesOrNo.NO })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_DETAILS_CHECK + languages.WELSH_URL_PARAMETER);
       });
   });
 });
