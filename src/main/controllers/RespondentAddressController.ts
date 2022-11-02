@@ -7,6 +7,7 @@ import {
 } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -114,7 +115,11 @@ export default class RespondentAddressController {
       handleUpdateDraftCase(req, logger);
       return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
-      const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
+      const { userCase } = req.session;
+      const nextPage =
+        userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
+          ? PageUrls.ACAS_CERT_NUM
+          : PageUrls.WORK_ADDRESS;
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
       handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, logger);
