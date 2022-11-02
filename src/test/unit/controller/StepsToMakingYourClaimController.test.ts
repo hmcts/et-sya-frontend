@@ -141,6 +141,7 @@ describe('Steps to Making your claim Controller', () => {
       hearingPreferences: undefined,
       hearingAssistance: undefined,
       claimantContactPreference: undefined,
+      claimantContactLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
