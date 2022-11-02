@@ -84,7 +84,11 @@ export const idamCallbackHandler = async (
       err.name = RedisErrors.FAILED_TO_CONNECT;
       return next(err);
     }
-    return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    const redirectUrl =
+      req.session.lang === languages.WELSH
+        ? PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER
+        : PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(redirectUrl);
   } else {
     try {
       const caseData = await getPreloginCaseData(redisClient, guid);

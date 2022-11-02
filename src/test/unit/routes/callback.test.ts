@@ -113,13 +113,14 @@ describe('Test responds to /oauth2/callback', function () {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING_ENGLISH);
   });
 
-  test('Should redirect to Claimant applications page if it is a existing user', async () => {
+  test('Should redirect to Claimant applications page (English language) if the current language is English and it is an existing user', async () => {
     //Given that the state param is 'existingUser'
     req.query = { code: 'testCode', state: existingUser };
+    (req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER);
 
     //Then it should redirect to CLAIM_STEPS page
     idamCallbackHandler(req, res, next, serviceUrl);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER);
   });
 });
