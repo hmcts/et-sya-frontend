@@ -6,10 +6,9 @@ import * as path from 'path';
 import config from 'config';
 
 import { app } from './app';
+import { getLogger } from './logger';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('server');
+const logger = getLogger('server');
 
 const port: number = parseInt(process.env.PORT, 10) || config.get('port');
 
@@ -26,6 +25,6 @@ if (app.locals.ENV === 'development') {
   });
 } else {
   app.listen(port, () => {
-    logger.info(`Application started: http://localhost:${port}`);
+    logger.info(`Application started on port ${port}`);
   });
 }

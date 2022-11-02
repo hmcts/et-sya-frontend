@@ -1,11 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
+const logger = getLogger('DownloadClaimController');
 
 export default class DownloadClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -15,7 +14,7 @@ export default class DownloadClaimController {
       res.setHeader('Content-Disposition', 'attachment; filename=submitted-claim.pdf');
       res.status(200).send(Buffer.from(pdf.data, 'binary'));
     } catch (error) {
-      logger.info(error);
+      logger.info(error.message);
       res.redirect('not-found');
     }
   }

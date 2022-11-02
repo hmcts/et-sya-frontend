@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -8,12 +7,15 @@ import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
+import { getLogger } from '../logger';
 import { cachePreloginCaseData } from '../services/CacheService';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('TypeOfClaimController');
 
 export default class TypeOfClaimController {
   private readonly form: Form;
@@ -84,7 +86,7 @@ export default class TypeOfClaimController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.typeOfClaimFormContent.fields);
   }
 
@@ -130,7 +132,7 @@ export default class TypeOfClaimController {
 
     // Only called when returning from CYA page
     if (req.session.userCase.id) {
-      handleUpdateDraftCase(req, this.logger);
+      handleUpdateDraftCase(req, logger);
     }
   };
 

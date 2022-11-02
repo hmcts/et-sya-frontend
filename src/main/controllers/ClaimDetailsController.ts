@@ -6,15 +6,14 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DocumentDetail, TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('ClaimDetailsController');
+const logger = getLogger('ClaimDetailsController');
 
 export default class ClaimDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -42,7 +41,7 @@ export default class ClaimDetailsController {
         req.session.user?.accessToken
       );
     } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
+      logger.error(err.message);
     }
 
     // Because these translations don't have the CYA 'change' translation, they don't show the change action.
@@ -87,7 +86,7 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
   try {
     await getDocumentDetails(et1DocumentDetails, accessToken);
   } catch (err) {
-    logger.error(err.response?.status, err.response?.data, err);
+    logger.error(err.message);
   }
 
   return et1DocumentDetails;

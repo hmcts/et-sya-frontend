@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -8,10 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypeDiscrimination, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('ClaimTypeDiscriminationController');
 
 export default class ClaimTypeDiscriminationController {
   private readonly form: Form;
@@ -78,7 +80,7 @@ export default class ClaimTypeDiscriminationController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.claimTypeDiscriminationFormContent.fields);
   }
 
@@ -89,7 +91,7 @@ export default class ClaimTypeDiscriminationController {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
     handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

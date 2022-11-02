@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -7,11 +6,14 @@ import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('NoticeTypeController');
 
 export default class NoticeTypeController {
   private readonly form: Form;
@@ -46,7 +48,7 @@ export default class NoticeTypeController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
 
@@ -62,7 +64,7 @@ export default class NoticeTypeController {
     }
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -3,13 +3,12 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
+import { getLogger } from '../logger';
 
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('CitizenHubDocumentController');
+const logger = getLogger('CitizenHubDocumentController');
 
 export default class CitizenHubDocumentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -44,7 +43,7 @@ export default class CitizenHubDocumentController {
     try {
       await getDocumentDetails(documents, req.session.user?.accessToken);
     } catch (err) {
-      logger.error(err.response?.status, err.response?.data, err);
+      logger.error(err.message);
       return res.redirect('/not-found');
     }
 

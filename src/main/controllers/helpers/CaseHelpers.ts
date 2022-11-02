@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
@@ -10,6 +9,7 @@ import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo
 import { mvpLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
+import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { resetValuesIfNeeded } from './FormHelpers';
@@ -35,7 +35,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
+export const handleUpdateDraftCase = (req: AppRequest, logger: Logger): void => {
   if (!req.session.errors?.length) {
     getCaseApi(req.session.user?.accessToken)
       .updateDraftCase(req.session.userCase)
@@ -45,19 +45,19 @@ export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): 
         req.session.save();
       })
       .catch(error => {
-        logger.error(error);
+        logger.error(error.message);
       });
   }
 };
 
-export const handleUpdateSubmittedCase = (req: AppRequest, logger: LoggerInstance): void => {
+export const handleUpdateSubmittedCase = (req: AppRequest, logger: Logger): void => {
   getCaseApi(req.session.user?.accessToken)
     .updateSubmittedCase(req.session.userCase)
     .then(() => {
       logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
     })
     .catch(error => {
-      logger.error(error);
+      logger.error(error.message);
     });
 };
 
@@ -110,7 +110,7 @@ export const isPostcodeMVPLocation = (postCode: string): boolean => {
 export const handleUploadDocument = async (
   req: AppRequest,
   file: UploadedFile,
-  logger: LoggerInstance
+  logger: Logger
 ): Promise<AxiosResponse<DocumentUploadResponse>> => {
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(

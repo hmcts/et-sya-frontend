@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -8,10 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { ClaimTypePay } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('ClaimTypePayController');
 
 export default class ClaimTypePayController {
   private readonly form: Form;
@@ -59,14 +61,14 @@ export default class ClaimTypePayController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.claimTypePayFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.DESCRIBE_WHAT_HAPPENED);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

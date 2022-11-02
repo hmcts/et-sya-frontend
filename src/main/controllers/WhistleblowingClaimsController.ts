@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isContentBetween3And100Chars } from '../components/form/validator';
@@ -9,10 +8,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('WhistleblowingClaimsController');
 
 export default class WhistleblowingClaimsController {
   private readonly form: Form;
@@ -50,14 +52,14 @@ export default class WhistleblowingClaimsController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.whistleblowingClaimsFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
-    handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), this.logger);
+    handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
