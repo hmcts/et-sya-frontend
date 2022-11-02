@@ -95,7 +95,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
         });
       } finally {
         activateCursorButtons();
-        window.open(PageUrls.CLAIM_SAVED, '_self');
+        // window.open(PageUrls.CLAIM_SAVED, '_self');
       }
     }
   };
