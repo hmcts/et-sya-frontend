@@ -47,7 +47,7 @@ describe('How would you like to be updated about your claim page', () => {
 
   it('should display radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(inputs);
-    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
+    expect(radioButtons.length).equal(2, `only ${radioButtons.length} found`);
   });
 
   it('should display inputs with valid labels', () => {

@@ -227,6 +227,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
+          claimant_contact_language: EnglishOrWelsh.ENGLISH,
           claimant_phone_number: '075',
           claimant_addressUK: {
             AddressLine1: 'address 1',
@@ -431,6 +432,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingPreferences: undefined,
       hearingAssistance: undefined,
       claimantContactPreference: undefined,
+      claimantContactLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       claimSummaryText: undefined,
