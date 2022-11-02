@@ -1,9 +1,16 @@
-import {CaseWithId, PayInterval, StillWorking, WeeksOrMonths, YesOrNo, YesOrNoOrNotSure} from '../../definitions/case';
-import {InterceptPaths, PageUrls} from '../../definitions/constants';
-import {TypesOfClaim} from '../../definitions/definition';
-import {AnyRecord} from '../../definitions/util-types';
+import {
+  CaseWithId,
+  PayInterval,
+  StillWorking,
+  WeeksOrMonths,
+  YesOrNo,
+  YesOrNoOrNotSure,
+} from '../../definitions/case';
+import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { TypesOfClaim } from '../../definitions/definition';
+import { AnyRecord } from '../../definitions/util-types';
 
-let getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+const getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
   let translation = translations.employmentDetails.working;
   if (userCase.isStillWorking === StillWorking.NOTICE) {
     translation = translations.employmentDetails.notice;
@@ -13,7 +20,7 @@ let getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, transla
   return translation;
 };
 
-let getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translations: AnyRecord) {
   let translation = translations.employmentDetails.annual;
   if (userCase.payInterval === PayInterval.MONTHLY) {
     translation = translations.employmentDetails.monthly;
@@ -23,18 +30,11 @@ let getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, translat
   return translation;
 };
 
-
 export const getEmploymentDetails = (
   userCase: CaseWithId,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   const employmentDetails = [];
-  employmentDetails.push({
-    key: {
-      text: translations.employmentDetails.header,
-      classes: 'govuk-heading-m',
-    },
-  });
 
   if (userCase.pastEmployer === YesOrNo.NO) {
     employmentDetails.push({
@@ -83,7 +83,7 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: getTranslationsForStillWorkingEnum(userCase,translations),
+          text: getTranslationsForStillWorkingEnum(userCase, translations),
         },
         actions: {
           items: [
@@ -188,8 +188,10 @@ export const getEmploymentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            text: userCase.noticePeriodUnit === WeeksOrMonths.MONTHS ?
-              translations.employmentDetails.months : translations.employmentDetails.weeks
+            text:
+              userCase.noticePeriodUnit === WeeksOrMonths.MONTHS
+                ? translations.employmentDetails.months
+                : translations.employmentDetails.weeks,
           },
           actions: {
             items: [
@@ -368,10 +370,10 @@ export const getEmploymentDetails = (
                 userCase.newJobStartDate.day === undefined
                   ? ''
                   : userCase.newJobStartDate.day +
-                  '-' +
-                  userCase.newJobStartDate.month +
-                  '-' +
-                  userCase.newJobStartDate.year,
+                    '-' +
+                    userCase.newJobStartDate.month +
+                    '-' +
+                    userCase.newJobStartDate.year,
             },
             actions: {
               items: [

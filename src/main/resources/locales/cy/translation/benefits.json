@@ -1,5 +1,7 @@
 {
   "title": "Welsh Translation required",
+  "workingOrNoticeLegend": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
+  "noLongerWorkingLegend": "Welsh Translation required",
   "h1": {
     "workingOrNotice": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
     "noLongerWorking": "Welsh Translation required"

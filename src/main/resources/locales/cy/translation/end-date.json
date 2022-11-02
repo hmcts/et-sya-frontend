@@ -1,6 +1,7 @@
 {
   "title": "Dyddiad terfyn y gyflogaeth",
   "h1": "Dyddiad terfyn y gyflogaeth",
+  "legend": "Welsh Translation required",
   "p1": "Dywedwch wrthym pryd wnaethoch chi roi’r gorau i weithio gyda’r atebydd.",
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
