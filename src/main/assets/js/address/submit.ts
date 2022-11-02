@@ -1,4 +1,5 @@
 import { isValidUKPostcode } from '../../../components/form/address_validator';
+import { PageUrls } from '../../../definitions/constants';
 import locales from '../../../resources/locales/en/translation/enter-address.json';
 import { getById, hidden } from '../selectors';
 import { focusToGovUKErrorDiv } from '../set-focus';
@@ -94,7 +95,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
         });
       } finally {
         activateCursorButtons();
-        // window.open(PageUrls.CLAIM_SAVED, '_self');
+        window.open(PageUrls.CLAIM_SAVED, '_self');
       }
     }
   };
