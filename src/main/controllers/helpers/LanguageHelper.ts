@@ -59,3 +59,13 @@ export const setClaimSavedLanguage = (req: AppRequest, redirectUrl: string): str
   }
   return redirectUrl;
 };
+
+export const setCheckAnswersLanguage = (req: AppRequest, sessionUrl: string): string => {
+  if (req.session.lang === languages.WELSH || (req.url as string)?.includes(languages.WELSH_URL_PARAMETER)) {
+    sessionUrl += languages.WELSH_URL_PARAMETER;
+  }
+  if (req.session.lang === languages.ENGLISH || (req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER)) {
+    sessionUrl += languages.ENGLISH_URL_PARAMETER;
+  }
+  return sessionUrl;
+};

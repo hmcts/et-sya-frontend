@@ -13,7 +13,9 @@ describe('Change Details Controller', () => {
       redirect: 'respondent',
     };
     controller.get(request, response);
-    expect(request.session.returnUrl).toStrictEqual(PageUrls.RESPONDENT_DETAILS_CHECK);
+    expect(request.session.returnUrl).toStrictEqual(
+      PageUrls.RESPONDENT_DETAILS_CHECK + languages.ENGLISH_URL_PARAMETER
+    );
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_ADDRESS + languages.ENGLISH_URL_PARAMETER);
   });
 
@@ -26,7 +28,7 @@ describe('Change Details Controller', () => {
       redirect: 'answers',
     };
     controller.get(request, response);
-    expect(request.session.returnUrl).toStrictEqual(PageUrls.CHECK_ANSWERS);
+    expect(request.session.returnUrl).toStrictEqual(PageUrls.CHECK_ANSWERS + languages.ENGLISH_URL_PARAMETER);
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS + languages.ENGLISH_URL_PARAMETER);
   });
 });
