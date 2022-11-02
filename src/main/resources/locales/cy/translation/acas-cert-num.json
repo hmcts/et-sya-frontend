@@ -1,8 +1,9 @@
 {
-  "title": "Acas certificate number - Requires Update",
-  "acasCertNum": "Enter an Acas early conciliation certificate number - Requires Update",
+  "title": "Welsh Translation required",
+  "acasCertNum": "Welsh Translation required",
   "h1": "A oes gennych rif tystysgrif ACAS ar gyfer ",
-  "hintText": "Nearly everyone should have this number before they fill in a claim form. You can find it on your Acas certificate. Read more about the - Requires Update",
+  "legend": "Welsh Translation required ",
+  "hintText": "Welsh Translation required",
   "linkText": "Acas early conciliation service(opens in new tab) - Requires Update",
   "yes": "Oes",
   "no": "Nac oes",

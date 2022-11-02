@@ -1,6 +1,8 @@
 {
   "title": "Date of birth details - Welsh translation required",
-  "h1": "Beth yw eich dyddiad geni?",
+  "h1": "Dyddiad geni?",
+  "legend": "Beth yw eich dyddiad geni?",
+  "p1": "Welsh translation required",
   "hint": "Fe ddefnyddir y manylion hyn i symud eich hawliad yn ei flaen.<br><br>Er enghraifft, 23 04 1981",
   "errors": {
     "dobDate": {

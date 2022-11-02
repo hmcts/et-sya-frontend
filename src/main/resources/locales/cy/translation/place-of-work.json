@@ -5,6 +5,7 @@
   "manualAddress": "Welsh Translation required",
   "cannotFindAddress": "Welsh Translation required",
   "findAddress": "Welsh Translation required",
+  "postcodeErrorText": "Welsh Translation required",
   "errors": {
     "addressPostcode": {
       "invalid": "Welsh Translation required",

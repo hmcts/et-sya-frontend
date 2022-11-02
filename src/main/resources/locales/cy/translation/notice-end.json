@@ -2,6 +2,7 @@
   "title": "Welsh Translation required",
   "label": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
   "h1": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "legend": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
   "p1": "Dywedwch wrthym pryd fyddych yn rhoi’r gorau i weithio gyda’r atebydd.",
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {

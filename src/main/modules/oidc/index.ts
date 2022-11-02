@@ -48,7 +48,7 @@ export class Oidc {
         // it is assigned the value of res.locals.isLoggedIn
         res.locals.isLoggedIn = true;
         next();
-      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST) {
+      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);

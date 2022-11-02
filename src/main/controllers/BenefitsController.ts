@@ -6,7 +6,7 @@ import { areBenefitsValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
@@ -22,8 +22,9 @@ export default class BenefitsController {
         id: 'employee-benefits',
         type: 'radios',
         classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.label,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
@@ -34,8 +35,8 @@ export default class BenefitsController {
                 name: 'benefits-char-count',
                 type: 'charactercount',
                 label: (l: AnyRecord): string => l.hint,
-                labelHidden: true,
-                hint: (l: AnyRecord): string => l.hint,
+                labelHidden: false,
+                labelAsHint: true,
                 maxlength: 2500,
                 attributes: { maxLength: 2500 },
                 validator: areBenefitsValid,
@@ -80,6 +81,11 @@ export default class BenefitsController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
     const employmentStatus = req.session.userCase.isStillWorking;
+    const employeeBenefits = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    employeeBenefits.label =
+      employmentStatus === 'Working' || employmentStatus === 'Notice'
+        ? l => l.workingOrNoticeLegend
+        : l => l.noLongerWorkingLegend;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.BENEFITS, {
       ...content,

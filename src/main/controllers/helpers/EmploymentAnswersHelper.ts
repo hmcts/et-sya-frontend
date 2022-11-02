@@ -35,12 +35,6 @@ export const getEmploymentDetails = (
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   const employmentDetails = [];
-  employmentDetails.push({
-    key: {
-      text: translations.employmentDetails.header,
-      classes: 'govuk-heading-m',
-    },
-  });
 
   if (userCase.pastEmployer === YesOrNo.NO) {
     employmentDetails.push({
