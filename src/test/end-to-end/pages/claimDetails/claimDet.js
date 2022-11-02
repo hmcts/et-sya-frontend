@@ -172,4 +172,5 @@ module.exports = async function (allClaimDetailsPages) {
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
+  I.wait(5);
 };
