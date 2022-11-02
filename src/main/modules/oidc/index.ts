@@ -93,9 +93,9 @@ export const idamCallbackHandler = async (
         logger.info(`Created Draft Case - ${response.data.id}`);
         req.session.userCase = fromApiFormat(response.data);
         const redirectUrl =
-          req.session.lang === languages.ENGLISH
-            ? PageUrls.NEW_ACCOUNT_LANDING_ENGLISH
-            : PageUrls.NEW_ACCOUNT_LANDING_WELSH;
+          req.session.lang === languages.WELSH
+            ? PageUrls.NEW_ACCOUNT_LANDING_WELSH
+            : PageUrls.NEW_ACCOUNT_LANDING_ENGLISH;
         return res.redirect(redirectUrl);
       }
       throw new Error('Draft Case was not created successfully');
