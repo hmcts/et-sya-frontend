@@ -1,17 +1,18 @@
 {
-  "title": "Address details - Update Required",
+  "title": "Welsh Translation required",
   "pageHeader": "Beth yw eich cyfeiriad cyswllt neu gyfeiriad cartref?",
-  "manualAddress": "I live outside the UK - REQUIRES UPDATE",
+  "manualAddress": "Welsh Translation required",
   "pageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
   "enterPostcode": "Rhowch god post yn y DU",
-  "addressLine1": "Address line 1 - REQUIRES UPDATE",
-  "addressLine2": "Address line 2 - REQUIRES UPDATE",
+  "addressLine1": "Welsh Translation required",
+  "addressLine2": "Welsh Translation required",
   "town": "Tref neu ddinas",
   "county": "Sir neu dalaith (dewisol)",
   "country": "Gwlad",
   "postcode": "Cod post neu god zip",
   "enterAddressManually": "Nid wyf yn byw yn y DU",
   "cannotFindAddress": "Ni allaf ddod o hyd i fy nghyfeiriad yn y rhestr",
+  "postcodeErrorText": "Welsh Translation required",
   "errors": {
     "address1": {
       "required": "Enter the first line of your contact or home address - up to 100 characters - REQUIRES UPDATE",

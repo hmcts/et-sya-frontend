@@ -1,6 +1,7 @@
 {
   "title": "Welsh Translation required",
-  "h1": "Pa fath o hawliad yn ymwneud â thâl ydych chi’n ei wneud?",
+  "h1": "Welsh Translation required",
+  "legend": "Pa fath o hawliad yn ymwneud â thâl ydych chi’n ei wneud?",
   "detailsSummary": "Beth yw hawliadau yn ymwneud â thâl?",
   "detailsText": "Mae’n erbyn y gyfraith i gyflogwr ddal tâl yn ôl ar ôl i weithiwr wneud gwaith iddynt. Gall hyn hefyd gynnwys didynnu tâl yn anghyfreithlon.",
   "arrears": { "title": "Welsh Translation required", "checkbox": "Ôl-daliadau (tâl sy’n ddyledus i chi)" },
