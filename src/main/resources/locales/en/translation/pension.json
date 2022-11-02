@@ -1,7 +1,6 @@
 {
   "title": "Pension contributions",
   "h1": "Did the respondent make any contributions to your pension? (optional)",
-  "legend": "Did the respondent make any contributions to your pension? (optional)",
   "label": "Did the respondent make any contributions to your pension?",
   "pensionContributions": "Enter their pension contributions - worked out weekly",
   "errors": {

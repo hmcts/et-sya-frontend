@@ -10,7 +10,7 @@ const buttonClass = 'govuk-button';
 const radioClass = 'govuk-radios__item';
 const expectedRadioLabel1 = 'I’m claiming on my own';
 const expectedRadioLabel2 = 'I’m claiming with another person or other people';
-const expectedTitle = 'Claiming on your own or with others';
+const expectedTitle = 'Are you making a claim on your own or with others?';
 const expectedP1 =
   'You can make a claim to an employment tribunal on your own, where you are the only claimant. You can also make a claim alongside another person, or a group of people who have been treated in the same way.';
 const expectedP2 =

@@ -5,7 +5,6 @@
   "selectAddress": "Select an address",
   "selectDefault": "Several addresses found...",
   "cannotFindAddress": "I cannot find the address in the list",
-  "postcodeErrorText": "Enter a postcode. For example, SW1 1AA",
   "findAddress": "Find address",
   "pageText": "You should be able to find the address on your payslips, contract or other official documents.",
   "insetText": "This should be the same respondent address given to Acas.",

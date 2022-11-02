@@ -14,6 +14,12 @@ export const getRespondentSection = (
   respondentSections.push(
     {
       key: {
+        text: translations.respondentDetails.header + index + translations.respondentDetails.details,
+        classes: 'govuk-heading-m',
+      },
+    },
+    {
+      key: {
         text: translations.respondentDetails.respondentName,
         classes: 'govuk-!-font-weight-regular-m',
       },
@@ -152,6 +158,12 @@ export const getRespondentDetailsSection = (
 ): unknown => {
   const respondentSections = [];
   respondentSections.push(
+    {
+      key: {
+        text: translations.subTitle + index,
+        classes: 'govuk-heading-m',
+      },
+    },
     {
       key: {
         text: translations.name,

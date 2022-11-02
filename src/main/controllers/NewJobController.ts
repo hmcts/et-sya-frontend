@@ -22,8 +22,7 @@ export default class NewJobController {
         id: 'new-job',
         type: 'radios',
         label: (l: AnyRecord): string => l.h1,
-        labelHidden: false,
-        labelSize: 'xl',
+        labelHidden: true,
         classes: 'govuk-radios--inline',
         values: [
           {

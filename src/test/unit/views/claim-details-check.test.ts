@@ -13,7 +13,7 @@ const claimDetailsCheckJsonRaw = fs.readFileSync(
 );
 const claimDetailsCheckJson = JSON.parse(claimDetailsCheckJsonRaw);
 
-const titleClass = 'govuk-fieldset__legend';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle = claimDetailsCheckJson.heading;
 const radios = 'govuk-radios__item';
 const expectedRadioLabel1 = claimDetailsCheckJson.yes;

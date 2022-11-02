@@ -29,9 +29,8 @@ export default class DescribeWhatHappenedController {
     fields: {
       claimSummaryText: {
         id: 'claim-summary-text',
-        label: l => l.legend,
-        labelHidden: false,
-        labelSize: 'l',
+        label: l => l.textInputHint,
+        labelHidden: true,
         type: 'charactercount',
         classes: 'govuk-label',
         hint: l => l.textInputHint,
@@ -40,7 +39,7 @@ export default class DescribeWhatHappenedController {
       },
       claimSummaryFileName: {
         id: 'claim-summary-file',
-        label: l => l.fileUpload.label,
+        label: l => l.fileUpload.linkText,
         labelHidden: true,
         type: 'upload',
         classes: 'govuk-label',

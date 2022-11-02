@@ -6,7 +6,6 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
-import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
@@ -19,11 +18,8 @@ export default class ClaimDetailsCheckController {
       claimDetailsCheck: {
         ...DefaultRadioFormFields,
         id: 'claim-details-check',
-        label: (l: AnyRecord): string => l.heading,
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
-        hint: (l: AnyRecord): string => l.p,
+        label: 'Have you completed this section?',
+        labelHidden: true,
         classes: 'govuk-radios',
       },
     },

@@ -5,7 +5,6 @@
   "manualAddress": "I worked outside the UK",
   "cannotFindAddress": "I cannot find the address in the list",
   "findAddress": "Find address",
-  "postcodeErrorText": "Enter a postcode. For example, SW1 1AA",
   "errors": {
     "addressPostcode": {
       "invalid": "Enter a valid postcode. For example, SW1 1AA",

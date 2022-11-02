@@ -21,10 +21,8 @@ export default class StillWorkingController {
         classes: 'govuk-radios',
         id: 'still-working',
         type: 'radios',
-        label: (l: AnyRecord): string => l.legend,
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
+        label: (l: AnyRecord): string => l.label,
+        labelHidden: true,
         values: [
           {
             name: 'working',
