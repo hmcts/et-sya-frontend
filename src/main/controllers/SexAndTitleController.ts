@@ -22,7 +22,7 @@ export default class SexAndTitleController {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'sex',
         type: 'radios',
-        labelSize: 'm',
+        labelSize: 's',
         label: (l: AnyRecord): string => l.sex,
         values: [
           {
@@ -44,7 +44,7 @@ export default class SexAndTitleController {
         type: 'text',
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord) => l.preferredTitle,
-        labelSize: 'm',
+        labelSize: 's',
         attributes: { maxLength: 20 },
         validator: validateTitlePreference,
       },

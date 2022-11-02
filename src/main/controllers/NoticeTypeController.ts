@@ -5,7 +5,7 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields, FormInput } from '../definitions/form';
+import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
@@ -21,9 +21,8 @@ export default class NoticeTypeController {
         id: 'notice-type',
         type: 'radios',
         classes: 'govuk-radios--inline',
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
+        label: (l: AnyRecord): string => l.labelHidden,
+        labelHidden: true,
         values: [
           {
             label: (l: AnyRecord): string => l.weeks,
@@ -69,11 +68,6 @@ export default class NoticeTypeController {
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
     const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const noticePeriodUnit = Object.entries(this.form.getFormFields())[0][1] as FormInput;
-    noticePeriodUnit.label =
-      employmentStatus === 'Working' || employmentStatus === 'Notice'
-        ? l => l.workingHeader
-        : l => l.noLongerWorkingHeader;
     res.render(TranslationKeys.NOTICE_TYPE, {
       ...content,
       employmentStatus,

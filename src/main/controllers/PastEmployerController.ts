@@ -21,9 +21,7 @@ export default class PastEmployerController {
       pastEmployer: {
         ...DefaultRadioFormFields,
         label: (l: AnyRecord): string => l.heading,
-        labelHidden: false,
-        labelSize: 'xl',
-        isPageHeading: true,
+        labelHidden: true,
         id: 'past-employer',
         classes: 'govuk-radios--inline',
       },

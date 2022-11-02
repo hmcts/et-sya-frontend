@@ -1,9 +1,7 @@
 {
   "title": "Date of birth details",
-  "h1": "Date of birth",
-  "legend": "What is your date of birth?",
-  "p1": "These details will be used to help progress your claim.",
-  "hint": "For example, 23 04 1981",
+  "h1": "What is your date of birth?",
+  "hint": "These details will be used to help progress your claim.<br><br>For example, 23 04 1981",
   "errors": {
     "dobDate": {
       "dayRequired": "Enter a day for your date of birth. For example, 23",

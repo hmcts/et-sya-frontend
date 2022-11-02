@@ -36,7 +36,6 @@ export interface FormOptions {
   label?: Label;
   labelHidden?: boolean;
   labelSize?: string | null;
-  labelAsHint?: boolean;
   isPageHeading?: boolean | null;
   hideError?: boolean;
   values: FormInput[];
@@ -51,8 +50,6 @@ export interface FormInput {
   name?: string;
   label?: Label;
   labelHidden?: boolean;
-  labelSize?: string | null;
-  labelAsHint?: boolean;
   divider?: boolean;
   exclusive?: boolean;
   hint?: Label;

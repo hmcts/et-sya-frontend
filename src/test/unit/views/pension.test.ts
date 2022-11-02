@@ -13,7 +13,7 @@ const pensionJsonRaw = fs.readFileSync(
 );
 const pensionJson = JSON.parse(pensionJsonRaw);
 
-const titleClass = 'govuk-fieldset__legend';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle = pensionJson.h1;
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-input--width-5';

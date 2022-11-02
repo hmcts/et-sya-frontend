@@ -1,7 +1,5 @@
 {
   "title": "Employee benefits",
-  "workingOrNoticeLegend": "Do you or did you receive any employee benefits? (optional)",
-  "noLongerWorkingLegend": "Did you receive any employee benefits? (optional)",
   "h1": {
     "workingOrNotice": "Do or did you receive any employee benefits? (optional)",
     "noLongerWorking": "Did you receive any employee benefits? (optional)"

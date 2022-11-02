@@ -1,7 +1,6 @@
 {
   "title": "Employment end date",
   "h1": "Employment end date",
-  "legend": "When did your employment end?",
   "p1": "Tell us when you finished with the respondent.",
   "hint": "For example, 27 3 2007",
   "errors": {

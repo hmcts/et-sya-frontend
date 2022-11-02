@@ -5,7 +5,7 @@ import { NoAcasNumberReason } from '../../../main/definitions/case';
 import { mockApp } from '../mocks/mockApp';
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitle = 'Reason for not having a certificate number';
+const expectedTitle = 'Why do you not have an Acas number?';
 const radios = 'govuk-radios__item';
 const expectedRadioLabel1 = NoAcasNumberReason.ANOTHER;
 const expectedRadioLabel2 = NoAcasNumberReason.NO_POWER;

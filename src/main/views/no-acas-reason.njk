@@ -14,11 +14,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-      <p class="govuk-body"> {{ hint }}
-        <a href=\'https://www.acas.org.uk/contact\' class="govuk-link" rel="noreferrer noopener" target="_blank">
-          {{linkText}}
-        </a>
-      </p>
+
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
