@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -7,10 +6,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('TellUsWhatYouWantController');
 
 export default class TellUsWhatYouWantController {
   private readonly form: Form;
@@ -54,7 +56,7 @@ export default class TellUsWhatYouWantController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.tellUsWhatYouWantFormContent.fields);
   }
 
@@ -69,7 +71,7 @@ export default class TellUsWhatYouWantController {
     } else {
       handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     }
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {

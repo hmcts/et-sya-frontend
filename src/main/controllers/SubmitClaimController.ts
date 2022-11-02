@@ -3,10 +3,10 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('SubmitCaseController');
 
 export default class SubmitCaseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -16,7 +16,7 @@ export default class SubmitCaseController {
       req.session.userCase = fromApiFormat(submittedClaim.data);
       req.session.errors = [];
     } catch (error) {
-      logger.info(`Case failed to submit with error - ${error}`);
+      logger.info(error.message);
       req.session.errors = [{ errorType: 'api', propertyName: 'hiddenErrorField' }];
       return res.redirect(PageUrls.CHECK_ANSWERS);
     }

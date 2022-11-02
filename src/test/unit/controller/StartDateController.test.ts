@@ -1,15 +1,8 @@
-import axios from 'axios';
-import { LoggerInstance } from 'winston';
-
 import StartDateController from '../../../main/controllers/StartDateController';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Start date Controller', () => {
   const t = {
@@ -17,13 +10,8 @@ describe('Start date Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render start date page', () => {
-    const startDateController = new StartDateController(mockLogger);
+    const startDateController = new StartDateController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -56,7 +44,7 @@ describe('Start date Controller', () => {
       'startDate-year': '2000',
     };
 
-    const controller = new StartDateController(mockLogger);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -91,7 +79,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.WORKING,
     };
 
-    const controller = new StartDateController(mockLogger);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -126,7 +114,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NOTICE,
     };
 
-    const controller = new StartDateController(mockLogger);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -161,7 +149,7 @@ describe('Start date Controller', () => {
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     };
 
-    const controller = new StartDateController(mockLogger);
+    const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
@@ -183,20 +171,5 @@ describe('Start date Controller', () => {
     });
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
-  });
-
-  it('should run logger in catch block', async () => {
-    const body = {
-      'startDate-day': '11',
-      'startDate-month': '11',
-      'startDate-year': '2000',
-    };
-    const controller = new StartDateController(mockLogger);
-    const request = mockRequest({ body });
-    const response = mockResponse();
-
-    await controller.post(request, response);
-
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

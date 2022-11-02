@@ -227,6 +227,7 @@ describe('handle update draft case', () => {
     expect(req.session.userCase).toBeDefined();
   });
 });
+
 describe('handle update submitted case', () => {
   it('should successfully save case', async () => {
     caseApi.updateSubmittedCase = jest.fn().mockResolvedValueOnce(
@@ -244,14 +245,18 @@ describe('handle update submitted case', () => {
     await new Promise(nextTick);
     expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case id: testUserCaseId');
   });
+
   it('should catch failure when updating case', async () => {
-    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce('test error');
+    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     handleUpdateSubmittedCase(req, mockLogger);
     await new Promise(nextTick);
+
     expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });
+
 describe('handle file upload', () => {
   it('should succesfully handle file upload', async () => {
     caseApi.uploadDocument = jest.fn().mockResolvedValueOnce(

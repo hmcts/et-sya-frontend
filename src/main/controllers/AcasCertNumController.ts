@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
@@ -8,12 +7,15 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('AcasCertNumController');
 
 export default class AcasCertNumController {
   private readonly form: Form;
@@ -59,13 +61,13 @@ export default class AcasCertNumController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.acasCertNumContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCaseForRespondent(req, this.form);
-    handleUpdateDraftCase(req, this.logger);
+    handleUpdateDraftCase(req, logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {

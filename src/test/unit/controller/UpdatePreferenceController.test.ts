@@ -1,5 +1,3 @@
-import { LoggerInstance } from 'winston';
-
 import UpdatePreferenceController from '../../../main/controllers/UpdatePreferenceController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -12,13 +10,8 @@ describe('Update Preference Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the Update Preference page', () => {
-    const controller = new UpdatePreferenceController(mockLogger);
+    const controller = new UpdatePreferenceController();
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
@@ -30,7 +23,7 @@ describe('Update Preference Controller', () => {
     const errors = [{ propertyName: 'claimantContactPreference', errorType: 'required' }];
     const body = { claimantContactPreference: '' };
 
-    const controller = new UpdatePreferenceController(mockLogger);
+    const controller = new UpdatePreferenceController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
@@ -43,7 +36,7 @@ describe('Update Preference Controller', () => {
   it('should add the update preference form value to the userCase', () => {
     const body = { claimantContactPreference: 'Email' };
 
-    const controller = new UpdatePreferenceController(mockLogger);
+    const controller = new UpdatePreferenceController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
