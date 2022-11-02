@@ -1,7 +1,8 @@
 {
   "title": "My own claim or representative",
-  "h1": "Are you making the claim for yourself, or representing someone else?",
+  "h1": "Claiming on your own or on behalf of someone else",
   "p1": "A representative is someone who can act on your behalf to complete the claim, write to the employment tribunal or present your case at a hearing.",
+  "legend": "Are you making the claim for yourself, or representing someone else?",
   "detailsSummary1": "Who can act as a representative?",
   "detailsText1": {
     "p1": "Free representation can include:",

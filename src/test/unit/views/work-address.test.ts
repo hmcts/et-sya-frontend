@@ -3,7 +3,7 @@ import request from 'supertest';
 
 import { mockApp } from '../mocks/mockApp';
 
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-fieldset__legend--xl';
 const expectedTitle = 'Did you work at 1 The street?';
 const hintClass = 'govuk-hint';
 const expectedHint =

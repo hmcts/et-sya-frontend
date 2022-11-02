@@ -6,7 +6,7 @@ import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
@@ -24,6 +24,9 @@ export default class AcasCertNumController {
         classes: 'govuk-radios',
         id: 'acasCert',
         type: 'radios',
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         values: [
           {
             name: 'acasCertNum',
@@ -35,6 +38,7 @@ export default class AcasCertNumController {
                 name: 'acasCertNum',
                 type: 'text',
                 label: (l: AnyRecord): string => l.acasCertNum,
+                labelAsHint: true,
                 classes: 'govuk-textarea',
                 attributes: { maxLength: 13 },
               },
@@ -94,7 +98,8 @@ export default class AcasCertNumController {
       [TranslationKeys.COMMON, TranslationKeys.ACAS_CERT_NUM],
       respondentIndex
     );
-
+    const acasCert = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    acasCert.label = (l: AnyRecord): string => l.legend + currentRespondentName + '?';
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_CERT_NUM, {
       ...content,

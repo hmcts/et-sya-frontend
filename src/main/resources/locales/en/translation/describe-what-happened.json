@@ -1,6 +1,7 @@
 {
   "title": "Summarise what happened to you",
-  "h1": "Describe what happened to you",
+  "h1": "Describe your claim",
+  "legend": "Describe what happened to you",
   "p1": "This is your opportunity to explain why you are making a claim to an employment tribunal.",
   "p2": "It’s important you focus on setting out what happened to you and explain, as far as you can, why you think what happened was unlawful.",
   "p3": "Your claim will be sent to the respondents who will have a chance to reply through the tribunal.",
