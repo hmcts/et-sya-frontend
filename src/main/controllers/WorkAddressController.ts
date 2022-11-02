@@ -5,7 +5,7 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -20,6 +20,10 @@ export default class WorkAddressController {
   private readonly workAddressFormContent: FormContent = {
     fields: {
       claimantWorkAddressQuestion: {
+        label: (l: AnyRecord): string => l.legend,
+        labelSize: 'xl',
+        labelHidden: false,
+        isPageHeading: true,
         ...DefaultInlineRadioFormFields,
         hint: (l: AnyRecord): string => l.hintText,
         id: 'work-address',
@@ -56,6 +60,8 @@ export default class WorkAddressController {
   public get = (req: AppRequest, res: Response): void => {
     const respondentIndex = getRespondentIndex(req);
     const addressLine = req.session.userCase.respondents[respondentIndex].respondentAddress1;
+    const didYouWorkQuestion = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    didYouWorkQuestion.label = (l: AnyRecord): string => l.legend + addressLine + '?';
     const content = getPageContent(req, this.workAddressFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.WORK_ADDRESS,

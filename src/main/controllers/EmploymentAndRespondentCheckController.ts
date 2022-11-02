@@ -6,6 +6,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
+import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
@@ -17,8 +18,11 @@ export default class EmploymentAndRespondentCheckController {
     fields: {
       employmentAndRespondentCheck: {
         ...DefaultRadioFormFields,
-        label: 'Have you completed this section?',
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'xl',
+        isPageHeading: true,
+        hint: (l: AnyRecord): string => l.hint,
         id: 'tasklist-check',
         classes: 'govuk-radios',
       },

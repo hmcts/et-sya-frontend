@@ -1,10 +1,10 @@
-import {CaseWithId, EmailOrPost, HearingPreference, Sex, YesOrNo} from '../../definitions/case';
-import {InterceptPaths, PageUrls} from '../../definitions/constants';
-import {AnyRecord} from '../../definitions/util-types';
+import { CaseWithId, EmailOrPost, HearingPreference, Sex, YesOrNo } from '../../definitions/case';
+import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { AnyRecord } from '../../definitions/util-types';
 
-import {answersAddressFormatter} from './PageContentHelpers';
+import { answersAddressFormatter } from './PageContentHelpers';
 
-let getTranslationsForSexEnum = function (userCase: CaseWithId, translations: AnyRecord) {
+const getTranslationsForSexEnum = function (userCase: CaseWithId, translations: AnyRecord) {
   let translation = translations.personalDetails.preferNotToSay;
   if (userCase.claimantSex === Sex.MALE) {
     translation = translations.personalDetails.male;
@@ -14,8 +14,8 @@ let getTranslationsForSexEnum = function (userCase: CaseWithId, translations: An
   return translation;
 };
 
-let getTranslationsForHearingPreferences = function (userCase: CaseWithId, translations: AnyRecord) {
-  let hearingPreferences: string[] = [];
+const getTranslationsForHearingPreferences = function (userCase: CaseWithId, translations: AnyRecord) {
+  const hearingPreferences: string[] = [];
   if (userCase.hearingPreferences !== undefined) {
     userCase.hearingPreferences.forEach(function (item) {
       if (item === HearingPreference.VIDEO) {
@@ -37,12 +37,6 @@ export const getYourDetails = (
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
-    {
-      key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-heading-m',
-      },
-    },
     {
       key: {
         text: translations.personalDetails.dob,
@@ -150,8 +144,10 @@ export const getYourDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.claimantContactPreference === EmailOrPost.EMAIL
-          ? translations.personalDetails.email : translations.personalDetails.post,
+        text:
+          userCase.claimantContactPreference === EmailOrPost.EMAIL
+            ? translations.personalDetails.email
+            : translations.personalDetails.post,
       },
       actions: {
         items: [

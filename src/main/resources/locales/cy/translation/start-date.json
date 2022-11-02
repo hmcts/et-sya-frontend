@@ -1,8 +1,9 @@
 {
   "title": "Dyddiad cychwyn y gyflogaeth",
   "label": "Dyddiad cychwyn y gyflogaeth",
+  "legend": "Welsh Translation required",
   "h1": "Dyddiad cychwyn y gyflogaeth",
-  "p1": "Dywedwch wrthym pryd wnaethoch chi gychwyn gweithio iddynt. - REQUIRES UPDATE",
+  "p1": "Welsh Translation required",
   "p2": "Os nad ydych yn gwybod yr union ddyddiad, yna nodwch eich amcangyfrif gorau.",
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
