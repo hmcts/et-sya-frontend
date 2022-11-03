@@ -32,7 +32,7 @@
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
     "hint": "<p>You can only upload 1 document.</p><p>If you want to upload an email, download and convert from your email client first. Most email clients will give the option of downloading as pdf or PostScript.</p><p>Upload a file</p>",
-    "hintExisting": "<b><p>You can only upload 1 document.</p><p>You have previously uploaded: {{filename}}</p></b>"
+    "hintExisting": "<p>You can only upload 1 document.</p><p>If you want to upload an email, download and convert from your email client first. Most email clients will give the option of downloading as pdf or PostScript.</p><b><p>You have previously uploaded: {{filename}}</p></b>"
   },
   "acceptedFormats": {
     "label": "Accepted formats",
