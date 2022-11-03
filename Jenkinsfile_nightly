@@ -15,7 +15,7 @@ def product = "et"
 def component = "sya"
 
 def secrets = [
-    'et-aat': [
+    'et-${env}': [
         secret('test-username', 'TEST_CASE_USERNAME'),
         secret('test-password', 'TEST_CASE_PASSWORD')
     ]

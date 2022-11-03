@@ -1,0 +1,47 @@
+#!groovy
+@Library(value="Infrastructure", changelog=false) _
+
+properties([
+  parameters([
+    string(name: 'PRODUCT_NAME', defaultValue: 'et', description: ''),
+    string(name: 'APP', defaultValue: 'et-sya-frontend', description: ''),
+    string(name: 'TYPE', defaultValue: 'nodejs', description: ''),
+    string(name: 'ENVIRONMENT', defaultValue: 'sandbox', description: 'Environment where code should be build and deployed'),
+    choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod\nhmctsdemo', description: 'Azure subscriptions available to build in')
+  ]),
+  [$class: 'GithubProjectProperty', projectUrlStr: 'github.com/hmcts/et-sya-frontend'],
+  pipelineTriggers([[$class: 'GitHubPushTrigger']])
+])
+
+def secrets = [
+    'et-${env}': [
+        secret('test-username', 'TEST_CASE_USERNAME'),
+        secret('test-password', 'TEST_CASE_PASSWORD')
+    ]
+]
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [ $class: 'AzureKeyVaultSecret',
+      secretType: 'Secret',
+      name: secretName,
+      version: '',
+      envVariable: envVar
+    ]
+}
+
+withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
+    enableSlackNotifications('#et-builds')
+
+    loadVaultSecrets(secrets)
+
+    after('functional:preview') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
+    after('functional:demo') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+
+    after('functional:aat') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/site/serenity/**/*'
+    }
+}
