@@ -125,6 +125,37 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
   }
 };
 
+export const handleSessionErrorsWithoutRedirect = (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  redirectUrl: string
+): string => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  const sessionErrors = getSessionErrors(req, form, formData);
+
+  req.session.errors = sessionErrors;
+
+  const { saveForLater } = req.body;
+  const requiredErrExists = sessionErrors.some(err => err.errorType === 'required');
+
+  if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
+    req.session.errors = [];
+    return PageUrls.CLAIM_SAVED;
+  }
+  if (sessionErrors.length) {
+    req.session.save(err => {
+      if (err) {
+        throw err;
+      }
+      return req.url;
+    });
+  } else {
+    const nextPage = handleReturnUrl(req, redirectUrl);
+    return nextPage;
+  }
+};
+
 export const getCustomStartDateError = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError => {
   const dob = req.session.userCase.dobDate;
   const startDate = formData.startDate;

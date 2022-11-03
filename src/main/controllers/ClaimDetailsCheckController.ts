@@ -9,7 +9,7 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { AnyRecord } from '../definitions/util-types';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handleSessionErrorsWithoutRedirect } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class ClaimDetailsCheckController {
@@ -37,8 +37,13 @@ export default class ClaimDetailsCheckController {
 
   public post = (req: AppRequest, res: Response): void => {
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
-    handleUpdateDraftCase(req, this.logger);
+    // handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
+    // handleUpdateDraftCase(req, this.logger);
+    const returnURL = handleSessionErrorsWithoutRedirect(req, res, this.form, PageUrls.CLAIM_STEPS);
+    if (returnURL !== req.url && returnURL !== PageUrls.CLAIM_SAVED) {
+      handleUpdateDraftCase(req, this.logger);
+    }
+    res.redirect(returnURL);
   };
 
   public get = (req: AppRequest, res: Response): void => {
