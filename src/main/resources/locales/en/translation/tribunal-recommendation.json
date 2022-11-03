@@ -1,7 +1,6 @@
 {
   "title": "Recommendation request",
-  "h1": "Your tribunal recommendation",
-  "legend": "What tribunal recommendation would you like to make? (optional)",
+  "h1": "What tribunal recommendation would you like to make? (optional)",
   "detailsSummaryRecom": "What is a tribunal recommendation?",
   "detailsTextRecom": "If your employer is found to have discriminated against you, a tribunal can make a recommendation that the respondent take specific steps to reduce the effect of the discrimination on you",
   "hint": "Tell us what action you’d like a tribunal to recommend your respondents take to reduce the impact of any discrimination which has occurred.",

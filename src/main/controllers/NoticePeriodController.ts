@@ -22,9 +22,8 @@ export default class NoticePeriodController {
       noticePeriod: {
         id: 'notice-period',
         type: 'radios',
-        label: (l: AnyRecord): string => l.legend,
-        labelSize: 'xl',
-        labelHidden: false,
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
         classes: 'govuk-radios--inline',
         values: [
           {

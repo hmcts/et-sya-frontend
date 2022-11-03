@@ -14,7 +14,7 @@ const acasJson = JSON.parse(acasJsonRaw);
 
 const respondentName = 'Globo Gym';
 const titleClass = 'govuk-heading-xl';
-const expectedTitle: string = acasJson.h1;
+const expectedTitle: string = acasJson.h1 + respondentName;
 
 let htmlRes: Document;
 describe('Do you have an Acas cert num Page', () => {

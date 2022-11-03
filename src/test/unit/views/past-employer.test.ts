@@ -13,7 +13,7 @@ const updatePreferenceJsonRaw = fs.readFileSync(
 const updatePreferenceJson = JSON.parse(updatePreferenceJsonRaw);
 
 const PAGE_URL = '/past-employer';
-const titleClass = 'govuk-fieldset__legend--xl';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle = updatePreferenceJson.heading;
 const buttonClass = 'govuk-button';
 const inputs = 'govuk-radios';

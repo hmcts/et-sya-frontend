@@ -19,7 +19,7 @@ export class Helmet {
 
   public enableFor(app: express.Express): void {
     // include default helmet functions
-    app.use(helmet({ crossOriginEmbedderPolicy: false, crossOriginResourcePolicy: false }));
+    app.use(helmet());
 
     this.setContentSecurityPolicy(app, this.formActionUrls);
     this.setReferrerPolicy(app, this.config.referrerPolicy);

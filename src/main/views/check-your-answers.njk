@@ -32,9 +32,9 @@
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
-      <h2 class="govuk-summary-list__key govuk-heading-m">
+      <dt class="govuk-summary-list__key govuk-heading-m">
           {{ applicationDetails.header }}
-      </h2>
+      </dt>
     </div>
     <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
@@ -54,19 +54,13 @@
     </dd>
   </div>
   </dl>
-  <h2 class="govuk-summary-list__key govuk-heading-m">
-    {{ subTitleYourDetails }}
-  </h2>
-  <hr/>
+
   {{
     govukSummaryList({
       rows: yourDetails
     })
   }}
-   <h2 class="govuk-summary-list__key govuk-heading-m">
-      {{ subTitleEmploymentDetails }}
-    </h2>
-    <hr/>
+
   {{
     govukSummaryList({
       rows: employmentSection
@@ -74,10 +68,6 @@
   }}
 
   {% for respondent in respondents %}
-    <h2 class="govuk-summary-list__key govuk-heading-m">
-      {{ respondentTitle }} {{loop.index}} {{ details }}
-    </h2>
-    <hr/>
     {{
       govukSummaryList({
         rows: getRespondentSection(userCase, respondent, loop.index, translations)
@@ -87,9 +77,9 @@
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
-      <h2 class="govuk-summary-list__key govuk-heading-m">
+      <dt class="govuk-summary-list__key govuk-heading-m">
           {{ claimDetails.header }}
-      </h2>
+      </dt>
     </div>
     {% if userCase.claimTypeDiscrimination %}
       <div class="govuk-summary-list__row">

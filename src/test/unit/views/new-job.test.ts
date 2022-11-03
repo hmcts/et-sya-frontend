@@ -13,7 +13,7 @@ const newJobJsonRaw = fs.readFileSync(
 );
 const newJobJson = JSON.parse(newJobJsonRaw);
 
-const titleClass = 'govuk-fieldset__legend';
+const titleClass = 'govuk-heading-xl';
 const expectedTitle = newJobJson.h1;
 const buttonClass = 'govuk-button';
 const radios = 'govuk-radios';

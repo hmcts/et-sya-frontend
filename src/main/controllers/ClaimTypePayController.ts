@@ -21,9 +21,8 @@ export default class ClaimTypePayController {
     fields: {
       claimTypePay: {
         id: 'claimTypePay',
-        label: l => l.legend,
-        labelHidden: false,
-        labelSize: 'l',
+        label: l => l.h1,
+        labelHidden: true,
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,

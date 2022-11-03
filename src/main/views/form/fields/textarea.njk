@@ -5,7 +5,7 @@
   name: fieldName,
   label: {
     text: getContent(field.label),
-    classes: "hidden" if field.labelHidden else ("govuk-hint" if field.labelAsHint else labelClasses)
+    classes: "hidden" if field.labelHidden else labelClasses
   },
   hint: {
     html: getContent(field.hint)

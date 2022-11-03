@@ -1,11 +1,9 @@
 {
   "title": "Is this section completed?",
   "heading": "Have you completed this section?",
-  "legend": "Have you completed this section?",
   "yes": "Yes, I've completed this section",
   "no": "No, I'll come back to it later",
   "p": "You can change your answers later.",
-  "hint": "You can change your answers later.",
   "errors": {
     "personalDetailsCheck": {
       "required": "Tell us if you have completed this section"

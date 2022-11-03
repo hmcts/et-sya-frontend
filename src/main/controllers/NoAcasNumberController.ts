@@ -24,9 +24,13 @@ export default class NoAcasNumberController {
         classes: 'govuk-radios',
         id: 'no-acas-reason',
         type: 'radios',
-        label: (l: AnyRecord): string => l.legend,
-        labelHidden: false,
-        labelSize: 'xl',
+        label: (l: AnyRecord): string => l.h1,
+        labelHidden: true,
+        hint: (l: AnyRecord): string =>
+          l.hint +
+          ' <a href=\'https://www.acas.org.uk/contact\' class="govuk-link" rel="noreferrer noopener" target="_blank">' +
+          l.linkText +
+          '</a>',
         values: [
           {
             name: 'another',

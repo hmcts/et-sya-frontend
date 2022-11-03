@@ -15,10 +15,8 @@
   {% endblock %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
+        <h2 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h2>
             {% for respondent in respondents %}
-            <h2 class="govuk-heading-m">{{ subTitle }} {{loop.index}}</h2>
-            <hr/>
               {{ govukSummaryList({
                 rows: getRespondentDetailsSection(respondent, loop.index, translations)
               })
