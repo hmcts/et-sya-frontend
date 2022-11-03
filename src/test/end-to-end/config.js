@@ -15,4 +15,9 @@ module.exports = {
     waitForTimeout: 20000,
     smartWait: 20000,
   },
+  plugins: {
+    retryFailedStep: {
+      enabled: true,
+    },
+  },
 };

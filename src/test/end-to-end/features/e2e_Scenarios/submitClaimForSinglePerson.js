@@ -31,9 +31,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-})
-  .tag('@RET-BAT')
-  .retry(2);
+}).tag('@RET-BAT');
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
@@ -51,9 +49,7 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await submittingClaim(I, false);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-})
-  .tag('@RET-BAT')
-  .retry(2);
+}).tag('@RET-BAT');
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality CrossBrowser', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
@@ -71,6 +67,4 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality Cro
   await submittingClaim(I, false);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-})
-  .tag('@RET-BAT')
-  .retry(2);
+}).tag('@RET-BAT');
