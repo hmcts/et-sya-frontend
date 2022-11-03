@@ -31,7 +31,7 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await submittingClaim(I);
   await checkYourAnswers(I);
   await claimSubmitted(I);
-}).tag('@smoke');
+}).tag('@RET-BAT');
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality', async ({ I }) => {
   await commonFlow.createSingleMyselfCase();
