@@ -1,6 +1,7 @@
 import ReasonableAdjustmentsController from '../../../main/controllers/ReasonableAdjustmentsController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Reasonable Adjustments Controller', () => {
@@ -38,12 +39,12 @@ describe('Reasonable Adjustments Controller', () => {
       reasonableAdjustments: 'Yes',
       reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new ReasonableAdjustmentsController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

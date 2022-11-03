@@ -12,6 +12,7 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentNameController');
 
@@ -43,14 +44,15 @@ export default class RespondentNameController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCaseForRespondent(req, this.form);
     handleUpdateDraftCase(req, logger);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      returnNextPage(req, res, PageUrls.CLAIM_SAVED);
     } else {
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-      handleSessionErrors(req, res, this.form, redirectUrl);
+      returnNextPage(req, res, redirectUrl);
     }
   };
 

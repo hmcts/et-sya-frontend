@@ -1,7 +1,8 @@
 import SexAndTitleController from '../../../main/controllers/SexAndTitleController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Sex and Title Controller', () => {
@@ -53,10 +54,10 @@ describe('Sex and Title Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
     const controller = new SexAndTitleController();
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 
@@ -72,10 +73,10 @@ describe('Sex and Title Controller', () => {
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
     const controller = new SexAndTitleController();
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

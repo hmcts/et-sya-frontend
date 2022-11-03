@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('AverageWeeklyHoursController');
 
@@ -43,9 +44,10 @@ export default class AverageWeeklyHoursController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PAY);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, PageUrls.PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {

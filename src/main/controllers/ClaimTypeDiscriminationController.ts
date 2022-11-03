@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('ClaimTypeDiscriminationController');
 
@@ -85,13 +86,14 @@ export default class ClaimTypeDiscriminationController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    handleSessionErrors(req, res, this.form);
+    setUserCase(req, this.form);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

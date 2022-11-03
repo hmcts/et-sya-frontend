@@ -17,6 +17,7 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentAddressController');
 
@@ -108,10 +109,10 @@ export default class RespondentAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCaseForRespondent(req, this.form);
     const { saveForLater } = req.body;
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
       handleUpdateDraftCase(req, logger);
       return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
@@ -121,8 +122,8 @@ export default class RespondentAddressController {
           ? PageUrls.ACAS_CERT_NUM
           : PageUrls.WORK_ADDRESS;
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-      handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, logger);
+      returnNextPage(req, res, redirectUrl);
     }
   };
 

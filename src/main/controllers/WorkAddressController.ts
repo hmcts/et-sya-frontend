@@ -13,7 +13,7 @@ import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('WorkAddressController');
 
@@ -36,11 +36,12 @@ export default class WorkAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
     const { saveForLater } = req.body;
+    handleSessionErrors(req, res, this.form);
+    setUserCase(req, this.form);
 
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      returnNextPage(req, res, PageUrls.CLAIM_SAVED);
     } else {
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrl = isRespondentAndWorkAddressSame
@@ -50,8 +51,8 @@ export default class WorkAddressController {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
-      handleSessionErrors(req, res, this.form, redirectUrl);
       handleUpdateDraftCase(req, logger);
+      returnNextPage(req, res, redirectUrl);
     }
   };
 

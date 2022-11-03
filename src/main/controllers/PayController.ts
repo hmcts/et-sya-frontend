@@ -17,6 +17,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
@@ -55,9 +56,10 @@ export default class PayController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PENSION);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, PageUrls.PENSION);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -13,6 +13,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('WhistleblowingClaimsController');
 
@@ -57,9 +58,10 @@ export default class WhistleblowingClaimsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
     handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), logger);
+    returnNextPage(req, res, PageUrls.CLAIM_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {

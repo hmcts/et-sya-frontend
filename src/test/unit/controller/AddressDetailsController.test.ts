@@ -1,7 +1,7 @@
 import AddressDetailsController from '../../../main/controllers/AddressDetailsController';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Address details Controller', () => {
@@ -50,9 +50,8 @@ describe('Address details Controller', () => {
 
       const controller = new AddressDetailsController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
       controller.post(req, res);
 

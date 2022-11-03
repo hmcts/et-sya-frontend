@@ -13,7 +13,7 @@ import { handleUpdateDraftCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('AcasCertNumController');
 
@@ -66,12 +66,10 @@ export default class AcasCertNumController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForRespondent(req, this.form);
-    handleUpdateDraftCase(req, logger);
     const { saveForLater } = req.body;
 
     if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+      handleSessionErrors(req, res, this.form);
     } else {
       let redirectUrl;
       if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
@@ -82,7 +80,10 @@ export default class AcasCertNumController {
       } else {
         redirectUrl = PageUrls.ACAS_CERT_NUM;
       }
-      handleSessionErrors(req, res, this.form, redirectUrl);
+      handleSessionErrors(req, res, this.form);
+      setUserCaseForRespondent(req, this.form);
+      handleUpdateDraftCase(req, logger);
+      returnNextPage(req, res, redirectUrl);
     }
   };
 

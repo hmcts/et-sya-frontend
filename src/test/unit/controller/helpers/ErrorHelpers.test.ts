@@ -249,7 +249,7 @@ describe('handleSessionErrors', () => {
 
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
-    handleSessionErrors(req, res, form, '');
+    handleSessionErrors(req, res, form);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
@@ -271,7 +271,7 @@ describe('handleSessionErrors', () => {
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
     expect(function () {
-      handleSessionErrors(req, res, form, '');
+      handleSessionErrors(req, res, form);
     }).toThrow(err);
   });
 });

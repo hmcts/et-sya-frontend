@@ -3,13 +3,14 @@ import express from 'express';
 import redis from 'redis-mock';
 
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData } from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 const app = express();
@@ -71,12 +72,12 @@ describe('Type Of Claim Controller', () => {
         ],
         otherClaim: 'Help',
       };
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
       const controller = new TypeOfClaimController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
       controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
@@ -95,12 +96,12 @@ describe('Type Of Claim Controller', () => {
       const body = {
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       };
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
       const controller = new TypeOfClaimController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
       controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);

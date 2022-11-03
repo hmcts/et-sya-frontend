@@ -13,6 +13,7 @@ import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './help
 import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('DescribeWhatHappenedController');
 
@@ -80,7 +81,6 @@ export default class DescribeWhatHappenedController {
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(req.url);
     }
-    setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const claimSummaryError = getClaimSummaryError(
@@ -99,8 +99,10 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
+        handleSessionErrors(req, res, this.form);
+        setUserCase(req, this.form);
         handleUpdateDraftCase(req, logger);
+        returnNextPage(req, res, PageUrls.TELL_US_WHAT_YOU_WANT);
       }
     } else {
       req.session.errors.push(claimSummaryError);

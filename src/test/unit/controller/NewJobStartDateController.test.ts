@@ -1,6 +1,6 @@
 import NewJobStartDateController from '../../../main/controllers/NewJobStartDateController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('New Job Start Date Controller', () => {
@@ -27,28 +27,9 @@ describe('New Job Start Date Controller', () => {
 
     const controller = new NewJobStartDateController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      newJobStartDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);

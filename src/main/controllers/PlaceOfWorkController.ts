@@ -16,6 +16,7 @@ import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('PlaceOfWorkController');
 
@@ -102,10 +103,11 @@ export default class PlaceOfWorkController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

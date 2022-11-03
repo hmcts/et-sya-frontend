@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('NoticeLengthController');
 
@@ -46,9 +47,10 @@ export default class NoticeLengthController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

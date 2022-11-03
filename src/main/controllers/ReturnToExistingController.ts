@@ -11,7 +11,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 export default class ReturnToExistingController {
   private readonly form: Form;
@@ -51,11 +51,12 @@ export default class ReturnToExistingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? LegacyUrls.ET1_BASE
       : PageUrls.CLAIMANT_APPLICATIONS;
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

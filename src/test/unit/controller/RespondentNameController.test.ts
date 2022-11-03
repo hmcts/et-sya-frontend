@@ -1,7 +1,8 @@
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
@@ -36,12 +37,12 @@ describe('Respondent Name Controller', () => {
 
   it('should create new respondent and add the respondent name to the session', () => {
     const body = { respondentName: 'Globo Gym' };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new RespondentNameController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 
@@ -77,9 +78,8 @@ describe('Respondent Name Controller', () => {
     const controller = new RespondentNameController();
 
     const req = mockRequest({ body });
-    const res = mockResponse();
-
     req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+    const res = mockResponse();
 
     controller.post(req, res);
 
@@ -90,7 +90,7 @@ describe('Respondent Name Controller', () => {
 
     const controller = new RespondentNameController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
     req.session.userCase = userCaseWithRespondent;
 

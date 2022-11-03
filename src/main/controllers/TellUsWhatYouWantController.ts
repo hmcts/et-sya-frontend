@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('TellUsWhatYouWantController');
 
@@ -61,17 +62,18 @@ export default class TellUsWhatYouWantController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
-      handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
-    } else if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
-    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
-    } else {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
-    }
     handleUpdateDraftCase(req, logger);
+    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
+      returnNextPage(req, res, PageUrls.COMPENSATION);
+    } else if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+      returnNextPage(req, res, PageUrls.TRIBUNAL_RECOMMENDATION);
+    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+      returnNextPage(req, res, PageUrls.WHISTLEBLOWING_CLAIMS);
+    } else {
+      returnNextPage(req, res, PageUrls.CLAIM_DETAILS_CHECK);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -13,6 +13,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -42,6 +43,7 @@ export default class StartDateController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     let redirectUrl = '';
     const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
@@ -52,8 +54,8 @@ export default class StartDateController {
       redirectUrl = PageUrls.END_DATE;
     }
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

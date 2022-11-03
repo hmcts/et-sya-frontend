@@ -1,7 +1,8 @@
 import PayController from '../../../main/controllers/PayController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PayInterval } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Pay Controller', () => {
@@ -36,12 +37,11 @@ describe('Pay Controller', () => {
 
   it('should add payBeforeTax, payAfterTax and payInterval to the session userCase', () => {
     const body = { payBeforeTax: '123', payAfterTax: '124', payInterval: PayInterval.WEEKLY };
-
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
     const controller = new PayController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

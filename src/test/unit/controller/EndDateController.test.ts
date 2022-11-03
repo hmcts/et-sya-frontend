@@ -32,25 +32,6 @@ describe('End date Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '23',
-        month: '11',
-        year: '2039',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
-
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
@@ -68,25 +49,6 @@ describe('End date Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '23',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
@@ -106,25 +68,6 @@ describe('End date Controller', () => {
     const res = mockResponse();
     controller.post(req, res);
 
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
-
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
@@ -142,25 +85,6 @@ describe('End date Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '',
-        month: '',
-        year: '',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);

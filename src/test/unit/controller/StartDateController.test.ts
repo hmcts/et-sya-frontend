@@ -1,7 +1,8 @@
 import StartDateController from '../../../main/controllers/StartDateController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Start date Controller', () => {
@@ -34,35 +35,19 @@ describe('Start date Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', () => {
-    const errors = [
-      { propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' },
-      { propertyName: 'startDate', errorType: 'invalidDateBeforeDOB' },
-    ];
+    const errors = [{ propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
       'startDate-day': '',
       'startDate-month': '11',
       'startDate-year': '2000',
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
@@ -74,6 +59,7 @@ describe('Start date Controller', () => {
       'startDate-month': '11',
       'startDate-year': '2000',
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
     const userCase = {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.WORKING,
@@ -81,24 +67,9 @@ describe('Start date Controller', () => {
 
     const controller = new StartDateController();
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequestEmpty({ body, userCase });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.WORKING,
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
   });
@@ -113,27 +84,13 @@ describe('Start date Controller', () => {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.NOTICE,
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.NOTICE,
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
   });
@@ -148,27 +105,13 @@ describe('Start date Controller', () => {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
     controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.NO_LONGER_WORKING,
-    });
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });

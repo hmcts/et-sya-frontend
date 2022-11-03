@@ -13,7 +13,7 @@ import { cachePreloginCaseData } from '../services/CacheService';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -91,6 +91,7 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     let redirectUrl;
     if (
       conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
@@ -128,12 +129,12 @@ export default class TypeOfClaimController {
       }
     }
 
-    handleSessionErrors(req, res, this.form, redirectUrl);
-
     // Only called when returning from CYA page
     if (req.session.userCase.id) {
       handleUpdateDraftCase(req, logger);
     }
+
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

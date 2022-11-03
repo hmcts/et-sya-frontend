@@ -1,6 +1,6 @@
 import AverageWeeklyHoursController from '../../../main/controllers/AverageWeeklyHoursController';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Average weekly hours Controller', () => {
@@ -34,9 +34,8 @@ describe('Average weekly hours Controller', () => {
 
     const controller = new AverageWeeklyHoursController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

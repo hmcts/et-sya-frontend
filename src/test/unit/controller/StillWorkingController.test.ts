@@ -1,7 +1,8 @@
 import StillWorkingController from '../../../main/controllers/StillWorkingController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Are you still working controller', () => {
@@ -44,11 +45,11 @@ describe('Are you still working controller', () => {
 
   it('should add isStillWorking to the session userCase', () => {
     const body = { isStillWorking: StillWorking.WORKING };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StillWorkingController();
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

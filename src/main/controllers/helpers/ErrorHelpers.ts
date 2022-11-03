@@ -15,8 +15,6 @@ import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
-import { handleReturnUrl } from './RouterHelpers';
-
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   //call get custom errors and add to session errors
   let sessionErrors = form.getErrors(formData);
@@ -99,7 +97,7 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
   }
 };
 
-export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+export const handleSessionErrors = (req: AppRequest, res: Response, form: Form): void => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
   const sessionErrors = getSessionErrors(req, form, formData);
 
@@ -119,9 +117,6 @@ export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, 
       }
       return res.redirect(req.url);
     });
-  } else {
-    const nextPage = handleReturnUrl(req, redirectUrl);
-    return res.redirect(nextPage);
   }
 };
 

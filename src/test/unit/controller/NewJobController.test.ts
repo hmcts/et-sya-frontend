@@ -1,7 +1,7 @@
 import NewJobController from '../../../main/controllers/NewJobController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('New Job Controller', () => {
@@ -55,9 +55,8 @@ describe('New Job Controller', () => {
     const body = { newJob: YesOrNo.NO };
     const controller = new NewJobController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.FIRST_RESPONDENT_NAME);

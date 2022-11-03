@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('NoticeTypeController');
 
@@ -52,6 +52,7 @@ export default class NoticeTypeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     let redirectUrl;
     if (
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
@@ -62,8 +63,8 @@ export default class NoticeTypeController {
       redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
     }
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

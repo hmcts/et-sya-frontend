@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('NewJobController');
 
@@ -50,9 +50,10 @@ export default class NewJobController {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
       : PageUrls.FIRST_RESPONDENT_NAME;
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

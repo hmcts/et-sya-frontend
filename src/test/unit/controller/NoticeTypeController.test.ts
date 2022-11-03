@@ -2,7 +2,7 @@ import NoticeTypeController from '../../../main/controllers/NoticeTypeController
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { WeeksOrMonths } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Notice Type Controller', () => {
@@ -47,9 +47,8 @@ describe('Notice Type Controller', () => {
 
     const controller = new NoticeTypeController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

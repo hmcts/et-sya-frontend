@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('StillWorkingController');
 
@@ -60,10 +61,10 @@ export default class StillWorkingController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const redirectUrl = PageUrls.JOB_TITLE;
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, PageUrls.JOB_TITLE);
   };
 
   public get = (req: AppRequest, res: Response): void => {

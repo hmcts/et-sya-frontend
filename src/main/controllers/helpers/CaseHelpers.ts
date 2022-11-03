@@ -122,3 +122,20 @@ export const handleUploadDocument = async (
     logger.error(err.message);
   }
 };
+
+// export const handleControllerLogic = (
+//   req: AppRequest<Partial<AnyRecord>>,
+//   res: Response<any, Record<string, any>>,
+//   form: Form,
+//   logger: LoggerInstance,
+//   redirectUrl: string
+// ) => {
+//   const errors = handleSessionErrors(req, form);
+//   if (errors !== undefined) {
+//     handleSessionErrors(req, res, errors);
+//   } else {
+//     setUserCase(req, form);
+//     handleUpdateDraftCase(req, logger);
+//     returnNextPage(req, res, redirectUrl);
+//   }
+// };

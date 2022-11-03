@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('BenefitsController');
 
@@ -66,15 +67,16 @@ export default class BenefitsController {
 
   public post = (req: AppRequest, res: Response): void => {
     const session = req.session;
-    setUserCase(req, this.form);
     let redirectUrl = '';
     if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    handleSessionErrors(req, res, this.form);
+    setUserCase(req, this.form);
     handleUpdateDraftCase(req, logger);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

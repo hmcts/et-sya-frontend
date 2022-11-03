@@ -1,7 +1,8 @@
 import UpdatePreferenceController from '../../../main/controllers/UpdatePreferenceController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Update Preference Controller', () => {
@@ -35,12 +36,12 @@ describe('Update Preference Controller', () => {
 
   it('should add the update preference form value to the userCase', () => {
     const body = { claimantContactPreference: 'Email' };
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new UpdatePreferenceController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 

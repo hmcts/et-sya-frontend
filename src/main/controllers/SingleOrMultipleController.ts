@@ -12,6 +12,7 @@ import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 import { setUserCase } from './helpers/CaseHelpers';
 import { handleSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
 
 export default class SingleOrMultipleController {
   private readonly form: Form;
@@ -46,6 +47,7 @@ export default class SingleOrMultipleController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
+    handleSessionErrors(req, res, this.form);
     setUserCase(req, this.form);
     let redirectUrl = '';
     if (req.body.caseType === CaseType.SINGLE) {
@@ -55,7 +57,7 @@ export default class SingleOrMultipleController {
     } else {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -1,5 +1,6 @@
 import VideoHearingsController from '../../../main/controllers/VideoHearingsController';
-import { mockRequest } from '../mocks/mockRequest';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Hearing Preferences Controller', () => {
@@ -32,11 +33,12 @@ describe('Hearing Preferences Controller', () => {
   it('should add the videoHearings form value to the userCase', () => {
     const body = { hearingPreferences: 'Phone' };
 
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
+
     const controller = new VideoHearingsController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
     controller.post(req, res);
 
