@@ -66,5 +66,4 @@ module.exports = async function () {
   I.see('Have you completed this section?');
   I.checkOption('#tasklist-check');
   I.click(commonConfig.saveAndContinue);
-  I.wait(5);
 };
