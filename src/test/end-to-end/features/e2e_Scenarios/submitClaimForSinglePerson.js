@@ -72,5 +72,5 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality Cro
   await checkYourAnswers(I);
   await claimSubmitted(I);
 })
-  .tag('@RET-BAT')
+  .tag('@RET-XB')
   .retry(2);
