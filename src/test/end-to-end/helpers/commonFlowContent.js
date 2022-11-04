@@ -1,6 +1,7 @@
 const { I } = inject();
 
 async function verifyMakeAClaimToAnEmploymentTribunal() {
+  console.log(process.env.TEST_URL);
   I.see(
     'Use this service to make claims to an employment tribunal when an employer, potential employer, trade union or'
   );
