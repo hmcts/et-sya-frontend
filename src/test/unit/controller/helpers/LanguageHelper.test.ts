@@ -3,7 +3,7 @@ import { mockSession } from '../../mocks/mockApp';
 import { mockRequest } from '../../mocks/mockRequest';
 
 describe('setUrlLanguageForRedirectPage', () => {
-  it('should add welsh parameters to the redirected url if the request url has welsh parameters', () => {
+  it('should add welshTranslations parameters to the redirected url if the request url has welshTranslations parameters', () => {
     const req = mockRequest({
       session: mockSession([], [], []),
       body: { saveForLater: true, testFormField: 'test value' },

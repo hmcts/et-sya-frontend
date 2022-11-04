@@ -38,7 +38,7 @@ const findMissingKeys = function (
 };
 
 describe('Check missing keys in translation files', () => {
-  it('There should not be any missing translation files for welsh translations', () => {
+  it('There should not be any missing translation files for welshTranslations translations', () => {
     const missingFiles = englishTranslationFiles.filter(x => !welshTranslationFiles.includes(x));
     expect(missingFiles).toEqual([]);
   });
@@ -57,7 +57,7 @@ describe('Check missing keys in translation files', () => {
     expect(findMissingKeys(welshContents, englishContents)).toEqual([]);
   });
 
-  test.each(englishTranslationFiles)('Check welsh translation file %s has no missing keys', file => {
+  test.each(englishTranslationFiles)('Check welshTranslations translation file %s has no missing keys', file => {
     const englishFile = fs.readFileSync(path.resolve(__dirname, englishDirectory + file), 'utf-8');
     const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
     const englishContents = JSON.parse(englishFile);
@@ -87,10 +87,13 @@ describe('Check missing keys in translation files', () => {
     }
   }
 
-  test.each(englishTranslationFiles)('Check welsh translation file %s has no unfinished translations', file => {
-    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
-    const welshContents = JSON.parse(welshFile);
+  test.each(englishTranslationFiles)(
+    'Check welshTranslations translation file %s has no unfinished translations',
+    file => {
+      const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+      const welshContents = JSON.parse(welshFile);
 
-    checkWelshTranlationFile(welshContents, file.replace(/\.json/, ''));
-  });
+      checkWelshTranlationFile(welshContents, file.replace(/\.json/, ''));
+    }
+  );
 });

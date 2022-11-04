@@ -1,5 +1,5 @@
 module.exports = {
-  TestUrl: process.env.TEST_E2E_URL || 'https://et-sya.aat.platform.hmcts.net',
+  TestUrl: process.env.TEST_E2E_URL || 'https://et-sya-pr-478.service.core-compute-preview.internal',
   TestShowBrowserWindow: process.env.SHOW_BROWSER_WINDOW || false,
   TestsPathToRun: process.env.E2E_TEST_PATH || './features/**/*js',
   TestReportFolder: process.env.E2E_OUTPUT_DIR || './functional-output/reports',

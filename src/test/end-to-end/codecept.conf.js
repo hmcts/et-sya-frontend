@@ -17,6 +17,13 @@ exports.config = {
   },
   include: {
     I: './pages/steps.js',
+    preLoginScreensWelsh: './pages/welsh/prelogin.welsh.page.js',
+    loginPage: './pages/welsh/login.page.js',
+    taskListPageWelsh: './pages/welsh/task.list.welsh.page.js',
+    personalDetailsPageWelsh: './pages/welsh/personal.details.welsh.page.js',
+    employmentAndRespondentPageWelsh: './pages/welsh/employment.and.respondent.details.welsh.page',
+    claimDetailsPageWelsh: './pages/welsh/claim.details.welsh.page.js',
+    submitClaimPageWelsh: './pages/welsh/submit.claim.welsh.page.js',
   },
   mocha: {
     reporterEnabled: 'codeceptjs-cli-reporter, mochawesome',

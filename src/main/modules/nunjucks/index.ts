@@ -26,7 +26,10 @@ export class Nunjucks {
       }
     );
 
-    nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
+    nunEnv.addGlobal(
+      'welshEnabled',
+      process.env.FT_WELSH === 'true' || config.get('featureFlags.welshTranslations') === 'true'
+    );
 
     nunEnv.addGlobal('getContent', function (prop: ((param: string) => string) | string): string {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
