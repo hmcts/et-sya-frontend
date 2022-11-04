@@ -11,6 +11,9 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+  environment:
+    PCQ_HEALTH_URL: https://equality-and-diversity.platform.hmcts.net/health
+    PCQ_URL: https://equality-and-diversity.platform.hmcts.net/service-endpoint
 idam-pr:
   enabled: true
   redirect_uris:
