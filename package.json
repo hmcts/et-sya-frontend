@@ -107,6 +107,7 @@
     "@types/redis-mock": "^0.17.1",
     "@types/sinon-chai": "^3.2.8",
     "@types/supertest": "^2.0.8",
+    "@types/pino-std-serializers": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "babel-loader": "^9.0.0",
@@ -157,7 +158,8 @@
     "**/**/glob-parent": ">=6.0.1",
     "**/**/glob": ">=8.0.3",
     "**/**/scss-tokenizer": ">=0.4.3",
-    "**/**/minimatch": ">=3.0.5"
+    "**/**/minimatch": ">=3.0.5",
+    "**/**/table": ">=6.8.1"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
