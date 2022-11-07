@@ -9,10 +9,8 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 export default class SingleOrMultipleController {
   private readonly form: Form;
@@ -48,8 +46,6 @@ export default class SingleOrMultipleController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
     let redirectUrl = '';
     if (req.body.caseType === CaseType.SINGLE) {
       redirectUrl = PageUrls.ACAS_MULTIPLE_CLAIM;
@@ -58,7 +54,7 @@ export default class SingleOrMultipleController {
     } else {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
     }
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

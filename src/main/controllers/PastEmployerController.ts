@@ -9,10 +9,9 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('PastEmployerController');
 
@@ -39,13 +38,10 @@ export default class PastEmployerController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.FIRST_RESPONDENT_NAME;
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

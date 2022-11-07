@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 import { cachePreloginCaseData } from '../services/CacheService';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
@@ -91,50 +91,52 @@ export default class TypeOfClaimController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    let redirectUrl;
-    if (
-      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
-      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
-    ) {
-      redirectUrl = PageUrls.CLAIM_STEPS;
-    } else {
-      redirectUrl = LegacyUrls.ET1_BASE;
-    }
     setUserCase(req, this.form);
-    if (req.app?.locals) {
-      const redisClient = req.app.locals?.redisClient;
-      if (redisClient) {
-        const cacheMap = new Map<CaseDataCacheKey, string>([
-          [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
-          [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
-          [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
-          [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
-          [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
-        ]);
-        try {
-          req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
-        } catch (err) {
-          const error = new Error(err.message);
-          error.name = RedisErrors.FAILED_TO_SAVE;
-          if (err.stack) {
-            error.stack = err.stack;
-          }
-          throw error;
-        }
+    const errors = returnSessionErrors(req, this.form);
+    if (errors.length === 0 || errors === undefined) {
+      let redirectUrl;
+      if (
+        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
+        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
+      ) {
+        redirectUrl = PageUrls.CLAIM_STEPS;
       } else {
-        const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
-        err.name = RedisErrors.FAILED_TO_CONNECT;
-        throw err;
+        redirectUrl = LegacyUrls.ET1_BASE;
       }
+      if (req.app?.locals) {
+        const redisClient = req.app.locals?.redisClient;
+        if (redisClient) {
+          const cacheMap = new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
+            [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+            [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
+          ]);
+          try {
+            req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
+          } catch (err) {
+            const error = new Error(err.message);
+            error.name = RedisErrors.FAILED_TO_SAVE;
+            if (err.stack) {
+              error.stack = err.stack;
+            }
+            throw error;
+          }
+        } else {
+          const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
+          err.name = RedisErrors.FAILED_TO_CONNECT;
+          throw err;
+        }
+      }
+      // Only called when returning from CYA page
+      if (req.session.userCase.id) {
+        handleUpdateDraftCase(req, logger);
+      }
+      returnNextPage(req, res, redirectUrl);
+    } else {
+      handleErrors(req, res, errors);
     }
-
-    // Only called when returning from CYA page
-    if (req.session.userCase.id) {
-      handleUpdateDraftCase(req, logger);
-    }
-
-    returnNextPage(req, res, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -11,10 +11,8 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const end_date: DateFormFields = {
   ...EndDateFormFields,
@@ -37,10 +35,7 @@ export default class EndDateController {
     this.form = new Form(<FormFields>this.endDateFormContent.fields);
   }
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, PageUrls.NOTICE_PERIOD);
+    handlePostLogic(req, res, this.form, logger, PageUrls.NOTICE_PERIOD);
   };
 
   public get = (req: AppRequest, res: Response): void => {

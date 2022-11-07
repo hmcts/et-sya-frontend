@@ -10,10 +10,8 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const start_date: DateFormFields = {
   ...StartDateFormFields,
@@ -43,7 +41,6 @@ export default class StartDateController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
     let redirectUrl = '';
     const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
@@ -53,9 +50,7 @@ export default class StartDateController {
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

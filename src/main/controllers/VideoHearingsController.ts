@@ -9,10 +9,8 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('VideoHearingsController');
 
@@ -73,10 +71,7 @@ export default class VideoHearingsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, PageUrls.REASONABLE_ADJUSTMENTS);
+    handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

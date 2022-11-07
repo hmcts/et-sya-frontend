@@ -8,10 +8,9 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 export default class AcasMultipleController {
   private readonly form: Form;
@@ -52,12 +51,10 @@ export default class AcasMultipleController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.TYPE_OF_CLAIM
       : PageUrls.VALID_ACAS_REASON;
-    setUserCase(req, this.form);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

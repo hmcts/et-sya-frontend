@@ -11,10 +11,8 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const dob_date: DateFormFields = {
   ...BirthDateFormFields,
@@ -37,10 +35,7 @@ export default class DobController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, PageUrls.SEX_AND_TITLE);
+    handlePostLogic(req, res, this.form, logger, PageUrls.SEX_AND_TITLE);
   };
 
   public get = (req: AppRequest, res: Response): void => {

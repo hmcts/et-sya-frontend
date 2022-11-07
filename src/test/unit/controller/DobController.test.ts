@@ -1,6 +1,7 @@
 import DobController from '../../../main/controllers/DobController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Dob Controller', () => {
@@ -72,26 +73,26 @@ describe('Dob Controller', () => {
       expect(req.session.errors).toEqual(errors);
     });
 
-    // it('should update draft case when date is submitted', () => {
-    //   const body = {
-    //     'dobDate-day': '05',
-    //     'dobDate-month': '11',
-    //     'dobDate-year': '2000',
-    //   };
-    //   const req = mockRequestEmpty({ body });
-    //   jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
-    //   const controller = new DobController();
-    //   const res = mockResponse();
-    //   controller.post(req, res);
+    it('should update draft case when date is submitted', () => {
+      const body = {
+        'dobDate-day': '05',
+        'dobDate-month': '11',
+        'dobDate-year': '2000',
+      };
+      const req = mockRequestEmpty({ body });
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
+      const controller = new DobController();
+      const res = mockResponse();
+      controller.post(req, res);
 
-    //   expect(req.session.userCase).toMatchObject({
-    //     dobDate: {
-    //       day: '05',
-    //       month: '11',
-    //       year: '2000',
-    //     },
-    //   });
-    // });
+      expect(req.session.userCase).toMatchObject({
+        dobDate: {
+          day: '05',
+          month: '11',
+          year: '2000',
+        },
+      });
+    });
 
     it('should go to the Sex and Title page when correct date is entered', () => {
       const req = mockRequest({

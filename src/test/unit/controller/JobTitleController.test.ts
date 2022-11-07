@@ -1,6 +1,5 @@
 import JobTitleController from '../../../main/controllers/JobTitleController';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormError } from '../../../main/definitions/form';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -26,7 +25,6 @@ describe('Job Title Controller', () => {
       const body = {
         jobTitle: '',
       };
-      const errors: FormError[] = [];
       const controller = new JobTitleController();
 
       const req = mockRequestEmpty({ body });
@@ -35,7 +33,7 @@ describe('Job Title Controller', () => {
       controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
-      expect(req.session.errors).toEqual(errors);
+      expect(req.session.errors).toHaveLength(0);
     });
 
     it('should add the job title to the session userCase', () => {

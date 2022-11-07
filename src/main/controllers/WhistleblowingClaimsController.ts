@@ -10,10 +10,8 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('WhistleblowingClaimsController');
 
@@ -58,10 +56,7 @@ export default class WhistleblowingClaimsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(this.checkWhistleBlowingClaimYesNo(req), logger);
-    returnNextPage(req, res, PageUrls.CLAIM_DETAILS_CHECK);
+    handlePostLogic(this.checkWhistleBlowingClaimYesNo(req), res, this.form, logger, PageUrls.CLAIM_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -76,7 +71,7 @@ export default class WhistleblowingClaimsController {
   };
 
   private checkWhistleBlowingClaimYesNo(req: AppRequest): AppRequest {
-    if (req.session.userCase.whistleblowingClaim === YesOrNo.NO) {
+    if (req.body.whistleblowingClaim === YesOrNo.NO) {
       req.session.userCase.whistleblowingEntityName = undefined;
     }
     return req;

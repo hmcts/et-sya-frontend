@@ -113,6 +113,7 @@ describe('Type Of Claim Controller', () => {
     it('should cache the Other Types of Claims to Redis', () => {
       const body = {
         typeOfClaim: [TypesOfClaim.OTHER_TYPES],
+        otherClaim: 'No notice',
       };
 
       const controller = new TypeOfClaimController();
@@ -125,7 +126,7 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CLAIMANT_REPRESENTED, undefined],
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
-        [CaseDataCacheKey.OTHER_CLAIM_TYPE, undefined],
+        [CaseDataCacheKey.OTHER_CLAIM_TYPE, 'No notice'],
       ]);
       req.app = app;
       req.app.locals = {

@@ -7,10 +7,8 @@ import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants'
 import { FormContent, FormFields } from '../definitions/form';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { isPostcodeMVPLocation, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicPreLogin, isPostcodeMVPLocation } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 export default class WorkPostcodeController {
   private readonly form: Form;
@@ -35,13 +33,11 @@ export default class WorkPostcodeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
     let redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
     if (isPostcodeMVPLocation(req.body.workPostcode)) {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

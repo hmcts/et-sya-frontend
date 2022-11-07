@@ -9,10 +9,8 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('BenefitsController');
 
@@ -67,17 +65,13 @@ export default class BenefitsController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const session = req.session;
     let redirectUrl = '';
-    if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -13,11 +13,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentAddressController');
 
@@ -109,22 +107,13 @@ export default class RespondentAddressController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCaseForRespondent(req, this.form);
-    const { saveForLater } = req.body;
-    if (saveForLater) {
-      handleUpdateDraftCase(req, logger);
-      return res.redirect(PageUrls.CLAIM_SAVED);
-    } else {
-      const { userCase } = req.session;
-      const nextPage =
-        userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
-          ? PageUrls.ACAS_CERT_NUM
-          : PageUrls.WORK_ADDRESS;
-      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-      handleUpdateDraftCase(req, logger);
-      returnNextPage(req, res, redirectUrl);
-    }
+    const { userCase } = req.session;
+    const nextPage =
+      userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
+        ? PageUrls.ACAS_CERT_NUM
+        : PageUrls.WORK_ADDRESS;
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
+    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

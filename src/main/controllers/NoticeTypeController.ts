@@ -8,10 +8,9 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('NoticeTypeController');
 
@@ -53,7 +52,6 @@ export default class NoticeTypeController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
     let redirectUrl;
     if (
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
@@ -63,9 +61,7 @@ export default class NoticeTypeController {
     } else {
       redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
     }
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -1,18 +1,23 @@
 import { AxiosResponse } from 'axios';
+import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
+import { LoggerInstance } from 'winston';
 
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
-import { mvpLocations } from '../../definitions/constants';
+import { PageUrls, mvpLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
+import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded } from './FormHelpers';
+import { setUserCaseForRespondent } from './RespondentHelpers';
+import { returnNextPage } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -123,19 +128,57 @@ export const handleUploadDocument = async (
   }
 };
 
-// export const handleControllerLogic = (
-//   req: AppRequest<Partial<AnyRecord>>,
-//   res: Response<any, Record<string, any>>,
-//   form: Form,
-//   logger: LoggerInstance,
-//   redirectUrl: string
-// ) => {
-//   const errors = handleSessionErrors(req, form);
-//   if (errors !== undefined) {
-//     handleSessionErrors(req, res, errors);
-//   } else {
-//     setUserCase(req, form);
-//     handleUpdateDraftCase(req, logger);
-//     returnNextPage(req, res, redirectUrl);
-//   }
-// };
+export const handlePostLogic = (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): void => {
+  setUserCase(req, form);
+  const errors = returnSessionErrors(req, form);
+  const { saveForLater } = req.body;
+  if (errors.length === 0 || errors === undefined) {
+    req.session.errors = [];
+    handleUpdateDraftCase(req, logger);
+    if (saveForLater) {
+      return res.redirect(PageUrls.CLAIM_SAVED);
+    } else {
+      returnNextPage(req, res, redirectUrl);
+    }
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const handlePostLogicForRespondent = (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): void => {
+  setUserCaseForRespondent(req, form);
+  const errors = returnSessionErrors(req, form);
+  const { saveForLater } = req.body;
+  if (errors.length === 0 || errors === undefined) {
+    handleUpdateDraftCase(req, logger);
+    if (saveForLater) {
+      return res.redirect(PageUrls.CLAIM_SAVED);
+    } else {
+      returnNextPage(req, res, redirectUrl);
+    }
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+  setUserCase(req, form);
+  const errors = returnSessionErrors(req, form);
+  if (errors.length === 0 || errors === undefined) {
+    returnNextPage(req, res, redirectUrl);
+  } else {
+    handleErrors(req, res, errors);
+  }
+};

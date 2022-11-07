@@ -9,10 +9,8 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 export default class LipOrRepController {
   private readonly form: Form;
@@ -56,9 +54,7 @@ export default class LipOrRepController {
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    returnNextPage(req, res, redirectUrl);
+    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

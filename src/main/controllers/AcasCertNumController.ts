@@ -9,11 +9,10 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('AcasCertNumController');
 
@@ -70,25 +69,16 @@ export default class AcasCertNumController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    const { saveForLater } = req.body;
-
-    if (saveForLater) {
-      handleSessionErrors(req, res, this.form);
+    let redirectUrl;
+    if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
+      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+    } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
+      req.session.returnUrl = undefined;
+      redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
     } else {
-      let redirectUrl;
-      if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
-        redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
-      } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
-        req.session.returnUrl = undefined;
-        redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
-      } else {
-        redirectUrl = PageUrls.ACAS_CERT_NUM;
-      }
-      handleSessionErrors(req, res, this.form);
-      setUserCaseForRespondent(req, this.form);
-      handleUpdateDraftCase(req, logger);
-      returnNextPage(req, res, redirectUrl);
+      redirectUrl = PageUrls.ACAS_CERT_NUM;
     }
+    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

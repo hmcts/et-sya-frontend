@@ -10,10 +10,8 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('UpdatePreferenceController');
 
@@ -52,10 +50,7 @@ export default class UpdatePreferenceController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    handleSessionErrors(req, res, this.form);
-    setUserCase(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    returnNextPage(req, res, PageUrls.VIDEO_HEARINGS);
+    handlePostLogic(req, res, this.form, logger, PageUrls.VIDEO_HEARINGS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

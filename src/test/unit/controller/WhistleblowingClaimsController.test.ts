@@ -88,5 +88,24 @@ describe('Whistleblowing Claims Controller', () => {
         whistleblowingEntityName: 'name',
       });
     });
+
+    it('should assign No answer to userCase and reset whistleblowingEntityName', () => {
+      const req = mockRequest({
+        body: {
+          whistleblowingClaim: YesOrNo.NO,
+        },
+      });
+      const res = mockResponse();
+
+      req.session.userCase.whistleblowingClaim = YesOrNo.YES;
+      req.session.userCase.whistleblowingEntityName = 'ESMA';
+
+      new WhistleblowingClaimsController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        whistleblowingClaim: YesOrNo.NO,
+        whistleblowingEntityName: undefined,
+      });
+    });
   });
 });

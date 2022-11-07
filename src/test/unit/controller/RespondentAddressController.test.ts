@@ -116,6 +116,23 @@ describe('Respondent Address Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
 
+    req.session.userCase = {
+      id: '12354',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      respondents: [
+        {
+          respondentNumber: 1,
+          respondentName: 'Globo Gym',
+        },
+        {
+          respondentNumber: 2,
+          respondentName: 'Enron',
+        },
+      ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
@@ -131,6 +148,23 @@ describe('Respondent Address Controller', () => {
     const controller = new RespondentAddressController();
     const req = mockRequest({ body });
     const res = mockResponse();
+
+    req.session.userCase = {
+      id: '12354',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      respondents: [
+        {
+          respondentNumber: 1,
+          respondentName: 'Globo Gym',
+        },
+        {
+          respondentNumber: 2,
+          respondentName: 'Enron',
+        },
+      ],
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
 
     controller.post(req, res);
     expect(req.session.userCase.respondents[0].respondentAddress1).toStrictEqual('10 test street');

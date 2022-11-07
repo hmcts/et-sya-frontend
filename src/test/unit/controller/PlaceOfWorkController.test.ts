@@ -56,7 +56,7 @@ describe('Place Of Work Controller Tests', () => {
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
-    expect(req.session.errors).toEqual([]);
+    expect(req.session.errors).toHaveLength(0);
   });
   it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
     const body = { saveForLater: true };
