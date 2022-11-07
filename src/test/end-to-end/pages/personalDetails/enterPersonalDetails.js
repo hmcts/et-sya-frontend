@@ -5,7 +5,7 @@ const commonConfig = require('../../features/Data/commonConfig.json');
 module.exports = async function () {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  I.click('[href="/dob-details"]');
+  I.click('[href="/dob-details?lng=en"]');
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
