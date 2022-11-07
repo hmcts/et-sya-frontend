@@ -1958,6 +1958,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/pino-std-serializers@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/pino-std-serializers/-/pino-std-serializers-4.0.0.tgz#1e28b80b554c8222858e99a4e0fc77fd070e10e8"
+  integrity sha512-gXfUZx2xIBbFYozGms53fT0nvkacx/+62c8iTxrEqH5PkIGAQvDbXg2774VWOycMPbqn5YJBQ3BMsg4Li3dWbg==
+  dependencies:
+    pino-std-serializers "*"
+
 "@types/pino@6.3", "@types/pino@^6.3.5":
   version "6.3.12"
   resolved "https://registry.yarnpkg.com/@types/pino/-/pino-6.3.12.tgz#4425db6ced806109c3df957100cba9dfcd73c228"
@@ -8907,6 +8914,11 @@ pino-pretty@^4.1.0:
     rfdc "^1.3.0"
     split2 "^3.1.1"
     strip-json-comments "^3.1.1"
+
+pino-std-serializers@*:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-6.0.0.tgz#4c20928a1bafca122fdc2a7a4a171ca1c5f9c526"
+  integrity sha512-mMMOwSKrmyl+Y12Ri2xhH1lbzQxwwpuru9VjyJpgFIH4asSj88F2csdMwN6+M5g1Ll4rmsYghHLQJw81tgZ7LQ==
 
 pino-std-serializers@^3.1.0:
   version "3.2.0"
