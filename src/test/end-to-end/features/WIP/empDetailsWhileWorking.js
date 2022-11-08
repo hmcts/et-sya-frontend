@@ -50,7 +50,7 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.click('#main-form-submit');
 
   I.seeElement('#employee-benefits');
-  I.see('Do or did you receive any employee benefits?');
+  I.see('Employee benefits');
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
   authPage.logout();
