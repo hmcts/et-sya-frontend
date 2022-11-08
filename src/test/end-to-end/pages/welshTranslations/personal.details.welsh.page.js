@@ -14,7 +14,7 @@ module.exports = {
   },
   //click personal details link and enter details
   clickPersonalDetailsLink() {
-    I.click('[href="/dob-details"]');
+    I.click('[href="/dob-details?lng=cy"]');
   },
   enterDob() {
     //enter date of birth
