@@ -17,30 +17,30 @@ describe('Hearing Preferences Controller', () => {
     expect(response.render).toHaveBeenCalledWith('video-hearings', expect.anything());
   });
 
-  it('should render same page if errors are present', () => {
+  it('should render same page if errors are present', async () => {
     const errors = [{ propertyName: 'hearingPreferences', errorType: 'required' }];
     const body = { hearingPreferences: '' };
     const controller = new VideoHearingsController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should add the videoHearings form value to the userCase', () => {
+  it('should add the videoHearings form value to the userCase', async () => {
     const body = { hearingPreferences: 'Phone' };
 
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
     const controller = new VideoHearingsController();
 
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({ hearingPreferences: ['Phone'] });
   });

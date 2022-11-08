@@ -18,43 +18,43 @@ describe('New Job Pay Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB_PAY, expect.anything());
   });
 
-  it('should have error when pay is entered and interval is not entered', () => {
+  it('should have error when pay is entered and interval is not entered', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: '6700', newJobPayInterval: '' };
     const expectedErrors = [{ propertyName: 'newJobPayInterval', errorType: 'required' }];
     const response = mockResponse();
     const request = mockRequest({ body });
-    controller.post(request, response);
+    await controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
   });
 
-  it('should have error when pay is not a valid number', () => {
+  it('should have error when pay is not a valid number', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: 'ten', newJobPayInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'notANumber' }];
     const response = mockResponse();
     const request = mockRequest({ body });
-    controller.post(request, response);
+    await controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
   });
 
-  it('should have error when no pay is entered and interval is entered', () => {
+  it('should have error when no pay is entered and interval is entered', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: '', newJobPayInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'required' }];
     const response = mockResponse();
     const request = mockRequest({ body });
-    controller.post(request, response);
+    await controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
   });
 
-  it('should have error when pay is less than two characters', () => {
+  it('should have error when pay is less than two characters', async () => {
     const controller = new NewJobPayController();
     const body = { newJobPay: '1', newJobPayInterval: PayInterval.WEEKLY };
     const expectedErrors = [{ propertyName: 'newJobPay', errorType: 'minLengthRequired' }];
     const response = mockResponse();
     const request = mockRequest({ body });
-    controller.post(request, response);
+    await controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
   });
 });

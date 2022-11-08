@@ -44,8 +44,8 @@ export default class JobTitleController {
     this.form = new Form(<FormFields>this.jobTitleContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.START_DATE);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.START_DATE);
   };
 
   public get = (req: AppRequest, res: Response): void => {

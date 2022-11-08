@@ -39,7 +39,7 @@ describe('Valid no acas reason Controller', () => {
     it('should assign userCase from formData for Valid No Acas Reason', () => {
       const body = { validNoAcasReason: YesOrNo.YES };
 
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
       const controller = new ValidNoAcasReasonController();
 

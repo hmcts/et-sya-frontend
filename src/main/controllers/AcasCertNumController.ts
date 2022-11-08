@@ -68,7 +68,7 @@ export default class AcasCertNumController {
     this.form = new Form(<FormFields>this.acasCertNumContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
       redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
@@ -78,7 +78,7 @@ export default class AcasCertNumController {
     } else {
       redirectUrl = PageUrls.ACAS_CERT_NUM;
     }
-    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

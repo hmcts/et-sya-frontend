@@ -4,6 +4,8 @@ import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
 describe('Reasonable Adjustments Controller', () => {
   const t = {
     'reasonable-adjustments': {},
@@ -21,32 +23,31 @@ describe('Reasonable Adjustments Controller', () => {
   });
 
   describe('post() reasonable adjustments', () => {
-    it('should redirect to the next page when nothing is selected as the form is optional', () => {
+    it('should redirect to the next page when nothing is selected as the form is optional', async () => {
       const body = {};
 
       const controller = new ReasonableAdjustmentsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.PERSONAL_DETAILS_CHECK);
     });
   });
 
-  it('should add the reasonable adjustments form value to the userCase', () => {
+  it('should add the reasonable adjustments form value to the userCase', async () => {
     const body = {
       reasonableAdjustments: 'Yes',
       reasonableAdjustmentsDetail: 'Reasonable adjustments detail test text',
     };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new ReasonableAdjustmentsController();
 
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
       reasonableAdjustments: 'Yes',

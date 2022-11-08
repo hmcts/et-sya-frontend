@@ -41,9 +41,9 @@ export default class RespondentNameController {
     this.form = new Form(<FormFields>this.respondentNameContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

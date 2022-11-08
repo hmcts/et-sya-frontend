@@ -6,6 +6,8 @@ import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
 describe('Pension controller', () => {
   const t = {
     pension: {},
@@ -20,7 +22,7 @@ describe('Pension controller', () => {
     expect(response.render).toHaveBeenCalledWith('pension', expect.anything());
   });
 
-  it('should render the benefits page when no radio buttons are selected', () => {
+  it('should render the benefits page when no radio buttons are selected', async () => {
     const body = {
       claimantPensionContribution: '',
     };
@@ -28,12 +30,12 @@ describe('Pension controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
   });
 
-  it('should render the benefits page when yes radio button is selected and amount is left blank', () => {
+  it('should render the benefits page when yes radio button is selected and amount is left blank', async () => {
     const body = {
       claimantPensionContribution: YesOrNo.YES,
       claimantPensionWeeklyContribution: '',
@@ -42,44 +44,40 @@ describe('Pension controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
   });
 
-  it('should render same page if an invalid value is entered', () => {
+  it('should render same page if an invalid value is entered', async () => {
     const errors = [{ propertyName: 'claimantPensionWeeklyContribution', errorType: 'notANumber' }];
     const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: 'a' };
     const controller = new PensionController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should add the pension form value to the userCase', () => {
+  it('should add the pension form value to the userCase', async () => {
     const body = { claimantPensionContribution: YesOrNo.YES, claimantPensionWeeklyContribution: '14' };
-
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new PensionController();
 
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase).toStrictEqual(body);
   });
 
-  it('should reset contribution if No selected', () => {
+  it('should reset contribution if No selected', async () => {
     const body = { claimantPensionContribution: YesOrNo.NO };
-
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new PensionController();
 
@@ -93,7 +91,7 @@ describe('Pension controller', () => {
       lastModified: 'August 19, 2022',
     };
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.BENEFITS);
     expect(req.session.userCase.claimantPensionContribution).toStrictEqual(YesOrNo.NO);

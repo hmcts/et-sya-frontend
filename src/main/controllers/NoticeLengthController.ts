@@ -44,8 +44,8 @@ export default class NoticeLengthController {
     this.form = new Form(<FormFields>this.noticeLengthContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.AVERAGE_WEEKLY_HOURS);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

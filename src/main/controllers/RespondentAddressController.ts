@@ -106,14 +106,14 @@ export default class RespondentAddressController {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
     const nextPage =
       userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
         ? PageUrls.ACAS_CERT_NUM
         : PageUrls.WORK_ADDRESS;
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

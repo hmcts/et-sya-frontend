@@ -35,8 +35,8 @@ export default class NewJobStartDateController {
     this.form = new Form(<FormFields>this.newJobStartDateContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.NEW_JOB_PAY);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.NEW_JOB_PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -100,9 +100,9 @@ export default class PlaceOfWorkController {
     this.form = new Form(<FormFields>this.placeOfWorkContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
-    handlePostLogic(req, res, this.form, logger, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

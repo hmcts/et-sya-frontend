@@ -20,7 +20,7 @@ describe('Update Preference Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.UPDATE_PREFERENCE, expect.anything());
   });
 
-  it('should redirect to the same screen when errors are present', () => {
+  it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'claimantContactPreference', errorType: 'required' }];
     const body = { claimantContactPreference: '' };
 
@@ -28,22 +28,22 @@ describe('Update Preference Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should add the update preference form value to the userCase', () => {
+  it('should add the update preference form value to the userCase', async () => {
     const body = { claimantContactPreference: 'Email' };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
     const controller = new UpdatePreferenceController();
 
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({ claimantContactPreference: 'Email' });
   });

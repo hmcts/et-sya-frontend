@@ -99,7 +99,7 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        handlePostLogic(req, res, this.form, logger, PageUrls.TELL_US_WHAT_YOU_WANT);
+        await handlePostLogic(req, res, this.form, logger, PageUrls.TELL_US_WHAT_YOU_WANT);
       }
     } else {
       req.session.errors.push(claimSummaryError);

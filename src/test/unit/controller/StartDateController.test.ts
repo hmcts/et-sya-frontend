@@ -5,6 +5,8 @@ import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
 describe('Start date Controller', () => {
   const t = {
     'start-date': {},
@@ -34,32 +36,30 @@ describe('Start date Controller', () => {
     });
   });
 
-  it('should redirect to the same screen when errors are present', () => {
+  it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
       'startDate-day': '',
       'startDate-month': '11',
       'startDate-year': '2000',
     };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to notice period when WORKING is selected', () => {
+  it('should redirect to notice period when WORKING is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
       'startDate-year': '2000',
     };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
     const userCase = {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.WORKING,
@@ -69,12 +69,12 @@ describe('Start date Controller', () => {
 
     const req = mockRequestEmpty({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
   });
 
-  it('should redirect to notice end when NOTICE is selected', () => {
+  it('should redirect to notice end when NOTICE is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
@@ -84,18 +84,17 @@ describe('Start date Controller', () => {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.NOTICE,
     };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
   });
 
-  it('should redirect to employment end date when NO_LONGER_WORKING is selected', () => {
+  it('should redirect to employment end date when NO_LONGER_WORKING is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
@@ -105,13 +104,12 @@ describe('Start date Controller', () => {
       dobDate: { year: '1990', month: '12', day: '24' },
       isStillWorking: StillWorking.NO_LONGER_WORKING,
     };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
 
     const controller = new StartDateController();
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });

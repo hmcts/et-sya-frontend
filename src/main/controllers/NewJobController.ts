@@ -46,11 +46,11 @@ export default class NewJobController {
     this.form = new Form(<FormFields>this.newJobContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
       : PageUrls.FIRST_RESPONDENT_NAME;
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

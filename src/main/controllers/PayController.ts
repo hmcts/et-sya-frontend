@@ -53,8 +53,8 @@ export default class PayController {
     this.form = new Form(<FormFields>this.payContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.PENSION);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.PENSION);
   };
 
   public get = (req: AppRequest, res: Response): void => {

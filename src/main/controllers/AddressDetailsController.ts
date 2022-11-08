@@ -104,8 +104,8 @@ export default class AddressDetailsController {
     this.form = new Form(<FormFields>this.addressDetailsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.TELEPHONE_NUMBER);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.TELEPHONE_NUMBER);
   };
 
   public get = (req: AppRequest, res: Response): void => {

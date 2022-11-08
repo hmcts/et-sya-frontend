@@ -64,14 +64,14 @@ export default class BenefitsController {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
     if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -4,6 +4,8 @@ import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
 describe('Dob Controller', () => {
   const t = {
     'date-of-birth': {},
@@ -73,17 +75,16 @@ describe('Dob Controller', () => {
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should update draft case when date is submitted', () => {
+    it('should update draft case when date is submitted', async () => {
       const body = {
         'dobDate-day': '05',
         'dobDate-month': '11',
         'dobDate-year': '2000',
       };
       const req = mockRequestEmpty({ body });
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve({}));
       const controller = new DobController();
       const res = mockResponse();
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         dobDate: {
@@ -94,7 +95,7 @@ describe('Dob Controller', () => {
       });
     });
 
-    it('should go to the Sex and Title page when correct date is entered', () => {
+    it('should go to the Sex and Title page when correct date is entered', async () => {
       const req = mockRequest({
         body: {
           'dobDate-day': '05',
@@ -103,7 +104,7 @@ describe('Dob Controller', () => {
         },
       });
       const res = mockResponse();
-      new DobController().post(req, res);
+      await new DobController().post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.SEX_AND_TITLE);
     });

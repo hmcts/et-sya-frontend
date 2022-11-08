@@ -62,8 +62,8 @@ export default class ReasonableAdjustmentsController {
     this.form = new Form(<FormFields>this.reasonableAdjustmentsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {

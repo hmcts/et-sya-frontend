@@ -68,8 +68,8 @@ export default class PensionController {
     this.form = new Form(<FormFields>this.pensionContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.BENEFITS);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.BENEFITS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

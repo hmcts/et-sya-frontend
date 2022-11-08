@@ -46,8 +46,8 @@ export default class NewJobPayController {
     this.form = new Form(<FormFields>this.newJobPayContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
   public get = (req: AppRequest, res: Response): void => {

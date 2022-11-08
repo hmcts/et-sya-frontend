@@ -49,8 +49,8 @@ export default class UpdatePreferenceController {
     this.form = new Form(<FormFields>this.updatePrefFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.VIDEO_HEARINGS);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.VIDEO_HEARINGS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

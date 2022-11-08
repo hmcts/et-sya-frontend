@@ -60,8 +60,8 @@ export default class StillWorkingController {
     this.form = new Form(<FormFields>this.stillWorkingContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
   };
 
   public get = (req: AppRequest, res: Response): void => {

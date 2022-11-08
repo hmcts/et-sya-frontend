@@ -45,7 +45,7 @@ export default class CompensationController {
     this.form = new Form(<FormFields>this.compensationFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
@@ -54,7 +54,7 @@ export default class CompensationController {
     } else {
       redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

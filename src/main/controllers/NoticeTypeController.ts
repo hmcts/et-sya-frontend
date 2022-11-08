@@ -51,7 +51,7 @@ export default class NoticeTypeController {
     this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
@@ -61,7 +61,7 @@ export default class NoticeTypeController {
     } else {
       redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

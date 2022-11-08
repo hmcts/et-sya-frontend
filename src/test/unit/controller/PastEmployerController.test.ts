@@ -1,9 +1,12 @@
 import PastEmployerController from '../../../main/controllers/PastEmployerController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Update Past Employer Controller', () => {
   const t = {
@@ -19,7 +22,7 @@ describe('Update Past Employer Controller', () => {
     expect(response.render).toHaveBeenCalledWith('past-employer', expect.anything());
   });
 
-  it('should redirect to the same screen when errors are present', () => {
+  it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'pastEmployer', errorType: 'required' }];
     const body = { pastEmployer: '' };
 
@@ -27,24 +30,24 @@ describe('Update Past Employer Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should render are you still working page when the page submitted', () => {
+  it('should render are you still working page when the page submitted', async () => {
     const body = { pastEmployer: YesOrNo.YES };
     const controller = new PastEmployerController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.STILL_WORKING);
   });
 
-  it('should add pastEmployer to the session userCase', () => {
+  it('should add pastEmployer to the session userCase', async () => {
     const body = { pastEmployer: YesOrNo.YES };
 
     const controller = new PastEmployerController();
@@ -52,7 +55,7 @@ describe('Update Past Employer Controller', () => {
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
       pastEmployer: YesOrNo.YES,

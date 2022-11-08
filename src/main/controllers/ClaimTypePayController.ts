@@ -64,8 +64,8 @@ export default class ClaimTypePayController {
     this.form = new Form(<FormFields>this.claimTypePayFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
   };
 
   public get = (req: AppRequest, res: Response): void => {

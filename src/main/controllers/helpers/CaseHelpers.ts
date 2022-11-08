@@ -40,18 +40,16 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const handleUpdateDraftCase = (req: AppRequest, logger: Logger): void => {
+export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(response => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-        req.session.userCase = fromApiFormat(response.data);
-        req.session.save();
-      })
-      .catch(error => {
-        logger.error(error.message);
-      });
+    try {
+      const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
+      logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      req.session.userCase = fromApiFormat(response.data);
+      req.session.save();
+    } catch (error) {
+      logger.error(error.message);
+    }
   }
 };
 
@@ -128,19 +126,19 @@ export const handleUploadDocument = async (
   }
 };
 
-export const handlePostLogic = (
+export const handlePostLogic = async (
   req: AppRequest,
   res: Response,
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string
-): void => {
+): Promise<void> => {
   setUserCase(req, form);
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
   if (errors.length === 0 || errors === undefined) {
     req.session.errors = [];
-    handleUpdateDraftCase(req, logger);
+    await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
       return res.redirect(PageUrls.CLAIM_SAVED);
     } else {
@@ -151,18 +149,18 @@ export const handlePostLogic = (
   }
 };
 
-export const handlePostLogicForRespondent = (
+export const handlePostLogicForRespondent = async (
   req: AppRequest,
   res: Response,
   form: Form,
   logger: LoggerInstance,
   redirectUrl: string
-): void => {
+): Promise<void> => {
   setUserCaseForRespondent(req, form);
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
   if (errors.length === 0 || errors === undefined) {
-    handleUpdateDraftCase(req, logger);
+    await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
       return res.redirect(PageUrls.CLAIM_SAVED);
     } else {

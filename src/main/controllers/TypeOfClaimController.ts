@@ -90,7 +90,7 @@ export default class TypeOfClaimController {
     this.form = new Form(<FormFields>this.typeOfClaimFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0 || errors === undefined) {
@@ -131,7 +131,7 @@ export default class TypeOfClaimController {
       }
       // Only called when returning from CYA page
       if (req.session.userCase.id) {
-        handleUpdateDraftCase(req, logger);
+        await handleUpdateDraftCase(req, logger);
       }
       returnNextPage(req, res, redirectUrl);
     } else {

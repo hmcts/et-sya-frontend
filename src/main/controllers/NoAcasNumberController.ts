@@ -66,14 +66,14 @@ export default class NoAcasNumberController {
     this.form = new Form(<FormFields>this.noAcasNumberContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (req.body.saveForLater) {
       redirectUrl = PageUrls.CLAIM_SAVED;
     } else {
       redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     }
-    handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

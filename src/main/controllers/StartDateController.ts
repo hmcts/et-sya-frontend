@@ -40,7 +40,7 @@ export default class StartDateController {
     this.form = new Form(<FormFields>this.startDateContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
     const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
@@ -50,7 +50,7 @@ export default class StartDateController {
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

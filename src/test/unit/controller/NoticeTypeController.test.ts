@@ -1,9 +1,12 @@
 import NoticeTypeController from '../../../main/controllers/NoticeTypeController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { WeeksOrMonths } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Notice Type Controller', () => {
   const t = {
@@ -20,29 +23,29 @@ describe('Notice Type Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_TYPE, expect.anything());
   });
 
-  it('should render the notice length page when weeks or months radio button is selected', () => {
+  it('should render the notice length page when weeks or months radio button is selected', async () => {
     const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
     const controller = new NoticeTypeController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_LENGTH);
   });
 
-  it('should render the average weekly hours page when neither radio button is selected', () => {
+  it('should render the average weekly hours page when neither radio button is selected', async () => {
     const body = { noticePeriodUnit: '' };
     const controller = new NoticeTypeController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
   });
 
-  it('should add the notice period to the session userCase', () => {
+  it('should add the notice period to the session userCase', async () => {
     const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
 
     const controller = new NoticeTypeController();
@@ -50,7 +53,7 @@ describe('Notice Type Controller', () => {
     const req = mockRequestEmpty({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriodUnit: WeeksOrMonths.WEEKS,

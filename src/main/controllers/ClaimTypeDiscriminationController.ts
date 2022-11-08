@@ -83,12 +83,12 @@ export default class ClaimTypeDiscriminationController {
     this.form = new Form(<FormFields>this.claimTypeDiscriminationFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

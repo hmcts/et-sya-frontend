@@ -37,14 +37,14 @@ export default class TribunalRecommendationController {
     this.form = new Form(<FormFields>this.tribunalRecommendationFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
       redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
       redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

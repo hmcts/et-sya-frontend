@@ -1,10 +1,13 @@
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Respondent Address Controller', () => {
   const t = {
@@ -25,7 +28,7 @@ describe('Respondent Address Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ADDRESS, expect.anything());
   });
 
-  it('should render the Work Address page on post', () => {
+  it('should render the Work Address page on post', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -39,12 +42,12 @@ describe('Respondent Address Controller', () => {
 
     request.session.userCase = userCaseWithRespondent;
 
-    controller.post(request, response);
+    await controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/respondent/1/work-address');
   });
 
-  it('should render the Acas Cert Num page on post when more than one respondent', () => {
+  it('should render the Acas Cert Num page on post when more than one respondent', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -73,12 +76,12 @@ describe('Respondent Address Controller', () => {
       lastModified: 'August 19, 2022',
     };
 
-    controller.post(request, response);
+    await controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
   });
 
-  it('should render the Acas Cert Num page when claimant did not work for the respondent', () => {
+  it('should render the Acas Cert Num page when claimant did not work for the respondent', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -104,12 +107,12 @@ describe('Respondent Address Controller', () => {
       lastModified: 'August 19, 2022',
     };
 
-    controller.post(request, response);
+    await controller.post(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
   });
 
-  it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
+  it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', async () => {
     const body = { saveForLater: true };
     const controller = new RespondentAddressController();
 
@@ -133,12 +136,12 @@ describe('Respondent Address Controller', () => {
       lastModified: 'August 19, 2022',
     };
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
-  it('should add respondent address to the session userCase', () => {
+  it('should add respondent address to the session userCase', async () => {
     const body = {
       respondentAddress1: '10 test street',
       respondentAddressTown: 'test',
@@ -166,7 +169,7 @@ describe('Respondent Address Controller', () => {
       lastModified: 'August 19, 2022',
     };
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(req.session.userCase.respondents[0].respondentAddress1).toStrictEqual('10 test street');
     expect(req.session.userCase.respondents[0].respondentAddressTown).toStrictEqual('test');
     expect(req.session.userCase.respondents[0].respondentAddressCountry).toStrictEqual('Test Country');

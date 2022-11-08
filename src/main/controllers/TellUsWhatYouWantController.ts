@@ -59,7 +59,7 @@ export default class TellUsWhatYouWantController {
     this.form = new Form(<FormFields>this.tellUsWhatYouWantFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (req.body.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
       redirectUrl = PageUrls.COMPENSATION;
@@ -70,7 +70,7 @@ export default class TellUsWhatYouWantController {
     } else {
       redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
-    handlePostLogic(req, res, this.form, logger, redirectUrl);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

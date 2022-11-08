@@ -41,8 +41,8 @@ export default class AverageWeeklyHoursController {
     this.form = new Form(<FormFields>this.averageWeeklyHoursContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    handlePostLogic(req, res, this.form, logger, PageUrls.PAY);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {
