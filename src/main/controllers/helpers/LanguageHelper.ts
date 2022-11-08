@@ -16,30 +16,44 @@ export const setUrlLanguage = (req: AppRequest, redirectUrl: string): string => 
 };
 
 export const setCallbackUrlLanguage = (req: AppRequest, languageRequestParam: string): string => {
-  if ((req.cookies.i18next as string)?.includes(languages.ENGLISH_URL_PARAMETER)) {
-    languageRequestParam = languages.ENGLISH;
+  if ((req.cookies.i18next as string)?.includes(languages.WELSH)) {
+    languageRequestParam = languages.WELSH_URL_PARAMETER;
   }
-  if ((req.cookies.i18next as string)?.includes(languages.WELSH_URL_PARAMETER)) {
-    languageRequestParam = languages.WELSH;
+  if ((req.cookies.i18next as string)?.includes(languages.ENGLISH)) {
+    languageRequestParam = languages.ENGLISH_URL_PARAMETER;
   }
   return languageRequestParam;
 };
 
 export const setI18nLanguageCookie = (req: AppRequest, i18nLanguageCookie: string): string => {
-  if ((req.url as string)?.includes(languages.WELSH_URL_PARAMETER || languages.WELSH_LOCALE)) {
+  if (
+    (req.url as string)?.includes(languages.WELSH_URL_PARAMETER) ||
+    (req.url as string)?.includes(languages.WELSH_LOCALE)
+  ) {
     i18nLanguageCookie = languages.WELSH;
   }
-  if ((req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER || languages.ENGLISH_LOCALE)) {
+  if (
+    (req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER) ||
+    (req.url as string)?.includes(languages.ENGLISH_LOCALE)
+  ) {
     i18nLanguageCookie = languages.ENGLISH;
   }
   return i18nLanguageCookie;
 };
 
 export const setChangeAnswersUrlLanguage = (req: AppRequest, redirectUrlParam: string): string => {
-  if (req.session.lang === languages.WELSH || (req.url as string)?.includes(languages.WELSH_URL_PARAMETER)) {
+  if (
+    req.session.lang === languages.WELSH ||
+    (req.url as string)?.includes(languages.WELSH_URL_PARAMETER) ||
+    (req.url as string)?.includes(languages.WELSH_LOCALE)
+  ) {
     redirectUrlParam = languages.WELSH_URL_PARAMETER;
   }
-  if (req.session.lang === languages.ENGLISH || (req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER)) {
+  if (
+    req.session.lang === languages.ENGLISH ||
+    (req.url as string)?.includes(languages.ENGLISH_URL_PARAMETER) ||
+    (req.url as string)?.includes(languages.ENGLISH_LOCALE)
+  ) {
     redirectUrlParam = languages.ENGLISH_URL_PARAMETER;
   }
   return redirectUrlParam;

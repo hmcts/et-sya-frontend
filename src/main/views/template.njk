@@ -44,8 +44,15 @@
   <!-- End of hidden session object for user already logged in check-->
 {% endblock %}
 
+{% set languageParam = "" %}
+{% if "lng=cy" in currentUrl %}
+  {% set languageParam = "?lng=cy" %}
+{% else %}
+  {% set languageParam = "?lng=en" %}
+{% endif %}
+
 {% set logInOrOut = {
-  href: "/logout",
+  href: "/logout" + languageParam,
   text: signOut,
   active: false
 }
@@ -77,7 +84,7 @@ if isLoggedIn %}
 
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
-   {% set phaseBarText = "beta" %}
+  {% set phaseBarText = "beta" %}
 
   {% if welshEnabled %}
     {% set queryStringConcat = "" %}

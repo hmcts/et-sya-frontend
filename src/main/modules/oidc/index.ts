@@ -2,7 +2,6 @@ import config from 'config';
 import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
-import { setI18nLanguageCookie } from '../../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
@@ -24,7 +23,7 @@ export class Oidc {
       let stateParam = '';
       let languageParam = '';
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
-      languageParam = setI18nLanguageCookie(req, req.cookies.i18next);
+      languageParam = req.cookies.i18next;
       res.redirect(getRedirectUrl(req, serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
@@ -77,6 +76,7 @@ export const idamCallbackHandler = async (
   }
 
   const guid = String(req.query?.state);
+  const languageParam = req.cookies.idam_ui_locales;
 
   if (guid === EXISTING_USER) {
     if (!redisClient) {
@@ -85,7 +85,7 @@ export const idamCallbackHandler = async (
       return next(err);
     }
     const redirectUrl =
-      req.session.lang === languages.WELSH
+      languageParam === languages.WELSH
         ? PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER
         : PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER;
     return res.redirect(redirectUrl);
