@@ -19,18 +19,18 @@ describe('Whistleblowing Claims Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should not require input for forwarding whistleblower claim input', () => {
+    it('should not require input for forwarding whistleblower claim input', async () => {
       const req = mockRequest({ body: {} });
       const res = mockResponse();
-      new WhistleblowingClaimsController().post(req, res);
+      await new WhistleblowingClaimsController().post(req, res);
 
       expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should require regulator or body name if selected yes for forwarding', () => {
+    it('should require regulator or body name if selected yes for forwarding', async () => {
       const req = mockRequest({ body: { whistleblowingClaim: YesOrNo.YES } });
       const res = mockResponse();
-      new WhistleblowingClaimsController().post(req, res);
+      await new WhistleblowingClaimsController().post(req, res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'required' }];
 
@@ -38,7 +38,7 @@ describe('Whistleblowing Claims Controller', () => {
       expect(req.session.errors).toEqual(expectedErrors);
     });
 
-    it('should require not too short regulator or body name if selected yes for forwarding', () => {
+    it('should require not too short regulator or body name if selected yes for forwarding', async () => {
       const Req = mockRequest({
         body: {
           whistleblowingClaim: YesOrNo.YES,
@@ -46,7 +46,7 @@ describe('Whistleblowing Claims Controller', () => {
         },
       });
       const Res = mockResponse();
-      new WhistleblowingClaimsController().post(Req, Res);
+      await new WhistleblowingClaimsController().post(Req, Res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
@@ -55,7 +55,7 @@ describe('Whistleblowing Claims Controller', () => {
       expect(Req.session.errors).toEqual(expectedErrors);
     });
 
-    it('should require not too long regulator or body name if selected yes for forwarding', () => {
+    it('should require not too long regulator or body name if selected yes for forwarding', async () => {
       const Req = mockRequest({
         body: {
           whistleblowingClaim: YesOrNo.YES,
@@ -63,7 +63,7 @@ describe('Whistleblowing Claims Controller', () => {
         },
       });
       const Res = mockResponse();
-      new WhistleblowingClaimsController().post(Req, Res);
+      await new WhistleblowingClaimsController().post(Req, Res);
 
       const expectedErrors = [{ propertyName: 'whistleblowingEntityName', errorType: 'invalidLength' }];
 
@@ -72,7 +72,7 @@ describe('Whistleblowing Claims Controller', () => {
       expect(Req.session.errors).toEqual(expectedErrors);
     });
 
-    it('should assign userCase from the page form data', () => {
+    it('should assign userCase from the page form data', async () => {
       const req = mockRequest({
         body: {
           whistleblowingClaim: YesOrNo.YES,
@@ -81,11 +81,30 @@ describe('Whistleblowing Claims Controller', () => {
       });
       const res = mockResponse();
 
-      new WhistleblowingClaimsController().post(req, res);
+      await new WhistleblowingClaimsController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         whistleblowingClaim: YesOrNo.YES,
         whistleblowingEntityName: 'name',
+      });
+    });
+
+    it('should assign No answer to userCase and reset whistleblowingEntityName', async () => {
+      const req = mockRequest({
+        body: {
+          whistleblowingClaim: YesOrNo.NO,
+        },
+      });
+      const res = mockResponse();
+
+      req.session.userCase.whistleblowingClaim = YesOrNo.YES;
+      req.session.userCase.whistleblowingEntityName = 'ESMA';
+
+      await new WhistleblowingClaimsController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        whistleblowingClaim: YesOrNo.NO,
+        whistleblowingEntityName: undefined,
       });
     });
   });

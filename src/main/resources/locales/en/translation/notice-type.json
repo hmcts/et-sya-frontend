@@ -1,6 +1,8 @@
 {
   "title": "Notice period",
-  "labelHidden": "Is your notice period in weeks or months?",
+  "legend": "Is your notice period in weeks or months? (optional)",
+  "workingHeader": "Is your notice period in weeks or months? (optional)",
+  "noLongerWorkingHeader": "Was your notice period in weeks or months? (optional)",
   "h1": {
     "workingOrNotice": "Is your notice period in weeks or months? (optional)",
     "noLongerWorking": "Was your notice period in weeks or months? (optional)"

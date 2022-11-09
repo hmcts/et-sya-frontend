@@ -3,7 +3,8 @@ import {
   getClaimSummaryError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
-  handleSessionErrors,
+  handleErrors,
+  returnSessionErrors,
 } from '../../../../main/controllers/helpers/ErrorHelpers';
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
@@ -232,7 +233,7 @@ describe('ACAS Certificate Number Errors', () => {
   });
 });
 
-describe('handleSessionErrors', () => {
+describe('returnSessionErrors + handleErrors', () => {
   it('return PageUrls.CLAIM_SAVED when saveForLater and requiredErrors exists', () => {
     const req = mockRequest({
       session: mockSession([], [], []),
@@ -249,7 +250,9 @@ describe('handleSessionErrors', () => {
 
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
-    handleSessionErrors(req, res, form, '');
+
+    const errors = returnSessionErrors(req, form);
+    handleErrors(req, res, errors);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_SAVED);
   });
 
@@ -270,8 +273,10 @@ describe('handleSessionErrors', () => {
     );
     const form = mockForm({ testFormField: formField });
     const res = mockResponse();
+
+    const errors = returnSessionErrors(req, form);
     expect(function () {
-      handleSessionErrors(req, res, form, '');
+      handleErrors(req, res, errors);
     }).toThrow(err);
   });
 });

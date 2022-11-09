@@ -1,7 +1,10 @@
 import NoticeEndController from '../../../main/controllers/NoticeEndController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Notice end Controller', () => {
   const t = {
@@ -9,7 +12,7 @@ describe('Notice end Controller', () => {
     common: {},
   };
 
-  it('should render notice end page', () => {
+  it('should render notice end page', async () => {
     const noticeEndController = new NoticeEndController();
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -20,11 +23,11 @@ describe('Notice end Controller', () => {
     const body = { noticeEnds: '' };
     const req = mockRequest({ body });
     const res = mockResponse();
-    noticeEndController.post(req, res);
+    await noticeEndController.post(req, res);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_END, expect.anything());
   });
 
-  it('should redirect to notice type on successful post', () => {
+  it('should redirect to notice type on successful post', async () => {
     const body = {
       'noticeEnds-day': '21',
 
@@ -38,7 +41,7 @@ describe('Notice end Controller', () => {
 
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_TYPE);
   });
@@ -55,7 +58,7 @@ describe('Notice end Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date is in the future', () => {
+  it('should redirect to the same screen when date is in the future', async () => {
     const errors = [
       { propertyName: 'noticeEnds', errorType: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
     ];
@@ -68,12 +71,12 @@ describe('Notice end Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date is in the 10 years past', () => {
+  it('should redirect to the same screen when date is in the 10 years past', async () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'invalidDateInPast', fieldName: 'day' }];
     const body = {
       'noticeEnds-day': '23',
@@ -84,12 +87,12 @@ describe('Notice end Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date fields are empty', () => {
+  it('should redirect to the same screen when date fields are empty', async () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'required', fieldName: 'day' }];
     const body = {
       'noticeEnds-day': '',
@@ -100,7 +103,7 @@ describe('Notice end Controller', () => {
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
