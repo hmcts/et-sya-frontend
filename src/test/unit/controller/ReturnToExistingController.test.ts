@@ -43,6 +43,6 @@ describe('Return To Existing Controller', () => {
     controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(LegacyUrls.ET1_BASE);
-    expect(req.session.errors).toEqual([]);
+    expect(req.session.errors).toEqual(undefined);
   });
 });

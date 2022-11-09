@@ -9,8 +9,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
-import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
 
@@ -81,7 +81,6 @@ export default class DescribeWhatHappenedController {
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(req.url);
     }
-    setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const claimSummaryError = getClaimSummaryError(
@@ -100,8 +99,7 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-        handleUpdateDraftCase(req, logger);
+        await handlePostLogic(req, res, this.form, logger, PageUrls.TELL_US_WHAT_YOU_WANT);
       }
     } else {
       req.session.errors.push(claimSummaryError);

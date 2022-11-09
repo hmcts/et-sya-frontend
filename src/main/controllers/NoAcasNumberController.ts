@@ -9,10 +9,9 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { getRespondentIndex } from './helpers/RespondentHelpers';
 
 const logger = getLogger('NoAcasNumberController');
 
@@ -67,16 +66,14 @@ export default class NoAcasNumberController {
     this.form = new Form(<FormFields>this.noAcasNumberContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForRespondent(req, this.form);
-    handleUpdateDraftCase(req, logger);
-    const { saveForLater } = req.body;
-
-    if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    let redirectUrl;
+    if (req.body.saveForLater) {
+      redirectUrl = PageUrls.CLAIM_SAVED;
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.RESPONDENT_DETAILS_CHECK);
+      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     }
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

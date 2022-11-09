@@ -8,8 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('TelNumberController');
@@ -44,10 +43,8 @@ export default class TelNumberController {
     this.form = new Form(<FormFields>this.telNumberContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.UPDATE_PREFERENCES);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.UPDATE_PREFERENCES);
   };
 
   public get = (req: AppRequest, res: Response): void => {

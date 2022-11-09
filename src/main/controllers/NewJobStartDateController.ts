@@ -11,8 +11,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const new_job_start_date: DateFormFields = {
@@ -36,10 +35,8 @@ export default class NewJobStartDateController {
     this.form = new Form(<FormFields>this.newJobStartDateContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.NEW_JOB_PAY);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.NEW_JOB_PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {

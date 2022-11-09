@@ -1,6 +1,7 @@
 import AcasMultipleController from '../../../main/controllers/AcasMultipleController';
 import { AppRequest } from '../../../main/definitions/appRequest';
-import { mockRequest } from '../mocks/mockRequest';
+import { PageUrls } from '../../../main/definitions/constants';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Acas Multiple Controller', () => {
@@ -20,7 +21,7 @@ describe('Acas Multiple Controller', () => {
 
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'acasMultiple', errorType: 'required' }];
-    const body = { 'acas-multiple': '' };
+    const body = { acasMultiple: '' };
 
     const controller = new AcasMultipleController();
 
@@ -30,5 +31,18 @@ describe('Acas Multiple Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
+  });
+
+  it('should add Yes selection to user case and continue to Type of claim page', () => {
+    const body = { acasMultiple: 'Yes' };
+
+    const controller = new AcasMultipleController();
+
+    const req = mockRequestEmpty({ body });
+    const res = mockResponse();
+    controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TYPE_OF_CLAIM);
+    expect(req.session.userCase).toEqual(body);
   });
 });

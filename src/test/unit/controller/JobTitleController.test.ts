@@ -1,9 +1,10 @@
 import JobTitleController from '../../../main/controllers/JobTitleController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormError } from '../../../main/definitions/form';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 describe('Job Title Controller', () => {
   const t = {
     'job-title': {},
@@ -22,33 +23,30 @@ describe('Job Title Controller', () => {
   });
 
   describe('post()', () => {
-    it('should not return an error when the job title is empty', () => {
+    it('should not return an error when the job title is empty', async () => {
       const body = {
         jobTitle: '',
       };
-      const errors: FormError[] = [];
       const controller = new JobTitleController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
-      expect(req.session.errors).toEqual(errors);
+      expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should add the job title to the session userCase', () => {
+    it('should add the job title to the session userCase', async () => {
       const body = { jobTitle: 'Vice President Branch Co-Manager' };
 
       const controller = new JobTitleController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
       expect(req.session.userCase).toStrictEqual({
@@ -57,7 +55,7 @@ describe('Job Title Controller', () => {
     });
   });
 
-  it('should redirect to respondent details check if there is a returnUrl', () => {
+  it('should redirect to respondent details check if there is a returnUrl', async () => {
     const body = { jobTitle: 'Assistant Vice President Branch Manager' };
 
     const controller = new JobTitleController();
@@ -67,7 +65,7 @@ describe('Job Title Controller', () => {
 
     req.session.returnUrl = PageUrls.CHECK_ANSWERS;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });
