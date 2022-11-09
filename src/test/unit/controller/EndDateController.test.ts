@@ -18,7 +18,7 @@ describe('End date Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.END_DATE, expect.anything());
   });
 
-  it('should redirect to the same screen when date is in the future', () => {
+  it('should redirect to the same screen when date is in the future', async () => {
     const errors = [{ propertyName: 'endDate', errorType: 'invalidDateInFuture', fieldName: 'day' }];
     const body = {
       'endDate-day': '23',
@@ -30,32 +30,13 @@ describe('End date Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '23',
-        month: '11',
-        year: '2039',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date is in the 10 years past', () => {
+  it('should redirect to the same screen when date is in the 10 years past', async () => {
     const errors = [{ propertyName: 'endDate', errorType: 'invalidDateMoreThanTenYearsInPast', fieldName: 'year' }];
     const body = {
       'endDate-day': '23',
@@ -67,32 +48,13 @@ describe('End date Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '23',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when day is empty', () => {
+  it('should redirect to the same screen when day is empty', async () => {
     const errors = [{ propertyName: 'endDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
       'endDate-day': '',
@@ -104,32 +66,13 @@ describe('End date Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date fields are empty', () => {
+  it('should redirect to the same screen when date fields are empty', async () => {
     const errors = [{ propertyName: 'endDate', errorType: 'required', fieldName: 'day' }];
     const body = {
       'endDate-day': '',
@@ -141,26 +84,7 @@ describe('End date Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      endDate: {
-        day: '',
-        month: '',
-        year: '',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);

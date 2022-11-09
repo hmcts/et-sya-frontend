@@ -8,8 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('TellUsWhatYouWantController');
@@ -60,18 +59,18 @@ export default class TellUsWhatYouWantController {
     this.form = new Form(<FormFields>this.tellUsWhatYouWantFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
-      handleSessionErrors(req, res, this.form, PageUrls.COMPENSATION);
-    } else if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
-      handleSessionErrors(req, res, this.form, PageUrls.TRIBUNAL_RECOMMENDATION);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    let redirectUrl;
+    if (req.body.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY)) {
+      redirectUrl = PageUrls.COMPENSATION;
+    } else if (req.body.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
+      redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
     } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+      redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

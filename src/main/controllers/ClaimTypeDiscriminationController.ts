@@ -9,8 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimTypeDiscriminationController');
@@ -84,14 +83,12 @@ export default class ClaimTypeDiscriminationController {
     this.form = new Form(<FormFields>this.claimTypeDiscriminationFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
       redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

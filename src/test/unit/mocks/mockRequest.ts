@@ -40,6 +40,41 @@ export const mockRequest = ({
   return req;
 };
 
+export const mockRequestEmpty = ({
+  body,
+  userCase,
+  session,
+  t,
+  file,
+}: {
+  body?: AnyRecord;
+  userCase?: Partial<CaseWithId>;
+  session?: AnyRecord;
+  t?: AnyRecord;
+  file?: Express.Multer.File;
+}): AppRequest => {
+  const req = {
+    t: () => t,
+  } as unknown as AppRequest;
+
+  req.t = jest.fn().mockReturnValue(req);
+  req.body = body;
+  req.file = file;
+  req.params = {
+    respondentNumber: '1',
+  };
+  req.session = {
+    userCase: {
+      ...userCase,
+    } as CaseWithId,
+    ...session,
+    save: jest.fn(done => (done ? done() : true)),
+    lang: 'en',
+    errors: undefined,
+  } as unknown as AppSession;
+  return req;
+};
+
 export const mockRequestWithTranslation = (
   {
     body,

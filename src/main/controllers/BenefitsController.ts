@@ -9,8 +9,7 @@ import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('BenefitsController');
@@ -65,17 +64,14 @@ export default class BenefitsController {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    const session = req.session;
-    setUserCase(req, this.form);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
-    if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

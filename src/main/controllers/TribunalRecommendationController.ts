@@ -9,8 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('TribunalRecommendationController');
@@ -38,14 +37,14 @@ export default class TribunalRecommendationController {
     this.form = new Form(<FormFields>this.tribunalRecommendationFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    let redirectUrl;
     if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
-      handleSessionErrors(req, res, this.form, PageUrls.WHISTLEBLOWING_CLAIMS);
+      redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_DETAILS_CHECK);
+      redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
     }
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

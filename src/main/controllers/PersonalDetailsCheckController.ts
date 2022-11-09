@@ -9,10 +9,8 @@ import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../def
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-
 const logger = getLogger('PersonalDetailsCheckController');
 
 export default class PersonalDetailsCheckController {
@@ -39,10 +37,8 @@ export default class PersonalDetailsCheckController {
     this.form = new Form(<FormFields>this.personalDetailsCheckContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.CLAIM_STEPS);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_STEPS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
