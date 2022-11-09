@@ -1,4 +1,5 @@
 import RespondentAddressController from '../../../main/controllers/RespondentAddressController';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { mockRequest } from '../mocks/mockRequest';
@@ -76,6 +77,38 @@ describe('Respondent Address Controller', () => {
 
     expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
   });
+
+  it('should render the Acas Cert Num page when claimant did not work for the respondent', () => {
+    const body = {
+      respondentAddress1: '10 test street',
+      respondentAddressTown: 'test',
+      respondentAddressPostcode: 'AB1 2CD',
+      respondentAddressCountry: 'Test Country',
+    };
+    const controller = new RespondentAddressController();
+
+    const response = mockResponse();
+    const request = mockRequest({ body });
+
+    request.session.userCase = {
+      id: '12354',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      respondents: [
+        {
+          respondentNumber: 1,
+          respondentName: 'Globo Gym',
+        },
+      ],
+      pastEmployer: YesOrNo.NO,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    };
+
+    controller.post(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/respondent/1/acas-cert-num');
+  });
+
   it('should redirect to your claim has been saved page when save as draft selected and nothing is entered', () => {
     const body = { saveForLater: true };
     const controller = new RespondentAddressController();
