@@ -10,8 +10,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ReasonableAdjustmentsController');
@@ -25,8 +24,9 @@ export default class ReasonableAdjustmentsController {
         classes: 'govuk-radios',
         id: 'reasonableAdjustments',
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelSize: 'l',
+        labelHidden: false,
         values: [
           {
             name: 'reasonableAdjustments',
@@ -62,10 +62,8 @@ export default class ReasonableAdjustmentsController {
     this.form = new Form(<FormFields>this.reasonableAdjustmentsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.PERSONAL_DETAILS_CHECK);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.PERSONAL_DETAILS_CHECK);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -8,8 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
@@ -22,8 +21,9 @@ export default class NoticePeriodController {
       noticePeriod: {
         id: 'notice-period',
         type: 'radios',
-        label: (l: AnyRecord): string => l.h1,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelSize: 'xl',
+        labelHidden: false,
         classes: 'govuk-radios--inline',
         values: [
           {
@@ -51,13 +51,11 @@ export default class NoticePeriodController {
     this.form = new Form(<FormFields>this.noticePeriodFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NOTICE_TYPE
       : PageUrls.AVERAGE_WEEKLY_HOURS;
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

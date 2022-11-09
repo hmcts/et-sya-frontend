@@ -1,8 +1,11 @@
 import TelNumberController from '../../../main/controllers/TelNumberController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Telephone number Controller', () => {
   const t = {
@@ -21,7 +24,7 @@ describe('Telephone number Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the same screen when errors are present', () => {
+    it('should redirect to the same screen when errors are present', async () => {
       const errors = [{ propertyName: 'telNumber', errorType: 'nonnumeric' }];
       const body = { telNumber: 'not valid' };
 
@@ -29,22 +32,21 @@ describe('Telephone number Controller', () => {
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should assign userCase from formData', () => {
+    it('should assign userCase from formData', async () => {
       const body = { telNumber: '01234567890' };
 
       const controller = new TelNumberController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.UPDATE_PREFERENCES);
       expect(req.session.userCase).toStrictEqual({

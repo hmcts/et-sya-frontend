@@ -18,20 +18,20 @@ describe('Tell Us What You Want Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should not require input (all fields are optional)', () => {
+    it('should not require input (all fields are optional)', async () => {
       const req = mockRequest({ body: {} });
-      new TellUsWhatYouWantController().post(req, mockResponse());
+      await new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should assign userCase from the page form data', () => {
+    it('should assign userCase from the page form data', async () => {
       const req = mockRequest({
         body: {
           tellUsWhatYouWant: ['compensationOnly'],
         },
       });
-      new TellUsWhatYouWantController().post(req, mockResponse());
+      await new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.userCase).toMatchObject({ tellUsWhatYouWant: ['compensationOnly'] });
     });
