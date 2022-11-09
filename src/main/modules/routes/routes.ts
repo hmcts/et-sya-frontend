@@ -39,6 +39,7 @@ import NewJobController from '../../controllers/NewJobController';
 import NewJobPayController from '../../controllers/NewJobPayController';
 import NewJobStartDateController from '../../controllers/NewJobStartDateController';
 import NoAcasNumberController from '../../controllers/NoAcasNumberController';
+import NotFoundController from '../../controllers/NotFoundController';
 import NoticeEndController from '../../controllers/NoticeEndController';
 import NoticeLengthController from '../../controllers/NoticeLengthController';
 import NoticePeriodController from '../../controllers/NoticePeriodController';
@@ -217,6 +218,7 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.GET_SUBMITTED_CASE_DOCUMENT, new SubmittedCaseDocumentController().get);
+    app.get(PageUrls.NOT_FOUND, new NotFoundController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
