@@ -9,8 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ClaimTypePayController');
@@ -21,8 +20,9 @@ export default class ClaimTypePayController {
     fields: {
       claimTypePay: {
         id: 'claimTypePay',
-        label: l => l.h1,
-        labelHidden: true,
+        label: l => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         type: 'checkboxes',
         isPageHeading: true,
         hint: l => l.selectAllHint,
@@ -64,10 +64,8 @@ export default class ClaimTypePayController {
     this.form = new Form(<FormFields>this.claimTypePayFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.DESCRIBE_WHAT_HAPPENED);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.DESCRIBE_WHAT_HAPPENED);
   };
 
   public get = (req: AppRequest, res: Response): void => {

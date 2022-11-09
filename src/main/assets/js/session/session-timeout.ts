@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { PageUrls } from '../../../definitions/constants';
 import * as i18n from '../../../resources/locales/en/translation/template.json';
+import { focusToGovUKErrorDiv } from '../set-focus';
 
 export default class SessionTimeout {
   public sessionExpirationTime: string;
@@ -42,6 +43,7 @@ export default class SessionTimeout {
   init(): void {
     this.addListeners();
     void this.extendSession();
+    focusToGovUKErrorDiv();
   }
 
   addListeners = (): void => {
@@ -139,17 +141,27 @@ export default class SessionTimeout {
   }
 
   extendSession = (): Promise<void> => {
-    if (this.isLoggedIn.value === 'true') {
+    focusToGovUKErrorDiv();
+    if (
+      this.isLoggedIn !== null &&
+      this.isLoggedIn !== undefined &&
+      this.isLoggedIn.value !== null &&
+      this.isLoggedIn.value !== '' &&
+      this.isLoggedIn.value !== undefined &&
+      this.isLoggedIn.value === 'true'
+    ) {
       return axios
         .get('/extend-session')
         .then((response: AxiosResponse): void => {
           this.sessionExpirationTime = response.data.timeout;
           this.restartCounters();
           this.closeModal();
+          focusToGovUKErrorDiv();
         })
         .catch(() => {
           this.removeListeners();
           this.stopCounters();
+          focusToGovUKErrorDiv();
         });
     }
   };
