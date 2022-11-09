@@ -71,7 +71,7 @@ module.exports = async function (noticePeriodContract, noticePeriod) {
 
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   //I.waitForElement('#employee-benefits', testConfig.TestWaitForTextTimeLimit);
-  I.see('Do or did you receive any employee benefits?');
+  I.see('Employee benefits');
   I.checkOption('input[id=employee-benefits]');
   I.click(commonConfig.saveAndContinue);
 };
