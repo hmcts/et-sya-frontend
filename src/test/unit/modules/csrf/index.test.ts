@@ -6,6 +6,8 @@ import { Browser, Page, chromium } from 'playwright';
 
 import { app } from '../../../../main/app';
 
+const url = process.env.TEST_URL || 'https://localhost:3001';
+
 describe('test csrf', () => {
   let browser: Browser;
   let page: Page;
@@ -20,7 +22,7 @@ describe('test csrf', () => {
   beforeEach(async () => {
     app.locals.CSRF_DISABLED = false;
     page = await browser.newPage({ ignoreHTTPSErrors: true });
-    await page.goto('https://localhost:3001/work-postcode');
+    await page.goto(url + '/work-postcode');
 
     return async () => {
       await page.close();
