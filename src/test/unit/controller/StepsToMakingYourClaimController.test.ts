@@ -3,6 +3,7 @@ import { Application } from 'express';
 import redis from 'redis-mock';
 
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -11,11 +12,12 @@ import * as cacheService from '../../../main/services/CacheService';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockSession } from '../mocks/mockApp';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 // All page includes links there is no redirect page that is why did not check
 // response.redirect
@@ -70,7 +72,7 @@ describe('Steps to Making your claim Controller', () => {
       config: undefined,
     };
     const res = mockResponse();
-    const req = mockRequest({});
+    const req = mockRequestEmpty({});
     req.url = '/testPageUrl?lng=cy';
     req.session.userCase.id = undefined;
     req.app = {} as Application;

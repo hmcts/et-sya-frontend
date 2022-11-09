@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { validateTitlePreference } from '../components/form/validator';
@@ -9,10 +8,12 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('SexAndTitleController');
 
 export default class SexAndTitleController {
   private readonly form: Form;
@@ -53,14 +54,12 @@ export default class SexAndTitleController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.sexAndTitleContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.ADDRESS_DETAILS);
-    handleUpdateDraftCase(req, this.logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

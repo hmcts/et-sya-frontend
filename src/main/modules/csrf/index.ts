@@ -12,10 +12,6 @@ const INVALID_CSRF_CODE = 'EBADCSRFTOKEN';
 
 const csrf = csurf({ cookie: false }); // DON'T ENABLE COOKIE, VULNERABILITY WITH CSURF
 
-// todo tests required - figure out how to maintain session with supertest:
-// [ ] csrf works
-// [ ] csrf altered
-// [ ] multiple users
 export default class CSRFToken {
   public enableFor(app: Application): void {
     app.use(csrf, (req, res, next) => {

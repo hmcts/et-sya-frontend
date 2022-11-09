@@ -1,7 +1,8 @@
 import ValidNoAcasReasonController from '../../../main/controllers/ValidNoAcasReasonController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Valid no acas reason Controller', () => {
@@ -38,11 +39,12 @@ describe('Valid no acas reason Controller', () => {
     it('should assign userCase from formData for Valid No Acas Reason', () => {
       const body = { validNoAcasReason: YesOrNo.YES };
 
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
       const controller = new ValidNoAcasReasonController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
       controller.post(req, res);
 

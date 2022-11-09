@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,9 +12,9 @@ import {
   submitButton,
 } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const pay_before_tax: CurrencyFormFields = {
@@ -30,6 +29,8 @@ const pay_interval: PayIntervalRadioFormFields = {
   label: (l: AnyRecord): string => l.weeklyMonthlyAnnual,
 };
 
+const logger = getLogger('NewJobPayController');
+
 export default class NewJobPayController {
   private readonly form: Form;
   private readonly newJobPayContent: FormContent = {
@@ -41,14 +42,12 @@ export default class NewJobPayController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.newJobPayContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.FIRST_RESPONDENT_NAME);
-    handleUpdateDraftCase(req, this.logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
   public get = (req: AppRequest, res: Response): void => {

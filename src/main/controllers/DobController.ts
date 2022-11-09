@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -10,9 +9,9 @@ import { BirthDateFormFields, DateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const dob_date: DateFormFields = {
@@ -20,6 +19,8 @@ const dob_date: DateFormFields = {
   id: 'dobDate',
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('dobDate', body),
 };
+
+const logger = getLogger('DobController');
 
 export default class DobController {
   private readonly form: Form;
@@ -29,14 +30,12 @@ export default class DobController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.dobFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.SEX_AND_TITLE);
-    handleUpdateDraftCase(req, this.logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.SEX_AND_TITLE);
   };
 
   public get = (req: AppRequest, res: Response): void => {

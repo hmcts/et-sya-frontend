@@ -1,29 +1,18 @@
-import axios from 'axios';
-import { LoggerInstance } from 'winston';
-
 import JobTitleController from '../../../main/controllers/JobTitleController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
-import { FormError } from '../../../main/definitions/form';
-import { CaseApi } from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 describe('Job Title Controller', () => {
   const t = {
     'job-title': {},
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the Job Title page', () => {
-    const controller = new JobTitleController(mockLogger);
+    const controller = new JobTitleController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -34,63 +23,49 @@ describe('Job Title Controller', () => {
   });
 
   describe('post()', () => {
-    it('should not return an error when the job title is empty', () => {
+    it('should not return an error when the job title is empty', async () => {
       const body = {
         jobTitle: '',
       };
-      const errors: FormError[] = [];
-      const controller = new JobTitleController(mockLogger);
+      const controller = new JobTitleController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
-      expect(req.session.errors).toEqual(errors);
+      expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should add the job title to the session userCase', () => {
+    it('should add the job title to the session userCase', async () => {
       const body = { jobTitle: 'Vice President Branch Co-Manager' };
 
-      const controller = new JobTitleController(mockLogger);
+      const controller = new JobTitleController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.START_DATE);
       expect(req.session.userCase).toStrictEqual({
         jobTitle: 'Vice President Branch Co-Manager',
       });
     });
-
-    it('should run logger in catch block', async () => {
-      const body = { jobTitle: 'Vice President Branch Co-Manager' };
-      const controller = new JobTitleController(mockLogger);
-      const request = mockRequest({ body });
-      const response = mockResponse();
-
-      await controller.post(request, response);
-
-      return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
-    });
   });
 
-  it('should redirect to respondent details check if there is a returnUrl', () => {
+  it('should redirect to respondent details check if there is a returnUrl', async () => {
     const body = { jobTitle: 'Assistant Vice President Branch Manager' };
 
-    const controller = new JobTitleController(mockLogger);
+    const controller = new JobTitleController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
 
     req.session.returnUrl = PageUrls.CHECK_ANSWERS;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CHECK_ANSWERS);
   });

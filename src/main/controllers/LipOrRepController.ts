@@ -9,8 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
-import { setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicPreLogin } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 export default class LipOrRepController {
@@ -47,7 +46,6 @@ export default class LipOrRepController {
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
     let redirectUrl;
     if (req.body.claimantRepresentedQuestion === YesOrNo.NO) {
       redirectUrl = PageUrls.SINGLE_OR_MULTIPLE_CLAIM;
@@ -56,7 +54,7 @@ export default class LipOrRepController {
     } else {
       redirectUrl = PageUrls.LIP_OR_REPRESENTATIVE;
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
+    handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

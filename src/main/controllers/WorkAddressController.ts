@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -8,12 +7,15 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+
+const logger = getLogger('WorkAddressController');
 
 export default class WorkAddressController {
   private readonly form: Form;
@@ -33,17 +35,16 @@ export default class WorkAddressController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.workAddressFormContent.fields);
   }
 
   public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
     const { saveForLater } = req.body;
-
-    if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-    } else {
+    setUserCase(req, this.form);
+    const errors = returnSessionErrors(req, this.form);
+    if (errors.length === 0 || errors === undefined) {
+      handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
@@ -52,8 +53,13 @@ export default class WorkAddressController {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
-      handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
+      if (saveForLater) {
+        return res.redirect(PageUrls.CLAIM_SAVED);
+      } else {
+        returnNextPage(req, res, redirectUrl);
+      }
+    } else {
+      handleErrors(req, res, errors);
     }
   };
 

@@ -1,12 +1,10 @@
-import { AxiosResponse } from 'axios';
-import { LoggerInstance } from 'winston';
-
 import NoticeEndController from '../../../main/controllers/NoticeEndController';
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import * as caseApi from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Notice end Controller', () => {
   const t = {
@@ -14,15 +12,8 @@ describe('Notice end Controller', () => {
     common: {},
   };
 
-  const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
-
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
-  it('should render notice end page', () => {
-    const noticeEndController = new NoticeEndController(mockLogger);
+  it('should render notice end page', async () => {
+    const noticeEndController = new NoticeEndController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -32,11 +23,11 @@ describe('Notice end Controller', () => {
     const body = { noticeEnds: '' };
     const req = mockRequest({ body });
     const res = mockResponse();
-    noticeEndController.post(req, res);
+    await noticeEndController.post(req, res);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_END, expect.anything());
   });
 
-  it('should redirect to notice type on successful post', () => {
+  it('should redirect to notice type on successful post', async () => {
     const body = {
       'noticeEnds-day': '21',
 
@@ -45,12 +36,12 @@ describe('Notice end Controller', () => {
       'noticeEnds-year': '2023',
     };
 
-    const controller = new NoticeEndController(mockLogger);
+    const controller = new NoticeEndController();
     const req = mockRequest({ body });
 
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_TYPE);
   });
@@ -58,7 +49,7 @@ describe('Notice end Controller', () => {
   it('should redirect to the same screen when errors are present', () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'dayRequired', fieldName: 'day' }];
     const body = { noticeEnds: '' };
-    const controller = new NoticeEndController(mockLogger);
+    const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
@@ -67,7 +58,7 @@ describe('Notice end Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date is in the future', () => {
+  it('should redirect to the same screen when date is in the future', async () => {
     const errors = [
       { propertyName: 'noticeEnds', errorType: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
     ];
@@ -76,66 +67,44 @@ describe('Notice end Controller', () => {
       'noticeEnds-month': '11',
       'noticeEnds-year': '2039',
     };
-    const controller = new NoticeEndController(mockLogger);
+    const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date is in the 10 years past', () => {
+  it('should redirect to the same screen when date is in the 10 years past', async () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'invalidDateInPast', fieldName: 'day' }];
     const body = {
       'noticeEnds-day': '23',
       'noticeEnds-month': '11',
       'noticeEnds-year': '2000',
     };
-    const controller = new NoticeEndController(mockLogger);
+    const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to the same screen when date fields are empty', () => {
+  it('should redirect to the same screen when date fields are empty', async () => {
     const errors = [{ propertyName: 'noticeEnds', errorType: 'required', fieldName: 'day' }];
     const body = {
       'noticeEnds-day': '',
       'noticeEnds-month': '',
       'noticeEnds-year': '',
     };
-    const controller = new NoticeEndController(mockLogger);
+    const controller = new NoticeEndController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
-  });
-
-  it('should invoke logger in then() block', async () => {
-    const body = {
-      'noticeEnds-day': '12',
-      'noticeEnds-month': '12',
-      'noticeEnds-year': `${new Date().getFullYear() + 5}`,
-    };
-    const controller = new NoticeEndController(mockLogger);
-    const request = mockRequest({ body });
-    const response = mockResponse();
-    const fetchResponse = Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
-
-    (getCaseApiMock as jest.Mock).mockReturnValue({
-      updateDraftCase: jest.fn(() => {
-        return fetchResponse;
-      }),
-    });
-
-    await controller.post(request, response);
-
-    expect(mockLogger.info).toHaveBeenCalled();
   });
 });

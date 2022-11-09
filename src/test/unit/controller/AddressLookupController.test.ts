@@ -56,7 +56,7 @@ describe('Address Lookup Controller', () => {
     const mockReq = mockRequest({ body: { postcode } });
     const mockRes = mockResponse();
 
-    await controller.post(mockReq, mockRes);
+    controller.post(mockReq, mockRes);
 
     expect(mockGetAddressesFromPostcode).not.toHaveBeenCalled();
     expect((mockRes.json as jest.Mock).mock.calls[0][0]).toMatchObject(expected);

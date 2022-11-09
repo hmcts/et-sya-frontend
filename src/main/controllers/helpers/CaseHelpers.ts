@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { Response } from 'express';
 import { cloneDeep } from 'lodash';
 import { parse } from 'postcode';
 import { LoggerInstance } from 'winston';
@@ -7,12 +8,16 @@ import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
-import { mvpLocations } from '../../definitions/constants';
+import { PageUrls, mvpLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
+import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
+import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded } from './FormHelpers';
+import { setUserCaseForRespondent } from './RespondentHelpers';
+import { returnNextPage } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -35,29 +40,27 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const handleUpdateDraftCase = (req: AppRequest, logger: LoggerInstance): void => {
+export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
-    getCaseApi(req.session.user?.accessToken)
-      .updateDraftCase(req.session.userCase)
-      .then(response => {
-        logger.info(`Updated draft case id: ${req.session.userCase.id}`);
-        req.session.userCase = fromApiFormat(response.data);
-        req.session.save();
-      })
-      .catch(error => {
-        logger.error(error);
-      });
+    try {
+      const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
+      logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      req.session.userCase = fromApiFormat(response.data);
+      req.session.save();
+    } catch (error) {
+      logger.error(error.message);
+    }
   }
 };
 
-export const handleUpdateSubmittedCase = (req: AppRequest, logger: LoggerInstance): void => {
+export const handleUpdateSubmittedCase = (req: AppRequest, logger: Logger): void => {
   getCaseApi(req.session.user?.accessToken)
     .updateSubmittedCase(req.session.userCase)
     .then(() => {
       logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
     })
     .catch(error => {
-      logger.error(error);
+      logger.error(error.message);
     });
 };
 
@@ -110,7 +113,7 @@ export const isPostcodeMVPLocation = (postCode: string): boolean => {
 export const handleUploadDocument = async (
   req: AppRequest,
   file: UploadedFile,
-  logger: LoggerInstance
+  logger: Logger
 ): Promise<AxiosResponse<DocumentUploadResponse>> => {
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
@@ -120,5 +123,60 @@ export const handleUploadDocument = async (
     return result;
   } catch (err) {
     logger.error(err.message);
+  }
+};
+
+export const handlePostLogic = async (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): Promise<void> => {
+  setUserCase(req, form);
+  const errors = returnSessionErrors(req, form);
+  const { saveForLater } = req.body;
+  if (errors.length === 0 || errors === undefined) {
+    req.session.errors = [];
+    await handleUpdateDraftCase(req, logger);
+    if (saveForLater) {
+      return res.redirect(PageUrls.CLAIM_SAVED);
+    } else {
+      returnNextPage(req, res, redirectUrl);
+    }
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const handlePostLogicForRespondent = async (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): Promise<void> => {
+  setUserCaseForRespondent(req, form);
+  const errors = returnSessionErrors(req, form);
+  const { saveForLater } = req.body;
+  if (errors.length === 0 || errors === undefined) {
+    await handleUpdateDraftCase(req, logger);
+    if (saveForLater) {
+      return res.redirect(PageUrls.CLAIM_SAVED);
+    } else {
+      returnNextPage(req, res, redirectUrl);
+    }
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+  setUserCase(req, form);
+  const errors = returnSessionErrors(req, form);
+  if (errors.length === 0 || errors === undefined) {
+    returnNextPage(req, res, redirectUrl);
+  } else {
+    handleErrors(req, res, errors);
   }
 };

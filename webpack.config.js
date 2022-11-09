@@ -14,6 +14,7 @@ module.exports = {
   plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins],
   entry: path.resolve(sourcePath, 'index.js'),
   mode: devMode ? 'development' : 'production',
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       ...scss.rules,

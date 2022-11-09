@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
@@ -8,11 +7,14 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, handleUploadDocument, setUserCase } from './helpers/CaseHelpers';
-import { getClaimSummaryError, handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
+
+const logger = getLogger('DescribeWhatHappenedController');
 
 export default class DescribeWhatHappenedController {
   private uploadedFileName = '';
@@ -69,7 +71,7 @@ export default class DescribeWhatHappenedController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.describeWhatHappenedFormContent.fields);
   }
 
@@ -79,7 +81,6 @@ export default class DescribeWhatHappenedController {
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(req.url);
     }
-    setUserCase(req, this.form);
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const claimSummaryError = getClaimSummaryError(
@@ -89,17 +90,16 @@ export default class DescribeWhatHappenedController {
     );
     if (!claimSummaryError) {
       try {
-        const result = await handleUploadDocument(req, req.file, this.logger);
+        const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
           req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
-        this.logger.info(error);
+        logger.info(error);
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        handleSessionErrors(req, res, this.form, PageUrls.TELL_US_WHAT_YOU_WANT);
-        handleUpdateDraftCase(req, this.logger);
+        await handlePostLogic(req, res, this.form, logger, PageUrls.TELL_US_WHAT_YOU_WANT);
       }
     } else {
       req.session.errors.push(claimSummaryError);
