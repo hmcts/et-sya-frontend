@@ -16,6 +16,7 @@ import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded } from './FormHelpers';
+import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage } from './RouterHelpers';
 
@@ -160,6 +161,7 @@ export const handlePostLogicForRespondent = async (
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
   if (errors.length === 0 || errors === undefined) {
+    req.session.errors = [];
     await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
       return res.redirect(PageUrls.CLAIM_SAVED);
@@ -175,7 +177,8 @@ export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Fo
   setUserCase(req, form);
   const errors = returnSessionErrors(req, form);
   if (errors.length === 0 || errors === undefined) {
-    returnNextPage(req, res, redirectUrl);
+    req.session.errors = [];
+    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
   } else {
     handleErrors(req, res, errors);
   }

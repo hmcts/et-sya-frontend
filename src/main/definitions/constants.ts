@@ -305,3 +305,12 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+
+export const languages = {
+  WELSH: 'cy',
+  ENGLISH: 'en',
+  WELSH_LOCALE: '&ui_locales=cy',
+  ENGLISH_LOCALE: '&ui_locales=en',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
+};

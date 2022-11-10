@@ -10,7 +10,7 @@ import { getLogger } from '../../logger';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
-import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
+import { validateNoSignInEndpoints } from './noSignInRequiredEndpoints';
 
 const logger = getLogger('oidc');
 
@@ -45,7 +45,7 @@ export class Oidc {
         // it is assigned the value of res.locals.isLoggedIn
         res.locals.isLoggedIn = true;
         next();
-      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
+      } else if (validateNoSignInEndpoints(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);
