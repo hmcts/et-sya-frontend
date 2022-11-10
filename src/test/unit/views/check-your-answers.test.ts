@@ -86,7 +86,7 @@ describe('Check your answers confirmation page', () => {
   it('should display 9 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {
@@ -123,8 +123,9 @@ describe('Check your answers confirmation page', () => {
     const homeAddressLink = yourDetailsList[3].getAttribute('href');
     const telephoneLink = yourDetailsList[4].getAttribute('href');
     const howToContactLink = yourDetailsList[5].getAttribute('href');
-    const hearingsLink = yourDetailsList[6].getAttribute('href');
-    const disabilityLink = yourDetailsList[7].getAttribute('href');
+    const contactLanguageLink = yourDetailsList[6].getAttribute('href');
+    const hearingsLink = yourDetailsList[7].getAttribute('href');
+    const disabilityLink = yourDetailsList[8].getAttribute('href');
 
     expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
@@ -132,6 +133,10 @@ describe('Check your answers confirmation page', () => {
     expect(homeAddressLink).equals(PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(telephoneLink).equals(PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(howToContactLink).equals(
+      PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(contactLanguageLink).equals(
       PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'
     );
