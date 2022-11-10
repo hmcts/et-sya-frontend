@@ -10,8 +10,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('SexAndTitleController');
@@ -24,7 +23,7 @@ export default class SexAndTitleController {
         classes: 'govuk-radios govuk-!-margin-bottom-6',
         id: 'sex',
         type: 'radios',
-        labelSize: 's',
+        labelSize: 'm',
         label: (l: AnyRecord): string => l.sex,
         values: [
           {
@@ -46,7 +45,7 @@ export default class SexAndTitleController {
         type: 'text',
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord) => l.preferredTitle,
-        labelSize: 's',
+        labelSize: 'm',
         attributes: { maxLength: 20 },
         validator: validateTitlePreference,
       },
@@ -59,10 +58,8 @@ export default class SexAndTitleController {
     this.form = new Form(<FormFields>this.sexAndTitleContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.ADDRESS_DETAILS);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

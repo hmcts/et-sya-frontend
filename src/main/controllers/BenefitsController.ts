@@ -5,12 +5,11 @@ import { areBenefitsValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('BenefitsController');
@@ -23,8 +22,9 @@ export default class BenefitsController {
         id: 'employee-benefits',
         type: 'radios',
         classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.label,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
@@ -35,8 +35,8 @@ export default class BenefitsController {
                 name: 'benefits-char-count',
                 type: 'charactercount',
                 label: (l: AnyRecord): string => l.hint,
-                labelHidden: true,
-                hint: (l: AnyRecord): string => l.hint,
+                labelHidden: false,
+                labelAsHint: true,
                 maxlength: 2500,
                 attributes: { maxLength: 2500 },
                 validator: areBenefitsValid,
@@ -64,22 +64,24 @@ export default class BenefitsController {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    const session = req.session;
-    setUserCase(req, this.form);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
-    if (session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+    if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.NEW_JOB;
     } else {
       redirectUrl = PageUrls.FIRST_RESPONDENT_NAME;
     }
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
     const employmentStatus = req.session.userCase.isStillWorking;
+    const employeeBenefits = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    employeeBenefits.label =
+      employmentStatus === 'Working' || employmentStatus === 'Notice'
+        ? l => l.workingOrNoticeLegend
+        : l => l.noLongerWorkingLegend;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.BENEFITS, {
       ...content,

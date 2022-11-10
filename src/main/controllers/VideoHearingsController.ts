@@ -9,8 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('VideoHearingsController');
@@ -21,9 +20,11 @@ export default class VideoHearingsController {
     fields: {
       hearingPreferences: {
         id: 'hearingPreferences',
-        label: l => l.h1,
-        labelHidden: true,
+        label: l => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         type: 'checkboxes',
+        hint: l => l.selectAllHint,
         validator: atLeastOneFieldIsChecked,
         values: [
           {
@@ -69,10 +70,8 @@ export default class VideoHearingsController {
     this.form = new Form(<FormFields>this.videoHearingsContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.REASONABLE_ADJUSTMENTS);
-    handleUpdateDraftCase(req, logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.REASONABLE_ADJUSTMENTS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

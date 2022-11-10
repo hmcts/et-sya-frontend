@@ -1,8 +1,11 @@
 import StartDateController from '../../../main/controllers/StartDateController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Start date Controller', () => {
   const t = {
@@ -33,11 +36,8 @@ describe('Start date Controller', () => {
     });
   });
 
-  it('should redirect to the same screen when errors are present', () => {
-    const errors = [
-      { propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' },
-      { propertyName: 'startDate', errorType: 'invalidDateBeforeDOB' },
-    ];
+  it('should redirect to the same screen when errors are present', async () => {
+    const errors = [{ propertyName: 'startDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
       'startDate-day': '',
       'startDate-month': '11',
@@ -46,29 +46,15 @@ describe('Start date Controller', () => {
 
     const controller = new StartDateController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should redirect to notice period when WORKING is selected', () => {
+  it('should redirect to notice period when WORKING is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
@@ -81,29 +67,14 @@ describe('Start date Controller', () => {
 
     const controller = new StartDateController();
 
-    const req = mockRequest({ body, userCase });
+    const req = mockRequestEmpty({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.WORKING,
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_PERIOD);
   });
 
-  it('should redirect to notice end when NOTICE is selected', () => {
+  it('should redirect to notice end when NOTICE is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
@@ -118,27 +89,12 @@ describe('Start date Controller', () => {
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.NOTICE,
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_END);
   });
 
-  it('should redirect to employment end date when NO_LONGER_WORKING is selected', () => {
+  it('should redirect to employment end date when NO_LONGER_WORKING is selected', async () => {
     const body = {
       'startDate-day': '11',
       'startDate-month': '11',
@@ -153,22 +109,7 @@ describe('Start date Controller', () => {
 
     const req = mockRequest({ body, userCase });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '1990',
-        month: '12',
-        day: '24',
-      },
-      startDate: {
-        day: '11',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      isStillWorking: StillWorking.NO_LONGER_WORKING,
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.END_DATE);
   });

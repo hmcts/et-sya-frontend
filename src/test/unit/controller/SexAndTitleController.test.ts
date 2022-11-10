@@ -1,8 +1,11 @@
 import SexAndTitleController from '../../../main/controllers/SexAndTitleController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { Sex } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Sex and Title Controller', () => {
   it('should render sex and preferred title page', () => {
@@ -48,17 +51,16 @@ describe('Sex and Title Controller', () => {
     });
   });
 
-  it('should assign userCase from the page form data', () => {
+  it('should assign userCase from the page form data', async () => {
     const body = {
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     };
     const controller = new SexAndTitleController();
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
@@ -67,17 +69,16 @@ describe('Sex and Title Controller', () => {
     });
   });
 
-  it('Should assign userCase for title', () => {
+  it('Should assign userCase for title', async () => {
     const body = {
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     };
     const controller = new SexAndTitleController();
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
     expect(req.session.userCase).toStrictEqual({
