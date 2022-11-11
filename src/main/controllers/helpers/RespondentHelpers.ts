@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ErrorPages } from '../../definitions/constants';
+import { ErrorPages, PageUrls } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -38,8 +38,11 @@ export const getRespondentIndex = (req: AppRequest): number => {
 };
 
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
-  if (respondentNumber < 6) {
-    return '/respondent/' + respondentNumber.toString() + pageUrl;
+  const ValidUrls = Object.values(ValidRespondentUrls);
+  for (const url of ValidUrls) {
+    if ('/respondent/' + respondentNumber.toString() + pageUrl === url) {
+      return url;
+    }
   }
   return ErrorPages.NOT_FOUND;
 };
@@ -64,4 +67,30 @@ export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent):
   userCase.workAddressTown = respondent.respondentAddressTown;
   userCase.workAddressCountry = respondent.respondentAddressCountry;
   userCase.workAddressPostcode = respondent.respondentAddressPostcode;
+};
+
+const respondent = '/respondent/';
+export const ValidRespondentUrls = {
+  name1: respondent + 1 + PageUrls.RESPONDENT_NAME,
+  name2: respondent + 2 + PageUrls.RESPONDENT_NAME,
+  name3: respondent + 3 + PageUrls.RESPONDENT_NAME,
+  name4: respondent + 4 + PageUrls.RESPONDENT_NAME,
+  name5: respondent + 5 + PageUrls.RESPONDENT_NAME,
+  address1: respondent + 1 + PageUrls.RESPONDENT_ADDRESS,
+  address2: respondent + 2 + PageUrls.RESPONDENT_ADDRESS,
+  address3: respondent + 3 + PageUrls.RESPONDENT_ADDRESS,
+  address4: respondent + 4 + PageUrls.RESPONDENT_ADDRESS,
+  address5: respondent + 5 + PageUrls.RESPONDENT_ADDRESS,
+  acas1: respondent + 1 + PageUrls.ACAS_CERT_NUM,
+  acas2: respondent + 2 + PageUrls.ACAS_CERT_NUM,
+  acas3: respondent + 3 + PageUrls.ACAS_CERT_NUM,
+  acas4: respondent + 4 + PageUrls.ACAS_CERT_NUM,
+  acas5: respondent + 5 + PageUrls.ACAS_CERT_NUM,
+  noacas1: respondent + 1 + PageUrls.NO_ACAS_NUMBER,
+  noacas2: respondent + 2 + PageUrls.NO_ACAS_NUMBER,
+  noacas3: respondent + 3 + PageUrls.NO_ACAS_NUMBER,
+  noacas4: respondent + 4 + PageUrls.NO_ACAS_NUMBER,
+  noacas5: respondent + 5 + PageUrls.NO_ACAS_NUMBER,
+  workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
+  placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
 };
