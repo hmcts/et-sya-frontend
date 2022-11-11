@@ -67,7 +67,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
       req.session.userCase.ClaimantPcqId = claimantPcqId;
       req.session.save();
-      handleUpdateDraftCase(req, logger);
+      await handleUpdateDraftCase(req, logger);
 
       res.redirect(`${pcqUrl}?${qs}`);
     } else {

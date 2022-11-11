@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
+import { ErrorPages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -37,7 +38,10 @@ export const getRespondentIndex = (req: AppRequest): number => {
 };
 
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
-  return '/respondent/' + respondentNumber.toString() + pageUrl;
+  if (respondentNumber < 6) {
+    return '/respondent/' + respondentNumber.toString() + pageUrl;
+  }
+  return ErrorPages.NOT_FOUND;
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
