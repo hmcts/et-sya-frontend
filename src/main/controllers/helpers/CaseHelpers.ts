@@ -134,19 +134,7 @@ export const handlePostLogic = async (
   redirectUrl: string
 ): Promise<void> => {
   setUserCase(req, form);
-  const errors = returnSessionErrors(req, form);
-  const { saveForLater } = req.body;
-  if (errors.length === 0 || errors === undefined) {
-    req.session.errors = [];
-    await handleUpdateDraftCase(req, logger);
-    if (saveForLater) {
-      return res.redirect(PageUrls.CLAIM_SAVED);
-    } else {
-      returnNextPage(req, res, redirectUrl);
-    }
-  } else {
-    handleErrors(req, res, errors);
-  }
+  await postLogic(req, res, form, logger, redirectUrl);
 };
 
 export const handlePostLogicForRespondent = async (
@@ -157,25 +145,37 @@ export const handlePostLogicForRespondent = async (
   redirectUrl: string
 ): Promise<void> => {
   setUserCaseForRespondent(req, form);
-  const errors = returnSessionErrors(req, form);
-  const { saveForLater } = req.body;
-  if (errors.length === 0 || errors === undefined) {
-    await handleUpdateDraftCase(req, logger);
-    if (saveForLater) {
-      return res.redirect(PageUrls.CLAIM_SAVED);
-    } else {
-      returnNextPage(req, res, redirectUrl);
-    }
-  } else {
-    handleErrors(req, res, errors);
-  }
+  await postLogic(req, res, form, logger, redirectUrl);
 };
 
 export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
   setUserCase(req, form);
   const errors = returnSessionErrors(req, form);
   if (errors.length === 0 || errors === undefined) {
+    req.session.errors = [];
     returnNextPage(req, res, redirectUrl);
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const postLogic = async (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): Promise<void> => {
+  const errors = returnSessionErrors(req, form);
+  const { saveForLater } = req.body;
+  if (errors.length === 0 || errors === undefined) {
+    req.session.errors = [];
+    await handleUpdateDraftCase(req, logger);
+    if (saveForLater) {
+      return res.redirect(PageUrls.CLAIM_SAVED);
+    } else {
+      returnNextPage(req, res, redirectUrl);
+    }
   } else {
     handleErrors(req, res, errors);
   }
