@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import config from 'config';
-import { isEmpty } from 'lodash';
 
 export const getAddressesForPostcode = async (postcode: string): Promise<Address[]> => {
   try {
@@ -39,31 +38,16 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
         },
       }) => ({
         fullAddress: ADDRESS,
-        street1:
-          !isEmpty(ORGANISATION_NAME) || !isEmpty(SUB_BUILDING_NAME)
-            ? [[ORGANISATION_NAME, SUB_BUILDING_NAME].filter(Boolean).join(', ')].filter(Boolean).join(' ')
-            : BUILDING_NUMBER,
-        street2:
-          !isEmpty(ORGANISATION_NAME) || !isEmpty(SUB_BUILDING_NAME)
-            ? [
-                BUILDING_NAME,
-                BUILDING_NUMBER,
-                THOROUGHFARE_NAME,
-                DEPENDENT_THOROUGHFARE_NAME,
-                DEPENDENT_LOCALITY,
-                DOUBLE_DEPENDENT_LOCALITY,
-              ]
-                .filter(Boolean)
-                .join(', ')
-            : [
-                BUILDING_NAME,
-                THOROUGHFARE_NAME,
-                DEPENDENT_THOROUGHFARE_NAME,
-                DEPENDENT_LOCALITY,
-                DOUBLE_DEPENDENT_LOCALITY,
-              ]
-                .filter(Boolean)
-                .join(', '),
+        street1: [
+          [ORGANISATION_NAME, SUB_BUILDING_NAME, BUILDING_NAME, BUILDING_NUMBER, THOROUGHFARE_NAME]
+            .filter(Boolean)
+            .join(', '),
+        ]
+          .filter(Boolean)
+          .join(' '),
+        street2: [DEPENDENT_THOROUGHFARE_NAME, DEPENDENT_LOCALITY, DOUBLE_DEPENDENT_LOCALITY]
+          .filter(Boolean)
+          .join(', '),
         town: POST_TOWN,
         county: LOCAL_CUSTODIAN_CODE_DESCRIPTION,
         postcode: POSTCODE,
