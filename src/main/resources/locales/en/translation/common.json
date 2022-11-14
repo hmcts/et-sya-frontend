@@ -39,6 +39,7 @@
   "weekly": "Weekly",
   "monthly": "Monthly",
   "annual": "Annual",
+  "saveAndContinue": "Save and continue",
   "selectAllHint": "Select all that apply.",
   "claimTypes": {
     "breachOfContract": "Breach of contract",
