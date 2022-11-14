@@ -141,8 +141,10 @@ export const handlePostLogic = async (
     req.session.errors = [];
     await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
-      return res.redirect(PageUrls.CLAIM_SAVED);
+      redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      return res.redirect(redirectUrl);
     } else {
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     }
   } else {
@@ -164,8 +166,10 @@ export const handlePostLogicForRespondent = async (
     req.session.errors = [];
     await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
-      return res.redirect(PageUrls.CLAIM_SAVED);
+      redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      return res.redirect(redirectUrl);
     } else {
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     }
   } else {
