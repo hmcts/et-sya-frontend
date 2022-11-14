@@ -1,5 +1,6 @@
 import {
   EmailOrPost,
+  EnglishOrWelsh,
   HearingPreference,
   NoAcasNumberReason,
   Sex,
@@ -53,6 +54,7 @@ export const mockEt1DataModelUpdate = {
     claimantType: {
       claimant_email_address: 'tester@test.com',
       claimant_contact_preference: EmailOrPost.EMAIL,
+      claimant_contact_language: EnglishOrWelsh.ENGLISH,
       claimant_phone_number: '075',
       claimant_addressUK: {
         AddressLine1: 'address 1',

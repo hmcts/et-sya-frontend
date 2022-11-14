@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { EmailOrPost } from '../definitions/case';
+import { EmailOrPost, EnglishOrWelsh } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -35,6 +35,27 @@ export default class UpdatePreferenceController {
             label: (l: AnyRecord): string => l.post,
             name: 'post',
             value: EmailOrPost.POST,
+            attributes: { maxLength: 2 },
+          },
+        ],
+        validator: isFieldFilledIn,
+      },
+      claimantContactLanguagePreference: {
+        classes: 'govuk-radios--inline',
+        id: 'update-preference-language',
+        type: 'radios',
+        label: (l: AnyRecord): string => l.languageLabel,
+        values: [
+          {
+            label: (l: AnyRecord): string => l.english,
+            name: 'english',
+            value: EnglishOrWelsh.ENGLISH,
+            attributes: { maxLength: 2 },
+          },
+          {
+            label: (l: AnyRecord): string => l.welsh,
+            name: 'welsh',
+            value: EnglishOrWelsh.WELSH,
             attributes: { maxLength: 2 },
           },
         ],

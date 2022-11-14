@@ -1,4 +1,4 @@
-import { CaseWithId, EmailOrPost, HearingPreference, Sex, YesOrNo } from '../../definitions/case';
+import { CaseWithId, EmailOrPost, EnglishOrWelsh, HearingPreference, Sex, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -148,6 +148,27 @@ export const getYourDetails = (
           userCase.claimantContactPreference === EmailOrPost.EMAIL
             ? translations.personalDetails.email
             : translations.personalDetails.post,
+      },
+      actions: {
+        items: [
+          {
+            href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.personalDetails.howToBeContacted,
+          },
+        ],
+      },
+    },
+    {
+      key: {
+        text: translations.personalDetails.languageLabel,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text:
+          userCase.claimantContactLanguagePreference === EnglishOrWelsh.ENGLISH
+            ? translations.personalDetails.english
+            : translations.personalDetails.welsh,
       },
       actions: {
         items: [

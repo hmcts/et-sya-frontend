@@ -15,7 +15,7 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   test('should go to the video hearing page when the Email radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ claimantContactPreference: 'Email' })
+      .send({ claimantContactPreference: 'Email', claimantContactLanguagePreference: 'English' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -25,7 +25,7 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   test('should go to the video hearing page when the Post radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ claimantContactPreference: 'Post' })
+      .send({ claimantContactPreference: 'Post', claimantContactLanguagePreference: 'English' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
@@ -33,6 +33,35 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   });
 
   test('should reload the page when the no radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ claimantContactLanguagePreference: undefined })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+      });
+  });
+  test('should go to the video hearing page when the English radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ claimantContactPreference: 'Email', claimantContactLanguagePreference: 'English' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+      });
+  });
+
+  test('should go to the video hearing page when the Welsh radio button is selected', async () => {
+    await request(mockApp({}))
+      .post(PageUrls.UPDATE_PREFERENCES)
+      .send({ claimantContactPreference: 'Email', claimantContactLanguagePreference: 'Welsh' })
+      .expect(res => {
+        expect(res.status).toStrictEqual(302);
+        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+      });
+  });
+
+  test('should reload the page when the no Language radio button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
       .send({ claimantContactPreference: undefined })
