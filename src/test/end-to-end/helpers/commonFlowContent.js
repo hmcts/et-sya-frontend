@@ -23,7 +23,7 @@ async function verifyMakeAClaimToAnEmploymentTribunal() {
   I.see('Help using the service');
   I.see('Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.');
   I.see('Telephone: 0300 123 1024');
-  I.see('Telephone: 0300 303 5176 (Welsh language)');
+  I.see(' Telephone: 0300 303 5176 (Welsh language)');
   I.see('Telephone: 0300 790 6234 (Scotland)');
   I.see('Textphone: 18001 0300 123 1024 (England and Wales)');
   I.see('Textphone: 18001 0300 790 6234 (Scotland)');
