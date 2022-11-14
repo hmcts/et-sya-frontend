@@ -7,6 +7,7 @@ import {
   CaseTypeId,
   CaseWithId,
   EmailOrPost,
+  EnglishOrWelsh,
   HearingPreference,
   NoAcasNumberReason,
   PayInterval,
@@ -116,6 +117,7 @@ describe('Should return data in api format', () => {
       hearingPreferences: [HearingPreference.PHONE],
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
+      claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
       claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
@@ -225,6 +227,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
+          claimant_contact_language: EnglishOrWelsh.ENGLISH,
           claimant_phone_number: '075',
           claimant_addressUK: {
             AddressLine1: 'address 1',
@@ -429,6 +432,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingPreferences: undefined,
       hearingAssistance: undefined,
       claimantContactPreference: undefined,
+      claimantContactLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       claimSummaryText: undefined,

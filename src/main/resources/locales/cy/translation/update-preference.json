@@ -4,8 +4,14 @@
   "label": "Welsh Translation required",
   "email": "E-bost",
   "post": "Trwy’r post",
+  "languageLabel": "Welsh Translation required",
+  "english": "Welsh Translation required",
+  "welsh": "Welsh Translation required",
   "errors": {
     "claimantContactPreference": {
+      "required": "Welsh Translation required"
+    },
+    "claimantContactLanguagePreference": {
       "required": "Welsh Translation required"
     }
   }

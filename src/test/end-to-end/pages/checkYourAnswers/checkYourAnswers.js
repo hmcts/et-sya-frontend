@@ -22,6 +22,10 @@ module.exports = async function () {
   I.see('Preferred title');
   I.see('Contact or home address');
   I.see('Telephone number');
+  I.see('How would you like to be contacted?');
+  I.see('Post');
+  I.see('Which language would you like to be contacted in?');
+  I.see('Welsh');
 
   I.click("//span[contains(.,'Contact us')]");
   await contactUs.verifyContactUs();

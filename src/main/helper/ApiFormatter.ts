@@ -101,6 +101,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
     claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
@@ -178,6 +179,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_email_address: caseItem.email,
         claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
+        claimant_contact_language: caseItem.claimantContactLanguagePreference,
         claimant_addressUK: {
           AddressLine1: caseItem.address1,
           AddressLine2: caseItem.address2,
