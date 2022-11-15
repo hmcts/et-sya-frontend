@@ -33,7 +33,7 @@ module.exports = async function () {
   I.click('#selectAddressInput');
   I.selectOption(
     '#selectAddressInput',
-    '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
+    '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3, SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
   );
   I.click(commonConfig.saveAndContinue);
 
