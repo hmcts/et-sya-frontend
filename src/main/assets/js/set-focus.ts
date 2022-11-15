@@ -22,7 +22,7 @@ export function focusToGovUKErrorDiv(): void {
       !window.location.href.includes('respondent-address') &&
       !window.location.href.includes('place-of-work')
     ) {
-      window.location.href = window.location.href.substring(0, window.location.href.indexOf('#'));
+      window.open(window.location.href.substring(0, window.location.href.indexOf('#')));
     }
   }
   const govUKErrorDiv = findFirstElementByClassName('govuk-error-summary');
