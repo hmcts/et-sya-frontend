@@ -10,22 +10,29 @@
   {% include "back-link.njk"%}
 {% endblock %}
 
+{% set languageParam = "" %}
+{% if "lng=cy" in currentUrl %}
+  {% set languageParam = "?lng=cy" %}
+{% else %}
+  {% set languageParam = "?lng=en" %}
+{% endif %}
+
 {% block content %}
-        {{ govukPanel({
+  {{ govukPanel({
         titleText: titleText
       }) }}
 
-    <div class="govuk-button-group">
-      {{ govukButton({
+  <div class="govuk-button-group">
+    {{ govukButton({
         text: continueWithClaim,
-        href: "/return-to-existing",
+        href: redirectUrl,
         preventDoubleClick: true
       }) }}
-      {{ govukButton({
+    {{ govukButton({
         text: signOut,
-        href: "/logout",
+        href: AuthUrls.LOGOUT + languageParam,
         classes: "govuk-button--secondary"
       }) }}
-    </div>
+  </div>
 
 {% endblock %}

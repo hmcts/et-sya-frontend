@@ -4,7 +4,7 @@ const commonConfig = require('../../features/Data/commonConfig.json');
 module.exports = async function (orgOption) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
-  I.click('[href="/past-employer"]');
+  I.click('[href="/past-employer?lng=en"]');
   if (orgOption === 'No') {
     I.click('#past-employer-2');
     I.click(commonConfig.saveAndContinue);

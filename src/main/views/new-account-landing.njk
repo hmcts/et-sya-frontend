@@ -11,27 +11,34 @@
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-panel govuk-panel--interruption">
         <h1 class="govuk-panel__title">{{ h1 }}</h1>
-          <p class="govuk-panel__body">{{ p1 }}</p>
-          <p class="govuk-panel__body">{{ p2 }}</p>
+        <p class="govuk-panel__body">{{ p1 }}</p>
+        <p class="govuk-panel__body">{{ p2 }}</p>
       </div>
     </div>
   </div>
-{% endblock %} 
+{% endblock %}
+
+{% set languageParam = "" %}
+{% if "lng=cy" in currentUrl %}
+  {% set languageParam = "?lng=cy" %}
+{% else %}
+  {% set languageParam = "?lng=en" %}
+{% endif %}
 
 {% block footer %}
   <div class="govuk-width-container">
     <div class="govuk-button-group">
       {{ govukButton({
         text: continue,
-        href: "/steps-to-making-your-claim"
+        href: redirectUrl
       }) }}
 
       {{ govukButton({
         text: saveForLater,
         classes: "govuk-button--secondary",
-        href: "/your-claim-has-been-saved"
+        href: PageUrls.CLAIM_SAVED + languageParam
       }) }}
     </div>
   </div>
   {{ super() }}
-{% endblock %} 
+{% endblock %}

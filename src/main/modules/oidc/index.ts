@@ -3,14 +3,14 @@ import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
-import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
+import { validateNoSignInEndpoints } from './noSignInRequiredEndpoints';
 
 const logger = getLogger('oidc');
 
@@ -21,8 +21,10 @@ export class Oidc {
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
+      let languageParam = '';
+      languageParam = req.cookies.i18next;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
+      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
@@ -45,7 +47,7 @@ export class Oidc {
         // it is assigned the value of res.locals.isLoggedIn
         res.locals.isLoggedIn = true;
         next();
-      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
+      } else if (validateNoSignInEndpoints(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);
@@ -89,7 +91,11 @@ export const idamCallbackHandler = async (
       if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
         logger.info(`Created Draft Case - ${response.data.id}`);
         req.session.userCase = fromApiFormat(response.data);
-        return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+        const redirectUrl =
+          req.session.lang === languages.WELSH
+            ? PageUrls.NEW_ACCOUNT_LANDING + languages.WELSH_URL_PARAMETER
+            : PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER;
+        return res.redirect(redirectUrl);
       }
       logger.error('Draft Case was not created successfully');
     } catch (error) {
