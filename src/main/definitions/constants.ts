@@ -156,7 +156,6 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
-  GET_SUBMITTED_CASE_DOCUMENT: '/getSubmittedCaseDocument/:docId',
   PCQ: '/pcq',
 } as const;
 
