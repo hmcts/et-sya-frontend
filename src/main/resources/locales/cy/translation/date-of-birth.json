@@ -1,0 +1,22 @@
+{
+  "title": "Date of birth details - Welsh translation required",
+  "h1": "Beth yw eich dyddiad geni?",
+  "hint": "Fe ddefnyddir y manylion hyn i symud eich hawliad yn ei flaen.<br><br>Er enghraifft, 23 04 1981",
+  "errors": {
+    "dobDate": {
+      "dayRequired": "Enter a day for your date of birth. For example, 23 <B>- Welsh translation required</B>",
+      "monthRequired": "Enter a month for your date of birth. For example, 04 <B>- Welsh translation required</B>",
+      "yearRequired": "Enter a year for your date of birth. For example, 1981 <B>- Welsh translation required</B>",
+      "dayNotANumber": "Day must only contain numbers. For example, 23 <B>- Welsh translation required</B>",
+      "monthNotANumber": "Month must only contain numbers. For example, 04 <B>- Welsh translation required</B>",
+      "yearNotANumber": "Year must only contain numbers. For example, 1981 <B>- Welsh translation required</B>",
+      "dayInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
+      "monthInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
+      "yearInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
+      "invalidDate": "Date of birth must be a real date. <B>- Welsh translation required</B>",
+      "invalidDateInFuture": "Date entered must be in the past. <B>- Welsh translation required</B>",
+      "invalidDateTooFarInPast": "Date must be between 10 years and 100 years in the past. <B>- Welsh translation required</B>",
+      "invalidDateTooRecent": "Date must be between 10 years and 100 years in the past. <B>- Welsh translation required</B>"
+    }
+  }
+}
