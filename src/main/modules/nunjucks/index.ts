@@ -118,7 +118,7 @@ export class Nunjucks {
           hint: i.hint && {
             html: this.env.globals.getContent.call(this, i.hint),
           },
-          divider: i.divider && 'or',
+          divider: this.env.globals.currentUrl.includes('lng=cy') ? i.divider && 'neu' : i.divider && 'or',
           behaviour: i.exclusive && 'exclusive',
           conditional: ((): { html: string | undefined } => {
             let innerHtml = '';
