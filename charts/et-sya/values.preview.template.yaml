@@ -11,6 +11,8 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+  environment:
+    ET_SYA_API_HOST: 'https://et-sya-api-pr-189.service.core-compute-preview.internal'
 idam-pr:
   enabled: true
   redirect_uris:
