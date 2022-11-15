@@ -1,0 +1,12 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Sut yr hoffech i ni gysylltu â chi ynghylch eich hawliad?",
+  "label": "Welsh Translation required",
+  "email": "E-bost",
+  "post": "Trwy’r post",
+  "errors": {
+    "claimantContactPreference": {
+      "required": "Welsh Translation required"
+    }
+  }
+}
