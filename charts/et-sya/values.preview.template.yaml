@@ -12,9 +12,40 @@ nodejs:
         - os-places-token
         - pcq-token-key
   environment:
-    ET_SYA_API_HOST: 'http://et-sya-api-pr-189.service.core-compute-preview.internal'
+    ET_SYA_API_HOST: http://{{ .Release.Name }}-et-sya-api
+
 idam-pr:
   enabled: true
   redirect_uris:
     ET Citizen Submit Your Appeal:
       - https://${SERVICE_FQDN}/oauth2/callback
+
+et-sya-api:
+  enabled: true
+  java:
+    imagePullPolicy: Always
+    image: hmctspublic.azurecr.io/et/sya-api:pr-189-e0ba241-20221115140541 # or pr
+    releaseNameOverride: ${SERVICE_NAME}-et-sya-api
+    ingressHost: et-sya-api-${SERVICE_FQDN}
+    keyVaults:
+      et-sya-api:
+        secrets:
+          - name: et-sya-api-s2s-secret
+            alias: ET_SYA_S2S_SECRET
+          - name: Ocp-Apim-Subscription-Key
+            alias: ACAS_KEY
+      et:
+        secrets:
+          - AppInsightsInstrumentationKey
+          - name: tornado-access-key
+            alias: TORNADO_ACCESS_KEY
+          - gov-notify-api-key
+    environment:
+      IDAM_API_BASEURL: https://idam-api.aat.platform.hmcts.net
+      IDAM_JWKS_BASEURL: https://idam-api.aat.platform.hmcts.net/o/jwks
+      CASE_DATA_STORE_BASEURL: http://ccd-data-store-api-aat.service.core-compute-aat.internal
+      SERVICE_AUTH_PROVIDER_URL: http://rpe-service-auth-provider-aat.service.core-compute-aat.internal
+      ACAS_URL: https://api-dev-acas-01.azure-api.net/ECCLDev
+      MICRO_SERVICE: et_sya_api
+      TORNADO_URL: https://docmosis.aat.platform.hmcts.net/rs/render
+      CASE_DOCUMENT_AM_URL: http://ccd-case-document-am-api-aat.service.core-compute-aat.internal
