@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
@@ -12,6 +12,8 @@ export default class ChangeDetailsController {
     } else if (req.query.redirect === 'respondent') {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, '');
       req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+    } else {
+      redirectUrl = ErrorPages.NOT_FOUND;
     }
 
     return res.redirect(redirectUrl);
