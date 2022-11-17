@@ -1,0 +1,44 @@
+{
+  "title": "Contact the Tribunal",
+  "sections": {
+    "withdraw": {
+      "label": "Withdraw all or part of my claim"
+    },
+    "change": {
+      "label": "Change my personal details"
+    },
+    "postpone": {
+      "label": "Ask the tribunal to postpone my hearing"
+    },
+    "vary": {
+      "label": "Vary an order the tribunal has issued"
+    },
+    "reconsider_decision": {
+      "label": "Apply to have a decision made by a legal officer considered afresh"
+    },
+    "amend": {
+      "label": "Amend my claim"
+    },
+    "respondent": {
+      "label": "Order the respondent to do something"
+    },
+    "witness": {
+      "label": "Order a witness to attend to give evidence"
+    },
+    "noncompliance": {
+      "label": "Tell the tribunal a respondent has not complied with an order"
+    },
+    "publicity": {
+      "label": "Restrict publicity in my case"
+    },
+    "strike": {
+      "label": "Strike out all or part of the response"
+    },
+    "reconsider_judgement": {
+      "label": "Apply for a judgment to be reconsidered"
+    },
+    "other": {
+      "label": "Contact the tribunal about something else"
+    }
+  }
+}

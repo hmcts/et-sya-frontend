@@ -1,0 +1,133 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+
+{% block beforeContent %}
+    {{ super() }}
+    {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+   {{ govukAccordion({
+        id: "contact-options", 
+        items: [
+        {
+            heading: {
+                text: sections.withdraw.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.change.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.postpone.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.vary.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.reconsider_decision.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.amend.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.respondent.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.witness.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.noncompliance.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.publicity.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.strike.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.reconsider_judgement.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        },
+        {
+            heading: {
+                text: sections.other.label
+            }, 
+            content: {
+                html: "<p class='govuk-body'>test</p>
+                <p class='govuk-body'>test</p>"
+            }
+        }]
+   }) }}
+{% endblock %}
