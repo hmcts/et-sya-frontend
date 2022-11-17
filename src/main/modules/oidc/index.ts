@@ -18,11 +18,12 @@ export class Oidc {
   public enableFor(app: Application): void {
     const port = app.locals.developmentMode ? `:${config.get('port')}` : '';
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
+    let languageParam: string;
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
-      let languageParam = '';
       languageParam = req.cookies.i18next;
+      console.log(`Lang param in get ${languageParam}`);
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
@@ -38,6 +39,7 @@ export class Oidc {
     });
 
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
+      console.log(`Lang param in callback ${languageParam}`);
       idamCallbackHandler(req, res, next, serviceUrl(res));
     });
 
@@ -62,7 +64,6 @@ export const idamCallbackHandler = async (
   next: NextFunction,
   serviceUrl: string
 ): Promise<void> => {
-  console.log(`Service Url in idamCallbackHandler -  ${serviceUrl}`);
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     // eslint-disable-next-line prettier/prettier
@@ -79,8 +80,6 @@ export const idamCallbackHandler = async (
   const guid = String(req.query?.state);
 
   if (guid === EXISTING_USER) {
-    console.log(req.session);
-    console.log(`Cookies - ${req.cookies}`);
     if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;
