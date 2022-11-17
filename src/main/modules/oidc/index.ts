@@ -62,6 +62,7 @@ export const idamCallbackHandler = async (
   next: NextFunction,
   serviceUrl: string
 ): Promise<void> => {
+  console.log(`Service Url in idamCallbackHandler -  ${serviceUrl}`);
   const redisClient = req.app.locals?.redisClient;
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     // eslint-disable-next-line prettier/prettier
