@@ -38,7 +38,27 @@ export class Oidc {
       });
     });
 
+    app.get(
+      AuthUrls.CALLBACK + '/&state=existingUser&ui_locales=en',
+      (req: AppRequest, res: Response, next: NextFunction) => {
+        console.log('English');
+        const locale = String(req.query?.ui_locales);
+        console.log(`Locale in existing user block - ${locale}`);
+        idamCallbackHandler(req, res, next, serviceUrl(res));
+      }
+    );
+
+    app.get(
+      AuthUrls.CALLBACK + '/&state=existingUser&ui_locales=cy',
+      (req: AppRequest, res: Response, next: NextFunction) => {
+        console.log('Welsh');
+        const locale = String(req.query?.ui_locales);
+        console.log(`Locale in existing user block - ${locale}`);
+        idamCallbackHandler(req, res, next, serviceUrl(res));
+      }
+    );
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
+      console.log('Normal');
       console.log(`Lang param in callback ${languageParam}`);
       idamCallbackHandler(req, res, next, serviceUrl(res));
     });
@@ -78,10 +98,8 @@ export const idamCallbackHandler = async (
   }
 
   const guid = String(req.query?.state);
-  const locale = String(req.query?.ui_locales);
 
   if (guid === EXISTING_USER) {
-    console.log(`Locale in existing user block - ${locale}`);
     if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;
