@@ -59,7 +59,9 @@ export class Oidc {
     );
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
       console.log('Normal');
-      console.log(`Lang param in callback ${languageParam}`);
+      console.log(req.url);
+      const locale = String(req.query?.ui_locales);
+      console.log(`Locale in existing user block - ${locale}`);
       idamCallbackHandler(req, res, next, serviceUrl(res));
     });
 
