@@ -58,7 +58,7 @@ export class Oidc {
       }
     );
     app.get(AuthUrls.CALLBACK, (req: AppRequest, res: Response, next: NextFunction) => {
-      console.log('Normal');
+      console.log('Normal block');
       console.log(req.url);
       const locale = String(req.query?.ui_locales);
       console.log(`Locale in existing user block - ${locale}`);
