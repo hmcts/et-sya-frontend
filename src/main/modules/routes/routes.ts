@@ -25,6 +25,7 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -215,6 +216,7 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
