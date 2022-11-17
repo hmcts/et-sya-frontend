@@ -79,6 +79,8 @@ export const idamCallbackHandler = async (
   const guid = String(req.query?.state);
 
   if (guid === EXISTING_USER) {
+    console.log(req.session);
+    console.log(`Cookies - ${req.cookies}`);
     if (!redisClient) {
       const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
       err.name = RedisErrors.FAILED_TO_CONNECT;
