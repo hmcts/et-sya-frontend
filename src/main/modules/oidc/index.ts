@@ -61,7 +61,13 @@ export class Oidc {
       console.log('Normal block');
       console.log(req.url);
       const locale = String(req.query?.ui_locales);
-      console.log(`Locale in existing user block - ${locale}`);
+      console.log('Locale: ' + String(req.query?.locale));
+      console.log('Ui Locale: ' + String(req.query?.idam_ui_locales));
+      console.log('Cookie locale: ' + req.cookies.idam_ui_locales);
+      console.log(`Locale from ui_locales  - ${locale}`);
+      const params = req.params;
+      console.log('Params: ' + params);
+      console.log('Param locale: ' + params.ui_locales);
       idamCallbackHandler(req, res, next, serviceUrl(res));
     });
 
