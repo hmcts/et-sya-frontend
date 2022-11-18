@@ -13,9 +13,14 @@ export default class ChangeDetailsController {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, '');
       req.session.returnUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
     } else {
-      redirectUrl = ErrorPages.NOT_FOUND;
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
-
-    return res.redirect(redirectUrl);
+    const ValidUrls = Object.values(PageUrls);
+    for (const url of ValidUrls) {
+      if (redirectUrl === url) {
+        return res.redirect(url);
+      }
+    }
+    return res.redirect(ErrorPages.NOT_FOUND);
   };
 }
