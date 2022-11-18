@@ -23,7 +23,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
   I.selectOption(
     '#selectAddressInput',
-    '{"fullAddress":"7, VALLEY GARDENS, LEEDS, LS7 4QE","street1":"7 VALLEY GARDENS","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS7 4QE","country":"ENGLAND"}'
+    '{"fullAddress":"7, VALLEY GARDENS, LEEDS, LS7 4QE","street1":"7, VALLEY GARDENS","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS7 4QE","country":"ENGLAND"}'
   );
   I.click(commonConfig.saveAndContinue);
 
@@ -47,7 +47,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
     I.selectOption(
       '#selectAddressInput',
-      '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25 RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
+      '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25, RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
     );
     I.click(commonConfig.saveAndContinue);
     //I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
