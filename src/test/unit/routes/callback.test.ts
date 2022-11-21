@@ -24,6 +24,8 @@ const serviceUrl = 'serviceUrl';
 const caseType = 'ET_EnglandWales';
 const guid = '04a7a170-55aa-4882-8a62-e3c418fa804d';
 const existingUser = 'existingUser';
+const englishGuidParam = '-en';
+const welshGuidParam = '-cy';
 
 let req: AppRequest;
 let res: Response;
@@ -84,9 +86,9 @@ describe('Test responds to /oauth2/callback', function () {
     );
   });
 
-  test('Should redirect to NEW_ACCOUNT_LANDING page if successfully created case', async () => {
+  test('Should redirect to NEW_ACCOUNT_LANDING page in English if successfully created case and English language is selected', async () => {
     //Given that both the code and state param exist
-    req.query = { code: 'testCode', state: guid };
+    req.query = { code: 'testCode', state: guid + englishGuidParam };
 
     //Given that prelogin data is successfully retreived
     jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
@@ -110,13 +112,49 @@ describe('Test responds to /oauth2/callback', function () {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to Claimant applications page if it is a existing user', async () => {
+  test('Should redirect to Claimant applications page in English if it is an existing user and English language is selected', async () => {
     //Given that the state param is 'existingUser'
-    req.query = { code: 'testCode', state: existingUser };
+    req.query = { code: 'testCode', state: existingUser + englishGuidParam };
 
     //Then it should redirect to CLAIM_STEPS page
     idamCallbackHandler(req, res, next, serviceUrl);
     await new Promise(process.nextTick);
-    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should redirect to NEW_ACCOUNT_LANDING page in Welsh if successfully created case with Welsh language selected', async () => {
+    //Given that both the code and state param exist
+    req.query = { code: 'testCode', state: guid + welshGuidParam };
+
+    //Given that prelogin data is successfully retreived
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
+
+    //Given that case is created successfully
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+    caseApi.createCase = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        data: {
+          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+          last_modified: '2019-02-12T14:25:39.015',
+          created_date: '2019-02-12T14:25:39.015',
+        },
+        status: 200,
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+
+    //Then it should redirect to NEW_ACCOUNT_LANDING page in Welsh
+    idamCallbackHandler(req, res, next, serviceUrl);
+    await new Promise(process.nextTick);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to Claimant applications pagein Welsh if it is an existing user and Welsh language is selected', async () => {
+    //Given that the state param is 'existingUser'
+    req.query = { code: 'testCode', state: existingUser + welshGuidParam };
+
+    //Then it should redirect to CLAIM_STEPS page
+    idamCallbackHandler(req, res, next, serviceUrl);
+    await new Promise(process.nextTick);
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER);
   });
 });
