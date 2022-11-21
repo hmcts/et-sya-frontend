@@ -15,11 +15,8 @@ export default class ChangeDetailsController {
     } else {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
-    const ValidUrls = Object.values(PageUrls);
-    for (const url of ValidUrls) {
-      if (redirectUrl === url) {
-        return res.redirect(url);
-      }
+    if (redirectUrl.startsWith('/')) {
+      return res.redirect(redirectUrl);
     }
     return res.redirect(ErrorPages.NOT_FOUND);
   };

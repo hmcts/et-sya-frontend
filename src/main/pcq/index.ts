@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4';
 
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { AppRequest } from '../definitions/appRequest';
-import { HTTPS_PROTOCOL, PageUrls } from '../definitions/constants';
+import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { createToken } from './createToken';
@@ -38,14 +38,13 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     logger.info(`PCQ status is ${healthResp}`);
 
     const pcqUrl: string = config.get('services.pcq.url');
-    const host: string = config.get('services.et.host');
+    const host: string = config.get('ingress');
     const pcqId = req.session.userCase?.ClaimantPcqId;
 
-    console.log('Host: ' + host);
     if (!pcqId && healthResp === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
-      const returnurl = HTTPS_PROTOCOL + host + PageUrls.CHECK_ANSWERS;
+      const returnurl = host + PageUrls.CHECK_ANSWERS;
 
       //Generate pcq id
       const claimantPcqId: string = uuid();
