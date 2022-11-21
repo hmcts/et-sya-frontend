@@ -83,6 +83,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: 'tribunal-contact-selected',
 } as const;
 
 export const PageUrls = {
@@ -158,6 +159,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal-selected/:selectedOption',
   PCQ: '/pcq',
 } as const;
 

@@ -26,6 +26,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
+import ContactTribunalSelectedController from '../../controllers/ContactTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -217,6 +218,7 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
+    app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTribunalSelectedController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
