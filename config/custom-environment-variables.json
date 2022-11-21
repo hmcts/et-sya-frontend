@@ -17,6 +17,9 @@
       "enabled": "PCQ_ENABLED",
       "url": "PCQ_URL",
       "health": "PCQ_HEALTH_URL"
+    },
+    "et": {
+      "host": "ingressHost"
     }
   },
   "session": {

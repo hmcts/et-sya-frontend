@@ -22,15 +22,12 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
     mockedConfig.get.mockReturnValueOnce('SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP');
 
     const userCase = {};
     const req = mockRequest({ body, userCase, session });
     const res = mockResponse();
-    req.protocol = 'http';
-    req.headers = {
-      host: 'localhost:3001',
-    };
 
     const redirectMock = jest.fn();
     res.redirect = redirectMock;
@@ -54,6 +51,7 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
     mockedConfig.get.mockReturnValueOnce('SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP');
 
     const userCase = { ClaimantPcqId: '112' };
@@ -77,6 +75,8 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if PCQ Health is DOWN', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -118,6 +118,8 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (response received)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -135,6 +137,8 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (response not received)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -152,6 +156,8 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (all others)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
+    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
