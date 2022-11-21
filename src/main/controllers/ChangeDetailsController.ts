@@ -15,8 +15,18 @@ export default class ChangeDetailsController {
     } else {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
-    if (redirectUrl.startsWith('/')) {
-      return res.redirect(redirectUrl);
+
+    const ValidUrls = Object.values(PageUrls);
+    for (const url of ValidUrls) {
+      const welshUrl = url + '/?lng=cy';
+      const englishUrl = url + '/?lng=en';
+      if (redirectUrl === url) {
+        return res.redirect(url);
+      } else if (redirectUrl === welshUrl) {
+        return res.redirect(welshUrl);
+      } else if (redirectUrl === englishUrl) {
+        return res.redirect(englishUrl);
+      }
     }
     return res.redirect(ErrorPages.NOT_FOUND);
   };

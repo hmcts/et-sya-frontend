@@ -22,6 +22,8 @@ export function focusToGovUKErrorDiv(): void {
       !window.location.href.includes('respondent-address') &&
       !window.location.href.includes('place-of-work')
     ) {
+      console.log(window.location.href);
+      console.log(window.location.href.substring(0, window.location.href.indexOf('#')));
       window.open(window.location.href.substring(0, window.location.href.indexOf('#')), '_self');
     }
   }

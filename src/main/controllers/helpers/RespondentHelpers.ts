@@ -40,8 +40,14 @@ export const getRespondentIndex = (req: AppRequest): number => {
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
   const ValidUrls = Object.values(ValidRespondentUrls);
   for (const url of ValidUrls) {
+    const welshUrl = url + '/?lng=cy';
+    const englishUrl = url + '/?lng=en';
     if ('/respondent/' + respondentNumber.toString() + pageUrl === url) {
       return url;
+    } else if ('/respondent/' + respondentNumber.toString() + pageUrl === welshUrl) {
+      return welshUrl;
+    } else if ('/respondent/' + respondentNumber.toString() + pageUrl === englishUrl) {
+      return englishUrl;
     }
   }
   return ErrorPages.NOT_FOUND;
