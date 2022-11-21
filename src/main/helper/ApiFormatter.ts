@@ -405,7 +405,7 @@ export const returnSubmittedEt1Form = (lang: EnglishOrWelsh, documentCollection?
   const documentDetailCollection = setDocumentValues(documentCollection, et1DocTypes);
 
   if (documentDetailCollection !== undefined) {
-    if (lang == EnglishOrWelsh.WELSH && documentDetailCollection.length > 1) {
+    if (lang === EnglishOrWelsh.WELSH && documentDetailCollection.length > 1) {
       return documentDetailCollection[1];
     }
     return documentDetailCollection[0];
