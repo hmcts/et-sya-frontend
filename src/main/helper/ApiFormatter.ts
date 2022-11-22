@@ -135,7 +135,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
-    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.claimantType.claimant_contact_language,
+    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
       fromApiCaseData.case_data?.documentCollection),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
