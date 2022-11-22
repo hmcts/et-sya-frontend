@@ -1,22 +1,30 @@
-import { isDateEmpty } from '../components/form/dateValidators';
-import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
-import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
-import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
-import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
-import { AppRequest, UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
+import {isDateEmpty} from '../components/form/dateValidators';
+import {retrieveCurrentLocale} from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import {combineDocuments} from '../controllers/helpers/DocumentHelpers';
+import {CreateCaseBody, RespondentRequestBody, UpdateCaseBody} from '../definitions/api/caseApiBody';
+import {CaseApiDataResponse, DocumentApiModel, RespondentApiModel} from '../definitions/api/caseApiResponse';
+import {DocumentUploadResponse} from '../definitions/api/documentApiResponse';
+import {AppRequest, UserDetails} from '../definitions/appRequest';
 import {
-  CcdDataModel,
-  TYPE_OF_CLAIMANT,
+  CaseDataCacheKey,
+  CaseDate,
+  CaseWithId,
+  ccdPreferredTitle,
+  Document,
+  EnglishOrWelsh,
+  Respondent
+} from '../definitions/case';
+import {
   acceptanceDocTypes,
+  CcdDataModel,
   et1DocTypes,
   et3FormDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
   responseRejectedDocTypes,
+  TYPE_OF_CLAIMANT,
 } from '../definitions/constants';
-import { DocumentDetail } from '../definitions/definition';
+import {DocumentDetail} from '../definitions/definition';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -127,7 +135,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
-    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
+      fromApiCaseData.case_data?.documentCollection),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
@@ -388,7 +397,7 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   });
 };
 
-export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]): DocumentDetail => {
+export const returnSubmittedEt1Form = (lang: EnglishOrWelsh, documentCollection?: DocumentApiModel[]): DocumentDetail => {
   if (documentCollection === undefined) {
     return;
   }
@@ -396,6 +405,9 @@ export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]):
   const documentDetailCollection = setDocumentValues(documentCollection, et1DocTypes);
 
   if (documentDetailCollection !== undefined) {
+    if (lang === EnglishOrWelsh.WELSH && documentDetailCollection.length > 1) {
+      return documentDetailCollection[1];
+    }
     return documentDetailCollection[0];
   }
 };
