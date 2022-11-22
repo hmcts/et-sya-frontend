@@ -14,6 +14,7 @@ export default class ContactTheTribunalController {
     ]);
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL, {
       ...content,
+      hideContactUs: true,
     });
   }
 }
