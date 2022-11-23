@@ -7,5 +7,7 @@
   },
   "document": "Document",
   "documentDetails": "Details",
-  "date": "Date"
+  "date": "Date",
+  "contactText": "You can also ",
+  "contactLink": "contact the tribunal about your case."
 }
