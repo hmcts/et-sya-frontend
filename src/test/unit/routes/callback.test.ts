@@ -5,7 +5,7 @@ import redis from 'redis-mock';
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
@@ -67,7 +67,7 @@ describe('Test responds to /oauth2/callback', function () {
       expect(CacheService.getPreloginCaseData).toHaveBeenCalled();
       expect(caseApi.createCase).toHaveBeenCalled();
     });
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
   test('Should redirect to Claimant applications page if an existing user logs in', async () => {
