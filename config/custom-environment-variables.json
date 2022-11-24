@@ -1,6 +1,5 @@
 {
   "port": "PORT",
-  "ingress": "ingressHost",
   "services": {
     "idam": {
       "clientID": "IDAM_CLIENT_ID",
@@ -18,6 +17,9 @@
       "enabled": "PCQ_ENABLED",
       "url": "PCQ_URL",
       "health": "PCQ_HEALTH_URL"
+    },
+    "et": {
+      "host": "HOST"
     }
   },
   "session": {

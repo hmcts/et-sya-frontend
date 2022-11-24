@@ -38,7 +38,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     logger.info(`PCQ status is ${healthResp}`);
 
     const pcqUrl: string = config.get('services.pcq.url');
-    const host: string = config.get('ingress');
+    const host: string = config.get('services.et.host');
     const pcqId = req.session.userCase?.ClaimantPcqId;
 
     if (!pcqId && healthResp === 'UP') {
