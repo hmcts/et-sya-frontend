@@ -12,7 +12,7 @@ nodejs:
         - os-places-token
         - pcq-token-key
   environment:
-    host: https://${SERVICE_FQDN}
+    HOST: https://${SERVICE_FQDN}
 idam-pr:
   enabled: true
   redirect_uris:
