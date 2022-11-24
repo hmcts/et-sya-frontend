@@ -58,6 +58,6 @@ export const mockApplications: ApplicationTableRecord[] = [
     },
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
-    url: '/getSubmittedCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+    url: '/citizen-hub/1234567',
   },
 ];

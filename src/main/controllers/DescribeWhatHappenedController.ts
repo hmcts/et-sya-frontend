@@ -100,6 +100,7 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
+
         const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
         await handlePostLogic(req, res, this.form, logger, redirectUrl);
       }
