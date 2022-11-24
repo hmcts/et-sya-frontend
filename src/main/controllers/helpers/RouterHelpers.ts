@@ -24,10 +24,6 @@ export const conditionalRedirect = (
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
   return res.redirect(handleReturnUrl(req, redirectUrl));
-
-  //else {
-  //   return res.redirect(ErrorPages.NOT_FOUND);
-  // }
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
@@ -38,9 +34,3 @@ const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
   }
   return nextPage;
 };
-
-// const validateUrl = (url: string): boolean => {
-//   const ValidUrls = Object.values(PageUrls);
-//   if (ValidUrls.includes(url)) return true;
-//   return false;
-// };
