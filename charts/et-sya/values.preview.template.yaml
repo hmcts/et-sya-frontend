@@ -11,8 +11,6 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
-  environment:
-    HOST: ${SERVICE_FQDN}
 idam-pr:
   enabled: true
   redirect_uris:

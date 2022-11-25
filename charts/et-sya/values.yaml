@@ -21,6 +21,5 @@ nodejs:
     PCQ_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/service-endpoint'
     PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
     PCQ_ENABLED: 'true'
-    HOST: 'et-sya.{{ .Values.global.environment }}.platform.hmcts.net'
 idam-pr:
   enabled: false

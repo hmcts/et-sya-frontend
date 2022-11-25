@@ -38,9 +38,6 @@
     },
     "et1Legacy": {
       "url": "https://employmenttribunals.service.gov.uk"
-    },
-    "et": {
-      "host": "http://localhost:3001"
     }
   },
   "pact": {

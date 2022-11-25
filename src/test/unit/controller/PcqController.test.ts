@@ -4,6 +4,7 @@ import config from 'config';
 import PcqController from '../../../main/controllers/PcqController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
+import * as invokePCQ from '../../../main/pcq/index';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -17,12 +18,12 @@ describe('PCQGetController', () => {
   const controller = new PcqController();
   const body = {};
   const session = { user: { id: '', email: 'johndoe@example.com', accessToken: '', givenName: '', familyName: '' } };
+  jest.spyOn(invokePCQ, 'getHost').mockReturnValue('localhost');
 
   test('Should redirect to PCQ if PCQ status is UP and ClaimantPcqId does not exist', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
     mockedConfig.get.mockReturnValueOnce('SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP');
 
     const userCase = {};
@@ -51,7 +52,6 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
     mockedConfig.get.mockReturnValueOnce('SAjhk11Ykyvs45Xvybwz2qmUe3C3bCl45bYPgsBu3Titb3Ejd0W9N03cU6rNNtP');
 
     const userCase = { ClaimantPcqId: '112' };
@@ -76,7 +76,6 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -119,7 +118,6 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -138,7 +136,6 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -157,7 +154,6 @@ describe('PCQGetController', () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
-    mockedConfig.get.mockReturnValueOnce('http://localhost:3001');
 
     const req = mockRequest({});
     const res = mockResponse();
