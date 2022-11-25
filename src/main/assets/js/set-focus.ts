@@ -1,6 +1,7 @@
 // Autofocus section
 // Code below automatically focuses to errors, in case any error exists on the page for accessibility
 
+import { ValidRespondentUrls } from '../../controllers/helpers/RespondentHelpers';
 import { PageUrls } from '../../definitions/constants';
 
 if (document.addEventListener) {
@@ -25,12 +26,24 @@ export function focusToGovUKErrorDiv(): void {
       !window.location.href.includes('place-of-work')
     ) {
       const baseUrl = window.location.href.substring(0, window.location.href.indexOf('#'));
-      const path = baseUrl.substring(baseUrl.lastIndexOf('/'));
-      const ValidUrls = Object.values(PageUrls);
-      for (const url of ValidUrls) {
-        if (path === url) {
-          window.open(url, '_self');
-          break;
+      const respondentIndex = baseUrl.indexOf('/respondent/');
+      if (respondentIndex === -1) {
+        const ValidRedirects = Object.values(PageUrls);
+        for (const url of ValidRedirects) {
+          const path = baseUrl.substring(baseUrl.lastIndexOf('/'));
+          if (path === url) {
+            window.open(url, '_self');
+            break;
+          }
+        }
+      } else {
+        const ValidRespondentRedirects = Object.values(ValidRespondentUrls);
+        for (const url of ValidRespondentRedirects) {
+          const respondentPath = baseUrl.substring(respondentIndex);
+          if (respondentPath === url) {
+            window.open(url, '_self');
+            break;
+          }
         }
       }
     }

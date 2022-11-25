@@ -99,4 +99,4 @@ export const ValidRespondentUrls = {
   noacas5: respondent + 5 + PageUrls.NO_ACAS_NUMBER,
   workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
   placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
-};
+} as const;
