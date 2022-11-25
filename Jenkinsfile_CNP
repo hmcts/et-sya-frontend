@@ -63,7 +63,7 @@ withPipeline(type, product, component) {
       }
       loadVaultSecrets(inTestFalse)
   }
-  after('functionalTest:preview') {
+  afterAlways('functionalTest:preview') {
     loadVaultSecrets(inTestTrue)
       stage('Accessibiltiy') {
           yarnBuilder.yarn('tests:a11y')
