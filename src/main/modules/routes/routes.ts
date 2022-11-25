@@ -62,7 +62,6 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
-import SubmittedCaseDocumentController from '../../controllers/SubmittedCaseDocumentController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -216,7 +215,6 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
-    app.get(PageUrls.GET_SUBMITTED_CASE_DOCUMENT, new SubmittedCaseDocumentController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({

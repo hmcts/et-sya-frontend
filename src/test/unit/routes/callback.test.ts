@@ -6,7 +6,6 @@ import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
 import { PageUrls, languages } from '../../../main/definitions/constants';
-import { CaseState } from '../../../main/definitions/definition';
 import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
@@ -14,24 +13,35 @@ import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { mockUserDetails } from '../mocks/mockUser';
+import mockUserCaseApiResponseComplete from '../mocks/mockUserCaseResponseMinimal';
 
 jest.mock('axios');
 jest.mock('../../../main/auth/index');
 
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+caseApi.createCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: mockUserCaseApiResponseComplete,
+    status: 200,
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
 const redisClient = redis.createClient();
 const serviceUrl = 'serviceUrl';
-const caseType = 'ET_EnglandWales';
 const guid = '04a7a170-55aa-4882-8a62-e3c418fa804d';
 const existingUser = 'existingUser';
 const englishGuidParam = '-en';
 const welshGuidParam = '-cy';
 
-let req: AppRequest;
-let res: Response;
-let next: NextFunction;
+const caseData =
+  '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
 describe('Test responds to /oauth2/callback', function () {
+  let req: AppRequest;
+  let res: Response;
+  let next: NextFunction;
+
   beforeAll(() => {
     next = jest.fn();
     req = mockRequest({});
@@ -50,111 +60,45 @@ describe('Test responds to /oauth2/callback', function () {
     jest.spyOn(res, 'redirect');
   });
 
-  test('Should get user details if both state and code param are found in req.query', () => {
-    //Given that both the code and state param exist
-    req.query = { code: 'testCode', state: guid };
-
-    //Then it should call getUserDetails
-    jest.spyOn(authIndex, 'getUserDetails');
-    return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
-      expect(authIndex.getUserDetails).toHaveBeenCalled()
-    );
-  });
-
-  test('Should get prelogin case data from redis if it is a new user', () => {
-    //Given that both the code and state param exist
-    req.query = { code: 'testCode', state: guid };
-
-    //Then it should call getPreloginCaseData
-    jest.spyOn(CacheService, 'getPreloginCaseData');
-    return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
-      expect(CacheService.getPreloginCaseData).toHaveBeenCalled()
-    );
-  });
-
-  test('Should call sya-api to create draft case if prelogin data successfully retreived', () => {
-    //Given that both the code and state param exist
-    req.query = { code: 'testCode', state: guid };
-
-    //Given that prelogin data is successfully retreived
-    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
-
-    //Then it should call getCaseApi to create draft case
-    jest.spyOn(CaseService, 'getCaseApi');
-    return idamCallbackHandler(req, res, next, serviceUrl).then(() =>
-      expect(CaseService.getCaseApi).toHaveBeenCalled()
-    );
-  });
-
-  test('Should redirect to NEW_ACCOUNT_LANDING page in English if successfully created case and English language is selected', async () => {
-    //Given that both the code and state param exist
+  test('should create a new case in English language and redirect to the new account page in English when a new user logs in', async () => {
     req.query = { code: 'testCode', state: guid + englishGuidParam };
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseData));
+    jest.spyOn(authIndex, 'getUserDetails');
 
-    //Given that prelogin data is successfully retreived
-    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
-
-    //Given that case is created successfully
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-    caseApi.createCase = jest.fn().mockResolvedValue(
-      Promise.resolve({
-        data: {
-          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-          last_modified: '2019-02-12T14:25:39.015',
-          created_date: '2019-02-12T14:25:39.015',
-        },
-        status: 200,
-      } as AxiosResponse<CaseApiDataResponse>)
-    );
-
-    //Then it should redirect to NEW_ACCOUNT_LANDING page
-    idamCallbackHandler(req, res, next, serviceUrl);
-    await new Promise(process.nextTick);
+    await idamCallbackHandler(req, res, next, serviceUrl).then(() => {
+      expect(authIndex.getUserDetails).toHaveBeenCalled();
+      expect(CacheService.getPreloginCaseData).toHaveBeenCalled();
+      expect(caseApi.createCase).toHaveBeenCalled();
+    });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to Claimant applications page in English if it is an existing user and English language is selected', async () => {
-    //Given that the state param is 'existingUser'
+  test('Should redirect to Claimant applications page in English language if an existing user who had selected English logs in', async () => {
     req.query = { code: 'testCode', state: existingUser + englishGuidParam };
 
-    //Then it should redirect to CLAIM_STEPS page
-    idamCallbackHandler(req, res, next, serviceUrl);
-    await new Promise(process.nextTick);
+    await idamCallbackHandler(req, res, next, serviceUrl);
+
     expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to NEW_ACCOUNT_LANDING page in Welsh if successfully created case with Welsh language selected', async () => {
-    //Given that both the code and state param exist
+  test('should create a new case in Welsh language and redirect to the new account page in Welsh when a new user logs in', async () => {
     req.query = { code: 'testCode', state: guid + welshGuidParam };
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseData));
+    jest.spyOn(authIndex, 'getUserDetails');
 
-    //Given that prelogin data is successfully retreived
-    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseType));
-
-    //Given that case is created successfully
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-    caseApi.createCase = jest.fn().mockResolvedValue(
-      Promise.resolve({
-        data: {
-          state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-          last_modified: '2019-02-12T14:25:39.015',
-          created_date: '2019-02-12T14:25:39.015',
-        },
-        status: 200,
-      } as AxiosResponse<CaseApiDataResponse>)
-    );
-
-    //Then it should redirect to NEW_ACCOUNT_LANDING page in Welsh
-    idamCallbackHandler(req, res, next, serviceUrl);
-    await new Promise(process.nextTick);
+    await idamCallbackHandler(req, res, next, serviceUrl).then(() => {
+      expect(authIndex.getUserDetails).toHaveBeenCalled();
+      expect(CacheService.getPreloginCaseData).toHaveBeenCalled();
+      expect(caseApi.createCase).toHaveBeenCalled();
+    });
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.WELSH_URL_PARAMETER);
   });
 
-  test('Should redirect to Claimant applications pagein Welsh if it is an existing user and Welsh language is selected', async () => {
-    //Given that the state param is 'existingUser'
+  test('Should redirect to Claimant applications page in Welsh language if an existing user who had selected Welsh logs in', async () => {
     req.query = { code: 'testCode', state: existingUser + welshGuidParam };
 
-    //Then it should redirect to CLAIM_STEPS page
-    idamCallbackHandler(req, res, next, serviceUrl);
-    await new Promise(process.nextTick);
+    await idamCallbackHandler(req, res, next, serviceUrl);
+
     expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER);
   });
 });

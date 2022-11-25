@@ -8,7 +8,7 @@ import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
-import { PageUrls, mvpLocations } from '../../definitions/constants';
+import { PageUrls, inScopeLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
@@ -97,14 +97,14 @@ export const getSectionStatusForEmployment = (
   }
 };
 
-export const isPostcodeMVPLocation = (postCode: string): boolean => {
+export const isPostcodeInScope = (postCode: string): boolean => {
   const {
     outcode, // => "SW1A"
     area, // => "SW"
     district, // => "SW1"
   } = parse(postCode);
-  for (const mvpLocation of mvpLocations) {
-    if (mvpLocation === outcode || mvpLocation === area || mvpLocation === district) {
+  for (const location of inScopeLocations) {
+    if (location === outcode || location === area || location === district) {
       return true;
     }
   }
@@ -135,21 +135,7 @@ export const handlePostLogic = async (
   redirectUrl: string
 ): Promise<void> => {
   setUserCase(req, form);
-  const errors = returnSessionErrors(req, form);
-  const { saveForLater } = req.body;
-  if (errors.length === 0 || errors === undefined) {
-    req.session.errors = [];
-    await handleUpdateDraftCase(req, logger);
-    if (saveForLater) {
-      redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
-      return res.redirect(redirectUrl);
-    } else {
-      redirectUrl = setUrlLanguage(req, redirectUrl);
-      returnNextPage(req, res, redirectUrl);
-    }
-  } else {
-    handleErrors(req, res, errors);
-  }
+  await postLogic(req, res, form, logger, redirectUrl);
 };
 
 export const handlePostLogicForRespondent = async (
@@ -160,9 +146,30 @@ export const handlePostLogicForRespondent = async (
   redirectUrl: string
 ): Promise<void> => {
   setUserCaseForRespondent(req, form);
+  await postLogic(req, res, form, logger, redirectUrl);
+};
+
+export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+  setUserCase(req, form);
+  const errors = returnSessionErrors(req, form);
+  if (errors.length === 0) {
+    req.session.errors = [];
+    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
+  } else {
+    handleErrors(req, res, errors);
+  }
+};
+
+export const postLogic = async (
+  req: AppRequest,
+  res: Response,
+  form: Form,
+  logger: LoggerInstance,
+  redirectUrl: string
+): Promise<void> => {
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
-  if (errors.length === 0 || errors === undefined) {
+  if (errors.length === 0) {
     req.session.errors = [];
     await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
@@ -172,17 +179,6 @@ export const handlePostLogicForRespondent = async (
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     }
-  } else {
-    handleErrors(req, res, errors);
-  }
-};
-
-export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
-  setUserCase(req, form);
-  const errors = returnSessionErrors(req, form);
-  if (errors.length === 0 || errors === undefined) {
-    req.session.errors = [];
-    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
   } else {
     handleErrors(req, res, errors);
   }
