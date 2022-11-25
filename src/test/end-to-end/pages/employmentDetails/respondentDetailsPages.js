@@ -29,7 +29,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
 
   //enter address for another location
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  I.see('Did you work at 7 VALLEY GARDENS?');
+  I.see('Did you work at 7, VALLEY GARDENS?');
   //Did you work at address or another
   if (workAddress === 'Yes') {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
