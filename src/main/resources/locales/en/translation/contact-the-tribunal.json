@@ -11,7 +11,7 @@
       "label": "Give notice that I want to withdraw all or part of my claim",
       "body": "When you've reached a settlement or do not want to continue with your claim."
     },
-    "change": {
+    "change_details": {
       "label": "I want to change my personal details",
       "body": "Change the personal details you gave when making your claim."
     },
