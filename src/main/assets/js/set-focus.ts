@@ -1,6 +1,8 @@
 // Autofocus section
 // Code below automatically focuses to errors, in case any error exists on the page for accessibility
 
+import { PageUrls } from '../../definitions/constants';
+
 if (document.addEventListener) {
   document.addEventListener('load', focusToGovUKErrorDiv);
   document.addEventListener('pageshow', focusToGovUKErrorDiv);
@@ -22,8 +24,15 @@ export function focusToGovUKErrorDiv(): void {
       !window.location.href.includes('respondent-address') &&
       !window.location.href.includes('place-of-work')
     ) {
-      const location = window.location.href.substring(0, window.location.href.indexOf('#'));
-      window.open(location, '_self');
+      const baseUrl = window.location.href.substring(0, window.location.href.indexOf('#'));
+      const path = baseUrl.substring(baseUrl.lastIndexOf('/'));
+      const ValidUrls = Object.values(PageUrls);
+      for (const url of ValidUrls) {
+        if (path === url) {
+          window.open(url, '_self');
+          break;
+        }
+      }
     }
   }
   const govUKErrorDiv = findFirstElementByClassName('govuk-error-summary');
