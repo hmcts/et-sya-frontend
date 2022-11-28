@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
 import { setChangeAnswersUrlLanguage, setCheckAnswersLanguage } from './helpers/LanguageHelper';
 
@@ -16,7 +16,22 @@ export default class ChangeDetailsController {
       redirectUrl = setChangeAnswersUrlLanguage(req, redirectUrl);
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, redirectUrl);
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);
+    } else {
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
-    return res.redirect(redirectUrl);
+
+    const ValidUrls = Object.values(PageUrls);
+    for (const url of ValidUrls) {
+      const welshUrl = url + '/?lng=cy';
+      const englishUrl = url + '/?lng=en';
+      if (redirectUrl === url) {
+        return res.redirect(url);
+      } else if (redirectUrl === welshUrl) {
+        return res.redirect(welshUrl);
+      } else if (redirectUrl === englishUrl) {
+        return res.redirect(englishUrl);
+      }
+    }
+    return res.redirect(ErrorPages.NOT_FOUND);
   };
 }
