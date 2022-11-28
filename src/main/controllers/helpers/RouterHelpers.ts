@@ -23,8 +23,7 @@ export const conditionalRedirect = (
 };
 
 export const returnNextPage = (req: AppRequest, res: Response, redirectUrl: string): void => {
-  const nextPage = handleReturnUrl(req, redirectUrl);
-  return res.redirect(nextPage);
+  return res.redirect(handleReturnUrl(req, redirectUrl));
 };
 
 const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {

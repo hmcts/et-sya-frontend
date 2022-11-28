@@ -80,7 +80,7 @@ export default class DescribeWhatHappenedController {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
-      return res.redirect(req.url);
+      return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
     }
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -106,7 +106,7 @@ export default class DescribeWhatHappenedController {
       }
     } else {
       req.session.errors.push(claimSummaryError);
-      return res.redirect(req.url);
+      return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
     }
   };
 
