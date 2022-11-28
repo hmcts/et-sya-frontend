@@ -8,7 +8,7 @@ describe('Change Details Controller', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.url = PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE;
+    request.url = '/respondent/1' + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE;
     request.query = {
       redirect: 'respondent',
     };
@@ -16,7 +16,24 @@ describe('Change Details Controller', () => {
     expect(request.session.returnUrl).toStrictEqual(
       PageUrls.RESPONDENT_DETAILS_CHECK + languages.ENGLISH_URL_PARAMETER
     );
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_ADDRESS + languages.ENGLISH_URL_PARAMETER);
+    expect(response.redirect).toHaveBeenCalledWith(
+      '/respondent/1' + PageUrls.RESPONDENT_ADDRESS + languages.ENGLISH_URL_PARAMETER
+    );
+  });
+
+  it('should redirect to the correct respondent page and should set request.session.returnUrl to PageUrls.CheckAnswers', () => {
+    const controller = new ChangeDetailsController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.url = '/respondent/1' + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.ANSWERS_CHANGE;
+    request.query = {
+      redirect: 'answers',
+    };
+    controller.get(request, response);
+    expect(request.session.returnUrl).toStrictEqual(PageUrls.CHECK_ANSWERS + languages.ENGLISH_URL_PARAMETER);
+    expect(response.redirect).toHaveBeenCalledWith(
+      '/respondent/1' + PageUrls.RESPONDENT_ADDRESS + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should redirect to the same url with request.url and should set request.session.returnUrl to PageUrls.CheckAnswers', () => {
@@ -41,7 +58,6 @@ describe('Change Details Controller', () => {
       redirect: 'DELETE*FROM DB',
     };
     controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(
-    .NOT_FOUND);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });
