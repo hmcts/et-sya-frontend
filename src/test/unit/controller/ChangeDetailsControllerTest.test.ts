@@ -8,7 +8,7 @@ describe('Change Details Controller', () => {
     const controller = new ChangeDetailsController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.url = PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE;
+    request.url = '/respondent/1' + PageUrls.RESPONDENT_ADDRESS + InterceptPaths.RESPONDENT_CHANGE;
     request.query = {
       redirect: 'respondent',
     };
@@ -41,7 +41,6 @@ describe('Change Details Controller', () => {
       redirect: 'DELETE*FROM DB',
     };
     controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(
-    .NOT_FOUND);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });
