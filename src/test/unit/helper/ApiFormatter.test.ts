@@ -469,7 +469,6 @@ describe('Format Case Data to Frontend Model', () => {
     });
   });
 
-
   it('should return document collection for welsh`', () => {
     const mockedApiData: CaseApiDataResponse = {
       id: '1234',
@@ -481,7 +480,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
-          claimant_contact_language: EnglishOrWelsh.WELSH
+          claimant_contact_language: EnglishOrWelsh.WELSH,
         },
         documentCollection: [
           {
@@ -526,11 +525,11 @@ describe('Format Case Data to Frontend Model', () => {
       dobDate: undefined,
       claimantSex: undefined,
       preferredTitle: undefined,
-      email: "janedoe@exmaple.com",
+      email: 'janedoe@exmaple.com',
       et1SubmittedForm: {
-        "description": "ET1 WELSH - R600227/21/75",
-        "id": "10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa",
-        "type": "ET1",
+        description: 'ET1 WELSH - R600227/21/75',
+        id: '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+        type: 'ET1',
       },
       address1: undefined,
       address2: undefined,
@@ -566,8 +565,8 @@ describe('Format Case Data to Frontend Model', () => {
       noticeEnds: undefined,
       hearingPreferences: undefined,
       hearingAssistance: undefined,
-      claimantContactPreference: "Email",
-      claimantContactLanguagePreference: "Welsh",
+      claimantContactPreference: 'Email',
+      claimantContactLanguagePreference: 'Welsh',
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       claimSummaryText: undefined,
@@ -600,10 +599,9 @@ describe('Format Case Data to Frontend Model', () => {
       responseRejectionDocumentDetail: undefined,
       responseEt3FormDocumentDetail: [],
       otherClaim: undefined,
-      id: "1234",
+      id: '1234',
     });
   });
-
 
   it('date formatter should return null when date is empty', () => {
     const caseItem: CaseWithId = {

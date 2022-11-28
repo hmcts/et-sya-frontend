@@ -43,7 +43,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     if (!pcqId && healthResp === 'UP') {
       //call pcq
       logger.info('Calling the PCQ Service');
-      const returnurl = req.headers.host + PageUrls.CHECK_ANSWERS;
+      const returnurl = getHost(res) + PageUrls.CHECK_ANSWERS;
 
       //Generate pcq id
       const claimantPcqId: string = uuid();
@@ -67,7 +67,8 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
       req.session.userCase.ClaimantPcqId = claimantPcqId;
       req.session.save();
-      handleUpdateDraftCase(req, logger);
+      await handleUpdateDraftCase(req, logger);
+
       res.redirect(`${pcqUrl}?${qs}`);
     } else {
       //skip pcq
@@ -79,6 +80,10 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     logger.info(`PCQ enabled: ${isEnabled().toString()}`);
     res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
   }
+};
+
+export const getHost = (res: Response): string => {
+  return res.locals.host === 'localhost' ? `${res.locals.host}:3001` : res.locals.host;
 };
 
 export const callPCQHealth = (): Promise<string> => {
