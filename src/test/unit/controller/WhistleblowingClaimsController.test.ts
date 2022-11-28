@@ -1,4 +1,5 @@
 import WhistleblowingClaimsController from '../../../main/controllers/WhistleblowingClaimsController';
+import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
@@ -9,6 +10,10 @@ describe('Whistleblowing Claims Controller', () => {
     'whistleblowing-claims': {},
     common: {},
   };
+
+  beforeAll(() => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  });
 
   it('should render the whistleblowing claims page', () => {
     const controller = new WhistleblowingClaimsController();
