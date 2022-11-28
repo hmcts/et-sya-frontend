@@ -39,8 +39,9 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
       }) => ({
         fullAddress: ADDRESS,
         street1: [
-          BUILDING_NUMBER,
-          [ORGANISATION_NAME, SUB_BUILDING_NAME, BUILDING_NAME, THOROUGHFARE_NAME].filter(Boolean).join(', '),
+          [ORGANISATION_NAME, SUB_BUILDING_NAME, BUILDING_NAME, BUILDING_NUMBER, THOROUGHFARE_NAME]
+            .filter(Boolean)
+            .join(', '),
         ]
           .filter(Boolean)
           .join(' '),
