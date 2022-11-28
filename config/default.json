@@ -12,7 +12,7 @@
     "welsh": "true"
   },
   "session": {
-    "maxAgeInMs": "3600000",
+    "maxAgeInMs": "5000",
     "secret": "local",
     "redis": {
       "host": "",
