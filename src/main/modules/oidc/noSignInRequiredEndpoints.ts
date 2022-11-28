@@ -11,5 +11,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.CONTACT_ACAS,
   PageUrls.TYPE_OF_CLAIM,
   PageUrls.COOKIE_PREFERENCES,
+  PageUrls.RETURN_TO_EXISTING,
   Urls.INFO,
 ];
