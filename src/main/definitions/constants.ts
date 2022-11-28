@@ -166,6 +166,10 @@ export const InterceptPaths = {
   SUBMIT_CASE: '/submitDraftCase',
 } as const;
 
+export const ErrorPages = {
+  NOT_FOUND: '/not-found',
+};
+
 export const ValidationErrors = {
   REQUIRED: 'required',
   INVALID_VALUE: 'invalid',

@@ -1,5 +1,5 @@
 import ChangeDetailsController from '../../../main/controllers/ChangeDetailsController';
-import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -28,5 +28,17 @@ describe('Change Details Controller', () => {
     controller.get(request, response);
     expect(request.session.returnUrl).toStrictEqual(PageUrls.CHECK_ANSWERS);
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.DOB_DETAILS);
+  });
+
+  it('should redirect to Error page if invalid query param passed', () => {
+    const controller = new ChangeDetailsController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.url = PageUrls.DOB_DETAILS + '/change?redirect=DELETE*FROM DB';
+    request.query = {
+      redirect: 'DELETE*FROM DB',
+    };
+    controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });
