@@ -81,6 +81,12 @@ export default class SessionTimeout {
 
   resetModalMessage = (): void => {
     this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
+
+    if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
+      this.modalCountdownElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
+    } else {
+      this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
+    }
   };
 
   restartCounters = (): void => {
