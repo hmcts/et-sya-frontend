@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isValidPension } from '../components/form/validator';
@@ -8,10 +7,12 @@ import { YesOrNoOrNotSure } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('PensionController');
 
 export default class PensionController {
   private readonly form: Form;
@@ -21,8 +22,10 @@ export default class PensionController {
         id: 'pension',
         type: 'radios',
         classes: 'govuk-radios',
-        label: (l: AnyRecord): string => l.label,
-        labelHidden: true,
+        label: (l: AnyRecord): string => l.legend,
+        labelHidden: false,
+        labelSize: 'xl',
+        isPageHeading: true,
         values: [
           {
             label: (l: AnyRecord): string => l.yes,
@@ -33,9 +36,8 @@ export default class PensionController {
                 name: 'pension-contributions',
                 type: 'currency',
                 classes: 'govuk-input--width-5',
-                label: (l: AnyRecord): string => l.label,
-                labelHidden: true,
-                hint: (l: AnyRecord): string => l.pensionContributions,
+                label: (l: AnyRecord): string => l.pensionContributions,
+                labelAsHint: true,
                 attributes: { maxLength: 12 },
                 validator: isValidPension,
               },
@@ -62,14 +64,12 @@ export default class PensionController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.pensionContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.BENEFITS);
-    handleUpdateDraftCase(req, this.logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.BENEFITS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

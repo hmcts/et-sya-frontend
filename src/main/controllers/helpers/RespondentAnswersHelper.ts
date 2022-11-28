@@ -14,12 +14,6 @@ export const getRespondentSection = (
   respondentSections.push(
     {
       key: {
-        text: translations.respondentDetails.header + index + translations.respondentDetails.details,
-        classes: 'govuk-heading-m',
-      },
-    },
-    {
-      key: {
         text: translations.respondentDetails.respondentName,
         classes: 'govuk-!-font-weight-regular-m',
       },
@@ -61,7 +55,7 @@ export const getRespondentSection = (
       },
     }
   );
-  if (index === 1) {
+  if (index === 1 && userCase.pastEmployer === YesOrNo.YES) {
     respondentSections.push({
       key: {
         text: translations.respondentDetails.workedAtRespondent,
@@ -158,12 +152,6 @@ export const getRespondentDetailsSection = (
 ): unknown => {
   const respondentSections = [];
   respondentSections.push(
-    {
-      key: {
-        text: translations.subTitle + index,
-        classes: 'govuk-heading-m',
-      },
-    },
     {
       key: {
         text: translations.name,

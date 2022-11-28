@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { isValidNoticeLength } from '../components/form/validator';
@@ -8,10 +7,12 @@ import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+const logger = getLogger('NoticeLengthController');
 
 export default class NoticeLengthController {
   private readonly form: Form;
@@ -39,14 +40,12 @@ export default class NoticeLengthController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.noticeLengthContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, PageUrls.AVERAGE_WEEKLY_HOURS);
-    handleUpdateDraftCase(req, this.logger);
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    await handlePostLogic(req, res, this.form, logger, PageUrls.AVERAGE_WEEKLY_HOURS);
   };
 
   public get = (req: AppRequest, res: Response): void => {

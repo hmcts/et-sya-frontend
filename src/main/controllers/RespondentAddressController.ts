@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import {
   isValidAddressFirstLine,
@@ -8,14 +7,17 @@ import {
 } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl, setUserCaseForRespondent } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+const logger = getLogger('RespondentAddressController');
 
 export default class RespondentAddressController {
   private readonly form: Form;
@@ -100,23 +102,18 @@ export default class RespondentAddressController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.respondentAddressContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    setUserCaseForRespondent(req, this.form);
-    const { saveForLater } = req.body;
-    if (saveForLater) {
-      handleSessionErrors(req, res, this.form, PageUrls.CLAIM_SAVED);
-      handleUpdateDraftCase(req, this.logger);
-      return res.redirect(PageUrls.CLAIM_SAVED);
-    } else {
-      const nextPage = req.session.userCase.respondents.length > 1 ? PageUrls.ACAS_CERT_NUM : PageUrls.WORK_ADDRESS;
-      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
-      handleSessionErrors(req, res, this.form, redirectUrl);
-      handleUpdateDraftCase(req, this.logger);
-    }
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const { userCase } = req.session;
+    const nextPage =
+      userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
+        ? PageUrls.ACAS_CERT_NUM
+        : PageUrls.WORK_ADDRESS;
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
+    await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

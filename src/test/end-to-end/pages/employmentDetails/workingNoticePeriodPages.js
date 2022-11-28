@@ -59,7 +59,7 @@ module.exports = async function (noticePeriodLength) {
 
   //Did you receive any benefits
   I.seeElement('#employee-benefits');
-  I.see('Do or did you receive any employee benefits?');
+  I.see('Employee benefits');
   I.checkOption('input[id=employee-benefits]');
   I.click(commonConfig.saveAndContinue);
 };

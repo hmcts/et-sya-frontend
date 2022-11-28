@@ -1,15 +1,11 @@
-import axios from 'axios';
-import { LoggerInstance } from 'winston';
-
 import StillWorkingController from '../../../main/controllers/StillWorkingController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { CaseApi } from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Are you still working controller', () => {
   const t = {
@@ -17,13 +13,8 @@ describe('Are you still working controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render are you still working page', () => {
-    const controller = new StillWorkingController(mockLogger);
+    const controller = new StillWorkingController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -32,37 +23,36 @@ describe('Are you still working controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.STILL_WORKING, expect.anything());
   });
 
-  it('should render the employment details page', () => {
+  it('should render the employment details page', async () => {
     const body = { isStillWorking: StillWorking.WORKING };
-    const controller = new StillWorkingController(mockLogger);
+    const controller = new StillWorkingController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
   });
 
-  it('should render the job title page when the page submitted', () => {
+  it('should render the job title page when the page submitted', async () => {
     const body = { isStillWorking: StillWorking.WORKING };
-    const controller = new StillWorkingController(mockLogger);
+    const controller = new StillWorkingController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
   });
 
-  it('should add isStillWorking to the session userCase', () => {
+  it('should add isStillWorking to the session userCase', async () => {
     const body = { isStillWorking: StillWorking.WORKING };
 
-    const controller = new StillWorkingController(mockLogger);
-    const req = mockRequest({ body });
+    const controller = new StillWorkingController();
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
     expect(req.session.userCase).toStrictEqual({
@@ -70,29 +60,19 @@ describe('Are you still working controller', () => {
     });
   });
 
-  it('should redirect to the same screen when errors are present', () => {
+  it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'isStillWorking', errorType: 'required' }];
     const body = {
       isStillWorking: '',
     };
 
-    const controller = new StillWorkingController(mockLogger);
+    const controller = new StillWorkingController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
-  });
-
-  it('should run logger in catch block', async () => {
-    const controller = new StillWorkingController(mockLogger);
-    const request = mockRequest({ body: { isStillWorking: StillWorking.WORKING } });
-    const response = mockResponse();
-
-    await controller.post(request, response);
-
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });

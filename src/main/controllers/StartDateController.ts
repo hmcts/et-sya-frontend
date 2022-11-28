@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
@@ -9,9 +8,9 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { DateFormFields, StartDateFormFields } from '../definitions/dates';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord, UnknownRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const start_date: DateFormFields = {
@@ -20,6 +19,8 @@ const start_date: DateFormFields = {
   hint: (l: AnyRecord): string => l.hint,
   parser: (body: UnknownRecord): CaseDate => convertToDateObject('startDate', body),
 };
+
+const logger = getLogger('StartDateController');
 
 export default class StartDateController {
   private readonly form: Form;
@@ -35,11 +36,11 @@ export default class StartDateController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.startDateContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
     const stillWorking = req.session.userCase.isStillWorking;
     if (stillWorking === StillWorking.WORKING) {
@@ -49,9 +50,7 @@ export default class StartDateController {
     } else if (stillWorking === StillWorking.NO_LONGER_WORKING) {
       redirectUrl = PageUrls.END_DATE;
     }
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, this.logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

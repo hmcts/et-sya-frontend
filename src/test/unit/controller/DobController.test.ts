@@ -1,12 +1,10 @@
-import { AxiosResponse } from 'axios';
-import { LoggerInstance } from 'winston';
-
 import DobController from '../../../main/controllers/DobController';
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
-import * as caseApi from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Dob Controller', () => {
   const t = {
@@ -14,15 +12,8 @@ describe('Dob Controller', () => {
     common: {},
   };
 
-  const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
-
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the DobController page', () => {
-    const dobController = new DobController(mockLogger);
+    const dobController = new DobController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -53,7 +44,7 @@ describe('Dob Controller', () => {
         },
       });
       const res = mockResponse();
-      new DobController(mockLogger).post(req, res);
+      new DobController().post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(req.path);
     });
@@ -79,22 +70,23 @@ describe('Dob Controller', () => {
       },
     ])('should return appropriate errors for %o', ({ body, errors }) => {
       const req = mockRequest({ body });
-      new DobController(mockLogger).post(req, mockResponse());
+      new DobController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should update draft case when date is submitted', () => {
-      const request = mockRequest({
-        body: {
-          'dobDate-day': '05',
-          'dobDate-month': '11',
-          'dobDate-year': '2000',
-        },
-      });
-      new DobController(mockLogger).post(request, mockResponse());
+    it('should update draft case when date is submitted', async () => {
+      const body = {
+        'dobDate-day': '05',
+        'dobDate-month': '11',
+        'dobDate-year': '2000',
+      };
+      const req = mockRequestEmpty({ body });
+      const controller = new DobController();
+      const res = mockResponse();
+      await controller.post(req, res);
 
-      expect(request.session.userCase).toMatchObject({
+      expect(req.session.userCase).toMatchObject({
         dobDate: {
           day: '05',
           month: '11',
@@ -103,7 +95,7 @@ describe('Dob Controller', () => {
       });
     });
 
-    it('should go to the Sex and Title page when correct date is entered', () => {
+    it('should go to the Sex and Title page when correct date is entered', async () => {
       const req = mockRequest({
         body: {
           'dobDate-day': '05',
@@ -112,30 +104,9 @@ describe('Dob Controller', () => {
         },
       });
       const res = mockResponse();
-      new DobController(mockLogger).post(req, res);
+      await new DobController().post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.SEX_AND_TITLE);
     });
-  });
-
-  it('should invoke logger in then() block', async () => {
-    (getCaseApiMock as jest.Mock).mockReturnValue({
-      updateDraftCase: jest.fn(() => {
-        return Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
-      }),
-    });
-
-    await new DobController(mockLogger).post(
-      mockRequest({
-        body: {
-          'dobDate-day': '12',
-          'dobDate-month': '12',
-          'dobDate-year': '2005',
-        },
-      }),
-      mockResponse()
-    );
-
-    expect(mockLogger.info).toHaveBeenCalled();
   });
 });
