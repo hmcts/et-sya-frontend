@@ -52,8 +52,6 @@ describe('Type Of Claim Controller', () => {
       const errors = [{ propertyName: 'typeOfClaim', errorType: 'required' }];
       const body = { typeOfClaim: [''] };
 
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
-
       const controller = new TypeOfClaimController();
 
       const req = mockRequest({ body });
@@ -185,6 +183,8 @@ describe('Type Of Claim Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
 
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+
       jest.spyOn(res, 'redirect');
 
       await controller.post(req, res);
@@ -196,6 +196,8 @@ describe('Type Of Claim Controller', () => {
       const controller = new TypeOfClaimController();
       const req = mockRequest({ body });
       const res = mockResponse();
+
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
 
       jest.spyOn(res, 'redirect');
 
