@@ -3,6 +3,9 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
+import { ValidRespondentUrls } from './helpers/RespondentHelpers';
+import { returnValidUrl } from './helpers/RouterHelpers';
+
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
     let redirectUrl = req.url;
@@ -16,18 +19,13 @@ export default class ChangeDetailsController {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
-    const ValidUrls = Object.values(PageUrls);
-    for (const url of ValidUrls) {
-      const welshUrl = url + '/?lng=cy';
-      const englishUrl = url + '/?lng=en';
-      if (redirectUrl === url) {
-        return res.redirect(url);
-      } else if (redirectUrl === welshUrl) {
-        return res.redirect(welshUrl);
-      } else if (redirectUrl === englishUrl) {
-        return res.redirect(englishUrl);
-      }
+    const respondentIndex = redirectUrl.indexOf('/respondent/');
+    if (respondentIndex === -1) {
+      const ValidRedirects = Object.values(PageUrls);
+      return res.redirect(returnValidUrl(redirectUrl, ValidRedirects));
+    } else {
+      const ValidRespondentRedirects = Object.values(ValidRespondentUrls);
+      return res.redirect(returnValidUrl(redirectUrl, ValidRespondentRedirects));
     }
-    return res.redirect(ErrorPages.NOT_FOUND);
   };
 }

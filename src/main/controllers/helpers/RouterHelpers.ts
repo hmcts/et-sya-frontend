@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls } from '../../definitions/constants';
+import { ErrorPages, PageUrls } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
 
 export const handleSaveAsDraft = (res: Response): void => {
@@ -33,4 +33,21 @@ const handleReturnUrl = (req: AppRequest, redirectUrl: string): string => {
     req.session.returnUrl = undefined;
   }
   return nextPage;
+};
+
+export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string => {
+  for (const url of validUrls) {
+    if (redirectUrl === url) {
+      const welshUrl = url + '/?lng=cy';
+      const englishUrl = url + '/?lng=en';
+      if (redirectUrl === url) {
+        return url;
+      } else if (redirectUrl === welshUrl) {
+        return welshUrl;
+      } else if (redirectUrl === englishUrl) {
+        return englishUrl;
+      }
+    }
+  }
+  return ErrorPages.NOT_FOUND;
 };
