@@ -52,6 +52,8 @@ describe('Type Of Claim Controller', () => {
       const errors = [{ propertyName: 'typeOfClaim', errorType: 'required' }];
       const body = { typeOfClaim: [''] };
 
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+
       const controller = new TypeOfClaimController();
 
       const req = mockRequest({ body });
