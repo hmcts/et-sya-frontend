@@ -74,6 +74,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import GenericTemplateToContactController from "../../controllers/GenericTemplateToContactController";
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -206,6 +207,8 @@ export class Routes {
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);
+    app.get(PageUrls.CONTACT, new GenericTemplateToContactController().get);
+    app.post(PageUrls.CONTACT, new GenericTemplateToContactController().post);
     app.get(InterceptPaths.CHANGE_DETAILS, new ChangeDetailsController().get);
     app.get(Urls.EXTEND_SESSION, new SessionTimeoutController().getExtendSession);
     app.get(InterceptPaths.SUBMIT_CASE, new SubmitClaimController().get);
