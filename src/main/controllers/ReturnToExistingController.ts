@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { AuthUrls, LegacyUrls, TranslationKeys } from '../definitions/constants';
+import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -53,7 +53,7 @@ export default class ReturnToExistingController {
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? LegacyUrls.ET1_BASE
-      : AuthUrls.LOGIN;
+      : PageUrls.CLAIMANT_APPLICATIONS;
     setUserCase(req, this.form);
     handleSessionErrors(req, res, this.form, redirectUrl);
   };
