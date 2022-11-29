@@ -59,6 +59,7 @@ export default class ReturnToExistingController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    req.session.guid = undefined;
     const content = getPageContent(req, this.returnToExistingContent, [
       TranslationKeys.COMMON,
       TranslationKeys.RETURN_TO_EXISTING,
