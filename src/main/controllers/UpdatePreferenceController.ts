@@ -45,17 +45,39 @@ export default class UpdatePreferenceController {
         id: 'update-preference-language',
         type: 'radios',
         label: (l: AnyRecord): string => l.languageLabel,
+        hint: (l: AnyRecord): string => l.languageHint,
         values: [
+          {
+            label: (l: AnyRecord): string => l.welsh,
+            name: 'welsh',
+            value: EnglishOrWelsh.WELSH,
+            attributes: { maxLength: 2 },
+          },
           {
             label: (l: AnyRecord): string => l.english,
             name: 'english',
             value: EnglishOrWelsh.ENGLISH,
             attributes: { maxLength: 2 },
           },
+        ],
+        validator: isFieldFilledIn,
+      },
+      claimantHearingLanguagePreference: {
+        classes: 'govuk-radios--inline',
+        id: 'update-hearing-language',
+        type: 'radios',
+        label: (l: AnyRecord): string => l.hearingLabel,
+        values: [
           {
             label: (l: AnyRecord): string => l.welsh,
             name: 'welsh',
             value: EnglishOrWelsh.WELSH,
+            attributes: { maxLength: 2 },
+          },
+          {
+            label: (l: AnyRecord): string => l.english,
+            name: 'english',
+            value: EnglishOrWelsh.ENGLISH,
             attributes: { maxLength: 2 },
           },
         ],
