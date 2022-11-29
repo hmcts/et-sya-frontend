@@ -19,10 +19,10 @@ export default class ClaimTypeDiscriminationController {
     fields: {
       claimTypeDiscrimination: {
         id: 'claimTypeDiscrimination',
-        label: l => l.h1,
-        labelHidden: true,
+        label: l => l.legend,
+        labelHidden: false,
+        labelSize: 'l',
         type: 'checkboxes',
-        isPageHeading: true,
         hint: l => l.selectAllHint,
         validator: atLeastOneFieldIsChecked,
         values: [

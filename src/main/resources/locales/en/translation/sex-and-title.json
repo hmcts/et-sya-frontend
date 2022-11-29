@@ -1,12 +1,12 @@
 {
   "title": "Sex and preferred title",
-  "h1": "Sex and preferred title (optional)",
+  "h1": "Sex and preferred title",
   "p": "These details will be used to help progress your claim.",
   "male": "Male",
   "female": "Female",
   "sex": "What is your sex?",
   "preferNotToSay": "Prefer not to say",
-  "preferredTitle": "What is your preferred title?",
+  "preferredTitle": "What is your preferred title? (optional)",
   "errors": {
     "preferredTitle": {
       "required": "Select a list option from the \"What is your preferred title\" dropdown",

@@ -16,9 +16,9 @@
   <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
-           {{ h1 + respondentName }}?
+           {{ h1 }}
         </h1>
-        <p class="govuk-body">{{ hintText }} 
+        <p class="govuk-body">{{ hintText }}
           <a href='https://www.acas.org.uk/early-conciliation' class="govuk-link" rel="noreferrer noopener" target="_blank">{{linkText}}</a>
         </p>
         {% block form %}
@@ -26,4 +26,4 @@
         {% endblock %}
       </div>
   </div>
-{% endblock %} 
+{% endblock %}
