@@ -162,7 +162,7 @@ export const PageUrls = {
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
-  CONTACT: '/contact'
+  CONTACT_TEMPLATE: '/contact-template'
 } as const;
 
 export const InterceptPaths = {
