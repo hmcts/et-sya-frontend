@@ -60,7 +60,6 @@ export default class UpdatePreferenceController {
             attributes: { maxLength: 2 },
           },
         ],
-        validator: isFieldFilledIn,
       },
       claimantHearingLanguagePreference: {
         classes: 'govuk-radios--inline',
@@ -81,7 +80,6 @@ export default class UpdatePreferenceController {
             attributes: { maxLength: 2 },
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: submitButton,

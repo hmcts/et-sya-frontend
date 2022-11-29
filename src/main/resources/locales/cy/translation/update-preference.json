@@ -12,9 +12,6 @@
   "errors": {
     "claimantContactPreference": {
       "required": "Welsh Translation required"
-    },
-    "claimantContactLanguagePreference": {
-      "required": "Welsh Translation required"
     }
   }
 }

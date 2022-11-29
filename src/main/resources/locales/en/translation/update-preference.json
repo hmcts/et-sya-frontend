@@ -12,9 +12,6 @@
   "errors": {
     "claimantContactPreference": {
       "required": "Tell us whether you want to be contacted by email or by post"
-    },
-    "claimantContactLanguagePreference": {
-      "required": "Tell us what language you want to be contacted in"
     }
   }
 }
