@@ -17,13 +17,12 @@ export class HubLinksStatuses {
   [linkName: string]: HubLinkStatus;
 
   constructor() {
-    Object.values(HubLinkNames)
-      .filter(name => name !== HubLinkNames.Et1ClaimForm)
-      .forEach(name => {
-        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
-      });
+    Object.values(HubLinkNames).forEach(name => {
+      this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+    });
 
     this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
+    this[HubLinkNames.ContactTribunal] = HubLinkStatus.OPTIONAL;
   }
 }
 
@@ -41,6 +40,7 @@ export const enum HubLinkStatus {
 export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
   [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+  [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
 ]);
 
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
