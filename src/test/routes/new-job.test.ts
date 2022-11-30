@@ -12,7 +12,7 @@ describe(`GET ${PageUrls.NEW_JOB}`, () => {
     expect(res.status).toStrictEqual(200);
   });
 });
-// There should be updates for mocking calls for et-sya-api --> RET-2738
+
 describe(`on POST ${PageUrls.NEW_JOB} with Yes`, () => {
   test('should return the new job page when Yes radio button is selected', async () => {
     jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());

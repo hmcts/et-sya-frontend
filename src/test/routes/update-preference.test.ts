@@ -13,8 +13,8 @@ describe(`GET ${PageUrls.UPDATE_PREFERENCES}`, () => {
 });
 
 describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should go to the video hearing page when the Email radio button is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
       .send({ claimantContactPreference: 'Email' })
@@ -25,7 +25,6 @@ describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   });
 
   test('should go to the video hearing page when the Post radio button is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     await request(mockApp({}))
       .post(PageUrls.UPDATE_PREFERENCES)
       .send({ claimantContactPreference: 'Post' })
