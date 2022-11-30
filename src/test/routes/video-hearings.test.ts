@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { HearingPreference } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 });
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)

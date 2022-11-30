@@ -7,7 +7,6 @@ import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.PENSION}`, () => {
   it('should return the employment details notice pension page', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     const res = await request(mockApp({})).get(PageUrls.PENSION);
     expect(res.type).toStrictEqual('text/html');
     expect(res.status).toStrictEqual(200);

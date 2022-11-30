@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should navigate to the describe what happened page when TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
     await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) }))
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)
@@ -22,9 +24,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
         expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED.toString());
       });
   });
-});
-// This case occurs only when TypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
-describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
+  // This case occurs only when TypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
   test('should navigate to the claim type pay when TypesOfClaim.PAY_RELATED_CLAIM selected', async () => {
     await request(
       mockApp({ session: mockSession([TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.PAY_RELATED_CLAIM], [], []) })

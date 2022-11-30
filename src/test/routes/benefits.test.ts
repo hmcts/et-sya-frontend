@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -19,6 +20,7 @@ describe(`GET ${PageUrls.BENEFITS}`, () => {
 });
 
 describe(`on POST ${PageUrls.BENEFITS}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should navigate to the respondent name when either working or notice and save and continue button is clicked', async () => {
     await request(
       mockApp({
@@ -34,9 +36,7 @@ describe(`on POST ${PageUrls.BENEFITS}`, () => {
         expect(res.header['location']).toStrictEqual(PageUrls.FIRST_RESPONDENT_NAME);
       });
   });
-});
 
-describe(`on POST ${PageUrls.BENEFITS}`, () => {
   test('should navigate to the new job page when no longer working and save and continue button is clicked', async () => {
     await request(
       mockApp({
