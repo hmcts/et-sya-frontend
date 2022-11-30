@@ -1,10 +1,8 @@
 import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
-
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 
@@ -58,6 +56,7 @@ export default class CitizenHubDocumentController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(req?.params?.documentType, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       hideContactUs: true,
       docs: documents,
       et3Forms: documents.filter(d => d.type === 'ET3'),

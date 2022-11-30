@@ -4,6 +4,7 @@ import config from 'config';
 import PcqController from '../../../main/controllers/PcqController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
+import * as invokePCQ from '../../../main/pcq/index';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -17,6 +18,7 @@ describe('PCQGetController', () => {
   const controller = new PcqController();
   const body = {};
   const session = { user: { id: '', email: 'johndoe@example.com', accessToken: '', givenName: '', familyName: '' } };
+  jest.spyOn(invokePCQ, 'getHost').mockReturnValue('localhost');
 
   test('Should redirect to PCQ if PCQ status is UP and ClaimantPcqId does not exist', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
@@ -27,10 +29,6 @@ describe('PCQGetController', () => {
     const userCase = {};
     const req = mockRequest({ body, userCase, session });
     const res = mockResponse();
-    req.protocol = 'http';
-    req.headers = {
-      host: 'localhost:3001',
-    };
 
     const redirectMock = jest.fn();
     res.redirect = redirectMock;
@@ -77,6 +75,7 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if PCQ Health is DOWN', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -118,6 +117,7 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (response received)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -135,6 +135,7 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (response not received)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
 
     const req = mockRequest({});
     const res = mockResponse();
@@ -152,6 +153,7 @@ describe('PCQGetController', () => {
   test('Should redirect to Check Your Answers if health error (all others)', async () => {
     mockedConfig.get.mockReturnValueOnce('true');
     mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/health');
+    mockedConfig.get.mockReturnValueOnce('https://pcq.aat.platform.hmcts.net/service-endpoint');
 
     const req = mockRequest({});
     const res = mockResponse();

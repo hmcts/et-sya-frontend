@@ -6,7 +6,6 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
-
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
