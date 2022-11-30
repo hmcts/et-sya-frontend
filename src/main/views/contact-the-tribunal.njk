@@ -1,0 +1,163 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+
+{% block beforeContent %}
+    {{ super() }}
+    {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+            <p class="govuk-body govuk-!-margin-bottom-8">
+                {{ landing_text.p1 }} <br><br>
+                {{ landing_text.p2 }} <br><br>
+                {{ landing_text.p3}}
+            </p>
+            {{ govukAccordion({
+                    id: "contact-options",
+                    items: [
+                    {
+                        heading: {
+                            text: sections.withdraw.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.withdraw.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/withdraw'>" + sections.withdraw.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.change_details.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.change_details.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/change_details'>" + sections.change_details.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.postpone.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.postpone.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/postpone'>" + sections.postpone.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.vary.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.vary.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/vary'>" + sections.vary.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.reconsider_decision.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.reconsider_decision.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/reconsider_decision'>" + sections.reconsider_decision.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.amend.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.amend.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/amend'>" + sections.amend.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.respondent.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.respondent.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/respondent'>" + sections.respondent.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.witness.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.witness.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/witness'>" + sections.witness.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.noncompliance.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.noncompliance.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/noncompliance'>" + sections.noncompliance.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.publicity.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.publicity.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/publicity'>" + sections.publicity.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.strike.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.strike.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/strike'>" + sections.strike.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.reconsider_judgement.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.reconsider_judgement.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/reconsider_judgement'>" + sections.reconsider_judgement.label + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.other.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.other.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/other'>" + sections.other.link + "</a>"
+                        }
+                    },
+                    {
+                        heading: {
+                            text: sections.documents.label
+                        },
+                        content: {
+                            html: "<p class='govuk-body'>"+sections.documents.body+"</p> <br>" +
+                                "<a class='govuk-link' href='/contact-the-tribunal/documents'>" + sections.documents.label + "</a>"
+                        }
+                    }]
+            }) }}
+
+            <h2 class="govuk-heading-m">{{ call.h1 }}</h2>
+            <p class="govuk-body">{{ call.p1 }} <br> {{ call.p2 }}</p>
+            <h2 class="govuk-heading-m">{{ call.english.h1 }}</h2>
+            <p class="govuk-body">{{ call.english.p1 }} <br> {{ call.english.p2 }}</p>
+            <h2 class="govuk-heading-m">{{ call.welsh.h1 }}</h2>
+            <p class="govuk-body">{{ call.welsh.p1 }}</p>
+            <h2 class="govuk-heading-m">{{ call.scottish.h1 }}</h2>
+            <p class="govuk-body">{{ call.scottish.p1 }} <br> {{ call.scottish.p2 }}</p>
+            <p class="govuk-body">{{ call.p3 }} <br> {{ call.p4 }} <br> {{ call.p5 }}</p>
+            <a href="https://www.gov.uk/call-charges" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ call.link }}</a>
+        </div>
+    </div>
+{% endblock %}

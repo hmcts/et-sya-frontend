@@ -1,0 +1,91 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "landing_text": {
+    "p1": "Welsh Translation required",
+    "p2": "Welsh Translation required",
+    "p3": "Welsh Translation required"
+  },
+  "sections": {
+    "withdraw": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "change_details": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "postpone": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "vary": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "reconsider_decision": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "amend": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "respondent": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "witness": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "noncompliance": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "publicity": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "strike": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "reconsider_judgement": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    },
+    "other": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "documents": {
+      "label": "Welsh Translation required",
+      "body": "Welsh Translation required"
+    }
+  },
+  "call": {
+    "h1": "Welsh Translation required",
+    "p1": "Welsh Translation required",
+    "p2": "Welsh Translation required",
+    "english": {
+      "h1": "Welsh Translation required",
+      "p1": "Welsh Translation required",
+      "p2": "Welsh Translation required"
+    },
+    "welsh": {
+      "h1": "Welsh Translation required",
+      "p1": "Welsh Translation required"
+    },
+    "scottish": {
+      "h1": "Welsh Translation required",
+      "p1": "Welsh Translation required",
+      "p2": "Welsh Translation required"
+    },
+    "p3": "Welsh Translation required",
+    "p4": "Welsh Translation required",
+    "p5": "Welsh Translation required",
+    "link": "Welsh Translation required"
+  }
+}
