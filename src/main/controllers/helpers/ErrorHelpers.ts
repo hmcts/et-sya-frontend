@@ -210,3 +210,18 @@ export const getClaimSummaryError = (
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
   }
 };
+
+export const getContactTemplateError = (
+  formData: Partial<CaseWithId>,
+  file: Express.Multer.File,
+): FormError => {
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+
+  if (fileFormatInvalid) {
+    return { propertyName: 'contactTemplateFile', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'contactTemplateFile', errorType: fileNameInvalid };
+  }
+};

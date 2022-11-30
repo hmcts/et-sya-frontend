@@ -1,0 +1,69 @@
+import * as helper from '../../../main/controllers/helpers/CaseHelpers';
+import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
+import { mockFile } from '../mocks/mockFile';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+import ContactTemplateController from "../../../main/controllers/ContactTemplateController";
+import {TranslationKeys} from "../../../main/definitions/constants";
+
+describe('Contact Template Controller', () => {
+  const t = {
+    'contact-template-controller': {},
+    common: {},
+  };
+  const helperMock = jest.spyOn(helper, 'handleUploadDocument');
+
+  beforeAll(() => {
+    const uploadResponse: DocumentUploadResponse = {
+      originalDocumentName: 'test.txt',
+      uri: 'test.com',
+      _links: {
+        binary: {
+          href: 'test.com',
+        },
+      },
+    } as DocumentUploadResponse;
+
+    (helperMock as jest.Mock).mockReturnValue({
+      data: uploadResponse,
+    });
+  });
+
+  it('should render contact template page', () => {
+    const controller = new ContactTemplateController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+
+    controller.get(request, response);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CONTACT_TEMPLATE, expect.anything());
+  });
+
+  describe('Correct validation', () => {
+    it('should both summary text and summary file be optional', async () => {
+      const req = mockRequest({ body: { contactTemplateText: '' } });
+      await new ContactTemplateController().post(req, mockResponse());
+
+      expect(req.session.errors.length).toEqual(0);
+    });
+
+    it('should only allow valid file formats', async () => {
+      const newFile = mockFile;
+      newFile.originalname = 'file.invalidFileFormat';
+      const req = mockRequest({ body: {}, file: newFile });
+      await new ContactTemplateController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileFormat' }]);
+    });
+
+    it('should assign userCase from summary text', async () => {
+      const req = mockRequest({ body: { contactTemplateText: 'test' } });
+      const res = mockResponse();
+
+      await new ContactTemplateController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        contactTemplateText: 'test',
+      });
+    });
+  });
+});

@@ -38,5 +38,6 @@
         value: true
       }) if getContent(form.saveForLater.text)
     }}
+          <a {{getContent(form.cancel.hidden)}} class={{getContent(form.cancel.classes)}} href={{getContent(form.cancel.link)}}>{{ getContent(form.cancel.text) }}</a>
   </div>
 </form>
