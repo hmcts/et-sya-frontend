@@ -55,6 +55,16 @@ describe('Contact Template Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileFormat' }]);
     });
 
+    it('should only allow valid file sizes', async () => {
+      const newFile = mockFile;
+      newFile.originalname = 'file.invalidFileSize';
+      const req = mockRequest({ body: {}, file: newFile });
+      req.fileTooLarge = true;
+      await new ContactTemplateController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileSize' }]);
+    });
+
     it('should assign userCase from summary text', async () => {
       const req = mockRequest({ body: { contactTemplateText: 'test' } });
       const res = mockResponse();
