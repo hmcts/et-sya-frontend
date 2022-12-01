@@ -58,6 +58,7 @@ describe('Describe-What-Happened Controller', () => {
     it('should assign userCase from summary text', async () => {
       const req = mockRequest({ body: { claimSummaryText: 'test' } });
       const res = mockResponse();
+      jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
 
       await new DescribeWhatHappenedController().post(req, res);
 
