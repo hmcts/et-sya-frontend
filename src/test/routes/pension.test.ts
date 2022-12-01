@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { StillWorking, YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.PENSION}`, () => {
 });
 
 describe(`on POST ${PageUrls.PENSION}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test("should return the benefits page when 'yes' radio button is selected, a valid pension contribution is entered and 'save and continue' are selected", async () => {
     await request(
       mockApp({

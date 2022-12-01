@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.TELEPHONE_NUMBER}`, () => {
 });
 
 describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
   test('should go to update preferences page when phone number has been entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.TELEPHONE_NUMBER)
