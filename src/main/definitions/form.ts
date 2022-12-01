@@ -17,6 +17,7 @@ export type Warning = Label;
 export interface SubmitButton {
   text: Label;
   classes?: string;
+  disabled?: boolean;
 }
 
 export interface Link {
@@ -52,7 +53,6 @@ export interface FormOptions {
   validator?: ValidationCheck;
   parser?: Parser;
   subFields?: Record<string, FormField>;
-  disabled?: boolean;
 }
 
 export interface FormInput {

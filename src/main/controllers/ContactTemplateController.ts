@@ -42,20 +42,13 @@ export default class ContactTemplateController {
         labelSize: 'm',
         type: 'upload',
       },
-      // uploadButton: {
-      //   id: 'uploadButton',
-      //   type: 'submit',
-      //  // disabled: this.getDisabled(),
-      //  // labelHidden: false,
-      //   //hint: l => this.getHint(l),
-      //   //labelSize: 'm',
-      //   //type: 'upload',
-      // },
     },
-    // submit: {
-    //   text: (l: AnyRecord): string => l.continue,
-    //   classes: 'govuk-!-margin-right-8',
-    // },
+    submit: {
+      text: (l: AnyRecord): string => l.uploadFileButton,
+      classes: "govuk-button--secondary",
+      disabled: true
+      //classes: 'govuk-!-margin-right-8',
+    },
     //
     // cancel: {
     //   text: (l: AnyRecord): string => l.cancel,
