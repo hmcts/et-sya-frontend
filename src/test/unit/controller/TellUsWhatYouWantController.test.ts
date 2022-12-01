@@ -1,4 +1,5 @@
 import TellUsWhatYouWantController from '../../../main/controllers/TellUsWhatYouWantController';
+import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -8,6 +9,10 @@ describe('Tell Us What You Want Controller', () => {
     'tell-us-what-you-want': {},
     common: {},
   };
+
+  beforeAll(() => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  });
 
   it('should render the tell us what you want page', () => {
     const controller = new TellUsWhatYouWantController();

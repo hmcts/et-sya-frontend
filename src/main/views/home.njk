@@ -3,6 +3,13 @@
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
+{% set languageParam = "" %}
+{% if "lng=cy" in currentUrl %}
+  {% set languageParam = "?lng=cy" %}
+{% else %}
+  {% set languageParam = "?lng=en" %}
+{% endif %}
+
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -27,7 +34,7 @@
       }) }}
       <ul class="govuk-list">
         <li><b>{{ claimStartedTxt }}</b></li>
-        <li><a href={{PageUrls.RETURN_TO_EXISTING}} class="govuk-link">{{ returnClaimTxt }}</a></li>
+        <li><a href="{{PageUrls.RETURN_TO_EXISTING + languageParam}}" class="govuk-link">{{ returnClaimTxt }}</a></li>
       </ul>
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
       <p class="govuk-body ">{{ contactUsForHelp|safe }}</p>
