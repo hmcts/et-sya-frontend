@@ -119,7 +119,7 @@ export const handleUploadDocument = async (
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
       req.session.user?.accessToken
-    ).uploadDocument(file, 'ET_EnglandWales');
+    ).uploadDocument(file, req.session.userCase?.caseTypeId);
     logger.info(`Uploaded document to: ${result.data._links.self.href}`);
     return result;
   } catch (err) {
