@@ -76,7 +76,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ContactTemplateController from 'controllers/ContactTemplateController';
+import ContactTemplateController from '../../controllers/ContactTemplateController';
 
 const multer = require('multer');
 const handleUploads = multer({
