@@ -15,9 +15,13 @@ const logger = getLogger('ContactTemplateController');
 
 
 export default class ContactTemplateController {
+
   private getHint = (label: AnyRecord): string => {
     return label.fileUpload.hint;
   };
+  // private getDisabled = (label: AnyRecord): string => {
+  //   return label.fileUpload.hint;
+  // };
   private readonly form: Form;
   private readonly contactTemplateContent: FormContent = {
     fields: {
@@ -38,18 +42,27 @@ export default class ContactTemplateController {
         labelSize: 'm',
         type: 'upload',
       },
+      // uploadButton: {
+      //   id: 'uploadButton',
+      //   type: 'submit',
+      //  // disabled: this.getDisabled(),
+      //  // labelHidden: false,
+      //   //hint: l => this.getHint(l),
+      //   //labelSize: 'm',
+      //   //type: 'upload',
+      // },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-      classes: 'govuk-!-margin-right-8',
-    },
-
-    cancel: {
-      text: (l: AnyRecord): string => l.cancel,
-      classes: 'govuk-link',
-      link: "#",
-      hidden: ""
-    },
+    // submit: {
+    //   text: (l: AnyRecord): string => l.continue,
+    //   classes: 'govuk-!-margin-right-8',
+    // },
+    //
+    // cancel: {
+    //   text: (l: AnyRecord): string => l.cancel,
+    //   classes: 'govuk-link',
+    //   link: "#",
+    //   hidden: ""
+    // },
   };
 
   constructor() {

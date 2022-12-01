@@ -27,7 +27,7 @@ export interface Link {
 }
 
 export interface FormContent {
-  submit: SubmitButton;
+  submit?: SubmitButton;
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
@@ -52,6 +52,7 @@ export interface FormOptions {
   validator?: ValidationCheck;
   parser?: Parser;
   subFields?: Record<string, FormField>;
+  disabled?: boolean;
 }
 
 export interface FormInput {

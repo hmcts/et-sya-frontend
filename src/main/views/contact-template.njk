@@ -1,6 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -27,6 +28,45 @@
                   {% block form %}
                   {% include "form/form.njk"%}
                   {% endblock %}
+                  {{ govukButton({
+                                      text: "Upload File",
+                                      classes: "govuk-button--secondary",
+                                      disabled: "true"
+                                    }) }}
+                                    <br/>
+                                       <br/>
+                                     <h2 class="govuk-summary-list__key govuk-heading-m">
+                                            Uploaded file
+                                          </h2>
+                                          <hr/>
+
+                                          {{ govukSummaryList({
+                                              rows: [
+                                                {
+                                                  key: {
+                                                    html: '<p class="govuk-body">No files uploaded</p>'
+                                                  },
+                                                  value: {
+                                                     text: ""
+                                                  },
+                                                  actions: {
+                                                    items: [
+
+                                                    ]
+                                                  }
+                                                }
+                                              ]
+                                            }) }}
+
+
+                                     <div class="govuk-button-group">
+                                          {{ govukButton({
+                                            text: "Continue",
+                                            classes: 'govuk-!-margin-right-8'
+                                          }) }}
+                                          <a class="govuk-link" href="#">Cancel</a>
+                                        </div>
+                                      </div>
     </div>
   </div>
 {% endblock %}
