@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { EmailOrPost, EnglishOrWelsh } from '../definitions/case';
+import { CaseTypeId, EmailOrPost, EnglishOrWelsh } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -16,8 +16,8 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 const logger = getLogger('UpdatePreferenceController');
 
 export default class UpdatePreferenceController {
-  private readonly form: Form;
-  private readonly updatePrefFormContent: FormContent = {
+  private form: Form;
+  private readonly scotlandFormContent: FormContent = {
     fields: {
       claimantContactPreference: {
         classes: 'govuk-radios--inline',
@@ -40,6 +40,14 @@ export default class UpdatePreferenceController {
         ],
         validator: isFieldFilledIn,
       },
+    },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
+  };
+  private readonly englandWalesFormContent: FormContent = {
+    ...this.scotlandFormContent,
+    fields: {
+      ...this.scotlandFormContent.fields,
       claimantContactLanguagePreference: {
         classes: 'govuk-radios--inline',
         id: 'update-preference-language',
@@ -82,26 +90,33 @@ export default class UpdatePreferenceController {
         ],
       },
     },
-    submit: submitButton,
-    saveForLater: saveForLaterButton,
   };
 
-  constructor() {
-    this.form = new Form(<FormFields>this.updatePrefFormContent.fields);
-  }
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.VIDEO_HEARINGS);
+    await handlePostLogic(req, res, this.getForm(req.session.userCase.caseTypeId), logger, PageUrls.VIDEO_HEARINGS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.updatePrefFormContent, [
+    const content = getPageContent(req, this.getFormContent(req.session.userCase.caseTypeId), [
       TranslationKeys.COMMON,
       TranslationKeys.UPDATE_PREFERENCE,
     ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
+    assignFormData(req.session.userCase, this.getForm(req.session.userCase.caseTypeId).getFormFields());
     res.render(TranslationKeys.UPDATE_PREFERENCE, {
       ...content,
     });
+  };
+
+  // Get form content according to the caseTypeId
+  public getFormContent = (caseTypeId: CaseTypeId): FormContent => {
+    return caseTypeId === CaseTypeId.ENGLAND_WALES ? this.englandWalesFormContent : this.scotlandFormContent;
+  };
+
+  // Ensure form is a singleton
+  public getForm = (caseTypeId: CaseTypeId): Form => {
+    if (this.form === undefined) {
+      this.form = new Form(<FormFields>this.getFormContent(caseTypeId).fields);
+    }
+    return this.form;
   };
 }
