@@ -8,4 +8,5 @@ export interface ClaimantCorrespondence {
   claimant_phone_number?: string;
   claimant_contact_preference?: EmailOrPost;
   claimant_contact_language?: EnglishOrWelsh;
+  claimant_hearing_language?: EnglishOrWelsh;
 }

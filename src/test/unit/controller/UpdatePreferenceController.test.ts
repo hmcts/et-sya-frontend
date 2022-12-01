@@ -21,10 +21,7 @@ describe('Update Preference Controller', () => {
   });
 
   it('should redirect to the same screen when errors are present', async () => {
-    const errors = [
-      { propertyName: 'claimantContactPreference', errorType: 'required' },
-      { propertyName: 'claimantContactLanguagePreference', errorType: 'required' },
-    ];
+    const errors = [{ propertyName: 'claimantContactPreference', errorType: 'required' }];
     const body = { claimantContactPreference: '' };
 
     const controller = new UpdatePreferenceController();

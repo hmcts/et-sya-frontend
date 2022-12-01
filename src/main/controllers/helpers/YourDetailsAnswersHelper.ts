@@ -166,9 +166,30 @@ export const getYourDetails = (
       },
       value: {
         text:
-          userCase.claimantContactLanguagePreference === EnglishOrWelsh.ENGLISH
-            ? translations.personalDetails.english
-            : translations.personalDetails.welsh,
+          userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH
+            ? translations.personalDetails.welsh
+            : translations.personalDetails.english,
+      },
+      actions: {
+        items: [
+          {
+            href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.personalDetails.howToBeContacted,
+          },
+        ],
+      },
+    },
+    {
+      key: {
+        text: translations.personalDetails.hearingLabel,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text:
+          userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH
+            ? translations.personalDetails.welsh
+            : translations.personalDetails.english,
       },
       actions: {
         items: [

@@ -118,6 +118,7 @@ describe('Should return data in api format', () => {
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
       claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+      claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
       claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
@@ -228,6 +229,7 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
           claimant_contact_language: EnglishOrWelsh.ENGLISH,
+          claimant_hearing_language: EnglishOrWelsh.ENGLISH,
           claimant_phone_number: '075',
           claimant_addressUK: {
             AddressLine1: 'address 1',
@@ -433,6 +435,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingAssistance: undefined,
       claimantContactPreference: undefined,
       claimantContactLanguagePreference: undefined,
+      claimantHearingLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       claimSummaryText: undefined,
@@ -481,6 +484,7 @@ describe('Format Case Data to Frontend Model', () => {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
           claimant_contact_language: EnglishOrWelsh.WELSH,
+          claimant_hearing_language: EnglishOrWelsh.WELSH,
         },
         documentCollection: [
           {
@@ -567,6 +571,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingAssistance: undefined,
       claimantContactPreference: 'Email',
       claimantContactLanguagePreference: 'Welsh',
+      claimantHearingLanguagePreference: 'Welsh',
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       claimSummaryText: undefined,
