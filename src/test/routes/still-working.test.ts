@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.STILL_WORKING}`, () => {
 });
 
 describe(`on POST ${PageUrls.STILL_WORKING}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should return the employment details - job title page when Still working for them button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.STILL_WORKING)

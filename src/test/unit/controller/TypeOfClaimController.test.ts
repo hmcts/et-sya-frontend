@@ -183,6 +183,8 @@ describe('Type Of Claim Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
 
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+
       jest.spyOn(res, 'redirect');
 
       await controller.post(req, res);
@@ -194,6 +196,8 @@ describe('Type Of Claim Controller', () => {
       const controller = new TypeOfClaimController();
       const req = mockRequest({ body });
       const res = mockResponse();
+
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
 
       jest.spyOn(res, 'redirect');
 

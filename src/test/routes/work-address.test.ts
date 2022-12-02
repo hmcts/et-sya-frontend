@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -27,6 +28,7 @@ describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
 
 describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   test('should load acas number page if yes is selected', async () => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     await request(
       mockApp({
         userCase: {
@@ -48,6 +50,7 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   });
 
   test('should load place of work page if no is selected', async () => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
     await request(
       mockApp({
         userCase: {
