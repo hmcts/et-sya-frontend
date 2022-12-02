@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
@@ -257,5 +257,21 @@ describe('Check your answers confirmation page', () => {
       PageUrls.WHISTLEBLOWING_CLAIMS + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'
     );
+  });
+});
+
+describe('CYA for Scottish cases', () => {
+  beforeAll(async () => {
+    await request(mockApp({ userCase: { caseTypeId: CaseTypeId.SCOTLAND } }))
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should display 8 rows in Your Details summary list', () => {
+    const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
+    const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
+    expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
   });
 });
