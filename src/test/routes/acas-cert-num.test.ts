@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -26,6 +27,7 @@ describe(`GET ${PageUrls.ACAS_CERT_NUM}`, () => {
 });
 
 describe(`on POST ${PageUrls.ACAS_CERT_NUM}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should go to the types of claim page when the Yes radio button is selected', async () => {
     await request(mockApp({}))
       .post(pageUrl)

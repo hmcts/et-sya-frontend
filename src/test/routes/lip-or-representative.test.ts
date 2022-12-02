@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
 });
 
 describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test("should return the Single or Multiple claims page when (no) 'representing myself' is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
