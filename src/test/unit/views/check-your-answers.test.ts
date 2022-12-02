@@ -83,10 +83,10 @@ describe('Check your answers confirmation page', () => {
     expect(typeOfClaimList.length).equals(1, 'Incorrect number of rows found');
   });
 
-  it('should display 9 rows in Your Details summary list', () => {
+  it('should display 10 rows in Your Details summary list', () => {
     const summaryListSections = htmlRes.getElementsByClassName(summaryListClass);
     const personalDetailsList = summaryListSections[1].querySelectorAll(summaryListKeyExcludeHeadingClass);
-    expect(personalDetailsList.length).equals(9, 'Incorrect number of rows found');
+    expect(personalDetailsList.length).equals(10, 'Incorrect number of rows found');
   });
 
   it('should display 13 rows in Employment Details summary list', () => {
@@ -124,8 +124,9 @@ describe('Check your answers confirmation page', () => {
     const telephoneLink = yourDetailsList[4].getAttribute('href');
     const howToContactLink = yourDetailsList[5].getAttribute('href');
     const contactLanguageLink = yourDetailsList[6].getAttribute('href');
-    const hearingsLink = yourDetailsList[7].getAttribute('href');
-    const disabilityLink = yourDetailsList[8].getAttribute('href');
+    const contactHearingLink = yourDetailsList[7].getAttribute('href');
+    const hearingsLink = yourDetailsList[8].getAttribute('href');
+    const disabilityLink = yourDetailsList[9].getAttribute('href');
 
     expect(dobDetailsLink).equals(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(sexDetailsLink).equals(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
@@ -137,6 +138,10 @@ describe('Check your answers confirmation page', () => {
       'Incorrect href found'
     );
     expect(contactLanguageLink).equals(
+      PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+      'Incorrect href found'
+    );
+    expect(contactHearingLink).equals(
       PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
       'Incorrect href found'
     );
