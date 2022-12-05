@@ -16,7 +16,6 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 const logger = getLogger('UpdatePreferenceController');
 
 export default class UpdatePreferenceController {
-  private form: Form;
   private readonly scotlandFormContent: FormContent = {
     fields: {
       claimantContactPreference: {
@@ -44,6 +43,7 @@ export default class UpdatePreferenceController {
     submit: submitButton,
     saveForLater: saveForLaterButton,
   };
+
   private readonly englandWalesFormContent: FormContent = {
     ...this.scotlandFormContent,
     fields: {
@@ -107,16 +107,12 @@ export default class UpdatePreferenceController {
     });
   };
 
-  // Get form content according to the caseTypeId
-  public getFormContent = (caseTypeId: CaseTypeId): FormContent => {
-    return caseTypeId === CaseTypeId.ENGLAND_WALES ? this.englandWalesFormContent : this.scotlandFormContent;
+  getForm = (caseTypeId: CaseTypeId): Form => {
+    return new Form(<FormFields>this.getFormContent(caseTypeId).fields);
   };
 
-  // Ensure form is a singleton
-  public getForm = (caseTypeId: CaseTypeId): Form => {
-    if (this.form === undefined) {
-      this.form = new Form(<FormFields>this.getFormContent(caseTypeId).fields);
-    }
-    return this.form;
+  // Get form content according to the caseTypeId
+  getFormContent = (caseTypeId: CaseTypeId): FormContent => {
+    return caseTypeId === CaseTypeId.ENGLAND_WALES ? this.englandWalesFormContent : this.scotlandFormContent;
   };
 }
