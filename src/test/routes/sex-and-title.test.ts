@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { Sex } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.SEX_AND_TITLE}`, () => {
 });
 
 describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should go to the address details page', async () => {
     await request(mockApp({}))
       .post(PageUrls.SEX_AND_TITLE)
@@ -22,9 +24,6 @@ describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
         expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_DETAILS);
       });
   });
-});
-
-describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
   test('should return gender details page if title contains number', async () => {
     const body = {
       claimantSex: Sex.MALE,

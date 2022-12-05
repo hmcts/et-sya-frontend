@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
 });
 
 describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test(
     'should navigate to the compensation page when TellUsWhatYouWant.COMPENSATION_ONLY selected ' +
       'and save and continue button is clicked',
@@ -26,9 +28,6 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the tribunal recommendation page when TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION selected ' +
       'and save and continue button is clicked',
@@ -42,9 +41,6 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the compensation page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are selected and save and continue button is clicked',
@@ -58,9 +54,6 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the whistle blowing claims page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING selected ' +
@@ -74,9 +67,6 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   test(
     'should navigate to the PageUrls.CLAIM_DETAILS_CHECK page when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION are not selected, TypesOfClaim.WHISTLE_BLOWING is not selected ' +

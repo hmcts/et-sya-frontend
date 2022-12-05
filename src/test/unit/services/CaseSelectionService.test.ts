@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import {
   getUserApplications,
@@ -118,7 +118,7 @@ describe('Case Selection Service using Case Api', () => {
     expect(result).toStrictEqual([]);
   });
 
-  test('Should select User Case and redirect to Claim Steps', async () => {
+  test('Should select User Case and redirect to Claim Steps in English language if current language is English', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: {
         id: '12234',
@@ -139,6 +139,7 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
@@ -146,10 +147,42 @@ describe('Case Selection Service using Case Api', () => {
 
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to new claim if undefined', async () => {
+  test('Should select User Case and redirect to Claim Steps in Welsh language if current language is Welsh', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: {
+        id: '12234',
+        state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+        last_modified: '2019-02-12T14:25:39.015',
+        created_date: '2019-02-12T14:25:39.015',
+        case_data: {
+          caseType: CaseType.SINGLE,
+          typesOfClaim: ['discrimination', 'payRelated'],
+          claimantRepresentedQuestion: YesOrNo.YES,
+          caseSource: 'ET1 Online',
+        },
+      },
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to new claim in English language if undefined and current language is English', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: undefined,
       status: 200,
@@ -159,16 +192,37 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to new claim if null', async () => {
+  test('Should redirect to new claim in Welsh language if undefined and current language is Welsh', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: undefined,
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to new claim in English language if null and current language is English', async () => {
     const response: AxiosResponse<CaseApiDataResponse> = {
       data: null,
       status: 200,
@@ -178,16 +232,37 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to home page on error', async () => {
+  test('Should redirect to new claim in Welsh language if null and current language is Welsh', async () => {
+    const response: AxiosResponse<CaseApiDataResponse> = {
+      data: null,
+      status: 200,
+      statusText: '',
+      headers: undefined,
+      config: undefined,
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to home page in English language on error if current language is English', async () => {
     const response = {
       data: { invalidData: 'rytrfgb' },
       status: 200,
@@ -195,13 +270,32 @@ describe('Case Selection Service using Case Api', () => {
     };
 
     const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
     const res = mockResponse();
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     getCaseApiClientMock.mockReturnValue(caseApi);
     caseApi.getUserCase = jest.fn().mockResolvedValue(response);
     await selectUserCase(req, res, '12234');
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('Should redirect to home page in Welsh on error if current language is Welsh', async () => {
+    const response = {
+      data: { invalidData: 'rytrfgb' },
+      status: 200,
+      statusText: '',
+    };
+
+    const req = mockRequest({});
+    req.url = PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER;
+    const res = mockResponse();
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    getCaseApiClientMock.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(response);
+    await selectUserCase(req, res, '12234');
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.HOME + languages.WELSH_URL_PARAMETER);
   });
 });
 

@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.CLAIM_DETAILS_CHECK}`, () => {
 });
 
 describe(`on POST ${PageUrls.CLAIM_DETAILS_CHECK}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
   test('should navigate to the claim steps page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.CLAIM_DETAILS_CHECK)
