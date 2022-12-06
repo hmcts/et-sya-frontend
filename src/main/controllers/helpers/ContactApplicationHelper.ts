@@ -6,7 +6,7 @@ export const getFiles = (
   userCase: CaseWithId | undefined,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
-    if (userCase === undefined || userCase.contactTemplateFile === undefined) {
+    if (userCase === undefined || userCase.contactApplicationFile === undefined) {
       return [
         {
           key: {
@@ -25,7 +25,7 @@ export const getFiles = (
       return [
         {
           key: {
-            text: userCase.contactTemplateFile,
+            text: userCase.contactApplicationFile,
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {

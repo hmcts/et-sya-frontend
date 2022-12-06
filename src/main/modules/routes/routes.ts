@@ -76,7 +76,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ContactTemplateController from '../../controllers/ContactTemplateController';
+import ContactApplicationController from '../../controllers/ContactApplicationController';
 import RemoveFileController from '../../controllers/RemoveFileController';
 
 const multer = require('multer');
@@ -207,8 +207,8 @@ export class Routes {
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
-    app.get(PageUrls.CONTACT_TEMPLATE, new ContactTemplateController().get);
-    app.post(PageUrls.CONTACT_TEMPLATE, new ContactTemplateController().post);
+    app.get(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().get);
+    app.post(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);

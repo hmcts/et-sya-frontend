@@ -110,8 +110,8 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
-  contactTemplateText?: string;
-  contactTemplateFile?: Document;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;

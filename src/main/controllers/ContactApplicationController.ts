@@ -7,32 +7,32 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import {handlePostLogic, handleUploadDocument} from "./helpers/CaseHelpers";
 import {fromApiFormatDocument} from "../helper/ApiFormatter";
-import {getContactTemplateError} from "./helpers/ErrorHelpers";
+import {getContactApplicationError} from "./helpers/ErrorHelpers";
 import {getLogger} from "../logger";
 import {getFiles} from "./helpers/ContactApplicationHelper";
 import {getPageContent} from "./helpers/FormHelpers";
 
-const logger = getLogger('ContactTemplateController');
+const logger = getLogger('ContactApplicationController');
 
 
-export default class ContactTemplateController {
+export default class ContactApplicationController {
   private getHint = (label: AnyRecord): string => {
     return label.fileUpload.hint;
   };
   private readonly form: Form;
-  private readonly contactTemplateContent: FormContent = {
+  private readonly contactApplicationContent: FormContent = {
     fields: {
-      contactTemplateText: {
-        id: 'Contact-Template-Text',
+      contactApplicationText: {
+        id: 'Contact-Application-Text',
         type: 'textarea',
         label: l => l.legend,
         labelHidden: true,
         labelSize: 'normal',
-        hint: l => l.contactTemplateText,
+        hint: l => l.contactApplicationText,
         attributes: {title: 'Give details text area'},
       },
-      contactTemplateFile: {
-        id: 'contactTemplateFile',
+      contactApplicationFile: {
+        id: 'contactApplicationFile',
         classes: 'govuk-label',
         labelHidden: false,
         hint: l => this.getHint(l),
@@ -47,35 +47,35 @@ export default class ContactTemplateController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.contactTemplateContent.fields);
+    this.form = new Form(<FormFields>this.contactApplicationContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
-      req.session.errors = [{propertyName: 'contactTemplateFile', errorType: 'invalidFileSize'}];
+      req.session.errors = [{propertyName: 'contactApplicationFile', errorType: 'invalidFileSize'}];
       return res.redirect(req.url);
     }
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactTemplateError = getContactTemplateError(
+    const contactApplicationError = getContactApplicationError(
       formData,
       req.file
     );
-    if (!contactTemplateError) {
+    if (!contactApplicationError) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
-          req.session.userCase.contactTemplateFile = fromApiFormatDocument(result.data);
+          req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
         logger.info(error);
-        req.session.errors = [{propertyName: 'contactTemplateFile', errorType: 'backEndError'}];
+        req.session.errors = [{propertyName: 'contactApplicationFile', errorType: 'backEndError'}];
       } finally {
         await handlePostLogic(req, res, this.form, logger, req.url);
       }
     } else {
-      req.session.errors.push(contactTemplateError);
+      req.session.errors.push(contactApplicationError);
       return res.redirect(req.url);
     }
   };
@@ -83,15 +83,15 @@ export default class ContactTemplateController {
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_TEMPLATE, { returnObjects: true }),
+      ...req.t(TranslationKeys.CONTACT_APPLICATION, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
-    const content = getPageContent(req, this.contactTemplateContent, [
+    const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.CONTACT_TEMPLATE,
+      TranslationKeys.CONTACT_APPLICATION,
     ]);
-    this.contactTemplateContent.submit.disabled = userCase.contactTemplateFile !== undefined;
-    res.render(TranslationKeys.CONTACT_TEMPLATE, {
+    this.contactApplicationContent.submit.disabled = userCase.contactApplicationFile !== undefined;
+    res.render(TranslationKeys.CONTACT_APPLICATION, {
       ...translations,
       PageUrls,
       userCase,

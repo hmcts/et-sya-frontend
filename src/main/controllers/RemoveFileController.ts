@@ -5,7 +5,7 @@ import {PageUrls } from '../definitions/constants';
 
 export default class RemoveFileController {
   public get = (req: AppRequest, res: Response): void => {
-    req.session.userCase.contactTemplateFile = undefined;
-    res.redirect(PageUrls.CONTACT_TEMPLATE);
+    req.session.userCase.contactApplicationFile = undefined;
+    res.redirect(PageUrls.CONTACT_APPLICATION);
   };
 }

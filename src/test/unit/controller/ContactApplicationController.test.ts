@@ -3,12 +3,12 @@ import { DocumentUploadResponse } from '../../../main/definitions/api/documentAp
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import ContactTemplateController from "../../../main/controllers/ContactTemplateController";
+import ContactApplicationController from "../../../main/controllers/ContactApplicationController";
 import {TranslationKeys} from "../../../main/definitions/constants";
 
-describe('Contact Template Controller', () => {
+describe('Contact Application Controller', () => {
   const t = {
-    'contact-template-controller': {},
+    'contact-application-controller': {},
     common: {},
   };
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
@@ -30,18 +30,18 @@ describe('Contact Template Controller', () => {
   });
 
   it('should render contact template page', () => {
-    const controller = new ContactTemplateController();
+    const controller = new ContactApplicationController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
     controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CONTACT_TEMPLATE, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CONTACT_APPLICATION, expect.anything());
   });
 
   describe('Correct validation', () => {
     it('should both summary text and summary file be optional', async () => {
       const req = mockRequest({ body: { contactTemplateText: '' } });
-      await new ContactTemplateController().post(req, mockResponse());
+      await new ContactApplicationController().post(req, mockResponse());
 
       expect(req.session.errors.length).toEqual(0);
     });
@@ -50,7 +50,7 @@ describe('Contact Template Controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
-      await new ContactTemplateController().post(req, mockResponse());
+      await new ContactApplicationController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileFormat' }]);
     });
@@ -60,7 +60,7 @@ describe('Contact Template Controller', () => {
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
       req.fileTooLarge = true;
-      await new ContactTemplateController().post(req, mockResponse());
+      await new ContactApplicationController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileSize' }]);
     });
@@ -69,7 +69,7 @@ describe('Contact Template Controller', () => {
       const req = mockRequest({ body: { contactTemplateText: 'test' } });
       const res = mockResponse();
 
-      await new ContactTemplateController().post(req, res);
+      await new ContactApplicationController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         contactTemplateText: 'test',

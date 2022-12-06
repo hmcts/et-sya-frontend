@@ -211,7 +211,7 @@ export const getClaimSummaryError = (
   }
 };
 
-export const getContactTemplateError = (
+export const getContactApplicationError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
 ): FormError => {
@@ -219,9 +219,9 @@ export const getContactTemplateError = (
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (fileFormatInvalid) {
-    return { propertyName: 'contactTemplateFile', errorType: fileFormatInvalid };
+    return { propertyName: 'contactApplicationFile', errorType: fileFormatInvalid };
   }
   if (fileNameInvalid) {
-    return { propertyName: 'contactTemplateFile', errorType: fileNameInvalid };
+    return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
   }
 };
