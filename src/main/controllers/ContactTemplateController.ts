@@ -98,7 +98,6 @@ export default class ContactTemplateController {
       InterceptPaths,
       hideContactUs: true,
       files: getFiles(userCase, translations),
-      //...content,
       errors: req.session.errors,
       ...content,
     });
