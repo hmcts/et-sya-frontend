@@ -29,7 +29,7 @@ describe('Contact Application Controller', () => {
     });
   });
 
-  it('should render contact template page', () => {
+  it('should render contact application page', () => {
     const controller = new ContactApplicationController();
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -40,7 +40,7 @@ describe('Contact Application Controller', () => {
 
   describe('Correct validation', () => {
     it('should both summary text and summary file be optional', async () => {
-      const req = mockRequest({ body: { contactTemplateText: '' } });
+      const req = mockRequest({ body: { contactApplicationText: '' } });
       await new ContactApplicationController().post(req, mockResponse());
 
       expect(req.session.errors.length).toEqual(0);
@@ -52,7 +52,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequest({ body: {}, file: newFile });
       await new ContactApplicationController().post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileFormat' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileFormat' }]);
     });
 
     it('should only allow valid file sizes', async () => {
@@ -62,17 +62,17 @@ describe('Contact Application Controller', () => {
       req.fileTooLarge = true;
       await new ContactApplicationController().post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'contactTemplateFile', errorType: 'invalidFileSize' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
     });
 
     it('should assign userCase from summary text', async () => {
-      const req = mockRequest({ body: { contactTemplateText: 'test' } });
+      const req = mockRequest({ body: { contactApplicationText: 'test' } });
       const res = mockResponse();
 
       await new ContactApplicationController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
-        contactTemplateText: 'test',
+        contactApplicationText: 'test',
       });
     });
   });
