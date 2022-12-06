@@ -5,6 +5,9 @@
   "genericGuidance": "Welsh Translation required",
   "contactTemplateText": "Welsh Translation required",
   "subTitle": "Welsh Translation required",
+  "remove": "Welsh Translation required",
+  "noFilesUpload": "Welsh Translation required",
+  "uploadFileButton": "Welsh Translation required",
   "genericGuidanceItem1": "Welsh Translation required",
   "genericGuidanceItem2": "Welsh Translation required",
   "genericGuidanceItem3": "Welsh Translation required",
@@ -13,10 +16,10 @@
   },
   "errors": {
     "contactTemplateFile": {
-      "invalidFileFormat": "Welsh translation required",
-      "invalidFileName": "Welsh translation required",
-      "invalidFileSize": "Welsh translation required",
-      "backEndError": "Welsh translation required"
+      "invalidFileFormat": "Welsh Translation required",
+      "invalidFileName": "Welsh Translation required",
+      "invalidFileSize": "Welsh Translation required",
+      "backEndError": "Welsh Translation required"
     }
   }
 }
