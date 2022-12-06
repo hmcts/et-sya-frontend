@@ -15,7 +15,7 @@
     "label": "Welsh Translation required"
   },
   "errors": {
-    "contactTemplateFile": {
+    "contactApplicationFile": {
       "invalidFileFormat": "Welsh Translation required",
       "invalidFileName": "Welsh Translation required",
       "invalidFileSize": "Welsh Translation required",
