@@ -100,7 +100,7 @@ export default class ContactTemplateController {
       TranslationKeys.COMMON,
       TranslationKeys.CONTACT_TEMPLATE,
     ]);
-    this.contactTemplateContent.submit.disabled = userCase.contactTemplateFile != undefined;
+    this.contactTemplateContent.submit.disabled = userCase.contactTemplateFile !== undefined;
     //assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CONTACT_TEMPLATE, {
       ...translations,
