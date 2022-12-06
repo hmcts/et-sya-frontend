@@ -43,15 +43,7 @@ export default class ContactTemplateController {
     submit: {
       text: (l: AnyRecord): string => l.uploadFileButton,
       classes: "govuk-button--secondary"
-      //classes: 'govuk-!-margin-right-8',
     },
-    //
-    // cancel: {
-    //   text: (l: AnyRecord): string => l.cancel,
-    //   classes: 'govuk-link',
-    //   link: "#",
-    //   hidden: ""
-    // },
   };
 
   constructor() {
@@ -89,8 +81,6 @@ export default class ContactTemplateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-
-    //this.uploadedFileName = getUploadedFileName(req.session?.userCase?.contactTemplateFile?.document_filename);
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_TEMPLATE, { returnObjects: true }),
@@ -101,7 +91,6 @@ export default class ContactTemplateController {
       TranslationKeys.CONTACT_TEMPLATE,
     ]);
     this.contactTemplateContent.submit.disabled = userCase.contactTemplateFile !== undefined;
-    //assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CONTACT_TEMPLATE, {
       ...translations,
       PageUrls,
