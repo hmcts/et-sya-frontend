@@ -16,7 +16,6 @@ const logger = getLogger('ContactTemplateController');
 
 
 export default class ContactTemplateController {
-  private disabled = false;
   private getHint = (label: AnyRecord): string => {
     return label.fileUpload.hint;
   };
@@ -43,8 +42,7 @@ export default class ContactTemplateController {
     },
     submit: {
       text: (l: AnyRecord): string => l.uploadFileButton,
-      classes: "govuk-button--secondary",
-      disabled: this.disabled
+      classes: "govuk-button--secondary"
       //classes: 'govuk-!-margin-right-8',
     },
     //
@@ -93,18 +91,16 @@ export default class ContactTemplateController {
   public get = (req: AppRequest, res: Response): void => {
 
     //this.uploadedFileName = getUploadedFileName(req.session?.userCase?.contactTemplateFile?.document_filename);
-
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_TEMPLATE, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
-    this.disabled = getFiles(userCase, translations).length > 0;
     const content = getPageContent(req, this.contactTemplateContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CONTACT_TEMPLATE,
     ]);
-    this.contactTemplateContent.submit.disabled = this.disabled;
+    this.contactTemplateContent.submit.disabled = userCase.contactTemplateFile != undefined;
     //assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CONTACT_TEMPLATE, {
       ...translations,

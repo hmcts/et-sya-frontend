@@ -1,12 +1,12 @@
 import {CaseWithId} from "../../definitions/case";
 import {AnyRecord} from "../../definitions/util-types";
-import {InterceptPaths, PageUrls} from "../../definitions/constants";
+import {InterceptPaths} from "../../definitions/constants";
 
 export const getFiles = (
   userCase: CaseWithId | undefined,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
-    if (userCase === undefined || userCase.contactTemplateFile?.document_filename === '') {
+    if (userCase === undefined || userCase.contactTemplateFile === undefined) {
       return [
         {
           key: {
@@ -34,7 +34,7 @@ export const getFiles = (
           actions: {
             items: [
               {
-                href: PageUrls.CONTACT_TEMPLATE + InterceptPaths.REMOVE_FILE,
+                href: InterceptPaths.REMOVE_FILE,
                 text: translations.remove,
                 visuallyHiddenText: translations.remove,
               },
