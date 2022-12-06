@@ -90,7 +90,7 @@ export default class ContactApplicationController {
       TranslationKeys.COMMON,
       TranslationKeys.CONTACT_APPLICATION,
     ]);
-    this.contactApplicationContent.submit.disabled = userCase.contactApplicationFile !== undefined;
+    this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
     res.render(TranslationKeys.CONTACT_APPLICATION, {
       ...translations,
       PageUrls,
