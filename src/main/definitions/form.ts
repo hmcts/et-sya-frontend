@@ -17,10 +17,11 @@ export type Warning = Label;
 export interface SubmitButton {
   text: Label;
   classes?: string;
+  disabled?: boolean;
 }
 
 export interface FormContent {
-  submit: SubmitButton;
+  submit?: SubmitButton;
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;

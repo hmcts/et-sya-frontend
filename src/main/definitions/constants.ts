@@ -87,6 +87,7 @@ export const TranslationKeys = {
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  CONTACT_APPLICATION: 'contact-application',
 } as const;
 
 export const PageUrls = {
@@ -165,6 +166,7 @@ export const PageUrls = {
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  CONTACT_APPLICATION: '/contact-application',
 } as const;
 
 export const InterceptPaths = {
@@ -172,6 +174,7 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file'
 } as const;
 
 export const ErrorPages = {
