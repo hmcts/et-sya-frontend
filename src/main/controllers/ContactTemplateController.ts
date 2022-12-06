@@ -2,26 +2,24 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import {TranslationKeys} from '../definitions/constants';
+import {InterceptPaths, PageUrls, TranslationKeys} from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import {handlePostLogic, handleUploadDocument} from "./helpers/CaseHelpers";
 import {fromApiFormatDocument} from "../helper/ApiFormatter";
 import {getContactTemplateError} from "./helpers/ErrorHelpers";
 import {getLogger} from "../logger";
+import {getFiles} from "./helpers/ContactApplicationHelper";
+import {getPageContent} from "./helpers/FormHelpers";
 
 const logger = getLogger('ContactTemplateController');
 
 
 export default class ContactTemplateController {
-
+  private disabled = false;
   private getHint = (label: AnyRecord): string => {
     return label.fileUpload.hint;
   };
-  // private getDisabled = (label: AnyRecord): string => {
-  //   return label.fileUpload.hint;
-  // };
   private readonly form: Form;
   private readonly contactTemplateContent: FormContent = {
     fields: {
@@ -46,7 +44,7 @@ export default class ContactTemplateController {
     submit: {
       text: (l: AnyRecord): string => l.uploadFileButton,
       classes: "govuk-button--secondary",
-      disabled: true
+      disabled: this.disabled
       //classes: 'govuk-!-margin-right-8',
     },
     //
@@ -93,13 +91,30 @@ export default class ContactTemplateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+
+    //this.uploadedFileName = getUploadedFileName(req.session?.userCase?.contactTemplateFile?.document_filename);
+
+    const userCase = req.session?.userCase;
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_TEMPLATE, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+    };
+    this.disabled = getFiles(userCase, translations).length > 0;
     const content = getPageContent(req, this.contactTemplateContent, [
       TranslationKeys.COMMON,
       TranslationKeys.CONTACT_TEMPLATE,
     ]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
+    this.contactTemplateContent.submit.disabled = this.disabled;
+    //assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.CONTACT_TEMPLATE, {
+      ...translations,
+      PageUrls,
+      userCase,
+      InterceptPaths,
       hideContactUs: true,
+      files: getFiles(userCase, translations),
+      //...content,
+      errors: req.session.errors,
       ...content,
     });
   };

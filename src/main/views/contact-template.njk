@@ -9,9 +9,16 @@
 {% endblock %}
 
 {% block content %}
-  {% block errorSummary %}
-   {% include "error-summary.njk" %}
-  {% endblock %}
+ {{ govukErrorSummary({
+     titleText: errorSummaryTitle,
+     errorList: [
+       {
+         text: submitError | safe,
+         href: "#main-form-submit"
+       }
+     ]
+   }) if errors.length > 0
+ }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -36,23 +43,11 @@
                                           </h2>
                                           <hr/>
 
-                                          {{ govukSummaryList({
-                                              rows: [
-                                                {
-                                                  key: {
-                                                    html: '<p class="govuk-body">No files uploaded</p>'
-                                                  },
-                                                  value: {
-                                                     text: ""
-                                                  },
-                                                  actions: {
-                                                    items: [
-
-                                                    ]
-                                                  }
-                                                }
-                                              ]
-                                            }) }}
+                                            {{
+                                              govukSummaryList({
+                                                rows: files
+                                              })
+                                            }}
 
 
                                      <div class="govuk-button-group">

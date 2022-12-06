@@ -174,6 +174,7 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file'
 } as const;
 
 export const ErrorPages = {
