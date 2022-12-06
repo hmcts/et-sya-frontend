@@ -20,19 +20,11 @@ export interface SubmitButton {
   disabled?: boolean;
 }
 
-export interface Link {
-  text: Label;
-  classes?: string;
-  link?: string;
-  hidden?: string; //if this is set to "hidden", cancel link won't be shown, if set to empty string, cancel link will be shown.
-}
-
 export interface FormContent {
   submit?: SubmitButton;
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
-  cancel?: Link;
 }
 
 export type FormField = FormInput | FormOptions;
