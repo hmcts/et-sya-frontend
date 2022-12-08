@@ -55,6 +55,7 @@ export const mockEt1DataModelUpdate = {
       claimant_email_address: 'tester@test.com',
       claimant_contact_preference: EmailOrPost.EMAIL,
       claimant_contact_language: EnglishOrWelsh.ENGLISH,
+      claimant_hearing_language: EnglishOrWelsh.ENGLISH,
       claimant_phone_number: '075',
       claimant_addressUK: {
         AddressLine1: 'address 1',

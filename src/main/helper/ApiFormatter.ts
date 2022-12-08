@@ -110,6 +110,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
     claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
+    claimantHearingLanguagePreference: fromApiCaseData.case_data?.claimantType?.claimant_hearing_language,
     claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
@@ -191,6 +192,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
         claimant_contact_language: caseItem.claimantContactLanguagePreference,
+        claimant_hearing_language: caseItem.claimantHearingLanguagePreference,
         claimant_addressUK: {
           AddressLine1: caseItem.address1,
           AddressLine2: caseItem.address2,
@@ -332,12 +334,11 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  const newDate = new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
+  return new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-  return newDate;
 }
 
 export const getDueDate = (date: string, daysUntilDue: number): string => {

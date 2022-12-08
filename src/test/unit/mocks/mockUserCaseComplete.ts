@@ -76,6 +76,7 @@ export default {
   hearingAssistance: 'Hearing assistance test',
   claimantContactPreference: EmailOrPost.EMAIL,
   claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+  claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
   employmentAndRespondentCheck: YesOrNo.YES,
   claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
   claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
