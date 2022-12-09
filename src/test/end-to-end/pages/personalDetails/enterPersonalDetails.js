@@ -44,13 +44,19 @@ module.exports = async function () {
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('How would you like to be contacted about your claim?');
+  I.see('What format would you like to be contacted in?');
   I.see('Email');
   I.see('Post');
-  I.see('Which language would you like to be contacted in?');
+  I.see('What language do you want us to use when we contact you?');
+  I.see('English');
+  I.see('Welsh');
+  I.see('If a hearing is required, what language do you want to speak at a hearing?');
   I.see('English');
   I.see('Welsh');
   I.checkOption('#update-preference-2');
   I.checkOption('#update-preference-language-2');
+  I.checkOption('#update-hearing-language-2');
+  I.wait(2)
   I.click(commonConfig.saveAndContinue);
 
   await I.scrollPageToBottom();
