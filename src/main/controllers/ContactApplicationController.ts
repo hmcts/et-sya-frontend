@@ -2,18 +2,18 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import {InterceptPaths, PageUrls, TranslationKeys} from '../definitions/constants';
+import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import {handlePostLogic, handleUploadDocument} from "./helpers/CaseHelpers";
-import {fromApiFormatDocument} from "../helper/ApiFormatter";
-import {getContactApplicationError} from "./helpers/ErrorHelpers";
-import {getLogger} from "../logger";
-import {getFiles} from "./helpers/ContactApplicationHelper";
-import {getPageContent} from "./helpers/FormHelpers";
+import { fromApiFormatDocument } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
+
+import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { getFiles } from './helpers/ContactApplicationHelper';
+import { getContactApplicationError } from './helpers/ErrorHelpers';
+import { getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ContactApplicationController');
-
 
 export default class ContactApplicationController {
   private getHint = (label: AnyRecord): string => {
@@ -29,7 +29,7 @@ export default class ContactApplicationController {
         labelHidden: true,
         labelSize: 'normal',
         hint: l => l.contactApplicationText,
-        attributes: {title: 'Give details text area'},
+        attributes: { title: 'Give details text area' },
       },
       contactApplicationFile: {
         id: 'contactApplicationFile',
@@ -42,7 +42,7 @@ export default class ContactApplicationController {
     },
     submit: {
       text: (l: AnyRecord): string => l.uploadFileButton,
-      classes: "govuk-button--secondary"
+      classes: 'govuk-button--secondary',
     },
   };
 
@@ -53,15 +53,12 @@ export default class ContactApplicationController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
-      req.session.errors = [{propertyName: 'contactApplicationFile', errorType: 'invalidFileSize'}];
+      req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }];
       return res.redirect(req.url);
     }
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactApplicationError = getContactApplicationError(
-      formData,
-      req.file
-    );
+    const contactApplicationError = getContactApplicationError(formData, req.file);
     if (!contactApplicationError) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
@@ -70,7 +67,7 @@ export default class ContactApplicationController {
         }
       } catch (error) {
         logger.info(error);
-        req.session.errors = [{propertyName: 'contactApplicationFile', errorType: 'backEndError'}];
+        req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
       } finally {
         await handlePostLogic(req, res, this.form, logger, req.url);
       }
