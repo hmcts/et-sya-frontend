@@ -44,7 +44,6 @@ export default class WorkAddressController {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0 || errors === undefined) {
-      handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       const redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
@@ -53,6 +52,7 @@ export default class WorkAddressController {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
+      handleUpdateDraftCase(req, logger);
       if (saveForLater) {
         return res.redirect(PageUrls.CLAIM_SAVED);
       } else {
