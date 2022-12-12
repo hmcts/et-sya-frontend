@@ -10,7 +10,8 @@
   "phaseBanner": {
     "feedback": "Your feedback",
     "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
-    "additionalText": "helps us to improve this service."
+    "additionalText": "helps us to improve this service.",
+    "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">Cymraeg</a>"
   },
   "contactUsTitle": "Contact us",
   "contactUsForHelp": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.<br><br>Telephone: 0300 123 1024<br>Telephone: 0300 303 5176(Welsh language)<br>Telephone: 0300 790 6234(Scotland)<br>Textphone: 18001 0300 123 1024(England and Wales)<br>Textphone: 18001 0300 790 6234(Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out about call charges</a>",
