@@ -1,10 +1,10 @@
+import ContactApplicationController from '../../../main/controllers/ContactApplicationController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import ContactApplicationController from "../../../main/controllers/ContactApplicationController";
-import {TranslationKeys} from "../../../main/definitions/constants";
 
 describe('Contact Application Controller', () => {
   const t = {
@@ -35,7 +35,7 @@ describe('Contact Application Controller', () => {
     const request = mockRequest({ t });
 
     controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.CONTACT_APPLICATION, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
   });
 
   describe('Correct validation', () => {
@@ -43,7 +43,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
       await new ContactApplicationController().post(req, mockResponse());
 
-      expect(req.session.errors.length).toEqual(0);
+      expect(req.session.errors).toHaveLength(0);
     });
 
     it('should only allow valid file formats', async () => {

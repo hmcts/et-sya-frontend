@@ -83,11 +83,10 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
-  TRIBUNAL_CONTACT_SELECTED: 'tribunal-contact-selected',
+  TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
-  CONTACT_APPLICATION: 'contact-application',
 } as const;
 
 export const PageUrls = {
@@ -166,7 +165,6 @@ export const PageUrls = {
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
-  CONTACT_APPLICATION: '/contact-application',
 } as const;
 
 export const InterceptPaths = {
@@ -174,7 +172,7 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
-  REMOVE_FILE: '/remove-uploaded-file'
+  REMOVE_FILE: '/remove-uploaded-file',
 } as const;
 
 export const ErrorPages = {

@@ -80,15 +80,15 @@ export default class ContactApplicationController {
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_APPLICATION, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.CONTACT_APPLICATION,
+      TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
     ]);
     this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
-    res.render(TranslationKeys.CONTACT_APPLICATION, {
+    res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       ...translations,
       PageUrls,
       userCase,
