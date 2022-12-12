@@ -1,0 +1,16 @@
+export const applications = [
+  'withdraw',
+  'change_details',
+  'postpone',
+  'vary',
+  'reconsider_decision',
+  'amend',
+  'respondent',
+  'witness',
+  'noncompliance',
+  'publicity',
+  'strike',
+  'reconsider_judgement',
+  'other',
+  'documents',
+];

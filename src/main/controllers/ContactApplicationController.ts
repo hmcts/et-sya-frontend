@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { applications } from '../definitions/contact-application';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -78,6 +79,12 @@ export default class ContactApplicationController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (!applications.includes(req.params.selectedOption)) {
+      logger.info('bad request parameter: "' + req.params.selectedOption + '"');
+      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
+      return;
+    }
+
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
