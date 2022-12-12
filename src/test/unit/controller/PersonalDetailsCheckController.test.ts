@@ -1,28 +1,20 @@
-import { AxiosResponse } from 'axios';
-import { LoggerInstance } from 'winston';
-
 import PersonalDetailsCheckController from '../../../main/controllers/PersonalDetailsCheckController';
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import * as caseApi from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Test task List check controller', () => {
   const t = {
     personalDetailsCheck: {},
     common: {},
   };
-  const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
-
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
 
   it('should render the task list check page', () => {
-    const controller = new PersonalDetailsCheckController(mockLogger);
+    const controller = new PersonalDetailsCheckController();
 
     const response = mockResponse();
     const request = mockRequest({ t });
@@ -32,44 +24,26 @@ describe('Test task List check controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TASK_LIST_CHECK, expect.anything());
   });
 
-  it('should render the claim steps page', () => {
+  it('should render the claim steps page', async () => {
     const body = { personalDetailsCheck: YesOrNo.YES };
-    const controller = new PersonalDetailsCheckController(mockLogger);
+    const controller = new PersonalDetailsCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_STEPS);
   });
 
-  it('should render same page if nothing selected', () => {
+  it('should render same page if nothing selected', async () => {
     const errors = [{ propertyName: 'personalDetailsCheck', errorType: 'required' }];
     const body = { personalDetailsCheck: '' };
-    const controller = new PersonalDetailsCheckController(mockLogger);
+    const controller = new PersonalDetailsCheckController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
-  });
-
-  it('should invoke logger in then() block', async () => {
-    const body = { personalDetailsCheck: YesOrNo.NO };
-    const controller = new PersonalDetailsCheckController(mockLogger);
-    const request = mockRequest({ body });
-    const response = mockResponse();
-    const fetchResponse = Promise.resolve({} as AxiosResponse<CaseApiDataResponse>);
-
-    (getCaseApiMock as jest.Mock).mockReturnValue({
-      updateDraftCase: jest.fn(() => {
-        return fetchResponse;
-      }),
-    });
-
-    await controller.post(request, response);
-
-    expect(mockLogger.info).toHaveBeenCalled();
   });
 });

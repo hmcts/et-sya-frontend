@@ -8,7 +8,7 @@ import {
   handleUpdateDraftCase,
   handleUpdateSubmittedCase,
   handleUploadDocument,
-  isPostcodeMVPLocation,
+  isPostcodeInScope,
   setUserCaseWithRedisData,
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
@@ -163,15 +163,22 @@ describe('isPostcodeMVPLocation()', () => {
     { postcode: 'E8 1LW', expected: false },
     { postcode: 'E2 6NR', expected: false },
     { postcode: 'LU7 0EU', expected: false }, // Luton
-    { postcode: 'LE3 1EP', expected: false }, // Leicester
+    { postcode: 'LE3 1EP', expected: true }, // Leicester
     { postcode: 'M41 8PX', expected: false }, // Manchester
     { postcode: 'NE289QH', expected: false }, // Newcastle
-    { postcode: 'LE3 1EP', expected: false }, // Leicester
     { postcode: 'TD12 4AA', expected: false },
     { postcode: 'TD12 4AH', expected: false },
     { postcode: 'OL2 5AA', expected: false },
-  ])('Check if postcode is an MVP location %o', ({ postcode, expected }) => {
-    expect(isPostcodeMVPLocation(postcode)).toEqual(expected);
+    { postcode: 'BS1 6JQ', expected: true }, // Bristol
+    { postcode: 'BA1 2QH', expected: true }, // Bath
+    { postcode: 'EX1 1HS', expected: true }, // Exeter
+    { postcode: 'GU35 0PB', expected: true }, // Bordon
+    { postcode: 'SO23 8UJ', expected: true }, // Winchester
+    { postcode: 'S81 0JG', expected: true }, // Worksop
+    { postcode: 'LN6 7QL', expected: true }, // Lincoln
+    { postcode: 'PE25 1BJ', expected: true }, // Skegness
+  ])('Check if postcode is in scope %o', ({ postcode, expected }) => {
+    expect(isPostcodeInScope(postcode)).toEqual(expected);
   });
 });
 
@@ -227,6 +234,7 @@ describe('handle update draft case', () => {
     expect(req.session.userCase).toBeDefined();
   });
 });
+
 describe('handle update submitted case', () => {
   it('should successfully save case', async () => {
     caseApi.updateSubmittedCase = jest.fn().mockResolvedValueOnce(
@@ -244,14 +252,18 @@ describe('handle update submitted case', () => {
     await new Promise(nextTick);
     expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case id: testUserCaseId');
   });
+
   it('should catch failure when updating case', async () => {
-    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce('test error');
+    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     handleUpdateSubmittedCase(req, mockLogger);
     await new Promise(nextTick);
+
     expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });
+
 describe('handle file upload', () => {
   it('should succesfully handle file upload', async () => {
     caseApi.uploadDocument = jest.fn().mockResolvedValueOnce(

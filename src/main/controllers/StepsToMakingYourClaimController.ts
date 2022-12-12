@@ -7,14 +7,14 @@ import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
+import { getLogger } from '../logger';
 import { getPreloginCaseData } from '../services/CacheService';
 import { getCaseApi } from '../services/CaseService';
 
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('StepsToMakingYourClaimController');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
@@ -27,6 +27,7 @@ export default class StepsToMakingYourClaimController {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       if (userCase.id === undefined) {
+        // todo try-catch this - if createCase errors the whole app fails.
         const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
         logger.info(`Created Draft Case - ${newCase.data.id}`);
         req.session.userCase = fromApiFormat(newCase.data);

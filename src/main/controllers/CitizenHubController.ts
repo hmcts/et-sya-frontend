@@ -14,14 +14,13 @@ import {
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
+import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-
-const logger = Logger.getLogger('app');
+const logger = getLogger('CitizenHubController');
 
 const DAYS_FOR_PROCESSING = 5;
 
@@ -36,7 +35,7 @@ export default class CitizenHubController {
           (await getCaseApi(req.session.user?.accessToken).getUserCase(req.params.caseId)).data
         );
       } catch (error) {
-        logger.error(`Could not access /citizen-hub/${req.params.caseId}`);
+        logger.error(error.message);
         return res.redirect('/not-found');
       }
     }

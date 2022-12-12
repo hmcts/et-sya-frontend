@@ -55,7 +55,7 @@ export const getRespondentSection = (
       },
     }
   );
-  if (index === 1) {
+  if (index === 1 && userCase.pastEmployer === YesOrNo.YES) {
     respondentSections.push({
       key: {
         text: translations.respondentDetails.workedAtRespondent,

@@ -6,13 +6,13 @@ import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
+import { getLogger } from '../../logger';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
 import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
 
-const { Logger } = require('@hmcts/nodejs-logging');
-const logger = Logger.getLogger('app');
+const logger = getLogger('oidc');
 
 export class Oidc {
   public enableFor(app: Application): void {
@@ -20,7 +20,7 @@ export class Oidc {
     const serviceUrl = (res: Response): string => `${HTTPS_PROTOCOL}${res.locals.host}${port}`;
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
-      let stateParam = '';
+      let stateParam;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
     });
@@ -91,10 +91,10 @@ export const idamCallbackHandler = async (
         req.session.userCase = fromApiFormat(response.data);
         return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
       }
-      throw new Error('Draft Case was not created successfully');
+      logger.error('Draft Case was not created successfully');
     } catch (error) {
       //ToDo - needs to handle different error response
-      logger.info(error);
+      logger.error(error.message);
     }
   }
 };

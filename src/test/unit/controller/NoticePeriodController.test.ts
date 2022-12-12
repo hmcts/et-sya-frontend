@@ -1,16 +1,12 @@
-import axios from 'axios';
-import { LoggerInstance } from 'winston';
-
 import NoticePeriodController from '../../../main/controllers/NoticePeriodController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { CaseApi } from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Notice Period Controller', () => {
   const t = {
@@ -18,13 +14,8 @@ describe('Notice Period Controller', () => {
     common: {},
   };
 
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
-
   it('should render the notice period page', () => {
-    const controller = new NoticePeriodController(mockLogger);
+    const controller = new NoticePeriodController();
     const response = mockResponse();
     const request = <AppRequest>mockRequest({ t });
 
@@ -32,70 +23,57 @@ describe('Notice Period Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_PERIOD, expect.anything());
   });
 
-  it('should render the notice type page when yes radio button is selected', () => {
+  it('should render the notice type page when yes radio button is selected', async () => {
     const body = { noticePeriod: YesOrNo.YES };
-    const controller = new NoticePeriodController(mockLogger);
+    const controller = new NoticePeriodController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NOTICE_TYPE);
   });
 
-  it('should render the average weekly hours page when no radio button is selected', () => {
+  it('should render the average weekly hours page when no radio button is selected', async () => {
     const body = { noticePeriod: YesOrNo.NO };
-    const controller = new NoticePeriodController(mockLogger);
+    const controller = new NoticePeriodController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.AVERAGE_WEEKLY_HOURS);
   });
 
-  it('should add the notice period selected value to the session userCase', () => {
+  it('should add the notice period selected value to the session userCase', async () => {
     const body = { noticePeriod: YesOrNo.YES };
 
-    const controller = new NoticePeriodController(mockLogger);
+    const controller = new NoticePeriodController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriod: YesOrNo.YES,
     });
   });
 
-  it('should reset notice period values if No selected', () => {
+  it('should reset notice period values if No selected', async () => {
     const body = { noticePeriod: YesOrNo.NO };
 
-    const controller = new NoticePeriodController(mockLogger);
+    const controller = new NoticePeriodController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    req.session.userCase = undefined;
 
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(req.session.userCase).toStrictEqual({
       noticePeriod: YesOrNo.NO,
       noticePeriodUnit: undefined,
       noticePeriodLength: undefined,
     });
-  });
-
-  it('should run logger in catch block', async () => {
-    const body = { noticePeriod: YesOrNo.YES };
-    const controller = new NoticePeriodController(mockLogger);
-    const request = mockRequest({ body });
-    const response = mockResponse();
-
-    await controller.post(request, response);
-
-    return caseApi.updateDraftCase(request.session.userCase).then(() => expect(mockLogger.error).toHaveBeenCalled());
   });
 });
