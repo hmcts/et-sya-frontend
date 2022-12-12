@@ -109,8 +109,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
-    claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
-    claimantHearingLanguagePreference: fromApiCaseData.case_data?.claimantType?.claimant_hearing_language,
+    claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
+    claimantHearingLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_language,
     claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
@@ -137,7 +137,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     et1SubmittedForm: returnSubmittedEt1Form(
-      fromApiCaseData.case_data?.claimantType?.claimant_contact_language,
+      fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
       fromApiCaseData.case_data?.documentCollection
     ),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
@@ -191,8 +191,6 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         claimant_email_address: caseItem.email,
         claimant_phone_number: caseItem.telNumber,
         claimant_contact_preference: caseItem.claimantContactPreference,
-        claimant_contact_language: caseItem.claimantContactLanguagePreference,
-        claimant_hearing_language: caseItem.claimantHearingLanguagePreference,
         claimant_addressUK: {
           AddressLine1: caseItem.address1,
           AddressLine2: caseItem.address2,
@@ -231,6 +229,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
+        contact_language: caseItem.claimantContactLanguagePreference,
+        hearing_language: caseItem.claimantHearingLanguagePreference,
       },
       claimantRequests: {
         discrimination_claims: caseItem.claimTypeDiscrimination,

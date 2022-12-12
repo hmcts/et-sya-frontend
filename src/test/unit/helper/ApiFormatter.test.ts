@@ -228,8 +228,6 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
-          claimant_contact_language: EnglishOrWelsh.ENGLISH,
-          claimant_hearing_language: EnglishOrWelsh.ENGLISH,
           claimant_phone_number: '075',
           claimant_addressUK: {
             AddressLine1: 'address 1',
@@ -269,6 +267,8 @@ describe('Format Case Data to Frontend Model', () => {
           reasonable_adjustments_detail: 'Adjustments detail test',
           hearing_preferences: [HearingPreference.PHONE],
           hearing_assistance: 'Hearing assistance test',
+          contact_language: EnglishOrWelsh.ENGLISH,
+          hearing_language: EnglishOrWelsh.ENGLISH,
         },
         claimantRequests: {
           claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
@@ -483,8 +483,10 @@ describe('Format Case Data to Frontend Model', () => {
         claimantType: {
           claimant_email_address: 'janedoe@exmaple.com',
           claimant_contact_preference: EmailOrPost.EMAIL,
-          claimant_contact_language: EnglishOrWelsh.WELSH,
-          claimant_hearing_language: EnglishOrWelsh.WELSH,
+        },
+        claimantHearingPreference: {
+          contact_language: EnglishOrWelsh.WELSH,
+          hearing_language: EnglishOrWelsh.WELSH,
         },
         documentCollection: [
           {

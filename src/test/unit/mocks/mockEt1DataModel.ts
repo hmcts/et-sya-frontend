@@ -54,8 +54,6 @@ export const mockEt1DataModelUpdate = {
     claimantType: {
       claimant_email_address: 'tester@test.com',
       claimant_contact_preference: EmailOrPost.EMAIL,
-      claimant_contact_language: EnglishOrWelsh.ENGLISH,
-      claimant_hearing_language: EnglishOrWelsh.ENGLISH,
       claimant_phone_number: '075',
       claimant_addressUK: {
         AddressLine1: 'address 1',
@@ -95,6 +93,8 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
+      contact_language: EnglishOrWelsh.ENGLISH,
+      hearing_language: EnglishOrWelsh.ENGLISH,
     },
     claimantRequests: {
       discrimination_claims: [ClaimTypeDiscrimination.RACE],
