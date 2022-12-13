@@ -2,5 +2,23 @@
   "title": "Reconsider a judgment",
   "applicationType": "Reconsider a judgment",
   "applicationTitle": "Apply for a judgment to be reconsidered",
-  "text": "Use this form to have a judgment made by a tribunal reconsidered. This may be a judgment made by a judge alone or by a judge sitting with non-legal members.\n\nIf reconsideration is necessary in the interests of justice you can ask the tribunal to look at the judgment again.\n\nOnly a judgment which finally determines an issue in your case can be reconsidered. This therefore excludes any decision that does not comprise a final determination of the claim, or part of a claim. If you wish to ask for a case management order to be varied or revoked, use the vary or revoke an order application.\n\nYou can only ask the tribunal to reconsider a judgment within 14 days of the date the judgment was sent to you.\n\nIf you want the tribunal to reconsider a judgment that was sent to you over 14 days ago you must explain why your application is late. \n\nA reconsideration application does not affect the time limit for appealing to the Employment Appeal Tribunal.\n\nDetails to include in your application:\n\nthe judgment you want reconsidered \nthe date the tribunal issued the judgment\nyour reason for a late application if the judgment was sent over 14 days ago\nwhy it is in the interests of justice to reconsider this judgment\nif the tribunal should vary or revoke the judgment\nany additional information or material which the tribunal does not already have to support your application"
+  "content": [
+    "<p class=\"govuk-body\">Use this form to have a judgment made by a tribunal reconsidered. This may be a judgment made by a judge alone or by a judge sitting with non-legal members.</p>",
+    "<p class=\"govuk-body\">If reconsideration is necessary in the interests of justice you can ask the tribunal to look at the judgment again.</p>",
+    "<p class=\"govuk-body\">Only a judgment which finally determines an issue in your case can be reconsidered. This therefore excludes any decision that does not comprise a final determination of the claim, or part of a claim. If you wish to ask for a case management order to be varied or revoked, use the vary or revoke an order application.</p>",
+    "<p class=\"govuk-body\">You can only ask the tribunal to reconsider a judgment within 14 days of the date the judgment was sent to you.</p>",
+    "<p class=\"govuk-body\">If you want the tribunal to reconsider a judgment that was sent to you over 14 days ago you must explain why your application is late.</p>",
+    "<p class=\"govuk-body\">A reconsideration application does not affect the time limit for appealing to the Employment Appeal Tribunal.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the judgment you want reconsidered</li>",
+    "<li>the date the tribunal issued the judgment</li>",
+    "<li>your reason for a late application if the judgment was sent over 14 days ago</li>",
+    "<li>why it is in the interests of justice to reconsider this judgment</li>",
+    "<li>if the tribunal should vary or revoke the judgment</li>",
+    "<li>any additional information or material which the tribunal does not already have to support your application</li>",
+    "</ul>"
+  ]
 }

@@ -2,5 +2,14 @@
   "title": "Contact the tribunal",
   "applicationType": "Contact the tribunal",
   "applicationTitle": "Contact the tribunal",
-  "text": "Tell or ask the tribunal about something relevant to your case.\n\nDo not use this form to:\n\nseek legal advice from the tribunal. The tribunal is an independent judicial body and cannot give legal advice\ntell us about settlement offers or discussions, which are private and confidential to the parties"
+  "content": [
+    "<p class=\"govuk-body\">Tell or ask the tribunal about something relevant to your case.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Do not use this form to:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>seek legal advice from the tribunal. The tribunal is an independent judicial body and cannot give legal advice</li>",
+    "<li>tell us about settlement offers or discussions, which are private and confidential to the parties</li>",
+    "</ul>"
+  ]
 }

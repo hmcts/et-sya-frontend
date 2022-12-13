@@ -2,5 +2,26 @@
   "title": "Restrict publicity",
   "applicationType": "Restrict publicity",
   "applicationTitle": "Apply to restrict publicity",
-  "text": "Use this form to apply to prevent or restrict publicity in your case. \n\nIt is an important principle that justice should normally be delivered in public. \n\nHowever, the tribunal has the power to prevent or restrict the public disclosure of any aspect of your case if necessary in the interests of justice or to protect the Convention rights of any person. Convention rights are the rights and fundamental freedoms as set out in the Human Rights Act 1998.\n\nThe tribunal also has certain other powers to sit in private or to restrict publicity in accordance with sections 10A, 10B, 11 and 12 of the Employment Tribunals Act 1996.\n\nThe tribunal may issue an order:\n\nthat a hearing that would otherwise be in public be conducted, in whole or in part, in private\nthat the identities of specified parties, witnesses or other persons referred to in the proceedings should not be disclosed to the public, by the use of anonymisation or otherwise\nfor measures preventing witnesses at a public hearing being identifiable by members of the public\nrestricting the reporting of the case in the media\n\nDetails to include in your application:\n\nhow the tribunal should prevent or restrict publicity in your case. For example, tell us which parts or aspects of the case we should not publicise\nwhy the restrictions you want are needed. The tribunal must make the least restrictive order possible. Tell us why fewer restrictions would not be enough\nany media interest in your case. Include names of media organisations or journalists that are interested. The tribunal might seek their comments before making a decision"
+  "content": [
+    "<p class=\"govuk-body\">Use this form to apply to prevent or restrict publicity in your case.</p>",
+    "<p class=\"govuk-body\">It is an important principle that justice should normally be delivered in public.</p>",
+    "<p class=\"govuk-body\">However, the tribunal has the power to prevent or restrict the public disclosure of any aspect of your case if necessary in the interests of justice or to protect the Convention rights of any person. Convention rights are the rights and fundamental freedoms as set out in the Human Rights Act 1998.</p>",
+    "<p class=\"govuk-body\">The tribunal also has certain other powers to sit in private or to restrict publicity in accordance with sections 10A, 10B, 11 and 12 of the Employment Tribunals Act 1996.</p>",
+    "<p class=\"govuk-body\">The tribunal may issue an order:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>that a hearing that would otherwise be in public be conducted, in whole or in part, in private</li>",
+    "<li>that the identities of specified parties, witnesses or other persons referred to in the proceedings should not be disclosed to the public, by the use of anonymisation or otherwise</li>",
+    "<li>for measures preventing witnesses at a public hearing being identifiable by members of the public</li>",
+    "<li>restricting the reporting of the case in the media</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>how the tribunal should prevent or restrict publicity in your case. For example, tell us which parts or aspects of the case we should not publicise</li>",
+    "<li>why the restrictions you want are needed. The tribunal must make the least restrictive order possible. Tell us why fewer restrictions would not be enough</li>",
+    "<li>any media interest in your case. Include names of media organisations or journalists that are interested. The tribunal might seek their comments before making a decision</li>",
+    "</ul>"
+  ]
 }
