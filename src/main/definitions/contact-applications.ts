@@ -1,4 +1,4 @@
-export const applications = [
+export default [
   'withdraw',
   'change_details',
   'postpone',
