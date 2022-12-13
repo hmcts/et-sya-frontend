@@ -82,29 +82,28 @@ export default class ContactTheTribunalSelectedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (!applications.includes(req.params.selectedOption)) {
-      logger.info('bad request parameter: "' + req.params.selectedOption + '"');
+    const selectedApplication = req.params.selectedOption;
+    if (!applications.includes(selectedApplication)) {
+      logger.info('bad request parameter: "' + selectedApplication + '"');
       res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
       return;
     }
 
     const userCase = req.session?.userCase;
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-    };
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
+      TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
     this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
-      ...translations,
       PageUrls,
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      files: getFiles(userCase, translations),
+      files: getFiles(userCase, {
+        ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+      }),
       errors: req.session.errors,
       ...content,
     });
