@@ -4,14 +4,13 @@
   "label": "Welsh Translation required",
   "email": "E-bost",
   "post": "Trwy’r post",
-  "languageLabel": "Welsh Translation required",
-  "english": "Welsh Translation required",
-  "welsh": "Welsh Translation required",
+  "languageLabel": "Pa iaith ydych chi eisiau i ni ei defnyddio pan fyddwn yn cysylltu â chi?",
+  "languageHint": "Byddwn yn anfon negeseuon e-bost a dogfennau atoch wrth i’ch achos fynd yn ei flaen. Dewiswch ym mha iaith yr hoffech gael y rhain.",
+  "english": "Saesneg",
+  "welsh": "Cymraeg",
+  "hearingLabel": "Os bydd gwrandawiad, ym mha iaith ydych chi eisiau siarad yn y gwrandawiad?",
   "errors": {
     "claimantContactPreference": {
-      "required": "Welsh Translation required"
-    },
-    "claimantContactLanguagePreference": {
       "required": "Welsh Translation required"
     }
   }

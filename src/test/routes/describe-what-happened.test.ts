@@ -1,7 +1,7 @@
 import request from 'supertest';
 
-import { PageUrls, languages } from '../../main/definitions/constants';
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
