@@ -1,4 +1,4 @@
-import ContactApplicationController from '../../../main/controllers/ContactApplicationController';
+import ContactTheTribunalSelectedController from '../../../main/controllers/ContactTheTribunalSelectedController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -30,7 +30,7 @@ describe('Contact Application Controller', () => {
   });
 
   it('should render contact application page', () => {
-    const controller = new ContactApplicationController();
+    const controller = new ContactTheTribunalSelectedController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -41,7 +41,7 @@ describe('Contact Application Controller', () => {
   describe('Correct validation', () => {
     it('should both summary text and summary file be optional', async () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
-      await new ContactApplicationController().post(req, mockResponse());
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toHaveLength(0);
     });
@@ -50,7 +50,7 @@ describe('Contact Application Controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
-      await new ContactApplicationController().post(req, mockResponse());
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileFormat' }]);
     });
@@ -60,7 +60,7 @@ describe('Contact Application Controller', () => {
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
       req.fileTooLarge = true;
-      await new ContactApplicationController().post(req, mockResponse());
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
     });
@@ -69,7 +69,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequest({ body: { contactApplicationText: 'test' } });
       const res = mockResponse();
 
-      await new ContactApplicationController().post(req, res);
+      await new ContactTheTribunalSelectedController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         contactApplicationText: 'test',

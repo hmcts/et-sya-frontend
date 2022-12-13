@@ -14,9 +14,12 @@ import { getFiles } from './helpers/ContactApplicationHelper';
 import { getContactApplicationError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
-const logger = getLogger('ContactApplicationController');
+const logger = getLogger('ContactTheTribunalSelectedController');
 
-export default class ContactApplicationController {
+/**
+ * Controller for any contact-the-tribunal application page
+ */
+export default class ContactTheTribunalSelectedController {
   private getHint = (label: AnyRecord): string => {
     return label.fileUpload.hint;
   };

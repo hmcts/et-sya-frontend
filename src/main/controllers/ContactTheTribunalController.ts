@@ -8,6 +8,9 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
 
+/**
+ * Controller for contact-the-tribunal page with a list of applications to start
+ */
 export default class ContactTheTribunalController {
   public get(req: AppRequest, res: Response): void {
     const translations: AnyRecord = {
