@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
-import { applications } from '../definitions/contact-application';
+import applications from '../definitions/contact-applications';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 

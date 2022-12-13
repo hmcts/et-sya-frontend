@@ -23,7 +23,7 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-hint">{{ applicationType }}</span>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ applicationTitle }}</h1>
-      <p class="govuk-body"> {{ variableContent }}</p>
+      <p class="govuk-body">{{ text }}</p>
       <p class="govuk-body-m govuk-!-font-weight-bold">{{ genericGuidance }}</p>
       <p class="govuk-body">{{ subTitle }}</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -31,7 +31,6 @@
         <li>{{ genericGuidanceItem2 }}</li>
         <li>{{ genericGuidanceItem3 }}</li>
       </ul>
-      <p class="govuk-body">{{ text }}</p>
       <span class="govuk-hint">{{ contactTemplateText }}</span>
       {% block form %}
         {% include "form/form.njk" %}
