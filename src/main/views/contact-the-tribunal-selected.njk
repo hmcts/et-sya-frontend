@@ -23,7 +23,7 @@
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-hint">{{ applicationType }}</span>
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ applicationTitle }}</h1>
-      <p class="govuk-body">{{ text }}</p>
+      {{ getContentSafe(content | join) }}
       <p class="govuk-body-m govuk-!-font-weight-bold">{{ genericGuidance }}</p>
       <p class="govuk-body">{{ subTitle }}</p>
       <ul class="govuk-list govuk-list--bullet">
