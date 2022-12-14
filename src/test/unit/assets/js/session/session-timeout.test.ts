@@ -5,8 +5,6 @@
 //  using chai expect, rather than global jest expect
 import axios from 'axios';
 import chai from 'chai';
-import config from 'config';
-import moment from 'moment';
 import sinon from 'sinon';
 
 import SessionTimeout from '../../../../../main/assets/js/session/session-timeout';
@@ -23,9 +21,6 @@ describe('Session Timeout', () => {
   let stopCountersStub: sinon.SinonStub;
   let startCounterStub: sinon.SinonStub;
   let resetModalMessageStub: sinon.SinonStub;
-  let signOutStub: sinon.SinonStub;
-  let openModalStub: sinon.SinonStub;
-  let startModalCountdownStub: sinon.SinonStub;
   let restartCountersStub: sinon.SinonStub;
   let clock: sinon.SinonFakeTimers;
   let modalElement: HTMLElement;
@@ -125,20 +120,6 @@ describe('Session Timeout', () => {
       expect(stopCountersStub).to.have.been.calledOnce;
       expect(startCounterStub).to.have.been.calledOnce;
       expect(resetModalMessageStub).to.have.been.calledOnce;
-    });
-
-    it('should startCounter countdown and call relevant functions', () => {
-      sessionTimeout.sessionExpirationTime = moment().add(config.get('session.maxAgeInMs'), 'milliseconds').format();
-      signOutStub = sandbox.stub(sessionTimeout, 'signOut');
-      openModalStub = sandbox.stub(sessionTimeout, 'openModal');
-      startModalCountdownStub = sandbox.stub(sessionTimeout, 'startModalCountdown');
-      sessionTimeout.startCounter();
-      clock.tick(sessionTimeout.sessionTimeoutCountdown - sessionTimeout.bufferSessionExtension + 1);
-      expect(openModalStub).to.have.been.calledOnce;
-      expect(startModalCountdownStub).to.have.been.calledOnce;
-
-      clock.tick(sessionTimeout.sessionTimeoutCountdown + 1);
-      expect(signOutStub).to.have.been.calledOnce;
     });
   });
 
