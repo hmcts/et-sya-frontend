@@ -33,6 +33,7 @@ describe('Contact Application Controller', () => {
     const controller = new ContactTheTribunalSelectedController();
     const response = mockResponse();
     const request = mockRequest({ t });
+    request.params.selectedOption = 'withdraw';
 
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
