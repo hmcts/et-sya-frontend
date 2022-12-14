@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.COMPENSATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.COMPENSATION}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test(
     'should navigate to claim details check page when ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION or TypesOfClaim.WHISTLE_BLOWING not selected',
@@ -25,10 +27,8 @@ describe(`on POST ${PageUrls.COMPENSATION}`, () => {
         });
     }
   );
-});
-// This case occurs only when both TellUsWhatYouWant.COMPENSATION_ONLY and TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION
-// are selected
-describe(`on POST ${PageUrls.COMPENSATION}`, () => {
+  // This case occurs only when both TellUsWhatYouWant.COMPENSATION_ONLY and TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION
+  // are selected
   test(
     'should navigate to PageUrls.TRIBUNAL_RECOMMENDATION when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION selected',
@@ -49,9 +49,6 @@ describe(`on POST ${PageUrls.COMPENSATION}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.COMPENSATION}`, () => {
   test(
     'should navigate to PageUrls.WHISTLEBLOWING_CLAIMS when both TellUsWhatYouWant.COMPENSATION_ONLY and ' +
       'TypesOfClaim.WHISTLE_BLOWING selected and TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION not selected',

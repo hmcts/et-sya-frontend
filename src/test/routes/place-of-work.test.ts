@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -16,6 +17,7 @@ describe(`GET ${PageUrls.PLACE_OF_WORK}`, () => {
 });
 
 describe(`on POST ${PageUrls.PLACE_OF_WORK}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
   test('should redirect to acas number page on submit', async () => {
     await request(mockApp({}))
       .post(pageUrl)

@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
@@ -13,6 +14,7 @@ describe(`GET ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test(
     'should navigate to PageUrls.CLAIM_DETAILS_CHECK when TypesOfClaim.WHISTLE_BLOWING is not selected and ' +
       'save and continue button is clicked',
@@ -25,9 +27,6 @@ describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
         });
     }
   );
-});
-
-describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
   test(
     'should navigate to the whistleblowing claims page when TypesOfClaim.WHISTLE_BLOWING is selected and ' +
       'save and continue button is clicked',

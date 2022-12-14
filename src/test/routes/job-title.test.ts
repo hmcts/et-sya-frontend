@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
@@ -12,6 +13,7 @@ describe(`GET ${PageUrls.JOB_TITLE}`, () => {
 });
 
 describe(`on POST ${PageUrls.JOB_TITLE}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
   test('should navigate to the start date page when a job title is entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.JOB_TITLE)

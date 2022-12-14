@@ -4,15 +4,14 @@
   "label": "What format would you like to be contacted in?",
   "email": "Email",
   "post": "Post",
-  "languageLabel": "Which language would you like to be contacted in?",
-  "english": "English",
+  "languageLabel": "What language do you want us to use when we contact you?",
+  "languageHint": "We'll send you emails and documents as we progress your case. Choose which language you'd like these in.",
   "welsh": "Welsh",
+  "english": "English",
+  "hearingLabel": "If a hearing is required, what language do you want to speak at a hearing?",
   "errors": {
     "claimantContactPreference": {
       "required": "Tell us whether you want to be contacted by email or by post"
-    },
-    "claimantContactLanguagePreference": {
-      "required": "Tell us what language you want to be contacted in"
     }
   }
 }
