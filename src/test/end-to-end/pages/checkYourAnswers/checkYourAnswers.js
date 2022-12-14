@@ -22,7 +22,7 @@ module.exports = async function () {
   I.see('Preferred title');
   I.see('Contact or home address');
   I.see('Telephone number');
-  I.see('Communication preference');
+  I.see('How would you like to be contacted?');
   I.see('Post');
   I.see('What language do you want us to use when we contact you?');
   I.see('English');
