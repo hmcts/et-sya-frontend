@@ -1,6 +1,6 @@
-import {CaseWithId} from "../../definitions/case";
 import {AnyRecord} from "../../definitions/util-types";
 import {InterceptPaths} from "../../definitions/constants";
+import {CaseWithId} from "../../definitions/case";
 
 export const getFiles = (
   userCase: CaseWithId | undefined,
@@ -25,7 +25,7 @@ export const getFiles = (
       return [
         {
           key: {
-            text: userCase.contactApplicationFile,
+            text: userCase.contactApplicationFile.document_filename,
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {

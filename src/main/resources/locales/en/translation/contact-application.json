@@ -10,9 +10,13 @@
   "uploadFileButton": "Upload file",
   "genericGuidanceItem1": "If you are taking picture of a letter, place it on a flat surface and take the picture from above",
   "genericGuidanceItem2": "If you are uploading written documents with tracked changes, make sure that tracked changes are turned on",
-  "genericGuidanceItem3": "You an make more than one application at the sae time by completing each form separately. If the applications are linked you can make that clear in the text box",
+  "genericGuidanceItem3": "You can make more than one application at the same time by completing each form separately. If the applications are linked you can make that clear in the text box",
   "fileUpload": {
     "label": "Upload a file"
+  },
+  "acceptedFormats": {
+    "label": "Accepted formats",
+    "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "contactApplicationFile": {

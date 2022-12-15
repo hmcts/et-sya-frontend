@@ -99,7 +99,7 @@ export class Routes {
   public enableFor(app: Application): void {
     // Singleton controllers:
     const describeWhatHappenedController = new DescribeWhatHappenedController();
-
+    const contactApplicationController = new ContactApplicationController();
     app.get(Urls.PCQ, new PcqController().get);
     app.get(PageUrls.HOME, new HomeController().get);
     app.get(PageUrls.CHECKLIST, new ChecklistController().get);
@@ -207,8 +207,10 @@ export class Routes {
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
-    app.get(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().get);
-    app.post(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().post);
+    app.get(PageUrls.CONTACT_APPLICATION, contactApplicationController.get);
+    app.post(PageUrls.CONTACT_APPLICATION,
+      handleUploads.single('contactApplicationFile'),
+      contactApplicationController.post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);

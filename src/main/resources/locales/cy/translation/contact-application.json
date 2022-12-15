@@ -14,6 +14,10 @@
   "fileUpload": {
     "label": "Welsh Translation required"
   },
+  "acceptedFormats": {
+    "label": "Welsh translation required",
+    "p1": "Welsh translation required"
+  },
   "errors": {
     "contactApplicationFile": {
       "invalidFileFormat": "Welsh Translation required",

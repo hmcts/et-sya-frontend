@@ -11,6 +11,7 @@ import {getContactApplicationError} from "./helpers/ErrorHelpers";
 import {getLogger} from "../logger";
 import {getFiles} from "./helpers/ContactApplicationHelper";
 import {getPageContent} from "./helpers/FormHelpers";
+import {Document} from "../definitions/case";
 
 const logger = getLogger('ContactApplicationController');
 
@@ -33,11 +34,20 @@ export default class ContactApplicationController {
       },
       contactApplicationFile: {
         id: 'contactApplicationFile',
-        classes: 'govuk-label',
-        labelHidden: false,
-        hint: l => this.getHint(l),
-        labelSize: 'm',
+        label: l => l.fileUpload.label,
+        labelHidden: true,
         type: 'upload',
+        classes: 'govuk-label',
+        hint: l => this.getHint(l),
+      },
+      contactApplicationFileType: {
+        id: 'contactApplicationFileType',
+        label: l => l.acceptedFormats.label,
+        labelHidden: true,
+        type: 'readonly',
+        classes: 'govuk-label',
+        collapsableTitle: l => l.acceptedFormats.label,
+        hint: l => l.acceptedFormats.p1,
       },
     },
     submit: {
@@ -50,14 +60,25 @@ export default class ContactApplicationController {
     this.form = new Form(<FormFields>this.contactApplicationContent.fields);
   }
 
+
+
+  private static getFile(document: Express.Multer.File): Document {
+    return {
+      document_url: "",
+      document_filename: document.originalname,
+      document_binary_url: "",
+    };
+  }
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
       req.session.errors = [{propertyName: 'contactApplicationFile', errorType: 'invalidFileSize'}];
-      return res.redirect(req.url);
+      return res.redirect(PageUrls.CONTACT_APPLICATION);
     }
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+
     const contactApplicationError = getContactApplicationError(
       formData,
       req.file
@@ -65,6 +86,7 @@ export default class ContactApplicationController {
     if (!contactApplicationError) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
+        req.session.userCase.contactApplicationFile = ContactApplicationController.getFile(req.file);
         if (result?.data) {
           req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
@@ -76,7 +98,7 @@ export default class ContactApplicationController {
       }
     } else {
       req.session.errors.push(contactApplicationError);
-      return res.redirect(req.url);
+      return res.redirect(PageUrls.CONTACT_APPLICATION);
     }
   };
 
