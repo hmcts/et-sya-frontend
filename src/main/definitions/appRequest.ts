@@ -19,6 +19,7 @@ export interface AppSession extends Session {
   user: UserDetails;
   guid: string | undefined;
   fileTooLarge?: boolean;
+  cookies?: string;
 }
 
 export interface UserDetails {

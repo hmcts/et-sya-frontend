@@ -74,6 +74,7 @@ export interface Case {
   acasMultiple?: YesOrNo;
   claimantContactPreference?: EmailOrPost;
   claimantContactLanguagePreference?: EnglishOrWelsh;
+  claimantHearingLanguagePreference?: EnglishOrWelsh;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;

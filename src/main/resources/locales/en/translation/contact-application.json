@@ -3,6 +3,7 @@
   "applicationTitle": "Main Heading",
   "variableContent": "[Variable content goes here]",
   "genericGuidance": "Upload letters, photos or documents if they are relevant to your application. Do not any other material.",
+
   "contactTemplateText": "Give details of your application. Please state which respondent or respondents your application applies to. Use both the box and the file upload if you need to.",
   "subTitle": "Remember that:",
   "remove": "Remove",
@@ -18,6 +19,7 @@
     "label": "Accepted formats",
     "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
+
   "errors": {
     "contactApplicationFile": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",

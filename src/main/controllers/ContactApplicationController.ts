@@ -13,6 +13,7 @@ import {getFiles} from "./helpers/ContactApplicationHelper";
 import {getPageContent} from "./helpers/FormHelpers";
 import {Document} from "../definitions/case";
 
+
 const logger = getLogger('ContactApplicationController');
 
 
@@ -70,6 +71,7 @@ export default class ContactApplicationController {
     };
   }
 
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
@@ -79,6 +81,7 @@ export default class ContactApplicationController {
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
 
+
     const contactApplicationError = getContactApplicationError(
       formData,
       req.file
@@ -87,6 +90,7 @@ export default class ContactApplicationController {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         req.session.userCase.contactApplicationFile = ContactApplicationController.getFile(req.file);
+
         if (result?.data) {
           req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
@@ -99,6 +103,7 @@ export default class ContactApplicationController {
     } else {
       req.session.errors.push(contactApplicationError);
       return res.redirect(PageUrls.CONTACT_APPLICATION);
+
     }
   };
 

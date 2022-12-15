@@ -211,6 +211,7 @@ export class Routes {
     app.post(PageUrls.CONTACT_APPLICATION,
       handleUploads.single('contactApplicationFile'),
       contactApplicationController.post);
+
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);
