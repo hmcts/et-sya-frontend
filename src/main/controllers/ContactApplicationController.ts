@@ -47,6 +47,7 @@ export default class ContactApplicationController {
         labelHidden: true,
         type: 'readonly',
         classes: 'govuk-label',
+        isCollapsable: true,
         collapsableTitle: l => l.acceptedFormats.label,
         hint: l => l.acceptedFormats.p1,
       },
