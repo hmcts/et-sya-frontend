@@ -2,6 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -51,6 +52,22 @@
         }) }}
         <a class="govuk-link" href="#">Cancel</a>
       </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/find-legal-advice" target="_blank">
+          {{findLegalAdvice}}
+        </a>
+      </p>
+
+      {% set sideBarContent %}
+        {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "Contact",
+        html: sideBarContent
+      }) }}
     </div>
   </div>
 {% endblock %}

@@ -92,6 +92,7 @@ export default class ContactTheTribunalSelectedController {
     const userCase = req.session?.userCase;
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
