@@ -10,6 +10,7 @@ import { getPageContent } from './helpers/FormHelpers';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const languageParam = `?lng=${req.cookies.i18next}`;
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_APPLICATIONS,
@@ -25,6 +26,7 @@ export default class ClaimantApplicationsController {
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,
+        languageParam,
       });
     }
   };
