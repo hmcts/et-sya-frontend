@@ -25,9 +25,11 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactApplicationController from '../../controllers/ContactApplicationController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import ContactTribunalSelectedController from '../../controllers/ContactTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -52,6 +54,7 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RemoveFileController from '../../controllers/RemoveFileController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
@@ -76,8 +79,6 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ContactApplicationController from '../../controllers/ContactApplicationController';
-import RemoveFileController from '../../controllers/RemoveFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -224,6 +225,8 @@ export class Routes {
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTribunalSelectedController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(
       Urls.INFO,
       infoRequestHandler({

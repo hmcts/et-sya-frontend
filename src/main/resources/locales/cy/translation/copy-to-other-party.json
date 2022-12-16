@@ -1,0 +1,17 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Welsh translation required",
+  "p1": "Welsh translation required.",
+  "legend": "Welsh translation required",
+  "hintText": "Welsh translation required",
+  "yes": "Welsh translation required",
+  "no": "Welsh translation required",
+  "errors": {
+    "copyCorrespondence": {
+      "required": "Welsh translation required"
+    },
+    "noCopyReason": {
+      "required": "Welsh translation required"
+    }
+  }
+}
