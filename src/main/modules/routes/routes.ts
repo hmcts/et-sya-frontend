@@ -26,7 +26,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
-import ContactTribunalSelectedController from '../../controllers/ContactTribunalSelectedController';
+import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -52,6 +52,7 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RemoveFileController from '../../controllers/RemoveFileController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
@@ -76,8 +77,6 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ContactApplicationController from '../../controllers/ContactApplicationController';
-import RemoveFileController from '../../controllers/RemoveFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -207,13 +206,10 @@ export class Routes {
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
-    app.get(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().get);
-    app.post(PageUrls.CONTACT_APPLICATION, new ContactApplicationController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);
     app.get(InterceptPaths.CHANGE_DETAILS, new ChangeDetailsController().get);
-    app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
     app.get(Urls.EXTEND_SESSION, new SessionTimeoutController().getExtendSession);
     app.get(InterceptPaths.SUBMIT_CASE, new SubmitClaimController().get);
     app.get(PageUrls.CLAIMANT_APPLICATIONS, new ClaimantApplicationsController().get);
@@ -223,7 +219,9 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
-    app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTribunalSelectedController().get);
+    app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
+    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
