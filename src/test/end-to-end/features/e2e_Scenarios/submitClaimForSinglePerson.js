@@ -55,3 +55,14 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
 })
   .tag('@RET-BAT')
   .retry(2);
+
+Scenario('Return to Existing Claim Route', async ({ I }) => {
+  await commonFlow.returnToAnExistingClaim();
+  I.wait(2);
+  await I.authenticateWithIdam();
+  I.wait(2);
+  await I.claimantApplications();
+  await I.citizenHub();
+})
+  .tag('@pats')
+  .retry(2);
