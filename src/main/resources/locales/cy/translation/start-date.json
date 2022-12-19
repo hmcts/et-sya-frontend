@@ -3,25 +3,25 @@
   "label": "Dyddiad cychwyn y gyflogaeth",
   "legend": "Welsh Translation required",
   "h1": "Dyddiad cychwyn y gyflogaeth",
-  "p1": "Welsh Translation required",
+  "p1": "Dywedwch wrthym pryd wnaethoch chi ddechrau gweithio i’r atebydd.",
   "p2": "Os nad ydych yn gwybod yr union ddyddiad, yna nodwch eich amcangyfrif gorau.",
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "startDate": {
-      "required": "Welsh Translation required",
-      "dayRequired": "Welsh Translation required",
-      "monthRequired": "Welsh Translation required",
-      "yearRequired": "Welsh Translation required",
-      "dayNotANumber": "Welsh Translation required",
-      "monthNotANumber": "Welsh Translation required",
-      "yearNotANumber": "Welsh Translation required",
-      "dayInvalid": "Welsh Translation required",
-      "monthInvalid": "Welsh Translation required",
-      "invalidDate": "Welsh Translation required",
-      "yearInvalid": "Welsh Translation required",
-      "invalidDateInFuture": "Welsh Translation required",
-      "invalidDateTooFarInPast": "Welsh Translation required",
-      "invalidDateBeforeDOB": "Welsh Translation required"
+      "required": "Dywedwch wrthym pryd ddechreuoch chi weithio. Er enghraifft, 23 04 2014",
+      "dayRequired": "Nodwch ddiwrnod ar gyfer eich dyddiad dechrau. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer eich dyddiad dechrau. Er enghraifft, 04",
+      "yearRequired": "Nodwch flwyddyn ar gyfer eich dyddiad dechrau. Er enghraifft, 2014",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2014",
+      "dayInvalid": "Rhaid i’r diwrnod fod rhwng 1 a 31",
+      "monthInvalid": "Rhaid i’r mis fod rhwng 1 a 12",
+      "invalidDate": "Rydych wedi rhoi dyddiad annilys. Rhowch ddyddiad gan ddefnyddio’r fformat canlynol: 22 04 2014",
+      "yearInvalid": "Rydych wedi rhoi’r flwyddyn gan ddefnyddio fformat annilys. Rhowch y flwyddyn yn llawn, er enghraifft 2014",
+      "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol",
+      "invalidDateTooFarInPast": "Rydych wedi rhoi blwyddyn sydd yn rhy bell yn ôl yn y gorffennol.",
+      "invalidDateBeforeDOB": "Ni ddylai'r dyddiad fod yn gynharach na'ch dyddiad geni"
     }
   }
 }

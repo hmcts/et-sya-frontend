@@ -12,7 +12,7 @@
   "insetText1": "’Bydd angen i chi ddarparu esemptiad yn hwyrach ymlaen fel rhan och hawliad. Os nad ydych yn siŵr pa un syn berthnasol <a href=\"https://www.acas.org.uk/early-conciliation\" target=\"_blank\" class=\"govuk-link\">cysylltwch ag Acas</a>.",
   "errors": {
     "validNoAcasReason": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a oes gennych reswm dilys"
     }
   }
 }

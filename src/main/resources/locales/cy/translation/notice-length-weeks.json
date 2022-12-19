@@ -1,14 +1,14 @@
 {
   "title": "Welsh Translation required",
   "h1": {
-    "nonNotice": "Welsh Translation required",
+    "nonNotice": "Sawl wythnos yn eich cyfnod rhybudd? (dewisol)",
     "notice": "Am sawl wythnos o’ch cyfnod rhybudd y byddwch yn cael eich talu? (dewisol)"
   },
   "noticeLengthHint": "Er enghraifft, 4",
   "onNotice": "Welsh Translation required",
   "errors": {
     "noticePeriodLength": {
-      "notANumber": "Welsh Translation required"
+      "notANumber": "Rhaid i’r nifer o wythnosau yn y cyfnod rhybudd fod yn rhif, fel 4 ayyb."
     }
   }
 }
