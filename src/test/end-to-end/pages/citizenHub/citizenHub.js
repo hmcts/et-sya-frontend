@@ -31,6 +31,7 @@ module.exports = async function () {
   I.see('Contact the tribunal about my case');
   I.see('Find legal advice (opens in new tab)');
   I.click("//span[@class='govuk-details__summary-text']");
+  I.wait(1);
   I.click("//a[contains(text(),'Contact the tribunal about your case')]");
 
   I.waitForText('Contact the tribunal about your case', 30);
