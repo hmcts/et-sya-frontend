@@ -4,6 +4,7 @@
   "continue": "Continue",
   "view": "View",
   "change": "Change",
+  "cancel": "Cancel",
   "saveForLater": "Save as draft",
   "submit": "Save and continue",
   "required": "You have not answered the question. You need to select an answer before continuing.",
@@ -39,6 +40,7 @@
   "weekly": "Weekly",
   "monthly": "Monthly",
   "annual": "Annual",
+  "saveAndContinue": "Save and continue",
   "selectAllHint": "Select all that apply.",
   "claimTypes": {
     "breachOfContract": "Breach of contract",
@@ -47,5 +49,7 @@
     "unfairDismissal": "Unfair dismissal",
     "whistleBlowing": "Whistleblowing",
     "otherTypesOfClaims": "Other type of claim"
-  }
+  },
+  "of": "of",
+  "tasksCompleted": "tasks completed"
 }

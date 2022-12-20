@@ -15,8 +15,6 @@ import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
-import { handleReturnUrl } from './RouterHelpers';
-
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   //call get custom errors and add to session errors
   let sessionErrors = form.getErrors(formData);
@@ -99,29 +97,28 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
   }
 };
 
-export const handleSessionErrors = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
+export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
-  const sessionErrors = getSessionErrors(req, form, formData);
+  return getSessionErrors(req, form, formData);
+};
 
+export const handleErrors = (req: AppRequest, res: Response, sessionErrors: FormError[]): void => {
   req.session.errors = sessionErrors;
-
   const { saveForLater } = req.body;
   const requiredErrExists = sessionErrors.some(err => err.errorType === 'required');
 
   if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
     req.session.errors = [];
     return res.redirect(PageUrls.CLAIM_SAVED);
-  }
-  if (sessionErrors.length) {
-    req.session.save(err => {
-      if (err) {
-        throw err;
-      }
-      return res.redirect(req.url);
-    });
   } else {
-    const nextPage = handleReturnUrl(req, redirectUrl);
-    return res.redirect(nextPage);
+    if (sessionErrors.length) {
+      req.session.save(err => {
+        if (err) {
+          throw err;
+        }
+        return res.redirect(req.url);
+      });
+    }
   }
 };
 
@@ -199,7 +196,7 @@ export const getClaimSummaryError = (
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (!textProvided && !fileProvided) {
-    if (fileProvided || fileName) {
+    if (fileName) {
       return;
     } else {
       return { propertyName: 'claimSummaryText', errorType: 'required' };
@@ -211,5 +208,20 @@ export const getClaimSummaryError = (
   }
   if (fileNameInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
+  }
+};
+
+export const getContactApplicationError = (
+  formData: Partial<CaseWithId>,
+  file: Express.Multer.File,
+): FormError => {
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+
+  if (fileFormatInvalid) {
+    return { propertyName: 'contactApplicationFile', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
   }
 };

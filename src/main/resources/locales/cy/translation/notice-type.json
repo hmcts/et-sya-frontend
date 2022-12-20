@@ -1,0 +1,13 @@
+{
+  "title": "Welsh Translation required",
+  "legend": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "workingHeader": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "noLongerWorkingHeader": "Welsh Translation required",
+  "h1": {
+    "workingOrNotice": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+    "noLongerWorking": "A oedd eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)"
+  },
+  "months": "Misoedd",
+  "weeks": "Wythnosau",
+  "noLongerWorking": "Welsh Translation required"
+}

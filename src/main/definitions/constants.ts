@@ -82,6 +82,11 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
+  WELSH: 'cy',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
 } as const;
 
 export const PageUrls = {
@@ -156,8 +161,10 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
-  GET_SUBMITTED_CASE_DOCUMENT: '/getSubmittedCaseDocument/:docId',
+  CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   PCQ: '/pcq',
+  PCQ_WELSH: '/pcq?lng=cy',
 } as const;
 
 export const InterceptPaths = {
@@ -165,7 +172,12 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file',
 } as const;
+
+export const ErrorPages = {
+  NOT_FOUND: '/not-found',
+};
 
 export const ValidationErrors = {
   REQUIRED: 'required',
@@ -253,7 +265,7 @@ export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
 export const FILE_SIZE_LIMIT = 83886500;
 
-export const mvpLocations = [
+export const inScopeLocations = [
   'ZE',
   'TD9',
   'TD8',
@@ -293,6 +305,82 @@ export const mvpLocations = [
   'HD',
   'DN',
   'BD',
+  // Bristol
+  'TR',
+  'TQ',
+  'TA',
+  'SP',
+  'SO',
+  'SN',
+  'RG28',
+  'RG27',
+  'RG26',
+  'RG25',
+  'RG24',
+  'RG23',
+  'RG22',
+  'RG21',
+  'PO',
+  'PL',
+  'GU35',
+  'GU34',
+  'GU33',
+  'GU32',
+  'GU31',
+  'GU30',
+  'GU29',
+  'GU28',
+  'GU27',
+  'GU26',
+  'GL',
+  'EX',
+  'DT',
+  'BS',
+  'BN45',
+  'BN44',
+  'BN43',
+  'BN18',
+  'BN17',
+  'BN16',
+  'BN15',
+  'BN14',
+  'BN13',
+  'BN12',
+  'BN11',
+  'BH',
+  'BA',
+  // Midlands East
+  'S81',
+  'S80',
+  'S45',
+  'S44',
+  'S43',
+  'S42',
+  'S41',
+  'S40',
+  'PE25',
+  'PE24',
+  'PE23',
+  'PE22',
+  'PE21',
+  'PE20',
+  'PE12',
+  'PE11',
+  'PE10',
+  'NG',
+  'LN',
+  'LE',
+  'DN41',
+  'DN37',
+  'DN36',
+  'DN35',
+  'DN34',
+  'DN33',
+  'DN32',
+  'DN31',
+  'DN22',
+  'DN21',
+  'DE',
 ];
 
 export const et1DocTypes = ['ET1'];
@@ -301,3 +389,12 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+
+export const languages = {
+  WELSH: 'cy',
+  ENGLISH: 'en',
+  WELSH_LOCALE: '&ui_locales=cy',
+  ENGLISH_LOCALE: '&ui_locales=en',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
+};

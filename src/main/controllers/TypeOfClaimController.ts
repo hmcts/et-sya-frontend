@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
@@ -8,12 +7,16 @@ import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
+import { getLogger } from '../logger';
 import { cachePreloginCaseData } from '../services/CacheService';
 
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
+import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+
+const logger = getLogger('TypeOfClaimController');
 
 export default class TypeOfClaimController {
   private readonly form: Form;
@@ -84,53 +87,57 @@ export default class TypeOfClaimController {
     },
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.typeOfClaimFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
-    let redirectUrl;
-    if (
-      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
-      conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
-    ) {
-      redirectUrl = PageUrls.CLAIM_STEPS;
-    } else {
-      redirectUrl = LegacyUrls.ET1_BASE;
-    }
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    if (req.app?.locals) {
-      const redisClient = req.app.locals?.redisClient;
-      if (redisClient) {
-        const cacheMap = new Map<CaseDataCacheKey, string>([
-          [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
-          [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
-          [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
-          [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
-          [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
-        ]);
-        try {
-          req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
-        } catch (err) {
-          const error = new Error(err.message);
-          error.name = RedisErrors.FAILED_TO_SAVE;
-          if (err.stack) {
-            error.stack = err.stack;
-          }
-          throw error;
-        }
+    const errors = returnSessionErrors(req, this.form);
+    if (errors.length === 0 || errors === undefined) {
+      let redirectUrl;
+      if (
+        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
+        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
+      ) {
+        redirectUrl = PageUrls.CLAIM_STEPS;
       } else {
-        const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
-        err.name = RedisErrors.FAILED_TO_CONNECT;
-        throw err;
+        redirectUrl = LegacyUrls.ET1_BASE;
       }
-    }
-
-    handleSessionErrors(req, res, this.form, redirectUrl);
-
-    // Only called when returning from CYA page
-    if (req.session.userCase.id) {
-      handleUpdateDraftCase(req, this.logger);
+      if (req.app?.locals) {
+        const redisClient = req.app.locals?.redisClient;
+        if (redisClient) {
+          const cacheMap = new Map<CaseDataCacheKey, string>([
+            [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
+            [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
+            [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
+            [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
+            [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
+          ]);
+          try {
+            req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
+          } catch (err) {
+            const error = new Error(err.message);
+            error.name = RedisErrors.FAILED_TO_SAVE;
+            if (err.stack) {
+              error.stack = err.stack;
+            }
+            throw error;
+          }
+        } else {
+          const err = new Error(RedisErrors.CLIENT_NOT_FOUND);
+          err.name = RedisErrors.FAILED_TO_CONNECT;
+          throw err;
+        }
+      }
+      // Only called when returning from CYA page
+      if (req.session.userCase.id) {
+        await handleUpdateDraftCase(req, logger);
+      }
+      redirectUrl = setUrlLanguage(req, redirectUrl);
+      returnNextPage(req, res, redirectUrl);
+    } else {
+      handleErrors(req, res, errors);
     }
   };
 

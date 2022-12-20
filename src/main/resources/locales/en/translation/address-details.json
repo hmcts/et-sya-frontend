@@ -12,6 +12,7 @@
   "postcode": "Postcode or area code (optional)",
   "enterAddressManually": "I don't live in the UK",
   "cannotFindAddress": "I cannot find my address in the list",
+  "postcodeErrorText": "Enter a postcode. For example, SW1 1AA",
   "errors": {
     "address1": {
       "required": "Enter the first line of your contact or home address - up to 100 characters",

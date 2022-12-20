@@ -1,0 +1,18 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "legend": "A oes gennych reswm dilys pam nad oes gennych ‘dystysgrif cymodi cynnar Acas’?",
+  "p1": "O dan amgylchiadau penodol gallwch wneud hawliad heb dystysgrif cymodi cynnar Acas.",
+  "p2": "Bydd un o’r rhesymau (neu ‘esemptiadau’) canlynol yn berthnasol i’ch amgylchiadau penodol chi. Eglurwch pam nad ydych angen tystysgrif ar gyfer atebydd.",
+  "li1": "Rydych yn gwneud hawliad gydag unigolyn arall sydd â rhif cymodi cynnar Acas yn barod",
+  "li2": "Nid oes gan Acas y pŵer i ddarparu cymodi cynnar ar ran o’ch hawliad neu’ch hawliad cyfan",
+  "li3": "Mae’r sefydliadau neu’r bobl rydych yn gwneud hawliad yn eu herbyn wedi bod mewn cysylltiad ag Acas yn barod",
+  "li4": "Rydych yn gwneud hawliad am ddiswyddo annheg sy’n cynnwys cais am ‘gymorth interim’ - mae hyn yn anghyffredin a dim ond am resymau penodol y mae’n berthnasol, megis gweithgareddau undeb llafur, gweithredu fel cynrychiolydd y gweithwyr neu ddiswyddiad sy’n deillio o chwythu’r chwiban",
+  "warningTxt1": "Rhybudd - os byddwch yn defnyddio’r esemptiad anghywir (neu un sy’n amherthnasol) efallai y gwrthodir eich hawliad.",
+  "insetText1": "’Bydd angen i chi ddarparu esemptiad yn hwyrach ymlaen fel rhan och hawliad. Os nad ydych yn siŵr pa un syn berthnasol <a href=\"https://www.acas.org.uk/early-conciliation\" target=\"_blank\" class=\"govuk-link\">cysylltwch ag Acas</a>.",
+  "errors": {
+    "validNoAcasReason": {
+      "required": "Welsh Translation required"
+    }
+  }
+}

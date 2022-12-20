@@ -1,0 +1,36 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Ym mha gyfeiriad wnaethoch chi weithio?",
+  "enterPostcode": "Welsh Translation required",
+  "manualAddress": "Welsh Translation required",
+  "cannotFindAddress": "Welsh Translation required",
+  "findAddress": "Welsh Translation required",
+  "postcodeErrorText": "Welsh Translation required",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "Welsh Translation required",
+      "required": "Welsh Translation required",
+      "notSelected": "Welsh Translation required"
+    },
+    "workAddress1": {
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
+    },
+    "workAddress2": {
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
+    },
+    "workAddressTown": {
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
+    },
+    "workAddressCountry": {
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
+    },
+    "workAddressPostcode": {
+      "required": "Welsh Translation required",
+      "invalid": "Welsh Translation required"
+    }
+  }
+}

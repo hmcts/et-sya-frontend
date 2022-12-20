@@ -1,0 +1,17 @@
+{
+  "title": "Welsh Translation required",
+  "heading": "Ydych chi wedi cwblhau’r adran hon?",
+  "legend": "Ydych chi wedi cwblhau’r adran hon?",
+  "yes": "Do, rwyf wedi cwblhau’r adran hon",
+  "no": "Naddo, rwyf am ddychwelyd i’r adran hon yn hwyrach ymlaen",
+  "p": "Gallwch newid eich atebion yn hwyrach ymlaen.",
+  "hint": "Gallwch newid eich atebion yn hwyrach ymlaen.",
+  "errors": {
+    "personalDetailsCheck": {
+      "required": "Welsh Translation required"
+    },
+    "employmentAndRespondentCheck": {
+      "required": "Welsh Translation required"
+    }
+  }
+}

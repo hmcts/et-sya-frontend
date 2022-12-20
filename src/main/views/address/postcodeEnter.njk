@@ -3,7 +3,7 @@
 
 <div id="enterPostcode">
   <form id="postcodeLookup">
-    <input type="hidden" name="_csrf" value={{ csrfToken }}>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     {{ govukInput({
       id: "postcode",
       name: "postcode",
@@ -11,12 +11,22 @@
       label: {
         text: enterPostcode
       },
-      value: previousPostcode
+      value: previousPostcode,
+      errorMessage: {
+          text: postcodeErrorText
+        }
     }) }}
 
     <p class="govuk-body">
       <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
     </p>
+
+    {% set languageParam = "" %}
+    {% if "lng=cy" in currentUrl %}
+      {% set languageParam = "?lng=cy" %}
+    {% else %}
+      {% set languageParam = "?lng=en" %}
+    {% endif %}
 
     {{ govukButton({
       attributes: {
@@ -34,6 +44,7 @@
           },
           text: saveAsDraft,
           type: submit,
+          href: PageUrls.CLAIM_SAVED + languageParam,
           classes: "govuk-button--secondary",
           preventDoubleClick: true
         }) }}

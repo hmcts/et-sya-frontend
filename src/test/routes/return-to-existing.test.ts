@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { app } from '../../main/app';
 import { YesOrNo } from '../../main/definitions/case';
-import { AuthUrls, PageUrls } from '../../main/definitions/constants';
+import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.RETURN_TO_EXISTING}`, () => {
@@ -30,7 +30,7 @@ describe(`on POST ${PageUrls.RETURN_TO_EXISTING}`, () => {
       .send({ returnToExisting: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(AuthUrls.LOGIN);
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIMANT_APPLICATIONS);
       });
   });
 });

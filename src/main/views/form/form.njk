@@ -1,7 +1,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-<form class="form" id="main-form" method="post" action="" novalidate="novalidate">
+<form class="form" id="main-form" method="post" action="" novalidate="true">
   <input type="hidden" name="_csrf" value={{ csrfToken }}>
   {% block form_content %}
     {% include "./fields.njk" %}
@@ -19,6 +19,7 @@
         classes: form.submit.classes,
         type: "submit",
         preventDoubleClick: true,
+        disabled: form.submit.disabled,
         attributes: {
           id: 'main-form-submit'
         }

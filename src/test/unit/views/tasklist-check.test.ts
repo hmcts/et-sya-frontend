@@ -13,8 +13,8 @@ const taskListCheckJsonRaw = fs.readFileSync(
 );
 const tasklistCheckJson = JSON.parse(taskListCheckJsonRaw);
 
-const titleClass = 'govuk-heading-xl';
-const expectedTitle = tasklistCheckJson.heading;
+const titleClass = 'govuk-fieldset__legend';
+const expectedTitle = tasklistCheckJson.legend;
 const radios = 'govuk-radios__item';
 const expectedRadioLabel1 = tasklistCheckJson.yes;
 const expectedRadioLabel2 = tasklistCheckJson.no;

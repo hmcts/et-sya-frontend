@@ -1,0 +1,55 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Welsh translation required",
+  "legend": "Disgrifiwch beth ddigwyddodd i chi",
+  "p1": "Dyma eich cyfle i esbonio pam eich bod yn gwneud hawliad i dribiwnlys cyflogaeth.",
+  "p2": "Mae’n bwysig eich bod yn canolbwyntio ar nodi beth ddigwyddodd i chi ac esbonio, cyn belled ag y gallwch, pam eich bod yn meddwl bod yr hyn a ddigwyddodd yn anghyfreithlon.",
+  "p3": "Bydd eich hawliad yn cael ei anfon at yr atebwyr, a fydd yn cael cyfle i ymateb trwy’r tribiwnlys.",
+  "p4": "Yna bydd y tribiwnlys yn penderfynu (trwy wrandawiad fel arfer) p’un a yw’r atebwyr wedi gweithredu mewn modd anghyfreithlon.",
+  "insetText": "Nid oes angen tystiolaeth fanwl arnom, fel copïau o negeseuon e-bost, llythyrau neu ddogfennau eraill, yn y cam hwn.  Cadwch y dogfennau hyn rhag ofn y byddwch eu hangen nes ymlaen. Efallai bydd arnoch angen dod â nhw i wrandawiad.",
+  "collapsibleSection1": {
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau gwahaniaethu",
+    "p1": "Disgrifiwch y digwyddiadau yr ydych yn cwyno amdanynt.",
+    "p2": "Ceisiwch roi dyddiadau’r digwyddiadau (a’u nodi mewn trefn cronolegol) a nodi enwau’r pobl eraill oedd yn rhan o’r digwyddiadau. Esboniwch, y gorau y gallwch, pam eich bod yn meddwl bod y digwyddiadau hyn yn golygu eich bod wedi bod yn destun gwahaniaethu anghyfreithlon, gan gyfeirio ar y nodweddion gwarchodedig rydych yn dibynnu arnynt."
+  },
+  "collapsibleSection2": {
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau diswyddo",
+    "p1": "Disgrifiwch amgylchiadau eich diswyddo.",
+    "p2": "Ceisiwch nodi dyddiadau digwyddiadau (fel cyfarfodydd diswyddo) ac enwau’r bobl eraill oedd yn rhan ohonynt (fel yr unigolyn wnaeth eich diswyddo). Dylech esbonio, y gorau y gallwch, pam eich bod yn ystyried bod eich diswyddo wedi bod yn annheg."
+  },
+  "collapsibleSection3": {
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau chwythu’r chwiban",
+    "li1": "Nodwch ddyddiadau bob amser wnaethoch chi \"chwythu’r chwiban\" trwy wneud datgeliad gwarchodedig. Ar gyfer pob datgeliad, rhowch grynodeb o’r wybodaeth wnaethoch chi ei datgelu, p’un a wnaed hyn ar lafar ynteu’n ysgrifenedig, yr unigolyn wnaethoch chi ddatgelu’r wybodaeth iddo, pa fath o gamymddwyn oeddech yn ei ddatgelu, a pham roedd y datgeliad er lles y cyhoedd.",
+    "li2": "Esboniwch sut gawsoch eich trin yn niweidiol (a all gynnwys cael eich diswyddo) oherwydd y datgeliad(au), gan nodi dyddiadau a chrynhoi’r digwyddiadau.",
+    "li3": "Nodwch enwau’r bobl oedd yn rhan o’r digwyddiadau ac sydd wedi bod yn dyst i’r digwyddiadau hyn.",
+    "li4": "Disgrifiwch sut gawsoch eich effeithio gan y driniaeth niweidiol."
+  },
+  "collapsibleSection4": {
+    "linkText": "Beth i ysgrifennu ar gyfer hawliadau ‘eraill’",
+    "li1": "Gall y tribiwnlys ond wrando achosion lle bo’r ddeddfwriaeth yn rhoi’r pŵer iddo wneud hynny. Esboniwch yn fras, os y gallwch, pa ddeddfwriaeth rydych chi’n dweud sy’n berthnasol i’r hawliad hwn.",
+    "li2": "Hyd yn oed os na allwch wneud hynny, y peth pwysicaf yw esbonio beth gafodd ei wneud a, cyn belled ag y gallwch, dweud pam yr ydych dweud yr oedd yn anghyfreithlon. Nodwch ddyddiadau a manylion bras am bob digwyddiad, gan gynnwys enw’r unigolyn oedd yn gyfrifol amdanynt."
+  },
+  "textInputHint": "Defnyddiwch y blwch hwn i ddisgrifio’r digwyddiadau sy’n ymwneud â’ch anghydfod, neu ychwanegwch at eich hawliad trwy lwytho dogfen",
+  "fileUpload": {
+    "linkText": "Neu gallwch lwytho eich crynodeb fel dogfen ar wahân (dewisol)",
+    "hint": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Llwytho ffeil</p>",
+    "hintExisting": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Welsh translation required</p><b>{{filename}}</b>"
+  },
+  "acceptedFormats": {
+    "label": "Welsh translation required",
+    "p1": "Welsh translation required"
+  },
+  "errors": {
+    "claimSummaryText": {
+      "required": "Welsh translation required",
+      "tooLong": "Welsh translation required",
+      "textAndFile": "Welsh translation required"
+    },
+    "claimSummaryFileName": {
+      "invalidFileFormat": "Welsh translation required",
+      "invalidFileName": "Welsh translation required",
+      "invalidFileSize": "Welsh translation required",
+      "backEndError": "Welsh translation required"
+    }
+  }
+}

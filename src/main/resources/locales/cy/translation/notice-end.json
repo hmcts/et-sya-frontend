@@ -1,0 +1,25 @@
+{
+  "title": "Welsh Translation required",
+  "label": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "h1": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "legend": "Pryd bydd eich cyfnod rhybudd yn dod i ben?",
+  "p1": "Dywedwch wrthym pryd fyddych yn rhoi’r gorau i weithio gyda’r atebydd.",
+  "hint": "Er enghraifft, 27 3 2007",
+  "errors": {
+    "noticeEnds": {
+      "required": "Welsh Translation required",
+      "dayRequired": "Welsh Translation required",
+      "monthRequired": "Welsh Translation required",
+      "yearRequired": "Welsh Translation required",
+      "dayNotANumber": "Welsh Translation required",
+      "monthNotANumber": "Welsh Translation required",
+      "yearNotANumber": "Welsh Translation required",
+      "dayInvalid": "Welsh Translation required",
+      "monthInvalid": "Welsh Translation required",
+      "yearInvalid": "Welsh Translation required",
+      "invalidDateInPast": "Welsh Translation required",
+      "invalidDateMoreThanTenYearsInFuture": "Welsh Translation required",
+      "invalidDate": "Welsh Translation required"
+    }
+  }
+}

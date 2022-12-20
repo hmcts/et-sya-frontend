@@ -1,8 +1,10 @@
 import NewJobStartDateController from '../../../main/controllers/NewJobStartDateController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockLogger } from '../mocks/mockLogger';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('New Job Start Date Controller', () => {
   const t = {
@@ -11,14 +13,14 @@ describe('New Job Start Date Controller', () => {
   };
 
   it('should render the New Job Start Date page', () => {
-    const controller = new NewJobStartDateController(mockLogger);
+    const controller = new NewJobStartDateController();
     const response = mockResponse();
     const request = mockRequest({ t });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB_START_DATE, expect.anything());
   });
 
-  it('should redirect to the same screen when errors are present', () => {
+  it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'newJobStartDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
       'newJobStartDate-day': '',
@@ -26,36 +28,17 @@ describe('New Job Start Date Controller', () => {
       'newJobStartDate-year': '2000',
     };
 
-    const controller = new NewJobStartDateController(mockLogger);
+    const controller = new NewJobStartDateController();
 
-    const req = mockRequest({ body });
+    const req = mockRequestEmpty({ body });
     const res = mockResponse();
-    controller.post(req, res);
-
-    expect(req.session.userCase).toEqual({
-      dobDate: {
-        year: '2000',
-        month: '12',
-        day: '24',
-      },
-      newJobStartDate: {
-        day: '',
-        month: '11',
-        year: '2000',
-      },
-      id: '1234',
-      startDate: {
-        day: '21',
-        month: '04',
-        year: '2019',
-      },
-    });
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should have error when date more than 10 years in future', () => {
+  it('should have error when date more than 10 years in future', async () => {
     const errors = [
       { propertyName: 'newJobStartDate', errorType: 'invalidDateMoreThanTenYearsInFuture', fieldName: 'year' },
     ];
@@ -65,27 +48,27 @@ describe('New Job Start Date Controller', () => {
       'newJobStartDate-year': '2100',
     };
 
-    const controller = new NewJobStartDateController(mockLogger);
+    const controller = new NewJobStartDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(req.path);
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should render the new job pay page when new job start date is left blank', () => {
+  it('should render the new job pay page when new job start date is left blank', async () => {
     const body = {
       'newJobStartDate-day': '',
       'newJobStartDate-month': '',
       'newJobStartDate-year': '',
     };
-    const controller = new NewJobStartDateController(mockLogger);
+    const controller = new NewJobStartDateController();
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    controller.post(req, res);
+    await await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB_PAY);
   });

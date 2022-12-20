@@ -17,10 +17,11 @@ export type Warning = Label;
 export interface SubmitButton {
   text: Label;
   classes?: string;
+  disabled?: boolean;
 }
 
 export interface FormContent {
-  submit: SubmitButton;
+  submit?: SubmitButton;
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
@@ -36,6 +37,7 @@ export interface FormOptions {
   label?: Label;
   labelHidden?: boolean;
   labelSize?: string | null;
+  labelAsHint?: boolean;
   isPageHeading?: boolean | null;
   hideError?: boolean;
   values: FormInput[];
@@ -50,6 +52,8 @@ export interface FormInput {
   name?: string;
   label?: Label;
   labelHidden?: boolean;
+  labelSize?: string | null;
+  labelAsHint?: boolean;
   divider?: boolean;
   exclusive?: boolean;
   hint?: Label;

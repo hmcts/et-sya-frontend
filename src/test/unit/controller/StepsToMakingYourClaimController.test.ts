@@ -3,6 +3,7 @@ import { Application } from 'express';
 import redis from 'redis-mock';
 
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -11,11 +12,12 @@ import * as cacheService from '../../../main/services/CacheService';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockSession } from '../mocks/mockApp';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 // All page includes links there is no redirect page that is why did not check
 // response.redirect
@@ -70,7 +72,8 @@ describe('Steps to Making your claim Controller', () => {
       config: undefined,
     };
     const res = mockResponse();
-    const req = mockRequest({});
+    const req = mockRequestEmpty({});
+    req.url = '/testPageUrl?lng=cy';
     req.session.userCase.id = undefined;
     req.app = {} as Application;
     req.app.locals = {};
@@ -89,8 +92,8 @@ describe('Steps to Making your claim Controller', () => {
 
     expect(req.session.userCase).toEqual({
       id: '12234',
-      createdDate: 'February 12, 2019',
-      lastModified: 'February 12, 2019',
+      createdDate: '12 February 2019',
+      lastModified: '12 February 2019',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       caseType: CaseType.SINGLE,
       caseTypeId: undefined,
@@ -138,11 +141,46 @@ describe('Steps to Making your claim Controller', () => {
       hearingPreferences: undefined,
       hearingAssistance: undefined,
       claimantContactPreference: undefined,
+      claimantContactLanguagePreference: undefined,
+      claimantHearingLanguagePreference: undefined,
       employmentAndRespondentCheck: undefined,
       claimDetailsCheck: undefined,
       respondents: undefined,
       otherClaim: undefined,
+      ClaimantPcqId: undefined,
+      acknowledgementOfClaimLetterDetail: undefined,
+      address1: undefined,
+      address2: undefined,
+      addressCountry: undefined,
+      addressPostcode: undefined,
+      addressTown: undefined,
+      claimSummaryFile: undefined,
+      claimSummaryText: undefined,
+      claimTypeDiscrimination: undefined,
+      claimTypePay: undefined,
+      claimantWorkAddressQuestion: undefined,
+      compensationAmount: undefined,
+      compensationOutcome: undefined,
+      et1SubmittedForm: undefined,
+      et3IsThereAnEt3Response: undefined,
+      ethosCaseReference: undefined,
+      feeGroupReference: undefined,
+      hubLinksStatuses: undefined,
+      managingOffice: undefined,
+      submittedDate: undefined,
+      tellUsWhatYouWant: undefined,
+      tribunalCorrespondenceEmail: undefined,
+      tribunalCorrespondenceTelephone: undefined,
+      tribunalRecommendationRequest: undefined,
+      whistleblowingClaim: undefined,
+      whistleblowingEntityName: undefined,
+      workAddress1: undefined,
+      workAddress2: undefined,
+      workAddressCountry: undefined,
+      workAddressPostcode: undefined,
+      workAddressTown: undefined,
     });
+    expect(req.language).toEqual('cy');
   });
 
   it('should render page with all claim types', () => {

@@ -1,9 +1,11 @@
 import AddressDetailsController from '../../../main/controllers/AddressDetailsController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockLogger } from '../mocks/mockLogger';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
 describe('Address details Controller', () => {
   const t = {
@@ -12,7 +14,7 @@ describe('Address details Controller', () => {
   };
 
   it('should render the Address details controller page', () => {
-    const addressDetailsController = new AddressDetailsController(mockLogger);
+    const addressDetailsController = new AddressDetailsController();
 
     const response = mockResponse();
     const userCase = { address1: '10 test street' };
@@ -23,7 +25,7 @@ describe('Address details Controller', () => {
   });
 
   describe('post()', () => {
-    it('should redirect to the same screen when errors are present', () => {
+    it('should redirect to the same screen when errors are present', async () => {
       const errors = [
         { propertyName: 'address1', errorType: 'required' },
         { propertyName: 'addressTown', errorType: 'required' },
@@ -31,17 +33,17 @@ describe('Address details Controller', () => {
       ];
       const body = { address1: '' };
 
-      const controller = new AddressDetailsController(mockLogger);
+      const controller = new AddressDetailsController();
 
       const req = mockRequest({ body });
       const res = mockResponse();
-      controller.post(req, res);
+      await await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(req.path);
       expect(req.session.errors).toEqual(errors);
     });
 
-    it('should assign userCase from formData', () => {
+    it('should assign userCase from formData', async () => {
       const body = {
         address1: '10 test street',
         addressTown: 'test',
@@ -49,13 +51,12 @@ describe('Address details Controller', () => {
         addressPostcode: 'AB1 2CD',
       };
 
-      const controller = new AddressDetailsController(mockLogger);
+      const controller = new AddressDetailsController();
 
-      const req = mockRequest({ body });
+      const req = mockRequestEmpty({ body });
       const res = mockResponse();
-      req.session.userCase = undefined;
 
-      controller.post(req, res);
+      await await controller.post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELEPHONE_NUMBER);
       expect(req.session.userCase).toStrictEqual({

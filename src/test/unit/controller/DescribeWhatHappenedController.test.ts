@@ -1,9 +1,7 @@
-import { LoggerInstance } from 'winston';
-
 import DescribeWhatHappenedController from '../../../main/controllers/DescribeWhatHappenedController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -13,11 +11,6 @@ describe('Describe-What-Happened Controller', () => {
     'describe-what-happened': {},
     common: {},
   };
-
-  const mockLogger = {
-    error: jest.fn().mockImplementation((message: string) => message),
-    info: jest.fn().mockImplementation((message: string) => message),
-  } as unknown as LoggerInstance;
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
 
   beforeAll(() => {
@@ -37,7 +30,7 @@ describe('Describe-What-Happened Controller', () => {
   });
 
   it('should render describe what happened page', () => {
-    const controller = new DescribeWhatHappenedController(mockLogger);
+    const controller = new DescribeWhatHappenedController();
     const response = mockResponse();
     const request = mockRequest({ t });
 
@@ -48,7 +41,7 @@ describe('Describe-What-Happened Controller', () => {
   describe('Correct validation', () => {
     it('should require either summary text or summary file', async () => {
       const req = mockRequest({ body: { claimSummaryText: '' } });
-      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
+      await new DescribeWhatHappenedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryText', errorType: 'required' }]);
     });
@@ -57,7 +50,7 @@ describe('Describe-What-Happened Controller', () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
       const req = mockRequest({ body: {}, file: newFile });
-      await new DescribeWhatHappenedController(mockLogger).post(req, mockResponse());
+      await new DescribeWhatHappenedController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileFormat' }]);
     });
@@ -65,10 +58,11 @@ describe('Describe-What-Happened Controller', () => {
     it('should assign userCase from summary text', async () => {
       const req = mockRequest({ body: { claimSummaryText: 'test' } });
       const res = mockResponse();
+      jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
 
-      await new DescribeWhatHappenedController(mockLogger).post(req, res);
+      await new DescribeWhatHappenedController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.TELL_US_WHAT_YOU_WANT + languages.ENGLISH_URL_PARAMETER);
       expect(req.session.userCase).toMatchObject({
         claimSummaryText: 'test',
       });

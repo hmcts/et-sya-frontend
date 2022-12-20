@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import config from 'config';
 
+import { getLogger } from '../logger';
+import { axiosErrorDetails } from '../services/AxiosErrorAdapter';
+
+const logger = getLogger('address');
+
 export const getAddressesForPostcode = async (postcode: string): Promise<Address[]> => {
   try {
     const url: string = config.get('services.addressLookup.url');
@@ -39,8 +44,9 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
       }) => ({
         fullAddress: ADDRESS,
         street1: [
-          BUILDING_NUMBER,
-          [ORGANISATION_NAME, SUB_BUILDING_NAME, BUILDING_NAME, THOROUGHFARE_NAME].filter(Boolean).join(', '),
+          [ORGANISATION_NAME, SUB_BUILDING_NAME, BUILDING_NAME, BUILDING_NUMBER, THOROUGHFARE_NAME]
+            .filter(Boolean)
+            .join(', '),
         ]
           .filter(Boolean)
           .join(' '),
@@ -53,8 +59,8 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
         country: countryCodes.get(COUNTRY_CODE),
       })
     );
-  } catch (err) {
-    //TODO: Log error after introducing logger
+  } catch (error) {
+    logger.error('Error getting addresses for postcode: ' + axiosErrorDetails(error));
     return [];
   }
 };

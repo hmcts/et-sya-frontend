@@ -1,0 +1,31 @@
+{
+  "title": "Vary or revoke an order",
+  "applicationType": "Vary or revoke an order",
+  "applicationTitle": "Apply to vary or revoke an order",
+  "content": [
+    "<p class=\"govuk-body\">Use this form to apply to vary or revoke an order the tribunal has issued.</p>",
+    "<p class=\"govuk-body\">Tribunal orders will not usually be varied or revoked unless there has been a material change in circumstances since the order was made, which make the variation in the interests of justice.</p>",
+    "<p class=\"govuk-body\">The tribunal will consider your reasons for varying or revoking the order and any supporting materials you provide then make a decision.</p>",
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the order you want to vary or revoke</li>",
+    "<li>the date the tribunal issued the order</li>",
+    "<li>explain which part of the order you want to vary or revoke</li>",
+    "<li>how to vary the order. For example, you might say that a case management order asked for an impact statement but you need more time to submit it</li>",
+    "<li>why it is in the interests of justice to vary or revoke this order. Tell us any relevant changes of circumstance since the order was made and consider the requirements of the ‘overriding objective’ in Rule 2 of the Employment Tribunal Rules of Procedure</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Rule 2 of the Employment Tribunal Rules of Procedure</p>",
+    "<p class=\"govuk-body\">The overriding objective of the Rules is to enable employment tribunals to deal with cases fairly and justly.</p>",
+    "<p class=\"govuk-body\">Dealing with a case fairly and justly includes:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>ensuring that the parties are on an equal footing</li>",
+    "<li>dealing with cases in ways which are proportionate to the complexity and importance of the issues</li>",
+    "<li>avoiding unnecessary formality and seeking flexibility in the proceedings</li>",
+    "<li>avoiding delay, so far as compatible with proper consideration of the issues</li>",
+    "<li>saving expense</li>",
+    "</ul>"
+  ]
+}

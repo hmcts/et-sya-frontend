@@ -5,11 +5,12 @@
   "address": "Address",
   "acasNum": "Acas certificate number",
   "submit": "Add another respondent",
+  "saveAndContinue": "Save and continue",
   "change": "Change",
   "unProvided": "Not provided",
   "errors": {
     "hiddenErrorField": {
-      "exceeded": "You can only add up to 5 respondents in this claim. Contact the tribunal after submitting your claim to discuss more respondents."
+      "exceeded": "You can only add up to 5 respondents in this section. If you need to enter the details of more respondents you can do this in the 'Describe what happened to you' section of the service or include the details as part of an attachment. Please ensure you provide an acas certifcate number or valid reason for not having this for each additional respondent."
     }
   }
 }

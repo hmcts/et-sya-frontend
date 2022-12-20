@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -8,11 +7,13 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { DefaultRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+const logger = getLogger('PastEmployerController');
 
 export default class PastEmployerController {
   private readonly form: Form;
@@ -21,7 +22,9 @@ export default class PastEmployerController {
       pastEmployer: {
         ...DefaultRadioFormFields,
         label: (l: AnyRecord): string => l.heading,
-        labelHidden: true,
+        labelHidden: false,
+        labelSize: 'xl',
+        isPageHeading: true,
         id: 'past-employer',
         classes: 'govuk-radios--inline',
       },
@@ -30,17 +33,15 @@ export default class PastEmployerController {
     saveForLater: saveForLaterButton,
   };
 
-  constructor(private logger: LoggerInstance) {
+  constructor() {
     this.form = new Form(<FormFields>this.pastEmployerFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.STILL_WORKING
       : PageUrls.FIRST_RESPONDENT_NAME;
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, this.logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

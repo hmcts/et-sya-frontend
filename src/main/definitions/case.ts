@@ -73,6 +73,8 @@ export interface Case {
   addressPostcode?: string;
   acasMultiple?: YesOrNo;
   claimantContactPreference?: EmailOrPost;
+  claimantContactLanguagePreference?: EnglishOrWelsh;
+  claimantHearingLanguagePreference?: EnglishOrWelsh;
   claimantRepresentedQuestion?: YesOrNo;
   caseType?: CaseType;
   caseTypeId?: CaseTypeId;
@@ -109,6 +111,8 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -213,6 +217,11 @@ export const enum WeeksOrMonths {
 export const enum EmailOrPost {
   EMAIL = 'Email',
   POST = 'Post',
+}
+
+export const enum EnglishOrWelsh {
+  ENGLISH = 'English',
+  WELSH = 'Welsh',
 }
 
 export const enum Sex {

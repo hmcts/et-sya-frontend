@@ -1,0 +1,20 @@
+{
+  "title": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "legend": "Dyddiad cychwyn y swydd newydd (dewisol)",
+  "p1": "Dywedwch rywfaint am eich swydd newydd. Os nad ydych yn gwybod yr union ddyddiad, yna nodwch eich amcangyfrif gorau.",
+  "hint": "Er enghraifft, 27 3 2007",
+  "errors": {
+    "newJobStartDate": {
+      "dayRequired": "Welsh Translation required",
+      "monthRequired": "Welsh Translation required",
+      "yearRequired": "Welsh Translation required",
+      "invalidDateInPast": "Welsh Translation required",
+      "invalidDateMoreThanTenYearsInFuture": "Welsh Translation required",
+      "dayNotANumber": "Welsh Translation required",
+      "monthNotANumber": "Welsh Translation required",
+      "yearNotANumber": "Welsh Translation required",
+      "invalidDate": "Welsh Translation required"
+    }
+  }
+}

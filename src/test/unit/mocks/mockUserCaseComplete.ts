@@ -2,6 +2,7 @@ import {
   CaseType,
   CaseTypeId,
   EmailOrPost,
+  EnglishOrWelsh,
   HearingPreference,
   NoAcasNumberReason,
   PayInterval,
@@ -21,8 +22,8 @@ import { HubLinksStatuses } from '../../../main/definitions/hub';
 
 export default {
   id: '1234',
-  createdDate: 'August 19, 2022',
-  lastModified: 'August 19, 2022',
+  createdDate: '19 August 2022',
+  lastModified: '19 August 2022',
   typeOfClaim: ['discrimination', 'payRelated'],
   dobDate: {
     day: '05',
@@ -74,6 +75,8 @@ export default {
   hearingPreferences: [HearingPreference.PHONE],
   hearingAssistance: 'Hearing assistance test',
   claimantContactPreference: EmailOrPost.EMAIL,
+  claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+  claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
   employmentAndRespondentCheck: YesOrNo.YES,
   claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
   claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],

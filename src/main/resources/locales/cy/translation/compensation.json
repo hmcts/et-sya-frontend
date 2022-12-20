@@ -1,0 +1,25 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Welsh translation required",
+  "legend": "Pa iawndal ydych yn ei geisio? (dewisol)",
+  "detailsSummaryComp": "Iawndal - beth all tribiwnlys ddyfarnu?",
+  "detailsTextComp": {
+    "p1": "Os bydd tribiwnlys yn penderfynu eich bod wedi’ch diswyddo’n annheg, fel arfer byddwch yn cael iawndal a fydd yn cynnwys:",
+    "li1": "dyfarniad cyffredin - swm penodol a gyfrifir gan ddefnyddio fformiwla safonol",
+    "li2": "dyfarndal cydadferol - iawndal am yr union arian a gollwyd o ganlyniad i’ch diswyddiad, neu yr ydych yn disgwyl ei golli yn y dyfodol oherwydd eich diswyddiad",
+    "p2": "Gellir lleihau’r iawndal a roddir am nifer o resymau, a bydd tribiwnlys yn dweud mwy wrthych am hyn os yw’n berthnasol i’ch amgylchiadau penodol chi.<br><br>",
+    "p3": "Mewn achosion disgyblu neu achosion yn ymwneud â chwyn, efallai y bydd gennych hawl i ddyfarniad uwch os bydd cyflogwr yn methu â dilyn y cyfarwyddyd a nodir yng <a href=\"https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Nghod Ymarfer Acas ar brosesau disgyblu neu gwynion.</a><br><br>",
+    "p4": "Yn debyg, gellir lleihau dyfarniadau os bydd tribiwnlys yn penderfynu eich bod chi wedi methu â dilyn y cyfarwyddyd a nodir yng <a href=\"https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Nghod Ymarfer Acas ar brosesau disgyblu neu gwynion.</a><br><br>",
+    "p5": "Gyda rhai hawliadau, megis y rhai hynny sy’n ymwneud â gwahaniaethu, gall tribiwnlys eich digolledu am ‘anaf i deimladau’ (poen a gofid rydych wedi’i ddioddef) yn ychwanegol at iawndal am golled ariannol."
+  },
+  "hint": "Ceisiwch nodi’r holl iawndal rydych yn ei hawlio, a darparwch gyfanswm os yn bosibl",
+  "amountLabel": "Rhowch gyfanswm yr iawndal rydych yn ei hawlio",
+  "errors": {
+    "compensationOutcome": {
+      "tooLong": "Welsh translation required"
+    },
+    "compensationAmount": {
+      "invalidCurrency": "Welsh translation required"
+    }
+  }
+}
