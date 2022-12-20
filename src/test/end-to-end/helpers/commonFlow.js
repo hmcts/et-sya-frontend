@@ -109,4 +109,22 @@ async function createSingleMyselfCase() {
   I.click('#main-form-submit');
 }
 
-module.exports = { initialPageFlow, createSingleMyselfCase };
+async function returnToAnExistingClaim() {
+  //Return To an existing claim on the Tribunal Page....
+  I.amOnPage('/');
+  I.see('Make a claim to an employment tribunal');
+  await commonFlowContentHelper.verifyMakeAClaimToAnEmploymentTribunal();
+  I.click("//a[.='Return to an existing claim']");
+
+  I.waitForText('Return to an existing claim', 30);
+  I.see(
+    'You’ll need to use either a ‘save and return number’ or your new ‘Employment Tribunal account’ to return to an existing claim.'
+  );
+  I.see('Have you got a ‘save and return number’ or a new ‘Employment Tribunal account’?');
+  I.see('I’ve got a ‘save and return number’');
+  I.see('I’ve got a new ‘Employment Tribunal account’');
+  I.click("//input[@value='No']");
+  I.click('Continue');
+}
+
+module.exports = { initialPageFlow, createSingleMyselfCase, returnToAnExistingClaim };
