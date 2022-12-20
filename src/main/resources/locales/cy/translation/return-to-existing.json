@@ -8,7 +8,7 @@
   "optionText2": "Mae gen i newydd <span class=\"govuk-!-font-weight-bold\">‘Gyfrif Tribiwnlys Cyflogaeth’</span>",
   "errors": {
     "returnToExisting": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a oes gennych rif cadw a dychwelyd neu gyfrif Tribiwnlys Cyflogaeth"
     }
   }
 }

@@ -11,7 +11,7 @@
   "otherPayments": { "title": "Welsh Translation required", "checkbox": "Taliadau eraill" },
   "errors": {
     "claimTypePay": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym pa fath o hawliad yn ymwneud â thâl ydych chi’n ei wneud"
     }
   }
 }

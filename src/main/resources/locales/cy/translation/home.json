@@ -1,13 +1,13 @@
 {
-  "title": "Welsh Translation required",
-  "pageTitle": "Welsh Translation required",
-  "serviceInfo": "Welsh Translation required",
-  "infoTxt": "Welsh Translation required",
-  "warningTxt1": "Welsh Translation required",
-  "saveInfo": "Welsh Translation required",
-  "warningTxt2": "Welsh Translation required",
-  "claimStartedTxt": "Welsh Translation required",
+  "title": "Cychwyn hawliad",
+  "pageTitle": "Gwneud hawliad i dribiwnlys Cyflogaeth",
+  "serviceInfo": "Defnyddiwch y gwasanaeth hwn i wneud hawliadau i dribiwnlys cyflogaeth pan fo cyflogwr, darpar gyflogwr, undeb llafur neu rywun yn y gwaith wedi trin rhywun arall yn anghyfreithlon.",
+  "infoTxt": "Yn ystod y broses tribiwnlys cyflogaeth, mae'r sefydliadau neu'r bobl rydych chi'n gwneud hawliad yn eu herbyn yn cael eu galw'n 'atebwyr'.",
+  "warningTxt1": "I wneud hawliad mae angen i chi gysylltu ag Acas a chael ‘tystysgrif cymodi cynnar’ ganddynt neu roi rheswm dilys i ni pam nad oes gennych un. <br><br>Os nad oes gennych dystysgrif neu reswm mae angen i chi gysylltu ag Acas.",
+  "saveInfo": "Nid oes rhaid i chi wneud yr hawliad i gyd ar unwaith. Gallwch ei gadw a dychwelyd ar unrhyw adeg cyn i chi ei gyflwyno.",
+  "warningTxt2": "Fel arfer  mae’n rhaid gwneud hawliad o fewn 3 mis i gyflogaeth ddod i ben neu i adeg y problemau a gododd.  Os yw hawliad yn hwyr, rhaid i chi egluro pam. Bydd barnwr wedyn yn penderfynu beth fydd yn digwydd nesaf.",
+  "claimStartedTxt": "Ydych chi eisoes wedi dechrau hawliad?",
   "returnClaimTxt": "Dychwelyd i hawliad presennol",
-  "contactUsHelpTitle": "Welsh Translation required",
+  "contactUsHelpTitle": "Help i ddefnyddio’r gwasanaeth",
   "contactUsHelpTxt": "Ffoniwch un o Ganolfannau Cyswllt Cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi."
 }

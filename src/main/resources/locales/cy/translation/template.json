@@ -1,10 +1,10 @@
 {
-  "serviceName": "Welsh Translation required",
-  "guide": "Welsh Translation required",
-  "termsAndConditions": "Welsh Translation required",
-  "cookiePolicy": "Welsh Translation required",
+  "serviceName": "Tribiwnlys Cyflogaeth",
+  "guide": "Canllaw",
+  "termsAndConditions": "Telerau ac amodau",
+  "cookiePolicy": "Cwcis",
   "contact": "Cysylltu â ni",
-  "stage": "Welsh Translation required",
+  "stage": "Beta",
   "signOut": "Welsh Translation required",
   "logIn": "Welsh Translation required",
   "phaseBanner": {
@@ -18,10 +18,10 @@
   "noticeLengthInsetText": "Welsh Translation required",
   "sessionTimeout": {
     "modal": {
-      "title": "Welsh Translation required",
-      "body": ["Welsh Translation required", "Welsh Translation required"],
-      "info": "Welsh Translation required",
-      "extend": "Welsh Translation required",
+      "title": "Rydych ar fin allgofnodi",
+      "body": ["Am resymau diogelwch, byddwch yn cael eich allgofnodi o’r gwasanaeth hwn mewn ", "funudau."],
+      "info": "Allgofnodi’n awtomatig",
+      "extend": "Parhau i ddefnyddio’r gwasanaeth",
       "cancel": "Allgofnodi"
     }
   }

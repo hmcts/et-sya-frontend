@@ -2,12 +2,12 @@
   "title": "Gwiriwch eich atebion",
   "h1": "Gwiriwch eich atebion",
   "des": "Gwiriwch eich atebion cyn cyflwyno eich hawliad.",
-  "subTitleYourDetails": "Welsh Translation required",
-  "subTitleEmploymentDetails": "Welsh Translation required",
-  "respondentTitle": "Welsh Translation required",
-  "details": "Welsh Translation required",
+  "subTitleYourDetails": "Eich manylion",
+  "subTitleEmploymentDetails": "Manylion cyflogaeth",
+  "respondentTitle": "Atebydd",
+  "details": "manylion",
   "submitYourClaim": "Cyflwyno eich hawliad",
-  "discrimination": "Welsh Translation required",
+  "discrimination": "Gwahaniaethu o unrhyw fath",
   "payRelated": "Ymwneud â thâl",
   "unfairDismissal": "Diswyddo annheg",
   "whistleBlowing": "Chwythu’r chwiban",
@@ -18,7 +18,7 @@
   "remember": "Cofiwch, os nad ydych yn siŵr am unrhyw beth, gallwch gadw a dychwelyd i’ch hawliad unrhyw dro trwy ddewis yr opsiwn ‘Cadw fel drafft’ ar waelod y dudalen hon.",
   "emailConfirmation": "Byddwn yn anfon cadarnhad atoch trwy neges e-bost unwaith y byddwch wedi cyflwyno’ch hawliad.",
   "submitBtn": "Cadw a pharhau",
-  "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Welsh Translation required </a> Welsh Translation required",
+  "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Argraffu’r dudalen hon </a> ar gyfer eich cofnodion",
   "change": "Welsh Translation required",
-  "submitError": "Welsh Translation required"
+  "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau."
 }
