@@ -102,7 +102,7 @@ export default class ContactTheTribunalSelectedController {
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      files: getFiles(userCase, {
+      files: getFiles(userCase, selectedApplication, {
         ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
       }),
       errors: req.session.errors,

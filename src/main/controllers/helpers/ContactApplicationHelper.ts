@@ -1,9 +1,10 @@
 import { CaseWithId } from '../../definitions/case';
-import { InterceptPaths } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getFiles = (
   userCase: CaseWithId | undefined,
+  selectedApplication: string,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   if (userCase === undefined || userCase.contactApplicationFile === undefined) {
@@ -34,7 +35,7 @@ export const getFiles = (
         actions: {
           items: [
             {
-              href: InterceptPaths.REMOVE_FILE,
+              href: PageUrls.REMOVE_FILE.replace(':application', selectedApplication),
               text: translations.remove,
               visuallyHiddenText: translations.remove,
             },

@@ -26,6 +26,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
+import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
@@ -52,7 +53,6 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
-import RemoveFileController from '../../controllers/RemoveFileController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
@@ -221,7 +221,7 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
-    app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
+    app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({

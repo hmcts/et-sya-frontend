@@ -163,6 +163,7 @@ export const PageUrls = {
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
+  REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
 } as const;
@@ -172,7 +173,6 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
-  REMOVE_FILE: '/remove-uploaded-file',
 } as const;
 
 export const ErrorPages = {
