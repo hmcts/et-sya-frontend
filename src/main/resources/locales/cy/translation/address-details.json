@@ -1,39 +1,39 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Manylion y cyfeiriad",
   "pageHeader": "Beth yw eich cyfeiriad cyswllt neu gyfeiriad cartref?",
-  "manualAddress": "Welsh Translation required",
+  "manualAddress": "Rwy’n byw y tu allan i’r DU",
   "pageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
   "enterPostcode": "Rhowch god post yn y DU",
-  "addressLine1": "Welsh Translation required",
-  "addressLine2": "Welsh Translation required",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 2",
   "town": "Tref neu ddinas",
   "county": "Sir neu dalaith (dewisol)",
   "country": "Gwlad",
-  "postcode": "Cod post neu god zip",
-  "enterAddressManually": "Nid wyf yn byw yn y DU",
-  "cannotFindAddress": "Ni allaf ddod o hyd i fy nghyfeiriad yn y rhestr",
-  "postcodeErrorText": "Welsh Translation required",
+  "postcode": "Cod post neu god ardal (dewisol)",
+  "enterAddressManually": "Rwy’n byw y tu allan i’r DU",
+  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
+  "postcodeErrorText": "Rhowch god post. Er enghraifft, SW1 1AA",
   "errors": {
     "address1": {
-      "required": "Enter the first line of your contact or home address - up to 100 characters - REQUIRES UPDATE",
-      "invalid": "Enter the first line of your contact or home address - up to 100 characters - REQUIRES UPDATE"
+      "required": "Rhowch linell gyntaf eich cyfeiriad cyswllt neu gartref - hyd at 100 o lythrennau",
+      "invalid": "Rhowch linell gyntaf eich cyfeiriad cyswllt neu gartref - hyd at 100 o lythrennau"
     },
     "address2": {
-      "required": "Enter the second line of your contact or home address - up to 50 characters - REQUIRES UPDATE",
-      "invalid": "Enter the second line of your contact or home address - up to 50 characters - REQUIRES UPDATE"
+      "required": "Rhowch ail linell eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau",
+      "invalid": "Rhowch ail linell eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau"
     },
     "addressTown": {
-      "required": "Enter a town or city for your contact or home address - up to 50 characters - REQUIRES UPDATE",
-      "invalid": "Enter a town or city for your contact or home address - up to 50 characters - REQUIRES UPDATE"
+      "required": "Rhowch dref neu ddinas ar gyfer eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau",
+      "invalid": "Rhowch dref neu ddinas ar gyfer eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau"
     },
     "addressCountry": {
-      "required": "Enter a Country for your contact or home address - up to 50 characters - REQUIRES UPDATE",
-      "invalid": "Enter a Country for your contact or home address - up to 50 characters - REQUIRES UPDATE"
+      "required": "Rhowch Wlad ar gyfer eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau",
+      "invalid": "Rhowch Wlad ar gyfer eich cyfeiriad cyswllt neu gartref - hyd at 50 o lythrennau"
     },
     "addressPostcode": {
-      "required": "Enter a postcode. For example, SW1 1AA - REQUIRES UPDATE",
-      "invalid": "Enter a valid postcode. For example, SW1 1AA - REQUIRES UPDATE",
-      "notSelected": "Select an address - REQUIRES UPDATE"
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch cod post dilys. Er enghraifft, SW1 1AA",
+      "notSelected": "Dewiswch gyfeiriad"
     }
   }
 }

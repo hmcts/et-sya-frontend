@@ -7,19 +7,19 @@
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "noticeEnds": {
-      "required": "Welsh Translation required",
-      "dayRequired": "Welsh Translation required",
-      "monthRequired": "Welsh Translation required",
-      "yearRequired": "Welsh Translation required",
-      "dayNotANumber": "Welsh Translation required",
-      "monthNotANumber": "Welsh Translation required",
-      "yearNotANumber": "Welsh Translation required",
-      "dayInvalid": "Welsh Translation required",
-      "monthInvalid": "Welsh Translation required",
-      "yearInvalid": "Welsh Translation required",
-      "invalidDateInPast": "Welsh Translation required",
-      "invalidDateMoreThanTenYearsInFuture": "Welsh Translation required",
-      "invalidDate": "Welsh Translation required"
+      "required": "Dywedwch wrthym pan fydd eich cyfnod rhybudd yn dod i ben. Er enghraifft, DD MM YYYY",
+      "dayRequired": "Rhowch ddiwrnod ar gyfer dyddiad gorffen eich cyfnod rhybudd. Er enghraifft, 23",
+      "monthRequired": "Rhowch fis ar gyfer dyddiad gorffen eich cyfnod rhybudd. Er enghraifft, 04",
+      "yearRequired": "Rhowch y flwyddyn pan fydd eich cyfnod rhybudd yn dod i ben. Er enghraifft, 2022",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2022",
+      "dayInvalid": "Rhaid i’r diwrnod fod rhwng 1 a 31",
+      "monthInvalid": "Rhaid i’r mis fod rhwng 1 a 12",
+      "yearInvalid": "Rydych wedi rhoi’r flwyddyn gan ddefnyddio fformat annilys. Rhowch y flwyddyn yn llawn, er enghraifft 2014",
+      "invalidDateInPast": "Rhowch ddyddiad dilys, ni ddylai'r dyddiad fod yn y gorffennol",
+      "invalidDateMoreThanTenYearsInFuture": "Rhowch ddyddiad dilys, ni ddylai’r dyddiad fod yn fwy na 10 mlynedd o’r dyddiad presennol",
+      "invalidDate": "Rhaid i ddyddiad gorffen yr hysbysiad cyflogaeth fod yn ddyddiad go iawn."
     }
   }
 }

@@ -1,16 +1,16 @@
 {
-  "title": "Welsh translation required - hawliadau chwythu’r chwiban",
+  "title": "Manylion yr hawliad - hawliadau chwythu’r chwiban",
   "h1": "Hawliadau chwythu’r chwiban (dewisol)",
   "p1": "Rydych wedi dewis hawliad chwythu’r chwiban, felly gallwch ofyn i ni anfon copi o’ch hawliad i reoleiddiwr neu gorff perthnasol (a elwir hefyd yn ‘unigolyn penodedig’).",
   "p2": "Byddwn yn hysbysu’r atebydd os byddwch yn gofyn i ni anfon eich hawliad ymlaen, ond ni fydd hyn yn effeithio ar sut byddwn yn prosesu eich hawliad",
-  "p3": "Ni fydd gan bob hawliad chwythu’r chwiban reoleiddiwr neu gorff perthnasol",
+  "p3": "Ni fydd gan bob hawliad chwythu’r chwiban reoleiddiwr neu gorff perthnasol.",
   "p4": "<a href=\"https://www.gov.uk/government/publications/blowing-the-whistle-list-of-prescribed-people-and-bodies--2/whistleblowing-list-of-prescribed-people-and-bodies\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Dod o hyd i’r rheoleiddiwr neu gorff perthnasol (agor mewn ffenestr newydd)</a> ar gyfer eich math chi o hawliad o’r rhestr hon",
   "forwardClaim": "Ydych chi eisiau i ni anfon eich hawliad chwythu’r chwiban i reoleiddiwr neu gorff perthnasol?",
   "regOrBodyName": "Nodwch enw’r rheoleiddiwr neu gorff perthnasol. Os na allwch ddod o hyd i un, rhowch ‘AMH’,",
   "errors": {
     "whistleblowingEntityName": {
-      "required": "Welsh translation required",
-      "invalidLength": "Welsh translation required"
+      "required": "Nodwch enw’r rheoleiddiwr neu’r corff perthnasol. Os na allwch ddod o hyd i un, rhowch ‘AMH’",
+      "invalidLength": "Rhaid i’r enw a nodir ar gyfer y rheoleiddiwr neu’r corff fod rhwng 3 a 100 llythyren. Os na allwch ddod o hyd i un, rhowch ‘AMH’"
     }
   }
 }

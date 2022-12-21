@@ -1,9 +1,9 @@
 {
-  "title": "",
-  "h1": "",
+  "title": "A oes gennych chi swydd newydd?",
+  "h1": "A oes gennych chi swydd newydd? (dewisol)",
   "errors": {
     "newJob": {
-      "required": ""
+      "required": "Welsh Translation required"
     }
   }
 }
