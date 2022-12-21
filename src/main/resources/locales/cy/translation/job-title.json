@@ -7,7 +7,7 @@
   "jobTitle": "Teitl y swydd (dewisol)",
   "errors": {
     "jobTitle": {
-      "invalid-length": "Welsh Translation required"
+      "invalid-length": "Rhaid i deitl y swydd fod rhwng 2 a 100 o lythrennau"
     }
   }
 }

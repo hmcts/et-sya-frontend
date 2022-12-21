@@ -1,7 +1,7 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Dewisiadau diweddaru am hawliad",
   "h1": "Sut yr hoffech i ni gysylltu â chi ynghylch eich hawliad?",
-  "label": "Welsh Translation required",
+  "label": "Pa fformat hoffech chi inni ei ddefnyddio i gysylltu â chi?",
   "email": "E-bost",
   "post": "Trwy’r post",
   "languageLabel": "Pa iaith ydych chi eisiau i ni ei defnyddio pan fyddwn yn cysylltu â chi?",
@@ -11,7 +11,7 @@
   "hearingLabel": "Os bydd gwrandawiad, ym mha iaith ydych chi eisiau siarad yn y gwrandawiad?",
   "errors": {
     "claimantContactPreference": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a ydych am inni gysylltu â chi drwy e-bost neu drwy'r post"
     }
   }
 }

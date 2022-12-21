@@ -6,8 +6,8 @@
   "postcode": "Cod post",
   "errors": {
     "workPostcode": {
-      "required": "Welsh Translation required",
-      "invalid": "Welsh Translation required"
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch cod post dilys. Er enghraifft, SW1 1AA"
     }
   }
 }

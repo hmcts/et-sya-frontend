@@ -1,10 +1,10 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Hawliad wedi’i gyflwyno",
   "h1": "Mae eich hawliad wedi ei gyflwyno",
   "downloadClaim": "Llwytho eich hawliad i lawr<br> <p class=\"govuk-body\">Mae'r cwestiynau rydych wedi'u hateb wedi'u cynnwys ar ein ffurflen PDF rhagnodedig. Mae hyn yn golygu y gall geiriad neu drefn y cwestiynau ymddangos yn wahanol ar y fersiwn y byddwch yn ei lawrlwytho. Ni fydd hyn yn effeithio ar sut mae'r tribiwnlys yn delio â'ch hawliad.</p>",
-  "downloadClaimHint": "Welsh Translation required",
+  "downloadClaimHint": "Mae'r cwestiynau rydych wedi'u hateb wedi'u cynnwys ar ein ffurflen PDF rhagnodedig. Mae hyn yn golygu y gall geiriad neu drefn y cwestiynau ymddangos yn wahanol ar y fersiwn y byddwch yn ei lawrlwytho.",
   "downloadBtnText": "Welsh Translation required",
-  "emailConfirmation": "Welsh Translation required",
+  "emailConfirmation": "Rydym wedi anfon cadarnhad atoch trwy e-bost.",
   "whatHappensNext": "Beth fydd yn digwydd nesaf",
   "whatHappensNextItemOne": "Byddwn yn gwirio eich hawliad ac efallai byddwn yn cysylltu â chi os bydd gennym unrhyw gwestiynau",
   "whatHappensNextItemTwo": "Byddwn yn cysylltu â chi pan fyddwn wedi anfon eich hawliad at yr atebwyr i esbonio beth fydd yn digwydd nesaf",
