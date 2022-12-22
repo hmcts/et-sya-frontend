@@ -50,5 +50,14 @@
     "otherTypesOfClaims": "Other type of claim"
   },
   "of": "of",
-  "tasksCompleted": "tasks completed"
+  "tasksCompleted": "tasks completed",
+  "CookieEmploymentTribunals": "Cookies on Employment Tribunals",
+  "CookieUse": "We use some essential cookies to make this service work.",
+  "CookieAnalytics": "We’d also like to use analytics cookies so we can understand how you use the service and make improvements.",
+  "CookieAccept": "Accept analytics cookies",
+  "CookieReject": "Reject analytics cookies",
+  "CookieHide": "Hide this message",
+  "CookieView": "View cookies",
+  "CookieAccepted": "You’ve accepted additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.",
+  "CookieRejected": " <p class=\"govuk-body\">You’ve rejected additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.</p>"
 }
