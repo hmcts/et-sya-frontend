@@ -5,13 +5,13 @@
   "male": "Gwryw",
   "female": "Benyw",
   "sex": "Beth yw eich rhyw?",
-  "preferNotToSay": "Prefer not to say - Welsh translation required",
+  "preferNotToSay": "Mae’n well gen i beidio dweud",
   "preferredTitle": "Beth yw eich teitl o ddewis?",
   "errors": {
     "preferredTitle": {
-      "required": "Select a list option from the \"What is your preferred title\" dropdown - Welsh translation required",
-      "lengthError": "Your preferred title must be a minimum of 2 characters - Welsh translation required",
-      "numberError": "Tell us your preferred title? This must not include numbers - Welsh translation required"
+      "required": "Dewiswch opsiwn o’r rhestr  \"Beth yw eich teitl\"",
+      "lengthError": "Rhaid i'ch teitl gynnwys o leiaf 2 lythyren",
+      "numberError": "Dywedwch wrthym beth yw eich teitl. Rhaid i hwn beidio â chynnwys rhifau"
     }
   }
 }

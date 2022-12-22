@@ -8,19 +8,19 @@
   "weeklyMonthlyAnnual": "Ai dyma eich cyflog wythnosol, misol neu flynyddol?",
   "errors": {
     "payBeforeTax": {
-      "required": "Welsh Translation required",
-      "minLengthRequired": "Welsh Translation required",
-      "notANumber": "Welsh Translation required"
+      "required": "Nodwch o leiaf un swm am eich Tâl",
+      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
+      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
     },
     "payAfterTax": {
-      "required": "Welsh Translation required",
-      "minLengthRequired": "Welsh Translation required",
-      "notANumber": "Welsh Translation required"
+      "required": "Nodwch o leiaf un swm am eich Tâl",
+      "minLengthRequired": "Rhaid i dâl ar ôl treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
+      "notANumber": "Rhaid i dâl ar ôl treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
     },
     "payInterval": {
-      "payBeforeTax": "Welsh Translation required",
-      "payAfterTax": "Welsh Translation required",
-      "required": "Welsh Translation required"
+      "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",
+      "payAfterTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl  ar ôl treth ac YG.",
+      "required": "Dywedwch wrthym pa mor aml  oeddech chi’n cael tâl."
     }
   }
 }

@@ -5,7 +5,7 @@
   "detailsSummary": "Beth yw gwahaniaethu?",
   "detailsText": {
     "p1": "Gwahaniaethu yw pan ydych yn cael eich trin yn annheg ac mae’r driniaeth yn gysylltiedig ag unrhyw un o’r nodweddion gwarchodedig a nodir yn Neddf Cydraddoldeb 2010. Mae gennych hawliau yn y gwaith os ydych wedi profi gwahaniaethu.<br><br>",
-    "p2": "Gweler y <a href=\"https://www.gov.uk/guidance/equality-act-2010-guidance\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">cyfarwyddyd ar GOV.UK (agor mewn ffenestr newydd)</a> am ragor o wybodaeth ynghylch nodweddion gwarchodedig a’ch hawliau yn y gweithle."
+    "p2": "Gweler y <a href=\"https://www.gov.uk/guidance/equality-act-2010-guidance\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">cyfarwyddyd ar GOV.UK (agor mewn ffenestr newydd) am ragor o wybodaeth ynghylch nodweddion gwarchodedig a’ch hawliau yn y gweithle."
   },
   "age": {
     "title": "Welsh Translation required",
@@ -41,7 +41,7 @@
   },
   "sex": {
     "title": "Welsh Translation required",
-    "checkbox": "Welsh Translation required"
+    "checkbox": "Rhywedd (gan gynnwys cyflog cyfartal)"
   },
   "sexualOrientation": {
     "title": "Welsh Translation required",
@@ -49,7 +49,7 @@
   },
   "errors": {
     "claimTypeDiscrimination": {
-      "required": "Welsh Translation required"
+      "required": "Rhowch gyfanswm yr iawndal yr ydych yn ei hawlio"
     }
   }
 }

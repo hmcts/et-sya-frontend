@@ -36,18 +36,18 @@
     "hintExisting": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Welsh translation required</p><b>{{filename}}</b>"
   },
   "acceptedFormats": {
-    "label": "Welsh translation required",
-    "p1": "Welsh translation required"
+    "label": "Fformatau derbyniol",
+    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
-      "required": "Welsh translation required",
-      "tooLong": "Welsh translation required",
-      "textAndFile": "Welsh translation required"
+      "required": "Dywedwch wrthym beth ddigwyddodd i chi",
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai",
+      "textAndFile": "Rhowch grynodeb neu lwytho fel dogfen ar wahân ni allwch wneud y ddau"
     },
     "claimSummaryFileName": {
-      "invalidFileFormat": "Welsh translation required",
-      "invalidFileName": "Welsh translation required",
+      "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
+      "invalidFileName": "Mae enw’r ffeil a ddarparwyd yn annilys. Ni all enw’r ffeil fod yn fwy na 150 llythyren ac ni all gynnwys unrhyw un o’r nodau canlynol: \\/:*?\"|<>",
       "invalidFileSize": "Welsh translation required",
       "backEndError": "Welsh translation required"
     }
