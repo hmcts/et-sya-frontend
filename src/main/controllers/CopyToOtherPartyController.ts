@@ -54,10 +54,6 @@ export default class CopyToOtherPartyController {
         validator: isFieldFilledIn,
       },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-      classes: 'govuk-!-margin-right-2',
-    },
   };
 
   constructor() {
@@ -77,11 +73,11 @@ export default class CopyToOtherPartyController {
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
-    // acasCert.label = (l: AnyRecord): string => l.legend + currentRespondentName + '?';
+    // copyCorrespondence.label = (l: AnyRecord): string => applicationType;
     // assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
-      //  respondentName: currentRespondentName,
+      //  applicationType: applicationType,
     });
   };
 }
