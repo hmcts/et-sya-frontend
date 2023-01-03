@@ -56,7 +56,7 @@ module.exports = async function () {
   I.checkOption('#update-preference-2');
   I.checkOption('#update-preference-language-2');
   I.checkOption('#update-hearing-language-2');
-  I.wait(2)
+  I.wait(2);
   I.click(commonConfig.saveAndContinue);
 
   await I.scrollPageToBottom();

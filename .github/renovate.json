@@ -43,6 +43,10 @@
     {
       "matchPackageNames": ["jest-pact"],
       "allowedVersions": "<=0.9.4"
+    },
+    {
+      "matchPackageNames": ["axios"],
+      "allowedVersions": "<=0"
     }
   ],
   "lockFileMaintenance": {
