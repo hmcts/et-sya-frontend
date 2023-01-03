@@ -60,7 +60,7 @@
     "autobind-decorator": "^2.4.0",
     "axios": "^0.27.0",
     "codeceptjs": "3.3.7",
-    "config": "^3.3.7",
+    "config": "^3.3.8",
     "connect-redis": "^6.1.1",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
@@ -160,7 +160,9 @@
     "**/**/scss-tokenizer": ">=0.4.3",
     "**/**/minimatch": ">=3.0.5",
     "**/**/table": ">=6.8.1",
-    "**/**/qs": ">=6.10.3"
+    "**/**/qs": ">=6.10.3",
+    "**/**/mocha": ">=5.0.1",
+    "**/**/json5": ">=2.2.2"
   },
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
