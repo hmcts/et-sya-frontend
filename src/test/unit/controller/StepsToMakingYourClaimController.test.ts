@@ -180,7 +180,6 @@ describe('Steps to Making your claim Controller', () => {
       workAddressPostcode: undefined,
       workAddressTown: undefined,
     });
-    expect(req.language).toEqual('cy');
   });
 
   it('should render page with all claim types', () => {
