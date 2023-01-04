@@ -3,7 +3,7 @@
   "h1": "A oes gennych chi swydd newydd? (dewisol)",
   "errors": {
     "newJob": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a oes gennych swydd newydd"
     }
   }
 }
