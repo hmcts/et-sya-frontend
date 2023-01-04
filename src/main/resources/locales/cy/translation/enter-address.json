@@ -3,9 +3,9 @@
   "findAddress": "Dod o hyd i gyfeiriad",
   "saveAsDraft": "Cadw fel drafft",
   "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
-  "change": "Welsh Translation required",
+  "change": "Newid",
   "postcode": "Cod post neu god ardal (dewisol)",
-  "errorSummaryHeading": "Welsh Translation required",
+  "errorSummaryHeading": "Mae yna broblem",
   "addressLine1": "Llinell cyfeiriad 1",
   "addressLine2": "Llinell cyfeiriad 1 2 (dewisol)",
   "selectAddress": "Dewiswch gyfeiriad",
@@ -13,7 +13,7 @@
   "county": "Sir",
   "country": "Gwlad",
   "town": "Tref neu ddinas",
-  "selectDefaultSeveral": "Welsh Translation required",
+  "selectDefaultSeveral": "Daethpwyd o hyd i sawl cyfeiriad",
   "selectDefaultSingle": "Daethpwyd o hyd i 1 cyfeiriad",
-  "selectDefaultNone": "Welsh Translation required"
+  "selectDefaultNone": "Heb gael hyd i gyfeiriad"
 }

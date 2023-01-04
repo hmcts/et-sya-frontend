@@ -1,8 +1,8 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Lleoliad gwaith",
   "h1": "Ym mha gyfeiriad wnaethoch chi weithio?",
   "enterPostcode": "Rhowch god post yn y DU",
-  "manualAddress": "Welsh Translation required",
+  "manualAddress": "Roeddwn i’n gweithio y tu allan i’r DU",
   "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
   "findAddress": "Dod o hyd i gyfeiriad",
   "postcodeErrorText": "Rhowch god post. Er enghraifft, SW1 1AA",
@@ -13,20 +13,20 @@
       "notSelected": "Dewiswch gyfeiriad"
     },
     "workAddress1": {
-      "required": "Welsh Translation required",
-      "invalid": "Welsh Translation required"
+      "required": "Rhowch linell gyntaf y cyfeiriad lle buoch chi’n gweithio - hyd at 100 o nodau",
+      "invalid": "Rhowch linell gyntaf ddilys ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 100 o nodau"
     },
     "workAddress2": {
-      "required": "Welsh Translation required",
-      "invalid": "Welsh Translation required"
+      "required": "Rhowch ail linell y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau",
+      "invalid": "Rhowch ail linell ddilys ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau"
     },
     "workAddressTown": {
-      "required": "Welsh Translation required",
-      "invalid": "Welsh Translation required"
+      "required": "Rhowch dref neu ddinas ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau",
+      "invalid": "Rhowch dref neu ddinas ddilys ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau"
     },
     "workAddressCountry": {
-      "required": "Welsh Translation required",
-      "invalid": "Welsh Translation required"
+      "required": "Rhowch wlad ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau",
+      "invalid": "Rhowch wlad ddilys ar gyfer y cyfeiriad lle buoch chi’n gweithio - hyd at 50 o nodau"
     },
     "workAddressPostcode": {
       "required": "Rhowch god post. Er enghraifft, SW1 1AA",

@@ -1,5 +1,5 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Oriau’r wythnos ar gyfartaledd",
   "h1": {
     "workingOrNotice": "Beth yw eich oriau gwaith ar gyfartaledd bob wythnos? (dewisol)",
     "noLongerWorking": "Beth yw eich oriau gwaith ar gyfartaledd bob wythnos? (dewisol)"
@@ -9,8 +9,8 @@
     "noLongerWorking": "Os oedd nifer yr oriau yr oeddech chi’n eu gweithio yn newid bob wythnos (er enghraifft, os oeddech ar gontract dim oriau), defnyddiwch eich 3 mis olaf o slipiau cyflog i gyfrifo’ch cyfartaledd wythnosol."
   },
   "p2": "Peidiwch â chynnwys unrhyw oriau goramser.",
-  "notWorking": "Welsh Translation required",
-  "enterAverageHours": "Welsh Translation required",
+  "notWorking": "Ddim yn gweithio mwyach",
+  "enterAverageHours": "Nodwch eich oriau’r wythnos ar gyfartaledd",
   "errors": {
     "avgWeeklyHrs": {
       "invalid": "Rhowch oriau wythnosol cyfartalog mewn fformat dilys, er enghraifft 0, 10, 35 ac ati",
