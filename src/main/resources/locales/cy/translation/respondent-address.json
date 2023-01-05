@@ -1,14 +1,14 @@
 {
   "title": "Manylion y cyfeiriad",
   "h1": "Beth yw cyfeiriad ",
-  "change": "Welsh Translation required",
+  "change": "Newid",
   "selectAddress": "Dewiswch gyfeiriad",
-  "selectDefault": "Welsh Translation required",
+  "selectDefault": "Daethpwyd o hyd i sawl cyfeiriad...",
   "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
   "postcodeErrorText": "Rhowch god post. Er enghraifft, SW1 1AA",
   "findAddress": "Dod o hyd i gyfeiriad",
   "pageText": "Dylai’r cyfeiriad fod ar eich slipiau cyflog, contract neu ddogfennau swyddogol eraill.",
-  "insetText": "Welsh Translation required",
+  "insetText": "Dylai hwn fod yr un cyfeiriad ar gyfer yr atebydd a roddwyd i Acas.",
   "town": "Tref neu ddinas",
   "manualAddress": "Mae cyfeiriad yr atebydd y tu allan i'r DU",
   "errors": {

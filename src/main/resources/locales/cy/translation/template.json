@@ -5,8 +5,8 @@
   "cookiePolicy": "Cwcis",
   "contact": "Cysylltu â ni",
   "stage": "Beta",
-  "signOut": "Welsh Translation required",
-  "logIn": "Welsh Translation required",
+  "signOut": "Allgofnodi",
+  "logIn": "Mewngofnodi",
   "phaseBanner": {
     "feedback": "Bydd eich adborth",
     "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
@@ -14,7 +14,7 @@
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
   },
   "contactUsTitle": "Cysylltu â ni",
-  "contactUsForHelp": "Welsh Translation required",
+  "contactUsForHelp": "Ffoniwch un o ganolfannau cyswllt cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi. <br><br>Rhif Ffôn: 0300 123 1024<br>Rhif ffôn: 0300 303 5176 (Llinell Iaith Gymraeg)<br>Rhif ffôn: 0300 790 6234 (Yr Alban)<br>Ffôn Testun: 18001 0300 123 1024 (Cymru a Lloegr)<br>Ffôn testun: 18001 0300 790 6234 (Yr Alban)<br>Dydd Llun i ddydd Gwener, 9am - 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "noticeLengthInsetText": "Welsh Translation required",
   "sessionTimeout": {
     "modal": {

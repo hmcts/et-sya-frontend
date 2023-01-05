@@ -11,7 +11,7 @@
   "payRelated": "Ymwneud â thâl",
   "unfairDismissal": "Diswyddo annheg",
   "whistleBlowing": "Chwythu’r chwiban",
-  "otherClaim": "Welsh Translation required",
+  "otherClaim": "Arall",
   "breachOfContract": "Torri contract",
   "checkAllAnswers": "Gwiriwch bod yr atebion rydych wedi’u darparu a’r manylion rydych wedi’u nodi yn gywir.",
   "warning": "Dyma eich cyfle olaf i newid unrhyw fanylion cyn i chi gyflwyno eich hawliad.",
@@ -19,6 +19,6 @@
   "emailConfirmation": "Byddwn yn anfon cadarnhad atoch trwy neges e-bost unwaith y byddwch wedi cyflwyno’ch hawliad.",
   "submitBtn": "Cadw a pharhau",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Argraffu’r dudalen hon </a> ar gyfer eich cofnodion",
-  "change": "Welsh Translation required",
+  "change": "Newid",
   "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau."
 }

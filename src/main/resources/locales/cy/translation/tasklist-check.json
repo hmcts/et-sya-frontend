@@ -1,5 +1,5 @@
 {
-  "title": "Welsh Translation required",
+  "title": "A yw'r adran hon wedi'i chwblhau?",
   "heading": "Ydych chi wedi cwblhau’r adran hon?",
   "legend": "Ydych chi wedi cwblhau’r adran hon?",
   "yes": "Do, rwyf wedi cwblhau’r adran hon",
@@ -8,10 +8,10 @@
   "hint": "Gallwch newid eich atebion yn hwyrach ymlaen.",
   "errors": {
     "personalDetailsCheck": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon"
     },
     "employmentAndRespondentCheck": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a ydych wedi cwblhau'r adran hon"
     }
   }
 }
