@@ -1,11 +1,11 @@
 {
-  "title": "Welsh Translation required",
-  "h1": "Welsh Translation required",
+  "title": "Cydnabod derbyn yr hawliad",
+  "h1": "Cydnabod derbyn yr hawliad",
   "description": {
-    "firstCell": "Welsh Translation required",
-    "secondCell": "Welsh Translation required"
+    "firstCell": "Disgrifiad",
+    "secondCell": "Cydnabod derbyn yr hawliad"
   },
-  "document": "Welsh Translation required",
-  "documentDetails": "Welsh Translation required",
-  "date": "Welsh Translation required"
+  "document": "Dogfen",
+  "documentDetails": "Manylion",
+  "date": "Dyddiad"
 }
