@@ -18,7 +18,11 @@ import { getCaseApi } from './CaseService';
 
 const logger = getLogger('CaseSelectionService');
 
-export const getUserApplications = (userCases: CaseWithId[], translations: AnyRecord): ApplicationTableRecord[] => {
+export const getUserApplications = (
+  userCases: CaseWithId[],
+  translations: AnyRecord,
+  languageParam: string
+): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
   for (const uCase of userCases) {
@@ -26,7 +30,7 @@ export const getUserApplications = (userCases: CaseWithId[], translations: AnyRe
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
-      url: getRedirectUrl(uCase),
+      url: getRedirectUrl(uCase, languageParam),
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);
@@ -41,11 +45,11 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
   return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
-export const getRedirectUrl = (userCase: CaseWithId): string => {
+export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    return `/claimant-application/${userCase.id}`;
+    return `/claimant-application/${userCase.id}${languageParam}`;
   } else {
-    return `/citizen-hub/${userCase.id}`;
+    return `/citizen-hub/${userCase.id}${languageParam}`;
   }
 };
 

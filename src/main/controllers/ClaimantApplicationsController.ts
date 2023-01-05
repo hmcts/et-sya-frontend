@@ -23,11 +23,10 @@ export default class ClaimantApplicationsController {
     if (userCases.length === 0) {
       return res.redirect(PageUrls.HOME);
     } else {
-      const usersApplications = getUserApplications(userCases, translations);
+      const usersApplications = getUserApplications(userCases, translations, languageParam);
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,
-        languageParam,
         currentUrl,
       });
     }
