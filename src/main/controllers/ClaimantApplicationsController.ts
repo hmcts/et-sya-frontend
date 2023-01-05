@@ -7,11 +7,10 @@ import { AnyRecord } from '../definitions/util-types';
 import { getUserApplications, getUserCasesByLastModified } from '../services/CaseSelectionService';
 
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const languageParam = `?lng=${req.cookies.i18next}`;
-    const currentUrl = PageUrls.CLAIMANT_APPLICATIONS;
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.CLAIMANT_APPLICATIONS,
@@ -23,11 +22,12 @@ export default class ClaimantApplicationsController {
     if (userCases.length === 0) {
       return res.redirect(PageUrls.HOME);
     } else {
+      const languageParam = getLanguageParam(req.url);
       const usersApplications = getUserApplications(userCases, translations, languageParam);
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,
-        currentUrl,
+        currentUrl: PageUrls.CLAIMANT_APPLICATIONS,
       });
     }
   };
