@@ -13,24 +13,18 @@ export const setUrlLanguage = (req: AppRequest, redirectUrl: string): string => 
   return redirectUrl;
 };
 
-export const setChangeAnswersUrlLanguage = (req: AppRequest, redirectUrlParam: string): string => {
-  if (req.session.lang === languages.WELSH) {
-    redirectUrlParam = languages.WELSH_URL_PARAMETER;
+export const setChangeAnswersUrlLanguage = (req: AppRequest): string => {
+  if (req.cookies.i18next === languages.WELSH) {
+    return languages.WELSH_URL_PARAMETER;
   }
-  if (req.session.lang === languages.ENGLISH) {
-    redirectUrlParam = languages.ENGLISH_URL_PARAMETER;
-  }
-  return redirectUrlParam;
+  return languages.ENGLISH_URL_PARAMETER;
 };
 
 export const setCheckAnswersLanguage = (req: AppRequest, sessionUrl: string): string => {
-  if (req.session.lang === languages.WELSH) {
-    sessionUrl += languages.WELSH_URL_PARAMETER;
+  if (req.cookies.i18next === languages.WELSH) {
+    return (sessionUrl += languages.WELSH_URL_PARAMETER);
   }
-  if (req.session.lang === languages.ENGLISH) {
-    sessionUrl += languages.ENGLISH_URL_PARAMETER;
-  }
-  return sessionUrl;
+  return (sessionUrl += languages.ENGLISH_URL_PARAMETER);
 };
 
 // Use the session language to set post url language param in describe what happened controller as the language param doesn't get appended if there's a csrf token in the url
