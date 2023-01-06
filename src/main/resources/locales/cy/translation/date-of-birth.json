@@ -2,7 +2,7 @@
   "title": "Manylion dyddiad Geni",
   "h1": "Dyddiad geni?",
   "legend": "Beth yw eich dyddiad geni?",
-  "p1": "Welsh translation required",
+  "p1": "Bydd y manylion hyn yn cael eu defnyddio i helpu i symud eich cais yn ei flaen.",
   "hint": "Fe ddefnyddir y manylion hyn i symud eich hawliad yn ei flaen.<br><br>Er enghraifft, 23 04 1981",
   "errors": {
     "dobDate": {
