@@ -42,12 +42,12 @@ describe('Employment start date page', () => {
 
   it('should display paragraph 1 text', () => {
     const p1 = htmlRes.getElementsByClassName(paragraphClass);
-    expect(p1[5].innerHTML).contains(expectedP1, 'Page title does not exist');
+    expect(p1[6].innerHTML).contains(expectedP1, 'Page title does not exist');
   });
 
   it('should display paragraph 2 text', () => {
     const p2 = htmlRes.getElementsByClassName(paragraphClass);
-    expect(p2[5].innerHTML).contains(expectedP2, 'Page title does not exist');
+    expect(p2[6].innerHTML).contains(expectedP2, 'Page title does not exist');
   });
 
   it('should display 3 input fields', () => {

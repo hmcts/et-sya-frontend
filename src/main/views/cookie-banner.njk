@@ -6,11 +6,11 @@
 {% endset %}
 
 {% set acceptHtml %}
-  <p class="govuk-body">{{CookieAccepted}}</p>
+  <p class="govuk-body">{{CookieAccepted | safe}}</p>
 {% endset %}
 
 {% set rejectHtml %}
-  <p class="govuk-body">{{CookieRejected}}</p>
+  <p class="govuk-body">{{CookieRejected | safe}}</p>
 {% endset %}
 
 {{ govukCookieBanner({

@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { AuthUrls, PageUrls } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ClaimSavedController {
   public get(req: AppRequest, res: Response): void {
@@ -12,6 +13,7 @@ export default class ClaimSavedController {
       ...req.t('claim-saved', { returnObjects: true }),
       redirectUrl,
       AuthUrls,
+      languageParam: getLanguageParam(req.url),
     });
   }
 }
