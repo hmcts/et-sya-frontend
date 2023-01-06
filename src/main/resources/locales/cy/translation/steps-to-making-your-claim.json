@@ -1,12 +1,12 @@
 {
   "title": "Camau i wneud eich hawliad",
   "h1": "Camau i wneud eich hawliad",
-  "applicationDetails": "Welsh Translation required",
-  "claimType": "Welsh Translation required",
-  "notStarted": "Welsh Translation required",
-  "completed": "Welsh Translation required",
+  "applicationDetails": "Ni all manylion yr hawliad",
+  "claimType": "Math o hawliad",
+  "notStarted": "HEB GYCHWYN",
+  "completed": "CWBLHAU",
   "inProgress": "Welsh Translation required",
-  "cannotStartYet": "Welsh Translation required",
+  "cannotStartYet": "DDECHRAU ETO",
   "section1": {
     "title": "Eich manylion",
     "link1Text": "Manylion personol",
@@ -24,7 +24,7 @@
     "link2Text": "Dywedwch wrthym beth yr ydych eisiau ei gael gan eich hawliad"
   },
   "section4": {
-    "title": "Welsh Translation required",
-    "link1Text": "Welsh Translation required"
+    "title": "Gwirio a chyflwyno",
+    "link1Text": "Gwirio'ch atebion"
   }
 }

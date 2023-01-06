@@ -6,16 +6,16 @@
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "endDate": {
-      "required": "Welsh Translation required",
-      "invalidDateInFuture": "Welsh Translation required",
-      "invalidDateMoreThanTenYearsInPast": "Welsh Translation required",
-      "dayRequired": "Welsh Translation required",
-      "monthRequired": "Welsh Translation required",
-      "yearRequired": "Welsh Translation required",
-      "dayNotANumber": "Welsh Translation required",
-      "monthNotANumber": "Welsh Translation required",
-      "yearNotANumber": "Welsh Translation required",
-      "invalidDate": "Welsh Translation required"
+      "required": "Dywedwch dyddiad gorffen eich cyflogaeth wrthym. Er enghraifft, DD MM YYYY",
+      "invalidDateInFuture": "Rhowch ddyddiad gorffen dilys, rhaid i’r dyddiad fod yn y gorffennol",
+      "invalidDateMoreThanTenYearsInPast": "Rhowch ddyddiad gorffen dilys, ni ddylai’r dyddiad fod yn fwy na 10 mlynedd yn  gorffennol",
+      "dayRequired": "Nodwch ddiwrnod ar gyfer eich dyddiad gorffen. Er enghraifft, 23",
+      "monthRequired": "Nodwch fis ar gyfer eich dyddiad gorffen. Er enghraifft, 04",
+      "yearRequired": "Nodwch flwyddyn ar gyfer eich dyddiad gorffen. Er enghraifft, 2022",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 2022",
+      "invalidDate": "Rhaid i’r dyddiad gorffen cyflogaeth fod yn ddyddiad go iawn."
     }
   }
 }

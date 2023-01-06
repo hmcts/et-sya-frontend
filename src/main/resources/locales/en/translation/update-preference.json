@@ -1,6 +1,6 @@
 {
   "title": "Claim update preference",
-  "h1": "How would you like to be contacted about your claim?",
+  "h1": "Communication preference",
   "label": "What format would you like to be contacted in?",
   "email": "Email",
   "post": "Post",

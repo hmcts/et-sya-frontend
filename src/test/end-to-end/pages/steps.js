@@ -19,6 +19,9 @@ module.exports = () => {
     submitClaim: steps.submitClaim.submitClaimPages,
     checkYourAnswers: steps.checkYourAnswers.checkYourAnswers,
     claimSubmitted: steps.claimSubmitted.claimSubmitted,
+
+    claimantApplications: steps.claimantApplications.claimantApplications,
+    citizenHub: steps.citizenHub.citizenHub,
   });
 };
 

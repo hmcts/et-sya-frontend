@@ -1,0 +1,15 @@
+export default [
+  'withdraw',
+  'change-details',
+  'postpone',
+  'vary',
+  'reconsider-decision',
+  'amend',
+  'respondent',
+  'witness',
+  'non-compliance',
+  'publicity',
+  'strike',
+  'reconsider-judgement',
+  'other',
+];

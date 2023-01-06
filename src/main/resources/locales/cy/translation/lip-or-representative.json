@@ -34,7 +34,7 @@
   "radio2": "Rwy’n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
   "errors": {
     "claimantRepresentedQuestion": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a ydych yn eich cynrychioli eich hun neu'n gweithredu fel cynrychiolydd"
     }
   }
 }

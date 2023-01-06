@@ -9,7 +9,7 @@
   "radio2": "Welsh Translation required",
   "errors": {
     "caseType": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a ydych yn hawlio ar eich pen eich hun neu'n hawlio gydag eraill"
     }
   }
 }

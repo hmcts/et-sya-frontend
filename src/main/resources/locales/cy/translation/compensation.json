@@ -13,13 +13,13 @@
     "p5": "Gyda rhai hawliadau, megis y rhai hynny sy’n ymwneud â gwahaniaethu, gall tribiwnlys eich digolledu am ‘anaf i deimladau’ (poen a gofid rydych wedi’i ddioddef) yn ychwanegol at iawndal am golled ariannol."
   },
   "hint": "Ceisiwch nodi’r holl iawndal rydych yn ei hawlio, a darparwch gyfanswm os yn bosibl",
-  "amountLabel": "Rhowch gyfanswm yr iawndal rydych yn ei hawlio",
+  "amountLabel": "Rhowch gyfanswm yr iawndal rydych yn gofyn amdano",
   "errors": {
     "compensationOutcome": {
-      "tooLong": "Welsh translation required"
+      "tooLong": "Rhaid i fanylion am yr Iawndal rydych yn ei hawlio fod yn llai na 2500 o lythrennau"
     },
     "compensationAmount": {
-      "invalidCurrency": "Welsh translation required"
+      "invalidCurrency": "Dim ond rhifau a phwynt degol/coma (os oes angen) ddylai’r swm eu cynnwys. Er enghraifft: 1500 25000  25,000.00 ayyb."
     }
   }
 }
