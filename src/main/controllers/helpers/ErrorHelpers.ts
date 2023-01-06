@@ -211,10 +211,7 @@ export const getClaimSummaryError = (
   }
 };
 
-export const getContactApplicationError = (
-  formData: Partial<CaseWithId>,
-  file: Express.Multer.File,
-): FormError => {
+export const getContactApplicationError = (formData: Partial<CaseWithId>, file: Express.Multer.File): FormError => {
   const fileFormatInvalid = hasInvalidFileFormat(file);
   const fileNameInvalid = hasInvalidName(file?.originalname);
 

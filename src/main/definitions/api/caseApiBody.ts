@@ -3,6 +3,7 @@ import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDet
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
+import { GenericTseApplications } from '../complexTypes/genericTseApplication';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
@@ -27,6 +28,7 @@ interface CaseDataApiBody {
   claimantWorkAddressQuestion?: string;
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
+  genericTseApplicationCollection?: GenericTseApplications[];
 }
 
 export interface CreateCaseBody {
