@@ -11,7 +11,7 @@ async function verifyMakeAClaimToAnEmploymentTribunal() {
   I.see('‘respondents’.');
   I.see('To make a claim you need to contact Acas and get an ‘Early conciliation certificate’ from them or give us a');
   I.see('valid reason why you do not have one.');
-  I.see('If you do not have a certificate or a reason you need to contact Acas.');
+  I.see('If you do not have a certificate or a reason you need to contact Acas (opens in new tab).');
   I.see(
     'You do not have to make your claim in one go. You can save and return to it at any time before you submit it.'
   );
