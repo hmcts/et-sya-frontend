@@ -34,13 +34,6 @@
     </div>
   </div>
 
-  {% set languageParam = "" %}
-  {% if "lng=cy" in currentUrl %}
-    {% set languageParam = "?lng=cy" %}
-  {% else %}
-    {% set languageParam = "?lng=en" %}
-  {% endif %}
-
   <div class="govuk-grid-row">
     <div class="govuk-button-group">
       {{ govukButton({

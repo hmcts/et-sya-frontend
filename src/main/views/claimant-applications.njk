@@ -4,13 +4,6 @@
 {% set draftApplications = [] %}
 {% set submittedApplications = [] %}
 
-{% set languageParam = "" %}
-{% if "lng=cy" in currentUrl %}
-  {% set languageParam = "?lng=cy" %}
-{% else %}
-  {% set languageParam = "?lng=en" %}
-{% endif %}
-
 {% for app in usersApplications %}
 
   {% if app.respondents === 'undefined' and app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -28,7 +21,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + languageParam + ">" + continue + "</a>"
+        html: "<a href=" + app.url + ">" + continue + "</a>"
       }
     ]), draftApplications) %}
   {% elif app.userCase.state === 'AWAITING_SUBMISSION_TO_HMCTS' %}
@@ -46,7 +39,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + languageParam + ">" + continue + "</a>"
+        html: "<a href=" + app.url + ">" + continue + "</a>"
       }
     ]), draftApplications) %}
   {% else %}
@@ -62,7 +55,7 @@
       }, {
         text: app.userCase.lastModified
       }, {
-        html: "<a href=" + app.url + languageParam + ">" + view + "</a>"
+        html: "<a href=" + app.url + ">" + view + "</a>"
       }
     ]), submittedApplications) %}
   {% endif %}
