@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
 
 export const handleSaveAsDraft = (res: Response): void => {
@@ -52,7 +52,7 @@ export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string
 
 export const getLanguageParam = (url: string): string => {
   if (url?.includes('lng=cy')) {
-    return TranslationKeys.WELSH_URL_PARAMETER;
+    return languages.WELSH_URL_PARAMETER;
   }
-  return TranslationKeys.ENGLISH_URL_PARAMETER;
+  return languages.ENGLISH_URL_PARAMETER;
 };

@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ErrorPages, PageUrls, TranslationKeys } from '../../definitions/constants';
+import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -40,8 +40,8 @@ export const getRespondentIndex = (req: AppRequest): number => {
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
   const ValidUrls = Object.values(ValidRespondentUrls);
   for (const url of ValidUrls) {
-    const welshUrl = url + TranslationKeys.WELSH_URL_PARAMETER;
-    const englishUrl = url + TranslationKeys.ENGLISH_URL_PARAMETER;
+    const welshUrl = url + languages.WELSH_URL_PARAMETER;
+    const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
     if ('/respondent/' + respondentNumber.toString() + pageUrl === url) {
       return url;
     } else if ('/respondent/' + respondentNumber.toString() + pageUrl === welshUrl) {
