@@ -62,6 +62,10 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (!req.body.contactApplicationFile) {
+      return res.redirect(req.url);
+    }
+
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
       req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }];
@@ -103,7 +107,7 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
-    //this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
+    this.contactApplicationContent.upload.disabled = userCase?.contactApplicationFile !== undefined;
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
       userCase,
