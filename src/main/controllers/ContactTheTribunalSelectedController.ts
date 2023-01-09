@@ -5,6 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
@@ -43,11 +44,17 @@ export default class ContactTheTribunalSelectedController {
         labelSize: 'm',
         type: 'upload',
       },
+      upload: {
+        id: 'upload',
+        type: 'button',
+      },
     },
-    submit: {
-      text: (l: AnyRecord): string => l.uploadFileButton,
+    upload: {
+      text: (l: AnyRecord): string => l.upload,
       classes: 'govuk-button--secondary',
     },
+    submit: submitButton,
+    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -96,7 +103,7 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
-    this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
+    //this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
       userCase,

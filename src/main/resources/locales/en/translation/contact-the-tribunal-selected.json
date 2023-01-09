@@ -11,6 +11,7 @@
   "fileUpload": {
     "label": "Upload a file"
   },
+  "upload": "Upload file",
   "errors": {
     "contactApplicationFile": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
