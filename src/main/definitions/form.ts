@@ -25,6 +25,7 @@ export interface FormContent {
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
+  upload?: SubmitButton;
 }
 
 export type FormField = FormInput | FormOptions;
