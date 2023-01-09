@@ -230,13 +230,6 @@
         {% endif %}
       </dl>
 
-      {% set languageParam = "" %}
-      {% if "lng=cy" in currentUrl %}
-        {% set languageParam = "?lng=cy" %}
-      {% else %}
-        {% set languageParam = "?lng=en" %}
-      {% endif %}
-
       <div class="govuk-form-group">
         {{
       govukButton({

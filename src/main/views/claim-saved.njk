@@ -10,13 +10,6 @@
   {% include "back-link.njk"%}
 {% endblock %}
 
-{% set languageParam = "" %}
-{% if "lng=cy" in currentUrl %}
-  {% set languageParam = "?lng=cy" %}
-{% else %}
-  {% set languageParam = "?lng=en" %}
-{% endif %}
-
 {% block content %}
   {{ govukPanel({
         titleText: titleText

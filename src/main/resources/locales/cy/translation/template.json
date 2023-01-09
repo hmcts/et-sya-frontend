@@ -15,7 +15,7 @@
   },
   "contactUsTitle": "Cysylltu â ni",
   "contactUsForHelp": "Ffoniwch un o ganolfannau cyswllt cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi. <br><br>Rhif Ffôn: 0300 123 1024<br>Rhif ffôn: 0300 303 5176 (Llinell Iaith Gymraeg)<br>Rhif ffôn: 0300 790 6234 (Yr Alban)<br>Ffôn Testun: 18001 0300 123 1024 (Cymru a Lloegr)<br>Ffôn testun: 18001 0300 790 6234 (Yr Alban)<br>Dydd Llun i ddydd Gwener, 9am - 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
-  "noticeLengthInsetText": "Welsh Translation required",
+  "noticeLengthInsetText": "Os nad ydych yn siŵr, edrychwch ar delerau ac amodau eich contract cyflogaeth.",
   "sessionTimeout": {
     "modal": {
       "title": "Rydych ar fin allgofnodi",
