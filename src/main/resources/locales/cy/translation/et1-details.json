@@ -24,7 +24,7 @@
     "post": "Trwy’r post",
     "video": "Fideo",
     "phone": "Ffôn",
-    "neither": "Welsh Translation Required",
+    "neither": "Dim un",
     "yes": "Oes",
     "no": "Nac oes"
   },
@@ -68,13 +68,13 @@
   "respondentDetails": {
     "header": "Atebydd ",
     "details": "manylion",
-    "respondentName": "Welsh Translation required",
+    "respondentName": "Enw'r atebydd",
     "respondentAddress": "Cyfeiriad yr Atebydd",
-    "workedAtRespondent": "Welsh Translation required",
-    "addressWorkedAt": "Welsh Translation required",
-    "orgOrPerson": "Welsh Translation required",
-    "acasNumber": "Welsh Translation required",
-    "noAcasReason": "Welsh Translation required",
+    "workedAtRespondent": "Wnaethoch chi weithio yng nghyfeiriad yr atebydd?",
+    "addressWorkedAt": "Y cyfeiriad rydych chi’n gweithio ynddo neu'r cyfeiriad yr oeddech chi’n gweithio ynddo",
+    "orgOrPerson": "Sefydliad neu berson",
+    "acasNumber": "A oes gennych chi rif tystysgrif Acas?",
+    "noAcasReason": "Pam nad oes gennych rif Acas?",
     "acasExemption": "Esemptiad Acas",
     "name": "Enw",
     "telephone": "Rhif ffôn yn y DU",
@@ -86,15 +86,15 @@
   "claimDetails": {
     "header": "Manylion yr hawliad",
     "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
-    "claimTypePay": "Welsh Translation required",
+    "claimTypePay": "Pa fath o hawliad tâl ydych chi'n ei wneud?",
     "describeWhatHappened": "Disgrifiwch beth ddigwyddodd i chi",
-    "ifClaimSuccessful": "Welsh Translation required",
-    "expectedCompensation": "Welsh Translation required",
-    "expectedTribunalsRecommendation": "Welsh Translation required",
+    "ifClaimSuccessful": "Beth ydych chi ei eisiau os yw eich hawliad yn llwyddiannus?",
+    "expectedCompensation": "WPa iawndal rydych chi'n ei geisio?",
+    "expectedTribunalsRecommendation": "Pa argymhelliad tribiwnlys hoffech chi ei wneud?",
     "forwardClaim": "Ydych chi eisiau i ni anfon eich hawliad chwythu’r chwiban i reoleiddiwr neu gorff perthnasol?",
     "summary": "Crynodeb o’r hawliad",
     "fileUploads": "Ffeiliau sydd wedi cael eu llwytho",
-    "whatYouWant": "Welsh Translation required"
+    "whatYouWant": "Beth rydych chi ei eisiau"
   },
   "payClaims": {
     "Arrears": "Ôl-daliadau",
@@ -126,7 +126,7 @@
     "Pregnancy or maternity": "Beichiogrwydd neu famolaeth",
     "Race": "Hil",
     "Religion or belief": "Crefydd neu gred",
-    "Sex": "Welsh Translation required",
+    "Sex": "Rhyw (gan gynnwys cyflog cyfartal)",
     "Sexual orientation": "Cyfeiriadedd rhywiol"
   }
 }

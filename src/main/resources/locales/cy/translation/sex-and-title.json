@@ -1,12 +1,12 @@
 {
-  "title": "Welsh translation required",
-  "h1": "Welsh translation required",
+  "title": "Rhyw a’r teitl sydd orau gennych",
+  "h1": "Rhyw a’r teitl sydd orau gennych ",
   "p": "Fe ddefnyddir y manylion hyn i’n helpu i symud eich hawliad yn ei flaen.",
   "male": "Gwryw",
   "female": "Benyw",
   "sex": "Beth yw eich rhyw?",
   "preferNotToSay": "Mae’n well gen i beidio dweud",
-  "preferredTitle": "Beth yw eich teitl o ddewis?",
+  "preferredTitle": "Beth yw eich teitl o ddewis? (dewisol)",
   "errors": {
     "preferredTitle": {
       "required": "Dewiswch opsiwn o’r rhestr  \"Beth yw eich teitl\"",

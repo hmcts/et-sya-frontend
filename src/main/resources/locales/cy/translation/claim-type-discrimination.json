@@ -8,43 +8,43 @@
     "p2": "Gweler y <a href=\"https://www.gov.uk/guidance/equality-act-2010-guidance\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">cyfarwyddyd ar GOV.UK (agor mewn ffenestr newydd) am ragor o wybodaeth ynghylch nodweddion gwarchodedig a’ch hawliau yn y gweithle."
   },
   "age": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas ag oedran",
     "checkbox": "Oedran"
   },
   "disability": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas ag anabledd",
     "checkbox": "Anabledd"
   },
   "ethnicity": {
-    "title": "Welsh Translation required",
-    "checkbox": "Welsh Translation required"
+    "title": "Hawliad mewn perthynas ag ethnigrwydd",
+    "checkbox": "Ethnigrwydd"
   },
   "genderReassignment": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas ag ailbennu rhywedd",
     "checkbox": "Ailbennu rhywedd"
   },
   "marriageOrCivilPartnership": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â phriodas neu bartneriaeth sifil",
     "checkbox": "Priodas neu bartneriaeth sifil"
   },
   "pregnancyOrMaternity": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â beichiogrwydd neu famolaeth",
     "checkbox": "Beichiogrwydd neu famolaeth"
   },
   "race": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â hil",
     "checkbox": "Hil (gan gynnwys lliw, cenedligrwydd a tharddiad ethnig neu genedlaethol)"
   },
   "religionOrBelief": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â chrefydd neu gred",
     "checkbox": "Crefydd neu gred"
   },
   "sex": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â rhyw",
     "checkbox": "Rhywedd (gan gynnwys cyflog cyfartal)"
   },
   "sexualOrientation": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â chyfeiriadedd rhywiol",
     "checkbox": "Cyfeiriadedd rhywiol"
   },
   "errors": {

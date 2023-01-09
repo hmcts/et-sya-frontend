@@ -1,6 +1,6 @@
 {
-  "title": "Welsh translation required",
-  "h1": "Welsh translation required",
+  "title": "Crynhoi beth ddigwyddodd i chi",
+  "h1": "Disgrifiwch eich hawliad",
   "legend": "Disgrifiwch beth ddigwyddodd i chi",
   "p1": "Dyma eich cyfle i esbonio pam eich bod yn gwneud hawliad i dribiwnlys cyflogaeth.",
   "p2": "Mae’n bwysig eich bod yn canolbwyntio ar nodi beth ddigwyddodd i chi ac esbonio, cyn belled ag y gallwch, pam eich bod yn meddwl bod yr hyn a ddigwyddodd yn anghyfreithlon.",
@@ -33,7 +33,7 @@
   "fileUpload": {
     "linkText": "Neu gallwch lwytho eich crynodeb fel dogfen ar wahân (dewisol)",
     "hint": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Llwytho ffeil</p>",
-    "hintExisting": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Welsh translation required</p><b>{{filename}}</b>"
+    "hintExisting": "Dim ond 1 dogfen y gallwch ei llwytho. Os ydych chi eisiau llwytho e-bost, lawrlwythwch a throswch ef o e-bost eich cleient yn gyntaf. Bydd y rhan fwyaf o e-byst cleientiaid yn rhoi'r opsiwn o’u lawrlwytho fel pdf neu PostScript. Rydych chi eisoes wedi llwytho: {{filename}}"
   },
   "acceptedFormats": {
     "label": "Fformatau derbyniol",
@@ -48,8 +48,8 @@
     "claimSummaryFileName": {
       "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
       "invalidFileName": "Mae enw’r ffeil a ddarparwyd yn annilys. Ni all enw’r ffeil fod yn fwy na 150 llythyren ac ni all gynnwys unrhyw un o’r nodau canlynol: \\/:*?\"|<>",
-      "invalidFileSize": "Welsh translation required",
-      "backEndError": "Welsh translation required"
+      "invalidFileSize": "Mae'r ffeil rydych chi'n ceisio ei lwytho wedi mynd y tu hwnt i'r terfyn maint, ceisiwch leihau maint y ffeil.",
+      "backEndError": "Cafwyd problem wrth geisio llwytho eich ffeil. Rhowch gynnig arni. Os yw hyn yn parhau, cysylltwch â’r adran gefnogaeth."
     }
   }
 }
