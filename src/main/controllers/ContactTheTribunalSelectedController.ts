@@ -33,23 +33,31 @@ export default class ContactTheTribunalSelectedController {
         hint: l => l.contactApplicationText,
         attributes: { title: 'Give details text area' },
       },
-      filesTitle: {
-        id: 'filesTitle',
-        classes: 'govuk-label',
-        label: l => l.files.title,
-        labelHidden: false,
-        type: 'inset',
-      },
-      contactApplicationFile: {
-        id: 'contactApplicationFile',
-        classes: 'govuk-label',
-        labelHidden: false,
-        labelSize: 'm',
-        type: 'upload',
-      },
-      upload: {
-        id: 'upload',
-        type: 'button',
+      inset: {
+        id: 'inset',
+        type: 'insetFields',
+        subFields: {
+          filesTitle: {
+            id: 'filesTitle',
+            classes: 'govuk-label',
+            hint: l => l.files.title,
+            labelHidden: false,
+            labelSize: 'm',
+            type: 'readonly',
+          },
+          contactApplicationFile: {
+            id: 'contactApplicationFile',
+            classes: 'govuk-label',
+            labelHidden: false,
+            labelSize: 'm',
+            type: 'upload',
+          },
+          upload: {
+            // todo look into merging
+            id: 'upload',
+            type: 'button',
+          },
+        },
       },
     },
     upload: {
@@ -57,6 +65,7 @@ export default class ContactTheTribunalSelectedController {
       classes: 'govuk-button--secondary',
     },
     submit: submitButton,
+    // todo cancel
   };
 
   constructor() {
