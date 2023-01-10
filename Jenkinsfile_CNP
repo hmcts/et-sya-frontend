@@ -48,7 +48,7 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
-  afterAlways('functionalTest:aat') {
+  afterAlways('sonarscan') {
     loadVaultSecrets(inTestTrue)
       stage('Accessibiltiy') {
           yarnBuilder.yarn('tests:a11y')
@@ -60,21 +60,6 @@ withPipeline(type, product, component) {
               reportFiles          : 'a11y.html',
               reportName           : 'Accessibility results'
       ])
-      }
-      loadVaultSecrets(inTestFalse)
-  }
-  afterAlways('functionalTest:preview') {
-    loadVaultSecrets(inTestTrue)
-      stage('Accessibiltiy') {
-          yarnBuilder.yarn('tests:a11y')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : "functional-output/accessibility-report",
-              reportFiles          : 'a11y.html',
-              reportName           : 'Accessibility results'
-        ])
       }
       loadVaultSecrets(inTestFalse)
   }
