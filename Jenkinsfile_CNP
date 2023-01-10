@@ -48,7 +48,7 @@ withPipeline(type, product, component) {
     yarnBuilder.yarn('build')
   }
 
-  before('smoketest:aat') {
+  afterSuccess('smoketest:aat') {
     loadVaultSecrets(inTestTrue)
       stage('Accessibiltiy') {
           yarnBuilder.yarn('tests:a11y')
@@ -63,7 +63,7 @@ withPipeline(type, product, component) {
       }
       loadVaultSecrets(inTestFalse)
   }
-  before('smoketest:preview') {
+  afterSuccess('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
       stage('Accessibiltiy') {
           yarnBuilder.yarn('tests:a11y')
