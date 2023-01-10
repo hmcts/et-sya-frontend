@@ -8,8 +8,10 @@
   "genericGuidanceItem1": "Welsh Translation required",
   "genericGuidanceItem2": "Welsh Translation required",
   "genericGuidanceItem3": "Welsh Translation required",
-  "fileUpload": {
-    "label": "Welsh Translation required"
+  "files": {
+    "title": "Welsh Translation required",
+    "button": "Welsh Translation required",
+    "uploaded": "Welsh Translation required"
   },
   "errors": {
     "contactApplicationFile": {

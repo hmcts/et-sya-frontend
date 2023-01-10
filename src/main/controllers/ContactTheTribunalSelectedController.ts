@@ -5,7 +5,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
@@ -21,9 +21,6 @@ const logger = getLogger('ContactTheTribunalSelectedController');
  * Controller for any contact-the-tribunal application page
  */
 export default class ContactTheTribunalSelectedController {
-  private getHint = (label: AnyRecord): string => {
-    return label.fileUpload.hint;
-  };
   private readonly form: Form;
   private readonly contactApplicationContent: FormContent = {
     fields: {
@@ -36,11 +33,17 @@ export default class ContactTheTribunalSelectedController {
         hint: l => l.contactApplicationText,
         attributes: { title: 'Give details text area' },
       },
+      filesTitle: {
+        id: 'filesTitle',
+        classes: 'govuk-label',
+        label: l => l.files.title,
+        labelHidden: false,
+        type: 'inset',
+      },
       contactApplicationFile: {
         id: 'contactApplicationFile',
         classes: 'govuk-label',
         labelHidden: false,
-        hint: l => this.getHint(l),
         labelSize: 'm',
         type: 'upload',
       },
@@ -50,11 +53,10 @@ export default class ContactTheTribunalSelectedController {
       },
     },
     upload: {
-      text: (l: AnyRecord): string => l.upload,
+      text: (l: AnyRecord): string => l.files.button,
       classes: 'govuk-button--secondary',
     },
     submit: submitButton,
-    saveForLater: saveForLaterButton,
   };
 
   constructor() {
@@ -113,7 +115,7 @@ export default class ContactTheTribunalSelectedController {
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      files: getFiles(userCase, selectedApplication, {
+      filesUploaded: getFiles(userCase, selectedApplication, {
         ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
       }),
       errors: req.session.errors,
