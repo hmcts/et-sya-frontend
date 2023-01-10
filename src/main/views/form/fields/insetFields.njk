@@ -1,6 +1,9 @@
 <div class="govuk-inset-text">
+  <div class={{field.classes}}>{{getContent(field.label)}}</div>
   {% for fieldName, field in field.subFields %}
-    {% set labelClasses %}{% if field.labelSize !== null%}govuk-label--{{ field.labelSize if field.labelSize else "m"}}{% endif %}{% endset %}
+    {% set labelClasses %}
+    {% if field.labelSize !== null%}govuk-label--{{ field.labelSize if field.labelSize else "m"}}
+    {% endif %}{% endset %}
     {% if field.isCollapsable %}
       {% include "../collapsable.njk" %}
     {% else %}
