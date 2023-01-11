@@ -220,7 +220,11 @@ export class Routes {
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
-    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.post(
+      PageUrls.TRIBUNAL_CONTACT_SELECTED,
+      handleUploads.single('contactApplicationFile'),
+      new ContactTheTribunalSelectedController().post
+    );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
     app.get(
       Urls.INFO,

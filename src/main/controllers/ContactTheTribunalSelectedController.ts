@@ -70,7 +70,7 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (!req.body.contactApplicationFile) {
+    if (!req.file?.originalname) {
       return res.redirect(req.url);
     }
 
