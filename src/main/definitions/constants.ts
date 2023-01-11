@@ -87,6 +87,7 @@ export const TranslationKeys = {
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
 } as const;
 
 export const PageUrls = {
@@ -165,6 +166,7 @@ export const PageUrls = {
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
 } as const;
 
 export const InterceptPaths = {

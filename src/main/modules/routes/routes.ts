@@ -25,6 +25,7 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
@@ -222,6 +223,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
     app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({

@@ -1,0 +1,9 @@
+{
+  "title": "Check your answers",
+  "applicationType": "Application type",
+  "legend": "What do you want to tell or ask the tribunal?",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "submitBtn": "Submit",
+  "cancelLink": "Cancel"
+}
