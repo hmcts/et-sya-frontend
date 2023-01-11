@@ -5,7 +5,6 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
-import { submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
@@ -58,8 +57,6 @@ export default class ContactTheTribunalSelectedController {
       text: (l: AnyRecord): string => l.files.button,
       classes: 'govuk-button--secondary',
     },
-    submit: submitButton,
-    // todo cancel
   };
 
   constructor() {
@@ -67,7 +64,6 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    console.log(JSON.stringify(req.body, null, 2));
     if (!req.body.contactApplicationFile) {
       return res.redirect(req.url);
     }
@@ -80,7 +76,6 @@ export default class ContactTheTribunalSelectedController {
     req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const contactApplicationError = getContactApplicationError(formData, req.file);
-    console.log(JSON.stringify(req.body, null, 2));
     if (!contactApplicationError) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);

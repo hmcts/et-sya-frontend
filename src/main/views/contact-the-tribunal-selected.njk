@@ -33,14 +33,24 @@
         <li>{{ genericGuidanceItem3 }}</li>
       </ul>
       <span class="govuk-hint">{{ contactTemplateText }}</span>
-      {% include "form/form.njk" %}
-      <h2 class="govuk-summary-list__key govuk-heading-m">
-        {{ files.uploaded }}
-      </h2>
-      <hr />
-      {{ govukSummaryList({
-        rows: filesUploaded
-      }) }}
+      {% block form %}
+        {% include "form/form.njk"%}
+
+        <h2 class="govuk-summary-list__key govuk-heading-m">
+          {{ files.uploaded }}
+        </h2>
+        <hr />
+        {{ govukSummaryList({
+          rows: filesUploaded
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: continue
+          }) }}
+          <a class="govuk-link" href="#">{{ cancel }}</a>
+        </div>
+      {% endblock %}
     </div>
     <div class="govuk-grid-column-one-third">
       <p class="govuk-body">
