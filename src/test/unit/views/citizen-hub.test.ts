@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
@@ -50,19 +50,19 @@ describe('Citizen hub page', () => {
       {
         state: CaseState.SUBMITTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.NO,
+          et3ResponseReceived: false,
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.NO,
+          et3ResponseReceived: false,
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.YES,
+          et3ResponseReceived: true,
         },
       },
     ];
@@ -241,7 +241,7 @@ describe('Citizen hub page', () => {
             et1ClaimForm: HubLinkStatus.SUBMITTED_AND_VIEWED,
             respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
           },
-          et3IsThereAnEt3Response: YesOrNo.YES,
+          et3ResponseReceived: true,
         },
         selector: bannerHeaderSelector,
         expectedText: 'The tribunal has received a response from the respondent',
