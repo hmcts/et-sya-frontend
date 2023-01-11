@@ -46,16 +46,22 @@ export default class ContactTheTribunalSelectedController {
             type: 'upload',
           },
           upload: {
-            // todo look into merging
+            label: (l: AnyRecord): string => l.files.button,
+            classes: 'govuk-button--secondary',
             id: 'upload',
             type: 'button',
+            name: 'upload',
+            value: 'true',
           },
         },
       },
+      filesUploaded: {
+        label: l => l.files.uploaded,
+        type: 'summaryList',
+      },
     },
-    upload: {
-      text: (l: AnyRecord): string => l.files.button,
-      classes: 'govuk-button--secondary',
+    submit: {
+      text: l => l.continue,
     },
   };
 
@@ -109,15 +115,20 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
-    this.contactApplicationContent.upload.disabled = userCase?.contactApplicationFile !== undefined;
+
+    // (this.contactApplicationContent.fields as any).inset.upload.disabled =
+    //   userCase?.contactApplicationFile !== undefined;
+
+    (this.contactApplicationContent.fields as any).filesUploaded.rows = getFiles(userCase, selectedApplication, {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    });
+
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      filesUploaded: getFiles(userCase, selectedApplication, {
-        ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
-      }),
+      canCancel: true,
       errors: req.session.errors,
       ...content,
     });

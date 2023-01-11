@@ -1,14 +1,12 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{{
-      govukButton({
-        text: getContent(form.upload.text),
-        classes: form.upload.classes,
-        type: "submit",
-        preventDoubleClick: true,
-        disabled: form.upload.disabled,
-        attributes: {
-          id: 'upload-form-submit'
-        }
-      }) if getContent(form.upload.text)
-    }}
+{{ govukButton({
+  text: getContent(field.label),
+  classes: field.classes,
+  type: "submit",
+  preventDoubleClick: true,
+  disabled: field.disabled,
+  id: field.id,
+  name: field.name,
+  value: field.value
+}) }}

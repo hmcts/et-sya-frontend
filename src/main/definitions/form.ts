@@ -46,6 +46,7 @@ export interface FormOptions {
   validator?: ValidationCheck;
   parser?: Parser;
   subFields?: Record<string, FormField>;
+  rows?: { key: unknown; value?: unknown; actions?: unknown }[];
 }
 
 export interface FormInput {
