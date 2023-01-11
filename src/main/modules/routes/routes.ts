@@ -9,6 +9,7 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
+import ApplicationListController from '../../controllers/ApplicationListController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -101,6 +102,7 @@ export class Routes {
     const describeWhatHappenedController = new DescribeWhatHappenedController();
 
     app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
+    app.get(PageUrls.APPLICATION_LIST, new ApplicationListController().get);
     app.get(Urls.PCQ, new PcqController().get);
     app.get(PageUrls.HOME, new HomeController().get);
     app.get(PageUrls.CHECKLIST, new ChecklistController().get);
