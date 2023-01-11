@@ -1,6 +1,6 @@
 {
   "title": "Date of birth details",
-  "h1": "Date of birth",
+  "h1": "Date of birth (optional)",
   "legend": "What is your date of birth?",
   "p1": "These details will be used to help progress your claim.",
   "hint": "For example, 23 04 1981",
