@@ -54,15 +54,13 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateSubmittedCase = (req: AppRequest, logger: Logger): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .updateSubmittedCase(req.session.userCase)
-    .then(() => {
-      logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
-    })
-    .catch(error => {
-      logger.error(error.message);
-    });
+export const handleUpdateSubmittedCase = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateSubmittedCase(req.session.userCase);
+    logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 export const getSectionStatus = (

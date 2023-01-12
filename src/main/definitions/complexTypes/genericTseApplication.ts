@@ -1,18 +1,7 @@
-export interface GenericTseApplications {
-  id: string;
-  value: GenericTseApplicationTypeItem;
-}
-
-export interface GenericTseApplicationTypeItem {
-  number: string;
+export interface GenericTseApplication {
   type: string;
-  applicant: string;
-  date: string;
-  documentUpload: Document;
   details: string;
+  documentUpload: Document;
   copyToOtherPartyYesOrNo: string;
   copyToOtherPartyText: string;
-  dueDate: string;
-  responsesCount: string;
-  status: string;
 }

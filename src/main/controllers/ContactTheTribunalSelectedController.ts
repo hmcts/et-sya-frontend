@@ -9,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { handleUpdateSubmittedCase, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getContactApplicationError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -92,7 +92,7 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
       } finally {
-        await handlePostLogic(req, res, this.form, logger, req.url);
+        await handleUpdateSubmittedCase(req, logger);
       }
     } else {
       req.session.errors.push(contactApplicationError);
@@ -128,7 +128,7 @@ export default class ContactTheTribunalSelectedController {
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      canCancel: true,
+      cancelLink: PageUrls.CONTACT_THE_TRIBUNAL,
       errors: req.session.errors,
       ...content,
     });

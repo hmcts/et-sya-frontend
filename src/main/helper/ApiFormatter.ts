@@ -165,7 +165,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
-    claimantTseApplications: fromApiCaseData?.case_data?.genericTseApplicationCollection,
   };
 }
 
@@ -263,6 +262,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
+      new_tse_application: caseItem.claimantTseApplication,
     },
   };
 }
