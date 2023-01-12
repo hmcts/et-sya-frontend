@@ -39,6 +39,9 @@
   "optional": "Dewisol",
   "waitingForTheTribunal": "Aros am y tribiwnlys",
   "submittedAndViewed": "Wedi'i gyflwyno",
+  "submittedAlert": "Welsh Translation required",
+  "processClaim": "Welsh Translation required",
+  "busyPeriod": ". Welsh Translation required.",
   "notificationBanner": {
     "acknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod eich hawliad",
