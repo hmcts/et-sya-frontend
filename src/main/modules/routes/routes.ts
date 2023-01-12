@@ -84,13 +84,8 @@ const handleUploads = multer({
     fileSize: FILE_SIZE_LIMIT,
   },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    const fileSize = parseInt(req.headers['content-length']);
-    if (fileSize > FILE_SIZE_LIMIT) {
-      req.fileTooLarge = true;
-      return callback(null, false);
-    } else {
-      return callback(null, true);
-    }
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    return callback(null, !req.fileTooLarge);
   },
 });
 

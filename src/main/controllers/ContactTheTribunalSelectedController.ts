@@ -70,34 +70,24 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (!req.file?.originalname) {
-      return res.redirect(req.url);
-    }
-
-    if (req.fileTooLarge) {
-      req.fileTooLarge = false;
-      req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }];
-      return res.redirect(req.url);
-    }
-    req.session.errors = [];
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactApplicationError = getContactApplicationError(formData, req.file);
-    if (!contactApplicationError) {
-      try {
-        const result = await handleUploadDocument(req, req.file, logger);
-        if (result?.data) {
-          req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
-        }
-      } catch (error) {
-        logger.info(error);
-        req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
-      } finally {
-        await handleUpdateSubmittedCase(req, logger);
-      }
-    } else {
+    const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
+    if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
       return res.redirect(req.url);
     }
+
+    try {
+      const result = await handleUploadDocument(req, req.file, logger);
+      if (result?.data) {
+        req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
+      }
+    } catch (error) {
+      logger.info(error);
+      req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
+    }
+
+    await handleUpdateSubmittedCase(req, logger);
   };
 
   public get = (req: AppRequest, res: Response): void => {
