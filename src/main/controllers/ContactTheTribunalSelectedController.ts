@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId, YesOrNo } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
@@ -70,24 +71,47 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
-    if (contactApplicationError) {
-      req.session.errors.push(contactApplicationError);
+    const userCase = req.session.userCase;
+
+    // Todo think about using CaseHelpers.setUserCase
+    userCase.contactApplicationText = req.body.contactApplicationText;
+
+    if (req.body.upload) {
+      if (!req.file?.originalname) {
+        return res.redirect(req.url);
+      }
+
+      const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+      const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
+      if (contactApplicationError) {
+        req.session.errors.push(contactApplicationError);
+        return res.redirect(req.url);
+      }
+      req.session.errors = [];
+
+      try {
+        const result = await handleUploadDocument(req, req.file, logger);
+        if (result?.data) {
+          userCase.contactApplicationFile = fromApiFormatDocument(result.data);
+        }
+      } catch (error) {
+        logger.info(error);
+        req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
+      }
+
       return res.redirect(req.url);
     }
 
-    try {
-      const result = await handleUploadDocument(req, req.file, logger);
-      if (result?.data) {
-        req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
-      }
-    } catch (error) {
-      logger.info(error);
-      req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
-    }
-
+    userCase.claimantTseApplication = {
+      type: userCase.contactApplicationType,
+      details: userCase.contactApplicationText,
+      documentUpload: userCase.contactApplicationFile,
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+      copyToOtherPartyText: '',
+    };
     await handleUpdateSubmittedCase(req, logger);
+    clearTseFields(userCase);
+    return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -99,6 +123,11 @@ export default class ContactTheTribunalSelectedController {
     }
 
     const userCase = req.session?.userCase;
+    if (selectedApplication !== userCase.contactApplicationType) {
+      clearTseFields(userCase);
+      userCase.contactApplicationType = selectedApplication;
+    }
+
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -106,8 +135,8 @@ export default class ContactTheTribunalSelectedController {
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
 
-    // (this.contactApplicationContent.fields as any).inset.upload.disabled =
-    //   userCase?.contactApplicationFile !== undefined;
+    (this.contactApplicationContent.fields as any).inset.subFields.upload.disabled =
+      userCase?.contactApplicationFile !== undefined;
 
     (this.contactApplicationContent.fields as any).filesUploaded.rows = getFiles(userCase, selectedApplication, {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
@@ -123,4 +152,9 @@ export default class ContactTheTribunalSelectedController {
       ...content,
     });
   };
+}
+
+export function clearTseFields(userCase: CaseWithId): void {
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
 }
