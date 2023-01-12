@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { CaseWithId } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
@@ -50,19 +50,37 @@ describe('Citizen hub page', () => {
       {
         state: CaseState.SUBMITTED,
         case_data: {
-          et3ResponseReceived: false,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.NO,
+              },
+            },
+          ],
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3ResponseReceived: false,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.NO,
+              },
+            },
+          ],
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3ResponseReceived: true,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.YES,
+              },
+            },
+          ],
         },
       },
     ];

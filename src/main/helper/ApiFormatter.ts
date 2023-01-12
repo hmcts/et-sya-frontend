@@ -450,7 +450,7 @@ export const getDocId = (url: string): string => {
 };
 
 export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
-  if (caseData.respondentCollection) {
+  if (caseData?.respondentCollection) {
     return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
   }
 
