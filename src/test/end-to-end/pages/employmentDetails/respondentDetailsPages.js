@@ -66,6 +66,9 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.checkOption('#acasCert-2');
     I.click(commonConfig.saveAndContinue);
+    I.see(
+      'Please note: incorrectly claiming an exemption may lead to your claim being rejected. If in doubt, please contact Acas.'
+    );
     I.see('Why do you not have an Acas number?');
     I.checkOption('#no-acas-reason');
     I.click(commonConfig.saveAndContinue);
