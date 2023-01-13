@@ -40,9 +40,9 @@
   "optional": "Dewisol",
   "waitingForTheTribunal": "Aros am y tribiwnlys",
   "submittedAndViewed": "Wedi'i gyflwyno",
-  "submittedAlert": "Welsh Translation required",
-  "processClaim": "Welsh Translation required",
-  "busyPeriod": ". Welsh Translation required.",
+  "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
+  "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
+  "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
   "notificationBanner": {
     "acknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod eich hawliad",
