@@ -86,6 +86,7 @@ export const TranslationKeys = {
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
   APPLICATION_COMPLETE: 'application-complete',
   APPLICATION_LIST: 'application-list',
+  SELECTED_SUBMITTED_APPLICATION: 'selected-submitted-application',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
@@ -169,6 +170,7 @@ export const PageUrls = {
   PCQ_WELSH: '/pcq?lng=cy',
   APPLICATION_COMPLETE: '/application-complete',
   APPLICATION_LIST: '/application-list',
+  SELECTED_SUBMITTED_APPLICATION: '/selected-submitted-application',
 } as const;
 
 export const InterceptPaths = {

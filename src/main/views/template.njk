@@ -1,6 +1,5 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
-{% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
@@ -137,26 +136,5 @@ if isLoggedIn %}
     </div>
   {% endif %}
 
-  {{ govukFooter({
-  meta: {
-    items: [
-      {
-          href: "/guide",
-          text: guide
-      },
-      {
-          href: "/terms-and-conditions",
-          text: termsAndConditions
-      },
-      {
-          href: "/cookies",
-          text: cookiePolicy
-      },
-      {
-          href: "/contact-us",
-          text: contact
-      }
-    ]
-  }
-}) }}
+  {% include "./footer.njk" %}
 {% endblock %}

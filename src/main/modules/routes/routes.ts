@@ -60,6 +60,7 @@ import RespondentDetailsCheckController from '../../controllers/RespondentDetail
 import RespondentNameController from '../../controllers/RespondentNameController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
+import SelectedSubmittedApplicationController from '../../controllers/SelectedSubmittedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
 import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
@@ -226,6 +227,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
     app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
+    app.get(PageUrls.SELECTED_SUBMITTED_APPLICATION, new SelectedSubmittedApplicationController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({

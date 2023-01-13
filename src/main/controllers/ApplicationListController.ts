@@ -29,6 +29,7 @@ export default class ApplicationListController {
     res.render(TranslationKeys.APPLICATION_LIST, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_LIST, { returnObjects: true }),
+      ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       redirectUrl,
       rows,
     });
