@@ -80,6 +80,7 @@
 
 {% if showSubmittedAlert or showAcknowledgementAlert or showRejectionAlert or showRespondentResponseReceived or showRespondentRejection or showRespondentAcknowledgement %}
     {{ govukNotificationBanner({
-   html: htmlForNotification
+   html: htmlForNotification,
+   titleText: important
   }) }}
 {% endif %}
