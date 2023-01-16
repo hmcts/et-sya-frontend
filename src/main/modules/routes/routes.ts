@@ -64,7 +64,9 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import ResponseCompleteController from '../../controllers/ResponseCompleteController';
 import ResponseSupportingMaterialController from '../../controllers/ResponseSupportingMaterialController';
+import ResponseSupportingMaterialFileController from '../../controllers/ResponseSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
@@ -89,7 +91,6 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ResponseSupportingMaterialFileController from '../../controllers/ResponseSupportingMaterialFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -241,6 +242,7 @@ export class Routes {
       new ContactTheTribunalSelectedController().post
     );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
+    app.get(PageUrls.RESPONSE_COMPLETE, new ResponseCompleteController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
