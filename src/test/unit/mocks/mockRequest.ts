@@ -105,6 +105,7 @@ export const mockRequestWithTranslation = (
       startDate: { year: '2019', month: '04', day: '21' },
       noticeEnds: { year: '2019', month: '04', day: '21' },
       newJob: YesOrNo.YES,
+      newJobStartDate: { year: '2020', month: '04', day: '21' },
       isStillWorking: StillWorking.NOTICE,
       typeOfClaim: [],
       ...userCase,
