@@ -1,13 +1,13 @@
 {
-  "callEmployer": "Welsh Translation required",
-  "contactText": "Welsh Translation required",
-  "contactLink": "Welsh Translation required",
-  "englandWales": "Welsh Translation required",
-  "ewNumbers": "Welsh Translation required",
-  "welsh": "Welsh Translation required",
-  "welshNumber": "Welsh Translation required",
-  "scotland": "Welsh Translation required",
-  "scotlandNumbers": "Welsh Translation required",
-  "hours": "Welsh Translation required",
-  "callCharges": "Welsh Translation required"
+  "callEmployer": "Ffoniwch canolfan gyswllt cwsmeriaid y Tribiwnlys Cyflogaeth os oes gennych unrhyw gwestiynau am eich hawliad. Ni allant roi cyngor cyfreithiol i chi na phrosesu unrhyw ddiweddariadau i'ch achos.",
+  "contactText": "Gallwch hefyd",
+  "contactLink": "gysylltu â’r tribiwnlys ynglŷn â’ch achos.",
+  "englandWales": "Cymru a Lloegr",
+  "ewNumbers": "Rhif Ffôn: 0300 123 1024 <br /> Ffôn Testun: 18001 0300 123 1024",
+  "welsh": "Llinell ffôn i siaradwyr Cymraeg",
+  "welshNumber": "Rhif Ffôn: 0300 303 5176",
+  "scotland": "Yr Alban",
+  "scotlandNumbers": "Rhif Ffôn: 0300 790 6234 <br /> Ffôn Testun: 18001 0300 790 6234",
+  "hours": "Dydd Llun i ddydd Iau, 8.30am i 5pm.  Dydd Gwener, 8.30am i 4pm.  Nid yw'r ganolfan ar agor yn ystod gwyliau banc.",
+  "callCharges": "Gwybodaeth am brisiau galwadau (yn agor mewn tab newydd)"
 }

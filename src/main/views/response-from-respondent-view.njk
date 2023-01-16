@@ -59,7 +59,7 @@
                 text: rejectionLetter
               },
               {
-                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
+                html: "<a href=\"/case-document/response-rejection\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
               }
             ]
             ), documentsRows) %}
@@ -118,7 +118,7 @@
       {% endset %}
 
       {{ govukDetails({
-              summaryText: "Contact",
+              summaryText: contact,
               html: sideBarContent
             }) }}
 

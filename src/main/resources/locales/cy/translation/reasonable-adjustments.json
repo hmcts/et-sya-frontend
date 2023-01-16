@@ -1,6 +1,6 @@
 {
   "title": "Unrhyw addasiadau angenrheidiol?",
-  "h1": "Welsh Translation required",
+  "h1": "Cymorth ychwanegol yn ystod eich achos",
   "legend": "A oes gennych anabledd corfforol, meddyliol neu addysgol neu gyflwr iechyd sy’n golygu bod angen cymorth arnoch yn ystod eich achos?",
   "p": "Gwyddwn fod rhai pobl angen cymorth i gael mynediad at wybodaeth ac i ddefnyddio ein gwasanaethau. Gelwir hyn yn aml yn addasiad rhesymol. Rhaid i rai addasiadau rhesymol gael eu cytuno arnynt gan farnwr neu GLlTEM. Gallwch drafod gyda’r tribiwnlys os bydd eich anghenion yn newid.",
   "detailsSummary": {
@@ -10,9 +10,9 @@
     "bullet2": "help gyda cyfathrebu, gweld, gwrando, siarad neu gymorth gan gyfieithydd/dehonglydd",
     "bullet3": "cymorth gyda mynediad a symudedd, os bydd gwrandawiad yn cael ei gynnal wyneb yn wyneb"
   },
-  "yes": "Welsh Translation required",
+  "yes": "Oes",
   "noSupport": "Nac oes, nid oes arnaf angen unrhyw gymorth ar hyn o bryd",
-  "adjustmentDetailTextLabel": "Welsh Translation required",
+  "adjustmentDetailTextLabel": "Dywedwch wrthym pa gymorth rydych angen gofyn amdano ",
   "textAreaHint": "Gallwch ddisgrifio beth sydd ei angen arnoch",
   "errors": {
     "reasonableAdjustmentsDetail": {

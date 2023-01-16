@@ -1,14 +1,14 @@
 {
   "title": "Math o hawliad",
   "h1": "Pa fath o hawliad ydych chi’n ei wneud?",
-  "hints": "Welsh Translation required",
+  "hints": "Gallwch ddewis <span class=”govuk-!-font-weight-bold”>mwy nag 1 </span> math o hawliad. <br><br> <details class=”govuk-details” data-module=”govuk-details”> <summary class=”govuk-details__summary”> <span class=”govuk-details__summary-text”> Am beth mae’r honiadau torri amodau contract amdan? </span> </summary> <div class=”govuk-details__text”> Efallai bod gennych gontract cyflogaeth ysgrifenedig neu ar lafar gyda’ch cyflogwr. <br><br> Os na fydd eich cyflogwr yn cadw at delerau’r contract ac yn gwneud newidiadau heb eich cytundeb - gelwir hyn yn torri amodau’r contract. <br><br> Os gallwch chi brofi eich bod wedi colli allan yn ariannol oherwydd bod amodau’r contract wedi’u torri yna mae’n bosib y gallwch hawlio iawndal. </div> </details>",
   "hint": "Gallwch ddewis bob un sy’n berthnasol i chi. Fe ofynnir am ragor o wybodaeth yn hwyrach ymlaen yn yr hawliad. <br><br><span class=\"govuk-!-font-weight\">Dewiswch bob un sy'n berthnasol </span>",
   "breachOfContract": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â thorri amodau contract",
     "checkbox": "Torri contract - gan gynnwys tâl cyfnod rhybudd"
   },
   "discrimination": {
-    "title": "Welsh Translation required",
+    "title": "Hawliad mewn perthynas â gwahaniaethu",
     "checkbox": "Gwahaniaethu o unrhyw fath",
     "hint": "er enghraifft oherwydd eich rhyw, ethnigrwydd, anabledd neu nodwedd arall"
   },
@@ -27,16 +27,16 @@
     "hint": "gan gynnwys diswyddo neu unrhyw fath arall o driniaeth annheg yn dilyn chwythu’r chwiban"
   },
   "otherTypesOfClaims": {
-    "title": "Welsh Translation required",
+    "title": "Math arall o hawliad",
     "checkbox": "Math arall o hawliad",
     "explain": "Disgrifiwch pa fath o hawliad ydych chi eisiau ei wneud"
   },
   "errors": {
     "typeOfClaim": {
-      "required": "Welsh Translation required"
+      "required": "Dewiswch o leiaf un o'r opsiynau isod ar gyfer eich math o hawliad."
     },
     "otherClaim": {
-      "required": "Welsh Translation required"
+      "required": "Disgrifiwch y math o hawliad"
     }
   }
 }

@@ -49,6 +49,8 @@ export class Helmet {
       'https://www.gstatic.com',
     ];
 
+    const styleSrc = [self, "'sha256-4z94HBtDQ7TATlXQpTKGg1rMyQvXAdMgvQ5YYOMBiDs='"];
+
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
       scriptSrc.push('https://localhost:5000/login');
@@ -63,7 +65,7 @@ export class Helmet {
           imgSrc,
           objectSrc: [self],
           scriptSrc,
-          styleSrc: [self],
+          styleSrc,
           formAction: [self, ...formActionUrls],
         },
       })

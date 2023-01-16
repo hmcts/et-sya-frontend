@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class HomeController {
   public get(req: AppRequest, res: Response): void {
@@ -13,6 +14,7 @@ export default class HomeController {
       ...req.t(TranslationKeys.HOME, { returnObjects: true }),
       PageUrls,
       redirectUrl,
+      languageParam: getLanguageParam(req.url),
     });
   }
 }

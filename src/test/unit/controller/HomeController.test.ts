@@ -23,6 +23,7 @@ describe('Onboarding Controller', () => {
       ...(<AnyRecord>request.t('home', { returnObjects: true })),
       PageUrls,
       redirectUrl,
+      languageParam: '?lng=en',
     });
   });
 });

@@ -1,6 +1,6 @@
 {
-  "title": "Welsh translation required",
-  "h1": "Welsh translation required",
+  "title": "Beth ydych chi eisiau ei gael gan eich hawliad",
+  "h1": "Beth ydych chi eisiau ei gael gan eich hawliad?",
   "legend": "Beth hoffech chi ei gael os bydd eich hawliad yn llwyddiannus? (dewisol)",
   "detailsSummaryComp": "Iawndal - beth all tribiwnlys ddyfarnu?",
   "detailsTextComp": {
@@ -15,21 +15,21 @@
   "detailsSummaryRecom": "Beth yw argymhelliad tribiwnlys?",
   "detailsTextRecom": "Os penderfynir bod eich cyflogwr wedi gwahaniaethu yn eich erbyn, gall tribiwnlys wneud argymhelliad bod yr atebydd yn cymryd camau penodol i leihau effaith y gwahaniaethu arnoch",
   "compensationOnly": {
-    "title": "Welsh translation required",
+    "title": "Iawndal yw’r unig opsiwn",
     "checkbox": "Iawndal yn unig"
   },
   "compensationOnlyHint": "Fe ofynnir i chi ddarparu amcangyfrif o gyfanswm yr iawndal",
   "tribunalRecommendation": {
-    "title": "Welsh translation required",
+    "title": "Opsiwn argymhelliad y tribiwnlys",
     "checkbox": "Os ydych yn hawlio am wahaniaethu, argymhelliad y tribiwnlys"
   },
   "tribunalRecommendationHint": "Fe ofynnir i chi ddisgrifio eich cais i’r tribiwnlys",
   "oldJob": {
-    "title": "Welsh translation required",
+    "title": "Opsiwn hen swydd",
     "checkbox": "Os ydych yn hawlio am ddiswyddo annheg, i gael eich hen swydd yn ôl ac iawndal"
   },
   "anotherJob": {
-    "title": "Welsh translation required",
+    "title": "Opsiwn swydd arall",
     "checkbox": "Os ydych yn hawlio am ddiswyddo annheg, i gael swydd arall gyda’r un cyflogwr neu gyflogwr cysylltiedig ac iawndal (ailgysylltiad)"
   }
 }
