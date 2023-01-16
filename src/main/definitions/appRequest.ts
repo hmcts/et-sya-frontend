@@ -20,6 +20,8 @@ export interface AppSession extends Session {
   guid: string | undefined;
   fileTooLarge?: boolean;
   cookies?: string;
+  contactType?: string;
+  contactTribunalSelection?: string;
 }
 
 export interface UserDetails {

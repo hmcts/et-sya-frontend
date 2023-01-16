@@ -165,6 +165,8 @@ export interface Case {
   otherClaim?: string;
   // TSE
   claimantTseApplications?: GenericTseApplications[];
+  // Temporary
+  copyCorrespondence?: YesOrNo;
 }
 
 export const enum StillWorking {

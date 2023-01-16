@@ -82,7 +82,9 @@ export default class ContactTheTribunalSelectedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    req.session.contactType = 'Application';
     const selectedApplication = req.params.selectedOption;
+    req.session.contactTribunalSelection = selectedApplication;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
       res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);

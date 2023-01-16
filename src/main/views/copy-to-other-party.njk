@@ -16,19 +16,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
-        <span class="govuk-caption-l">{{ caption }}</span>
+        <span class="govuk-caption-l">{{ copyCorrespondence }}</span>
         {{ h1 }}
       </h1>
       <p class="govuk-body">{{ p1 }}
       </p>
       {% block form %}
         {% include "form/form.njk"%}
-        <div class="govuk-button-group">
-          {{ govukButton({
-          text: continue
-          }) }}
-          <a class="govuk-link" href="#">{{ cancel }}</a>
-        </div>
       {% endblock %}
     </div>
   </div>

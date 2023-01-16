@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { TranslationKeys } from '../definitions/constants';
 
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
@@ -23,7 +22,7 @@ export default class ApplicationCompleteController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_COMPLETE, { returnObjects: true }),
       applicationDate: dateString,
-      rule92: YesOrNo.YES,
+      rule92: req.session.userCase.copyCorrespondence,
       redirectUrl,
     });
   }

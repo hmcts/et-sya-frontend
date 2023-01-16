@@ -54,6 +54,15 @@ export default class CopyToOtherPartyController {
         validator: isFieldFilledIn,
       },
     },
+    submit: {
+      text: (l: AnyRecord): string => l.continue,
+      classes: 'govuk-!-margin-right-2',
+    },
+    cancel: {
+      text: (l: AnyRecord): string => l.cancel,
+      classes: 'govuk-link',
+      href: PageUrls.CITIZEN_HUB,
+    },
   };
 
   constructor() {
@@ -62,22 +71,35 @@ export default class CopyToOtherPartyController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     // TODO - insert the correct redirect urls
-    await handlePostLogic(req, res, this.form, logger, PageUrls.HOME);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.APPLICATION_COMPLETE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    // TODO add correct logic to display the application type
-    // const applicationType = applications[applicationIndex].applicationType;
+    let captionSubject = '';
+    let captionText = '';
+    const contactType = req.session.contactType;
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
+    };
+    if (contactType === translations.contact) {
+      captionSubject = req.session.contactTribunalSelection;
+      captionText = translations.sections[captionSubject].caption;
+    }
+    if (contactType === translations.application) {
+      captionText = translations.respondToApplication;
+    }
+    if (contactType === translations.tribunal) {
+      captionText = translations.respondToTribunal;
+    }
     const content = getPageContent(req, this.CopyToOtherPartyContent, [
       TranslationKeys.COMMON,
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
-    // copyCorrespondence.label = (l: AnyRecord): string => applicationType;
-    // assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
-      //  applicationType: applicationType,
+      copyCorrespondence: captionText,
     });
   };
 }
