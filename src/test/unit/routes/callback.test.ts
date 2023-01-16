@@ -5,7 +5,7 @@ import redis from 'redis-mock';
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
-import { PageUrls } from '../../../main/definitions/constants';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { idamCallbackHandler } from '../../../main/modules/oidc';
 import * as CacheService from '../../../main/services/CacheService';
 import * as CaseService from '../../../main/services/CaseService';
@@ -31,6 +31,9 @@ const redisClient = redis.createClient();
 const serviceUrl = 'serviceUrl';
 const guid = '04a7a170-55aa-4882-8a62-e3c418fa804d';
 const existingUser = 'existingUser';
+const englishGuidParam = '-en';
+const welshGuidParam = '-cy';
+
 const caseData =
   '[["workPostcode", "SW1A 1AA"],["claimantRepresentedQuestion","Yes"],["caseType","Single"],["typeOfClaim","[\\"breachOfContract\\",\\"discrimination\\",\\"payRelated\\",\\"unfairDismissal\\",\\"whistleBlowing\\"]"]]';
 
@@ -57,8 +60,8 @@ describe('Test responds to /oauth2/callback', function () {
     jest.spyOn(res, 'redirect');
   });
 
-  test('should create a new case and redirect to the new account page when a new user logs in', async () => {
-    req.query = { code: 'testCode', state: guid };
+  test('should create a new case in English language and redirect to the new account page in English when a new user logs in', async () => {
+    req.query = { code: 'testCode', state: guid + englishGuidParam };
     jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseData));
     jest.spyOn(authIndex, 'getUserDetails');
 
@@ -67,14 +70,35 @@ describe('Test responds to /oauth2/callback', function () {
       expect(CacheService.getPreloginCaseData).toHaveBeenCalled();
       expect(caseApi.createCase).toHaveBeenCalled();
     });
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.ENGLISH_URL_PARAMETER);
   });
 
-  test('Should redirect to Claimant applications page if an existing user logs in', async () => {
-    req.query = { code: 'testCode', state: existingUser };
+  test('Should redirect to Claimant applications page in English language if an existing user who had selected English logs in', async () => {
+    req.query = { code: 'testCode', state: existingUser + englishGuidParam };
 
     await idamCallbackHandler(req, res, next, serviceUrl);
 
-    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  test('should create a new case in Welsh language and redirect to the new account page in Welsh when a new user logs in', async () => {
+    req.query = { code: 'testCode', state: guid + welshGuidParam };
+    jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseData));
+    jest.spyOn(authIndex, 'getUserDetails');
+
+    await idamCallbackHandler(req, res, next, serviceUrl).then(() => {
+      expect(authIndex.getUserDetails).toHaveBeenCalled();
+      expect(CacheService.getPreloginCaseData).toHaveBeenCalled();
+      expect(caseApi.createCase).toHaveBeenCalled();
+    });
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_ACCOUNT_LANDING + languages.WELSH_URL_PARAMETER);
+  });
+
+  test('Should redirect to Claimant applications page in Welsh language if an existing user who had selected Welsh logs in', async () => {
+    req.query = { code: 'testCode', state: existingUser + welshGuidParam };
+
+    await idamCallbackHandler(req, res, next, serviceUrl);
+
+    expect(res.redirect).toHaveBeenLastCalledWith(PageUrls.CLAIMANT_APPLICATIONS + languages.WELSH_URL_PARAMETER);
   });
 });

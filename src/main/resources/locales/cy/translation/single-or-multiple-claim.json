@@ -1,13 +1,15 @@
 {
-  "title": "Lorem ipsum dolor sit",
-  "h1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer convallis mi sed erat dapibus interdum non?",
-  "p1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse metus lacus, convallis nec maximus in, vehicula at nunc. Sed facilisis accumsan dolor ac mattis.",
-  "p2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id tempus risus. Ut tortor ex, lacinia ac dui ac, porta dapibus sem. Duis pellentesque lacus non lectus tincidunt.",
-  "radio1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-  "radio2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  "title": "Hawliad Unigol neu Luosog",
+  "h1": "Gwneud hawliad ar eich pen eich hun neu gydag eraill",
+  "legend": "Ydych chi’n gwneud hawliad ar eich pen eich hun neu gydag eraill?",
+  "p1": "Gallwch wneud hawliad i dribiwnlys cyflogaeth ar eich pen eich hun os mai chi yw’r unig hawlydd. Gallwch hefyd wneud hawliad gydag unigolyn arall, neu gyda grŵp o bobl sydd wedi’u trin yr un ffordd.",
+  "p2": "Mae’n helpu’r tribiwnlys cyflogaeth i wybod pa fath o hawliad a wneir. Os nad ydych yn gwybod, dewiswch yr opsiwn cyntaf.",
+  "p3": "Os ydych yn gwneud hawliad gyda phobl eraill, fe ofynnir i chi ddweud wrthym beth yw eu henwau (os ydych yn gwybod hynny).",
+  "radio1": "Rwy’n gwneud hawliad ar fy mhen fy hun",
+  "radio2": "Rwy’n gwneud hawliad gydag unigolyn arall neu bobl eraill",
   "errors": {
     "caseType": {
-      "required": "Lorem ipsum dolor"
+      "required": "Dywedwch wrthym a ydych yn hawlio ar eich pen eich hun neu'n hawlio gydag eraill"
     }
   }
 }

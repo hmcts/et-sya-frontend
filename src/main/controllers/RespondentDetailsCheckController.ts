@@ -7,8 +7,10 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;
@@ -38,7 +40,8 @@ export default class RespondentDetailsCheckController {
       return res.redirect(PageUrls.RESPONDENT_DETAILS_CHECK);
     } else {
       req.session.errors = [];
-      return res.redirect(getRespondentRedirectUrl(newRespondentNum, PageUrls.RESPONDENT_NAME));
+      const redirectUrl = setUrlLanguage(req, PageUrls.RESPONDENT_NAME);
+      return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl));
     }
   };
 
@@ -55,6 +58,8 @@ export default class RespondentDetailsCheckController {
       respondents,
       translations,
       getRespondentDetailsSection,
+      PageUrls,
+      languageParam: getLanguageParam(req.url),
     });
   };
 }

@@ -27,7 +27,7 @@
     "hint": "including dismissal or any other unfair treatment after whistleblowing"
   },
   "otherTypesOfClaims": {
-    "title": "other types of claims",
+    "title": "other types of claim",
     "checkbox": "Other type of claim",
     "explain": "Please describe what type of claim you want to make"
   },

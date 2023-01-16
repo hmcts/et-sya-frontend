@@ -1,0 +1,13 @@
+{
+  "title": "Gwirio tystysgrif Acas",
+  "h1": "Tystysgrif Acas",
+  "legend": "A oes gennych ‘dystysgrif cymodi cynnar Acas’ ar gyfer yr atebydd neu’r atebwyr rydych yn gwneud hawliad yn ei erbyn/eu herbyn?",
+  "p1": "I wneud hawliad, fel arfer bydd angen i chi gael tystysgrif cymodi cynnar Acas (neu roi rheswm dilys pam nad oes gennych un) ar gyfer pob atebydd rydych yn gwneud hawliad yn ei erbyn.",
+  "p2": "Bydd Acas wedi anfon tystysgrifau atoch ar ôl i chi gysylltu â nhw i geisio setlo eich anghydfod drwy gymodi cynnar.",
+  "p3": "Mae’r tystysgrifau yn cynnwys manylion yr atebydd rydych yn gwneud eich hawliad yn ei erbyn yn ogystal â’u rhif adnabod. Bydd angen i chi ddarparu’r rhain yn hwyrach ymlaen fel rhan o’ch hawliad.",
+  "errors": {
+    "acasMultiple": {
+      "required": "Dywedwch wrthym a oes gennych dystysgrif"
+    }
+  }
+}

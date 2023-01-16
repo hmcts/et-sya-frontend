@@ -1,0 +1,41 @@
+{
+  "title": "Manylion y cyfeiriad",
+  "h1": "Beth yw cyfeiriad ",
+  "change": "Newid",
+  "selectAddress": "Dewiswch gyfeiriad",
+  "selectDefault": "Daethpwyd o hyd i sawl cyfeiriad...",
+  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
+  "postcodeErrorText": "Rhowch god post. Er enghraifft, SW1 1AA",
+  "findAddress": "Dod o hyd i gyfeiriad",
+  "pageText": "Dylai’r cyfeiriad fod ar eich slipiau cyflog, contract neu ddogfennau swyddogol eraill.",
+  "insetText": "Dylai hwn fod yr un cyfeiriad ar gyfer yr atebydd a roddwyd i Acas.",
+  "town": "Tref neu ddinas",
+  "manualAddress": "Mae cyfeiriad yr atebydd y tu allan i'r DU",
+  "errors": {
+    "addressPostcode": {
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA",
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "notSelected": "Dewiswch gyfeiriad"
+    },
+    "respondentAddress1": {
+      "required": "Rhowch linell gyntaf cyfeiriad yr atebydd - hyd at 100 o lythrennau",
+      "invalid": "Rhowch linell gyntaf ddilys ar gyfer cyfeiriad yr atebydd - hyd at 100 o lythrennau"
+    },
+    "respondentAddress2": {
+      "required": "Rhowch ail linell cyfeiriad yr atebydd - hyd at 50 o lythrennau",
+      "invalid": "Rhowch ail linell ddilys ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau"
+    },
+    "respondentAddressTown": {
+      "required": "Rhowch dref neu ddinas ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau",
+      "invalid": "Rhowch dref neu ddinas ddilys ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau"
+    },
+    "respondentAddressCountry": {
+      "required": "Rhowch wlad ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau",
+      "invalid": "Rhowch wlad ddilys ar gyfer cyfeiriad yr atebydd - hyd at 50 o lythrennau"
+    },
+    "respondentAddressPostcode": {
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch god post dilys. Er enghraifft, SW1 1AA"
+    }
+  }
+}

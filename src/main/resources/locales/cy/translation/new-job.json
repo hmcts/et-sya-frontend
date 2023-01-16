@@ -1,0 +1,9 @@
+{
+  "title": "A oes gennych chi swydd newydd?",
+  "h1": "A oes gennych chi swydd newydd? (dewisol)",
+  "errors": {
+    "newJob": {
+      "required": "Dywedwch wrthym a oes gennych swydd newydd"
+    }
+  }
+}

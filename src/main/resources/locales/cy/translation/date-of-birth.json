@@ -1,22 +1,24 @@
 {
-  "title": "Date of birth details - Welsh translation required",
-  "h1": "Beth yw eich dyddiad geni?",
+  "title": "Manylion dyddiad Geni",
+  "h1": "Dyddiad geni (dewisol)",
+  "legend": "Beth yw eich dyddiad geni?",
+  "p1": "Bydd y manylion hyn yn cael eu defnyddio i helpu i symud eich cais yn ei flaen.",
   "hint": "Fe ddefnyddir y manylion hyn i symud eich hawliad yn ei flaen.<br><br>Er enghraifft, 23 04 1981",
   "errors": {
     "dobDate": {
-      "dayRequired": "Enter a day for your date of birth. For example, 23 <B>- Welsh translation required</B>",
-      "monthRequired": "Enter a month for your date of birth. For example, 04 <B>- Welsh translation required</B>",
-      "yearRequired": "Enter a year for your date of birth. For example, 1981 <B>- Welsh translation required</B>",
-      "dayNotANumber": "Day must only contain numbers. For example, 23 <B>- Welsh translation required</B>",
-      "monthNotANumber": "Month must only contain numbers. For example, 04 <B>- Welsh translation required</B>",
-      "yearNotANumber": "Year must only contain numbers. For example, 1981 <B>- Welsh translation required</B>",
-      "dayInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
-      "monthInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
-      "yearInvalid": "Date of birth must be a real date. <B>- Welsh translation required</B>",
-      "invalidDate": "Date of birth must be a real date. <B>- Welsh translation required</B>",
-      "invalidDateInFuture": "Date entered must be in the past. <B>- Welsh translation required</B>",
-      "invalidDateTooFarInPast": "Date must be between 10 years and 100 years in the past. <B>- Welsh translation required</B>",
-      "invalidDateTooRecent": "Date must be between 10 years and 100 years in the past. <B>- Welsh translation required</B>"
+      "dayRequired": "Rhowch ddiwrnod ar gyfer eich dyddiad geni. Er enghraifft, 23",
+      "monthRequired": "Rhowch fis ar gyfer eich dyddiad geni. Er enghraifft, 04",
+      "yearRequired": "Rhowch flwyddyn ar gyfer eich dyddiad geni. Er enghraifft, 1981",
+      "dayNotANumber": "Rhaid i'r diwrnod gynnwys rhifau yn unig. Er enghraifft, 23",
+      "monthNotANumber": "Rhaid i’r mis gynnwys rhifau yn unig. Er enghraifft, 04",
+      "yearNotANumber": "Rhaid i’r flwyddyn gynnwys rhifau yn unig. Er enghraifft, 1981",
+      "dayInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "monthInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "yearInvalid": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDate": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
+      "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol.",
+      "invalidDateTooFarInPast": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol.",
+      "invalidDateTooRecent": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol."
     }
   }
 }

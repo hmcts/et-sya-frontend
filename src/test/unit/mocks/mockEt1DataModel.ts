@@ -1,5 +1,6 @@
 import {
   EmailOrPost,
+  EnglishOrWelsh,
   HearingPreference,
   NoAcasNumberReason,
   Sex,
@@ -92,6 +93,8 @@ export const mockEt1DataModelUpdate = {
       reasonable_adjustments_detail: 'Adjustments detail test',
       hearing_preferences: [HearingPreference.PHONE],
       hearing_assistance: 'Hearing assistance test',
+      contact_language: EnglishOrWelsh.ENGLISH,
+      hearing_language: EnglishOrWelsh.ENGLISH,
     },
     claimantRequests: {
       discrimination_claims: [ClaimTypeDiscrimination.RACE],

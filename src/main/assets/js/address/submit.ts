@@ -1,5 +1,6 @@
 import { isValidUKPostcode } from '../../../components/form/address_validator';
-import { PageUrls } from '../../../definitions/constants';
+import { PageUrls, languages } from '../../../definitions/constants';
+import localesCy from '../../../resources/locales/cy/translation/enter-address.json';
 import locales from '../../../resources/locales/en/translation/enter-address.json';
 import { getById, hidden } from '../selectors';
 import { focusToGovUKErrorDiv } from '../set-focus';
@@ -59,15 +60,28 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
 
           getById('userPostcode').textContent = postcode;
 
+          let none: string;
+          let single: string;
+          let several: string;
+          if (window.location.href.includes(languages.WELSH_URL_PARAMETER)) {
+            none = localesCy.selectDefaultNone;
+            single = localesCy.selectDefaultSingle;
+            several = localesCy.selectDefaultSeveral;
+          } else {
+            none = locales.selectDefaultNone;
+            single = locales.selectDefaultSingle;
+            several = locales.selectDefaultSeveral;
+          }
+
           selectAddress.remove(0);
           const placeholder = document.createElement('option');
           placeholder.value = '-1';
           if (addresses.length === 0) {
-            placeholder.text = locales.selectDefaultNone;
+            placeholder.text = none;
           } else if (addresses.length === 1) {
-            placeholder.text = locales.selectDefaultSingle;
+            placeholder.text = single;
           } else {
-            placeholder.text = locales.selectDefaultSeveral;
+            placeholder.text = several;
           }
           selectAddress.add(placeholder);
 

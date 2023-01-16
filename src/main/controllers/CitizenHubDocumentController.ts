@@ -1,8 +1,10 @@
 import { Response } from 'express';
+
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
+
 import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 

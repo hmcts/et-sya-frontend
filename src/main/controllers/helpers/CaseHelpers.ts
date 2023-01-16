@@ -16,6 +16,7 @@ import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
 import { resetValuesIfNeeded } from './FormHelpers';
+import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage } from './RouterHelpers';
 
@@ -151,9 +152,9 @@ export const handlePostLogicForRespondent = async (
 export const handlePostLogicPreLogin = (req: AppRequest, res: Response, form: Form, redirectUrl: string): void => {
   setUserCase(req, form);
   const errors = returnSessionErrors(req, form);
-  if (errors.length === 0 || errors === undefined) {
+  if (errors.length === 0) {
     req.session.errors = [];
-    returnNextPage(req, res, redirectUrl);
+    returnNextPage(req, res, setUrlLanguage(req, redirectUrl));
   } else {
     handleErrors(req, res, errors);
   }
@@ -168,12 +169,14 @@ export const postLogic = async (
 ): Promise<void> => {
   const errors = returnSessionErrors(req, form);
   const { saveForLater } = req.body;
-  if (errors.length === 0 || errors === undefined) {
+  if (errors.length === 0) {
     req.session.errors = [];
     await handleUpdateDraftCase(req, logger);
     if (saveForLater) {
-      return res.redirect(PageUrls.CLAIM_SAVED);
+      redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+      return res.redirect(redirectUrl);
     } else {
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     }
   } else {

@@ -1,7 +1,28 @@
 {
+  "serviceName": "Tribiwnlys Cyflogaeth",
+  "guide": "Canllaw",
+  "termsAndConditions": "Telerau ac amodau",
+  "cookiePolicy": "Cwcis",
+  "contact": "Cysylltu",
+  "stage": "Beta",
+  "signOut": "Allgofnodi",
+  "logIn": "Mewngofnodi",
   "phaseBanner": {
     "feedback": "Bydd eich adborth",
+    "smartSurveyFeedbackUrl": "https://www.smartsurvey.co.uk/s/ET_Feedback/?pageurl=",
     "additionalText": "yn ein helpu i wella’r gwasanaeth.",
     "languageToggle": "<a href=\"{currentUrl}{languageFlag}\" class=\"govuk-link language\">English</a>"
+  },
+  "contactUsTitle": "Cysylltu â ni",
+  "contactUsForHelp": "Ffoniwch un o ganolfannau cyswllt cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi. <br><br>Rhif Ffôn: 0300 123 1024<br>Rhif ffôn: 0300 303 5176 (Llinell Iaith Gymraeg)<br>Rhif ffôn: 0300 790 6234 (Yr Alban)<br>Ffôn Testun: 18001 0300 123 1024 (Cymru a Lloegr)<br>Ffôn testun: 18001 0300 790 6234 (Yr Alban)<br>Dydd Llun i ddydd Gwener, 9am - 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
+  "noticeLengthInsetText": "Os nad ydych yn siŵr, edrychwch ar delerau ac amodau eich contract cyflogaeth.",
+  "sessionTimeout": {
+    "modal": {
+      "title": "Rydych ar fin allgofnodi",
+      "body": ["Am resymau diogelwch, byddwch yn cael eich allgofnodi o’r gwasanaeth hwn mewn ", "funudau."],
+      "info": "Allgofnodi’n awtomatig",
+      "extend": "Parhau i ddefnyddio’r gwasanaeth",
+      "cancel": "Allgofnodi"
+    }
   }
 }

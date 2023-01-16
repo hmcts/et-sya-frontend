@@ -1,0 +1,71 @@
+{
+  "title": "Gwasanaeth i Ddinasyddion",
+  "header": "Trosolwg o’r achos - ",
+  "caseNumber": "Rhif yr achos ",
+  "accepted": "Derbyniwyd yr hawliad",
+  "received": "Ymateb wedi cyrraedd",
+  "details": "Manylion eich gwrandawiad",
+  "decision": "Y penderfyniad ar eich hawliad",
+
+  "iWantTo": "Rwyf eisiau...",
+  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
+
+  "section1": "Amdanoch chi",
+  "section2": "Eich hawliad",
+  "section3": "Yr ymateb",
+  "section4": "Eich gwrandawiadau",
+  "section5": "Ceisiadau i’r tribiwnlys",
+  "section6": "Gorchmynion a cheisiadau gan y tribiwnlys",
+  "section7": "Dyfarniadau gan y tribiwnlys",
+  "section8": "Dogfennau’r achos",
+
+  "personalDetails": "Gweld a golygu eich manylion personol",
+  "et1ClaimForm": "Eich ffurflen hawlio ET1",
+  "respondentResponse": "Ymateb gan yr atebydd (ET3)",
+  "hearingDetails": "Gweld manylion eich gwrandawiadau",
+  "requestsAndApplications": "Eich cais a’ch ceisiadau",
+  "respondentApplications": "Ceisiadau’r atebydd",
+  "contactTribunal": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "tribunalOrders": "Pob gorchymyn a phob cais gan y tribiwnlys",
+  "tribunalJudgements": "Gweld pob dyfarniad",
+  "documents": "Pob dogfen",
+
+  "notViewedYet": "Heb ei weld eto",
+  "notAvailableYet": "Ddim ar gael eto",
+  "completed": "Wedi’i gwblhau",
+  "submitted": "Wedi'i gyflwyno",
+  "viewed": "Wedi’i weld",
+  "important": "Pwysig",
+  "optional": "Dewisol",
+  "waitingForTheTribunal": "Aros am y tribiwnlys",
+  "submittedAndViewed": "Wedi'i gyflwyno",
+  "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
+  "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
+  "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
+  "notificationBanner": {
+    "acknowledgement": {
+      "header": "Mae’r tribiwnlys wedi cydnabod eich hawliad",
+      "link": "Gweld y gydnabyddiaeth o dderbyn yr hawliad",
+      "p1": "Mae’r tribiwnlys hefyd wedi cyflwyno Hysbysiad o Hawliad i’r atebydd ac wedi pennu dyddiad ar gyfer y gwrandawiad.",
+      "p2": "<span class=\"govuk-body govuk-!-font-weight-bold\">Beth fydd yn digwydd nesaf</span><br>Mae’r tribiwnlys wedi gofyn i’r atebydd ymateb i’ch cais erbyn"
+    },
+    "rejection": {
+      "header": "Mae’r tribiwnlys wedi gwrthod y cyfan neu ran o’ch hawliad",
+      "link": "Gweld yr hysbysiad gwrthod",
+      "p1": "Bydd y tribiwnlys yn cau eich hawliad."
+    },
+    "respondentReceived": {
+      "header": "Mae'r tribiwnlys wedi cael ymateb gan yr atebydd",
+      "p1": "Byddwn yn prosesu’r ymateb ac yn cysylltu â chi yn fuan i ddweud wrthych beth fydd yn digwydd nesaf."
+    },
+    "respondentRejection": {
+      "header": "Mae'r tribiwnlys wedi gwrthod ymateb yr atebydd.",
+      "link": "Gweld y llythyr gwrthod"
+    },
+    "respondentAcknowledgement": {
+      "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd.",
+      "link": "Gweld yr ymateb"
+    }
+  }
+}

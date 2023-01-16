@@ -2,6 +2,7 @@
   "title": "Work address",
   "legend": "Did you work at ",
   "hintText": "Choose 'Yes' if you worked from home occasionally or full-time for the same address listed for the respondent.",
+  "h1": "Did you work at",
   "errors": {
     "claimantWorkAddressQuestion": {
       "required": "Tell us did you work at this address"

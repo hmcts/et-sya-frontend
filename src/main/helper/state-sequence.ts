@@ -1,4 +1,4 @@
-import { CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseWithId } from '../definitions/case';
 import { CaseState, HubCaseState } from '../definitions/definition';
 
 export class StateSequence {
@@ -24,7 +24,7 @@ export class StateSequence {
   }
 
   public toHubState(userCase: Partial<CaseWithId>): HubCaseState {
-    if (userCase.et3IsThereAnEt3Response === YesOrNo.YES) {
+    if (userCase.et3ResponseReceived) {
       return HubCaseState.RESPONSE_RECEIVED;
     } else if (userCase.state === CaseState.ACCEPTED) {
       return HubCaseState.ACCEPTED;
