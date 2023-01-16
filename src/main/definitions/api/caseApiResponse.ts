@@ -50,7 +50,7 @@ export interface CaseData {
   respondentCollection?: RespondentApiModel[];
   claimantWorkAddressQuestion?: YesOrNo;
   claimantWorkAddress?: WorkAddressDetails;
-  et3IsThereAnEt3Response?: YesOrNo;
+  et3ResponseReceived?: boolean;
   receiptDate?: string;
   hubLinksStatuses?: HubLinksStatuses;
   managingOffice?: string;

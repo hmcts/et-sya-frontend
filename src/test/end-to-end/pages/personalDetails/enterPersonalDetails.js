@@ -9,6 +9,7 @@ module.exports = async function () {
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.see('Date of birth (optional)');
   I.see('What is your date of birth?');
   I.fillField('#dobDate-day', '01');
   I.fillField('#dobDate-month', '01');

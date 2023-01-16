@@ -121,7 +121,7 @@ export default {
       ccdId: '3454xaa',
     },
   ],
-  et3IsThereAnEt3Response: YesOrNo.YES,
+  et3ResponseReceived: true,
   claimSummaryFile: {
     document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
     document_filename: 'document.pdf',

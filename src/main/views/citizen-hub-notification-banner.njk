@@ -4,11 +4,11 @@
 
   {% if showSubmittedAlert %}
     <h3 class="govuk-notification-banner__heading">
-        You have submitted your claim to the tribunal
+        {{ submittedAlert }}
     </h3>
 
     <p class="govuk-body">
-        We aim to process your claim by {{processingDueDate}}. In busy periods it may take longer.
+        {{ processClaim }} {{ processingDueDate }}{{ busyPeriod }}
     </p>
   {% endif %}
 
@@ -80,6 +80,7 @@
 
 {% if showSubmittedAlert or showAcknowledgementAlert or showRejectionAlert or showRespondentResponseReceived or showRespondentRejection or showRespondentAcknowledgement %}
     {{ govukNotificationBanner({
-   html: htmlForNotification
+   html: htmlForNotification,
+   titleText: important
   }) }}
 {% endif %}

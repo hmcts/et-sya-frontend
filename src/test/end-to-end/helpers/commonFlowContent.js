@@ -11,7 +11,7 @@ async function verifyMakeAClaimToAnEmploymentTribunal() {
   I.see('‘respondents’.');
   I.see('To make a claim you need to contact Acas and get an ‘Early conciliation certificate’ from them or give us a');
   I.see('valid reason why you do not have one.');
-  I.see('If you do not have a certificate or a reason you need to contact Acas.');
+  I.see('If you do not have a certificate or a reason you need to contact Acas (opens in new tab).');
   I.see(
     'You do not have to make your claim in one go. You can save and return to it at any time before you submit it.'
   );
@@ -72,19 +72,21 @@ async function verifyWhoCanActAsARepresentativeGuidanceText() {
 }
 
 async function verifyHowToFindARepresentativeGuidanceText() {
-  I.see('Use the following to find and get a legal representative:');
-  I.see('Find a solicitor in England and Wales – list of solicitors run by The Law Society');
-  I.see('Find a solicitor in Scotland – database of solicitors run The Law Society of Scotland');
-  I.see('Free Representation Unit (FRU) – charity providing legal advice, case preparation and advocacy');
+  I.see('The following links open in a new tab');
+  I.see('Find a solicitor in England and Wales\n(opens in new tab)\n – list of solicitors run by The Law Society');
+  I.see('Find a solicitor in Scotland\n(opens in new tab)\n – database of solicitors run The Law Society of Scotland');
+  I.see(
+    'Free Representation Unit (FRU)\n(opens in new tab)\n – charity providing legal advice, case preparation and advocacy'
+  );
   I.see('for people not eligible for legal aid or who cannot afford lawyers (this service is not available in');
   I.see('Scotland)');
   I.see('In Scotland, some university law clinics can provide advice and represenation. You can find a list');
-  I.see('at The Scottish University Law Clinic Network (SULCN)');
+  I.see('at The Scottish University Law Clinic Network (SULCN)\n(opens in new tab)\n');
   I.see('local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford');
   I.see('lawyers.');
   I.see('A trade union may also be able to pay for a solicitor and free legal advice is available from Citizens');
-  I.see('Advice or Citizens Advice Scotland.');
-  I.see('The Equality Advisory and Support Service can help with discrimination claims.');
+  I.see('Advice\n(opens in new tab)\n or Citizens Advice Scotland\n(opens in new tab)\n.');
+  I.see('The Equality Advisory and Support Service\n(opens in new tab)\n can help with discrimination claims.');
   I.see('Some people may also be able to get help to pay for legal advice through legal aid.');
 }
 

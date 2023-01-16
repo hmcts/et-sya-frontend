@@ -32,7 +32,7 @@ export class Oidc {
         if (req.query.redirectUrl) {
           return res.redirect(req.query.redirectUrl as string);
         } else {
-          return res.redirect(PageUrls.CLAIM_SAVED);
+          return res.redirect(PageUrls.HOME);
         }
       });
     });

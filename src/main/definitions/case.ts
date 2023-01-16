@@ -152,7 +152,7 @@ export interface Case {
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: DocumentDetail;
   submittedDate?: CaseDate;
-  et3IsThereAnEt3Response?: YesOrNo;
+  et3ResponseReceived?: boolean;
   hubLinksStatuses?: HubLinksStatuses;
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];

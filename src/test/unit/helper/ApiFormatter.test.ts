@@ -151,7 +151,7 @@ describe('Should return data in api format', () => {
       ],
       createdDate: '19 August 2022',
       lastModified: '19 August 2022',
-      et3IsThereAnEt3Response: YesOrNo.YES,
+      et3ResponseReceived: true,
       claimSummaryFile: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
@@ -217,7 +217,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
         typesOfClaim: ['discrimination', 'payRelated'],
         ClaimantPcqId: '1234',
-        et3IsThereAnEt3Response: YesOrNo.YES,
+        et3ResponseReceived: true,
         claimantIndType: {
           claimant_first_names: 'Jane',
           claimant_last_name: 'Doe',
@@ -304,6 +304,7 @@ describe('Format Case Data to Frontend Model', () => {
         respondentCollection: [
           {
             value: {
+              responseReceived: YesOrNo.YES,
               respondent_name: 'Globo Corp',
               respondent_ACAS_question: YesOrNo.YES,
               respondent_ACAS: 'R111111111111',
@@ -454,7 +455,7 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressTown: undefined,
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
-      et3IsThereAnEt3Response: undefined,
+      et3ResponseReceived: false,
       claimSummaryFile: undefined,
       submittedDate: undefined,
       hubLinksStatuses: undefined,
@@ -592,7 +593,7 @@ describe('Format Case Data to Frontend Model', () => {
       workAddressTown: undefined,
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
-      et3IsThereAnEt3Response: undefined,
+      et3ResponseReceived: false,
       claimSummaryFile: undefined,
       submittedDate: undefined,
       hubLinksStatuses: undefined,
