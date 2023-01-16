@@ -82,7 +82,7 @@ export default class ContactTheTribunalSelectedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    req.session.contactType = 'Application';
+    req.session.contactType = 'Contact';
     const selectedApplication = req.params.selectedOption;
     req.session.contactTribunalSelection = selectedApplication;
     if (!applications.includes(selectedApplication)) {
