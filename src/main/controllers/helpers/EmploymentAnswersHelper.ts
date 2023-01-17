@@ -367,7 +367,7 @@ export const getEmploymentDetails = (
             },
             value: {
               text:
-                userCase.newJobStartDate.day === undefined
+                userCase.newJobStartDate === undefined
                   ? ''
                   : userCase.newJobStartDate.day +
                     '-' +
