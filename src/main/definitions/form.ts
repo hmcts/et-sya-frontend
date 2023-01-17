@@ -20,19 +20,11 @@ export interface SubmitButton {
   disabled?: boolean;
 }
 
-export interface CancelLink {
-  text: Label;
-  classes?: string;
-  disabled?: boolean;
-  href?: string;
-}
-
 export interface FormContent {
   submit?: SubmitButton;
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
-  cancel?: CancelLink;
 }
 
 export type FormField = FormInput | FormOptions;

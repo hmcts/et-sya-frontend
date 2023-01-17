@@ -1,0 +1,28 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+<div class="govuk-button-group">
+  {{ govukButton({
+    text: getContent(form.submit.text),
+    classes: form.submit.classes,
+    preventDoubleClick: true,
+    disabled: form.submit.disabled,
+    attributes: {
+      id: 'main-form-submit'
+    }
+  }) if getContent(form.submit.text) }}
+
+  {{ govukButton({
+    text: getContent(form.saveForLater.text),
+    classes: form.saveForLater.classes,
+    preventDoubleClick: true,
+    name: 'saveForLater',
+    attributes: {
+      id: 'main-form-save-for-later'
+    },
+    value: true
+  }) if getContent(form.saveForLater.text) }}
+
+  {% if cancelLink %}
+    <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
+  {% endif %}
+</div>

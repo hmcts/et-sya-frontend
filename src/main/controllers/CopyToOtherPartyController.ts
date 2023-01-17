@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('CopyToOtherPartyController');
 
@@ -58,11 +59,6 @@ export default class CopyToOtherPartyController {
       text: (l: AnyRecord): string => l.continue,
       classes: 'govuk-!-margin-right-2',
     },
-    cancel: {
-      text: (l: AnyRecord): string => l.cancel,
-      classes: 'govuk-link',
-      href: PageUrls.CITIZEN_HUB,
-    },
   };
 
   constructor() {
@@ -94,12 +90,16 @@ export default class CopyToOtherPartyController {
     }
     const content = getPageContent(req, this.CopyToOtherPartyContent, [
       TranslationKeys.COMMON,
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
+    const languageParam = getLanguageParam(req.url);
+    const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
       copyCorrespondence: captionText,
+      cancelLink: redirectUrl,
     });
   };
 }
