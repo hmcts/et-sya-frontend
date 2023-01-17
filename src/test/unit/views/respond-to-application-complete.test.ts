@@ -7,22 +7,22 @@ import request from 'supertest';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
-const responseCompleteJsonRaw = fs.readFileSync(
-  path.resolve(__dirname, '../../../main/resources/locales/en/translation/response-complete.json'),
+const respondToApplicationCompleteJsonRaw = fs.readFileSync(
+  path.resolve(__dirname, '../../../main/resources/locales/en/translation/respond-to-application-complete.json'),
   'utf-8'
 );
-const responseCompleteJson = JSON.parse(responseCompleteJsonRaw);
+const respondToApplicationCompleteJson = JSON.parse(respondToApplicationCompleteJsonRaw);
 const titleClass = 'govuk-panel__title';
 const panelClass = 'govuk-panel govuk-panel--confirmation';
 const headingClass = 'govuk-heading-m';
 const buttonClass = 'govuk-button';
-const expectedTitle = responseCompleteJson.titleText;
+const expectedTitle = respondToApplicationCompleteJson.titleText;
 
 let htmlRes: Document;
-describe('Response complete page', () => {
+describe('Respond to application complete page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get(PageUrls.RESPONSE_COMPLETE)
+      .get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
@@ -40,11 +40,11 @@ describe('Response complete page', () => {
 
   it('should display paragraph header', () => {
     const title = htmlRes.getElementsByClassName(headingClass);
-    expect(title[2].innerHTML).contains(responseCompleteJson.h1, 'Panel title does not exist');
+    expect(title[2].innerHTML).contains(respondToApplicationCompleteJson.h1, 'Panel title does not exist');
   });
 
   it('should display close button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[5].innerHTML).contains(responseCompleteJson.button, 'Could not find the button');
+    expect(button[5].innerHTML).contains(respondToApplicationCompleteJson.button, 'Could not find the button');
   });
 });

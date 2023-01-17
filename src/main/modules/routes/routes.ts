@@ -58,13 +58,13 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
-import ResponseCompleteController from '../../controllers/ResponseCompleteController';
 import ResponseSupportingMaterialController from '../../controllers/ResponseSupportingMaterialController';
 import ResponseSupportingMaterialFileController from '../../controllers/ResponseSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -242,7 +242,8 @@ export class Routes {
       new ContactTheTribunalSelectedController().post
     );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
-    app.get(PageUrls.RESPONSE_COMPLETE, new ResponseCompleteController().get);
+    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
