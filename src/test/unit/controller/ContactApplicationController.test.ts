@@ -44,7 +44,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
-      expect(req.session.errors).toHaveLength(0);
+      expect(req.session.errors).toHaveLength(1);
     });
 
     it('should only allow valid file formats', async () => {

@@ -1,9 +1,9 @@
+import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
-import { GenericTseApplication } from '../complexTypes/genericTseApplication';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
@@ -28,7 +28,7 @@ interface CaseDataApiBody {
   claimantWorkAddressQuestion?: string;
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
-  new_tse_application?: GenericTseApplication;
+  claimantTse?: ClaimantTse;
 }
 
 export interface CreateCaseBody {

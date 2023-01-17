@@ -262,7 +262,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
-      new_tse_application: caseItem.claimantTseApplication,
+      claimantTse: setClaimantTse(caseItem),
     },
   };
 }
@@ -443,3 +443,13 @@ export const setDocumentValues = (
 export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
 };
+
+function setClaimantTse(caseItem: CaseWithId) {
+  if (caseItem.contactApplicationSending) {
+    return {
+      contactApplicationType: caseItem.contactApplicationType,
+      contactApplicationText: caseItem.contactApplicationText,
+      contactApplicationFile: caseItem.contactApplicationFile,
+    };
+  }
+}
