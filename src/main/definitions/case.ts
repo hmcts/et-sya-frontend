@@ -1,4 +1,3 @@
-import { GenericTseApplication } from './complexTypes/genericTseApplication';
 import {
   CaseState,
   ClaimOutcomes,
@@ -162,10 +161,10 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   // TSE
+  contactApplicationSending?: boolean;
   contactApplicationType?: string;
   contactApplicationText?: string;
   contactApplicationFile?: Document;
-  claimantTseApplication?: GenericTseApplication;
 }
 
 export const enum StillWorking {

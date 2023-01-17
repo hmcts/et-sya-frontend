@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseWithId } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
@@ -102,13 +102,7 @@ export default class ContactTheTribunalSelectedController {
       return res.redirect(req.url);
     }
 
-    userCase.claimantTseApplication = {
-      type: userCase.contactApplicationType,
-      details: userCase.contactApplicationText,
-      documentUpload: userCase.contactApplicationFile,
-      copyToOtherPartyYesOrNo: YesOrNo.YES,
-      copyToOtherPartyText: '',
-    };
+    userCase.contactApplicationSending = true;
     await handleUpdateSubmittedCase(req, logger);
     clearTseFields(userCase);
     return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
@@ -155,6 +149,7 @@ export default class ContactTheTribunalSelectedController {
 }
 
 export function clearTseFields(userCase: CaseWithId): void {
+  userCase.contactApplicationSending = false;
   userCase.contactApplicationText = undefined;
   userCase.contactApplicationFile = undefined;
 }
