@@ -14,6 +14,9 @@
     "uploaded": "Welsh Translation required"
   },
   "errors": {
+    "contactApplicationText": {
+      "required": "Welsh Translation required"
+    },
     "contactApplicationFile": {
       "invalidFileFormat": "Welsh Translation required",
       "invalidFileName": "Welsh Translation required",

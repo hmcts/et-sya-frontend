@@ -14,6 +14,9 @@
     "uploaded": "Files uploaded"
   },
   "errors": {
+    "contactApplicationText": {
+      "required": "Use the text box or file upload to give details"
+    },
     "contactApplicationFile": {
       "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
       "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",

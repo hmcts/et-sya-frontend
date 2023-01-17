@@ -10,15 +10,19 @@
 {% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
   {{ govukErrorSummary({
     titleText: errorSummaryTitle,
     errorList: [
       {
-        text: submitError | safe,
-        href: "#main-form-submit"
+        text: errorMessage,
+        href: "#contactApplicationFile"
       }
     ]
-  }) if errors.length > 0 }}
+  }) if errorMessage.length > 0 }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">

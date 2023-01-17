@@ -5,14 +5,14 @@ import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormError, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUpdateSubmittedCase, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
-import { getContactApplicationError } from './helpers/ErrorHelpers';
+import { getContactApplicationError, getLastFileError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
@@ -76,19 +76,16 @@ export default class ContactTheTribunalSelectedController {
     // Todo think about using CaseHelpers.setUserCase
     userCase.contactApplicationText = req.body.contactApplicationText;
 
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
+    req.session.errors = [];
+    if (contactApplicationError) {
+      req.session.errors.push(contactApplicationError);
+      //TODO Handle redirect to Welsh page
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+    }
+
     if (req.body.upload) {
-      if (!req.file?.originalname) {
-        return res.redirect(req.url);
-      }
-
-      const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-      const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
-      if (contactApplicationError) {
-        req.session.errors.push(contactApplicationError);
-        return res.redirect(req.url);
-      }
-      req.session.errors = [];
-
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
@@ -98,9 +95,9 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-
-      return res.redirect(req.url);
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
     }
+    req.session.errors = [];
 
     userCase.claimantTseApplication = {
       type: userCase.contactApplicationType,
@@ -142,13 +139,27 @@ export default class ContactTheTribunalSelectedController {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
     });
 
+    const fileError: FormError = getLastFileError(req.session.errors);
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    };
+
+    let errorMessage: string;
+    if (fileError) {
+      const errorMessages = translations.errors.contactApplicationFile;
+      errorMessage = errorMessages[fileError.errorType];
+    } else {
+      errorMessage = undefined;
+    }
+
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
       userCase,
       InterceptPaths,
       hideContactUs: true,
       cancelLink: PageUrls.CONTACT_THE_TRIBUNAL,
-      errors: req.session.errors,
+      errorMessage,
       ...content,
     });
   };

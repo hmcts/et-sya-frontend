@@ -216,6 +216,13 @@ export const getContactApplicationError = (
   file: Express.Multer.File,
   fileTooLarge: boolean
 ): FormError => {
+  const textProvided = isFieldFilledIn(formData.contactApplicationText) === undefined;
+  const fileProvided = file !== undefined;
+
+  if (!textProvided && !fileProvided) {
+    return { propertyName: 'contactApplicationText', errorType: 'required' };
+  }
+
   if (fileTooLarge) {
     return { propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' };
   }
@@ -228,5 +235,15 @@ export const getContactApplicationError = (
   const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
     return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
+  }
+};
+
+export const getLastFileError = (errors: FormError[]): FormError => {
+  if (errors?.length > 0) {
+    for (let i = errors.length - 1; i >= 0; i--) {
+      if (errors[i].propertyName.includes('contactApplicationFile')) {
+        return errors[i];
+      }
+    }
   }
 };
