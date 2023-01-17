@@ -82,6 +82,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  ACCESSIBILITY_STATEMENT: 'accessibility-statement',
 } as const;
 
 export const PageUrls = {
@@ -157,6 +158,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   PCQ: '/pcq',
+  ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
 
 export const InterceptPaths = {
