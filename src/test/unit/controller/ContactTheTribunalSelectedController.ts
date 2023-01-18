@@ -40,11 +40,11 @@ describe('Contact Application Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should both summary text and summary file be optional', async () => {
+    it('should require either summary text or summary file', async () => {
       const req = mockRequest({ body: { contactApplicationText: '' } });
       await new ContactTheTribunalSelectedController().post(req, mockResponse());
 
-      expect(req.session.errors).toHaveLength(1);
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
     });
 
     it('should only allow valid file formats', async () => {
@@ -66,14 +66,32 @@ describe('Contact Application Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
     });
 
-    it('should assign userCase from summary text', async () => {
-      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+    it('should assign values when clicking upload file for appropriate values', async () => {
+      const req = mockRequest({
+        body: { upload: true, contactApplicationText: 'test', contactApplicationFile: mockFile },
+      });
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
         contactApplicationText: 'test',
+        contactApplicationFile: {
+          document_filename: 'test.txt',
+        },
+      });
+    });
+
+    it('should reset values when clicking continue which submits the claim', async () => {
+      const req = mockRequest({ body: { contactApplicationText: 'test', contactApplicationFile: mockFile } });
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(req.session.userCase).toMatchObject({
+        contactApplicationSending: false,
+        contactApplicationText: undefined,
+        contactApplicationFile: undefined,
       });
     });
   });
