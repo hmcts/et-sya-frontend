@@ -17,7 +17,7 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
-import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -44,7 +44,7 @@ export default class CitizenHubController {
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
-      await handleUpdateSubmittedCase(req, logger);
+      handleUpdateHubLinksStatuses(req, logger);
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
