@@ -84,6 +84,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
+  APPLICATION_COMPLETE: 'application-complete',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
@@ -166,6 +167,7 @@ export const PageUrls = {
   REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  APPLICATION_COMPLETE: '/application-complete',
 } as const;
 
 export const InterceptPaths = {

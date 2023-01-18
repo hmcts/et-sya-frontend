@@ -40,9 +40,9 @@ describe('Hearing Preference video or phone Choice page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display firt paragraph', () => {
+  it('should display expected text', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[5].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p1[6].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display continue button', () => {

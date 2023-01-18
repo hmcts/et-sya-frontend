@@ -2,7 +2,12 @@ import { isDateEmpty } from '../components/form/dateValidators';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import {
+  CaseApiDataResponse,
+  CaseData,
+  DocumentApiModel,
+  RespondentApiModel,
+} from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { AppRequest, UserDetails } from '../definitions/appRequest';
 import {
@@ -12,6 +17,7 @@ import {
   Document,
   EnglishOrWelsh,
   Respondent,
+  YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
 import {
@@ -133,7 +139,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
-    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    et3ResponseReceived: hasResponseFromRespondentList(fromApiCaseData.case_data),
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
     et1SubmittedForm: returnSubmittedEt1Form(
@@ -442,6 +448,14 @@ export const setDocumentValues = (
 
 export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
+};
+
+export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
+  if (caseData?.respondentCollection) {
+    return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
+  }
+
+  return false;
 };
 
 function setClaimantTse(caseItem: CaseWithId) {

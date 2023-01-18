@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -53,7 +52,7 @@ export default class CitizenHubController {
     // Mark respondent's response as waiting for the tribunal
     if (
       hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-      userCase.et3IsThereAnEt3Response === YesOrNo.YES
+      userCase.et3ResponseReceived
     ) {
       hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
     }

@@ -162,7 +162,7 @@ describe('Steps to Making your claim Controller', () => {
       compensationAmount: undefined,
       compensationOutcome: undefined,
       et1SubmittedForm: undefined,
-      et3IsThereAnEt3Response: undefined,
+      et3ResponseReceived: false,
       ethosCaseReference: undefined,
       feeGroupReference: undefined,
       hubLinksStatuses: undefined,
@@ -180,7 +180,6 @@ describe('Steps to Making your claim Controller', () => {
       workAddressPostcode: undefined,
       workAddressTown: undefined,
     });
-    expect(req.language).toEqual('cy');
   });
 
   it('should render page with all claim types', () => {

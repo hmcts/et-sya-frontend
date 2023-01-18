@@ -32,12 +32,12 @@ describe('Work postcode page', () => {
 
   it('should display firt paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[5].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p1[6].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display second paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(pClass);
-    expect(p1[6].innerHTML).contains(expectedP2, 'P2 does not exist');
+    expect(p1[7].innerHTML).contains(expectedP2, 'P2 does not exist');
   });
 
   it('should display 1 input field', () => {

@@ -1,10 +1,10 @@
 {
-  "title": "Welsh Translation required",
+  "title": "Rhif tystysgrif Acas",
   "acasCertNum": "Nodwch rif tystysgrif cymodi cynnar Acas",
   "h1": "A oes gennych rif tystysgrif ACAS ar gyfer ",
   "legend": "A oes gennych rif tystysgrif ACAS ar gyfer ",
   "hintText": "Dylai bod gan bron bawb y rhif hwn cyn iddynt lenwi’r ffurflen hawlio. Gallwch ddod o hyd iddo ar eich tystysgrif Acas. Darllenwch fwy am wasanaeth  cymodi cynnar Acas (yn agor mewn tab newydd)",
-  "linkText": "Welsh Translation required",
+  "linkText": "Gwasanaeth cymodi cynnar Acas (yn agor mewn tab newydd)",
   "yes": "Oes",
   "no": "Nac oes",
   "errors": {

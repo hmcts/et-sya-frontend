@@ -1,17 +1,17 @@
 {
   "title": "Buddion gweithwyr",
   "workingOrNoticeLegend": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
-  "noLongerWorkingLegend": "Welsh Translation required",
+  "noLongerWorkingLegend": "Oeddech chi’n cael unrhyw fuddion fel cyflogai? (dewisol)",
   "h1": {
     "workingOrNotice": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
-    "noLongerWorking": "Welsh Translation required"
+    "noLongerWorking": "Oeddech chi’n cael unrhyw fuddion fel cyflogai? (dewisol)"
   },
   "label": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion?",
   "p1": "Er enghraifft, gofal plant, car cwmni, yswiriant tŷ a iechyd.",
   "benefitsTitle": "Beth a ystyrir i fod yn fuddion cyflogeion?",
   "benefitsHelpTxt": "Buddion cyflogeion (a elwir hefyd yn ‘buddion ymarferol’) yw’r gwahanol fathau o fuddion ychwanegol rydych yn eu cael ar ben eich cyflog arferol.",
   "hint": "Dywedwch fwy wrthym am y buddion hynny",
-  "noLongerWorking": "Welsh Translation required",
+  "noLongerWorking": "Ddim yn gweithio mwyach",
   "errors": {
     "benefitsCharCount": {
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
