@@ -9,6 +9,7 @@ async function initialPageFlow() {
   //Make a Claim  to an employment Tribunal Page....
   await I.amOnPage('/');
   await I.see('Make a claim to an employment tribunal');
+  await I.see('If you do not have a certificate or a reason you need to contact Acas (opens in new tab).');
   await commonFlowContentHelper.verifyMakeAClaimToAnEmploymentTribunal();
   await I.click('Start now');
 

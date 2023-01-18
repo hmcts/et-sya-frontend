@@ -275,3 +275,83 @@ describe('CYA for Scottish cases', () => {
     expect(personalDetailsList.length).equals(8, 'Incorrect number of rows found');
   });
 });
+
+describe('Check your answers confirmation page - New Job with start date', () => {
+  beforeAll(async () => {
+    await request(
+      mockApp({
+        userCase: {
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
+          claimantWorkAddressQuestion: YesOrNo.NO,
+          pastEmployer: YesOrNo.YES,
+          noticePeriod: YesOrNo.YES,
+          isStillWorking: StillWorking.NO_LONGER_WORKING,
+          newJob: YesOrNo.YES,
+          newJobStartDate: { year: '2020', month: '04', day: '21' },
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Does',
+              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              acasCert: YesOrNo.NO,
+              acasCertNum: '12345',
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
+        },
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should show new job start date', () => {
+    const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
+    expect(allKeys[21].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[22].innerHTML).contains('New job start date', '21-04-2020');
+  });
+});
+
+describe('Check your answers confirmation page - New Job with undefined', () => {
+  beforeAll(async () => {
+    await request(
+      mockApp({
+        userCase: {
+          typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
+          claimantWorkAddressQuestion: YesOrNo.NO,
+          pastEmployer: YesOrNo.YES,
+          noticePeriod: YesOrNo.YES,
+          isStillWorking: StillWorking.NO_LONGER_WORKING,
+          newJob: YesOrNo.YES,
+          newJobStartDate: undefined,
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'John Does',
+              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              acasCert: YesOrNo.NO,
+              acasCertNum: '12345',
+              noAcasReason: NoAcasNumberReason.ANOTHER,
+            },
+          ],
+          claimTypeDiscrimination: [ClaimTypeDiscrimination.AGE],
+          tellUsWhatYouWant: [TellUsWhatYouWant.COMPENSATION_ONLY, TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION],
+        },
+      })
+    )
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should show new job start date', () => {
+    const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
+    expect(allKeys[21].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[22].innerHTML).contains('New job start date', '');
+  });
+});
