@@ -5,7 +5,7 @@ import { TranslationKeys, responseRejectedDocTypes } from '../definitions/consta
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
-import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
 
 const logger = getLogger('CitizenHubDocumentController');
@@ -52,7 +52,7 @@ export default class CitizenHubDocumentController {
       view = 'response-from-respondent-view';
     }
 
-    handleUpdateSubmittedCase(req, logger);
+    handleUpdateHubLinksStatuses(req, logger);
 
     res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
