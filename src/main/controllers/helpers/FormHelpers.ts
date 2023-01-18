@@ -3,7 +3,8 @@ import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import { mapSelectedRespondentValuesToCase } from '.././helpers/RespondentHelpers';
+
+import { mapSelectedRespondentValuesToCase } from './RespondentHelpers';
 
 export const getPageContent = (
   req: AppRequest,
@@ -50,6 +51,15 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
           .map((fieldWithSubFields: FormInput) => fieldWithSubFields.subFields)
           .forEach((subField: Record<string, FormField>) => assignFormData(caseName, subField));
       }
+    }
+  });
+};
+
+export const trimFormData = (formData: Partial<CaseWithId>): void => {
+  (Object.keys(formData) as (keyof typeof formData)[]).forEach(key => {
+    const value = formData[key];
+    if (typeof value === 'string') {
+      (formData as AnyRecord)[key] = value.trim();
     }
   });
 };
