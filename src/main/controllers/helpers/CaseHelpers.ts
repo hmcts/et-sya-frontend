@@ -15,7 +15,7 @@ import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
-import { resetValuesIfNeeded } from './FormHelpers';
+import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage } from './RouterHelpers';
@@ -25,6 +25,7 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
+  trimFormData(formData);
   resetValuesIfNeeded(formData);
   Object.assign(req.session.userCase, formData);
 };
