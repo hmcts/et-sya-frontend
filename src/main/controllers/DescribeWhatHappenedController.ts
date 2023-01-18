@@ -81,6 +81,7 @@ export default class DescribeWhatHappenedController {
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
     }
+    req.session.errors = [];
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const claimSummaryError = getClaimSummaryError(
