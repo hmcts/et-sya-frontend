@@ -1,7 +1,7 @@
 import ContactTheTribunalSelectedController from '../../../main/controllers/ContactTheTribunalSelectedController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -14,6 +14,7 @@ describe('Contact Application Controller', () => {
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
 
   beforeAll(() => {
+    jest.spyOn(helper, 'handleUpdateSubmittedCase').mockImplementation(() => Promise.resolve());
     const uploadResponse: DocumentUploadResponse = {
       originalDocumentName: 'test.txt',
       uri: 'test.com',
@@ -37,6 +38,26 @@ describe('Contact Application Controller', () => {
 
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
+  });
+
+  describe('GET - application names', () => {
+    it('allow white-listed application parameters', async () => {
+      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+      req.params.selectedOption = 'withdraw';
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().get(req, res);
+      expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
+    });
+
+    it('disallow non-white-listed application parameters', async () => {
+      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+      req.params.selectedOption = 'not-allowed';
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().get(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL);
+    });
   });
 
   describe('Correct validation', () => {
