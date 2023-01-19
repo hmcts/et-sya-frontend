@@ -111,8 +111,6 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
-  contactApplicationText?: string;
-  contactApplicationFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -152,7 +150,7 @@ export interface Case {
   tribunalCorrespondenceTelephone?: string;
   et1SubmittedForm?: DocumentDetail;
   submittedDate?: CaseDate;
-  et3IsThereAnEt3Response?: YesOrNo;
+  et3ResponseReceived?: boolean;
   hubLinksStatuses?: HubLinksStatuses;
   allEt1DocumentDetails?: DocumentDetail[];
   acknowledgementOfClaimLetterDetail?: DocumentDetail[];
@@ -162,6 +160,11 @@ export interface Case {
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
+  // TSE
+  contactApplicationSending?: boolean;
+  contactApplicationType?: string;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
 }
 
 export const enum StillWorking {

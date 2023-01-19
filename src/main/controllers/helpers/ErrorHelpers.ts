@@ -214,14 +214,36 @@ export const getClaimSummaryError = (
 export const getContactApplicationError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
+  fileTooLarge: boolean
 ): FormError => {
-  const fileFormatInvalid = hasInvalidFileFormat(file);
-  const fileNameInvalid = hasInvalidName(file?.originalname);
+  const textProvided = isFieldFilledIn(formData.contactApplicationText) === undefined;
+  const fileProvided = file !== undefined;
 
+  if (!textProvided && !fileProvided) {
+    return { propertyName: 'contactApplicationText', errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = hasInvalidFileFormat(file);
   if (fileFormatInvalid) {
     return { propertyName: 'contactApplicationFile', errorType: fileFormatInvalid };
   }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
     return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
+  }
+};
+
+export const getLastFileError = (errors: FormError[]): FormError => {
+  if (errors?.length > 0) {
+    for (let i = errors.length - 1; i >= 0; i--) {
+      if (errors[i].propertyName.includes('contactApplicationFile')) {
+        return errors[i];
+      }
+    }
   }
 };

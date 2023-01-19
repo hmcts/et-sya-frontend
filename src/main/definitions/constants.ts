@@ -84,6 +84,7 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
+  APPLICATION_COMPLETE: 'application-complete',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
@@ -164,9 +165,11 @@ export const PageUrls = {
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
+  REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
   CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
+  APPLICATION_COMPLETE: '/application-complete',
 } as const;
 
 export const InterceptPaths = {
@@ -174,7 +177,6 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
-  REMOVE_FILE: '/remove-uploaded-file',
 } as const;
 
 export const ErrorPages = {
@@ -198,7 +200,7 @@ export const JavaApiUrls = {
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
-  UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
+  UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',

@@ -25,6 +25,7 @@ export interface FormContent {
   fields: FormFields | FormFieldsFn;
   saveForLater?: SubmitButton;
   continue?: SubmitButton;
+  upload?: SubmitButton;
 }
 
 export type FormField = FormInput | FormOptions;
@@ -45,6 +46,7 @@ export interface FormOptions {
   validator?: ValidationCheck;
   parser?: Parser;
   subFields?: Record<string, FormField>;
+  rows?: { key: unknown; value?: unknown; actions?: unknown }[];
 }
 
 export interface FormInput {
