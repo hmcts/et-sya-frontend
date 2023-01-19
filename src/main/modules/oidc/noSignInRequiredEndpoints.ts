@@ -12,5 +12,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.TYPE_OF_CLAIM,
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
+  PageUrls.ACCESSIBILITY_STATEMENT,
   Urls.INFO,
 ];
