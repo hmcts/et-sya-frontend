@@ -88,6 +88,7 @@ export const TranslationKeys = {
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  ACCESSIBILITY_STATEMENT: 'accessibility-statement',
 } as const;
 
 export const PageUrls = {
@@ -167,6 +168,7 @@ export const PageUrls = {
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
   APPLICATION_COMPLETE: '/application-complete',
+  ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
 
 export const InterceptPaths = {

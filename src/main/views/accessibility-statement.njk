@@ -1,0 +1,125 @@
+{% extends "template.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+
+  <section>
+    <h1 class="govuk-heading-l">{{ header1 }}</h1>
+    <p class="govuk-body">{{ paragraph_s1_1 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s1_2 | safe }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ ableTo1 }}</li>
+      <li>{{ ableTo2 }}</li>
+      <li>{{ ableTo3 }}</li>
+      <li>{{ ableTo4 }}</li>
+      <li>{{ ableTo5 }}</li>
+    </ul>
+    <p class="govuk-body">{{ paragraph_s1_3 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s1_4 | safe }}</p>
+  </section>
+  <section>
+    <h2 class="govuk-heading-m">{{ header2 }}</h2>
+    <p class="govuk-body">{{ paragraph_s2_1 | safe }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ notAccessible1 }}</li>
+      <li>{{ notAccessible2 }}</li>
+      <li>{{ notAccessible3 }}</li>
+      <li>{{ notAccessible4 }}</li>
+      <li>{{ notAccessible5 }}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header3 }}</h2>
+    <p class="govuk-body">{{ paragraph_s3_1 | safe }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ contactType1 | safe }}</li>
+      <li>{{ contactType2 }}</li>
+      <li>{{ contactType3 }}</li>
+      <li>{{ contactType4 }}</li>
+    </ul>
+    <p class="govuk-body">{{ paragraph_s3_2 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s3_3 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header4 }}</h2>
+    <p class="govuk-body">{{ paragraph_s4_1 | safe }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ contactInfo1 | safe }}</li>
+      <li>{{ contactInfo2 }}</li>
+      <li>{{ contactInfo3 }}</li>
+      <li>{{ contactInfo4 }}</li>
+    </ul>
+    <p class="govuk-body">{{ paragraph_s4_2 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header5 }}</h2>
+    <p class="govuk-body">{{ paragraph_s5_1 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header6 }}</h2>
+    <p class="govuk-body">{{ paragraph_s6_1 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s6_2 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s6_3 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header7 }}</h2>
+    <p class="govuk-body">{{ paragraph_s7_1 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header8 }}</h2>
+    <p class="govuk-body">{{ paragraph_s8_1 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header9 }}</h2>
+    <p class="govuk-body">{{ paragraph_s9_1 | safe }}</p>
+    <h2 class="govuk-heading-m">{{ nonComplianceReason1 | safe }}</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li> {{ nonCompliance_1_1 }} </li>
+      <li> {{ nonCompliance_1_2 }} </li>
+      <li> {{ nonCompliance_1_3 }} </li>
+      <li> {{ nonCompliance_1_4 }} </li>
+      <li> {{ nonCompliance_1_5 }} </li>
+      <li> {{ nonCompliance_1_6 }} </li>
+    </ul>
+    <p class="govuk-body">{{ paragraph_s9_2 | safe }}</p>
+    <h2 class="govuk-heading-m">{{ nonComplianceReason2 | safe }}</h2>
+    <h3 class="govuk-heading-s">{{ nonComplianceReason2_PDF_DOCS | safe }}</h3>
+    <p class="govuk-body">{{ paragraph_s9_3 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s9_4 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s9_5 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header10 }}</h2>
+    <p class="govuk-body">{{ paragraph_s10_1 | safe }}</p>
+  </section>
+
+  <section>
+    <h2 class="govuk-heading-m">{{ header11 }}</h2>
+    <p class="govuk-body">{{ paragraph_s11_1 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_2 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_3 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_4 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_5 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_6 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_7 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_8 | safe }}</p>
+    <p class="govuk-body">{{ paragraph_s11_9 | safe }}</p>
+  </section>
+
+
+{% endblock %}

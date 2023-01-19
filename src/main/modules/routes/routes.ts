@@ -6,6 +6,7 @@ import { FileFilterCallback } from 'multer';
 
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
+import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
@@ -116,6 +117,7 @@ export class Routes {
     app.get(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().get);
     app.post(PageUrls.VALID_ACAS_REASON, new ValidNoAcasReasonController().post);
     app.get(PageUrls.COOKIE_PREFERENCES, new CookiePreferencesController().get);
+    app.get(PageUrls.ACCESSIBILITY_STATEMENT, new AccessibilityStatementController().get);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().get);
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_NAME, new RespondentNameController().post);
     app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_ADDRESS, new RespondentAddressController().get);
