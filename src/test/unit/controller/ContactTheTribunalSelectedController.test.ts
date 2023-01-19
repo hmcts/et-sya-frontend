@@ -14,7 +14,7 @@ describe('Contact Application Controller', () => {
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
 
   beforeAll(() => {
-    jest.spyOn(helper, 'handleUpdateSubmittedCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateHubLinksStatuses').mockImplementation(() => Promise.resolve());
     const uploadResponse: DocumentUploadResponse = {
       originalDocumentName: 'test.txt',
       uri: 'test.com',

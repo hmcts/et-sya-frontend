@@ -10,7 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handleUpdateSubmittedCase, handleUploadDocument } from './helpers/CaseHelpers';
+import { handleUpdateHubLinksStatuses, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getContactApplicationError, getLastFileError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -100,7 +100,7 @@ export default class ContactTheTribunalSelectedController {
     req.session.errors = [];
 
     userCase.contactApplicationSending = true;
-    await handleUpdateSubmittedCase(req, logger);
+    await handleUpdateHubLinksStatuses(req, logger);
     clearTseFields(userCase);
     return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
   };
