@@ -268,7 +268,6 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
       respondentCollection: setRespondentApiFormat(caseItem.respondents),
       claimantWorkAddressQuestion: caseItem.claimantWorkAddressQuestion,
       hubLinksStatuses: caseItem.hubLinksStatuses,
-      claimantTse: setClaimantTse(caseItem),
     },
   };
 }
@@ -457,13 +456,3 @@ export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
 
   return false;
 };
-
-function setClaimantTse(caseItem: CaseWithId) {
-  if (caseItem.contactApplicationSending) {
-    return {
-      contactApplicationType: caseItem.contactApplicationType,
-      contactApplicationText: caseItem.contactApplicationText,
-      contactApplicationFile: caseItem.contactApplicationFile,
-    };
-  }
-}
