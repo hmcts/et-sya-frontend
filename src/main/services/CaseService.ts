@@ -103,7 +103,7 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error updating hub links statuses: ' + axiosErrorDetails(error));
+      throw new Error('Error submitting claimant tse application: ' + axiosErrorDetails(error));
     }
   };
 
