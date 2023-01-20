@@ -87,13 +87,8 @@ const handleUploads = multer({
     fileSize: FILE_SIZE_LIMIT,
   },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    const fileSize = parseInt(req.headers['content-length']);
-    if (fileSize > FILE_SIZE_LIMIT) {
-      req.fileTooLarge = true;
-      return callback(null, false);
-    } else {
-      return callback(null, true);
-    }
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    return callback(null, !req.fileTooLarge);
   },
 });
 
@@ -227,7 +222,11 @@ export class Routes {
     app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
-    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.post(
+      PageUrls.TRIBUNAL_CONTACT_SELECTED,
+      handleUploads.single('contactApplicationFile'),
+      new ContactTheTribunalSelectedController().post
+    );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
     app.get(
       Urls.INFO,

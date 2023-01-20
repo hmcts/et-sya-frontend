@@ -64,6 +64,15 @@ export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logg
   }
 };
 
+export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitClaimantTse(req.session.userCase);
+    logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const getSectionStatus = (
   detailsCheckValue: YesOrNo,
   sessionValue: string | CaseDate | number

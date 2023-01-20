@@ -1,4 +1,3 @@
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 <!--  Ehe form body will not be parsed until after the request passes that middleware, we need to send the csrf in the action -->
@@ -13,31 +12,5 @@
     {% endif %}
   {% endblock %}
 
-  <div class="govuk-form-group">
-    {{
-      govukButton({
-        text: getContent(form.submit.text),
-        classes: form.submit.classes,
-        type: "submit",
-        preventDoubleClick: true,
-        attributes: {
-          id: 'main-form-submit'
-        }
-      }) if getContent(form.submit.text)
-    }}
-
-    {{
-      govukButton({
-        text: getContent(form.saveForLater.text),
-        classes: form.saveForLater.classes,
-        preventDoubleClick: true,
-        name: 'saveForLater',
-        value: true,
-        attributes: {
-          id: 'main-form-save-for-later'
-        },
-        value: true
-      }) if getContent(form.saveForLater.text)
-    }}
-  </div>
+  {% include "./saveButtons.njk" %}
 </form>

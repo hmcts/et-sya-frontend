@@ -171,7 +171,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
-    claimantTseApplications: fromApiCaseData?.case_data?.genericTseApplicationCollection,
   };
 }
 

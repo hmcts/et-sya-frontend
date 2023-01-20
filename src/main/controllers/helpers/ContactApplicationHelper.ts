@@ -26,7 +26,7 @@ export const getFiles = (
     return [
       {
         key: {
-          text: userCase.contactApplicationFile,
+          text: userCase.contactApplicationFile.document_filename,
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
