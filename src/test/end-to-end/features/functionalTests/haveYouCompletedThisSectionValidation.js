@@ -14,7 +14,7 @@ Scenario('No selection is made when completing your details section', async ({ I
   I.waitForElement('#tasklist-check');
   I.waitForText('Have you completed this section?', 30);
   I.click('#main-form-submit');
-  I.waitForText('There is a problem', 5, '#error-summary-title');
+  I.waitForText('There is a problem', 5, '#govuk-error-summary__title');
   const error_message_actual = (await I.grabTextFrom('#tasklist-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
   authPage.logout();
@@ -27,7 +27,7 @@ Scenario('No selection is made when completing employment and respondent section
   I.waitForElement('#tasklist-check');
   I.waitForText('Have you completed this section?', 30);
   I.click('#main-form-submit');
-  I.waitForText('There is a problem', 5, '#error-summary-title');
+  I.waitForText('There is a problem', 5, '#govuk-error-summary__title');
   const error_message_actual = (await I.grabTextFrom('#tasklist-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
   authPage.logout();
@@ -40,7 +40,7 @@ Scenario('No selection is made when completing claim details section', async ({ 
   I.waitForElement('#claim-details-check');
   I.waitForText('Have you completed this section?', 30);
   I.click('#main-form-submit');
-  I.waitForText('There is a problem', 5, '#error-summary-title');
+  I.waitForText('There is a problem', 5, '#govuk-error-summary__title');
   //I.waitForText('Tell us if you have completed this section');
   const error_message_actual = (await I.grabTextFrom('#claim-details-check-error')).trim();
   assert.equal(error_message_actual, error_message_expected, 'error message not matching expected');
