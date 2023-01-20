@@ -185,7 +185,7 @@ Scenario('Save as Draft: Still working for organisation', () => {
 
   I.seeElement('#main-form-submit');
   I.click('#main-form-submit');
-  I.seeElement('[aria-labelledby="govuk-error-summary__title"]');
+  I.seeElement('[aria-labelledby="error-summary-title"]');
   I.see('There is a problem');
   I.checkOption('#past-employer');
   I.click('#main-form-save-for-later');
