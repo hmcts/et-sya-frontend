@@ -37,26 +37,6 @@
         <li>{{ genericGuidanceItem3 }}</li>
       </ul>
       <span class="govuk-hint">{{ contactTemplateText }}</span>
-      {% block form %}
-        {% include "form/form.njk" %}
-      {% endblock %}
-      <br /><br />
-      <h2 class="govuk-summary-list__key govuk-heading-m">
-        Uploaded file
-      </h2>
-      <hr />
-      {{ govukSummaryList({
-        rows: files
-      }) }}
-
-      <div class="govuk-button-group">
-        {{ govukButton({
-          text: "Continue",
-          classes: 'govuk-!-margin-right-8',
-          href: PageUrls.COPY_TO_OTHER_PARTY
-        }) }}
-        <a class="govuk-link" href="#">Cancel</a>
-      </div>
       {% include "form/multipartForm.njk"%}
     </div>
     <div class="govuk-grid-column-one-third">

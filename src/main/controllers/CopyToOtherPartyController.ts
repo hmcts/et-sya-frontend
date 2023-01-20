@@ -9,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { setUserCase, submitClaimantTse } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -66,8 +66,11 @@ export default class CopyToOtherPartyController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    setUserCase(req, this.form);
+    // Moved submission to here temporarily
+    await submitClaimantTse(req, logger);
     // TODO - insert the correct redirect urls
-    await handlePostLogic(req, res, this.form, logger, PageUrls.APPLICATION_COMPLETE);
+    res.redirect(PageUrls.APPLICATION_COMPLETE);
   };
 
   public get = (req: AppRequest, res: Response): void => {
