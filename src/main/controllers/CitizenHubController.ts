@@ -44,7 +44,7 @@ export default class CitizenHubController {
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
-      handleUpdateHubLinksStatuses(req, logger);
+      await handleUpdateHubLinksStatuses(req, logger);
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
