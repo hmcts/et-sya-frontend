@@ -15,7 +15,7 @@ import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
-import { resetValuesIfNeeded } from './FormHelpers';
+import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage } from './RouterHelpers';
@@ -25,6 +25,7 @@ export const setUserCase = (req: AppRequest, form: Form): void => {
   if (!req.session.userCase) {
     req.session.userCase = {} as CaseWithId;
   }
+  trimFormData(formData);
   resetValuesIfNeeded(formData);
   Object.assign(req.session.userCase, formData);
 };
@@ -54,15 +55,13 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateSubmittedCase = (req: AppRequest, logger: Logger): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .updateSubmittedCase(req.session.userCase)
-    .then(() => {
-      logger.info(`Updated submitted case id: ${req.session.userCase.id}`);
-    })
-    .catch(error => {
-      logger.error(error.message);
-    });
+export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+    logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 export const getSectionStatus = (

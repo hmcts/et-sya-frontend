@@ -90,6 +90,7 @@ export const TranslationKeys = {
   ENGLISH_URL_PARAMETER: '?lng=en',
   CONTACT_APPLICATION: 'contact-application',
   COPY_TO_OTHER_PARTY: 'copy-to-other-party',
+  ACCESSIBILITY_STATEMENT: 'accessibility-statement',
 } as const;
 
 export const PageUrls = {
@@ -172,6 +173,7 @@ export const PageUrls = {
   CONTACT_APPLICATION: '/contact-application',
   COPY_TO_OTHER_PARTY: '/copy-to-other-party',
   APPLICATION_COMPLETE: '/application-complete',
+  ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
 
 export const InterceptPaths = {
@@ -203,7 +205,7 @@ export const JavaApiUrls = {
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
-  UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
+  UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
