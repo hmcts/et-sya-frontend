@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
@@ -46,7 +47,7 @@ export default class WorkAddressController {
     if (errors.length === 0 || errors === undefined) {
       handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
-      const redirectUrl = isRespondentAndWorkAddressSame
+      let redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
         : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
       if (isRespondentAndWorkAddressSame) {
@@ -54,8 +55,10 @@ export default class WorkAddressController {
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
       }
       if (saveForLater) {
-        return res.redirect(PageUrls.CLAIM_SAVED);
+        redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+        return res.redirect(redirectUrl);
       } else {
+        redirectUrl = setUrlLanguage(req, redirectUrl);
         returnNextPage(req, res, redirectUrl);
       }
     } else {

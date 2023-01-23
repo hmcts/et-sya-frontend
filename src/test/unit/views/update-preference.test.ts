@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
@@ -21,9 +22,9 @@ const inputs = 'govuk-radios';
 const expectedInputLabel = 'label';
 
 let htmlRes: Document;
-describe('How would you like to be updated about your claim page', () => {
+describe('How would you like to be updated about your claim page - EnglandWales', () => {
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(mockApp({ userCase: { caseTypeId: CaseTypeId.ENGLAND_WALES } }))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -47,7 +48,7 @@ describe('How would you like to be updated about your claim page', () => {
 
   it('should display radio buttons', () => {
     const radioButtons = htmlRes.getElementsByClassName(inputs);
-    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
+    expect(radioButtons.length).equal(3, `only ${radioButtons.length} found`);
   });
 
   it('should display inputs with valid labels', () => {
@@ -56,5 +57,20 @@ describe('How would you like to be updated about your claim page', () => {
       expectedInputLabel,
       'Could not find the radio button with label ' + expectedInputLabel
     );
+  });
+});
+
+describe('How would you like to be updated about your claim page - Scotland', () => {
+  beforeAll(async () => {
+    await request(mockApp({ userCase: { caseTypeId: CaseTypeId.SCOTLAND } }))
+      .get(PAGE_URL)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+  });
+
+  it('should display radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(inputs);
+    expect(radioButtons.length).equal(1, `only ${radioButtons.length} found`);
   });
 });

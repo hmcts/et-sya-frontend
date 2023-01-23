@@ -7,6 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
@@ -33,6 +34,7 @@ export default class CheckYourAnswersController {
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
       errors: req.session.errors,
+      languageParam: getLanguageParam(req.url),
     });
   }
 }

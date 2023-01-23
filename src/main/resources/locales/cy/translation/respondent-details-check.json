@@ -1,0 +1,16 @@
+{
+  "title": "Gwiriwch fanylion yr atebydd",
+  "subTitle": "Atebydd ",
+  "name": "Enw",
+  "address": "Cyfeiriad",
+  "acasNum": "Rhif tystysgrif Acas",
+  "submit": "Ychwanegu atebydd arall",
+  "saveAndContinue": "Cadw a pharhau",
+  "change": "Newid",
+  "unProvided": "Dim byd wedi ei ddarparu",
+  "errors": {
+    "hiddenErrorField": {
+      "exceeded": "Dim ond hyd at 5 atebydd y gellir eu hychwanegu yn yr hawliad hwn. Cysylltwch â'r tribiwnlys ar ôl cyflwyno eich hawliad i drafod mwy o atebwyr."
+    }
+  }
+}

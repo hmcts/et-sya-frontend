@@ -94,15 +94,15 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should display download claim subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[6])).equals(pageJson.downloadClaimHint);
+      expect(getTrimmedInnerText(bodyElements[7])).equals(pageJson.downloadClaimHint);
     });
 
     it('should display subtext', () => {
-      expect(getTrimmedInnerText(bodyElements[7])).equals(pageJson.claimQuestionsText);
+      expect(getTrimmedInnerText(bodyElements[8])).equals(pageJson.claimQuestionsText);
     });
 
     it('should display subtext call ET customer care', () => {
-      expect(getTrimmedInnerText(bodyElements[8])).equals(pageJson.processQuestionsText);
+      expect(getTrimmedInnerText(bodyElements[9])).equals(pageJson.processQuestionsText);
     });
 
     it('should have 3 items', () => {
@@ -129,7 +129,7 @@ describe('Claim Submitted Confirmation page', () => {
     });
 
     it('should display append', () => {
-      expect(getTrimmedInnerText(bodyElements[9])).equals(pageJson.contactAppend);
+      expect(getTrimmedInnerText(bodyElements[10])).equals(pageJson.contactAppend);
     });
   });
 

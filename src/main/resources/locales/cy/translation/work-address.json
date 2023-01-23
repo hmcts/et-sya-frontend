@@ -1,0 +1,11 @@
+{
+  "title": "Cyfeiriad gwaith",
+  "legend": "A wnaethoch weithio yn ",
+  "hintText": "Dewiswch ‘Do’ os oeddech yn gweithio o adref weithiau neu yn barhaol yn y cyfeiriad a roddwyd ar gyfer yr atebydd.",
+  "h1": "A wnaethoch weithio yn",
+  "errors": {
+    "claimantWorkAddressQuestion": {
+      "required": "Dywedwch wrthym a wnaethoch chi weithio yn y cyfeiriad hwn"
+    }
+  }
+}

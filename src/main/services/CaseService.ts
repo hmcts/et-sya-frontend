@@ -79,11 +79,15 @@ export class CaseApi {
     }
   };
 
-  updateSubmittedCase = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+  updateHubLinksStatuses = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, toApiFormat(caseItem));
+      return await this.axios.put(JavaApiUrls.UPDATE_CASE_SUBMITTED, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        hub_links_statuses: caseItem.hubLinksStatuses,
+      });
     } catch (error) {
-      throw new Error('Error updating submitted case: ' + axiosErrorDetails(error));
+      throw new Error('Error updating hub links statuses: ' + axiosErrorDetails(error));
     }
   };
 

@@ -1,0 +1,26 @@
+{
+  "title": "Eich cyflog",
+  "h1": "Eich cyflog (dewisol)",
+  "p1": "Ar gyfer rhai mathau o hawliadau, bydd y tribiwnlys angen gwybod eich cyflog ar gyfartaledd dros y 12 wythnos diwethaf. Darparwch eich amcangyfrif gorau o’ch cyflog wythnosol ar gyfartaledd Byddwch yn gallu cywiro hwn nes ymlaen os oes angen. Bydd darparu’r wybodaeth am eich cyflog yn helpu’r tribiwnlys i symud eich hawliad yn ei flaen. - REQUIRES UPDATE",
+  "p2": "Gallwch gael gwybodaeth o’ch slipiau cyflog. Cofiwch gynnwys unrhyw daliadau goramser, taliadau ar gomisiwn a bonysau.",
+  "payBeforeTax": "Nodwch eich cyflog CYN treth ac Yswiriant Gwladol",
+  "payAfterTax": "Nodwch eich cyflog AR ÔL treth ac Yswiriant Gwladol",
+  "weeklyMonthlyAnnual": "Ai dyma eich cyflog wythnosol, misol neu flynyddol?",
+  "errors": {
+    "payBeforeTax": {
+      "required": "Nodwch o leiaf un swm am eich Tâl",
+      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
+      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+    },
+    "payAfterTax": {
+      "required": "Nodwch o leiaf un swm am eich Tâl",
+      "minLengthRequired": "Rhaid i dâl ar ôl treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
+      "notANumber": "Rhaid i dâl ar ôl treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+    },
+    "payInterval": {
+      "payBeforeTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl cyn treth ac YG.",
+      "payAfterTax": "Dywedwch wrthym pa mor aml ar gyfer Tâl  ar ôl treth ac YG.",
+      "required": "Dywedwch wrthym pa mor aml  oeddech chi’n cael tâl."
+    }
+  }
+}

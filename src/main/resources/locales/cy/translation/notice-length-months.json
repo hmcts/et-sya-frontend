@@ -1,0 +1,14 @@
+{
+  "title": "Misoedd yn y cyfnod Rhybudd?",
+  "h1": {
+    "nonNotice": "Sawl mis yn eich cyfnod rhybudd? (dewisol)",
+    "notice": "Am sawl mis o’ch cyfnod rhybudd y byddwch yn cael eich talu? (dewisol)"
+  },
+  "noticeLengthHint": "Er enghraifft, 4",
+  "onNotice": "Rhybudd",
+  "errors": {
+    "noticePeriodLength": {
+      "notANumber": "Rhaid i’r nifer o fisoedd yn y cyfnod rhybudd fod yn rhif, fel 4 ayyb."
+    }
+  }
+}

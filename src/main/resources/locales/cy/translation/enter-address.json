@@ -1,0 +1,19 @@
+{
+  "enterPostcode": "Rhowch god post yn y DU",
+  "findAddress": "Dod o hyd i gyfeiriad",
+  "saveAsDraft": "Cadw fel drafft",
+  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
+  "change": "Newid",
+  "postcode": "Cod post neu god ardal (dewisol)",
+  "errorSummaryHeading": "Mae yna broblem",
+  "addressLine1": "Llinell cyfeiriad 1",
+  "addressLine2": "Llinell cyfeiriad 1 2 (dewisol)",
+  "selectAddress": "Dewiswch gyfeiriad",
+  "buildingStreet": "Adeilad a stryd",
+  "county": "Sir",
+  "country": "Gwlad",
+  "town": "Tref neu ddinas",
+  "selectDefaultSeveral": "Daethpwyd o hyd i sawl cyfeiriad",
+  "selectDefaultSingle": "Daethpwyd o hyd i 1 cyfeiriad",
+  "selectDefaultNone": "Heb gael hyd i gyfeiriad"
+}
