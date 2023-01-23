@@ -161,11 +161,11 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   // TSE
-  copyCorrespondence?: YesOrNo;
-  contactApplicationSending?: boolean;
   contactApplicationType?: string;
   contactApplicationText?: string;
   contactApplicationFile?: Document;
+  copyCorrespondence?: YesOrNo;
+  noCopyReason?: string;
 }
 
 export const enum StillWorking {

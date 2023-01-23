@@ -67,6 +67,9 @@ export default class CopyToOtherPartyController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    if (req.session.userCase.copyCorrespondence === YesOrNo.YES) {
+      req.session.userCase.noCopyReason = undefined;
+    }
     // Moved submission to here temporarily
     await submitClaimantTse(req, logger);
     // TODO - insert the correct redirect urls
