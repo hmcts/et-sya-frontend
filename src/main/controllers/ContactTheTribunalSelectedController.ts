@@ -99,7 +99,6 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    userCase.contactApplicationSending = true;
     return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
 
@@ -160,7 +159,6 @@ export default class ContactTheTribunalSelectedController {
 }
 
 export function clearTseFields(userCase: CaseWithId): void {
-  userCase.contactApplicationSending = false;
   userCase.contactApplicationText = undefined;
   userCase.contactApplicationFile = undefined;
 }
