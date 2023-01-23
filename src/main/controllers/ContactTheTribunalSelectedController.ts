@@ -77,7 +77,12 @@ export default class ContactTheTribunalSelectedController {
     userCase.contactApplicationText = req.body.contactApplicationText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactApplicationError = getContactApplicationError(formData, req.file, req.fileTooLarge);
+    const contactApplicationError = getContactApplicationError(
+      formData,
+      req.file,
+      req.fileTooLarge,
+      userCase.contactApplicationFile
+    );
     req.session.errors = [];
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
@@ -105,7 +110,6 @@ export default class ContactTheTribunalSelectedController {
   public get = (req: AppRequest, res: Response): void => {
     req.session.contactType = 'Contact';
     const selectedApplication = req.params.selectedOption;
-    req.session.contactTribunalSelection = selectedApplication;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
       res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);

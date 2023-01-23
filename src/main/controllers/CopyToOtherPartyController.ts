@@ -82,7 +82,7 @@ export default class CopyToOtherPartyController {
       ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
     };
     if (contactType === translations.contact) {
-      captionSubject = req.session.contactTribunalSelection;
+      captionSubject = req.session.userCase.contactApplicationType;
       captionText = translations.sections[captionSubject].caption;
     }
     if (contactType === translations.application) {
