@@ -110,7 +110,6 @@ describe('Contact Application Controller', () => {
       await new ContactTheTribunalSelectedController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
-        contactApplicationSending: false,
         contactApplicationText: undefined,
         contactApplicationFile: undefined,
       });

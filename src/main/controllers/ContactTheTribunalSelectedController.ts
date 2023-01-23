@@ -99,7 +99,6 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    userCase.contactApplicationSending = true;
     await submitClaimantTse(req, logger);
     clearTseFields(userCase);
     return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
@@ -160,7 +159,6 @@ export default class ContactTheTribunalSelectedController {
 }
 
 export function clearTseFields(userCase: CaseWithId): void {
-  userCase.contactApplicationSending = false;
   userCase.contactApplicationText = undefined;
   userCase.contactApplicationFile = undefined;
 }
