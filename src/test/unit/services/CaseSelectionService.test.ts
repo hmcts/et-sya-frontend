@@ -14,6 +14,7 @@ import * as caseService from '../../../main/services/CaseService';
 import { mockApplications } from '../mocks/mockApplications';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import {mockEnglishClaimTypesTranslations} from "../mocks/mockTranslations";
 
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
@@ -251,7 +252,7 @@ describe('get User applications', () => {
         },
       },
     ];
-    const result = getUserApplications(userCases);
+    const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations, '?lng=en');
     expect(result).toStrictEqual(mockApplications);
   });
 });
