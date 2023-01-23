@@ -9,6 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
+import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { setUserCase, submitClaimantTse } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -72,6 +73,8 @@ export default class CopyToOtherPartyController {
     }
     // Moved submission to here temporarily
     await submitClaimantTse(req, logger);
+    clearTseFields(req.session.userCase);
+
     // TODO - insert the correct redirect urls
     res.redirect(PageUrls.APPLICATION_COMPLETE);
   };
