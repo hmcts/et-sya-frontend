@@ -128,7 +128,6 @@
     "jest-pact": "0.9.4",
     "lint-staged": "^13.0.0",
     "mini-css-extract-plugin": "^2.5.3",
-    "njk": "^5.0.0",
     "nock": "^13.2.4",
     "node-sass": "^8.0.0",
     "nodemon": "^2.0.15",
