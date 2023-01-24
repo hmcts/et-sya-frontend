@@ -123,7 +123,7 @@ export const isValidAvgWeeklyHours: Validator = value => {
     return 'notANumber';
   }
 
-  if ((value as string).startsWith('0') && (value as string).trim().length > 1) {
+  if ((value as string).trim().startsWith('.')) {
     return 'invalid';
   }
 

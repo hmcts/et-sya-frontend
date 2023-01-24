@@ -31,9 +31,9 @@ describe('Notice end Controller', () => {
     const body = {
       'noticeEnds-day': '21',
 
-      'noticeEnds-month': '01',
+      'noticeEnds-month': '12',
 
-      'noticeEnds-year': '2023',
+      'noticeEnds-year': '2030',
     };
 
     const controller = new NoticeEndController();
