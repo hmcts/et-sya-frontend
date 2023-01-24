@@ -7,7 +7,6 @@ import { getUserApplications, getUserCasesByLastModified } from '../services/Cas
 
 import { getPageContent } from './helpers/FormHelpers';
 import {AnyRecord} from "../definitions/util-types";
-import {getLanguageParam} from "./helpers/RouterHelpers";
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -22,8 +21,7 @@ export default class ClaimantApplicationsController {
     if (userCases.length === 0) {
       return res.redirect(PageUrls.HOME);
     } else {
-      const languageParam = getLanguageParam(req.url);
-      const usersApplications = getUserApplications(userCases, translations, languageParam);
+      const usersApplications = getUserApplications(userCases, translations);
       res.render(TranslationKeys.CLAIMANT_APPLICATIONS, {
         ...content,
         usersApplications,

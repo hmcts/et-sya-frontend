@@ -252,7 +252,7 @@ describe('get User applications', () => {
         },
       },
     ];
-    const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations, '?lng=en');
+    const result = getUserApplications(userCases, mockEnglishClaimTypesTranslations);
     expect(result).toStrictEqual(mockApplications);
   });
 });
