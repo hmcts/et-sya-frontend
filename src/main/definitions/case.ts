@@ -161,7 +161,6 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   // TSE
-  contactApplicationSending?: boolean;
   contactApplicationType?: string;
   contactApplicationText?: string;
   contactApplicationFile?: Document;

@@ -88,6 +88,7 @@ export const TranslationKeys = {
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  ACCESSIBILITY_STATEMENT: 'accessibility-statement',
   CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
 } as const;
 
@@ -171,6 +172,7 @@ export const PageUrls = {
   PCQ_WELSH: '/pcq?lng=cy',
   CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
   APPLICATION_COMPLETE: '/application-complete',
+  ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
 
 export const InterceptPaths = {
@@ -203,6 +205,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',

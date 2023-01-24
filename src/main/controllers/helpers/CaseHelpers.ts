@@ -55,15 +55,22 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateHubLinksStatuses = (req: AppRequest, logger: Logger): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .updateHubLinksStatuses(req.session.userCase)
-    .then(() => {
-      logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
-    })
-    .catch(error => {
-      logger.error(error.message);
-    });
+export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+    logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitClaimantTse(req.session.userCase);
+    logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 export const getSectionStatus = (
