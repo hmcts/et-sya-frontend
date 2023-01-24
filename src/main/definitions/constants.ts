@@ -163,6 +163,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   REMOVE_FILE: '/remove-tse-file/:application',
@@ -177,6 +178,7 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
 } as const;
 
 export const ErrorPages = {

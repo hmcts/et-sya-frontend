@@ -137,26 +137,5 @@ if isLoggedIn %}
     </div>
   {% endif %}
 
-  {{ govukFooter({
-  meta: {
-    items: [
-      {
-          href: "/guide",
-          text: guide
-      },
-      {
-          href: "/terms-and-conditions",
-          text: termsAndConditions
-      },
-      {
-          href: "/cookies",
-          text: cookiePolicy
-      },
-      {
-          href: "/contact-us",
-          text: contactUsTitle
-      }
-    ]
-  }
-}) }}
+  {% include "./footer.njk" %}
 {% endblock %}

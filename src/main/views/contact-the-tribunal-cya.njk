@@ -1,4 +1,5 @@
 {% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
@@ -9,7 +10,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% include "back-link.njk" %}
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ title }}</h1>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ titleCya }}</h1>
       {{ govukSummaryList({
         rows: [
           {
@@ -17,12 +18,11 @@
             text: applicationType,
             classes: "govuk-!-font-weight-regular-m"
           },
-            value: {
-          },
+            value: { text: typeOfApplication | safe },
             actions: {
             items: [
               {
-                href: "#",
+                href: PageUrls.CONTACT_THE_TRIBUNAL,
                 text: "Change",
                 visuallyHiddenText: applicationType
               }
@@ -34,12 +34,11 @@
             text: legend,
             classes: "govuk-!-font-weight-regular-m"
           },
-            value: {
-          },
+            value: { text: userCase.contactApplicationText | safe },
             actions: {
             items: [
               {
-                href: "#",
+                href: contactTheTribunalSelectedUrl + languageParam,
                 text: "Change",
                 visuallyHiddenText: legend
               }
@@ -47,21 +46,22 @@
           }
           },
           {
-            key: {
-            text: supportingMaterial,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: {
-          },
-            actions: {
-            items: [
-              {
-                href: "#",
-                text: "Change",
-                visuallyHiddenText: supportingMaterial
-              }
-            ]
-          }
+              key: {
+              text: supportingMaterial,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              html: downloadLink
+            },
+              actions: {
+              items: [
+                {
+                  href: contactTheTribunalSelectedUrl + languageParam,
+                  text: "Change",
+                  visuallyHiddenText: supportingMaterial
+                }
+              ]
+            }
           },
           {
             key: {
@@ -86,9 +86,15 @@
       <div class="govuk-button-group">
         {{ govukButton({
           text: submitBtn,
-          classes: 'govuk-!-margin-right-6'
+          type: submit,
+          classes: 'govuk-!-margin-right-6',
+          href: InterceptPaths.SUBMIT_TRIBUNAL_CYA + languageParam,
+          preventDoubleClick: true,
+          attributes: {
+            id: 'main-form-submit'
+          }
         }) }}
-        <a class="govuk-link" href="#">{{ cancelLink }}</a>
+        <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
       </div>
     </div>
 
@@ -112,26 +118,5 @@
 {% endblock %}
 
 {% block footer %}
-  {{ govukFooter({
-    meta: {
-      items: [
-        {
-          href: "/guide",
-          text: guide
-        },
-        {
-          href: "/terms-and-conditions",
-          text: termsAndConditions
-        },
-        {
-          href: "/cookies",
-          text: cookiePolicy
-        },
-        {
-          href: "/contact-us",
-          text: contact
-        }
-      ]
-    }
-  }) }}
+  {% include "./footer.njk" %}
 {% endblock %}
