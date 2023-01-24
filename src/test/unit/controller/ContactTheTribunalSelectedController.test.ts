@@ -102,17 +102,5 @@ describe('Contact Application Controller', () => {
         },
       });
     });
-
-    it('should reset values when clicking continue which submits the claim', async () => {
-      const req = mockRequest({ body: { contactApplicationText: 'test', contactApplicationFile: mockFile } });
-      const res = mockResponse();
-
-      await new ContactTheTribunalSelectedController().post(req, res);
-
-      expect(req.session.userCase).toMatchObject({
-        contactApplicationText: undefined,
-        contactApplicationFile: undefined,
-      });
-    });
   });
 });

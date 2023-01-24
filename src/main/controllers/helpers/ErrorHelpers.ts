@@ -11,7 +11,7 @@ import {
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
@@ -214,12 +214,13 @@ export const getClaimSummaryError = (
 export const getContactApplicationError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
-  fileTooLarge: boolean
+  fileTooLarge: boolean,
+  uploadedFile: Document
 ): FormError => {
   const textProvided = isFieldFilledIn(formData.contactApplicationText) === undefined;
   const fileProvided = file !== undefined;
 
-  if (!textProvided && !fileProvided) {
+  if (!textProvided && !fileProvided && !uploadedFile) {
     return { propertyName: 'contactApplicationText', errorType: 'required' };
   }
 
