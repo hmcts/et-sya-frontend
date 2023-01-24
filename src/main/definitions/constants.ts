@@ -88,6 +88,8 @@ export const TranslationKeys = {
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  CONTACT_APPLICATION: 'contact-application',
+  COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
 } as const;
 
@@ -168,6 +170,8 @@ export const PageUrls = {
   REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  CONTACT_APPLICATION: '/contact-application',
+  COPY_TO_OTHER_PARTY: '/copy-to-other-party',
   APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
@@ -177,6 +181,7 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file',
 } as const;
 
 export const ErrorPages = {

@@ -31,6 +31,7 @@ import ContactTheTribunalController from '../../controllers/ContactTheTribunalCo
 import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -218,6 +219,8 @@ export class Routes {
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
