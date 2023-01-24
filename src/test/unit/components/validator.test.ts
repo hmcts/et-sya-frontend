@@ -206,7 +206,7 @@ describe('Validation', () => {
       { mockRef: '25a', expected: 'notANumber' },
       { mockRef: '20.00', expected: undefined },
       { mockRef: '169', expected: 'exceeded' },
-      { mockRef: '-4', expected: 'notANumber' },
+      { mockRef: '-4', expected: 'negativeNumber' },
       { mockRef: '35', expected: undefined },
       { mockRef: '2', expected: undefined },
       { mockRef: null, expected: undefined },
