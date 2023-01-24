@@ -27,6 +27,7 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
@@ -68,6 +69,7 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitTribunalCYAController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -80,6 +82,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -218,10 +221,13 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new SupportingMaterialController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
+    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTribunalCYAController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
       handleUploads.single('contactApplicationFile'),

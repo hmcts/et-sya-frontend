@@ -91,6 +91,7 @@ export const TranslationKeys = {
   CONTACT_APPLICATION: 'contact-application',
   COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
+  CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
 } as const;
 
 export const PageUrls = {
@@ -165,6 +166,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   REMOVE_FILE: '/remove-tse-file/:application',
@@ -172,6 +174,7 @@ export const PageUrls = {
   PCQ_WELSH: '/pcq?lng=cy',
   CONTACT_APPLICATION: '/contact-application',
   COPY_TO_OTHER_PARTY: '/copy-to-other-party',
+  CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
   APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
@@ -182,6 +185,7 @@ export const InterceptPaths = {
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
   REMOVE_FILE: '/remove-uploaded-file',
+  SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
 } as const;
 
 export const ErrorPages = {
