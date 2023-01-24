@@ -178,8 +178,8 @@ describe('Format document model', () => {
         },
       },
       classification: '',
-      size: '',
-      mimeType: '',
+      size: '16000000',
+      mimeType: 'test',
       hashToken: '',
       createdOn: '',
       createdBy: '',
@@ -196,6 +196,8 @@ describe('Format document model', () => {
       document_filename: 'testname',
       document_url: 'test.com',
       document_binary_url: 'test.com',
+      document_mime_type: 'test',
+      document_size: 16,
     });
   });
 });

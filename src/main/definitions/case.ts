@@ -268,6 +268,6 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
-  document_size: number;
-  document_mime_type: string;
+  document_size?: number;
+  document_mime_type?: string;
 }
