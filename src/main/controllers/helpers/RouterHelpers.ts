@@ -51,4 +51,3 @@ export const returnValidUrl = (redirectUrl: string, validUrls: string[]): string
   }
   return ErrorPages.NOT_FOUND;
 };
-
