@@ -123,7 +123,7 @@ export const isValidAvgWeeklyHours: Validator = value => {
     return 'negativeNumber';
   }
 
-  if (!/^\d{1,3}\.?\d{1,3}$/.test(value as string)) {
+  if (!/^\d{0,3}\.?\d{1,3}$/.test(value as string)) {
     return 'notANumber';
   }
 
