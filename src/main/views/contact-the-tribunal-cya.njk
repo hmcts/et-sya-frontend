@@ -22,7 +22,7 @@
             actions: {
             items: [
               {
-                href: PageUrls.CONTACT_THE_TRIBUNAL,
+                href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
                 text: "Change",
                 visuallyHiddenText: applicationType
               }
@@ -46,34 +46,33 @@
           }
           },
           {
-              key: {
-              text: supportingMaterial,
-              classes: "govuk-!-font-weight-regular-m"
-            },
-              value: {
-              html: downloadLink
-            },
-              actions: {
-              items: [
-                {
-                  href: contactTheTribunalSelectedUrl + languageParam,
-                  text: "Change",
-                  visuallyHiddenText: supportingMaterial
-                }
-              ]
-            }
+            key: {
+            text: supportingMaterial,
+            classes: "govuk-!-font-weight-regular-m"
+          },
+            value: {
+            html: downloadLink
+          },
+            actions: {
+            items: [
+              {
+                href: contactTheTribunalSelectedUrl + languageParam,
+                text: "Change",
+                visuallyHiddenText: supportingMaterial
+              }
+            ]
+          }
           },
           {
             key: {
             text: copyCorrespondence,
             classes: "govuk-!-font-weight-regular-m"
           },
-            value: {
-          },
+            value: { text: userCase.copyCorrespondence | safe },
             actions: {
             items: [
               {
-                href: "#",
+                href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
                 text: "Change",
                 visuallyHiddenText: copyCorrespondence
               }

@@ -7,14 +7,10 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
 
-import { clearTseFields } from './ContactTheTribunalSelectedController';
-import { setUserCase, submitClaimantTse } from './helpers/CaseHelpers';
+import { setUserCase } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-
-const logger = getLogger('CopyToOtherPartyController');
 
 export default class CopyToOtherPartyController {
   private readonly form: Form;
@@ -71,12 +67,7 @@ export default class CopyToOtherPartyController {
     if (req.session.userCase.copyCorrespondence === YesOrNo.YES) {
       req.session.userCase.noCopyReason = undefined;
     }
-    // Moved submission to here temporarily
-    await submitClaimantTse(req, logger);
-    clearTseFields(req.session.userCase);
-
-    // TODO - insert the correct redirect urls
-    res.redirect(PageUrls.APPLICATION_COMPLETE);
+    res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {
