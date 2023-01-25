@@ -200,7 +200,7 @@ describe('Validation', () => {
 
   describe('isValidAvgWeeklyHours()', () => {
     it.each([
-      { mockRef: '00', expected: undefined },
+      { mockRef: '00', expected: 'invalid' },
       { mockRef: 'a', expected: 'notANumber' },
       { mockRef: '%', expected: 'notANumber' },
       { mockRef: '25a', expected: 'notANumber' },
