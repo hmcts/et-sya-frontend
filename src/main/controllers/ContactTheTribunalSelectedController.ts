@@ -104,7 +104,9 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+    const redirectPage = userCase.copyCorrespondence ? PageUrls.CONTACT_THE_TRIBUNAL_CYA : PageUrls.COPY_TO_OTHER_PARTY;
+
+    return res.redirect(redirectPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
