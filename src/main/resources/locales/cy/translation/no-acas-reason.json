@@ -10,7 +10,7 @@
   "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim.",
   "errors": {
     "noAcasReason": {
-      "required": "Dywedwch pam nad oes gennych rif Acas .  Os nad ydych yn siŵr pa eithriad i ddewis cysylltwch â Acas"
+      "required": "Dywedwch pam nad oes gennych rif Acas . Os nad ydych yn siŵr pa eithriad i ddewis cysylltwch ag Acas"
     }
   }
 }

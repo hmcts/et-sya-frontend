@@ -7,7 +7,7 @@
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "noticeEnds": {
-      "required": "Dywedwch wrthym pan fydd eich cyfnod rhybudd yn dod i ben. Er enghraifft, DD MM YYYY",
+      "required": "Dywedwch wrthym pryd bydd eich cyfnod rhybudd yn dod i ben. Er enghraifft, DD MM BBBB",
       "dayRequired": "Rhowch ddiwrnod ar gyfer dyddiad gorffen eich cyfnod rhybudd. Er enghraifft, 23",
       "monthRequired": "Rhowch fis ar gyfer dyddiad gorffen eich cyfnod rhybudd. Er enghraifft, 04",
       "yearRequired": "Rhowch y flwyddyn pan fydd eich cyfnod rhybudd yn dod i ben. Er enghraifft, 2022",
