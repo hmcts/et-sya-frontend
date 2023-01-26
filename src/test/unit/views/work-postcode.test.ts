@@ -9,9 +9,9 @@ const pClass = 'govuk-body';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'What’s the postcode where you worked or work?';
 const expectedP1 =
-  'We need this to help progress your claim. If you work or worked at home occasionally or full time, enter the postcode where you would go to work for the employer.';
+  'This will decide which Employment Tribunal office deals with your claim. If you worked at home, enter your home postcode.';
 const expectedP2 =
-  'If you’re claiming against someone you’ve not worked for - as best as you can, enter the postcode of where they’re based.';
+  'If you’re claiming against someone you did not work for, enter the postcode of where they are based.';
 const inputs = '[class*="workPostcode"]';
 const expectedInputLabel = 'Postcode';
 
