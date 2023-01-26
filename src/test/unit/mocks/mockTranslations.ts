@@ -7,7 +7,7 @@ export const mockWelshClaimTypesTranslations: AnyRecord = {
     payRelated: 'Ymwneud â thâl',
     unfairDismissal: 'Diswyddo annheg',
     whistleBlowing: 'Chwythu’r chwiban',
-    otherClaim: 'Math arall o hawliad',
+    otherTypesOfClaims: 'Math arall o hawliad',
   },
   of: 'o',
   tasksCompleted: "tasg wedi'u cwblhau",

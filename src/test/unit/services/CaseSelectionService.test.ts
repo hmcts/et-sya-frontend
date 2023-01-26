@@ -216,7 +216,7 @@ describe('get User applications', () => {
         claimDetailsCheck: YesOrNo.YES,
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
-        typeOfClaim: [' discrimination'],
+        typeOfClaim: ['discrimination'],
         respondents: [
           {
             respondentName: 'Globo Corp',
@@ -229,7 +229,7 @@ describe('get User applications', () => {
       {
         id: '123456',
         state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-        typeOfClaim: [' discrimination'],
+        typeOfClaim: ['discrimination'],
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
       },
@@ -238,7 +238,7 @@ describe('get User applications', () => {
         state: CaseState.SUBMITTED,
         createdDate: 'September 1, 2022',
         lastModified: 'September 1, 2022',
-        typeOfClaim: [' discrimination'],
+        typeOfClaim: ['discrimination'],
         ethosCaseReference: '654321/2022',
         respondents: [
           {

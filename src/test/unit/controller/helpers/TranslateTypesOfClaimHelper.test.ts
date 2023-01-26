@@ -12,11 +12,11 @@ describe('translateTypesOfClaimHelper', () => {
     translateTypesOfClaims(mockApplicationWithAllTypeOfClaims, mockWelshClaimTypesTranslations);
     const translatedTypesOfClaims = mockApplicationWithAllTypeOfClaims.userCase.typeOfClaim;
     expect(translatedTypesOfClaims).toContain('Torri contract');
-    expect(translatedTypesOfClaims).toContain('Gwahaniaethu');
-    expect(translatedTypesOfClaims).toContain('Ymwneud â thâl');
-    expect(translatedTypesOfClaims).toContain('Diswyddo annheg');
-    expect(translatedTypesOfClaims).toContain('Chwythu’r chwiban');
-    expect(translatedTypesOfClaims).toContain('Math arall o hawliad');
+    expect(translatedTypesOfClaims).toContain(' Gwahaniaethu');
+    expect(translatedTypesOfClaims).toContain(' Ymwneud â thâl');
+    expect(translatedTypesOfClaims).toContain(' Diswyddo annheg');
+    expect(translatedTypesOfClaims).toContain(' Chwythu’r chwiban');
+    expect(translatedTypesOfClaims).toContain(' Math arall o hawliad');
   });
 });
 
