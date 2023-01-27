@@ -2,9 +2,7 @@ import { ApplicationTableRecord, TypesOfClaim } from '../../definitions/definiti
 import { AnyRecord } from '../../definitions/util-types';
 
 export const translateTypesOfClaims = (rec: ApplicationTableRecord, translations: AnyRecord): void => {
-  rec.userCase.typeOfClaim = rec?.userCase?.typeOfClaim?.map(toc =>
-    rec?.userCase?.typeOfClaim?.at(0) === toc ? translateTypeOfClaim(toc, translations) :
-    " " + translateTypeOfClaim(toc, translations));
+  rec.userCase.typeOfClaim = rec?.userCase?.typeOfClaim?.map(toc => " " + translateTypeOfClaim(toc, translations));
 };
 
 export const translateTypeOfClaim = (typeOfClaims: string, translations: AnyRecord): string => {
