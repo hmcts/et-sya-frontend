@@ -18,7 +18,8 @@ export const translateTypeOfClaim = (typeOfClaims: string, translations: AnyReco
     case TypesOfClaim.BREACH_OF_CONTRACT.toString():
       return translations.claimTypes.breachOfContract;
     case TypesOfClaim.OTHER_TYPES.toString():
-      return translations.claimTypes.otherClaim;
+      return translations.claimTypes.otherTypesOfClaims;
+
     default:
       return undefined;
   }
