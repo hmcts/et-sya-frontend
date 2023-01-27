@@ -1,12 +1,12 @@
 {
   "title": "Camau i wneud eich hawliad",
   "h1": "Camau i wneud eich hawliad",
-  "applicationDetails": "Ni all manylion yr hawliad",
+  "applicationDetails": "Manylion yr hawliad",
   "claimType": "Math o hawliad",
   "notStarted": "HEB GYCHWYN",
-  "completed": "CWBLHAU",
+  "completed": "WEDI'I GWBLHAU",
   "inProgress": "YN MYND RHAGDDO",
-  "cannotStartYet": "DDECHRAU ETO",
+  "cannotStartYet": "NI ALLWCH WNEUD HYN ETO",
   "section1": {
     "title": "Eich manylion",
     "link1Text": "Manylion personol",
