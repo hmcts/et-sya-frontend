@@ -2,16 +2,17 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications from '../definitions/contact-applications';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormError, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
+import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
-import { getContactApplicationError } from './helpers/ErrorHelpers';
+import { getContactApplicationError, getLastFileError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
@@ -20,9 +21,6 @@ const logger = getLogger('ContactTheTribunalSelectedController');
  * Controller for any contact-the-tribunal application page
  */
 export default class ContactTheTribunalSelectedController {
-  private getHint = (label: AnyRecord): string => {
-    return label.fileUpload.hint;
-  };
   private readonly form: Form;
   private readonly contactApplicationContent: FormContent = {
     fields: {
@@ -35,18 +33,36 @@ export default class ContactTheTribunalSelectedController {
         hint: l => l.contactApplicationText,
         attributes: { title: 'Give details text area' },
       },
-      contactApplicationFile: {
-        id: 'contactApplicationFile',
-        classes: 'govuk-label',
-        labelHidden: false,
-        hint: l => this.getHint(l),
-        labelSize: 'm',
-        type: 'upload',
+      inset: {
+        id: 'inset',
+        classes: 'govuk-heading-m',
+        label: l => l.files.title,
+        type: 'insetFields',
+        subFields: {
+          contactApplicationFile: {
+            id: 'contactApplicationFile',
+            classes: 'govuk-label',
+            labelHidden: false,
+            labelSize: 'm',
+            type: 'upload',
+          },
+          upload: {
+            label: (l: AnyRecord): string => l.files.button,
+            classes: 'govuk-button--secondary',
+            id: 'upload',
+            type: 'button',
+            name: 'upload',
+            value: 'true',
+          },
+        },
+      },
+      filesUploaded: {
+        label: l => l.files.uploaded,
+        type: 'summaryList',
       },
     },
     submit: {
-      text: (l: AnyRecord): string => l.uploadFileButton,
-      classes: 'govuk-button--secondary',
+      text: l => l.continue,
     },
   };
 
@@ -55,33 +71,46 @@ export default class ContactTheTribunalSelectedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.fileTooLarge) {
-      req.fileTooLarge = false;
-      req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }];
-      return res.redirect(req.url);
-    }
-    req.session.errors = [];
+    const userCase = req.session.userCase;
+
+    // Todo think about using CaseHelpers.setUserCase
+    userCase.contactApplicationText = req.body.contactApplicationText;
+
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const contactApplicationError = getContactApplicationError(formData, req.file);
-    if (!contactApplicationError) {
+    const contactApplicationError = getContactApplicationError(
+      formData,
+      req.file,
+      req.fileTooLarge,
+      userCase.contactApplicationFile
+    );
+    req.session.errors = [];
+    if (contactApplicationError) {
+      req.session.errors.push(contactApplicationError);
+      //TODO Handle redirect to Welsh page
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+    }
+
+    if (req.body.upload) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
-          req.session.userCase.contactApplicationFile = fromApiFormatDocument(result.data);
+          userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
         logger.info(error);
-        req.session.errors = [{ propertyName: 'contactApplicationFile', errorType: 'backEndError' }];
-      } finally {
-        await handlePostLogic(req, res, this.form, logger, req.url);
+        req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-    } else {
-      req.session.errors.push(contactApplicationError);
-      return res.redirect(req.url);
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
     }
+    req.session.errors = [];
+
+    const redirectPage = userCase.copyCorrespondence ? PageUrls.CONTACT_THE_TRIBUNAL_CYA : PageUrls.COPY_TO_OTHER_PARTY;
+
+    return res.redirect(redirectPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    req.session.contactType = 'Contact';
     const selectedApplication = req.params.selectedOption;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
@@ -90,22 +119,52 @@ export default class ContactTheTribunalSelectedController {
     }
 
     const userCase = req.session?.userCase;
+    if (selectedApplication !== userCase.contactApplicationType) {
+      clearTseFields(userCase);
+      userCase.contactApplicationType = selectedApplication;
+    }
+
     const content = getPageContent(req, this.contactApplicationContent, [
       TranslationKeys.COMMON,
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.TRIBUNAL_CONTACT_SELECTED,
       TranslationKeys.CONTACT_THE_TRIBUNAL + '-' + selectedApplication,
     ]);
-    this.contactApplicationContent.submit.disabled = userCase?.contactApplicationFile !== undefined;
+
+    (this.contactApplicationContent.fields as any).inset.subFields.upload.disabled =
+      userCase?.contactApplicationFile !== undefined;
+
+    (this.contactApplicationContent.fields as any).filesUploaded.rows = getFiles(userCase, selectedApplication, {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    });
+
+    const fileError: FormError = getLastFileError(req.session.errors);
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    };
+
+    let errorMessage: string;
+    if (fileError) {
+      const errorMessages = translations.errors.contactApplicationFile;
+      errorMessage = errorMessages[fileError.errorType];
+    } else {
+      errorMessage = undefined;
+    }
+
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      files: getFiles(userCase, {
-        ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
-      }),
-      errors: req.session.errors,
+      cancelLink: PageUrls.CONTACT_THE_TRIBUNAL,
+      errorMessage,
       ...content,
     });
   };
+}
+
+export function clearTseFields(userCase: CaseWithId): void {
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
 }

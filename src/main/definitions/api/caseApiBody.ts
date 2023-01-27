@@ -1,3 +1,4 @@
+import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -27,6 +28,7 @@ interface CaseDataApiBody {
   claimantWorkAddressQuestion?: string;
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
+  claimantTse?: ClaimantTse;
 }
 
 export interface CreateCaseBody {

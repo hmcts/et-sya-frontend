@@ -111,8 +111,6 @@ export interface Case {
   benefitsCharCount?: string;
   claimSummaryText?: string;
   claimSummaryFile?: Document;
-  contactApplicationText?: string;
-  contactApplicationFile?: Document;
   claimOutcome?: ClaimOutcomes[];
   compensationOutcome?: string;
   compensationAmount?: number;
@@ -162,6 +160,12 @@ export interface Case {
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
+  // TSE
+  contactApplicationType?: string;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
+  copyCorrespondence?: YesOrNo;
+  noCopyReason?: string;
 }
 
 export const enum StillWorking {
@@ -264,4 +268,6 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
+  document_size?: number;
+  document_mime_type?: string;
 }

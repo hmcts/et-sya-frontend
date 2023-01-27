@@ -277,6 +277,8 @@ export function fromApiFormatDocument(document: DocumentUploadResponse): Documen
     document_url: document.uri,
     document_filename: document.originalDocumentName,
     document_binary_url: document._links.binary.href,
+    document_size: parseInt(document.size) / 1000000,
+    document_mime_type: document.mimeType,
   };
 }
 

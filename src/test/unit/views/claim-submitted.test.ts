@@ -34,6 +34,8 @@ describe('Claim Submitted Confirmation page', () => {
             document_filename: 'describe.pdf',
             document_url: 'describe.com',
             document_binary_url: '034034034',
+            document_size: 16,
+            document_mime_type: 'text',
           },
         },
       })

@@ -35,6 +35,7 @@ export const enum HubLinkStatus {
   NOT_YET_AVAILABLE = 'notAvailableYet',
   WAITING_FOR_TRIBUNAL = 'waitingForTheTribunal',
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
+  IN_PROGRESS = 'inProgress',
 }
 
 export const hubLinksUrlMap = new Map<string, string>([
@@ -52,6 +53,7 @@ export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
   [HubLinkStatus.SUBMITTED_AND_VIEWED, '--turquoise'],
+  [HubLinkStatus.IN_PROGRESS, '--yellow'],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

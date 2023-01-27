@@ -27,9 +27,12 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
+import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -54,7 +57,6 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
-import RemoveFileController from '../../controllers/RemoveFileController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
@@ -67,6 +69,7 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitTribunalCYAController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -79,6 +82,7 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -86,13 +90,8 @@ const handleUploads = multer({
     fileSize: FILE_SIZE_LIMIT,
   },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    const fileSize = parseInt(req.headers['content-length']);
-    if (fileSize > FILE_SIZE_LIMIT) {
-      req.fileTooLarge = true;
-      return callback(null, false);
-    } else {
-      return callback(null, true);
-    }
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    return callback(null, !req.fileTooLarge);
   },
 });
 
@@ -222,10 +221,19 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new SupportingMaterialController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
-    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
-    app.get(InterceptPaths.REMOVE_FILE, new RemoveFileController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
+    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTribunalCYAController().get);
+    app.post(
+      PageUrls.TRIBUNAL_CONTACT_SELECTED,
+      handleUploads.single('contactApplicationFile'),
+      new ContactTheTribunalSelectedController().post
+    );
+    app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({

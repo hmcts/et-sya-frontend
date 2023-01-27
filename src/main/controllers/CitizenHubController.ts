@@ -17,6 +17,7 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
+import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 
 const logger = getLogger('CitizenHubController');
@@ -40,6 +41,7 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+    clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
 
     if (!userCase.hubLinksStatuses) {
