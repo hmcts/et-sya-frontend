@@ -83,6 +83,12 @@
     "yes": "Do",
     "no": "Naddo"
   },
+  "acasReason": {
+    "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
+    "no_power": "Nid oes gan Acas y pŵer i gymodi ar fy hawliad neu ran o fy hawliad.",
+    "employer": "Mae fy nghyflogwr eisoes wedi bod mewn cysylltiad ag Acas",
+    "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim."
+  },
   "claimDetails": {
     "header": "Manylion yr hawliad",
     "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
