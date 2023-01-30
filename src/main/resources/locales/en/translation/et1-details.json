@@ -25,6 +25,7 @@
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
+    "endDate": "Employment end date",
     "noticePeriod": "Do you have a written contract with notice period?",
     "noticeEnds": "Notice period ends",
     "noticePeriodWeeksOrMonths": "Is your notice period in weeks or months?",
