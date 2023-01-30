@@ -145,7 +145,10 @@ export const getEmploymentDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.noticePeriod,
+          text:
+            userCase.noticePeriod === YesOrNo.YES
+              ? translations.employmentDetails.yes
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [
