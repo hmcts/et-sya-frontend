@@ -83,7 +83,8 @@
     "payRelated": "Pay-related",
     "unfairDismissal": "Unfair dismissal",
     "whistleBlowing": "Whistleblowing",
-    "otherClaim": "Other type of claim"
+    "otherClaim": "Other type of claim",
+    "otherTypesOfClaims": "Other type of claim"
   },
   "tellUsWhatYouWant": {
     "compensation": "Compensation only",
