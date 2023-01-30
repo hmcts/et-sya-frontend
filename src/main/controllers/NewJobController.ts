@@ -9,8 +9,7 @@ import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
@@ -24,7 +23,8 @@ export default class NewJobController {
         id: 'new-job',
         type: 'radios',
         label: (l: AnyRecord): string => l.h1,
-        labelHidden: true,
+        labelHidden: false,
+        labelSize: 'xl',
         classes: 'govuk-radios--inline',
         values: [
           {
@@ -46,13 +46,11 @@ export default class NewJobController {
     this.form = new Form(<FormFields>this.newJobContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
       : PageUrls.FIRST_RESPONDENT_NAME;
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

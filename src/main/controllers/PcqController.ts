@@ -5,6 +5,6 @@ import { invokePCQ } from '../pcq';
 
 export default class PcqController {
   public async get(req: AppRequest, res: Response): Promise<void> {
-    invokePCQ(req, res);
+    await invokePCQ(req, res);
   }
 }

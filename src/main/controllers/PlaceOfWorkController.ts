@@ -12,8 +12,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
@@ -101,11 +100,9 @@ export default class PlaceOfWorkController {
     this.form = new Form(<FormFields>this.placeOfWorkContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {

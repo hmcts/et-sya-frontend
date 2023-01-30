@@ -4,12 +4,11 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { WeeksOrMonths } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
+import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
-import { handleSessionErrors } from './helpers/ErrorHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
@@ -23,8 +22,9 @@ export default class NoticeTypeController {
         id: 'notice-type',
         type: 'radios',
         classes: 'govuk-radios--inline',
-        label: (l: AnyRecord): string => l.labelHidden,
-        labelHidden: true,
+        labelHidden: false,
+        labelSize: 'xl',
+        isPageHeading: true,
         values: [
           {
             label: (l: AnyRecord): string => l.weeks,
@@ -51,7 +51,7 @@ export default class NoticeTypeController {
     this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (
       conditionalRedirect(req, this.form.getFormFields(), WeeksOrMonths.WEEKS) ||
@@ -61,15 +61,18 @@ export default class NoticeTypeController {
     } else {
       redirectUrl = PageUrls.AVERAGE_WEEKLY_HOURS;
     }
-    setUserCase(req, this.form);
-    handleSessionErrors(req, res, this.form, redirectUrl);
-    handleUpdateDraftCase(req, logger);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
     const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
+    const noticePeriodUnit = Object.entries(this.form.getFormFields())[0][1] as FormInput;
+    noticePeriodUnit.label =
+      employmentStatus === 'Working' || employmentStatus === 'Notice'
+        ? l => l.workingHeader
+        : l => l.noLongerWorkingHeader;
     res.render(TranslationKeys.NOTICE_TYPE, {
       ...content,
       employmentStatus,

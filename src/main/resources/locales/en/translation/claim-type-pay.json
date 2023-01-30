@@ -1,6 +1,7 @@
 {
   "title": "Payment claim type",
-  "h1": "What type of pay claim are you making?",
+  "h1": "Your pay claim",
+  "legend": "What type of pay claim are you making?",
   "detailsSummary": "What are pay claims?",
   "detailsText": "It is against the law for an employer to withhold pay after an employee has carried out work for them. This can also include unlawful deduction of pay.",
   "arrears": { "title": "Arrears claim", "checkbox": "Arrears (pay you are owed)" },

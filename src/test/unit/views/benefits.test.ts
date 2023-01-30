@@ -15,8 +15,8 @@ const benefitsJsonRaw = fs.readFileSync(
 const benefitsJson = JSON.parse(benefitsJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const expectedTitleWorkingOrNotice = benefitsJson.h1.workingOrNotice;
-const expectedTitleNoLongerWorking = benefitsJson.h1.noLongerWorking;
+const expectedTitleWorkingOrNotice = benefitsJson.title;
+const expectedTitleNoLongerWorking = benefitsJson.title;
 const buttonClass = 'govuk-button';
 const radios = 'govuk-radios';
 

@@ -1,5 +1,6 @@
 import request from 'supertest';
 
+import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
@@ -19,6 +20,7 @@ describe(`GET ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
 });
 
 describe(`on POST ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
   test('should navigate to the pay before tax page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.AVERAGE_WEEKLY_HOURS)

@@ -1,4 +1,5 @@
 import TellUsWhatYouWantController from '../../../main/controllers/TellUsWhatYouWantController';
+import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -9,6 +10,10 @@ describe('Tell Us What You Want Controller', () => {
     common: {},
   };
 
+  beforeAll(() => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  });
+
   it('should render the tell us what you want page', () => {
     const controller = new TellUsWhatYouWantController();
     const response = mockResponse();
@@ -18,20 +23,20 @@ describe('Tell Us What You Want Controller', () => {
   });
 
   describe('Correct validation', () => {
-    it('should not require input (all fields are optional)', () => {
+    it('should not require input (all fields are optional)', async () => {
       const req = mockRequest({ body: {} });
-      new TellUsWhatYouWantController().post(req, mockResponse());
+      await new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.errors).toHaveLength(0);
     });
 
-    it('should assign userCase from the page form data', () => {
+    it('should assign userCase from the page form data', async () => {
       const req = mockRequest({
         body: {
           tellUsWhatYouWant: ['compensationOnly'],
         },
       });
-      new TellUsWhatYouWantController().post(req, mockResponse());
+      await new TellUsWhatYouWantController().post(req, mockResponse());
 
       expect(req.session.userCase).toMatchObject({ tellUsWhatYouWant: ['compensationOnly'] });
     });

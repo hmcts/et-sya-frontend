@@ -14,7 +14,7 @@ const noticeTypeJsonRaw = fs.readFileSync(
 );
 const noticeTypeJson = JSON.parse(noticeTypeJsonRaw);
 
-const titleClass = 'govuk-heading-xl';
+const titleClass = 'govuk-fieldset__legend';
 const expectedTitleWorkingOrNotice = noticeTypeJson.h1.workingOrNotice;
 const expectedTitleNoLongerWorking = noticeTypeJson.h1.noLongerWorking;
 const radios = 'govuk-radios--inline';
