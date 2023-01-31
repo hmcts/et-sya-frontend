@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const logger = getLogger('ClaimDetailsController');
@@ -23,7 +24,7 @@ export default class ClaimDetailsController {
       logger.error('A userCase was not found');
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
-
+    userCase.selectedGenericTseApplicationNumber = undefined;
     userCase.allEt1DocumentDetails = await getET1Documents(userCase, req.session.user?.accessToken);
 
     const et1Documents = [];
@@ -48,7 +49,17 @@ export default class ClaimDetailsController {
     // However, this is just a quick fix to make it look like a table rather than the summary details that it actually is.
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
+
+    if (userCase.genericTseApplicationCollection.length) {
+      const genericCollection = userCase.genericTseApplicationCollection;
+      genericCollection.forEach(it => {
+        const app = it.value.type;
+        it.linkValue = translations.sections[app].label;
+        it.redirectUrl = `/application-details/${it.value.number}${getLanguageParam(req.url)}`;
+      });
+    }
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

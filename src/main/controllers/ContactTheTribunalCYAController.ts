@@ -5,6 +5,7 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -24,29 +25,12 @@ export default class ContactTheTribunalCYAController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    const applicationFile = userCase?.contactApplicationFile;
-    let downloadLink = '';
-    if (
-      applicationFile &&
-      applicationFile.document_size &&
-      applicationFile.document_mime_type &&
-      applicationFile.document_filename
-    ) {
-      downloadLink =
-        "<a href='/getSupportingMaterial/' target='_blank' class='govuk-link'>" +
-        applicationFile.document_filename +
-        '(' +
-        applicationFile.document_mime_type +
-        ', ' +
-        applicationFile.document_size +
-        'MB)' +
-        '</a>';
-    }
+    const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
       ...content,
       ...translations,
-      typeOfApplication: translations.sections[userCase.contactApplicationType].label,
+      typeOfApplication: translations.sections[userCase.contactApplicationType]?.label,
       PageUrls,
       userCase,
       respondents: req.session.userCase?.respondents,

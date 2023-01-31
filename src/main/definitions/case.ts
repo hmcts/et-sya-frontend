@@ -1,3 +1,4 @@
+import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -166,6 +167,8 @@ export interface Case {
   contactApplicationFile?: Document;
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
+  genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  selectedGenericTseApplicationNumber?: string;
 }
 
 export const enum StillWorking {

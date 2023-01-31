@@ -20,6 +20,7 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { GenericTseApplicationTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
@@ -171,6 +172,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
+    genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
   };
 }
 
@@ -457,4 +459,15 @@ export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   }
 
   return false;
+};
+
+export const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
+  if (items?.length === 0) {
+    return [];
+  }
+  return items?.sort((a, b) => {
+    const da = new Date(a.value.date),
+      db = new Date(b.value.date);
+    return da.valueOf() - db.valueOf();
+  });
 };

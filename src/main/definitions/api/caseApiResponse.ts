@@ -4,6 +4,7 @@ import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDet
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
 import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
+import { GenericTseApplicationTypeItem } from '../complexTypes/genericTseApplicationTypeItem';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
@@ -61,6 +62,7 @@ export interface CaseData {
   et3NotificationDocCollection?: DocumentApiModel[];
   et3ResponseContestClaimDocument?: DocumentApiModel[];
   claimServedDate?: string;
+  genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
 }
 
 export interface RespondentApiModel {

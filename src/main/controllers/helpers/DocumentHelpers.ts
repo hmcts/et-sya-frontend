@@ -1,3 +1,5 @@
+import { Document } from '../../definitions/case';
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -21,6 +23,37 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
   }
 };
 
+export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<void> => {
+  const docId = doc.document_url.replace(/.*\//g, '');
+  const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
+  const { size, mimeType } = docDetails.data;
+  doc.document_mime_type = mimeType;
+  doc.document_size = size / 1000000;
+};
+
 // merge arrays but make sure they are not undefined
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
+
+export const createDownloadLink = (file: Document): string => {
+  let downloadLink = '';
+  if (file && file.document_size && file.document_mime_type && file.document_filename) {
+    downloadLink =
+      "<a href='/getSupportingMaterial' target='_blank' class='govuk-link'>" +
+      file.document_filename +
+      '(' +
+      file.document_mime_type +
+      ', ' +
+      file.document_size +
+      'MB)' +
+      '</a>';
+  }
+  return downloadLink;
+};
+
+export const findSelectedGenericTseApplication = (
+  items: GenericTseApplicationTypeItem[],
+  param: string
+): GenericTseApplicationTypeItem => {
+  return items.find(it => it.value.number === param);
+};
