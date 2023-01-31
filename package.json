@@ -104,7 +104,6 @@
     "@types/chai-as-promised": "^7.1.5",
     "@types/git-rev-sync": "2.0.0",
     "@types/jest": "^29.0.0",
-    "@types/pino-std-serializers": "^4.0.0",
     "@types/redis-mock": "^0.17.1",
     "@types/sinon-chai": "^3.2.8",
     "@types/supertest": "^2.0.8",
