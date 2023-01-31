@@ -105,7 +105,9 @@ export const getRespondentSection = (
       },
     });
   }
-  const acasCertValue = respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : respondent.acasCert;
+
+  const acasCertValue =
+    respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.respondentDetails.no;
   respondentSections.push({
     key: {
       text: translations.respondentDetails.acasNumber,
@@ -124,7 +126,7 @@ export const getRespondentSection = (
       ],
     },
   });
-  if (acasCertValue === YesOrNo.NO) {
+  if (respondent.acasCert === YesOrNo.NO) {
     let reasonText;
     switch (respondent.noAcasReason) {
       case NoAcasNumberReason.ANOTHER:
