@@ -24,6 +24,8 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
+  const copyToOtherPartyTextErrors = getcopyToOtherPartyTextError(formData);
+
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
   }
@@ -47,6 +49,10 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   if (otherClaimTypeError) {
     sessionErrors = [...sessionErrors, otherClaimTypeError];
   }
+
+  if (copyToOtherPartyTextErrors) {
+    sessionErrors = [...sessionErrors, copyToOtherPartyTextErrors];
+  }
   return sessionErrors;
 };
 
@@ -61,6 +67,21 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
       return { errorType, propertyName: 'hearingAssistance' };
+    }
+  }
+};
+
+export const getcopyToOtherPartyTextError = (formData: Partial<CaseWithId>): FormError => {
+  const copyToOtherPartyYesOrNoRadio = formData.copyToOtherPartyYesOrNo;
+  const copyToOtherPartyTextTextarea = formData.copyToOtherPartyText;
+
+  if (
+    copyToOtherPartyYesOrNoRadio?.includes(YesOrNo.NO) &&
+    (!copyToOtherPartyTextTextarea || copyToOtherPartyTextTextarea.trim().length === 0)
+  ) {
+    const errorType = isFieldFilledIn(copyToOtherPartyTextTextarea);
+    if (errorType) {
+      return { errorType, propertyName: 'copyToOtherPartyText' };
     }
   }
 };
