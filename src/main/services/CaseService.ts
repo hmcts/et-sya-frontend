@@ -100,8 +100,8 @@ export class CaseApi {
           contactApplicationType: caseItem.contactApplicationType,
           contactApplicationText: caseItem.contactApplicationText,
           contactApplicationFile: caseItem.contactApplicationFile,
-          copyCorrespondence: caseItem.copyCorrespondence,
-          noCopyReason: caseItem.noCopyReason,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
         },
       });
     } catch (error) {

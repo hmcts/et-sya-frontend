@@ -22,7 +22,7 @@ export default class ApplicationCompleteController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_COMPLETE, { returnObjects: true }),
       applicationDate: dateString,
-      rule92: req.session.userCase.copyCorrespondence,
+      rule92: req.session.userCase.copyToOtherPartyYesOrNo,
       redirectUrl,
     });
   }

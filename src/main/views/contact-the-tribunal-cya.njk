@@ -65,16 +65,16 @@
           },
           {
             key: {
-            text: copyCorrespondence,
+            text: copyToOtherPartyYesOrNo,
             classes: "govuk-!-font-weight-regular-m"
           },
-            value: { text: userCase.copyCorrespondence | safe },
+            value: { text: userCase.copyToOtherPartyYesOrNo | safe },
             actions: {
             items: [
               {
                 href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
                 text: "Change",
-                visuallyHiddenText: copyCorrespondence
+                visuallyHiddenText: copyToOtherPartyYesOrNo
               }
             ]
           }
