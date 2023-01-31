@@ -2,6 +2,9 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { AnyRecord } from '../definitions/util-types';
+
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
@@ -11,8 +14,10 @@ export default class ClaimSubmittedController {
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
       hideContactUs: true,
       submissionReferenceText: userCase.id,
-      claimSubmittedText: formatClaimSubmittedDate(),
-      attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename),
+      claimSubmittedText: formatClaimSubmittedDate(new Date(), req),
+      attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename, {
+        ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
+      }),
       downloadLink: '/getCaseDocument/' + userCase.et1SubmittedForm?.id,
       tribunalOfficeText: userCase.managingOffice,
       emailText: userCase.tribunalCorrespondenceEmail,
@@ -22,17 +27,17 @@ export default class ClaimSubmittedController {
   }
 }
 
-function formatClaimSubmittedDate(date: Date = new Date()) {
-  const year = date.toLocaleString('default', { year: 'numeric' });
-  const month = date.toLocaleString('default', { month: 'long' });
-  const day = date.toLocaleString('default', { day: '2-digit' });
-
-  return `${day} ${month} ${year}`;
+function formatClaimSubmittedDate(date: Date, req: AppRequest<Partial<AnyRecord>>) {
+  return new Date(date).toLocaleDateString(retrieveCurrentLocale(req?.url), {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 }
 
-const formatAttachmentsText = (fileName: string) => {
+const formatAttachmentsText = (fileName: string, translations: AnyRecord) => {
   if (fileName === undefined || fileName.length < 1) {
-    return 'None';
+    return translations.none;
   }
   return fileName;
 };

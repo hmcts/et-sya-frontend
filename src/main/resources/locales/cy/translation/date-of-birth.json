@@ -2,8 +2,8 @@
   "title": "Manylion dyddiad Geni",
   "h1": "Dyddiad geni (dewisol)",
   "legend": "Beth yw eich dyddiad geni?",
-  "p1": "Bydd y manylion hyn yn cael eu defnyddio i helpu i symud eich cais yn ei flaen.",
-  "hint": "Fe ddefnyddir y manylion hyn i symud eich hawliad yn ei flaen.<br><br>Er enghraifft, 23 04 1981",
+  "p1": "Fe ddefnyddir y manylion hyn i’n helpu i symud eich hawliad yn ei flaen.",
+  "hint": "Er enghraifft, 23 04 1981",
   "errors": {
     "dobDate": {
       "dayRequired": "Rhowch ddiwrnod ar gyfer eich dyddiad geni. Er enghraifft, 23",

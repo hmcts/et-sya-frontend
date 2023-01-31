@@ -21,7 +21,7 @@
   "compensationOnlyHint": "Fe ofynnir i chi ddarparu amcangyfrif o gyfanswm yr iawndal",
   "tribunalRecommendation": {
     "title": "Opsiwn argymhelliad y tribiwnlys",
-    "checkbox": "Os ydych yn hawlio am wahaniaethu, argymhelliad y tribiwnlys"
+    "checkbox": "Os ydych yn hawlio am wahaniaethu, argymhelliad tribiwnlys"
   },
   "tribunalRecommendationHint": "Fe ofynnir i chi ddisgrifio eich cais i’r tribiwnlys",
   "oldJob": {

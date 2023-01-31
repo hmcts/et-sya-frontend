@@ -3,14 +3,14 @@
   "h1": "Rheswm dros beidio bod â thystysgrif",
   "legend": "Pam nad oes gennych rif Acas?",
   "hint": "Noder: gall hawlio esemptiad yn anghywir arwain at wrthod eich hawliad. Os oes gennych unrhyw amheuon, cysylltwch ag Acas.",
-  "dismissalHint": "Nid yw’r ffaith eich bod yn gwneud hawliad o ddiswyddo annheg ac wedi dewis yr opsiwn hwn yn golygu eich bod o reidrwydd yn gwneud cais am gymorth dros dro. Os ydych yn cyflwyno’r hawliad hwn fwy na 7 diwrnod ar ôl i’ch cyflogaeth ddod i ben ni allwch wneud cais am gymorth dros dro.",
+  "dismissalHint": "Nid yw’r ffaith eich bod yn gwneud hawliad o ddiswyddo annheg ac wedi dewis yr opsiwn hwn yn golygu eich bod o reidrwydd yn gwneud cais am gymorth interim. Os ydych yn cyflwyno’r hawliad hwn fwy na 7 diwrnod ar ôl i’ch cyflogaeth ddod i ben, yna ni allwch wneud cais am gymorth interim.",
   "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
   "no_power": "Nid oes gan Acas y pŵer i gymodi ar fy hawliad neu ran o fy hawliad.",
   "employer": "Mae fy nghyflogwr eisoes wedi bod mewn cysylltiad ag Acas",
   "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim.",
   "errors": {
     "noAcasReason": {
-      "required": "Dywedwch pam nad oes gennych rif Acas .  Os nad ydych yn siŵr pa eithriad i ddewis cysylltwch â Acas"
+      "required": "Dywedwch pam nad oes gennych rif Acas . Os nad ydych yn siŵr pa eithriad i ddewis cysylltwch ag Acas"
     }
   }
 }
