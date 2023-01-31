@@ -31,11 +31,3 @@ smoke-output/reports
 src/test/api/pact/pacts/
 src/test/end-to-end/functional-output/*
 /dump.rdb
-
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
