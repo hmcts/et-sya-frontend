@@ -409,6 +409,7 @@ describe('Format Case Data to Frontend Model', () => {
       addressTown: undefined,
       telNumber: undefined,
       firstName: undefined,
+      genericTseApplicationCollection: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,

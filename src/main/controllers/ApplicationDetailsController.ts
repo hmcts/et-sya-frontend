@@ -27,12 +27,15 @@ export default class ApplicationDetailsController {
     req.session.userCase.selectedGenericTseApplicationNumber = selectedApplication.value.number;
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
+    const document = selectedApplication.value?.documentUpload;
 
-    try {
-      await getDocumentAdditionalInformation(selectedApplication.value?.documentUpload, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
+    if (!document.document_mime_type && !document.document_size) {
+      try {
+        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        return res.redirect('/not-found');
+      }
     }
 
     const downloadLink = createDownloadLink(selectedApplication.value?.documentUpload);

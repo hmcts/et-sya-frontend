@@ -15,7 +15,7 @@ export default class SupportingMaterialController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
     let fileId = userCase?.contactApplicationFile?.document_url;
-    if (!fileId) {
+    if (!fileId && userCase?.genericTseApplicationCollection?.length && userCase.selectedGenericTseApplicationNumber) {
       const selectedGenericTseApplication = findSelectedGenericTseApplication(
         userCase?.genericTseApplicationCollection,
         userCase.selectedGenericTseApplicationNumber

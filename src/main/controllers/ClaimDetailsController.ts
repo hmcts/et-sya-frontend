@@ -52,7 +52,7 @@ export default class ClaimDetailsController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    if (userCase.genericTseApplicationCollection.length) {
+    if (userCase.genericTseApplicationCollection?.length) {
       const genericCollection = userCase.genericTseApplicationCollection;
       genericCollection.forEach(it => {
         const app = it.value.type;

@@ -23,12 +23,13 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
   }
 };
 
-export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<void> => {
+export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = doc.document_url.replace(/.*\//g, '');
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { size, mimeType } = docDetails.data;
   doc.document_mime_type = mimeType;
   doc.document_size = size / 1000000;
+  return doc;
 };
 
 // merge arrays but make sure they are not undefined
@@ -55,5 +56,5 @@ export const findSelectedGenericTseApplication = (
   items: GenericTseApplicationTypeItem[],
   param: string
 ): GenericTseApplicationTypeItem => {
-  return items.find(it => it.value.number === param);
+  return items?.find(it => it.value.number === param);
 };
