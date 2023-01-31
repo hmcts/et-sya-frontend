@@ -7,44 +7,46 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { handlePostLogic, setUserCase } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+const logger = getLogger('CopyToOtherPartyController');
 
 export default class CopyToOtherPartyController {
   private readonly form: Form;
 
   private readonly CopyToOtherPartyContent: FormContent = {
     fields: {
-      copyCorrespondence: {
+      copyToOtherPartyYesOrNo: {
         classes: 'govuk-radios',
-        id: 'copyCorrespondence',
+        id: 'copyToOtherPartyYesOrNo',
         type: 'radios',
         label: (l: AnyRecord): string => l.legend,
         labelHidden: false,
         labelSize: 'l',
         values: [
           {
-            name: 'copyCorrespondence',
+            name: 'copyToOtherPartyYesOrNo',
             label: (l: AnyRecord): string => l.yes,
             value: YesOrNo.YES,
           },
           {
-            name: 'copyCorrespondence',
+            name: 'copyToOtherPartyYesOrNo',
             label: (l: AnyRecord): string => l.no,
             value: YesOrNo.NO,
             subFields: {
-              noCopyReason: {
-                id: 'noCopyReason',
-                name: 'noCopyReason',
+              copyToOtherPartyText: {
+                id: 'copyToOtherPartyText',
+                name: 'copyToOtherPartyText',
                 type: 'textarea',
                 label: (l: AnyRecord): string => l.hintText,
                 labelSize: 'm',
                 isPageHeading: true,
                 classes: 'govuk-textarea',
                 attributes: { maxLength: 1500 },
-                validator: isFieldFilledIn,
               },
             },
           },
@@ -64,10 +66,10 @@ export default class CopyToOtherPartyController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    if (req.session.userCase.copyCorrespondence === YesOrNo.YES) {
-      req.session.userCase.noCopyReason = undefined;
+    if (req.session.userCase.copyToOtherPartyYesOrNo === YesOrNo.YES) {
+      req.session.userCase.copyToOtherPartyText = undefined;
     }
-    res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.CONTACT_THE_TRIBUNAL_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -98,7 +100,7 @@ export default class CopyToOtherPartyController {
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
-      copyCorrespondence: captionText,
+      copyToOtherPartyYesOrNo: captionText,
       cancelLink: redirectUrl,
     });
   };
