@@ -17,6 +17,6 @@
       "router/*": ["router/*"],
       "routes/*": ["routes/*"]
     },
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["node_modules/@types"]
   }
 }
