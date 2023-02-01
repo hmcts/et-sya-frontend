@@ -1,17 +1,21 @@
 {
   "title": "Buddion gweithwyr",
-  "workingOrNoticeLegend": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
+  "workingOrNoticeLegend": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion gweithwyr? (dewisol)",
   "noLongerWorkingLegend": "Oeddech chi’n cael unrhyw fuddion fel cyflogai? (dewisol)",
   "h1": {
-    "workingOrNotice": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion? (dewisol)",
+    "workingOrNotice": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion gweithwyr? (dewisol)",
     "noLongerWorking": "Oeddech chi’n cael unrhyw fuddion fel cyflogai? (dewisol)"
   },
   "label": "Ydych chi, neu oeddech chi’n cael unrhyw fuddion cyflogeion?",
-  "p1": "Er enghraifft, gofal plant, car cwmni, yswiriant tŷ a iechyd.",
-  "benefitsTitle": "Beth a ystyrir i fod yn fuddion cyflogeion?",
-  "benefitsHelpTxt": "Buddion cyflogeion (a elwir hefyd yn ‘buddion ymarferol’) yw’r gwahanol fathau o fuddion ychwanegol rydych yn eu cael ar ben eich cyflog arferol.",
+  "p1": "Er enghraifft, gofal plant, car cwmni, yswiriant tŷ ac iechyd.",
+  "benefitsTitle": "Beth a ystyrir i fod yn fuddion gweithwyr?",
+  "benefitsHelpTxt": "Buddion gweithwyr (a elwir hefyd yn ‘buddion ymarferol’) yw’r gwahanol fathau o fuddion ychwanegol rydych yn eu cael ar ben eich cyflog arferol.",
   "hint": "Dywedwch fwy wrthym am y buddion hynny",
   "noLongerWorking": "Ddim yn gweithio mwyach",
+  "yes": "Ydw",
+  "no": "Nac ydw",
+  "yesPast": "Oeddwn",
+  "noPast": "Nac oeddwn",
   "errors": {
     "benefitsCharCount": {
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"

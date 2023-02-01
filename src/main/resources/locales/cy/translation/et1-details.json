@@ -69,7 +69,7 @@
     "header": "Atebydd ",
     "details": "manylion",
     "respondentName": "Enw'r atebydd",
-    "respondentAddress": "Cyfeiriad yr Atebydd",
+    "respondentAddress": "Cyfeiriad yr atebydd",
     "workedAtRespondent": "Wnaethoch chi weithio yng nghyfeiriad yr atebydd?",
     "addressWorkedAt": "Y cyfeiriad rydych chi’n gweithio ynddo neu'r cyfeiriad yr oeddech chi’n gweithio ynddo",
     "orgOrPerson": "Sefydliad neu berson",
@@ -83,13 +83,19 @@
     "yes": "Do",
     "no": "Naddo"
   },
+  "acasReason": {
+    "another": "Mae gan rywun arall rwy’n gwneud yr hawliad gyda nhw rif tystysgrif cymodi cynnar Acas",
+    "no_power": "Nid oes gan Acas y pŵer i gymodi ar fy hawliad neu ran o fy hawliad.",
+    "employer": "Mae fy nghyflogwr eisoes wedi bod mewn cysylltiad ag Acas",
+    "unfair_dismissal": "Mae’r hawliad yn ymwneud â chwyn am ddiswyddo annheg yn unig sy’n cynnwys cais am gymorth interim."
+  },
   "claimDetails": {
     "header": "Manylion yr hawliad",
     "claimTypeDiscrimination": "Pa fath o hawliad yn ymwneud â gwahaniaethu ydych chi’n ei wneud?",
     "claimTypePay": "Pa fath o hawliad tâl ydych chi'n ei wneud?",
     "describeWhatHappened": "Disgrifiwch beth ddigwyddodd i chi",
     "ifClaimSuccessful": "Beth ydych chi ei eisiau os yw eich hawliad yn llwyddiannus?",
-    "expectedCompensation": "WPa iawndal rydych chi'n ei geisio?",
+    "expectedCompensation": "Pa iawndal ydych yn ei geisio?",
     "expectedTribunalsRecommendation": "Pa argymhelliad tribiwnlys hoffech chi ei wneud?",
     "forwardClaim": "Ydych chi eisiau i ni anfon eich hawliad chwythu’r chwiban i reoleiddiwr neu gorff perthnasol?",
     "summary": "Crynodeb o’r hawliad",

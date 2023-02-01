@@ -1,5 +1,7 @@
 {
   "title": "Oes gennych chi gontract ysgrifenedig gyda chyfnod hysbysiad?",
-  "h1": "Oes gennych chi gontract ysgrifenedig gyda chyfnod hysbysiad? (dewisol)",
-  "legend": "Oes gennych chi gontract ysgrifenedig gyda chyfnod hysbysiad? (dewisol)"
+  "h1": "Oes gennych chi gontract ysgrifenedig gyda chyfnod rhybudd? (dewisol)",
+  "legend": "Oes gennych chi gontract ysgrifenedig gyda chyfnod rhybudd? (dewisol)",
+  "yes": "Oes",
+  "no": "Nac oes"
 }

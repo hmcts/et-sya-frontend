@@ -2,7 +2,8 @@
   "title": "Wythnosau yn y cyfnod Rhybudd?",
   "h1": {
     "nonNotice": "Sawl wythnos yn eich cyfnod rhybudd? (dewisol)",
-    "notice": "Am sawl wythnos o’ch cyfnod rhybudd y byddwch yn cael eich talu? (dewisol)"
+    "notice": "Am sawl wythnos o’ch cyfnod rhybudd byddwch yn cael eich talu? (dewisol)",
+    "noLongerWorking": "Sawl wythnos oedd eich cyfnod rhybudd? (dewisol)"
   },
   "noticeLengthHint": "Er enghraifft, 4",
   "onNotice": "Rhybudd",
