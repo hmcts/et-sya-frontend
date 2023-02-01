@@ -14,6 +14,7 @@ import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getContactApplicationError, getLastFileError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -104,9 +105,8 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    const redirectPage = userCase.copyToOtherPartyYesOrNo
-      ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
-      : PageUrls.COPY_TO_OTHER_PARTY;
+    const redirectPage =
+      'witness' === userCase.contactApplicationType ? PageUrls.CONTACT_THE_TRIBUNAL_CYA : PageUrls.COPY_TO_OTHER_PARTY;
 
     return res.redirect(redirectPage);
   };
@@ -159,7 +159,7 @@ export default class ContactTheTribunalSelectedController {
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      cancelLink: PageUrls.CONTACT_THE_TRIBUNAL,
+      cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       errorMessage,
       ...content,
     });
