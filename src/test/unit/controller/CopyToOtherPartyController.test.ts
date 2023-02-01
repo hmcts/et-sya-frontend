@@ -1,0 +1,87 @@
+import CopyToOtherPartyController from '../../../main/controllers/CopyToOtherPartyController';
+import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
+import { mockRequest } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
+
+describe('Copy to other party Controller', () => {
+  // const t = {
+  //   'copy-to-other-party': {},
+  //   common: {},
+  // };
+
+  // it('should render the copy to other party page', () => {
+  //   const controller = new CopyToOtherPartyController();
+
+  //   const response = mockResponse();
+  //   const request = mockRequest({ t });
+
+  //   controller.get(request, response);
+
+  //   expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
+  // });
+
+  it('should redirect to contact the tribunal check your answers page when yes is selected', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+  });
+
+  it('should redirect to contact the tribunal check your answers page when no is selected and summary text provided', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES, copyToOtherPartyText: 'Test response' };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+  });
+
+  it('should redirect to same page and throw error when nothing is selected', async () => {
+    const body = { copyToOtherPartyYesOrNo: '' };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
+    expect(req.session.errors).toHaveLength(1);
+  });
+
+  it('should redirect to same page and throw error when No is selected but no summary text provided', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: '' };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(req.path);
+  });
+
+  it('should add the responses to the session userCase', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: 'Test response' };
+    const controller = new CopyToOtherPartyController();
+    const req = mockRequest({ body });
+    const res = mockResponse();
+
+    await controller.post(req, res);
+    expect(req.session.userCase.copyToOtherPartyYesOrNo).toEqual(YesOrNo.NO);
+    expect(req.session.userCase.copyToOtherPartyText).toEqual('Test response');
+  });
+});
