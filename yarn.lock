@@ -6800,6 +6800,7 @@ __metadata:
     nunjucks: ^3.2.2
     pa11y: ^6.1.1
     path: ^0.12.7
+    pino-pretty: ^9.1.1
     playwright: ^1.25.2
     postcode: ^5.1.0
     prettier: ^2.5.1
@@ -12092,7 +12093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-pretty@npm:^4.1.0":
+"pino-pretty@npm:^4.1.0, pino-pretty@npm:^9.1.1":
   version: 9.1.1
   resolution: "pino-pretty@npm:9.1.1"
   dependencies:
