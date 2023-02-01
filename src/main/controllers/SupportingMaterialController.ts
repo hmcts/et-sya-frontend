@@ -4,8 +4,6 @@ import { AppRequest } from '../definitions/appRequest';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
-
 const logger = getLogger('SupportingMaterialController');
 
 /**
@@ -15,14 +13,8 @@ export default class SupportingMaterialController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
     let fileId = userCase?.contactApplicationFile?.document_url;
-    if (!fileId && userCase?.genericTseApplicationCollection?.length && userCase.selectedGenericTseApplicationNumber) {
-      const selectedGenericTseApplication = findSelectedGenericTseApplication(
-        userCase?.genericTseApplicationCollection,
-        userCase.selectedGenericTseApplicationNumber
-      );
-      if (selectedGenericTseApplication && selectedGenericTseApplication.value?.documentUpload) {
-        fileId = selectedGenericTseApplication.value.documentUpload.document_url;
-      }
+    if (!fileId && userCase.selectedGenericTseApplication) {
+      fileId = userCase.selectedGenericTseApplication.value.documentUpload.document_url;
     }
 
     try {

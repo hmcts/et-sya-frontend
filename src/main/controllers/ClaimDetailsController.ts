@@ -24,7 +24,7 @@ export default class ClaimDetailsController {
       logger.error('A userCase was not found');
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
-    userCase.selectedGenericTseApplicationNumber = undefined;
+    userCase.selectedGenericTseApplication = undefined;
     userCase.allEt1DocumentDetails = await getET1Documents(userCase, req.session.user?.accessToken);
 
     const et1Documents = [];

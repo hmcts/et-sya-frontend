@@ -62,7 +62,6 @@ describe('Supporting material Controller', () => {
     };
 
     request.session.userCase.genericTseApplicationCollection = [item];
-    request.session.userCase.selectedGenericTseApplicationNumber = '1';
 
     controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();

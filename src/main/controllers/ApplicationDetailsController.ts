@@ -23,8 +23,8 @@ export default class ApplicationDetailsController {
       req.session.userCase.genericTseApplicationCollection,
       req.params.appId
     );
-    //To save selected Tse application number, will be cleared if press 'Back'(to 'claim-details')
-    req.session.userCase.selectedGenericTseApplicationNumber = selectedApplication.value.number;
+    //To save selected Tse application, will be cleared if you press 'Back'(to 'claim-details')
+    req.session.userCase.selectedGenericTseApplication = selectedApplication;
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
