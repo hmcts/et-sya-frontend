@@ -414,5 +414,5 @@ export const languages = {
 };
 
 export const ContactApplications = {
-  WITNESS: 'witness',
+  TypeC: 'witness',
 };
