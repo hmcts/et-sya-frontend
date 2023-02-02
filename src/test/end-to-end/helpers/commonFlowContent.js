@@ -44,11 +44,10 @@ async function verifyBeforeYouContinueGuidanceText() {
 }
 
 async function verifyWhatIsThePostcodeYouHaveWorkedForGuidanceText() {
-  I.see('We need this to help progress your claim. If you work or worked at');
-  I.see('home occasionally or full time, enter the postcode where you would');
-  I.see('go to work for the employer.');
-  I.see('If you’re claiming against someone you’ve not worked for - as best');
-  I.see('as you can, enter the postcode of where they’re based.');
+  I.see('This will decide which Employment Tribunal office deals with your claim.');
+  I.see('If you worked at home, enter your home postcode.');
+  I.see('If you’re claiming against someone you did not work for,');
+  I.see('enter the postcode of where they are based.');
 }
 
 async function verifyARepresentativeGuidanceText() {
