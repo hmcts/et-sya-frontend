@@ -39,6 +39,7 @@
     "isStillWorking": "A ydych chi’n dal i weithio i’r sefydliad neu’r unigolyn rydych yn gwneud eich hawliad yn ei erbyn?",
     "jobTitle": "Teitl y swydd",
     "startDate": "Dyddiad cychwyn y gyflogaeth",
+    "endDate": "Dyddiad terfyn y gyflogaeth",
     "noticePeriod": "Oes gennych chi gontract ysgrifenedig gyda chyfnod rhybudd?",
     "noticeEnds": "Cyfnod rhybudd yn dod i ben",
     "noticePeriodWeeksOrMonths": "A yw eich cyfnod rhybudd mewn wythnosau neu fisoedd?",
@@ -115,7 +116,8 @@
     "payRelated": "Ymwneud â thâl",
     "unfairDismissal": "Diswyddo annheg",
     "whistleBlowing": "Chwythu’r chwiban",
-    "otherClaim": "Math arall o hawliad"
+    "otherClaim": "Math arall o hawliad",
+    "otherTypesOfClaims": "Math arall o hawliad"
   },
   "tellUsWhatYouWant": {
     "compensation": "Iawndal yn unig",
