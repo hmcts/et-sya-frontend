@@ -1,19 +1,16 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
 
-import { handlePostLogic, setUserCase } from './helpers/CaseHelpers';
+import { setUserCase } from './helpers/CaseHelpers';
+import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-
-const logger = getLogger('CopyToOtherPartyController');
 
 export default class CopyToOtherPartyController {
   private readonly form: Form;
@@ -51,7 +48,6 @@ export default class CopyToOtherPartyController {
             },
           },
         ],
-        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -65,11 +61,17 @@ export default class CopyToOtherPartyController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    setUserCase(req, this.form);
-    if (req.session.userCase.copyToOtherPartyYesOrNo === YesOrNo.YES) {
-      req.session.userCase.copyToOtherPartyText = undefined;
+    if (req.body.copyToOtherPartyYesOrNo === YesOrNo.YES) {
+      req.body.copyToOtherPartyText = undefined;
     }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+    setUserCase(req, this.form);
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const copyToOtherPartyError = getCopyToOtherPartyError(formData);
+    if (copyToOtherPartyError) {
+      req.session.errors.push(copyToOtherPartyError);
+      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+    }
+    return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {

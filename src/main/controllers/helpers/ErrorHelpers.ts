@@ -24,7 +24,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
-  const copyToOtherPartyTextErrors = getcopyToOtherPartyTextError(formData);
 
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -50,9 +49,6 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
     sessionErrors = [...sessionErrors, otherClaimTypeError];
   }
 
-  if (copyToOtherPartyTextErrors) {
-    sessionErrors = [...sessionErrors, copyToOtherPartyTextErrors];
-  }
   return sessionErrors;
 };
 
@@ -71,15 +67,19 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
   }
 };
 
-export const getcopyToOtherPartyTextError = (formData: Partial<CaseWithId>): FormError => {
-  const copyToOtherPartyYesOrNoRadio = formData.copyToOtherPartyYesOrNo;
-  const copyToOtherPartyTextTextarea = formData.copyToOtherPartyText;
+export const getCopyToOtherPartyError = (formData: Partial<CaseWithId>): FormError => {
+  if (formData.copyToOtherPartyYesOrNo === undefined) {
+    const errorType = isFieldFilledIn(formData.copyToOtherPartyYesOrNo);
+    if (errorType) {
+      return { errorType, propertyName: 'copyToOtherPartyYesOrNo' };
+    }
+  }
 
   if (
-    copyToOtherPartyYesOrNoRadio?.includes(YesOrNo.NO) &&
-    (!copyToOtherPartyTextTextarea || copyToOtherPartyTextTextarea.trim().length === 0)
+    formData.copyToOtherPartyYesOrNo?.includes(YesOrNo.NO) &&
+    (!formData.copyToOtherPartyText || formData.copyToOtherPartyText.trim().length === 0)
   ) {
-    const errorType = isFieldFilledIn(copyToOtherPartyTextTextarea);
+    const errorType = isFieldFilledIn(formData.copyToOtherPartyText);
     if (errorType) {
       return { errorType, propertyName: 'copyToOtherPartyText' };
     }
