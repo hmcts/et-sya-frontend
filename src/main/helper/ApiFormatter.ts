@@ -273,12 +273,13 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  const mimeType = document?.originalDocumentName.replace(/.+[.]/gm, '');
   return {
     document_url: document.uri,
     document_filename: document.originalDocumentName,
     document_binary_url: document._links.binary.href,
-    document_size: parseInt(document.size) / 1000000,
-    document_mime_type: document.mimeType,
+    document_size: parseInt(document.size),
+    document_mime_type: mimeType,
   };
 }
 

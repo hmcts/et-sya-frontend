@@ -167,7 +167,6 @@ export interface Case {
   contactApplicationFile?: Document;
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
-  
 }
 
 export const enum StillWorking {
