@@ -76,9 +76,11 @@
 
   {% for respondent in respondents %}
     <h2 class="govuk-summary-list__key govuk-heading-m">
-      {{ respondentTitle }}
-      {{loop.index}}
-      {{ details }}
+      {% if languageParam === '?lng=cy' %}
+        {{ details }} {{ respondentTitle }} {{ loop.index }}
+      {% else %}
+        {{ respondentTitle }} {{ loop.index }} {{ details }}
+      {% endif %}
     </h2>
     <hr/>
     {{

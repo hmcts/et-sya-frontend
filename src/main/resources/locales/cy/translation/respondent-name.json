@@ -7,8 +7,8 @@
   "label": "Rhowch enw’r atebydd",
   "errors": {
     "respondentName": {
-      "required": "Rhowch enw ymatebwr rhwng 1-100 o lythrennau",
-      "invalidLength": "Rhowch enw ymatebwr rhwng 1-100 o lythrennau"
+      "required": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau",
+      "invalidLength": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau"
     }
   }
 }

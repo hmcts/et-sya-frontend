@@ -72,6 +72,7 @@ export interface FormInput {
   isCollapsable?: boolean | null;
   collapsableTitle?: Label;
   maxlength?: number | null;
+  values?: [];
 }
 
 export type FormError = {

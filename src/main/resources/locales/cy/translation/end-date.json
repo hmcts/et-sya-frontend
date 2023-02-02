@@ -6,7 +6,7 @@
   "hint": "Er enghraifft, 27 3 2007",
   "errors": {
     "endDate": {
-      "required": "Dywedwch dyddiad gorffen eich cyflogaeth wrthym. Er enghraifft, DD MM YYYY",
+      "required": "Dywedwch wrthym pryd daeth eich cyflogaeth i ben. Er enghraifft, DD MM BBBB",
       "invalidDateInFuture": "Rhowch ddyddiad gorffen dilys, rhaid i’r dyddiad fod yn y gorffennol",
       "invalidDateMoreThanTenYearsInPast": "Rhowch ddyddiad gorffen dilys, ni ddylai’r dyddiad fod yn fwy na 10 mlynedd yn  gorffennol",
       "dayRequired": "Nodwch ddiwrnod ar gyfer eich dyddiad gorffen. Er enghraifft, 23",

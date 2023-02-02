@@ -10,6 +10,8 @@
   "li4": "You’re making an unfair dismissal claim which contains an application for ‘interim relief’ - this is rare and only applicable for certain reasons such as trade union activities, acting as a workers' representative or dismissal arising from whistleblowing",
   "warningTxt1": "If you tell us the wrong exemption (or it does not apply) your claim may be rejected.",
   "insetText1": "You’ll need to provide an exemption later as part of your claim. If you’re not sure which one applies <a href=\"https://www.acas.org.uk/early-conciliation\" rel=\"noreferrer noopener\" target=\"_blank\" class=\"govuk-link\">contact Acas (opens in new tab)</a>.",
+  "yes": "Yes",
+  "no": "No",
   "errors": {
     "validNoAcasReason": {
       "required": "Tell us if you have a valid reason"

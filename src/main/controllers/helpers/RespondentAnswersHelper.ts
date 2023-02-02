@@ -1,4 +1,4 @@
-import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
+import { CaseWithId, NoAcasNumberReason, Respondent, YesOrNo } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -105,7 +105,9 @@ export const getRespondentSection = (
       },
     });
   }
-  const acasCertValue = respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : respondent.acasCert;
+
+  const acasCertValue =
+    respondent.acasCert === YesOrNo.YES ? respondent.acasCertNum : translations.respondentDetails.no;
   respondentSections.push({
     key: {
       text: translations.respondentDetails.acasNumber,
@@ -124,14 +126,32 @@ export const getRespondentSection = (
       ],
     },
   });
-  if (acasCertValue === YesOrNo.NO) {
+  if (respondent.acasCert === YesOrNo.NO) {
+    let reasonText;
+    switch (respondent.noAcasReason) {
+      case NoAcasNumberReason.ANOTHER:
+        reasonText = translations.acasReason.another;
+        break;
+      case NoAcasNumberReason.EMPLOYER:
+        reasonText = translations.acasReason.employer;
+        break;
+      case NoAcasNumberReason.NO_POWER:
+        reasonText = translations.acasReason.no_power;
+        break;
+      case NoAcasNumberReason.UNFAIR_DISMISSAL:
+        reasonText = translations.acasReason.unfair_dismissal;
+        break;
+      default:
+        reasonText = undefined;
+    }
+
     respondentSections.push({
       key: {
         text: translations.respondentDetails.noAcasReason,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: respondent.noAcasReason,
+        text: reasonText,
       },
       actions: {
         items: [
