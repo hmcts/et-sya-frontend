@@ -1,6 +1,6 @@
 import CopyToOtherPartyController from '../../../main/controllers/CopyToOtherPartyController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -29,10 +29,11 @@ describe('Copy to other party Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should redirect to contact the tribunal check your answers page when no is selected and summary text provided', async () => {
@@ -42,10 +43,11 @@ describe('Copy to other party Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should render the same page when nothing is selected', async () => {
@@ -55,11 +57,12 @@ describe('Copy to other party Controller', () => {
     const controller = new CopyToOtherPartyController();
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
     req.session.errors = [];
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
     expect(req.session.errors).toEqual(errors);
   });
 
@@ -71,11 +74,12 @@ describe('Copy to other party Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
     req.session.errors = [];
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
     expect(req.session.errors).toEqual(errors);
   });
 

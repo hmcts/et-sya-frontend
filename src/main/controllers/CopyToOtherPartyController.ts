@@ -65,13 +65,14 @@ export default class CopyToOtherPartyController {
       req.body.copyToOtherPartyText = undefined;
     }
     setUserCase(req, this.form);
+    const languageParam = getLanguageParam(req.url);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const copyToOtherPartyError = getCopyToOtherPartyError(formData);
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
-      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
-    return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+    return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam);
   };
 
   public get = (req: AppRequest, res: Response): void => {
