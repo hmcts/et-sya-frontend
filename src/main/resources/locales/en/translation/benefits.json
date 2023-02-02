@@ -12,6 +12,10 @@
   "benefitsHelpTxt": "Employee benefits (also known as 'benefits in kind') are the various types of non-wage compensation you get on top of your normal wages.",
   "hint": "Tell us about any benefits",
   "noLongerWorking": "No longer working",
+  "yes": "Yes",
+  "no": "No",
+  "yesPast": "Yes",
+  "noPast": "No",
   "errors": {
     "benefitsCharCount": {
       "tooLong": "Description must be 2500 characters or less"

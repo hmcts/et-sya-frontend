@@ -1,6 +1,8 @@
 {
   "title": "Have a new job?",
   "h1": "Have you got a new job? (optional)",
+  "yes": "Yes",
+  "no": "No",
   "errors": {
     "newJob": {
       "required": "Tell us if you have a new job"

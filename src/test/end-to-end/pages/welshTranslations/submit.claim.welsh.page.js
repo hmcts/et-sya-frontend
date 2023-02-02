@@ -19,7 +19,7 @@ module.exports = {
   },
   clickSubmitOnCheckYourAnswers() {
     I.waitForText('Gwiriwch eich atebion', 30);
-    I.click('Cadw a pharhau');
+    I.click('Cyflwyno');
   },
 
   async verifyClaimSubmitted() {

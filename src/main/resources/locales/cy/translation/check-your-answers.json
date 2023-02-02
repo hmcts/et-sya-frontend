@@ -5,7 +5,7 @@
   "subTitleYourDetails": "Eich manylion",
   "subTitleEmploymentDetails": "Manylion cyflogaeth",
   "respondentTitle": "Atebydd",
-  "details": "manylion",
+  "details": "Manylion",
   "submitYourClaim": "Cyflwyno eich hawliad",
   "discrimination": "Gwahaniaethu o unrhyw fath",
   "payRelated": "Ymwneud â thâl",
@@ -17,7 +17,7 @@
   "warning": "Dyma eich cyfle olaf i newid unrhyw fanylion cyn i chi gyflwyno eich hawliad.",
   "remember": "Cofiwch, os nad ydych yn siŵr am unrhyw beth, gallwch gadw a dychwelyd i’ch hawliad unrhyw dro trwy ddewis yr opsiwn ‘Cadw fel drafft’ ar waelod y dudalen hon.",
   "emailConfirmation": "Byddwn yn anfon cadarnhad atoch trwy neges e-bost unwaith y byddwch wedi cyflwyno’ch hawliad.",
-  "submitBtn": "Cadw a pharhau",
+  "submitBtn": "Cyflwyno",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Argraffu’r dudalen hon </a> ar gyfer eich cofnodion",
   "change": "Newid",
   "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau."

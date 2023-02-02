@@ -49,7 +49,7 @@
   },
   "errors": {
     "claimTypeDiscrimination": {
-      "required": "Rhowch gyfanswm yr iawndal yr ydych yn ei hawlio"
+      "required": "Dywedwch wrthym pa fath(au) o wahaniaethu ydych chi’n ei hawlio?"
     }
   }
 }
