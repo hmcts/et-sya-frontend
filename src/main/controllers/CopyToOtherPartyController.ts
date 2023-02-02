@@ -103,7 +103,6 @@ export default class CopyToOtherPartyController {
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
       copyToOtherPartyYesOrNo: captionText,
-      copyToOtherPartyYesOrNo: captionText,
       cancelLink: redirectUrl,
     });
   };
