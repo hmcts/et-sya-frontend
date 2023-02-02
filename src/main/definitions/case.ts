@@ -160,12 +160,14 @@ export interface Case {
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
+  typeOfClaimString?: string;
   // TSE
   contactApplicationType?: string;
   contactApplicationText?: string;
   contactApplicationFile?: Document;
-  copyCorrespondence?: YesOrNo;
-  noCopyReason?: string;
+  copyToOtherPartyYesOrNo?: YesOrNo;
+  copyToOtherPartyText?: string;
+  
 }
 
 export const enum StillWorking {

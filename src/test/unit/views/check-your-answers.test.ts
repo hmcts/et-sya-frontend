@@ -73,7 +73,7 @@ describe('Check your answers confirmation page', () => {
     expect(summaryLists[0].innerHTML).contains('Application details', 'List heading not found');
     expect(summaryLists[1].innerHTML).contains('Your details', 'List heading not found');
     expect(summaryLists[2].innerHTML).contains('Employment details', 'List heading not found');
-    expect(summaryLists[3].innerHTML).contains('\n      Respondent\n      1\n      details', 'List heading not found');
+    expect(summaryLists[3].innerHTML).contains('Respondent 1 details', 'List heading not found');
     expect(summaryLists[4].innerHTML).contains('Claim details', 'List heading not found');
   });
 
@@ -311,8 +311,8 @@ describe('Check your answers confirmation page - New Job with start date', () =>
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[23].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[24].innerHTML).contains('New job start date', '21-04-2020');
+    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[25].innerHTML).contains('New job start date', '21-04-2020');
   });
 });
 
@@ -351,7 +351,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
 
   it('should show new job start date', () => {
     const allKeys = htmlRes.getElementsByClassName('govuk-summary-list__key govuk-!-font-weight-regular-m');
-    expect(allKeys[23].innerHTML).contains('Have you got a new job?', 'Yes');
-    expect(allKeys[24].innerHTML).contains('New job start date', '');
+    expect(allKeys[24].innerHTML).contains('Have you got a new job?', 'Yes');
+    expect(allKeys[25].innerHTML).contains('New job start date', '');
   });
 });

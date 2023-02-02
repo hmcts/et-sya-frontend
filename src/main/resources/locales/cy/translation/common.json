@@ -50,6 +50,13 @@
     "whistleBlowing": "Chwythu’r chwiban",
     "otherTypesOfClaims": "Math arall o hawliad"
   },
+  "youUnder": "Cewch ddefnyddio",
+  "youOver": "Rydych wedi defnyddio",
+  "charactersRemaining": "nod arall",
+  "charactersOver": "nod yn ormod",
+  "oneLeft": "Cewch ddefnyddio 1 nod arall",
+  "oneOver": "Rydych wedi defnyddio 1 nod yn ormod",
+  "atLimit": "Cewch ddefnyddio 0 nod arall",
   "of": "o",
   "tasksCompleted": "tasg wedi'u cwblhau",
   "CookieEmploymentTribunals": "Cwcis Tribiwnlysoedd Cyflogaeth",

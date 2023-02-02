@@ -12,10 +12,10 @@
   "yes": "Welsh translation required",
   "no": "Welsh translation required",
   "errors": {
-    "copyCorrespondence": {
+    "copyToOtherPartyYesOrNo": {
       "required": "Welsh translation required"
     },
-    "noCopyReason": {
+    "copyToOtherPartyText": {
       "required": "Welsh translation required"
     }
   }

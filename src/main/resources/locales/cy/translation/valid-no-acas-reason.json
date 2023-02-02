@@ -9,7 +9,9 @@
   "li3": "Mae’r sefydliadau neu’r bobl rydych yn gwneud hawliad yn eu herbyn wedi bod mewn cysylltiad ag Acas yn barod",
   "li4": "Rydych yn gwneud hawliad am ddiswyddo annheg sy’n cynnwys cais am ‘gymorth interim’ - mae hyn yn anghyffredin a dim ond am resymau penodol y mae’n berthnasol, megis gweithgareddau undeb llafur, gweithredu fel cynrychiolydd y gweithwyr neu ddiswyddiad sy’n deillio o chwythu’r chwiban",
   "warningTxt1": "Rhybudd - os byddwch yn defnyddio’r esemptiad anghywir (neu un sy’n amherthnasol) efallai y gwrthodir eich hawliad.",
-  "insetText1": "’Bydd angen i chi ddarparu esemptiad yn hwyrach ymlaen fel rhan och hawliad. Os nad ydych yn siŵr pa un syn berthnasol <a href=\"https://www.acas.org.uk/early-conciliation\" rel=\"noreferrer noopener\" target=\"_blank\" class=\"govuk-link\"> cysylltwch ag Acas (yn agor mewn tab newydd)</a>.",
+  "insetText1": "Bydd angen i chi ddarparu esemptiad yn hwyrach ymlaen fel rhan o'ch hawliad. Os nad ydych yn siŵr pa un sy'n berthnasol <a href=\"https://www.acas.org.uk/early-conciliation\" rel=\"noreferrer noopener\" target=\"_blank\" class=\"govuk-link\"> cysylltwch ag Acas (yn agor mewn tab newydd)</a>.",
+  "yes": "Oes",
+  "no": "Nac oes",
   "errors": {
     "validNoAcasReason": {
       "required": "Dywedwch wrthym a oes gennych reswm dilys"

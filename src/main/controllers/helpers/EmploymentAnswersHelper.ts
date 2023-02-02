@@ -139,13 +139,39 @@ export const getEmploymentDetails = (
       userCase.isStillWorking === StillWorking.WORKING ||
       userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
     ) {
+      if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
+        employmentDetails.push({
+          key: {
+            text: translations.employmentDetails.endDate,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            text:
+              userCase.endDate === undefined
+                ? ''
+                : userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year,
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
+                text: translations.change,
+                visuallyHiddenText: translations.employmentDetails.endDate,
+              },
+            ],
+          },
+        });
+      }
       employmentDetails.push({
         key: {
           text: translations.employmentDetails.noticePeriod,
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: userCase.noticePeriod,
+          text:
+            userCase.noticePeriod === YesOrNo.YES
+              ? translations.employmentDetails.yes
+              : translations.employmentDetails.no,
         },
         actions: {
           items: [

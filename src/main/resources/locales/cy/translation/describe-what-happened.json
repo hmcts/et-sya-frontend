@@ -10,7 +10,7 @@
   "collapsibleSection1": {
     "linkText": "Beth i ysgrifennu ar gyfer hawliadau gwahaniaethu",
     "p1": "Disgrifiwch y digwyddiadau yr ydych yn cwyno amdanynt.",
-    "p2": "Ceisiwch roi dyddiadau’r digwyddiadau (a’u nodi mewn trefn cronolegol) a nodi enwau’r pobl eraill oedd yn rhan o’r digwyddiadau. Esboniwch, y gorau y gallwch, pam eich bod yn meddwl bod y digwyddiadau hyn yn golygu eich bod wedi bod yn destun gwahaniaethu anghyfreithlon, gan gyfeirio ar y nodweddion gwarchodedig rydych yn dibynnu arnynt."
+    "p2": "Ceisiwch roi dyddiadau’r digwyddiadau (a’u nodi mewn trefn gronolegol) a nodi enwau’r bobl eraill oedd yn rhan o’r digwyddiadau. Esboniwch, y gorau y gallwch, pam eich bod yn meddwl bod y digwyddiadau hyn yn golygu eich bod wedi bod yn destun gwahaniaethu anghyfreithlon, gan gyfeirio at y nodweddion gwarchodedig rydych yn dibynnu arnynt."
   },
   "collapsibleSection2": {
     "linkText": "Beth i ysgrifennu ar gyfer hawliadau diswyddo",
@@ -27,13 +27,13 @@
   "collapsibleSection4": {
     "linkText": "Beth i ysgrifennu ar gyfer hawliadau ‘eraill’",
     "li1": "Gall y tribiwnlys ond wrando achosion lle bo’r ddeddfwriaeth yn rhoi’r pŵer iddo wneud hynny. Esboniwch yn fras, os y gallwch, pa ddeddfwriaeth rydych chi’n dweud sy’n berthnasol i’r hawliad hwn.",
-    "li2": "Hyd yn oed os na allwch wneud hynny, y peth pwysicaf yw esbonio beth gafodd ei wneud a, cyn belled ag y gallwch, dweud pam yr ydych dweud yr oedd yn anghyfreithlon. Nodwch ddyddiadau a manylion bras am bob digwyddiad, gan gynnwys enw’r unigolyn oedd yn gyfrifol amdanynt."
+    "li2": "Hyd yn oed os na allwch wneud hynny, y peth pwysicaf yw esbonio beth gafodd ei wneud a, cyn belled ag y gallwch, dweud pam yr ydych yn dweud yr oedd yn anghyfreithlon."
   },
   "textInputHint": "Defnyddiwch y blwch hwn i ddisgrifio’r digwyddiadau sy’n ymwneud â’ch anghydfod, neu ychwanegwch at eich hawliad trwy lwytho dogfen",
   "fileUpload": {
     "linkText": "Neu gallwch lwytho eich crynodeb fel dogfen ar wahân (dewisol)",
-    "hint": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Llwytho ffeil</p>",
-    "hintExisting": "Dim ond 1 dogfen y gallwch ei llwytho. Os ydych chi eisiau llwytho e-bost, lawrlwythwch a throswch ef o e-bost eich cleient yn gyntaf. Bydd y rhan fwyaf o e-byst cleientiaid yn rhoi'r opsiwn o’u lawrlwytho fel pdf neu PostScript. Rydych chi eisoes wedi llwytho: {{filename}}"
+    "hint": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Os ydych eisiau llwytho e-bost, yn gyntaf rhaid i chi lawrlwytho’r neges a’i throsi i fformat addas. Gan amlaf, gallwch lawrlwytho’r neges e-bost fel dogfen pdf neu PostScript.</p><p>Llwytho ffeil</p>",
+    "hintExisting": "<p>Gallwch lwytho 1 dogfen yn unig.</p><p>Os ydych eisiau llwytho e-bost, yn gyntaf rhaid i chi lawrlwytho’r neges a’i throsi i fformat addas. Gan amlaf, gallwch lawrlwytho’r neges e-bost fel dogfen pdf neu PostScript.</p><b><p>Rydych chi eisoes wedi llwytho: {{filename}}</p></b>"
   },
   "acceptedFormats": {
     "label": "Fformatau derbyniol",

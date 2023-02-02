@@ -39,6 +39,7 @@
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",
+    "endDate": "Employment end date",
     "noticePeriod": "Do you have a written contract with notice period?",
     "noticeEnds": "Notice period ends",
     "noticePeriodWeeksOrMonths": "Is your notice period in weeks or months?",
@@ -83,6 +84,12 @@
     "yes": "Yes",
     "no": "No"
   },
+  "acasReason": {
+    "another": "Another person I’m making a claim with has an Acas early conciliation certificate number",
+    "no_power": "Acas doesn’t have the power to conciliate on some or all of my claim",
+    "employer": "My employer has already been in touch with Acas",
+    "unfair_dismissal": "The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+  },
   "claimDetails": {
     "header": "Claim details",
     "claimTypeDiscrimination": "What type of discrimination claim are you making?",
@@ -109,7 +116,8 @@
     "payRelated": "Pay-related",
     "unfairDismissal": "Unfair dismissal",
     "whistleBlowing": "Whistleblowing",
-    "otherClaim": "Other type of claim"
+    "otherClaim": "Other type of claim",
+    "otherTypesOfClaims": "Other type of claim"
   },
   "tellUsWhatYouWant": {
     "compensation": "Compensation only",
