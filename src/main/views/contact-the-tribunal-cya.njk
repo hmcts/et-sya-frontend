@@ -12,74 +12,7 @@
       {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ titleCya }}</h1>
       {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-            text: applicationType,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: typeOfApplication | safe },
-            actions: {
-            items: [
-              {
-                href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
-                text: "Change",
-                visuallyHiddenText: applicationType
-              }
-            ]
-          }
-          },
-          {
-            key: {
-            text: legend,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: userCase.contactApplicationText | safe },
-            actions: {
-            items: [
-              {
-                href: contactTheTribunalSelectedUrl + languageParam,
-                text: "Change",
-                visuallyHiddenText: legend
-              }
-            ]
-          }
-          },
-          {
-            key: {
-            text: supportingMaterial,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: {
-            html: downloadLink
-          },
-            actions: {
-            items: [
-              {
-                href: contactTheTribunalSelectedUrl + languageParam,
-                text: "Change",
-                visuallyHiddenText: supportingMaterial
-              }
-            ]
-          }
-          },
-          {
-            key: {
-            text: copyToOtherPartyYesOrNo,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: userCase.copyToOtherPartyYesOrNo | safe },
-            actions: {
-            items: [
-              {
-                href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                text: "Change",
-                visuallyHiddenText: copyToOtherPartyYesOrNo
-              }
-            ]
-          }
-          }
-        ]
+        rows: cyaContent
       }) }}
 
       <div class="govuk-button-group">
