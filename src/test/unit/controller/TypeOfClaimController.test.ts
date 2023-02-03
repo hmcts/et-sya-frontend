@@ -127,6 +127,8 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.OTHER_TYPES])],
         [CaseDataCacheKey.OTHER_CLAIM_TYPE, 'No notice'],
+        [CaseDataCacheKey.ACAS_MULTIPLE, undefined],
+        [CaseDataCacheKey.VALID_NO_ACAS_REASON, undefined],
       ]);
       req.app = app;
       req.app.locals = {
@@ -152,6 +154,8 @@ describe('Type Of Claim Controller', () => {
         [CaseDataCacheKey.CASE_TYPE, undefined],
         [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify([TypesOfClaim.BREACH_OF_CONTRACT])],
         [CaseDataCacheKey.OTHER_CLAIM_TYPE, undefined],
+        [CaseDataCacheKey.ACAS_MULTIPLE, undefined],
+        [CaseDataCacheKey.VALID_NO_ACAS_REASON, undefined],
       ]);
       req.app = app;
       req.app.locals = {
