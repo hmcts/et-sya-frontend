@@ -49,6 +49,7 @@ describe('Should return data in api format', () => {
       [CaseDataCacheKey.CASE_TYPE, 'Single'],
       [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(['discrimination', 'payRelated'])],
       [CaseDataCacheKey.OTHER_CLAIM_TYPE, 'other claim description'],
+      [CaseDataCacheKey.ACAS_MULTIPLE, 'Yes'],
     ]);
 
     const mockUserDetails: UserDetails = {
