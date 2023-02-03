@@ -1,8 +1,8 @@
 {
   "title": "Cod post eich gweithle",
   "h1": "Beth yw cod post y lle yr oeddech yn gweithio neu’r lle yr ydych yn gweithio?",
-  "p1": "Rydym angen hwn i’n helpu i symud eich achos yn ei flaen. Os ydych neu os oeddech yn gweithio o adref weithiau neu’n llawn amser, rhowch god post lle byddech yn mynd i weithio i’r cyflogwr.",
-  "p2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt - cystal ag y gallwch, rhowch god post ble maent wedi’u lleoli.",
+  "p1": "Rydym angen hwn i benderfynu pa swyddfa Tribiwnlys Cyflogaeth fydd yn delio â’ch hawliad. Os oeddech yn gweithio o adref, rhowch god post eich cartref.",
+  "p2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch god post ble maent wedi’u lleoli.",
   "postcode": "Cod post",
   "errors": {
     "workPostcode": {
