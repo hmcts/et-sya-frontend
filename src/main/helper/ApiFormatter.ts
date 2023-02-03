@@ -41,6 +41,14 @@ export function toApiFormatCreate(
       claimantRequests: {
         other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
       },
+      triageQuestions: {
+        postcode: userDataMap.get(CaseDataCacheKey.POSTCODE),
+        claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+        caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
+        acasMultiple: userDataMap.get(CaseDataCacheKey.ACAS_MULTIPLE),
+        validNoAcasReason: userDataMap.get(CaseDataCacheKey.VALID_NO_ACAS_REASON),
+        typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
+      },
     },
   };
 }
