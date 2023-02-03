@@ -19,6 +19,7 @@ export const mockEt1DataModel = {
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
     triageQuestions: {
       acasMultiple: "Yes",
+      validNoAcasReason: "Reason",
       caseType: "Single",
       claimantRepresentedQuestion: "Yes",
       postcode: "SW1A 1AA",
