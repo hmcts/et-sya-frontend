@@ -5,6 +5,8 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { getCYAcontent } from './helpers/ContactTheTribunalCYAHelper';
+import { formatBytes } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -22,42 +24,39 @@ export default class ContactTheTribunalCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
     };
 
     const applicationFile = userCase?.contactApplicationFile;
     let downloadLink = '';
-    if (
-      applicationFile &&
-      applicationFile.document_size &&
-      applicationFile.document_mime_type &&
-      applicationFile.document_filename
-    ) {
+    if (applicationFile) {
       downloadLink =
         "<a href='/getSupportingMaterial/' target='_blank' class='govuk-link'>" +
         applicationFile.document_filename +
         '(' +
         applicationFile.document_mime_type +
         ', ' +
-        applicationFile.document_size +
-        'MB)' +
+        formatBytes(applicationFile.document_size) +
+        ')' +
         '</a>';
     }
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
       ...content,
       ...translations,
-      typeOfApplication: translations.sections[userCase.contactApplicationType].label,
       PageUrls,
       userCase,
       respondents: req.session.userCase?.respondents,
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      downloadLink,
-      languageParam: getLanguageParam(req.url),
-      contactTheTribunalSelectedUrl: PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(
-        ':selectedOption',
-        userCase.contactApplicationType
+      cyaContent: getCYAcontent(
+        userCase,
+        translations,
+        getLanguageParam(req.url),
+        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
+        downloadLink,
+        translations.sections[userCase.contactApplicationType].label
       ),
     });
   }
