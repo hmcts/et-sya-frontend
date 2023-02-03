@@ -61,4 +61,5 @@ export interface IdamResponseData {
   id_token: string;
   token_type: string;
   expires_in: number;
+  expires_in2: number;
 }
