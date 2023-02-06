@@ -38,6 +38,7 @@ export default class ContactTheTribunalCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
+      languageParam: getLanguageParam(req.url),
       cyaContent: getCYAcontent(
         userCase,
         translations,
