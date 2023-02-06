@@ -72,6 +72,7 @@ export default class CopyToOtherPartyController {
       req.session.errors.push(copyToOtherPartyError);
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
+    req.session.errors = [];
     return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam);
   };
 
