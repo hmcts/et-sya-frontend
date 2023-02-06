@@ -10,6 +10,7 @@ import AccessibilityStatementController from '../../controllers/AccessibilitySta
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
+import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -70,6 +71,7 @@ import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYou
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitTribunalCYAController from '../../controllers/SubmitTribunalCYAController';
+import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -82,7 +84,6 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -245,5 +246,6 @@ export class Routes {
         info: {},
       })
     );
+    app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
   }
 }

@@ -6,7 +6,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getCYAcontent } from './helpers/ContactTheTribunalCYAHelper';
-import { formatBytes } from './helpers/DocumentHelpers';
+import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -27,19 +27,7 @@ export default class ContactTheTribunalCYAController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
     };
 
-    const applicationFile = userCase?.contactApplicationFile;
-    let downloadLink = '';
-    if (applicationFile) {
-      downloadLink =
-        "<a href='/getSupportingMaterial/' target='_blank' class='govuk-link'>" +
-        applicationFile.document_filename +
-        '(' +
-        applicationFile.document_mime_type +
-        ', ' +
-        formatBytes(applicationFile.document_size) +
-        ')' +
-        '</a>';
-    }
+    const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
       ...content,

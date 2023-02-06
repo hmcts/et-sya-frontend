@@ -92,6 +92,7 @@ export const TranslationKeys = {
   COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
   CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
+  APPLICATION_DETAILS: 'application-details',
 } as const;
 
 export const PageUrls = {
@@ -177,6 +178,7 @@ export const PageUrls = {
   CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
   APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
+  APPLICATION_DETAILS: '/application-details/:appId',
 } as const;
 
 export const InterceptPaths = {

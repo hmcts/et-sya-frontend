@@ -16,11 +16,14 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
 
+      {% if userCase.acknowledgementOfClaimLetterDetail.length or userCase.rejectionOfClaimDocumentDetail.length or userCase.genericTseApplicationCollection.length %}
+        <div class="govuk-summary-list__key govuk-heading-m">Claim related information</div>
+      {% endif %}
+
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
         {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
           {{ govukTable({
             firstCellIsHeader: false,
-            caption: "Claim related information",
             rows: [
               [
                 {
@@ -42,7 +45,6 @@
         {% for doc in userCase.rejectionOfClaimDocumentDetail %}
           {{ govukTable({
             firstCellIsHeader: false,
-            caption: "Claim related information",
             rows: [
               [
                 {
@@ -53,6 +55,29 @@
                 },
                 {
                     html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                }
+              ]
+            ]
+          }) }}
+        {% endfor %}
+      {% endif %}
+
+      {% if userCase.genericTseApplicationCollection.length %}
+        {% for tseApp in userCase.genericTseApplicationCollection %}
+          {{ govukTable({
+            firstCellIsHeader: false,
+            rows: [
+              [
+                {
+                  text: tseApp.value.date,
+                  classes: 'govuk-!-width-one-quarter'
+                },
+                {
+                  text: application,
+                  classes: 'govuk-!-width-one-quarter'
+                },
+                {
+                  html: "<a href=\"" + tseApp.redirectUrl + "\" class=\"govuk-link\">" + tseApp.linkValue + "</a>"
                 }
               ]
             ]
