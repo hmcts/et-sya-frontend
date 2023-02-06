@@ -196,8 +196,8 @@ describe('Format document model', () => {
       document_filename: 'testname',
       document_url: 'test.com',
       document_binary_url: 'test.com',
-      document_mime_type: 'test',
-      document_size: 16,
+      document_mime_type: 'testname',
+      document_size: 16000000,
     });
   });
 });

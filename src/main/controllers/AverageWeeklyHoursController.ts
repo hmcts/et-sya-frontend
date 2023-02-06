@@ -23,7 +23,7 @@ export default class AverageWeeklyHoursController {
         type: 'text',
         classes: 'govuk-input--width-10',
         label: (l: AnyRecord): string => l.enterAverageHours,
-        attributes: { maxLength: 3 },
+        attributes: { maxLength: 5 },
         validator: isValidAvgWeeklyHours,
       },
     },

@@ -161,6 +161,7 @@ export interface Case {
   respondentResponseDeadline?: string;
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
+  typeOfClaimString?: string;
   // TSE
   contactApplicationType?: string;
   contactApplicationText?: string;
