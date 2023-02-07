@@ -5,7 +5,7 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getCYAcontent } from './helpers/ContactTheTribunalCYAHelper';
+import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -39,7 +39,7 @@ export default class ContactTheTribunalCYAController {
       errors: req.session.errors,
       cancelPage,
       languageParam: getLanguageParam(req.url),
-      cyaContent: getCYAcontent(
+      cyaContent: getCyaContent(
         userCase,
         translations,
         getLanguageParam(req.url),

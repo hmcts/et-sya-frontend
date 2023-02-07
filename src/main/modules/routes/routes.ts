@@ -70,7 +70,7 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
-import SubmitTribunalCYAController from '../../controllers/SubmitTribunalCYAController';
+import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
@@ -228,7 +228,7 @@ export class Routes {
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
-    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTribunalCYAController().get);
+    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
       handleUploads.single('contactApplicationFile'),
