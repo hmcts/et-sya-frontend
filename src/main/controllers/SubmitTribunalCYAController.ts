@@ -8,9 +8,9 @@ import { getLogger } from '../logger';
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
 
-const logger = getLogger('SubmitCaseController');
+const logger = getLogger('SubmitTseController');
 
-export default class SubmitTribunalCYAController {
+export default class SubmitTseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       const userCase = req.session?.userCase;
