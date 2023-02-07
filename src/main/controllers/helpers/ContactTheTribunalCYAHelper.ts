@@ -1,4 +1,4 @@
-import { CaseWithId } from '../../definitions/case';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { ContactApplications, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -81,6 +81,28 @@ export const getCYAcontent = (
                   href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
                   text: 'Change',
                   visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
+                },
+              ],
+            },
+          },
+        ]),
+    ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
+      ? []
+      : [
+          {
+            key: {
+              text: translations.copyToOtherPartyText,
+              classes: 'govuk-!-font-weight-regular-m',
+            },
+            value: {
+              text: userCase.copyToOtherPartyText,
+            },
+            actions: {
+              items: [
+                {
+                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+                  text: 'Change',
+                  visuallyHiddenText: translations.copyToOtherPartyText,
                 },
               ],
             },

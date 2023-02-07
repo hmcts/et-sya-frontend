@@ -1,13 +1,13 @@
-import SubmitTribunalCYAController from '../../../main/controllers/SubmitTribunalCYAController';
+import SubmitTseController from '../../../main/controllers/SubmitTribunalCYAController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Submit tribunal cya Controller', () => {
+describe('Submit tell something else Controller', () => {
   it('should redirect to PageUrls.APPLICATION_COMPLETE', () => {
-    const controller = new SubmitTribunalCYAController();
+    const controller = new SubmitTseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.url = PageUrls.APPLICATION_COMPLETE;
@@ -16,7 +16,7 @@ describe('Submit tribunal cya Controller', () => {
   });
 
   it('should change hublink status to IN PROGRESS before submitting the case', () => {
-    const controller = new SubmitTribunalCYAController();
+    const controller = new SubmitTseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
@@ -40,7 +40,7 @@ describe('Submit tribunal cya Controller', () => {
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
     jest.spyOn(CaseHelper, 'submitClaimantTse').mockImplementationOnce(() => Promise.resolve());
-    await new SubmitTribunalCYAController().get(request, response);
+    await new SubmitTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
   });
