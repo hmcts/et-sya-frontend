@@ -2,7 +2,7 @@ import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { ContactApplications, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const getCYAcontent = (
+export const getCyaContent = (
   userCase: CaseWithId,
   translations: AnyRecord,
   languageParam: string,
