@@ -28,7 +28,7 @@ export const getDocumentAdditionalInformation = async (doc: Document, accessToke
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { size, mimeType } = docDetails.data;
   doc.document_mime_type = mimeType;
-  doc.document_size = size / 1000000;
+  doc.document_size = size;
   return doc;
 };
 
