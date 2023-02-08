@@ -5,7 +5,7 @@ import { get, set } from 'lodash';
 
 export class PropertiesVolume {
   enableFor(server: Application): void {
-    if (server.locals.ENV !== 'development') {
+    if (server.locals.ENV !== 'development' && server.locals.ENV !== 'test') {
       propertiesVolume.addTo(config);
 
       this.setSecret('secrets.et.AppInsightsInstrumentationKey', 'appInsights.instrumentationKey');
