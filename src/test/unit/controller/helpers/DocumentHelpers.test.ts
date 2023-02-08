@@ -78,6 +78,6 @@ it('should update document size and mime type values', async () => {
 
   const modifiedDoc = await getDocumentAdditionalInformation(doc, testRawId);
 
-  expect(modifiedDoc.document_size).toEqual(0.010575);
+  expect(modifiedDoc.document_size).toEqual(10575);
   expect(modifiedDoc.document_mime_type).toEqual('pdf');
 });
