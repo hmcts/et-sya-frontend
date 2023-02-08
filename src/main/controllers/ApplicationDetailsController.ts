@@ -23,13 +23,13 @@ export default class ApplicationDetailsController {
       req.session.userCase.genericTseApplicationCollection,
       req.params.appId
     );
-    //To save selected Tse application, will be cleared if you press 'Back'(to 'claim-details')
+    //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
     req.session.userCase.selectedGenericTseApplication = selectedApplication;
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
 
-    if (!document.document_mime_type && !document.document_size) {
+    if (document) {
       try {
         await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
       } catch (err) {
@@ -38,7 +38,7 @@ export default class ApplicationDetailsController {
       }
     }
 
-    const downloadLink = createDownloadLink(selectedApplication.value?.documentUpload);
+    const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
