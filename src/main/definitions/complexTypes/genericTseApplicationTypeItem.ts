@@ -19,6 +19,7 @@ export interface GenericTseApplicationType {
   documentUpload?: Document;
   number?: string;
   respondCollection?: TseRespondTypeItem[];
+  status?: string;
 }
 
 export interface TseRespondTypeItem {

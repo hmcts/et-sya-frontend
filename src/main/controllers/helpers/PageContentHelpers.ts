@@ -1,3 +1,8 @@
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { AnyRecord } from '../../definitions/util-types';
+
+import { getLanguageParam } from './RouterHelpers';
+
 export const answersAddressFormatter = (
   line1?: string,
   line2?: string,
@@ -33,5 +38,19 @@ export const getUploadedFileName = (fileName?: string): string => {
     return fileName;
   } else {
     return '';
+  }
+};
+
+export const populateGenericCollectionWithRedirectLinks = (
+  items: GenericTseApplicationTypeItem[],
+  url: string,
+  translations: AnyRecord
+): void => {
+  if (items && items.length) {
+    items.forEach(it => {
+      const app = it.value.type;
+      it.linkValue = translations.sections[app].caption;
+      it.redirectUrl = `/application-details/${it.value.number}${getLanguageParam(url)}`;
+    });
   }
 };
