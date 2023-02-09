@@ -43,7 +43,6 @@ export default class CopyToOtherPartyController {
                 labelSize: 'm',
                 isPageHeading: true,
                 classes: 'govuk-textarea',
-                attributes: { maxLength: 1500 },
               },
             },
           },
@@ -68,11 +67,11 @@ export default class CopyToOtherPartyController {
     const languageParam = getLanguageParam(req.url);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const copyToOtherPartyError = getCopyToOtherPartyError(formData);
+    req.session.errors = [];
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
-    req.session.errors = [];
     return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam);
   };
 
