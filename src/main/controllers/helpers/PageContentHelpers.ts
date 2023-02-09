@@ -1,4 +1,5 @@
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -41,16 +42,17 @@ export const getUploadedFileName = (fileName?: string): string => {
   }
 };
 
-export const populateGenericCollectionWithRedirectLinks = (
+export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   items: GenericTseApplicationTypeItem[],
   url: string,
   translations: AnyRecord
 ): void => {
   if (items && items.length) {
-    items.forEach(it => {
-      const app = it.value.type;
-      it.linkValue = translations.sections[app].caption;
-      it.redirectUrl = `/application-details/${it.value.number}${getLanguageParam(url)}`;
+    items.forEach(item => {
+      const app = item.value.type;
+      item.linkValue = translations.sections[app].caption;
+      item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
     });
   }
 };

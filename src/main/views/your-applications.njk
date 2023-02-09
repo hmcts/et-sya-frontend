@@ -20,7 +20,8 @@
                 html: "<a href=\"" + app.redirectUrl + "\" class=\"govuk-link\">" + app.linkValue + "</a>"
               },
               {
-                text: app.value.status
+                text: app.value.status,
+                classes: "govuk-tag govuk-tag" + app.statusColor
               }
             ]
           ), tseRows) %}

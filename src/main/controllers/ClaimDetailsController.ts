@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
-import { populateGenericCollectionWithRedirectLinks } from './helpers/PageContentHelpers';
+import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
@@ -52,7 +52,11 @@ export default class ClaimDetailsController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    populateGenericCollectionWithRedirectLinks(userCase.genericTseApplicationCollection, req.url, translations);
+    populateAppItemsWithRedirectLinksCaptionsAndStatusColors(
+      userCase.genericTseApplicationCollection,
+      req.url,
+      translations
+    );
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

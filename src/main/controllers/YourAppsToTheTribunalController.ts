@@ -6,7 +6,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
-import { populateGenericCollectionWithRedirectLinks } from './helpers/PageContentHelpers';
+import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 
 export default class YourAppsToTheTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -18,7 +18,7 @@ export default class YourAppsToTheTribunalController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    populateGenericCollectionWithRedirectLinks(tseGenericApps, req.url, translations);
+    populateAppItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
