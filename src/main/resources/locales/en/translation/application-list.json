@@ -1,0 +1,9 @@
+{
+  "title": "Your applications",
+  "h1": "Your applications to the tribunal",
+  "table": {
+    "date": "Date submitted",
+    "app": "Application",
+    "status": "Status"
+  }
+}

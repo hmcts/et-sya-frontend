@@ -1,0 +1,96 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "back-link.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">
+        Title of Application(Should be changed)
+      </h1>
+      {{ govukSummaryList({
+        rows: [
+          {
+              key: {
+              text: applicant,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              text: "Claimant(Should be changed)"
+            }
+          },
+          {
+              key: {
+              text: applicationDate,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              text: "5 May 2022 (Should be changed)"
+            }
+          },
+          {
+              key: {
+              text: applicationType,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              text: "Contact about something else(Should be changed)"
+            }
+          },
+          {
+              key: {
+              text: legend,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              text: "Test(Should be changed)"
+            }
+          },
+          {
+              key: {
+              text: supportingMaterial,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+                html: '<a href=\"\">' + "SettlementPdf" +  '</a>' | safe
+            }
+          },
+          {
+              key: {
+              text: copyCorrespondence,
+              classes: "govuk-!-font-weight-regular-m"
+            },
+              value: {
+              text: "Test(Should be changed)"
+            }
+          }
+        ]
+      }) }}
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/find-legal-advice" target="_blank">
+          {{ findLegalAdvice }}
+        </a>
+      </p>
+
+      {% set sideBarContent %}
+        {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "Contact",
+        html: sideBarContent
+      }) }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "./footer.njk" %}
+{% endblock %}

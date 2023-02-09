@@ -1,0 +1,52 @@
+{% extends "template.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "back-link.njk" %}
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">{{ h1 }}</caption>
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">{{ table.date }}</th>
+          <th scope="col" class="govuk-table__header">{{ table.app }}</th>
+          <th scope="col" class="govuk-table__header">{{ table.status }}</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+        {% for row in rows %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ row.date }}</td>
+            <td class="govuk-table__cell">{{ row.app }}</td>
+            <td class="govuk-table__cell">{{ row.status }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      <p class="govuk-body">
+        <a href="https://www.gov.uk/find-legal-advice" target="_blank">
+          {{ findLegalAdvice }}
+        </a>
+      </p>
+
+      {% set sideBarContent %}
+        {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "Contact",
+        html: sideBarContent
+      }) }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "./footer.njk" %}
+{% endblock %}

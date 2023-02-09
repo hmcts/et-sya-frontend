@@ -10,7 +10,7 @@ import AccessibilityStatementController from '../../controllers/AccessibilitySta
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
-import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import ApplicationListController from '../../controllers/ApplicationListController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -63,6 +63,7 @@ import RespondentDetailsCheckController from '../../controllers/RespondentDetail
 import RespondentNameController from '../../controllers/RespondentNameController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
+import SelectedSubmittedApplicationController from '../../controllers/SelectedSubmittedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
 import SingleOrMultipleController from '../../controllers/SingleOrMultipleController';
@@ -103,6 +104,7 @@ export class Routes {
     const describeWhatHappenedController = new DescribeWhatHappenedController();
 
     app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
+    app.get(PageUrls.APPLICATION_LIST, new ApplicationListController().get);
     app.get(Urls.PCQ, new PcqController().get);
     app.get(PageUrls.HOME, new HomeController().get);
     app.get(PageUrls.CHECKLIST, new ChecklistController().get);
@@ -236,6 +238,7 @@ export class Routes {
       new ContactTheTribunalSelectedController().post
     );
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
+    app.get(PageUrls.SELECTED_SUBMITTED_APPLICATION, new SelectedSubmittedApplicationController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
