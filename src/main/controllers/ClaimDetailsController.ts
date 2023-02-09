@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
@@ -36,9 +37,7 @@ export default class ClaimDetailsController {
       });
     }
 
-    if (userCase.respondents && userCase.respondents.length) {
-      userCase.respondents.forEach((it, index) => (it.respondentNumber = index + 1));
-    }
+    setNumbersToRespondents(userCase.respondents);
 
     try {
       await getDocumentDetails(
