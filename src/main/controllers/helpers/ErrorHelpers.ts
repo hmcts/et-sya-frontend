@@ -7,6 +7,7 @@ import {
   hasInvalidFileFormat,
   hasInvalidName,
   isAcasNumberValid,
+  isContent2500CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
@@ -68,20 +69,17 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
 };
 
 export const getCopyToOtherPartyError = (formData: Partial<CaseWithId>): FormError => {
-  if (formData.copyToOtherPartyYesOrNo === undefined) {
-    const errorType = isFieldFilledIn(formData.copyToOtherPartyYesOrNo);
-    if (errorType) {
-      return { errorType, propertyName: 'copyToOtherPartyYesOrNo' };
-    }
+  const shouldCopy = formData.copyToOtherPartyYesOrNo;
+  const radiosErrorType = isFieldFilledIn(shouldCopy);
+  if (radiosErrorType) {
+    return { errorType: radiosErrorType, propertyName: 'copyToOtherPartyYesOrNo' };
   }
 
-  if (
-    formData.copyToOtherPartyYesOrNo?.includes(YesOrNo.NO) &&
-    (!formData.copyToOtherPartyText || formData.copyToOtherPartyText.trim().length === 0)
-  ) {
-    const errorType = isFieldFilledIn(formData.copyToOtherPartyText);
-    if (errorType) {
-      return { errorType, propertyName: 'copyToOtherPartyText' };
+  if (shouldCopy === YesOrNo.NO) {
+    const copyText = formData.copyToOtherPartyText;
+    const textErrorType = isFieldFilledIn(copyText) || isContent2500CharsOrLess(copyText);
+    if (textErrorType) {
+      return { errorType: textErrorType, propertyName: 'copyToOtherPartyText' };
     }
   }
 };

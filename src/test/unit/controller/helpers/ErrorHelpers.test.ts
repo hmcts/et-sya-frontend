@@ -1,6 +1,7 @@
 import {
   getACASCertificateNumberError,
   getClaimSummaryError,
+  getCopyToOtherPartyError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   handleErrors,
@@ -278,5 +279,38 @@ describe('returnSessionErrors + handleErrors', () => {
     expect(function () {
       handleErrors(req, res, errors);
     }).toThrow(err);
+  });
+});
+
+describe('getCopyToOtherPartyError', () => {
+  it('should require one of the radio buttons to be selected', () => {
+    expect(getCopyToOtherPartyError({})).toStrictEqual({
+      errorType: 'required',
+      propertyName: 'copyToOtherPartyYesOrNo',
+    });
+  });
+
+  describe('selecting to not copy to other party', () => {
+    it('should not allow empty text', () => {
+      expect(getCopyToOtherPartyError({ copyToOtherPartyYesOrNo: YesOrNo.NO })).toStrictEqual({
+        errorType: 'required',
+        propertyName: 'copyToOtherPartyText',
+      });
+    });
+
+    it('should not allow too large a text', () => {
+      expect(
+        getCopyToOtherPartyError({ copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: '1'.repeat(2501) })
+      ).toStrictEqual({
+        errorType: 'tooLong',
+        propertyName: 'copyToOtherPartyText',
+      });
+    });
+  });
+
+  it('should not error on a valid input', () => {
+    expect(
+      getCopyToOtherPartyError({ copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: 'test' })
+    ).toBeUndefined();
   });
 });
