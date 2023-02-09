@@ -8,7 +8,9 @@ variable "location" {
 
 variable "env" {}
 
-variable "subscription" {}
+variable "subscription" {
+  default = ""
+}
 
 variable "deployment_namespace" {}
 
