@@ -78,13 +78,13 @@ export default class ContactTheTribunalSelectedController {
     userCase.contactApplicationText = req.body.contactApplicationText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    req.session.errors = [];
     const contactApplicationError = getContactApplicationError(
       formData,
       req.file,
       req.fileTooLarge,
       userCase.contactApplicationFile
     );
-    req.session.errors = [];
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
       //TODO Handle redirect to Welsh page

@@ -16,7 +16,8 @@
       "required": "Welsh translation required"
     },
     "copyToOtherPartyText": {
-      "required": "Welsh translation required"
+      "required": "Welsh translation required",
+      "tooLong": "Welsh translation required"
     }
   }
 }
