@@ -36,6 +36,10 @@ export default class ClaimDetailsController {
       });
     }
 
+    if (userCase.respondents && userCase.respondents.length) {
+      userCase.respondents.forEach((it, index) => (it.respondentNumber = index + 1));
+    }
+
     try {
       await getDocumentDetails(
         combineDocuments(userCase?.acknowledgementOfClaimLetterDetail, userCase?.rejectionOfClaimDocumentDetail),

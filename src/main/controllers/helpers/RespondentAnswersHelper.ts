@@ -14,6 +14,14 @@ export const getRespondentSection = (
   respondentSections.push(
     {
       key: {
+        text:
+          translations.respondentDetails.header + respondent.respondentNumber + translations.respondentDetails.details,
+        classes: 'govuk-summary-list__key govuk-heading-m',
+      },
+      value: {},
+    },
+    {
+      key: {
         text: translations.respondentDetails.respondentName,
         classes: 'govuk-!-font-weight-regular-m',
       },
