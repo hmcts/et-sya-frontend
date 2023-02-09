@@ -16,7 +16,8 @@
       "required": "Tell us if you want to copy this correspondence to the other party"
     },
     "copyToOtherPartyText": {
-      "required": "Tell the Tribunal why you do not want to inform the other party"
+      "required": "Tell the Tribunal why you do not want to inform the other party",
+      "tooLong": "Give details must be entered as less than 2500 characters"
     }
   }
 }
