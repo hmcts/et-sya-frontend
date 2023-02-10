@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
+import {areClaimTypeDescValid, atLeastOneFieldIsChecked} from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
@@ -74,6 +74,9 @@ export default class TypeOfClaimController {
                 type: 'textarea',
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
+                maxlength: 2000,
+                attributes: { maxLength: 2000 },
+                validator: areClaimTypeDescValid,
               },
             },
             value: 'otherTypesOfClaims',
