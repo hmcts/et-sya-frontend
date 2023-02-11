@@ -11,7 +11,7 @@ import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './help
 export default class YourAppsToTheTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const tseGenericApps = userCase.genericTseApplicationCollection;
+    const tseGenericApps = userCase?.genericTseApplicationCollection;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),

@@ -85,8 +85,6 @@ export const TranslationKeys = {
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
   APPLICATION_COMPLETE: 'application-complete',
-  APPLICATION_LIST: 'application-list',
-  SELECTED_SUBMITTED_APPLICATION: 'selected-submitted-application',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
@@ -183,8 +181,6 @@ export const PageUrls = {
   ACCESSIBILITY_STATEMENT: '/accessibility',
   APPLICATION_DETAILS: '/application-details/:appId',
   YOUR_APPLICATIONS: '/your-applications',
-  APPLICATION_LIST: '/application-list',
-  SELECTED_SUBMITTED_APPLICATION: '/selected-submitted-application',
 } as const;
 
 export const InterceptPaths = {
