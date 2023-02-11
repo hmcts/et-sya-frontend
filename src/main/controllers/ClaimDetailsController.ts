@@ -12,6 +12,7 @@ import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers'
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const logger = getLogger('ClaimDetailsController');
@@ -35,6 +36,8 @@ export default class ClaimDetailsController {
         name: doc.type === 'ET1' ? 'ET1 Form' : 'ET1 support document',
       });
     }
+
+    setNumbersToRespondents(userCase.respondents);
 
     try {
       await getDocumentDetails(

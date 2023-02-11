@@ -100,3 +100,9 @@ export const ValidRespondentUrls = {
   workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
   placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
 } as const;
+
+export const setNumbersToRespondents = (respondents: Respondent[]): void => {
+  if (respondents && respondents.length) {
+    respondents.forEach((it, index) => (it.respondentNumber = index + 1));
+  }
+};
