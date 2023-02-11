@@ -9,41 +9,33 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% include "back-link.njk" %}
-        {% set tseRows = [] %}
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col"> {{ submitDate }} </th>
+          <th class="govuk-table__header" scope="col"> {{ application }} </th>
+          <th class="govuk-table__header" scope="col"> {{ status }} </th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
         {% for app in tseGenericApps %}
-          {% set tseRows = (tseRows.push(
-            [
-              {
-                text: app.value.date
-              },
-              {
-                html: "<a href=\"" + app.redirectUrl + "\" class=\"govuk-link\">" + app.linkValue + "</a>"
-              },
-              {
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              {{ app.value.date }}
+            </td>
+            <td class="govuk-table__cell">
+              <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link"> {{ app.linkValue }} </a>
+            </td>
+            <td class="govuk-table__cell">
+              {{ govukTag({
                 text: app.value.status,
-                classes: "govuk-tag govuk-tag" + app.statusColor
-              }
-            ]
-          ), tseRows) %}
+                classes: "govuk-tag" + app.statusColor
+              }) }}
+            </td>
+          </tr>
         {% endfor %}
-
-        {{ govukTable({
-          caption: yourAppsTitle,
-          captionClasses: "govuk-heading-l",
-          firstCellIsHeader: false,
-          head: [
-            {
-              text: submitDate
-            },
-            {
-              text: application
-            },
-            {
-              text: status
-            }
-          ],
-          rows: tseRows
-        }) }}
+        </tbody>
+      </table>
     </div>
 
     <div class="govuk-grid-column-one-third-from-desktop">

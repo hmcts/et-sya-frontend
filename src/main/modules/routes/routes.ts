@@ -10,6 +10,7 @@ import AccessibilityStatementController from '../../controllers/AccessibilitySta
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
+import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import ApplicationListController from '../../controllers/ApplicationListController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
