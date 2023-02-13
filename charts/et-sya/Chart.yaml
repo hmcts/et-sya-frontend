@@ -6,9 +6,9 @@ home: https://github.com/hmcts/et-sya-frontend
 version: 0.0.28
 dependencies:
   - name: nodejs
-    version: 2.4.13
+    version: 2.4.15
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
   - name: idam-pr
-    version: 2.2.7
+    version: 2.3.0
     repository: https://hmctspublic.azurecr.io/helm/v1/repo/
     condition: idam-pr.enabled
