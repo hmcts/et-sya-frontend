@@ -10,9 +10,9 @@ import { getLogger } from '../logger';
 
 import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
+import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 const logger = getLogger('ClaimDetailsController');
@@ -55,14 +55,11 @@ export default class ClaimDetailsController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    if (userCase.genericTseApplicationCollection?.length) {
-      const genericCollection = userCase.genericTseApplicationCollection;
-      genericCollection.forEach(it => {
-        const app = it.value.type;
-        it.linkValue = translations.sections[app].label;
-        it.redirectUrl = `/application-details/${it.value.number}${getLanguageParam(req.url)}`;
-      });
-    }
+    populateAppItemsWithRedirectLinksCaptionsAndStatusColors(
+      userCase.genericTseApplicationCollection,
+      req.url,
+      translations
+    );
 
     res.render(TranslationKeys.CLAIM_DETAILS, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

@@ -82,6 +82,7 @@ import VideoHearingsController from '../../controllers/VideoHearingsController';
 import WhistleblowingClaimsController from '../../controllers/WhistleblowingClaimsController';
 import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
+import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
@@ -247,5 +248,6 @@ export class Routes {
       })
     );
     app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
+    app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
   }
 }
