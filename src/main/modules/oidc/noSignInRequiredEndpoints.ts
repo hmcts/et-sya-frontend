@@ -13,7 +13,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
   PageUrls.ACCESSIBILITY_STATEMENT,
-  PageUrls.YOUR_APPLICATIONS,
   Urls.INFO,
 ];
 
