@@ -8,7 +8,6 @@ import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
-import {TriageQuestions} from "../complexTypes/triageQuestions";
 
 interface CaseDataApiBody {
   caseType: string;
@@ -23,7 +22,6 @@ interface CaseDataApiBody {
   claimantTaskListChecks?: TaskListCheckType;
   claimantOtherType?: ClaimantEmploymentDetails;
   claimantRequests?: ClaimantRequests;
-  triageQuestions?: TriageQuestions;
   newEmploymentType?: NewEmploymentDetails;
   respondentCollection?: RespondentRequestBody[];
   claimantWorkAddressQuestion?: string;

@@ -112,8 +112,6 @@ export default class TypeOfClaimController {
             [CaseDataCacheKey.CASE_TYPE, req.session.userCase?.caseType],
             [CaseDataCacheKey.TYPES_OF_CLAIM, JSON.stringify(req.session.userCase?.typeOfClaim)],
             [CaseDataCacheKey.OTHER_CLAIM_TYPE, req.session.userCase?.otherClaim],
-            [CaseDataCacheKey.ACAS_MULTIPLE, req.session.userCase?.acasMultiple],
-            [CaseDataCacheKey.VALID_NO_ACAS_REASON, req.session.userCase?.validNoAcasReason],
           ]);
           try {
             req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
