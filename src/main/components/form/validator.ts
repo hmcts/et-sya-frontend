@@ -19,13 +19,13 @@ export const isRespondentNameValid: Validator = value => {
 };
 
 export const isContent2500CharsOrLess: Validator = value => {
-  if (value !== undefined && (value as string).trim().length > 2500) {
+  if (value && (value as string).trim().length > 2500) {
     return 'tooLong';
   }
 };
 
 export const isContent2000CharsOrLess: Validator = value => {
-  if (value !== undefined && (value as string).trim().length > 2000) {
+  if (value && (value as string).trim().length > 2000) {
     return 'tooLong';
   }
 };

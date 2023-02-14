@@ -1,11 +1,13 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import {
+  areClaimTypeDescValid,
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasInvalidFileFormat,
   hasInvalidName,
   isAcasNumberValid,
+  isContent2000CharsOrLess,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
   isFieldFilledIn,
@@ -209,6 +211,8 @@ describe('Validation', () => {
       { mockRef: '-4', expected: 'negativeNumber' },
       { mockRef: '35', expected: undefined },
       { mockRef: '2', expected: undefined },
+      { mockRef: '.25', expected: 'invalid' },
+      { mockRef: '-1', expected: 'negativeNumber' },
       { mockRef: null, expected: undefined },
     ])('check integer input is valid', ({ mockRef, expected }) => {
       expect(isValidAvgWeeklyHours(mockRef)).toEqual(expected);
@@ -458,6 +462,29 @@ describe('Validation', () => {
     it('Should validate corect RNNNNNN/NN/NN format', () => {
       const isValid = isAcasNumberValid('R123456/78/12');
       expect(isValid).toStrictEqual(undefined);
+    });
+  });
+  describe('isContent2000CharsOrLess()', () => {
+    it('should not warn when content is 2000 characters or less', () => {
+      expect(isContent2000CharsOrLess(undefined)).toStrictEqual(undefined);
+      expect(isContent2000CharsOrLess('')).toStrictEqual(undefined);
+      expect(isContent2000CharsOrLess('1'.repeat(2000))).toStrictEqual(undefined);
+    });
+
+    it('should warn when content longer than 2000 characters', () => {
+      expect(isContent2000CharsOrLess('1'.repeat(2001))).toStrictEqual('tooLong');
+    });
+  });
+
+  describe('areClaimTypeDescValid()', () => {
+    it('should accept claim type description when content is 2000 characters or less', () => {
+      expect(areClaimTypeDescValid(undefined)).toStrictEqual(undefined);
+      expect(areClaimTypeDescValid('')).toStrictEqual(undefined);
+      expect(areClaimTypeDescValid('1'.repeat(2000))).toStrictEqual(undefined);
+    });
+
+    it('should not accept claim type description when content longer than 2000 characters', () => {
+      expect(areClaimTypeDescValid('1'.repeat(2001))).toStrictEqual('tooLong');
     });
   });
 });
