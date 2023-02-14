@@ -12,50 +12,7 @@
       {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
       {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-            text: applicant,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.applicant }
-          },
-          {
-            key: {
-            text: requestDate,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.date }
-          },
-          {
-            key: {
-            text: applicationType,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.linkValue }
-          },
-          {
-            key: {
-            text: legend,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.details }
-          },
-          {
-            key: {
-            text: supportingMaterial,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { html: downloadLink }
-          },
-          {
-            key: {
-            text: copyCorrespondence,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.copyToOtherPartyYesOrNo }
-          }
-        ]
+        rows: appContent
       }) }}
 
       {% if selectedApplication.value.respondCollection.length %}

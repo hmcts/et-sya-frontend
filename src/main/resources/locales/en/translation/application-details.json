@@ -22,5 +22,6 @@
   "publicity": "restrict publicity",
   "strike": "strike out the response",
   "reconsider-judgement": "reconsider a judgment",
-  "other": "contact the tribunal"
+  "other": "contact the tribunal",
+  "copyToOtherPartyText": "Reason for not informing other party"
 }
