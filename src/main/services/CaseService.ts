@@ -8,6 +8,7 @@ import { DocumentDetailsResponse } from '../definitions/api/documentDetailsRespo
 import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
+import { typeCApplications } from '../definitions/contact-applications';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
@@ -93,9 +94,12 @@ export class CaseApi {
 
   submitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
+      console.log(typeCApplications.includes(caseItem.contactApplicationType));
+
       return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
+        is_type_c: typeCApplications.includes(caseItem.contactApplicationType),
         claimant_tse: {
           contactApplicationType: caseItem.contactApplicationType,
           contactApplicationText: caseItem.contactApplicationText,

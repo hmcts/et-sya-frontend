@@ -13,3 +13,5 @@ export default [
   'reconsider-judgement',
   'other',
 ];
+
+export const typeCApplications = ['witness'];
