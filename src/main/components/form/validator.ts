@@ -24,6 +24,12 @@ export const isContent2500CharsOrLess: Validator = value => {
   }
 };
 
+export const isContent2000CharsOrLess: Validator = value => {
+  if (value !== undefined && (value as string).trim().length > 2000) {
+    return 'tooLong';
+  }
+};
+
 export const isContentBetween3And100Chars: Validator = value => {
   if (!value) {
     return 'required';
@@ -100,6 +106,10 @@ export const isValidNoticeLength: Validator = value => {
 
 export const areBenefitsValid: Validator = value => {
   return isContent2500CharsOrLess(value);
+};
+
+export const areClaimTypeDescValid: Validator = value => {
+  return isContent2000CharsOrLess(value);
 };
 
 export const isPayIntervalNull: Validator = (value: string) => {
