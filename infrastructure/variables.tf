@@ -1,4 +1,3 @@
-
 variable "product" {}
 
 variable "component" {}
