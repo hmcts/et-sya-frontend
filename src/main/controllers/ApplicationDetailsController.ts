@@ -6,6 +6,7 @@ import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -49,7 +50,7 @@ export default class ApplicationDetailsController {
       ...content,
       header,
       selectedApplication,
-      downloadLink,
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
     });
   };
 }
