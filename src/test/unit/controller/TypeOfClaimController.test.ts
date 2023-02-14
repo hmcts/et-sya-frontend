@@ -22,6 +22,10 @@ jest.mock('../../../main/services/CacheService', () => {
   };
 });
 describe('Type Of Claim Controller', () => {
+  afterAll(() => {
+    redisClient.quit();
+  });
+
   const t = {
     'type-of-claim': {},
     common: {},
@@ -164,22 +168,6 @@ describe('Type Of Claim Controller', () => {
       controller.post(req, res);
       expect(cachePreloginCaseData).toHaveBeenCalledWith(redisClient, cacheMap);
     });
-
-    // it('should throw error if Redis client not found', () => {
-    //   const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
-
-    //   const controller = new TypeOfClaimController();
-
-    //   const req = mockRequest({ body });
-    //   const res = mockResponse();
-
-    //   req.app = app;
-    //   req.app.locals = {};
-
-    //   expect(() => {
-    //     controller.post(req, res);
-    //   }).toThrow(RedisErrors.CLIENT_NOT_FOUND);
-    // });
 
     it('should redirect to ET1_BASE page if Breach of Contract is selected', async () => {
       const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT] };
