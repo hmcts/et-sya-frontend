@@ -108,10 +108,6 @@ export const areBenefitsValid: Validator = value => {
   return isContent2500CharsOrLess(value);
 };
 
-export const areClaimTypeDescValid: Validator = value => {
-  return isContent2000CharsOrLess(value);
-};
-
 export const isPayIntervalNull: Validator = (value: string) => {
   if (!value) {
     return 'required';
