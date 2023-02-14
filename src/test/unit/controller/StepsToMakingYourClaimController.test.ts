@@ -145,6 +145,7 @@ describe('Steps to Making your claim Controller', () => {
       respondents: undefined,
       otherClaim: undefined,
     });
+    redisClient.quit();
   });
 
   it('should render page with all claim types', () => {
