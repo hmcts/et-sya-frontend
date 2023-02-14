@@ -171,4 +171,6 @@ export default class ContactTheTribunalSelectedController {
 export function clearTseFields(userCase: CaseWithId): void {
   userCase.contactApplicationText = undefined;
   userCase.contactApplicationFile = undefined;
+  userCase.copyToOtherPartyYesOrNo = undefined;
+  userCase.copyToOtherPartyText = undefined;
 }
