@@ -43,5 +43,7 @@ describe('Submit tell something else Controller', () => {
     await new SubmitTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
+    expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);
+    expect(request.session.userCase.copyToOtherPartyText).toStrictEqual(undefined);
   });
 });
