@@ -94,8 +94,6 @@ export class CaseApi {
 
   submitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      console.log(typeCApplications.includes(caseItem.contactApplicationType));
-
       return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
