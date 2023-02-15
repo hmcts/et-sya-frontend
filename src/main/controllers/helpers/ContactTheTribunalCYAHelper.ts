@@ -1,5 +1,6 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { ContactApplications, PageUrls } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
+import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getCyaContent = (
@@ -64,7 +65,7 @@ export const getCyaContent = (
         ],
       },
     },
-    ...(ContactApplications.TypeC === userCase.contactApplicationType
+    ...(applicationTypes.c.includes(userCase.contactApplicationType)
       ? []
       : [
           {

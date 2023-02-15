@@ -13,3 +13,7 @@ export default [
   'reconsider-judgement',
   'other',
 ];
+
+export const applicationTypes = {
+  c: 'witness',
+};
