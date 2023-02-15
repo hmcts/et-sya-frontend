@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
-import applications, { typeCApplications } from '../definitions/contact-applications';
+import applications, { applicationTypes } from '../definitions/contact-applications';
 import { FormContent, FormError, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -105,7 +105,7 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    const redirectPage = typeCApplications.includes(userCase.contactApplicationType)
+    const redirectPage = applicationTypes.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : PageUrls.COPY_TO_OTHER_PARTY;
 

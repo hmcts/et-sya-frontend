@@ -14,4 +14,6 @@ export default [
   'other',
 ];
 
-export const typeCApplications = ['witness'];
+export const applicationTypes = {
+  c: 'witness',
+};

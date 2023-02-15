@@ -416,7 +416,3 @@ export const languages = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
-
-export const ContactApplications = {
-  TypeC: 'witness',
-};
