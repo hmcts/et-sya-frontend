@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import {areClaimTypeDescValid, atLeastOneFieldIsChecked} from '../components/form/validator';
+import {atLeastOneFieldIsChecked, isContent2000CharsOrLess} from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
@@ -71,12 +71,12 @@ export default class TypeOfClaimController {
             subFields: {
               otherClaim: {
                 id: 'otherTypesOfClaims',
-                type: 'textarea',
+                type: 'charactercount',
+                classes: 'govuk-label',
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
                 maxlength: 2000,
-                attributes: { maxLength: 2000 },
-                validator: areClaimTypeDescValid,
+                validator: isContent2000CharsOrLess,
               },
             },
             value: 'otherTypesOfClaims',
