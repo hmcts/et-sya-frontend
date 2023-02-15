@@ -53,6 +53,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
       item.linkValue = translations.sections[app].caption;
       item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
       item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
+      item.value.status = translations[item.value.status];
     });
   }
 };
