@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import {atLeastOneFieldIsChecked, isContent2000CharsOrLess} from '../components/form/validator';
+import {atLeastOneFieldIsChecked} from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
@@ -75,8 +75,8 @@ export default class TypeOfClaimController {
                 classes: 'govuk-label',
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
+                labelHidden: false,
                 maxlength: 2000,
-                validator: isContent2000CharsOrLess,
               },
             },
             value: 'otherTypesOfClaims',

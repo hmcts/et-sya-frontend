@@ -1,7 +1,6 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import {
-  areClaimTypeDescValid,
   arePayValuesNull,
   atLeastOneFieldIsChecked,
   hasInvalidFileFormat,
@@ -473,18 +472,6 @@ describe('Validation', () => {
 
     it('should warn when content longer than 2000 characters', () => {
       expect(isContent2000CharsOrLess('1'.repeat(2001))).toStrictEqual('tooLong');
-    });
-  });
-
-  describe('areClaimTypeDescValid()', () => {
-    it('should accept claim type description when content is 2000 characters or less', () => {
-      expect(areClaimTypeDescValid(undefined)).toStrictEqual(undefined);
-      expect(areClaimTypeDescValid('')).toStrictEqual(undefined);
-      expect(areClaimTypeDescValid('1'.repeat(2000))).toStrictEqual(undefined);
-    });
-
-    it('should not accept claim type description when content longer than 2000 characters', () => {
-      expect(areClaimTypeDescValid('1'.repeat(2001))).toStrictEqual('tooLong');
     });
   });
 });
