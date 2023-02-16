@@ -37,13 +37,14 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
+  const mimeType = file?.document_filename.replace(/.+[.]/gm, '');
   let downloadLink = '';
   if (file && file.document_size && file.document_mime_type && file.document_filename) {
     downloadLink =
       "<a href='/getSupportingMaterial' target='_blank' class='govuk-link'>" +
       file.document_filename +
       '(' +
-      file.document_mime_type +
+      mimeType +
       ', ' +
       formatBytes(file.document_size) +
       ')' +
