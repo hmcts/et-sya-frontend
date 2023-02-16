@@ -6,7 +6,7 @@ import {
   getSectionStatus,
   getSectionStatusForEmployment,
   handleUpdateDraftCase,
-  handleUpdateSubmittedCase,
+  handleUpdateHubLinksStatuses,
   handleUploadDocument,
   isPostcodeInScope,
   setUserCaseWithRedisData,
@@ -235,9 +235,9 @@ describe('handle update draft case', () => {
   });
 });
 
-describe('handle update submitted case', () => {
-  it('should successfully save case', async () => {
-    caseApi.updateSubmittedCase = jest.fn().mockResolvedValueOnce(
+describe('handle update hub links statuses', () => {
+  it('should successfully update hub links statuses', async () => {
+    caseApi.updateHubLinksStatuses = jest.fn().mockResolvedValueOnce(
       Promise.resolve({
         data: {
           created_date: '2022-08-19T09:19:25.79202',
@@ -248,16 +248,16 @@ describe('handle update submitted case', () => {
       } as AxiosResponse<CaseApiDataResponse>)
     );
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    handleUpdateSubmittedCase(req, mockLogger);
+    handleUpdateHubLinksStatuses(req, mockLogger);
     await new Promise(nextTick);
-    expect(mockLogger.info).toHaveBeenCalledWith('Updated submitted case id: testUserCaseId');
+    expect(mockLogger.info).toHaveBeenCalledWith('Updated hub links statuses for case: testUserCaseId');
   });
 
-  it('should catch failure when updating case', async () => {
-    caseApi.updateSubmittedCase = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+  it('should catch failure whenupdate hub links statuses', async () => {
+    caseApi.updateHubLinksStatuses = jest.fn().mockRejectedValueOnce({ message: 'test error' });
 
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    handleUpdateSubmittedCase(req, mockLogger);
+    handleUpdateHubLinksStatuses(req, mockLogger);
     await new Promise(nextTick);
 
     expect(mockLogger.error).toHaveBeenCalledWith('test error');

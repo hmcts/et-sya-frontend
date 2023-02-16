@@ -1,5 +1,8 @@
+import i18next from 'i18next';
+
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
-import { CaseWithId, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
+import { languages } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 export const mockRequest = ({
@@ -12,6 +15,7 @@ export const mockRequest = ({
   body?: AnyRecord;
   userCase?: Partial<CaseWithId>;
   session?: AnyRecord;
+  cookies?: string;
   t?: AnyRecord;
   file?: Express.Multer.File;
 }): AppRequest => {
@@ -25,6 +29,9 @@ export const mockRequest = ({
   req.params = {
     respondentNumber: '1',
   };
+  req.cookies = {
+    i18next: languages.ENGLISH,
+  };
   req.session = {
     userCase: {
       id: '1234',
@@ -36,6 +43,7 @@ export const mockRequest = ({
     save: jest.fn(done => (done ? done() : true)),
     lang: 'en',
     errors: undefined,
+    cookies: i18next,
   } as unknown as AppSession;
   return req;
 };
@@ -108,6 +116,8 @@ export const mockRequestWithTranslation = (
       newJobStartDate: { year: '2020', month: '04', day: '21' },
       isStillWorking: StillWorking.NOTICE,
       typeOfClaim: [],
+      claimantSex: Sex.FEMALE,
+      hearingPreferences: [HearingPreference.NEITHER],
       ...userCase,
     } as CaseWithId,
     ...session,

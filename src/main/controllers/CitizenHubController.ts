@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -18,7 +17,7 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
-import { handleUpdateSubmittedCase } from './helpers/CaseHelpers';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -45,7 +44,7 @@ export default class CitizenHubController {
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
-      handleUpdateSubmittedCase(req, logger);
+      handleUpdateHubLinksStatuses(req, logger);
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
@@ -53,7 +52,7 @@ export default class CitizenHubController {
     // Mark respondent's response as waiting for the tribunal
     if (
       hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-      userCase.et3IsThereAnEt3Response === YesOrNo.YES
+      userCase.et3ResponseReceived
     ) {
       hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
     }

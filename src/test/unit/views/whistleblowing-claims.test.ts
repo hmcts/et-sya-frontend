@@ -35,9 +35,9 @@ describe('Whistleblowing Claims page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display 8 paragraphs', () => {
+  it('should display 10 paragraphs', () => {
     const paragraphs = htmlRes.getElementsByClassName(expectedParagraphs);
-    expect(paragraphs.length).equal(9, `only ${paragraphs.length} found`);
+    expect(paragraphs.length).equal(10, `only ${paragraphs.length} found`);
   });
 
   it('should display correct radio buttons', () => {

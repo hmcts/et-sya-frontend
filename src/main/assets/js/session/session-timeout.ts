@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import moment from 'moment';
 
-import { PageUrls } from '../../../definitions/constants';
+import { PageUrls, languages } from '../../../definitions/constants';
+import * as i18nWelsh from '../../../resources/locales/cy/translation/template.json';
 import * as i18n from '../../../resources/locales/en/translation/template.json';
 import { focusToGovUKErrorDiv } from '../set-focus';
 
@@ -78,6 +79,12 @@ export default class SessionTimeout {
 
   resetModalMessage = (): void => {
     this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
+
+    if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
+      this.modalCountdownElement.innerHTML = i18nWelsh.sessionTimeout.modal.info;
+    } else {
+      this.modalCountdownElement.innerHTML = i18n.sessionTimeout.modal.info;
+    }
   };
 
   restartCounters = (): void => {
@@ -96,7 +103,11 @@ export default class SessionTimeout {
         .duration(this.bufferSessionExtension - count)
         .seconds()
         .toLocaleString('en-GB', { minimumIntegerDigits: 2 });
-      this.modalCountdownElement.innerHTML = `${i18n.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18n.sessionTimeout.modal.body[1]}`;
+      if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
+        this.modalCountdownElement.innerHTML = `${i18nWelsh.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18nWelsh.sessionTimeout.modal.body[1]}`;
+      } else {
+        this.modalCountdownElement.innerHTML = `${i18n.sessionTimeout.modal.body[0]} ${minutes}:${seconds} ${i18n.sessionTimeout.modal.body[1]}`;
+      }
       count += 1000;
     }, 1000);
   };
@@ -137,7 +148,13 @@ export default class SessionTimeout {
   };
 
   signOut(): void {
-    window.location.assign('/logout?redirectUrl=' + PageUrls.HOME);
+    let redirectUrl = '';
+    if (this.extendSessionElement.innerHTML.includes(i18nWelsh.sessionTimeout.modal.extend)) {
+      redirectUrl = PageUrls.HOME + languages.WELSH_URL_PARAMETER;
+    } else {
+      redirectUrl = PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
+    }
+    window.location.assign('/logout?redirectUrl=' + redirectUrl);
   }
 
   extendSession = (): Promise<void> => {

@@ -14,6 +14,15 @@
   rows: field.attributes.rows,
   attributes: field.attributes,
   maxlength: field.maxlength,
+   charactersUnderLimitText: {
+    other: youUnder + ' %{count} ' + charactersRemaining,
+    one: oneLeft
+  },
+  charactersOverLimitText: {
+    other: youOver + ' %{count} ' + charactersOver,
+    one: oneOver
+  },
+  charactersAtLimitText: atLimit,
   errorMessage: null if field.hideError else getError(fieldName),
   formGroup: {
     classes: "hidden " + field.id if field.hidden else field.id

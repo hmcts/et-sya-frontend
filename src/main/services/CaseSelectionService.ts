@@ -1,26 +1,27 @@
 import { AxiosResponse } from 'axios';
 import { Response } from 'express';
 
+import {
+  translateOverallStatus,
+  translateTypesOfClaims,
+} from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../definitions/case';
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, languages } from '../definitions/constants';
 import { ApplicationTableRecord, CaseState } from '../definitions/definition';
+import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { getCaseApi } from './CaseService';
-import {AnyRecord} from "../definitions/util-types";
-import {
-  translateOverallStatus,
-  translateTypesOfClaims
-} from "../controllers/helpers/ApplicationTableRecordTranslationHelper";
 
 const logger = getLogger('CaseSelectionService');
 
 export const getUserApplications = (
   userCases: CaseWithId[],
-  translations: AnyRecord
+  translations: AnyRecord,
+  languageParam: string
 ): ApplicationTableRecord[] => {
   const apps: ApplicationTableRecord[] = [];
 
@@ -29,7 +30,7 @@ export const getUserApplications = (
       userCase: uCase,
       respondents: formatRespondents(uCase.respondents),
       completionStatus: getOverallStatus(uCase, translations),
-      url: getRedirectUrl(uCase),
+      url: getRedirectUrl(uCase, languageParam),
     };
     translateTypesOfClaims(rec, translations);
     apps.push(rec);
@@ -44,11 +45,11 @@ export const formatRespondents = (respondents?: Respondent[]): string => {
   return respondents.map(respondent => respondent.respondentName).join('<br />');
 };
 
-export const getRedirectUrl = (userCase: CaseWithId): string => {
+export const getRedirectUrl = (userCase: CaseWithId, languageParam: string): string => {
   if (userCase.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
-    return `/claimant-application/${userCase.id}`;
+    return `/claimant-application/${userCase.id}${languageParam}`;
   } else {
-    return `/citizen-hub/${userCase.id}`;
+    return `/citizen-hub/${userCase.id}${languageParam}`;
   }
 };
 
@@ -94,7 +95,7 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
     } else {
       logger.info(`Retrieving cases for ${req.session.user?.id}`);
       const casesByLastModified: CaseApiDataResponse[] = sortCasesByLastModified(cases);
-      return casesByLastModified.map(app => fromApiFormat(app));
+      return casesByLastModified.map(app => fromApiFormat(app, req));
     }
   } catch (err) {
     logger.error(err.message);
@@ -105,20 +106,32 @@ export const getUserCasesByLastModified = async (req: AppRequest): Promise<CaseW
 export const selectUserCase = async (req: AppRequest, res: Response, caseId: string): Promise<void> => {
   if (caseId === 'newClaim') {
     req.session.userCase = undefined;
-    return res.redirect(PageUrls.WORK_POSTCODE);
+    const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
+      ? PageUrls.WORK_POSTCODE + languages.WELSH_URL_PARAMETER
+      : PageUrls.WORK_POSTCODE + languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(redirectUrl);
   }
   try {
     const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
     if (response.data === undefined || response.data === null) {
-      return res.redirect(PageUrls.LIP_OR_REPRESENTATIVE);
+      const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
+        ? PageUrls.LIP_OR_REPRESENTATIVE + languages.WELSH_URL_PARAMETER
+        : PageUrls.LIP_OR_REPRESENTATIVE + languages.ENGLISH_URL_PARAMETER;
+      return res.redirect(redirectUrl);
     } else {
       req.session.userCase = fromApiFormat(response.data);
       req.session.save();
-      return res.redirect(PageUrls.CLAIM_STEPS);
+      const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
+        ? PageUrls.CLAIM_STEPS + languages.WELSH_URL_PARAMETER
+        : PageUrls.CLAIM_STEPS + languages.ENGLISH_URL_PARAMETER;
+      return res.redirect(redirectUrl);
     }
   } catch (err) {
     logger.error(err.message);
-    return res.redirect(PageUrls.HOME);
+    const redirectUrl = req.url.includes(languages.WELSH_URL_PARAMETER)
+      ? PageUrls.HOME + languages.WELSH_URL_PARAMETER
+      : PageUrls.HOME + languages.ENGLISH_URL_PARAMETER;
+    return res.redirect(redirectUrl);
   }
 };
 

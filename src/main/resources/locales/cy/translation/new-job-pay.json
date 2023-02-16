@@ -1,0 +1,17 @@
+{
+  "title": "Cyflog eich swydd newydd",
+  "h1": "Beth yw cyflog eich swydd newydd? (dewisol)",
+  "p1": "Dywedwch beth yw eich cyflog gros - cyn treth a didyniadau eraill. Fe welwch hyn ar eich slipiau cyflog newydd neu gofynnwch i'ch cyflogwr am fanylion.",
+  "payBeforeTax": "Nodwch eich cyflog CYN treth ac Yswiriant Gwladol",
+  "weeklyMonthlyAnnual": "Ai dyma eich cyflog wythnosol, misol neu flynyddol?",
+  "errors": {
+    "newJobPay": {
+      "required": "Dywedwch beth yw eich Cyflog cyn treth ac YG",
+      "minLengthRequired": "Rhaid i dâl cyn treth ac YG fod yn ffigyrau dwbl o leiaf. Er enghraifft £10",
+      "notANumber": "Rhaid i dâl cyn treth fod yn rhif ac yn ffigyrau dwbl o leiaf. Er enghraifft 10"
+    },
+    "newJobPayInterval": {
+      "required": "Dywedwch wrthym pa mor aml oeddech chi’n cael tâl."
+    }
+  }
+}

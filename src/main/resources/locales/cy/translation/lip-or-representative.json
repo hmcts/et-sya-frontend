@@ -1,0 +1,40 @@
+{
+  "title": "Fy hawliad fy hun neu gynrychiolydd ",
+  "h1": "Hawlio ar eich pen eich hun neu ar ran rhywun arall",
+  "p1": "Cynrychiolydd yw rhywun sy’n gallu gweithredu ar eich rhan i gwblhau’r hawliad, ysgrifennu i’r tribiwnlys cyflogaeth neu gyflwyno eich achos mewn gwrandawiad.",
+  "legend": "Ydych chi’n gwneud yr hawliad ar gyfer chi eich hun, neu a ydych chi’n cynrychioli rhywun arall?",
+  "detailsSummary1": "Pwy all weithredu fel cynrychiolydd?",
+  "detailsText1": {
+    "p1": "Gall enghreifftiau o gynrychiolaeth am ddim gynnwys:",
+    "li1": "ffrindiau",
+    "li2": "cydweithwyr",
+    "li3": "aelodau o’r teulu",
+    "li4": "undebau llafur (os oes un ar gael i chi)",
+    "li5": "cynghorwyr Cyngor ar Bopeth",
+    "li6": "cynghorwyr o gymorthfeydd y gyfraith neu ganolfannau’r gyfraith",
+    "p2": "Gall enghreifftiau o gynrychiolaeth a delir amdano fod yn weithwyr proffesiynol ym maes y gyfraith, gan gynnwys:",
+    "li7": "cyfreithwyr",
+    "li8": "bargyfreithwyr (a elwir yn ‘eiriolwyr’ yn yr Alban)",
+    "li9": "gweithredwyr cyfreithiol",
+    "li10": "cwmnïau rheoli hawliadau (sy’n cael eu rheoleiddio gan yr Awdurdod Ymddygiad Ariannol (FCA)"
+  },
+  "detailsSummary2": "Sut alla’i ddod o hyd i gynrychiolydd?",
+  "detailsText2": {
+    "p1": "Mae'r dolenni canlynol yn agor mewn tab newydd",
+    "li1": "<a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Dod o hyd i gyfreithiwr yng Nghymru a Lloegr</a> – rhestr o gyfreithwyr gan Gymdeithas y Gyfraith</a>",
+    "li2": "<a href=\"https://www.lawscot.org.uk/find-a-solicitor/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Dod o hyd i gyfreithiwr yn yr Alban</a> – cronfa ddata o gyfreithwyr gan Gymdeithas y Gyfraith yr Alban",
+    "li3": "<a href=\"https://www.thefru.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Uned Cynrychiolaeth am Ddim (FRU)</a> – elusen sy’n darparu cyngor cyfreithiol, cymorth i baratoi achosion ac adfocatiaeth i bobl nad ydynt yn gymwys i gael cymorth cyfreithiol neu sydd ddim yn gallu fforddio talu am gyfreithiwr (nid yw’r gwasanaeth hwn ar gael yn yr Alban)",
+    "li4": "Yn yr Alban, gall cymorthfeydd y gyfraith rhai prifysgolion ddarparu cyngor a chynrychiolaeth. Gallwch gael rhestr o’r rhain gan <a href=\"https://www.abdn.ac.uk/law/research/the-scottish-university-law-clinic-network-546.php\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Rwydwaith Cymorthfeydd y Gyfraith Prifysgolion yr Alban (SULCN)</a>",
+    "li5": "canolfannau’r gyfraith lleol - ymarferiadau cyfreithiol dielw sy’n darparu cymorth cyfreithiol i bobl sydd ddim yn gallu fforddio talu am gyfreithiwr.",
+    "p2": "Efallai y gall undeb llafar hefyd helpu i dalu am gyfreithiwr, ac mae cyngor cyfreithiol am ddim ar gael gan <a href=\"https://www.citizensadvice.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Gyngor ar Bopeth</a> neu <a href=\"https://www.cas.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Gyngor ar Bopeth yr Alban</a>.",
+    "p3": "Gall y <a href=\"https://www.equalityadvisoryservice.com/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\"><span class=\"govuk-visually-hidden\">(yn agor mewn tab newydd)</span>Gwasanaeth Cyngor a Chymorth ar Gydraddoldeb</a> helpu gyda hawliadau sy’n ymwneud â gwahaniaethu.",
+    "p4": "Efallai y gall rhai pobl hefyd gael cymorth i dalu am gyngor cyfreithiol drwy gymorth cyfreithiol."
+  },
+  "radio1": "Rwy’n fy nghynrychioli fy hun ac yn gwneud fy hawliad fy hun",
+  "radio2": "Rwy’n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
+  "errors": {
+    "claimantRepresentedQuestion": {
+      "required": "Dywedwch wrthym a ydych yn eich cynrychioli eich hun neu'n gweithredu fel cynrychiolydd"
+    }
+  }
+}

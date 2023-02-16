@@ -12,35 +12,91 @@ describe(`GET ${PageUrls.UPDATE_PREFERENCES}`, () => {
   });
 });
 
-describe(`on POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
-  test('should go to the video hearing page when the Email radio button is selected', async () => {
-    await request(mockApp({}))
-      .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ claimantContactPreference: 'Email' })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
-      });
+describe(`POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
+  describe('Correct input', () => {
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+
+    test('goes to next page when selecting just Email radio button', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({ claimantContactPreference: 'Email' })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+        });
+    });
+
+    test('goes to next page when selecting just Post radio button', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({ claimantContactPreference: 'Post' })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+        });
+    });
+
+    test('goes to next page when selecting English radio button', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({
+          claimantContactPreference: 'Email',
+          claimantContactLanguagePreference: 'English',
+          claimantHearingLanguagePreference: 'English',
+        })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+        });
+    });
+
+    test('goes to next page when selecting Welsh radio button', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({
+          claimantContactPreference: 'Email',
+          claimantContactLanguagePreference: 'Welsh',
+          claimantHearingLanguagePreference: 'Welsh',
+        })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
+        });
+    });
   });
 
-  test('should go to the video hearing page when the Post radio button is selected', async () => {
-    await request(mockApp({}))
-      .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ claimantContactPreference: 'Post' })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.VIDEO_HEARINGS);
-      });
-  });
+  describe('require contact preference', () => {
+    test("should reload the page when the just contact preference isn't selected", async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({
+          claimantContactLanguagePreference: 'English',
+          claimantHearingLanguagePreference: 'English',
+        })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+        });
+    });
 
-  test('should reload the page when the no radio button is selected', async () => {
-    await request(mockApp({}))
-      .post(PageUrls.UPDATE_PREFERENCES)
-      .send({ claimantContactPreference: undefined })
-      .expect(res => {
-        expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
-      });
+    test('should reload the page when the no radio button is selected', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({})
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+        });
+    });
+
+    test('should reload the page when the no Language radio button is selected', async () => {
+      await request(mockApp({}))
+        .post(PageUrls.UPDATE_PREFERENCES)
+        .send({ claimantContactPreference: undefined })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.UPDATE_PREFERENCES);
+        });
+    });
   });
 });

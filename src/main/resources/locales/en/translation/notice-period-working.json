@@ -1,5 +1,7 @@
 {
   "title": "Do you have a written contract with a notice period?",
   "h1": "Do you have a written contract with a notice period? (optional)",
-  "legend": "Do you have a written contract with a notice period? (optional)"
+  "legend": "Do you have a written contract with a notice period? (optional)",
+  "yes": "Yes",
+  "no": "No"
 }

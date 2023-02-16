@@ -1,12 +1,25 @@
-import i18next from 'i18next';
-
 import { isDateEmpty } from '../components/form/dateValidators';
+import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
-import { CaseApiDataResponse, DocumentApiModel, RespondentApiModel } from '../definitions/api/caseApiResponse';
+import {
+  CaseApiDataResponse,
+  CaseData,
+  DocumentApiModel,
+  RespondentApiModel,
+} from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
-import { UserDetails } from '../definitions/appRequest';
-import { CaseDataCacheKey, CaseDate, CaseWithId, Document, Respondent, ccdPreferredTitle } from '../definitions/case';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
+import {
+  CaseDataCacheKey,
+  CaseDate,
+  CaseWithId,
+  Document,
+  EnglishOrWelsh,
+  Respondent,
+  YesOrNo,
+  ccdPreferredTitle,
+} from '../definitions/case';
 import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
@@ -57,7 +70,7 @@ export function toApiFormatCreate(
   return caseBody;
 }
 
-export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId {
+export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppRequest): CaseWithId {
   return {
     id: fromApiCaseData.id,
     ClaimantPcqId: fromApiCaseData.case_data?.ClaimantPcqId,
@@ -114,6 +127,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     hearingPreferences: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_preferences,
     hearingAssistance: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_assistance,
     claimantContactPreference: fromApiCaseData.case_data?.claimantType?.claimant_contact_preference,
+    claimantContactLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
+    claimantHearingLanguagePreference: fromApiCaseData.case_data?.claimantHearingPreference?.hearing_language,
     claimTypeDiscrimination: fromApiCaseData.case_data?.claimantRequests?.discrimination_claims,
     claimTypePay: fromApiCaseData.case_data?.claimantRequests?.pay_claims,
     claimSummaryText: fromApiCaseData.case_data?.claimantRequests?.claim_description,
@@ -127,8 +142,8 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     otherClaim: fromApiCaseData?.case_data?.claimantRequests?.other_claim,
     employmentAndRespondentCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.employmentAndRespondentCheck,
     claimDetailsCheck: fromApiCaseData.case_data?.claimantTaskListChecks?.claimDetailsCheck,
-    createdDate: convertFromTimestampString(fromApiCaseData.created_date),
-    lastModified: convertFromTimestampString(fromApiCaseData.last_modified),
+    createdDate: convertFromTimestampString(fromApiCaseData.created_date, req),
+    lastModified: convertFromTimestampString(fromApiCaseData.last_modified, req),
     respondents: mapRespondents(fromApiCaseData.case_data?.respondentCollection),
     claimantWorkAddressQuestion: fromApiCaseData.case_data?.claimantWorkAddressQuestion,
     workAddress1: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.AddressLine1,
@@ -136,10 +151,13 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse): CaseWithId 
     workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
-    et3IsThereAnEt3Response: fromApiCaseData?.case_data?.et3IsThereAnEt3Response,
+    et3ResponseReceived: hasResponseFromRespondentList(fromApiCaseData.case_data),
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
-    et1SubmittedForm: returnSubmittedEt1Form(fromApiCaseData.case_data?.documentCollection),
+    et1SubmittedForm: returnSubmittedEt1Form(
+      fromApiCaseData.case_data?.claimantHearingPreference?.contact_language,
+      fromApiCaseData.case_data?.documentCollection
+    ),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
       acceptanceDocTypes
@@ -229,6 +247,8 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
         reasonable_adjustments_detail: caseItem.reasonableAdjustmentsDetail,
         hearing_preferences: caseItem.hearingPreferences,
         hearing_assistance: caseItem.hearingAssistance,
+        contact_language: caseItem.claimantContactLanguagePreference,
+        hearing_language: caseItem.claimantHearingLanguagePreference,
       },
       claimantRequests: {
         discrimination_claims: caseItem.claimTypeDiscrimination,
@@ -330,9 +350,9 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
   }
 };
 
-function convertFromTimestampString(responseDate: string) {
+function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  return new Date(dateComponent).toLocaleDateString(i18next.language, {
+  return new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -398,7 +418,10 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
   });
 };
 
-export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]): DocumentDetail => {
+export const returnSubmittedEt1Form = (
+  lang: EnglishOrWelsh,
+  documentCollection?: DocumentApiModel[]
+): DocumentDetail => {
   if (documentCollection === undefined) {
     return;
   }
@@ -406,6 +429,9 @@ export const returnSubmittedEt1Form = (documentCollection?: DocumentApiModel[]):
   const documentDetailCollection = setDocumentValues(documentCollection, et1DocTypes);
 
   if (documentDetailCollection !== undefined) {
+    if (lang === EnglishOrWelsh.WELSH && documentDetailCollection.length > 1) {
+      return documentDetailCollection[1];
+    }
     return documentDetailCollection[0];
   }
 };
@@ -433,4 +459,12 @@ export const setDocumentValues = (
 
 export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
+};
+
+export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
+  if (caseData?.respondentCollection) {
+    return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
+  }
+
+  return false;
 };
