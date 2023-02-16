@@ -474,16 +474,4 @@ describe('Validation', () => {
       expect(isContent2000CharsOrLess('1'.repeat(2001))).toStrictEqual('tooLong');
     });
   });
-
-  describe('isContent2000CharsOrLess()', () => {
-    it('should accept when content is 2000 characters or less', () => {
-      expect(isContent2000CharsOrLess(undefined)).toStrictEqual(undefined);
-      expect(isContent2000CharsOrLess('')).toStrictEqual(undefined);
-      expect(isContent2000CharsOrLess('1'.repeat(2000))).toStrictEqual(undefined);
-    });
-
-    it('should not accept when content longer than 2000 characters', () => {
-      expect(isContent2000CharsOrLess('1'.repeat(2001))).toStrictEqual('tooLong');
-    });
-  });
 });
