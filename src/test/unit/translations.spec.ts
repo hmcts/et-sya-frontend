@@ -97,4 +97,11 @@ describe('Check missing keys in translation files', () => {
       }
     }
   }
+
+  test.each(englishTranslationFiles)('Check welsh translation file %s has no unfinished translations', file => {
+    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+    const welshContents = JSON.parse(welshFile);
+
+    checkWelshTranlationFile(welshContents, file.replace(/\.json/, ''));
+  });
 });
