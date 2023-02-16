@@ -8,6 +8,7 @@ export interface GenericTseApplicationTypeItem {
   //Url for navigating used in et-sya-front only
   redirectUrl?: string;
   statusColor?: string;
+  displayStatus?: string;
 }
 
 export interface GenericTseApplicationType {
