@@ -10,7 +10,7 @@ import { getLogger } from '../../logger';
 import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
-import { noSignInRequiredEndpoints } from './noSignInRequiredEndpoints';
+import { validateNoSignInEndpoints } from './noSignInRequiredEndpoints';
 
 const logger = getLogger('oidc');
 
@@ -21,8 +21,10 @@ export class Oidc {
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
+      const languageParam = req.cookies.i18next;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
-      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam));
+      stateParam = stateParam + '-' + languageParam;
+      res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
@@ -30,7 +32,7 @@ export class Oidc {
         if (req.query.redirectUrl) {
           return res.redirect(req.query.redirectUrl as string);
         } else {
-          return res.redirect(PageUrls.CLAIM_SAVED);
+          return res.redirect(PageUrls.HOME);
         }
       });
     });
@@ -45,7 +47,7 @@ export class Oidc {
         // it is assigned the value of res.locals.isLoggedIn
         res.locals.isLoggedIn = true;
         next();
-      } else if (noSignInRequiredEndpoints.includes(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
+      } else if (validateNoSignInEndpoints(req.url) || process.env.IN_TEST || '/extend-session' === req.url) {
         next();
       } else {
         return res.redirect(AuthUrls.LOGIN);
@@ -68,12 +70,17 @@ export const idamCallbackHandler = async (
   } else {
     return res.redirect(AuthUrls.LOGIN);
   }
+
   //For now if user account does not have the citizen role redirect to login
   if (!req.session.user?.isCitizen) {
     return res.redirect(AuthUrls.LOGIN);
   }
 
-  const guid = String(req.query?.state);
+  const state = String(req.query?.state);
+  const guid = state.substring(0, state.lastIndexOf('-'));
+  const langSuffix = state.substring(state.lastIndexOf('-') + 1, state.length);
+  const langPrefix = '?lng=';
+  const lang = langPrefix + langSuffix;
 
   if (guid === EXISTING_USER) {
     if (!redisClient) {
@@ -81,7 +88,7 @@ export const idamCallbackHandler = async (
       err.name = RedisErrors.FAILED_TO_CONNECT;
       return next(err);
     }
-    return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    return res.redirect(PageUrls.CLAIMANT_APPLICATIONS + lang);
   } else {
     try {
       const caseData = await getPreloginCaseData(redisClient, guid);
@@ -89,7 +96,7 @@ export const idamCallbackHandler = async (
       if (response.data.state === CaseState.AWAITING_SUBMISSION_TO_HMCTS) {
         logger.info(`Created Draft Case - ${response.data.id}`);
         req.session.userCase = fromApiFormat(response.data);
-        return res.redirect(PageUrls.NEW_ACCOUNT_LANDING);
+        return res.redirect(PageUrls.NEW_ACCOUNT_LANDING + lang);
       }
       logger.error('Draft Case was not created successfully');
     } catch (error) {

@@ -5,11 +5,16 @@ import jwtDecode from 'jwt-decode';
 import { UserDetails } from '../definitions/appRequest';
 import { CITIZEN_ROLE } from '../definitions/constants';
 
-export const getRedirectUrl = (serviceUrl: string, callbackUrlPage: string, guid: string): string => {
+export const getRedirectUrl = (
+  serviceUrl: string,
+  callbackUrlPage: string,
+  guid: string,
+  languageParam: string
+): string => {
   const clientID: string = config.get('services.idam.clientID');
   const loginUrl: string = config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
-  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}`;
+  return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`;
 };
 
 export const getUserDetails = async (

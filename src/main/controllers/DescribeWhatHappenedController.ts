@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
 import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
 
 const logger = getLogger('DescribeWhatHappenedController');
@@ -99,7 +100,9 @@ export default class DescribeWhatHappenedController {
         req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
       } finally {
         this.uploadedFileName = '';
-        await handlePostLogic(req, res, this.form, logger, PageUrls.TELL_US_WHAT_YOU_WANT);
+
+        const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
+        await handlePostLogic(req, res, this.form, logger, redirectUrl);
       }
     } else {
       req.session.errors.push(claimSummaryError);

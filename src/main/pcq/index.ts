@@ -1,10 +1,10 @@
 import axios from 'axios';
 import config from 'config';
 import { Response } from 'express';
-import i18next from 'i18next';
 import { uuid } from 'uuidv4';
 
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
+import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
@@ -55,7 +55,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
         ccdCaseId: req.session.userCase.id,
         partyId: req.session.user?.email ? req.session.user.email : 'anonymous',
         returnUrl: returnurl,
-        language: i18next.language || 'en',
+        language: req.language || 'en',
       };
 
       params.token = createToken(params);
@@ -73,12 +73,12 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     } else {
       //skip pcq
       logger.info(`PCQ status is ${healthResp} and PCQ ID is ${pcqId}`);
-      res.redirect(PageUrls.CHECK_ANSWERS);
+      res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
     }
   } else {
     //skip pcq
     logger.info(`PCQ enabled: ${isEnabled().toString()}`);
-    res.redirect(PageUrls.CHECK_ANSWERS);
+    res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
   }
 };
 

@@ -11,39 +11,41 @@
 
 {% block content %}
   {% block errorSummary %}
-   {% include "error-summary.njk" %}
+    {% include "error-summary.njk" %}
   {% endblock %}
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
-            {% for respondent in respondents %}
-            <h2 class="govuk-heading-m">{{ subTitle }} {{loop.index}}</h2>
-            <hr/>
-              {{ govukSummaryList({
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-4">{{ title }}</h1>
+      {% for respondent in respondents %}
+        <h2 class="govuk-heading-m">{{ subTitle }}
+          {{loop.index}}</h2>
+        <hr/>
+        {{ govukSummaryList({
                 rows: getRespondentDetailsSection(respondent, loop.index, translations)
               })
 
               }}
 
-            {% endfor %}
+      {% endfor %}
 
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
     </div>
   </div>
+
   <div class="govuk-grid-row">
-      <div class="govuk-button-group">
-        {{ govukButton({
-          text: "Save and continue",
-          href: "/employment-respondent-task-check"
+    <div class="govuk-button-group">
+      {{ govukButton({
+          text: saveAndContinue,
+          href: PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK + languageParam
         }) }}
 
-        {{ govukButton({
-          text: "Save as draft",
+      {{ govukButton({
+          text: saveForLater,
           classes: "govuk-button--secondary",
-          href: "/your-claim-has-been-saved"
+          href: PageUrls.CLAIM_SAVED + languageParam
         }) }}
-      </div>
     </div>
+  </div>
 {% endblock %}

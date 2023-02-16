@@ -1,0 +1,13 @@
+{
+  "title": "Cod post eich gweithle",
+  "h1": "Beth yw cod post y lle yr oeddech yn gweithio neu’r lle yr ydych yn gweithio?",
+  "p1": "Rydym angen hwn i benderfynu pa swyddfa Tribiwnlys Cyflogaeth fydd yn delio â’ch hawliad. Os oeddech yn gweithio o adref, rhowch god post eich cartref.",
+  "p2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch god post ble maent wedi’u lleoli.",
+  "postcode": "Cod post",
+  "errors": {
+    "workPostcode": {
+      "required": "Rhowch god post. Er enghraifft, SW1 1AA",
+      "invalid": "Rhowch cod post dilys. Er enghraifft, SW1 1AA"
+    }
+  }
+}

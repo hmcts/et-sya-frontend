@@ -13,8 +13,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% if employmentStatus === onNotice %}
+      {% if employmentStatus === 'Notice' %}
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.notice }}</h1>
+      {% elif employmentStatus === 'No longer working' %}
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.noLongerWorking }}</h1>
       {% else %}
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1.nonNotice }}</h1>
       {% endif %}

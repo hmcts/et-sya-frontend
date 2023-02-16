@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
-import { PageUrls } from '../../main/definitions/constants';
+import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
@@ -21,7 +21,7 @@ describe(`POST ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
       .send({ claimSummaryText: 'text' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT);
+        expect(res.header['location']).toStrictEqual(PageUrls.TELL_US_WHAT_YOU_WANT + languages.ENGLISH_URL_PARAMETER);
       });
   });
 });

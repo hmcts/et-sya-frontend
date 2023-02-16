@@ -1,0 +1,13 @@
+{
+  "title": "Cyfnod rhybudd",
+  "legend": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "workingHeader": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "noLongerWorkingHeader": "A oedd eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+  "h1": {
+    "workingOrNotice": "A yw eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)",
+    "noLongerWorking": "A oedd eich cyfnod rhybudd yn wythnosau ynteu’n fisoedd? (dewisol)"
+  },
+  "months": "Misoedd",
+  "weeks": "Wythnosau",
+  "noLongerWorking": "Ddim yn gweithio mwyach"
+}

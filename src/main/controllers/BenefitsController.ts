@@ -5,7 +5,7 @@ import { areBenefitsValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields, FormInput } from '../definitions/form';
+import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
@@ -77,11 +77,18 @@ export default class BenefitsController {
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
     const employmentStatus = req.session.userCase.isStillWorking;
-    const employeeBenefits = Object.entries(this.form.getFormFields())[0][1] as FormInput;
-    employeeBenefits.label =
-      employmentStatus === 'Working' || employmentStatus === 'Notice'
-        ? l => l.workingOrNoticeLegend
-        : l => l.noLongerWorkingLegend;
+    const employeeBenefits = Object.entries(this.form.getFormFields())[0][1];
+
+    if (employmentStatus === StillWorking.NO_LONGER_WORKING) {
+      employeeBenefits.label = l => l.noLongerWorkingLegend;
+      employeeBenefits.values[0].label = l => l.yesPast;
+      employeeBenefits.values[1].label = l => l.noPast;
+    } else {
+      employeeBenefits.label = l => l.workingOrNoticeLegend;
+      employeeBenefits.values[0].label = l => l.yes;
+      employeeBenefits.values[1].label = l => l.no;
+    }
+
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.BENEFITS, {
       ...content,

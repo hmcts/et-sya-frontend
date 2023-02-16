@@ -105,23 +105,23 @@ describe('Cookie preferences page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it('should display 18 paragraphs', () => {
+  it('should display 20 paragraphs', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p.length).equal(19, `${p.length} paragraphs found - expected 19`);
-    expect(p[5].innerHTML).contains(expectedParagraph1, paragraphDoesNotExist);
-    expect(p[6].innerHTML).contains(expectedHowAreCookiesUsedParagraph1, paragraphDoesNotExist);
-    expect(p[7].innerHTML).contains(expectedHowAreCookiesUsedParagraph2, paragraphDoesNotExist);
-    expect(p[8].innerHTML).contains(expectedWebsiteUsageCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[9].innerHTML).contains(expectedWebsiteUsageCookiesParagraph2, paragraphDoesNotExist);
-    expect(p[10].innerHTML).contains(expectedWebsiteUsageCookiesParagraph3, paragraphDoesNotExist);
-    expect(p[11].innerHTML).contains(expectedWebsiteUsageCookiesParagraph4, paragraphDoesNotExist);
-    expect(p[12].innerHTML).contains(expectedWebsiteUsageCookiesParagraph5, paragraphDoesNotExist);
-    expect(p[13].innerHTML).contains(expectedIntroMessageCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[14].innerHTML).contains(expectedSessionCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[15].innerHTML).contains(expectedIdentityCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[16].innerHTML).contains(expectedSecurityCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[17].innerHTML).contains(expectedDynatraceCookiesParagraph1, paragraphDoesNotExist);
-    expect(p[18].innerHTML).contains(expectedDynatraceCookiesParagraph2, paragraphDoesNotExist);
+    expect(p.length).equal(20, `${p.length} paragraphs found - expected 20`);
+    expect(p[6].innerHTML).contains(expectedParagraph1, paragraphDoesNotExist);
+    expect(p[7].innerHTML).contains(expectedHowAreCookiesUsedParagraph1, paragraphDoesNotExist);
+    expect(p[8].innerHTML).contains(expectedHowAreCookiesUsedParagraph2, paragraphDoesNotExist);
+    expect(p[9].innerHTML).contains(expectedWebsiteUsageCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[10].innerHTML).contains(expectedWebsiteUsageCookiesParagraph2, paragraphDoesNotExist);
+    expect(p[11].innerHTML).contains(expectedWebsiteUsageCookiesParagraph3, paragraphDoesNotExist);
+    expect(p[12].innerHTML).contains(expectedWebsiteUsageCookiesParagraph4, paragraphDoesNotExist);
+    expect(p[13].innerHTML).contains(expectedWebsiteUsageCookiesParagraph5, paragraphDoesNotExist);
+    expect(p[14].innerHTML).contains(expectedIntroMessageCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[15].innerHTML).contains(expectedSessionCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[16].innerHTML).contains(expectedIdentityCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[17].innerHTML).contains(expectedSecurityCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[18].innerHTML).contains(expectedDynatraceCookiesParagraph1, paragraphDoesNotExist);
+    expect(p[19].innerHTML).contains(expectedDynatraceCookiesParagraph2, paragraphDoesNotExist);
   });
 
   it('should display 3 bullet lists', () => {
