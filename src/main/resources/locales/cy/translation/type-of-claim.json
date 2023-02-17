@@ -37,7 +37,7 @@
     },
     "otherClaim": {
       "required": "Disgrifiwch y math o hawliad",
-      "tooLong": "Rhaid i'r disgrifiad fod yn 2000 nod neu lai"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2000 llythyren neu lai"
     }
   }
 }
