@@ -36,7 +36,8 @@
       "required": "Dewiswch o leiaf un o'r opsiynau isod ar gyfer eich math o hawliad."
     },
     "otherClaim": {
-      "required": "Disgrifiwch y math o hawliad"
+      "required": "Disgrifiwch y math o hawliad",
+      "tooLong": "Rhaid i'r disgrifiad fod yn 2000 nod neu lai"
     }
   }
 }
