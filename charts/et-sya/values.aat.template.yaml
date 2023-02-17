@@ -1,9 +1,9 @@
 nodejs:
   # Don't modify below here
   image: ${IMAGE_NAME}
-  ingressHost: ${SERVICE_NAME}.preview.platform.hmcts.net
+  ingressHost: ${SERVICE_FQDN}
   environment:
-    OAUTH_CLIENT_REDIRECT: https://${SERVICE_NAME}.preview.platform.hmcts.net/oauth2/callback
+    OAUTH_CLIENT_REDIRECT: https://${SERVICE_FQDN}/oauth2/callback
   keyVaults:
     et:
       resourceGroup: et
