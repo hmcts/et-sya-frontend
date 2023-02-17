@@ -1,7 +1,7 @@
 nodejs:
   # Don't modify below here
   image: ${IMAGE_NAME}
-  ingressHost: ${SERVICE_FQDN}
+  ingressHost: ${SERVICE_NAME}.preview.platform.hmcts.net
   keyVaults:
     et:
       resourceGroup: et
@@ -15,4 +15,4 @@ idam-pr:
   enabled: true
   redirect_uris:
     ET Citizen Submit Your Appeal:
-      - https://${SERVICE_FQDN}/oauth2/callback
+      - https://${SERVICE_NAME}.preview.platform.hmcts.net/oauth2/callback
