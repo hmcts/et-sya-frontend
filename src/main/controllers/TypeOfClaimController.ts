@@ -77,7 +77,7 @@ export default class TypeOfClaimController {
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
                 labelHidden: false,
-                maxlength: 2000,
+                maxlength: 1500,
               },
             },
             value: 'otherTypesOfClaims',

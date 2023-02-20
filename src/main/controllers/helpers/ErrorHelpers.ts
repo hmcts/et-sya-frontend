@@ -6,7 +6,7 @@ import {
   arePayValuesNull,
   hasInvalidFileFormat,
   hasInvalidName,
-  isAcasNumberValid, isContent2000CharsOrLess,
+  isAcasNumberValid, isContent1500CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
@@ -78,7 +78,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
       return { errorType, propertyName: 'otherClaim' };
     }
   } else {
-    const x = isContent2000CharsOrLess(otherClaimTextarea);
+    const x = isContent1500CharsOrLess(otherClaimTextarea);
     if (x) {
       return {errorType: x, propertyName: 'otherClaim' };
     }
