@@ -37,7 +37,7 @@
     },
     "otherClaim": {
       "required": "Disgrifiwch y math o hawliad",
-      "tooLong": "Rhaid i’r disgrifiad fod yn 2000 llythyren neu lai"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 1500 llythyren neu lai"
     }
   }
 }

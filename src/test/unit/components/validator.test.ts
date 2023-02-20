@@ -6,7 +6,7 @@ import {
   hasInvalidFileFormat,
   hasInvalidName,
   isAcasNumberValid,
-  isContent2000CharsOrLess,
+  isContent1500CharsOrLess,
   isContent2500CharsOrLess,
   isContentBetween3And100Chars,
   isFieldFilledIn,
@@ -465,13 +465,13 @@ describe('Validation', () => {
   });
   describe('isContent2000CharsOrLess()', () => {
     it('should not warn when content is 2000 characters or less', () => {
-      expect(isContent2000CharsOrLess(undefined)).toStrictEqual(undefined);
-      expect(isContent2000CharsOrLess('')).toStrictEqual(undefined);
-      expect(isContent2000CharsOrLess('1'.repeat(2000))).toStrictEqual(undefined);
+      expect(isContent1500CharsOrLess(undefined)).toStrictEqual(undefined);
+      expect(isContent1500CharsOrLess('')).toStrictEqual(undefined);
+      expect(isContent1500CharsOrLess('1'.repeat(1500))).toStrictEqual(undefined);
     });
 
     it('should warn when content longer than 2000 characters', () => {
-      expect(isContent2000CharsOrLess('1'.repeat(2001))).toStrictEqual('tooLong');
+      expect(isContent1500CharsOrLess('1'.repeat(1501))).toStrictEqual('tooLong');
     });
   });
 });
