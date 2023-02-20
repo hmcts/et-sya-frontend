@@ -236,7 +236,14 @@ export const getContactApplicationError = (
   fileTooLarge: boolean,
   uploadedFile: Document
 ): FormError => {
-  const textProvided = isFieldFilledIn(formData.contactApplicationText) === undefined;
+  const text = formData.contactApplicationText;
+
+  const tooLong = isContent2500CharsOrLess(text);
+  if (tooLong) {
+    return { propertyName: 'contactApplicationText', errorType: tooLong };
+  }
+
+  const textProvided = isFieldFilledIn(text) === undefined;
   const fileProvided = file !== undefined;
 
   if (!textProvided && !fileProvided && !uploadedFile) {
