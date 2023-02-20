@@ -68,6 +68,13 @@ describe('Contact Application Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
     });
 
+    it('should not allow invalid free text size', async () => {
+      const req = mockRequest({ body: { contactApplicationText: '1'.repeat(2501) } });
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'tooLong' }]);
+    });
+
     it('should only allow valid file formats', async () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
