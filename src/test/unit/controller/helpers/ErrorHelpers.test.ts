@@ -2,6 +2,7 @@ import {
   getACASCertificateNumberError,
   getClaimSummaryError,
   getCopyToOtherPartyError,
+  getLastFileError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
   handleErrors,
@@ -312,5 +313,31 @@ describe('getCopyToOtherPartyError', () => {
     expect(
       getCopyToOtherPartyError({ copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: 'test' })
     ).toBeUndefined();
+  });
+});
+
+describe('getLastFileError', () => {
+  it("should return nothing when there aren't any file errors", () => {
+    expect(
+      getLastFileError([
+        { propertyName: 'a', errorType: 'A' },
+        { propertyName: 'b', errorType: 'B' },
+        { propertyName: 'c', errorType: 'C' },
+      ])
+    ).toBeUndefined();
+  });
+
+  it('should return last file error when there are multiple of them', () => {
+    expect(
+      getLastFileError([
+        { propertyName: 'contactApplicationFile', errorType: 'A' },
+        { propertyName: 'b', errorType: 'B' },
+        { propertyName: 'contactApplicationFile', errorType: 'C' },
+        { propertyName: 'd', errorType: 'D' },
+      ])
+    ).toStrictEqual({
+      propertyName: 'contactApplicationFile',
+      errorType: 'C',
+    });
   });
 });
