@@ -16,9 +16,13 @@ import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definiti
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
-export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
-  //call get custom errors and add to session errors
-  let sessionErrors = form.getErrors(formData);
+export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  return getSessionErrors(req, form, formData);
+};
+
+const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
+  let sessionErrors = form.getValidatorErrors(formData);
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
@@ -88,10 +92,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  if (
-    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
-    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
-  ) {
+  if ((claimTypesCheckbox as string[])?.includes('otherTypesOfClaims')) {
     const errorType = isFieldFilledIn(otherClaimTextarea);
     if (errorType) {
       return { errorType, propertyName: 'otherClaim' };
@@ -114,11 +115,6 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
       }
     }
   }
-};
-
-export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
-  return getSessionErrors(req, form, formData);
 };
 
 export const handleErrors = (req: AppRequest, res: Response, sessionErrors: FormError[]): void => {

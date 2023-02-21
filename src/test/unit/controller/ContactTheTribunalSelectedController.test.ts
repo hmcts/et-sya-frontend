@@ -94,6 +94,15 @@ describe('Contact Application Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
     });
 
+    it('should only allow valid file names', async () => {
+      const newFile = mockFile;
+      newFile.originalname = '$%?invalid.txt';
+      const req = mockRequest({ body: {}, file: newFile });
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
+    });
+
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
         body: { upload: true, contactApplicationText: 'test', contactApplicationFile: mockFile },
