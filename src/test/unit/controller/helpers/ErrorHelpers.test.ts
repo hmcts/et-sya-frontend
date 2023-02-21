@@ -5,6 +5,7 @@ import {
   getCustomStartDateError,
   getLastFileError,
   getNewJobPartialPayInfoError,
+  getOtherClaimDescriptionError,
   getPartialPayInfoError,
   handleErrors,
   returnSessionErrors,
@@ -12,6 +13,7 @@ import {
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { StartDateFormFields } from '../../../../main/definitions/dates';
+import { TypesOfClaim } from '../../../../main/definitions/definition';
 import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
@@ -172,6 +174,38 @@ describe('Claim Summary Error', () => {
     const errors = getClaimSummaryError(body, undefined, undefined);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
+  });
+});
+
+describe('getOtherClaimDescriptionError', () => {
+  it('should not return an error if otherTypesOfClaims not ticked', () => {
+    const body = { typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.DISCRIMINATION] };
+
+    const errors = getOtherClaimDescriptionError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should not return an error if otherTypesOfClaims ticked and other type provided', () => {
+    const body = {
+      typeOfClaim: [TypesOfClaim.OTHER_TYPES],
+      otherClaim: 'anything',
+    };
+
+    const errors = getOtherClaimDescriptionError(body);
+
+    expect(errors).toEqual(undefined);
+  });
+
+  it('should return error if otherTypesOfClaims ticked and other type not provided', () => {
+    const body = {
+      typeOfClaim: [TypesOfClaim.OTHER_TYPES],
+      otherClaim: '',
+    };
+
+    const errors = getOtherClaimDescriptionError(body);
+
+    expect(errors).toStrictEqual({ errorType: 'required', propertyName: 'otherClaim' });
   });
 });
 

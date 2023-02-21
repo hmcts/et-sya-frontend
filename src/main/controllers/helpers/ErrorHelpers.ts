@@ -92,10 +92,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  if (
-    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
-    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
-  ) {
+  if ((claimTypesCheckbox as string[])?.includes('otherTypesOfClaims')) {
     const errorType = isFieldFilledIn(otherClaimTextarea);
     if (errorType) {
       return { errorType, propertyName: 'otherClaim' };
