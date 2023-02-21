@@ -275,7 +275,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
-  const mimeType = document?.originalDocumentName.replace(/.+[.]/gm, '');
+  const mimeType = document?.originalDocumentName.replace(/.+(?=[.])[.]/gm, '');
   return {
     document_url: document.uri,
     document_filename: document.originalDocumentName,

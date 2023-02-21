@@ -22,7 +22,7 @@ export default class SupportingMaterialController {
         logger.info('bad request parameter');
         return res.redirect('/not-found');
       }
-      const docId = fileId.replace(/.*\//g, '');
+      const docId = fileId.replace(/^\D+.+\//g, '');
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
       res.setHeader('Content-Type', document.headers['content-type']);
       res.status(200).send(Buffer.from(document.data, 'binary'));
