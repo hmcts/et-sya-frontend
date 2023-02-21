@@ -15,7 +15,8 @@
   },
   "errors": {
     "contactApplicationText": {
-      "required": "Welsh Translation required"
+      "required": "Welsh Translation required",
+      "tooLong": "Welsh Translation required"
     },
     "contactApplicationFile": {
       "invalidFileFormat": "Welsh Translation required",
