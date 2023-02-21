@@ -1,4 +1,17 @@
-import { answersAddressFormatter } from '../../../../main/controllers/helpers/PageContentHelpers';
+import {
+  answersAddressFormatter,
+  getUploadedFileName,
+  populateAppItemsWithRedirectLinksCaptionsAndStatusColors,
+} from '../../../../main/controllers/helpers/PageContentHelpers';
+import {
+  GenericTseApplicationType,
+  GenericTseApplicationTypeItem,
+} from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { TranslationKeys } from '../../../../main/definitions/constants';
+import { AnyRecord } from '../../../../main/definitions/util-types';
+import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
+import contactTheTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
+import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('returnFormattedAddress', () => {
   it('should return full formatted address', () => {
@@ -31,5 +44,45 @@ describe('returnFormattedAddress', () => {
     const address = answersAddressFormatter(line1, line3, line4);
 
     expect(address).toEqual('4 main st, London, England');
+  });
+
+  it('should return file name if present', () => {
+    const fileName = 'testfilename';
+    expect(getUploadedFileName(fileName)).toEqual('testfilename');
+  });
+
+  it('should return empty string if file name is not present', () => {
+    expect(getUploadedFileName()).toEqual('');
+  });
+
+  it('should populate app items with redirect link, caption, statusColor and displayStatus', () => {
+    const genericTseApplicationType = {
+      number: '1',
+      status: 'inProgress',
+      type: 'withdraw',
+    } as GenericTseApplicationType;
+
+    const item = {
+      value: genericTseApplicationType,
+    } as GenericTseApplicationTypeItem;
+    const items = [item];
+
+    const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw };
+
+    const req = mockRequestWithTranslation({}, translationJsons);
+    req.session.userCase.genericTseApplicationCollection = items;
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
+
+    populateAppItemsWithRedirectLinksCaptionsAndStatusColors(items, 'testUrl', translations);
+
+    expect(item.linkValue).toEqual('Withdraw my claim');
+    expect(item.redirectUrl).toEqual('/application-details/1?lng=en');
+    expect(item.statusColor).toEqual('--yellow');
+    expect(item.displayStatus).toEqual('In progress');
   });
 });
