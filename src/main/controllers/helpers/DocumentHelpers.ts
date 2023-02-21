@@ -24,7 +24,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 };
 
 export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
-  const docId = doc.document_url.replace(/.*\//g, '');
+  const docId = doc.document_url.replace(/^\D+.+\//g, '');
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { size, mimeType } = docDetails.data;
   doc.document_mime_type = mimeType;
@@ -37,7 +37,7 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
-  const mimeType = file?.document_filename.replace(/.+[.]/gm, '');
+  const mimeType = file?.document_filename.replace(/.+(?=[.])[.]/gm, '');
   let downloadLink = '';
   if (file && file.document_size && file.document_mime_type && file.document_filename) {
     downloadLink =
