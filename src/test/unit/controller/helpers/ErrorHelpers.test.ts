@@ -2,6 +2,7 @@ import {
   getACASCertificateNumberError,
   getClaimSummaryError,
   getCopyToOtherPartyError,
+  getCustomStartDateError,
   getLastFileError,
   getNewJobPartialPayInfoError,
   getPartialPayInfoError,
@@ -10,11 +11,48 @@ import {
 } from '../../../../main/controllers/helpers/ErrorHelpers';
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
+import { StartDateFormFields } from '../../../../main/definitions/dates';
 import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
 import { mockRequest, mockRequestWithSaveException } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
+
+describe('getCustomStartDateError', () => {
+  it("should not raise an error if one of the dates isn't provided", () => {
+    const req = mockRequest({
+      session: mockSession([], [], []),
+    });
+
+    expect(getCustomStartDateError(req, undefined, {})).toBeUndefined();
+
+    expect(
+      getCustomStartDateError(req, undefined, { startDate: { year: '1987', month: '6', day: '27' } })
+    ).toBeUndefined();
+
+    expect(
+      getCustomStartDateError(
+        mockRequest({
+          session: { ...mockSession([], [], []), userCase: { dobDate: { year: '1966', month: '1', day: '6' } } },
+        }),
+        undefined,
+        {}
+      )
+    ).toBeUndefined();
+  });
+
+  it('should error when start date is before birthday', () => {
+    expect(
+      getCustomStartDateError(
+        mockRequest({
+          session: { ...mockSession([], [], []), userCase: { dobDate: { year: '1966', month: '1', day: '6' } } },
+        }),
+        mockForm({ startDate: StartDateFormFields }),
+        { startDate: { year: '1000', month: '6', day: '27' } }
+      )
+    ).toStrictEqual({ errorType: 'invalidDateBeforeDOB', propertyName: 'startDate' });
+  });
+});
 
 describe('Partial Pay errors', () => {
   it('should return error if pay interval does not exist', () => {
