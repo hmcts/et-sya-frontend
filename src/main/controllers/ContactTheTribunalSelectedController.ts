@@ -74,7 +74,6 @@ export default class ContactTheTribunalSelectedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
 
-    // Todo think about using CaseHelpers.setUserCase
     userCase.contactApplicationText = req.body.contactApplicationText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
