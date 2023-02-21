@@ -1,3 +1,4 @@
+import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -161,6 +162,14 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
+  // TSE
+  contactApplicationType?: string;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
+  copyToOtherPartyYesOrNo?: YesOrNo;
+  copyToOtherPartyText?: string;
+  genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  selectedGenericTseApplication?: GenericTseApplicationTypeItem;
 }
 
 export const enum StillWorking {
@@ -263,4 +272,6 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
+  document_size?: number;
+  document_mime_type?: string;
 }

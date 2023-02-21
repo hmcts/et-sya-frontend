@@ -178,8 +178,8 @@ describe('Format document model', () => {
         },
       },
       classification: '',
-      size: '',
-      mimeType: '',
+      size: '16000000',
+      mimeType: 'test',
       hashToken: '',
       createdOn: '',
       createdBy: '',
@@ -196,6 +196,8 @@ describe('Format document model', () => {
       document_filename: 'testname',
       document_url: 'test.com',
       document_binary_url: 'test.com',
+      document_mime_type: 'testname',
+      document_size: 16000000,
     });
   });
 });
@@ -407,6 +409,7 @@ describe('Format Case Data to Frontend Model', () => {
       addressTown: undefined,
       telNumber: undefined,
       firstName: undefined,
+      genericTseApplicationCollection: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,

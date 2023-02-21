@@ -37,33 +37,21 @@ export const getEmploymentDetails = (
   const employmentDetails = [];
 
   if (userCase.pastEmployer === YesOrNo.NO) {
-    employmentDetails.push({
-      key: {
-        text: translations.employmentDetails.didYouWorkFor,
-        classes: 'govuk-!-font-weight-regular-m',
+    employmentDetails.push(
+      {
+        key: {
+          text: translations.employmentDetails.header,
+          classes: 'govuk-summary-list__key govuk-heading-m',
+        },
+        value: {},
       },
-      value: {
-        text: translations.employmentDetails.no,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.PAST_EMPLOYER,
-            text: translations.change,
-            visuallyHiddenText: translations.employmentDetails.didYouWorkFor,
-          },
-        ],
-      },
-    });
-  } else {
-    if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
-      employmentDetails.push({
+      {
         key: {
           text: translations.employmentDetails.didYouWorkFor,
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: translations.employmentDetails.yes,
+          text: translations.employmentDetails.no,
         },
         actions: {
           items: [
@@ -74,7 +62,37 @@ export const getEmploymentDetails = (
             },
           ],
         },
-      });
+      }
+    );
+  } else {
+    if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
+      employmentDetails.push(
+        {
+          key: {
+            text: translations.employmentDetails.header,
+            classes: 'govuk-summary-list__key govuk-heading-m',
+          },
+          value: {},
+        },
+        {
+          key: {
+            text: translations.employmentDetails.didYouWorkFor,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            text: translations.employmentDetails.yes,
+          },
+          actions: {
+            items: [
+              {
+                href: PageUrls.PAST_EMPLOYER,
+                text: translations.change,
+                visuallyHiddenText: translations.employmentDetails.didYouWorkFor,
+              },
+            ],
+          },
+        }
+      );
     }
     employmentDetails.push(
       {

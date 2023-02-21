@@ -1,0 +1,38 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk" %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+      <p class="govuk-body govuk-!-margin-bottom-8">
+        {{ landing_text.p1 }} <br><br>
+        {{ landing_text.p2 }} <br><br>
+        {{ landing_text.p3 }}
+      </p>
+      {{ govukAccordion({
+        id: "contact-options",
+        items: applicationsAccordionItems
+      }) }}
+
+      <h2 class="govuk-heading-m">{{ call.h1 }}</h2>
+      <p class="govuk-body">{{ call.p1 }} <br> {{ call.p2 }}</p>
+      <h2 class="govuk-heading-m">{{ call.english.h1 }}</h2>
+      <p class="govuk-body">{{ call.english.p1 }} <br> {{ call.english.p2 }}</p>
+      <h2 class="govuk-heading-m">{{ call.welsh.h1 }}</h2>
+      <p class="govuk-body">{{ call.welsh.p1 }}</p>
+      <h2 class="govuk-heading-m">{{ call.scottish.h1 }}</h2>
+      <p class="govuk-body">{{ call.scottish.p1 }} <br> {{ call.scottish.p2 }}</p>
+      <p class="govuk-body">{{ call.p3 }} <br> {{ call.p4 }} <br> {{ call.p5 }}</p>
+      <a href="https://www.gov.uk/call-charges" class="govuk-link" rel="noreferrer noopener"
+         target="_blank">{{ call.link }}</a>
+    </div>
+  </div>
+{% endblock %}
