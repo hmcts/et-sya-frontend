@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
@@ -22,7 +23,7 @@ export default class SupportingMaterialController {
         logger.info('bad request parameter');
         return res.redirect('/not-found');
       }
-      const docId = fileId.replace(/^\D+.+\//g, '');
+      const docId = getDocId(fileId);
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
       res.setHeader('Content-Type', document.headers['content-type']);
       res.status(200).send(Buffer.from(document.data, 'binary'));

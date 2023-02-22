@@ -275,7 +275,7 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
-  const mimeType = document?.originalDocumentName.replace(/.+(?=[.])[.]/gm, '');
+  const mimeType = getFileExtension(document?.originalDocumentName);
   return {
     document_url: document.uri,
     document_filename: document.originalDocumentName,
@@ -452,6 +452,13 @@ export const setDocumentValues = (
 
 export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
+};
+
+export const getFileExtension = (fileName: string): string => {
+  if (!fileName) {
+    return '';
+  }
+  return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
 };
 
 export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
