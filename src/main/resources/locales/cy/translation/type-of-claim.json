@@ -29,7 +29,7 @@
   "otherTypesOfClaims": {
     "title": "Math arall o hawliad",
     "checkbox": "Math arall o hawliad",
-    "explain": "Disgrifiwch pa fath o hawliad ydych chi eisiau ei wneud"
+    "explain": "Mewn ychydig eiriau, dywedwch wrthym pa fath o hawliad ydych chi’n ei wneud. Gallwch ddisgrifio manylion eich hawliad yn hwyrach ymlaen."
   },
   "errors": {
     "typeOfClaim": {
@@ -37,7 +37,7 @@
     },
     "otherClaim": {
       "required": "Disgrifiwch y math o hawliad",
-      "tooLong": "Rhaid i’r disgrifiad fod yn 1500 llythyren neu lai"
+      "tooLong": "Rhaid i’r disgrifiad fod yn 100 llythyren neu lai"
     }
   }
 }
