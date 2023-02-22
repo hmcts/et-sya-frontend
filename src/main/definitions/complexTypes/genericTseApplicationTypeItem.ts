@@ -35,3 +35,9 @@ export interface TseRespondType {
   response?: string;
   copyToOtherParty?: string;
 }
+
+export const sortByDate = (a: GenericTseApplicationTypeItem, b: GenericTseApplicationTypeItem): number => {
+  const da = new Date(a.value.date),
+    db = new Date(b.value.date);
+  return da.valueOf() - db.valueOf();
+};
