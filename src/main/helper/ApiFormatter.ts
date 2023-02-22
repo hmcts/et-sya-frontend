@@ -467,6 +467,6 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
     return [];
   }
 
-  items.sort(sortByDate);
+  items?.sort(sortByDate);
   return items;
 };
