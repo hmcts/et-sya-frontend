@@ -454,7 +454,7 @@ export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
 };
 
-export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
+const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
     return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
   }
@@ -462,13 +462,16 @@ export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   return false;
 };
 
-export const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
+const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
   if (items?.length === 0) {
     return [];
   }
-  return items?.sort((a, b) => {
+
+  const sortedApplications = items?.sort((a, b) => {
     const da = new Date(a.value.date),
       db = new Date(b.value.date);
     return da.valueOf() - db.valueOf();
   });
+
+  return sortedApplications;
 };
