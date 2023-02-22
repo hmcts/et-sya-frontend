@@ -31,6 +31,7 @@ import {
   fromApiFormatDocument,
   getDocId,
   getDueDate,
+  getFileExtension,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
@@ -750,6 +751,11 @@ describe('set Serving Document Values()', () => {
 
   it('should get the document id correctly from the url', () => {
     expect(getDocId('http://address/documents/abc123')).toBe('abc123');
+  });
+
+  it('should get the file extension from file name', () => {
+    expect(getFileExtension('test1.doc')).toBe('doc');
+    expect(getFileExtension('test1.doc.doc.pdf')).toBe('pdf');
   });
 });
 
