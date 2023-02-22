@@ -20,7 +20,7 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
-import { GenericTseApplicationTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
+import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
@@ -461,7 +461,7 @@ export const getFileExtension = (fileName: string): string => {
   return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
 };
 
-export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
+const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
     return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
   }
@@ -469,13 +469,11 @@ export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   return false;
 };
 
-export const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
+const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
   if (items?.length === 0) {
     return [];
   }
-  return items?.sort((a, b) => {
-    const da = new Date(a.value.date),
-      db = new Date(b.value.date);
-    return da.valueOf() - db.valueOf();
-  });
+
+  items?.sort(sortByDate);
+  return items;
 };
