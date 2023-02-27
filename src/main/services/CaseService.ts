@@ -8,6 +8,7 @@ import { DocumentDetailsResponse } from '../definitions/api/documentDetailsRespo
 import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
+import { applicationTypes } from '../definitions/contact-applications';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
@@ -88,6 +89,25 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error updating hub links statuses: ' + axiosErrorDetails(error));
+    }
+  };
+
+  submitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error submitting claimant tse application: ' + axiosErrorDetails(error));
     }
   };
 

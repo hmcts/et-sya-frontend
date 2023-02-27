@@ -31,6 +31,7 @@ import {
   fromApiFormatDocument,
   getDocId,
   getDueDate,
+  getFileExtension,
   isOtherTitle,
   isValidPreferredTitle,
   parseDateFromString,
@@ -178,8 +179,8 @@ describe('Format document model', () => {
         },
       },
       classification: '',
-      size: '',
-      mimeType: '',
+      size: '16000000',
+      mimeType: 'test',
       hashToken: '',
       createdOn: '',
       createdBy: '',
@@ -196,6 +197,8 @@ describe('Format document model', () => {
       document_filename: 'testname',
       document_url: 'test.com',
       document_binary_url: 'test.com',
+      document_mime_type: 'testname',
+      document_size: 16000000,
     });
   });
 });
@@ -407,6 +410,7 @@ describe('Format Case Data to Frontend Model', () => {
       addressTown: undefined,
       telNumber: undefined,
       firstName: undefined,
+      genericTseApplicationCollection: undefined,
       lastName: undefined,
       claimantPensionContribution: undefined,
       claimantPensionWeeklyContribution: undefined,
@@ -747,6 +751,11 @@ describe('set Serving Document Values()', () => {
 
   it('should get the document id correctly from the url', () => {
     expect(getDocId('http://address/documents/abc123')).toBe('abc123');
+  });
+
+  it('should get the file extension from file name', () => {
+    expect(getFileExtension('test1.doc')).toBe('doc');
+    expect(getFileExtension('test1.doc.doc.pdf')).toBe('pdf');
   });
 });
 

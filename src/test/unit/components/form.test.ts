@@ -43,7 +43,7 @@ describe('Form', () => {
   const form = new Form(<FormFields>mockForm.fields);
 
   it('Should validate a form', async () => {
-    const errors = form.getErrors({
+    const errors = form.getValidatorErrors({
       field: YesOrNo.YES,
       dateField: {
         day: '1',
@@ -64,7 +64,7 @@ describe('Form', () => {
   });
 
   it('Should validate a form and return error', async () => {
-    const errors = form.getErrors({ dateField: {} } as unknown as Case);
+    const errors = form.getValidatorErrors({ dateField: {} } as unknown as Case);
 
     expect(errors).toStrictEqual([
       {
@@ -130,7 +130,7 @@ describe('Form', () => {
     const subFieldForm = new Form(<FormFields>mockSubFieldForm.fields);
 
     it('returns the field error', () => {
-      const errors = subFieldForm.getErrors({});
+      const errors = subFieldForm.getValidatorErrors({});
 
       expect(errors).toStrictEqual([
         {
@@ -141,7 +141,7 @@ describe('Form', () => {
     });
 
     it('does not return any subfields error if the field has not been selected', () => {
-      const errors = subFieldForm.getErrors({
+      const errors = subFieldForm.getValidatorErrors({
         field: YesOrNo.YES,
       } as unknown as Case);
 
@@ -149,7 +149,7 @@ describe('Form', () => {
     });
 
     it('returns the subfield error when the field has been selected', () => {
-      const errors = subFieldForm.getErrors({
+      const errors = subFieldForm.getValidatorErrors({
         field: YesOrNo.NO,
       } as unknown as Case);
 
