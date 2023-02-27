@@ -1,3 +1,4 @@
+import { SendNotificationTypeItem } from './complexTypes/SendNotificationTypeItem';
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import {
   CaseState,
@@ -170,6 +171,7 @@ export interface Case {
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  sendNotificationCollection?: SendNotificationTypeItem[];
 }
 
 export const enum StillWorking {

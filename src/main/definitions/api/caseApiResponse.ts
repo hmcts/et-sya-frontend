@@ -1,4 +1,5 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
+import { SendNotificationTypeItem } from '../complexTypes/SendNotificationTypeItem';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -63,6 +64,7 @@ export interface CaseData {
   et3ResponseContestClaimDocument?: DocumentApiModel[];
   claimServedDate?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  sendNotificationCollection?: SendNotificationTypeItem[];
 }
 
 export interface RespondentApiModel {
