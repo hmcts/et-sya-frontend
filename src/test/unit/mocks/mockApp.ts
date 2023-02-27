@@ -39,6 +39,14 @@ export function mockSession(
       createdDate: 'August 19, 2022',
       lastModified: 'August 19, 2022',
     },
+    submittedCase: {
+      id: 'testUserCaseId',
+      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
+      typeOfClaim: typeOfClaimList,
+      tellUsWhatYouWant: tellUsWhatYouWantList,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+    },
     errors: errorList,
     guid: 'kedicik6-l0v3-y0u2-t1h3-mehmet9c3d68',
     user: {
