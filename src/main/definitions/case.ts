@@ -170,6 +170,8 @@ export interface Case {
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  respondToApplicationText?: string;
+  hasSupportingMaterial?: YesOrNo;
 }
 
 export const enum StillWorking {

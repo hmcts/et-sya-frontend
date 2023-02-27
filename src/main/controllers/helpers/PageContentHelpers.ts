@@ -1,5 +1,6 @@
+import { AppRequest } from '../../definitions/appRequest';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -52,6 +53,64 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = item.value.type;
       item.linkValue = translations.sections[app].caption;
       item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
+      item.displayStatus = translations[item.value.status];
+    });
+  }
+};
+
+export const activateRespondentApplicationsLink = (items: GenericTseApplicationTypeItem[], req: AppRequest): void => {
+  const userCase = req.session?.userCase;
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
+        userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
+      }
+    }
+  }
+};
+
+export const findLatestRespondentApplication = (
+  items: GenericTseApplicationTypeItem[]
+): GenericTseApplicationTypeItem => {
+  let latestRespondentApplication = 0;
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
+        if (parseInt(items[i].value.number) > latestRespondentApplication) {
+          latestRespondentApplication = parseInt(items[i].value.number);
+        }
+      }
+    }
+  }
+  return items?.find(it => parseInt(it.value.number) === latestRespondentApplication);
+};
+
+export const findSelectedGenericTseApplication = (
+  items: GenericTseApplicationTypeItem[],
+  param: string
+): GenericTseApplicationTypeItem => {
+  return items?.find(it => it.value.number === param);
+};
+
+export const populateResponseItemsWithRedirectLinksCaptionsAndStatusColors = (
+  items: GenericTseApplicationTypeItem[],
+  url: string,
+  translations: AnyRecord
+): void => {
+  const respondentItems = [];
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
+        respondentItems[i] = items[i];
+      }
+    }
+  }
+  if (respondentItems && respondentItems.length) {
+    respondentItems.forEach(item => {
+      const app = translations.insetText[item.value.type];
+      item.linkValue = app;
+      item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
       item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
       item.displayStatus = translations[item.value.status];
     });

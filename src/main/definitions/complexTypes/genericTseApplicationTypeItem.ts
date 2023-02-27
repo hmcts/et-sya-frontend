@@ -22,6 +22,7 @@ export interface GenericTseApplicationType {
   number?: string;
   respondCollection?: TseRespondTypeItem[];
   status?: string;
+  dueDate?: string;
 }
 
 export interface TseRespondTypeItem {
@@ -34,4 +35,5 @@ export interface TseRespondType {
   date?: string;
   response?: string;
   copyToOtherParty?: string;
+  hasSupportingMaterial?: YesOrNo;
 }

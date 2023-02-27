@@ -19,6 +19,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { activateRespondentApplicationsLink } from './helpers/PageContentHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -41,8 +42,11 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
+
+    const tseGenericApps = userCase?.genericTseApplicationCollection;
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
@@ -50,6 +54,7 @@ export default class CitizenHubController {
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
+    activateRespondentApplicationsLink(tseGenericApps, req);
 
     // Mark respondent's response as waiting for the tribunal
     if (
@@ -89,6 +94,23 @@ export default class CitizenHubController {
       };
     });
 
+    // const translations: AnyRecord = {
+    //   ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+    //   ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+    //   ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    // };
+
+    // const selectedApplication = findLatestRespondentApplication(
+    //   req.session.userCase.genericTseApplicationCollection,
+    // );
+
+    // const header = translations.notificationBanner.respondentApplicationReceived.header + translations[selectedApplication.value.type];
+    // const dueDate = new Date(Date.parse(selectedApplication.value.dueDate));
+    // const dueDateDayInt = dueDate.getDay();
+    // const dueDateDayString = translations.days[dueDate.getDay()];
+    // const dueDateMonth = translations.months[dueDate.getMonth()];
+    // const dueDateYear = dueDate.getFullYear();
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -97,6 +119,11 @@ export default class CitizenHubController {
       userCase,
       currentState,
       sections,
+      // header,
+      // dueDateDayInt,
+      // dueDateDayString,
+      // dueDateMonth,
+      // dueDateYear,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert:
@@ -111,6 +138,8 @@ export default class CitizenHubController {
         hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
       showRespondentResponseReceived:
         hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL,
+      // showRespondentApplicationReceived:
+      //   hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS,
       showRespondentRejection:
         !!userCase?.responseRejectionDocumentDetail?.length &&
         hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,

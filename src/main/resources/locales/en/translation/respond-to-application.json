@@ -1,0 +1,36 @@
+{
+  "caption": "Respond to an application",
+  "h1": "Your response",
+  "p1": "The respondent has applied to ",
+  "p1a": ".",
+  "p2": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
+  "p2a": " at the latest.",
+  "p3": "If you need more time to respond, you may request more time from the tribunal. If you do not respond or request more time to respond, the tribunal will consider the application without your response.",
+  "applicationType": "[application type]",
+  "applicationDate": "[application date plus 7 days]",
+  "p4": "Consider in your response:",
+  "bullets": {
+    "li1": "If you agree with the application or not",
+    "li2": "If you disagree, explain why",
+    "li3": "If you want to apply for a hearing to discuss your response"
+  },
+  "details": {
+    "summaryText": "Search for legal help",
+    "p1": "If you need legal help or advice before responding, use the Law Society to find legal professionals.",
+    "p2": "Search for legal professionals in England and Wales (opens in new tab).",
+    "p3": "Search for legal professionals in Scotland (opens in new tab)."
+  },
+  "textInputLabel": "What's your response to the respondent's application?",
+  "textInputHint": "Use this box to provide your answer or you can upload material at the next step.",
+  "radioButtonLabel": "Supporting material",
+  "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "errors": {
+    "hasSupportingMaterial": {
+      "required": "Tell us if you want to copy this correspondence to the other party"
+    },
+    "respondToApplicationText": {
+      "required": "Tell the Tribunal why you do not want to inform the other party",
+      "tooLong": "Give details must be entered as less than 2500 characters"
+    }
+  }
+}
