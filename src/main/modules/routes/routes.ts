@@ -58,7 +58,10 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
+import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -249,5 +252,10 @@ export class Routes {
     );
     app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
     app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
+    app.get(PageUrls.RESPOND_TO_APPLICATION, new RespondToApplicationController().get);
+    app.post(PageUrls.RESPOND_TO_APPLICATION, new RespondToApplicationController().post);
+    app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+    //  app.post(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().post);
   }
 }

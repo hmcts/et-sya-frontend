@@ -43,6 +43,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
   [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
+  [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
 ]);
 
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
