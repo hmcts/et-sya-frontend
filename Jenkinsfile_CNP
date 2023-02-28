@@ -1,5 +1,13 @@
 #!groovy
 
+properties([
+// H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+pipelineTriggers([cron('H 05 * * *')]),
+parameters([
+        string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
+    ])
+])
+
 @Library("Infrastructure")
 
 import uk.gov.hmcts.contino.AppPipelineDsl
@@ -10,6 +18,10 @@ def component = "sya"
 def branchesToSync = ['perftest', 'demo', 'ithc']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
+def vaultOverrides = [
+  'aat': 'demo'
+]
 
 def secrets = [
     'et-${env}': [
@@ -41,11 +53,18 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline(type, product, component) {
   loadVaultSecrets(secrets)
+  overrideVaultEnvironments(vaultOverrides)
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
 
   afterAlways('build') {
     yarnBuilder.yarn('build')
+  }
+
+  beforeAlways('smoketest:aat') {
+      stage('E2E Tests ACAS Demo') {
+          yarnBuilder.yarn('test:functional-acas')
+      }
   }
 
   afterSuccess('smoketest:aat') {
