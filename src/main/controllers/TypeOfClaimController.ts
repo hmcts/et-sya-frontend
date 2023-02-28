@@ -97,7 +97,7 @@ export default class TypeOfClaimController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
-    if (errors.length === 0) {
+    if (errors.length === 0 || errors === undefined) {
       let redirectUrl;
       if (
         conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
