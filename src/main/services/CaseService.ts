@@ -23,11 +23,11 @@ export class CaseApi {
         toApiFormatCreate(new Map(JSON.parse(caseData)), userDetails)
       );
     } catch (error) {
-      console.log('error occured1: ' + error.response.data.error);
+      console.log('error occured1: ' + error.response?.data?.error);
       console.log('error occurred2: ' + error.message);
-      console.log('error data: ' + error.response.data);
-      console.log('error status: ' + error.response.status);
-      console.log('error headers: ' + error.response.headers);
+      console.log('error data: ' + error.response?.data);
+      console.log('error status: ' + error.response?.status);
+      console.log('error headers: ' + error.response?.headers);
       console.log('error request: ' + error.request);
       throw new Error('Error creating case: ' + axiosErrorDetails(error));
     }
