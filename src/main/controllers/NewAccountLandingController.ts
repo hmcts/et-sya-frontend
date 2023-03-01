@@ -8,6 +8,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class NewAccountLandingController {
   public get = (req: AppRequest, res: Response): void => {
+    console.log('Account Landing Page');
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_STEPS);
     res.render('new-account-landing', {
       ...req.t('common', { returnObjects: true }),

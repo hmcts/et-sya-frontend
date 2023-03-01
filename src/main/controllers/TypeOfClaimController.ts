@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import {atLeastOneFieldIsChecked} from '../components/form/validator';
+import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
 import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
@@ -109,7 +109,9 @@ export default class TypeOfClaimController {
       }
       if (req.app?.locals) {
         const redisClient = req.app.locals?.redisClient;
+        console.log('redis client will be searched');
         if (redisClient) {
+          console.log('redis client found');
           const cacheMap = new Map<CaseDataCacheKey, string>([
             [CaseDataCacheKey.POSTCODE, req.session.userCase?.workPostcode],
             [CaseDataCacheKey.CLAIMANT_REPRESENTED, req.session.userCase?.claimantRepresentedQuestion],
@@ -119,8 +121,11 @@ export default class TypeOfClaimController {
             [CaseDataCacheKey.ACAS_MULTIPLE, req.session.userCase?.acasMultiple],
             [CaseDataCacheKey.VALID_NO_ACAS_REASON, req.session.userCase?.validNoAcasReason],
           ]);
+          console.log('redis client settled');
           try {
+            console.log('gui id is being settled');
             req.session.guid = cachePreloginCaseData(redisClient, cacheMap);
+            console.log('gui id is settled');
           } catch (err) {
             const error = new Error(err.message);
             error.name = RedisErrors.FAILED_TO_SAVE;
@@ -136,6 +141,7 @@ export default class TypeOfClaimController {
         }
       }
       // Only called when returning from CYA page
+      console.log('checking usercase id' + req.session.userCase.id);
       if (req.session.userCase.id) {
         await handleUpdateDraftCase(req, logger);
       }
