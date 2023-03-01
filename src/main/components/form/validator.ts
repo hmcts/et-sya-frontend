@@ -24,8 +24,8 @@ export const isContent2500CharsOrLess: Validator = value => {
   }
 };
 
-export const isContent2000CharsOrLess: Validator = value => {
-  if (value && (value as string).trim().length > 2000) {
+export const isContent100CharsOrLess: Validator = value => {
+  if (value && (value as string).trim().length > 100) {
     return 'tooLong';
   }
 };
