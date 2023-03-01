@@ -57,14 +57,14 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
   syncBranchesWithMaster(branchesToSync)
 
-  afterAlways('build') {
-    yarnBuilder.yarn('build')
-  }
-
-  before('smoketest:aat') {
+  before('build') {
       stage('E2E Tests ACAS Demo') {
           yarnBuilder.yarn('test:functional-acas')
       }
+  }
+
+  afterAlways('build') {
+    yarnBuilder.yarn('build')
   }
 
   afterSuccess('smoketest:aat') {
