@@ -27,9 +27,9 @@
     "hint": "including dismissal or any other unfair treatment after whistleblowing"
   },
   "otherTypesOfClaims": {
-    "title": "other types of claims",
+    "title": "other types of claim",
     "checkbox": "Other type of claim",
-    "explain": "Please describe what type of claim you want to make"
+    "explain": "Tell us briefly what type of claim you're making. You can describe the details of your claim later."
   },
   "errors": {
     "typeOfClaim": {
@@ -37,7 +37,7 @@
     },
     "otherClaim": {
       "required": "Please describe the type of claim",
-      "tooLong": "Description must be 2000 characters or less"
+      "tooLong": "Description must be 100 characters or less"
     }
   }
 }

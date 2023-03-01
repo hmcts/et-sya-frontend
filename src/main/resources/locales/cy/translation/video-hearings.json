@@ -1,11 +1,12 @@
 {
-  "title": "Welsh Translation required",
-  "h1": "A fyddech chi’n gallu cymryd rhan mewn gwrandawiadau drwy fideo a dros y ffôn?",
+  "title": "Y math o wrandawiad fyddai orau gennych",
+  "h1": "Fformat y gwrandawiad",
+  "legend": "A fyddech chi’n gallu cymryd rhan mewn gwrandawiadau drwy fideo a dros y ffôn?",
   "p1": "Os bydd eich achos yn mynd i wrandawiad, gellir ei gynnal naill ai:",
   "bullet1": "yn bersonol, mewn ystafell yn un o adeiladau’r tribiwnlys (‘wyneb yn wyneb’)",
   "bullet2": "drwy fideo (ble allwch ymuno o leoliad sy’n addas i chi)",
   "bullet3": "dros y ffôn",
-  "p2": "Welsh Translation required",
+  "p2": "Mae rhai gwrandawiadau yn defnyddio cyfuniad o'r dulliau hyn. Barnwr fydd yn penderfynu pa ddull fydd yn cael ei ddefnyddio. Gall ddibynnu ar y math o hawliad.",
   "checkboxVideo": "Byddwn yn gallu cymryd rhan mewn gwrandawiadau drwy fideo",
   "checkboxPhone": "Byddwn yn gallu cymryd rhan mewn gwrandawiadau dros y ffôn",
   "checkboxNeither": "Ni fyddwn yn gallu cymryd rhan mewn gwrandawiadau drwy fideo neu dros y ffôn",
@@ -14,10 +15,10 @@
   "selectAllHint": "Dewiswch bob un sy'n berthnasol",
   "errors": {
     "hearingPreferences": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym a allwch chi gymryd rhan mewn gwrandawiad fideo neu ffôn."
     },
     "hearingAssistance": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch pam na allwch gymryd rhan mewn gwrandawiad fideo neu ffôn."
     }
   }
 }

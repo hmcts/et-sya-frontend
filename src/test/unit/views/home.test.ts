@@ -38,7 +38,7 @@ describe('Onboarding (home) page', () => {
 
   it('should display firt paragraph', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[5].innerHTML).contains(expectedP1, 'P1 does not exist');
+    expect(p[6].innerHTML).contains(expectedP1, 'P1 does not exist');
   });
 
   it('should display GDS inset text component', () => {
@@ -48,7 +48,7 @@ describe('Onboarding (home) page', () => {
 
   it('should display second paragraph', () => {
     const p = htmlRes.getElementsByClassName(pClass);
-    expect(p[6].innerHTML).contains(expectedP2, 'P2 does not exist');
+    expect(p[7].innerHTML).contains(expectedP2, 'P2 does not exist');
   });
 
   it('should display 2 GDS warning text components', () => {

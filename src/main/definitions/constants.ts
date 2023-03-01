@@ -82,6 +82,9 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  WELSH: 'cy',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
 } as const;
 
@@ -158,6 +161,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
   PCQ: '/pcq',
+  PCQ_WELSH: '/pcq?lng=cy',
   ACCESSIBILITY_STATEMENT: '/accessibility',
 } as const;
 
@@ -189,7 +193,7 @@ export const JavaApiUrls = {
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
-  UPDATE_CASE_SUBMITTED: 'cases/update-case-submitted',
+  UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
@@ -382,3 +386,12 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+
+export const languages = {
+  WELSH: 'cy',
+  ENGLISH: 'en',
+  WELSH_LOCALE: '&ui_locales=cy',
+  ENGLISH_LOCALE: '&ui_locales=en',
+  WELSH_URL_PARAMETER: '?lng=cy',
+  ENGLISH_URL_PARAMETER: '?lng=en',
+};

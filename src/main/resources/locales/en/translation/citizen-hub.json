@@ -31,10 +31,14 @@
   "submitted": "Submitted",
   "optional": "Optional",
   "viewed": "Viewed",
+  "important": "Important",
   "notViewedYet": "Not viewed yet",
   "notAvailableYet": "Not available yet",
   "waitingForTheTribunal": "Waiting for the tribunal",
   "submittedAndViewed": "Submitted",
+  "submittedAlert": "You have submitted your claim to the tribunal",
+  "processClaim": "We aim to process your claim by",
+  "busyPeriod": ". In busy periods it may take longer.",
   "notificationBanner": {
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",

@@ -39,6 +39,7 @@
   "weekly": "Weekly",
   "monthly": "Monthly",
   "annual": "Annual",
+  "saveAndContinue": "Save and continue",
   "selectAllHint": "Select all that apply.",
   "claimTypes": {
     "breachOfContract": "Breach of contract",
@@ -47,5 +48,23 @@
     "unfairDismissal": "Unfair dismissal",
     "whistleBlowing": "Whistleblowing",
     "otherTypesOfClaims": "Other type of claim"
-  }
+  },
+  "youUnder": "You have",
+  "youOver": "You have",
+  "charactersRemaining": "characters remaining",
+  "charactersOver": "characters too many",
+  "oneLeft": "You have 1 character remaining",
+  "oneOver": "You have 1 character too many",
+  "atLimit": "You have 0 characters remaining",
+  "of": "of",
+  "tasksCompleted": "tasks completed",
+  "CookieEmploymentTribunals": "Cookies on Employment Tribunals",
+  "CookieUse": "We use some essential cookies to make this service work.",
+  "CookieAnalytics": "We’d also like to use analytics cookies so we can understand how you use the service and make improvements.",
+  "CookieAccept": "Accept analytics cookies",
+  "CookieReject": "Reject analytics cookies",
+  "CookieHide": "Hide this message",
+  "CookieView": "View cookies",
+  "CookieAccepted": "You’ve accepted additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.",
+  "CookieRejected": " <p class=\"govuk-body\">You’ve rejected additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.</p>"
 }

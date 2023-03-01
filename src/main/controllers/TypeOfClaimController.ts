@@ -13,6 +13,7 @@ import { cachePreloginCaseData } from '../services/CacheService';
 import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
 
 const logger = getLogger('TypeOfClaimController');
@@ -76,7 +77,7 @@ export default class TypeOfClaimController {
                 label: l => l.otherTypesOfClaims.explain,
                 labelSize: 'normal',
                 labelHidden: false,
-                maxlength: 2000,
+                maxlength: 100,
               },
             },
             value: 'otherTypesOfClaims',
@@ -138,6 +139,7 @@ export default class TypeOfClaimController {
       if (req.session.userCase.id) {
         await handleUpdateDraftCase(req, logger);
       }
+      redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     } else {
       handleErrors(req, res, errors);

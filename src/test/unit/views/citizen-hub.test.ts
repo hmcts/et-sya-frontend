@@ -50,19 +50,37 @@ describe('Citizen hub page', () => {
       {
         state: CaseState.SUBMITTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.NO,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.NO,
+              },
+            },
+          ],
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.NO,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.NO,
+              },
+            },
+          ],
         },
       },
       {
         state: CaseState.ACCEPTED,
         case_data: {
-          et3IsThereAnEt3Response: YesOrNo.YES,
+          respondentCollection: [
+            {
+              value: {
+                responseReceived: YesOrNo.YES,
+              },
+            },
+          ],
         },
       },
     ];
@@ -241,7 +259,7 @@ describe('Citizen hub page', () => {
             et1ClaimForm: HubLinkStatus.SUBMITTED_AND_VIEWED,
             respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
           },
-          et3IsThereAnEt3Response: YesOrNo.YES,
+          et3ResponseReceived: true,
         },
         selector: bannerHeaderSelector,
         expectedText: 'The tribunal has received a response from the respondent',

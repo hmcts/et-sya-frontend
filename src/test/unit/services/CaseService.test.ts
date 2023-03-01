@@ -7,6 +7,7 @@ import {
   CaseTypeId,
   CaseWithId,
   EmailOrPost,
+  EnglishOrWelsh,
   HearingPreference,
   NoAcasNumberReason,
   PayInterval,
@@ -25,7 +26,7 @@ import {
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
-import { mockEt1DataModelSubmittedUpdate, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
+import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
 
 const token = 'testToken';
 
@@ -176,6 +177,8 @@ describe('update case', () => {
       hearingPreferences: [HearingPreference.PHONE],
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
+      claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+      claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
       claimTypePay: [ClaimTypePay.REDUNDANCY_PAY],
@@ -228,7 +231,7 @@ describe('update case', () => {
     );
   });
 
-  it('should update submitted case data', async () => {
+  it('should update hub links statuses', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
       state: CaseState.SUBMITTED,
@@ -236,10 +239,10 @@ describe('update case', () => {
       lastModified: 'August 19, 2022',
       hubLinksStatuses: new HubLinksStatuses(),
     };
-    await api.updateSubmittedCase(caseItem);
+    await api.updateHubLinksStatuses(caseItem);
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
-    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockEt1DataModelSubmittedUpdate);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
   });
 });
 
@@ -296,6 +299,8 @@ describe('submitCase', () => {
       hearingPreferences: [HearingPreference.PHONE],
       hearingAssistance: 'Hearing assistance test',
       claimantContactPreference: EmailOrPost.EMAIL,
+      claimantContactLanguagePreference: EnglishOrWelsh.ENGLISH,
+      claimantHearingLanguagePreference: EnglishOrWelsh.ENGLISH,
       employmentAndRespondentCheck: YesOrNo.YES,
       claimDetailsCheck: YesOrNo.YES,
       claimTypeDiscrimination: [ClaimTypeDiscrimination.RACE],
@@ -431,9 +436,9 @@ describe('Rethrowing errors when axios requests fail', () => {
       errorMessage: 'Error updating draft case: ' + error.message,
     },
     {
-      serviceMethod: api.updateSubmittedCase,
+      serviceMethod: api.updateHubLinksStatuses,
       parameters: [caseItem],
-      errorMessage: 'Error updating submitted case: ' + error.message,
+      errorMessage: 'Error updating hub links statuses: ' + error.message,
     },
     {
       serviceMethod: api.getUserCase,
