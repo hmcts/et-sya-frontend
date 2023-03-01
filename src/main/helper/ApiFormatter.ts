@@ -36,37 +36,39 @@ export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
   userDetails: UserDetails
 ): CreateCaseBody {
-  let caseBody : CreateCaseBody =
-    {
-      post_code: userDataMap.get(CaseDataCacheKey.POSTCODE),
-      case_data: {
-        caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
-        claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
-        typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
-        caseSource: CcdDataModel.CASE_SOURCE,
-        claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
-        claimantIndType: {
-          claimant_first_names: userDetails.givenName,
-          claimant_last_name: userDetails.familyName,
-        },
-        claimantType: {
-          claimant_email_address: userDetails.email,
-        },
-        claimantRequests: {
-          other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
-        },
-        triageQuestions: {
-          postcode: userDataMap.get(CaseDataCacheKey.POSTCODE),
-          claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
-          caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
-          acasMultiple: userDataMap.get(CaseDataCacheKey.ACAS_MULTIPLE),
-          typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
-        },
+  console.log('creating case body');
+  const caseBody: CreateCaseBody = {
+    post_code: userDataMap.get(CaseDataCacheKey.POSTCODE),
+    case_data: {
+      caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
+      claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+      typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
+      caseSource: CcdDataModel.CASE_SOURCE,
+      claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
+      claimantIndType: {
+        claimant_first_names: userDetails.givenName,
+        claimant_last_name: userDetails.familyName,
       },
-    };
+      claimantType: {
+        claimant_email_address: userDetails.email,
+      },
+      claimantRequests: {
+        other_claim: userDataMap.get(CaseDataCacheKey.OTHER_CLAIM_TYPE),
+      },
+      triageQuestions: {
+        postcode: userDataMap.get(CaseDataCacheKey.POSTCODE),
+        claimantRepresentedQuestion: userDataMap.get(CaseDataCacheKey.CLAIMANT_REPRESENTED),
+        caseType: userDataMap.get(CaseDataCacheKey.CASE_TYPE),
+        acasMultiple: userDataMap.get(CaseDataCacheKey.ACAS_MULTIPLE),
+        typesOfClaim: JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM)),
+      },
+    },
+  };
+  console.log('created case body: ' + caseBody);
   if (userDataMap.get(CaseDataCacheKey.VALID_NO_ACAS_REASON) !== undefined) {
     caseBody.case_data.triageQuestions.validNoAcasReason = userDataMap.get(CaseDataCacheKey.VALID_NO_ACAS_REASON);
   }
+  console.log('RETURNING CASE BODY: ' + caseBody);
   return caseBody;
 }
 

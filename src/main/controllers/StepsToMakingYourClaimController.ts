@@ -19,12 +19,14 @@ const logger = getLogger('StepsToMakingYourClaimController');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
+    console.log('stepstomaking your claim page get method');
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
     const { userCase } = req.session;
+    console.log('checking redis data');
     if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);

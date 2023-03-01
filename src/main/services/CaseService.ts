@@ -17,11 +17,18 @@ export class CaseApi {
 
   createCase = async (caseData: string, userDetails: UserDetails): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
+      console.log('creating case with parameters: ' + JavaApiUrls.INITIATE_CASE_DRAFT);
       return await this.axios.post(
         JavaApiUrls.INITIATE_CASE_DRAFT,
         toApiFormatCreate(new Map(JSON.parse(caseData)), userDetails)
       );
     } catch (error) {
+      console.log('error occured1: ' + error.response.data.error);
+      console.log('error occurred2: ' + error.message);
+      console.log('error data: ' + error.response.data);
+      console.log('error status: ' + error.response.status);
+      console.log('error headers: ' + error.response.headers);
+      console.log('error request: ' + error.request);
       throw new Error('Error creating case: ' + axiosErrorDetails(error));
     }
   };

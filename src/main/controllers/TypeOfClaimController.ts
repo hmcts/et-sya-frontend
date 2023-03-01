@@ -141,9 +141,11 @@ export default class TypeOfClaimController {
         }
       }
       // Only called when returning from CYA page
-      console.log('checking usercase id' + req.session.userCase.id);
+      console.log('checking usercase id: ' + req.session.userCase.id);
       if (req.session.userCase.id) {
+        console.log('checking usercase id found: ' + req.session.userCase.id);
         await handleUpdateDraftCase(req, logger);
+        console.log('updated draft case');
       }
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
