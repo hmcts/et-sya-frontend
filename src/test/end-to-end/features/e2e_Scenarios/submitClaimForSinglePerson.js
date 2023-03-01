@@ -53,6 +53,7 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await claimSubmitted(I);
 })
   .tag('@RET-BAT')
+  .tag('@demo')
   .retry(2);
 
 Scenario('Submit a single claim for myself without the Complete PCQ/Equality CrossBrowser', async ({ I }) => {
