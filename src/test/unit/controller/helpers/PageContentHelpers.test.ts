@@ -58,7 +58,7 @@ describe('returnFormattedAddress', () => {
   it('should populate app items with redirect link, caption, statusColor and displayStatus', () => {
     const genericTseApplicationType = {
       number: '1',
-      status: 'inProgress',
+      applicationState: 'inProgress',
       type: 'withdraw',
     } as GenericTseApplicationType;
 
