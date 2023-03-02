@@ -3,7 +3,7 @@ import { Application, NextFunction, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
-import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors } from '../../definitions/constants';
+import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { getLogger } from '../../logger';
@@ -21,7 +21,7 @@ export class Oidc {
 
     app.get(AuthUrls.LOGIN, (req: AppRequest, res) => {
       let stateParam;
-      const languageParam = req.cookies.i18next;
+      const languageParam = req.cookies.i18next === languages.WELSH ? languages.WELSH : languages.ENGLISH;
       req.session.guid ? (stateParam = req.session.guid) : (stateParam = EXISTING_USER);
       stateParam = stateParam + '-' + languageParam;
       res.redirect(getRedirectUrl(serviceUrl(res), AuthUrls.CALLBACK, stateParam, languageParam));
