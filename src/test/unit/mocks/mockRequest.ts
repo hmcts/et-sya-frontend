@@ -39,6 +39,12 @@ export const mockRequest = ({
       startDate: { year: '2019', month: '04', day: '21' },
       ...userCase,
     } as CaseWithId,
+    submittedCase: {
+      id: '1234',
+      dobDate: { year: '2000', month: '12', day: '24' },
+      startDate: { year: '2019', month: '04', day: '21' },
+      ...userCase,
+    } as CaseWithId,
     ...session,
     save: jest.fn(done => (done ? done() : true)),
     lang: 'en',
@@ -73,6 +79,9 @@ export const mockRequestEmpty = ({
   };
   req.session = {
     userCase: {
+      ...userCase,
+    } as CaseWithId,
+    submittedCase: {
       ...userCase,
     } as CaseWithId,
     ...session,
@@ -120,6 +129,19 @@ export const mockRequestWithTranslation = (
       hearingPreferences: [HearingPreference.NEITHER],
       ...userCase,
     } as CaseWithId,
+    submittedCase: {
+      id: '1234',
+      dobDate: { year: '2000', month: '12', day: '24' },
+      startDate: { year: '2019', month: '04', day: '21' },
+      noticeEnds: { year: '2019', month: '04', day: '21' },
+      newJob: YesOrNo.YES,
+      newJobStartDate: { year: '2020', month: '04', day: '21' },
+      isStillWorking: StillWorking.NOTICE,
+      typeOfClaim: [],
+      claimantSex: Sex.FEMALE,
+      hearingPreferences: [HearingPreference.NEITHER],
+      ...userCase,
+    } as CaseWithId,
     ...session,
     save: jest.fn(done => (done ? done() : true)),
     lang: 'en',
@@ -150,6 +172,12 @@ export const mockRequestWithSaveException = ({
   };
   req.session = {
     userCase: {
+      id: '1234',
+      dobDate: { year: '2000', month: '12', day: '24' },
+      startDate: { year: '2019', month: '04', day: '21' },
+      ...userCase,
+    } as CaseWithId,
+    submittedCase: {
       id: '1234',
       dobDate: { year: '2000', month: '12', day: '24' },
       startDate: { year: '2019', month: '04', day: '21' },
