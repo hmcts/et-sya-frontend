@@ -15,5 +15,31 @@ export default [
 ];
 
 export const applicationTypes = {
+  a: [
+    'amend',
+    'Amend response',
+    'non-compliance',
+    'Claimant not complied',
+    'other',
+    'Contact the tribunal',
+    'order',
+    'Order other party',
+    'postpone',
+    'Postpone a hearing',
+    'publicity',
+    'Restrict publicity',
+    'strike',
+    'Strike out all or part of a claim',
+    'vary',
+    'Vary or revoke an order',
+  ],
+  b: [
+    'change-details',
+    'Change personal details',
+    'reconsider-decision',
+    'Consider a decision afresh',
+    'reconsider-judgement',
+    'Reconsider judgement',
+  ],
   c: 'witness',
 };

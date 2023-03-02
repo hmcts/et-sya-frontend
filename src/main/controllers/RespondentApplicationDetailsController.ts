@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -13,6 +13,7 @@ import {
   getDocumentAdditionalInformation,
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -32,7 +33,7 @@ export default class RespondentApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const insetText = translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
-    const redirectUrl = PageUrls.RESPOND_TO_APPLICATION;
+    const redirectUrl = `/respond-to-application/${selectedApplication.value.number}${getLanguageParam(req.url)}`;
 
     if (document) {
       try {

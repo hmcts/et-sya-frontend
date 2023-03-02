@@ -81,3 +81,14 @@ export interface DocumentDetail {
   createdOn?: string;
   type?: string;
 }
+
+export interface RespondentAppNotificationBannerContent {
+  respondentApplicationHeader?: string;
+  respondToRespondentAppRedirectUrl?: string;
+  dueDate?: Date;
+  dueDateDayMonthYear?: string;
+  respondByDate?: string;
+  applicant?: string;
+  copyToOtherPartyYesOrNo?: string;
+  applicationType?: string;
+}

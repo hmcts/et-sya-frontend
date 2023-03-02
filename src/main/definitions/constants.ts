@@ -183,7 +183,7 @@ export const PageUrls = {
   APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
   APPLICATION_DETAILS: '/application-details/:appId',
-  RESPOND_TO_APPLICATION: '/respond-to-application',
+  RESPOND_TO_APPLICATION: '/respond-to-application/:appId',
   YOUR_APPLICATIONS: '/your-applications',
   RESPONDENT_APPLICATIONS: '/respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',

@@ -6,8 +6,6 @@
   "p2": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
   "p2a": " at the latest.",
   "p3": "If you need more time to respond, you may request more time from the tribunal. If you do not respond or request more time to respond, the tribunal will consider the application without your response.",
-  "applicationType": "[application type]",
-  "applicationDate": "[application date plus 7 days]",
   "p4": "Consider in your response:",
   "bullets": {
     "li1": "If you agree with the application or not",
@@ -20,16 +18,36 @@
     "p2": "Search for legal professionals in England and Wales (opens in new tab).",
     "p3": "Search for legal professionals in Scotland (opens in new tab)."
   },
+  "applicationTo": "Application to ",
+  "applicant": "Applicant",
+  "requestDate": "Application date",
+  "applicationType": "Application type",
+  "legend": "What do you want to tell or ask the tribunal?",
+  "respond": "Respond",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "textInputLabel": "What's your response to the respondent's application?",
   "textInputHint": "Use this box to provide your answer or you can upload material at the next step.",
   "radioButtonLabel": "Supporting material",
   "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "Amend response": "amend response",
+  "Change personal details": "change personal details",
+  "Claimant not complied": "tell the tribunal the claimant has not complied",
+  "Consider a decision afresh": "consider a decision afresh",
+  "Contact the tribunal": "contact the tribunal",
+  "Order other party": "order other party",
+  "Order a witness to attend to give evidence": "order a witness to attend to give evidence",
+  "Postpone a hearing": "postpone a hearing",
+  "Reconsider judgement": "reconsider judgement",
+  "Restrict publicity": "restrict publicity",
+  "Strike out all or part of a claim": "strike out all or part of a claim",
+  "Vary or revoke an order": "vary or revoke an order",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Tell us if you want to copy this correspondence to the other party"
+      "required": "Tell us if you also want to upload supporting material?"
     },
     "respondToApplicationText": {
-      "required": "Tell the Tribunal why you do not want to inform the other party",
+      "required": "Provide details of your response &/or upload supporting material",
       "tooLong": "Give details must be entered as less than 2500 characters"
     }
   }

@@ -24,62 +24,20 @@
 
       <div class="govuk-body">
         <p>{{ p1 }}<b>{{ applicationType }}</b>{{ p1a }}</p>
-        <p>{{ p2 }}<b>{{ applicationDate }}</b>{{ p2a }}</p>
+        <p>{{ p2 }}<b>{{ respondByDate }}</b>{{ p2a }}</p>
         <p>{{ p3 }}</p>
       </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-            text: respondent,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.respondent }
-          },
-          {
-            key: {
-            text: requestDate,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.date }
-          },
-          {
-            key: {
-            text: applicationType,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.linkValue }
-          },
-          {
-            key: {
-            text: legend,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.details }
-          },
-          {
-            key: {
-            text: supportingMaterial,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { html: downloadLink }
-          },
-          {
-            key: {
-            text: copyCorrespondence,
-            classes: "govuk-!-font-weight-regular-m"
-          },
-            value: { text: selectedApplication.value.copyToOtherPartyYesOrNo }
-          }
-        ]
-      }) }}
     </div>
   </div>
+
+   {{ govukSummaryList({
+      rows: appContent
+      }) 
+    }}
 
       <div class="govuk-body">
         <p><b>{{ p4 }}</b></p>
