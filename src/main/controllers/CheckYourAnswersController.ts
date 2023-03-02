@@ -12,6 +12,9 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
+    if (!req.session || !req.session.userCase) {
+      return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
+    }
     const userCase = req.session?.userCase;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
