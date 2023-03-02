@@ -14,12 +14,17 @@ def type = "nodejs"
 def product = "et"
 def component = "sya"
 
+def vaultOverrides = [
+  'aat': 'demo'
+]
+
 def secrets = [
-    'et-aat': [
+    'et-${env}': [
         secret('test-username', 'TEST_CASE_USERNAME'),
         secret('test-password', 'TEST_CASE_PASSWORD')
     ]
 ]
+
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -29,9 +34,9 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
-
 withNightlyPipeline(type, product, component) {
     loadVaultSecrets(secrets)
+    overrideVaultEnvironments(vaultOverrides)
     enableFullFunctionalTest()
     enableCrossBrowserTest()
     enableFortifyScan('et-aat')
@@ -55,7 +60,7 @@ withNightlyPipeline(type, product, component) {
                 reportFiles : "ET-sya-functional-tests.html",
                 reportName : "ET SYA Functional Tests Report"
         ]
-        //enableSlackNotification('#et-builds')
+        enableSlackNotification('#et-builds')
     }
 
     after('fortify-scan') {
