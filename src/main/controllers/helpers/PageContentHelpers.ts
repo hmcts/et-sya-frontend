@@ -1,7 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
-import { RespondentAppNotificationBannerContent } from '../../definitions/definition';
+import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -53,7 +53,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   const claimantItems = [];
   if (items && items.length) {
     for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.applicant.includes('Claimant')) {
+      if (items[i].value.applicant?.includes('Claimant')) {
         claimantItems[i] = items[i];
       }
     }
@@ -125,17 +125,17 @@ export const populateResponseItemsWithRedirectLinksCaptionsAndStatusColors = (
   }
 };
 
-export const getRespondentApplicationsForNotificationBanner = (
+export const getRespondentApplicationDetails = (
   items: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
   req: AppRequest
-): RespondentAppNotificationBannerContent[] => {
-  const bannerContent: RespondentAppNotificationBannerContent[] = [];
+): RespondentApplicationDetails[] => {
+  const bannerContent: RespondentApplicationDetails[] = [];
 
   if (items && items.length) {
     for (let i = items.length - 1; i >= 0; i--) {
       const dueDate = new Date(Date.parse(items[i].value.dueDate));
-      const rec: RespondentAppNotificationBannerContent = {
+      const rec: RespondentApplicationDetails = {
         respondentApplicationHeader:
           translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
         respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${getLanguageParam(
@@ -152,6 +152,8 @@ export const getRespondentApplicationsForNotificationBanner = (
           ' ' +
           dueDate.getFullYear(),
         applicationType: applicationTypes.a.includes(items[i].value.type) ? 'A' : 'B',
+        number: items[i].value.number,
+        status: items[i].value.status,
       };
       bannerContent.push(rec);
     }

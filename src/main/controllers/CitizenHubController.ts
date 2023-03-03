@@ -19,10 +19,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import {
-  activateRespondentApplicationsLink,
-  getRespondentApplicationsForNotificationBanner,
-} from './helpers/PageContentHelpers';
+import { activateRespondentApplicationsLink, getRespondentApplicationDetails } from './helpers/PageContentHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -106,7 +103,7 @@ export default class CitizenHubController {
     let respondentBannerContent = undefined;
 
     if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
-      respondentBannerContent = getRespondentApplicationsForNotificationBanner(tseGenericApps, translations, req);
+      respondentBannerContent = getRespondentApplicationDetails(tseGenericApps, translations, req);
     }
 
     res.render(TranslationKeys.CITIZEN_HUB, {

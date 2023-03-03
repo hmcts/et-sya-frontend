@@ -141,41 +141,36 @@
   }) }}
 {% endif %}
 
-{# {% if showRespondentApplicationReceived %}
-  {{ govukNotificationBanner({
-   html: htmlForRespondentApplicationReceived,
-   titleText: important
-  }) }}
-{% endif %} #}
-
 {% if showRespondentApplicationReceived %}
   {% for app in respondentBannerContent %}
     {% if (loop.index <= 5) %}
       {% if app.applicant === "Respondent" %}
         {% if app.copyToOtherPartyYesOrNo === "Yes" %}
-          {% set htmlForRespondentApplicationReceived %}
+          {% if app.status === "notStartedYet" %}
+            {% set htmlForRespondentApplicationReceived %}
 
-          <h3 class="govuk-notification-banner__heading">
-            {{app.respondentApplicationHeader}}
-          </h3>
-          <p class="govuk-body">
-            {% if app.applicationType === "B" %}
-              {{notificationBanner.respondentApplicationReceived.p1TypeB}}<br><br>
-            {% endif %}
-            {{notificationBanner.respondentApplicationReceived.p1}}
-            <b>{{ app.respondByDate }}</b>
-            {{ notificationBanner.respondentApplicationReceived.p1a }}
-          </p>
-          <h3 class="govuk-notification-banner__heading">
-            <a class="govuk-link" href="{{app.respondToRespondentAppRedirectUrl}}">{{notificationBanner.respondentApplicationReceived.link}}</a>
-          </p>
+            <h3 class="govuk-notification-banner__heading">
+              {{app.respondentApplicationHeader}}
+            </h3>
+            <p class="govuk-body">
+              {% if app.applicationType === "B" %}
+                {{notificationBanner.respondentApplicationReceived.p1TypeB}}<br><br>
+              {% endif %}
+              {{notificationBanner.respondentApplicationReceived.p1}}
+              <b>{{ app.respondByDate }}</b>
+              {{ notificationBanner.respondentApplicationReceived.p1a }}
+            </p>
+            <h3 class="govuk-notification-banner__heading">
+              <a class="govuk-link" href="{{app.respondToRespondentAppRedirectUrl}}">{{notificationBanner.respondentApplicationReceived.link}}</a>
+            </p>
 
-          {% endset %}
-          {{ govukNotificationBanner({
+            {% endset %}
+            {{ govukNotificationBanner({
                 html: htmlForRespondentApplicationReceived,
                 titleText: important
                 }) }}
 
+          {% endif %}
         {% endif %}
       {% endif %}
     {% endif %}
