@@ -171,6 +171,7 @@ export interface Case {
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  // Notifications
   sendNotificationCollection?: SendNotificationTypeItem[];
 }
 

@@ -45,7 +45,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
 ]);
 
-export const hubLinksColorMap = new Map<HubLinkStatus, string>([
+export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
   [HubLinkStatus.SUBMITTED, '--turquoise'],
   [HubLinkStatus.OPTIONAL, '--blue'],

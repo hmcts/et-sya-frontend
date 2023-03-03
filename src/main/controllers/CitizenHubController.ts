@@ -6,9 +6,9 @@ import {
   HubLinkNames,
   HubLinkStatus,
   HubLinksStatuses,
-  hubLinksColorMap,
   hubLinksUrlMap,
   sectionIndexToLinkNames,
+  statusColorMap,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
@@ -43,6 +43,8 @@ export default class CitizenHubController {
     const userCase = req.session.userCase;
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
+
+    console.log(userCase.sendNotificationCollection);
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
@@ -83,7 +85,7 @@ export default class CitizenHubController {
             status: (l: AnyRecord): string => l[status],
             shouldShow: status !== HubLinkStatus.NOT_YET_AVAILABLE && status !== HubLinkStatus.WAITING_FOR_TRIBUNAL,
             url: () => hubLinksUrlMap.get(linkName),
-            statusColor: () => hubLinksColorMap.get(status),
+            statusColor: () => statusColorMap.get(status),
           };
         }),
       };

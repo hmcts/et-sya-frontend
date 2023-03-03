@@ -1,5 +1,5 @@
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -52,7 +52,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = item.value.type;
       item.linkValue = translations.sections[app].caption;
       item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
   }
