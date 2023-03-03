@@ -86,28 +86,28 @@ export const getCyaContent = (
               ],
             },
           },
-        ]),
-    ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyText,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.copyToOtherPartyText,
-            },
-            actions: {
-              items: [
+          ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
+            ? []
+            : [
                 {
-                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                  text: 'Change',
-                  visuallyHiddenText: translations.copyToOtherPartyText,
+                  key: {
+                    text: translations.copyToOtherPartyText,
+                    classes: 'govuk-!-font-weight-regular-m',
+                  },
+                  value: {
+                    text: userCase.copyToOtherPartyText,
+                  },
+                  actions: {
+                    items: [
+                      {
+                        href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+                        text: 'Change',
+                        visuallyHiddenText: translations.copyToOtherPartyText,
+                      },
+                    ],
+                  },
                 },
-              ],
-            },
-          },
+              ]),
         ]),
   ];
 };

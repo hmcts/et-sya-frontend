@@ -105,7 +105,6 @@ export class Routes {
     // Singleton controllers:
     const describeWhatHappenedController = new DescribeWhatHappenedController();
 
-    app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
     app.get(Urls.PCQ, new PcqController().get);
     app.get(PageUrls.HOME, new HomeController().get);
     app.get(PageUrls.CHECKLIST, new ChecklistController().get);
@@ -233,6 +232,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
+    app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
       handleUploads.single('contactApplicationFile'),

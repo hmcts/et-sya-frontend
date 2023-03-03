@@ -68,6 +68,13 @@ describe('Contact Application Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'required' }]);
     });
 
+    it('should not allow invalid free text size', async () => {
+      const req = mockRequest({ body: { contactApplicationText: '1'.repeat(2501) } });
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationText', errorType: 'tooLong' }]);
+    });
+
     it('should only allow valid file formats', async () => {
       const newFile = mockFile;
       newFile.originalname = 'file.invalidFileFormat';
@@ -87,6 +94,15 @@ describe('Contact Application Controller', () => {
       expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' }]);
     });
 
+    it('should only allow valid file names', async () => {
+      const newFile = mockFile;
+      newFile.originalname = '$%?invalid.txt';
+      const req = mockRequest({ body: {}, file: newFile });
+      await new ContactTheTribunalSelectedController().post(req, mockResponse());
+
+      expect(req.session.errors).toEqual([{ propertyName: 'contactApplicationFile', errorType: 'invalidFileName' }]);
+    });
+
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
         body: { upload: true, contactApplicationText: 'test', contactApplicationFile: mockFile },
@@ -101,6 +117,42 @@ describe('Contact Application Controller', () => {
           document_filename: 'test.txt',
         },
       });
+    });
+
+    it('should redirect to copy-to-other-party page when non-type-c application', async () => {
+      const req = mockRequest({
+        body: {
+          upload: false,
+          contactApplicationText: 'test',
+          contactApplicationFile: mockFile,
+        },
+        userCase: {
+          contactApplicationType: 'withdraw',
+        },
+      });
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY);
+    });
+
+    it('should redirect to CYA page when type-c application', async () => {
+      const req = mockRequest({
+        body: {
+          upload: false,
+          contactApplicationText: 'test',
+          contactApplicationFile: mockFile,
+        },
+        userCase: {
+          contactApplicationType: 'witness',
+        },
+      });
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
     });
   });
 });
