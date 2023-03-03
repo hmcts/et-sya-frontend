@@ -12,6 +12,15 @@
   "notAnswered": "Nid ydych wedi ateb y cwestiwn.",
   "errorSaving": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau.",
   "errorSummaryTitle": "Mae yna broblem",
+  "days": [
+    "Welsh Translation required",
+    "Welsh Translation required",
+    "Welsh Translation required",
+    "Welsh Translation required",
+    "Welsh Translation required",
+    "Welsh Translation required",
+    "Welsh Translation required"
+  ],
   "months": [
     "Ionawr",
     "Chwefror",
