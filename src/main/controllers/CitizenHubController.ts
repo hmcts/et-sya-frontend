@@ -45,7 +45,6 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
-
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
 

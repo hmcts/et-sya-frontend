@@ -252,10 +252,9 @@ export class Routes {
     );
     app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
     app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
-    app.get(PageUrls.RESPOND_TO_APPLICATION, new RespondToApplicationController().get);
-    app.post(PageUrls.RESPOND_TO_APPLICATION, new RespondToApplicationController().post);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().get);
+    app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
-    //  app.post(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().post);
   }
 }

@@ -141,13 +141,6 @@
   }) }}
 {% endif %}
 
-{# {% if showRespondentApplicationReceived %}
-  {{ govukNotificationBanner({
-   html: htmlForRespondentApplicationReceived,
-   titleText: important
-  }) }}
-{% endif %} #}
-
 {% if showRespondentApplicationReceived %}
   {% for app in respondentBannerContent %}
     {% if (loop.index <= 5) %}

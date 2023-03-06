@@ -10,12 +10,13 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
   getDocumentAdditionalInformation,
 } from './helpers/DocumentHelpers';
+import { getApplicationResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -68,7 +69,19 @@ export default class RespondToApplicationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.RESPONDENT_APPLICATIONS);
+    setUserCase(req, this.form);
+    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
+    const error = getApplicationResponseError(formData);
+
+    if (error) {
+      req.session.errors = [];
+      req.session.errors.push(error);
+      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}`);
+    }
+    req.session.errors = [];
+
+    // TODO Send to supporting doc upload
+    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

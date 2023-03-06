@@ -19,7 +19,6 @@ export default class RespondentApplicationsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    // activateRespondentsApplicationsLink(tseGenericApps, req);
     populateResponseItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
