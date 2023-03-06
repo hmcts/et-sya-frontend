@@ -1,0 +1,55 @@
+{
+  "caption": "Respond to an application",
+  "h1": "Your response",
+  "p1": "The respondent has applied to ",
+  "p1a": ".",
+  "p2": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
+  "p2a": " at the latest.",
+  "p3": "If you need more time to respond, you may request more time from the tribunal. If you do not respond or request more time to respond, the tribunal will consider the application without your response.",
+  "p4": "Consider in your response:",
+  "bullets": {
+    "li1": "If you agree with the application or not",
+    "li2": "If you disagree, explain why",
+    "li3": "If you want to apply for a hearing to discuss your response"
+  },
+  "details": {
+    "summaryText": "Welsh Translation required",
+    "p1": "Welsh Translation required.",
+    "p2": "Welsh Translation required.",
+    "p3": "Welsh Translation required."
+  },
+  "applicationTo": "Welsh Translation required ",
+  "applicant": "Welsh Translation required",
+  "requestDate": "Welsh Translation required",
+  "applicationType": "Welsh Translation required",
+  "legend": "Welsh Translation required?",
+  "respond": "Welsh Translation required",
+  "supportingMaterial": "Welsh Translation required",
+  "copyCorrespondence": "Welsh Translation required?",
+  "textInputLabel": "Welsh Translation required?",
+  "textInputHint": "Welsh Translation required",
+  "radioButtonLabel": "Welsh Translation required",
+  "radioButtonHint": "Welsh Translation required?",
+  "Amend response": "Welsh Translation required",
+  "Change personal details": "Welsh Translation required",
+  "Claimant not complied": "Welsh Translation required",
+  "Consider a decision afresh": "Welsh Translation required",
+  "Contact the tribunal": "Welsh Translation required",
+  "Order other party": "Welsh Translation required",
+  "Order a witness to attend to give evidence": "Welsh Translation required",
+  "Postpone a hearing": "Welsh Translation required",
+  "Reconsider judgement": "Welsh Translation required",
+  "Restrict publicity": "Welsh Translation required",
+  "Strike out all or part of a claim": "Welsh Translation required",
+  "Vary or revoke an order": "Welsh Translation required",
+  "errors": {
+    "hasSupportingMaterial": {
+      "required": "Welsh Translation required?"
+    },
+    "respondToApplicationText": {
+      "required": "Welsh Translation required",
+      "requiredFile": "Welsh Translation required",
+      "tooLong": "Welsh Translation required"
+    }
+  }
+}
