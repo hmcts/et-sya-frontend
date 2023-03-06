@@ -155,7 +155,6 @@ export const getRespondentApplicationsForNotificationBanner = (
       };
       bannerContent.push(rec);
     }
-    console.log(bannerContent);
     return bannerContent;
   }
 };
