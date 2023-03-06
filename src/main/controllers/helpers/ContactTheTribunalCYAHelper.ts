@@ -65,7 +65,7 @@ export const getCyaContent = (
         ],
       },
     },
-    ...(applicationTypes.c.includes(userCase.contactApplicationType)
+    ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? []
       : [
           {

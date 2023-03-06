@@ -151,7 +151,7 @@ export const getRespondentApplicationsForNotificationBanner = (
           translations.months[dueDate.getMonth()] +
           ' ' +
           dueDate.getFullYear(),
-        applicationType: applicationTypes.a.includes(items[i].value.type) ? 'A' : 'B',
+        applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
       };
       bannerContent.push(rec);
     }
