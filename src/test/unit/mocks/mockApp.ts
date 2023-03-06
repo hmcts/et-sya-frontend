@@ -50,6 +50,7 @@ export function mockSession(
       familyName: 'user',
     },
     returnUrl: undefined,
+    contactType: 'Application',
   };
 }
 
@@ -99,6 +100,7 @@ export const mockApp = ({
         id: '1234',
         dobDate: { year: '2000', month: '12', day: '24' },
         typeOfClaim: [],
+        contactType: 'Application',
         ...userCase,
       } as CaseWithId,
       ...session,

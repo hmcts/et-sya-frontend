@@ -7,23 +7,29 @@ import {
   hasInvalidFileFormat,
   hasInvalidName,
   isAcasNumberValid,
+  isContent2500CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 
-export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
-  //call get custom errors and add to session errors
-  let sessionErrors = form.getErrors(formData);
+export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  return getSessionErrors(req, form, formData);
+};
+
+const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
+  let sessionErrors = form.getValidatorErrors(formData);
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
+
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
   }
@@ -47,6 +53,7 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   if (otherClaimTypeError) {
     sessionErrors = [...sessionErrors, otherClaimTypeError];
   }
+
   return sessionErrors;
 };
 
@@ -65,14 +72,27 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
   }
 };
 
+export const getCopyToOtherPartyError = (formData: Partial<CaseWithId>): FormError => {
+  const shouldCopy = formData.copyToOtherPartyYesOrNo;
+  const radiosErrorType = isFieldFilledIn(shouldCopy);
+  if (radiosErrorType) {
+    return { errorType: radiosErrorType, propertyName: 'copyToOtherPartyYesOrNo' };
+  }
+
+  if (shouldCopy === YesOrNo.NO) {
+    const copyText = formData.copyToOtherPartyText;
+    const textErrorType = isFieldFilledIn(copyText) || isContent2500CharsOrLess(copyText);
+    if (textErrorType) {
+      return { errorType: textErrorType, propertyName: 'copyToOtherPartyText' };
+    }
+  }
+};
+
 export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): FormError => {
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  if (
-    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
-    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
-  ) {
+  if (claimTypesCheckbox?.includes('otherTypesOfClaims')) {
     const errorType = isFieldFilledIn(otherClaimTextarea);
     if (errorType) {
       return { errorType, propertyName: 'otherClaim' };
@@ -95,11 +115,6 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
       }
     }
   }
-};
-
-export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
-  return getSessionErrors(req, form, formData);
 };
 
 export const handleErrors = (req: AppRequest, res: Response, sessionErrors: FormError[]): void => {
@@ -208,5 +223,50 @@ export const getClaimSummaryError = (
   }
   if (fileNameInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
+  }
+};
+
+export const getContactApplicationError = (
+  formData: Partial<CaseWithId>,
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document
+): FormError => {
+  const text = formData.contactApplicationText;
+
+  const tooLong = isContent2500CharsOrLess(text);
+  if (tooLong) {
+    return { propertyName: 'contactApplicationText', errorType: tooLong };
+  }
+
+  const textProvided = isFieldFilledIn(text) === undefined;
+  const fileProvided = file !== undefined;
+
+  if (!textProvided && !fileProvided && !uploadedFile) {
+    return { propertyName: 'contactApplicationText', errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  if (fileFormatInvalid) {
+    return { propertyName: 'contactApplicationFile', errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
+  }
+};
+
+export const getLastFileError = (errors: FormError[]): FormError => {
+  if (errors?.length > 0) {
+    for (let i = errors.length - 1; i >= 0; i--) {
+      if (errors[i].propertyName.includes('contactApplicationFile')) {
+        return errors[i];
+      }
+    }
   }
 };

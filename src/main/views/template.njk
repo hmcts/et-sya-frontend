@@ -1,6 +1,5 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
-{% from "govuk/components/footer/macro.njk" import govukFooter %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
@@ -137,42 +136,5 @@ if isLoggedIn %}
     </div>
   {% endif %}
 
-  {{ govukFooter({
-  meta: {
-    items: [
-      {
-          href: "https://www.gov.uk/help",
-          text: help
-      },
-      {
-          href: "https://www.gov.uk/help/privacy-notice",
-          text: privacy
-      },
-      {
-          href: "https://www.gov.uk/help/cookies",
-          text: cookiePolicy
-      },
-      {
-          href: "/accessibility",
-          text: accessibility
-      },
-      {
-          href: "https://www.gov.uk/guidance/employment-tribunal-offices-and-venues",
-          text: contact
-      },
-      {
-          href: "https://www.gov.uk/help/terms-conditions",
-          text: termsAndConditions
-      },
-      {
-          href: "https://www.gov.uk/cymraeg",
-          text: wasanaethau
-      },
-      {
-          href: "https://www.gov.uk/government/organisations/government-digital-service",
-          text: digitalService
-      }
-    ]
-  }
-}) }}
+  {% include "./footer.njk" %}
 {% endblock %}

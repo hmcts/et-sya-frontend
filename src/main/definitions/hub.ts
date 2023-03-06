@@ -17,13 +17,12 @@ export class HubLinksStatuses {
   [linkName: string]: HubLinkStatus;
 
   constructor() {
-    Object.values(HubLinkNames)
-      .filter(name => name !== HubLinkNames.Et1ClaimForm)
-      .forEach(name => {
-        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
-      });
+    Object.values(HubLinkNames).forEach(name => {
+      this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+    });
 
     this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
+    this[HubLinkNames.ContactTribunal] = HubLinkStatus.OPTIONAL;
   }
 }
 
@@ -36,11 +35,14 @@ export const enum HubLinkStatus {
   NOT_YET_AVAILABLE = 'notAvailableYet',
   WAITING_FOR_TRIBUNAL = 'waitingForTheTribunal',
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
+  IN_PROGRESS = 'inProgress',
 }
 
 export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
   [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+  [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
+  [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
 ]);
 
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
@@ -52,6 +54,7 @@ export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
   [HubLinkStatus.SUBMITTED_AND_VIEWED, '--turquoise'],
+  [HubLinkStatus.IN_PROGRESS, '--yellow'],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

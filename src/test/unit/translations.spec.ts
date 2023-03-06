@@ -1,12 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 
+import { getLogger } from '../../main/logger';
+
 const englishDirectory = '../../main/resources/locales/en/translation/';
 const welshDirectory = '../../main/resources/locales/cy/translation/';
 
 const englishTranslationFiles = fs.readdirSync(path.resolve(__dirname, englishDirectory));
 
 const welshTranslationFiles = fs.readdirSync(path.resolve(__dirname, welshDirectory));
+
+const logger = getLogger('translations');
 
 const findMissingKeys = function (
   original: Record<string, unknown>,
@@ -66,6 +70,13 @@ describe('Check missing keys in translation files', () => {
     expect(findMissingKeys(englishContents, welshContents)).toEqual([]);
   });
 
+  test.each(englishTranslationFiles)('Check welsh translation file %s has no unfinished translations', file => {
+    const welshFile = fs.readFileSync(path.resolve(__dirname, welshDirectory + file), 'utf-8');
+    const welshContents = JSON.parse(welshFile);
+
+    checkWelshTranlationFile(welshContents, file.replace(/\.json/, ''));
+  });
+
   function checkWelshTranlationFile(obj: { [index: string]: unknown }, full_key: string) {
     for (const k in obj) {
       if (typeof obj[k] === 'string') {
@@ -76,7 +87,7 @@ describe('Check missing keys in translation files', () => {
           val.includes('Update Required') ||
           val === ''
         ) {
-          console.warn(`${full_key}.${k} Does not have welsh translation`);
+          logger.warn(`${full_key}.${k} Does not have welsh translation`);
         }
       } else {
         if (typeof obj[k] === 'object') {

@@ -143,4 +143,5 @@ export default {
     description: 'Case Details - Sunday Ayeni',
     type: 'ET1',
   },
+  genericTseApplicationCollection: undefined,
 };
