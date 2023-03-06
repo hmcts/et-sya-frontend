@@ -36,6 +36,7 @@ export const enum HubLinkStatus {
   WAITING_FOR_TRIBUNAL = 'waitingForTheTribunal',
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
   IN_PROGRESS = 'inProgress',
+  NOT_STARTED_YET = 'notStartedYet',
 }
 
 export const hubLinksUrlMap = new Map<string, string>([
@@ -43,6 +44,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
   [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
+  [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
 ]);
 
 export const hubLinksColorMap = new Map<HubLinkStatus, string>([
@@ -55,6 +57,7 @@ export const hubLinksColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
   [HubLinkStatus.SUBMITTED_AND_VIEWED, '--turquoise'],
   [HubLinkStatus.IN_PROGRESS, '--yellow'],
+  [HubLinkStatus.NOT_STARTED_YET, '--red'],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

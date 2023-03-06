@@ -23,6 +23,7 @@ export interface GenericTseApplicationType {
   respondCollection?: TseRespondTypeItem[];
   status?: string;
   applicationState?: string;
+  dueDate?: string;
 }
 
 export interface TseRespondTypeItem {
@@ -35,6 +36,7 @@ export interface TseRespondType {
   date?: string;
   response?: string;
   copyToOtherParty?: string;
+  hasSupportingMaterial?: YesOrNo;
 }
 
 export const sortByDate = (a: GenericTseApplicationTypeItem, b: GenericTseApplicationTypeItem): number => {

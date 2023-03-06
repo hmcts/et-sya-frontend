@@ -1,5 +1,6 @@
 import {
   getACASCertificateNumberError,
+  getApplicationResponseErrors,
   getClaimSummaryError,
   getCopyToOtherPartyError,
   getCustomStartDateError,
@@ -410,6 +411,66 @@ describe('getLastFileError', () => {
     ).toStrictEqual({
       propertyName: 'contactApplicationFile',
       errorType: 'C',
+    });
+  });
+
+  describe('getApplicationResponseError', () => {
+    it('should not return error when no error', () => {
+      expect(
+        getApplicationResponseErrors({
+          respondToApplicationText: 'help',
+          hasSupportingMaterial: YesOrNo.NO,
+        })
+      ).toBeUndefined();
+    });
+
+    it('should return error when nothing entered', () => {
+      expect(
+        getApplicationResponseErrors({
+          respondToApplicationText: undefined,
+          hasSupportingMaterial: undefined,
+        })
+      ).toStrictEqual({
+        propertyName: 'respondToApplicationText',
+        errorType: 'required',
+      });
+    });
+
+    it('should return error when response details field is entered, but a radio button is not selected', () => {
+      expect(
+        getApplicationResponseErrors({
+          respondToApplicationText: 'help',
+          hasSupportingMaterial: undefined,
+        })
+      ).toStrictEqual({
+        propertyName: 'hasSupportingMaterial',
+        errorType: 'required',
+      });
+    });
+
+    it('should return error when response details is blank and No radio button is selected', () => {
+      expect(
+        getApplicationResponseErrors({
+          respondToApplicationText: undefined,
+          hasSupportingMaterial: YesOrNo.NO,
+        })
+      ).toStrictEqual({
+        propertyName: 'respondToApplicationText',
+        errorType: 'requiredFile',
+      });
+    });
+
+    it('should return error when response details is more than 2500 characters', () => {
+      const testString = 'a'.repeat(2501);
+      expect(
+        getApplicationResponseErrors({
+          respondToApplicationText: testString,
+          hasSupportingMaterial: YesOrNo.NO,
+        })
+      ).toStrictEqual({
+        propertyName: 'respondToApplicationText',
+        errorType: 'tooLong',
+      });
     });
   });
 });

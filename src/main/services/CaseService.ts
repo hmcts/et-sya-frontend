@@ -97,7 +97,7 @@ export class CaseApi {
       return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
-        type_c: applicationTypes.c.includes(caseItem.contactApplicationType),
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
         claimant_tse: {
           contactApplicationType: caseItem.contactApplicationType,
           contactApplicationText: caseItem.contactApplicationText,

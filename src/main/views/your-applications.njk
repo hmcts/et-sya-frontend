@@ -19,6 +19,7 @@
         </thead>
         <tbody class="govuk-table__body">
         {% for app in tseGenericApps %}
+         {% if app.value.applicant === "Claimant" %}
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               {{ app.value.date }}
@@ -33,6 +34,7 @@
               }) }}
             </td>
           </tr>
+           {% endif %}
         {% endfor %}
         </tbody>
       </table>
