@@ -104,7 +104,7 @@ export default class ContactTheTribunalSelectedController {
     }
     req.session.errors = [];
 
-    const redirectPage = applicationTypes.c.includes(userCase.contactApplicationType)
+    const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : PageUrls.COPY_TO_OTHER_PARTY;
 

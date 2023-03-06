@@ -11,6 +11,7 @@
   "notAnswered": "You have not answered the question.",
   "errorSaving": "Sorry, we’re having technical problems saving your application. Please try again in a few minutes.",
   "errorSummaryTitle": "There is a problem",
+  "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   "months": [
     "January",
     "February",

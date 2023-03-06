@@ -67,6 +67,13 @@
     "respondentAcknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd.",
       "link": "Gweld yr ymateb"
+    },
+    "respondentApplicationReceived": {
+      "header": "Welsh Translation required ",
+      "p1TypeB": "Welsh Translation required.",
+      "p1": "Welsh Translation required ",
+      "p1a": " Welsh Translation required",
+      "link": "Welsh Translation required"
     }
   }
 }

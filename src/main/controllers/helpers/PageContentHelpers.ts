@@ -1,5 +1,8 @@
+import { AppRequest } from '../../definitions/appRequest';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { applicationTypes } from '../../definitions/contact-applications';
+import { RespondentAppNotificationBannerContent } from '../../definitions/definition';
+import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -47,13 +50,111 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): void => {
+  const claimantItems = [];
   if (items && items.length) {
-    items.forEach(item => {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Claimant')) {
+        claimantItems[i] = items[i];
+      }
+    }
+  }
+  if (claimantItems && claimantItems.length) {
+    claimantItems.forEach(item => {
       const app = item.value.type;
       item.linkValue = translations.sections[app].caption;
       item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
       item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
+  }
+};
+
+export const activateRespondentApplicationsLink = (items: GenericTseApplicationTypeItem[], req: AppRequest): void => {
+  const userCase = req.session?.userCase;
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
+        userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
+      }
+    }
+  }
+};
+
+export const getApplicationRespondByDate = (
+  item: GenericTseApplicationTypeItem,
+  req: AppRequest,
+  translations: AnyRecord
+): string => {
+  const userCase = req.session?.userCase;
+  if (item) {
+    const dueDate = new Date(Date.parse(userCase.selectedGenericTseApplication.value.dueDate));
+    const dateString =
+      translations.days[dueDate.getDay()] +
+      ' ' +
+      dueDate.getDate() +
+      ' ' +
+      translations.months[dueDate.getMonth()] +
+      ' ' +
+      dueDate.getFullYear();
+
+    return dateString;
+  }
+};
+
+export const populateResponseItemsWithRedirectLinksCaptionsAndStatusColors = (
+  items: GenericTseApplicationTypeItem[],
+  url: string,
+  translations: AnyRecord
+): void => {
+  const respondentItems = [];
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
+        respondentItems[i] = items[i];
+      }
+    }
+  }
+  if (respondentItems && respondentItems.length) {
+    respondentItems.forEach(item => {
+      const app = translations[item.value.type];
+      item.linkValue = app;
+      item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
+      item.displayStatus = translations[item.value.status];
+    });
+  }
+};
+
+export const getRespondentApplicationsForNotificationBanner = (
+  items: GenericTseApplicationTypeItem[],
+  translations: AnyRecord,
+  req: AppRequest
+): RespondentAppNotificationBannerContent[] => {
+  const bannerContent: RespondentAppNotificationBannerContent[] = [];
+
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      const dueDate = new Date(Date.parse(items[i].value.dueDate));
+      const rec: RespondentAppNotificationBannerContent = {
+        respondentApplicationHeader:
+          translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
+        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${getLanguageParam(
+          req.url
+        )}`,
+        applicant: items[i].value.applicant,
+        copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
+        respondByDate:
+          translations.days[dueDate.getDay()] +
+          ' ' +
+          dueDate.getDate() +
+          ' ' +
+          translations.months[dueDate.getMonth()] +
+          ' ' +
+          dueDate.getFullYear(),
+        applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
+      };
+      bannerContent.push(rec);
+    }
+    return bannerContent;
   }
 };
