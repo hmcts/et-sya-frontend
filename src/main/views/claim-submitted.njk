@@ -4,11 +4,6 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-{% block beforeContent %}
-  {{ super() }}
-  {% include "back-link.njk"%}
-{% endblock %}
-
 {% block content %}
 <div class="govuk-grid-row ">
   <div class="govuk-grid-column-two-thirds">
@@ -19,7 +14,7 @@
     <p class="govuk-body">
       {{ emailConfirmation }}
     </p>
-  
+
     <h2 class="govuk-heading-m">
       {{ whatHappensNext }}
     </h2>
@@ -59,7 +54,7 @@
         { key: { text: tribunalOffice  }, value: { text: tribunalOfficeText } },
         { key: { text: email  }, value: { text: emailText } },
         { key: { text: telephone  }, value: { text: telephoneText } }
-      ]}) 
+      ]})
     }}
 
     <h2 class="govuk-heading-m">
@@ -92,7 +87,7 @@
       {{ contactAppend | safe}}
     </p>
    </div>
-</div>   
+</div>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds govuk-border black-border govuk-!-padding-bottom-2">
@@ -107,5 +102,5 @@
         </a>
       </div>
     </div>
-  
+
 {% endblock %}
