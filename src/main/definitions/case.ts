@@ -251,6 +251,8 @@ export const enum CaseDataCacheKey {
   CASE_TYPE = 'caseType',
   TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
+  ACAS_MULTIPLE = 'acasMultiple',
+  VALID_NO_ACAS_REASON = 'validNoAcasReason'
 }
 
 export const enum HearingPreference {

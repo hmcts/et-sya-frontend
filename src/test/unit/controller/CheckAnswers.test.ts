@@ -1,7 +1,8 @@
 import CheckYourAnswersController from '../../../main/controllers/CheckYourAnswersController';
+import { PageUrls } from '../../../main/definitions/constants';
 import checkAnswersJsonRaw from '../../../main/resources/locales/en/translation/check-your-answers.json';
 import et1DetailsJsonRaw from '../../../main/resources/locales/en/translation/et1-details.json';
-import { mockRequestWithTranslation } from '../mocks/mockRequest';
+import { mockRequestEmpty, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Check Your answers Controller', () => {
@@ -15,5 +16,27 @@ describe('Check Your answers Controller', () => {
     controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('check-your-answers', expect.anything());
+  });
+
+  it('should redirect claimant applications page when there is no session', () => {
+    const controller = new CheckYourAnswersController();
+    const response = mockResponse();
+    const request = mockRequestEmpty({});
+    request.session = null;
+
+    controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
+  });
+
+  it('should redirect claimant applications page when there is no user case', () => {
+    const controller = new CheckYourAnswersController();
+    const response = mockResponse();
+    const request = mockRequestEmpty({});
+    request.session.userCase = null;
+
+    controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.CLAIMANT_APPLICATIONS);
   });
 });

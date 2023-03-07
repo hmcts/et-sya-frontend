@@ -180,6 +180,7 @@ describe('Steps to Making your claim Controller', () => {
       workAddressPostcode: undefined,
       workAddressTown: undefined,
     });
+    redisClient.quit();
   });
 
   it('should render page with all claim types', () => {
