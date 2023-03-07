@@ -21,6 +21,7 @@ export interface GenericTseApplicationType {
   documentUpload?: Document;
   number?: string;
   respondCollection?: TseRespondTypeItem[];
+  responsesCount?: string;
   status?: string;
   applicationState?: string;
   dueDate?: string;

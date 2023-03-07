@@ -111,6 +111,25 @@ export class CaseApi {
     }
   };
 
+  respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put('cases/respond-to-application', {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        applicationId: caseItem.selectedGenericTseApplication.id,
+        response: {
+          response: caseItem.respondToApplicationText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          // supportingMaterial:
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
   getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.post(JavaApiUrls.GET_CASE, { case_id: id });
