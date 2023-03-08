@@ -300,6 +300,26 @@ describe('ACAS Certificate Number Errors', () => {
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
 
+  it('should return an error if more than 2000 chars are entered', () => {
+    const body = {
+      typeOfClaim: ['otherTypesOfClaims'],
+      otherClaim: '1'.repeat(2001),
+    };
+
+    const errors = getOtherClaimDescriptionError(body);
+    expect(errors).toEqual({ errorType: 'tooLong', propertyName: 'otherClaim' });
+  });
+
+  it('should return an error if other type text area is empty', () => {
+    const body = {
+      typeOfClaim: ['otherTypesOfClaims'],
+      otherClaim: '',
+    };
+
+    const errors = getOtherClaimDescriptionError(body);
+    expect(errors).toEqual({ errorType: 'required', propertyName: 'otherClaim' });
+  });
+
   it('should return an error if invalid acas number provided - (has character which is not numeric and / after R)', () => {
     const body = {
       acasCertNum: 'R1234/6c91234',

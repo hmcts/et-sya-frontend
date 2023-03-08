@@ -21,14 +21,14 @@ export default class CaseDocumentController {
       }
 
       const docId = req.params.docId;
-      const { userCase } = req.session;
+      const { submittedCase } = req.session;
 
       const allDocumentSets = combineDocuments(
-        [userCase?.et1SubmittedForm],
-        userCase?.allEt1DocumentDetails,
-        userCase?.acknowledgementOfClaimLetterDetail,
-        userCase?.rejectionOfClaimDocumentDetail,
-        userCase?.responseEt3FormDocumentDetail
+        [submittedCase?.et1SubmittedForm],
+        submittedCase?.allEt1DocumentDetails,
+        submittedCase?.acknowledgementOfClaimLetterDetail,
+        submittedCase?.rejectionOfClaimDocumentDetail,
+        submittedCase?.responseEt3FormDocumentDetail
       );
 
       const details = allDocumentSets.find(doc => doc.id === docId);

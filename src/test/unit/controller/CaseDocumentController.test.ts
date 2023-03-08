@@ -28,6 +28,13 @@ describe('Case Document Controller', () => {
         mimeType: 'test mimeType',
       },
     ];
+    request.session.submittedCase.acknowledgementOfClaimLetterDetail = [
+      {
+        id: '1234',
+        description: 'desc',
+        mimeType: 'test mimeType',
+      },
+    ];
     const fetchResponse = {
       status: 200,
       data: 'someBinaryContent',
