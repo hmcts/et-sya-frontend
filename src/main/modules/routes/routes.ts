@@ -64,6 +64,7 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import ResponseSupportingMaterialController from '../../controllers/ResponseSupportingMaterialController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
@@ -88,6 +89,7 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import ResponseSupportingMaterialFileController from '../../controllers/ResponseSupportingMaterialFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -256,5 +258,12 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+    app.get(PageUrls.RESPONSE_SUPPORTING_MATERIAL, new ResponseSupportingMaterialController().get);
+    app.post(
+      PageUrls.RESPONSE_SUPPORTING_MATERIAL,
+      handleUploads.single('supportingMaterialFile'),
+      new ResponseSupportingMaterialController().post
+    );
+    app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new ResponseSupportingMaterialFileController().get);
   }
 }

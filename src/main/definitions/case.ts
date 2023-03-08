@@ -172,6 +172,8 @@ export interface Case {
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   respondToApplicationText?: string;
   hasSupportingMaterial?: YesOrNo;
+  supportingMaterialText?: string;
+  supportingMaterialFile?: Document;
 }
 
 export const enum StillWorking {

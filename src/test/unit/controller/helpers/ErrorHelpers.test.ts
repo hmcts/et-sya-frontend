@@ -4,6 +4,7 @@ import {
   getClaimSummaryError,
   getCopyToOtherPartyError,
   getCustomStartDateError,
+  getFileErrorMessage,
   getLastFileError,
   getNewJobPartialPayInfoError,
   getOtherClaimDescriptionError,
@@ -12,13 +13,16 @@ import {
   returnSessionErrors,
 } from '../../../../main/controllers/helpers/ErrorHelpers';
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
-import { PageUrls } from '../../../../main/definitions/constants';
+import { PageUrls, TranslationKeys } from '../../../../main/definitions/constants';
 import { StartDateFormFields } from '../../../../main/definitions/dates';
 import { TypesOfClaim } from '../../../../main/definitions/definition';
+import { FormError } from '../../../../main/definitions/form';
+import { AnyRecord } from '../../../../main/definitions/util-types';
+import contactTheTribunalSelectedRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
-import { mockRequest, mockRequestWithSaveException } from '../../mocks/mockRequest';
+import { mockRequest, mockRequestWithSaveException, mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
 
 describe('getCustomStartDateError', () => {
@@ -472,5 +476,30 @@ describe('getLastFileError', () => {
         errorType: 'tooLong',
       });
     });
+  });
+});
+
+describe('getFileErrorMessage', () => {
+  it("should return undefined when there aren't any file errors", () => {
+    const translationJsons = { ...contactTheTribunalSelectedRaw };
+    const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    };
+    expect(getFileErrorMessage(undefined, translations)).toBeUndefined();
+  });
+
+  it('should return file error message', () => {
+    const translationJsons = { ...contactTheTribunalSelectedRaw };
+    const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
+    };
+    const mockError = {
+      errorType: 'invalidFileFormat',
+      propertyName: 'supportingMaterialFile',
+    } as FormError;
+
+    expect(getFileErrorMessage([mockError], translations)).toBeUndefined();
   });
 });
