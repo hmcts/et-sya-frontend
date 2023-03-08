@@ -8,6 +8,7 @@ import {
   hasInvalidName,
   isAcasNumberValid,
   isContent100CharsOrLess,
+  isContent2500CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
@@ -92,7 +93,10 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const claimTypesCheckbox = formData.typeOfClaim;
   const otherClaimTextarea = formData.otherClaim;
 
-  if (claimTypesCheckbox?.includes('otherTypesOfClaims')) {
+  if (
+    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
+    (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
+  ) {
     const errorType = isFieldFilledIn(otherClaimTextarea);
     if (errorType) {
       return { errorType, propertyName: 'otherClaim' };
@@ -100,7 +104,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   } else {
     const x = isContent100CharsOrLess(otherClaimTextarea);
     if (x) {
-      return {errorType: x, propertyName: 'otherClaim' };
+      return { errorType: x, propertyName: 'otherClaim' };
     }
   }
 };
