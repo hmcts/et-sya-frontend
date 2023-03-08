@@ -79,8 +79,10 @@ export default class RespondToApplicationController {
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(PageUrls.RESPONSE_SUPPORTING_MATERIAL.replace(':appId', req.params.appId))
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+      ? res.redirect(
+          PageUrls.RESPONSE_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+        )
+      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
