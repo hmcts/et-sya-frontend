@@ -86,6 +86,7 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.contactType = 'Respond to an application';
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

@@ -22,6 +22,30 @@ describe('Copy to other party Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
   });
 
+  it('should render the copy to other party page for response', () => {
+    const controller = new CopyToOtherPartyController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.contactType = 'Respond to an application';
+    request.session.userCase.contactApplicationType = 'Withdraw';
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
+  });
+
+  it('should render the copy to other party page for tribunal', () => {
+    const controller = new CopyToOtherPartyController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.contactType = 'Respond to the tribunal';
+    request.session.userCase.contactApplicationType = 'Withdraw';
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
+  });
+
   it('should redirect to contact the tribunal check your answers page when yes is selected', async () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
 
