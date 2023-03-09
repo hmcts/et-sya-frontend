@@ -58,7 +58,7 @@ export function mockSession(
       familyName: 'user',
     },
     returnUrl: undefined,
-    contactType: 'Application',
+    contactType: 'Respond',
   };
 }
 

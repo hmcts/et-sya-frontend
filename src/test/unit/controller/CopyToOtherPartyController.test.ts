@@ -1,7 +1,9 @@
 import CopyToOtherPartyController from '../../../main/controllers/CopyToOtherPartyController';
 import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
-import { mockRequest } from '../mocks/mockRequest';
+import { PageUrls, Rule92Types, TranslationKeys, languages } from '../../../main/definitions/constants';
+import contactTheTribunalJsonRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
+import copyJsonRaw from '../../../main/resources/locales/en/translation/copy-to-other-party.json';
+import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Copy to other party Controller', () => {
@@ -11,11 +13,12 @@ describe('Copy to other party Controller', () => {
   };
 
   it('should render the copy to other party page', () => {
+    const translationJsons = { ...contactTheTribunalJsonRaw, ...copyJsonRaw };
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
-    const request = mockRequest({ t });
-    request.session.contactType = 'Contact';
-    request.session.userCase.contactApplicationType = 'Withdraw';
+    const request = mockRequestWithTranslation({}, translationJsons);
+    request.session.contactType = Rule92Types.CONTACT;
+    request.session.userCase.contactApplicationType = 'withdraw';
 
     controller.get(request, response);
 
@@ -26,8 +29,7 @@ describe('Copy to other party Controller', () => {
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
     const request = mockRequest({ t });
-    request.session.contactType = 'Respond to an application';
-    request.session.userCase.contactApplicationType = 'Withdraw';
+    request.session.contactType = Rule92Types.RESPOND;
 
     controller.get(request, response);
 
@@ -38,8 +40,7 @@ describe('Copy to other party Controller', () => {
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
     const request = mockRequest({ t });
-    request.session.contactType = 'Respond to the tribunal';
-    request.session.userCase.contactApplicationType = 'Withdraw';
+    request.session.contactType = Rule92Types.TRIBUNAL;
 
     controller.get(request, response);
 

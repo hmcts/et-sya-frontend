@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -86,7 +86,7 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    req.session.contactType = 'Respond to an application';
+    req.session.contactType = Rule92Types.RESPOND;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
