@@ -67,7 +67,6 @@ export default class RespondToApplicationController {
   constructor() {
     this.form = new Form(<FormFields>this.respondToApplicationContent.fields);
   }
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
@@ -79,9 +78,11 @@ export default class RespondToApplicationController {
       return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}`);
     }
     req.session.errors = [];
-
-    // TODO Send to supporting doc upload
-    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+      ? res.redirect(
+          PageUrls.RESPONSE_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+        )
+      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

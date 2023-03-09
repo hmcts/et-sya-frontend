@@ -6,7 +6,11 @@ import { AnyRecord } from '../definitions/util-types';
 
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
-    const { userCase } = req.session;
+    if (req.session && req.session.userCase) {
+      req.session.submittedCase = req.session.userCase;
+      req.session.userCase = null;
+    }
+    const { submittedCase } = req.session;
     const lang =
       req.cookies.i18next === TranslationKeys.WELSH || req.url?.includes('?lng=cy') ? TranslationKeys.WELSH : 'en-GB';
     const pageTranslations: AnyRecord = {
@@ -16,13 +20,13 @@ export default class ClaimSubmittedController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CLAIM_SUBMITTED, { returnObjects: true }),
       hideContactUs: true,
-      submissionReferenceText: userCase.id,
+      submissionReferenceText: submittedCase.id,
       claimSubmittedText: formatClaimSubmittedDate(new Date(), lang),
-      attachmentsText: formatAttachmentsText(userCase.claimSummaryFile?.document_filename, pageTranslations),
-      downloadLink: '/getCaseDocument/' + userCase.et1SubmittedForm?.id,
-      tribunalOfficeText: returnManagingOffice(userCase.managingOffice, pageTranslations),
-      emailText: userCase.tribunalCorrespondenceEmail,
-      telephoneText: userCase.tribunalCorrespondenceTelephone,
+      attachmentsText: formatAttachmentsText(submittedCase.claimSummaryFile?.document_filename, pageTranslations),
+      downloadLink: '/getCaseDocument/' + submittedCase.et1SubmittedForm?.id,
+      tribunalOfficeText: returnManagingOffice(submittedCase.managingOffice, pageTranslations),
+      emailText: submittedCase.tribunalCorrespondenceEmail,
+      telephoneText: submittedCase.tribunalCorrespondenceTelephone,
       PageUrls,
     });
   }

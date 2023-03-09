@@ -60,6 +60,11 @@ describe('Test responds to /oauth2/callback', function () {
     jest.spyOn(res, 'redirect');
   });
 
+
+  afterAll(() => {
+    redisClient.quit();
+  });
+
   test('should create a new case in English language and redirect to the new account page in English when a new user logs in', async () => {
     req.query = { code: 'testCode', state: guid + englishGuidParam };
     jest.spyOn(CacheService, 'getPreloginCaseData').mockReturnValue(Promise.resolve(caseData));

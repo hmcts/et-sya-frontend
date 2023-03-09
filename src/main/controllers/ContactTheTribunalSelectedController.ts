@@ -5,14 +5,14 @@ import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
-import { FormContent, FormError, FormFields } from '../definitions/form';
+import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
-import { getContactApplicationError, getLastFileError } from './helpers/ErrorHelpers';
+import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 
@@ -78,11 +78,13 @@ export default class ContactTheTribunalSelectedController {
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
-    const contactApplicationError = getContactApplicationError(
-      formData,
+    const contactApplicationError = getFileUploadAndTextAreaError(
+      formData.contactApplicationText,
       req.file,
       req.fileTooLarge,
-      userCase.contactApplicationFile
+      userCase.contactApplicationFile,
+      'contactApplicationText',
+      'contactApplicationFile'
     );
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
@@ -140,19 +142,9 @@ export default class ContactTheTribunalSelectedController {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
     });
 
-    const fileError: FormError = getLastFileError(req.session.errors);
-
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, { returnObjects: true }),
     };
-
-    let errorMessage: string;
-    if (fileError) {
-      const errorMessages = translations.errors.contactApplicationFile;
-      errorMessage = errorMessages[fileError.errorType];
-    } else {
-      errorMessage = undefined;
-    }
 
     res.render(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, {
       PageUrls,
@@ -160,7 +152,7 @@ export default class ContactTheTribunalSelectedController {
       InterceptPaths,
       hideContactUs: true,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
-      errorMessage,
+      errorMessage: getFileErrorMessage(req.session.errors, translations.errors.contactApplicationFile),
       ...content,
     });
   };
