@@ -143,5 +143,15 @@ export default {
     description: 'Case Details - Sunday Ayeni',
     type: 'ET1',
   },
-  genericTseApplicationCollection: undefined,
+  genericTseApplicationCollection: [
+    {
+      id: '124',
+      value: {
+        applicant: 'Claimant',
+        date: '2019-05-02',
+        copyToOtherPartyYesOrNo: YesOrNo.YES,
+        status: 'inProgress',
+      },
+    },
+  ],
 };

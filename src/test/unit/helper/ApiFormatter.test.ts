@@ -341,6 +341,17 @@ describe('Format Case Data to Frontend Model', () => {
             id: '3454xaa',
           },
         ],
+        genericTseApplicationCollection: [
+          {
+            id: '124',
+            value: {
+              applicant: 'Claimant',
+              date: '2019-05-02',
+              copyToOtherPartyYesOrNo: YesOrNo.YES,
+              status: 'inProgress',
+            },
+          },
+        ],
         receiptDate: '2022-10-03',
         hubLinksStatuses: new HubLinksStatuses(),
         managingOffice: 'Leeds',
@@ -706,34 +717,36 @@ describe('parseDateFromString()', () => {
   });
 });
 
+const servingDocCollection = [
+  {
+    id: '10',
+    value: {
+      typeOfDocument: '1.1',
+      shortDescription: 'text',
+      uploadedDocument: {
+        document_url: 'http://address/documents/abc123',
+        document_filename: 'sample.pdf',
+        document_binary_url: 'http://address/documents/abc123/binary',
+      },
+    },
+  },
+  {
+    id: '11',
+    value: {
+      typeOfDocument: '1.1',
+      shortDescription: 'a sentence',
+      uploadedDocument: {
+        document_url: 'http://address/documents/xyz123',
+        document_filename: 'letter.png',
+        document_binary_url: 'http://address/documents/xyz123/binary',
+      },
+    },
+  },
+];
+
 describe('set Serving Document Values()', () => {
   it('should retrieve serving Document id, type and description from ccd response', () => {
-    const servingDocumentCollection = [
-      {
-        id: '10',
-        value: {
-          typeOfDocument: '1.1',
-          shortDescription: 'text',
-          uploadedDocument: {
-            document_url: 'http://address/documents/abc123',
-            document_filename: 'sample.pdf',
-            document_binary_url: 'http://address/documents/abc123/binary',
-          },
-        },
-      },
-      {
-        id: '11',
-        value: {
-          typeOfDocument: '1.1',
-          shortDescription: 'a sentence',
-          uploadedDocument: {
-            document_url: 'http://address/documents/xyz123',
-            document_filename: 'letter.png',
-            document_binary_url: 'http://address/documents/xyz123/binary',
-          },
-        },
-      },
-    ];
+    const servingDocumentCollection = servingDocCollection;
 
     const expected = [
       { id: 'abc123', description: 'text', type: '1.1' },
@@ -741,6 +754,18 @@ describe('set Serving Document Values()', () => {
     ];
 
     const result = setDocumentValues(servingDocumentCollection, acceptanceDocTypes);
+    expect(result).toEqual(expected);
+  });
+
+  it('should retrieve serving Document id, type and description for ET3 and no description', () => {
+    const servingDocumentCollection = servingDocCollection;
+
+    const expected = [
+      { id: 'abc123', description: '', type: 'et3Supporting' },
+      { id: 'xyz123', description: '', type: 'et3Supporting' },
+    ];
+
+    const result = setDocumentValues(servingDocumentCollection, undefined, true);
     expect(result).toEqual(expected);
   });
 
@@ -758,6 +783,7 @@ describe('set Serving Document Values()', () => {
   it('should get the file extension from file name', () => {
     expect(getFileExtension('test1.doc')).toBe('doc');
     expect(getFileExtension('test1.doc.doc.pdf')).toBe('pdf');
+    expect(getFileExtension(undefined)).toBe('');
   });
 });
 
