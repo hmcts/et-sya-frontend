@@ -17,14 +17,13 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { TYPE_OF_CLAIMANT, acceptanceDocTypes } from '../../../main/definitions/constants';
+import { acceptanceDocTypes } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
-import { HubLinksStatuses } from '../../../main/definitions/hub';
 import {
   formatDate,
   fromApiFormat,
@@ -42,6 +41,7 @@ import {
 } from '../../../main/helper/ApiFormatter';
 import { mockEt1DataModel, mockEt1DataModelUpdate } from '../mocks/mockEt1DataModel';
 import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
+import { mockedApiData } from '../mocks/mockedApiData';
 
 describe('Should return data in api format', () => {
   it('should transform triage and Idam credentials to api format', () => {
@@ -207,190 +207,23 @@ describe('Format document model', () => {
 
 describe('Format Case Data to Frontend Model', () => {
   it('should format Case Api Response`', () => {
-    const mockedApiData: CaseApiDataResponse = {
-      id: '1234',
-      case_type_id: CaseTypeId.ENGLAND_WALES,
-      state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
-      created_date: '2022-08-19T09:19:25.79202',
-      last_modified: '2022-08-19T09:19:25.817549',
-      case_data: {
-        ethosCaseReference: '123456/2022',
-        feeGroupReference: '1234',
-        caseType: CaseType.SINGLE,
-        claimantRepresentedQuestion: YesOrNo.YES,
-        claimantWorkAddressQuestion: YesOrNo.YES,
-        claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
-        typesOfClaim: ['discrimination', 'payRelated'],
-        ClaimantPcqId: '1234',
-        et3ResponseReceived: true,
-        claimantIndType: {
-          claimant_first_names: 'Jane',
-          claimant_last_name: 'Doe',
-          claimant_date_of_birth: '2022-10-05',
-          claimant_sex: Sex.MALE,
-          claimant_preferred_title: 'Mr',
-        },
-        claimantType: {
-          claimant_email_address: 'janedoe@exmaple.com',
-          claimant_contact_preference: EmailOrPost.EMAIL,
-          claimant_phone_number: '075',
-          claimant_addressUK: {
-            AddressLine1: 'address 1',
-            AddressLine2: 'address 2',
-            PostTown: 'Test',
-            PostCode: 'TEST',
-            Country: 'United',
-          },
-        },
-        claimantOtherType: {
-          pastEmployer: YesOrNo.YES,
-          stillWorking: StillWorking.WORKING,
-          claimant_occupation: 'Developer',
-          claimant_employed_from: '2010-05-11',
-          claimant_employed_to: '2017-05-11',
-          claimant_notice_period: YesOrNo.YES,
-          claimant_notice_period_unit: WeeksOrMonths.WEEKS,
-          claimant_notice_period_duration: '1',
-          claimant_average_weekly_hours: 5,
-          claimant_pay_before_tax: 123,
-          claimant_pay_after_tax: 120,
-          claimant_pay_cycle: PayInterval.WEEKLY,
-          claimant_pension_contribution: YesOrNoOrNotSure.YES,
-          claimant_pension_weekly_contribution: 15,
-          claimant_benefits: YesOrNo.YES,
-          claimant_benefits_detail: 'Some benefits',
-          claimant_employed_notice_period: '2022-08-11',
-        },
-        newEmploymentType: {
-          new_job: YesOrNo.YES,
-          newly_employed_from: '2010-05-12',
-          new_pay_before_tax: 4000,
-          new_job_pay_interval: PayInterval.MONTHLY,
-        },
-        claimantHearingPreference: {
-          reasonable_adjustments: YesOrNo.YES,
-          reasonable_adjustments_detail: 'Adjustments detail test',
-          hearing_preferences: [HearingPreference.PHONE],
-          hearing_assistance: 'Hearing assistance test',
-          contact_language: EnglishOrWelsh.ENGLISH,
-          hearing_language: EnglishOrWelsh.ENGLISH,
-        },
-        claimantRequests: {
-          claim_outcome: [TellUsWhatYouWant.COMPENSATION_ONLY],
-          claimant_compensation_text: 'Compensation outcome',
-          claimant_compensation_amount: 123,
-          claimant_tribunal_recommendation: 'Tribunal recommendation request',
-          whistleblowing: YesOrNo.YES,
-          whistleblowing_authority: 'Whistleblowing entity name',
-          claim_description: 'Claim summary text',
-          claim_description_document: {
-            document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
-            document_filename: 'document.pdf',
-            document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
-          },
-          discrimination_claims: [ClaimTypeDiscrimination.RACE],
-          pay_claims: [ClaimTypePay.REDUNDANCY_PAY],
-          other_claim: 'other type of claims',
-        },
-        claimantTaskListChecks: {
-          personalDetailsCheck: YesOrNo.YES,
-          employmentAndRespondentCheck: YesOrNo.YES,
-          claimDetailsCheck: YesOrNo.YES,
-        },
-        claimantWorkAddress: {
-          claimant_work_address: {
-            AddressLine1: 'Respondent Address',
-            AddressLine2: 'That Road',
-            PostTown: 'Anytown',
-            Country: 'England',
-            PostCode: 'SW1H 9AQ',
-          },
-        },
-        respondentCollection: [
-          {
-            value: {
-              responseReceived: YesOrNo.YES,
-              respondent_name: 'Globo Corp',
-              respondent_ACAS_question: YesOrNo.YES,
-              respondent_ACAS: 'R111111111111',
-              respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
-              respondent_address: {
-                AddressLine1: 'Respondent Address',
-                AddressLine2: 'That Road',
-                PostTown: 'Anytown',
-                Country: 'England',
-                PostCode: 'SW1H 9AQ',
-              },
-            },
-            id: '3453xaa',
-          },
-          {
-            value: {
-              respondent_name: 'Version1',
-              respondent_ACAS_question: YesOrNo.YES,
-              respondent_ACAS: 'R111111111112',
-              respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
-              respondent_address: {
-                AddressLine1: 'Ad1',
-                AddressLine2: 'Ad2',
-                PostTown: 'Town2',
-                Country: 'Country2',
-                PostCode: 'SW1A 1AA',
-              },
-            },
-            id: '3454xaa',
-          },
-        ],
-        genericTseApplicationCollection: [
-          {
-            id: '124',
-            value: {
-              applicant: 'Claimant',
-              date: '2019-05-02',
-              copyToOtherPartyYesOrNo: YesOrNo.YES,
-              status: 'inProgress',
-            },
-          },
-        ],
-        receiptDate: '2022-10-03',
-        hubLinksStatuses: new HubLinksStatuses(),
-        managingOffice: 'Leeds',
-        tribunalCorrespondenceEmail: 'leedsoffice@gov.co.uk',
-        tribunalCorrespondenceTelephone: '0300 123 1024',
-        documentCollection: [
-          {
-            id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
-            value: {
-              typeOfDocument: 'ET1',
-              uploadedDocument: {
-                document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
-                document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
-                document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-              },
-              shortDescription: 'Case Details - Sunday Ayeni',
-            },
-          },
-          {
-            id: '3db71007-d42c-43d5-a51b-57957f78ced3',
-            value: {
-              typeOfDocument: 'ACAS Certificate',
-              uploadedDocument: {
-                document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
-                document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
-                document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
-              },
-              shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
-            },
-          },
-        ],
-      },
-    };
     const result = fromApiFormat(mockedApiData);
     expect(result).toStrictEqual(mockUserCaseComplete);
   });
 
+  it('should format Case Api Response with no applications`', () => {
+    const mock = mockedApiData;
+    mock.case_data.genericTseApplicationCollection = [];
+    const complete = mockUserCaseComplete;
+    complete.genericTseApplicationCollection = [];
+
+    const result = fromApiFormat(mock);
+
+    expect(result).toStrictEqual(complete);
+  });
+
   it('should return undefined for empty field`', () => {
-    const mockedApiData: CaseApiDataResponse = {
+    const mockedApiDataEmpty: CaseApiDataResponse = {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       created_date: '2022-08-19T09:19:25.817549',
@@ -399,7 +232,7 @@ describe('Format Case Data to Frontend Model', () => {
         claimantRepresentedQuestion: YesOrNo.YES,
       },
     };
-    const result = fromApiFormat(mockedApiData);
+    const result = fromApiFormat(mockedApiDataEmpty);
     expect(result).toStrictEqual({
       id: '1234',
       feeGroupReference: undefined,
@@ -491,7 +324,7 @@ describe('Format Case Data to Frontend Model', () => {
   });
 
   it('should return document collection for welsh`', () => {
-    const mockedApiData: CaseApiDataResponse = {
+    const mockedApiDataWelsh: CaseApiDataResponse = {
       id: '1234',
       state: CaseState.AWAITING_SUBMISSION_TO_HMCTS,
       created_date: '2022-08-19T09:19:25.817549',
@@ -534,7 +367,7 @@ describe('Format Case Data to Frontend Model', () => {
         ],
       },
     };
-    const result = fromApiFormat(mockedApiData);
+    const result = fromApiFormat(mockedApiDataWelsh);
     expect(result).toEqual({
       feeGroupReference: undefined,
       ethosCaseReference: undefined,

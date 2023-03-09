@@ -153,5 +153,14 @@ export default {
         status: 'inProgress',
       },
     },
+    {
+      id: '125',
+      value: {
+        applicant: 'Claimant',
+        date: '2019-05-03',
+        copyToOtherPartyYesOrNo: YesOrNo.YES,
+        status: 'inProgress',
+      },
+    },
   ],
 };
