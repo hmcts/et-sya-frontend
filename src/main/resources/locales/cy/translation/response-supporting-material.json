@@ -1,0 +1,29 @@
+{
+  "hintText": "Welsh translation required",
+  "titleResponse": "Welsh translation required",
+  "subTitle": "Welsh translation required",
+  "genericGuidanceItem1": "Welsh translation required",
+  "genericGuidanceItem2": "Welsh translation required",
+  "genericGuidanceItem3": "Welsh translation required",
+  "boxLabel": "Welsh translation required",
+  "remove": "Welsh translation required",
+  "noFilesUpload": "<p class=\"govuk-body\">Welsh translation required</p>",
+  "uploadFileButton": "Welsh translation required",
+  "files": {
+    "title": "Welsh translation required",
+    "button": "Welsh translation required",
+    "uploaded": "Welsh translation required"
+  },
+  "errors": {
+    "supportingMaterialText": {
+      "required": "Dywedwch wrthym beth ddigwyddodd i chi",
+      "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
+    },
+    "supportingMaterialFile": {
+      "invalidFileFormat": "Nid yw'r math o ffeil rydych chi'n ceisio ei uwchlwytho yn cael ei gefnogi gan ein system. Byddwch cystal a newid hon i ffeil gyffredin, e.e. Word, Excel, pdf. os gwelwch yn dda.",
+      "invalidFileName": "Mae enw’r ffeil a ddarparwyd yn annilys. Ni all enw’r ffeil fod yn fwy na 150 llythyren ac ni all gynnwys unrhyw un o’r nodau canlynol: \\\\/:*?\\\"|<>",
+      "invalidFileSize": "Mae'r ffeil rydych chi'n ceisio ei lwytho wedi mynd y tu hwnt i'r terfyn maint, ceisiwch leihau maint y ffeil.",
+      "backEndError": "Cafwyd problem wrth geisio llwytho eich ffeil. Rhowch gynnig arni. Os yw hyn yn parhau, cysylltwch â’r adran gefnogaeth."
+    }
+  }
+}

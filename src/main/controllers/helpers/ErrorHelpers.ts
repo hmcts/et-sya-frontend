@@ -16,6 +16,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
 
 export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
@@ -235,38 +236,38 @@ export const getClaimSummaryError = (
   }
 };
 
-export const getContactApplicationError = (
-  formData: Partial<CaseWithId>,
+export const getFileUploadAndTextAreaError = (
+  formDataText: string,
   file: Express.Multer.File,
   fileTooLarge: boolean,
-  uploadedFile: Document
+  uploadedFile: Document,
+  textAreaProperty: string,
+  uplodedFileProperty: string
 ): FormError => {
-  const text = formData.contactApplicationText;
-
-  const tooLong = isContent2500CharsOrLess(text);
+  const tooLong = isContent2500CharsOrLess(formDataText);
   if (tooLong) {
-    return { propertyName: 'contactApplicationText', errorType: tooLong };
+    return { propertyName: textAreaProperty, errorType: tooLong };
   }
 
-  const textProvided = isFieldFilledIn(text) === undefined;
+  const textProvided = isFieldFilledIn(formDataText) === undefined;
   const fileProvided = file !== undefined;
 
   if (!textProvided && !fileProvided && !uploadedFile) {
-    return { propertyName: 'contactApplicationText', errorType: 'required' };
+    return { propertyName: textAreaProperty, errorType: 'required' };
   }
 
   if (fileTooLarge) {
-    return { propertyName: 'contactApplicationFile', errorType: 'invalidFileSize' };
+    return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
   }
 
   const fileFormatInvalid = hasInvalidFileFormat(file);
   if (fileFormatInvalid) {
-    return { propertyName: 'contactApplicationFile', errorType: fileFormatInvalid };
+    return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
   }
 
   const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
-    return { propertyName: 'contactApplicationFile', errorType: fileNameInvalid };
+    return { propertyName: uplodedFileProperty, errorType: fileNameInvalid };
   }
 };
 
@@ -296,10 +297,22 @@ export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): For
   }
 };
 
+export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyRecord): string | undefined => {
+  const fileError: FormError = getLastFileError(errors);
+
+  let errorMessage: string;
+  if (fileError) {
+    errorMessage = errorTranslations[fileError.errorType];
+  } else {
+    errorMessage = undefined;
+  }
+  return errorMessage;
+};
+
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (errors[i].propertyName.includes('contactApplicationFile')) {
+      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
         return errors[i];
       }
     }
