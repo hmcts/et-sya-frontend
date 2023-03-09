@@ -97,6 +97,7 @@ export const TranslationKeys = {
   RESPOND_TO_APPLICATION: 'respond-to-application',
   RESPONDENT_APPLICATIONS: 'respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
+  RESPONSE_SUPPORTING_MATERIAL: 'response-supporting-material',
 } as const;
 
 export const PageUrls = {
@@ -183,10 +184,13 @@ export const PageUrls = {
   APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
   APPLICATION_DETAILS: '/application-details/:appId',
-  RESPOND_TO_APPLICATION: '/respond-to-application/:appId',
+  RESPOND_TO_APPLICATION_SELECTED: '/respond-to-application/:appId',
+  RESPOND_TO_APPLICATION: '/respond-to-application',
   YOUR_APPLICATIONS: '/your-applications',
   RESPONDENT_APPLICATIONS: '/respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',
+  RESPONSE_SUPPORTING_MATERIAL: '/response-supporting-material/:appId',
+  REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
 } as const;
 
 export const InterceptPaths = {

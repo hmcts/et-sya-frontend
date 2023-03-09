@@ -60,6 +60,7 @@ describe('returnFormattedAddress', () => {
     const genericTseApplicationType = {
       number: '1',
       applicationState: 'inProgress',
+      applicant: 'Claimant',
       type: 'withdraw',
       applicant: 'Claimant',
     } as GenericTseApplicationType;

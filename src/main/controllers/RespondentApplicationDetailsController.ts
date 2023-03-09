@@ -13,6 +13,7 @@ import {
   getDocumentAdditionalInformation,
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -29,8 +30,9 @@ export default class RespondentApplicationDetailsController {
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
     req.session.userCase.selectedGenericTseApplication = selectedApplication;
 
-    const header = translations.applicationTo + translations[selectedApplication.value?.type];
+    const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
+    const redirectUrl = `/respond-to-application/${selectedApplication.value.number}${getLanguageParam(req.url)}`;
 
     if (document) {
       try {
@@ -43,9 +45,6 @@ export default class RespondentApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, downloadLink);
-    console.log(appContent);
-
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.RESPONDENT_APPLICATION_DETAILS,
@@ -54,8 +53,9 @@ export default class RespondentApplicationDetailsController {
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
+      insetText,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      redirectUrl,
     });
   };
 }

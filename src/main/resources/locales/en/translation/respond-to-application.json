@@ -48,7 +48,8 @@
     },
     "respondToApplicationText": {
       "required": "Provide details of your response &/or upload supporting material",
-      "tooLong": "Give details must be entered as less than 2500 characters"
+      "requiredFile": "Provide details of your response &/or upload a file",
+      "tooLong": "Response details must be 2500 characters or less"
     }
   }
 }

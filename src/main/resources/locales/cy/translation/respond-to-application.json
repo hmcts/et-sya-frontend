@@ -1,12 +1,12 @@
 {
   "caption": "Welsh Translation required",
   "h1": "Welsh Translation required",
-  "p1": "Welsh Translation required",
+  "p1": "Welsh Translation required ",
   "p1a": ".",
-  "p2": "Welsh Translation required",
-  "p2a": "Welsh Translation required",
-  "p3": "Welsh Translation required",
-  "p4": "Welsh Translation required",
+  "p2": "Welsh Translation required ",
+  "p2a": " Welsh Translation required.",
+  "p3": "Welsh Translation required.",
+  "p4": "Consider in your response:",
   "bullets": {
     "li1": "Welsh Translation required",
     "li2": "Welsh Translation required",
@@ -14,22 +14,22 @@
   },
   "details": {
     "summaryText": "Welsh Translation required",
-    "p1": "Welsh Translation required",
-    "p2": "Welsh Translation required",
-    "p3": "Welsh Translation required"
+    "p1": "Welsh Translation required.",
+    "p2": "Welsh Translation required.",
+    "p3": "Welsh Translation required."
   },
-  "applicationTo": "Welsh Translation required",
+  "applicationTo": "Welsh Translation required ",
   "applicant": "Welsh Translation required",
   "requestDate": "Welsh Translation required",
   "applicationType": "Welsh Translation required",
-  "legend": "Welsh Translation required",
+  "legend": "Welsh Translation required?",
   "respond": "Welsh Translation required",
   "supportingMaterial": "Welsh Translation required",
-  "copyCorrespondence": "Welsh Translation required",
-  "textInputLabel": "Welsh Translation required",
+  "copyCorrespondence": "Welsh Translation required?",
+  "textInputLabel": "Welsh Translation required?",
   "textInputHint": "Welsh Translation required",
   "radioButtonLabel": "Welsh Translation required",
-  "radioButtonHint": "Welsh Translation required",
+  "radioButtonHint": "Welsh Translation required?",
   "Amend response": "Welsh Translation required",
   "Change personal details": "Welsh Translation required",
   "Claimant not complied": "Welsh Translation required",
@@ -44,10 +44,11 @@
   "Vary or revoke an order": "Welsh Translation required",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Welsh Translation required"
+      "required": "Welsh Translation required?"
     },
     "respondToApplicationText": {
       "required": "Welsh Translation required",
+      "requiredFile": "Welsh Translation required",
       "tooLong": "Welsh Translation required"
     }
   }

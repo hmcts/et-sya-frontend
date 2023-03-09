@@ -2,8 +2,9 @@ import ContactTheTribunalSelectedController from '../../../main/controllers/Cont
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import contactTheTribunalSelectedRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockFile } from '../mocks/mockFile';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Contact Application Controller', () => {
@@ -12,6 +13,7 @@ describe('Contact Application Controller', () => {
     common: {},
   };
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
+  const translationJsons = { ...contactTheTribunalSelectedRaw };
 
   beforeAll(() => {
     jest.spyOn(helper, 'submitClaimantTse').mockImplementation(() => Promise.resolve());
@@ -33,7 +35,7 @@ describe('Contact Application Controller', () => {
   it('should render contact application page', () => {
     const controller = new ContactTheTribunalSelectedController();
     const response = mockResponse();
-    const request = mockRequest({ t });
+    const request = mockRequestWithTranslation({ t }, translationJsons);
     request.params.selectedOption = 'withdraw';
 
     controller.get(request, response);
@@ -42,10 +44,9 @@ describe('Contact Application Controller', () => {
 
   describe('GET - application names', () => {
     it('allow white-listed application parameters', async () => {
-      const req = mockRequest({ body: { contactApplicationText: 'test' } });
+      const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
-
       await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
     });
