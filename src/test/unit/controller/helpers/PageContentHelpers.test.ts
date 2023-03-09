@@ -2,6 +2,7 @@ import {
   answersAddressFormatter,
   getUploadedFileName,
   populateAppItemsWithRedirectLinksCaptionsAndStatusColors,
+  populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/PageContentHelpers';
 import {
   GenericTseApplicationType,
@@ -86,4 +87,39 @@ describe('returnFormattedAddress', () => {
     expect(item.statusColor).toEqual('--yellow');
     expect(item.displayStatus).toEqual('In progress');
   });
+});
+
+it('should populate respondent app items with redirect link, caption, statusColor and displayStatus', () => {
+  const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw };
+
+  const req = mockRequestWithTranslation({}, translationJsons);
+
+  const translations: AnyRecord = {
+    ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
+    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+    ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+  };
+  const respondentApp = {
+    number: '1',
+    type: 'Amend response',
+    applicant: 'Respondent',
+    copyToOtherPartyYesOrNo: 'Yes',
+    status: 'notStartedYet',
+    dueDate: '14 March 2023',
+  } as GenericTseApplicationType;
+
+  const item = {
+    value: respondentApp,
+  } as GenericTseApplicationTypeItem;
+  const items = [item];
+
+  const url = 'testUrl';
+
+  populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+  expect(item.value.type).toEqual('Amend response');
+  expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
+  expect(item.statusColor).toEqual('--red');
+  expect(item.value.status).toEqual('notStartedYet');
 });

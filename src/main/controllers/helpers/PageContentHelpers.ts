@@ -101,11 +101,11 @@ export const getApplicationRespondByDate = (
   }
 };
 
-export const populateResponseItemsWithRedirectLinksCaptionsAndStatusColors = (
+export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
   items: GenericTseApplicationTypeItem[],
   url: string,
   translations: AnyRecord
-): void => {
+): GenericTseApplicationTypeItem[] => {
   const respondentItems = [];
   if (items && items.length) {
     for (let i = items.length - 1; i >= 0; i--) {
@@ -122,6 +122,7 @@ export const populateResponseItemsWithRedirectLinksCaptionsAndStatusColors = (
       item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
       item.displayStatus = translations[item.value.status];
     });
+    return items;
   }
 };
 
@@ -154,10 +155,11 @@ export const getRespondentApplicationDetails = (
         applicationType: applicationTypes.a.includes(items[i].value.type) ? 'A' : 'B',
         number: items[i].value.number,
         status: items[i].value.status,
+        date: items[i].value.date,
+        type: items[i].value.type,
       };
       bannerContent.push(rec);
     }
-    console.log(bannerContent);
     return bannerContent;
   }
 };

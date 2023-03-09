@@ -6,7 +6,10 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
-import { populateResponseItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
+import {
+  activateRespondentApplicationsLink,
+  populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
+} from './helpers/PageContentHelpers';
 
 export default class RespondentApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -19,8 +22,8 @@ export default class RespondentApplicationsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    // activateRespondentsApplicationsLink(tseGenericApps, req);
-    populateResponseItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
+    activateRespondentApplicationsLink(tseGenericApps, req);
+    populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,

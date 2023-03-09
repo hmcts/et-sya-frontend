@@ -93,4 +93,6 @@ export interface RespondentApplicationDetails {
   applicationType?: string;
   number?: string;
   status?: string;
+  type?: string;
+  date?: string;
 }
