@@ -12,22 +12,22 @@ import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getFilesRows } from './helpers/ResponseSupportingMaterialHelper';
+import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
-export default class ResponseSupportingMaterialController {
+export default class RespondentSupportingMaterialController {
   private readonly form: Form;
   private readonly supportingMaterialContent: FormContent = {
     fields: {
-      supportingMaterialText: {
-        id: 'supporting-material-text',
+      respondToApplicationText: {
+        id: 'respond-to-application-text',
         type: 'textarea',
         label: l => l.legend,
         labelHidden: true,
         labelSize: 'normal',
-        hint: l => l.supportingMaterialText,
+        hint: l => l.respondToApplicationText,
         attributes: { title: 'Give details text area' },
       },
       inset: {
@@ -69,23 +69,23 @@ export default class ResponseSupportingMaterialController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-    userCase.supportingMaterialText = req.body.supportingMaterialText;
+    userCase.respondToApplicationText = req.body.respondToApplicationText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
 
     const supportingMaterialError = getFileUploadAndTextAreaError(
-      formData.supportingMaterialText,
+      formData.respondToApplicationText,
       req.file,
       req.fileTooLarge,
       userCase.supportingMaterialFile,
-      'supportingMaterialText',
+      'respondToApplicationText',
       'supportingMaterialFile'
     );
 
     const supportingMaterialUrl =
-      PageUrls.RESPONSE_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
@@ -118,21 +118,21 @@ export default class ResponseSupportingMaterialController {
     const content = getPageContent(req, this.supportingMaterialContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.RESPONSE_SUPPORTING_MATERIAL,
+      TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL,
     ]);
 
     (this.supportingMaterialContent.fields as any).inset.subFields.upload.disabled =
       userCase?.supportingMaterialFile !== undefined;
 
     (this.supportingMaterialContent.fields as any).filesUploaded.rows = getFilesRows(userCase, req.params.appId, {
-      ...req.t(TranslationKeys.RESPONSE_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
     });
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONSE_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
     };
 
-    res.render(TranslationKeys.RESPONSE_SUPPORTING_MATERIAL, {
+    res.render(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, {
       PageUrls,
       userCase,
       InterceptPaths,

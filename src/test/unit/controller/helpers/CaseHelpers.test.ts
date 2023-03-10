@@ -312,3 +312,21 @@ describe('handle file upload', () => {
     expect(mockLogger.info).toHaveBeenCalledWith('Uploaded document to: test.pdf');
   });
 });
+
+describe('handle respond to application', () => {
+  it('should successfully submit respond to application', () => {
+    caseApi.respondToApplication = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+});

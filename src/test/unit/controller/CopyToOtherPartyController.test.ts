@@ -53,6 +53,7 @@ describe('Copy to other party Controller', () => {
     const controller = new CopyToOtherPartyController();
 
     const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.CONTACT;
     const res = mockResponse();
     req.params.languageParam = languages.ENGLISH;
 
@@ -61,12 +62,29 @@ describe('Copy to other party Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.ENGLISH_URL_PARAMETER);
   });
 
+  it('should redirect to the respondents check your answers page when yes or no is selected', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.RESPOND;
+    const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_APPLICATION_CYA + languages.ENGLISH_URL_PARAMETER);
+  });
+
   it('should redirect to contact the tribunal check your answers page when no is selected and summary text provided', async () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.YES, copyToOtherPartyText: 'Test response' };
 
     const controller = new CopyToOtherPartyController();
 
     const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.CONTACT;
+
     const res = mockResponse();
     req.params.languageParam = languages.ENGLISH;
 

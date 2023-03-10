@@ -1,6 +1,6 @@
-import { getFilesRows } from '../../../../main/controllers/helpers/ResponseSupportingMaterialHelper';
+import { getFilesRows } from '../../../../main/controllers/helpers/RespondentSupportingMaterialHelper';
 import { Document } from '../../../../main/definitions/case';
-import responseSupportingMaterialRaw from '../../../../main/resources/locales/en/translation/response-supporting-material.json';
+import responseSupportingMaterialRaw from '../../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('getFilesRows', () => {

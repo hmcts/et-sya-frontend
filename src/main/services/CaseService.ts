@@ -120,7 +120,13 @@ export class CaseApi {
         response: {
           response: caseItem.respondToApplicationText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
-          // supportingMaterial:
+          supportingMaterial: [
+            {
+              value: {
+                uploadedDocument: caseItem.supportingMaterialFile,
+              },
+            },
+          ],
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
           copyNoGiveDetails: caseItem.copyToOtherPartyText,
         },

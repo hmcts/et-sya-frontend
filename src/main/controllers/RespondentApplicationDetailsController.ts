@@ -6,6 +6,7 @@ import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import {
   createDownloadLink,
@@ -17,18 +18,24 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = req.session.userCase;
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const selectedApplication = findSelectedGenericTseApplication(
-      req.session.userCase.genericTseApplicationCollection,
+      userCase.genericTseApplicationCollection,
       req.params.appId
     );
 
-    //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
-    req.session.userCase.selectedGenericTseApplication = selectedApplication;
+    const savedApplication = req.session.userCase.selectedGenericTseApplication;
+
+    if (!savedApplication || (savedApplication && req.params.appId !== savedApplication.value.number)) {
+      clearTseFields(userCase);
+      req.session.userCase.selectedGenericTseApplication = selectedApplication;
+    }
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const insetText = translations[selectedApplication.value.type];

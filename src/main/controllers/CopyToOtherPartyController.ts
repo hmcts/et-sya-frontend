@@ -72,7 +72,13 @@ export default class CopyToOtherPartyController {
       req.session.errors.push(copyToOtherPartyError);
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
-    return res.redirect(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam);
+    let redirecPage = '';
+    if (req.session.contactType === Rule92Types.CONTACT) {
+      redirecPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
+    } else if (req.session.contactType === Rule92Types.RESPOND) {
+      redirecPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+    }
+    return res.redirect(redirecPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -85,7 +91,6 @@ export default class CopyToOtherPartyController {
     };
     if (contactType === Rule92Types.CONTACT) {
       captionSubject = req.session.userCase.contactApplicationType;
-      console.log(translations.sections);
       captionText = translations.sections[captionSubject]?.caption;
     }
     if (contactType === Rule92Types.RESPOND) {
