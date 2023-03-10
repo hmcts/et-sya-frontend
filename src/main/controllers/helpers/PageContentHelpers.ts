@@ -127,7 +127,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 export const getRespondentApplicationDetails = (
   items: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
-  req: AppRequest
+  languageParam: string
 ): RespondentApplicationDetails[] => {
   const bannerContent: RespondentApplicationDetails[] = [];
 
@@ -137,9 +137,7 @@ export const getRespondentApplicationDetails = (
       const rec: RespondentApplicationDetails = {
         respondentApplicationHeader:
           translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
-        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${getLanguageParam(
-          req.url
-        )}`,
+        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${languageParam}`,
         applicant: items[i].value.applicant,
         copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
         respondByDate:
