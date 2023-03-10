@@ -426,3 +426,9 @@ export const languages = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
+
+export const Rule92Types = {
+  CONTACT: 'Contact',
+  RESPOND: 'Respond',
+  TRIBUNAL: 'Tribunal',
+} as const;

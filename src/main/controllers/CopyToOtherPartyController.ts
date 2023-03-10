@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -83,14 +83,15 @@ export default class CopyToOtherPartyController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
     };
-    if (contactType === translations.contact) {
+    if (contactType === Rule92Types.CONTACT) {
       captionSubject = req.session.userCase.contactApplicationType;
-      captionText = translations.sections[captionSubject].caption;
+      console.log(translations.sections);
+      captionText = translations.sections[captionSubject]?.caption;
     }
-    if (contactType === translations.application) {
+    if (contactType === Rule92Types.RESPOND) {
       captionText = translations.respondToApplication;
     }
-    if (contactType === translations.tribunal) {
+    if (contactType === Rule92Types.TRIBUNAL) {
       captionText = translations.respondToTribunal;
     }
     const content = getPageContent(req, this.CopyToOtherPartyContent, [
