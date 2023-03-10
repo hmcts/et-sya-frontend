@@ -22,8 +22,8 @@ export interface GenericTseApplicationType {
   number?: string;
   respondCollection?: TseRespondTypeItem[];
   status?: string;
-  applicationState?: string;
   dueDate?: string;
+  applicationState?: string;
 }
 
 export interface TseRespondTypeItem {
