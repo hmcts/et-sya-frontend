@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -114,7 +114,7 @@ export default class ContactTheTribunalSelectedController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    req.session.contactType = 'Contact';
+    req.session.contactType = Rule92Types.CONTACT;
     const selectedApplication = req.params.selectedOption;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');

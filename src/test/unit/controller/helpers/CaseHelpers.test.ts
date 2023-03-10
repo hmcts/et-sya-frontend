@@ -10,6 +10,7 @@ import {
   handleUploadDocument,
   isPostcodeInScope,
   setUserCaseWithRedisData,
+  submitClaimantTse,
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
@@ -232,6 +233,34 @@ describe('handle update draft case', () => {
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     handleUpdateDraftCase(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
+  });
+});
+
+describe('handle submit application', () => {
+  it('should successfully submit application', () => {
+    caseApi.submitClaimantTse = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+
+  it('should catch failure to submit application', async () => {
+    caseApi.submitClaimantTse = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    await new Promise(nextTick);
+
+    expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });
 
