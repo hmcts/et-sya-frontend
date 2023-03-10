@@ -82,7 +82,7 @@ export interface DocumentDetail {
   type?: string;
 }
 
-export interface RespondentAppNotificationBannerContent {
+export interface RespondentApplicationDetails {
   respondentApplicationHeader?: string;
   respondToRespondentAppRedirectUrl?: string;
   dueDate?: Date;
@@ -91,4 +91,8 @@ export interface RespondentAppNotificationBannerContent {
   applicant?: string;
   copyToOtherPartyYesOrNo?: string;
   applicationType?: string;
+  number?: string;
+  status?: string;
+  type?: string;
+  date?: string;
 }

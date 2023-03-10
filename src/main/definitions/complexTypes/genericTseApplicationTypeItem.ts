@@ -23,8 +23,8 @@ export interface GenericTseApplicationType {
   respondCollection?: TseRespondTypeItem[];
   responsesCount?: string;
   status?: string;
-  applicationState?: string;
   dueDate?: string;
+  applicationState?: string;
 }
 
 export interface TseRespondTypeItem {

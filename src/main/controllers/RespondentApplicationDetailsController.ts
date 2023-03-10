@@ -38,7 +38,6 @@ export default class RespondentApplicationDetailsController {
     }
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
-    const insetText = translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
     const redirectUrl = `/respond-to-application/${selectedApplication.value.number}${getLanguageParam(req.url)}`;
 
@@ -61,7 +60,6 @@ export default class RespondentApplicationDetailsController {
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
-      insetText,
       selectedApplication,
       redirectUrl,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
