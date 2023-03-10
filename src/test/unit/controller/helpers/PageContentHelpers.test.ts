@@ -1,5 +1,6 @@
 import {
   answersAddressFormatter,
+  getApplicationRespondByDate,
   getUploadedFileName,
   populateAppItemsWithRedirectLinksCaptionsAndStatusColors,
   populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
@@ -11,6 +12,7 @@ import {
 import { TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
+import common from '../../../../main/resources/locales/en/translation/common.json';
 import contactTheTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
@@ -87,6 +89,25 @@ describe('returnFormattedAddress', () => {
     expect(item.statusColor).toEqual('--yellow');
     expect(item.displayStatus).toEqual('In progress');
   });
+});
+
+it('should get Application by date', () => {
+  const application = {
+    id: '124',
+    value: {
+      number: '1',
+      applicationState: 'inProgress',
+      applicant: 'Claimant',
+      type: 'withdraw',
+      dueDate: '2023-05-05',
+    },
+  } as GenericTseApplicationTypeItem;
+
+  const translationJson = { ...common };
+
+  const result = getApplicationRespondByDate(application, translationJson);
+
+  expect(result).toEqual('Friday 5 May 2023');
 });
 
 it('should populate respondent app items with redirect link, caption, statusColor and displayStatus', () => {

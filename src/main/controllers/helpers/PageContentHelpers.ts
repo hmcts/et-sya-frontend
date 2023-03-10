@@ -81,13 +81,11 @@ export const activateRespondentApplicationsLink = (items: GenericTseApplicationT
 };
 
 export const getApplicationRespondByDate = (
-  item: GenericTseApplicationTypeItem,
-  req: AppRequest,
+  selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord
 ): string => {
-  const userCase = req.session?.userCase;
-  if (item) {
-    const dueDate = new Date(Date.parse(userCase.selectedGenericTseApplication.value.dueDate));
+  if (selectedApplication) {
+    const dueDate = new Date(Date.parse(selectedApplication.value.dueDate));
     const dateString =
       translations.days[dueDate.getDay()] +
       ' ' +

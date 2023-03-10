@@ -100,7 +100,7 @@ export default class RespondToApplicationController {
     req.session.userCase.selectedGenericTseApplication = selectedApplication;
 
     const applicationType = translations[selectedApplication.value.type];
-    const respondByDate = getApplicationRespondByDate(selectedApplication, req, translations);
+    const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
     const document = selectedApplication.value?.documentUpload;
 
     if (document) {
