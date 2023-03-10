@@ -26,6 +26,7 @@ import {
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
+import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
 
 const token = 'testToken';
@@ -67,10 +68,10 @@ describe('createCase', () => {
           claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
           triageQuestions: {
             acasMultiple: undefined,
-            caseType: "Single",
-            claimantRepresentedQuestion: "Yes",
-            postcode: "SW1A 1AA",
-            typesOfClaim: ["breachOfContract", "discrimination", "payRelated", "unfairDismissal", "whistleBlowing"]
+            caseType: 'Single',
+            claimantRepresentedQuestion: 'Yes',
+            postcode: 'SW1A 1AA',
+            typesOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           },
           claimantIndType: {
             claimant_first_names: 'Bobby',
@@ -229,6 +230,32 @@ describe('update case', () => {
       JavaApiUrls.UPDATE_CASE_DRAFT,
       expect.objectContaining(mockEt1DataModelUpdate)
     );
+  });
+
+  it('should submit Claimant TSE application', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+    };
+
+    await api.submitClaimantTse(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockClaimantTseRequest);
   });
 
   it('should update hub links statuses', async () => {

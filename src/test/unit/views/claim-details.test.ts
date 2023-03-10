@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
-import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
+import mockUserCaseClaimDetails from '../mocks/mockUserCaseClaimDetails';
 import { getHtmlRes } from '../test-helpers/requester';
 
 const PAGE_URL = '/claim-details';
@@ -52,7 +52,7 @@ let htmlRes: Document;
 
 describe('ET1 details', () => {
   beforeAll(async () => {
-    htmlRes = await getHtmlRes(mockUserCaseComplete, PAGE_URL);
+    htmlRes = await getHtmlRes(mockUserCaseClaimDetails, PAGE_URL);
   });
 
   it('should display title', () => {
@@ -72,10 +72,10 @@ describe('ET1 details', () => {
 
     expect(summaryLists[0].innerHTML).toMatch('Application details');
     expect(summaryLists[1].innerHTML).toMatch('Your details');
-    /*expect(summaryLists[2].innerHTML).toMatch('Employment details');
+    expect(summaryLists[2].innerHTML).toMatch('Employment details');
     expect(summaryLists[3].innerHTML).toMatch('Respondent 1 details');
     expect(summaryLists[4].innerHTML).toMatch('Respondent 2 details');
-    expect(summaryLists[5].innerHTML).toMatch('Your details');*/
+    expect(summaryLists[5].innerHTML).toMatch('Claim details');
   });
 
   /*it.each([
@@ -103,7 +103,7 @@ describe('ET1 details', () => {
 
 describe('ET1 documents', () => {
   it('Shows Date uploaded and Document columns', async () => {
-    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, claimSummaryFile: undefined }, PAGE_URL);
+    htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, claimSummaryFile: undefined }, PAGE_URL);
 
     const table = htmlRes.getElementsByClassName(tableSelector)[0];
     const headerRow = Array.from(table.getElementsByClassName(rowSelector))[0];
@@ -141,7 +141,7 @@ describe('ET1 documents', () => {
   ])(
     'show correct documents with modifier: $caseDocumentsModifier',
     async ({ caseDocumentsModifier, expectedDocuments }) => {
-      htmlRes = await getHtmlRes({ ...mockUserCaseComplete, ...caseDocumentsModifier }, PAGE_URL);
+      htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, ...caseDocumentsModifier }, PAGE_URL);
 
       const table = htmlRes.getElementsByClassName(tableSelector)[0];
       const rows = Array.from(table.getElementsByClassName(rowSelector));
