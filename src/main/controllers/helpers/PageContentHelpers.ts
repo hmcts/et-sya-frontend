@@ -152,7 +152,7 @@ export const getRespondentApplicationDetails = (
           translations.months[dueDate.getMonth()] +
           ' ' +
           dueDate.getFullYear(),
-        applicationType: applicationTypes.a.includes(items[i].value.type) ? 'A' : 'B',
+        applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
         number: items[i].value.number,
         status: items[i].value.status,
         date: items[i].value.date,

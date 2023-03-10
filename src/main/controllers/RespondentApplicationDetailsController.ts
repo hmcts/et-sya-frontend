@@ -53,9 +53,9 @@ export default class RespondentApplicationDetailsController {
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
-      insetText,
       selectedApplication,
       redirectUrl,
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
     });
   };
 }
