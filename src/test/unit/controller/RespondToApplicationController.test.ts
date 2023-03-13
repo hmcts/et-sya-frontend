@@ -1,5 +1,5 @@
 import RespondToApplicationController from '../../../main/controllers/RespondToApplicationController';
-import { CaseWithId } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
@@ -40,5 +40,46 @@ describe('Respond to application Controller', () => {
     controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPOND_TO_APPLICATION, expect.anything());
+  });
+
+  it('should render the Rule 92 page', async () => {
+    const body = {
+      respondToApplicationText: 'some Text',
+      hasSupportingMaterial: YesOrNo.NO,
+    };
+
+    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToApplicationController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party?lng=en');
+  });
+
+  it('should render the add supporting material page', async () => {
+    const body = {
+      respondToApplicationText: 'some Text',
+      hasSupportingMaterial: YesOrNo.YES,
+    };
+
+    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToApplicationController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/response-supporting-material/1?lng=en');
+  });
+
+  it('should return same page on error', async () => {
+    const body = {
+      respondToApplicationText: 'some Text',
+    };
+
+    const request = mockRequestWithTranslation({ t, body }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondToApplicationController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith('/respond-to-application/1?lng=en');
   });
 });

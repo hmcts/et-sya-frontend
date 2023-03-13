@@ -75,7 +75,7 @@ export default class RespondToApplicationController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}`);
+      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`);
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
