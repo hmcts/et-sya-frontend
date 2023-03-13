@@ -1,6 +1,6 @@
 import { getCyaContent } from '../../../../main/controllers/helpers/ContactTheTribunalCYAHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { TranslationKeys } from '../../../../main/definitions/constants';
+import { CHANGE, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import contactTheTribunalCYARaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal-cya.json';
 import contactTheTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
@@ -36,7 +36,7 @@ describe('Contact the tribunal CYA controller', () => {
       items: [
         {
           href: '/contact-the-tribunal?lng=cy',
-          text: 'Change',
+          text: CHANGE,
           visuallyHiddenText: translations.applicationType,
         },
       ],
@@ -50,7 +50,7 @@ describe('Contact the tribunal CYA controller', () => {
       items: [
         {
           href: '/contact-the-tribunal/withdraw?lng=cy',
-          text: 'Change',
+          text: CHANGE,
           visuallyHiddenText: 'What do you want to tell or ask the tribunal?',
         },
       ],
@@ -61,7 +61,7 @@ describe('Contact the tribunal CYA controller', () => {
       items: [
         {
           href: '/contact-the-tribunal/withdraw?lng=cy',
-          text: 'Change',
+          text: CHANGE,
           visuallyHiddenText: 'Supporting material',
         },
       ],
@@ -75,7 +75,7 @@ describe('Contact the tribunal CYA controller', () => {
       items: [
         {
           href: '/copy-to-other-party?lng=cy',
-          text: 'Change',
+          text: CHANGE,
           visuallyHiddenText:
             'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
         },
@@ -90,7 +90,7 @@ describe('Contact the tribunal CYA controller', () => {
       items: [
         {
           href: '/copy-to-other-party?lng=cy',
-          text: 'Change',
+          text: CHANGE,
           visuallyHiddenText: 'Reason for not informing other party',
         },
       ],
