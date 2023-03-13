@@ -20,6 +20,7 @@ import { getCaseApi } from '../services/CaseService';
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { activateRespondentApplicationsLink, getRespondentApplicationDetails } from './helpers/PageContentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -42,6 +43,7 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
@@ -103,7 +105,7 @@ export default class CitizenHubController {
     let respondentBannerContent = undefined;
 
     if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
-      respondentBannerContent = getRespondentApplicationDetails(tseGenericApps, translations, req);
+      respondentBannerContent = getRespondentApplicationDetails(tseGenericApps, translations, languageParam);
     }
 
     res.render(TranslationKeys.CITIZEN_HUB, {

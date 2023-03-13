@@ -81,13 +81,11 @@ export const activateRespondentApplicationsLink = (items: GenericTseApplicationT
 };
 
 export const getApplicationRespondByDate = (
-  item: GenericTseApplicationTypeItem,
-  req: AppRequest,
+  selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord
 ): string => {
-  const userCase = req.session?.userCase;
-  if (item) {
-    const dueDate = new Date(Date.parse(userCase.selectedGenericTseApplication.value.dueDate));
+  if (selectedApplication) {
+    const dueDate = new Date(Date.parse(selectedApplication.value.dueDate));
     const dateString =
       translations.days[dueDate.getDay()] +
       ' ' +
@@ -129,7 +127,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 export const getRespondentApplicationDetails = (
   items: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
-  req: AppRequest
+  languageParam: string
 ): RespondentApplicationDetails[] => {
   const bannerContent: RespondentApplicationDetails[] = [];
 
@@ -139,9 +137,7 @@ export const getRespondentApplicationDetails = (
       const rec: RespondentApplicationDetails = {
         respondentApplicationHeader:
           translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
-        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${getLanguageParam(
-          req.url
-        )}`,
+        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${languageParam}`,
         applicant: items[i].value.applicant,
         copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
         respondByDate:
