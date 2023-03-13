@@ -61,12 +61,13 @@ import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustm
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
-import ResponseSupportingMaterialController from '../../controllers/ResponseSupportingMaterialController';
-import ResponseSupportingMaterialFileController from '../../controllers/ResponseSupportingMaterialFileController';
+import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
+import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
@@ -76,6 +77,7 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
@@ -235,6 +237,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
+    app.get(InterceptPaths.SUBMIT_RESPONDENT_CYA, new SubmitRespondentController().get);
     app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
@@ -261,12 +264,13 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
-    app.get(PageUrls.RESPONSE_SUPPORTING_MATERIAL, new ResponseSupportingMaterialController().get);
+    app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
     app.post(
-      PageUrls.RESPONSE_SUPPORTING_MATERIAL,
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
       handleUploads.single('supportingMaterialFile'),
-      new ResponseSupportingMaterialController().post
+      new RespondentSupportingMaterialController().post
     );
-    app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new ResponseSupportingMaterialFileController().get);
+    app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
   }
 }

@@ -73,6 +73,15 @@ export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promis
   }
 };
 
+export const respondToApplication = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).respondToApplication(req.session.userCase);
+    logger.info(`Responded to application for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const getSectionStatus = (
   detailsCheckValue: YesOrNo,
   sessionValue: string | CaseDate | number

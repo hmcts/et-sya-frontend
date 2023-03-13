@@ -98,7 +98,8 @@ export const TranslationKeys = {
   RESPOND_TO_APPLICATION: 'respond-to-application',
   RESPONDENT_APPLICATIONS: 'respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
-  RESPONSE_SUPPORTING_MATERIAL: 'response-supporting-material',
+  RESPONDENT_SUPPORTING_MATERIAL: 'respondent-supporting-material',
+  RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
 } as const;
 
 export const PageUrls = {
@@ -190,9 +191,10 @@ export const PageUrls = {
   YOUR_APPLICATIONS: '/your-applications',
   RESPONDENT_APPLICATIONS: '/respondent-applications',
   RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',
-  RESPONSE_SUPPORTING_MATERIAL: '/response-supporting-material/:appId',
+  RESPONDENT_SUPPORTING_MATERIAL: '/respondent-supporting-material/:appId',
   REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
   RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
+  RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
 } as const;
 
 export const InterceptPaths = {
@@ -202,6 +204,7 @@ export const InterceptPaths = {
   SUBMIT_CASE: '/submitDraftCase',
   REMOVE_FILE: '/remove-uploaded-file',
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
+  SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
 } as const;
 
 export const ErrorPages = {
@@ -419,6 +422,7 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+export const CHANGE = 'Change';
 
 export const languages = {
   WELSH: 'cy',
