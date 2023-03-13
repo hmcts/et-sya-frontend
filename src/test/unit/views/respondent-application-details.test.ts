@@ -45,6 +45,7 @@ describe('Respondent Application details page', () => {
                 details: 'Test text',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,
               },
+              linkValue: 'Amend response',
             },
             {
               id: 'abc1234',
@@ -57,6 +58,7 @@ describe('Respondent Application details page', () => {
                 details: 'Testing',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,
               },
+              linkValue: 'Restrict publicity',
             },
           ],
         },
@@ -87,7 +89,7 @@ describe('Respondent Application details page', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListClass);
     expect(summaryListData[0].innerHTML).contains('Respondent', 'Application date does not exist');
     expect(summaryListData[1].innerHTML).contains('7 March 2023', ' Application type does not exist');
-    //expect(summaryListData[2].innerHTML).contains('Amend response', ' Application type does not exist');
+    expect(summaryListData[2].innerHTML).contains('Amend response', ' Application type does not exist');
     expect(summaryListData[3].innerHTML).contains('Test text', ' Application type does not exist');
     expect(summaryListData[4].innerHTML).contains('', ' Application type does not exist');
     expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application type does not exist');
