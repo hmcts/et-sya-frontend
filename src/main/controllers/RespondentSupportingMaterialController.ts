@@ -62,11 +62,9 @@ export default class RespondentSupportingMaterialController {
       text: l => l.continue,
     },
   };
-
   constructor() {
     this.form = new Form(<FormFields>this.supportingMaterialContent.fields);
   }
-
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     userCase.respondToApplicationText = req.body.respondToApplicationText;
