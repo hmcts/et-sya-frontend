@@ -74,7 +74,7 @@ export default class RespondToApplicationController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}`);
+      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`);
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
@@ -94,7 +94,7 @@ export default class RespondToApplicationController {
     const selectedApplication = req.session.userCase.selectedGenericTseApplication;
 
     const applicationType = translations[selectedApplication.value.type];
-    const respondByDate = getApplicationRespondByDate(selectedApplication, req, translations);
+    const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
     const document = selectedApplication.value?.documentUpload;
 
     if (document) {
