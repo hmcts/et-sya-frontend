@@ -11,11 +11,7 @@ import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import {
-  createDownloadLink,
-  findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
-} from './helpers/DocumentHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getApplicationResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
@@ -80,7 +76,7 @@ export default class RespondToApplicationController {
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
       ? res.redirect(
-          PageUrls.RESPONSE_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
         )
       : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
   };
@@ -92,12 +88,7 @@ export default class RespondToApplicationController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    const selectedApplication = findSelectedGenericTseApplication(
-      req.session.userCase.genericTseApplicationCollection,
-      req.params.appId
-    );
-
-    req.session.userCase.selectedGenericTseApplication = selectedApplication;
+    const selectedApplication = req.session.userCase.selectedGenericTseApplication;
 
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);

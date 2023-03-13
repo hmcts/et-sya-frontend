@@ -172,7 +172,6 @@ export interface Case {
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   respondToApplicationText?: string;
   hasSupportingMaterial?: YesOrNo;
-  supportingMaterialText?: string;
   supportingMaterialFile?: Document;
 }
 
@@ -265,7 +264,7 @@ export const enum CaseDataCacheKey {
   TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
   ACAS_MULTIPLE = 'acasMultiple',
-  VALID_NO_ACAS_REASON = 'validNoAcasReason'
+  VALID_NO_ACAS_REASON = 'validNoAcasReason',
 }
 
 export const enum HearingPreference {
