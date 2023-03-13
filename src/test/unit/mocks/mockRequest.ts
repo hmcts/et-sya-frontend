@@ -114,6 +114,7 @@ export const mockRequestWithTranslation = (
   req.body = body;
   req.params = {
     respondentNumber: '1',
+    appId: '1',
   };
   req.session = {
     userCase: {
