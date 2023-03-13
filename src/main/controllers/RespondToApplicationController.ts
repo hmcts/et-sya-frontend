@@ -11,10 +11,7 @@ import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import {
-  createDownloadLink,
-  getDocumentAdditionalInformation,
-} from './helpers/DocumentHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getApplicationResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';

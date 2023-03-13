@@ -9,7 +9,7 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respondent supporting material controller', () => {
   const t = {
-    'contact-application-controller': {},
+    'respondent-supporting-material-controller': {},
     common: {},
   };
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
