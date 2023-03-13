@@ -72,13 +72,13 @@ export default class CopyToOtherPartyController {
       req.session.errors.push(copyToOtherPartyError);
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
-    let redirecPage = '';
+    let redirectPage = '';
     if (req.session.contactType === Rule92Types.CONTACT) {
-      redirecPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
+      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
     } else if (req.session.contactType === Rule92Types.RESPOND) {
-      redirecPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+      redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
     }
-    return res.redirect(redirecPage);
+    return res.redirect(redirectPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
