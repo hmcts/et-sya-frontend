@@ -6,24 +6,32 @@ import {
   arePayValuesNull,
   hasInvalidFileFormat,
   hasInvalidName,
-  isAcasNumberValid, isContent100CharsOrLess,
+  isAcasNumberValid,
+  isContent100CharsOrLess,
+  isContent2500CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
+import { AnyRecord } from '../../definitions/util-types';
 
-export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
-  //call get custom errors and add to session errors
-  let sessionErrors = form.getErrors(formData);
+export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
+  const formData = form.getParsedBody(req.body, form.getFormFields());
+  return getSessionErrors(req, form, formData);
+};
+
+const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
+  let sessionErrors = form.getValidatorErrors(formData);
   const custErrors = getCustomStartDateError(req, form, formData);
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
   const acasCertificateNumberError = getACASCertificateNumberError(formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
+
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
   }
@@ -47,6 +55,7 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   if (otherClaimTypeError) {
     sessionErrors = [...sessionErrors, otherClaimTypeError];
   }
+
   return sessionErrors;
 };
 
@@ -61,6 +70,22 @@ export const getHearingPreferenceReasonError = (formData: Partial<CaseWithId>): 
     const errorType = isFieldFilledIn(hearingPreferenceNeitherTextarea);
     if (errorType) {
       return { errorType, propertyName: 'hearingAssistance' };
+    }
+  }
+};
+
+export const getCopyToOtherPartyError = (formData: Partial<CaseWithId>): FormError => {
+  const shouldCopy = formData.copyToOtherPartyYesOrNo;
+  const radiosErrorType = isFieldFilledIn(shouldCopy);
+  if (radiosErrorType) {
+    return { errorType: radiosErrorType, propertyName: 'copyToOtherPartyYesOrNo' };
+  }
+
+  if (shouldCopy === YesOrNo.NO) {
+    const copyText = formData.copyToOtherPartyText;
+    const textErrorType = isFieldFilledIn(copyText) || isContent2500CharsOrLess(copyText);
+    if (textErrorType) {
+      return { errorType: textErrorType, propertyName: 'copyToOtherPartyText' };
     }
   }
 };
@@ -80,7 +105,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   } else {
     const x = isContent100CharsOrLess(otherClaimTextarea);
     if (x) {
-      return {errorType: x, propertyName: 'otherClaim' };
+      return { errorType: x, propertyName: 'otherClaim' };
     }
   }
 };
@@ -100,11 +125,6 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
       }
     }
   }
-};
-
-export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
-  const formData = form.getParsedBody(req.body, form.getFormFields());
-  return getSessionErrors(req, form, formData);
 };
 
 export const handleErrors = (req: AppRequest, res: Response, sessionErrors: FormError[]): void => {
@@ -213,5 +233,88 @@ export const getClaimSummaryError = (
   }
   if (fileNameInvalid) {
     return { propertyName: 'claimSummaryFileName', errorType: fileNameInvalid };
+  }
+};
+
+export const getFileUploadAndTextAreaError = (
+  formDataText: string,
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document,
+  textAreaProperty: string,
+  uplodedFileProperty: string
+): FormError => {
+  const tooLong = isContent2500CharsOrLess(formDataText);
+  if (tooLong) {
+    return { propertyName: textAreaProperty, errorType: tooLong };
+  }
+
+  const textProvided = isFieldFilledIn(formDataText) === undefined;
+  const fileProvided = file !== undefined;
+
+  if (!textProvided && !fileProvided && !uploadedFile) {
+    return { propertyName: textAreaProperty, errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  if (fileFormatInvalid) {
+    return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName: uplodedFileProperty, errorType: fileNameInvalid };
+  }
+};
+
+export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): FormError => {
+  const text = formData.respondToApplicationText;
+  const radio = formData.hasSupportingMaterial;
+  const textProvided = isFieldFilledIn(text) === undefined;
+  const supportingMaterialAnswer = isFieldFilledIn(radio) === undefined;
+
+  if (!textProvided) {
+    if (!supportingMaterialAnswer) {
+      return { propertyName: 'respondToApplicationText', errorType: 'required' };
+    }
+
+    if (radio === YesOrNo.NO) {
+      return { propertyName: 'respondToApplicationText', errorType: 'requiredFile' };
+    }
+  } else {
+    const tooLong = isContent2500CharsOrLess(text);
+    if (tooLong) {
+      return { propertyName: 'respondToApplicationText', errorType: tooLong };
+    }
+
+    if (!supportingMaterialAnswer) {
+      return { propertyName: 'hasSupportingMaterial', errorType: 'required' };
+    }
+  }
+};
+
+export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyRecord): string | undefined => {
+  const fileError: FormError = getLastFileError(errors);
+
+  let errorMessage: string;
+  if (fileError) {
+    errorMessage = errorTranslations[fileError.errorType];
+  } else {
+    errorMessage = undefined;
+  }
+  return errorMessage;
+};
+
+export const getLastFileError = (errors: FormError[]): FormError => {
+  if (errors?.length > 0) {
+    for (let i = errors.length - 1; i >= 0; i--) {
+      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
+        return errors[i];
+      }
+    }
   }
 };

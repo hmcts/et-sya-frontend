@@ -1,86 +1,177 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% set htmlForNotification %}
+{% set htmlForSubmittedAlert %}
 
-  {% if showSubmittedAlert %}
-    <h3 class="govuk-notification-banner__heading">
-        {{ submittedAlert }}
-    </h3>
+{% if showSubmittedAlert %}
+  <h3 class="govuk-notification-banner__heading">
+    {{ submittedAlert }}
+  </h3>
 
-    <p class="govuk-body">
-        {{ processClaim }} {{ processingDueDate }}{{ busyPeriod }}
-    </p>
-  {% endif %}
-
-  {% if showAcknowledgementAlert %}
-    <h3 class="govuk-notification-banner__heading">
-        {{notificationBanner.acknowledgement.header}}
-    </h3>
-
-    <p class="govuk-body">
-        <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{notificationBanner.acknowledgement.link}}</a>.
-    </p>
-
-    <p class="govuk-body">
-        {{notificationBanner.acknowledgement.p1}}
-    </p>
-
-    {% if respondentResponseDeadline %}
-        <p class="govuk-body">
-            {{notificationBanner.acknowledgement.p2 | safe}}
-            {{respondentResponseDeadline}}.
-        </p>
-    {% endif %}
-  {% endif %}
-
-  {% if showRejectionAlert %}
-    <h3 class="govuk-notification-banner__heading">
-        {{notificationBanner.rejection.header}}
-    </h3>
-
-    <p class="govuk-body">
-        {{notificationBanner.rejection.p1}}
-    </p>
-
-    <p class="govuk-body">
-        <a class="govuk-link" href="/case-document/rejection-of-claim">{{notificationBanner.rejection.link}}</a>.
-    </p>
-  {% endif %}
-
-  {% if showRespondentResponseReceived %}
-    <h3 class="govuk-notification-banner__heading">
-      {{notificationBanner.respondentReceived.header}}
-    </h3>
-    <p class="govuk-body">
-      {{notificationBanner.respondentReceived.p1}}
-    </p>
-  {% endif %}
-
-  {% if showRespondentRejection %}
-    <h3 class="govuk-notification-banner__heading">
-        {{notificationBanner.respondentRejection.header}}
-    </h3>
-
-    <p class="govuk-body">
-        <a class="govuk-link" href="/case-document/response-rejection">{{notificationBanner.respondentRejection.link}}</a>.
-    </p>
-  {% endif %}
-
-  {% if showRespondentAcknowledgement %}
-    <h3 class="govuk-notification-banner__heading">
-        {{notificationBanner.respondentAcknowledgement.header}}
-    </h3>
-
-    <p class="govuk-body">
-        <a class="govuk-link" href="/case-document/response-acknowledgement">{{notificationBanner.respondentAcknowledgement.link}}</a>.
-    </p>
-  {% endif %}
+  <p class="govuk-body">
+    {{ processClaim }}
+    {{ processingDueDate }}{{ busyPeriod }}
+  </p>
+{% endif %}
 
 {% endset %}
 
-{% if showSubmittedAlert or showAcknowledgementAlert or showRejectionAlert or showRespondentResponseReceived or showRespondentRejection or showRespondentAcknowledgement %}
-    {{ govukNotificationBanner({
-   html: htmlForNotification,
+{% set htmlForAcknowledgementAlert %}
+
+{% if showAcknowledgementAlert %}
+  <h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.acknowledgement.header}}
+  </h3>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="/case-document/acknowledgement-of-claim">{{notificationBanner.acknowledgement.link}}</a>.
+  </p>
+
+  <p class="govuk-body">
+    {{notificationBanner.acknowledgement.p1}}
+  </p>
+
+  {% if respondentResponseDeadline %}
+    <p class="govuk-body">
+      {{notificationBanner.acknowledgement.p2 | safe}}
+      {{respondentResponseDeadline}}.
+    </p>
+  {% endif %}
+{% endif %}
+
+{% endset %}
+
+{% set htmlForRejectionAlert %}
+
+{% if showRejectionAlert %}
+  <h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.rejection.header}}
+  </h3>
+
+  <p class="govuk-body">
+    {{notificationBanner.rejection.p1}}
+  </p>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="/case-document/rejection-of-claim">{{notificationBanner.rejection.link}}</a>.
+  </p>
+{% endif %}
+
+{% endset %}
+
+{% set htmlForRespondentResponseReceived %}
+
+{% if showRespondentResponseReceived %}
+  <h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.respondentReceived.header}}
+  </h3>
+  <p class="govuk-body">
+    {{notificationBanner.respondentReceived.p1}}
+  </p>
+{% endif %}
+
+{% endset %}
+
+{% set htmlForRespondentRejection %}
+
+{% if showRespondentRejection %}
+  <h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.respondentRejection.header}}
+  </h3>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="/case-document/response-rejection">{{notificationBanner.respondentRejection.link}}</a>.
+  </p>
+{% endif %}
+
+{% endset %}
+
+{% set htmlForRespondentAcknowledgement %}
+
+{% if showRespondentAcknowledgement %}
+  <h3 class="govuk-notification-banner__heading">
+    {{notificationBanner.respondentAcknowledgement.header}}
+  </h3>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="/case-document/response-acknowledgement">{{notificationBanner.respondentAcknowledgement.link}}</a>.
+  </p>
+{% endif %}
+
+{% endset %}
+
+{% if showSubmittedAlert %}
+  {{ govukNotificationBanner({
+   html: htmlForSubmittedAlert,
    titleText: important
   }) }}
+{% endif %}
+
+{% if showAcknowledgementAlert %}
+  {{ govukNotificationBanner({
+   html: htmlForAcknowledgementAlert,
+   titleText: important
+  }) }}
+{% endif %}
+
+{% if showRejectionAlert %}
+  {{ govukNotificationBanner({
+   html: htmlForRejectionAlert,
+   titleText: important
+  }) }}
+{% endif %}
+
+{% if showRespondentResponseReceived %}
+  {{ govukNotificationBanner({
+   html: htmlForRespondentResponseReceived,
+   titleText: important
+  }) }}
+{% endif %}
+
+{% if showRespondentRejection %}
+  {{ govukNotificationBanner({
+   html: htmlForRespondentRejection,
+   titleText: important
+  }) }}
+{% endif %}
+
+{% if showRespondentAcknowledgement %}
+  {{ govukNotificationBanner({
+   html: htmlForRespondentAcknowledgement,
+   titleText: important
+  }) }}
+{% endif %}
+
+{% if showRespondentApplicationReceived %}
+  {% for app in respondentBannerContent %}
+    {% if (loop.index <= 5) %}
+      {% if app.applicant === "Respondent" %}
+        {% if app.copyToOtherPartyYesOrNo === "Yes" %}
+          {% if app.status === "notStartedYet" %}
+            {% set htmlForRespondentApplicationReceived %}
+
+            <h3 class="govuk-notification-banner__heading">
+              {{app.respondentApplicationHeader}}
+            </h3>
+            <p class="govuk-body">
+              {% if app.applicationType === "B" %}
+                {{notificationBanner.respondentApplicationReceived.p1TypeB}}<br><br>
+              {% endif %}
+              {{notificationBanner.respondentApplicationReceived.p1}}
+              <b>{{ app.respondByDate }}</b>
+              {{ notificationBanner.respondentApplicationReceived.p1a }}
+            </p>
+            <h3 class="govuk-notification-banner__heading">
+              <a class="govuk-link" href="{{app.respondToRespondentAppRedirectUrl}}">{{notificationBanner.respondentApplicationReceived.link}}</a>
+            </p>
+
+            {% endset %}
+            {{ govukNotificationBanner({
+                html: htmlForRespondentApplicationReceived,
+                titleText: important
+                }) }}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
 {% endif %}

@@ -1,0 +1,22 @@
+{
+  "applicationTo": "Application to ",
+  "applicant": "Applicant",
+  "requestDate": "Application date",
+  "applicationType": "Application type",
+  "legend": "What do you want to tell or ask the tribunal?",
+  "respond": "Respond",
+  "supportingMaterial": "Supporting material",
+  "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "Amend response": "amend response",
+  "Change personal details": "change personal details",
+  "Claimant not complied": "tell the tribunal the claimant has not complied",
+  "Consider a decision afresh": "consider a decision afresh",
+  "Contact the tribunal": "contact the tribunal",
+  "Order other party": "order other party",
+  "Order a witness to attend to give evidence": "order a witness to attend to give evidence",
+  "Postpone a hearing": "postpone a hearing",
+  "Reconsider judgement": "reconsider judgement",
+  "Restrict publicity": "restrict publicity",
+  "Strike out all or part of a claim": "strike out all or part of a claim",
+  "Vary or revoke an order": "vary or revoke an order"
+}

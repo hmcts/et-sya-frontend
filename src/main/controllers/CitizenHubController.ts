@@ -17,7 +17,9 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
+import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { activateRespondentApplicationsLink, getRespondentApplicationDetails } from './helpers/PageContentHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -40,14 +42,19 @@ export default class CitizenHubController {
     }
 
     const userCase = req.session.userCase;
+
+    clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
+
+    const tseGenericApps = userCase?.genericTseApplicationCollection;
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
-      handleUpdateHubLinksStatuses(req, logger);
+      await handleUpdateHubLinksStatuses(req, logger);
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
+    activateRespondentApplicationsLink(tseGenericApps, req);
 
     // Mark respondent's response as waiting for the tribunal
     if (
@@ -87,6 +94,18 @@ export default class CitizenHubController {
       };
     });
 
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
+
+    let respondentBannerContent = undefined;
+
+    if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
+      respondentBannerContent = getRespondentApplicationDetails(tseGenericApps, translations, req);
+    }
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -95,6 +114,7 @@ export default class CitizenHubController {
       userCase,
       currentState,
       sections,
+      respondentBannerContent,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert:
@@ -109,6 +129,8 @@ export default class CitizenHubController {
         hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
       showRespondentResponseReceived:
         hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL,
+      showRespondentApplicationReceived:
+        hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS,
       showRespondentRejection:
         !!userCase?.responseRejectionDocumentDetail?.length &&
         hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,

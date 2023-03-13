@@ -20,6 +20,7 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
@@ -182,6 +183,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
+    genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
   };
 }
 
@@ -284,10 +286,13 @@ export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
 }
 
 export function fromApiFormatDocument(document: DocumentUploadResponse): Document {
+  const mimeType = getFileExtension(document?.originalDocumentName);
   return {
     document_url: document.uri,
     document_filename: document.originalDocumentName,
     document_binary_url: document._links.binary.href,
+    document_size: parseInt(document.size),
+    document_mime_type: mimeType,
   };
 }
 
@@ -460,10 +465,26 @@ export const getDocId = (url: string): string => {
   return url.substring(url.lastIndexOf('/') + 1, url.length);
 };
 
-export const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
+export const getFileExtension = (fileName: string): string => {
+  if (!fileName) {
+    return '';
+  }
+  return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
+};
+
+const hasResponseFromRespondentList = (caseData: CaseData): boolean => {
   if (caseData?.respondentCollection) {
     return caseData.respondentCollection.some(r => r.value.responseReceived === YesOrNo.YES);
   }
 
   return false;
+};
+
+const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem[] => {
+  if (items?.length === 0) {
+    return [];
+  }
+
+  items?.sort(sortByDate);
+  return items;
 };

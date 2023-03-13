@@ -52,7 +52,7 @@ export default class CitizenHubDocumentController {
       view = 'response-from-respondent-view';
     }
 
-    handleUpdateHubLinksStatuses(req, logger);
+    await handleUpdateHubLinksStatuses(req, logger);
 
     res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
