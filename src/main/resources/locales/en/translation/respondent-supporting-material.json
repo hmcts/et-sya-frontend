@@ -15,7 +15,7 @@
     "uploaded": "Files uploaded"
   },
   "errors": {
-    "supportingMaterialText": {
+    "respondToApplicationText": {
       "required": "Use the text box or file upload to give details",
       "tooLong": "Give details (free text) must be entered as 2500 characters or less"
     },

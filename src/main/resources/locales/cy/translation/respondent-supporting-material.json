@@ -15,7 +15,7 @@
     "uploaded": "Welsh translation required"
   },
   "errors": {
-    "supportingMaterialText": {
+    "respondToApplicationText": {
       "required": "Dywedwch wrthym beth ddigwyddodd i chi",
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     },
