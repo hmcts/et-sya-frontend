@@ -17,10 +17,13 @@
       }) 
     }}
 
+    {% if respondButton %}
       {{ govukButton({
         text: respond,
         href: redirectUrl
       }) }}
+    {% endif %}
+
     </div>
 
     {% set sideBarContent %}
