@@ -1,5 +1,6 @@
+import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { getTseApplicationDetails } from '../../../main/controllers/helpers/ApplicationDetailsHelper';
-import { YesOrNo } from '../../../main/definitions/case';
+import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
@@ -8,8 +9,48 @@ import { TranslationKeys } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respondent application details', () => {
+  const translationJsons = { ...respondentApplicationDetailsRaw };
+
+  it('should get resondent application details page', () => {
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: [
+        {
+          id: '1',
+          value: {
+            applicant: 'Respondent',
+            date: '2022-05-05',
+            type: 'Amend my claim',
+            copyToOtherPartyText: 'Yes',
+            details: 'Help',
+            number: '1',
+            status: 'notViewedYet',
+            dueDate: '2022-05-12',
+            applicationState: 'notViewedYet',
+            respondCollection: [
+              {
+                id: '1',
+                value: {
+                  from: 'Claimant',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    };
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+
+    const controller = new RespondentApplicationDetailsController();
+
+    controller.get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+  });
+
   it('should return expected application details', () => {
     const genericTseApplicationType = {
       number: '1',
@@ -24,8 +65,6 @@ describe('Respondent application details', () => {
       value: genericTseApplicationType,
       linkValue: 'Amend response',
     } as GenericTseApplicationTypeItem;
-
-    const translationJsons = { ...respondentApplicationDetailsRaw };
 
     const req = mockRequestWithTranslation({}, translationJsons);
     req.session.userCase.genericTseApplicationCollection = [selectedApplication];
