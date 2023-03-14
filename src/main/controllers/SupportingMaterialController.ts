@@ -13,7 +13,7 @@ const logger = getLogger('SupportingMaterialController');
 export default class SupportingMaterialController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
-    let fileId = userCase?.contactApplicationFile?.document_url;
+    let fileId = userCase?.contactApplicationFile?.document_url || userCase?.supportingMaterialFile?.document_url;
     if (!fileId && userCase.selectedGenericTseApplication) {
       fileId = userCase.selectedGenericTseApplication.value.documentUpload.document_url;
     }
