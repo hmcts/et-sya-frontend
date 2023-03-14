@@ -33,7 +33,7 @@ describe('Respondent Applications page', () => {
               value: {
                 date: '7 March 2023',
                 type: 'Amend response',
-                status: 'notStartedYet',
+                applicationState: 'notStartedYet',
                 number: '1',
                 applicant: 'Respondent',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,
@@ -44,7 +44,7 @@ describe('Respondent Applications page', () => {
               value: {
                 date: '8 March 2023',
                 type: 'Restrict publicity',
-                status: 'notStartedYet',
+                applicationState: 'notStartedYet',
                 number: '2',
                 applicant: 'Respondent',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,

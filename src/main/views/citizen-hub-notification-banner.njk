@@ -146,7 +146,7 @@
     {% if (loop.index <= 5) %}
       {% if app.applicant === "Respondent" %}
         {% if app.copyToOtherPartyYesOrNo === "Yes" %}
-          {% if app.status === "notStartedYet" %}
+          {% if app.applicationState === "notStartedYet" %}
             {% set htmlForRespondentApplicationReceived %}
 
             <h3 class="govuk-notification-banner__heading">
