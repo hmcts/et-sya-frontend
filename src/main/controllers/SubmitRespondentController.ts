@@ -7,6 +7,7 @@ import { getLogger } from '../logger';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses, respondToApplication } from './helpers/CaseHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('SubmitRespondentController');
 
@@ -21,7 +22,6 @@ export default class SubmitRespondentController {
     } catch (error) {
       logger.info(error.message);
     }
-    // TODO should be changed after RET-2790
-    return res.redirect(PageUrls.APPLICATION_COMPLETE);
+    return res.redirect(PageUrls.RESPOND_TO_APPLICATION_COMPLETE + getLanguageParam(req.url));
   };
 }

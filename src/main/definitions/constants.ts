@@ -85,6 +85,7 @@ export const TranslationKeys = {
   CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
   APPLICATION_COMPLETE: 'application-complete',
+  RESPOND_TO_APPLICATION_COMPLETE: 'respond-to-application-complete',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
@@ -192,6 +193,7 @@ export const PageUrls = {
   RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',
   RESPONDENT_SUPPORTING_MATERIAL: '/respondent-supporting-material/:appId',
   REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
+  RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
   RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
 } as const;
 
