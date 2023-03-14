@@ -9,36 +9,37 @@ import { mockResponse } from '../mocks/mockResponse';
 describe('Respond to application Controller', () => {
   const translationJsons = { ...respondJsonRaw, ...common };
   const t = {
+    'respond-to-application': {},
     common: {},
   };
 
   it('should render the Respond to application page', () => {
     const controller = new RespondToApplicationController();
-
-    const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: [
-        {
-          id: '1',
-          value: {
-            applicant: 'Respondent',
-            date: '2022-05-05',
-            type: 'Amend my claim',
-            copyToOtherPartyText: 'Yes',
-            details: 'Help',
-            number: '1',
-            status: 'notViewedYet',
-            dueDate: '2022-05-12',
-            applicationState: 'notViewedYet',
-          },
+    const tseAppCollection = [
+      {
+        id: '1',
+        value: {
+          applicant: 'Respondent',
+          date: '2022-05-05',
+          type: 'Amend my claim',
+          copyToOtherPartyText: 'Yes',
+          details: 'Help',
+          number: '1',
+          status: 'notViewedYet',
+          dueDate: '2022-05-12',
+          applicationState: 'notViewedYet',
         },
-      ],
+      },
+    ];
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: tseAppCollection,
+      selectedGenericTseApplication: tseAppCollection[0],
     };
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
 
     controller.get(request, response);
-
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPOND_TO_APPLICATION, expect.anything());
   });
 
@@ -67,7 +68,7 @@ describe('Respond to application Controller', () => {
 
     const controller = new RespondToApplicationController();
     await controller.post(request, res);
-    expect(res.redirect).toHaveBeenCalledWith('/response-supporting-material/1?lng=en');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent-supporting-material/1?lng=en');
   });
 
   it('should return same page on error', async () => {

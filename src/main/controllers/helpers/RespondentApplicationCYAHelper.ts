@@ -3,45 +3,26 @@ import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const getCyaContent = (
+export const getRespondentCyaContent = (
   userCase: CaseWithId,
   translations: AnyRecord,
   languageParam: string,
-  contactTheTribunalSelectedUrl: string,
-  downloadLink: string,
-  typeOfApplication: string
+  supportingMaterialUrl: string,
+  downloadLink: string
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: typeOfApplication,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.applicationType,
-          },
-        ],
-      },
-    },
     {
       key: {
         text: translations.legend,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.contactApplicationText,
+        text: userCase.respondToApplicationText,
       },
       actions: {
         items: [
           {
-            href: contactTheTribunalSelectedUrl + languageParam,
+            href: supportingMaterialUrl + languageParam,
             text: CHANGE,
             visuallyHiddenText: translations.legend,
           },
@@ -58,7 +39,7 @@ export const getCyaContent = (
       actions: {
         items: [
           {
-            href: contactTheTribunalSelectedUrl + languageParam,
+            href: supportingMaterialUrl + languageParam,
             text: CHANGE,
             visuallyHiddenText: translations.supportingMaterial,
           },
