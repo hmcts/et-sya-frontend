@@ -32,7 +32,7 @@ export const getTseApplicationDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedApplication.linkValue,
+        text: translations[selectedApplication.value.type],
       },
     },
     {
