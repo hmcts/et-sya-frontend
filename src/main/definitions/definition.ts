@@ -92,7 +92,7 @@ export interface RespondentApplicationDetails {
   copyToOtherPartyYesOrNo?: string;
   applicationType?: string;
   number?: string;
-  status?: string;
+  applicationState?: string;
   type?: string;
   date?: string;
 }

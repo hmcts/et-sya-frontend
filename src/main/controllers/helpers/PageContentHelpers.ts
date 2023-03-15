@@ -117,8 +117,8 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = translations[item.value.type];
       item.linkValue = app;
       item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.status);
-      item.displayStatus = translations[item.value.status];
+      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.displayStatus = translations[item.value.applicationState];
     });
     return items;
   }
@@ -150,7 +150,7 @@ export const getRespondentApplicationDetails = (
           dueDate.getFullYear(),
         applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
         number: items[i].value.number,
-        status: items[i].value.status,
+        applicationState: items[i].value.applicationState,
         date: items[i].value.date,
         type: items[i].value.type,
       };

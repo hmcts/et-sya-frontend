@@ -122,7 +122,7 @@ it('should get Respondent Application Details', () => {
       number: '1',
       respondToRespondentAppRedirectUrl: '/respondent-application-details/1?lng=en',
       respondentApplicationHeader: 'The respondent has applied to amend my claim',
-      status: 'Open',
+      applicationState: 'inProgress',
       type: 'amend',
     },
   ]);
@@ -163,7 +163,7 @@ it('should populate respondent app items with redirect link, caption, statusColo
     type: 'Amend response',
     applicant: 'Respondent',
     copyToOtherPartyYesOrNo: 'Yes',
-    status: 'notStartedYet',
+    applicationState: 'notStartedYet',
     dueDate: '14 March 2023',
   } as GenericTseApplicationType;
 
@@ -179,5 +179,5 @@ it('should populate respondent app items with redirect link, caption, statusColo
   expect(item.value.type).toEqual('Amend response');
   expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
   expect(item.statusColor).toEqual('--red');
-  expect(item.value.status).toEqual('notStartedYet');
+  expect(item.value.applicationState).toEqual('notStartedYet');
 });

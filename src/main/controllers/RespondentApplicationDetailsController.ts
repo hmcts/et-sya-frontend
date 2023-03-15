@@ -30,6 +30,11 @@ export default class RespondentApplicationDetailsController {
       req.params.appId
     );
 
+    let respondButton = true;
+    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === 'Claimant').length > 0) {
+      respondButton = false;
+    }
+
     const savedApplication = req.session.userCase.selectedGenericTseApplication;
 
     if (!savedApplication || (savedApplication && req.params.appId !== savedApplication.value.number)) {
@@ -63,6 +68,7 @@ export default class RespondentApplicationDetailsController {
       selectedApplication,
       redirectUrl,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      respondButton,
     });
   };
 }
