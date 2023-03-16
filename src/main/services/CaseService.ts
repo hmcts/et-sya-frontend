@@ -117,16 +117,10 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         applicationId: caseItem.selectedGenericTseApplication.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
         response: {
           response: caseItem.respondToApplicationText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
-          supportingMaterial: [
-            {
-              value: {
-                uploadedDocument: caseItem.supportingMaterialFile,
-              },
-            },
-          ],
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
           copyNoGiveDetails: caseItem.copyToOtherPartyText,
         },
