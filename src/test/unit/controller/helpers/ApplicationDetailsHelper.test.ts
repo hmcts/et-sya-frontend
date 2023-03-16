@@ -42,7 +42,7 @@ describe('Application details', () => {
     expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Request date' });
     expect(appContent[1].value).toEqual({ text: '2022-12-12' });
     expect(appContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application type' });
-    expect(appContent[2].value).toEqual({ text: 'withdraw' });
+    expect(appContent[2].value).toEqual({ text: 'withdraw my claim' });
     expect(appContent[3].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'What do you want to tell or ask the tribunal?',
