@@ -4,6 +4,7 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
+{% from "components/web-chat.njk" import webChatModal %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
@@ -132,10 +133,13 @@ if isLoggedIn %}
         </summary>
         <div class="govuk-details__text">
           {{ contactUsForHelp|safe }}
+           {{ webChatModal() }}
+
         </div>
       </details>
     </div>
   {% endif %}
+
 
   {{ govukFooter({
   meta: {

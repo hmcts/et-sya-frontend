@@ -7,8 +7,9 @@ export interface HelmetConfig {
 }
 
 const googleAnalyticsDomain = '*.google-analytics.com';
-const tagManager = ['*.googletagmanager.com', 'https://tagmanager.google.com'];
+const tagManager = ['*.googletagmanager.com', 'https://tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
 const azureBlob = '*.blob.core.windows.net';
+const webChat = 'https://vcc-eu4.8x8.com';
 const self = "'self'";
 
 /**
@@ -34,6 +35,9 @@ export class Helmet {
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
       "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
+      "'sha256-3GXApuK7cB2BF9uHQgwMqeha+0b6kRylpUppmrrA2Ng='",
+      "'sha256-mELJSxgt9A4MuAKrIJ7iuPz6oxsbl7cp5iTieONZHSw='",
+      "'sha256-FiZUeT/V4X81LXdIxje1wtfEjtxsNS8gTc9lEdDKSd8='",
       idamUrl,
     ];
 
@@ -49,7 +53,9 @@ export class Helmet {
       'https://www.gstatic.com',
     ];
 
-    const styleSrc = [self, "'sha256-4z94HBtDQ7TATlXQpTKGg1rMyQvXAdMgvQ5YYOMBiDs='"];
+    const frameSrc = [self, webChat];
+
+    const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'"];
 
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
@@ -63,6 +69,7 @@ export class Helmet {
           defaultSrc: ["'none'"],
           fontSrc: [self, 'data:'],
           imgSrc,
+          frameSrc,
           objectSrc: [self],
           scriptSrc,
           styleSrc,
