@@ -12,6 +12,4 @@ Scenario('Employee details when he got a new job', () => {
   I.checkOption('input[id=new-job]');
   I.click('#main-form-submit');
   authPage.logout();
-})
-  .tag('@RET-1170')
-  .tag(' @RET-BAT');
+}).tag('@RET-1170');
