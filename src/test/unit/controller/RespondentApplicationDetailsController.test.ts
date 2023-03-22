@@ -79,7 +79,7 @@ describe('Respondent application details', () => {
     expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application date' });
     expect(appContent[1].value).toEqual({ text: '2022-12-12' });
     expect(appContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application type' });
-    expect(appContent[2].value).toEqual({ text: 'amend response' });
+    expect(appContent[2].value).toEqual({ text: 'Amend response' });
     expect(appContent[3].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'What do you want to tell or ask the tribunal?',

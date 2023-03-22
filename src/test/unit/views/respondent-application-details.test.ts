@@ -72,7 +72,7 @@ describe('Respondent Application details page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(respondentApplicationDetailsJSON.applicationTo + 'amend response');
+    expect(title[0].innerHTML).contains(respondentApplicationDetailsJSON.applicationTo + 'Amend response');
   });
 
   it('should display respondent application row headers', () => {
