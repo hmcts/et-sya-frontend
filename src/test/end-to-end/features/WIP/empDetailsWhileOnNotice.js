@@ -57,5 +57,4 @@ Scenario('Claim while on notice for organisation', () => {
   authPage.logout();
 })
   .tag('@RET-1131')
-  .tag('@RET-1023')
-  .tag(' @RET-BAT');
+  .tag('@RET-1023');

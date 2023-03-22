@@ -32,4 +32,4 @@ Scenario('Verify returing to an existing claim flow when got a new ET account', 
   I.click('Continue');
   authPage.login();
   authPage.logout();
-}).tag(' @RET-BAT');
+});
