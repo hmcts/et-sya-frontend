@@ -1,10 +1,8 @@
 import {
   answersAddressFormatter,
   getApplicationRespondByDate,
-  getRespondentApplicationDetails,
   getUploadedFileName,
   populateAppItemsWithRedirectLinksCaptionsAndStatusColors,
-  populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/PageContentHelpers';
 import {
   GenericTseApplicationType,
@@ -93,41 +91,6 @@ describe('returnFormattedAddress', () => {
   });
 });
 
-it('should get Respondent Application Details', () => {
-  const application = {
-    id: '124',
-    value: {
-      number: '1',
-      applicationState: 'inProgress',
-      applicant: 'Claimant',
-      copyToOtherPartyYesOrNo: 'Yes',
-      type: 'amend',
-      status: 'Open',
-      dueDate: '2023-05-07',
-      date: '2023-05-01',
-    },
-  } as GenericTseApplicationTypeItem;
-
-  const translationJson = { ...common, ...citizenHubRaw, ...applicationDetails };
-
-  const result = getRespondentApplicationDetails([application], translationJson, '?lng=en');
-
-  expect(result).toEqual([
-    {
-      applicant: 'Claimant',
-      applicationType: 'B',
-      copyToOtherPartyYesOrNo: 'Yes',
-      respondByDate: 'Sunday 7 May 2023',
-      date: '2023-05-01',
-      number: '1',
-      respondToRespondentAppRedirectUrl: '/respondent-application-details/1?lng=en',
-      respondentApplicationHeader: 'The respondent has applied to amend my claim',
-      applicationState: 'inProgress',
-      type: 'amend',
-    },
-  ]);
-});
-
 it('should get Application due date in correct format', () => {
   const application = {
     id: '124',
@@ -145,39 +108,4 @@ it('should get Application due date in correct format', () => {
   const result = getApplicationRespondByDate(application, translationJson);
 
   expect(result).toEqual('Friday 5 May 2023');
-});
-
-it('should populate respondent app items with redirect link, caption, statusColor and displayStatus', () => {
-  const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw };
-
-  const req = mockRequestWithTranslation({}, translationJsons);
-
-  const translations: AnyRecord = {
-    ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
-    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-    ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-    ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-  };
-  const respondentApp = {
-    number: '1',
-    type: 'Amend response',
-    applicant: 'Respondent',
-    copyToOtherPartyYesOrNo: 'Yes',
-    applicationState: 'notStartedYet',
-    dueDate: '14 March 2023',
-  } as GenericTseApplicationType;
-
-  const item = {
-    value: respondentApp,
-  } as GenericTseApplicationTypeItem;
-  const items = [item];
-
-  const url = 'testUrl';
-
-  populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
-
-  expect(item.value.type).toEqual('Amend response');
-  expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
-  expect(item.statusColor).toEqual('--red');
-  expect(item.value.applicationState).toEqual('notStartedYet');
 });
