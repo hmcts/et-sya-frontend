@@ -19,8 +19,12 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { activateRespondentApplicationsLink, getRespondentApplicationDetails } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import {
+  activateRespondentApplicationsLink,
+  getRespondentApplications,
+  getRespondentBannerContent,
+} from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('CitizenHubController');
 
@@ -48,16 +52,14 @@ export default class CitizenHubController {
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
 
-    const tseGenericApps = userCase?.genericTseApplicationCollection;
+    const respondentApplications = getRespondentApplications(userCase);
+    activateRespondentApplicationsLink(respondentApplications, userCase);
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
-
     const hubLinksStatuses = userCase.hubLinksStatuses;
-    activateRespondentApplicationsLink(tseGenericApps, req);
-
     // Mark respondent's response as waiting for the tribunal
     if (
       hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
@@ -105,7 +107,7 @@ export default class CitizenHubController {
     let respondentBannerContent = undefined;
 
     if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
-      respondentBannerContent = getRespondentApplicationDetails(tseGenericApps, translations, languageParam);
+      respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
