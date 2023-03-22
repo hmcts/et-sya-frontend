@@ -33,7 +33,7 @@ export default class RespondentApplicationsController {
 
     res.render(TranslationKeys.RESPONDENT_APPLICATIONS, {
       ...content,
-      tseGenericApps: respondentApplications,
+      respondentApplications,
       translations,
     });
   };

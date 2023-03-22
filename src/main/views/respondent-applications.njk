@@ -25,27 +25,23 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-          {% for app in tseGenericApps %}
-            {% if app.value.applicant === "Respondent" %}
-              {% if app.value.copyToOtherPartyYesOrNo === "Yes" %}
-                <tr class="govuk-table__row">
-                  <td class="govuk-table__cell">
-                    {{ app.value.date }}
-                  </td>
-                  <td class="govuk-table__cell">
-                    <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
-                      {{ app.linkValue }}
-                    </a>
-                  </td>
-                  <td class="govuk-table__cell">
-                    {{ govukTag({
-                        text: app.displayStatus,
-                        classes: "govuk-tag" + app.statusColor
-                    }) }}
-                  </td>
-                </tr>
-              {% endif %}
-            {% endif %}
+          {% for app in respondentApplications %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {{ app.value.date }}
+              </td>
+              <td class="govuk-table__cell">
+                <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
+                  {{ app.linkValue }}
+                </a>
+              </td>
+              <td class="govuk-table__cell">
+                {{ govukTag({
+                    text: app.displayStatus,
+                    classes: "govuk-tag" + app.statusColor
+                }) }}
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
