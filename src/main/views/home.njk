@@ -30,7 +30,37 @@
         <li><a href="{{PageUrls.RETURN_TO_EXISTING + languageParam}}" class="govuk-link">{{ returnClaimTxt }}</a></li>
       </ul>
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
-      <p class="govuk-body ">{{ contactUsForHelp|safe }}</p>
+      <p class="govuk-body ">
+          {{ contactUsForeword|safe }}
+          <br><br>
+          {{ mainTelephone|safe }}<br>
+          {{ welshTelephone|safe }}<br>
+          {{ scotlandTelephone|safe }}<br>
+          {{ englandOrWalesTextPhone|safe }}<br>
+          {{ scotlandTextPhone|safe }}<br>
+          {% if i18n.language == "en" %}
+            <table style="border-left:0px; border-top:0px; color:rgb(11, 12, 12);
+                          font-family: "GDS Transport", arial, sans-serif; font-size:19px;">
+              <tr style="border-left:0px;">
+                <td style="border-left:0px; border-right:0px; ">
+                  <p class="govuk-body" style="margin:0;">Webchat:</p>
+                </td>
+                <td style="border-left:0px; border-top:5px solid white;">
+                  {{ webChatModal() }}
+                </td>
+                <td style="border-left:0px; border-right:0px; border-top:0px;">
+                 <p class="govuk-body" style="margin:0;">({{ scotlandOnly }})</p>
+                </td>
+              </tr>
+            </table>
+            <br>
+          {% endif %}
+          <p class="govuk-body" style="margin:0;">
+          <a href="https://www.gov.uk/call-charges" class="govuk-link">
+            {{ contactCharges|safe }}
+          </a>
+          </p>
+        </p>
+      </div>
     </div>
-  </div>
 {% endblock %}
