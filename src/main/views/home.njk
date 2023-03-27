@@ -33,12 +33,12 @@
       <div class="govuk-body">
           {{ contactUsForeword|safe }}
           <br><br>
+          {{ contactDuration|safe }}<br/>
           {{ mainTelephone|safe }}<br/>
           {{ welshTelephone|safe }}<br/>
           {{ scotlandTelephone|safe }}<br/>
           {{ englandOrWalesTextPhone|safe }}<br/>
-          {{ scotlandTextPhone|safe }}<br/>
-          {{ contactDuration|safe }}
+          {{ scotlandTextPhone|safe }}
           {% if i18n.language == "en" %}
             <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
           {% else %}
