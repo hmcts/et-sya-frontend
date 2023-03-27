@@ -1,13 +1,13 @@
-import {Document} from '../../definitions/case';
-import {GenericTseApplicationTypeItem} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import {DocumentDetail} from '../../definitions/definition';
-import {getDocId, getFileExtension} from '../../helper/ApiFormatter';
-import {getCaseApi} from '../../services/CaseService';
+import { Document } from '../../definitions/case';
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { DocumentDetail } from '../../definitions/definition';
+import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
+import { getCaseApi } from '../../services/CaseService';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
     const docDetails = await getCaseApi(accessToken).getDocumentDetails(document.id);
-    const {createdOn, size, mimeType, originalDocumentName} = docDetails.data;
+    const { createdOn, size, mimeType, originalDocumentName } = docDetails.data;
     const retrievedValues = {
       size: (size / 1000000).toFixed(3),
       mimeType,
@@ -27,7 +27,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const {size, mimeType} = docDetails.data;
+  const { size, mimeType } = docDetails.data;
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
