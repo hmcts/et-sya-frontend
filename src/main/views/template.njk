@@ -4,6 +4,7 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/timeout-modal.njk" import timeoutModal with context %}
+{% from "components/web-chat.njk" import webChatModal %}
 
 {% block head %}
   {% include "webpack/css.njk" %}
@@ -122,7 +123,7 @@ if isLoggedIn %}
 {% endblock %}
 
 {% block footer %}
-  {% if "/" !== currentUrl and hideContactUs === undefined %}
+  {% if "/" !== currentUrl and "/?lng=en" != currentUrl and "/?lng=cy" != currentUrl and hideContactUs === undefined %}
     <div class="govuk-width-container">
       <details class="govuk-details" data-module="govuk-details">
         <summary class="govuk-details__summary">
@@ -131,12 +132,24 @@ if isLoggedIn %}
           </span>
         </summary>
         <div class="govuk-details__text">
-          {{ contactUsForHelp|safe }}
+          {{ contactUsForeword|safe }}
+          <br><br>
+          {{ contactDuration|safe }}<br/>
+          {{ mainTelephone|safe }}<br/>
+          {{ welshTelephone|safe }}<br/>
+          {{ scotlandTelephone|safe }}<br/>
+          {{ englandOrWalesTextPhone|safe }}<br/>
+          {{ scotlandTextPhone|safe }}
+          {% if i18n.language == "en" %}
+            <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
+          {% else %}
+            <br/><br/>
+          {% endif %}
+          <a href="https://www.gov.uk/call-charges" class="govuk-link">{{ contactCharges|safe }}</a>
         </div>
       </details>
     </div>
   {% endif %}
-
   {{ govukFooter({
   meta: {
     items: [

@@ -30,7 +30,26 @@
         <li><a href="{{PageUrls.RETURN_TO_EXISTING + languageParam}}" class="govuk-link">{{ returnClaimTxt }}</a></li>
       </ul>
       <h2 class="govuk-heading-m">{{ contactUsHelpTitle }}</h2>
-      <p class="govuk-body ">{{ contactUsForHelp|safe }}</p>
+      <div class="govuk-body">
+          {{ contactUsForeword|safe }}
+          <br><br>
+          {{ contactDuration|safe }}<br/>
+          {{ mainTelephone|safe }}<br/>
+          {{ welshTelephone|safe }}<br/>
+          {{ scotlandTelephone|safe }}<br/>
+          {{ englandOrWalesTextPhone|safe }}<br/>
+          {{ scotlandTextPhone|safe }}
+          {% if i18n.language == "en" %}
+            <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
+          {% else %}
+            <br/><br/>
+          {% endif %}
+          <p class="govuk-body" style="margin:0;">
+          <a href="https://www.gov.uk/call-charges" class="govuk-link">
+            {{ contactCharges|safe }}
+          </a>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
 {% endblock %}
