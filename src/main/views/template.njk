@@ -134,28 +134,16 @@ if isLoggedIn %}
         <div class="govuk-details__text">
           {{ contactUsForeword|safe }}
           <br><br>
-          {{ mainTelephone|safe }}<br>
-          {{ welshTelephone|safe }}<br>
-          {{ scotlandTelephone|safe }}<br>
-          {{ englandOrWalesTextPhone|safe }}<br>
-          {{ scotlandTextPhone|safe }}<br>
+          {{ mainTelephone|safe }}<br/>
+          {{ welshTelephone|safe }}<br/>
+          {{ scotlandTelephone|safe }}<br/>
+          {{ englandOrWalesTextPhone|safe }}<br/>
+          {{ scotlandTextPhone|safe }}<br/>
+          {{ contactDuration|safe }}
           {% if i18n.language == "en" %}
-            <table style="border-left:0px; border-top:0px;">
-              <tr style="border-left:0px;">
-                <td style="border-left:0px; border-right:0px;">
-                  Webchat:
-                </td>
-                <td style="border-left:0px; border-top:5px solid white;">
-                  {{ webChatModal() }}
-                </td>
-                <td style="border-left:0px; border-right:0px; border-top:0px;">
-                 ({{ scotlandOnly }})
-                </td>
-              </tr>
-            </table>
-            <br>
+            <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
           {% else %}
-            <br>
+            <br/><br/>
           {% endif %}
           <a href="https://www.gov.uk/call-charges" class="govuk-link">{{ contactCharges|safe }}</a>
         </div>
