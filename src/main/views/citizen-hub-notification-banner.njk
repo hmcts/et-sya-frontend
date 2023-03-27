@@ -175,3 +175,26 @@
     {% endif %}
   {% endfor %}
 {% endif %}
+
+{% if showOrderOrRequestReceived %}
+  {% for order in notifications %}
+        {% set htmlForOrderOrRequestReceived %}
+           {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
+              <h3 class="govuk-notification-banner__heading">
+                {{ notificationBanner.orderOrRequest.responseRequired + order.value.sendNotificationTitle}}
+              </h3>
+           {% else %}
+              <h3 class="govuk-notification-banner__heading">
+                {{ notificationBanner.orderOrRequest.noResponseRequired }}
+              </h3>
+           {% endif %}
+              <p class="govuk-body">
+                <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
+              </p>
+        {% endset %}
+        {{ govukNotificationBanner({
+          html: htmlForOrderOrRequestReceived,
+          titleText: important
+        }) }}
+  {% endfor %}
+{% endif %}

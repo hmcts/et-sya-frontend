@@ -100,6 +100,8 @@ export const TranslationKeys = {
   RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
   RESPONDENT_SUPPORTING_MATERIAL: 'respondent-supporting-material',
   RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
+  RESPONDENT_ORDERS_AND_REQUESTS: 'respondent-orders-and-requests',
+  RESPONDENT_ORDER_OR_REQUEST_DETAILS: 'respondent-order-or-request-details',
 } as const;
 
 export const PageUrls = {
@@ -195,6 +197,9 @@ export const PageUrls = {
   REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
   RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
   RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
+  RESPONDENT_ORDERS_AND_REQUESTS: '/respondent-orders-and-requests',
+  RESPONDENT_ORDER_OR_REQUEST_DETAILS: '/respondent-order-or-request-details/:orderId',
+  GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
 } as const;
 
 export const InterceptPaths = {
@@ -437,4 +442,15 @@ export const Rule92Types = {
   CONTACT: 'Contact',
   RESPOND: 'Respond',
   TRIBUNAL: 'Tribunal',
+} as const;
+
+export const Parties = {
+  BOTH_PARTIES: 'Both parties',
+  CLAIMANT_ONLY: 'Claimant only',
+  RESPONDENT_ONLY: 'Respondent only',
+} as const;
+
+export const ResponseRequired = {
+  YES: 'Yes - view document for details',
+  NO: 'No',
 } as const;

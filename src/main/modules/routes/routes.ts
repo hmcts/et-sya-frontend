@@ -66,6 +66,8 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import RespondentOrderOrRequestDetailsController from '../../controllers/RespondentOrderOrRequestDetailsController';
+import { RespondentOrdersAndRequestsController } from '../../controllers/RespondentOrdersAndRequestsController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -93,6 +95,7 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import TribunalOrderDocumentController from "../../controllers/TribunalOrderDocumentController";
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -272,5 +275,8 @@ export class Routes {
     );
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
+    app.get(PageUrls.RESPONDENT_ORDERS_AND_REQUESTS, new RespondentOrdersAndRequestsController().get);
+    app.get(PageUrls.RESPONDENT_ORDER_OR_REQUEST_DETAILS, new RespondentOrderOrRequestDetailsController().get);
+    app.get(PageUrls.GET_TRIBUNAL_ORDER_DOCUMENT, new TribunalOrderDocumentController().get);
   }
 }

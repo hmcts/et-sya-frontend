@@ -33,6 +33,7 @@
   "viewed": "Viewed",
   "important": "Important",
   "notViewedYet": "Not viewed yet",
+  "notStartedYet": "Not started yet",
   "notAvailableYet": "Not available yet",
   "inProgress": "In progress",
   "waitingForTheTribunal": "Waiting for the tribunal",
@@ -70,6 +71,11 @@
       "p1": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
       "p1a": " at the latest.",
       "link": "Respond to the application"
+    },
+    "orderOrRequest": {
+      "responseRequired": "The tribunal has sent you a notification: ",
+      "noResponseRequired": "The tribunal has sent you a notification",
+      "link": "View the notification"
     }
   }
 }

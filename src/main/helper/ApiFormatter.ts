@@ -184,6 +184,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
       ),
     ],
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
+    sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
   };
 }
 

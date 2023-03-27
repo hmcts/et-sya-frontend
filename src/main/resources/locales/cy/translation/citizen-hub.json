@@ -32,10 +32,10 @@
   "documents": "Pob dogfen",
   "inProgress": "Yn mynd rhagddo",
   "notViewedYet": "Heb ei weld eto",
+  "notStartedYet": "Welsh Translation required",
   "notAvailableYet": "Welsh Translation required",
   "completed": "Wedi’i gwblhau",
   "submitted": "Wedi'i gyflwyno",
-
   "viewed": "Wedi’i weld",
   "important": "Pwysig",
   "optional": "Dewisol",
@@ -73,6 +73,11 @@
       "p1TypeB": "Welsh Translation required",
       "p1": "Welsh Translation required",
       "p1a": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "orderOrRequest": {
+      "responseRequired": "Welsh Translation required",
+      "noResponseRequired": "Welsh Translation required",
       "link": "Welsh Translation required"
     }
   }

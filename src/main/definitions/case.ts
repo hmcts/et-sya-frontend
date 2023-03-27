@@ -9,6 +9,7 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
+import {SendNotificationTypeItem} from "./complexTypes/sendNotificationTypeItem";
 
 export enum Checkbox {
   Checked = 'checked',
@@ -173,6 +174,9 @@ export interface Case {
   respondToApplicationText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
+  sendNotificationCollection?: SendNotificationTypeItem[];
+  //Created for saving select order or request value;
+  selectedRequestOrOrder?: SendNotificationTypeItem;
 }
 
 export const enum StillWorking {

@@ -207,5 +207,24 @@ export const mockedApiData: CaseApiDataResponse = {
         },
       },
     ],
+    sendNotificationCollection: [
+      {
+        id: '123',
+        value: {
+          number: '1',
+          sendNotificationTitle: 'title',
+          sendNotificationSelectHearing: 'hearing',
+          date: '2019-05-03',
+          sentBy: 'Tribunal',
+          sendNotificationCaseManagement: 'Order',
+          sendNotificationResponseTribunal: 'required',
+          sendNotificationSelectParties: 'Both',
+          sendNotificationAdditionalInfo: 'additional info',
+          sendNotificationWhoCaseOrder: 'Legal officer',
+          sendNotificationFullName: 'Judge Dredd',
+          sendNotificationNotify: 'Both',
+        },
+      },
+    ],
   },
 };
