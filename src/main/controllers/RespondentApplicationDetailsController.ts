@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -31,7 +31,7 @@ export default class RespondentApplicationDetailsController {
     );
 
     let respondButton = true;
-    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === Cla).length > 0) {
+    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length > 0) {
       respondButton = false;
     }
 
