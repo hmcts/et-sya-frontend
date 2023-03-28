@@ -1,5 +1,4 @@
 import { CaseType, CaseTypeId, YesOrNo } from '../case';
-import { SendNotificationTypeItem } from '../complexTypes/SendNotificationTypeItem';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
