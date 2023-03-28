@@ -2,7 +2,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -63,7 +63,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = item.value.type;
       item.linkValue = translations.sections[app].caption;
       item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
   }
@@ -117,7 +117,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = translations[item.value.type];
       item.linkValue = app;
       item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
     return items;

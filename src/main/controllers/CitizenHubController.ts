@@ -6,7 +6,7 @@ import {
   HubLinkNames,
   HubLinkStatus,
   HubLinksStatuses,
-  hubLinksColorMap,
+  statusColorMap,
   hubLinksUrlMap,
   sectionIndexToLinkNames,
 } from '../definitions/hub';
@@ -97,7 +97,7 @@ export default class CitizenHubController {
             status: (l: AnyRecord): string => l[status],
             shouldShow: status !== HubLinkStatus.NOT_YET_AVAILABLE && status !== HubLinkStatus.WAITING_FOR_TRIBUNAL,
             url: () => hubLinksUrlMap.get(linkName),
-            statusColor: () => hubLinksColorMap.get(status),
+            statusColor: () => statusColorMap.get(status),
           };
         }),
       };

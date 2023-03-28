@@ -1,7 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
-import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
@@ -164,7 +164,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         ':orderId',
         `${item.value.number}${getLanguageParam(url)}`
       );
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.notificationState);
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
       item.displayStatus = translations[item.value.notificationState];
     });
     return notifications;
