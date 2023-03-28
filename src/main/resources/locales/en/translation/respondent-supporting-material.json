@@ -1,0 +1,29 @@
+{
+  "hintText": "Respond to an application",
+  "titleResponse": "Provide supporting material",
+  "subTitle": "Consider when providing material that:",
+  "genericGuidanceItem1": "you can upload letters, photos or documents to support your response",
+  "genericGuidanceItem2": "if you are taking a picture of a letter, place it on a flat surface and take the picture from above",
+  "genericGuidanceItem3": "if you are uploading written documents with tracked changes, make sure that tracked changes are turned on",
+  "boxLabel": "Use this box to provide any supporting material. You can also upload a file if you wish.",
+  "remove": "Remove",
+  "noFilesUpload": "<p class=\"govuk-body\">No files uploaded</p>",
+  "uploadFileButton": "Upload file",
+  "files": {
+    "title": "Upload a file",
+    "button": "Upload file",
+    "uploaded": "Files uploaded"
+  },
+  "errors": {
+    "respondToApplicationText": {
+      "required": "Use the text box or file upload to give details",
+      "tooLong": "Give details (free text) must be entered as 2500 characters or less"
+    },
+    "supportingMaterialFile": {
+      "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
+      "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",
+      "invalidFileSize": "The file you are trying to upload has exceeded the maximum file size limit, please reduce the size of the file.",
+      "backEndError": "There was an error uploading your file. Please try again. If this error persists please contact support."
+    }
+  }
+}

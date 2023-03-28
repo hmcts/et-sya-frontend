@@ -34,6 +34,7 @@
   "important": "Important",
   "notViewedYet": "Not viewed yet",
   "notAvailableYet": "Not available yet",
+  "inProgress": "In progress",
   "waitingForTheTribunal": "Waiting for the tribunal",
   "submittedAndViewed": "Submitted",
   "submittedAlert": "You have submitted your claim to the tribunal",
@@ -62,6 +63,13 @@
     "respondentAcknowledgement": {
       "header": "The tribunal has acknowledged the respondent's response.",
       "link": "View the response"
+    },
+    "respondentApplicationReceived": {
+      "header": "The respondent has applied to ",
+      "p1TypeB": "You do not need to respond to this application.",
+      "p1": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
+      "p1a": " at the latest.",
+      "link": "Respond to the application"
     }
   }
 }

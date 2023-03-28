@@ -9,6 +9,8 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
+import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
+import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -26,7 +28,12 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
+import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
+import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
+import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -51,9 +58,16 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
+import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
+import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
+import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
+import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
@@ -63,6 +77,9 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitRespondentController from '../../controllers/SubmitRespondentController';
+import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
+import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
@@ -73,6 +90,7 @@ import VideoHearingsController from '../../controllers/VideoHearingsController';
 import WhistleblowingClaimsController from '../../controllers/WhistleblowingClaimsController';
 import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
+import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
@@ -82,13 +100,8 @@ const handleUploads = multer({
     fileSize: FILE_SIZE_LIMIT,
   },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    const fileSize = parseInt(req.headers['content-length']);
-    if (fileSize > FILE_SIZE_LIMIT) {
-      req.fileTooLarge = true;
-      return callback(null, false);
-    } else {
-      return callback(null, true);
-    }
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    return callback(null, !req.fileTooLarge);
   },
 });
 
@@ -217,6 +230,23 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new SupportingMaterialController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
+    app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
+    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
+    app.get(InterceptPaths.SUBMIT_RESPONDENT_CYA, new SubmitRespondentController().get);
+    app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
+    app.post(
+      PageUrls.TRIBUNAL_CONTACT_SELECTED,
+      handleUploads.single('contactApplicationFile'),
+      new ContactTheTribunalSelectedController().post
+    );
+    app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
+    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
     app.get(
       Urls.INFO,
       infoRequestHandler({
@@ -228,5 +258,19 @@ export class Routes {
         info: {},
       })
     );
+    app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
+    app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().get);
+    app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
+    app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+    app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
+    app.post(
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
+      handleUploads.single('supportingMaterialFile'),
+      new RespondentSupportingMaterialController().post
+    );
+    app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
   }
 }

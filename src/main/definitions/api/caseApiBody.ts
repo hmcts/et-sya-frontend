@@ -1,3 +1,4 @@
+import { ClaimantTse } from '../complexTypes/ClaimantTse';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -6,9 +7,9 @@ import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
+import { TriageQuestions } from '../complexTypes/triageQuestions';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
-import {TriageQuestions} from "../complexTypes/triageQuestions";
 
 interface CaseDataApiBody {
   caseType: string;
@@ -29,6 +30,7 @@ interface CaseDataApiBody {
   claimantWorkAddressQuestion?: string;
   claimantWorkAddress?: WorkAddressDetails;
   hubLinksStatuses?: HubLinksStatuses;
+  claimantTse?: ClaimantTse;
 }
 
 export interface CreateCaseBody {

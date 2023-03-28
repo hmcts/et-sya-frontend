@@ -1,0 +1,18 @@
+{
+  "title": "Postpone a hearing",
+  "applicationType": "Postpone a hearing",
+  "applicationTitle": "Apply to postpone my hearing",
+  "content": [
+    "<p class=\"govuk-body\">Use this form to ask the tribunal to postpone your hearing to a later date.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>which hearing you want to postpone. If the hearing you want to postpone is listed over multiple days, tell us which day or days you are applying to postpone</li>",
+    "<li>the reason you want to postpone. The tribunal will use this to decide whether to grant your application</li>",
+    "<li>any essential documents to support your application. For example, you may want to upload a medical note or correspondence from a witness who cannot attend</li>",
+    "<li>weekday dates within the next 3 months that you, your witnesses or representatives cannot attend a rescheduled hearing</li>",
+    "<li>the reason you cannot attend on those dates</li>",
+    "</ul>"
+  ]
+}

@@ -1,3 +1,9 @@
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { AnyRecord } from '../../definitions/util-types';
+
+import { getLanguageParam } from './RouterHelpers';
+
 export const answersAddressFormatter = (
   line1?: string,
   line2?: string,
@@ -33,5 +39,48 @@ export const getUploadedFileName = (fileName?: string): string => {
     return fileName;
   } else {
     return '';
+  }
+};
+
+export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
+  items: GenericTseApplicationTypeItem[],
+  url: string,
+  translations: AnyRecord
+): void => {
+  const claimantItems = [];
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.applicant?.includes('Claimant')) {
+        claimantItems[i] = items[i];
+      }
+    }
+  }
+  if (claimantItems && claimantItems.length) {
+    claimantItems.forEach(item => {
+      const app = item.value.type;
+      item.linkValue = translations.sections[app].caption;
+      item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.displayStatus = translations[item.value.applicationState];
+    });
+  }
+};
+
+export const getApplicationRespondByDate = (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord
+): string => {
+  if (selectedApplication) {
+    const dueDate = new Date(Date.parse(selectedApplication.value.dueDate));
+    const dateString =
+      translations.days[dueDate.getDay()] +
+      ' ' +
+      dueDate.getDate() +
+      ' ' +
+      translations.months[dueDate.getMonth()] +
+      ' ' +
+      dueDate.getFullYear();
+
+    return dateString;
   }
 };

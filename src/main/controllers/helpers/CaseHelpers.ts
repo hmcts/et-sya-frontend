@@ -55,15 +55,31 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateHubLinksStatuses = (req: AppRequest, logger: Logger): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .updateHubLinksStatuses(req.session.userCase)
-    .then(() => {
-      logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
-    })
-    .catch(error => {
-      logger.error(error.message);
-    });
+export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+    logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitClaimantTse(req.session.userCase);
+    logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const respondToApplication = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).respondToApplication(req.session.userCase);
+    logger.info(`Responded to application for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 export const getSectionStatus = (
@@ -120,7 +136,7 @@ export const handleUploadDocument = async (
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
       req.session.user?.accessToken
-    ).uploadDocument(file, 'ET_EnglandWales');
+    ).uploadDocument(file, req.session.userCase?.caseTypeId);
     logger.info(`Uploaded document to: ${result.data._links.self.href}`);
     return result;
   } catch (err) {

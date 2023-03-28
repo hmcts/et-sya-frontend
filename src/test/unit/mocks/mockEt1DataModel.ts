@@ -19,14 +19,14 @@ export const mockEt1DataModel = {
     claimantRepresentedQuestion: 'Yes',
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
     triageQuestions: {
-      acasMultiple: "Yes",
-      validNoAcasReason: "Reason",
-      caseType: "Single",
-      claimantRepresentedQuestion: "Yes",
-      postcode: "SW1A 1AA",
-      typesOfClaim: ["discrimination", "payRelated",]
+      acasMultiple: 'Yes',
+      validNoAcasReason: 'Reason',
+      caseType: 'Single',
+      claimantRepresentedQuestion: 'Yes',
+      postcode: 'SW1A 1AA',
+      typesOfClaim: ['discrimination', 'payRelated'],
     },
-  caseSource: 'ET1 Online',
+    caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'Bobby',
       claimant_last_name: 'Ryan',
@@ -240,7 +240,7 @@ export const mockHubLinkStatusesRequest = {
   case_id: '1234',
   case_type_id: {},
   hub_links_statuses: {
-    contactTribunal: HubLinkStatus.NOT_YET_AVAILABLE,
+    contactTribunal: HubLinkStatus.OPTIONAL,
     documents: HubLinkStatus.NOT_YET_AVAILABLE,
     et1ClaimForm: HubLinkStatus.SUBMITTED,
     hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,

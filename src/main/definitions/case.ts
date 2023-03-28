@@ -1,3 +1,4 @@
+import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -161,6 +162,17 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
+  // TSE
+  contactApplicationType?: string;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
+  copyToOtherPartyYesOrNo?: YesOrNo;
+  copyToOtherPartyText?: string;
+  genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  respondToApplicationText?: string;
+  hasSupportingMaterial?: YesOrNo;
+  supportingMaterialFile?: Document;
 }
 
 export const enum StillWorking {
@@ -252,7 +264,7 @@ export const enum CaseDataCacheKey {
   TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
   ACAS_MULTIPLE = 'acasMultiple',
-  VALID_NO_ACAS_REASON = 'validNoAcasReason'
+  VALID_NO_ACAS_REASON = 'validNoAcasReason',
 }
 
 export const enum HearingPreference {
@@ -265,4 +277,6 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
+  document_size?: number;
+  document_mime_type?: string;
 }

@@ -1,5 +1,6 @@
 import { YesOrNo } from '../../../main/definitions/case';
-import { ApplicationTableRecord, CaseState } from '../../../main/definitions/definition';
+import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { ApplicationTableRecord, CaseState, RespondentApplicationDetails } from '../../../main/definitions/definition';
 
 export const mockApplications: ApplicationTableRecord[] = [
   {
@@ -62,5 +63,61 @@ export const mockApplications: ApplicationTableRecord[] = [
     respondents: 'Globo Corp',
     completionStatus: '0 of 4 tasks completed',
     url: '/citizen-hub/1234567?lng=en',
+  },
+];
+
+export const mockRespondentApplications: RespondentApplicationDetails[] = [
+  {
+    respondentApplicationHeader: 'The respondent has applied to amend response',
+    respondToRespondentAppRedirectUrl: '/respondent-application-details/1?lng=en',
+    copyToOtherPartyYesOrNo: 'Yes',
+    applicationType: 'A',
+    number: '1',
+  },
+  {
+    respondentApplicationHeader: 'The respondent has applied to change personal details',
+    respondToRespondentAppRedirectUrl: '/respondent-application-details/2?lng=en',
+    copyToOtherPartyYesOrNo: 'Yes',
+    applicationType: 'B',
+    number: '2',
+  },
+  {
+    respondentApplicationHeader: 'The respondent has applied to tell the tribunal the claimant has not complied',
+    respondToRespondentAppRedirectUrl: '/respondent-application-details/3?lng=en',
+    copyToOtherPartyYesOrNo: 'No',
+    applicationType: 'A',
+    number: '3',
+  },
+  {
+    respondentApplicationHeader: 'The respondent has applied to consider a decision afresh',
+    respondToRespondentAppRedirectUrl: '/respondent-application-details/4?lng=en',
+    copyToOtherPartyYesOrNo: 'No',
+    applicationType: 'B',
+    number: '4',
+  },
+];
+
+export const mockRespondentApplicationDetails: GenericTseApplicationTypeItem[] = [
+  {
+    value: {
+      date: '7 March 2023',
+      type: 'Amend response',
+      number: '1',
+      details: 'Amend response text',
+      applicant: 'Respondent',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+    },
+    linkValue: 'Amend response',
+  },
+  {
+    value: {
+      date: '13 March 2023',
+      type: 'Change personal details',
+      number: '2',
+      details: 'Change personal details text',
+      applicant: 'Respondent',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+    },
+    linkValue: 'Change personal details',
   },
 ];

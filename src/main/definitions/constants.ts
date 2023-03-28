@@ -82,10 +82,24 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
+  APPLICATION_COMPLETE: 'application-complete',
+  RESPOND_TO_APPLICATION_COMPLETE: 'respond-to-application-complete',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  CONTACT_APPLICATION: 'contact-application',
+  COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
+  CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
+  APPLICATION_DETAILS: 'application-details',
+  YOUR_APPLICATIONS: 'your-applications',
+  RESPOND_TO_APPLICATION: 'respond-to-application',
+  RESPONDENT_APPLICATIONS: 'respondent-applications',
+  RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
+  RESPONDENT_SUPPORTING_MATERIAL: 'respondent-supporting-material',
+  RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
 } as const;
 
 export const PageUrls = {
@@ -160,9 +174,27 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial',
+  CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
+  REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  CONTACT_APPLICATION: '/contact-application',
+  COPY_TO_OTHER_PARTY: '/copy-to-other-party',
+  CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
+  APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
+  APPLICATION_DETAILS: '/application-details/:appId',
+  RESPOND_TO_APPLICATION_SELECTED: '/respond-to-application/:appId',
+  RESPOND_TO_APPLICATION: '/respond-to-application',
+  YOUR_APPLICATIONS: '/your-applications',
+  RESPONDENT_APPLICATIONS: '/respondent-applications',
+  RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',
+  RESPONDENT_SUPPORTING_MATERIAL: '/respondent-supporting-material/:appId',
+  REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
+  RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
+  RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
 } as const;
 
 export const InterceptPaths = {
@@ -170,6 +202,9 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file',
+  SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
+  SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
 } as const;
 
 export const ErrorPages = {
@@ -194,6 +229,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
@@ -386,6 +422,7 @@ export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+export const CHANGE = 'Change';
 
 export const languages = {
   WELSH: 'cy',
@@ -395,3 +432,9 @@ export const languages = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
+
+export const Rule92Types = {
+  CONTACT: 'Contact',
+  RESPOND: 'Respond',
+  TRIBUNAL: 'Tribunal',
+} as const;
