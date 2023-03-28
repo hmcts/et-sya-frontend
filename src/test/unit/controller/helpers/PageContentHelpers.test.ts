@@ -8,7 +8,7 @@ import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { TranslationKeys } from '../../../../main/definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetails from '../../../../main/resources/locales/en/translation/application-details.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
@@ -62,7 +62,7 @@ describe('returnFormattedAddress', () => {
     const genericTseApplicationType = {
       number: '1',
       applicationState: 'inProgress',
-      applicant: 'Claimant',
+      applicant: CLAIMANT,
       type: 'withdraw',
     } as GenericTseApplicationType;
 
@@ -97,7 +97,7 @@ it('should get Application due date in correct format', () => {
     value: {
       number: '1',
       applicationState: 'inProgress',
-      applicant: 'Claimant',
+      applicant: CLAIMANT,
       type: 'withdraw',
       dueDate: '2023-05-05',
     },

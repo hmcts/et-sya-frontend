@@ -1,4 +1,5 @@
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { CLAIMANT } from '../../definitions/constants';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -50,7 +51,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   const claimantItems = [];
   if (items && items.length) {
     for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.applicant?.includes('Claimant')) {
+      if (items[i].value.applicant?.includes(CLAIMANT)) {
         claimantItems[i] = items[i];
       }
     }

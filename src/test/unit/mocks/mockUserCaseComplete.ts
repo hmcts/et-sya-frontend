@@ -12,6 +12,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
+import { CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -147,7 +148,7 @@ export default {
     {
       id: '124',
       value: {
-        applicant: 'Claimant',
+        applicant: CLAIMANT,
         date: '2019-05-02',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
@@ -156,7 +157,7 @@ export default {
     {
       id: '125',
       value: {
-        applicant: 'Claimant',
+        applicant: CLAIMANT,
         date: '2019-05-03',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',

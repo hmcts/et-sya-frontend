@@ -454,3 +454,5 @@ export const ResponseRequired = {
   YES: 'Yes - view document for details',
   NO: 'No',
 } as const;
+
+export const CLAIMANT = 'Claimant';

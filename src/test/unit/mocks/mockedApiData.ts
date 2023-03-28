@@ -13,7 +13,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { CLAIMANT, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -160,7 +160,7 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '124',
         value: {
-          applicant: 'Claimant',
+          applicant: CLAIMANT,
           date: '2019-05-02',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
@@ -169,7 +169,7 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '125',
         value: {
-          applicant: 'Claimant',
+          applicant: CLAIMANT,
           date: '2019-05-03',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',

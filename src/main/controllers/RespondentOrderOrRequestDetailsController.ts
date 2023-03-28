@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -25,7 +25,7 @@ export default class RespondentOrderOrRequestDetailsController {
       req.url
     )}`;
     let respondButton = true;
-    if (selectedRequestOrOrder.value.respondCollection?.filter(r => r.value.from === 'Claimant').length > 0) {
+    if (selectedRequestOrOrder.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length > 0) {
       respondButton = false;
     }
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;

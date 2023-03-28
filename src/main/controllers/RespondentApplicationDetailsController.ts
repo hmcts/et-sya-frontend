@@ -31,7 +31,7 @@ export default class RespondentApplicationDetailsController {
     );
 
     let respondButton = true;
-    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === 'Claimant').length > 0) {
+    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === Cla).length > 0) {
       respondButton = false;
     }
 

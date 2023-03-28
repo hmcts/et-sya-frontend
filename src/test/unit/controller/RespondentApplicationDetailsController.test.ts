@@ -5,7 +5,7 @@ import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
 } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -33,7 +33,7 @@ describe('Respondent application details', () => {
               {
                 id: '1',
                 value: {
-                  from: 'Claimant',
+                  from: CLAIMANT,
                 },
               },
             ],
