@@ -54,9 +54,7 @@ Scenario('Claim while working for organisation when notice period is for 3 month
   I.checkOption('input[id=employee-benefits]');
   I.click('#main-form-submit');
   authPage.logout();
-})
-  .tag('@RET-1130')
-  .tag(' @RET-BAT');
+}).tag('@RET-1130');
 
 Scenario('Claim while working for organisation when notice period is for 2 weeks', () => {
   I.amOnPage(testUrl);

@@ -8,13 +8,14 @@ import { AnyRecord } from '../definitions/util-types';
 import { getPageContent } from './helpers/FormHelpers';
 import {
   activateRespondentApplicationsLink,
+  getRespondentApplications,
   populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
-} from './helpers/PageContentHelpers';
+} from './helpers/TseRespondentApplicationHelpers';
 
 export default class RespondentApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const tseGenericApps = userCase?.genericTseApplicationCollection;
+    const respondentApplications = getRespondentApplications(userCase);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
@@ -22,8 +23,8 @@ export default class RespondentApplicationsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    activateRespondentApplicationsLink(tseGenericApps, req);
-    populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
+    activateRespondentApplicationsLink(respondentApplications, userCase);
+    populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(respondentApplications, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -32,7 +33,7 @@ export default class RespondentApplicationsController {
 
     res.render(TranslationKeys.RESPONDENT_APPLICATIONS, {
       ...content,
-      tseGenericApps,
+      respondentApplications,
       translations,
     });
   };

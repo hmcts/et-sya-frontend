@@ -1,8 +1,7 @@
-import { AppRequest } from '../../definitions/appRequest';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
+import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -66,17 +65,6 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
       item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
-  }
-};
-
-export const activateRespondentApplicationsLink = (items: GenericTseApplicationTypeItem[], req: AppRequest): void => {
-  const userCase = req.session?.userCase;
-  if (items && items.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
-        userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
-      }
-    }
   }
 };
 
