@@ -1,6 +1,4 @@
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { applicationTypes } from '../../definitions/contact-applications';
-import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -84,66 +82,5 @@ export const getApplicationRespondByDate = (
       dueDate.getFullYear();
 
     return dateString;
-  }
-};
-
-export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
-  items: GenericTseApplicationTypeItem[],
-  url: string,
-  translations: AnyRecord
-): GenericTseApplicationTypeItem[] => {
-  const respondentItems = [];
-  if (items && items.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.applicant.includes('Respondent') && items[i].value.copyToOtherPartyYesOrNo.includes('Yes')) {
-        respondentItems[i] = items[i];
-      }
-    }
-  }
-  if (respondentItems && respondentItems.length) {
-    respondentItems.forEach(item => {
-      const app = translations[item.value.type];
-      item.linkValue = app;
-      item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
-      item.displayStatus = translations[item.value.applicationState];
-    });
-    return items;
-  }
-};
-
-export const getRespondentApplicationDetails = (
-  items: GenericTseApplicationTypeItem[],
-  translations: AnyRecord,
-  languageParam: string
-): RespondentApplicationDetails[] => {
-  const bannerContent: RespondentApplicationDetails[] = [];
-
-  if (items && items.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      const dueDate = new Date(Date.parse(items[i].value.dueDate));
-      const rec: RespondentApplicationDetails = {
-        respondentApplicationHeader:
-          translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
-        respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${languageParam}`,
-        applicant: items[i].value.applicant,
-        copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
-        respondByDate:
-          translations.days[dueDate.getDay()] +
-          ' ' +
-          dueDate.getDate() +
-          ' ' +
-          translations.months[dueDate.getMonth()] +
-          ' ' +
-          dueDate.getFullYear(),
-        applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
-        number: items[i].value.number,
-        applicationState: items[i].value.applicationState,
-        date: items[i].value.date,
-        type: items[i].value.type,
-      };
-      bannerContent.push(rec);
-    }
-    return bannerContent;
   }
 };
