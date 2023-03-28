@@ -6,9 +6,9 @@ import {
   HubLinkNames,
   HubLinkStatus,
   HubLinksStatuses,
-  statusColorMap,
   hubLinksUrlMap,
   sectionIndexToLinkNames,
+  statusColorMap,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
@@ -19,7 +19,6 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { activateRespondentApplicationsLink, getRespondentApplicationDetails } from './helpers/PageContentHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterNotificationsWithRequestsOrOrders,
