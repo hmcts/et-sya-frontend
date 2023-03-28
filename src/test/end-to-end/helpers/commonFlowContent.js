@@ -72,20 +72,25 @@ async function verifyWhoCanActAsARepresentativeGuidanceText() {
 
 async function verifyHowToFindARepresentativeGuidanceText() {
   I.see('The following links open in a new tab');
-  I.see('Find a solicitor in England and Wales\n(opens in new tab)\n – list of solicitors run by The Law Society');
-  I.see('Find a solicitor in Scotland\n(opens in new tab)\n – database of solicitors run The Law Society of Scotland');
+  I.seeElement("//a[.='Find a solicitor in England and Wales(opens in new tab)']");
+  I.see('– list of solicitors run by The Law Society');
+  I.seeElement("//a[.='Find a solicitor in Scotland(opens in new tab)']");
+  I.see('– charity providing legal advice, case preparation and advocacy');
+  I.seeElement("//a[.='Free Representation Unit (FRU)(opens in new tab)']");
   I.see(
-    'Free Representation Unit (FRU)\n(opens in new tab)\n – charity providing legal advice, case preparation and advocacy'
+    '– charity providing legal advice, case preparation and advocacy for people not eligible for legal aid or who cannot afford lawyers (this service is not available in Scotland)'
   );
-  I.see('for people not eligible for legal aid or who cannot afford lawyers (this service is not available in');
-  I.see('Scotland)');
-  I.see('In Scotland, some university law clinics can provide advice and represenation. You can find a list');
-  I.see('at The Scottish University Law Clinic Network (SULCN)\n(opens in new tab)\n');
-  I.see('local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford');
-  I.see('lawyers.');
-  I.see('A trade union may also be able to pay for a solicitor and free legal advice is available from Citizens');
-  I.see('Advice\n(opens in new tab)\n or Citizens Advice Scotland\n(opens in new tab)\n.');
-  I.see('The Equality Advisory and Support Service\n(opens in new tab)\n can help with discrimination claims.');
+  I.see('In Scotland, some university law clinics can provide advice and represenation. You can find a list at');
+  I.seeElement("//a[.='The Scottish University Law Clinic Network (SULCN)(opens in new tab)']");
+  I.see(
+    'local ‘law centres’ – not-for-profit legal practices providing legal aid for people who cannot afford lawyers.'
+  );
+  I.see('A trade union may also be able to pay for a solicitor and free legal advice is available from');
+  I.seeElement("//a[.='Citizens Advice(opens in new tab)']");
+  I.see('or');
+  I.seeElement("//a[.='Citizens Advice Scotland(opens in new tab)']");
+  I.seeElement("//a[.='Equality Advisory and Support Service(opens in new tab)']");
+  I.see('can help with discrimination claims.');
   I.see('Some people may also be able to get help to pay for legal advice through legal aid.');
 }
 
