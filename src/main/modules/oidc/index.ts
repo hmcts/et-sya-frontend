@@ -72,9 +72,9 @@ export const idamCallbackHandler = async (
   }
 
   //For now if user account does not have the citizen role redirect to login
-  // if (!req.session.user?.isCitizen) {
-  //   return res.redirect(AuthUrls.LOGIN);
-  // }
+  if (!req.session.user?.isCitizen) {
+    return res.redirect(AuthUrls.LOGIN);
+  }
 
   const state = String(req.query?.state);
   const guid = state.substring(0, state.lastIndexOf('-'));
