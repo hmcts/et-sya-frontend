@@ -1,6 +1,6 @@
 import ApplicationDetailsController from '../../../main/controllers/ApplicationDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../../../main/definitions/constants';
 import applicationDetails from '../../../main/resources/locales/en/translation/application-details.json';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -20,7 +20,7 @@ describe('Claimant Applications Controller', () => {
         {
           id: '1',
           value: {
-            applicant: 'Claimant',
+            applicant: CLAIMANT,
             date: '2022-05-05',
             type: 'Amend my claim',
             copyToOtherPartyText: 'Yes',

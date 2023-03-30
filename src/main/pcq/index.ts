@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4';
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { CLAIMANT, PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { createToken } from './createToken';
@@ -50,7 +50,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 
       const params: PCQRequest = {
         serviceId: 'ET',
-        actor: 'Claimant',
+        actor: CLAIMANT,
         pcqId: claimantPcqId,
         ccdCaseId: req.session.userCase.id,
         partyId: req.session.user?.email ? req.session.user.email : 'anonymous',

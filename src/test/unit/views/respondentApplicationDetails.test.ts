@@ -17,7 +17,7 @@ const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-
 const summaryListClass = 'govuk-summary-list__value';
 const summaryListHeadingClass = 'govuk-summary-list__key';
 
-const reqUrl = '/respondent-application-details/1';
+const reqUrl = '/respondent-application-details/abc123';
 
 const expectedRowHeader1 = respondentApplicationDetailsJSON.applicant;
 const expectedRowHeader2 = respondentApplicationDetailsJSON.requestDate;

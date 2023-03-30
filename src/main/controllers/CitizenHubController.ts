@@ -6,9 +6,9 @@ import {
   HubLinkNames,
   HubLinkStatus,
   HubLinksStatuses,
-  hubLinksColorMap,
   hubLinksUrlMap,
   sectionIndexToLinkNames,
+  statusColorMap,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
@@ -20,6 +20,11 @@ import { getCaseApi } from '../services/CaseService';
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import {
+  activateTribunalOrdersAndRequestsLink,
+  filterNotificationsWithRequestsOrOrders,
+  populateNotificationsWithRedirectLinksAndStatusColors,
+} from './helpers/TribunalOrderOrRequestHelper';
 import {
   activateRespondentApplicationsLink,
   getRespondentApplications,
@@ -54,12 +59,15 @@ export default class CitizenHubController {
 
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
+    const sendNotificationCollection = userCase?.sendNotificationCollection;
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
     const hubLinksStatuses = userCase.hubLinksStatuses;
+    activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
+
     // Mark respondent's response as waiting for the tribunal
     if (
       hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
@@ -92,7 +100,7 @@ export default class CitizenHubController {
             status: (l: AnyRecord): string => l[status],
             shouldShow: status !== HubLinkStatus.NOT_YET_AVAILABLE && status !== HubLinkStatus.WAITING_FOR_TRIBUNAL,
             url: () => hubLinksUrlMap.get(linkName),
-            statusColor: () => hubLinksColorMap.get(status),
+            statusColor: () => statusColorMap.get(status),
           };
         }),
       };
@@ -103,6 +111,9 @@ export default class CitizenHubController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
+
+    const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
+    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
 
@@ -119,6 +130,7 @@ export default class CitizenHubController {
       currentState,
       sections,
       respondentBannerContent,
+      notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert:
@@ -142,6 +154,7 @@ export default class CitizenHubController {
         !!userCase?.responseAcknowledgementDocumentDetail?.length &&
         hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
+      showOrderOrRequestReceived: notifications && notifications.length,
     });
   }
 }

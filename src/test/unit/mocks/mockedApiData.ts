@@ -13,7 +13,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
+import { CLAIMANT, TYPE_OF_CLAIMANT } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -160,7 +160,7 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '124',
         value: {
-          applicant: 'Claimant',
+          applicant: CLAIMANT,
           date: '2019-05-02',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
@@ -169,7 +169,7 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '125',
         value: {
-          applicant: 'Claimant',
+          applicant: CLAIMANT,
           date: '2019-05-03',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
@@ -204,6 +204,25 @@ export const mockedApiData: CaseApiDataResponse = {
             document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
           },
           shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+        },
+      },
+    ],
+    sendNotificationCollection: [
+      {
+        id: '123',
+        value: {
+          number: '1',
+          sendNotificationTitle: 'title',
+          sendNotificationSelectHearing: 'hearing',
+          date: '2019-05-03',
+          sentBy: 'Tribunal',
+          sendNotificationCaseManagement: 'Order',
+          sendNotificationResponseTribunal: 'required',
+          sendNotificationSelectParties: 'Both',
+          sendNotificationAdditionalInfo: 'additional info',
+          sendNotificationWhoCaseOrder: 'Legal officer',
+          sendNotificationFullName: 'Judge Dredd',
+          sendNotificationNotify: 'Both',
         },
       },
     ],

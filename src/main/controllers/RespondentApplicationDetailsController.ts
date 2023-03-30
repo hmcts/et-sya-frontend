@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -30,10 +30,7 @@ export default class RespondentApplicationDetailsController {
       req.params.appId
     );
 
-    let respondButton = true;
-    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === 'Claimant').length > 0) {
-      respondButton = false;
-    }
+    const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === CLAIMANT);
 
     const savedApplication = req.session.userCase.selectedGenericTseApplication;
 

@@ -1,0 +1,18 @@
+{
+  "hearing": "Hearing",
+  "dateSent": "Date sent",
+  "sentBy": "Sent by",
+  "orderOrRequest": "Case management order or request?",
+  "responseDue": "Response due",
+  "partyToRespond": "Party or parties to respond",
+  "addInfo": "Additional information",
+  "description": "Description",
+  "document": "Document",
+  "orderMadeBy": "Case management order made by",
+  "requestMadeBy": "Request made by",
+  "fullName": "Full name",
+  "sentTo": "Sent to",
+  "eccNotification": "What is the ECC notification?",
+  "tips": "You must respond to the tribunal",
+  "respond": "Respond"
+}

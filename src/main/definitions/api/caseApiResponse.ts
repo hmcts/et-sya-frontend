@@ -7,6 +7,7 @@ import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { GenericTseApplicationTypeItem } from '../complexTypes/genericTseApplicationTypeItem';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
+import { SendNotificationTypeItem } from '../complexTypes/sendNotificationTypeItem';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { CaseState } from '../definition';
@@ -63,6 +64,7 @@ export interface CaseData {
   et3ResponseContestClaimDocument?: DocumentApiModel[];
   claimServedDate?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  sendNotificationCollection?: SendNotificationTypeItem[];
 }
 
 export interface RespondentApiModel {

@@ -2,7 +2,7 @@ import { CaseWithId } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, hubLinksColorMap } from '../../definitions/hub';
+import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getLanguageParam } from './RouterHelpers';
@@ -30,7 +30,7 @@ export const getRespondentBannerContent = (
         const rec: RespondentApplicationDetails = {
           respondentApplicationHeader:
             translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
-          respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${languageParam}`,
+          respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].id}${languageParam}`,
           applicant: items[i].value.applicant,
           copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
           respondByDate:
@@ -73,7 +73,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = translations[item.value.type];
       item.linkValue = app;
       item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
-      item.statusColor = hubLinksColorMap.get(<HubLinkStatus>item.value.applicationState);
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
     return respondentItems;

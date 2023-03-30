@@ -45,9 +45,10 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
   [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+  [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
 ]);
 
-export const hubLinksColorMap = new Map<HubLinkStatus, string>([
+export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
   [HubLinkStatus.SUBMITTED, '--turquoise'],
   [HubLinkStatus.OPTIONAL, '--blue'],
