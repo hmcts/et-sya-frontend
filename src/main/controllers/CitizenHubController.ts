@@ -90,7 +90,7 @@ export default class CitizenHubController {
       userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
     }
 
-    const sections = Array.from(Array(8)).map((__ignored, index) => {
+    const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
         links: sectionIndexToLinkNames[index].map(linkName => {

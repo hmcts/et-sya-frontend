@@ -1,7 +1,6 @@
 import { PageUrls } from './constants';
 
 export enum HubLinkNames {
-  PersonalDetails = 'personalDetails',
   Et1ClaimForm = 'et1ClaimForm',
   RespondentResponse = 'respondentResponse',
   HearingDetails = 'hearingDetails',
@@ -62,7 +61,6 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
-  [HubLinkNames.PersonalDetails],
   [HubLinkNames.Et1ClaimForm],
   [HubLinkNames.RespondentResponse],
   [HubLinkNames.HearingDetails],
