@@ -22,8 +22,7 @@ export default class TribunalOrderOrRequestDetailsController {
     const redirectUrl = `/respondent-order-or-request-details/${selectedRequestOrOrder.value.number}${getLanguageParam(
       req.url
     )}`;
-    const respondButton =
-      selectedRequestOrOrder.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length === 0;
+    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
     if (documents && documents.length) {
       for (const it of documents) {
