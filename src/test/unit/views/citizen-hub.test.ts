@@ -191,7 +191,7 @@ describe('Citizen hub page', () => {
     it.each([
       { selector: greenTagSelector, expectedText: 'Completed', expectedCount: 1 },
       { selector: turquoiseTagSelector, expectedText: 'Viewed', expectedCount: 1 },
-      { selector: turquoiseTagSelector, expectedText: 'Submitted', expectedCount: 2 },
+      { selector: turquoiseTagSelector, expectedText: 'Submitted', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Not available yet', expectedCount: 1 },
       { selector: greyTagSelector, expectedText: 'Waiting for the tribunal', expectedCount: 1 },
       { selector: blueTagSelector, expectedText: 'Optional', expectedCount: 4 },
