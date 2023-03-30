@@ -60,7 +60,7 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
     claimantItems.forEach(item => {
       const app = item.value.type;
       item.linkValue = translations.sections[app].caption;
-      item.redirectUrl = `/application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.redirectUrl = `/application-details/${item.id}${getLanguageParam(url)}`;
       item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });

@@ -160,9 +160,9 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
 ): SendNotificationTypeItem[] => {
   if (notifications && notifications.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
     notifications.forEach(item => {
-      item.redirectUrl = PageUrls.RESPONDENT_ORDER_OR_REQUEST_DETAILS.replace(
+      item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
         ':orderId',
-        `${item.value.number}${getLanguageParam(url)}`
+        `${item.id}${getLanguageParam(url)}`
       );
       item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
       item.displayStatus = translations[item.value.notificationState];

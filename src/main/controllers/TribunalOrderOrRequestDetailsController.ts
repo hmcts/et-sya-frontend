@@ -8,15 +8,13 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { getRepondentOrderOrRequestDetails } from './helpers/RespondentOrderOrRequestHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
-export default class RespondentOrderOrRequestDetailsController {
+export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(
-      it => it.value.number === req.params.orderId
-    );
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
@@ -24,10 +22,8 @@ export default class RespondentOrderOrRequestDetailsController {
     const redirectUrl = `/respondent-order-or-request-details/${selectedRequestOrOrder.value.number}${getLanguageParam(
       req.url
     )}`;
-    let respondButton = true;
-    if (selectedRequestOrOrder.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length > 0) {
-      respondButton = false;
-    }
+    const respondButton =
+      selectedRequestOrOrder.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length === 0;
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
     if (documents && documents.length) {
       for (const it of documents) {
@@ -41,16 +37,16 @@ export default class RespondentOrderOrRequestDetailsController {
     }
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.RESPONDENT_ORDER_OR_REQUEST_DETAILS,
+      TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
     ]);
 
-    res.render(TranslationKeys.RESPONDENT_ORDER_OR_REQUEST_DETAILS, {
+    res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
       ...content,
       respondButton,
       orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),

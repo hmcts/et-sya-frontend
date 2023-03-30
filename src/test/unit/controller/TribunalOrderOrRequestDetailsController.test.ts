@@ -1,9 +1,9 @@
-import RespondentOrderOrRequestDetailsController from '../../../main/controllers/RespondentOrderOrRequestDetailsController';
+import TribunalOrderOrRequestDetailsController from '../../../main/controllers/TribunalOrderOrRequestDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { SendNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
-import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/respondent-order-or-request-details.json';
+import respondentOrderOrRequestDetailsRaw from '../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -25,10 +25,10 @@ describe('Respondent order or request details Controller', () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({ userCase }, translationJsons);
 
-    const controller = new RespondentOrderOrRequestDetailsController();
+    const controller = new TribunalOrderOrRequestDetailsController();
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(
-      TranslationKeys.RESPONDENT_ORDER_OR_REQUEST_DETAILS,
+      TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
       expect.anything()
     );
   });

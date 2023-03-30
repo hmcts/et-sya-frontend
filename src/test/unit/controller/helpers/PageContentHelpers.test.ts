@@ -67,6 +67,7 @@ describe('returnFormattedAddress', () => {
     } as GenericTseApplicationType;
 
     const item = {
+      id: '1',
       value: genericTseApplicationType,
     } as GenericTseApplicationTypeItem;
     const items = [item];

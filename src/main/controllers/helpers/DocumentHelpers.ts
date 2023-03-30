@@ -71,7 +71,7 @@ export const findSelectedGenericTseApplication = (
   items: GenericTseApplicationTypeItem[],
   param: string
 ): GenericTseApplicationTypeItem => {
-  return items?.find(it => it.value.number === param);
+  return items?.find(it => it.id === param);
 };
 
 export function formatBytes(bytes: number, decimals = 2): string {

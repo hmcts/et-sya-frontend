@@ -3,7 +3,7 @@ import {
   filterNotificationsWithRequestsOrOrders,
   getRepondentOrderOrRequestDetails,
   populateNotificationsWithRedirectLinksAndStatusColors,
-} from '../../../../main/controllers/helpers/RespondentOrderOrRequestHelper';
+} from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import { Document } from '../../../../main/definitions/case';
 import {
   DocumentType,
@@ -15,10 +15,10 @@ import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/def
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
-import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/respondent-order-or-request-details.json';
+import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
-describe('Respondent order or request helper', () => {
+describe('Tribunal order or request helper', () => {
   const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw };
   const req = mockRequestWithTranslation({}, translationJsons);
 
@@ -56,15 +56,16 @@ describe('Respondent order or request helper', () => {
   } as SendNotificationType;
 
   const notificationItem = {
+    id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
     value: notificationType,
   } as SendNotificationTypeItem;
 
   const translations: AnyRecord = {
-    ...req.t(TranslationKeys.RESPONDENT_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+    ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
   };
 
-  it('should return expected respondent order or request details content', () => {
+  it('should return expected tribunal order or request details content', () => {
     const pageContent = getRepondentOrderOrRequestDetails(translations, notificationItem);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
     expect(pageContent[0].value).toEqual({ text: 'Selected hearing' });
@@ -178,7 +179,9 @@ describe('Respondent order or request helper', () => {
       'url',
       translations
     )[0];
-    expect(populatedNotification.redirectUrl).toEqual('/respondent-order-or-request-details/1?lng=en');
+    expect(populatedNotification.redirectUrl).toEqual(
+      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
   });

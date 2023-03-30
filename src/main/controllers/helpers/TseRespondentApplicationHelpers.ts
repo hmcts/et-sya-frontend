@@ -30,7 +30,7 @@ export const getRespondentBannerContent = (
         const rec: RespondentApplicationDetails = {
           respondentApplicationHeader:
             translations.notificationBanner.respondentApplicationReceived.header + translations[items[i].value.type],
-          respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].value.number}${languageParam}`,
+          respondToRespondentAppRedirectUrl: `/respondent-application-details/${items[i].id}${languageParam}`,
           applicant: items[i].value.applicant,
           copyToOtherPartyYesOrNo: items[i].value.copyToOtherPartyYesOrNo,
           respondByDate:

@@ -100,8 +100,8 @@ export const TranslationKeys = {
   RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
   RESPONDENT_SUPPORTING_MATERIAL: 'respondent-supporting-material',
   RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
-  RESPONDENT_ORDERS_AND_REQUESTS: 'respondent-orders-and-requests',
-  RESPONDENT_ORDER_OR_REQUEST_DETAILS: 'respondent-order-or-request-details',
+  TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
+  TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
 } as const;
 
 export const PageUrls = {
@@ -197,8 +197,8 @@ export const PageUrls = {
   REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
   RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
   RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
-  RESPONDENT_ORDERS_AND_REQUESTS: '/respondent-orders-and-requests',
-  RESPONDENT_ORDER_OR_REQUEST_DETAILS: '/respondent-order-or-request-details/:orderId',
+  TRIBUNAL_ORDERS_AND_REQUESTS: '/tribunal-orders-and-requests',
+  TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
 } as const;
 

@@ -19,12 +19,12 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterNotificationsWithRequestsOrOrders,
   populateNotificationsWithRedirectLinksAndStatusColors,
-} from './helpers/RespondentOrderOrRequestHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+} from './helpers/TribunalOrderOrRequestHelper';
 import {
   activateRespondentApplicationsLink,
   getRespondentApplications,

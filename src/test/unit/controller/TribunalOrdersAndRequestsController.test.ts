@@ -1,4 +1,4 @@
-import { RespondentOrdersAndRequestsController } from '../../../main/controllers/RespondentOrdersAndRequestsController';
+import { TribunalOrdersAndRequestsController } from '../../../main/controllers/TribunalOrdersAndRequestsController';
 import {
   SendNotificationType,
   SendNotificationTypeItem,
@@ -26,12 +26,12 @@ describe('Respondent orders and requests Controller', () => {
       },
     ];
 
-    const respondentOrdersAndRequestsController = new RespondentOrdersAndRequestsController();
+    const respondentOrdersAndRequestsController = new TribunalOrdersAndRequestsController();
     const request = mockRequest({});
     request.session.userCase.sendNotificationCollection = notificationItems;
     const response = mockResponse();
 
     await respondentOrdersAndRequestsController.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_ORDERS_AND_REQUESTS, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, expect.anything());
   });
 });

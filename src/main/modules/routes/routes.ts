@@ -66,8 +66,8 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
-import RespondentOrderOrRequestDetailsController from '../../controllers/RespondentOrderOrRequestDetailsController';
-import { RespondentOrdersAndRequestsController } from '../../controllers/RespondentOrdersAndRequestsController';
+import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
+import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -275,8 +275,8 @@ export class Routes {
     );
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
-    app.get(PageUrls.RESPONDENT_ORDERS_AND_REQUESTS, new RespondentOrdersAndRequestsController().get);
-    app.get(PageUrls.RESPONDENT_ORDER_OR_REQUEST_DETAILS, new RespondentOrderOrRequestDetailsController().get);
+    app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
+    app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.GET_TRIBUNAL_ORDER_DOCUMENT, new TribunalOrderDocumentController().get);
   }
 }

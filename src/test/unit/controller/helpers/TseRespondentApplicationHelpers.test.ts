@@ -42,7 +42,7 @@ describe('should get respondent application details', () => {
         respondByDate: 'Sunday 7 May 2023',
         date: '2023-05-01',
         number: '1',
-        respondToRespondentAppRedirectUrl: '/respondent-application-details/1?lng=en',
+        respondToRespondentAppRedirectUrl: '/respondent-application-details/124?lng=en',
         respondentApplicationHeader: 'The respondent has applied to amend my claim',
         applicationState: 'notStartedYet',
         type: 'amend',
@@ -71,6 +71,7 @@ describe('should get respondent application details', () => {
     } as GenericTseApplicationType;
 
     const item = {
+      id: '1',
       value: respondentApp,
     } as GenericTseApplicationTypeItem;
     const items = [item];
