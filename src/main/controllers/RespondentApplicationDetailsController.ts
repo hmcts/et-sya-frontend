@@ -7,7 +7,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
-import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getTseApplicationDecisionDetails, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -52,6 +52,45 @@ export default class RespondentApplicationDetailsController {
       }
     }
 
+    let decisionContent = undefined;
+    const decisionDocDownload = [];
+    const decisionDocDownloadLink = [];
+
+    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
+      for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
+        decisionDocDownload[i] = selectedApplication.value?.adminDecision[i].value.responseRequiredDoc;
+        try {
+          await getDocumentAdditionalInformation(decisionDocDownload[i], req.session.user?.accessToken);
+        } catch (err) {
+          logger.error(err.message);
+          return res.redirect('/not-found');
+        }
+
+        decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
+      }
+      decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    }
+
+    let claimantResponseDocDownload;
+    let claimantResponseDocDownloadLink;
+
+    if (selectedApplication.value?.respondCollection && selectedApplication.value?.respondCollection.length) {
+      for (let i = selectedApplication.value?.respondCollection.length - 1; i >= 0; i--) {
+        if (selectedApplication.value?.respondCollection[i].value.from === 'Claimant') {
+          claimantResponseDocDownload =
+            selectedApplication.value?.respondCollection[i].value.supportingMaterial[0].value.uploadedDocument;
+        }
+      }
+      try {
+        await getDocumentAdditionalInformation(claimantResponseDocDownload, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        return res.redirect('/not-found');
+      }
+
+      claimantResponseDocDownloadLink = createDownloadLink(claimantResponseDocDownload);
+    }
+
     const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -65,7 +104,9 @@ export default class RespondentApplicationDetailsController {
       selectedApplication,
       redirectUrl,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      decisionContent,
       respondButton,
+      claimantResponseDocDownloadLink,
     });
   };
 }

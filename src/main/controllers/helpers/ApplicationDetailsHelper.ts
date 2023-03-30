@@ -71,3 +71,112 @@ export const getTseApplicationDetails = (
         ]),
   ];
 };
+
+export const getTseApplicationDecisionDetails = (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  decisionDocDownloadLink: string[]
+): { key: unknown; value?: unknown; actions?: unknown }[] => {
+  const tseApplicationDecisionDetails = [];
+  let tableTopSpace = '';
+  let notificationSpaced = translations.notification;
+  const latestAdminDecision = selectedApplication.value?.adminDecision.length - 1;
+  for (let i = latestAdminDecision; i >= 0; i--) {
+    if (i !== latestAdminDecision) {
+      notificationSpaced = translations.notificationWithSpace;
+      tableTopSpace = translations.tableTopSpace;
+    }
+    tseApplicationDecisionDetails.push(
+      {
+        key: {
+          html: notificationSpaced,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          html: tableTopSpace,
+          text: selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
+        },
+      },
+      {
+        key: {
+          text: translations.decision,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.decision,
+        },
+      },
+      {
+        key: {
+          text: translations.date,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.date,
+        },
+      },
+      {
+        key: {
+          text: translations.sentBy,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: translations.tribunal,
+        },
+      },
+      {
+        key: {
+          text: translations.decisionType,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.typeOfDecision,
+        },
+      },
+      {
+        key: {
+          text: translations.additionalInfo,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.additionalInformation,
+        },
+      },
+      {
+        key: {
+          text: translations.document,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: { html: decisionDocDownloadLink[i] },
+      },
+      {
+        key: {
+          text: translations.decisionMadeBy,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.decisionMadeBy,
+        },
+      },
+      {
+        key: {
+          text: translations.name,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.decisionMadeByFullName,
+        },
+      },
+      {
+        key: {
+          text: translations.sentTo,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedApplication.value.adminDecision[i].value.selectPartyNotify,
+        },
+      }
+    );
+  }
+  return tseApplicationDecisionDetails;
+};
