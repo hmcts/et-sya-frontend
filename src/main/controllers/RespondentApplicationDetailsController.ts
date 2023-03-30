@@ -30,10 +30,7 @@ export default class RespondentApplicationDetailsController {
       req.params.appId
     );
 
-    let respondButton = true;
-    if (selectedApplication.value.respondCollection?.filter(r => r.value.from === CLAIMANT).length > 0) {
-      respondButton = false;
-    }
+    const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === CLAIMANT);
 
     const savedApplication = req.session.userCase.selectedGenericTseApplication;
 
