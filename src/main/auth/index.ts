@@ -28,7 +28,6 @@ export const getUserDetails = async (
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
   const code = encodeURIComponent(rawCode);
   const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
-
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',
