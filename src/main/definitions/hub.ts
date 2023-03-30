@@ -47,15 +47,16 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
 ]);
 
+const TURQUOISE = '--turquoise';
 export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.COMPLETED, '--green'],
-  [HubLinkStatus.SUBMITTED, '--turquoise'],
+  [HubLinkStatus.SUBMITTED, TURQUOISE],
   [HubLinkStatus.OPTIONAL, '--blue'],
-  [HubLinkStatus.VIEWED, '--turquoise'],
+  [HubLinkStatus.VIEWED, TURQUOISE],
   [HubLinkStatus.NOT_VIEWED, '--red'],
   [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
-  [HubLinkStatus.SUBMITTED_AND_VIEWED, '--turquoise'],
+  [HubLinkStatus.SUBMITTED_AND_VIEWED, TURQUOISE],
   [HubLinkStatus.IN_PROGRESS, '--yellow'],
   [HubLinkStatus.NOT_STARTED_YET, '--red'],
 ]);
