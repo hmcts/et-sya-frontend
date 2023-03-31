@@ -67,29 +67,10 @@ export default class CitizenHubController {
       await handleUpdateHubLinksStatuses(req, logger);
     }
     const hubLinksStatuses = userCase.hubLinksStatuses;
+
     activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
 
-    // Mark respondent's response as waiting for the tribunal
-    if (
-      hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-      userCase.et3ResponseReceived
-    ) {
-      hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
-    }
-
-    if (
-      userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
-      (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
-    ) {
-      userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
-    }
-
-    if (
-      userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED &&
-      (userCase.acknowledgementOfClaimLetterDetail?.length || userCase.rejectionOfClaimDocumentDetail?.length)
-    ) {
-      userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
-    }
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
 
     const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
       return {
@@ -144,6 +125,29 @@ export default class CitizenHubController {
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications && notifications.length,
     });
+  }
+}
+
+function updateHubLinkStatuses(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
+  if (
+    hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
+    userCase.et3ResponseReceived
+  ) {
+    hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
+  }
+
+  if (
+    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
+    (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
+  ) {
+    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
+  }
+
+  if (
+    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED &&
+    (userCase.acknowledgementOfClaimLetterDetail?.length || userCase.rejectionOfClaimDocumentDetail?.length)
+  ) {
+    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
   }
 }
 
