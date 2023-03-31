@@ -37,19 +37,32 @@ export const getDocumentAdditionalInformation = async (doc: Document, accessToke
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
-export const createDownloadLink = (file: Document): string => {
+export const createDownloadLink = (file: Document, multipleFiles?: boolean): string => {
   const mimeType = getFileExtension(file?.document_filename);
   let downloadLink = '';
   if (file && file.document_size && file.document_mime_type && file.document_filename) {
-    downloadLink =
-      "<a href='/getSupportingMaterial' target='_blank' class='govuk-link'>" +
-      file.document_filename +
-      '(' +
-      mimeType +
-      ', ' +
-      formatBytes(file.document_size) +
-      ')' +
-      '</a>';
+    if (multipleFiles) {
+      downloadLink =
+        "<a href='/getTribunalOrderDocument/:docId' target='_blank' class='govuk-link'>" +
+        file.document_filename +
+        '(' +
+        mimeType +
+        ', ' +
+        formatBytes(file.document_size) +
+        ')' +
+        '</a>';
+      downloadLink = downloadLink.replace(':docId', getDocId(file.document_url));
+    } else {
+      downloadLink =
+        "<a href='/getSupportingMaterial' target='_blank' class='govuk-link'>" +
+        file.document_filename +
+        '(' +
+        mimeType +
+        ', ' +
+        formatBytes(file.document_size) +
+        ')' +
+        '</a>';
+    }
   }
   return downloadLink;
 };
@@ -58,7 +71,7 @@ export const findSelectedGenericTseApplication = (
   items: GenericTseApplicationTypeItem[],
   param: string
 ): GenericTseApplicationTypeItem => {
-  return items?.find(it => it.value.number === param);
+  return items?.find(it => it.id === param);
 };
 
 export function formatBytes(bytes: number, decimals = 2): string {

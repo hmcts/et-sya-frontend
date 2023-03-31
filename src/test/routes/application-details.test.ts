@@ -12,6 +12,7 @@ describe(`GET ${pageUrl}`, () => {
         userCase: {
           genericTseApplicationCollection: [
             {
+              id: '1',
               value: {
                 number: '1',
               },

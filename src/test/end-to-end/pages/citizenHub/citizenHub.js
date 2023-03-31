@@ -9,8 +9,6 @@ module.exports = async function () {
   I.see('You have submitted your claim to the tribunal');
   I.see('We aim to process your claim by');
   I.see('In busy periods it may take longer.');
-  I.see('About you');
-  I.see('View and edit your personal details');
   I.see('Your claim');
   I.see('Your ET1 claim form');
   I.see('The response');

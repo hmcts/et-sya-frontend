@@ -1,0 +1,69 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "back-link.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            {{ date }}
+          </th>
+          <th class="govuk-table__header" scope="col">
+            {{ ordersAndRequests }}
+          </th>
+          <th class="govuk-table__header" scope="col">
+            {{ status }}
+          </th>
+        </tr>
+        </thead>
+        {% if notifications !== 'undefined' and notifications.length %}
+          <tbody class="govuk-table__body">
+          {% for notification in notifications %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {{ notification.value.date }}
+              </td>
+              <td class="govuk-table__cell">
+                <a href="{{ getContent(notification.redirectUrl) }}" class="govuk-link">
+                  {{ notification.value.sendNotificationTitle }}
+                </a>
+              </td>
+              <td class="govuk-table__cell">
+                {{ govukTag({
+                  text: notification.displayStatus,
+                  classes: "govuk-tag" + notification.statusColor
+                }) }}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        {% endif %}
+      </table>
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+        {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      <div class="govuk-!-margin-top-2">
+        {{ govukDetails({
+          summaryText: "Contact",
+          html: sideBarContent
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "./footer.njk" %}
+{% endblock %}

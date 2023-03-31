@@ -6,7 +6,7 @@ import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { TranslationKeys } from '../../../../main/definitions/constants';
+import { CLAIMANT, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetails from '../../../../main/resources/locales/en/translation/application-details.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
@@ -21,7 +21,7 @@ describe('should get respondent application details', () => {
       value: {
         number: '1',
         applicationState: 'notStartedYet',
-        applicant: 'Claimant',
+        applicant: CLAIMANT,
         copyToOtherPartyYesOrNo: 'Yes',
         type: 'amend',
         status: 'Open',
@@ -36,13 +36,13 @@ describe('should get respondent application details', () => {
 
     expect(result).toEqual([
       {
-        applicant: 'Claimant',
+        applicant: CLAIMANT,
         applicationType: 'B',
         copyToOtherPartyYesOrNo: 'Yes',
         respondByDate: 'Sunday 7 May 2023',
         date: '2023-05-01',
         number: '1',
-        respondToRespondentAppRedirectUrl: '/respondent-application-details/1?lng=en',
+        respondToRespondentAppRedirectUrl: '/respondent-application-details/124?lng=en',
         respondentApplicationHeader: 'The respondent has applied to amend my claim',
         applicationState: 'notStartedYet',
         type: 'amend',
@@ -71,6 +71,7 @@ describe('should get respondent application details', () => {
     } as GenericTseApplicationType;
 
     const item = {
+      id: '1',
       value: respondentApp,
     } as GenericTseApplicationTypeItem;
     const items = [item];

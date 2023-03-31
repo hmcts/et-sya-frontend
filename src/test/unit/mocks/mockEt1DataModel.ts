@@ -244,7 +244,6 @@ export const mockHubLinkStatusesRequest = {
     documents: HubLinkStatus.NOT_YET_AVAILABLE,
     et1ClaimForm: HubLinkStatus.SUBMITTED,
     hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
-    personalDetails: HubLinkStatus.NOT_YET_AVAILABLE,
     requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,

@@ -40,6 +40,20 @@ it('should create proper download link for TSE CYA', () => {
   expect(mockLink).toStrictEqual(createdLink);
 });
 
+it('should create proper download link for Tribunal Order document viewing', () => {
+  const doc: Document = {
+    document_url: '111',
+    document_filename: 'test.pdf',
+    document_binary_url: '',
+    document_size: 1000,
+    document_mime_type: 'pdf',
+  };
+  const mockLink =
+    "<a href='/getTribunalOrderDocument/111' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
+  const createdLink = createDownloadLink(doc, true);
+  expect(mockLink).toStrictEqual(createdLink);
+});
+
 it('should update document size and mime type values', async () => {
   const doc: Document = {
     document_url: 'test.url',
