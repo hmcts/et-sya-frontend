@@ -47,18 +47,26 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
 ]);
 
-const TURQUOISE = '--turquoise';
+const COLORS = {
+  TURQUOISE: '--turquoise',
+  GREEN: '--green',
+  BLUE: '--blue',
+  RED: '--red',
+  GREY: '--grey',
+  YELLOW: '--yellow',
+};
+
 export const statusColorMap = new Map<HubLinkStatus, string>([
-  [HubLinkStatus.COMPLETED, '--green'],
-  [HubLinkStatus.SUBMITTED, TURQUOISE],
-  [HubLinkStatus.OPTIONAL, '--blue'],
-  [HubLinkStatus.VIEWED, TURQUOISE],
-  [HubLinkStatus.NOT_VIEWED, '--red'],
-  [HubLinkStatus.NOT_YET_AVAILABLE, '--grey'],
-  [HubLinkStatus.WAITING_FOR_TRIBUNAL, '--grey'],
-  [HubLinkStatus.SUBMITTED_AND_VIEWED, TURQUOISE],
-  [HubLinkStatus.IN_PROGRESS, '--yellow'],
-  [HubLinkStatus.NOT_STARTED_YET, '--red'],
+  [HubLinkStatus.COMPLETED, COLORS.GREEN],
+  [HubLinkStatus.SUBMITTED, COLORS.TURQUOISE],
+  [HubLinkStatus.OPTIONAL, COLORS.BLUE],
+  [HubLinkStatus.VIEWED, COLORS.TURQUOISE],
+  [HubLinkStatus.NOT_VIEWED, COLORS.RED],
+  [HubLinkStatus.NOT_YET_AVAILABLE, COLORS.GREY],
+  [HubLinkStatus.WAITING_FOR_TRIBUNAL, COLORS.GREY],
+  [HubLinkStatus.SUBMITTED_AND_VIEWED, COLORS.TURQUOISE],
+  [HubLinkStatus.IN_PROGRESS, COLORS.YELLOW],
+  [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
