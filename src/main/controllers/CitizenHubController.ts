@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -133,28 +134,57 @@ export default class CitizenHubController {
       notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
-      showSubmittedAlert:
-        !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length,
-      showAcknowledgementAlert:
-        !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
-      showRejectionAlert:
-        !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-        hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED,
-      showRespondentResponseReceived:
-        hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL,
-      showRespondentApplicationReceived:
-        hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS,
-      showRespondentRejection:
-        !!userCase?.responseRejectionDocumentDetail?.length &&
-        hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
-      showRespondentAcknowledgement:
-        !!userCase?.responseAcknowledgementDocumentDetail?.length &&
-        hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED,
+      showSubmittedAlert: shouldShowSubmittedAlert(userCase),
+      showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
+      showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
+      showRespondentResponseReceived: shouldShowRespondentResponseReceived(hubLinksStatuses),
+      showRespondentApplicationReceived: shouldShowRespondentApplicationReceived(hubLinksStatuses),
+      showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
+      showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications && notifications.length,
     });
   }
+}
+
+function shouldShowSubmittedAlert(userCase: CaseWithId) {
+  return !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length;
+}
+
+function shouldShowAcknowledgementAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
+  return (
+    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
+  );
+}
+
+function shouldShowRejectionAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
+  return (
+    !!userCase?.rejectionOfClaimDocumentDetail?.length &&
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
+    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
+  );
+}
+
+function shouldShowRespondentResponseReceived(hubLinksStatuses: HubLinksStatuses) {
+  return hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL;
+}
+
+function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatuses) {
+  return hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS;
+}
+
+function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
+  return (
+    !!userCase?.responseRejectionDocumentDetail?.length &&
+    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
+  );
+}
+
+function shouldShowRespondentAcknolwedgement(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
+  return (
+    !!userCase?.responseAcknowledgementDocumentDetail?.length &&
+    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
+  );
 }
