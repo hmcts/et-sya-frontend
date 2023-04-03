@@ -15,7 +15,7 @@
   "decision": "Decision",
   "notification": "Notification",
   "notificationWithSpace": "<br><br>Notification",
-  "tableTopSpace": "<br><br>",
+  "tableTopWithSpace": "<br><br>",
   "date": "Date",
   "sentBy": "Sent by",
   "decisionType": "Type of decision",
