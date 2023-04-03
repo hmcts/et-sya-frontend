@@ -9,6 +9,7 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { JavaApiUrls } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
+import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
@@ -127,6 +128,19 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
+  updateSendNotificationState = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.UPDATE_NOTIFICATION_STATE, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: caseItem.selectedRequestOrOrder.id,
+        notification_state: HubLinkStatus.VIEWED,
+      });
+    } catch (error) {
+      throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));
     }
   };
 

@@ -170,6 +170,7 @@
 
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
+    {% if order.value.notificationState !== 'viewed' %}
         {% set htmlForOrderOrRequestReceived %}
            {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
               <h3 class="govuk-notification-banner__heading">
@@ -188,5 +189,6 @@
           html: htmlForOrderOrRequestReceived,
           titleText: important
         }) }}
+    {% endif %}
   {% endfor %}
 {% endif %}
