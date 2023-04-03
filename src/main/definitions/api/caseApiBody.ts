@@ -7,9 +7,9 @@ import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
 import { RespondentType } from '../complexTypes/respondent';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
+import { TriageQuestions } from '../complexTypes/triageQuestions';
 import { WorkAddressDetails } from '../complexTypes/workAddressDetails';
 import { HubLinksStatuses } from '../hub';
-import {TriageQuestions} from "../complexTypes/triageQuestions";
 
 interface CaseDataApiBody {
   caseType: string;
