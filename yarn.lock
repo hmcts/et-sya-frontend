@@ -4327,7 +4327,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.3":
+"async@npm:^3.2.3, async@npm:^3.2.4":
   version: 3.2.4
   resolution: "async@npm:3.2.4"
   checksum: 43d07459a4e1d09b84a20772414aa684ff4de085cbcaec6eea3c7a8f8150e8c62aa6cd4e699fe8ee93c3a5b324e777d34642531875a0817a35697522c1b02e89
@@ -5347,6 +5347,13 @@ __metadata:
     kind-of: ^6.0.2
     shallow-clone: ^3.0.0
   checksum: 770f912fe4e6f21873c8e8fbb1e99134db3b93da32df271d00589ea4a29dbe83a9808a322c93f3bcaf8584b8b4fa6fc269fc8032efbaa6728e0c9886c74467d2
+  languageName: node
+  linkType: hard
+
+"clone@npm:2.x":
+  version: 2.1.2
+  resolution: "clone@npm:2.1.2"
+  checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
   languageName: node
   linkType: hard
 
@@ -7232,6 +7239,7 @@ __metadata:
     jest-pact: 0.9.4
     jquery: ^3.5.1
     jwt-decode: ^3.1.2
+    launchdarkly-node-server-sdk: ^7.0.0
     lint-staged: ^13.0.0
     lodash: ^4.17.20
     mini-css-extract-plugin: ^2.5.3
@@ -10445,6 +10453,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"launchdarkly-eventsource@npm:1.4.4":
+  version: 1.4.4
+  resolution: "launchdarkly-eventsource@npm:1.4.4"
+  checksum: 7d153b1523b27236057d8155c50a785b7838637c4283b4d984fdf3a7f7a6bb7afc384a0e84275d2ae50bcf38a180731e86c74455ba3ed110ffcbfade0c8a7f33
+  languageName: node
+  linkType: hard
+
+"launchdarkly-node-server-sdk@npm:^7.0.0":
+  version: 7.0.1
+  resolution: "launchdarkly-node-server-sdk@npm:7.0.1"
+  dependencies:
+    async: ^3.2.4
+    launchdarkly-eventsource: 1.4.4
+    lru-cache: ^6.0.0
+    node-cache: ^5.1.0
+    semver: ^7.3.0
+    tunnel: 0.0.6
+    uuid: ^8.3.2
+  checksum: 83a24c6157088c19dbe31c7e3369a852a9cc24336778790f173869a0a3f29ed74e6babe9f31e7672ef6a374b5f7880c3c4dc6d9d1eefbf67239d15747491ea2e
+  languageName: node
+  linkType: hard
+
 "lazystream@npm:^1.0.0":
   version: 1.0.1
   resolution: "lazystream@npm:1.0.1"
@@ -11768,6 +11798,15 @@ __metadata:
     lodash: ^4.17.21
     propagate: ^2.0.0
   checksum: 118d04e95a17f493898a82b5dfecc03762776e1980d9c3b2077479747e60b77109c5f7c0df969d1a8f6039260abe5961733553a5841f0f627bb35238576a0009
+  languageName: node
+  linkType: hard
+
+"node-cache@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "node-cache@npm:5.1.2"
+  dependencies:
+    clone: 2.x
+  checksum: b0bdd81a6fee4754fb984a05246b510bb35dc54721116d465899bf4229ee3287fdafb47da526900ee9924fb402ed5c7d8050049d37d8bf2d26dbafc23a2c3205
   languageName: node
   linkType: hard
 
@@ -14083,7 +14122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.x, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:~7.3.5":
+"semver@npm:7.x, semver@npm:^7.3.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8, semver@npm:~7.3.5":
   version: 7.3.8
   resolution: "semver@npm:7.3.8"
   dependencies:
@@ -15396,6 +15435,13 @@ __metadata:
   dependencies:
     safe-buffer: ^5.0.1
   checksum: 05f6510358f8afc62a057b8b692f05d70c1782b70db86d6a1e0d5e28a32389e52fa6e7707b6c5ecccacc031462e4bc35af85ecfe4bbc341767917b7cf6965711
+  languageName: node
+  linkType: hard
+
+"tunnel@npm:0.0.6":
+  version: 0.0.6
+  resolution: "tunnel@npm:0.0.6"
+  checksum: c362948df9ad34b649b5585e54ce2838fa583aa3037091aaed66793c65b423a264e5229f0d7e9a95513a795ac2bd4cb72cda7e89a74313f182c1e9ae0b0994fa
   languageName: node
   linkType: hard
 

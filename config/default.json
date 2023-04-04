@@ -38,6 +38,9 @@
     },
     "et1Legacy": {
       "url": "https://employmenttribunals.service.gov.uk"
+    },
+    "launchDarkly": {
+      "key": "TO BE PICKED UP FROM ENV"
     }
   },
   "pact": {

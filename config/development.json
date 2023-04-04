@@ -19,6 +19,9 @@
       "health": "https://pcq.aat.platform.hmcts.net/health",
       "token": "TO BE PICKED FROM ENV",
       "enabled": "true"
+    },
+    "launchDarkly": {
+      "key": "TO BE PICKED UP FROM ENV"
     }
   },
   "session": {

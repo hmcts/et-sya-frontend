@@ -2,6 +2,8 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
+import { GenericTseApplicationTypeItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -15,6 +17,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
@@ -58,17 +61,41 @@ export default class CitizenHubController {
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
 
-    const respondentApplications = getRespondentApplications(userCase);
-    activateRespondentApplicationsLink(respondentApplications, userCase);
-    const sendNotificationCollection = userCase?.sendNotificationCollection;
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
+
+    let respondentApplications: GenericTseApplicationTypeItem[] = [];
+    let sendNotificationCollection: SendNotificationTypeItem[] = [];
+    let notifications: SendNotificationTypeItem[] = [];
+    let respondentBannerContent = undefined;
+    let contactUrl;
+    if (await getFlagValue('testFeature', null)) {
+      respondentApplications = getRespondentApplications(userCase);
+      activateRespondentApplicationsLink(respondentApplications, userCase);
+      sendNotificationCollection = userCase?.sendNotificationCollection;
+      activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
+      notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
+      populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
+      if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
+        respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
+      }
+      contactUrl = PageUrls.CONTACT_THE_TRIBUNAL + getLanguageParam(req.url);
+    } else {
+      userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.NOT_YET_AVAILABLE;
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_YET_AVAILABLE;
+      userCase.hubLinksStatuses[HubLinkNames.ContactTribunal] = HubLinkStatus.NOT_YET_AVAILABLE;
+      userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.NOT_YET_AVAILABLE;
+      contactUrl = 'https://www.gov.uk/guidance/employment-tribunal-offices-and-venues';
+    }
 
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
     const hubLinksStatuses = userCase.hubLinksStatuses;
-
-    activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
@@ -87,21 +114,6 @@ export default class CitizenHubController {
         }),
       };
     });
-
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-    };
-
-    const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
-
-    let respondentBannerContent = undefined;
-
-    if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
-      respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
-    }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -124,6 +136,7 @@ export default class CitizenHubController {
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications && notifications.length,
+      contactUrl,
     });
   }
 }
