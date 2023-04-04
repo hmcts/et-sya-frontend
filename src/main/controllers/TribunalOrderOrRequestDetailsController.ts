@@ -1,16 +1,18 @@
-import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { CLAIMANT, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
+import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
+import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
+const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
@@ -18,10 +20,16 @@ export default class TribunalOrderOrRequestDetailsController {
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
+    if (selectedRequestOrOrder.value.notificationState !== HubLinkStatus.VIEWED) {
+      try {
+        await updateSendNotificationState(req, logger);
+      } catch (error) {
+        logger.info(error.message);
+      }
+    }
+
     //todo URL must be reviewed and changed to 'Respond to request'.
-    const redirectUrl = `/respondent-order-or-request-details/${selectedRequestOrOrder.value.number}${getLanguageParam(
-      req.url
-    )}`;
+    const redirectUrl = '';
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
     if (documents && documents.length) {
