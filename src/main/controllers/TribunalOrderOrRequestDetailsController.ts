@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { CLAIMANT, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
+import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
@@ -19,10 +20,12 @@ export default class TribunalOrderOrRequestDetailsController {
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
-    try {
-      await updateSendNotificationState(req, logger);
-    } catch (error) {
-      logger.info(error.message);
+    if (selectedRequestOrOrder.value.notificationState !== HubLinkStatus.VIEWED) {
+      try {
+        await updateSendNotificationState(req, logger);
+      } catch (error) {
+        logger.info(error.message);
+      }
     }
 
     //todo URL must be reviewed and changed to 'Respond to request'.
