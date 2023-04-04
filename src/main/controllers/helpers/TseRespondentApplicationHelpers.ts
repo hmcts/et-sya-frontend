@@ -42,7 +42,7 @@ export const getRespondentBannerContent = (
             ' ' +
             dueDate.getFullYear(),
           applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
-          number: items[i].value.number,
+          number: items[i].id,
           applicationState: items[i].value.applicationState,
           date: items[i].value.date,
           type: items[i].value.type,
