@@ -18,6 +18,7 @@ export default class ApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
 
     const selectedApplication = findSelectedGenericTseApplication(

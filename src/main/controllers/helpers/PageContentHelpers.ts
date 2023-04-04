@@ -59,7 +59,8 @@ export const populateAppItemsWithRedirectLinksCaptionsAndStatusColors = (
   if (claimantItems && claimantItems.length) {
     claimantItems.forEach(item => {
       const app = item.value.type;
-      item.linkValue = translations.sections[app].caption;
+      item.linkValue = translations[app];
+      console.log(item.value.type);
       item.redirectUrl = `/application-details/${item.id}${getLanguageParam(url)}`;
       item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
