@@ -1,4 +1,5 @@
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -9,7 +10,6 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
-import {SendNotificationTypeItem} from "./complexTypes/sendNotificationTypeItem";
 
 export enum Checkbox {
   Checked = 'checked',

@@ -102,6 +102,7 @@ export const TranslationKeys = {
   RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
   TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
+  TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
 } as const;
 
 export const PageUrls = {
@@ -200,6 +201,7 @@ export const PageUrls = {
   TRIBUNAL_ORDERS_AND_REQUESTS: '/tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
+  TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
 } as const;
 
 export const InterceptPaths = {

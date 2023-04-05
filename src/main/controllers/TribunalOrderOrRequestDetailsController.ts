@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CLAIMANT, TranslationKeys } from '../definitions/constants';
+import { CLAIMANT, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
@@ -28,8 +29,8 @@ export default class TribunalOrderOrRequestDetailsController {
       }
     }
 
-    //todo URL must be reviewed and changed to 'Respond to request'.
-    const redirectUrl = '';
+    const redirectUrl =
+      PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
     if (documents && documents.length) {

@@ -1,0 +1,31 @@
+{
+  "caption": "Welsh translation required",
+  "header": "Welsh translation required",
+  "hearing": "Welsh translation required",
+  "dateSent": "Welsh translation required",
+  "sentBy": "Welsh translation required",
+  "orderOrRequest": "Welsh translation required",
+  "responseDue": "Welsh translation required",
+  "partyToRespond": "Welsh translation required",
+  "addInfo": "Welsh translation required",
+  "description": "Welsh translation required",
+  "document": "Welsh translation required",
+  "orderMadeBy": "Welsh translation required",
+  "requestMadeBy": "Welsh translation required",
+  "fullName": "Welsh translation required",
+  "sentTo": "Welsh translation required",
+  "textInputLabel": "Welsh translation required",
+  "textInputHint": "Welsh translation required",
+  "radioButtonLabel": "Welsh translation required",
+  "radioButtonHint": "Welsh translation required",
+  "errors": {
+    "hasSupportingMaterial": {
+      "required": "Welsh translation required"
+    },
+    "respondToApplicationText": {
+      "required": "Welsh translation required",
+      "requiredFile": "Welsh translation required",
+      "tooLong": "Welsh translation required"
+    }
+  }
+}

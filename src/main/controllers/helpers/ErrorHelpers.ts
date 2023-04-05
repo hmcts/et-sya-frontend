@@ -288,7 +288,7 @@ export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): For
   } else {
     const tooLong = isContent2500CharsOrLess(text);
     if (tooLong) {
-      return { propertyName: 'respondToApplicationText', errorType: tooLong };
+      return { propertyName: 'respondToApplicationText', errorType: 'tooLong' };
     }
 
     if (!supportingMaterialAnswer) {
