@@ -58,8 +58,6 @@ export default class CitizenHubController {
     clearTseFields(userCase);
     const currentState = currentStateFn(userCase);
 
-    const respondentApplications = getRespondentApplications(userCase);
-    activateRespondentApplicationsLink(respondentApplications, userCase);
     const sendNotificationCollection = userCase?.sendNotificationCollection;
 
     if (!userCase.hubLinksStatuses) {
@@ -67,6 +65,17 @@ export default class CitizenHubController {
       await handleUpdateHubLinksStatuses(req, logger);
     }
     const hubLinksStatuses = userCase.hubLinksStatuses;
+
+    const respondentApplications = getRespondentApplications(userCase);
+    activateRespondentApplicationsLink(respondentApplications, userCase);
+
+    // Mark respondent's response as waiting for the tribunal
+    if (
+      hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
+      userCase.et3ResponseReceived
+    ) {
+      hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
+    }
 
     activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
 
