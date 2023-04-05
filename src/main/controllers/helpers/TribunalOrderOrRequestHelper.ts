@@ -101,7 +101,7 @@ export const getRepondentOrderOrRequestDetails = (
             text: translations.document,
             classes: 'govuk-!-font-weight-regular-m',
           },
-          value: { html: createDownloadLink(doc.value.uploadedDocument, true) },
+          value: { html: createDownloadLink(doc.value.uploadedDocument) },
         }
       );
     });
