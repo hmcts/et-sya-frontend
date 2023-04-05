@@ -1,12 +1,7 @@
 import SupportingMaterialController from '../../../main/controllers/SupportingMaterialController';
-import { Document } from '../../../main/definitions/case';
-import {
-  GenericTseApplicationType,
-  GenericTseApplicationTypeItem,
-} from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import * as caseApi from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import {mockRequest} from '../mocks/mockRequest';
+import {mockResponse} from '../mocks/mockResponse';
 
 describe('Supporting material Controller', () => {
   const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
@@ -20,49 +15,12 @@ describe('Supporting material Controller', () => {
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 
-  it('should call getCaseDocument if contactApplication document id provided', () => {
+  it('should call getCaseDocument if document id provided in url params', () => {
     const controller = new SupportingMaterialController();
     const response = mockResponse();
     const userCase = {};
     const request = mockRequest({ userCase });
-
-    const doc: Document = {
-      document_url: '12345',
-      document_filename: 'test.pdf',
-      document_binary_url: '',
-      document_size: 1000,
-      document_mime_type: 'pdf',
-    };
-
-    request.session.userCase.contactApplicationFile = doc;
-    controller.get(request, response);
-    expect(getCaseApiMock).toHaveBeenCalled();
-  });
-
-  it('should call getCaseDocument if genericTseApplicationCollection document id provided', () => {
-    const controller = new SupportingMaterialController();
-    const response = mockResponse();
-    const userCase = {};
-    const request = mockRequest({ userCase });
-    const doc: Document = {
-      document_url: '12345',
-      document_filename: 'test.pdf',
-      document_binary_url: '',
-      document_size: 1000,
-      document_mime_type: 'pdf',
-    };
-
-    const type: GenericTseApplicationType = {
-      documentUpload: doc,
-      number: '1',
-    };
-
-    const item: GenericTseApplicationTypeItem = {
-      value: type,
-    };
-
-    request.session.userCase.genericTseApplicationCollection = [item];
-
+    request.params.docId = '12345';
     controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();
   });

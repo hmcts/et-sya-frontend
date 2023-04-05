@@ -176,7 +176,7 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
-  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial',
+  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial/:docId',
   CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
   TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
   REMOVE_FILE: '/remove-tse-file/:application',
@@ -199,7 +199,6 @@ export const PageUrls = {
   RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
   TRIBUNAL_ORDERS_AND_REQUESTS: '/tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
-  GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
 } as const;
 
 export const InterceptPaths = {
