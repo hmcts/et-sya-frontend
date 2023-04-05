@@ -52,43 +52,60 @@ export default class RespondentApplicationDetailsController {
       }
     }
 
-    let decisionContent = undefined;
-    const decisionDocDownload = [];
-    const decisionDocDownloadLink = [];
-
-    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
-      for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
-        decisionDocDownload[i] = selectedApplication.value?.adminDecision[i].value.responseRequiredDoc;
-        try {
-          await getDocumentAdditionalInformation(decisionDocDownload[i], req.session.user?.accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          return res.redirect('/not-found');
-        }
-
-        decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
-      }
-      decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
-    }
-
-    let claimantResponseDocDownload;
-    let claimantResponseDocDownloadLink;
+    let claimantResponseDocDownload = undefined;
 
     if (selectedApplication.value?.respondCollection && selectedApplication.value?.respondCollection.length) {
       for (let i = selectedApplication.value?.respondCollection.length - 1; i >= 0; i--) {
-        if (selectedApplication.value?.respondCollection[i].value.from === 'Claimant') {
+        if (
+          selectedApplication.value?.respondCollection[i].value.from === 'Claimant' &&
+          selectedApplication.value?.respondCollection[i].value.supportingMaterial !== undefined
+        ) {
           claimantResponseDocDownload =
             selectedApplication.value?.respondCollection[i].value.supportingMaterial[0].value.uploadedDocument;
         }
       }
+    }
+
+    if (claimantResponseDocDownload) {
       try {
         await getDocumentAdditionalInformation(claimantResponseDocDownload, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');
       }
+    }
 
-      claimantResponseDocDownloadLink = createDownloadLink(claimantResponseDocDownload);
+    const claimantResponseDocDownloadLink = createDownloadLink(claimantResponseDocDownload);
+
+    let decisionContent = undefined;
+    const decisionDocDownload = [];
+    const decisionDocDownloadLink = [];
+
+    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
+      for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
+        if (selectedApplication.value?.adminDecision[i].value.responseRequiredDoc !== undefined) {
+          decisionDocDownload[i] = selectedApplication.value?.adminDecision[i].value.responseRequiredDoc;
+        }
+      }
+    }
+
+    if (decisionDocDownload.length > 0) {
+      for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
+        if (decisionDocDownload[i]) {
+          try {
+            await getDocumentAdditionalInformation(decisionDocDownload[i], req.session.user?.accessToken);
+          } catch (err) {
+            logger.error(err.message);
+            return res.redirect('/not-found');
+          }
+          decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
+        }
+      }
+      decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    }
+
+    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
+      decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
     }
 
     const downloadLink = createDownloadLink(document);

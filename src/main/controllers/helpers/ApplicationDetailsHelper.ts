@@ -75,26 +75,26 @@ export const getTseApplicationDetails = (
 export const getTseApplicationDecisionDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  decisionDocDownloadLink: string[]
+  decisionDocDownloadLink: string[] | undefined
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   const tseApplicationDecisionDetails = [];
-  let tableTopSpace = '';
-  let notificationSpaced = translations.notification;
-  const latestAdminDecision = selectedApplication.value?.adminDecision.length - 1;
-  for (let i = latestAdminDecision; i >= 0; i--) {
-    if (i !== latestAdminDecision) {
-      notificationSpaced = translations.notificationWithSpace;
-      tableTopSpace = translations.tableTopSpace;
+
+  let tableTopSpacing = '';
+  let notification = translations.notification;
+
+  for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
+    if (i !== selectedApplication.value?.adminDecision.length - 1) {
+      tableTopSpacing = translations.tableTopWithSpace;
+      notification = translations.notificationWithSpace;
     }
     tseApplicationDecisionDetails.push(
       {
         key: {
-          html: notificationSpaced,
+          html: notification,
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          html: tableTopSpace,
-          text: selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
+          html: tableTopSpacing + selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
         },
       },
       {

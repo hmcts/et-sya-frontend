@@ -17,11 +17,17 @@
       }) 
     }}
 
-      {% if not respondButton %}
-        {% for respCol in selectedApplication.value.respondCollection %}
-          {% if respCol.value.from === "Claimant" %}
-            <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h2>
-            {{ govukSummaryList({
+      {% if respondButton %}
+        {{ govukButton({
+            text: respond,
+            href: redirectUrl
+          }) }}
+      {% endif %}
+
+      {% for respCol in selectedApplication.value.respondCollection %}
+        {% if respCol.value.from === "Claimant" %}
+          <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h2>
+          {{ govukSummaryList({
               rows: [
                 {
                   key: {
@@ -60,9 +66,8 @@
                 }
               ]
             }) }}
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+        {% endif %}
+      {% endfor %}
 
       {% if selectedApplication.value.adminDecision.length %}
         <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
@@ -71,29 +76,22 @@
           }) 
         }}
         <br>
-        {% endif %}
+      {% endif %}
 
-        {% if respondButton %}
-          {{ govukButton({
-            text: respond,
-            href: redirectUrl
-          }) }}
-        {% endif %}
+    </div>
 
-      </div>
+    {% set sideBarContent %}
+    {% include "./citizen-hub-sidebar.njk" %}
+    {% endset %}
 
-      {% set sideBarContent %}
-      {% include "./citizen-hub-sidebar.njk" %}
-      {% endset %}
-
-      {{ govukDetails({
+    {{ govukDetails({
         summaryText: "Contact",
         html: sideBarContent
       }) }}
-    </div>
   </div>
+</div>
 {% endblock %}
 
 {% block footer %}
-  {% include "./footer.njk" %}
+{% include "./footer.njk" %}
 {% endblock %}
