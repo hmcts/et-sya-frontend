@@ -1,73 +1,32 @@
 {% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
 
 {% set html %}
-<p class="govuk-body">{{CookieUse}}</p>
-<p class="govuk-body">{{CookieAnalytics}}</p>
-{% endset %}
-
-{% set acceptHtml %}
-  <p class="govuk-body">{{CookieAccepted | safe}}</p>
-{% endset %}
-
-{% set rejectHtml %}
-  <p class="govuk-body">{{CookieRejected | safe}}</p>
+  <p class="govuk-body">We use some essential cookies to make this service work.</p>
+  <p class="govuk-body">We’d like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.</p>
 {% endset %}
 
 {{ govukCookieBanner({
-  classes: 'cookie-banner',
-  ariaLabel: CookieEmploymentTribunals,
-  hidden: true,
+  ariaLabel: "Cookies on [name of service]",
   messages: [
     {
-      classes: 'cookie-banner-message',
-      headingText: CookieEmploymentTribunals,
+      headingText: "Cookies on [name of service]",
       html: html,
       actions: [
         {
-          classes: 'cookie-banner-accept-button',
-          text: CookieAccept,
-          type: "submit",
+          text: "Accept additional cookies",
+          type: "button",
           name: "cookies",
           value: "accept"
         },
         {
-          classes: 'cookie-banner-reject-button',
-          text: CookieReject,
-          type: "submit",
+          text: "Reject additional cookies",
+          type: "button",
           name: "cookies",
           value: "reject"
         },
         {
-          text: CookieView,
-          href: "/cookies"
-        }
-      ]
-    },
-    {
-      classes: 'cookie-banner-accept-message',
-      html: acceptHtml,
-      role: "alert",
-      hidden: true,
-      actions: [
-        {
-          classes: 'cookie-banner-hide-button',
-          text: CookieHide,
-          href: "#",
-          type: "button"
-        }
-      ]
-    },
-    {
-      classes: 'cookie-banner-reject-message',
-      html: rejectHtml,
-      role: "alert",
-      hidden: true,
-      actions: [
-        {
-          classes: 'cookie-banner-hide-button',
-          text: CookieHide,
-          href: "#",
-          type: "button"
+          text: "View cookies",
+          href: "#"
         }
       ]
     }
