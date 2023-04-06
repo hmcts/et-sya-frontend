@@ -188,11 +188,14 @@ describe('Respondent Application details page', () => {
     expect(summaryListData[13].innerHTML).contains('4 March 2023', 'Decision date does not exist');
     expect(summaryListData[14].innerHTML).contains('Tribunal', 'Decision maker does not exist');
     expect(summaryListData[15].innerHTML).contains('Judgment', 'Decision type does not exist');
-    expect(summaryListData[16].innerHTML).contains('Additional info 2 test text', 'Decision type does not exist');
-    expect(summaryListData[17].innerHTML).contains('', 'Decision type does not exist');
-    expect(summaryListData[18].innerHTML).contains('Judge', 'Decision type does not exist');
-    expect(summaryListData[19].innerHTML).contains('Mr Decider', 'Decision type does not exist');
-    expect(summaryListData[20].innerHTML).contains('Both parties', 'Decision type does not exist');
+    expect(summaryListData[16].innerHTML).contains(
+      'Additional info 2 test text',
+      'Decision additional info does not exist'
+    );
+    expect(summaryListData[17].innerHTML).contains('', 'Supporting material should be blank');
+    expect(summaryListData[18].innerHTML).contains('Judge', 'Decision made by does not exist');
+    expect(summaryListData[19].innerHTML).contains('Mr Decider', 'Decision maker name does not exist');
+    expect(summaryListData[20].innerHTML).contains('Both parties', 'Decision party notification does not exist');
   });
 
   it('should display the first row of older admin decisions with a space at the top', () => {
@@ -200,7 +203,7 @@ describe('Respondent Application details page', () => {
     expect(rowHeader[23].innerHTML).contains(adminDecisionRowHeader11, 'Header does not exist');
   });
 
-  it('should display admin decisions in descending order by application number', () => {
+  it('should display remaining admin decisions in descending order by application number', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListValueClass);
     expect(summaryListData[21].innerHTML).contains(
       '<br><br>Decision title 1 test text',
@@ -210,10 +213,13 @@ describe('Respondent Application details page', () => {
     expect(summaryListData[23].innerHTML).contains('3 March 2023', 'Decision date does not exist');
     expect(summaryListData[24].innerHTML).contains('Tribunal', 'Decision maker does not exist');
     expect(summaryListData[25].innerHTML).contains('Judgment', 'Decision type does not exist');
-    expect(summaryListData[26].innerHTML).contains('Additional info 1 test text', 'Decision type does not exist');
-    expect(summaryListData[27].innerHTML).contains('', 'Decision type does not exist');
-    expect(summaryListData[28].innerHTML).contains('Judge', 'Decision type does not exist');
-    expect(summaryListData[29].innerHTML).contains('Mr Judgey', 'Decision type does not exist');
-    expect(summaryListData[30].innerHTML).contains('Both parties', 'Decision type does not exist');
+    expect(summaryListData[26].innerHTML).contains(
+      'Additional info 1 test text',
+      'Decision additional info does not exist'
+    );
+    expect(summaryListData[27].innerHTML).contains('', 'Supporting material should be blank');
+    expect(summaryListData[28].innerHTML).contains('Judge', 'Decision made by does not exist');
+    expect(summaryListData[29].innerHTML).contains('Mr Judgey', 'Decision maker name does not exist');
+    expect(summaryListData[30].innerHTML).contains('Both parties', 'Decision party notification does not exist');
   });
 });
