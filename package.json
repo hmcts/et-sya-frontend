@@ -41,7 +41,7 @@
     "@hmcts/properties-volume": "^0.0.14",
     "@pact-foundation/pact": "9.18.1",
     "@types/config": "^3.0.0",
-    "@types/connect-redis": "^0.0.19",
+    "@types/connect-redis": "^0.0.20",
     "@types/cookie-parser": "^1.4.2",
     "@types/csurf": "^1.9.36",
     "@types/es6-promisify": "^6.0.1",
@@ -59,7 +59,7 @@
     "applicationinsights": "^2.2.0",
     "autobind-decorator": "^2.4.0",
     "axios": "^0.27.0",
-    "codeceptjs": "3.3.7",
+    "codeceptjs": "3.4.1",
     "config": "^3.3.8",
     "connect-redis": "^6.1.1",
     "cookie-parser": "^1.4.5",
@@ -70,7 +70,7 @@
     "express-nunjucks": "^2.2.5",
     "express-session": "^1.17.2",
     "google-libphonenumber": "^3.2.26",
-    "govuk-frontend": "4.4.1",
+    "govuk-frontend": "4.5.0",
     "helmet": "^6.0.0",
     "http-status-codes": "^2.2.0",
     "i18next": "^22.0.0",
@@ -83,7 +83,7 @@
     "mochawesome": "7.1.3",
     "multer": "^1.4.5-lts.1",
     "nunjucks": "^3.2.2",
-    "pino-pretty": "^9.1.1",
+    "pino-pretty": "^10.0.0",
     "playwright": "^1.25.2",
     "postcode": "^5.1.0",
     "prettier": "^2.5.1",
@@ -95,7 +95,7 @@
     "session-file-store": "^1.5.0",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.6.2",
+    "typescript": "^5.0.0",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
@@ -145,7 +145,7 @@
     "ts-jest": "^27.1.4",
     "ts-loader": "^9.2.7",
     "webdriverio": "^8.0.0",
-    "webpack": "^5.69.1",
+    "webpack": "^5.76.0",
     "webpack-cli": "^5.0.0",
     "webpack-dev-middleware": "^6.0.0",
     "webpack-node-externals": "^3.0.0"
@@ -153,5 +153,5 @@
   "peerDependencies": {
     "@faker-js/faker": "^5.5.3"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.5.0"
 }
