@@ -7142,7 +7142,7 @@ __metadata:
     chai-as-promised: ^7.1.1
     codeceptjs: 3.4.1
     config: ^3.3.8
-    connect-redis: ^7.0.0
+    connect-redis: ^6.1.1
     cookie-parser: ^1.4.5
     copy-webpack-plugin: ^11.0.0
     css-loader: ^6.7.0
