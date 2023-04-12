@@ -96,6 +96,7 @@ import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTrib
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 import TribunalOrderDocumentController from "../../controllers/TribunalOrderDocumentController";
+import AboutHearingDocumentsController from '../../controllers/AboutHearingDocumentsController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -278,5 +279,8 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.GET_TRIBUNAL_ORDER_DOCUMENT, new TribunalOrderDocumentController().get);
+    app.get("/about-hearing-documents", new AboutHearingDocumentsController().get);
+
   }
+
 }

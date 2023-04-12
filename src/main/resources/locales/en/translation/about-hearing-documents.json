@@ -1,0 +1,14 @@
+{
+    "h1":"About your hearing documents",
+    "headingCaption":"Prepare documents for a hearing",
+    "Question1": "Select the hearing these documents are for",
+    "Question2":"Whose hearing documents are you uploading?",
+    "Question2Radio1":"My hearing documents only",
+    "Question2Radio2": "Both parties’ hearing documents combined",
+    "Question3":"What are these documents?",
+    "Question3Radio1":"All hearing documents",
+    "Question3Radio2":"Supplementary or other documents",
+    "Question3Radio3":"Witness statements only"
+
+
+}
