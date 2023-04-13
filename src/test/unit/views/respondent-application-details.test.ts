@@ -17,7 +17,6 @@ const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-
 const summaryListValueClass = 'govuk-summary-list__value';
 const summaryListKeyClass = 'govuk-summary-list__key';
 const summaryListTitleClass = 'govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1';
-//const buttonClass = 'govuk-button';
 
 const reqUrl = '/respondent-application-details/abc123';
 
