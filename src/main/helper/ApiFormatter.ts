@@ -315,6 +315,14 @@ export const parseDateFromString = (date: string): CaseDate => {
   }
 };
 
+export const getClaimProcessingTargetDate = (year: string, month: string, day: string): number => {
+  if (!year || !month || !day) {
+    return;
+  }
+  const caseSubmittedDate = new Date(year + "-" + month + "-" + day)
+  return caseSubmittedDate.getDay() === 1 ? 5 : 7;
+};
+
 export const isValidPreferredTitle = (title: string): string => {
   if (title === undefined || title === '') {
     return undefined;
