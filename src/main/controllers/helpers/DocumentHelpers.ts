@@ -40,8 +40,8 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
 export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file?.document_filename);
   let downloadLink = '';
-  const href = '/getSupportingMaterial/' + getDocId(file.document_url);
   if (file && file.document_size && file.document_mime_type && file.document_filename) {
+    const href = '/getSupportingMaterial/' + getDocId(file.document_url);
     downloadLink =
       `<a href='${href}' target='_blank' class='govuk-link'>` +
       file.document_filename +
