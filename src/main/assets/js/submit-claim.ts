@@ -2,14 +2,21 @@ import { InterceptPaths } from '../../definitions/constants';
 
 import { getById } from './selectors';
 
-const submitCaseButton = getById('submit-case-button') as HTMLButtonElement | null;
+const submitCaseButton = getById('main-form-submit') as HTMLButtonElement | null;
 
 if (submitCaseButton) {
   submitCaseButton.addEventListener('click', disableSubmitCaseButton);
 }
 
 export function disableSubmitCaseButton(): void {
-  if (submitCaseButton && !submitCaseButton.disabled) {
+  if (
+    submitCaseButton &&
+    !submitCaseButton.disabled &&
+    window &&
+    window.location &&
+    window.location.href &&
+    window.location.href.includes('check-your-answers')
+  ) {
     submitCaseButton.disabled = true;
     submitCaseButton.className = 'govuk-button govuk-button--disabled';
     submitCaseButton.ariaDisabled = 'true';

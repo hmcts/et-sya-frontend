@@ -17,7 +17,7 @@
     errorList: [
       {
         text: submitError | safe,
-        href: "#submit-case-button"
+        href: "#main-form-submit"
       }
     ]
   }) if errors.length > 0
@@ -240,7 +240,7 @@
         type: "submit",
         preventDoubleClick: true,
         attributes: {
-          id: 'submit-case-button'
+          id: 'main-form-submit'
         }
       })
     }}
