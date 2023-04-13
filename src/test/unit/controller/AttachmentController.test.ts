@@ -1,14 +1,14 @@
-import SupportingMaterialController from '../../../main/controllers/SupportingMaterialController';
+import AttachmentController from '../../../main/controllers/AttachmentController';
 import * as caseApi from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Supporting material Controller', () => {
+describe('Attachment Controller', () => {
   const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
   (getCaseApiMock as jest.Mock).mockReturnValue(expect.anything());
 
   it('should redirect to not-found page if document id not provided', () => {
-    const controller = new SupportingMaterialController();
+    const controller = new AttachmentController();
     const response = mockResponse();
     const request = mockRequest({});
     controller.get(request, response);
@@ -16,7 +16,7 @@ describe('Supporting material Controller', () => {
   });
 
   it('should call getCaseDocument if document id provided in url params', () => {
-    const controller = new SupportingMaterialController();
+    const controller = new AttachmentController();
     const response = mockResponse();
     const userCase = {};
     const request = mockRequest({ userCase });
