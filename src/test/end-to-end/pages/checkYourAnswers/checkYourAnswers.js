@@ -32,5 +32,5 @@ module.exports = async function () {
   I.click("//span[contains(.,'Contact us')]");
   await contactUs.verifyContactUs();
 
-  I.forceClick("//a[@id='main-form-submit']");
+  I.forceClick("//a[@id='submit-case-button']");
 };
