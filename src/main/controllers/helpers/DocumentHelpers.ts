@@ -40,9 +40,10 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
 export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file?.document_filename);
   let downloadLink = '';
+  const href = '/getSupportingMaterial/' + getDocId(file.document_url);
   if (file && file.document_size && file.document_mime_type && file.document_filename) {
     downloadLink =
-      "<a href='/getSupportingMaterial/:docId' target='_blank' class='govuk-link'>" +
+      `<a href='${href}' target='_blank' class='govuk-link'>` +
       file.document_filename +
       '(' +
       mimeType +
@@ -50,7 +51,6 @@ export const createDownloadLink = (file: Document): string => {
       formatBytes(file.document_size) +
       ')' +
       '</a>';
-    downloadLink = downloadLink.replace(':docId', getDocId(file.document_url));
   }
   return downloadLink;
 };
