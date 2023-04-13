@@ -11,6 +11,7 @@ import AddressDetailsController from '../../controllers/AddressDetailsController
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -79,7 +80,6 @@ import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
-import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
 import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
@@ -232,7 +232,7 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
-    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new SupportingMaterialController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);

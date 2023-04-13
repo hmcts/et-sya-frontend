@@ -35,7 +35,8 @@ it('should create proper download link for TSE CYA', () => {
     document_size: 1000,
     document_mime_type: 'pdf',
   };
-  const mockLink = "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
+  const mockLink =
+    "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
   const createdLink = createDownloadLink(doc);
   expect(mockLink).toStrictEqual(createdLink);
 });
