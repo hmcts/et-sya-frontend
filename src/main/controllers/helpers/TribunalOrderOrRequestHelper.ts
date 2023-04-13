@@ -20,7 +20,7 @@ export const getRepondentOrderOrRequestDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: item.value.sendNotificationSelectHearing,
+        text: item.value.sendNotificationSelectHearing.selectedLabel,
       },
     });
   }

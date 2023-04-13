@@ -13,7 +13,7 @@ export interface SendNotificationType {
   sendNotificationTitle?: string;
 
   //Hearing title with date
-  sendNotificationSelectHearing?: string;
+  sendNotificationSelectHearing?: sendNotificationSelectHearingItem;
 
   //Date sent
   date?: string;
@@ -58,6 +58,11 @@ export interface SendNotificationType {
 export interface PseResponseTypeItem {
   id?: string;
   value?: PseResponseType;
+}
+
+export interface sendNotificationSelectHearingItem {
+  selectedCode?: string;
+  selectedLabel?: string;
 }
 
 export interface PseResponseType {
