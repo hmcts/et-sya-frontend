@@ -238,10 +238,9 @@
         text: submitBtn,
         classes: 'govuk-!-margin-right-2',
         type: "submit",
-        href: InterceptPaths.SUBMIT_CASE + languageParam,
         preventDoubleClick: true,
         attributes: {
-          id: 'main-form-submit'
+          id: 'submit-case-button'
         }
       })
     }}
@@ -252,7 +251,6 @@
         classes: 'govuk-button--secondary',
         preventDoubleClick: true,
         name: 'saveForLater',
-        href: PageUrls.CLAIM_SAVED + languageParam,
         value: true,
         attributes: {
           id: 'main-form-save-for-later'
