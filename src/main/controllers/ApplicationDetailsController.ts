@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -20,6 +20,8 @@ export default class ApplicationDetailsController {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
+
+    req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
 
     const selectedApplication = findSelectedGenericTseApplication(
       req.session.userCase.genericTseApplicationCollection,

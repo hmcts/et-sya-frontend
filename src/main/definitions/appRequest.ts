@@ -23,6 +23,7 @@ export interface AppSession extends Session {
   cookies?: string;
   contactType?: string;
   contactTribunalSelection?: string;
+  documentDownloadPage?: string;
 }
 
 export interface UserDetails {

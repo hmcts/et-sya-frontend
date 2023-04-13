@@ -2,7 +2,7 @@ import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CLAIMANT, TranslationKeys } from '../definitions/constants';
+import { CLAIMANT, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -15,10 +15,12 @@ import {
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getClaimantResponseDocDownload } from './helpers/TseRespondentApplicationHelpers';
 
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    req.session.documentDownloadPage = PageUrls.RESPONDENT_APPLICATION_DETAILS;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
@@ -34,7 +36,7 @@ export default class RespondentApplicationDetailsController {
 
     const savedApplication = req.session.userCase.selectedGenericTseApplication;
 
-    if (!savedApplication || (savedApplication && req.params.appId !== savedApplication.value.number)) {
+    if (!savedApplication || (savedApplication && req.params.appId !== savedApplication.id)) {
       clearTseFields(userCase);
       req.session.userCase.selectedGenericTseApplication = selectedApplication;
     }
@@ -54,16 +56,8 @@ export default class RespondentApplicationDetailsController {
 
     let claimantResponseDocDownload = undefined;
 
-    if (selectedApplication.value?.respondCollection && selectedApplication.value?.respondCollection.length) {
-      for (let i = selectedApplication.value?.respondCollection.length - 1; i >= 0; i--) {
-        if (
-          selectedApplication.value?.respondCollection[i].value.from === 'Claimant' &&
-          selectedApplication.value?.respondCollection[i].value.supportingMaterial !== undefined
-        ) {
-          claimantResponseDocDownload =
-            selectedApplication.value?.respondCollection[i].value.supportingMaterial[0].value.uploadedDocument;
-        }
-      }
+    if (selectedApplication.value?.respondCollection?.length) {
+      claimantResponseDocDownload = getClaimantResponseDocDownload(selectedApplication);
     }
 
     if (claimantResponseDocDownload) {
@@ -80,11 +74,12 @@ export default class RespondentApplicationDetailsController {
     let decisionContent = undefined;
     const decisionDocDownload = [];
     const decisionDocDownloadLink = [];
+    const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
 
-    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
-      for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
-        if (selectedApplication.value?.adminDecision[i].value.responseRequiredDoc !== undefined) {
-          decisionDocDownload[i] = selectedApplication.value?.adminDecision[i].value.responseRequiredDoc;
+    if (selectedAppAdminDecision?.length) {
+      for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
+        if (selectedAppAdminDecision[i].value.responseRequiredDoc !== undefined) {
+          decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc;
         }
       }
     }
@@ -104,7 +99,7 @@ export default class RespondentApplicationDetailsController {
       decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
     }
 
-    if (selectedApplication.value?.adminDecision && selectedApplication.value?.adminDecision.length) {
+    if (selectedAppAdminDecision?.length) {
       decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
     }
 
