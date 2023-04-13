@@ -72,10 +72,11 @@ export default class TribunalRespondToOrderController {
       );
     }
     req.session.errors = [];
-    /* Todo: Needs to be modified to conditional redirect - 'If user selects supporting material - he should be
-        redirected to SupportingMaterial page, otherwise to Rule92
-     */
-    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+      ? res.redirect(
+          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
+        )
+      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
