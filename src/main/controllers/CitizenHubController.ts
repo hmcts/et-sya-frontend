@@ -11,7 +11,7 @@ import {
   sectionIndexToLinkNames,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
-import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
+import { formatDate, fromApiFormat, getDueDate} from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
@@ -20,8 +20,7 @@ import { getCaseApi } from '../services/CaseService';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 
 const logger = getLogger('CitizenHubController');
-
-const DAYS_FOR_PROCESSING = 5;
+const DAYS_FOR_PROCESSING = 7;
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
