@@ -111,7 +111,8 @@ export default class AboutHearingDocumentsController {
     }
   
     public post = async (req: AppRequest, res: Response): Promise<void> => {
-        await handlePostLogic(req, res, this.form, logger, 'url for next page');
+        console.log("post method is triggered")
+        await handlePostLogic(req, res, this.form, logger, '/checklist');
     };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -121,7 +122,7 @@ export default class AboutHearingDocumentsController {
     res.render('about-hearing-documents', {
       ...content,
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t("about-hearing-documents", { returnObjects: true }),
+      ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       hideContactUs: true,

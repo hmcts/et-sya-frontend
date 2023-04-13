@@ -5,8 +5,15 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
 
 {% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
 
   <div class="govuk-grid-row">
 
@@ -15,11 +22,9 @@
       <h1 class="govuk-heading-xl">{{h1}}</h1>
 
     {% block form %}
-    {% include "form/form.njk"%}
-  {% endblock %}
-     
-    </div>
-
+      {% include "form/form.njk"%}
+    {% endblock %}
+      </div>
     <div class="govuk-grid-column-one-third-from-desktop">
 
       {% set sideBarContent %}
@@ -30,9 +35,6 @@
               summaryText: contact,
               html: sideBarContent
             }) }}
-
     </div>
-
   </div>
-
 {% endblock %}

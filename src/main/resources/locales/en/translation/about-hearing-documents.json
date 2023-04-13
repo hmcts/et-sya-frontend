@@ -8,7 +8,16 @@
     "Question3":"What are these documents?",
     "Question3Radio1":"All hearing documents",
     "Question3Radio2":"Supplementary or other documents",
-    "Question3Radio3":"Witness statements only"
-
-
+    "Question3Radio3":"Witness statements only",
+    "errors": {
+        "aboutHearingDocuments": {
+          "required": "Select which hearing these documents are for"
+        },
+        "whoseHearingDocumentsAreYouUploading": {
+            "required": "Select whose hearing documents you are uploading"
+          },
+          "whatAreTheseDocuments": {
+            "required": "Select what these documents are"
+          }
+      }
 }
