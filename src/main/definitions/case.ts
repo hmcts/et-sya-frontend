@@ -179,6 +179,9 @@ export interface Case {
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
+  aboutHearingDocuments?: string;
+  whoseHearingDocumentsAreYouUploading?: string;
+  whatAreTheseDocuments?: string;
 }
 
 export const enum StillWorking {
