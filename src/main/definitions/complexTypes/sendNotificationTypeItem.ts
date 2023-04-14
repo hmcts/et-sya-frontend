@@ -13,7 +13,7 @@ export interface SendNotificationType {
   sendNotificationTitle?: string;
 
   //Hearing title with date
-  sendNotificationSelectHearing?: sendNotificationSelectHearingItem;
+  sendNotificationSelectHearing?: SendNotificationSelectHearingItem;
 
   //Date sent
   date?: string;
@@ -60,7 +60,8 @@ export interface PseResponseTypeItem {
   value?: PseResponseType;
 }
 
-export interface sendNotificationSelectHearingItem {
+export interface SendNotificationSelectHearingItem {
+  // DynamicFixedListType
   selectedCode?: string;
   selectedLabel?: string;
 }

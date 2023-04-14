@@ -41,7 +41,9 @@ describe('Tribunal order or request helper', () => {
 
   const notificationType = {
     number: '1',
-    sendNotificationSelectHearing: 'Selected hearing',
+    sendNotificationSelectHearing: {
+      selectedLabel: 'Hearing',
+    },
     date: '2019-05-02',
     sentBy: 'Tribunal',
     sendNotificationCaseManagement: 'Order',
@@ -68,7 +70,7 @@ describe('Tribunal order or request helper', () => {
   it('should return expected tribunal order or request details content', () => {
     const pageContent = getRepondentOrderOrRequestDetails(translations, notificationItem);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
-    expect(pageContent[0].value).toEqual({ text: 'Selected hearing' });
+    expect(pageContent[0].value).toEqual({ text: 'Hearing' });
     expect(pageContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
     expect(pageContent[1].value).toEqual({ text: '2019-05-02' });
     expect(pageContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Sent by' });
@@ -112,7 +114,7 @@ describe('Tribunal order or request helper', () => {
     expect(pageContent[9].value).toEqual({ text: 'Judge' });
     expect(pageContent[10].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Full name',
+      text: 'Name',
     });
     expect(pageContent[10].value).toEqual({ text: 'Bob' });
     expect(pageContent[11].key).toEqual({
