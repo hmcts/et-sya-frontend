@@ -1,82 +1,65 @@
-import { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import CaseDocumentController from '../../../main/controllers/CaseDocumentController';
-import * as caseApi from '../../../main/services/CaseService';
+import { CaseWithId } from '../../../main/definitions/case';
+import { CaseState } from '../../../main/definitions/definition';
+import * as caseSelectionService from '../../../main/services/CaseSelectionService';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as caseService from '../../../main/services/CaseService';
+import { mockApplications } from '../mocks/mockApplications';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.mock('axios');
+const getUserCasesMock = jest.spyOn(caseSelectionService, 'getUserCasesByLastModified');
+const getUserAppMock = jest.spyOn(caseSelectionService, 'getUserApplications');
+const getCaseApiMock = jest.spyOn(caseService, 'getCaseApi');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+const api = new CaseApi(mockedAxios);
+
 describe('Case Document Controller', () => {
   const t = {};
-  const getCaseApiMock = jest.spyOn(caseApi, 'getCaseApi');
+  const userCases: CaseWithId[] = [
+    {
+      id: '12454',
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      et1SubmittedForm: {
+        id: '1234',
+        description: 'desc',
+        mimeType: 'application/pdf',
+        size: '123',
+        createdOn: '01/12/2023',
+        originalDocumentName: 'claim.pdf',
+      },
+    },
+  ];
 
   it('should retrieve the binary document', async () => {
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    getCaseApiMock.mockReturnValue(api);
+
+    const caseDocumentController = new CaseDocumentController();
+    const request = mockRequest({});
     const response = mockResponse();
-    const request = mockRequest({ t });
     request.params.docId = '1234';
-    request.session.user = {
-      id: '1',
-      givenName: 'Bobby',
-      familyName: 'Ryan',
-      email: 'bobby@gmail.com',
-      accessToken: 'token',
-      isCitizen: true,
-    };
-    request.session.userCase.acknowledgementOfClaimLetterDetail = [
-      {
-        id: '1234',
-        description: 'desc',
-        mimeType: 'test mimeType',
-      },
-    ];
-    request.session.submittedCase.acknowledgementOfClaimLetterDetail = [
-      {
-        id: '1234',
-        description: 'desc',
-        mimeType: 'test mimeType',
-      },
-    ];
-    const fetchResponse = {
-      status: 200,
-      data: 'someBinaryContent',
-    } as AxiosResponse;
-
-    (getCaseApiMock as jest.Mock).mockReturnValue({
-      getCaseDocument: jest.fn(() => {
-        return fetchResponse;
-      }),
-    });
-
-    const expectedBuffer = Buffer.from(fetchResponse.data, 'binary');
-    await new CaseDocumentController().get(request, response);
-    expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'test mimeType');
+    await caseDocumentController.get(request, response);
+    expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'application/pdf');
     expect(response.status).toHaveBeenCalledWith(200);
-    expect(response.send).toHaveBeenCalledWith(expectedBuffer);
   });
 
-  it('should redirect to not-found on error during request', async () => {
-    const response = mockResponse();
-    const request = mockRequest({ t });
-    request.params.docId = '1234';
-    request.session.user = {
-      id: '1',
-      givenName: 'Bobby',
-      familyName: 'Ryan',
-      email: 'bobby@gmail.com',
-      accessToken: 'token',
-      isCitizen: true,
-    };
-    request.session.userCase.acknowledgementOfClaimLetterDetail = [
-      {
-        id: '1234',
-        description: 'desc',
-        mimeType: 'test mimeType',
-      },
-    ];
+  it('should redirect to not found when document not found in user cases', async () => {
+    getUserCasesMock.mockResolvedValue(userCases);
+    getUserAppMock.mockReturnValue(mockApplications);
+    getCaseApiMock.mockReturnValue(api);
 
-    (getCaseApiMock as jest.Mock).mockReturnValue({
-      getCaseDocument: jest.fn().mockRejectedValue(new Error('test error message')),
-    });
-    await new CaseDocumentController().get(request, response);
+    const caseDocumentController = new CaseDocumentController();
+    const request = mockRequest({});
+    const response = mockResponse();
+    request.params.docId = '12345';
+    await caseDocumentController.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 
