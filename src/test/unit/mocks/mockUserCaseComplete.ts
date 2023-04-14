@@ -21,6 +21,26 @@ import {
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 
+export const selectedRequestOrOrder = {
+  id: '123',
+  value: {
+    number: '1',
+    sendNotificationTitle: 'title',
+    sendNotificationSelectHearing: {
+      selectedLabel: 'Hearing',
+    },
+    date: '2019-05-03',
+    sentBy: 'Tribunal',
+    sendNotificationCaseManagement: 'Order',
+    sendNotificationResponseTribunal: 'required',
+    sendNotificationSelectParties: 'Both',
+    sendNotificationAdditionalInfo: 'additional info',
+    sendNotificationWhoCaseOrder: 'Legal officer',
+    sendNotificationFullName: 'Judge Dredd',
+    sendNotificationNotify: 'Both',
+  },
+};
+
 export default {
   id: '1234',
   createdDate: '19 August 2022',
@@ -164,25 +184,5 @@ export default {
       },
     },
   ],
-  sendNotificationCollection: [
-    {
-      id: '123',
-      value: {
-        number: '1',
-        sendNotificationTitle: 'title',
-        sendNotificationSelectHearing: {
-          selectedLabel: 'Hearing',
-        },
-        date: '2019-05-03',
-        sentBy: 'Tribunal',
-        sendNotificationCaseManagement: 'Order',
-        sendNotificationResponseTribunal: 'required',
-        sendNotificationSelectParties: 'Both',
-        sendNotificationAdditionalInfo: 'additional info',
-        sendNotificationWhoCaseOrder: 'Legal officer',
-        sendNotificationFullName: 'Judge Dredd',
-        sendNotificationNotify: 'Both',
-      },
-    },
-  ],
+  sendNotificationCollection: [selectedRequestOrOrder],
 };

@@ -9,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getApplicationResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
+import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
@@ -18,8 +18,8 @@ export default class TribunalRespondToOrderController {
   private readonly form: Form;
   private readonly respondToTribunalOrder: FormContent = {
     fields: {
-      respondToApplicationText: {
-        id: 'respond-to-application-text',
+      responseText: {
+        id: 'response-text',
         type: 'textarea',
         label: l => l.textInputLabel,
         labelHidden: false,
@@ -62,13 +62,13 @@ export default class TribunalRespondToOrderController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const error = getApplicationResponseError(formData);
+    const error = getResponseErrors(formData);
 
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
       return res.redirect(
-        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace('orderId', req.params.orderId + getLanguageParam(req.url))
+        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId + getLanguageParam(req.url))
       );
     }
     req.session.errors = [];

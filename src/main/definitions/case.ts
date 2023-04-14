@@ -172,6 +172,7 @@ export interface Case {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   respondToApplicationText?: string;
+  responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
   sendNotificationCollection?: SendNotificationTypeItem[];

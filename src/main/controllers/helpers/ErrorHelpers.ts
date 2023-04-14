@@ -297,6 +297,32 @@ export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): For
   }
 };
 
+export const getResponseErrors = (formData: Partial<CaseWithId>): FormError => {
+  const text = formData.responseText;
+  const radio = formData.hasSupportingMaterial;
+  const textProvided = isFieldFilledIn(text) === undefined;
+  const supportingMaterialAnswer = isFieldFilledIn(radio) === undefined;
+
+  if (!textProvided) {
+    if (!supportingMaterialAnswer) {
+      return { propertyName: 'responseText', errorType: 'required' };
+    }
+
+    if (radio === YesOrNo.NO) {
+      return { propertyName: 'responseText', errorType: 'requiredFile' };
+    }
+  } else {
+    const tooLong = isContent2500CharsOrLess(text);
+    if (tooLong) {
+      return { propertyName: 'responseText', errorType: 'tooLong' };
+    }
+
+    if (!supportingMaterialAnswer) {
+      return { propertyName: 'hasSupportingMaterial', errorType: 'required' };
+    }
+  }
+};
+
 export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyRecord): string | undefined => {
   const fileError: FormError = getLastFileError(errors);
 
