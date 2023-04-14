@@ -65,6 +65,40 @@ export interface CaseData {
   claimServedDate?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   sendNotificationCollection?: SendNotificationTypeItem[];
+  hearingCollection?: HearingModel[];
+}
+
+export interface HearingModel {
+  id: string;
+  value: {
+    Est_Hearing?: {
+      fromDays: string;
+      fromHours: string;
+      fromMinues: string;
+    };
+    Hearing_stage?: string;
+    Hearing_type?: string;
+    Hearing_date_start?: Date;
+    Hearing_judge_name?: string;
+    Hearing_venue?: {
+      value: HearingVenueItem;
+      list_items: HearingVenueItem[];
+      selectedCode: string;
+      selectedLabel: string;
+    };
+    hearingDateCollection: {
+      id: string;
+      value: {
+        listedDate: Date;
+        Hearing_status: string;
+      };
+    }[];
+  };
+}
+
+export interface HearingVenueItem {
+  code: string;
+  label: string;
 }
 
 export interface RespondentApiModel {
