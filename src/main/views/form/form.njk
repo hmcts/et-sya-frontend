@@ -6,10 +6,34 @@
   {% block form_content %}
     {% include "./fields.njk" %}
     {% if "got-a-notice-period" in currentUrl %}
+      <p class="govuk-body">{{ noticePeriodClearSelection | safe }}</p>
       {{ govukInsetText({
         text: noticeLengthInsetText
       }) }}
     {% endif %}
+
+     {% if "notice-type" in currentUrl %}
+        <p class="govuk-body">{{ noticeTypeClearSelection | safe }}</p>
+     {% endif %}
+
+     {% if "/pay" in currentUrl %}
+        <p class="govuk-body">{{ payClearSelection | safe }}</p>
+     {% endif %}
+
+     {% if "pension" in currentUrl %}
+        <p class="govuk-body">{{ pensionClearSelection | safe }}</p>
+     {% endif %}
+
+     {% if "benefits" in currentUrl %}
+        <p class="govuk-body">{{ benefitsClearSelection | safe }}</p>
+     {% endif %}
+
+     {% if "/new-job-pay" in currentUrl %}
+        <p class="govuk-body">{{ newJobPayClearSelection | safe }}</p>
+     {% endif %}
+     {% if "/new-job" in currentUrl and "/new-job-pay" not in currentUrl %}
+        <p class="govuk-body">{{ newJobClearSelection | safe }}</p>
+     {% endif %}
   {% endblock %}
 
   <div class="govuk-form-group">

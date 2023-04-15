@@ -20,6 +20,13 @@
   "contactUsTitle": "Cysylltu â ni",
   "contactUsForHelp": "Ffoniwch un o ganolfannau cyswllt cwsmeriaid y Tribiwnlys Cyflogaeth. Ni allant roi cyngor cyfreithiol i chi. <br><br>Rhif Ffôn: 0300 123 1024<br>Rhif ffôn: 0300 303 5176 (Llinell Iaith Gymraeg)<br>Rhif ffôn: 0300 790 6234 (Yr Alban)<br>Ffôn Testun: 18001 0300 123 1024 (Cymru a Lloegr)<br>Ffôn testun: 18001 0300 790 6234 (Yr Alban)<br>Dydd Llun i ddydd Gwener, 9am - 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Gwybodaeth am brisiau galwadau</a>",
   "noticeLengthInsetText": "Os nad ydych yn siŵr, edrychwch ar delerau ac amodau eich contract cyflogaeth.",
+  "noticePeriodClearSelection": "<a href='/got-a-notice-period' class=\"govuk-link\">Clirio’r dewis</a>",
+  "noticeTypeClearSelection": "<a href='/notice-type' class=\"govuk-link\">Clirio’r dewis</a>",
+  "payClearSelection": "<a href='/pay' class=\"govuk-link\">Clirio’r dewis</a>",
+  "pensionClearSelection": "<a href='/pension' class=\"govuk-link\">Clirio’r dewis</a>",
+  "benefitsClearSelection": "<a href='/benefits' class=\"govuk-link\">Clirio’r dewis</a>",
+  "newJobPayClearSelection": "<a href='/new-job-pay' class=\"govuk-link\">Clirio’r dewis</a>",
+  "newJobClearSelection": "<a href='/new-job' class=\"govuk-link\">Clirio’r dewis</a>",
   "sessionTimeout": {
     "modal": {
       "title": "Rydych ar fin allgofnodi",

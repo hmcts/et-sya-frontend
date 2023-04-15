@@ -20,6 +20,14 @@
   "contactUsTitle": "Contact us",
   "contactUsForHelp": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.<br><br>Telephone: 0300 123 1024<br>Telephone: 0300 303 5176(Welsh language)<br>Telephone: 0300 790 6234(Scotland)<br>Textphone: 18001 0300 123 1024(England and Wales)<br>Textphone: 18001 0300 790 6234(Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out about call charges</a>",
   "noticeLengthInsetText": "If you're not sure, check the terms and conditions of your employment contract.",
+  "noticePeriodClearSelection": "<a href='/got-a-notice-period' class=\"govuk-link\">Clear selection</a>",
+  "noticeTypeClearSelection": "<a href='/notice-type' class=\"govuk-link\">Clear selection</a>",
+  "payClearSelection": "<a href='/pay' class=\"govuk-link\">Clear selection</a>",
+  "pensionClearSelection": "<a href='/pension' class=\"govuk-link\">Clear selection</a>",
+  "benefitsClearSelection": "<a href='/benefits' class=\"govuk-link\">Clear selection</a>",
+  "newJobPayClearSelection": "<a href='/new-job-pay' class=\"govuk-link\">Clear selection</a>",
+  "newJobClearSelection": "<a href='/new-job' class=\"govuk-link\">Clear selection</a>",
+
   "sessionTimeout": {
     "modal": {
       "title": "You're about to be signed out",
