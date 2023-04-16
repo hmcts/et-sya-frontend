@@ -88,7 +88,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
           for (const address of addresses) {
             const addressOption = document.createElement('option');
             addressOption.value = JSON.stringify(address);
-            addressOption.text = address.fullAddress;
+            addressOption.text = titleCase(address.fullAddress);
             selectAddress.add(addressOption);
           }
         } finally {
@@ -113,6 +113,16 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
       }
     }
   };
+}
+
+function titleCase(str: string): string {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => {
+      return word.replace(word[0], word[0].toUpperCase());
+    })
+    .join(' ');
 }
 
 function activateCursorButtons() {
