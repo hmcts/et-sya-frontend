@@ -6,10 +6,49 @@
   {% block form_content %}
     {% include "./fields.njk" %}
     {% if "got-a-notice-period" in currentUrl %}
+      <p class="govuk-body">
+      <a href='/got-a-notice-period' class="govuk-link">{{ clearSelection }}</a>
+      </p>
       {{ govukInsetText({
         text: noticeLengthInsetText
       }) }}
     {% endif %}
+
+     {% if "notice-type" in currentUrl %}
+        <p class="govuk-body">
+        <a href='/notice-type' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
+
+     {% if "/pay" in currentUrl %}
+        <p class="govuk-body">
+        <a href='/pay' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
+
+     {% if "pension" in currentUrl %}
+        <p class="govuk-body">
+        <a href='/pension' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
+
+     {% if "benefits" in currentUrl %}
+        <p class="govuk-body">
+        <a href='/benefits' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
+
+     {% if "/new-job-pay" in currentUrl %}
+        <p class="govuk-body">
+        <a href='/new-job-pay' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
+
+     {% if "/new-job" in currentUrl and "/new-job-pay" not in currentUrl %}
+        <p class="govuk-body">
+        <a href='/new-job' class="govuk-link">{{ clearSelection }}</a>
+        </p>
+     {% endif %}
   {% endblock %}
 
   <div class="govuk-form-group">

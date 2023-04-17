@@ -20,6 +20,7 @@
   "contactUsTitle": "Contact us",
   "contactUsForHelp": "Call one of our Employment Tribunal customer contact centres. They cannot give you legal advice.<br><br>Telephone: 0300 123 1024<br>Telephone: 0300 303 5176(Welsh language)<br>Telephone: 0300 790 6234(Scotland)<br>Textphone: 18001 0300 123 1024(England and Wales)<br>Textphone: 18001 0300 790 6234(Scotland)<br>Monday to Friday, 9am to 5pm<br> <br><a href=\"https://www.gov.uk/call-charges\" class=\"govuk-link\">Find out about call charges</a>",
   "noticeLengthInsetText": "If you're not sure, check the terms and conditions of your employment contract.",
+  "clearSelection": "Clear selection",
   "sessionTimeout": {
     "modal": {
       "title": "You're about to be signed out",
