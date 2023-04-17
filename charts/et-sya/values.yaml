@@ -1,5 +1,5 @@
 nodejs:
-  applicationPort: 3000
+  applicationPort: 3001
   aadIdentityName: et
   ingressHost: et-sya.{{ .Values.global.environment }}.platform.hmcts.net
   image: 'hmctspublic.azurecr.io/et/sya:latest'
