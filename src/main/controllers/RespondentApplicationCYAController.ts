@@ -42,7 +42,7 @@ export default class RespondentApplicationCYAController {
         userCase,
         translations,
         getLanguageParam(req.url),
-        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedGenericTseApplication.value.number),
+        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedGenericTseApplication.id),
         downloadLink
       ),
     });

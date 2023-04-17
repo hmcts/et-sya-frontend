@@ -17,12 +17,66 @@
       }) 
     }}
 
-    {% if respondButton %}
-      {{ govukButton({
-        text: respond,
-        href: redirectUrl
-      }) }}
-    {% endif %}
+      {% if respondButton %}
+        {{ govukButton({
+            text: respond,
+            href: redirectUrl
+          }) }}
+      {% endif %}
+
+      {% for respCol in selectedApplication.value.respondCollection %}
+        {% if respCol.value.from === "Claimant" %}
+          <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h2>
+          {{ govukSummaryList({
+              rows: [
+                {
+                  key: {
+                  text: responseFrom,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: claimant }
+                },
+                {
+                  key: {
+                  text: responseDate,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.date }
+                },
+                {
+                  key: {
+                  text: response,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.response }
+                },
+                {
+                  key: {
+                  text: supportingMaterial,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { html: claimantResponseDocDownloadLink }
+                },
+                {
+                  key: {
+                  text: copyCorrespondence,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.copyToOtherParty }
+                }
+              ]
+            }) }}
+        {% endif %}
+      {% endfor %}
+
+      {% if selectedApplication.value.adminDecision.length %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
+        {{ govukSummaryList({
+          rows: decisionContent
+          }) 
+        }}
+        <br>
+      {% endif %}
 
     </div>
 
