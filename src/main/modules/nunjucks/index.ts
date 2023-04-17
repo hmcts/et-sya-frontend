@@ -25,7 +25,7 @@ export class Nunjucks {
         express: app,
       }
     );
-    const addFilters = require('./njkFilters.ts');
+    const addFilters = require(path.resolve(__dirname, './njkFilters.ts');
     addFilters(nunEnv);
     nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 
