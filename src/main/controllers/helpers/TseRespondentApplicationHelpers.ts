@@ -1,4 +1,4 @@
-import { CaseWithId } from '../../definitions/case';
+import { CaseWithId, Document } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
@@ -42,7 +42,7 @@ export const getRespondentBannerContent = (
             ' ' +
             dueDate.getFullYear(),
           applicationType: applicationTypes.respondent.a.includes(items[i].value.type) ? 'A' : 'B',
-          number: items[i].value.number,
+          number: items[i].id,
           applicationState: items[i].value.applicationState,
           date: items[i].value.date,
           type: items[i].value.type,
@@ -72,10 +72,25 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
     respondentItems.forEach(item => {
       const app = translations[item.value.type];
       item.linkValue = app;
-      item.redirectUrl = `/respondent-application-details/${item.value.number}${getLanguageParam(url)}`;
+      item.redirectUrl = `/respondent-application-details/${item.id}${getLanguageParam(url)}`;
       item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
       item.displayStatus = translations[item.value.applicationState];
     });
     return respondentItems;
   }
+};
+
+export const getClaimantResponseDocDownload = (selectedApplication: GenericTseApplicationTypeItem): Document => {
+  let claimantResponseDocDownload = undefined;
+  const selectedAppRespondCollection = selectedApplication.value?.respondCollection;
+  for (let i = selectedAppRespondCollection.length - 1; i >= 0; i--) {
+    const selectedAppRespondCollectionItem = selectedAppRespondCollection[i].value;
+    if (
+      selectedAppRespondCollectionItem.from === 'Claimant' &&
+      selectedAppRespondCollectionItem.supportingMaterial !== undefined
+    ) {
+      claimantResponseDocDownload = selectedAppRespondCollectionItem.supportingMaterial[0].value.uploadedDocument;
+    }
+  }
+  return claimantResponseDocDownload;
 };

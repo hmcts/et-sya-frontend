@@ -41,7 +41,7 @@ describe('should get respondent application details', () => {
         copyToOtherPartyYesOrNo: 'Yes',
         respondByDate: 'Sunday 7 May 2023',
         date: '2023-05-01',
-        number: '1',
+        number: '124',
         respondToRespondentAppRedirectUrl: '/respondent-application-details/124?lng=en',
         respondentApplicationHeader: 'The respondent has applied to amend my claim',
         applicationState: 'notStartedYet',

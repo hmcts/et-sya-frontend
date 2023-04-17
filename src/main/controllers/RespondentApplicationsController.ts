@@ -27,6 +27,7 @@ export default class RespondentApplicationsController {
     populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(respondentApplications, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
+      TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.RESPONDENT_APPLICATIONS,
     ]);

@@ -11,6 +11,7 @@ import AddressDetailsController from '../../controllers/AddressDetailsController
 import AddressLookupController from '../../controllers/AddressLookupController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -66,8 +67,6 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
-import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
-import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -81,9 +80,10 @@ import StillWorkingController from '../../controllers/StillWorkingController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
-import SupportingMaterialController from '../../controllers/SupportingMaterialController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
+import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
+import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
@@ -95,7 +95,6 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import TribunalOrderDocumentController from "../../controllers/TribunalOrderDocumentController";
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -233,7 +232,7 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
-    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new SupportingMaterialController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
     app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
@@ -277,6 +276,5 @@ export class Routes {
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
-    app.get(PageUrls.GET_TRIBUNAL_ORDER_DOCUMENT, new TribunalOrderDocumentController().get);
   }
 }
