@@ -1,3 +1,4 @@
+import { CaseWithId } from '../../definitions/case';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -24,3 +25,13 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 // merge arrays but make sure they are not undefined
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
+
+export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetail[] => {
+  const combinedDocuments: DocumentDetail[] = [];
+  userCases.forEach(userCase => {
+    if (userCase.et1SubmittedForm && userCase.et1SubmittedForm.id) {
+      combinedDocuments.push(userCase.et1SubmittedForm);
+    }
+  });
+  return combinedDocuments;
+};
