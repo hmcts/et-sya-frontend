@@ -17,7 +17,7 @@ export const getRespondentCyaContent = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.respondToApplicationText,
+        text: userCase.responseText,
       },
       actions: {
         items: [

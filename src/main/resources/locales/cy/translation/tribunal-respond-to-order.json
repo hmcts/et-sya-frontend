@@ -22,7 +22,7 @@
     "hasSupportingMaterial": {
       "required": "Welsh translation required"
     },
-    "respondToApplicationText": {
+    "responseText": {
       "required": "Welsh translation required",
       "requiredFile": "Welsh translation required",
       "tooLong": "Welsh translation required"

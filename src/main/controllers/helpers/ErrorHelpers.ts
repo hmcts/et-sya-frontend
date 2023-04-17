@@ -271,32 +271,6 @@ export const getFileUploadAndTextAreaError = (
   }
 };
 
-export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): FormError => {
-  const text = formData.respondToApplicationText;
-  const radio = formData.hasSupportingMaterial;
-  const textProvided = isFieldFilledIn(text) === undefined;
-  const supportingMaterialAnswer = isFieldFilledIn(radio) === undefined;
-
-  if (!textProvided) {
-    if (!supportingMaterialAnswer) {
-      return { propertyName: 'respondToApplicationText', errorType: 'required' };
-    }
-
-    if (radio === YesOrNo.NO) {
-      return { propertyName: 'respondToApplicationText', errorType: 'requiredFile' };
-    }
-  } else {
-    const tooLong = isContent2500CharsOrLess(text);
-    if (tooLong) {
-      return { propertyName: 'respondToApplicationText', errorType: 'tooLong' };
-    }
-
-    if (!supportingMaterialAnswer) {
-      return { propertyName: 'hasSupportingMaterial', errorType: 'required' };
-    }
-  }
-};
-
 export const getResponseErrors = (formData: Partial<CaseWithId>): FormError => {
   const text = formData.responseText;
   const radio = formData.hasSupportingMaterial;

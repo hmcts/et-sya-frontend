@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
-import { getApplicationResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
+import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -23,7 +23,7 @@ export default class RespondToApplicationController {
   private readonly form: Form;
   private readonly respondToApplicationContent: FormContent = {
     fields: {
-      respondToApplicationText: {
+      responseText: {
         id: 'respond-to-application-text',
         type: 'textarea',
         label: l => l.textInputLabel,

@@ -21,13 +21,13 @@ export default class RespondentSupportingMaterialController {
   private readonly form: Form;
   private readonly supportingMaterialContent: FormContent = {
     fields: {
-      respondToApplicationText: {
+      responseText: {
         id: 'respond-to-application-text',
         type: 'textarea',
         label: l => l.legend,
         labelHidden: true,
         labelSize: 'normal',
-        hint: l => l.respondToApplicationText,
+        hint: l => l.responseText,
         attributes: { title: 'Give details text area' },
       },
       inset: {
@@ -67,18 +67,18 @@ export default class RespondentSupportingMaterialController {
   }
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-    userCase.respondToApplicationText = req.body.respondToApplicationText;
+    userCase.responseText = req.body.responseText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
 
     const supportingMaterialError = getFileUploadAndTextAreaError(
-      formData.respondToApplicationText,
+      formData.responseText,
       req.file,
       req.fileTooLarge,
       userCase.supportingMaterialFile,
-      'respondToApplicationText',
+      'responseText',
       'supportingMaterialFile'
     );
 

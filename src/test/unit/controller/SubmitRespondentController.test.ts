@@ -32,7 +32,7 @@ describe('Submit respondent controller', () => {
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
     jest.spyOn(CaseHelper, 'submitClaimantTse').mockImplementationOnce(() => Promise.resolve());
     await new SubmitTseController().get(request, response);
-    expect(request.session.userCase.respondToApplicationText).toStrictEqual(undefined);
+    expect(request.session.userCase.responseText).toStrictEqual(undefined);
     expect(request.session.userCase.supportingMaterialFile).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);
   });

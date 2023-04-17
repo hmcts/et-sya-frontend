@@ -163,7 +163,7 @@ export function clearTseFields(userCase: CaseWithId): void {
   userCase.contactApplicationFile = undefined;
   userCase.copyToOtherPartyYesOrNo = undefined;
   userCase.copyToOtherPartyText = undefined;
-  userCase.respondToApplicationText = undefined;
+  userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
 }

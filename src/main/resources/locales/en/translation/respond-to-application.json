@@ -46,7 +46,7 @@
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"
     },
-    "respondToApplicationText": {
+    "responseText": {
       "required": "Provide details of your response &/or upload supporting material",
       "requiredFile": "Provide details of your response &/or upload a file",
       "tooLong": "Response details must be 2500 characters or less"
