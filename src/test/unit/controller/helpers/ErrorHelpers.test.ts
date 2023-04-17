@@ -2,10 +2,10 @@ import {
   getACASCertificateNumberError,
   getClaimSummaryError,
   getNewJobPartialPayInfoError,
+  getOtherClaimDescriptionError,
   getPartialPayInfoError,
   handleErrors,
   returnSessionErrors,
-  getOtherClaimDescriptionError
 } from '../../../../main/controllers/helpers/ErrorHelpers';
 import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';

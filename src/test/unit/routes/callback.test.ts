@@ -60,7 +60,6 @@ describe('Test responds to /oauth2/callback', function () {
     jest.spyOn(res, 'redirect');
   });
 
-
   afterAll(() => {
     redisClient.quit();
   });
