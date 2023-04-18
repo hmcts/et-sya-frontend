@@ -6,7 +6,8 @@ import {
   arePayValuesNull,
   hasInvalidFileFormat,
   hasInvalidName,
-  isAcasNumberValid, isContent100CharsOrLess,
+  isAcasNumberValid,
+  isContent100CharsOrLess,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
@@ -14,6 +15,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
+import { Logger } from '../../logger';
 
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   //call get custom errors and add to session errors
@@ -80,7 +82,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   } else {
     const x = isContent100CharsOrLess(otherClaimTextarea);
     if (x) {
-      return {errorType: x, propertyName: 'otherClaim' };
+      return { errorType: x, propertyName: 'otherClaim' };
     }
   }
 };
@@ -193,11 +195,12 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
 export const getClaimSummaryError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
-  fileName: string
+  fileName: string,
+  logger: Logger
 ): FormError => {
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = hasInvalidFileFormat(file, logger);
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (!textProvided && !fileProvided) {
