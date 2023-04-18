@@ -10,9 +10,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
       size: (size / 1000000).toFixed(3),
       mimeType,
       originalDocumentName,
-      createdOn: new Intl.DateTimeFormat('en-GB', {
-        dateStyle: 'long',
-      }).format(new Date(createdOn)),
+      createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
       description: document.description,
     };
     Object.assign(
