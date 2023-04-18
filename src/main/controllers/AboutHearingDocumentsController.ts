@@ -27,11 +27,11 @@ export default class AboutHearingDocumentsController {
     const { userCase } = req.session;
     req.session.errors = [];
     const errorsForPage = () => {
-      if (!req.body.aboutHearingDocuments) {
-        logger.info('no about');
-        req.session.errors.push({ propertyName: 'aboutHearingDocuments', errorType: 'required' });
+      if (!req.body.hearingDocumentsAreFor) {
+        logger.info('no hearing selected');
+        req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
       } else {
-        userCase.aboutHearingDocuments = req.body.aboutHearingDocuments;
+        userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
       }
       if (!req.body.whoseHearingDocumentsAreYouUploading) {
         logger.info('no whose');
@@ -73,7 +73,7 @@ export default class AboutHearingDocumentsController {
       ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(item.value.listedDate)}`,
             value: `HearingId=${hearing.id}&dateId=${item.id}`,
             attributes: { maxLength: 2 },
-            name: 'aboutHearingDocuments',
+            name: 'hearingDocumentsAreFor',
           }))
       )
       .map((hearing, index) => ({
@@ -85,7 +85,7 @@ export default class AboutHearingDocumentsController {
 
     this.aboutHearingDocumentsContent = {
       fields: {
-        aboutHearingDocuments: {
+        hearingDocumentsAreFor: {
           classes: 'govuk-radios',
           id: 'about-hearing-documents1',
           type: 'radios',

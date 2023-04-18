@@ -127,4 +127,18 @@ describe('About Hearing Documents Controller', () => {
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('about-hearing-documents', expect.anything());
   });
+
+  it('should redirect to the same screen when errors are present', () => {
+    const expectedErrors = [{ propertyName: 'hearingDocumentsAreFor', errorType: 'required' }];
+    const body = {
+      whoseHearingDocumentsAreYouUploading: 'BothPartiesHearingDocumentsCombined',
+      whatAreTheseDocuments: 'SupplementaryOrOtherDocuments',
+    };
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ body }, aboutHearingDocumentsJson);
+    const controller = new AboutHearingDocumentsController();
+
+    controller.post(request, response);
+    expect(request.session.errors).toEqual(expectedErrors);
+  });
 });
