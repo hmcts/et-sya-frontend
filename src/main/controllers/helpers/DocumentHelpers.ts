@@ -61,13 +61,6 @@ export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetai
           }
         });
       }
-      if (userCase.responseEt3FormDocumentDetail) {
-        userCase.responseEt3FormDocumentDetail.forEach(responseEt3FormDocumentDetailItem => {
-          if (responseEt3FormDocumentDetailItem.id) {
-            combinedDocuments.push(responseEt3FormDocumentDetailItem);
-          }
-        });
-      }
     }
   });
   return combinedDocuments;
