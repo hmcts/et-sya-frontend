@@ -29,8 +29,45 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
 export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetail[] => {
   const combinedDocuments: DocumentDetail[] = [];
   userCases.forEach(userCase => {
-    if (userCase.et1SubmittedForm && userCase.et1SubmittedForm.id) {
-      combinedDocuments.push(userCase.et1SubmittedForm);
+    if (userCase.et1SubmittedForm) {
+      if (userCase.et1SubmittedForm && userCase.et1SubmittedForm.id) {
+        combinedDocuments.push(userCase.et1SubmittedForm);
+      }
+      if (userCase.acknowledgementOfClaimLetterDetail) {
+        userCase.acknowledgementOfClaimLetterDetail.forEach(acknowledgementOfClaimLetterDetailItem => {
+          if (acknowledgementOfClaimLetterDetailItem.id) {
+            combinedDocuments.push(acknowledgementOfClaimLetterDetailItem);
+          }
+        });
+      }
+      if (userCase.rejectionOfClaimDocumentDetail) {
+        userCase.rejectionOfClaimDocumentDetail.forEach(rejectionOfClaimDocumentDetailItem => {
+          if (rejectionOfClaimDocumentDetailItem.id) {
+            combinedDocuments.push(rejectionOfClaimDocumentDetailItem);
+          }
+        });
+      }
+      if (userCase.responseAcknowledgementDocumentDetail) {
+        userCase.responseAcknowledgementDocumentDetail.forEach(responseAcknowledgementDocumentDetailItem => {
+          if (responseAcknowledgementDocumentDetailItem.id) {
+            combinedDocuments.push(responseAcknowledgementDocumentDetailItem);
+          }
+        });
+      }
+      if (userCase.responseRejectionDocumentDetail) {
+        userCase.responseRejectionDocumentDetail.forEach(responseRejectionDocumentDetailItem => {
+          if (responseRejectionDocumentDetailItem.id) {
+            combinedDocuments.push(responseRejectionDocumentDetailItem);
+          }
+        });
+      }
+      if (userCase.responseEt3FormDocumentDetail) {
+        userCase.responseEt3FormDocumentDetail.forEach(responseEt3FormDocumentDetailItem => {
+          if (responseEt3FormDocumentDetailItem.id) {
+            combinedDocuments.push(responseEt3FormDocumentDetailItem);
+          }
+        });
+      }
     }
   });
   return combinedDocuments;
