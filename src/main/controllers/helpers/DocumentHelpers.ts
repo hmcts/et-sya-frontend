@@ -33,30 +33,22 @@ export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetai
       }
       if (userCase.acknowledgementOfClaimLetterDetail) {
         userCase.acknowledgementOfClaimLetterDetail.forEach(acknowledgementOfClaimLetterDetailItem => {
-          if (acknowledgementOfClaimLetterDetailItem.id) {
-            combinedDocuments.push(acknowledgementOfClaimLetterDetailItem);
-          }
+          combinedDocuments.push(acknowledgementOfClaimLetterDetailItem);
         });
       }
       if (userCase.rejectionOfClaimDocumentDetail) {
         userCase.rejectionOfClaimDocumentDetail.forEach(rejectionOfClaimDocumentDetailItem => {
-          if (rejectionOfClaimDocumentDetailItem.id) {
-            combinedDocuments.push(rejectionOfClaimDocumentDetailItem);
-          }
+          combinedDocuments.push(rejectionOfClaimDocumentDetailItem);
         });
       }
       if (userCase.responseAcknowledgementDocumentDetail) {
         userCase.responseAcknowledgementDocumentDetail.forEach(responseAcknowledgementDocumentDetailItem => {
-          if (responseAcknowledgementDocumentDetailItem.id) {
-            combinedDocuments.push(responseAcknowledgementDocumentDetailItem);
-          }
+          combinedDocuments.push(responseAcknowledgementDocumentDetailItem);
         });
       }
       if (userCase.responseRejectionDocumentDetail) {
         userCase.responseRejectionDocumentDetail.forEach(responseRejectionDocumentDetailItem => {
-          if (responseRejectionDocumentDetailItem.id) {
-            combinedDocuments.push(responseRejectionDocumentDetailItem);
-          }
+          combinedDocuments.push(responseRejectionDocumentDetailItem);
         });
       }
     }
