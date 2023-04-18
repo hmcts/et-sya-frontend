@@ -69,8 +69,7 @@ export default class AboutHearingDocumentsController {
         hearing.value.hearingDateCollection
           .filter(item => new Date(item.value.listedDate) > new Date())
           .map(item => ({
-            label: `${hearing.value.Hearing_type} -  
-      ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(item.value.listedDate)}`,
+            label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(item.value.listedDate)}`,
             value: `HearingId=${hearing.id}&dateId=${item.id}`,
             attributes: { maxLength: 2 },
             name: 'hearingDocumentsAreFor',

@@ -7,6 +7,9 @@ const PAGE_URL = '/about-hearing-documents';
 const titleClass = 'govuk-heading-xl';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'About your hearing documents';
+const radioButtonQuestion = 'govuk-radios govuk-radios';
+const inputs = 'govuk-label govuk-radios__label';
+const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2023'
 let htmlRes: Document;
 
 describe('About hearing documents page', () => {
@@ -110,5 +113,35 @@ describe('About hearing documents page', () => {
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
     expect(button[5].innerHTML).contains('Continue', 'Could not find the continue button');
+  });
+
+  it('should display radios', () => {
+    const radios = htmlRes.getElementsByClassName(radioButtonQuestion);
+    expect(radios.length).equal(3, `only ${radios.length} found`);
+  });
+
+  it('first question should contain the correct number of radios buttons', () => {
+    const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
+    const question1 = allQuestions[0];
+    const radios = question1.getElementsByClassName(inputs);
+    expect(radios.length).equal(1, `only ${radios.length} found`);
+  });
+  it('first radio button of first question should contain the correct information of hearing details', () => {
+    const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
+    const question1 = allQuestions[0];
+    const radios = question1.getElementsByClassName(inputs);
+    expect(radios[0].innerHTML).contains(expectedRadioButton, 'Radio button is not correct');
+  });
+  it('second question should contain the correct number of radios buttons', () => {
+    const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
+    const question2 = allQuestions[1];
+    const radios = question2.getElementsByClassName(inputs);
+    expect(radios.length).equal(2, `only ${radios.length} found`);
+  });
+  it('third question should contain the correct number of radios buttons', () => {
+    const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
+    const question3 = allQuestions[2];
+    const radios = question3.getElementsByClassName(inputs);
+    expect(radios.length).equal(3, `only ${radios.length} found`);
   });
 });
