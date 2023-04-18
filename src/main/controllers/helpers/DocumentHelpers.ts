@@ -10,9 +10,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
       size: (size / 1000000).toFixed(3),
       mimeType,
       originalDocumentName,
-      createdOn: new Intl.DateTimeFormat('en-GB', {
-        dateStyle: 'long',
-      }).format(new Date(createdOn)),
+      createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
       description: document.description,
     };
     Object.assign(
@@ -35,37 +33,22 @@ export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetai
       }
       if (userCase.acknowledgementOfClaimLetterDetail) {
         userCase.acknowledgementOfClaimLetterDetail.forEach(acknowledgementOfClaimLetterDetailItem => {
-          if (acknowledgementOfClaimLetterDetailItem.id) {
-            combinedDocuments.push(acknowledgementOfClaimLetterDetailItem);
-          }
+          combinedDocuments.push(acknowledgementOfClaimLetterDetailItem);
         });
       }
       if (userCase.rejectionOfClaimDocumentDetail) {
         userCase.rejectionOfClaimDocumentDetail.forEach(rejectionOfClaimDocumentDetailItem => {
-          if (rejectionOfClaimDocumentDetailItem.id) {
-            combinedDocuments.push(rejectionOfClaimDocumentDetailItem);
-          }
+          combinedDocuments.push(rejectionOfClaimDocumentDetailItem);
         });
       }
       if (userCase.responseAcknowledgementDocumentDetail) {
         userCase.responseAcknowledgementDocumentDetail.forEach(responseAcknowledgementDocumentDetailItem => {
-          if (responseAcknowledgementDocumentDetailItem.id) {
-            combinedDocuments.push(responseAcknowledgementDocumentDetailItem);
-          }
+          combinedDocuments.push(responseAcknowledgementDocumentDetailItem);
         });
       }
       if (userCase.responseRejectionDocumentDetail) {
         userCase.responseRejectionDocumentDetail.forEach(responseRejectionDocumentDetailItem => {
-          if (responseRejectionDocumentDetailItem.id) {
-            combinedDocuments.push(responseRejectionDocumentDetailItem);
-          }
-        });
-      }
-      if (userCase.responseEt3FormDocumentDetail) {
-        userCase.responseEt3FormDocumentDetail.forEach(responseEt3FormDocumentDetailItem => {
-          if (responseEt3FormDocumentDetailItem.id) {
-            combinedDocuments.push(responseEt3FormDocumentDetailItem);
-          }
+          combinedDocuments.push(responseRejectionDocumentDetailItem);
         });
       }
     }
