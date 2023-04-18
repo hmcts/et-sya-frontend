@@ -9,6 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('AboutHearingDocumentsController');
 
@@ -54,29 +55,31 @@ export default class AboutHearingDocumentsController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const hearings = req.session?.userCase?.hearingCollection.flatMap(hearing => {
-      return hearing.value.hearingDateCollection.map(item => ({
-        id: hearing.id,
-        hearingType: hearing.value.Hearing_type,
-        hearingStage: hearing.value.Hearing_stage,
-        date: {
-          listedDate: new Intl.DateTimeFormat('en-GB', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-          }).format(new Date(item.value.listedDate)),
-          dateId: item.id,
-        },
-        venue: hearing.value?.Hearing_venue?.value?.label,
+    const formatDate = (rawDate: Date): string =>
+      new Intl.DateTimeFormat('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      }).format(new Date(rawDate));
+    // if no hearing collection we exit
+    // do we retreive data in background
+    // are attributes needed
+    const radioBtns = req.session?.userCase?.hearingCollection
+      .flatMap(hearing =>
+        hearing.value.hearingDateCollection
+          .filter(item => new Date(item.value.listedDate) > new Date())
+          .map(item => ({
+            label: `${hearing.value.Hearing_type} -  
+      ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(item.value.listedDate)}`,
+            value: `HearingId=${hearing.id}&dateId=${item.id}`,
+            attributes: { maxLength: 2 },
+            name: 'aboutHearingDocuments',
+          }))
+      )
+      .map((hearing, index) => ({
+        ...hearing,
+        label: `${index + 1} ${hearing.label}`,
       }));
-    });
-    const radioBtns = hearings.map((hearing, index) => ({
-      label: `${index + 1} ${hearing.hearingType} -  
-      ${hearing.venue} - ${hearing.date.listedDate}`,
-      name: 'radio' + index,
-      value: `HearingId=${hearing.id}&dateId=${hearing.date.dateId}`,
-      attributes: { maxLength: 2 },
-    }));
 
     logger.info('this is radio buttons ', JSON.stringify(radioBtns));
 
@@ -102,14 +105,14 @@ export default class AboutHearingDocumentsController {
           values: [
             {
               label: (l: AnyRecord): string => l.Question2Radio1,
-              name: 'radio1',
-              value: 'Yes',
+              name: 'whoseHearingDocumentsAreYouUploading',
+              value: 'MyHearingDocuments',
               attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question2Radio2,
-              name: 'radio2',
-              value: 'No',
+              name: 'whoseHearingDocumentsAreYouUploading',
+              value: 'BothPartiesHearingDocumentsCombined',
               attributes: { maxLength: 2 },
             },
           ],
@@ -125,20 +128,20 @@ export default class AboutHearingDocumentsController {
           values: [
             {
               label: (l: AnyRecord): string => l.Question3Radio1,
-              name: 'radio1',
-              value: 'Yes',
+              name: 'whatAreTheseDocuments',
+              value: 'AllHearingDocuments',
               attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio2,
-              name: 'radio2',
-              value: 'No',
+              name: 'whatAreTheseDocuments',
+              value: 'SupplementaryOrOtherDocuments',
               attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio3,
-              name: 'radio3',
-              value: 'No',
+              name: 'whatAreTheseDocuments',
+              value: 'WitnessStatementsOnly',
               attributes: { maxLength: 2 },
             },
           ],
@@ -147,7 +150,6 @@ export default class AboutHearingDocumentsController {
       },
       submit: {
         text: (l: AnyRecord): string => l.continue,
-        classes: 'govuk-!-margin-right-2',
       },
     };
     this.form = new Form(<FormFields>this.aboutHearingDocumentsContent.fields);
@@ -158,9 +160,10 @@ export default class AboutHearingDocumentsController {
       ...content,
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      //...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       hideContactUs: true,
+      cancelLink: `/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`,
     });
   };
 }

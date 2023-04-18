@@ -77,7 +77,14 @@ export interface HearingModel {
       fromMinues: string;
     };
     Hearing_stage?: string;
+    hearingFormat: string[];
     Hearing_type?: string;
+    hearingNumber: string;
+    hearingSitAlone: string;
+    judicialMediation: string;
+    hearingEstLengthNum: number;
+    hearingPublicPrivate: string;
+    Hearing_notes?: string;
     Hearing_date_start?: Date;
     Hearing_judge_name?: string;
     Hearing_venue?: {
@@ -91,6 +98,20 @@ export interface HearingModel {
       value: {
         listedDate: Date;
         Hearing_status: string;
+        hearingVenueDay?: {
+          value: {
+            code: string;
+            label: string;
+          };
+          list_items: {
+            code: string;
+            label: string;
+          }[];
+          selectedCode: string;
+          selectedLabel: string;
+        };
+        hearingTimingStart?: Date;
+        hearingTimingFinish?: Date;
       };
     }[];
   };
