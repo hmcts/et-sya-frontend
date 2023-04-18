@@ -354,7 +354,7 @@ describe('Validation', () => {
     ])('Check file format %o', ({ fileName, expected }) => {
       const newFile = mockFile;
       newFile.originalname = fileName;
-      expect(hasInvalidFileFormat(newFile)).toEqual(expected);
+      expect(hasInvalidFileFormat(newFile, undefined)).toEqual(expected);
     });
     it.each([
       { fileName: 'file Copy(0).csv', expected: undefined },
