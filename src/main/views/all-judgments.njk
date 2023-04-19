@@ -1,0 +1,88 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col">
+              {{ dateSent }}
+            </th>
+            <th class="govuk-table__header" scope="col">
+              {{ judgment }}
+            </th>
+            <th class="govuk-table__header" scope="col">
+              {{ status }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          {% for app in judgments %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {{ app.value.date }}
+              </td>
+              <td class="govuk-table__cell">
+                <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
+                  {{ app.value.sendNotificationTitle }}
+                </a>
+              </td>
+              <td class="govuk-table__cell">
+                {{ govukTag({
+                    text: app.displayStatus,
+                    classes: "govuk-tag" + app.statusColor
+                }) }}
+              </td>
+            </tr>
+          {% endfor %}
+          {% for app in decisions %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                {{ app.value.date }}
+              </td>
+              <td class="govuk-table__cell">
+                <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
+                  {{ app.value.enterNotificationTitle }}
+                </a>
+              </td>
+              <td class="govuk-table__cell">
+                {{ govukTag({
+                    text: app.displayStatus,
+                    classes: "govuk-tag" + app.statusColor
+                }) }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      <div class="govuk-!-margin-top-2">
+        {{ govukDetails({
+          summaryText: "Contact",
+          html: sideBarContent
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "./footer.njk" %}
+{% endblock %}

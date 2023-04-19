@@ -9,6 +9,7 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
+import AllJudgmentsController from '../../controllers/AllJudgmentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AttachmentController from '../../controllers/AttachmentController';
@@ -42,6 +43,7 @@ import EmploymentAndRespondentCheckController from '../../controllers/Employment
 import EndDateController from '../../controllers/EndDateController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
+import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
@@ -276,5 +278,7 @@ export class Routes {
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
+    app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
   }
 }

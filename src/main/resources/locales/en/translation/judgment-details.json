@@ -1,0 +1,11 @@
+{
+  "decision": "Decision",
+  "dateSent": "Date sent",
+  "sentBy": "Sent by",
+  "additionalInfo": "Additional information",
+  "description": "Description",
+  "document": "Document",
+  "judgmentMadeBy": "Judgment made by",
+  "name": "Name",
+  "sentTo": "Sent to"
+}

@@ -247,7 +247,7 @@ export const mockHubLinkStatusesRequest = {
     requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
-    tribunalJudgements: HubLinkStatus.NOT_YET_AVAILABLE,
+    tribunalJudgments: HubLinkStatus.NOT_YET_AVAILABLE,
     tribunalOrders: HubLinkStatus.NOT_YET_AVAILABLE,
   },
 };

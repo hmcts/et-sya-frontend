@@ -20,6 +20,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { activateJudgmentsLink, getDecisions } from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -68,6 +69,10 @@ export default class CitizenHubController {
 
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
+
+    const judgments = userCase.sendNotificationCollection;
+    const decisions = getDecisions(userCase);
+    activateJudgmentsLink(judgments, decisions, userCase);
 
     // Mark respondent's response as waiting for the tribunal
     if (

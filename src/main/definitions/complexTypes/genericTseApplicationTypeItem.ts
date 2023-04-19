@@ -31,6 +31,10 @@ export interface GenericTseApplicationType {
 export interface TseAdminDecisionItem {
   id?: string;
   value?: TseAdminDecision;
+  redirectUrl?: string;
+  statusColor?: string;
+  displayStatus?: string;
+  notificationState?: string;
 }
 
 export interface TseAdminDecision {

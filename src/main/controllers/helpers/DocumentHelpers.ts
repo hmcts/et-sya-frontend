@@ -1,5 +1,6 @@
 import { Document } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
@@ -59,6 +60,10 @@ export const findSelectedGenericTseApplication = (
   items: GenericTseApplicationTypeItem[],
   param: string
 ): GenericTseApplicationTypeItem => {
+  return items?.find(it => it.id === param);
+};
+
+export const findSelectedJudgment = (items: SendNotificationTypeItem[], param: string): SendNotificationTypeItem => {
   return items?.find(it => it.id === param);
 };
 
