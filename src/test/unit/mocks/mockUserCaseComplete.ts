@@ -183,4 +183,5 @@ export default {
       },
     },
   ],
+  hearingCollection: undefined,
 };

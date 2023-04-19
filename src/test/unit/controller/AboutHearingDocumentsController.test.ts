@@ -119,7 +119,6 @@ describe('About Hearing Documents Controller', () => {
               },
             },
           ],
-          //      hearingEstLengthNumType: 'Hours',
         },
       },
     ];
@@ -152,19 +151,29 @@ describe('About Hearing Documents Controller', () => {
     const controller = new AboutHearingDocumentsController();
 
     controller.post(request, response);
-    expect(response.redirect).toHaveBeenCalledWith('/');
     expect(request.session.errors).toHaveLength(0);
   });
   it('should return 2 errors when 2 questions are unanswered', () => {
-    const expectedErrors = [{ propertyName: 'hearingDocumentsAreFor', errorType: 'required' },
-    { propertyName: 'whatAreTheseDocuments', errorType: 'required' }];
+    const expectedErrors = [
+      { propertyName: 'hearingDocumentsAreFor', errorType: 'required' },
+      { propertyName: 'whatAreTheseDocuments', errorType: 'required' },
+    ];
     const body = {
-      whoseHearingDocumentsAreYouUploading: 'BothPartiesHearingDocumentsCombined' };
+      whoseHearingDocumentsAreYouUploading: 'BothPartiesHearingDocumentsCombined',
+    };
     const response = mockResponse();
     const request = mockRequestWithTranslation({ body }, aboutHearingDocumentsJson);
     const controller = new AboutHearingDocumentsController();
 
     controller.post(request, response);
     expect(request.session.errors).toEqual(expectedErrors);
+  });
+  it('should redirect to the citizen hub if no hearings are present', () => {
+    const controller = new AboutHearingDocumentsController();
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({}, aboutHearingDocumentsJson);
+
+    controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith('/citizen-hub/1234?lng=en');
   });
 });

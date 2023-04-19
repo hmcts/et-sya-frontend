@@ -22,25 +22,20 @@ export default class AboutHearingDocumentsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    logger.info('req.body is ', JSON.stringify(req.body));
-    logger.info('the form is  ', this.form);
     const { userCase } = req.session;
     req.session.errors = [];
     const errorsForPage = () => {
       if (!req.body.hearingDocumentsAreFor) {
-        logger.info('no hearing selected');
         req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
       } else {
         userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
       }
       if (!req.body.whoseHearingDocumentsAreYouUploading) {
-        logger.info('no whose');
         req.session.errors.push({ propertyName: 'whoseHearingDocumentsAreYouUploading', errorType: 'required' });
       } else {
         userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
       }
       if (!req.body.whatAreTheseDocuments) {
-        logger.info('no what are');
         req.session.errors.push({ propertyName: 'whatAreTheseDocuments', errorType: 'required' });
       } else {
         userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
@@ -61,15 +56,19 @@ export default class AboutHearingDocumentsController {
         month: 'short',
         year: 'numeric',
       }).format(new Date(rawDate));
-    // if no hearing collection we exit
-    // do we retreive data in background
-    // are attributes needed
+
+    if (!req.session?.userCase?.hearingCollection?.length) {
+      logger.info('no hearing collection found, redirecting to citizen hub');
+      return res.redirect(`/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`);
+    }
     const radioBtns = req.session?.userCase?.hearingCollection
       .flatMap(hearing =>
         hearing.value.hearingDateCollection
           .filter(item => new Date(item.value.listedDate) > new Date())
           .map(item => ({
-            label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(item.value.listedDate)}`,
+            label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
+              item.value.listedDate
+            )}`,
             value: `HearingId=${hearing.id}&dateId=${item.id}`,
             attributes: { maxLength: 2 },
             name: 'hearingDocumentsAreFor',
@@ -79,8 +78,6 @@ export default class AboutHearingDocumentsController {
         ...hearing,
         label: `${index + 1} ${hearing.label}`,
       }));
-
-    logger.info('this is radio buttons ', JSON.stringify(radioBtns));
 
     this.aboutHearingDocumentsContent = {
       fields: {
@@ -106,13 +103,11 @@ export default class AboutHearingDocumentsController {
               label: (l: AnyRecord): string => l.Question2Radio1,
               name: 'whoseHearingDocumentsAreYouUploading',
               value: 'MyHearingDocuments',
-              attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question2Radio2,
               name: 'whoseHearingDocumentsAreYouUploading',
               value: 'BothPartiesHearingDocumentsCombined',
-              attributes: { maxLength: 2 },
             },
           ],
           validator: isFieldFilledIn,
@@ -129,19 +124,16 @@ export default class AboutHearingDocumentsController {
               label: (l: AnyRecord): string => l.Question3Radio1,
               name: 'whatAreTheseDocuments',
               value: 'AllHearingDocuments',
-              attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio2,
               name: 'whatAreTheseDocuments',
               value: 'SupplementaryOrOtherDocuments',
-              attributes: { maxLength: 2 },
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio3,
               name: 'whatAreTheseDocuments',
               value: 'WitnessStatementsOnly',
-              attributes: { maxLength: 2 },
             },
           ],
           validator: isFieldFilledIn,
@@ -159,7 +151,6 @@ export default class AboutHearingDocumentsController {
       ...content,
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.ABOUT_HEARING_DOCUMENTS, { returnObjects: true }),
-      //...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       hideContactUs: true,
       cancelLink: `/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`,

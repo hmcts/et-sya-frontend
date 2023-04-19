@@ -9,7 +9,7 @@ const buttonClass = 'govuk-button';
 const expectedTitle = 'About your hearing documents';
 const radioButtonQuestion = 'govuk-radios govuk-radios';
 const inputs = 'govuk-label govuk-radios__label';
-const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2023'
+const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2023';
 let htmlRes: Document;
 
 describe('About hearing documents page', () => {
@@ -19,7 +19,7 @@ describe('About hearing documents page', () => {
         userCase: {
           hearingCollection: [
             {
-              id: '236c8a94-e485-4034-bbdb-99f982679138',
+              id: '123abc',
               value: {
                 Hearing_type: 'Hearing',
                 Hearing_notes: 'notes',
@@ -58,7 +58,7 @@ describe('About hearing documents page', () => {
                 hearingPublicPrivate: 'Public',
                 hearingDateCollection: [
                   {
-                    id: '3890feaa-ad4b-4822-9040-3bc09279450a',
+                    id: '321abc',
                     value: {
                       listedDate: new Date('2023-07-04T14:00:00.000'),
                       Hearing_status: 'Listed',
@@ -92,6 +92,41 @@ describe('About hearing documents page', () => {
                       hearingTimingFinish: new Date('2023-04-13T11:00:00.000'),
                     },
                   },
+                  {
+                    id: 'bcdefg123',
+                    value: {
+                      listedDate: new Date('2023-03-19T00:00:00.000'),
+                      Hearing_status: 'Listed',
+                      hearingVenueDay: {
+                        value: {
+                          code: 'Fox Court rm 1',
+                          label: 'Fox Court rm 1',
+                        },
+                        list_items: [
+                          {
+                            code: 'Field House',
+                            label: 'Field House',
+                          },
+                          {
+                            code: 'Fox Court rm 1',
+                            label: 'Fox Court rm 1',
+                          },
+                          {
+                            code: 'London Central',
+                            label: 'London Central',
+                          },
+                          {
+                            code: 'RCJ',
+                            label: 'RCJ',
+                          },
+                        ],
+                        selectedCode: 'Fox Court rm 1',
+                        selectedLabel: 'Fox Court rm 1',
+                      },
+                      hearingTimingStart: new Date('2023-03-19T00:00:00.000'),
+                      hearingTimingFinish: new Date('2023-03-19T00:00:00.000'),
+                    },
+                  },
                 ],
               },
             },
@@ -120,13 +155,13 @@ describe('About hearing documents page', () => {
     expect(radios.length).equal(3, `only ${radios.length} found`);
   });
 
-  it('first question should contain the correct number of radios buttons', () => {
+  it('first question should contain the correct number of radios buttons, only displaying hearings for future dates', () => {
     const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
     const question1 = allQuestions[0];
     const radios = question1.getElementsByClassName(inputs);
     expect(radios.length).equal(1, `only ${radios.length} found`);
   });
-  it('first radio button of first question should contain the correct information of hearing details', () => {
+  it('first radio button of first question should display the numbered hearing with location and formatted date', () => {
     const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
     const question1 = allQuestions[0];
     const radios = question1.getElementsByClassName(inputs);
