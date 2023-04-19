@@ -7,6 +7,7 @@ import nunjucks from 'nunjucks';
 import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
+import createFilters from "./njkFilters";
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -25,8 +26,7 @@ export class Nunjucks {
         express: app,
       }
     );
-    const addFilters = require('./njkFilters');
-    addFilters(nunEnv);
+    createFilters(nunEnv);
     nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 
     nunEnv.addGlobal('getContent', function (prop: ((param: string) => string) | string): string {

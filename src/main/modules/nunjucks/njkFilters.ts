@@ -22,4 +22,4 @@ function createFilters(env: nunjucks.Environment) {
   });
 }
 
-module.exports = createFilters;
+export default createFilters;
