@@ -29,28 +29,15 @@ it('should combine documents correctly', () => {
 
 it('should create proper download link for TSE CYA', () => {
   const doc: Document = {
-    document_url: '',
-    document_filename: 'test.pdf',
-    document_binary_url: '',
-    document_size: 1000,
-    document_mime_type: 'pdf',
-  };
-  const mockLink = "<a href='/getSupportingMaterial' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
-  const createdLink = createDownloadLink(doc);
-  expect(mockLink).toStrictEqual(createdLink);
-});
-
-it('should create proper download link for Tribunal Order document viewing', () => {
-  const doc: Document = {
-    document_url: '111',
+    document_url: 'uuid',
     document_filename: 'test.pdf',
     document_binary_url: '',
     document_size: 1000,
     document_mime_type: 'pdf',
   };
   const mockLink =
-    "<a href='/getTribunalOrderDocument/111' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
-  const createdLink = createDownloadLink(doc, true);
+    "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
+  const createdLink = createDownloadLink(doc);
   expect(mockLink).toStrictEqual(createdLink);
 });
 

@@ -25,6 +25,24 @@ export interface GenericTseApplicationType {
   status?: string;
   dueDate?: string;
   applicationState?: string;
+  adminDecision?: TseAdminDecisionItem[];
+}
+
+export interface TseAdminDecisionItem {
+  id?: string;
+  value?: TseAdminDecision;
+}
+
+export interface TseAdminDecision {
+  date?: string;
+  decision?: string;
+  decisionMadeBy?: string;
+  typeOfDecision?: string;
+  selectPartyNotify?: string;
+  responseRequiredDoc?: Document;
+  additionalInformation?: string;
+  decisionMadeByFullName?: string;
+  enterNotificationTitle?: string;
 }
 
 export interface TseRespondTypeItem {
@@ -38,6 +56,16 @@ export interface TseRespondType {
   response?: string;
   copyToOtherParty?: string;
   hasSupportingMaterial?: YesOrNo;
+  supportingMaterial?: TseRespondSupportingMaterialItem[];
+}
+
+export interface TseRespondSupportingMaterialItem {
+  id?: string;
+  value?: TseRespondSupportingMaterial;
+}
+
+export interface TseRespondSupportingMaterial {
+  uploadedDocument?: Document;
 }
 
 export const sortByDate = (a: GenericTseApplicationTypeItem, b: GenericTseApplicationTypeItem): number => {

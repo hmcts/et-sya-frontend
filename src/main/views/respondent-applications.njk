@@ -6,9 +6,12 @@
 
 {% block beforeContent %}
   {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% include "back-link.njk" %}
        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ title }}</h1>
       <table class="govuk-table">
         <thead class="govuk-table__head">

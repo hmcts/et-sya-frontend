@@ -1,5 +1,3 @@
-
-
 export interface TriageQuestions {
   postcode?: string;
   claimantRepresentedQuestion?: string;

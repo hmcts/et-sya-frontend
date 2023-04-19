@@ -14,6 +14,7 @@ import applicationDetails from '../../../../main/resources/locales/en/translatio
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import common from '../../../../main/resources/locales/en/translation/common.json';
 import contactTheTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
+import yourApplicationsRaw from '../../../../main/resources/locales/en/translation/your-applications.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('returnFormattedAddress', () => {
@@ -72,7 +73,7 @@ describe('returnFormattedAddress', () => {
     } as GenericTseApplicationTypeItem;
     const items = [item];
 
-    const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw, applicationDetails };
+    const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw, ...yourApplicationsRaw, applicationDetails };
 
     const req = mockRequestWithTranslation({}, translationJsons);
     req.session.userCase.genericTseApplicationCollection = items;

@@ -23,7 +23,7 @@ describe('Tribunal order or request helper', () => {
   const req = mockRequestWithTranslation({}, translationJsons);
 
   const doc: Document = {
-    document_url: '',
+    document_url: 'uuid',
     document_filename: 'test.pdf',
     document_binary_url: '',
     document_size: 1000,
@@ -103,7 +103,7 @@ describe('Tribunal order or request helper', () => {
       text: 'Document',
     });
     expect(pageContent[8].value).toEqual({
-      html: "<a href='/getTribunalOrderDocument/' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>",
     });
     expect(pageContent[9].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
