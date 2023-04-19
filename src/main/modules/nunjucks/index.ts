@@ -7,7 +7,8 @@ import nunjucks from 'nunjucks';
 import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
-import createFilters from "./njkFilters";
+
+import createFilters from './njkFilters';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {

@@ -1,6 +1,6 @@
 import nunjucks from 'nunjucks';
 
-function createFilters(env: nunjucks.Environment) {
+function createFilters(env: nunjucks.Environment): void {
   // to switch a string or an array of strings to titleCase
   env.addFilter('titleCase', function (input: string | string[]) {
     if (typeof input === 'string') {

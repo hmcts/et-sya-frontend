@@ -1,4 +1,5 @@
 import nunjucks from 'nunjucks';
+
 import createFilters from '../../../../../src/main/modules/nunjucks/njkFilters';
 
 describe('njkFilters', () => {
