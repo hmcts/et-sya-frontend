@@ -103,7 +103,7 @@ describe('Claim Summary Error', () => {
   it('should not return an error if only text has been provided', () => {
     const body = { claimSummaryText: 'text' };
 
-    const errors = getClaimSummaryError(body, undefined, undefined);
+    const errors = getClaimSummaryError(body, undefined, undefined, undefined);
 
     expect(errors).toEqual(undefined);
   });
@@ -111,7 +111,7 @@ describe('Claim Summary Error', () => {
   it('should not return an error if only a file has been provided', () => {
     const body = {};
 
-    const errors = getClaimSummaryError(body, mockFile, undefined);
+    const errors = getClaimSummaryError(body, mockFile, undefined, undefined);
 
     expect(errors).toEqual(undefined);
   });
@@ -119,7 +119,7 @@ describe('Claim Summary Error', () => {
   it('should not return an error if file has previously been uploaded', () => {
     const body = { claimSummaryText: '' };
 
-    const errors = getClaimSummaryError(body, undefined, 'testfile.pdf');
+    const errors = getClaimSummaryError(body, undefined, 'testfile.pdf', undefined);
 
     expect(errors).toEqual(undefined);
   });
@@ -130,7 +130,7 @@ describe('Claim Summary Error', () => {
       claimSummaryFileName: '',
     };
 
-    const errors = getClaimSummaryError(body, undefined, undefined);
+    const errors = getClaimSummaryError(body, undefined, undefined, undefined);
 
     expect(errors).toEqual({ propertyName: 'claimSummaryText', errorType: 'required' });
   });
