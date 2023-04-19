@@ -79,6 +79,11 @@ export default class AboutHearingDocumentsController {
         label: `${index + 1} ${hearing.label}`,
       }));
 
+    if (!radioBtns?.length) {
+      logger.info('no hearing collection with future dates, redirecting to citizen hub');
+      return res.redirect(`/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`);
+    }
+
     this.aboutHearingDocumentsContent = {
       fields: {
         hearingDocumentsAreFor: {
