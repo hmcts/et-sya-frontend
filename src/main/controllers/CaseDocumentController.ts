@@ -5,7 +5,11 @@ import { getLogger } from '../logger';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
 
-import { combineUserCaseDocuments } from './helpers/DocumentHelpers';
+import {
+  combineUserCaseDocuments,
+  findContentTypeByDocument,
+  findContentTypeByDocumentDetail,
+} from './helpers/DocumentHelpers';
 
 const logger = getLogger('CaseDocumentController');
 
@@ -33,13 +37,16 @@ export default class CaseDocumentController {
       }
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
-      if (!details.mimeType) {
-        res.setHeader('Content-Type', 'application/pdf');
-        logger.error('Failed document name: ' + details.id);
-      } else {
-        res.setHeader('Content-Type', details.mimeType);
+      let contentType = findContentTypeByDocumentDetail(details);
+      if (!contentType) {
+        contentType = findContentTypeByDocument(document);
       }
-
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
+      } else {
+        logger.error('Failed to download document with id: ' + details.id);
+        res.setHeader('Content-Type', 'application/pdf');
+      }
       res.status(200).send(Buffer.from(document.data, 'binary'));
     } catch (err) {
       logger.error(err.message);
