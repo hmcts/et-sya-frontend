@@ -49,7 +49,7 @@ export default class AttachmentController {
         docId !== respondentAppDocId &&
         docId !== claimantResponseDocId &&
         docId !== contactTribunalDocId &&
-        docId !== getDocId(userCase.supportingMaterialFile.document_url)
+        docId !== getDocId(userCase.supportingMaterialFile?.document_url)
       ) {
         logger.info('bad request parameter');
         return res.redirect('/not-found');
