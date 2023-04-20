@@ -8,7 +8,8 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { aboutHearingDocumentsErrors } from './helpers/ErrorHelpers';
+import { assignFormData, createRadioBtnsForAboutHearingDocs, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('AboutHearingDocumentsController');
@@ -24,25 +25,12 @@ export default class AboutHearingDocumentsController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
     req.session.errors = [];
-    const errorsForPage = () => {
-      if (!req.body.hearingDocumentsAreFor) {
-        req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
-      } else {
-        userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
-      }
-      if (!req.body.whoseHearingDocumentsAreYouUploading) {
-        req.session.errors.push({ propertyName: 'whoseHearingDocumentsAreYouUploading', errorType: 'required' });
-      } else {
-        userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
-      }
-      if (!req.body.whatAreTheseDocuments) {
-        req.session.errors.push({ propertyName: 'whatAreTheseDocuments', errorType: 'required' });
-      } else {
-        userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
-      }
-    };
 
-    errorsForPage();
+    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
+    userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
+    userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
+
+    req.session.errors = aboutHearingDocumentsErrors(req);
     if (req.session.errors.length) {
       return res.redirect('/about-hearing-documents');
     }
@@ -50,34 +38,12 @@ export default class AboutHearingDocumentsController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const formatDate = (rawDate: Date): string =>
-      new Intl.DateTimeFormat('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      }).format(new Date(rawDate));
-
     if (!req.session?.userCase?.hearingCollection?.length) {
       logger.info('no hearing collection found, redirecting to citizen hub');
       return res.redirect(`/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`);
     }
-    const radioBtns = req.session?.userCase?.hearingCollection
-      .flatMap(hearing =>
-        hearing.value.hearingDateCollection
-          .filter(item => new Date(item.value.listedDate) > new Date())
-          .map(item => ({
-            label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
-              item.value.listedDate
-            )}`,
-            value: `HearingId=${hearing.id}&dateId=${item.id}`,
-            attributes: { maxLength: 2 },
-            name: 'hearingDocumentsAreFor',
-          }))
-      )
-      .map((hearing, index) => ({
-        ...hearing,
-        label: `${index + 1} ${hearing.label}`,
-      }));
+
+    const radioBtns = createRadioBtnsForAboutHearingDocs(req.session?.userCase?.hearingCollection);
 
     if (!radioBtns?.length) {
       logger.info('no hearing collection with future dates, redirecting to citizen hub');

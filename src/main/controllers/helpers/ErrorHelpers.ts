@@ -318,3 +318,17 @@ export const getLastFileError = (errors: FormError[]): FormError => {
     }
   }
 };
+
+export const aboutHearingDocumentsErrors = (req: AppRequest): FormError[] => {
+  const errors: FormError[] = [];
+  if (!req.body.hearingDocumentsAreFor) {
+    errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
+  }
+  if (!req.body.whoseHearingDocumentsAreYouUploading) {
+    errors.push({ propertyName: 'whoseHearingDocumentsAreYouUploading', errorType: 'required' });
+  }
+  if (!req.body.whatAreTheseDocuments) {
+    errors.push({ propertyName: 'whatAreTheseDocuments', errorType: 'required' });
+  }
+  return errors;
+};
