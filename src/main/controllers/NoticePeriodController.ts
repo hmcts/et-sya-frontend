@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('NoticePeriodController');
 
@@ -51,6 +51,12 @@ export default class NoticePeriodController {
     this.form = new Form(<FormFields>this.noticePeriodFormContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.noticePeriod = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NOTICE_TYPE
@@ -60,6 +66,9 @@ export default class NoticePeriodController {
 
   public get = (req: AppRequest, res: Response): void => {
     const session = req.session;
+    if (req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.noticePeriodFormContent, [
       TranslationKeys.COMMON,
       session.userCase?.isStillWorking === StillWorking.NO_LONGER_WORKING
@@ -71,6 +80,7 @@ export default class NoticePeriodController {
     res.render(TranslationKeys.NOTICE_PERIOD, {
       ...content,
       employmentStatus,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }

@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import {getLanguageParam} from "./helpers/RouterHelpers";
 
 const logger = getLogger('BenefitsController');
 
@@ -64,6 +65,13 @@ export default class BenefitsController {
     this.form = new Form(<FormFields>this.benefitsContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.employeeBenefits = undefined;
+      req.session.userCase.benefitsCharCount = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
     if (req.session.userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
@@ -75,6 +83,9 @@ export default class BenefitsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.benefitsContent, [TranslationKeys.COMMON, TranslationKeys.BENEFITS]);
     const employmentStatus = req.session.userCase.isStillWorking;
     const employeeBenefits = Object.entries(this.form.getFormFields())[0][1];
@@ -93,6 +104,7 @@ export default class BenefitsController {
     res.render(TranslationKeys.BENEFITS, {
       ...content,
       employmentStatus,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }

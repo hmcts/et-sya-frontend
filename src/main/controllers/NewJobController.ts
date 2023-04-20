@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('NewJobController');
 
@@ -46,6 +46,12 @@ export default class NewJobController {
     this.form = new Form(<FormFields>this.newJobContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.newJob = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
       ? PageUrls.NEW_JOB_START_DATE
@@ -54,10 +60,14 @@ export default class NewJobController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.newJobContent, [TranslationKeys.COMMON, TranslationKeys.NEW_JOB]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NEW_JOB, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }
