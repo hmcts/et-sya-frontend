@@ -59,7 +59,7 @@ export default class NewJobPayController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query.redirect === 'clearSelection') {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }
     const content = getPageContent(req, this.newJobPayContent, [TranslationKeys.COMMON, TranslationKeys.NEW_JOB_PAY]);

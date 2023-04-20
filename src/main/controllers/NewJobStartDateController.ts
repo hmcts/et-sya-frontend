@@ -46,7 +46,7 @@ export default class NewJobStartDateController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query.redirect === 'clearSelection') {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }
     new_job_start_date.values = [

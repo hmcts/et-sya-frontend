@@ -71,7 +71,7 @@ export default class NoticeTypeController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    if (req.query.redirect === 'clearSelection') {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
       this.clearSelection(req);
     }
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
