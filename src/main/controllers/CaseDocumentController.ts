@@ -5,7 +5,7 @@ import { getLogger } from '../logger';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
 
-import { combineUserCaseDocuments } from './helpers/DocumentHelpers';
+import { combineUserCaseDocuments, findDocumentMimeTypeByExtension } from './helpers/DocumentHelpers';
 
 const logger = getLogger('CaseDocumentController');
 
@@ -33,9 +33,35 @@ export default class CaseDocumentController {
       }
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
+      let contentType;
       if (!details.mimeType) {
-        res.setHeader('Content-Type', 'application/pdf');
-        logger.error('Failed document name: ' + details.id);
+        if (!details.originalDocumentName) {
+          contentType = document.headers['content-type'];
+          if (!contentType) {
+            let fileName: string = document?.headers?.originalfilename;
+            if (!fileName) {
+              const contentDisposition = document.headers['content-disposition'];
+              fileName = contentDisposition?.substring(
+                contentDisposition.indexOf('"') + 1,
+                contentDisposition.lastIndexOf('"')
+              );
+            }
+            if (fileName) {
+              const fileExtension = fileName?.substring(fileName.indexOf('.') + 1)?.toLowerCase();
+              contentType = findDocumentMimeTypeByExtension(fileExtension);
+            }
+          }
+        } else {
+          const fileName = details.originalDocumentName;
+          const fileExtension = fileName?.substring(fileName.indexOf('.') + 1)?.toLowerCase();
+          contentType = findDocumentMimeTypeByExtension(fileExtension);
+        }
+        if (contentType) {
+          res.setHeader('Content-Type', contentType);
+        } else {
+          logger.error('Failed to download document with id: ' + details.id);
+          res.setHeader('Content-Type', 'application/pdf');
+        }
       } else {
         res.setHeader('Content-Type', details.mimeType);
       }
