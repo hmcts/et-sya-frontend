@@ -117,7 +117,7 @@ export const findContentTypeByDocumentDetail = (documentDetail: DocumentDetail):
   if (!contentType && documentDetail.originalDocumentName) {
     const originalDocumentExtension = documentDetail.originalDocumentName
       .substring(documentDetail.originalDocumentName.indexOf('.') + 1)
-      .toLowerCase();
+      ?.toLowerCase();
     contentType = findDocumentMimeTypeByExtension(originalDocumentExtension);
   }
   return contentType;
