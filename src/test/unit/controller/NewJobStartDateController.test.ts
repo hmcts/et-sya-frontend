@@ -20,6 +20,18 @@ describe('New Job Start Date Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB_START_DATE, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const controller = new NewJobStartDateController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.newJobStartDate = { year: '2023', month: '04', day: '20' };
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.newJobStartDate).toStrictEqual(undefined);
+  });
+
   it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'newJobStartDate', errorType: 'dayRequired', fieldName: 'day' }];
     const body = {
@@ -68,7 +80,7 @@ describe('New Job Start Date Controller', () => {
 
     const req = mockRequest({ body });
     const res = mockResponse();
-    await await controller.post(req, res);
+    await controller.post(req, res);
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.NEW_JOB_PAY);
   });
