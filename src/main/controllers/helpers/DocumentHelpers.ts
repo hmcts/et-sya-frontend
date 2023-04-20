@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { CaseWithId } from '../../definitions/case';
+import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -55,72 +56,71 @@ function pushDocumentsToCombinedDocuments(combinedDocuments: DocumentDetail[], d
 export const findDocumentMimeTypeByExtension = (extension: string): string => {
   switch (extension) {
     case 'docx':
-      return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      return DOCUMENT_CONTENT_TYPES.DOCX;
     case 'xlsx':
-      return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      return DOCUMENT_CONTENT_TYPES.XLSX;
     case 'pptx':
-      return 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+      return DOCUMENT_CONTENT_TYPES.PPTX;
     case 'doc':
-      return 'application/msword';
+      return DOCUMENT_CONTENT_TYPES.DOC;
     case 'xls':
-      return 'application/vnd.ms-excel';
+      return DOCUMENT_CONTENT_TYPES.XLS;
     case 'ppt':
-      return 'application/vnd.ms-powerpoint';
+      return DOCUMENT_CONTENT_TYPES.PPT;
     case 'csv':
-      return 'text/csv';
+      return DOCUMENT_CONTENT_TYPES.CSV;
     case 'gz':
-      return 'application/gzip';
+      return DOCUMENT_CONTENT_TYPES.GZ;
     case 'gif':
-      return 'image/gif';
+      return DOCUMENT_CONTENT_TYPES.GIF;
     case 'jpeg':
-      return 'image/jpeg';
+      return DOCUMENT_CONTENT_TYPES.JPEG;
     case 'jpg':
-      return 'image/jpeg';
+      return DOCUMENT_CONTENT_TYPES.JPG;
     case 'mp3':
-      return 'audio/mpeg';
+      return DOCUMENT_CONTENT_TYPES.MP3;
     case 'mp4':
-      return 'video/mp4';
+      return DOCUMENT_CONTENT_TYPES.MP4;
     case 'mpeg':
-      return 'video/mpeg';
+      return DOCUMENT_CONTENT_TYPES.MPEG;
     case 'png':
-      return 'image/png';
+      return DOCUMENT_CONTENT_TYPES.PNG;
     case 'pdf':
-      return 'application/pdf';
+      return DOCUMENT_CONTENT_TYPES.PDF;
     case 'tar':
-      return 'application/x-tar';
+      return DOCUMENT_CONTENT_TYPES.TAR;
     case 'txt':
-      return 'text/plain';
+      return DOCUMENT_CONTENT_TYPES.TXT;
     case 'wav':
-      return 'audio/wav';
+      return DOCUMENT_CONTENT_TYPES.WAV;
     case 'weba':
-      return 'audio/webm';
+      return DOCUMENT_CONTENT_TYPES.WEBA;
     case 'webm':
-      return 'video/webm';
+      return DOCUMENT_CONTENT_TYPES.WEBM;
     case 'webp':
-      return 'image/webp';
+      return DOCUMENT_CONTENT_TYPES.WEBP;
     case 'zip':
-      return 'application/zip';
+      return DOCUMENT_CONTENT_TYPES.ZIP;
     case '3gp':
-      return 'video/3gpp';
+      return DOCUMENT_CONTENT_TYPES._3GP;
     case '3g2':
-      return 'video/3gpp2';
+      return DOCUMENT_CONTENT_TYPES._3G2;
     case '7z':
-      return 'application/x-7z-compressed';
+      return DOCUMENT_CONTENT_TYPES._7Z;
     default:
       return undefined;
   }
 };
 
 export const findContentTypeByDocumentDetail = (documentDetail: DocumentDetail): string => {
-  return documentDetail.mimeType
-    ? documentDetail.mimeType
-    : documentDetail.originalDocumentName
-    ? findDocumentMimeTypeByExtension(
-        documentDetail.originalDocumentName
-          ?.substring(documentDetail.originalDocumentName.indexOf('.') + 1)
-          ?.toLowerCase()
-      )
-    : undefined;
+  let contentType = documentDetail.mimeType;
+  if (!contentType && documentDetail.originalDocumentName) {
+    const originalDocumentExtension = documentDetail.originalDocumentName
+      .substring(documentDetail.originalDocumentName.indexOf('.') + 1)
+      .toLowerCase();
+    contentType = findDocumentMimeTypeByExtension(originalDocumentExtension);
+  }
+  return contentType;
 };
 
 export const findContentTypeByDocument = (document: AxiosResponse): string => {
