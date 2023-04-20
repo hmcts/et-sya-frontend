@@ -1,0 +1,40 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/hmcts-progress-bar/macro.njk" import hmctsProgressBar %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <span class="govuk-caption-xl">{{headingCaption}}</span>
+      <h1 class="govuk-heading-xl">{{h1}}</h1>
+
+    {% block form %}
+      {% include "form/form.njk"%}
+    {% endblock %}
+      </div>
+    <div class="govuk-grid-column-one-third-from-desktop">
+
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      {{ govukDetails({
+              summaryText: contact,
+              html: sideBarContent
+            }) }}
+    </div>
+  </div>
+{% endblock %}

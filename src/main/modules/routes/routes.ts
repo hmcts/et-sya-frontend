@@ -4,6 +4,7 @@ import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 import { FileFilterCallback } from 'multer';
 
+import AboutHearingDocumentsController from '../../controllers/AboutHearingDocumentsController';
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
@@ -276,5 +277,7 @@ export class Routes {
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().get);
+    app.post(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().post);
   }
 }

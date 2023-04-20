@@ -1,3 +1,4 @@
+import { HearingModel } from './api/caseApiResponse';
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -177,6 +178,10 @@ export interface Case {
   sendNotificationCollection?: SendNotificationTypeItem[];
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
+  hearingCollection?: HearingModel[];
+  hearingDocumentsAreFor?: string;
+  whoseHearingDocumentsAreYouUploading?: string;
+  whatAreTheseDocuments?: string;
 }
 
 export const enum StillWorking {

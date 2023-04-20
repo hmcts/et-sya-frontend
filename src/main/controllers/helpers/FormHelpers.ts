@@ -1,3 +1,4 @@
+import { HearingModel } from '../../definitions/api/caseApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
@@ -84,3 +85,30 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
     formData.newJobPayInterval = undefined;
   }
 };
+
+const formatDate = (rawDate: Date): string =>
+  new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(rawDate));
+
+export const createRadioBtnsForAboutHearingDocs = (
+  hearingCollection: HearingModel[]
+): { name: string; label: string; value: string }[] =>
+  hearingCollection
+    .flatMap(hearing =>
+      hearing.value.hearingDateCollection
+        .filter(item => new Date(item.value.listedDate) > new Date())
+        .map(item => ({
+          label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
+            item.value.listedDate
+          )}`,
+          value: `HearingId=${hearing.id}&dateId=${item.id}`,
+          name: 'hearingDocumentsAreFor',
+        }))
+    )
+    .map((hearing, index) => ({
+      ...hearing,
+      label: `${index + 1} ${hearing.label}`,
+    }));
