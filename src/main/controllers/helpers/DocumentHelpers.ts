@@ -68,7 +68,6 @@ export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetai
 };
 
 export const findDocumentMimeTypeByExtension = (extension: string): string => {
-  if (extension) {
     switch (extension) {
       case 'docx':
         return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
@@ -125,7 +124,4 @@ export const findDocumentMimeTypeByExtension = (extension: string): string => {
       default:
         return 'application/pdf';
     }
-  } else {
-    return 'application/pdf';
-  }
 };
