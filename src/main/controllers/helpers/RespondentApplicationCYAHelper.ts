@@ -49,45 +49,49 @@ export const getRespondentCyaContent = (
     ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? []
       : [
-          {
-            key: {
-              text: translations.copyToOtherPartyYesOrNo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.copyToOtherPartyYesOrNo,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                  text: CHANGE,
-                  visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-                },
-              ],
-            },
-          },
-          ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
+          ...(!userCase.copyToOtherPartyYesOrNo
             ? []
             : [
                 {
                   key: {
-                    text: translations.copyToOtherPartyText,
+                    text: translations.copyToOtherPartyYesOrNo,
                     classes: 'govuk-!-font-weight-regular-m',
                   },
                   value: {
-                    text: userCase.copyToOtherPartyText,
+                    text: userCase.copyToOtherPartyYesOrNo,
                   },
                   actions: {
                     items: [
                       {
                         href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
                         text: CHANGE,
-                        visuallyHiddenText: translations.copyToOtherPartyText,
+                        visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
                       },
                     ],
                   },
                 },
+                ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
+                  ? []
+                  : [
+                      {
+                        key: {
+                          text: translations.copyToOtherPartyText,
+                          classes: 'govuk-!-font-weight-regular-m',
+                        },
+                        value: {
+                          text: userCase.copyToOtherPartyText,
+                        },
+                        actions: {
+                          items: [
+                            {
+                              href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+                              text: CHANGE,
+                              visuallyHiddenText: translations.copyToOtherPartyText,
+                            },
+                          ],
+                        },
+                      },
+                    ]),
               ]),
         ]),
   ];

@@ -1,5 +1,6 @@
 {
-  "hintText": "Respond to an application",
+  "hintTextApplication": "Respond to an application",
+  "hintTextTribunal": "Respond to the tribunal",
   "titleResponse": "Provide supporting material",
   "subTitle": "Consider when providing material that:",
   "genericGuidanceItem1": "you can upload letters, photos or documents to support your response",

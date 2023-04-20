@@ -26,7 +26,11 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-hint">{{ hintText }}</span>
+      {% if hintTextToAnApplication %}
+        <span class="govuk-hint">{{ hintTextApplication }}</span>
+      {% else %}
+        <span class="govuk-hint">{{ hintTextTribunal }}</span>
+      {% endif %}
       <h2 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ titleResponse }}</h2>
       <p class="govuk-body-m govuk-!-font-weight-bold">{{ genericGuidance }}</p>
       <p class="govuk-body">{{ subTitle }}</p>

@@ -12,10 +12,11 @@ import {
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
-import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinksStatuses, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
-import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw
+  from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Tribunal order or request helper', () => {
@@ -186,5 +187,24 @@ describe('Tribunal order or request helper', () => {
     );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
+  });
+
+  it('tribunal orders and requests section should keep its IN_PROGRESS status unchanged', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.IN_PROGRESS
+    );
   });
 });

@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -81,6 +81,7 @@ export default class TribunalRespondToOrderController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

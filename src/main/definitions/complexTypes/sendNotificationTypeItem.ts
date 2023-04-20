@@ -21,6 +21,8 @@ export interface SendNotificationType {
   //Static value
   sentBy?: string;
 
+  sendNotificationSubject?: string[];
+
   //Order or request?
   sendNotificationCaseManagement?: string;
 

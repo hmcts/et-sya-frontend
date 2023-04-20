@@ -6,8 +6,8 @@ import { CLAIMANT, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { getTseApplicationDecisionDetails, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { clearTseFields } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,

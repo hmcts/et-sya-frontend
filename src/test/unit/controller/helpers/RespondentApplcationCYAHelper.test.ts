@@ -84,4 +84,25 @@ describe('Respondent application CYA controller helper', () => {
       ],
     });
   });
+
+  it('should return content without Rule92 section if Rule92 page skipped(e.g.it is has ECC)', () => {
+    const translationJsons = { ...respondentCYARaw };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const userCase = req.session.userCase;
+    userCase.responseText = 'responseText';
+    userCase.copyToOtherPartyYesOrNo = undefined;
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+    };
+
+    const appContent = getRespondentCyaContent(
+      userCase,
+      translations,
+      '?lng=cy',
+      '/supporting-material',
+      'downloadLink'
+    );
+    expect(appContent[2]).toEqual(undefined);
+  });
 });

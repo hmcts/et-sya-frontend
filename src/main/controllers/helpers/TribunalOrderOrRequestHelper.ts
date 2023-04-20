@@ -180,10 +180,12 @@ export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTyp
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES
     );
 
-    if (respOnly) {
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-    } else {
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+    if (userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] === HubLinkStatus.NOT_YET_AVAILABLE) {
+      if (respOnly) {
+        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+      } else {
+        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+      }
     }
   }
 };

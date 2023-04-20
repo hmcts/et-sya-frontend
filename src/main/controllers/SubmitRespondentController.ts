@@ -5,8 +5,7 @@ import { PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
-import { clearTseFields } from './ContactTheTribunalSelectedController';
-import { handleUpdateHubLinksStatuses, respondToApplication } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses, respondToApplication } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('SubmitRespondentController');
