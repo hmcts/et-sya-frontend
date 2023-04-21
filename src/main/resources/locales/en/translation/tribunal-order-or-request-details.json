@@ -10,7 +10,7 @@
   "document": "Document",
   "orderMadeBy": "Case management order made by",
   "requestMadeBy": "Request made by",
-  "fullName": "Full name",
+  "fullName": "Name",
   "sentTo": "Sent to",
   "eccNotification": "What is the ECC notification?",
   "tips": "You must respond to the tribunal",

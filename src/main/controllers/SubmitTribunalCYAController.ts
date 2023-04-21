@@ -5,8 +5,7 @@ import { PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
-import { clearTseFields } from './ContactTheTribunalSelectedController';
-import { handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
 
 const logger = getLogger('SubmitTseController');
 

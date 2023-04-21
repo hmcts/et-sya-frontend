@@ -46,7 +46,7 @@
     "hasSupportingMaterial": {
       "required": "Welsh Translation required?"
     },
-    "respondToApplicationText": {
+    "responseText": {
       "required": "Welsh Translation required",
       "requiredFile": "Welsh Translation required",
       "tooLong": "Welsh Translation required"

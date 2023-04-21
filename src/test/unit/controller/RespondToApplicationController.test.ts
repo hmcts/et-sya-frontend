@@ -45,7 +45,7 @@ describe('Respond to application Controller', () => {
 
   it('should render the Rule 92 page', async () => {
     const body = {
-      respondToApplicationText: 'some Text',
+      responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.NO,
     };
 
@@ -59,7 +59,7 @@ describe('Respond to application Controller', () => {
 
   it('should render the add supporting material page', async () => {
     const body = {
-      respondToApplicationText: 'some Text',
+      responseText: 'some Text',
       hasSupportingMaterial: YesOrNo.YES,
     };
 
@@ -73,7 +73,7 @@ describe('Respond to application Controller', () => {
 
   it('should return same page on error', async () => {
     const body = {
-      respondToApplicationText: 'some Text',
+      responseText: 'some Text',
     };
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);

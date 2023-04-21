@@ -1,6 +1,5 @@
 import {
   getACASCertificateNumberError,
-  getApplicationResponseErrors,
   getClaimSummaryError,
   getCopyToOtherPartyError,
   getCustomStartDateError,
@@ -9,6 +8,7 @@ import {
   getNewJobPartialPayInfoError,
   getOtherClaimDescriptionError,
   getPartialPayInfoError,
+  getResponseErrors,
   handleErrors,
   returnSessionErrors,
 } from '../../../../main/controllers/helpers/ErrorHelpers';
@@ -441,8 +441,8 @@ describe('getLastFileError', () => {
   describe('getApplicationResponseError', () => {
     it('should not return error when no error', () => {
       expect(
-        getApplicationResponseErrors({
-          respondToApplicationText: 'help',
+        getResponseErrors({
+          responseText: 'help',
           hasSupportingMaterial: YesOrNo.NO,
         })
       ).toBeUndefined();
@@ -450,20 +450,20 @@ describe('getLastFileError', () => {
 
     it('should return error when nothing entered', () => {
       expect(
-        getApplicationResponseErrors({
-          respondToApplicationText: undefined,
+        getResponseErrors({
+          responseText: undefined,
           hasSupportingMaterial: undefined,
         })
       ).toStrictEqual({
-        propertyName: 'respondToApplicationText',
+        propertyName: 'responseText',
         errorType: 'required',
       });
     });
 
     it('should return error when response details field is entered, but a radio button is not selected', () => {
       expect(
-        getApplicationResponseErrors({
-          respondToApplicationText: 'help',
+        getResponseErrors({
+          responseText: 'help',
           hasSupportingMaterial: undefined,
         })
       ).toStrictEqual({
@@ -474,12 +474,12 @@ describe('getLastFileError', () => {
 
     it('should return error when response details is blank and No radio button is selected', () => {
       expect(
-        getApplicationResponseErrors({
-          respondToApplicationText: undefined,
+        getResponseErrors({
+          responseText: undefined,
           hasSupportingMaterial: YesOrNo.NO,
         })
       ).toStrictEqual({
-        propertyName: 'respondToApplicationText',
+        propertyName: 'responseText',
         errorType: 'requiredFile',
       });
     });
@@ -487,12 +487,12 @@ describe('getLastFileError', () => {
     it('should return error when response details is more than 2500 characters', () => {
       const testString = 'a'.repeat(2501);
       expect(
-        getApplicationResponseErrors({
-          respondToApplicationText: testString,
+        getResponseErrors({
+          responseText: testString,
           hasSupportingMaterial: YesOrNo.NO,
         })
       ).toStrictEqual({
-        propertyName: 'respondToApplicationText',
+        propertyName: 'responseText',
         errorType: 'tooLong',
       });
     });
