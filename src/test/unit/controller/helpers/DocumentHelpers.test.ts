@@ -7,6 +7,7 @@ import {
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { DocumentDetail } from '../../../../main/definitions/definition';
 import mockUserCaseWithDocumentsComplete from '../../mocks/mockUserCaseWithDocumentsComplete';
+import { TEST_DOCUMENT_CONTENT_TYPES } from '../../utils/testConstants';
 
 const documentDetailWithMimeType = {
   id: '1',
@@ -209,38 +210,10 @@ describe('FindContentTypeByDocumentDetail', () => {
 });
 
 describe('FindDocumentMimeTypeByExtension', () => {
-  it.each([
-    [null, undefined],
-    [undefined, undefined],
-    ['', undefined],
-    ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-    ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-    ['pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-    ['doc', 'application/msword'],
-    ['xls', 'application/vnd.ms-excel'],
-    ['ppt', 'application/vnd.ms-powerpoint'],
-    ['csv', 'text/csv'],
-    ['gz', 'application/gzip'],
-    ['gif', 'image/gif'],
-    ['jpeg', 'image/jpeg'],
-    ['jpg', 'image/jpeg'],
-    ['mp3', 'audio/mpeg'],
-    ['mp4', 'video/mp4'],
-    ['mpeg', 'video/mpeg'],
-    ['png', 'image/png'],
-    ['pdf', 'application/pdf'],
-    ['tar', 'application/x-tar'],
-    ['txt', 'text/plain'],
-    ['wav', 'audio/wav'],
-    ['weba', 'audio/webm'],
-    ['webm', 'video/webm'],
-    ['webp', 'image/webp'],
-    ['zip', 'application/zip'],
-    ['3gp', 'video/3gpp'],
-    ['3g2', 'video/3gpp2'],
-    ['7z', 'application/x-7z-compressed'],
-    ['xxx', undefined],
-  ])('If extension is %s then document type is %s', (extension: string, documentType: string) => {
-    expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
-  });
+  it.each(Object.values(TEST_DOCUMENT_CONTENT_TYPES).map(value => [value[0], value[1]]))(
+    'If extension is %s then document type is %s',
+    (extension: string, documentType: string) => {
+      expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
+    }
+  );
 });

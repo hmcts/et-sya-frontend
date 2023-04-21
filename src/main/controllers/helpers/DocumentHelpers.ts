@@ -53,63 +53,9 @@ function pushDocumentsToCombinedDocuments(combinedDocuments: DocumentDetail[], d
   documentDetailsList?.forEach(documentDetail => combinedDocuments.push(documentDetail));
 }
 
-export const findDocumentMimeTypeByExtension = (extension: string): string => {
-  switch (extension) {
-    case 'docx':
-      return DOCUMENT_CONTENT_TYPES.DOCX;
-    case 'xlsx':
-      return DOCUMENT_CONTENT_TYPES.XLSX;
-    case 'pptx':
-      return DOCUMENT_CONTENT_TYPES.PPTX;
-    case 'doc':
-      return DOCUMENT_CONTENT_TYPES.DOC;
-    case 'xls':
-      return DOCUMENT_CONTENT_TYPES.XLS;
-    case 'ppt':
-      return DOCUMENT_CONTENT_TYPES.PPT;
-    case 'csv':
-      return DOCUMENT_CONTENT_TYPES.CSV;
-    case 'gz':
-      return DOCUMENT_CONTENT_TYPES.GZ;
-    case 'gif':
-      return DOCUMENT_CONTENT_TYPES.GIF;
-    case 'jpeg':
-      return DOCUMENT_CONTENT_TYPES.JPEG;
-    case 'jpg':
-      return DOCUMENT_CONTENT_TYPES.JPG;
-    case 'mp3':
-      return DOCUMENT_CONTENT_TYPES.MP3;
-    case 'mp4':
-      return DOCUMENT_CONTENT_TYPES.MP4;
-    case 'mpeg':
-      return DOCUMENT_CONTENT_TYPES.MPEG;
-    case 'png':
-      return DOCUMENT_CONTENT_TYPES.PNG;
-    case 'pdf':
-      return DOCUMENT_CONTENT_TYPES.PDF;
-    case 'tar':
-      return DOCUMENT_CONTENT_TYPES.TAR;
-    case 'txt':
-      return DOCUMENT_CONTENT_TYPES.TXT;
-    case 'wav':
-      return DOCUMENT_CONTENT_TYPES.WAV;
-    case 'weba':
-      return DOCUMENT_CONTENT_TYPES.WEBA;
-    case 'webm':
-      return DOCUMENT_CONTENT_TYPES.WEBM;
-    case 'webp':
-      return DOCUMENT_CONTENT_TYPES.WEBP;
-    case 'zip':
-      return DOCUMENT_CONTENT_TYPES.ZIP;
-    case '3gp':
-      return DOCUMENT_CONTENT_TYPES._3GP;
-    case '3g2':
-      return DOCUMENT_CONTENT_TYPES._3G2;
-    case '7z':
-      return DOCUMENT_CONTENT_TYPES._7Z;
-    default:
-      return undefined;
-  }
+export const findDocumentMimeTypeByExtension = (extension: string): string | undefined => {
+  const mimetype = Object.entries(DOCUMENT_CONTENT_TYPES).find(([, [ext]]) => ext === extension) || [];
+  return mimetype[1] ? mimetype[1][1] : undefined;
 };
 
 export const findContentTypeByDocumentDetail = (documentDetail: DocumentDetail): string => {
