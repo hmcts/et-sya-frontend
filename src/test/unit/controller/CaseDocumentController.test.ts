@@ -227,7 +227,7 @@ describe('Case Document Controller', () => {
       const response = mockResponse();
       request.params.docId = '5';
       await caseDocumentController.get(request, response);
-      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'application/msword');
+      expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'application/vnd.ms-word');
       expect(response.status).toHaveBeenCalledWith(200);
     }
   );
