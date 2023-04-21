@@ -44,17 +44,17 @@ describe('Respondent supporting material controller', () => {
 
   describe('Correct validation', () => {
     it('should require either summary text or summary file', async () => {
-      const req = mockRequest({ body: { respondToApplicationText: '' } });
+      const req = mockRequest({ body: { responseText: '' } });
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'respondToApplicationText', errorType: 'required' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'responseText', errorType: 'required' }]);
     });
 
     it('should not allow invalid free text size', async () => {
-      const req = mockRequest({ body: { respondToApplicationText: '1'.repeat(2501) } });
+      const req = mockRequest({ body: { responseText: '1'.repeat(2501) } });
       await new RespondentSupportingMaterialController().post(req, mockResponse());
 
-      expect(req.session.errors).toEqual([{ propertyName: 'respondToApplicationText', errorType: 'tooLong' }]);
+      expect(req.session.errors).toEqual([{ propertyName: 'responseText', errorType: 'tooLong' }]);
     });
 
     it('should only allow valid file formats', async () => {
@@ -87,14 +87,14 @@ describe('Respondent supporting material controller', () => {
 
     it('should assign values when clicking upload file for appropriate values', async () => {
       const req = mockRequest({
-        body: { upload: true, respondToApplicationText: 'test', supportingMaterialFile: mockFile },
+        body: { upload: true, responseText: 'test', supportingMaterialFile: mockFile },
       });
       const res = mockResponse();
 
       await new RespondentSupportingMaterialController().post(req, res);
 
       expect(req.session.userCase).toMatchObject({
-        respondToApplicationText: 'test',
+        responseText: 'test',
         supportingMaterialFile: {
           document_filename: 'test.txt',
         },

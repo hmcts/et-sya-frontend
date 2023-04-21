@@ -1,0 +1,31 @@
+{
+  "caption": "Respond to the tribunal",
+  "header": "Your response",
+  "hearing": "Hearing",
+  "dateSent": "Date sent",
+  "sentBy": "Sent by",
+  "orderOrRequest": "Case management order or request?",
+  "responseDue": "Response due",
+  "partyToRespond": "Party or parties to respond",
+  "addInfo": "Additional information",
+  "description": "Description",
+  "document": "Document",
+  "orderMadeBy": "Case management order made by",
+  "requestMadeBy": "Request made by",
+  "fullName": "Full name",
+  "sentTo": "Sent to",
+  "textInputLabel": "What's your response to the tribunal?",
+  "textInputHint": "Use this box to respond or you can upload material at the next step.",
+  "radioButtonLabel": "Supporting material",
+  "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "errors": {
+    "hasSupportingMaterial": {
+      "required": "Tell us if you also want to upload supporting material?"
+    },
+    "responseText": {
+      "required": "Provide details of your response &/or upload supporting material",
+      "requiredFile": "Provide details of your response &/or upload a file",
+      "tooLong": "Response details must be 2500 characters or less additional details can be uploaded using the support material option"
+    }
+  }
+}

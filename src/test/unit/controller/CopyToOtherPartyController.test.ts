@@ -136,4 +136,20 @@ describe('Copy to other party Controller', () => {
     expect(req.session.userCase.copyToOtherPartyYesOrNo).toEqual(YesOrNo.NO);
     expect(req.session.userCase.copyToOtherPartyText).toEqual('Test response');
   });
+
+  it('should redirect to tribunal response check your answers page when no is selected and summary text provided', async () => {
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.YES, copyToOtherPartyText: 'Test response' };
+
+    const controller = new CopyToOtherPartyController();
+
+    const req = mockRequest({ body });
+    req.session.contactType = Rule92Types.TRIBUNAL;
+
+    const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TRIBUNAL_RESPONSE_CYA + languages.ENGLISH_URL_PARAMETER);
+  });
 });

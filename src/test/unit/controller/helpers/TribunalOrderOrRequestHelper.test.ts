@@ -12,10 +12,11 @@ import {
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
-import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinksStatuses, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
-import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw
+  from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Tribunal order or request helper', () => {
@@ -41,7 +42,9 @@ describe('Tribunal order or request helper', () => {
 
   const notificationType = {
     number: '1',
-    sendNotificationSelectHearing: 'Selected hearing',
+    sendNotificationSelectHearing: {
+      selectedLabel: 'Hearing',
+    },
     date: '2019-05-02',
     sentBy: 'Tribunal',
     sendNotificationCaseManagement: 'Order',
@@ -68,7 +71,7 @@ describe('Tribunal order or request helper', () => {
   it('should return expected tribunal order or request details content', () => {
     const pageContent = getRepondentOrderOrRequestDetails(translations, notificationItem);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
-    expect(pageContent[0].value).toEqual({ text: 'Selected hearing' });
+    expect(pageContent[0].value).toEqual({ text: 'Hearing' });
     expect(pageContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
     expect(pageContent[1].value).toEqual({ text: '2019-05-02' });
     expect(pageContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Sent by' });
@@ -112,7 +115,7 @@ describe('Tribunal order or request helper', () => {
     expect(pageContent[9].value).toEqual({ text: 'Judge' });
     expect(pageContent[10].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Full name',
+      text: 'Name',
     });
     expect(pageContent[10].value).toEqual({ text: 'Bob' });
     expect(pageContent[11].key).toEqual({
@@ -184,5 +187,24 @@ describe('Tribunal order or request helper', () => {
     );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
+  });
+
+  it('tribunal orders and requests section should keep its IN_PROGRESS status unchanged', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.IN_PROGRESS
+    );
   });
 });

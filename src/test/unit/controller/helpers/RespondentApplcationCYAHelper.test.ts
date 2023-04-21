@@ -10,7 +10,7 @@ describe('Respondent application CYA controller helper', () => {
     const translationJsons = { ...respondentCYARaw };
     const req = mockRequestWithTranslation({}, translationJsons);
     const userCase = req.session.userCase;
-    userCase.respondToApplicationText = 'respondToApplicationText';
+    userCase.responseText = 'responseText';
     userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
     userCase.copyToOtherPartyText = 'copyToOtherPartyText';
 
@@ -30,7 +30,7 @@ describe('Respondent application CYA controller helper', () => {
       classes: 'govuk-!-font-weight-regular-m',
       text: "What's your response to the respondent's application?",
     });
-    expect(appContent[0].value).toEqual({ text: 'respondToApplicationText' });
+    expect(appContent[0].value).toEqual({ text: 'responseText' });
     expect(appContent[0].actions).toEqual({
       items: [
         {
@@ -83,5 +83,26 @@ describe('Respondent application CYA controller helper', () => {
         },
       ],
     });
+  });
+
+  it('should return content without Rule92 section if Rule92 page skipped(e.g.it is has ECC)', () => {
+    const translationJsons = { ...respondentCYARaw };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const userCase = req.session.userCase;
+    userCase.responseText = 'responseText';
+    userCase.copyToOtherPartyYesOrNo = undefined;
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+    };
+
+    const appContent = getRespondentCyaContent(
+      userCase,
+      translations,
+      '?lng=cy',
+      '/supporting-material',
+      'downloadLink'
+    );
+    expect(appContent[2]).toEqual(undefined);
   });
 });

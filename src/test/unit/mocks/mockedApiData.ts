@@ -213,7 +213,9 @@ export const mockedApiData: CaseApiDataResponse = {
         value: {
           number: '1',
           sendNotificationTitle: 'title',
-          sendNotificationSelectHearing: 'hearing',
+          sendNotificationSelectHearing: {
+            selectedLabel: 'Hearing',
+          },
           date: '2019-05-03',
           sentBy: 'Tribunal',
           sendNotificationCaseManagement: 'Order',

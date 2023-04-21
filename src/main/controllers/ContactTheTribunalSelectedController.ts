@@ -2,7 +2,6 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId } from '../definitions/case';
 import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import applications, { applicationTypes } from '../definitions/contact-applications';
 import { FormContent, FormFields } from '../definitions/form';
@@ -10,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { handleUploadDocument } from './helpers/CaseHelpers';
+import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -156,14 +155,4 @@ export default class ContactTheTribunalSelectedController {
       ...content,
     });
   };
-}
-
-export function clearTseFields(userCase: CaseWithId): void {
-  userCase.contactApplicationText = undefined;
-  userCase.contactApplicationFile = undefined;
-  userCase.copyToOtherPartyYesOrNo = undefined;
-  userCase.copyToOtherPartyText = undefined;
-  userCase.respondToApplicationText = undefined;
-  userCase.hasSupportingMaterial = undefined;
-  userCase.supportingMaterialFile = undefined;
 }

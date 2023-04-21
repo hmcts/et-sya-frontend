@@ -1,0 +1,10 @@
+{
+  "titleText": "You have sent your response to the tribunal",
+  "h1": "What happens next",
+  "p1": {
+    "rule92Yes": "You have responded to the tribunal and copied your response to the other party.",
+    "rule92No": "You have responded to the tribunal."
+  },
+  "p2": "The tribunal will consider all correspondence and let you know what happens next.",
+  "button": "Close and return to case overview"
+}

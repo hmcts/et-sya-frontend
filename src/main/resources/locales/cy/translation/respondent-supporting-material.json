@@ -1,5 +1,6 @@
 {
-  "hintText": "Welsh translation required",
+  "hintTextApplication": "Welsh translation required",
+  "hintTextTribunal": "Welsh translation required",
   "titleResponse": "Welsh translation required",
   "subTitle": "Welsh translation required",
   "genericGuidanceItem1": "Welsh translation required",
@@ -15,7 +16,7 @@
     "uploaded": "Welsh translation required"
   },
   "errors": {
-    "respondToApplicationText": {
+    "responseText": {
       "required": "Dywedwch wrthym beth ddigwyddodd i chi",
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     },

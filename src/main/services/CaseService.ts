@@ -120,7 +120,7 @@ export class CaseApi {
         applicationId: caseItem.selectedGenericTseApplication.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         response: {
-          response: caseItem.respondToApplicationText,
+          response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
           copyNoGiveDetails: caseItem.copyToOtherPartyText,
@@ -141,6 +141,25 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));
+    }
+  };
+
+  addResponseSendNotification = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.ADD_RESPONSE_TO_SEND_NOTIFICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: caseItem.selectedRequestOrOrder.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        pseResponseType: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error adding response to sendNotification: ' + axiosErrorDetails(error));
     }
   };
 

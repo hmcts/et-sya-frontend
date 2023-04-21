@@ -47,7 +47,20 @@ describe('Contact Application Controller', () => {
       const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
-      await new ContactTheTribunalSelectedController().get(req, res);
+      new ContactTheTribunalSelectedController().get(req, res);
+      expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
+    });
+
+    it('successful get with contact application file', async () => {
+      const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
+      req.session.userCase.contactApplicationFile = {
+        document_binary_url: 'url',
+        document_filename: 'file.pdf',
+        document_url: 'url',
+      };
+      req.params.selectedOption = 'withdraw';
+      const res = mockResponse();
+      new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
     });
 
@@ -56,7 +69,7 @@ describe('Contact Application Controller', () => {
       req.params.selectedOption = 'not-allowed';
       const res = mockResponse();
 
-      await new ContactTheTribunalSelectedController().get(req, res);
+      new ContactTheTribunalSelectedController().get(req, res);
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL);
     });
   });

@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
@@ -21,13 +21,13 @@ export default class RespondentSupportingMaterialController {
   private readonly form: Form;
   private readonly supportingMaterialContent: FormContent = {
     fields: {
-      respondToApplicationText: {
+      responseText: {
         id: 'respond-to-application-text',
         type: 'textarea',
         label: l => l.legend,
         labelHidden: true,
         labelSize: 'normal',
-        hint: l => l.respondToApplicationText,
+        hint: l => l.responseText,
         attributes: { title: 'Give details text area' },
       },
       inset: {
@@ -62,23 +62,25 @@ export default class RespondentSupportingMaterialController {
       text: l => l.continue,
     },
   };
+
   constructor() {
     this.form = new Form(<FormFields>this.supportingMaterialContent.fields);
   }
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-    userCase.respondToApplicationText = req.body.respondToApplicationText;
+    userCase.responseText = req.body.responseText;
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
 
     const supportingMaterialError = getFileUploadAndTextAreaError(
-      formData.respondToApplicationText,
+      formData.responseText,
       req.file,
       req.fileTooLarge,
       userCase.supportingMaterialFile,
-      'respondToApplicationText',
+      'responseText',
       'supportingMaterialFile'
     );
 
@@ -104,10 +106,14 @@ export default class RespondentSupportingMaterialController {
     }
     req.session.errors = [];
 
-    //TODO Should be changed to conditional redirect when RET-2929, RET-2951, RET-2927  will be implemented. The
-    // condition is 'if Claimant is responding to a request from the Tribunal to provide something else, and the
-    // response is to an Employer Contract Claim (ECC), then don't ask Rule92 question
-    // (as response must only go to the Tribunal)'
+    if (
+      req.session.contactType === Rule92Types.TRIBUNAL &&
+      userCase.selectedRequestOrOrder &&
+      userCase.selectedRequestOrOrder.value.sendNotificationSubject?.length &&
+      userCase.selectedRequestOrOrder.value.sendNotificationSubject.includes('Employer Contract Claim')
+    ) {
+      return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA);
+    }
     return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
 
@@ -130,6 +136,8 @@ export default class RespondentSupportingMaterialController {
       ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
     };
 
+    const hintTextToAnApplication = req.session.contactType === Rule92Types.RESPOND;
+
     res.render(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, {
       PageUrls,
       userCase,
@@ -138,6 +146,7 @@ export default class RespondentSupportingMaterialController {
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.supportingMaterialFile),
       ...content,
+      hintTextToAnApplication,
     });
   };
 }
