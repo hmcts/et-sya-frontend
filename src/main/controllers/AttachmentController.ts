@@ -22,24 +22,43 @@ export default class AttachmentController {
     let decisionDocId;
     let requestDocId;
     let contactTribunalDocId;
+    const adminDecision = userCase.selectedGenericTseApplication?.value.adminDecision;
 
     if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
       respondentAppDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload.document_url);
+
+      claimantResponseDocId = undefined;
       const claimantResponseDoc = getClaimantResponseDocDownload(userCase.selectedGenericTseApplication);
-      claimantResponseDocId = getDocId(claimantResponseDoc.document_url);
-      decisionDocId = userCase.selectedGenericTseApplication?.value.adminDecision
-        .map(it => getDocId(it.value.responseRequiredDoc.document_url))
-        .find(id => id === docId);
+      if (claimantResponseDoc !== undefined) {
+        claimantResponseDocId = getDocId(claimantResponseDoc.document_url);
+      }
+
+      decisionDocId = undefined;
+      const decisionDocIds = [];
+      if (adminDecision?.length) {
+        for (let i = adminDecision.length - 1; i >= 0; i--) {
+          if (adminDecision[i].value.responseRequiredDoc !== undefined) {
+            decisionDocIds[i] = adminDecision[i].value.responseRequiredDoc.document_url;
+          }
+        }
+      }
+      decisionDocId = decisionDocIds.map(it => getDocId(it)).find(id => id === docId);
     }
 
+    requestDocId = undefined;
     if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
-      requestDocId = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument
-        .map(it => getDocId(it.value.uploadedDocument.document_url))
-        .find(id => id === docId);
+      if (userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument?.length) {
+        requestDocId = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument
+          .map(it => getDocId(it.value.uploadedDocument.document_url))
+          .find(id => id === docId);
+      }
     }
 
     if (req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS) {
-      contactTribunalDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload.document_url);
+      contactTribunalDocId = undefined;
+      if (userCase.selectedGenericTseApplication?.value.documentUpload.document_url !== undefined) {
+        contactTribunalDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload.document_url);
+      }
     }
 
     try {

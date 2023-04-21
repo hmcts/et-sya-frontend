@@ -83,7 +83,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 export const getClaimantResponseDocDownload = (selectedApplication: GenericTseApplicationTypeItem): Document => {
   let claimantResponseDocDownload = undefined;
   const selectedAppRespondCollection = selectedApplication.value?.respondCollection;
-  for (let i = selectedAppRespondCollection.length - 1; i >= 0; i--) {
+  for (let i = selectedAppRespondCollection?.length - 1; i >= 0; i--) {
     const selectedAppRespondCollectionItem = selectedAppRespondCollection[i].value;
     if (
       selectedAppRespondCollectionItem.from === 'Claimant' &&
