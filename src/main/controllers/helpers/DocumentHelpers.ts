@@ -73,7 +73,6 @@ export const findDocumentMimeTypeByExtension = (extension: string): string => {
     case 'gif':
       return 'image/gif';
     case 'jpeg':
-      return 'image/jpeg';
     case 'jpg':
       return 'image/jpeg';
     case 'mp3':
