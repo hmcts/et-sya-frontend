@@ -182,6 +182,7 @@ export interface Case {
   hearingDocumentsAreFor?: string;
   whoseHearingDocumentsAreYouUploading?: string;
   whatAreTheseDocuments?: string;
+  hearingDocument?: Document;
 }
 
 export const enum StillWorking {

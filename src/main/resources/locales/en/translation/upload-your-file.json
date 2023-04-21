@@ -1,0 +1,32 @@
+{
+    "title": "Upload your file of documents",
+    "h1": "Upload your file of documents",
+    "headingCaption": "Prepare documents for a hearing",
+    "p1": "Once you’ve read the orders from the tribunal, make sure:",
+    "bullet1": "you have the set of documents in one PDF file",
+    "bullet2": "that if an index is requested, the items are in date order or an order in which the tribunal have requested",
+    "bullet3": "the index item refers to the correct page in the document",
+    "bullet4": "you only include relevant documents and material for your case",
+    "bullet5": "the PDF document falls within any page limits given by the tribunal",
+    "p2": "If you’re referencing one section of a document like a contract of employment, say which part in the index.",
+    "p3": "If you need to refer to previous case documents, go to your <a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">case documents (opens in new tab)</a>",
+    
+    "fileUpload": {
+      "linkText": "Or upload your summary as a separate document (optional)",
+      "hint": "<p>You can only upload 1 document.</p><p>If you want to upload an email, download and convert from your email client first. Most email clients will give the option of downloading as pdf or PostScript.</p><p>Upload a file</p>",
+      "hintExisting": "<p>You can only upload 1 document.</p><p>If you want to upload an email, download and convert from your email client first. Most email clients will give the option of downloading as pdf or PostScript.</p><b><p>You have previously uploaded: {{filename}}</p></b>"
+    },
+    "acceptedFormats": {
+      "label": "Accepted formats",
+      "p1": "Accepted file formats are pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+    },
+    "errors": {
+      "hearingDocumentFileName": {
+        "invalidFileFormat": "The type of file you are trying to upload is not supported by our system. Please convert it into a common supported file type for example word, excel, pdf.",
+        "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",
+        "invalidFileSize": "The file you are trying to upload has exceeded the maximum file size limit, please reduce the size of the file.",
+        "backEndError": "There was an error uploading your file. Please try again. If this error persists please contact support."
+      }
+    }
+  }
+  

@@ -96,6 +96,7 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import UploadYourFileController from '../../controllers/UploadYourFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -279,5 +280,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().get);
     app.post(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().post);
+    app.get(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().get);
+    app.post(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().post);
   }
 }

@@ -236,6 +236,28 @@ export const getClaimSummaryError = (
   }
 };
 
+export const getHearingDocumentError = (
+  formData: Partial<CaseWithId>,
+  file: Express.Multer.File,
+  fileName: string
+): FormError => {
+  const fileProvided = file !== undefined;
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+
+  if (!fileProvided) {
+    if (fileName) {
+      return;
+    }
+  }
+  if (fileFormatInvalid) {
+    return { propertyName: 'hearingDocumentFileName', errorType: fileFormatInvalid };
+  }
+  if (fileNameInvalid) {
+    return { propertyName: 'hearingDocumentFileName', errorType: fileNameInvalid };
+  }
+};
+
 export const getFileUploadAndTextAreaError = (
   formDataText: string,
   file: Express.Multer.File,
