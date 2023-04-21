@@ -23,6 +23,18 @@ describe('Notice Type Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_TYPE, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const controller = new NoticeTypeController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.noticePeriodUnit = WeeksOrMonths.MONTHS;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.noticePeriodUnit).toStrictEqual(undefined);
+  });
+
   it('should render the notice length page when weeks or months radio button is selected', async () => {
     const body = { noticePeriodUnit: WeeksOrMonths.WEEKS };
     const controller = new NoticeTypeController();

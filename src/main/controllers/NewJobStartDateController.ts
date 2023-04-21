@@ -13,6 +13,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import {getLanguageParam} from "./helpers/RouterHelpers";
 
 const new_job_start_date: DateFormFields = {
   ...NewJobDateFormFields,
@@ -34,12 +35,20 @@ export default class NewJobStartDateController {
   constructor() {
     this.form = new Form(<FormFields>this.newJobStartDateContent.fields);
   }
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.newJobStartDate = undefined;
+    }
+  };
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     await handlePostLogic(req, res, this.form, logger, PageUrls.NEW_JOB_PAY);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     new_job_start_date.values = [
       {
         label: (l: AnyRecord): string => l.dateFormat.day,
@@ -68,6 +77,7 @@ export default class NewJobStartDateController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NEW_JOB_START_DATE, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }
