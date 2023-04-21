@@ -112,15 +112,19 @@ export const findDocumentMimeTypeByExtension = (extension: string): string => {
 };
 
 export const findContentTypeByDocumentDetail = (documentDetail: DocumentDetail): string => {
-  return documentDetail.mimeType
-    ? documentDetail.mimeType
-    : documentDetail.originalDocumentName
-    ? findDocumentMimeTypeByExtension(
-        documentDetail.originalDocumentName
-          ?.substring(documentDetail.originalDocumentName.indexOf('.') + 1)
-          ?.toLowerCase()
-      )
-    : undefined;
+  if (documentDetail.originalDocumentName) {
+    return documentDetail.mimeType
+      ? documentDetail.mimeType
+      : findDocumentMimeTypeByExtension(
+          documentDetail.originalDocumentName
+            ?.substring(documentDetail.originalDocumentName.indexOf('.') + 1)
+            ?.toLowerCase()
+        );
+  } else {
+    return documentDetail.mimeType
+      ? documentDetail.mimeType
+      : undefined;
+  }
 };
 
 export const findContentTypeByDocument = (document: AxiosResponse): string => {
