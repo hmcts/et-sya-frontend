@@ -1,9 +1,9 @@
 import NewJobController from '../../../main/controllers/NewJobController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import {YesOrNo} from '../../../main/definitions/case';
+import {PageUrls, TranslationKeys} from '../../../main/definitions/constants';
+import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
+import {mockResponse} from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
@@ -19,6 +19,18 @@ describe('New Job Controller', () => {
     const request = mockRequest({ t });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB, expect.anything());
+  });
+
+  it('should clear fields', () => {
+    const controller = new NewJobController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.newJob = YesOrNo.NO;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.newJob).toStrictEqual(undefined);
   });
 
   it('should render the respondent name page when neither radio button is selected', async () => {
