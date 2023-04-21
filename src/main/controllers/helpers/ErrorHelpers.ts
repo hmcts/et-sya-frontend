@@ -293,6 +293,33 @@ export const getFileUploadAndTextAreaError = (
   }
 };
 
+export const getFileUploadError = (
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document,
+  propertyName: string,
+  uplodedFileProperty: string
+): FormError => {
+  if (fileTooLarge) {
+    return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
+  }
+  const fileProvided = file !== undefined;
+  
+  if ( !fileProvided && !uploadedFile) {
+    return { propertyName, errorType: 'required' };
+  }
+
+  const fileFormatInvalid = hasInvalidFileFormat(file);
+  if (fileFormatInvalid) {
+    return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName: uplodedFileProperty, errorType: fileNameInvalid };
+  }
+};
+
 export const getApplicationResponseErrors = (formData: Partial<CaseWithId>): FormError => {
   const text = formData.respondToApplicationText;
   const radio = formData.hasSupportingMaterial;

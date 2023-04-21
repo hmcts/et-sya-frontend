@@ -9,7 +9,7 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handlePostLogic, handleUploadDocument } from './helpers/CaseHelpers';
-import { getHearingDocumentError } from './helpers/ErrorHelpers';
+import { getFileUploadError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
@@ -30,77 +30,81 @@ export default class UploadYourFileController {
   private readonly form: Form;
   private readonly uploadYourFileFormContent: FormContent = {
     fields: {
-      hearingDocumentFileName: {
-        id: 'hearing-document-file',
-        label: l => l.fileUpload.label,
-        labelHidden: true,
-        type: 'upload',
-        classes: 'govuk-label',
-        hint: l => this.getHint(l),
-        isCollapsable: false,
-        collapsableTitle: l => l.fileUpload.linkText,
+        inset: {
+          id: 'inset',
+          classes: 'govuk-heading-m',
+          label: l => l.files.title,
+          type: 'insetFields',
+          subFields: {
+            hearingDocumentFile: {
+              id: 'hearingDocumentFile',
+              classes: 'govuk-label',
+              labelHidden: false,
+              labelSize: 'm',
+              type: 'upload',
+            },
+            upload: {
+              label: (l: AnyRecord): string => l.files.button,
+              classes: 'govuk-button--secondary',
+              id: 'upload',
+              type: 'button',
+              name: 'upload',
+              value: 'true',
+            },
+          },
+        },
+        filesUploaded: {
+          label: l => l.files.uploaded,
+          type: 'summaryList',
+        },
       },
-      claimSummaryAcceptedType: {
-        id: 'hearing-document-accepted-type',
-        label: l => l.acceptedFormats.label,
-        labelHidden: true,
-        type: 'readonly',
-        classes: 'govuk-label',
-        isCollapsable: false,
-        collapsableTitle: l => l.acceptedFormats.label,
-        hint: l => l.acceptedFormats.p1,
+      submit: {
+        text: l => l.continue,
       },
-    },
-    submit: {
-      text: (l: AnyRecord): string => l.continue,
-      classes: 'govuk-!-margin-right-2',
-    },
-  };
+    };
 
   constructor() {
     this.form = new Form(<FormFields>this.uploadYourFileFormContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.fileTooLarge) {
-      req.session.errors = [{ propertyName: 'hearingDocumentFileName', errorType: 'invalidFileSize' }];
-      return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
+    const userCase = req.session.userCase;
+    userCase.respondToApplicationText = req.body.respondToApplicationText;
+
+    req.session.errors = [];
+
+    const supportingMaterialError = getFileUploadError(
+      req.file,
+      req.fileTooLarge,
+      userCase.hearingDocument,
+      'hearingDocumentError',
+      'hearingDocumentFile'
+    );
+
+    const supportingMaterialUrl =
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+
+    if (supportingMaterialError) {
+      req.session.errors.push(supportingMaterialError);
+      return res.redirect(supportingMaterialUrl);
+    }
+
+    if (req.body.upload) {
+      try {
+        const result = await handleUploadDocument(req, req.file, logger);
+        if (result?.data) {
+          userCase.supportingMaterialFile = fromApiFormatDocument(result.data);
+        }
+      } catch (error) {
+        logger.info(error);
+        req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
+      }
+      return res.redirect(supportingMaterialUrl);
     }
     req.session.errors = [];
 
-    const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const hearingDocumentError = getHearingDocumentError(
-      formData,
-      req.file,
-      req.session.userCase?.hearingDocument?.document_filename
-    );
-
-    if (hearingDocumentError) {
-      req.session.errors.push(hearingDocumentError);
-      return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
-    }
-
-    if (req.file) {
-      await this.uploadFile(req);
-    }
-
-    this.uploadedFileName = '';
-
-    const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
+    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
-
-  private async uploadFile(req: AppRequest) {
-    try {
-      const result = await handleUploadDocument(req, req.file, logger);
-      if (result?.data) {
-        req.session.userCase.hearingDocument = fromApiFormatDocument(result.data);
-      }
-    } catch (error) {
-      logger.info(error);
-      req.session.errors = [{ propertyName: 'hearingDocumentFileName', errorType: 'backEndError' }];
-    }
-  }
 
   public get = (req: AppRequest, res: Response): void => {
     this.uploadedFileName = getUploadedFileName(req.session?.userCase?.hearingDocument?.document_filename);
