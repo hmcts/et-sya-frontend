@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { conditionalRedirect } from './helpers/RouterHelpers';
+import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('NoticeTypeController');
 
@@ -51,6 +51,12 @@ export default class NoticeTypeController {
     this.form = new Form(<FormFields>this.noticeTypeContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.noticePeriodUnit = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (
@@ -65,6 +71,9 @@ export default class NoticeTypeController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.noticeTypeContent, [TranslationKeys.COMMON, TranslationKeys.NOTICE_TYPE]);
     const employmentStatus = req.session.userCase.isStillWorking;
     assignFormData(req.session.userCase, this.form.getFormFields());
@@ -76,6 +85,7 @@ export default class NoticeTypeController {
     res.render(TranslationKeys.NOTICE_TYPE, {
       ...content,
       employmentStatus,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }
