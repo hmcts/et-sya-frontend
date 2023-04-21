@@ -7,24 +7,19 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
 
-import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
-import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
+import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
-const logger = getLogger('RespondToApplicationController');
-
-export default class RespondToApplicationController {
+export default class TribunalRespondToOrderController {
   private readonly form: Form;
-  private readonly respondToApplicationContent: FormContent = {
+  private readonly respondToTribunalOrder: FormContent = {
     fields: {
       responseText: {
-        id: 'respond-to-application-text',
+        id: 'response-text',
         type: 'textarea',
         label: l => l.textInputLabel,
         labelHidden: false,
@@ -61,64 +56,47 @@ export default class RespondToApplicationController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.respondToApplicationContent.fields);
+    this.form = new Form(<FormFields>this.respondToTribunalOrder.fields);
   }
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
-    const error = getApplicationResponseError(formData);
+    const error = getResponseErrors(formData);
 
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`);
+      return res.redirect(
+        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId + getLanguageParam(req.url))
+      );
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
       ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
         )
       : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    req.session.contactType = Rule92Types.RESPOND;
+    const userCase = req.session.userCase;
+    req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    const selectedApplication = req.session.userCase.selectedGenericTseApplication;
-
-    const applicationType = translations[selectedApplication.value.type];
-    const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
-    const document = selectedApplication.value?.documentUpload;
-
-    if (document) {
-      try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect('/not-found');
-      }
-    }
-    const downloadLink = createDownloadLink(document);
-
-    const content = getPageContent(req, this.respondToApplicationContent, [
-      TranslationKeys.COMMON,
+    const content = getPageContent(req, this.respondToTribunalOrder, [
+      TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.RESPOND_TO_APPLICATION,
+      TranslationKeys.COMMON,
     ]);
 
-    const languageParam = getLanguageParam(req.url);
-    const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
-    res.render(TranslationKeys.RESPOND_TO_APPLICATION, {
-      cancelLink: redirectUrl,
+    res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
-      applicationType,
-      respondByDate,
-      selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
+      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, userCase.selectedRequestOrOrder),
     });
   };
 }
