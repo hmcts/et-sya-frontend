@@ -1,9 +1,9 @@
 import PayController from '../../../main/controllers/PayController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PayInterval } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import {PayInterval} from '../../../main/definitions/case';
+import {PageUrls, TranslationKeys} from '../../../main/definitions/constants';
+import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
+import {mockResponse} from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
@@ -20,6 +20,23 @@ describe('Pay Controller', () => {
 
     payController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.PAY, expect.anything());
+  });
+
+  it('should clear fields', () => {
+    const controller = new PayController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.payInterval = PayInterval.ANNUAL;
+    request.session.userCase.payBeforeTax = 40000;
+    request.session.userCase.payAfterTax = 30000;
+
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.payBeforeTax).toStrictEqual(undefined);
+    expect(request.session.userCase.payAfterTax).toStrictEqual(undefined);
+    expect(request.session.userCase.payInterval).toStrictEqual(undefined);
   });
 
   it('should render the pension page when the page submitted', async () => {

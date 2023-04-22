@@ -1,10 +1,10 @@
 import PensionController from '../../../main/controllers/PensionController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
-import { CaseState } from '../../../main/definitions/definition';
-import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import {YesOrNo, YesOrNoOrNotSure} from '../../../main/definitions/case';
+import {PageUrls} from '../../../main/definitions/constants';
+import {CaseState} from '../../../main/definitions/definition';
+import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
+import {mockResponse} from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
@@ -20,6 +20,18 @@ describe('Pension controller', () => {
     const request = mockRequest({ t });
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('pension', expect.anything());
+  });
+
+  it('should clear fields', () => {
+    const controller = new PensionController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.claimantPensionContribution = YesOrNoOrNotSure.NOT_SURE;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.claimantPensionContribution).toStrictEqual(undefined);
   });
 
   it('should render the benefits page when no radio buttons are selected', async () => {

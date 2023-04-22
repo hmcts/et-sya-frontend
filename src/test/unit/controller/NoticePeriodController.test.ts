@@ -1,10 +1,10 @@
 import NoticePeriodController from '../../../main/controllers/NoticePeriodController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { AppRequest } from '../../../main/definitions/appRequest';
-import { YesOrNo } from '../../../main/definitions/case';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
-import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import {AppRequest} from '../../../main/definitions/appRequest';
+import {YesOrNo} from '../../../main/definitions/case';
+import {PageUrls, TranslationKeys} from '../../../main/definitions/constants';
+import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
+import {mockResponse} from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
@@ -21,6 +21,18 @@ describe('Notice Period Controller', () => {
 
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_PERIOD, expect.anything());
+  });
+
+  it('should clear fields', () => {
+    const controller = new NoticePeriodController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.noticePeriod = YesOrNo.NO;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.noticePeriod).toStrictEqual(undefined);
   });
 
   it('should render the notice type page when yes radio button is selected', async () => {
