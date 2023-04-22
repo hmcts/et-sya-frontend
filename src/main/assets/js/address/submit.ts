@@ -129,16 +129,14 @@ function convertJsonArrayToTitleCase(jsonArray: Record<string, string>[]): Recor
       if (key === 'postcode') {
         newObj[key] = value;
       } else if (key === 'fullAddress') {
-        const postcodeRegex =
-          /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/g;
-        const postcode = value.match(postcodeRegex)?.[0] || '';
+        const postcode = addressObj.postcode;
         const addressWithoutPostcode = value.replace(postcode, '').trim();
-        newObj[key] = toTitleCase(addressWithoutPostcode) + ', ' + postcode;
+        newObj[key] =
+          toTitleCase(addressWithoutPostcode) + (addressWithoutPostcode.endsWith(',') ? '' : ',') + ' ' + postcode;
       } else {
         newObj[key] = toTitleCase(value);
       }
     }
-
     return newObj;
   });
 }
