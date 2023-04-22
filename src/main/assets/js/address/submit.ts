@@ -56,7 +56,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
             },
             body: JSON.stringify({ _csrf: formData.get('_csrf'), postcode }),
           });
-          const addresses = await response.json();
+          const addresses = convertJsonArrayToTitleCase(await response.json());
 
           getById('userPostcode').textContent = postcode;
 
@@ -88,7 +88,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
           for (const address of addresses) {
             const addressOption = document.createElement('option');
             addressOption.value = JSON.stringify(address);
-            addressOption.text = titleCase(address.fullAddress);
+            addressOption.text = address.fullAddress;
             selectAddress.add(addressOption);
           }
         } finally {
@@ -115,14 +115,31 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
   };
 }
 
-function titleCase(str: string): string {
-  return str
-    .toLowerCase()
-    .split(' ')
-    .map(word => {
-      return word.replace(word[0], word[0].toUpperCase());
-    })
-    .join(' ');
+function toTitleCase(str: string): string {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
+function convertJsonArrayToTitleCase(jsonArray: Record<string, string>[]): Record<string, string>[] {
+  return jsonArray.map(addressObj => {
+    const newObj: Record<string, string> = {};
+
+    for (const [key, value] of Object.entries(addressObj)) {
+      if (key === 'postcode') {
+        newObj[key] = value;
+      } else if (key === 'fullAddress') {
+        const postcodeRegex = /[A-Z0-9]{1,4} ?[A-Z0-9]{1,4}/g;
+        const postcode = value.match(postcodeRegex)?.[0] || '';
+        const addressWithoutPostcode = value.replace(postcode, '').trim();
+        newObj[key] = toTitleCase(addressWithoutPostcode) + ', ' + postcode;
+      } else {
+        newObj[key] = toTitleCase(value);
+      }
+    }
+
+    return newObj;
+  });
 }
 
 function activateCursorButtons() {
