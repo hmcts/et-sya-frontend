@@ -1,10 +1,10 @@
 import NoticePeriodController from '../../../main/controllers/NoticePeriodController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import {AppRequest} from '../../../main/definitions/appRequest';
-import {YesOrNo} from '../../../main/definitions/case';
-import {PageUrls, TranslationKeys} from '../../../main/definitions/constants';
-import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
-import {mockResponse} from '../mocks/mockResponse';
+import { AppRequest } from '../../../main/definitions/appRequest';
+import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 

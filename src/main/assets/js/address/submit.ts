@@ -117,7 +117,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
 
 function toTitleCase(str: string): string {
   return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
   });
 }
 
@@ -129,7 +129,8 @@ function convertJsonArrayToTitleCase(jsonArray: Record<string, string>[]): Recor
       if (key === 'postcode') {
         newObj[key] = value;
       } else if (key === 'fullAddress') {
-        const postcodeRegex = /[A-Z0-9]{1,4} ?[A-Z0-9]{1,4}/g;
+        const postcodeRegex =
+          /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/g;
         const postcode = value.match(postcodeRegex)?.[0] || '';
         const addressWithoutPostcode = value.replace(postcode, '').trim();
         newObj[key] = toTitleCase(addressWithoutPostcode) + ', ' + postcode;
