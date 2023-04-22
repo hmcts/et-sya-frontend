@@ -22,8 +22,8 @@ export const createToken = (params: PCQRequest): string => {
     });
 
     const paramsJson: string = JSON.stringify(params);
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
-    logger.info(cipher);
+    const cipher: crypto.CipherCCM = crypto.createCipheriv(algorithm, key, iv);
+    logger.info(cipher.read());
     encrypted = cipher.update(paramsJson, 'utf-8', 'hex');
     encrypted += cipher.final('hex');
   }
