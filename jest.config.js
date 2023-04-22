@@ -1,4 +1,5 @@
 module.exports = {
+  cache: true,
   coveragePathIgnorePatterns: ['<rootDir>/src/main/assets'],
   roots: ['<rootDir>/src/test/unit', '<rootDir>/src/test/routes'],
   testRegex: '(/src/test/.*|\\.(test|spec))\\.(ts|js)$',
