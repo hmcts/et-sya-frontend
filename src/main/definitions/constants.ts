@@ -103,6 +103,9 @@ export const TranslationKeys = {
   TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
   ABOUT_HEARING_DOCUMENTS: 'about-hearing-documents',
+  TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
+  TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
+  TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
 } as const;
 
 export const PageUrls = {
@@ -202,6 +205,9 @@ export const PageUrls = {
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
   ABOUT_HEARING_DOCUMENTS: '/about-hearing-documents',
+  TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
+  TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
+  TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
 } as const;
 
 export const InterceptPaths = {
@@ -212,6 +218,7 @@ export const InterceptPaths = {
   REMOVE_FILE: '/remove-uploaded-file',
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
+  TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
 } as const;
 
 export const ErrorPages = {
@@ -236,12 +243,13 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
-  UPDATE_NOTIFICATION_STATE: 'cases/update-notification-state',
+  UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',
   DOCUMENT_DETAILS: '/document/details/',
+  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
 } as const;
 
 export const Urls = {

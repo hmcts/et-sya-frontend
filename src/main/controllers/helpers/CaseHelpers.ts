@@ -91,6 +91,15 @@ export const updateSendNotificationState = async (req: AppRequest, logger: Logge
   }
 };
 
+export const addResponseSendNotification = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).addResponseSendNotification(req.session.userCase);
+    logger.info(`Responded to sendNotification: ${req.session.userCase.selectedRequestOrOrder.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const getSectionStatus = (
   detailsCheckValue: YesOrNo,
   sessionValue: string | CaseDate | number
@@ -208,4 +217,14 @@ export const postLogic = async (
   } else {
     handleErrors(req, res, errors);
   }
+};
+
+export const clearTseFields = (userCase: CaseWithId): void => {
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
+  userCase.copyToOtherPartyYesOrNo = undefined;
+  userCase.copyToOtherPartyText = undefined;
+  userCase.responseText = undefined;
+  userCase.hasSupportingMaterial = undefined;
+  userCase.supportingMaterialFile = undefined;
 };

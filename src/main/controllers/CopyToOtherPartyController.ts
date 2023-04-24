@@ -77,6 +77,8 @@ export default class CopyToOtherPartyController {
       redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
     } else if (req.session.contactType === Rule92Types.RESPOND) {
       redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+    } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
+      redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
     }
     return res.redirect(redirectPage);
   };
