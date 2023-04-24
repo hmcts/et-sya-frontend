@@ -74,6 +74,10 @@
       "responseRequired": "The tribunal has sent you a notification: ",
       "noResponseRequired": "The tribunal has sent you a notification",
       "link": "View the notification"
+    },
+    "judgment": {
+      "header": "The tribunal has made a decision on your case.",
+      "link": "View the decision"
     }
   }
 }

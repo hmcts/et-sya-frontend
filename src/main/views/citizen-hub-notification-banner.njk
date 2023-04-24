@@ -145,20 +145,20 @@
   {% for app in respondentBannerContent %}
     {% if (loop.index <= 5) %}
       {% set htmlForRespondentApplicationReceived %}
-        <h3 class="govuk-notification-banner__heading">
-          {{app.respondentApplicationHeader}}
-        </h3>
-          <p class="govuk-body">
-            {% if app.applicationType === "B" %}
-              {{notificationBanner.respondentApplicationReceived.p1TypeB}}<br><br>
-            {% endif %}
-            {{notificationBanner.respondentApplicationReceived.p1}}
-              <b>{{ app.respondByDate }}</b>
-            {{ notificationBanner.respondentApplicationReceived.p1a }}
-          </p>
-        <h3 class="govuk-notification-banner__heading">
-          <a class="govuk-link" href="{{app.respondToRespondentAppRedirectUrl}}">{{notificationBanner.respondentApplicationReceived.link}}</a>
-        </h3>
+      <h3 class="govuk-notification-banner__heading">
+        {{app.respondentApplicationHeader}}
+      </h3>
+      <p class="govuk-body">
+        {% if app.applicationType === "B" %}
+          {{notificationBanner.respondentApplicationReceived.p1TypeB}}<br><br>
+        {% endif %}
+        {{notificationBanner.respondentApplicationReceived.p1}}
+        <b>{{ app.respondByDate }}</b>
+        {{ notificationBanner.respondentApplicationReceived.p1a }}
+      </p>
+      <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{app.respondToRespondentAppRedirectUrl}}">{{notificationBanner.respondentApplicationReceived.link}}</a>
+      </h3>
       {% endset %}
       {{ govukNotificationBanner({
           html: htmlForRespondentApplicationReceived,
@@ -168,24 +168,43 @@
   {% endfor %}
 {% endif %}
 
+{% if showJudgmentReceived %}
+  {% for item in judgmentBannerContent %}
+    {% if item.value.notificationState !== 'viewed' %}
+      {% set htmlForJudgmentReceived %}
+      <h3 class="govuk-notification-banner__heading">
+        {{notificationBanner.judgment.header}}
+      </h3>
+      <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{app.redirectUrl}}">{{notificationBanner.judgment.link}}</a>
+      </h3>
+      {% endset %}
+      {{ govukNotificationBanner({
+          html: htmlForJudgmentReceived,
+          titleText: important
+          }) }}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
     {% if order.value.notificationState !== 'viewed' %}
-        {% set htmlForOrderOrRequestReceived %}
-           {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
-              <h3 class="govuk-notification-banner__heading">
-                {{ notificationBanner.orderOrRequest.responseRequired + order.value.sendNotificationTitle}}
-              </h3>
-           {% else %}
-              <h3 class="govuk-notification-banner__heading">
-                {{ notificationBanner.orderOrRequest.noResponseRequired }}
-              </h3>
-           {% endif %}
-              <p class="govuk-body">
-                <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
-              </p>
-        {% endset %}
-        {{ govukNotificationBanner({
+      {% set htmlForOrderOrRequestReceived %}
+      {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.orderOrRequest.responseRequired + order.value.sendNotificationTitle}}
+        </h3>
+      {% else %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.orderOrRequest.noResponseRequired }}
+        </h3>
+      {% endif %}
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
+      </p>
+      {% endset %}
+      {{ govukNotificationBanner({
           html: htmlForOrderOrRequestReceived,
           titleText: important
         }) }}

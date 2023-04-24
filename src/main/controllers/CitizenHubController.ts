@@ -20,7 +20,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { activateJudgmentsLink, getDecisions } from './helpers/JudgmentHelpers';
+import { activateJudgmentsLink, getDecisions, getJudgmentBannerContent } from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -117,6 +117,8 @@ export default class CitizenHubController {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
 
+    const judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -126,6 +128,7 @@ export default class CitizenHubController {
       currentState,
       sections,
       respondentBannerContent,
+      judgmentBannerContent,
       notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
@@ -136,6 +139,7 @@ export default class CitizenHubController {
       showRespondentApplicationReceived: shouldShowRespondentApplicationReceived(hubLinksStatuses),
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
+      showJudgmentReceived: shouldShowJudgmentReceived(hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications && notifications.length,
     });
@@ -191,6 +195,10 @@ function shouldShowRespondentResponseReceived(hubLinksStatuses: HubLinksStatuses
 
 function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatuses) {
   return hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS;
+}
+
+function shouldShowJudgmentReceived(hubLinksStatuses: HubLinksStatuses) {
+  return hubLinksStatuses[HubLinkNames.TribunalJudgments] === HubLinkStatus.IN_PROGRESS;
 }
 
 function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {

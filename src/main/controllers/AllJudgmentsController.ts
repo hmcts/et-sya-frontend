@@ -8,16 +8,18 @@ import { AnyRecord } from '../definitions/util-types';
 import { getPageContent } from './helpers/FormHelpers';
 import {
   getDecisions,
+  getJudgmentDecisions,
+  getJudgments,
   populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors,
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
-  // populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from './helpers/JudgmentHelpers';
 
 export default class AllJudgmentsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     const decisions = getDecisions(userCase);
-    const judgments = userCase.sendNotificationCollection;
+    const judgmentDecisions = getJudgmentDecisions(decisions);
+    const judgments = getJudgments(userCase);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.ALL_JUDGMENTS, { returnObjects: true }),
@@ -26,7 +28,7 @@ export default class AllJudgmentsController {
     };
 
     populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors(judgments, req.url, translations);
-    populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors(decisions, req.url, translations);
+    populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors(judgmentDecisions, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -38,7 +40,7 @@ export default class AllJudgmentsController {
       ...content,
       translations,
       judgments,
-      decisions,
+      judgmentDecisions,
     });
   };
 }
