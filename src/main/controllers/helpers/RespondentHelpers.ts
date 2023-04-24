@@ -54,7 +54,7 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
-  if (typeof selectedRespondentIndex !== 'undefined' && userCase.respondents !== undefined) {
+  if (typeof selectedRespondentIndex !== 'undefined' && userCase !== undefined && userCase.respondents !== undefined) {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
     userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex]?.respondentAddress1;
     userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex]?.respondentAddress2;

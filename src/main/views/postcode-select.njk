@@ -1,0 +1,34 @@
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% extends "template.njk" %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ enterPostcode }}</h1>
+  {{ govukSelect({
+    id: "addresses",
+    name: "addresses",
+    classes: "govuk-!-width-three-quarters",
+    label: {
+      text: "addresses"
+    },
+    items: addresses,
+    attributes: {
+      autocomplete: "off"
+    }
+  }) }}
+       <p class="govuk-body">
+         <a href="#" id="cannotFindAddress" class="govuk-link">{{ cannotFindAddress }}</a>
+       </p>
+    </div>
+  </div>
+{% endblock %}

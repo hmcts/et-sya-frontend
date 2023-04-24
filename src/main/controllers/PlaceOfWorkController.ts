@@ -4,6 +4,7 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
+  isValidUKPostcode,
 } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -22,13 +23,24 @@ export default class PlaceOfWorkController {
   private readonly form: Form;
   private readonly placeOfWorkContent: FormContent = {
     fields: {
+      ukPostcode: {
+        id: 'ukPostcode',
+        type: 'text',
+        classes: 'govuk-label govuk-!-width-one-half',
+        label: l => l.enterPostcode,
+        labelSize: null,
+        attributes: {
+          maxLength: 14,
+          autocomplete: 'postal-code',
+        },
+        validator: isValidUKPostcode,
+      },
       workAddress1: {
         id: 'address1',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-line1',
           maxLength: 100,
@@ -41,7 +53,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-line2',
           maxLength: 50,
@@ -54,7 +65,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-level2',
           maxLength: 50,
@@ -67,7 +77,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
-        hidden: true,
         attributes: {
           maxLength: 50,
         },
@@ -79,7 +88,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'postal-code',
           maxLength: 14,
@@ -115,7 +123,7 @@ export default class PlaceOfWorkController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
-      previousPostcode: req.session.userCase.workAddressPostcode,
+      previousPostcode: req.session.userCase !== undefined ? req.session.userCase.workAddressPostcode : 'M160YF',
     });
   };
 }

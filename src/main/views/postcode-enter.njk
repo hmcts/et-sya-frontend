@@ -1,0 +1,25 @@
+{% extends "template.njk" %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ enterPostcode }}</h1>
+
+      {% block form %}
+        {% include "form/form.njk" %}
+      {% endblock %}
+        <p class="govuk-body">
+            <a href="#" id="manualAddress" class="govuk-link">{{ manualAddress }}</a>
+          </p>
+    </div>
+  </div>
+{% endblock %}

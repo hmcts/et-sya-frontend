@@ -50,6 +50,8 @@ import PcqController from '../../controllers/PcqController';
 import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
+import PostCodeEnterController from '../../controllers/PostCodeEnterController';
+import PostCodeSelectController from '../../controllers/PostCodeSelectController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
@@ -217,6 +219,10 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.POSTCODE_ENTER, new PostCodeEnterController().get);
+    app.get(PageUrls.POSTCODE_SELECT, new PostCodeSelectController().get);
+    app.post(PageUrls.POSTCODE_ENTER, new PostCodeEnterController().post);
+    app.post(PageUrls.POSTCODE_SELECT, new PostCodeSelectController().post);
     app.get(
       Urls.INFO,
       infoRequestHandler({

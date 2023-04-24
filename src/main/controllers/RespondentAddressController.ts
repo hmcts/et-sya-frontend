@@ -30,7 +30,7 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        hidden: true,
+        hidden: false,
         attributes: {
           autocomplete: 'address-line1',
           maxLength: 100,
@@ -44,7 +44,7 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
-        hidden: true,
+        hidden: false,
         attributes: {
           autocomplete: 'address-line2',
           maxLength: 50,
@@ -58,7 +58,7 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        hidden: true,
+        hidden: false,
         attributes: {
           autocomplete: 'address-level2',
           maxLength: 50,
@@ -72,7 +72,7 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
-        hidden: true,
+        hidden: false,
         attributes: {
           maxLength: 50,
         },
@@ -85,7 +85,7 @@ export default class RespondentAddressController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
-        hidden: true,
+        hidden: false,
         attributes: {
           autocomplete: 'postal-code',
           maxLength: 14,
