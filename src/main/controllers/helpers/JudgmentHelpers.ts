@@ -7,6 +7,7 @@ import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNot
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
+import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const activateJudgmentsLink = (
@@ -51,17 +52,18 @@ export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
 
 export const getJudgmentDetails = (
   selectedJudgment: SendNotificationTypeItem,
-  translations: AnyRecord,
-  downloadLink: string
+  translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
+  const judgmentDetails = [];
+
+  judgmentDetails.push(
     {
       key: {
         text: translations.decision,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedJudgment.value.date,
+        text: selectedJudgment.value.sendNotificationDecision,
       },
     },
     {
@@ -75,46 +77,112 @@ export const getJudgmentDetails = (
     },
     {
       key: {
-        text: translations.applicationType,
+        text: translations.sentBy,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: selectedJudgment.value.sendNotificationSentBy,
+      },
+    }
+  );
+  if (selectedJudgment.value.sendNotificationAdditionalInfo) {
+    judgmentDetails.push({
+      key: {
+        text: translations.additionalInfo,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
         text: selectedJudgment.value.sendNotificationAdditionalInfo,
       },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
+    });
+  }
+
+  if (selectedJudgment.value.sendNotificationUploadDocument) {
+    judgmentDetails.push(
+      {
+        key: {
+          text: translations.description,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: selectedJudgment.value.sendNotificationUploadDocument[0].value.shortDescription,
+        },
       },
-      value: { text: selectedJudgment.value.sendNotificationUploadDocument[0].value.shortDescription },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
-    },
+      {
+        key: {
+          text: translations.document,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          value: {
+            html: createDownloadLink(selectedJudgment.value.sendNotificationUploadDocument[0].value.uploadedDocument),
+          },
+        },
+      }
+    );
+  }
+  judgmentDetails.push(
     {
       key: {
         text: translations.judgmentMadeBy,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: selectedJudgment.value.sendNotificationRequestMadeBy },
+      value: {
+        text: selectedJudgment.value.sendNotificationWhoMadeJudgement,
+      },
+    },
+
+    {
+      key: {
+        text: translations.name,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: selectedJudgment.value.sendNotificationFullName2,
+      },
     },
     {
       key: {
         text: translations.sentTo,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: selectedJudgment.value.sendNotificationSelectParties },
-    },
-  ];
+      value: {
+        text: selectedJudgment.value.sendNotificationNotify,
+      },
+    }
+  );
+  return judgmentDetails;
 };
 
 export const getDecisions = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
   return userCase?.genericTseApplicationCollection
     ?.filter(app => app.value.adminDecision && app.value.adminDecision.length)
     .flatMap(it => it.value.adminDecision);
+};
+
+export const getJudgmentDecisions = (items: TseAdminDecisionItem[]): TseAdminDecisionItem[] => {
+  return items?.filter(it => it.value.typeOfDecision === 'Judgment');
+};
+
+export const getJudgments = (userCase: CaseWithId): SendNotificationTypeItem[] => {
+  return userCase?.sendNotificationCollection?.filter(app => app.value.sendNotificationSubjectString === 'Judgment');
+};
+
+export const getJudgmentBannerContent = (
+  items: SendNotificationTypeItem[],
+  languageParam: string
+): SendNotificationTypeItem[] => {
+  const bannerContent: SendNotificationTypeItem[] = [];
+
+  if (items && items.length) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (items[i].value.notificationState !== HubLinkStatus.VIEWED) {
+        const rec: SendNotificationTypeItem = {
+          redirectUrl: `/judgment-details/${items[i].id}${languageParam}`,
+        };
+        bannerContent.push(rec);
+      }
+    }
+    return bannerContent;
+  }
 };

@@ -4,9 +4,10 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
+import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 
-import { createDownloadLink, findSelectedJudgment, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { findSelectedJudgment, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getJudgmentDetails } from './helpers/JudgmentHelpers';
 
@@ -14,6 +15,7 @@ export default class JudgmentDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     req.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
+    userCase.hubLinksStatuses[HubLinkNames.TribunalJudgments] = HubLinkStatus.VIEWED;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.JUDGMENT_DETAILS, { returnObjects: true }),
@@ -21,9 +23,13 @@ export default class JudgmentDetailsController {
     };
 
     const selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
+    console.log(selectedJudgment);
 
-    const header = selectedJudgment.value.sendNotificationTitle;
-    const document = selectedJudgment.value?.sendNotificationUploadDocument[0].value.uploadedDocument;
+    const header = selectedJudgment.value?.sendNotificationTitle;
+
+    const selectedJudgmentAttachment = selectedJudgment.value?.sendNotificationUploadDocument;
+    const document =
+      selectedJudgmentAttachment === undefined ? undefined : selectedJudgmentAttachment[0].value.uploadedDocument;
 
     if (document) {
       try {
@@ -33,8 +39,6 @@ export default class JudgmentDetailsController {
         return res.redirect('/not-found');
       }
     }
-
-    const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -46,7 +50,7 @@ export default class JudgmentDetailsController {
       ...content,
       header,
       selectedJudgment,
-      appContent: getJudgmentDetails(selectedJudgment, translations, downloadLink),
+      appContent: getJudgmentDetails(selectedJudgment, translations),
     });
   };
 }
