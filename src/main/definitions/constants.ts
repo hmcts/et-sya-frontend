@@ -103,7 +103,7 @@ export const TranslationKeys = {
   TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
   ABOUT_HEARING_DOCUMENTS: 'about-hearing-documents',
-  UPLOAD_YOUR_FILE: 'upload-your-file'
+  UPLOAD_YOUR_FILE: 'upload-your-file',
 } as const;
 
 export const PageUrls = {
@@ -203,7 +203,8 @@ export const PageUrls = {
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
   ABOUT_HEARING_DOCUMENTS: '/about-hearing-documents',
-  UPLOAD_YOUR_FILE: '/upload-your-file'
+  UPLOAD_YOUR_FILE: '/upload-your-file/:appId',
+  UPLOAD_YOUR_FILE_REMOVE: '/upload-your-file-remove/:appId',
 } as const;
 
 export const InterceptPaths = {

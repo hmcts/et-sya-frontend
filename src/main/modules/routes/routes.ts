@@ -41,6 +41,7 @@ import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
 import EndDateController from '../../controllers/EndDateController';
+import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import LipOrRepController from '../../controllers/LipOrRepController';
@@ -88,6 +89,7 @@ import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalO
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
+import UploadYourFileController from '../../controllers/UploadYourFileController';
 import ValidNoAcasReasonController from '../../controllers/ValidNoAcasReasonController';
 import VideoHearingsController from '../../controllers/VideoHearingsController';
 import WhistleblowingClaimsController from '../../controllers/WhistleblowingClaimsController';
@@ -96,7 +98,6 @@ import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import UploadYourFileController from '../../controllers/UploadYourFileController';
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -268,19 +269,30 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+
+    // this
     app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
+    // this
     app.post(
       PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
       handleUploads.single('supportingMaterialFile'),
       new RespondentSupportingMaterialController().post
     );
+    // this
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+
+    app.get(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().get);
+    app.post(
+      PageUrls.UPLOAD_YOUR_FILE,
+      handleUploads.single('hearingDocumentFile'),
+      new UploadYourFileController().post
+    );
+    app.get(PageUrls.UPLOAD_YOUR_FILE_REMOVE, new HearingDocumentFileController().get);
+
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().get);
     app.post(PageUrls.ABOUT_HEARING_DOCUMENTS, new AboutHearingDocumentsController().post);
-    app.get(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().get);
-    app.post(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().post);
   }
 }

@@ -297,26 +297,26 @@ export const getFileUploadError = (
   file: Express.Multer.File,
   fileTooLarge: boolean,
   uploadedFile: Document,
-  propertyName: string,
-  uplodedFileProperty: string
+  propertyName: string
 ): FormError => {
-  if (fileTooLarge) {
-    return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
-  }
   const fileProvided = file !== undefined;
-  
-  if ( !fileProvided && !uploadedFile) {
+
+  if (!fileProvided && !uploadedFile) {
     return { propertyName, errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName, errorType: 'invalidFileSize' };
   }
 
   const fileFormatInvalid = hasInvalidFileFormat(file);
   if (fileFormatInvalid) {
-    return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
+    return { propertyName, errorType: fileFormatInvalid };
   }
 
   const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
-    return { propertyName: uplodedFileProperty, errorType: fileNameInvalid };
+    return { propertyName, errorType: fileNameInvalid };
   }
 };
 
@@ -361,7 +361,9 @@ export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyR
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
+      if (
+        ['contactApplicationFile', 'supportingMaterialFile', 'hearingDocumentError'].includes(errors[i].propertyName)
+      ) {
         return errors[i];
       }
     }

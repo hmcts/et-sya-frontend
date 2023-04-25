@@ -143,6 +143,7 @@ export const handleUploadDocument = async (
   logger: Logger
 ): Promise<AxiosResponse<DocumentUploadResponse>> => {
   try {
+    logger.info('about to use axios to upload file');
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
       req.session.user?.accessToken
     ).uploadDocument(file, req.session.userCase?.caseTypeId);
