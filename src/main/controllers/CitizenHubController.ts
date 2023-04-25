@@ -55,6 +55,7 @@ export default class CitizenHubController {
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
+    req.session.documentDownloadPage = undefined;
     const currentState = currentStateFn(userCase);
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
