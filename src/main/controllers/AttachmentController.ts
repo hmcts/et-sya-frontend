@@ -24,11 +24,12 @@ export default class AttachmentController {
     let contactTribunalDocId;
     let contactTheTribunalSupportingFileId;
     let supportingFileId;
+    const selectedApplication = userCase.selectedGenericTseApplication;
 
     if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
-      respondentAppDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload?.document_url);
-      claimantResponseDocId = getClaimantResponseDocId(userCase.selectedGenericTseApplication);
-      decisionDocId = getDecisionDocId(req, userCase.selectedGenericTseApplication);
+      respondentAppDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
+      claimantResponseDocId = getClaimantResponseDocId(selectedApplication);
+      decisionDocId = getDecisionDocId(req, selectedApplication);
     }
 
     if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
@@ -37,8 +38,8 @@ export default class AttachmentController {
 
     if (req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS) {
       contactTribunalDocId = undefined;
-      if (userCase.selectedGenericTseApplication?.value.documentUpload.document_url !== undefined) {
-        contactTribunalDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload?.document_url);
+      if (selectedApplication?.value.documentUpload.document_url !== undefined) {
+        contactTribunalDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
       }
     }
 

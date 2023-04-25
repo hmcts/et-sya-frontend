@@ -107,11 +107,10 @@ export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTs
 export function getRequestDocId(req: AppRequest): string {
   const docId = req.params.docId;
   const userCase = req.session?.userCase;
+  const requestDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
   let requestDocId = undefined;
-  if (userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument?.length) {
-    requestDocId = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument
-      .map(it => getDocId(it.value.uploadedDocument.document_url))
-      .find(id => id === docId);
+  if (requestDoc?.length) {
+    requestDocId = requestDoc.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId);
   }
   return requestDocId;
 }
