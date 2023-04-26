@@ -25,6 +25,7 @@ export default class TribunalOrderOrRequestDetailsController {
     if (selectedRequestOrOrder.value.notificationState !== HubLinkStatus.VIEWED) {
       try {
         await updateSendNotificationState(req, logger);
+        selectedRequestOrOrder.value.notificationState = HubLinkStatus.VIEWED;
       } catch (error) {
         logger.info(error.message);
       }
