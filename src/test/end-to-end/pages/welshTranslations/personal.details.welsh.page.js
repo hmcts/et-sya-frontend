@@ -42,7 +42,7 @@ module.exports = {
     I.waitForVisible('#selectAddressInput', 30);
     I.selectOption(
       '#selectAddressInput',
-      '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
+      '{"fullAddress":"3, Skelton Avenue, Leeds, LS9 9HE","street1":"3, Skelton Avenue","street2":"","town":"Leeds","county":"Leeds","postcode":"LS9 9HE","country":"England"}'
     );
     I.click('Save and continue');
   },

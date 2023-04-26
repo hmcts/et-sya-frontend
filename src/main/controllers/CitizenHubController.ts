@@ -11,7 +11,7 @@ import {
   sectionIndexToLinkNames,
 } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
-import { formatDate, fromApiFormat, getDueDate} from '../helper/ApiFormatter';
+import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
 import { currentStateFn } from '../helper/state-sequence';
 import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
