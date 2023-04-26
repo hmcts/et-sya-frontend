@@ -6,7 +6,7 @@ import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { getClaimantResponseDocDownload } from './helpers/TseRespondentApplicationHelpers';
+import { getClaimantResponseDocId, getDecisionDocId, getRequestDocId } from './helpers/DocumentHelpers';
 
 const logger = getLogger('AttachmentController');
 
@@ -24,24 +24,23 @@ export default class AttachmentController {
     let contactTribunalDocId;
     let contactTheTribunalSupportingFileId;
     let supportingFileId;
+    const selectedApplication = userCase.selectedGenericTseApplication;
 
     if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
-      respondentAppDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload.document_url);
-      const claimantResponseDoc = getClaimantResponseDocDownload(userCase.selectedGenericTseApplication);
-      claimantResponseDocId = getDocId(claimantResponseDoc.document_url);
-      decisionDocId = userCase.selectedGenericTseApplication?.value.adminDecision
-        .map(it => getDocId(it.value.responseRequiredDoc.document_url))
-        .find(id => id === docId);
+      respondentAppDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
+      claimantResponseDocId = getClaimantResponseDocId(selectedApplication);
+      decisionDocId = getDecisionDocId(req, selectedApplication);
     }
 
     if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
-      requestDocId = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument
-        .map(it => getDocId(it.value.uploadedDocument.document_url))
-        .find(id => id === docId);
+      requestDocId = getRequestDocId(req);
     }
 
     if (req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS) {
-      contactTribunalDocId = getDocId(userCase.selectedGenericTseApplication?.value.documentUpload.document_url);
+      contactTribunalDocId = undefined;
+      if (selectedApplication?.value.documentUpload.document_url !== undefined) {
+        contactTribunalDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
+      }
     }
 
     if (userCase.contactApplicationFile) {

@@ -17,7 +17,7 @@ export default [
 export const applicationTypes = {
   claimant: {
     a: ['amend', 'non-compliance', 'other', 'order', 'postpone', 'publicity', 'strike', 'vary'],
-    b: ['change-details', 'reconsider-decision', 'reconsider-judgement'],
+    b: ['withdraw', 'change-details', 'reconsider-decision', 'reconsider-judgement'],
     c: 'witness',
   },
   respondent: {
