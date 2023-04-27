@@ -20,8 +20,7 @@ import { getCaseApi } from '../services/CaseService';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 
 const logger = getLogger('CitizenHubController');
-
-const DAYS_FOR_PROCESSING = 5;
+const DAYS_FOR_PROCESSING = 7;
 
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {

@@ -10,6 +10,7 @@ import './enter-address';
 import './print';
 import './cookie';
 import './set-focus';
+import './submit-claim';
 
 sessionTimeout.ready(sessionTimeout.initialize);
 import './data-layer';

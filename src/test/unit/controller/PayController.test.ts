@@ -22,6 +22,23 @@ describe('Pay Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.PAY, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const controller = new PayController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.payInterval = PayInterval.ANNUAL;
+    request.session.userCase.payBeforeTax = 40000;
+    request.session.userCase.payAfterTax = 30000;
+
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.payBeforeTax).toStrictEqual(undefined);
+    expect(request.session.userCase.payAfterTax).toStrictEqual(undefined);
+    expect(request.session.userCase.payInterval).toStrictEqual(undefined);
+  });
+
   it('should render the pension page when the page submitted', async () => {
     const body = {
       payBeforeTax: '123',
