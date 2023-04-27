@@ -17,6 +17,7 @@ export default class TribunalResponseCYAController {
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_RESPONSE_CYA,
     ]);
 
