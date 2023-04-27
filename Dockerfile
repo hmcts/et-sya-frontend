@@ -5,6 +5,7 @@ RUN corepack enable
 COPY --chown=hmcts:hmcts . .
 
 # ---- Build image ----
+
 FROM base as build
 RUN PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && yarn build:prod
 
