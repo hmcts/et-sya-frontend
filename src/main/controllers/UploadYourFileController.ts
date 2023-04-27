@@ -13,6 +13,7 @@ import { getFileErrorMessage, getFileUploadError } from './helpers/ErrorHelpers'
 import { getPageContent } from './helpers/FormHelpers';
 import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('UploadYourFileController');
 
@@ -72,9 +73,11 @@ export default class UploadYourFileController {
     );
     logger.info('is there a hearing document error? ', hearingDocumentError);
 
+    const pageUrl = PageUrls.UPLOAD_YOUR_FILE.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
-      return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
+      return res.redirect(pageUrl);
     }
     logger.info('does an upload exist? ', !!req.body.upload);
 
@@ -82,6 +85,7 @@ export default class UploadYourFileController {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
+          logger.info('setting hearing document to sessions now');
           userCase.hearingDocument = fromApiFormatDocument(result.data);
         }
       } catch (error) {
@@ -89,7 +93,9 @@ export default class UploadYourFileController {
         req.session.errors.push({ propertyName: 'hearingDocumentFile', errorType: 'backEndError' });
         return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
       }
+      return res.redirect(pageUrl);
     }
+    return res.redirect('/');
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -100,7 +106,7 @@ export default class UploadYourFileController {
       TranslationKeys.UPLOAD_YOUR_FILE,
     ]);
 
-    logger.info('usercase hearing document - false? - ', !!userCase.hearingDocument);
+    logger.info('usercase hearing document - false? - ', !!userCase?.hearingDocument);
 
     (this.uploadYourFileFormContent.fields as any).inset.subFields.upload.disabled =
       userCase?.hearingDocument !== undefined;
@@ -118,7 +124,7 @@ export default class UploadYourFileController {
       userCase,
       InterceptPaths,
       hideContactUs: true,
-      cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
+      cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase?.id)),
       // this transfile may need updated
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.hearingDocumentError),
       ...content,
