@@ -172,10 +172,11 @@ export interface Case {
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
-  respondToApplicationText?: string;
+  responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
   sendNotificationCollection?: SendNotificationTypeItem[];
+
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
@@ -183,6 +184,10 @@ export interface Case {
   whoseHearingDocumentsAreYouUploading?: string;
   whatAreTheseDocuments?: string;
   hearingDocument?: Document;
+
+  /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
+  all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
+  rule92state?: boolean;
 }
 
 export const enum StillWorking {

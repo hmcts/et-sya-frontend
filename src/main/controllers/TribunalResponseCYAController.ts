@@ -5,32 +5,31 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-export default class ContactTheTribunalCYAController {
+export default class TribunalResponseCYAController {
   public get(req: AppRequest, res: Response): void {
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
-      TranslationKeys.CONTACT_THE_TRIBUNAL_CYA,
+      TranslationKeys.TRIBUNAL_RESPONSE_CYA,
     ]);
 
     const cancelPage = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
     };
 
-    const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
+    const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
 
-    res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
+    res.render(TranslationKeys.TRIBUNAL_RESPONSE_CYA, {
       ...content,
       ...translations,
       PageUrls,
@@ -39,14 +38,13 @@ export default class ContactTheTribunalCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      submitRef: InterceptPaths.SUBMIT_TRIBUNAL_CYA + getLanguageParam(req.url),
-      cyaContent: getCyaContent(
+      submitRef: InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url),
+      cyaContent: getRespondentCyaContent(
         userCase,
         translations,
         getLanguageParam(req.url),
-        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
-        downloadLink,
-        translations.sections[userCase.contactApplicationType].label
+        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedRequestOrOrder.id),
+        downloadLink
       ),
     });
   }

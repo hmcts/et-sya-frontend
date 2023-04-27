@@ -18,8 +18,7 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields } from './ContactTheTribunalSelectedController';
-import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -56,6 +55,7 @@ export default class CitizenHubController {
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
+    req.session.documentDownloadPage = undefined;
     const currentState = currentStateFn(userCase);
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
