@@ -13,7 +13,6 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   getClaimantResponseDocDownloadLink,
   getDecisionContent,
-  getDocumentAdditionalInfoAsync,
   setSelectedTseApplication,
 } from './helpers/TseRespondentApplicationHelpers';
 
@@ -30,11 +29,7 @@ export default class RespondentApplicationDetailsController {
     );
     setSelectedTseApplication(req, userCase, selectedApplication);
 
-    const document = selectedApplication.value?.documentUpload;
     const accessToken = req.session.user?.accessToken;
-
-    await getDocumentAdditionalInfoAsync(document, logger, accessToken, res);
-
     const claimantResponseDocDownloadLink = await getClaimantResponseDocDownloadLink(
       selectedApplication,
       logger,
@@ -52,7 +47,7 @@ export default class RespondentApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const redirectUrl = `/respond-to-application/${selectedApplication.id}${getLanguageParam(req.url)}`;
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === CLAIMANT);
-    const downloadLink = createDownloadLink(document);
+    const supportingMaterialDownloadLink = createDownloadLink(selectedApplication.value?.documentUpload);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -64,7 +59,7 @@ export default class RespondentApplicationDetailsController {
       header,
       selectedApplication,
       redirectUrl,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
       decisionContent,
       respondButton,
       claimantResponseDocDownloadLink,

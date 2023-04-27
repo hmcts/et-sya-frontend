@@ -118,22 +118,6 @@ export const setSelectedTseApplication = (
   }
 };
 
-export const getDocumentAdditionalInfoAsync = async (
-  document: Document,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
-): Promise<void> => {
-  if (document) {
-    try {
-      await getDocumentAdditionalInformation(document, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
-  }
-};
-
 export const getClaimantResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
   logger: LoggerInstance,
