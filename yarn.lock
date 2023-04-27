@@ -12638,10 +12638,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-std-serializers@npm:^3.1.0":
-  version: 3.2.0
-  resolution: "pino-std-serializers@npm:3.2.0"
-  checksum: 77e29675b116e42ae9fe6d4ef52ef3a082ffc54922b122d85935f93ddcc20277f0b0c873c5c6c5274a67b0409c672aaae3de6bcea10a2d84699718dda55ba95b
+"pino-std-serializers@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "pino-std-serializers@npm:6.2.0"
+  checksum: f96db06a5a0c1b11b2e8afcdafe129cea8a2c99449c4f0f13ee59e098d60df8347607de5f017f19c771dae5e5f5ba0dc0b75d0323559786db9d78b9d0c3dcb31
   languageName: node
   linkType: hard
 
