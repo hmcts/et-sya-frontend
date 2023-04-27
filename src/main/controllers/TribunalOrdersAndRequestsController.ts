@@ -17,12 +17,15 @@ export class TribunalOrdersAndRequestsController {
         it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
     );
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
     };
 
-    const content = getPageContent(req, <FormContent>{}, [TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS]);
+    const content = getPageContent(req, <FormContent>{}, [
+      TranslationKeys.COMMON,
+      TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS,
+    ]);
     res.render(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, {
       ...content,
       notifications,

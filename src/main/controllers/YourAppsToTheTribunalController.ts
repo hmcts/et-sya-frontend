@@ -14,15 +14,16 @@ export default class YourAppsToTheTribunalController {
     const tseGenericApps = userCase?.genericTseApplicationCollection;
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
 
     populateAppItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.COMMON,
       TranslationKeys.YOUR_APPLICATIONS,
     ]);
 
