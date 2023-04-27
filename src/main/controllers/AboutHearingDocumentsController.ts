@@ -26,15 +26,19 @@ export default class AboutHearingDocumentsController {
     const { userCase } = req.session;
     req.session.errors = [];
 
-    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
+    userCase.hearingDocumentsAreFor = userCase.hearingCollection.find(hearing => {
+      logger.info(' looking through hearings array to find a postive', hearing.id === req.body.hearingDocumentsAreFor);
+      return hearing.id === req.body.hearingDocumentsAreFor;
+    });
+    logger.info(req.body.hearingDocumentsAreFor);
     userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
     userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
 
     req.session.errors = aboutHearingDocumentsErrors(req);
-    if (req.session.errors.length) {
+    if (req.session?.errors?.length) {
       return res.redirect('/about-hearing-documents');
     }
-    return res.redirect('/');
+    return res.redirect('/upload-your-file/' + userCase.hearingDocumentsAreFor.id);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

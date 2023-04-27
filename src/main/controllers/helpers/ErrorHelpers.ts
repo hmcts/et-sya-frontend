@@ -10,6 +10,7 @@ import {
   isContent100CharsOrLess,
   isContent2500CharsOrLess,
   isFieldFilledIn,
+  isNotPdfFileType,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
@@ -293,7 +294,7 @@ export const getFileUploadAndTextAreaError = (
   }
 };
 
-export const getFileUploadError = (
+export const getPdfUploadError = (
   file: Express.Multer.File,
   fileTooLarge: boolean,
   uploadedFile: Document,
@@ -302,14 +303,16 @@ export const getFileUploadError = (
   const fileProvided = file !== undefined;
 
   if (!fileProvided && !uploadedFile) {
-    return { propertyName, errorType: 'required' };
+    const formError = { propertyName, errorType: 'required' };
+    console.log('the form error is ', formError);
+    return formError;
   }
 
   if (fileTooLarge) {
     return { propertyName, errorType: 'invalidFileSize' };
   }
 
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = isNotPdfFileType(file);
   if (fileFormatInvalid) {
     return { propertyName, errorType: fileFormatInvalid };
   }

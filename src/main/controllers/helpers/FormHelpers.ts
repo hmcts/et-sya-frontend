@@ -104,7 +104,7 @@ export const createRadioBtnsForAboutHearingDocs = (
           label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
             item.value.listedDate
           )}`,
-          value: `HearingId=${hearing.id}&dateId=${item.id}`,
+          value: `${hearing.id}`,
           name: 'hearingDocumentsAreFor',
         }))
     )

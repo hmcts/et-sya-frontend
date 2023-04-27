@@ -180,7 +180,7 @@ export interface Case {
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
-  hearingDocumentsAreFor?: string;
+  hearingDocumentsAreFor?: HearingModel;
   whoseHearingDocumentsAreYouUploading?: string;
   whatAreTheseDocuments?: string;
   hearingDocument?: Document;

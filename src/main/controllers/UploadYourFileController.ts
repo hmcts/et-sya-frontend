@@ -9,7 +9,7 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
-import { getFileErrorMessage, getFileUploadError } from './helpers/ErrorHelpers';
+import { getFileErrorMessage, getPdfUploadError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -65,13 +65,13 @@ export default class UploadYourFileController {
 
     req.session.errors = [];
 
-    const hearingDocumentError = getFileUploadError(
+    const hearingDocumentError = getPdfUploadError(
       req.file,
       req.fileTooLarge,
       userCase.hearingDocument,
       'hearingDocumentError'
     );
-    logger.info('is there a hearing document error? ', hearingDocumentError);
+    console.log('is there a hearing document error? ', hearingDocumentError);
 
     const pageUrl = PageUrls.UPLOAD_YOUR_FILE.replace(':appId', req.params.appId) + getLanguageParam(req.url);
 
