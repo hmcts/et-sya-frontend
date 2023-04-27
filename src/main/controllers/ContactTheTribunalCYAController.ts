@@ -17,6 +17,7 @@ export default class ContactTheTribunalCYAController {
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.COMMON,
       TranslationKeys.CONTACT_THE_TRIBUNAL_CYA,
     ]);
 
