@@ -12,10 +12,36 @@
       {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
-      {{ govukSummaryList({
-      rows: appContent
-      }) 
-    }}
+      {% if selectedDecision !== undefined %}
+        {{ govukSummaryList({
+            rows: pageContent[0]
+           }) 
+          }}
+      {% endif %}
+
+      {% if (selectedDecisionApplication.value.respondCollection.length) and (selectedDecision !== undefined) %}
+        <h1 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h1>
+        {{ govukSummaryList({
+                rows: pageContent[1]
+                  }) 
+                }}
+      {% endif %}
+
+      {% if selectedDecision !== undefined %}
+        <h1 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h1>
+        {{ govukSummaryList({
+             rows: pageContent[2]
+               }) 
+             }}
+      {% endif %}
+
+      {% if selectedJudgment !== undefined %}
+        {{ govukSummaryList({
+            rows: pageContent
+              }) 
+            }}
+      {% endif %}
+
     </div>
 
     {% set sideBarContent %}

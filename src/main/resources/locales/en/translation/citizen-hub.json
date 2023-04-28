@@ -78,6 +78,24 @@
     "judgment": {
       "header": "The tribunal has made a decision on your case.",
       "link": "View the decision"
+    },
+    "decisionJudgment": {
+      "headerClaimant": "The tribunal has made a decision on your application to ",
+      "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
+      "link": "View the decision"
     }
-  }
+  },
+  "Change personal details": "change personal details",
+  "Claimant not complied": "tell the tribunal the claimant has not complied",
+  "Consider a decision afresh": "consider a decision afresh",
+  "Contact the tribunal": "contact the tribunal",
+  "Order other party": "order other party",
+  "Order a witness to attend to give evidence": "order a witness to attend to give evidence",
+  "Postpone a hearing": "postpone a hearing",
+  "Reconsider judgement": "reconsider judgement",
+  "Restrict publicity": "restrict publicity",
+  "Strike out all or part of a claim": "strike out all or part of a claim",
+  "Vary or revoke an order": "vary or revoke an order",
+  "Withdraw all/part of claim": "withdraw all/part of claim",
+  "withdraw": "withdraw all/part of claim"
 }

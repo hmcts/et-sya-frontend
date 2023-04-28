@@ -176,11 +176,27 @@
         {{notificationBanner.judgment.header}}
       </h3>
       <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{app.redirectUrl}}">{{notificationBanner.judgment.link}}</a>
+        <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.judgment.link}}</a>
       </h3>
       {% endset %}
       {{ govukNotificationBanner({
           html: htmlForJudgmentReceived,
+          titleText: important
+          }) }}
+    {% endif %}
+  {% endfor %}
+  {% for item in decisionBannerContent %}
+    {% if item.value.notificationState !== 'viewed' %}
+      {% set htmlForDecisionReceived %}
+      <h3 class="govuk-notification-banner__heading">
+        {{item.decisionBannerHeader}}
+      </h3>
+      <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.decisionJudgment.link}}</a>
+      </h3>
+      {% endset %}
+      {{ govukNotificationBanner({
+          html: htmlForDecisionReceived,
           titleText: important
           }) }}
     {% endif %}
