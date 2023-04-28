@@ -1,10 +1,20 @@
+import { Response } from 'express';
+import { LoggerInstance } from 'winston';
+
+import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document } from '../../definitions/case';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseAdminDecisionItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
+import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
+import { clearTseFields } from './CaseHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -93,4 +103,87 @@ export const getClaimantResponseDocDownload = (selectedApplication: GenericTseAp
     }
   }
   return claimantResponseDocDownload;
+};
+
+export const setSelectedTseApplication = (
+  req: AppRequest<Partial<AnyRecord>>,
+  userCase: CaseWithId,
+  selectedApplication: GenericTseApplicationTypeItem
+): void => {
+  const savedApplication = req.session.userCase.selectedGenericTseApplication;
+
+  if (!savedApplication || (savedApplication && req.params.appId !== savedApplication.id)) {
+    clearTseFields(userCase);
+    req.session.userCase.selectedGenericTseApplication = selectedApplication;
+  }
+};
+
+export const getClaimantResponseDocDownloadLink = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  logger: LoggerInstance,
+  accessToken: string,
+  res: Response
+): Promise<string | void> => {
+  let claimantResponseDocDownload = undefined;
+
+  if (selectedApplication.value?.respondCollection?.length) {
+    claimantResponseDocDownload = getClaimantResponseDocDownload(selectedApplication);
+  }
+
+  if (claimantResponseDocDownload) {
+    try {
+      await getDocumentAdditionalInformation(claimantResponseDocDownload, accessToken);
+    } catch (err) {
+      logger.error(err.message);
+      return res.redirect('/not-found');
+    }
+  }
+
+  return createDownloadLink(claimantResponseDocDownload);
+};
+
+export const getDecisionContent = async (
+  logger: LoggerInstance,
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  accessToken: string,
+  res: Response
+): Promise<any[] | void> => {
+  const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
+  let decisionContent = undefined;
+  const decisionDocDownload: string | any[] = getDecisionDocDownload(selectedAppAdminDecision);
+
+  const decisionDocDownloadLink = [];
+  if (decisionDocDownload.length > 0) {
+    for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
+      if (decisionDocDownload[i]) {
+        try {
+          await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
+        } catch (err) {
+          logger.error(err.message);
+          return res.redirect('/not-found');
+        }
+        decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
+      }
+    }
+    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+  }
+
+  if (selectedAppAdminDecision?.length) {
+    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+  }
+
+  return decisionContent;
+};
+
+export const getDecisionDocDownload = (selectedAppAdminDecision: TseAdminDecisionItem[]): any[] => {
+  const decisionDocDownload: string | any[] = [];
+  if (selectedAppAdminDecision?.length) {
+    for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
+      if (selectedAppAdminDecision[i].value.responseRequiredDoc !== undefined) {
+        decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc;
+      }
+    }
+  }
+  return decisionDocDownload;
 };
