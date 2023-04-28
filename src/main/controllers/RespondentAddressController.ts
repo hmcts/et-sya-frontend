@@ -15,7 +15,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { fillAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentAddressController');
 
@@ -94,11 +94,9 @@ export default class RespondentAddressController {
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2 hidden',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary hidden',
     },
   };
 
@@ -118,6 +116,7 @@ export default class RespondentAddressController {
 
   public get = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
+    const x = req.session.userCase.addressTypes;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = respondents[respondentIndex];
     const content = getPageContent(
@@ -126,7 +125,9 @@ export default class RespondentAddressController {
       [TranslationKeys.COMMON, TranslationKeys.RESPONDENT_ADDRESS, TranslationKeys.ENTER_ADDRESS],
       respondentIndex
     );
-
+    if (x !== undefined) {
+      fillAddressFields(x, req.session.userCase);
+    }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,

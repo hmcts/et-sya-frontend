@@ -1,4 +1,7 @@
 {
   "enterPostcode": "Enter a UK postcode",
-  "manualAddress": "The respondent address is outside the UK"
+  "manualAddress": "The respondent address is outside the UK",
+  "selectDefaultSeveral": "Several addresses found",
+  "selectDefaultSingle": "1 address found",
+  "selectDefaultNone": "No addresses found"
 }

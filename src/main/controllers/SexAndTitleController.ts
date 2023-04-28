@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { validateTitlePreference } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { Sex } from '../definitions/case';
+import { AddressPageType, Sex } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
@@ -59,7 +59,8 @@ export default class SexAndTitleController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
+    req.session.userCase.addressPageType = AddressPageType.ADDRESS_DETAILS;
+    await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_ENTER);
   };
 
   public get = (req: AppRequest, res: Response): void => {

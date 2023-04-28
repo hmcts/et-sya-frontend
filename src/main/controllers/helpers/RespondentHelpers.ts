@@ -53,6 +53,15 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
   return ErrorPages.NOT_FOUND;
 };
 
+export const fillAddressFields = async (x: unknown, userCase: CaseWithId): Promise<void> => {
+  const address = userCase.addresses.at(x as number);
+  userCase.respondentAddress1 = address.street1;
+  userCase.respondentAddress2 = address.street2;
+  userCase.respondentAddressTown = address.town;
+  userCase.respondentAddressCountry = address.country;
+  userCase.respondentAddressPostcode = address.postcode;
+};
+
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
   if (typeof selectedRespondentIndex !== 'undefined' && userCase !== undefined && userCase.respondents !== undefined) {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
@@ -82,6 +91,16 @@ export const ValidRespondentUrls = {
   name3: respondent + 3 + PageUrls.RESPONDENT_NAME,
   name4: respondent + 4 + PageUrls.RESPONDENT_NAME,
   name5: respondent + 5 + PageUrls.RESPONDENT_NAME,
+  postcodeenter1: respondent + 1 + PageUrls.POSTCODE_ENTER,
+  postcodeenter2: respondent + 2 + PageUrls.POSTCODE_ENTER,
+  postcodeenter3: respondent + 3 + PageUrls.POSTCODE_ENTER,
+  postcodeenter4: respondent + 4 + PageUrls.POSTCODE_ENTER,
+  postcodeenter5: respondent + 5 + PageUrls.POSTCODE_ENTER,
+  postcodeselect1: respondent + 1 + PageUrls.POSTCODE_SELECT,
+  postcodeselect2: respondent + 2 + PageUrls.POSTCODE_SELECT,
+  postcodeselect3: respondent + 3 + PageUrls.POSTCODE_SELECT,
+  postcodeselect4: respondent + 4 + PageUrls.POSTCODE_SELECT,
+  postcodeselect5: respondent + 5 + PageUrls.POSTCODE_SELECT,
   address1: respondent + 1 + PageUrls.RESPONDENT_ADDRESS,
   address2: respondent + 2 + PageUrls.RESPONDENT_ADDRESS,
   address3: respondent + 3 + PageUrls.RESPONDENT_ADDRESS,
@@ -99,4 +118,6 @@ export const ValidRespondentUrls = {
   noacas5: respondent + 5 + PageUrls.NO_ACAS_NUMBER,
   workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
   placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
+  postcodeEnter: respondent + 1 + PageUrls.POSTCODE_ENTER,
+  postcodeSelect: respondent + 1 + PageUrls.POSTCODE_SELECT,
 } as const;

@@ -4,7 +4,6 @@ import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
   isValidCountryTownOrCity,
-  isValidUKPostcode,
 } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -23,18 +22,6 @@ export default class PlaceOfWorkController {
   private readonly form: Form;
   private readonly placeOfWorkContent: FormContent = {
     fields: {
-      ukPostcode: {
-        id: 'ukPostcode',
-        type: 'text',
-        classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.enterPostcode,
-        labelSize: null,
-        attributes: {
-          maxLength: 14,
-          autocomplete: 'postal-code',
-        },
-        validator: isValidUKPostcode,
-      },
       workAddress1: {
         id: 'address1',
         type: 'text',

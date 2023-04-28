@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { getAddressesForPostcode } from '../address';
 import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -22,8 +23,6 @@ export default class PostCodeEnterController {
         id: 'enterPostcode',
         type: 'text',
         classes: 'govuk-label govuk-!-width-one-half',
-        label: l => l.enterPostcode,
-        labelSize: null,
         attributes: {
           maxLength: 14,
           autocomplete: 'postal-code',
@@ -40,32 +39,34 @@ export default class PostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const response = await getAddressesForPostcode(req.session.userCase.enterPostcode);
+    req.session.userCase.addresses = response;
+    req.session.userCase.addressTypes = [];
+    if (response.length > 0) {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: 'several',
+      });
+    } else if (response.length === 1) {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: 'first',
+      });
+    } else {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: 'none',
+      });
+    }
+    for (const address of response) {
+      req.session.userCase.addressTypes.push({
+        selected: false,
+        value: response.indexOf(address),
+        label: address.fullAddress,
+      });
+    }
     await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_SELECT);
   };
-
-  // public post1(req: AppRequest<UnknownRecord>, res: Response): Promise<void> {
-  //   const stubbedPostcode = this.checkStubbedPostcode(req.session.userCase.addressPostcode);
-  //   if (!stubbedPostcode) {
-  //     const a = getAddressesForPostcode(req.session.userCase.addressPostcode);
-  //   }
-  //
-  //   await handlePostLogic(req, res, this.form, logger, PageUrls.PLACE_OF_WORK);
-  //   // const { saveForLater } = req.body;
-  //   //
-  //   // if (saveForLater) {
-  //   //   handleSaveAsDraft(res);
-  //   // } else {
-  //   //   const postcode = req.body.postcode as string;
-  //   //
-  //   //   const stubbedPostcode = this.checkStubbedPostcode(postcode);
-  //   //   if (stubbedPostcode) {
-  //   //     res.json(stubbedPostcode);
-  //   //     return;
-  //   //   }
-  //   //
-  //   //   res.json(await getAddressesForPostcode(postcode));
-  //   // }
-  // }
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON, TranslationKeys.POSTCODE_ENTER]);

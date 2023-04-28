@@ -1,3 +1,5 @@
+import { Address } from '../address';
+
 import {
   CaseState,
   ClaimOutcomes,
@@ -18,6 +20,12 @@ export interface CaseDate {
   year: string;
   month: string;
   day: string;
+}
+
+export interface AddressType {
+  selected?: boolean;
+  value?: number;
+  label?: string;
 }
 
 export interface Respondent {
@@ -125,6 +133,8 @@ export interface Case {
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
+  addressTypes?: AddressType[];
+  addresses?: Address[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
@@ -161,6 +171,14 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
+  enterPostcode?: string;
+  addressPageType?: AddressPageType;
+}
+
+export const enum AddressPageType {
+  RESPONDENT_ADDRESS = 'Respondent details',
+  PLACE_OF_WORK = 'Place of work',
+  ADDRESS_DETAILS = 'Address details',
 }
 
 export const enum StillWorking {
@@ -252,7 +270,7 @@ export const enum CaseDataCacheKey {
   TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
   ACAS_MULTIPLE = 'acasMultiple',
-  VALID_NO_ACAS_REASON = 'validNoAcasReason'
+  VALID_NO_ACAS_REASON = 'validNoAcasReason',
 }
 
 export const enum HearingPreference {

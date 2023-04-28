@@ -86,6 +86,8 @@ export const TranslationKeys = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
+  POSTCODE_SELECT: 'postcode-select',
+  POSTCODE_ENTER: 'postcode-enter',
 } as const;
 
 export const PageUrls = {
@@ -163,6 +165,8 @@ export const PageUrls = {
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
   ACCESSIBILITY_STATEMENT: '/accessibility',
+  POSTCODE_SELECT: '/postcode-select',
+  POSTCODE_ENTER: '/postcode-enter',
 } as const;
 
 export const InterceptPaths = {
