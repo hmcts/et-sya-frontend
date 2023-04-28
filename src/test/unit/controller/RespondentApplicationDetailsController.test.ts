@@ -8,7 +8,7 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 
 describe('Respondent application details controller', () => {
-  it('should show respondent application details page', () => {
+  it('should show respondent application details page', async () => {
     const userCase: Partial<CaseWithId> = {
       genericTseApplicationCollection: [
         {
@@ -43,7 +43,7 @@ describe('Respondent application details controller', () => {
 
     const controller = new RespondentApplicationDetailsController();
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
   });
