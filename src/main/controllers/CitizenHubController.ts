@@ -20,7 +20,14 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './ContactTheTribunalSelectedController';
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { activateJudgmentsLink, getDecisions, getJudgmentBannerContent } from './helpers/JudgmentHelpers';
+import {
+  activateJudgmentsLink,
+  getDecisionBannerContent,
+  getDecisions,
+  getJudgmentBannerContent,
+  getJudgmentDecisions,
+  getJudgments,
+} from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -70,9 +77,10 @@ export default class CitizenHubController {
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
 
-    const judgments = userCase.sendNotificationCollection;
+    const judgments = getJudgments(userCase);
     const decisions = getDecisions(userCase);
-    activateJudgmentsLink(judgments, decisions, userCase);
+    const judgmentDecisions = getJudgmentDecisions(decisions);
+    activateJudgmentsLink(judgments, judgmentDecisions, userCase);
 
     // Mark respondent's response as waiting for the tribunal
     if (
@@ -118,6 +126,11 @@ export default class CitizenHubController {
     }
 
     const judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
+    const decisionBannerContent = getDecisionBannerContent(
+      userCase.genericTseApplicationCollection,
+      translations,
+      languageParam
+    );
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -129,6 +142,7 @@ export default class CitizenHubController {
       sections,
       respondentBannerContent,
       judgmentBannerContent,
+      decisionBannerContent,
       notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
