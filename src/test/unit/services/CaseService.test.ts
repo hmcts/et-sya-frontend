@@ -50,7 +50,7 @@ const mockUserDetails: UserDetails = {
   isCitizen: true,
 };
 
-const error = { message: 'error message' };
+let error = { message: 'error message' };
 
 describe('createCase', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
@@ -256,6 +256,155 @@ describe('update case', () => {
     await api.submitClaimantTse(caseItem);
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockClaimantTseRequest);
+  });
+
+  it('should submit response to application', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedGenericTseApplication: { id: '12345', value: {} },
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    await api.respondToApplication(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.RESPOND_TO_APPLICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: '1234',
+      case_type_id: 'ET_EnglandWales',
+      applicationId: '12345',
+      supportingMaterialFile: undefined,
+      response: {
+        response: 'Not for me',
+        hasSupportingMaterial: 'No',
+        copyToOtherParty: 'No',
+        copyNoGiveDetails: "Don't copy",
+      },
+    });
+  });
+
+  it('should throw error submit response to application', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    try {
+      await api.respondToApplication(caseItem);
+    } catch (e) {
+      error = e;
+    } finally {
+      expect(error.message).toBe(
+        "Error responding to tse application: Cannot read properties of undefined (reading 'id')"
+      );
+    }
+  });
+
+  it('should submit response to send notification', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedRequestOrOrder: { id: '12345', value: {} },
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    await api.addResponseSendNotification(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.ADD_RESPONSE_TO_SEND_NOTIFICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      case_type_id: caseItem.caseTypeId,
+      send_notification_id: '12345',
+      supportingMaterialFile: undefined,
+      pseResponseType: {
+        response: 'Not for me',
+        hasSupportingMaterial: 'No',
+        copyToOtherParty: 'No',
+        copyNoGiveDetails: "Don't copy",
+      },
+    });
+  });
+
+  it('should throw error submitting response to send notification', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedGenericTseApplication: { id: '12345', value: {} },
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    try {
+      await api.addResponseSendNotification(caseItem);
+    } catch (e) {
+      error = e;
+    } finally {
+      expect(error.message).toBe(
+        "Error adding response to sendNotification: Cannot read properties of undefined (reading 'id')"
+      );
+    }
   });
 
   it('should update hub links statuses', async () => {
