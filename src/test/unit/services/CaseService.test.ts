@@ -50,7 +50,7 @@ const mockUserDetails: UserDetails = {
   isCitizen: true,
 };
 
-let error = { message: 'error message' };
+const error = { message: 'error message' };
 
 describe('createCase', () => {
   it('should send post request to the correct api endpoint with the case type passed', async () => {
@@ -298,40 +298,6 @@ describe('update case', () => {
     });
   });
 
-  it('should throw error submit response to application', async () => {
-    const caseItem: CaseWithId = {
-      id: '1234',
-      caseTypeId: CaseTypeId.ENGLAND_WALES,
-      state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
-      hubLinksStatuses: new HubLinksStatuses(),
-      contactApplicationType: 'witness',
-      contactApplicationText: 'Change claim',
-      contactApplicationFile: {
-        document_url: '12345',
-        document_filename: 'test.pdf',
-        document_binary_url: '',
-        document_size: 1000,
-        document_mime_type: 'pdf',
-      },
-      copyToOtherPartyYesOrNo: YesOrNo.NO,
-      copyToOtherPartyText: "Don't copy",
-      hasSupportingMaterial: YesOrNo.NO,
-      responseText: 'Not for me',
-    };
-
-    try {
-      await api.respondToApplication(caseItem);
-    } catch (e) {
-      error = e;
-    } finally {
-      expect(error.message).toBe(
-        "Error responding to tse application: Cannot read properties of undefined (reading 'id')"
-      );
-    }
-  });
-
   it('should submit response to send notification', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
@@ -370,41 +336,6 @@ describe('update case', () => {
         copyNoGiveDetails: "Don't copy",
       },
     });
-  });
-
-  it('should throw error submitting response to send notification', async () => {
-    const caseItem: CaseWithId = {
-      id: '1234',
-      caseTypeId: CaseTypeId.ENGLAND_WALES,
-      state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
-      hubLinksStatuses: new HubLinksStatuses(),
-      selectedGenericTseApplication: { id: '12345', value: {} },
-      contactApplicationType: 'witness',
-      contactApplicationText: 'Change claim',
-      contactApplicationFile: {
-        document_url: '12345',
-        document_filename: 'test.pdf',
-        document_binary_url: '',
-        document_size: 1000,
-        document_mime_type: 'pdf',
-      },
-      copyToOtherPartyYesOrNo: YesOrNo.NO,
-      copyToOtherPartyText: "Don't copy",
-      hasSupportingMaterial: YesOrNo.NO,
-      responseText: 'Not for me',
-    };
-
-    try {
-      await api.addResponseSendNotification(caseItem);
-    } catch (e) {
-      error = e;
-    } finally {
-      expect(error.message).toBe(
-        "Error adding response to sendNotification: Cannot read properties of undefined (reading 'id')"
-      );
-    }
   });
 
   it('should update hub links statuses', async () => {
@@ -570,7 +501,11 @@ describe('Axios post to retrieve pdf', () => {
 });
 
 describe('Rethrowing errors when axios requests fail', () => {
-  const caseItem = { id: 123 };
+  const caseItem = {
+    id: 123,
+    selectedRequestOrOrder: { id: '12345', value: {} },
+    selectedGenericTseApplication: { id: '12345', value: {} },
+  };
 
   beforeAll(() => {
     mockedAxios.get.mockRejectedValue(error);
@@ -619,6 +554,26 @@ describe('Rethrowing errors when axios requests fail', () => {
     {
       serviceMethod: api.getUserCase,
       errorMessage: 'Error getting user case: ' + error.message,
+    },
+    {
+      serviceMethod: api.submitClaimantTse,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting claimant tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.respondToApplication,
+      parameters: [caseItem],
+      errorMessage: 'Error responding to tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.addResponseSendNotification,
+      parameters: [caseItem],
+      errorMessage: 'Error adding response to sendNotification: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateSendNotificationState,
+      parameters: [caseItem],
+      errorMessage: 'Error updating sendNotification state: ' + error.message,
     },
     {
       serviceMethod: api.submitCase,
