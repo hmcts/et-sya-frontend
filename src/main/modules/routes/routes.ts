@@ -87,6 +87,10 @@ import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantCont
 import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
 import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
+import TribunalRespondToOrderController from '../../controllers/TribunalRespondToOrderController';
+import TribunalResponseCYAController from '../../controllers/TribunalResponseCYAController';
+import TribunalResponseCompletedController from '../../controllers/TribunalResponseCompletedController';
+import TribunalResponseSubmitController from '../../controllers/TribunalResponseSubmitController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
 import ValidNoAcasReasonController from '../../controllers/ValidNoAcasReasonController';
@@ -280,5 +284,10 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
     app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
     app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
+    app.get(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().get);
+    app.post(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().post);
+    app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);
+    app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
+    app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
   }
 }

@@ -358,3 +358,21 @@ describe('update sendNotification state', () => {
     expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });
+
+describe('add response to send notification', () => {
+  it('should successfully submit response to send notification', () => {
+    caseApi.addResponseSendNotification = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+});

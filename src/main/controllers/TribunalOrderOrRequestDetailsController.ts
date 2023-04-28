@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
@@ -29,8 +30,8 @@ export default class TribunalOrderOrRequestDetailsController {
       }
     }
 
-    //todo URL must be reviewed and changed to 'Respond to request'.
-    const redirectUrl = '';
+    const redirectUrl =
+      PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
     if (documents && documents.length) {
@@ -46,11 +47,11 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
     ]);
 
