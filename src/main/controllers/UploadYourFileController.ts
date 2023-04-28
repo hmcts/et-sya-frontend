@@ -27,8 +27,8 @@ export default class UploadYourFileController {
         label: l => l.files.title,
         type: 'insetFields',
         subFields: {
-          hearingDocumentFile: {
-            id: 'hearingDocumentFile',
+          hearingDocument: {
+            id: 'hearingDocument',
             classes: 'govuk-label',
             labelHidden: false,
             labelSize: 'm',
@@ -60,16 +60,20 @@ export default class UploadYourFileController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-
+    console.log('hearing doc name is', userCase?.hearingDocument?.document_filename);
+    console.log('req.file size is ', req.file?.size);
+    console.log('req.file name is ', req.file?.filename);
+    console.log('req.file mime is ', req.file?.mimetype);
+    console.log('req.body is ', req.body);
     this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
 
     const hearingDocumentError = getPdfUploadError(
-      req.file,
+      req.file, // this will exist
       req.fileTooLarge,
-      userCase.hearingDocument,
-      'hearingDocumentError'
+      userCase.hearingDocument, // will this exist yet?
+      'hearingDocument'
     );
     console.log('is there a hearing document error? ', hearingDocumentError);
 
@@ -90,11 +94,17 @@ export default class UploadYourFileController {
         }
       } catch (error) {
         logger.info(error);
-        req.session.errors.push({ propertyName: 'hearingDocumentFile', errorType: 'backEndError' });
+        req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'backEndError' });
         return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
       }
       return res.redirect(pageUrl);
     }
+    console.log('successful, redirect to home page');
+    console.log('hearing doc name is', userCase?.hearingDocument?.document_filename);
+    console.log('req.file name is ', req.file?.filename);
+    console.log('req.body is ', req.body);
+    // console.log('req.file name is ', req.file?.filename);
+    // console.log('req.body is ', req.body);
     return res.redirect('/');
   };
 
@@ -126,7 +136,7 @@ export default class UploadYourFileController {
       hideContactUs: true,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase?.id)),
       // this transfile may need updated
-      errorMessage: getFileErrorMessage(req.session.errors, translations.errors.hearingDocumentError),
+      errorMessage: getFileErrorMessage(req.session.errors, translations.errors.hearingDocument),
       ...content,
     });
   };

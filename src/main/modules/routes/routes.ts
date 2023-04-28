@@ -286,11 +286,7 @@ export class Routes {
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
 
     app.get(PageUrls.UPLOAD_YOUR_FILE, new UploadYourFileController().get);
-    app.post(
-      PageUrls.UPLOAD_YOUR_FILE,
-      handleUploads.single('hearingDocumentFile'),
-      new UploadYourFileController().post
-    );
+    app.post(PageUrls.UPLOAD_YOUR_FILE, handleUploads.single('hearingDocument'), new UploadYourFileController().post);
     app.get(PageUrls.UPLOAD_YOUR_FILE_REMOVE, new HearingDocumentFileController().get);
 
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);

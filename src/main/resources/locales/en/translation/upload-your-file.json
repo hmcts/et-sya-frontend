@@ -29,7 +29,7 @@
     "uploaded": "Files uploaded"
   },
   "errors": {
-    "hearingDocumentError": {
+    "hearingDocument": {
       "required": "You must upload a PDF file to continue",
       "invalidFileFormat": "The selected file must be PDF",
       "invalidFileName": "The name of the file provided is invalid. A file name cannot exceed 150 characters or contain any of the following characters: \\/:*?\"|<>",

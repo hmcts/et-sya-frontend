@@ -237,28 +237,6 @@ export const getClaimSummaryError = (
   }
 };
 
-export const getHearingDocumentError = (
-  formData: Partial<CaseWithId>,
-  file: Express.Multer.File,
-  fileName: string
-): FormError => {
-  const fileProvided = file !== undefined;
-  const fileFormatInvalid = hasInvalidFileFormat(file);
-  const fileNameInvalid = hasInvalidName(file?.originalname);
-
-  if (!fileProvided) {
-    if (fileName) {
-      return;
-    }
-  }
-  if (fileFormatInvalid) {
-    return { propertyName: 'hearingDocumentFileName', errorType: fileFormatInvalid };
-  }
-  if (fileNameInvalid) {
-    return { propertyName: 'hearingDocumentFileName', errorType: fileNameInvalid };
-  }
-};
-
 export const getFileUploadAndTextAreaError = (
   formDataText: string,
   file: Express.Multer.File,
@@ -275,6 +253,8 @@ export const getFileUploadAndTextAreaError = (
   const textProvided = isFieldFilledIn(formDataText) === undefined;
   const fileProvided = file !== undefined;
 
+  console.log('is no file provided', !fileProvided);
+  console.log('is no uploaded file', !uploadedFile);
   if (!textProvided && !fileProvided && !uploadedFile) {
     return { propertyName: textAreaProperty, errorType: 'required' };
   }
@@ -297,14 +277,17 @@ export const getFileUploadAndTextAreaError = (
 export const getPdfUploadError = (
   file: Express.Multer.File,
   fileTooLarge: boolean,
-  uploadedFile: Document,
+  uploadedFile: Document, // do i need this?
   propertyName: string
 ): FormError => {
   const fileProvided = file !== undefined;
+  console.log('the file size passed is ', file?.size);
 
+  console.log('is no file provided', !fileProvided);
+  console.log('is no uploaded file', !uploadedFile);
   if (!fileProvided && !uploadedFile) {
+    // do i need to check uploaded file
     const formError = { propertyName, errorType: 'required' };
-    console.log('the form error is ', formError);
     return formError;
   }
 
@@ -364,9 +347,7 @@ export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyR
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (
-        ['contactApplicationFile', 'supportingMaterialFile', 'hearingDocumentError'].includes(errors[i].propertyName)
-      ) {
+      if (['contactApplicationFile', 'supportingMaterialFile', 'hearingDocument'].includes(errors[i].propertyName)) {
         return errors[i];
       }
     }
