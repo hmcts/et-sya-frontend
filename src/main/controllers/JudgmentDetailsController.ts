@@ -1,21 +1,29 @@
-import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
-import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
+import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { findSelectedJudgment, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { updateJudgmentNotificationState } from './helpers/CaseHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { getJudgmentDetails } from './helpers/JudgmentHelpers';
+import {
+  findSelectedDecision,
+  findSelectedJudgment,
+  getApplicationOfDecision,
+  getDecisionDetails,
+  getDecisions,
+  getJudgmentDetails,
+} from './helpers/JudgmentHelpers';
 
+const logger = getLogger('JudgmentDetailsController');
 export default class JudgmentDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     req.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
-    userCase.hubLinksStatuses[HubLinkNames.TribunalJudgments] = HubLinkStatus.VIEWED;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.JUDGMENT_DETAILS, { returnObjects: true }),
@@ -23,13 +31,37 @@ export default class JudgmentDetailsController {
     };
 
     const selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
-    console.log(selectedJudgment);
+    let selectedDecision = undefined;
+    let decisions = undefined;
+    let header = undefined;
+    let selectedJudgmentAttachment = undefined;
+    let selectedDecisionApplication;
 
-    const header = selectedJudgment.value?.sendNotificationTitle;
+    if (selectedJudgment === undefined) {
+      decisions = getDecisions(userCase);
+      selectedDecision = findSelectedDecision(decisions, req.params.appId);
+      selectedDecisionApplication = getApplicationOfDecision(userCase);
+      header = translations.applicationTo + translations[selectedDecisionApplication.value.type];
+      selectedJudgmentAttachment = selectedDecision.value.responseRequiredDoc;
+      selectedDecision.notificationState = HubLinkStatus.VIEWED;
+    } else {
+      selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
+      header = selectedJudgment.value.sendNotificationTitle;
+      selectedJudgmentAttachment =
+        selectedJudgment.value?.sendNotificationUploadDocument === undefined
+          ? undefined
+          : selectedJudgment.value?.sendNotificationUploadDocument[0]?.value.uploadedDocument;
+      if (selectedJudgment.value.notificationState !== HubLinkStatus.VIEWED) {
+        try {
+          await updateJudgmentNotificationState(selectedJudgment, req, logger);
+          selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
+        } catch (error) {
+          logger.info(error.message);
+        }
+      }
+    }
 
-    const selectedJudgmentAttachment = selectedJudgment.value?.sendNotificationUploadDocument;
-    const document =
-      selectedJudgmentAttachment === undefined ? undefined : selectedJudgmentAttachment[0].value.uploadedDocument;
+    const document = selectedJudgmentAttachment === undefined ? undefined : selectedJudgmentAttachment;
 
     if (document) {
       try {
@@ -39,6 +71,12 @@ export default class JudgmentDetailsController {
         return res.redirect('/not-found');
       }
     }
+
+    const downloadLink = createDownloadLink(document);
+    const pageContent =
+      selectedJudgment === undefined
+        ? getDecisionDetails(userCase, selectedDecision, downloadLink, translations)
+        : getJudgmentDetails(selectedJudgment, downloadLink, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -50,7 +88,9 @@ export default class JudgmentDetailsController {
       ...content,
       header,
       selectedJudgment,
-      appContent: getJudgmentDetails(selectedJudgment, translations),
+      selectedDecision,
+      pageContent,
+      selectedDecisionApplication,
     });
   };
 }
