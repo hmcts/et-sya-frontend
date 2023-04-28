@@ -13,7 +13,7 @@ let htmlRes: Document;
 describe('Hearing Document Upload', () => {
   beforeAll(async () => {
     await request(mockApp({}))
-      .get('/upload-your-file/123')
+      .get('/hearing-document-upload/123')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -25,20 +25,21 @@ export default class AboutHearingDocumentsController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
     req.session.errors = [];
-
-    userCase.hearingDocumentsAreFor = userCase.hearingCollection.find(hearing => {
-      logger.info(' looking through hearings array to find a postive', hearing.id === req.body.hearingDocumentsAreFor);
-      return hearing.id === req.body.hearingDocumentsAreFor;
-    });
-    logger.info(req.body.hearingDocumentsAreFor);
     userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
     userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
-
     req.session.errors = aboutHearingDocumentsErrors(req);
     if (req.session?.errors?.length) {
-      return res.redirect('/about-hearing-documents');
+      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
     }
-    return res.redirect('/upload-your-file/' + userCase.hearingDocumentsAreFor.id);
+
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.body.hearingDocumentsAreFor);
+    if (!foundHearing) {
+      req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
+      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
+    }
+
+    userCase.hearingDocumentsAreFor = foundHearing;
+    return res.redirect('/hearing-document-upload/' + userCase.hearingDocumentsAreFor.id);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

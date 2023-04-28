@@ -15,11 +15,11 @@ import { getFilesRows } from './helpers/HearingDocumentUploadHelper';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-const logger = getLogger('UploadYourFileController');
+const logger = getLogger('HearingDocumentUploadController');
 
-export default class UploadYourFileController {
+export default class HearingDocumentUploadController {
   private readonly form: Form;
-  private readonly uploadYourFileFormContent: FormContent = {
+  private readonly hearingDocumentUploadFormContent: FormContent = {
     fields: {
       inset: {
         id: 'inset',
@@ -55,87 +55,72 @@ export default class UploadYourFileController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.uploadYourFileFormContent.fields);
+    this.form = new Form(<FormFields>this.hearingDocumentUploadFormContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-    console.log('hearing doc name is', userCase?.hearingDocument?.document_filename);
-    console.log('req.file size is ', req.file?.size);
-    console.log('req.file name is ', req.file?.filename);
-    console.log('req.file mime is ', req.file?.mimetype);
-    console.log('req.body is ', req.body);
     this.form.getParsedBody(req.body, this.form.getFormFields());
 
     req.session.errors = [];
 
     const hearingDocumentError = getPdfUploadError(
-      req.file, // this will exist
+      req.file,
       req.fileTooLarge,
-      userCase.hearingDocument, // will this exist yet?
+      userCase.hearingDocument,
       'hearingDocument'
     );
-    console.log('is there a hearing document error? ', hearingDocumentError);
-
-    const pageUrl = PageUrls.UPLOAD_YOUR_FILE.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+    const pageUrl = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', req.params.appId) + getLanguageParam(req.url);
 
     if (hearingDocumentError) {
       req.session.errors.push(hearingDocumentError);
       return res.redirect(pageUrl);
     }
-    logger.info('does an upload exist? ', !!req.body.upload);
-
     if (req.body.upload) {
       try {
         const result = await handleUploadDocument(req, req.file, logger);
         if (result?.data) {
-          logger.info('setting hearing document to sessions now');
           userCase.hearingDocument = fromApiFormatDocument(result.data);
         }
       } catch (error) {
         logger.info(error);
         req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'backEndError' });
-        return res.redirect(PageUrls.UPLOAD_YOUR_FILE);
+        return res.redirect(pageUrl);
       }
       return res.redirect(pageUrl);
     }
-    console.log('successful, redirect to home page');
-    console.log('hearing doc name is', userCase?.hearingDocument?.document_filename);
-    console.log('req.file name is ', req.file?.filename);
-    console.log('req.body is ', req.body);
-    // console.log('req.file name is ', req.file?.filename);
-    // console.log('req.body is ', req.body);
-    return res.redirect('/');
+    return res.redirect('/not-found');
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
-    const content = getPageContent(req, this.uploadYourFileFormContent, [
+    const content = getPageContent(req, this.hearingDocumentUploadFormContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.UPLOAD_YOUR_FILE,
+      TranslationKeys.HEARING_DOCUMENT_UPLOAD,
     ]);
 
-    logger.info('usercase hearing document - false? - ', !!userCase?.hearingDocument);
-
-    (this.uploadYourFileFormContent.fields as any).inset.subFields.upload.disabled =
+    (this.hearingDocumentUploadFormContent.fields as any).inset.subFields.upload.disabled =
       userCase?.hearingDocument !== undefined;
 
-    (this.uploadYourFileFormContent.fields as any).filesUploaded.rows = getFilesRows(userCase, req.params.appId, {
-      ...req.t(TranslationKeys.UPLOAD_YOUR_FILE, { returnObjects: true }),
-    });
+    (this.hearingDocumentUploadFormContent.fields as any).filesUploaded.rows = getFilesRows(
+      userCase,
+      req.params.appId,
+      {
+        ...req.t(TranslationKeys.HEARING_DOCUMENT_UPLOAD, { returnObjects: true }),
+      }
+    );
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.UPLOAD_YOUR_FILE, { returnObjects: true }),
+      ...req.t(TranslationKeys.HEARING_DOCUMENT_UPLOAD, { returnObjects: true }),
     };
 
-    res.render(TranslationKeys.UPLOAD_YOUR_FILE, {
+    res.render(TranslationKeys.HEARING_DOCUMENT_UPLOAD, {
       PageUrls,
       userCase,
       InterceptPaths,
       hideContactUs: true,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase?.id)),
-      // this transfile may need updated
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.hearingDocument),
       ...content,
     });

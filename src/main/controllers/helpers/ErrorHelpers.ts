@@ -253,8 +253,6 @@ export const getFileUploadAndTextAreaError = (
   const textProvided = isFieldFilledIn(formDataText) === undefined;
   const fileProvided = file !== undefined;
 
-  console.log('is no file provided', !fileProvided);
-  console.log('is no uploaded file', !uploadedFile);
   if (!textProvided && !fileProvided && !uploadedFile) {
     return { propertyName: textAreaProperty, errorType: 'required' };
   }
@@ -277,18 +275,12 @@ export const getFileUploadAndTextAreaError = (
 export const getPdfUploadError = (
   file: Express.Multer.File,
   fileTooLarge: boolean,
-  uploadedFile: Document, // do i need this?
+  uploadedFile: Document,
   propertyName: string
 ): FormError => {
   const fileProvided = file !== undefined;
-  console.log('the file size passed is ', file?.size);
-
-  console.log('is no file provided', !fileProvided);
-  console.log('is no uploaded file', !uploadedFile);
   if (!fileProvided && !uploadedFile) {
-    // do i need to check uploaded file
-    const formError = { propertyName, errorType: 'required' };
-    return formError;
+    return { propertyName, errorType: 'required' };
   }
 
   if (fileTooLarge) {

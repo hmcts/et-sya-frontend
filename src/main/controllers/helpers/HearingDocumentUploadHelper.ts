@@ -35,7 +35,7 @@ export const getFilesRows = (
         actions: {
           items: [
             {
-              href: PageUrls.UPLOAD_YOUR_FILE_REMOVE.replace(':appId', appId),
+              href: PageUrls.HEARING_DOCUMENT_REMOVE.replace(':appId', appId),
               text: translations.remove,
               visuallyHiddenText: translations.remove,
             },

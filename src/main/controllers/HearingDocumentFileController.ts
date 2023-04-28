@@ -7,10 +7,8 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class HearingDocumentFileController {
   public get = (req: AppRequest, res: Response): void => {
-    console.log('setting hearing doc to undefined');
     req.session.userCase.hearingDocument = undefined;
-    const url = PageUrls.UPLOAD_YOUR_FILE.replace(':appId', req.params.appId) + getLanguageParam(req.url);
-    console.log('redirecting url is ', url);
+    const url = PageUrls.HEARING_DOCUMENT_UPLOAD.replace(':appId', req.params.appId) + getLanguageParam(req.url);
     res.redirect(url);
   };
 }
