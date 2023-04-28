@@ -27,6 +27,8 @@ export default class AboutHearingDocumentsController {
     req.session.errors = [];
     userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
     userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
+    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
+
     req.session.errors = aboutHearingDocumentsErrors(req);
     if (req.session?.errors?.length) {
       return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
