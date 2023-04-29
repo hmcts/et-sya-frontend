@@ -30,6 +30,12 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.acasCert === YesOrNo.YES) {
     formData.noAcasReason = undefined;
   }
+  if (formData.addressTypes !== undefined) {
+    req.session.userCase.addressTypes = formData.addressTypes;
+  }
+  if (formData.enterPostcode !== undefined) {
+    req.session.userCase.enterPostcode = formData.enterPostcode;
+  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
@@ -74,7 +80,6 @@ export const fillAddressFields = (x: unknown, userCase: CaseWithId): void => {
     userCase.workAddressCountry = address.country;
     userCase.workAddressPostcode = address.postcode;
   }
-
 };
 
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {

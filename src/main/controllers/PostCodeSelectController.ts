@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { AddressPageType } from '../definitions/case';
@@ -7,6 +8,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import localesCy from '../resources/locales/cy/translation/postcode-enter.json';
+import locales from '../resources/locales/en/translation/postcode-enter.json';
 
 import { handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -55,6 +58,32 @@ export default class PostCodeSelectController {
     }
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const response = await getAddressesForPostcode(req.session.userCase.enterPostcode);
+    req.session.userCase.addresses = response;
+    req.session.userCase.addressTypes = [];
+    if (response.length > 0) {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
+      });
+    } else if (response.length === 1) {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSingle : locales.selectDefaultSingle,
+      });
+    } else {
+      req.session.userCase.addressTypes.push({
+        selected: true,
+        label: req.url?.includes('lng=cy') ? localesCy.selectDefaultNone : locales.selectDefaultNone,
+      });
+    }
+    for (const address of response) {
+      req.session.userCase.addressTypes.push({
+        selected: false,
+        value: response.indexOf(address),
+        label: address.fullAddress,
+      });
+    }
     const content = getPageContent(req, this.postCodeSelectContent, [
       TranslationKeys.COMMON,
       TranslationKeys.POSTCODE_SELECT,

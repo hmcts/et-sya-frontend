@@ -1,18 +1,17 @@
-import {Response} from 'express';
+import { Response } from 'express';
 
-import {getAddressesForPostcode} from '../address';
-import {isValidUKPostcode} from '../components/form/address_validator';
-import {Form} from '../components/form/form';
-import {AppRequest} from '../definitions/appRequest';
-import {PageUrls, TranslationKeys} from '../definitions/constants';
-import {FormContent, FormFields} from '../definitions/form';
-import {saveForLaterButton, submitButton} from '../definitions/radios';
-import {getLogger} from '../logger';
+import { isValidUKPostcode } from '../components/form/address_validator';
+import { Form } from '../components/form/form';
+import { AppRequest } from '../definitions/appRequest';
+import { AddressPageType } from '../definitions/case';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { FormContent, FormFields } from '../definitions/form';
+import { saveForLaterButton, submitButton } from '../definitions/radios';
+import { getLogger } from '../logger';
 
-import {handlePostLogic, handlePostLogicForRespondent} from './helpers/CaseHelpers';
-import {assignFormData, getPageContent} from './helpers/FormHelpers';
-import {AddressPageType} from "../definitions/case";
-import {getRespondentRedirectUrl} from "./helpers/RespondentHelpers";
+import { handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('PostCodeEnterController');
 
@@ -41,33 +40,7 @@ export default class PostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    req.session.userCase.enterPostcode = req.body.enterPostcode;
-    const response = await getAddressesForPostcode(req.session.userCase.enterPostcode);
-    req.session.userCase.addresses = response;
-    req.session.userCase.addressTypes = [];
-    if (response.length > 0) {
-      req.session.userCase.addressTypes.push({
-        selected: true,
-        label: 'several',
-      });
-    } else if (response.length === 1) {
-      req.session.userCase.addressTypes.push({
-        selected: true,
-        label: 'first',
-      });
-    } else {
-      req.session.userCase.addressTypes.push({
-        selected: true,
-        label: 'none',
-      });
-    }
-    for (const address of response) {
-      req.session.userCase.addressTypes.push({
-        selected: false,
-        value: response.indexOf(address),
-        label: address.fullAddress,
-      });
-    }
+    //req.session.userCase.enterPostcode = req.body.enterPostcode;
     if (
       req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS ||
       req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK
