@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import {getLanguageParam} from "./helpers/RouterHelpers";
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('BenefitsController');
 

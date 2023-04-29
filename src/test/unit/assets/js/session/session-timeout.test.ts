@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /* eslint-disable jest/valid-expect */
 /* eslint-disable jest/no-done-callback */
 /* eslint-disable jest/no-conditional-expect */

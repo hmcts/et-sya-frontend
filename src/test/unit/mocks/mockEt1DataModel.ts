@@ -19,14 +19,14 @@ export const mockEt1DataModel = {
     claimantRepresentedQuestion: 'Yes',
     claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
     triageQuestions: {
-      acasMultiple: "Yes",
-      validNoAcasReason: "Reason",
-      caseType: "Single",
-      claimantRepresentedQuestion: "Yes",
-      postcode: "SW1A 1AA",
-      typesOfClaim: ["discrimination", "payRelated",]
+      acasMultiple: 'Yes',
+      validNoAcasReason: 'Reason',
+      caseType: 'Single',
+      claimantRepresentedQuestion: 'Yes',
+      postcode: 'SW1A 1AA',
+      typesOfClaim: ['discrimination', 'payRelated'],
     },
-  caseSource: 'ET1 Online',
+    caseSource: 'ET1 Online',
     claimantIndType: {
       claimant_first_names: 'Bobby',
       claimant_last_name: 'Ryan',

@@ -1,10 +1,10 @@
 import PensionController from '../../../main/controllers/PensionController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import {YesOrNo, YesOrNoOrNotSure} from '../../../main/definitions/case';
-import {PageUrls} from '../../../main/definitions/constants';
-import {CaseState} from '../../../main/definitions/definition';
-import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
-import {mockResponse} from '../mocks/mockResponse';
+import { YesOrNo, YesOrNoOrNotSure } from '../../../main/definitions/case';
+import { PageUrls } from '../../../main/definitions/constants';
+import { CaseState } from '../../../main/definitions/definition';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
