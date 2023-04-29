@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
@@ -33,28 +33,26 @@ export default class PostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
-    const x = req.body.addresses;
-    if (x !== undefined) {
-      redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    }
     switch (req.session.userCase.addressPageType) {
       case AddressPageType.RESPONDENT_ADDRESS: {
         redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+        await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
         break;
       }
       case AddressPageType.PLACE_OF_WORK: {
         redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
+        await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
         break;
       }
       case AddressPageType.ADDRESS_DETAILS: {
         redirectUrl = PageUrls.ADDRESS_DETAILS;
+        await handlePostLogic(req, res, this.form, logger, redirectUrl);
         break;
       }
       default: {
         break;
       }
     }
-    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const content = getPageContent(req, this.postCodeSelectContent, [

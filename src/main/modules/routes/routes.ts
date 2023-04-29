@@ -223,6 +223,10 @@ export class Routes {
     app.post(PageUrls.POSTCODE_SELECT, new PostCodeSelectController().post);
     app.get(PageUrls.POSTCODE_ENTER, new PostCodeEnterController().get);
     app.post(PageUrls.POSTCODE_ENTER, new PostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.POSTCODE_ENTER, new PostCodeEnterController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.POSTCODE_ENTER, new PostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.POSTCODE_SELECT, new PostCodeSelectController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.POSTCODE_SELECT, new PostCodeSelectController().post);
     app.get(
       Urls.INFO,
       infoRequestHandler({

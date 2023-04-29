@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
-import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { AppRequest, UserDetails } from '../definitions/appRequest';
+import { AddressPageType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -19,6 +19,9 @@ const logger = getLogger('StepsToMakingYourClaimController');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.addressPageType = AddressPageType.ADDRESS_DETAILS;
+    }
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -29,8 +32,16 @@ export default class StepsToMakingYourClaimController {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       if (userCase.id === undefined) {
+        const userDetails: UserDetails = {
+          id: '1234',
+          givenName: 'Bobby',
+          familyName: 'Ryan',
+          email: 'bobby@gmail.com',
+          accessToken: 'xxxx',
+          isCitizen: true,
+        };
         // todo try-catch this - if createCase errors the whole app fails.
-        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
+        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, userDetails);
         logger.info(`Created Draft Case - ${newCase.data.id}`);
         req.session.userCase = fromApiFormat(newCase.data);
       }
@@ -53,7 +64,7 @@ export default class StepsToMakingYourClaimController {
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
           },
           {
-            url: setUrlLanguage(req, PageUrls.ADDRESS_DETAILS.toString()),
+            url: setUrlLanguage(req, PageUrls.POSTCODE_ENTER.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },

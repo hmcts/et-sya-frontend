@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isRespondentNameValid } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { AddressPageType } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -10,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import {getRespondentIndex, getRespondentRedirectUrl} from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentNameController');
 
@@ -42,7 +43,8 @@ export default class RespondentNameController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    req.session.userCase.addressPageType = AddressPageType.RESPONDENT_ADDRESS;
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.POSTCODE_ENTER);
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 

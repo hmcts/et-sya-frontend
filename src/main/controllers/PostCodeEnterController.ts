@@ -1,16 +1,18 @@
-import { Response } from 'express';
+import {Response} from 'express';
 
-import { getAddressesForPostcode } from '../address';
-import { isValidUKPostcode } from '../components/form/address_validator';
-import { Form } from '../components/form/form';
-import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
-import { FormContent, FormFields } from '../definitions/form';
-import { saveForLaterButton, submitButton } from '../definitions/radios';
-import { getLogger } from '../logger';
+import {getAddressesForPostcode} from '../address';
+import {isValidUKPostcode} from '../components/form/address_validator';
+import {Form} from '../components/form/form';
+import {AppRequest} from '../definitions/appRequest';
+import {PageUrls, TranslationKeys} from '../definitions/constants';
+import {FormContent, FormFields} from '../definitions/form';
+import {saveForLaterButton, submitButton} from '../definitions/radios';
+import {getLogger} from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import {handlePostLogic, handlePostLogicForRespondent} from './helpers/CaseHelpers';
+import {assignFormData, getPageContent} from './helpers/FormHelpers';
+import {AddressPageType} from "../definitions/case";
+import {getRespondentRedirectUrl} from "./helpers/RespondentHelpers";
 
 const logger = getLogger('PostCodeEnterController');
 
@@ -39,6 +41,7 @@ export default class PostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.userCase.enterPostcode = req.body.enterPostcode;
     const response = await getAddressesForPostcode(req.session.userCase.enterPostcode);
     req.session.userCase.addresses = response;
     req.session.userCase.addressTypes = [];
@@ -65,7 +68,15 @@ export default class PostCodeEnterController {
         label: address.fullAddress,
       });
     }
-    await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_SELECT);
+    if (
+      req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS ||
+      req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK
+    ) {
+      const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.POSTCODE_SELECT);
+      await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
+    } else if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+      await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_SELECT);
+    }
   };
 
   public get = (req: AppRequest, res: Response): void => {

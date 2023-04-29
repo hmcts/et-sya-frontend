@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
+import { AddressPageType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
@@ -53,6 +53,8 @@ export default class WorkAddressController {
       if (isRespondentAndWorkAddressSame) {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
+      } else {
+        req.session.userCase.addressPageType = AddressPageType.PLACE_OF_WORK;
       }
       if (saveForLater) {
         redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);

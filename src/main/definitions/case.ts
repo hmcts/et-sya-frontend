@@ -176,7 +176,7 @@ export interface Case {
 }
 
 export const enum AddressPageType {
-  RESPONDENT_ADDRESS = 'Respondent details',
+  RESPONDENT_ADDRESS = 'Respondent address',
   PLACE_OF_WORK = 'Place of work',
   ADDRESS_DETAILS = 'Address details',
 }
