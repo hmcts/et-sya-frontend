@@ -112,7 +112,7 @@ export default class PlaceOfWorkController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
-      previousPostcode: req.session.userCase !== undefined ? req.session.userCase.workAddressPostcode : 'M160YF',
+      previousPostcode: req.session.userCase.workAddressPostcode,
     });
   };
 }
