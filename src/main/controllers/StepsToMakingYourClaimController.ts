@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { AppRequest, UserDetails } from '../definitions/appRequest';
+import { AppRequest } from '../definitions/appRequest';
 import { AddressPageType, YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
@@ -32,16 +32,8 @@ export default class StepsToMakingYourClaimController {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       if (userCase.id === undefined) {
-        const userDetails: UserDetails = {
-          id: '1234',
-          givenName: 'Bobby',
-          familyName: 'Ryan',
-          email: 'bobby@gmail.com',
-          accessToken: 'xxxx',
-          isCitizen: true,
-        };
         // todo try-catch this - if createCase errors the whole app fails.
-        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, userDetails);
+        const newCase = await getCaseApi(req.session.user?.accessToken).createCase(caseData, req.session.user);
         logger.info(`Created Draft Case - ${newCase.data.id}`);
         req.session.userCase = fromApiFormat(newCase.data);
       }
