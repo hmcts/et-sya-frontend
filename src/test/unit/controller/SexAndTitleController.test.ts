@@ -53,6 +53,7 @@ describe('Sex and Title Controller', () => {
 
   it('should assign userCase from the page form data', async () => {
     const body = {
+      addressPageType: 'Address details',
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     };
@@ -71,6 +72,7 @@ describe('Sex and Title Controller', () => {
 
   it('Should assign userCase for title', async () => {
     const body = {
+      addressPageType: 'Address details',
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     };

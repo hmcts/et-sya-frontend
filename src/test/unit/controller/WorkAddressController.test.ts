@@ -55,7 +55,7 @@ describe('Update Work Address Controller', () => {
 
     controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/place-of-work');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/postcode-enter');
     expect(req.session.userCase.claimantWorkAddressQuestion).toStrictEqual('No');
   });
   it('should redirect to your claim has been saved page and save respondent details when an answer is selected and save as draft clicked', () => {
