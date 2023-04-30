@@ -53,17 +53,22 @@ export default class PostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    let link = '#';
     if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+      link = PageUrls.ADDRESS_DETAILS;
       req.session.userCase.enterPostcode = req.session.userCase.addressDetailsPostcode;
     } else if (req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
+      link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
       req.session.userCase.enterPostcode = req.session.userCase.placeOfWorkPostcode;
     } else if (req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
+      link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
       req.session.userCase.enterPostcode = req.session.userCase.respondentPostcode;
     }
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON, TranslationKeys.POSTCODE_ENTER]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.POSTCODE_ENTER, {
       ...content,
+      link,
     });
   };
 }

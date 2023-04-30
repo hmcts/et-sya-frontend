@@ -70,25 +70,25 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
 };
 
 export const fillAddressFields = (x: unknown, userCase: CaseWithId): void => {
-  const address = userCase.addresses.at(x as number);
+  const address = userCase.addresses?.at(x as number);
   if (userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
-    userCase.respondentAddress1 = address.street1;
-    userCase.respondentAddress2 = address.street2;
-    userCase.respondentAddressTown = address.town;
-    userCase.respondentAddressCountry = address.country;
-    userCase.respondentAddressPostcode = address.postcode;
+    userCase.respondentAddress1 = address?.street1;
+    userCase.respondentAddress2 = address?.street2;
+    userCase.respondentAddressTown = address?.town;
+    userCase.respondentAddressCountry = address?.country;
+    userCase.respondentAddressPostcode = address?.postcode;
   } else if (userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
-    userCase.address1 = address.street1;
-    userCase.address2 = address.street2;
-    userCase.addressTown = address.town;
-    userCase.addressCountry = address.country;
-    userCase.addressPostcode = address.postcode;
+    userCase.address1 = address?.street1;
+    userCase.address2 = address?.street2;
+    userCase.addressTown = address?.town;
+    userCase.addressCountry = address?.country;
+    userCase.addressPostcode = address?.postcode;
   } else if (userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
-    userCase.workAddress1 = address.street1;
-    userCase.workAddress2 = address.street2;
-    userCase.workAddressTown = address.town;
-    userCase.workAddressCountry = address.country;
-    userCase.workAddressPostcode = address.postcode;
+    userCase.workAddress1 = address?.street1;
+    userCase.workAddress2 = address?.street2;
+    userCase.workAddressTown = address?.town;
+    userCase.workAddressCountry = address?.country;
+    userCase.workAddressPostcode = address?.postcode;
   }
 };
 
