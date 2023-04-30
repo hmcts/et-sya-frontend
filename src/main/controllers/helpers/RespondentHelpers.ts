@@ -36,6 +36,16 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.enterPostcode !== undefined) {
     req.session.userCase.enterPostcode = formData.enterPostcode;
   }
+
+  if (formData.enterPostcode !== undefined) {
+    if (req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
+      req.session.userCase.respondentPostcode = formData.enterPostcode;
+    } else if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+      req.session.userCase.addressDetailsPostcode = formData.enterPostcode;
+    } else if (req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
+      req.session.userCase.placeOfWorkPostcode = formData.enterPostcode;
+    }
+  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 

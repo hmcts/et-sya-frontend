@@ -172,6 +172,9 @@ export interface Case {
   otherClaim?: string;
   typeOfClaimString?: string;
   enterPostcode?: string;
+  addressDetailsPostcode?: string;
+  respondentPostcode?: string;
+  placeOfWorkPostcode?: string;
   addressPageType?: AddressPageType;
 }
 
