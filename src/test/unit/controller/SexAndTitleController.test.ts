@@ -65,6 +65,7 @@ describe('Sex and Title Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
+      addressPageType: 'Address details',
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
     });
@@ -84,6 +85,7 @@ describe('Sex and Title Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
+      addressPageType: 'Address details',
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
     });

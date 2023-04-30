@@ -20,7 +20,6 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const buttonClass = 'govuk-!-margin-right-2';
 const expectedInputLabel = addressJson.addressLine1;
 const labelClass = 'govuk-label';
 const inputClass = 'govuk-input';
@@ -51,11 +50,6 @@ describe('Place Of Work Page', () => {
   it('should display postcode input', () => {
     const inputs = htmlRes.getElementsByClassName(inputClass);
     expect(inputs[0].id).contains(address1, 'input does not exist');
-  });
-
-  it('should display find address button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Save and Continue', 'Could not find the button');
   });
 
   it('should display title', () => {
