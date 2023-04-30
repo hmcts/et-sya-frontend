@@ -24,16 +24,14 @@ module.exports = async function () {
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  I.see('What is your contact or home address?');
+  I.see('Enter a UK postcode');
   I.refreshPage();
-  I.waitToHide('#address1', 10);
-  I.dontSeeElement('#address1');
-  I.fillField('#postcode', 'LS9 9HE');
-  I.click('#findAddressButton');
-  I.waitForVisible('#selectAddressInput', testConfig.TestWaitForTextTimeLimit);
+  I.fillField('#enterPostcode', 'LS9 9HE');
+  I.click('#saveAndContinue');
+  I.waitForVisible('#selectAddress', testConfig.TestWaitForTextTimeLimit);
   I.selectOption(
-    '#selectAddressInput',
-    '{"fullAddress":"3, Skelton Avenue, Leeds, LS9 9HE","street1":"3, Skelton Avenue","street2":"","town":"Leeds","county":"Leeds","postcode":"LS9 9HE","country":"England"}'
+    '#addressTypes',
+    '{"text":"3, Skelton Avenue, Leeds, LS9 9HE","street1":"3, Skelton Avenue","street2":"","town":"Leeds","county":"Leeds","postcode":"LS9 9HE","country":"England"}'
   );
   I.click(commonConfig.saveAndContinue);
 
