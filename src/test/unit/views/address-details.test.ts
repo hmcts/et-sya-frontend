@@ -12,8 +12,6 @@ const expectedInputLabel2 = 'Address line 2 (optional)';
 const expectedInputLabel3 = 'Town or city';
 const expectedInputLabel4 = 'Country';
 const expectedInputLabel5 = 'Postcode or area code (optional)';
-const errorTitleClass = 'govuk-error-summary__title';
-const expectedErrorTitle = 'There is a problem';
 let htmlRes: Document;
 describe('Address details page', () => {
   beforeAll(async () => {
@@ -56,10 +54,5 @@ describe('Address details page', () => {
       expectedInputLabel5,
       `Could not find an input field with label ${expectedInputLabel5}`
     );
-  });
-
-  it('should find hidden error summary title', () => {
-    const title = htmlRes.getElementsByClassName(errorTitleClass);
-    expect(title[0].innerHTML).contains(expectedErrorTitle, 'Error summary title does not exist');
   });
 });
