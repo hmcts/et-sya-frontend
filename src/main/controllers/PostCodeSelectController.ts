@@ -12,7 +12,7 @@ import { getLogger } from '../logger';
 import localesCy from '../resources/locales/cy/translation/postcode-select.json';
 import locales from '../resources/locales/en/translation/postcode-select.json';
 
-import { handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
+import { convertJsonArrayToTitleCase, handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
@@ -59,7 +59,7 @@ export default class PostCodeSelectController {
     }
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const response = await getAddressesForPostcode(req.session.userCase.enterPostcode);
+    const response = convertJsonArrayToTitleCase(await getAddressesForPostcode(req.session.userCase.enterPostcode));
     req.session.userCase.addresses = response;
     req.session.userCase.addressTypes = [];
     if (response.length > 0) {

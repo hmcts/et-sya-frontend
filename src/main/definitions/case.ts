@@ -1,5 +1,3 @@
-import { Address } from '../address';
-
 import {
   CaseState,
   ClaimOutcomes,
@@ -134,7 +132,7 @@ export interface Case {
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
   addressTypes?: AddressType[];
-  addresses?: Address[];
+  addresses?: Record<string, string>[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
