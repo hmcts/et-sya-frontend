@@ -1,4 +1,10 @@
 {
   "enterPostcode": "Enter a UK postcode",
-  "manualAddress": "The respondent address is outside the UK"
+  "manualAddress": "The respondent address is outside the UK",
+  "errors": {
+    "enterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    }
+  }
 }

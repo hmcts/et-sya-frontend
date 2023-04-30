@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { getAddressesForPostcode } from '../address';
+import { isAddressSelected } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { AddressPageType } from '../definitions/case';
@@ -25,6 +26,7 @@ export default class PostCodeSelectController {
         type: 'option',
         classes: 'govuk-select',
         id: 'addressTypes',
+        validator: isAddressSelected,
       },
     },
     submit: submitButton,
@@ -36,20 +38,19 @@ export default class PostCodeSelectController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl = '';
-    switch (req.session.userCase.addressPageType) {
-      case AddressPageType.RESPONDENT_ADDRESS: {
+    switch (req.session.userCase?.addressPageType) {
+      case AddressPageType?.RESPONDENT_ADDRESS: {
         redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
         await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
         break;
       }
-      case AddressPageType.PLACE_OF_WORK: {
+      case AddressPageType?.PLACE_OF_WORK: {
         redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
         await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
         break;
       }
-      case AddressPageType.ADDRESS_DETAILS: {
-        redirectUrl = PageUrls.ADDRESS_DETAILS;
-        await handlePostLogic(req, res, this.form, logger, redirectUrl);
+      case AddressPageType?.ADDRESS_DETAILS: {
+        await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
         break;
       }
       default: {
@@ -89,9 +90,18 @@ export default class PostCodeSelectController {
       TranslationKeys.POSTCODE_SELECT,
     ]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
+    let link = '#';
+    if (req.session.userCase?.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+      link = PageUrls.ADDRESS_DETAILS;
+    } else if (req.session.userCase?.addressPageType === AddressPageType.PLACE_OF_WORK) {
+      link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
+    } else if (req.session.userCase?.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
+      link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.POSTCODE_SELECT, {
       ...content,
+      link,
     });
   };
 }

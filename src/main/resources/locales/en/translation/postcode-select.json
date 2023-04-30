@@ -2,5 +2,11 @@
   "selectAddress": "Select an address",
   "selectDefaultSeveral": "Several addresses found",
   "selectDefaultSingle": "1 address found",
-  "selectDefaultNone": "No addresses found"
+  "selectDefaultNone": "No addresses found",
+  "cannotFindAddress": "I cannot find my address in the list",
+  "errors": {
+    "addressTypes": {
+      "notSelected": "Select an address"
+    }
+  }
 }

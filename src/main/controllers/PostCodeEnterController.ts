@@ -40,32 +40,31 @@ export default class PostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    //req.session.userCase.enterPostcode = req.body.enterPostcode;
     if (
-      req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS ||
-      req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK
+      req.session.userCase?.addressPageType === AddressPageType.RESPONDENT_ADDRESS ||
+      req.session.userCase?.addressPageType === AddressPageType.PLACE_OF_WORK
     ) {
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.POSTCODE_SELECT);
       await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
-    } else if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+    } else {
       await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_SELECT);
     }
   };
 
   public get = (req: AppRequest, res: Response): void => {
     let link = '#';
-    if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
+    const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON, TranslationKeys.POSTCODE_ENTER]);
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    if (req.session.userCase?.addressPageType === AddressPageType.ADDRESS_DETAILS) {
       link = PageUrls.ADDRESS_DETAILS;
       req.session.userCase.enterPostcode = req.session.userCase.addressDetailsPostcode;
-    } else if (req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
+    } else if (req.session.userCase?.addressPageType === AddressPageType.PLACE_OF_WORK) {
       link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
       req.session.userCase.enterPostcode = req.session.userCase.placeOfWorkPostcode;
-    } else if (req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
+    } else if (req.session.userCase?.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
       link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
       req.session.userCase.enterPostcode = req.session.userCase.respondentPostcode;
     }
-    const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON, TranslationKeys.POSTCODE_ENTER]);
-    assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.POSTCODE_ENTER, {
       ...content,
       link,
