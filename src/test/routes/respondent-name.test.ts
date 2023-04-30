@@ -20,7 +20,7 @@ describe(`on POST ${PageUrls.RESPONDENT_NAME}`, () => {
       .send({ respondentName: 'Globo Gym' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('/respondent/1/respondent-address');
+        expect(res.header['location']).toStrictEqual('/respondent/1/postcode-enter');
       });
   });
 });

@@ -6,7 +6,6 @@ import { mockApp } from '../mocks/mockApp';
 const PAGE_URL = '/address-details';
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = 'What is your contact or home address?';
-const buttonClass = 'govuk-button';
 const inputs = '[class*="address"]';
 const expectedInputLabel1 = 'Address line 1';
 const expectedInputLabel2 = 'Address line 2 (optional)';
@@ -37,14 +36,9 @@ describe('Address details page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
   });
 
-  it("should display the 'Find Address' button", () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[5].innerHTML).contains('Find address', 'Could not find the button');
-  });
-
   it('should have 5 input address fields which are conditionally displayed', () => {
     const inputFields = htmlRes.querySelectorAll(inputs);
-    expect(inputFields.length).equal(5, `only ${inputFields.length} found`);
+    expect(inputFields.length).equal(5);
   });
 
   it('should display inputs with valid labels', () => {
