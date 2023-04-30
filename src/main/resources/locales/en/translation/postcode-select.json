@@ -1,7 +1,6 @@
 {
-  "selectAddress": "Select your address",
+  "selectAddress": "Select an address",
   "selectDefaultSeveral": "Several addresses found",
   "selectDefaultSingle": "1 address found",
   "selectDefaultNone": "No addresses found"
-
 }

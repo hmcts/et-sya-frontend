@@ -8,8 +8,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import localesCy from '../resources/locales/cy/translation/postcode-enter.json';
-import locales from '../resources/locales/en/translation/postcode-enter.json';
+import localesCy from '../resources/locales/cy/translation/postcode-select.json';
+import locales from '../resources/locales/en/translation/postcode-select.json';
 
 import { handlePostLogic, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
