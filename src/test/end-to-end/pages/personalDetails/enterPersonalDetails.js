@@ -31,7 +31,7 @@ module.exports = async function () {
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
   I.see('No addresses found');
-  I.click('I cannot find my address in the list');
+  I.click(commonConfig.saveAndContinue);
   I.fillField('#address1', '3 Skelton Avenue');
   I.fillField('#address2', '');
   I.fillField('#addressTown', 'Leeds');

@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { getAddressesForPostcode } from '../address';
-import { isAddressSelected } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { AddressPageType } from '../definitions/case';
@@ -26,7 +25,6 @@ export default class PostCodeSelectController {
         type: 'option',
         classes: 'govuk-select',
         id: 'addressTypes',
-        validator: isAddressSelected,
       },
     },
     submit: submitButton,
