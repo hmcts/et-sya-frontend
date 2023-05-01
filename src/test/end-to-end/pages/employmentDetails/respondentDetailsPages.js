@@ -43,12 +43,12 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.click(commonConfig.saveAndContinue);
     I.seeElement('#postcode');
     I.fillField('#postcode', 'LS14 1AR');
-    I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-    I.selectOption(
-      '#selectAddressInput',
-      '{"fullAddress":"25, Ringwood Drive, Leeds, LS14 1AR","street1":"25, Ringwood Drive","street2":"","town":"Leeds","county":"Leeds","postcode":"LS14 1AR","country":"England"}'
-    );
+    I.click(commonConfig.saveAndContinue);
+    I.waitForVisible('#adressTypes', testConfig.TestWaitForVisibilityTimeLimit);
+    I.see('Select an address');
+    I.selectOption('Several addresses found', '25, Ringwood Drive, Leeds, LS14 1AR');
+    I.click(commonConfig.saveAndContinue);
+    I.refreshPage();
     I.click(commonConfig.saveAndContinue);
     //I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
