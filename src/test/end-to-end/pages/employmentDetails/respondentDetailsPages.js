@@ -17,14 +17,18 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.refreshPage();
   I.waitToHide('#address1', 2);
   I.dontSeeElement('#address1');
-  I.waitForElement('#postcode', testConfig.TestWaitForVisibilityTimeLimit);
-  I.fillField('#postcode', 'LS7 4QE');
-  I.click('#findAddressButton');
-  I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-  I.selectOption(
-    '#selectAddressInput',
-    '{"fullAddress":"7, Valley Gardens, Leeds, LS7 4QE","street1":"7, Valley Gardens","street2":"","town":"Leeds","county":"Leeds","postcode":"LS7 4QE","country":"England"}'
-  );
+  I.waitForElement('#enterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
+  I.fillField('#enterPostcode', 'LS7 4QE');
+  I.click(commonConfig.saveAndContinue);
+  I.waitForVisible('#addressTypes', 30);
+  I.see('Select an address');
+  I.see('No addresses found');
+  I.click(commonConfig.saveAndContinue);
+  I.fillField('#address1', '7, Valley Gardens');
+  I.fillField('#address2', '');
+  I.fillField('#addressTown', 'Leeds');
+  I.fillField('#addressCountry', 'England');
+  I.fillField('#addressPostcode', 'LS7 4QE');
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
@@ -41,16 +45,19 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.checkOption('#work-address-2');
     I.click(commonConfig.saveAndContinue);
-    I.seeElement('#postcode');
-    I.fillField('#postcode', 'LS14 1AR');
+    I.seeElement('#enterPostcode');
+    I.fillField('#enterPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    I.waitForVisible('#adressTypes', testConfig.TestWaitForVisibilityTimeLimit);
+    I.waitForVisible('#addressTypes', 30);
     I.see('Select an address');
-    I.selectOption('Several addresses found', '25, Ringwood Drive, Leeds, LS14 1AR');
+    I.see('No addresses found');
     I.click(commonConfig.saveAndContinue);
-    I.refreshPage();
+    I.fillField('#address1', '25, Ringwood Drive');
+    I.fillField('#address2', '');
+    I.fillField('#addressTown', 'Leeds');
+    I.fillField('#addressCountry', 'England');
+    I.fillField('#addressPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    //I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   }
 
