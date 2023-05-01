@@ -31,7 +31,7 @@ module.exports = async function () {
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
   I.see('No addresses found');
-  I.click('[href="/address-details?lng=en"]');
+  I.click('I cannot find my address in the list');
   I.waitForVisible('#address1', testConfig.TestWaitForTextTimeLimit);
   I.fillField('#address1', '3 Skelton Avenue');
   I.fillField('#address2', '');
