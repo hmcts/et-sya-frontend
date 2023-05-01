@@ -34,6 +34,7 @@ module.exports = async function () {
   I.see('Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.click(commonConfig.saveAndContinue);
   I.see('What is your telephone number?');
   I.click(commonConfig.saveAndContinue);
 

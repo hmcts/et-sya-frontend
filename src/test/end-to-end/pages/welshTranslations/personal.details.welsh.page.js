@@ -42,6 +42,7 @@ module.exports = {
     I.selectOption('#addressTypes', 'Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
     I.see('Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
     I.refreshPage();
+    I.click(commonConfig.saveAndContinue);
   },
   enterTelephoneNumber() {
     //Enter telephone number
