@@ -100,7 +100,7 @@ export default class PostCodeSelectController {
     assignAddresses(req.session.userCase, this.form.getFormFields());
     let link = '#';
     if (req.session.userCase?.addressPageType === AddressPageType.ADDRESS_DETAILS) {
-      link = PageUrls.ADDRESS_DETAILS;
+      link = req.url.includes('lng=cy') ? PageUrls.ADDRESS_DETAILS + '?lng=cy' : PageUrls.ADDRESS_DETAILS + '?lng=en';
     } else if (req.session.userCase?.addressPageType === AddressPageType.PLACE_OF_WORK) {
       link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
     } else if (req.session.userCase?.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
