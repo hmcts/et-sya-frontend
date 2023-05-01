@@ -59,13 +59,16 @@ export default class PostCodeSelectController {
     }
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    let postcode = '';
+    let postcode = req.session.userCase.addressDetailsPostcode;
     if (req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
       postcode = req.session.userCase.respondentPostcode;
     } else if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
       postcode = req.session.userCase.addressDetailsPostcode;
     } else if (req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
       postcode = req.session.userCase.placeOfWorkPostcode;
+    }
+    if (postcode === undefined || postcode === '') {
+      postcode = 'M503SB';
     }
     const response = convertJsonArrayToTitleCase(await getAddressesForPostcode(postcode));
     req.session.userCase.addresses = response;
