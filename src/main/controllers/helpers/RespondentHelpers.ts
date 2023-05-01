@@ -71,7 +71,7 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
 
 export const fillAddressFields = (x: unknown, userCase: CaseWithId): void => {
   const address = userCase.addresses?.at(x as number);
-  if (typeof x === 'string') {
+  if (!x.toString().includes('object')) {
     if (userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
       userCase.respondentAddress1 = address?.street1;
       userCase.respondentAddress2 = address?.street2;
