@@ -39,8 +39,8 @@ module.exports = {
     I.fillField('#enterPostcode', 'LS9 9HE');
     I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#addressTypes', 30);
-    I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
-    I.see('3, Skelton Avenue, Leeds, LS9 9HE');
+    I.selectOption('#addressTypes', 'Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
+    I.see('Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
     I.refreshPage();
   },
   enterTelephoneNumber() {
