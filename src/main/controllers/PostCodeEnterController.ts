@@ -47,6 +47,7 @@ export default class PostCodeEnterController {
       const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.POSTCODE_SELECT);
       await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
     } else {
+      req.session.userCase.addressDetailsPostcode = req.body.enterPostcode;
       await handlePostLogic(req, res, this.form, logger, PageUrls.POSTCODE_SELECT);
     }
   };
