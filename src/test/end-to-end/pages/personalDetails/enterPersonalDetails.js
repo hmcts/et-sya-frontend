@@ -29,10 +29,7 @@ module.exports = async function () {
   I.fillField('#enterPostcode', 'LS9 9HE');
   I.click(commonConfig.saveAndContinue);
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
-  I.selectOption(
-    '#addressTypes',
-    '{"text":"3, Skelton Avenue, Leeds, LS9 9HE","street1":"3, Skelton Avenue","street2":"","town":"Leeds","county":"Leeds","postcode":"LS9 9HE","country":"England"}'
-  );
+  I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
   I.click(commonConfig.saveAndContinue);
 
   await I.scrollPageToBottom();
