@@ -31,7 +31,6 @@ module.exports = async function () {
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
   I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
-  I.click(commonConfig.saveAndContinue);
   I.refreshPage();
   I.click(commonConfig.saveAndContinue);
   await I.scrollPageToBottom();
