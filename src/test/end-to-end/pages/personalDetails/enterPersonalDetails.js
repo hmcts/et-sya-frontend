@@ -31,8 +31,7 @@ module.exports = async function () {
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
   I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
-  I.refreshPage();
-  I.click(commonConfig.saveAndContinue);
+  I.see('3, Skelton Avenue, Leeds, LS9 9HE');
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('What is your telephone number?');

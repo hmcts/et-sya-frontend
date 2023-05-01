@@ -40,8 +40,8 @@ module.exports = {
     I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#addressTypes', 30);
     I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
+    I.see('3, Skelton Avenue, Leeds, LS9 9HE');
     I.refreshPage();
-    I.click(commonConfig.saveAndContinue);
   },
   enterTelephoneNumber() {
     //Enter telephone number
