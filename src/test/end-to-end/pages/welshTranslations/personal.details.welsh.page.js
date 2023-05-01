@@ -1,3 +1,4 @@
+const commonConfig = require("../../features/Data/commonConfig.json");
 const { I } = inject();
 
 module.exports = {
@@ -36,7 +37,7 @@ module.exports = {
     I.see('Enter a UK postcode');
     I.refreshPage();
     I.fillField('#enterPostcode', 'LS9 9HE');
-    I.click('#saveAndContinue');
+    I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#selectAddress', 30);
     I.selectOption(
       '#addressTypes',

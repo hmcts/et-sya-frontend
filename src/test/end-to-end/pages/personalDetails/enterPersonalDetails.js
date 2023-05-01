@@ -27,7 +27,7 @@ module.exports = async function () {
   I.see('Enter a UK postcode');
   I.refreshPage();
   I.fillField('#enterPostcode', 'LS9 9HE');
-  I.click('#saveAndContinue');
+  I.click(commonConfig.saveAndContinue);
   I.waitForVisible('#selectAddress', testConfig.TestWaitForTextTimeLimit);
   I.selectOption(
     '#addressTypes',
