@@ -39,7 +39,7 @@ module.exports = {
     I.fillField('#enterPostcode', 'LS9 9HE');
     I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#addressTypes', 30);
-    I.selectOption('Several addresses found', '3, Skelton Avenue, Leeds, LS9 9HE');
+    I.selectOption('#addressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
     I.click(commonConfig.saveAndContinue);
     I.refreshPage();
     I.click(commonConfig.saveAndContinue);
