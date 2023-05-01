@@ -80,7 +80,6 @@ export default class PostCodeSelectController {
     }
     for (const address of response) {
       req.session.userCase.addressTypes.push({
-        selected: false,
         value: response.indexOf(address),
         label: address.fullAddress,
       });
