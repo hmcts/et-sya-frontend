@@ -1,4 +1,4 @@
-const commonConfig = require("../../features/Data/commonConfig.json");
+const commonConfig = require('../../features/Data/commonConfig.json');
 const { I } = inject();
 
 module.exports = {
