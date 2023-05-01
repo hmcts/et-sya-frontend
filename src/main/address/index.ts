@@ -10,8 +10,6 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
   const url: string = config.get('services.addressLookup.url');
   const token: string = config.get('services.addressLookup.token');
   try {
-    const url: string = config.get('services.addressLookup.url');
-
     const response: AxiosResponse<PostcodeResponse> = await axios.get(url, {
       headers: {
         accept: 'application/json',
