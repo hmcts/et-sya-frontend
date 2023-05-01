@@ -54,6 +54,7 @@ export default class PostCodeSelectController {
         break;
       }
       default: {
+        await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
         break;
       }
     }
