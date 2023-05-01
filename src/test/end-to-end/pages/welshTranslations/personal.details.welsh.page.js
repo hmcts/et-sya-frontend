@@ -43,7 +43,6 @@ module.exports = {
     I.see('Select an address');
     I.see('No addresses found');
     I.click('I cannot find my address in the list');
-    I.waitForVisible('#address1', testConfig.TestWaitForTextTimeLimit);
     I.fillField('#address1', '3 Skelton Avenue');
     I.fillField('#address2', '');
     I.fillField('#addressTown', 'Leeds');

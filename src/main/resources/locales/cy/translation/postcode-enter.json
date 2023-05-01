@@ -1,6 +1,6 @@
 {
   "enterPostcode": "Rhowch god post yn y DU",
-  "manualAddress": "Mae cyfeiriad yr atebydd y tu allan i'r DU",
+  "manualAddress": "Rwy’n byw y tu allan i’r DU",
   "errors": {
     "enterPostcode": {
       "required": "Rhowch god post. Er enghraifft, SW1 1AA",
