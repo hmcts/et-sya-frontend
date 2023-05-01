@@ -30,16 +30,20 @@ module.exports = async function () {
   I.click(commonConfig.saveAndContinue);
   I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
-  I.selectOption('#addressTypes', 'Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
-  I.see('Apartment 1001, Millennium Tower, 250, The Quays, Salford, M50 3SB');
-  await I.scrollPageToBottom();
-  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.see('No addresses found');
+  I.click('[href="/address-details?lng=en"]');
+  I.waitForVisible('#address1', testConfig.TestWaitForTextTimeLimit);
+  I.fillField('#address1', '3 Skelton Avenue');
+  I.fillField('#address2', '');
+  I.fillField('#addressTown', 'Leeds');
+  I.fillField('#addressCountry', 'England');
+  I.fillField('#addressPostcode', 'LS9 9HE');
   I.click(commonConfig.saveAndContinue);
   I.see('What is your telephone number?');
-  I.click(commonConfig.saveAndContinue);
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.click(commonConfig.saveAndContinue);
   I.see('Communication preference');
   I.see('What format would you like to be contacted in?');
   I.see('Email');
