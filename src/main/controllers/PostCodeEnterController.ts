@@ -57,7 +57,7 @@ export default class PostCodeEnterController {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON, TranslationKeys.POSTCODE_ENTER]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     if (req.session.userCase?.addressPageType === AddressPageType.ADDRESS_DETAILS) {
-      link = PageUrls.ADDRESS_DETAILS;
+      link = req.url.includes('lng=cy') ? PageUrls.ADDRESS_DETAILS + '?lng=cy' : PageUrls.ADDRESS_DETAILS + '?lng=en';
       req.session.userCase.enterPostcode = req.session.userCase.addressDetailsPostcode;
     } else if (req.session.userCase?.addressPageType === AddressPageType.PLACE_OF_WORK) {
       link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
