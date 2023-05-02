@@ -41,6 +41,11 @@ export default class AddressPostCodeSelectController {
     logger.info('Session ID:' + req.session.id);
     logger.info('Postcode in session is:' + req.session.userCase?.addressEnterPostcode);
     logger.info('Postcode in body is:' + req.body?.addressEnterPostcode);
+    logger.info('Claimant sex in session is:' + req.session.userCase.claimantSex.toString());
+    logger.info('Claimant dob day in session is:' + req.session.userCase.dobDate?.day);
+    logger.info('Claimant dob month in session is:' + req.session.userCase.dobDate?.month);
+    logger.info('Claimant dob year in session is:' + req.session.userCase.dobDate?.year);
+
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
     );
