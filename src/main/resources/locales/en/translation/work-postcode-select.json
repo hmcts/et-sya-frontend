@@ -5,7 +5,7 @@
   "selectDefaultNone": "No addresses found",
   "cannotFindAddress": "I cannot find my address in the list",
   "errors": {
-    "addressTypes": {
+    "workAddressTypes": {
       "notSelected": "Select an address"
     }
   }

@@ -2,7 +2,7 @@
   "enterPostcode": "Enter a UK postcode",
   "manualAddress": "I live outside the UK",
   "errors": {
-    "enterPostcode": {
+    "respondentEnterPostcode": {
       "invalid": "Enter a valid postcode. For example, SW1 1AA",
       "required": "Enter a postcode. For example, SW1 1AA"
     }
