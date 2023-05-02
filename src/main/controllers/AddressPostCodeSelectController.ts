@@ -38,6 +38,9 @@ export default class AddressPostCodeSelectController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    logger.info('Session ID:' + req.session.id);
+    logger.info('Postcode in session is:' + req.session.userCase?.addressEnterPostcode);
+    logger.info('Postcode in body is:' + req.body?.addressEnterPostcode);
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
     );
