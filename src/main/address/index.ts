@@ -7,14 +7,15 @@ import { axiosErrorDetails } from '../services/AxiosErrorAdapter';
 const logger = getLogger('address');
 
 export const getAddressesForPostcode = async (postcode: string): Promise<Address[]> => {
+  const url: string = config.get('services.addressLookup.url');
+  const token: string = config.get('services.addressLookup.token');
   try {
-    const url: string = config.get('services.addressLookup.url');
     const response: AxiosResponse<PostcodeResponse> = await axios.get(url, {
       headers: {
         accept: 'application/json',
       },
       params: {
-        key: config.get('services.addressLookup.token'),
+        key: token,
         postcode,
       },
     });
@@ -59,7 +60,9 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
       })
     );
   } catch (error) {
-    logger.error('Error getting addresses for postcode: ' + axiosErrorDetails(error));
+    logger.error(
+      'Error getting addresses for postcode: ' + axiosErrorDetails(error) + 'url: ' + url + ' token: ' + token
+    );
     return [];
   }
 };
