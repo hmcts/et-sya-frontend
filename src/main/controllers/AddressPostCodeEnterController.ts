@@ -38,6 +38,7 @@ export default class AddressPostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    req.session.userCase.addressEnterPostcode = req.body.addressEnterPostcode;
     logger.info('Postcode in session is:' + req.session.userCase.addressEnterPostcode);
     logger.info('Postcode in body is:' + req.body.addressEnterPostcode);
     logger.info('Session ID:' + req.session.id);
