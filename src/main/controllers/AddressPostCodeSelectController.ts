@@ -1,6 +1,5 @@
 import { Response } from 'express';
 
-import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -36,17 +35,30 @@ export default class AddressPostCodeSelectController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const response = convertJsonArrayToTitleCase(
-      await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
-    );
+    let response1 = undefined;
+    let response = undefined;
+    const postcode = req.session.userCase.addressEnterPostcode;
+    const csrf = req.csrfToken();
+    try {
+      response1 = await fetch('/address-lookup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ _csrf: csrf, postcode }),
+      });
+      response = convertJsonArrayToTitleCase(await response1.json());
+    } catch (e) {
+      logger.error(e.toString());
+    }
     req.session.userCase.addressAddresses = response;
     req.session.userCase.addressAddressTypes = [];
-    if (response.length > 0) {
+    if (response !== undefined && response.length > 0) {
       req.session.userCase.addressAddressTypes.push({
         selected: true,
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSeveral : locales.selectDefaultSeveral,
       });
-    } else if (response.length === 1) {
+    } else if (response !== undefined && response.length === 1) {
       req.session.userCase.addressAddressTypes.push({
         selected: true,
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultSingle : locales.selectDefaultSingle,
@@ -57,11 +69,13 @@ export default class AddressPostCodeSelectController {
         label: req.url?.includes('lng=cy') ? localesCy.selectDefaultNone : locales.selectDefaultNone,
       });
     }
-    for (const address of response) {
-      req.session.userCase.addressAddressTypes.push({
-        value: response.indexOf(address),
-        label: address.fullAddress,
-      });
+    if (response !== undefined) {
+      for (const address of response) {
+        req.session.userCase.addressAddressTypes.push({
+          value: response.indexOf(address),
+          label: address.fullAddress,
+        });
+      }
     }
     const content = getPageContent(req, this.postCodeSelectContent, [
       TranslationKeys.COMMON,
