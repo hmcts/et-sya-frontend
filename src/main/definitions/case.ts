@@ -177,13 +177,6 @@ export interface Case {
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
 }
-
-export const enum AddressPageType {
-  RESPONDENT_ADDRESS = 'Respondent address',
-  PLACE_OF_WORK = 'Place of work',
-  ADDRESS_DETAILS = 'Address details',
-}
-
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
