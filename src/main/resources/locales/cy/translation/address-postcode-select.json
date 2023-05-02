@@ -5,7 +5,7 @@
   "selectDefaultNone": "Heb gael hyd i gyfeiriad",
   "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
   "errors": {
-    "addressTypes": {
+    "addressAddressTypes": {
       "notSelected": "Dewiswch gyfeiriad"
     }
   }
