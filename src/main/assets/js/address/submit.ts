@@ -56,7 +56,7 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
             },
             body: JSON.stringify({ _csrf: formData.get('_csrf'), postcode }),
           });
-          const addresses = await response.json();
+          const addresses = convertJsonArrayToTitleCase(await response.json());
 
           getById('userPostcode').textContent = postcode;
 
@@ -113,6 +113,32 @@ if (postcodeLookupForm && findAddressButton && selectAddress) {
       }
     }
   };
+}
+
+function toTitleCase(str: string): string {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  });
+}
+
+function convertJsonArrayToTitleCase(jsonArray: Record<string, string>[]): Record<string, string>[] {
+  return jsonArray.map(addressObj => {
+    const newObj: Record<string, string> = {};
+
+    for (const [key, value] of Object.entries(addressObj)) {
+      if (key === 'postcode') {
+        newObj[key] = value;
+      } else if (key === 'fullAddress') {
+        const postcode = addressObj.postcode;
+        const addressWithoutPostcode = value.replace(postcode, '').trim();
+        newObj[key] =
+          toTitleCase(addressWithoutPostcode) + (addressWithoutPostcode.endsWith(',') ? '' : ',') + ' ' + postcode;
+      } else {
+        newObj[key] = toTitleCase(value);
+      }
+    }
+    return newObj;
+  });
 }
 
 function activateCursorButtons() {

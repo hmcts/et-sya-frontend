@@ -1,10 +1,11 @@
 # ---- Base image ----
 FROM hmctspublic.azurecr.io/base/node:16-alpine as base
+USER root
+RUN corepack enable
 COPY --chown=hmcts:hmcts . .
-RUN yarn install --production \
-  && yarn cache clean
 
 # ---- Build image ----
+
 FROM base as build
 RUN PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn install && yarn build:prod
 
