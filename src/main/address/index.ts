@@ -61,7 +61,14 @@ export const getAddressesForPostcode = async (postcode: string): Promise<Address
     );
   } catch (error) {
     logger.error(
-      'Error getting addresses for postcode: ' + axiosErrorDetails(error) + 'url: ' + url + ' token: ' + token
+      'Error getting addresses for postcode: ' +
+        axiosErrorDetails(error) +
+        'url: ' +
+        url +
+        ' token: ' +
+        token +
+        'postcode: ' +
+        postcode
     );
     return [];
   }
