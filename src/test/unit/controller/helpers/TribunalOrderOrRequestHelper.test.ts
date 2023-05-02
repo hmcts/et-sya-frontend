@@ -4,64 +4,22 @@ import {
   getRepondentOrderOrRequestDetails,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
-import { Document } from '../../../../main/definitions/case';
 import {
-  DocumentType,
-  DocumentTypeItem,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
-import { HubLinkNames, HubLinksStatuses, HubLinkStatus } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
-import respondentOrderOrRequestRaw
-  from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import { mockNotificationItem } from '../../mocks/mockNotificationItem';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Tribunal order or request helper', () => {
   const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw };
   const req = mockRequestWithTranslation({}, translationJsons);
-
-  const doc: Document = {
-    document_url: 'uuid',
-    document_filename: 'test.pdf',
-    document_binary_url: '',
-    document_size: 1000,
-    document_mime_type: 'pdf',
-  };
-
-  const docType = {
-    shortDescription: 'Short description',
-    uploadedDocument: doc,
-  } as DocumentType;
-
-  const docItem = {
-    value: docType,
-  } as DocumentTypeItem;
-
-  const notificationType = {
-    number: '1',
-    sendNotificationSelectHearing: {
-      selectedLabel: 'Hearing',
-    },
-    date: '2019-05-02',
-    sentBy: 'Tribunal',
-    sendNotificationCaseManagement: 'Order',
-    sendNotificationResponseTribunal: 'Required',
-    sendNotificationSelectParties: 'Both',
-    sendNotificationAdditionalInfo: 'Additional info',
-    sendNotificationUploadDocument: [docItem],
-    sendNotificationWhoCaseOrder: 'Judge',
-    sendNotificationFullName: 'Bob',
-    sendNotificationNotify: 'Both',
-    notificationState: 'notStartedYet',
-  } as SendNotificationType;
-
-  const notificationItem = {
-    id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
-    value: notificationType,
-  } as SendNotificationTypeItem;
+  const notificationItem = mockNotificationItem;
 
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),

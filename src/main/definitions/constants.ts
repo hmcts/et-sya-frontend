@@ -105,6 +105,8 @@ export const TranslationKeys = {
   TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
+  GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
 } as const;
 
 export const PageUrls = {
@@ -205,6 +207,8 @@ export const PageUrls = {
   TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
+  GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
 } as const;
 
 export const InterceptPaths = {

@@ -227,4 +227,5 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
+  userCase.selectedRequestOrOrder = undefined;
 };
