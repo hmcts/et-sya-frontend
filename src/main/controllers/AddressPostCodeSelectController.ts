@@ -1,5 +1,7 @@
+import autobind from 'autobind-decorator';
 import { Response } from 'express';
 
+import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -14,6 +16,7 @@ import { assignAddresses, assignFormData, getPageContent } from './helpers/FormH
 
 const logger = getLogger('AddressPostCodeSelectController');
 
+@autobind
 export default class AddressPostCodeSelectController {
   private readonly form: Form;
   private readonly postCodeSelectContent: FormContent = {
@@ -35,22 +38,9 @@ export default class AddressPostCodeSelectController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    let response1 = undefined;
-    let response = undefined;
-    const postcode = req.session.userCase.addressEnterPostcode;
-    const csrf = req.csrfToken();
-    try {
-      response1 = await fetch('/address-lookup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ _csrf: csrf, postcode }),
-      });
-      response = convertJsonArrayToTitleCase(await response1.json());
-    } catch (e) {
-      logger.error(e.toString());
-    }
+    const response = convertJsonArrayToTitleCase(
+      await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
+    );
     req.session.userCase.addressAddresses = response;
     req.session.userCase.addressAddressTypes = [];
     if (response !== undefined && response.length > 0) {
