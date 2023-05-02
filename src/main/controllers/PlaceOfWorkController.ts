@@ -14,7 +14,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillAddressFields, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { fillWorkAddressFields, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('PlaceOfWorkController');
 
@@ -99,7 +99,7 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const x = req.session.userCase.addressTypes;
+    const x = req.session.userCase.workAddressTypes;
     const content = getPageContent(
       req,
       this.placeOfWorkContent,
@@ -107,7 +107,7 @@ export default class PlaceOfWorkController {
       0
     ); // only respondent 1 has work address that is why selected respondent index is 0
     if (x !== undefined) {
-      fillAddressFields(x, req.session.userCase);
+      fillWorkAddressFields(x, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {

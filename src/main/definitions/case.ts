@@ -131,8 +131,12 @@ export interface Case {
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
-  addressTypes?: AddressType[];
-  addresses?: Record<string, string>[];
+  addressAddressTypes?: AddressType[];
+  addressAddresses?: Record<string, string>[];
+  respondentAddressTypes?: AddressType[];
+  respondentAddresses?: Record<string, string>[];
+  workAddressTypes?: AddressType[];
+  workAddresses?: Record<string, string>[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
@@ -169,11 +173,9 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
-  enterPostcode?: string;
-  addressDetailsPostcode?: string;
-  respondentPostcode?: string;
-  placeOfWorkPostcode?: string;
-  addressPageType?: AddressPageType;
+  respondentEnterPostcode?: string;
+  workEnterPostcode?: string;
+  addressEnterPostcode?: string;
 }
 
 export const enum AddressPageType {

@@ -63,7 +63,7 @@ describe('Sex and Title Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.POSTCODE_ENTER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
       addressPageType: 'Address details',
       claimantSex: Sex.MALE,
@@ -83,7 +83,7 @@ describe('Sex and Title Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.POSTCODE_ENTER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
       addressPageType: 'Address details',
       claimantSex: Sex.MALE,

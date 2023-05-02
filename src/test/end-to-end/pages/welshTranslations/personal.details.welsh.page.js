@@ -36,9 +36,9 @@ module.exports = {
     //Enter postcode for claimant address
     I.see('Enter a UK postcode');
     I.refreshPage();
-    I.fillField('#enterPostcode', 'LS9 9HE');
+    I.fillField('#addressEnterPostcode', 'LS9 9HE');
     I.click(commonConfig.saveAndContinue);
-    I.waitForVisible('#addressTypes', 30);
+    I.waitForVisible('#addressAddressTypes', 30);
     I.see('Select an address');
     I.see('No addresses found');
     I.click(commonConfig.saveAndContinue);

@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
-import { AddressPageType, YesOrNo } from '../definitions/case';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { DefaultInlineRadioFormFields, saveForLaterButton, submitButton } from '../definitions/radios';
@@ -49,12 +49,10 @@ export default class WorkAddressController {
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       let redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)
-        : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.POSTCODE_ENTER);
+        : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_ENTER);
       if (isRespondentAndWorkAddressSame) {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);
-      } else {
-        req.session.userCase.addressPageType = AddressPageType.PLACE_OF_WORK;
       }
       if (saveForLater) {
         redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);

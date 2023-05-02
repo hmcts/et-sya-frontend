@@ -26,9 +26,9 @@ module.exports = async function () {
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   I.see('Enter a UK postcode');
   I.refreshPage();
-  I.fillField('#enterPostcode', 'LS9 9HE');
+  I.fillField('#addressEnterPostcode', 'LS9 9HE');
   I.click(commonConfig.saveAndContinue);
-  I.waitForVisible('#addressTypes', testConfig.TestWaitForTextTimeLimit);
+  I.waitForVisible('#addressAddressTypes', testConfig.TestWaitForTextTimeLimit);
   I.see('Select an address');
   I.see('No addresses found');
   I.click(commonConfig.saveAndContinue);

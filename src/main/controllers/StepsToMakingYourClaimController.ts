@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { AddressPageType, YesOrNo } from '../definitions/case';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../definitions/definition';
 import { FormContent } from '../definitions/form';
@@ -19,9 +19,6 @@ const logger = getLogger('StepsToMakingYourClaimController');
 
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
-    if (req.session.userCase !== undefined) {
-      req.session.userCase.addressPageType = AddressPageType.ADDRESS_DETAILS;
-    }
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
@@ -56,7 +53,7 @@ export default class StepsToMakingYourClaimController {
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
           },
           {
-            url: setUrlLanguage(req, PageUrls.POSTCODE_ENTER.toString()),
+            url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },

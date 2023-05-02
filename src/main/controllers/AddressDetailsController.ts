@@ -14,7 +14,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillAddressFields } from './helpers/RespondentHelpers';
+import { fillAddressAddressFields } from './helpers/RespondentHelpers';
 
 const logger = getLogger('AddressDetailsController');
 
@@ -103,14 +103,14 @@ export default class AddressDetailsController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const x = req.session.userCase.addressTypes;
+    const x = req.session.userCase.addressAddressTypes;
     const content = getPageContent(req, this.addressDetailsContent, [
       TranslationKeys.COMMON,
       TranslationKeys.ADDRESS_DETAILS,
       TranslationKeys.ENTER_ADDRESS,
     ]);
     if (x !== undefined) {
-      fillAddressFields(x, req.session.userCase);
+      fillAddressAddressFields(x, req.session.userCase);
     }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_DETAILS, {

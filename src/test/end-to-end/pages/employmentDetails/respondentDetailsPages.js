@@ -17,18 +17,18 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.refreshPage();
   I.waitToHide('#address1', 2);
   I.dontSeeElement('#address1');
-  I.waitForElement('#enterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
-  I.fillField('#enterPostcode', 'LS7 4QE');
+  I.waitForElement('#respondentEnterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
+  I.fillField('#respondentEnterPostcode', 'LS7 4QE');
   I.click(commonConfig.saveAndContinue);
-  I.waitForVisible('#addressTypes', 30);
+  I.waitForVisible('#respondentAddressTypes', 30);
   I.see('Select an address');
   I.see('No addresses found');
   I.click(commonConfig.saveAndContinue);
-  I.fillField('#address1', '7, Valley Gardens');
-  I.fillField('#address2', '');
-  I.fillField('#addressTown', 'Leeds');
-  I.fillField('#addressCountry', 'England');
-  I.fillField('#addressPostcode', 'LS7 4QE');
+  I.fillField('#respondentAddress1', '7, Valley Gardens');
+  I.fillField('#respondentAddress2', '');
+  I.fillField('#respondentAddressTown', 'Leeds');
+  I.fillField('#respondentAddressCountry', 'England');
+  I.fillField('#respondentAddressPostcode', 'LS7 4QE');
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
@@ -45,18 +45,18 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.checkOption('#work-address-2');
     I.click(commonConfig.saveAndContinue);
-    I.seeElement('#enterPostcode');
-    I.fillField('#enterPostcode', 'LS14 1AR');
+    I.seeElement('#workEnterPostcode');
+    I.fillField('#workEnterPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    I.waitForVisible('#addressTypes', 30);
+    I.waitForVisible('#workAddressTypes', 30);
     I.see('Select an address');
     I.see('No addresses found');
     I.click(commonConfig.saveAndContinue);
-    I.fillField('#address1', '25, Ringwood Drive');
-    I.fillField('#address2', '');
-    I.fillField('#addressTown', 'Leeds');
-    I.fillField('#addressCountry', 'England');
-    I.fillField('#addressPostcode', 'LS14 1AR');
+    I.fillField('#workAddress1', '25, Ringwood Drive');
+    I.fillField('#workAddress2', '');
+    I.fillField('#workAddressTown', 'Leeds');
+    I.fillField('#workAddressCountry', 'England');
+    I.fillField('#workAddressPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   }

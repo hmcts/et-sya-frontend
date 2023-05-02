@@ -21,7 +21,7 @@ describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
       .send({ claimantSex: Sex.MALE, preferredTitle: 'Mr' })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.POSTCODE_ENTER);
+        expect(res.header['location']).toStrictEqual(PageUrls.ADDRESS_POSTCODE_ENTER);
       });
   });
   test('should return gender details page if title contains number', async () => {

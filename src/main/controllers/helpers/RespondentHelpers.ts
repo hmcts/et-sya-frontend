@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
-import { AddressPageType, CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
+import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
@@ -30,22 +30,19 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.acasCert === YesOrNo.YES) {
     formData.noAcasReason = undefined;
   }
-  if (formData.addressTypes !== undefined) {
-    req.session.userCase.addressTypes = formData.addressTypes;
+  if (formData.workAddressTypes !== undefined) {
+    req.session.userCase.workAddressTypes = formData.workAddressTypes;
   }
-  if (formData.enterPostcode !== undefined) {
-    req.session.userCase.enterPostcode = formData.enterPostcode;
+  if (formData.workEnterPostcode !== undefined) {
+    req.session.userCase.workEnterPostcode = formData.workEnterPostcode;
+  }
+  if (formData.respondentAddressTypes !== undefined) {
+    req.session.userCase.respondentAddressTypes = formData.respondentAddressTypes;
+  }
+  if (formData.respondentEnterPostcode !== undefined) {
+    req.session.userCase.respondentEnterPostcode = formData.respondentEnterPostcode;
   }
 
-  if (formData.enterPostcode !== undefined) {
-    if (req.session.userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
-      req.session.userCase.respondentPostcode = formData.enterPostcode;
-    } else if (req.session.userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
-      req.session.userCase.addressDetailsPostcode = formData.enterPostcode;
-    } else if (req.session.userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
-      req.session.userCase.placeOfWorkPostcode = formData.enterPostcode;
-    }
-  }
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
@@ -69,28 +66,36 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
   return ErrorPages.NOT_FOUND;
 };
 
-export const fillAddressFields = (x: unknown, userCase: CaseWithId): void => {
-  const address = userCase.addresses?.at(x as number);
+export const fillAddressAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.addressAddresses?.at(x as number);
   if (!x.toString().includes('object')) {
-    if (userCase.addressPageType === AddressPageType.RESPONDENT_ADDRESS) {
-      userCase.respondentAddress1 = address?.street1;
-      userCase.respondentAddress2 = address?.street2;
-      userCase.respondentAddressTown = address?.town;
-      userCase.respondentAddressCountry = address?.country;
-      userCase.respondentAddressPostcode = address?.postcode;
-    } else if (userCase.addressPageType === AddressPageType.ADDRESS_DETAILS) {
-      userCase.address1 = address?.street1;
-      userCase.address2 = address?.street2;
-      userCase.addressTown = address?.town;
-      userCase.addressCountry = address?.country;
-      userCase.addressPostcode = address?.postcode;
-    } else if (userCase.addressPageType === AddressPageType.PLACE_OF_WORK) {
-      userCase.workAddress1 = address?.street1;
-      userCase.workAddress2 = address?.street2;
-      userCase.workAddressTown = address?.town;
-      userCase.workAddressCountry = address?.country;
-      userCase.workAddressPostcode = address?.postcode;
-    }
+    userCase.address1 = address?.street1;
+    userCase.address2 = address?.street2;
+    userCase.addressTown = address?.town;
+    userCase.addressCountry = address?.country;
+    userCase.addressPostcode = address?.postcode;
+  }
+};
+
+export const fillWorkAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.workAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.workAddress1 = address?.street1;
+    userCase.workAddress2 = address?.street2;
+    userCase.workAddressTown = address?.town;
+    userCase.workAddressCountry = address?.country;
+    userCase.workAddressPostcode = address?.postcode;
+  }
+};
+
+export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.respondentAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.respondentAddress1 = address?.street1;
+    userCase.respondentAddress2 = address?.street2;
+    userCase.respondentAddressTown = address?.town;
+    userCase.respondentAddressCountry = address?.country;
+    userCase.respondentAddressPostcode = address?.postcode;
   }
 };
 
@@ -140,14 +145,25 @@ export const ValidRespondentUrls = {
   noacas5: respondent + 5 + PageUrls.NO_ACAS_NUMBER,
   workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
   placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
-  postcodeEnter1: respondent + 1 + PageUrls.POSTCODE_ENTER,
-  postcodeEnter2: respondent + 2 + PageUrls.POSTCODE_ENTER,
-  postcodeEnter3: respondent + 3 + PageUrls.POSTCODE_ENTER,
-  postcodeEnter4: respondent + 4 + PageUrls.POSTCODE_ENTER,
-  postcodeEnter5: respondent + 5 + PageUrls.POSTCODE_ENTER,
-  postcodeSelect1: respondent + 1 + PageUrls.POSTCODE_SELECT,
-  postcodeSelect2: respondent + 2 + PageUrls.POSTCODE_SELECT,
-  postcodeSelect3: respondent + 3 + PageUrls.POSTCODE_SELECT,
-  postcodeSelect4: respondent + 4 + PageUrls.POSTCODE_SELECT,
-  postcodeSelect5: respondent + 5 + PageUrls.POSTCODE_SELECT,
+  respondentPostcodeEnter1: respondent + 1 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter2: respondent + 2 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter3: respondent + 3 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter4: respondent + 4 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter5: respondent + 5 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeSelect1: respondent + 1 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect2: respondent + 2 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect3: respondent + 3 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect4: respondent + 4 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect5: respondent + 5 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+
+  workPostcodeEnter1: respondent + 1 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter2: respondent + 2 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter3: respondent + 3 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter4: respondent + 4 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter5: respondent + 5 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeSelect1: respondent + 1 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect2: respondent + 2 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect3: respondent + 3 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect4: respondent + 4 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect5: respondent + 5 + PageUrls.WORK_POSTCODE_SELECT,
 } as const;
