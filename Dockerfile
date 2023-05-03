@@ -1,7 +1,8 @@
 # ---- Base image ----
 FROM hmctspublic.azurecr.io/base/node:18-alpine as base
- USER root
- RUN corepack enable
+USER root
+RUN corepack enable
+COPY --chown=hmcts:hmcts . .
 
 # ---- Build image ----
 FROM base as build
