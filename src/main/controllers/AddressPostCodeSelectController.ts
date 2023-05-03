@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import { Response } from 'express';
 
 import { getAddressesForPostcode } from '../address';
@@ -15,8 +14,6 @@ import { convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelp
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 
 const logger = getLogger('AddressPostCodeSelectController');
-
-@autobind
 export default class AddressPostCodeSelectController {
   private readonly form: Form;
   private readonly postCodeSelectContent: FormContent = {
@@ -38,14 +35,6 @@ export default class AddressPostCodeSelectController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    logger.info('Session ID:' + req.session.id);
-    logger.info('Postcode in session is:' + req.session.userCase?.addressEnterPostcode);
-    logger.info('Postcode in body is:' + req.body?.addressEnterPostcode);
-    logger.info('Claimant sex in session is:' + req.session.userCase.claimantSex.toString());
-    logger.info('Claimant dob day in session is:' + req.session.userCase.dobDate?.day);
-    logger.info('Claimant dob month in session is:' + req.session.userCase.dobDate?.month);
-    logger.info('Claimant dob year in session is:' + req.session.userCase.dobDate?.year);
-
     const response = convertJsonArrayToTitleCase(
       await getAddressesForPostcode(req.session.userCase.addressEnterPostcode)
     );
