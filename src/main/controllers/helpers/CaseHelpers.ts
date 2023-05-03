@@ -50,6 +50,12 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       const workEnterPostcode = req.session.userCase.workEnterPostcode;
       const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
       const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
+      const addressAddresses = req.session.userCase.addressAddresses;
+      const workAddresses = req.session.userCase.workAddresses;
+      const respondentAddresses = req.session.userCase.respondentAddresses;
+      const workAddressTypes = req.session.userCase.workAddressTypes;
+      const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
+      const addressAddressTypes = req.session.userCase.addressAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
       if (req.session.userCase.workEnterPostcode === undefined) {
         req.session.userCase.workEnterPostcode = workEnterPostcode;
@@ -60,6 +66,12 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       if (req.session.userCase.respondentEnterPostcode === undefined) {
         req.session.userCase.respondentEnterPostcode = respondentEnterPostcode;
       }
+      req.session.userCase.addressAddresses = addressAddresses;
+      req.session.userCase.workAddresses = workAddresses;
+      req.session.userCase.respondentAddresses = respondentAddresses;
+      req.session.userCase.workAddressTypes = workAddressTypes;
+      req.session.userCase.respondentAddressTypes = respondentAddressTypes;
+      req.session.userCase.addressAddressTypes = addressAddressTypes;
       req.session.save();
     } catch (error) {
       logger.error(error.message);
