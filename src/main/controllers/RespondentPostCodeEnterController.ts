@@ -44,10 +44,7 @@ export default class RespondentPostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.postCodeContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_POSTCODE_ENTER,
-    ]);
+    const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
     res.render(TranslationKeys.RESPONDENT_POSTCODE_ENTER, {

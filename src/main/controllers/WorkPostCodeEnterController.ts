@@ -44,10 +44,7 @@ export default class WorkPostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.postCodeContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.WORK_POSTCODE_ENTER,
-    ]);
+    const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
     res.render(TranslationKeys.WORK_POSTCODE_ENTER, {

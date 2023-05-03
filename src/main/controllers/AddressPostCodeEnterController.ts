@@ -42,10 +42,7 @@ export default class AddressPostCodeEnterController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.postCodeContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ADDRESS_POSTCODE_ENTER,
-    ]);
+    const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     const link = req.url.includes('lng=cy')
       ? PageUrls.ADDRESS_DETAILS + '?lng=cy'

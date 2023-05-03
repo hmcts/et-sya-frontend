@@ -7,8 +7,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import localesCy from '../resources/locales/cy/translation/respondent-postcode-select.json';
-import locales from '../resources/locales/en/translation/respondent-postcode-select.json';
+import localesCy from '../resources/locales/cy/translation/common.json';
+import locales from '../resources/locales/en/translation/common.json';
 
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -65,10 +65,7 @@ export default class RespondentPostCodeSelectController {
         label: address.fullAddress,
       });
     }
-    const content = getPageContent(req, this.postCodeSelectContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.RESPONDENT_POSTCODE_SELECT,
-    ]);
+    const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
     assignFormData(req.session.userCase, this.form.getFormFields());

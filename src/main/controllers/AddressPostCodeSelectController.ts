@@ -7,8 +7,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
-import localesCy from '../resources/locales/cy/translation/address-postcode-select.json';
-import locales from '../resources/locales/en/translation/address-postcode-select.json';
+import localesCy from '../resources/locales/cy/translation/common.json';
+import locales from '../resources/locales/en/translation/common.json';
 
 import { convertJsonArrayToTitleCase, handlePostLogic } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -64,10 +64,7 @@ export default class AddressPostCodeSelectController {
         });
       }
     }
-    const content = getPageContent(req, this.postCodeSelectContent, [
-      TranslationKeys.COMMON,
-      TranslationKeys.ADDRESS_POSTCODE_SELECT,
-    ]);
+    const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = req.url.includes('lng=cy')
       ? PageUrls.ADDRESS_DETAILS + '?lng=cy'
