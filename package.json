@@ -33,6 +33,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.21.0",
+    "@babel/preset-typescript": "^7.21.5",
     "@faker-js/faker": "^7.6.0",
     "@hmcts/cookie-manager": "^1.0.0",
     "@hmcts/frontend": "^0.0.50-alpha",
@@ -60,6 +62,8 @@
     "applicationinsights": "^2.5.1",
     "autobind-decorator": "^2.4.0",
     "axios": "^0.27.2",
+    "babel-jest": "^29.5.0",
+    "babel-plugin-replace-ts-export-assignment": "^0.0.2",
     "codeceptjs": "3.4.1",
     "config": "^3.3.9",
     "connect-redis": "^6.1.3",
