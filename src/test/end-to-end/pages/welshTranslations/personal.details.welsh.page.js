@@ -43,8 +43,7 @@ module.exports = {
     I.see('Several addresses found');
     I.selectOption('#addressAddressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
     I.click(commonConfig.saveAndContinue);
-    I.see('3 Skelton Avenue');
-    I.see('LS9 9HE');
+    I.see('What is your contact or home address?');
     I.click(commonConfig.saveAndContinue);
   },
   enterTelephoneNumber() {
