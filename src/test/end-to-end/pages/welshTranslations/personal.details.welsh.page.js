@@ -40,13 +40,11 @@ module.exports = {
     I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#addressAddressTypes', 30);
     I.see('Select an address');
-    I.see('No addresses found');
+    I.see('Several addresses found');
+    I.selectOption('#addressAddressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
     I.click(commonConfig.saveAndContinue);
-    I.fillField('#address1', '3 Skelton Avenue');
-    I.fillField('#address2', '');
-    I.fillField('#addressTown', 'Leeds');
-    I.fillField('#addressCountry', 'England');
-    I.fillField('#addressPostcode', 'LS9 9HE');
+    I.see('3 Skelton Avenue');
+    I.see('LS9 9HE');
     I.click(commonConfig.saveAndContinue);
   },
   enterTelephoneNumber() {

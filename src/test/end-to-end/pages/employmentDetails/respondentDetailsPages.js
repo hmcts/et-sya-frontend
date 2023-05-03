@@ -22,13 +22,11 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.click(commonConfig.saveAndContinue);
   I.waitForVisible('#respondentAddressTypes', 30);
   I.see('Select an address');
-  I.see('No addresses found');
+  I.see('Several addresses found');
+  I.selectOption('#respondentAddressTypes', '7, Valley Gardens, Leeds, LS7 4QE');
   I.click(commonConfig.saveAndContinue);
-  I.fillField('#address1', '7, Valley Gardens');
-  I.fillField('#address2', '');
-  I.fillField('#addressTown', 'Leeds');
-  I.fillField('#addressCountry', 'England');
-  I.fillField('#addressPostcode', 'LS7 4QE');
+  I.see('7, Valley Gardens');
+  I.see('LS7 4QE');
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
