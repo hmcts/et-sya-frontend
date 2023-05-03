@@ -15,8 +15,6 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   //Enters Postcode for the respondent
   //I.seeElement('#postcode');
   I.refreshPage();
-  I.waitToHide('#address1', 2);
-  I.dontSeeElement('#address1');
   I.waitForElement('#respondentEnterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
   I.fillField('#respondentEnterPostcode', 'LS7 4QE');
   I.click(commonConfig.saveAndContinue);
@@ -25,8 +23,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.see('Several addresses found');
   I.selectOption('#respondentAddressTypes', '7, Valley Gardens, Leeds, LS7 4QE');
   I.click(commonConfig.saveAndContinue);
-  I.see('7, Valley Gardens');
-  I.see('LS7 4QE');
+  I.see('What is the address of Gabby Greta?');
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
@@ -48,13 +45,10 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.click(commonConfig.saveAndContinue);
     I.waitForVisible('#workAddressTypes', 30);
     I.see('Select an address');
-    I.see('No addresses found');
+    I.see('Several addresses found');
+    I.selectOption('#workAddressTypes', '25, Ringwood Drive, Leeds, LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    I.fillField('#address1', '25, Ringwood Drive');
-    I.fillField('#address2', '');
-    I.fillField('#addressTown', 'Leeds');
-    I.fillField('#addressCountry', 'England');
-    I.fillField('#addressPostcode', 'LS14 1AR');
+    I.see('What address did you work at?');
     I.click(commonConfig.saveAndContinue);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   }
