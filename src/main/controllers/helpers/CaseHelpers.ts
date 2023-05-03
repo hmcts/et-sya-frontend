@@ -47,7 +47,19 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      const workEnterPostcode = req.session.userCase.workEnterPostcode;
+      const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
+      const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
       req.session.userCase = fromApiFormat(response.data);
+      if (req.session.userCase.workEnterPostcode === undefined) {
+        req.session.userCase.workEnterPostcode = workEnterPostcode;
+      }
+      if (req.session.userCase.addressEnterPostcode === undefined) {
+        req.session.userCase.addressEnterPostcode = addressEnterPostcode;
+      }
+      if (req.session.userCase.respondentEnterPostcode === undefined) {
+        req.session.userCase.respondentEnterPostcode = respondentEnterPostcode;
+      }
       req.session.save();
     } catch (error) {
       logger.error(error.message);
