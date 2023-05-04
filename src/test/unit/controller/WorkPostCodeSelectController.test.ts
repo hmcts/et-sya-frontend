@@ -33,12 +33,12 @@ describe('WorkPostCodeSelectController', () => {
     ];
     addressTypes = [
       {
-        label: '1 address found',
+        label: 'Several addresses found',
         value: '0',
         selected: 'true',
       },
       {
-        label: 'Buckingham Palace, London, SW1A 1AA',
+        label: 'FLAT 1, HOPE COURT, PRINCE OF WALES ROAD, EXETER, EX4 4PN',
         value: '1',
         selected: 'false',
       },
