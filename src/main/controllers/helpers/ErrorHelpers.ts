@@ -10,6 +10,7 @@ import {
   isContent100CharsOrLess,
   isContent2500CharsOrLess,
   isFieldFilledIn,
+  isNotPdfFileType,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
@@ -271,6 +272,32 @@ export const getFileUploadAndTextAreaError = (
   }
 };
 
+export const getPdfUploadError = (
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document,
+  propertyName: string
+): FormError => {
+  const fileProvided = file !== undefined;
+  if (!fileProvided && !uploadedFile) {
+    return { propertyName, errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName, errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = isNotPdfFileType(file);
+  if (fileFormatInvalid) {
+    return { propertyName, errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName, errorType: fileNameInvalid };
+  }
+};
+
 export const getResponseErrors = (formData: Partial<CaseWithId>): FormError => {
   const text = formData.responseText;
   const radio = formData.hasSupportingMaterial;
@@ -312,7 +339,7 @@ export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyR
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
+      if (['contactApplicationFile', 'supportingMaterialFile', 'hearingDocument'].includes(errors[i].propertyName)) {
         return errors[i];
       }
     }

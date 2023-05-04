@@ -12,3 +12,16 @@ export const mockFile = {
   path: '',
   buffer: Buffer.from('test'),
 };
+
+export const mockPdf = {
+  fieldname: 'test',
+  filename: 'test',
+  encoding: 'txt',
+  mimetype: 'test',
+  size: 2046,
+  stream: new Readable(),
+  destination: '',
+  originalname: 'testFile.pdf',
+  path: '',
+  buffer: Buffer.from('test'),
+};

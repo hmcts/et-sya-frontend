@@ -9,7 +9,7 @@ const buttonClass = 'govuk-button';
 const expectedTitle = 'About your hearing documents';
 const radioButtonQuestion = 'govuk-radios govuk-radios';
 const inputs = 'govuk-label govuk-radios__label';
-const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2023';
+const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2223';
 let htmlRes: Document;
 
 describe('About hearing documents page', () => {
@@ -60,7 +60,7 @@ describe('About hearing documents page', () => {
                   {
                     id: '321abc',
                     value: {
-                      listedDate: new Date('2023-07-04T14:00:00.000'),
+                      listedDate: new Date('2223-07-04T14:00:00.000'),
                       Hearing_status: 'Listed',
                       hearingVenueDay: {
                         value: {
@@ -88,8 +88,8 @@ describe('About hearing documents page', () => {
                         selectedCode: 'Field House',
                         selectedLabel: 'Field House',
                       },
-                      hearingTimingStart: new Date('2023-04-13T11:00:00.000'),
-                      hearingTimingFinish: new Date('2023-04-13T11:00:00.000'),
+                      hearingTimingStart: new Date('2223-04-13T11:00:00.000'),
+                      hearingTimingFinish: new Date('2223-04-13T11:00:00.000'),
                     },
                   },
                   {

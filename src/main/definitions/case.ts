@@ -180,9 +180,10 @@ export interface Case {
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
-  hearingDocumentsAreFor?: string;
+  hearingDocumentsAreFor?: HearingModel;
   whoseHearingDocumentsAreYouUploading?: string;
   whatAreTheseDocuments?: string;
+  hearingDocument?: Document;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/

@@ -242,6 +242,16 @@ export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
   return 'invalidFileFormat';
 };
 
+export const isNotPdfFileType = (value: Express.Multer.File): string => {
+  if (!value || !value.originalname) {
+    return;
+  }
+  if (value.originalname.toLowerCase().endsWith('.pdf')) {
+    return;
+  }
+  return 'invalidFileFormat';
+};
+
 export const isAcasNumberValid: Validator = value => {
   const valueAsString = value as string;
   if (!/^[rR]\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {

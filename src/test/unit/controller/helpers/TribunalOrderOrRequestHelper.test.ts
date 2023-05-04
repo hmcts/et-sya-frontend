@@ -12,11 +12,10 @@ import {
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
-import { HubLinkNames, HubLinksStatuses, HubLinkStatus } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
-import respondentOrderOrRequestRaw
-  from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Tribunal order or request helper', () => {

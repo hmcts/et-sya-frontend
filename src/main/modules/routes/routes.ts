@@ -41,6 +41,8 @@ import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
 import EndDateController from '../../controllers/EndDateController';
+import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
+import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import LipOrRepController from '../../controllers/LipOrRepController';
@@ -271,6 +273,7 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+
     app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
     app.post(
       PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
@@ -278,6 +281,15 @@ export class Routes {
       new RespondentSupportingMaterialController().post
     );
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+
+    app.get(PageUrls.HEARING_DOCUMENT_UPLOAD, new HearingDocumentUploadController().get);
+    app.post(
+      PageUrls.HEARING_DOCUMENT_UPLOAD,
+      handleUploads.single('hearingDocument'),
+      new HearingDocumentUploadController().post
+    );
+    app.get(PageUrls.HEARING_DOCUMENT_REMOVE, new HearingDocumentFileController().get);
+
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
