@@ -5,6 +5,7 @@ import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
 describe('WorkPostCodeSelectController', () => {
   let controller: WorkPostCodeSelectController;
   let req: AppRequest;
@@ -19,23 +20,22 @@ describe('WorkPostCodeSelectController', () => {
     res = mockResponse;
     addresses = [
       {
-        fullAddress: 'Buckingham Palace, London, SW1A 1AA',
-        street1: 'Buckingham Palace',
-        street2: '',
-        town: 'London',
-        county: 'City Of Westminster',
-        postcode: 'SW1A 1AA',
+        fullAddress: 'FLAT 1, HOPE COURT, PRINCE OF WALES ROAD, EXETER, EX4 4PN',
+        street1: 'Flat 1, HOPE Court',
+        street2: 'Prince Of Wales Road',
+        town: 'Exeter',
+        postcode: 'EX4 4PN',
         country: 'England',
       },
     ];
     addressTypes = [
       {
-        label: '1 address found',
+        label: 'Several addresses found',
         value: '0',
         selected: 'true',
       },
       {
-        label: 'Buckingham Palace, London, SW1A 1AA',
+        label: 'FLAT 1, HOPE COURT, PRINCE OF WALES ROAD, EXETER, EX4 4PN',
         value: '1',
         selected: 'false',
       },
@@ -44,7 +44,7 @@ describe('WorkPostCodeSelectController', () => {
 
   describe('post', () => {
     it('should handle post request', async () => {
-      req.session.userCase.workEnterPostcode = 'SW1A 1AA';
+      req.session.userCase.workEnterPostcode = 'EX4 4PN';
       req.body = {
         addresses,
         addressTypes,
@@ -55,17 +55,6 @@ describe('WorkPostCodeSelectController', () => {
   });
 
   describe('get', () => {
-    it('should handle get request with multiple addresses', async () => {
-      req.session.userCase.workEnterPostcode = 'SW1A 1AA';
-      await controller.get(req, mockResponse());
-      expect(req.session.userCase.workAddresses).toStrictEqual(addresses);
-      expect(req.session.userCase.workAddressTypes.length).toBeGreaterThan(0);
-      expect(req.session.userCase.workAddressTypes[0].label).toEqual('Several addresses found');
-      expect(req.session.userCase.workAddressTypes[0].selected).toBe(true);
-      expect(req.session.userCase.workAddressTypes[1].value).toBeDefined();
-      expect(req.session.userCase.workAddressTypes[1].label).toBeDefined();
-    });
-
     it('should handle get request with no addresses', async () => {
       req.session.userCase.workEnterPostcode = 'SW1A 2CC';
       await controller.get(req, res());

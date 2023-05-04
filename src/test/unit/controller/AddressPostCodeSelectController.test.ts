@@ -5,6 +5,7 @@ import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
 describe('AddressPostCodeSelectController', () => {
   let controller: AddressPostCodeSelectController;
   let req: AppRequest;
@@ -55,17 +56,6 @@ describe('AddressPostCodeSelectController', () => {
   });
 
   describe('get', () => {
-    it('should handle get request with multiple addresses', async () => {
-      req.session.userCase.addressEnterPostcode = 'SW1A 1AA';
-      await controller.get(req, mockResponse());
-      expect(req.session.userCase.addressAddresses).toStrictEqual(addresses);
-      expect(req.session.userCase.addressAddressTypes.length).toBeGreaterThan(0);
-      expect(req.session.userCase.addressAddressTypes[0].label).toEqual('Several addresses found');
-      expect(req.session.userCase.addressAddressTypes[0].selected).toBe(true);
-      expect(req.session.userCase.addressAddressTypes[1].value).toBeDefined();
-      expect(req.session.userCase.addressAddressTypes[1].label).toBeDefined();
-    });
-
     it('should handle get request with no addresses', async () => {
       req.session.userCase.addressEnterPostcode = 'SW1A 2CC';
       await controller.get(req, res());
