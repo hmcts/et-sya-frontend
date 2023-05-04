@@ -8,6 +8,7 @@ import { validPostcodeResponse } from '../mocks/mockPostcodeResponses';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { postcodeSelectResponse } from '../mocks/mockedPostCodeSelectResponse';
+
 describe('RespondentPostCodeSelectController', () => {
   let controller: RespondentPostCodeSelectController;
   let req: AppRequest;
