@@ -43,8 +43,3 @@ export const isValidUKPostcode: AddressValidator = value => {
   }
 };
 
-export const isAddressSelected: AddressValidator = value => {
-  if (isNaN(parseInt(value as string))) {
-    return 'notSelected';
-  }
-};
