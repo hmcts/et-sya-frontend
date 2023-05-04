@@ -246,6 +246,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
