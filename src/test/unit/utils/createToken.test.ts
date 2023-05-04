@@ -1,5 +1,5 @@
 import config from 'config';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 import { createToken } from '../../../main/pcq/createToken';
 
@@ -11,7 +11,7 @@ describe('createToken', () => {
   const params = {
     serviceId: 'ET',
     actor: 'Claimant',
-    pcqId: uuid(),
+    pcqId: uuidv4(),
     ccdCaseId: '1234',
     partyId: 'test@hmcts.net',
     returnUrl: 'http://localhost:3100/test',

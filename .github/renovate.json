@@ -47,6 +47,10 @@
     {
       "matchPackageNames": ["axios"],
       "allowedVersions": "<=0"
+    },
+    {
+      "matchPackageNames": ["connect-redis"],
+      "allowedVersions": "<=6"
     }
   ],
   "lockFileMaintenance": {

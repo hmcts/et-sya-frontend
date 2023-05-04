@@ -47,7 +47,7 @@ describe('Respondent Name Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-address');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-postcode-enter');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globo Gym',
@@ -66,7 +66,7 @@ describe('Respondent Name Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-address');
+    expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-postcode-enter');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
       respondentName: 'Globe Gym',

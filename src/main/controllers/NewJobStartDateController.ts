@@ -13,7 +13,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import {getLanguageParam} from "./helpers/RouterHelpers";
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const new_job_start_date: DateFormFields = {
   ...NewJobDateFormFields,

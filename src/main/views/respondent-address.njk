@@ -14,7 +14,6 @@
         {% include "./error-summary.njk" %}
       {% endblock %}
 
-      {% include "./address/postcodeError.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
        {{ h1 + respondentName }}?
       </h1>
@@ -22,8 +21,7 @@
       {{ govukInsetText({
         text: insetText
       }) }}
-      {% include "./address/postcodeEnter.njk" %}
-      {% include "./address/postcodeSelect.njk" %}
+
 
       {% block form %}
         {% include "form/form.njk"%}

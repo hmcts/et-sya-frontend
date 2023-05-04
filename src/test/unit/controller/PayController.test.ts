@@ -1,9 +1,9 @@
 import PayController from '../../../main/controllers/PayController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import {PayInterval} from '../../../main/definitions/case';
-import {PageUrls, TranslationKeys} from '../../../main/definitions/constants';
-import {mockRequest, mockRequestEmpty} from '../mocks/mockRequest';
-import {mockResponse} from '../mocks/mockResponse';
+import { PayInterval } from '../../../main/definitions/case';
+import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
+import { mockResponse } from '../mocks/mockResponse';
 
 jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
 
