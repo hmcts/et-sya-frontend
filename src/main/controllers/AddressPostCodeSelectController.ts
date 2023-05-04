@@ -66,7 +66,7 @@ export default class AddressPostCodeSelectController {
     }
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
-    const link = req.url.includes('lng=cy')
+    const link = req.url?.includes('lng=cy')
       ? PageUrls.ADDRESS_DETAILS + '?lng=cy'
       : PageUrls.ADDRESS_DETAILS + '?lng=en';
     assignFormData(req.session.userCase, this.form.getFormFields());
