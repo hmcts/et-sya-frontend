@@ -66,10 +66,12 @@ export default class WorkPostCodeSelectController {
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
+    const title = req.url?.includes('lng=cy') ? localesCy.workPostcodeSelectTitle : locales.workPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.WORK_POSTCODE_SELECT, {
       ...content,
       link,
+      title,
     });
   };
 }

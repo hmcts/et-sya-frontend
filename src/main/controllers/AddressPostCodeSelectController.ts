@@ -69,10 +69,14 @@ export default class AddressPostCodeSelectController {
     const link = req.url?.includes('lng=cy')
       ? PageUrls.ADDRESS_DETAILS + '?lng=cy'
       : PageUrls.ADDRESS_DETAILS + '?lng=en';
+    const title = req.url?.includes('lng=cy')
+      ? localesCy.addressPostcodeSelectTitle
+      : locales.addressPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ADDRESS_POSTCODE_SELECT, {
       ...content,
       link,
+      title,
     });
   };
 }
