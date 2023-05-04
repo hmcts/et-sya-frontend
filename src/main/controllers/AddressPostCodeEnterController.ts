@@ -7,6 +7,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { saveForLaterButton, submitButton } from '../definitions/radios';
 import { getLogger } from '../logger';
+import localesCy from '../resources/locales/cy/translation/common.json';
+import locales from '../resources/locales/en/translation/common.json';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -47,9 +49,11 @@ export default class AddressPostCodeEnterController {
     const link = req.url?.includes('lng=cy')
       ? PageUrls.ADDRESS_DETAILS + '?lng=cy'
       : PageUrls.ADDRESS_DETAILS + '?lng=en';
+    const title = req.url?.includes('lng=cy') ? localesCy.addressPostcodeEnterTitle : locales.addressPostcodeEnterTitle;
     res.render(TranslationKeys.ADDRESS_POSTCODE_ENTER, {
       ...content,
       link,
+      title,
     });
   };
 }

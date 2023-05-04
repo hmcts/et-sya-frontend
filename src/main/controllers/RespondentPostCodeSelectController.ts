@@ -68,10 +68,14 @@ export default class RespondentPostCodeSelectController {
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    const title = req.url?.includes('lng=cy')
+      ? localesCy.respondentPostcodeSelectTitle
+      : locales.respondentPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_POSTCODE_SELECT, {
       ...content,
       link,
+      title,
     });
   };
 }

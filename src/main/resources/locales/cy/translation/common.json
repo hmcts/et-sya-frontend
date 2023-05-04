@@ -96,5 +96,11 @@
   "selectDefaultSeveral": "Daethpwyd o hyd i sawl cyfeiriad",
   "selectDefaultSingle": "Daethpwyd o hyd i 1 cyfeiriad",
   "selectDefaultNone": "Heb gael hyd i gyfeiriad",
-  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr"
+  "cannotFindAddress": "Ni allaf ddod o hyd i’r cyfeiriad yn y rhestr",
+  "workPostcodeEnterTitle": "Rhowch god post gwaith",
+  "workPostcodeSelectTitle": "Dewis cod post gwaith",
+  "addressPostcodeEnterTitle": "Rhowch y cod post cyfeiriad",
+  "addressPostcodeSelectTitle": "Cyfeiriad cod post dewis",
+  "respondentPostcodeEnterTitle": "Rhowch god post yr ymatebydd",
+  "respondentPostcodeSelectTitle": "Dewis cod post yr ymatebydd"
 }
