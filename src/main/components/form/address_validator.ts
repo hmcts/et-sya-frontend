@@ -42,4 +42,3 @@ export const isValidUKPostcode: AddressValidator = value => {
     return ValidationErrors.INVALID_VALUE;
   }
 };
-
