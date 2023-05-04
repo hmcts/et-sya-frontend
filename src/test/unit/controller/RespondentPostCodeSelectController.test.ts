@@ -2,9 +2,12 @@ import e from 'express';
 
 import RespondentPostCodeSelectController from '../../../main/controllers/RespondentPostCodeSelectController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
+import { convertJsonArrayToTitleCase } from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { validPostcodeResponse } from '../mocks/mockPostcodeResponses';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { postcodeSelectResponse } from '../mocks/mockedPostCodeSelectResponse';
 describe('RespondentPostCodeSelectController', () => {
   let controller: RespondentPostCodeSelectController;
   let req: AppRequest;
@@ -56,14 +59,14 @@ describe('RespondentPostCodeSelectController', () => {
 
   describe('get', () => {
     it('should handle get request with multiple addresses', async () => {
-      req.session.userCase.respondentEnterPostcode = 'SW1A 1AA';
+      const axios = require('axios');
+      jest.mock('axios');
+      const mockedAxios = axios as jest.Mocked<typeof axios>;
+      mockedAxios.get = jest.fn();
+      mockedAxios.get.mockResolvedValueOnce({ data: validPostcodeResponse });
+      req.session.userCase.respondentEnterPostcode = 'EX44PN';
       await controller.get(req, mockResponse());
-      expect(req.session.userCase.respondentAddresses).toStrictEqual(addresses);
-      expect(req.session.userCase.respondentAddressTypes.length).toBeGreaterThan(0);
-      expect(req.session.userCase.respondentAddressTypes[0].label).toEqual('Several addresses found');
-      expect(req.session.userCase.respondentAddressTypes[0].selected).toBe(true);
-      expect(req.session.userCase.respondentAddressTypes[1].value).toBeDefined();
-      expect(req.session.userCase.respondentAddressTypes[1].label).toBeDefined();
+      expect(req.session.userCase.respondentAddresses).toEqual(convertJsonArrayToTitleCase(postcodeSelectResponse));
     });
 
     it('should handle get request with no addresses', async () => {

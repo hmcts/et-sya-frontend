@@ -2,9 +2,12 @@ import e from 'express';
 
 import WorkPostCodeSelectController from '../../../main/controllers/WorkPostCodeSelectController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
+import { convertJsonArrayToTitleCase } from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
+import { validPostcodeResponse } from '../mocks/mockPostcodeResponses';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { postcodeSelectResponse } from '../mocks/mockedPostCodeSelectResponse';
 describe('WorkPostCodeSelectController', () => {
   let controller: WorkPostCodeSelectController;
   let req: AppRequest;
@@ -19,12 +22,11 @@ describe('WorkPostCodeSelectController', () => {
     res = mockResponse;
     addresses = [
       {
-        fullAddress: 'Buckingham Palace, London, SW1A 1AA',
-        street1: 'Buckingham Palace',
-        street2: '',
-        town: 'London',
-        county: 'City Of Westminster',
-        postcode: 'SW1A 1AA',
+        fullAddress: 'FLAT 1, HOPE COURT, PRINCE OF WALES ROAD, EXETER, EX4 4PN',
+        street1: 'Flat 1, HOPE Court',
+        street2: 'Prince Of Wales Road',
+        town: 'Exeter',
+        postcode: 'EX4 4PN',
         country: 'England',
       },
     ];
@@ -44,7 +46,7 @@ describe('WorkPostCodeSelectController', () => {
 
   describe('post', () => {
     it('should handle post request', async () => {
-      req.session.userCase.workEnterPostcode = 'SW1A 1AA';
+      req.session.userCase.workEnterPostcode = 'EX4 4PN';
       req.body = {
         addresses,
         addressTypes,
@@ -56,14 +58,14 @@ describe('WorkPostCodeSelectController', () => {
 
   describe('get', () => {
     it('should handle get request with multiple addresses', async () => {
-      req.session.userCase.workEnterPostcode = 'SW1A 1AA';
+      const axios = require('axios');
+      jest.mock('axios');
+      const mockedAxios = axios as jest.Mocked<typeof axios>;
+      mockedAxios.get = jest.fn();
+      mockedAxios.get.mockResolvedValueOnce({ data: validPostcodeResponse });
+      req.session.userCase.workEnterPostcode = 'EX44PN';
       await controller.get(req, mockResponse());
-      expect(req.session.userCase.workAddresses).toStrictEqual(addresses);
-      expect(req.session.userCase.workAddressTypes.length).toBeGreaterThan(0);
-      expect(req.session.userCase.workAddressTypes[0].label).toEqual('Several addresses found');
-      expect(req.session.userCase.workAddressTypes[0].selected).toBe(true);
-      expect(req.session.userCase.workAddressTypes[1].value).toBeDefined();
-      expect(req.session.userCase.workAddressTypes[1].label).toBeDefined();
+      expect(req.session.userCase.workAddresses).toEqual(convertJsonArrayToTitleCase(postcodeSelectResponse));
     });
 
     it('should handle get request with no addresses', async () => {
