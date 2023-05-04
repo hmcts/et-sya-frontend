@@ -42,9 +42,3 @@ export const isValidUKPostcode: AddressValidator = value => {
     return ValidationErrors.INVALID_VALUE;
   }
 };
-
-export const isAddressSelected: AddressValidator = value => {
-  if (isNaN(parseInt(value as string))) {
-    return 'notSelected';
-  }
-};
