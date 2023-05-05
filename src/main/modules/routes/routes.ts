@@ -15,6 +15,7 @@ import ApplicationDetailsController from '../../controllers/ApplicationDetailsCo
 import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
+import BundlesCompletedController from '../../controllers/BundlesCompletedController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -300,5 +301,6 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
+    app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
   }
 }

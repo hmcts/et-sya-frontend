@@ -1,0 +1,38 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+            titleText: titleText
+        }) 
+      }}
+      <br>
+        <h2 class="govuk-heading-m">{{ pHead }}</h2>
+            <p class="govuk-body ">{{ p1 }}</p>
+       <br>
+       {{ govukButton({
+        text: button,
+        href: redirectUrl
+      }) }}     
+    </div>
+    
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+            {% include "./citizen-hub-sidebar.njk" %}
+            {% endset %}
+
+            {{ govukDetails({
+              summaryText: contact,
+              html: sideBarContent
+            }) }}
+    </div>
+  </div>
+{% endblock %}
