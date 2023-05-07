@@ -1,11 +1,13 @@
-import { CaseWithId } from '../../definitions/case';
+import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { CLAIMANT } from '../../definitions/constants';
-import { DecisionBannerDetails } from '../../definitions/definition';
+import { CLAIMANT, RESPONDENT } from '../../definitions/constants';
+import { applicationTypes } from '../../definitions/contact-applications';
+import { DecisionAndApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -14,10 +16,16 @@ import { getLanguageParam } from './RouterHelpers';
 export const activateJudgmentsLink = (
   judgmentItems: SendNotificationTypeItem[],
   decisionItems: TseAdminDecisionItem[],
-  userCase: CaseWithId
+  req: AppRequest
 ): void => {
-  if ((judgmentItems && judgmentItems.length) || (decisionItems && decisionItems.length)) {
-    userCase.hubLinksStatuses[HubLinkNames.TribunalJudgments] = HubLinkStatus.IN_PROGRESS;
+  const userCase = req.session?.userCase;
+  if (
+    (judgmentItems && judgmentItems?.length && judgmentItems !== undefined) ||
+    (decisionItems && decisionItems?.length && decisionItems !== undefined)
+  ) {
+    if (userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] === HubLinkStatus.NOT_YET_AVAILABLE) {
+      userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] = HubLinkStatus.IN_PROGRESS;
+    }
   }
 };
 
@@ -29,25 +37,15 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
   if (judgmentItems && judgmentItems.length) {
     judgmentItems.forEach(item => {
       item.redirectUrl = `/judgment-details/${item.id}${getLanguageParam(url)}`;
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
-      item.displayStatus = translations[item.value.notificationState];
+      if (item.value.notificationState === undefined) {
+        item.statusColor = statusColorMap.get(HubLinkStatus.NOT_VIEWED);
+        item.displayStatus = translations.notViewedYet;
+      } else {
+        item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
+        item.displayStatus = translations[item.value.notificationState];
+      }
     });
     return judgmentItems;
-  }
-};
-
-export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
-  decisionItems: TseAdminDecisionItem[],
-  url: string,
-  translations: AnyRecord
-): TseAdminDecisionItem[] => {
-  if (decisionItems && decisionItems.length) {
-    decisionItems.forEach(item => {
-      item.redirectUrl = `/judgment-details/${item.id}${getLanguageParam(url)}`;
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.notificationState);
-      item.displayStatus = translations[item.notificationState];
-    });
-    return decisionItems;
   }
 };
 
@@ -157,10 +155,12 @@ export const getJudgmentDetails = (
 export const getDecisionDetails = (
   userCase: CaseWithId,
   selectedDecision: TseAdminDecisionItem,
+  selectedApplicationDocDownloadLink: string | void,
+  selectedApplicationResponseDocDownloadLink: string | void,
   downloadLink: string,
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[][] => {
-  const selectedDecisionApplication = getApplicationOfDecision(userCase);
+  const selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
   let responseFrom;
   if (selectedDecisionApplication.value.respondCollection?.length) {
     responseFrom =
@@ -211,26 +211,15 @@ export const getDecisionDetails = (
     }
   );
   if (selectedDecisionApplication.value.documentUpload) {
-    applicationDetails.push(
-      {
-        key: {
-          text: translations.supportingMaterial,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedDecisionApplication.value.documentUpload.document_url,
-        },
+    applicationDetails.push({
+      key: {
+        text: translations.supportingMaterial,
+        classes: 'govuk-!-font-weight-regular-m',
       },
-      {
-        key: {
-          text: translations.document,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: downloadLink,
-        },
-      }
-    );
+      value: {
+        html: selectedApplicationDocDownloadLink,
+      },
+    });
   }
   applicationDetails.push({
     key: {
@@ -271,6 +260,26 @@ export const getDecisionDetails = (
         },
       }
     );
+    if (selectedDecisionApplication.value.respondCollection[0].value.supportingMaterial) {
+      responseDetails.push({
+        key: {
+          text: translations.supportingMaterial,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          html: selectedApplicationResponseDocDownloadLink,
+        },
+      });
+    }
+    responseDetails.push({
+      key: {
+        text: translations.copyCorrespondence,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: selectedDecisionApplication.value.copyToOtherPartyYesOrNo,
+      },
+    });
   }
   decisionDetails.push(
     {
@@ -314,26 +323,15 @@ export const getDecisionDetails = (
   }
 
   if (selectedDecision.value.responseRequiredDoc) {
-    decisionDetails.push(
-      {
-        key: {
-          text: translations.description,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedDecision.value.responseRequiredDoc.document_url,
-        },
+    decisionDetails.push({
+      key: {
+        text: translations.document,
+        classes: 'govuk-!-font-weight-regular-m',
       },
-      {
-        key: {
-          text: translations.document,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: downloadLink,
-        },
-      }
-    );
+      value: {
+        html: downloadLink,
+      },
+    });
   }
   decisionDetails.push(
     {
@@ -370,36 +368,96 @@ export const getDecisionDetails = (
 
 export function getDecisions(userCase: CaseWithId): TseAdminDecisionItem[] {
   const decisions = userCase?.genericTseApplicationCollection
-    ?.filter(app => app.value.adminDecision && app.value.adminDecision.length)
-    .flatMap(it => it.value.adminDecision);
+    .filter(
+      obj =>
+        !obj.value.type.includes(applicationTypes.respondent.c) &&
+        obj.value.copyToOtherPartyYesOrNo === YesOrNo.YES &&
+        obj.value.adminDecision?.length
+    )
+    .flatMap(obj => obj.value.adminDecision);
+  return decisions.filter(it => it.value.typeOfDecision === 'Judgment');
+}
+
+export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
+  decisionItems: TseAdminDecisionItem[],
+  url: string,
+  translations: AnyRecord
+): TseAdminDecisionItem[] => {
+  if (decisionItems && decisionItems.length) {
+    decisionItems.forEach(item => {
+      item.redirectUrl = `/judgment-details/${item.id}${getLanguageParam(url)}`;
+      if (item.value.decisionState === undefined) {
+        item.statusColor = statusColorMap.get(HubLinkStatus.NOT_VIEWED);
+        item.displayStatus = translations.notViewedYet;
+      } else {
+        item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.decisionState);
+        item.displayStatus = translations[item.value.decisionState];
+      }
+    });
+    return decisionItems;
+  }
+};
+
+export function getAllAppsWithDecisions(userCase: CaseWithId): GenericTseApplicationTypeItem[] {
+  const decisions = userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
   return decisions;
 }
 
-export function getApplicationOfDecision(userCase: CaseWithId): GenericTseApplicationTypeItem {
-  const allApplications = userCase.genericTseApplicationCollection;
-  let stack = allApplications.map(item => ({ selectedApplicationId: item.id, selectedApplication: item }));
-  while (stack.length) {
-    const { selectedApplicationId, selectedApplication } = stack.pop();
-    stack = stack.concat(
-      selectedApplication.value.adminDecision?.map(item => ({
-        selectedApplicationId: selectedApplicationId.concat(item.id),
-        selectedApplication: item,
-      }))
-    );
-    return userCase.genericTseApplicationCollection.find(item => item.id === selectedApplicationId);
+export function matchDecisionsToApps(
+  appOfDecision: GenericTseApplicationTypeItem[],
+  decision: TseAdminDecisionItem[]
+): DecisionAndApplicationDetails[] {
+  const result = [];
+  if (appOfDecision?.length) {
+    for (let i = 0; i < appOfDecision.length; i++) {
+      if (
+        (appOfDecision[i].value.applicant === RESPONDENT &&
+          !appOfDecision[i].value.type.includes(applicationTypes.respondent.c) &&
+          appOfDecision[i].value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
+        appOfDecision[i].value.applicant === CLAIMANT
+      ) {
+        const parent = appOfDecision[i];
+        for (let j = 0; j < parent.value.adminDecision.length; j++) {
+          if (parent.value.adminDecision[j].value.typeOfDecision === 'Judgment') {
+            const nested = parent.value.adminDecision[j];
+            const matchingChildren = decision.filter(child => child.id === nested.id);
+            result.push({
+              ...parent,
+              decisionOfApp: matchingChildren[0],
+            });
+          }
+        }
+      }
+    }
   }
+  return result;
 }
 
-export const getJudgmentDecisions = (items: TseAdminDecisionItem[]): TseAdminDecisionItem[] => {
-  return items?.filter(it => it.value.typeOfDecision === 'Judgment');
-};
+export function getApplicationOfDecision(
+  userCase: CaseWithId,
+  selectedDecision: TseAdminDecisionItem
+): GenericTseApplicationTypeItem {
+  const data = userCase?.genericTseApplicationCollection;
+  const decisionApps = data?.filter(element => element.value.adminDecision && element.value.adminDecision.length);
+  const searchValue = selectedDecision;
+  let appOfDecision = undefined;
+
+  for (let i = 0; i < decisionApps.length; i++) {
+    if (decisionApps[i].value.adminDecision.find(val => val === searchValue)) {
+      appOfDecision = decisionApps[i];
+    }
+  }
+  return appOfDecision;
+}
 
 export const findSelectedDecision = (items: TseAdminDecisionItem[], param: string): TseAdminDecisionItem => {
   return items?.find(it => it.id === param);
 };
 
 export const getJudgments = (userCase: CaseWithId): SendNotificationTypeItem[] => {
-  return userCase?.sendNotificationCollection?.filter(app => app.value.sendNotificationSubjectString === 'Judgment');
+  return userCase?.sendNotificationCollection?.filter(app =>
+    app.value.sendNotificationSubjectString.includes('Judgment')
+  );
 };
 
 export const findSelectedJudgment = (items: SendNotificationTypeItem[], param: string): SendNotificationTypeItem => {
@@ -426,29 +484,26 @@ export const getJudgmentBannerContent = (
 };
 
 export const getDecisionBannerContent = (
-  items: GenericTseApplicationTypeItem[],
+  appsAndDecisions: DecisionAndApplicationDetails[],
   translations: AnyRecord,
   languageParam: string
-): DecisionBannerDetails[] => {
-  const bannerContent: DecisionBannerDetails[] = [];
+): DecisionAndApplicationDetails[] => {
+  const items = appsAndDecisions;
+  const bannerContent: DecisionAndApplicationDetails[] = [];
   if (items && items.length) {
     for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].value.adminDecision?.length) {
-        for (let j = items[i].value.adminDecision.length - 1; j >= 0; j--) {
-          if (items[i].value.adminDecision[j].value.typeOfDecision === 'Judgment') {
-            const decisionBannerHeader =
-              items[i].value.applicant === CLAIMANT
-                ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
-                : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
-            const bannerDetails: DecisionBannerDetails = {
-              decisionBannerHeader,
-              redirectUrl: `/judgment-details/${items[i].value.adminDecision[j].id}${languageParam}`,
-              applicant: items[i].value.applicant,
-              applicationType: items[i].value.type,
-            };
-            bannerContent.push(bannerDetails);
-          }
-        }
+      if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
+        const decisionBannerHeader =
+          items[i].value.applicant === CLAIMANT
+            ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
+            : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
+        const bannerDetails: DecisionAndApplicationDetails = {
+          decisionBannerHeader,
+          redirectUrl: `/judgment-details/${items[i].decisionOfApp?.id}${languageParam}`,
+          applicant: items[i].value.applicant,
+          applicationType: items[i].value.type,
+        };
+        bannerContent.push(bannerDetails);
       }
     }
     return bannerContent;
