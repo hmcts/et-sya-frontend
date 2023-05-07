@@ -7,12 +7,13 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { createDownloadLink, findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
+import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
-  getClaimantResponseDocDownloadLink,
+  getApplicationDocDownloadLink,
   getDecisionContent,
+  getResponseDocDownloadLink,
   setSelectedTseApplication,
 } from './helpers/TseRespondentApplicationHelpers';
 
@@ -30,12 +31,7 @@ export default class RespondentApplicationDetailsController {
     setSelectedTseApplication(req, userCase, selectedApplication);
 
     const accessToken = req.session.user?.accessToken;
-    const claimantResponseDocDownloadLink = await getClaimantResponseDocDownloadLink(
-      selectedApplication,
-      logger,
-      accessToken,
-      res
-    );
+    const responseDocDownloadLink = await getResponseDocDownloadLink(selectedApplication, logger, accessToken, res);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
@@ -47,7 +43,14 @@ export default class RespondentApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const redirectUrl = `/respond-to-application/${selectedApplication.id}${getLanguageParam(req.url)}`;
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === CLAIMANT);
-    const supportingMaterialDownloadLink = createDownloadLink(selectedApplication.value?.documentUpload);
+
+    const supportingMaterialDownloadLink = await getApplicationDocDownloadLink(
+      selectedApplication,
+      logger,
+      accessToken,
+      res
+    );
+
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -62,7 +65,7 @@ export default class RespondentApplicationDetailsController {
       appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
       decisionContent,
       respondButton,
-      claimantResponseDocDownloadLink,
+      responseDocDownloadLink,
     });
   };
 }

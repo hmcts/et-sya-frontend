@@ -21,17 +21,12 @@ import { getCaseApi } from '../services/CaseService';
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
   activateJudgmentsLink,
-  activateJudgmentsLink,
-  getDecisionBannerContent,
+  getAllAppsWithDecisions,
   getDecisionBannerContent,
   getDecisions,
-  getDecisions,
   getJudgmentBannerContent,
-  getJudgmentBannerContent,
-  getJudgmentDecisions,
-  getJudgmentDecisions,
   getJudgments,
-  getJudgments,
+  matchDecisionsToApps,
 } from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
@@ -74,6 +69,12 @@ export default class CitizenHubController {
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
 
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
+
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
@@ -84,9 +85,15 @@ export default class CitizenHubController {
     activateRespondentApplicationsLink(respondentApplications, userCase);
 
     const judgments = getJudgments(userCase);
-    const decisions = getDecisions(userCase);
-    const judgmentDecisions = getJudgmentDecisions(decisions);
-    activateJudgmentsLink(judgments, judgmentDecisions, userCase);
+    let decisions = undefined;
+    let appsAndDecisions = undefined;
+    if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
+      decisions = getDecisions(userCase);
+      const appsWithDecisions = getAllAppsWithDecisions(userCase);
+      appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+    }
+
+    activateJudgmentsLink(judgments, decisions, req);
 
     // Mark respondent's response as waiting for the tribunal
     if (
@@ -116,12 +123,6 @@ export default class CitizenHubController {
       };
     });
 
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-    };
-
     const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
@@ -131,12 +132,13 @@ export default class CitizenHubController {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
 
-    const judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
-    const decisionBannerContent = getDecisionBannerContent(
-      userCase.genericTseApplicationCollection,
-      translations,
-      languageParam
-    );
+    let judgmentBannerContent = undefined;
+    let decisionBannerContent = undefined;
+
+    if (userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
+      judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
+      decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
+    }
 
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -218,7 +220,7 @@ function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatu
 }
 
 function shouldShowJudgmentReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.TribunalJudgments] === HubLinkStatus.IN_PROGRESS;
+  return hubLinksStatuses[HubLinkNames.tribunalJudgements] === HubLinkStatus.IN_PROGRESS;
 }
 
 function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {

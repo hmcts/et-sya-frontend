@@ -7,7 +7,7 @@ import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { updateJudgmentNotificationState } from './helpers/CaseHelpers';
+import { updateDecisionState, updateJudgmentNotificationState } from './helpers/CaseHelpers';
 import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import {
@@ -18,6 +18,7 @@ import {
   getDecisions,
   getJudgmentDetails,
 } from './helpers/JudgmentHelpers';
+import { getApplicationDocDownloadLink, getResponseDocDownloadLink } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('JudgmentDetailsController');
 export default class JudgmentDetailsController {
@@ -34,34 +35,50 @@ export default class JudgmentDetailsController {
     let selectedDecision = undefined;
     let decisions = undefined;
     let header = undefined;
-    let selectedJudgmentAttachment = undefined;
+    let selectedAttachment = undefined;
     let selectedDecisionApplication;
+    let responseDocDownloadLink = undefined;
+    let selectedApplicationDocDownloadLink = undefined;
 
     if (selectedJudgment === undefined) {
       decisions = getDecisions(userCase);
       selectedDecision = findSelectedDecision(decisions, req.params.appId);
-      selectedDecisionApplication = getApplicationOfDecision(userCase);
+      if (selectedDecision?.value?.decisionState !== HubLinkStatus.VIEWED) {
+        try {
+          await updateDecisionState(selectedDecision, req, logger);
+        } catch (error) {
+          logger.info(error.message);
+        }
+      }
+      selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
+      const accessToken = req.session.user?.accessToken;
+      selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
+        selectedDecisionApplication,
+        logger,
+        accessToken,
+        res
+      );
+      responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, logger, accessToken, res);
       header = translations.applicationTo + translations[selectedDecisionApplication.value.type];
-      selectedJudgmentAttachment = selectedDecision.value.responseRequiredDoc;
-      selectedDecision.notificationState = HubLinkStatus.VIEWED;
+      selectedAttachment = selectedDecision.value.responseRequiredDoc;
+      selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
     } else {
-      selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
+      userCase.selectedRequestOrOrder = selectedJudgment;
       header = selectedJudgment.value.sendNotificationTitle;
-      selectedJudgmentAttachment =
+      selectedAttachment =
         selectedJudgment.value?.sendNotificationUploadDocument === undefined
           ? undefined
           : selectedJudgment.value?.sendNotificationUploadDocument[0]?.value.uploadedDocument;
       if (selectedJudgment.value.notificationState !== HubLinkStatus.VIEWED) {
         try {
           await updateJudgmentNotificationState(selectedJudgment, req, logger);
-          selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
         } catch (error) {
           logger.info(error.message);
         }
       }
     }
 
-    const document = selectedJudgmentAttachment === undefined ? undefined : selectedJudgmentAttachment;
+    const document = selectedAttachment === undefined ? undefined : selectedAttachment;
 
     if (document) {
       try {
@@ -75,7 +92,14 @@ export default class JudgmentDetailsController {
     const downloadLink = createDownloadLink(document);
     const pageContent =
       selectedJudgment === undefined
-        ? getDecisionDetails(userCase, selectedDecision, downloadLink, translations)
+        ? getDecisionDetails(
+            userCase,
+            selectedDecision,
+            selectedApplicationDocDownloadLink,
+            responseDocDownloadLink,
+            downloadLink,
+            translations
+          )
         : getJudgmentDetails(selectedJudgment, downloadLink, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
