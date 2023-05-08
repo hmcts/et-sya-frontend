@@ -86,7 +86,7 @@ export const getRepondentOrderOrRequestDetails = (
   }
 
   const docs = item.value.sendNotificationUploadDocument;
-  if (docs && docs.length) {
+  if (docs?.length) {
     docs.forEach(doc => {
       respondentRequestOrOrderDetails.push(
         {
@@ -158,7 +158,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): SendNotificationTypeItem[] => {
-  if (notifications && notifications.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
+  if (notifications?.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
     notifications.forEach(item => {
       item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
         ':orderId',
@@ -173,7 +173,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
 
 export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTypeItem[], req: AppRequest): void => {
   const userCase = req.session?.userCase;
-  if (items && items.length && filterNotificationsWithRequestsOrOrders(items).length) {
+  if (items?.length && filterNotificationsWithRequestsOrOrders(items).length) {
     const respOnly = items.some(
       item =>
         item.value.sendNotificationSelectParties === Parties.RESPONDENT_ONLY &&

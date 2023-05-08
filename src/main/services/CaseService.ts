@@ -116,7 +116,7 @@ export class CaseApi {
 
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put('cases/respond-to-application', {
+      return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         applicationId: caseItem.selectedGenericTseApplication.id,

@@ -34,7 +34,7 @@ export default class TribunalOrderOrRequestDetailsController {
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
     const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
-    if (documents && documents.length) {
+    if (documents?.length) {
       for (const it of documents) {
         try {
           await getDocumentAdditionalInformation(it.value.uploadedDocument, req.session.user?.accessToken);
