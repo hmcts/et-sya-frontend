@@ -16,8 +16,16 @@ import {
 export default class AllJudgmentsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const judgments = getJudgments(userCase);
-    const decisions = getDecisions(userCase);
+
+    let judgments = undefined;
+    if (userCase?.sendNotificationCollection?.length) {
+      judgments = getJudgments(userCase);
+    }
+
+    let decisions = undefined;
+    if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
+      decisions = getDecisions(userCase);
+    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.ALL_JUDGMENTS, { returnObjects: true }),

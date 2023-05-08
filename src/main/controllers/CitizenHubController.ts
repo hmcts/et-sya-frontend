@@ -84,13 +84,17 @@ export default class CitizenHubController {
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
 
-    const judgments = getJudgments(userCase);
     let decisions = undefined;
     let appsAndDecisions = undefined;
     if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
       decisions = getDecisions(userCase);
       const appsWithDecisions = getAllAppsWithDecisions(userCase);
       appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+    }
+
+    let judgments = undefined;
+    if (userCase?.sendNotificationCollection?.length) {
+      judgments = getJudgments(userCase);
     }
 
     activateJudgmentsLink(judgments, decisions, req);

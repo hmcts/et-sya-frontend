@@ -31,17 +31,23 @@ export default class JudgmentDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    const selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
     let selectedDecision = undefined;
     let decisions = undefined;
     let header = undefined;
     let selectedAttachment = undefined;
-    let selectedDecisionApplication;
+    let selectedDecisionApplication = undefined;
     let responseDocDownloadLink = undefined;
     let selectedApplicationDocDownloadLink = undefined;
 
+    let selectedJudgment = undefined;
+    if (userCase?.sendNotificationCollection?.length) {
+      selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
+    }
+
     if (selectedJudgment === undefined) {
-      decisions = getDecisions(userCase);
+      if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
+        decisions = getDecisions(userCase);
+      }
       selectedDecision = findSelectedDecision(decisions, req.params.appId);
       if (selectedDecision?.value?.decisionState !== HubLinkStatus.VIEWED) {
         try {
@@ -59,9 +65,8 @@ export default class JudgmentDetailsController {
         res
       );
       responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, logger, accessToken, res);
-      header = translations.applicationTo + translations[selectedDecisionApplication.value.type];
-      selectedAttachment = selectedDecision.value.responseRequiredDoc;
-      selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
+      header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
+      selectedAttachment = selectedDecision?.value?.responseRequiredDoc;
     } else {
       userCase.selectedRequestOrOrder = selectedJudgment;
       header = selectedJudgment.value.sendNotificationTitle;

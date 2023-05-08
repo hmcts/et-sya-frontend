@@ -162,9 +162,9 @@ export const getDecisionDetails = (
 ): { key: unknown; value?: unknown; actions?: unknown }[][] => {
   const selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
   let responseFrom;
-  if (selectedDecisionApplication.value.respondCollection?.length) {
+  if (selectedDecisionApplication?.value.respondCollection?.length) {
     responseFrom =
-      selectedDecisionApplication.value.respondCollection[0].value.from === CLAIMANT
+      selectedDecisionApplication?.value.respondCollection[0].value.from === CLAIMANT
         ? translations.responseFromRespondent
         : translations.responseFromClaimant;
   }
@@ -179,7 +179,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecisionApplication.value.applicant,
+        text: selectedDecisionApplication?.value.applicant,
       },
     },
     {
@@ -188,7 +188,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecisionApplication.value.type,
+        text: selectedDecisionApplication?.value.type,
       },
     },
     {
@@ -197,7 +197,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecisionApplication.value.date,
+        text: selectedDecisionApplication?.value.date,
       },
     },
     {
@@ -206,11 +206,11 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecisionApplication.value.details,
+        text: selectedDecisionApplication?.value.details,
       },
     }
   );
-  if (selectedDecisionApplication.value.documentUpload) {
+  if (selectedDecisionApplication?.value.documentUpload) {
     applicationDetails.push({
       key: {
         text: translations.supportingMaterial,
@@ -227,10 +227,10 @@ export const getDecisionDetails = (
       classes: 'govuk-!-font-weight-regular-m',
     },
     value: {
-      text: selectedDecisionApplication.value.copyToOtherPartyYesOrNo,
+      text: selectedDecisionApplication?.value.copyToOtherPartyYesOrNo,
     },
   });
-  if (selectedDecisionApplication.value.respondCollection) {
+  if (selectedDecisionApplication?.value.respondCollection) {
     responseDetails.push(
       {
         key: {
@@ -238,7 +238,7 @@ export const getDecisionDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          text: selectedDecisionApplication.value.respondCollection[0].value.from,
+          text: selectedDecisionApplication?.value.respondCollection[0].value.from,
         },
       },
       {
@@ -247,7 +247,7 @@ export const getDecisionDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          html: selectedDecisionApplication.value.respondCollection[0].value.date,
+          html: selectedDecisionApplication?.value.respondCollection[0].value.date,
         },
       },
       {
@@ -256,11 +256,11 @@ export const getDecisionDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          html: selectedDecisionApplication.value.respondCollection[0].value.response,
+          html: selectedDecisionApplication?.value.respondCollection[0].value.response,
         },
       }
     );
-    if (selectedDecisionApplication.value.respondCollection[0].value.supportingMaterial) {
+    if (selectedDecisionApplication?.value.respondCollection[0].value.supportingMaterial) {
       responseDetails.push({
         key: {
           text: translations.supportingMaterial,
@@ -277,7 +277,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecisionApplication.value.copyToOtherPartyYesOrNo,
+        text: selectedDecisionApplication?.value.copyToOtherPartyYesOrNo,
       },
     });
   }
@@ -288,7 +288,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.enterNotificationTitle,
+        text: selectedDecision?.value.enterNotificationTitle,
       },
     },
     {
@@ -297,7 +297,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.date,
+        text: selectedDecision?.value.date,
       },
     },
     {
@@ -306,23 +306,23 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.decisionMadeBy,
+        text: selectedDecision?.value.decisionMadeBy,
       },
     }
   );
-  if (selectedDecision.value.additionalInformation) {
+  if (selectedDecision?.value.additionalInformation) {
     decisionDetails.push({
       key: {
         text: translations.additionalInfo,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.additionalInformation,
+        text: selectedDecision?.value.additionalInformation,
       },
     });
   }
 
-  if (selectedDecision.value.responseRequiredDoc) {
+  if (selectedDecision?.value.responseRequiredDoc) {
     decisionDetails.push({
       key: {
         text: translations.document,
@@ -340,7 +340,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.decisionMadeBy,
+        text: selectedDecision?.value.decisionMadeBy,
       },
     },
 
@@ -350,7 +350,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.decisionMadeByFullName,
+        text: selectedDecision?.value.decisionMadeByFullName,
       },
     },
     {
@@ -359,7 +359,7 @@ export const getDecisionDetails = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: selectedDecision.value.selectPartyNotify,
+        text: selectedDecision?.value.selectPartyNotify,
       },
     }
   );
@@ -442,7 +442,7 @@ export function getApplicationOfDecision(
   const searchValue = selectedDecision;
   let appOfDecision = undefined;
 
-  for (let i = 0; i < decisionApps.length; i++) {
+  for (let i = 0; i < decisionApps?.length; i++) {
     if (decisionApps[i].value.adminDecision.find(val => val === searchValue)) {
       appOfDecision = decisionApps[i];
     }
