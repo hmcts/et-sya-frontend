@@ -186,7 +186,6 @@
     {% endif %}
   {% endfor %}
   {% for item in decisionBannerContent %}
-    {% if item.value.notificationState !== 'viewed' %}
       {% set htmlForDecisionReceived %}
       <h3 class="govuk-notification-banner__heading">
         {{item.decisionBannerHeader}}
@@ -199,7 +198,6 @@
           html: htmlForDecisionReceived,
           titleText: important
           }) }}
-    {% endif %}
   {% endfor %}
 {% endif %}
 
