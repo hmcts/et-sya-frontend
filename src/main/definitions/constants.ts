@@ -245,6 +245,7 @@ export const JavaApiUrls = {
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
@@ -468,3 +469,4 @@ export const ResponseRequired = {
 } as const;
 
 export const CLAIMANT = 'Claimant';
+export const RESPONDENT = 'Respondent';

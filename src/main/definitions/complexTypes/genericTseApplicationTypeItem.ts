@@ -34,7 +34,6 @@ export interface TseAdminDecisionItem {
   redirectUrl?: string;
   statusColor?: string;
   displayStatus?: string;
-  notificationState?: string;
 }
 
 export interface TseAdminDecision {
@@ -47,6 +46,7 @@ export interface TseAdminDecision {
   additionalInformation?: string;
   decisionMadeByFullName?: string;
   enterNotificationTitle?: string;
+  decisionState?: string;
 }
 
 export interface TseRespondTypeItem {
