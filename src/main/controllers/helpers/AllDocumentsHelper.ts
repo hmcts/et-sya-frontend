@@ -44,9 +44,7 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
   }
 };
 
-export const mapDocumentToTableRow = (
-  item: DocumentTypeItem
-): { date: string; description: string; downloadLink: string } => {
+export const mapDocumentToTableRow = (item: DocumentTypeItem): TableRow => {
   return {
     date: item.value.uploadedDocument.createdOn,
     description: item.value.shortDescription,
@@ -73,6 +71,7 @@ export const createSortedDocumentsMap = (docs: DocumentTypeItem[]): Map<string, 
         break;
       default:
         tribunalDocs.push(doc);
+        break;
     }
   });
 
@@ -101,18 +100,6 @@ export const filterRespondentsDocuments = (docs: DocumentTypeItem[], userCase: C
     ) {
       docsIdsToBeFiltered.push(tseValue.documentUpload.document_url);
     }
-
-    tseValue.respondCollection?.forEach(resp => {
-      const tseRespValue = resp.value;
-      if (
-        tseRespValue.from === Applicant.RESPONDENT &&
-        tseRespValue.supportingMaterial &&
-        tseRespValue.supportingMaterial.length &&
-        documentHasToBeFiltered(tseValue.copyToOtherPartyYesOrNo, tseValue.type)
-      ) {
-        docsIdsToBeFiltered.push(tseRespValue.supportingMaterial[0].value.uploadedDocument.document_url);
-      }
-    });
   });
   return docs.filter(doc => !docsIdsToBeFiltered.includes(doc.value.uploadedDocument.document_url));
 };
