@@ -258,6 +258,86 @@ describe('update case', () => {
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockClaimantTseRequest);
   });
 
+  it('should submit response to application', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedGenericTseApplication: { id: '12345', value: {} },
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    await api.respondToApplication(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.RESPOND_TO_APPLICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: '1234',
+      case_type_id: 'ET_EnglandWales',
+      applicationId: '12345',
+      supportingMaterialFile: undefined,
+      response: {
+        response: 'Not for me',
+        hasSupportingMaterial: 'No',
+        copyToOtherParty: 'No',
+        copyNoGiveDetails: "Don't copy",
+      },
+    });
+  });
+
+  it('should submit response to send notification', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      caseTypeId: CaseTypeId.ENGLAND_WALES,
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      hubLinksStatuses: new HubLinksStatuses(),
+      selectedRequestOrOrder: { id: '12345', value: {} },
+      contactApplicationType: 'witness',
+      contactApplicationText: 'Change claim',
+      contactApplicationFile: {
+        document_url: '12345',
+        document_filename: 'test.pdf',
+        document_binary_url: '',
+        document_size: 1000,
+        document_mime_type: 'pdf',
+      },
+      copyToOtherPartyYesOrNo: YesOrNo.NO,
+      copyToOtherPartyText: "Don't copy",
+      hasSupportingMaterial: YesOrNo.NO,
+      responseText: 'Not for me',
+    };
+
+    await api.addResponseSendNotification(caseItem);
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.ADD_RESPONSE_TO_SEND_NOTIFICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      case_type_id: caseItem.caseTypeId,
+      send_notification_id: '12345',
+      supportingMaterialFile: undefined,
+      pseResponseType: {
+        response: 'Not for me',
+        hasSupportingMaterial: 'No',
+        copyToOtherParty: 'No',
+        copyNoGiveDetails: "Don't copy",
+      },
+    });
+  });
+
   it('should update hub links statuses', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
@@ -421,7 +501,11 @@ describe('Axios post to retrieve pdf', () => {
 });
 
 describe('Rethrowing errors when axios requests fail', () => {
-  const caseItem = { id: 123 };
+  const caseItem = {
+    id: 123,
+    selectedRequestOrOrder: { id: '12345', value: {} },
+    selectedGenericTseApplication: { id: '12345', value: {} },
+  };
 
   beforeAll(() => {
     mockedAxios.get.mockRejectedValue(error);
@@ -470,6 +554,26 @@ describe('Rethrowing errors when axios requests fail', () => {
     {
       serviceMethod: api.getUserCase,
       errorMessage: 'Error getting user case: ' + error.message,
+    },
+    {
+      serviceMethod: api.submitClaimantTse,
+      parameters: [caseItem],
+      errorMessage: 'Error submitting claimant tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.respondToApplication,
+      parameters: [caseItem],
+      errorMessage: 'Error responding to tse application: ' + error.message,
+    },
+    {
+      serviceMethod: api.addResponseSendNotification,
+      parameters: [caseItem],
+      errorMessage: 'Error adding response to sendNotification: ' + error.message,
+    },
+    {
+      serviceMethod: api.updateSendNotificationState,
+      parameters: [caseItem],
+      errorMessage: 'Error updating sendNotification state: ' + error.message,
     },
     {
       serviceMethod: api.submitCase,

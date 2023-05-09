@@ -34,7 +34,7 @@ export const getRespondentBannerContent = (
 ): RespondentApplicationDetails[] => {
   const bannerContent: RespondentApplicationDetails[] = [];
 
-  if (items && items.length) {
+  if (items?.length) {
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].value.applicationState === 'notStartedYet') {
         const dueDate = new Date(Date.parse(items[i].value.dueDate));
@@ -69,7 +69,7 @@ export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
-  if (items && items.length) {
+  if (items?.length) {
     userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
   }
 };
@@ -79,7 +79,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): GenericTseApplicationTypeItem[] => {
-  if (respondentItems && respondentItems.length) {
+  if (respondentItems?.length) {
     respondentItems.forEach(item => {
       const app = translations[item.value.type];
       item.linkValue = app;

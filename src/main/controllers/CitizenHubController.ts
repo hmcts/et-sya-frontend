@@ -143,7 +143,7 @@ export default class CitizenHubController {
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
-      showOrderOrRequestReceived: notifications && notifications.length,
+      showOrderOrRequestReceived: notifications?.length,
     });
   }
 }
