@@ -4,7 +4,7 @@ import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { CLAIMANT, TranslationKeys } from '../../../../main/definitions/constants';
+import { Applicant, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetailsRaw from '../../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -23,7 +23,7 @@ describe('Respondent application details', () => {
         {
           id: '1',
           value: {
-            from: CLAIMANT,
+            from: Applicant.CLAIMANT,
             date: '20 March 2023',
             response: 'Response text',
             copyToOtherParty: YesOrNo.YES,

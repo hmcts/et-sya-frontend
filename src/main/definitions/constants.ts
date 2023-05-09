@@ -105,6 +105,7 @@ export const TranslationKeys = {
   TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
+  ALL_DOCUMENTS: 'all-documents',
 } as const;
 
 export const PageUrls = {
@@ -205,6 +206,7 @@ export const PageUrls = {
   TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
+  ALL_DOCUMENTS: '/all-documents',
 } as const;
 
 export const InterceptPaths = {
@@ -464,4 +466,14 @@ export const ResponseRequired = {
   NO: 'No',
 } as const;
 
-export const CLAIMANT = 'Claimant';
+export const Applicant = {
+  CLAIMANT: 'Claimant',
+  RESPONDENT: 'Respondent',
+} as const;
+
+export const AllDocumentTypes = {
+  CLAIMANT_CORRESPONDENCE: 'Claimant correspondence',
+  ACAS_CERT: 'ACAS Certificate',
+  RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
+  TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+} as const;

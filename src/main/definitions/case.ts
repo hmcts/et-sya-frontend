@@ -10,6 +10,7 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
+import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -182,6 +183,7 @@ export interface Case {
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
   rule92state?: boolean;
+  documentCollection?: DocumentTypeItem[];
 }
 
 export const enum StillWorking {
@@ -288,4 +290,5 @@ export interface Document {
   document_binary_url: string;
   document_size?: number;
   document_mime_type?: string;
+  createdOn?: string;
 }

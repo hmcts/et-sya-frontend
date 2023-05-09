@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CLAIMANT, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -46,7 +46,7 @@ export default class RespondentApplicationDetailsController {
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const redirectUrl = `/respond-to-application/${selectedApplication.id}${getLanguageParam(req.url)}`;
-    const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === CLAIMANT);
+    const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
     const supportingMaterialDownloadLink = createDownloadLink(selectedApplication.value?.documentUpload);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,

@@ -6,6 +6,7 @@ import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
 import { getClaimantResponseDocDownload } from './TseRespondentApplicationHelpers';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
@@ -30,10 +31,24 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const { size, mimeType } = docDetails.data;
+  const { createdOn, size, mimeType } = docDetails.data;
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'long',
+  }).format(new Date(createdOn));
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
+};
+
+export const getDocumentsAdditionalInformation = async (
+  documents: DocumentTypeItem[],
+  accessToken: string
+): Promise<void> => {
+  if (documents && documents.length) {
+    for (const doc of documents) {
+      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+    }
+  }
 };
 
 // merge arrays but make sure they are not undefined
