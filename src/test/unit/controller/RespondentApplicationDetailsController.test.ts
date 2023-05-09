@@ -1,6 +1,6 @@
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { CLAIMANT, TranslationKeys } from '../../../main/definitions/constants';
+import { Applicant, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -27,7 +27,7 @@ describe('Respondent application details controller', () => {
               {
                 id: '1',
                 value: {
-                  from: CLAIMANT,
+                  from: Applicant.CLAIMANT,
                   date: '20 March 2023',
                   response: 'Response text',
                   copyToOtherParty: YesOrNo.YES,
