@@ -19,10 +19,7 @@ export const activateJudgmentsLink = (
   req: AppRequest
 ): void => {
   const userCase = req.session?.userCase;
-  if (
-    (judgmentItems && judgmentItems?.length && judgmentItems !== undefined) ||
-    (decisionItems && decisionItems?.length && decisionItems !== undefined)
-  ) {
+  if (judgmentItems?.length || decisionItems?.length) {
     if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] === HubLinkStatus.NOT_YET_AVAILABLE) {
       userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] = HubLinkStatus.IN_PROGRESS;
     }
@@ -34,7 +31,7 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): SendNotificationTypeItem[] => {
-  if (judgmentItems && judgmentItems.length) {
+  if (judgmentItems?.length) {
     judgmentItems.forEach(item => {
       item.redirectUrl = `/judgment-details/${item.id}${getLanguageParam(url)}`;
       if (item.value.notificationState === undefined) {
@@ -85,6 +82,7 @@ export const getJudgmentDetails = (
       },
     }
   );
+
   if (selectedJudgment.value.sendNotificationAdditionalInfo) {
     judgmentDetails.push({
       key: {
@@ -210,6 +208,7 @@ export const getDecisionDetails = (
       },
     }
   );
+
   if (selectedDecisionApplication?.value.documentUpload) {
     applicationDetails.push({
       key: {
@@ -230,6 +229,7 @@ export const getDecisionDetails = (
       text: selectedDecisionApplication?.value.copyToOtherPartyYesOrNo,
     },
   });
+
   if (selectedDecisionApplication?.value.respondCollection) {
     responseDetails.push(
       {
@@ -260,6 +260,7 @@ export const getDecisionDetails = (
         },
       }
     );
+
     if (selectedDecisionApplication?.value.respondCollection[0].value.supportingMaterial) {
       responseDetails.push({
         key: {
@@ -310,6 +311,7 @@ export const getDecisionDetails = (
       },
     }
   );
+
   if (selectedDecision?.value.additionalInformation) {
     decisionDetails.push({
       key: {

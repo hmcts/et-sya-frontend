@@ -17,12 +17,12 @@ export default class AllJudgmentsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
 
-    let judgments = undefined;
+    let judgments;
     if (userCase?.sendNotificationCollection?.length) {
       judgments = getJudgments(userCase);
     }
 
-    let decisions = undefined;
+    let decisions;
     if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
       decisions = getDecisions(userCase);
     }
