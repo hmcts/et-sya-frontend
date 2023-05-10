@@ -1,3 +1,4 @@
+import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -10,7 +11,6 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
-import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 
 export enum Checkbox {
   Checked = 'checked',

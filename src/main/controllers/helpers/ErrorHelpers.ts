@@ -244,7 +244,8 @@ export const getFileUploadAndTextAreaError = (
   fileTooLarge: boolean,
   uploadedFile: Document,
   textAreaProperty: string,
-  uplodedFileProperty: string
+  uplodedFileProperty: string,
+  logger: Logger
 ): FormError => {
   const tooLong = isContent2500CharsOrLess(formDataText);
   if (tooLong) {
@@ -262,7 +263,7 @@ export const getFileUploadAndTextAreaError = (
     return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
   }
 
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = hasInvalidFileFormat(file, logger);
   if (fileFormatInvalid) {
     return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
   }

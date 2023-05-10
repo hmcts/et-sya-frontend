@@ -243,7 +243,6 @@ export const postLogic = async (
   }
 };
 
-
 export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.contactApplicationText = undefined;
   userCase.contactApplicationFile = undefined;
@@ -252,12 +251,14 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
+};
 
 function toTitleCase(str: string): string {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
   });
 }
+
 export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[]): Record<string, string>[] => {
   return jsonArray.map(addressObj => {
     const newObj: Record<string, string> = {};

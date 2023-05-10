@@ -461,7 +461,6 @@ export const languages = {
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
 
-
 export const Rule92Types = {
   CONTACT: 'Contact',
   RESPOND: 'Respond',

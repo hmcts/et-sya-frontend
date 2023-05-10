@@ -1,18 +1,15 @@
-import { AppRequest } from '../../definitions/appRequest';
-import { Document } from '../../definitions/case';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-
 import { AxiosResponse } from 'axios';
 
-import { CaseWithId } from '../../definitions/case';
+import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, Document } from '../../definitions/case';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
-
 import { DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
 import { getClaimantResponseDocDownload } from './TseRespondentApplicationHelpers';
-import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
@@ -44,10 +41,20 @@ export const getDocumentAdditionalInformation = async (doc: Document, accessToke
   return doc;
 };
 
+export const getDocumentsAdditionalInformation = async (
+  documents: DocumentTypeItem[],
+  accessToken: string
+): Promise<void> => {
+  if (documents && documents.length) {
+    for (const doc of documents) {
+      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+    }
+  }
+};
+
 // merge arrays but make sure they are not undefined
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
-
 
 export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file?.document_filename);

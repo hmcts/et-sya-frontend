@@ -1,5 +1,5 @@
 import config from 'config';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import { Applicant } from '../../../main/definitions/constants';
 import { createToken } from '../../../main/pcq/createToken';
