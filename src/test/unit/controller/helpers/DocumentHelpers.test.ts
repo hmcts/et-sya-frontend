@@ -275,53 +275,54 @@ it('should update document size and mime type values', async () => {
 
   expect(modifiedDoc.document_size).toEqual(10575);
   expect(modifiedDoc.document_mime_type).toEqual('pdf');
-it('should combine user case documents correctly', () => {
-  expect(combineUserCaseDocuments([mockUserCaseWithDocumentsComplete])).toStrictEqual([
-    { description: 'Case Details - Sunday Ayeni', id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673', type: 'ET1' },
-    { id: '1', description: 'desc1' },
-    { id: '2', description: 'desc2' },
-    { id: '3', description: 'desc3' },
-    { id: '4', description: 'desc4' },
-    { id: '5', description: 'desc5' },
-    { id: '6', description: 'desc6' },
-    { id: '7', description: 'desc7' },
-    { id: '8', description: 'desc8' },
-    {
-      id: 'a0c113ec-eede-472a-a59c-f2614b48177c',
-      description: 'Claim Summary File Detail',
-      originalDocumentName: 'document.pdf',
-    },
-  ]);
-});
-
-describe('FindContentTypeByDocument', () => {
-  it.each([
-    [documentWithContentType, 'application/vnd.ms-excel'],
-    [documentWithOriginalFileName, 'application/vnd.ms-word'],
-    [documentWithFileName, 'application/vnd.ms-powerpoint'],
-    [documentWithInvalidOriginalFileName, undefined],
-    [documentWithInvalidFileName, undefined],
-    [documentWithoutContentTypeAndFileName, undefined],
-  ])('%o document type should be %s', (documentItem: never, contentType: string) => {
-    expect(findContentTypeByDocument(documentItem)).toStrictEqual(contentType);
+  it('should combine user case documents correctly', () => {
+    expect(combineUserCaseDocuments([mockUserCaseWithDocumentsComplete])).toStrictEqual([
+      {description: 'Case Details - Sunday Ayeni', id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673', type: 'ET1'},
+      {id: '1', description: 'desc1'},
+      {id: '2', description: 'desc2'},
+      {id: '3', description: 'desc3'},
+      {id: '4', description: 'desc4'},
+      {id: '5', description: 'desc5'},
+      {id: '6', description: 'desc6'},
+      {id: '7', description: 'desc7'},
+      {id: '8', description: 'desc8'},
+      {
+        id: 'a0c113ec-eede-472a-a59c-f2614b48177c',
+        description: 'Claim Summary File Detail',
+        originalDocumentName: 'document.pdf',
+      },
+    ]);
   });
-});
 
-describe('FindContentTypeByDocumentDetail', () => {
-  it.each([
-    [documentDetailWithMimeType, 'image/jpeg'],
-    [documentDetailWithOriginalDocumentName, 'application/vnd.ms-word'],
-    [documentDetailWithoutMimeTypeAndOriginalDocumentName, undefined],
-  ])('%o document type should be %s', (documentDetailItem: DocumentDetail, contentType: string) => {
-    expect(findContentTypeByDocumentDetail(documentDetailItem)).toStrictEqual(contentType);
+  describe('FindContentTypeByDocument', () => {
+    it.each([
+      [documentWithContentType, 'application/vnd.ms-excel'],
+      [documentWithOriginalFileName, 'application/vnd.ms-word'],
+      [documentWithFileName, 'application/vnd.ms-powerpoint'],
+      [documentWithInvalidOriginalFileName, undefined],
+      [documentWithInvalidFileName, undefined],
+      [documentWithoutContentTypeAndFileName, undefined],
+    ])('%o document type should be %s', (documentItem: never, contentType: string) => {
+      expect(findContentTypeByDocument(documentItem)).toStrictEqual(contentType);
+    });
   });
-});
 
-describe('FindDocumentMimeTypeByExtension', () => {
-  it.each(Object.values(TEST_DOCUMENT_CONTENT_TYPES).map(value => [value[0], value[1]]))(
-    'If extension is %s then document type is %s',
-    (extension: string, documentType: string) => {
-      expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
-    }
-  );
-});
+  describe('FindContentTypeByDocumentDetail', () => {
+    it.each([
+      [documentDetailWithMimeType, 'image/jpeg'],
+      [documentDetailWithOriginalDocumentName, 'application/vnd.ms-word'],
+      [documentDetailWithoutMimeTypeAndOriginalDocumentName, undefined],
+    ])('%o document type should be %s', (documentDetailItem: DocumentDetail, contentType: string) => {
+      expect(findContentTypeByDocumentDetail(documentDetailItem)).toStrictEqual(contentType);
+    });
+  });
+
+  describe('FindDocumentMimeTypeByExtension', () => {
+    it.each(Object.values(TEST_DOCUMENT_CONTENT_TYPES).map(value => [value[0], value[1]]))(
+      'If extension is %s then document type is %s',
+      (extension: string, documentType: string) => {
+        expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
+      }
+    );
+  });
+}
