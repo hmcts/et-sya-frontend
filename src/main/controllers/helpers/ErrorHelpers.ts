@@ -17,6 +17,7 @@ import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definiti
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
+import { Logger } from '../../logger';
 
 export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
@@ -213,11 +214,12 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
 export const getClaimSummaryError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
-  fileName: string
+  fileName: string,
+  logger: Logger
 ): FormError => {
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = hasInvalidFileFormat(file, logger);
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (!textProvided && !fileProvided) {

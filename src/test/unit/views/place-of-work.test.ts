@@ -20,11 +20,10 @@ const addressJsonRaw = fs.readFileSync(
 
 const addressJson = JSON.parse(addressJsonRaw);
 const titleClass = 'govuk-heading-xl';
-const buttonClass = 'govuk-!-margin-right-2';
-const expectedInputLabel = addressJson.enterPostcode;
+const expectedInputLabel = addressJson.addressLine1;
 const labelClass = 'govuk-label';
 const inputClass = 'govuk-input';
-const postcodeId = 'postcode';
+const address1 = 'address1';
 const addressInputs = '[class*="address"]';
 const expectedInputLabel1 = 'Address line 1';
 const expectedInputLabel2 = 'Address line 2 (optional)';
@@ -43,19 +42,14 @@ describe('Place Of Work Page', () => {
       });
   });
 
-  it('should display postcode label', () => {
+  it('should display address line 1 label', () => {
     const inputLabel = htmlRes.getElementsByClassName(labelClass);
     expect(inputLabel[0].innerHTML).contains(expectedInputLabel, 'input label does not exist');
   });
 
   it('should display postcode input', () => {
     const inputs = htmlRes.getElementsByClassName(inputClass);
-    expect(inputs[0].id).contains(postcodeId, 'input does not exist');
-  });
-
-  it('should display find address button', () => {
-    const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[0].innerHTML).contains('Find address', 'Could not find the button');
+    expect(inputs[0].id).contains(address1, 'input does not exist');
   });
 
   it('should display title', () => {

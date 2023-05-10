@@ -106,6 +106,12 @@ export const TranslationKeys = {
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
   ALL_DOCUMENTS: 'all-documents',
+  ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
+  ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
+  RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
+  RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
+  WORK_POSTCODE_SELECT: 'work-postcode-select',
+  WORK_POSTCODE_ENTER: 'work-postcode-enter',
 } as const;
 
 export const PageUrls = {
@@ -207,6 +213,12 @@ export const PageUrls = {
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
   ALL_DOCUMENTS: '/all-documents',
+  RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
+  RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
+  WORK_POSTCODE_SELECT: '/work-postcode-select',
+  WORK_POSTCODE_ENTER: '/work-postcode-enter',
+  ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
+  ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
 } as const;
 
 export const InterceptPaths = {
@@ -449,6 +461,7 @@ export const languages = {
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
 
+
 export const Rule92Types = {
   CONTACT: 'Contact',
   RESPOND: 'Respond',
@@ -477,3 +490,47 @@ export const AllDocumentTypes = {
   RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
   TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
 } as const;
+
+export const DOCUMENT_CONTENT_TYPES = {
+  DOCX: ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+  XLSX: ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  PPTX: ['pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+  DOC: ['doc', 'application/vnd.ms-word'],
+  XLS: ['xls', 'application/vnd.ms-excel'],
+  PPT: ['ppt', 'application/vnd.ms-powerpoint'],
+  CSV: ['csv', 'text/csv'],
+  GZ: ['gz', 'application/gzip'],
+  GIF: ['gif', 'image/gif'],
+  JPEG: ['jpeg', 'image/jpeg'],
+  JPG: ['jpg', 'image/jpeg'],
+  MP3: ['mp3', 'audio/mpeg'],
+  MP4: ['mp4', 'video/mp4'],
+  MPEG: ['mpeg', 'video/mpeg'],
+  PNG: ['png', 'image/png'],
+  PDF: ['pdf', 'application/pdf'],
+  TAR: ['tar', 'application/x-tar'],
+  TXT: ['txt', 'text/plain'],
+  WAV: ['wav', 'audio/wav'],
+  WEBA: ['weba', 'audio/webm'],
+  WEBM: ['webm', 'video/webm'],
+  WEBP: ['webp', 'image/webp'],
+  ZIP: ['zip', 'application/zip'],
+  _3GP: ['3gp', 'video/3gpp'],
+  _3G2: ['3g2', 'video/3gpp2'],
+  _7Z: ['7z', 'application/x-7z-compressed'],
+  DOT: ['dot', 'application/msword'],
+  BMP: ['bmp', 'image/bmp'],
+  TIF: ['tif', 'image/tiff'],
+  TIFF: ['tiff', 'image/tiff'],
+  XLT: ['xlt', 'application/vnd.ms-excel'],
+  XLA: ['xla', 'application/vnd.ms-excel'],
+  XLTX: ['xltx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.template'],
+  XLSB: ['xlsb', 'application/vnd.ms-excel.sheet.binary.macroEnabled.12'],
+  POT: ['pot', 'application/mspowerpoint'],
+  PPS: ['pps', 'application/vnd.ms-powerpoint'],
+  PPA: ['ppa', 'application/vnd.ms-powerpoint'],
+  POTX: ['potx', 'application/vnd.openxmlformats-officedocument.presentationml.template'],
+  PPSX: ['ppsx', 'application/vnd.openxmlformats-officedocument.presentationml.slideshow'],
+  RTF: ['rtf', 'application/rtf'],
+  RTX: ['rtx', 'application/rtf'],
+};
