@@ -1,5 +1,6 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { Document } from '../../definitions/case';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';

@@ -50,7 +50,6 @@ export default class RespondentApplicationDetailsController {
     );
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-    const supportingMaterialDownloadLink = createDownloadLink(selectedApplication.value?.documentUpload);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,

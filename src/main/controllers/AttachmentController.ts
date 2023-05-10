@@ -74,6 +74,7 @@ export default class AttachmentController {
         responseDocId = getSelectedAppResponseDocId(req, appsAndDecisions);
         appDecisionDocId = getSelectedAppDecisionDocId(req, appsAndDecisions);
       }
+    }
 
     if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
       allDocsSelectedFileId = userCase.documentCollection
@@ -91,7 +92,7 @@ export default class AttachmentController {
         docId !== judgmentDocId &&
         docId !== appDocId &&
         docId !== appDecisionDocId &&
-        docId !== getDocId(userCase.supportingMaterialFile.document_url)
+        docId !== getDocId(userCase.supportingMaterialFile.document_url) &&
         docId !== allDocsSelectedFileId
       ) {
         logger.info('bad request parameter');

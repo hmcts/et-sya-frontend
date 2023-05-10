@@ -5,7 +5,7 @@ import {
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { CLAIMANT, RESPONDENT } from '../../definitions/constants';
+import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { DecisionAndApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
@@ -164,7 +164,7 @@ export const getDecisionDetails = (
   let responseFrom;
   if (selectedDecisionApplication?.value.respondCollection?.length) {
     responseFrom =
-      selectedDecisionApplication?.value.respondCollection[0].value.from === CLAIMANT
+      selectedDecisionApplication?.value.respondCollection[0].value.from === Applicant.CLAIMANT
         ? translations.responseFromRespondent
         : translations.responseFromClaimant;
   }
@@ -411,10 +411,10 @@ export function matchDecisionsToApps(
   if (appOfDecision?.length) {
     for (let i = 0; i < appOfDecision.length; i++) {
       if (
-        (appOfDecision[i].value.applicant === RESPONDENT &&
+        (appOfDecision[i].value.applicant === Applicant.RESPONDENT &&
           !appOfDecision[i].value.type.includes(applicationTypes.respondent.c) &&
           appOfDecision[i].value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
-        appOfDecision[i].value.applicant === CLAIMANT
+        appOfDecision[i].value.applicant === Applicant.CLAIMANT
       ) {
         const parent = appOfDecision[i];
         for (let j = 0; j < parent.value.adminDecision.length; j++) {
@@ -494,7 +494,7 @@ export const getDecisionBannerContent = (
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
         const decisionBannerHeader =
-          items[i].value.applicant === CLAIMANT
+          items[i].value.applicant === Applicant.CLAIMANT
             ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
             : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
         const bannerDetails: DecisionAndApplicationDetails = {

@@ -3,13 +3,12 @@ import {
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/JudgmentHelpers';
 import { Document } from '../../../../main/definitions/case';
+import { DocumentType, DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import {
   TseAdminDecision,
   TseAdminDecisionItem,
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import {
-  DocumentType,
-  DocumentTypeItem,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
