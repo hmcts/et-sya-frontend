@@ -23,8 +23,8 @@ export const activateJudgmentsLink = (
     (judgmentItems && judgmentItems?.length && judgmentItems !== undefined) ||
     (decisionItems && decisionItems?.length && decisionItems !== undefined)
   ) {
-    if (userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] === HubLinkStatus.NOT_YET_AVAILABLE) {
-      userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] = HubLinkStatus.IN_PROGRESS;
+    if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] === HubLinkStatus.NOT_YET_AVAILABLE) {
+      userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] = HubLinkStatus.IN_PROGRESS;
     }
   }
 };

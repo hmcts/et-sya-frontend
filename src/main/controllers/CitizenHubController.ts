@@ -151,7 +151,7 @@ export default class CitizenHubController {
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
 
-    if (userCase.hubLinksStatuses[HubLinkNames.tribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
+    if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
       judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
       decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
     }
@@ -236,7 +236,7 @@ function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatu
 }
 
 function shouldShowJudgmentReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.tribunalJudgements] === HubLinkStatus.IN_PROGRESS;
+  return hubLinksStatuses[HubLinkNames.TribunalJudgements] === HubLinkStatus.IN_PROGRESS;
 }
 
 function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
