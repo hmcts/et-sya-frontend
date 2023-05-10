@@ -17,6 +17,7 @@ export default class RespondentApplicationCYAController {
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
+      TranslationKeys.COMMON,
       TranslationKeys.RESPONDENT_APPLICATION_CYA,
     ]);
 

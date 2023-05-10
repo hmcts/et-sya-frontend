@@ -6,6 +6,7 @@ import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
 import { getClaimantResponseDocDownload } from './TseRespondentApplicationHelpers';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
@@ -30,10 +31,24 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const { size, mimeType } = docDetails.data;
+  const { createdOn, size, mimeType } = docDetails.data;
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'long',
+  }).format(new Date(createdOn));
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
+};
+
+export const getDocumentsAdditionalInformation = async (
+  documents: DocumentTypeItem[],
+  accessToken: string
+): Promise<void> => {
+  if (documents && documents.length) {
+    for (const doc of documents) {
+      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+    }
+  }
 };
 
 // merge arrays but make sure they are not undefined
@@ -43,7 +58,7 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
 export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file?.document_filename);
   let downloadLink = '';
-  if (file && file.document_size && file.document_mime_type && file.document_filename) {
+  if (file?.document_size && file.document_mime_type && file.document_filename) {
     const href = '/getSupportingMaterial/' + getDocId(file.document_url);
     downloadLink =
       `<a href='${href}' target='_blank' class='govuk-link'>` +

@@ -1,14 +1,14 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CLAIMANT, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
-import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
@@ -32,17 +32,17 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const redirectUrl =
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
-    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === CLAIMANT);
-    const documents = selectedRequestOrOrder.value.sendNotificationUploadDocument;
-    if (documents && documents.length) {
-      for (const it of documents) {
-        try {
-          await getDocumentAdditionalInformation(it.value.uploadedDocument, req.session.user?.accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          res.redirect('/not-found');
-        }
-      }
+    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
+      r => r.value.from === Applicant.CLAIMANT
+    );
+    try {
+      await getDocumentsAdditionalInformation(
+        selectedRequestOrOrder.value.sendNotificationUploadDocument,
+        req.session.user?.accessToken
+      );
+    } catch (err) {
+      logger.error(err.message);
+      res.redirect('/not-found');
     }
 
     const translations: AnyRecord = {

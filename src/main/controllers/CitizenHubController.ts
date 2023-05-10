@@ -2,6 +2,7 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
+import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -64,7 +65,18 @@ export default class CitizenHubController {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
+
     const hubLinksStatuses = userCase.hubLinksStatuses;
+
+    if (
+      (hubLinksStatuses[HubLinkNames.Documents] === HubLinkStatus.NOT_YET_AVAILABLE &&
+        userCase.documentCollection &&
+        userCase.documentCollection.length) ||
+      userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
+    ) {
+      userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.OPTIONAL;
+      await handleUpdateHubLinksStatuses(req, logger);
+    }
 
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
@@ -111,7 +123,6 @@ export default class CitizenHubController {
     if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
-
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -132,7 +143,7 @@ export default class CitizenHubController {
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
-      showOrderOrRequestReceived: notifications && notifications.length,
+      showOrderOrRequestReceived: notifications?.length,
     });
   }
 }
@@ -199,5 +210,12 @@ function shouldShowRespondentAcknolwedgement(userCase: CaseWithId, hubLinksStatu
   return (
     !!userCase?.responseAcknowledgementDocumentDetail?.length &&
     hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
+  );
+}
+
+function userCaseContainsGeneralCorrespondence(notifications: SendNotificationTypeItem[]): boolean {
+  return (
+    notifications &&
+    notifications.some(it => it.value.sendNotificationSubject.includes('Other (General correspondence)'))
   );
 }

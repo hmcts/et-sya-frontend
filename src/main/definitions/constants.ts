@@ -105,6 +105,7 @@ export const TranslationKeys = {
   TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
+  ALL_DOCUMENTS: 'all-documents',
   GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
   GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
 } as const;
@@ -207,6 +208,7 @@ export const PageUrls = {
   TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
+  ALL_DOCUMENTS: '/all-documents',
   GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
   GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
 } as const;
@@ -244,6 +246,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
+  RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
@@ -467,4 +470,14 @@ export const ResponseRequired = {
   NO: 'No',
 } as const;
 
-export const CLAIMANT = 'Claimant';
+export const Applicant = {
+  CLAIMANT: 'Claimant',
+  RESPONDENT: 'Respondent',
+} as const;
+
+export const AllDocumentTypes = {
+  CLAIMANT_CORRESPONDENCE: 'Claimant correspondence',
+  ACAS_CERT: 'ACAS Certificate',
+  RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
+  TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+} as const;

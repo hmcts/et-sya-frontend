@@ -9,6 +9,7 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
+import AllDocumentsController from '../../controllers/AllDocumentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AttachmentController from '../../controllers/AttachmentController';
@@ -287,6 +288,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
+    app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
     app.get(PageUrls.GENERAL_CORRESPONDENCE_LIST, new GeneralCorrespondenceListController().get);
     app.get(
       PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,

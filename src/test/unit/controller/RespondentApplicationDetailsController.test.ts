@@ -1,6 +1,6 @@
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { CLAIMANT, TranslationKeys } from '../../../main/definitions/constants';
+import { Applicant, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -8,7 +8,7 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 
 describe('Respondent application details controller', () => {
-  it('should show respondent application details page', () => {
+  it('should show respondent application details page', async () => {
     const userCase: Partial<CaseWithId> = {
       genericTseApplicationCollection: [
         {
@@ -27,7 +27,7 @@ describe('Respondent application details controller', () => {
               {
                 id: '1',
                 value: {
-                  from: CLAIMANT,
+                  from: Applicant.CLAIMANT,
                   date: '20 March 2023',
                   response: 'Response text',
                   copyToOtherParty: YesOrNo.YES,
@@ -43,7 +43,7 @@ describe('Respondent application details controller', () => {
 
     const controller = new RespondentApplicationDetailsController();
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
   });

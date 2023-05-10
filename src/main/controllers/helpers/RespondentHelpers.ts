@@ -102,7 +102,7 @@ export const ValidRespondentUrls = {
 } as const;
 
 export const setNumbersToRespondents = (respondents: Respondent[]): void => {
-  if (respondents && respondents.length) {
+  if (respondents?.length) {
     respondents.forEach((it, index) => (it.respondentNumber = index + 1));
   }
 };
