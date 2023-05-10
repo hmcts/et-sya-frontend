@@ -8,7 +8,7 @@ export enum HubLinkNames {
   RespondentApplications = 'respondentApplications',
   ContactTribunal = 'contactTribunal',
   TribunalOrders = 'tribunalOrders',
-  tribunalJudgements = 'tribunalJudgements',
+  TribunalJudgements = 'tribunalJudgements',
   Documents = 'documents',
 }
 
@@ -45,7 +45,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
   [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
   [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
-  [HubLinkNames.tribunalJudgements, PageUrls.ALL_JUDGMENTS],
+  [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
   [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
 ]);
 
@@ -77,6 +77,6 @@ export const sectionIndexToLinkNames: HubLinkNames[][] = [
   [HubLinkNames.HearingDetails],
   [HubLinkNames.RequestsAndApplications, HubLinkNames.RespondentApplications, HubLinkNames.ContactTribunal],
   [HubLinkNames.TribunalOrders],
-  [HubLinkNames.tribunalJudgements],
+  [HubLinkNames.TribunalJudgements],
   [HubLinkNames.Documents],
 ];
