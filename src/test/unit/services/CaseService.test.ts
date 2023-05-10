@@ -67,10 +67,10 @@ describe('createCase', () => {
           claimant_TypeOfClaimant: TYPE_OF_CLAIMANT,
           triageQuestions: {
             acasMultiple: undefined,
-            caseType: "Single",
-            claimantRepresentedQuestion: "Yes",
-            postcode: "SW1A 1AA",
-            typesOfClaim: ["breachOfContract", "discrimination", "payRelated", "unfairDismissal", "whistleBlowing"]
+            caseType: 'Single',
+            claimantRepresentedQuestion: 'Yes',
+            postcode: 'SW1A 1AA',
+            typesOfClaim: ['breachOfContract', 'discrimination', 'payRelated', 'unfairDismissal', 'whistleBlowing'],
           },
           claimantIndType: {
             claimant_first_names: 'Bobby',

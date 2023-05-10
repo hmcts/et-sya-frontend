@@ -82,10 +82,10 @@ async function verifyIfATribunalDecidesYouveBeenUnfairlyDismissed() {
   I.see('more about this if it applies in your specific circumstances.');
   I.see('In disciplinary or grievance cases, you may be entitled to an increased award');
   I.see('if an employer fails to follow the guidance set out in the Acas Code of');
-  I.see('Practice on disciplinary and grievance procedures.');
+  I.see('Practice on disciplinary and grievance procedures (opens in new tab).');
   I.see("Similarly, awards can be reduced if a tribunal decides you've failed to follow");
   I.see('the guidance set out in the Acas Code of Practice on disciplinary and griev');
-  I.see('ance procedures.');
+  I.see('ance procedures (opens in new tab).');
   I.see('In certain claims, such as those involving discrimination, a tribunal may com');
   I.see("pensate you for 'injury to feelings' (individual hurt and distress you may have");
   I.see('suffered) in addition to compensation for financial loss.');

@@ -1,4 +1,3 @@
-import { HTTPMethod } from '@pact-foundation/pact/src/common/request';
 import { pactWith } from 'jest-pact';
 
 import { IdTokenJwtPayload } from '../../../../../main/auth';
@@ -18,12 +17,13 @@ pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
       roles: somethingLike([somethingLike('solicitor'), somethingLike('caseworker')]),
     };
 
-    pactSetUp.provider.setup().then(() => {
-      pactSetUp.provider.addInteraction({
-        state: 'a valid user exists',
-        uponReceiving: 'a request for that user',
+    beforeEach(async () => {
+      await pactSetUp.provider.setup();
+      await pactSetUp.provider.addInteraction({
+        state: 'valid user exists',
+        uponReceiving: 'request for that user',
         withRequest: {
-          method: HTTPMethod.GET,
+          method: 'GET',
           path: '/details',
           headers: {
             Authorization: 'Bearer some-access-token',
@@ -38,22 +38,21 @@ pactWith({ consumer: 'ET-SYA', provider: 'Idam_api' }, () => {
         },
       });
     });
-  });
-  // eslint-disable-next-line jest/expect-expect
-  test('Returns the user details from IDAM', () => {
-    const taskUrl = `${pactSetUp.provider.mockService.baseUrl}/details`;
-    idamGetUserDetails(taskUrl)
-      .then((axiosResponse: { data: IdTokenJwtPayload }) => {
-        const dto: IdTokenJwtPayload = axiosResponse.data;
-        assertResponses(dto);
-      })
-      .then(() => {
-        pactSetUp.provider.verify().then(() => {
-          pactSetUp.provider.finalize();
-        });
-      });
+
+    afterEach(async () => {
+      await pactSetUp.provider.verify();
+      await pactSetUp.provider.finalize();
+    });
+
+    test('Returns the user details from IDAM', async () => {
+      const taskUrl = `${pactSetUp.provider.mockService.baseUrl}/details`;
+      const axiosResponse = await idamGetUserDetails(taskUrl);
+      const dto: IdTokenJwtPayload = axiosResponse.data;
+      assertResponses(dto);
+    });
   });
 });
+
 function assertResponses(dto: IdTokenJwtPayload) {
   expect(dto.uid).toStrictEqual('abc123');
   expect(dto.sub).toStrictEqual('joe.bloggs@hmcts.net');

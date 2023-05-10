@@ -34,6 +34,7 @@ export class Helmet {
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
       "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
+      "'sha256-A7Uu54feRuB88PgtD97QX8ZfJfCfC4LuAP3rCwwhnbE='",
       idamUrl,
     ];
 

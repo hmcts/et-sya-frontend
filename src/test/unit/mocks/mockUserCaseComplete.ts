@@ -39,6 +39,7 @@ export default {
   address1: 'address 1',
   address2: 'address 2',
   addressPostcode: 'TEST',
+  addressEnterPostcode: 'TEST',
   addressCountry: 'United',
   addressTown: 'Test',
   telNumber: '075',
@@ -94,6 +95,7 @@ export default {
   workAddressTown: 'Anytown',
   workAddressCountry: 'England',
   workAddressPostcode: 'SW1H 9AQ',
+  workEnterPostcode: 'SW1H 9AQ',
   otherClaim: 'other type of claims',
   respondents: [
     {
@@ -106,6 +108,7 @@ export default {
       respondentAddressTown: 'Anytown',
       respondentAddressCountry: 'England',
       respondentAddressPostcode: 'SW1H 9AQ',
+      respondentEnterPostcode: 'SW1H 9AQ',
       ccdId: '3453xaa',
     },
     {
@@ -118,6 +121,7 @@ export default {
       respondentAddressTown: 'Town2',
       respondentAddressCountry: 'Country2',
       respondentAddressPostcode: 'SW1A 1AA',
+      respondentEnterPostcode: 'SW1A 1AA',
       ccdId: '3454xaa',
     },
   ],

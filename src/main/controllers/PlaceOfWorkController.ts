@@ -14,7 +14,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { fillWorkAddressFields, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('PlaceOfWorkController');
 
@@ -28,7 +28,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine1,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-line1',
           maxLength: 100,
@@ -41,7 +40,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.addressLine2,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-line2',
           maxLength: 50,
@@ -54,7 +52,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.town,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'address-level2',
           maxLength: 50,
@@ -67,7 +64,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-!-width-one-half',
         label: l => l.country,
         labelSize: null,
-        hidden: true,
         attributes: {
           maxLength: 50,
         },
@@ -79,7 +75,6 @@ export default class PlaceOfWorkController {
         classes: 'govuk-label govuk-input--width-10',
         label: l => l.postcode,
         labelSize: null,
-        hidden: true,
         attributes: {
           autocomplete: 'postal-code',
           maxLength: 14,
@@ -88,11 +83,9 @@ export default class PlaceOfWorkController {
     },
     submit: {
       text: (l: AnyRecord): string => l.submit,
-      classes: 'govuk-!-margin-right-2 hidden',
     },
     saveForLater: {
       text: (l: AnyRecord): string => l.saveForLater,
-      classes: 'govuk-button--secondary hidden',
     },
   };
 
@@ -106,12 +99,16 @@ export default class PlaceOfWorkController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const x = req.session.userCase.workAddressTypes;
     const content = getPageContent(
       req,
       this.placeOfWorkContent,
       [TranslationKeys.COMMON, TranslationKeys.ENTER_ADDRESS, TranslationKeys.PLACE_OF_WORK],
       0
     ); // only respondent 1 has work address that is why selected respondent index is 0
+    if (x !== undefined) {
+      fillWorkAddressFields(x, req.session.userCase);
+    }
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.PLACE_OF_WORK, {
       ...content,
