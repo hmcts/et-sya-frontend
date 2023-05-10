@@ -481,3 +481,7 @@ export const AllDocumentTypes = {
   RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
   TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
 } as const;
+
+export const NotificationSubjects = {
+  GENERAL_CORRESPONCENDE: 'Other (General correspondence)',
+} as const;

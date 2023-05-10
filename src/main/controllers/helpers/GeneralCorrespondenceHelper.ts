@@ -1,5 +1,6 @@
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls } from '../../definitions/constants';
+import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
@@ -75,14 +76,19 @@ export const getCorrespondenceNotificationDetails = (
   return generalCorrespondenceNotification;
 };
 
-export const changeRedirectPageForGeneralCorrespondence = (
+export const updateGeneralCorrespondenceRedirectLinksAndStatus = (
   notifications: SendNotificationTypeItem[],
-  url: string
+  url: string,
+  translations: AnyRecord
 ): void => {
   notifications.forEach(item => {
-    item.redirectUrl = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS.replace(
-      ':itemId',
-      `${item.id}${getLanguageParam(url)}`
-    );
+    if (item.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONCENDE)) {
+      item.redirectUrl = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS.replace(
+        ':itemId',
+        `${item.id}${getLanguageParam(url)}`
+      );
+      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
+      item.displayStatus = translations[item.value.notificationState];
+    }
   });
 };

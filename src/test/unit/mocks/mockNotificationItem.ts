@@ -1,10 +1,10 @@
 import { Document } from '../../../main/definitions/case';
+import { DocumentType, DocumentTypeItem } from '../../../main/definitions/complexTypes/documentTypeItem';
 import {
-  DocumentType,
-  DocumentTypeItem,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import { NotificationSubjects } from '../../../main/definitions/constants';
 
 export const doc: Document = {
   document_url: 'uuid',
@@ -39,7 +39,7 @@ export const notificationType: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'notStartedYet',
-  sendNotificationSubject: ['Other (General correspondence)'],
+  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONCENDE],
 };
 
 export const mockNotificationItem: SendNotificationTypeItem = {
