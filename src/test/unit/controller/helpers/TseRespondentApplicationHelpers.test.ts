@@ -6,7 +6,7 @@ import {
   GenericTseApplicationType,
   GenericTseApplicationTypeItem,
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { CLAIMANT, TranslationKeys } from '../../../../main/definitions/constants';
+import { Applicant, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetails from '../../../../main/resources/locales/en/translation/application-details.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
@@ -21,7 +21,7 @@ describe('should get respondent application details', () => {
       value: {
         number: '1',
         applicationState: 'notStartedYet',
-        applicant: CLAIMANT,
+        applicant: Applicant.CLAIMANT,
         copyToOtherPartyYesOrNo: 'Yes',
         type: 'amend',
         status: 'Open',
@@ -36,7 +36,7 @@ describe('should get respondent application details', () => {
 
     expect(result).toEqual([
       {
-        applicant: CLAIMANT,
+        applicant: Applicant.CLAIMANT,
         applicationType: 'B',
         copyToOtherPartyYesOrNo: 'Yes',
         respondByDate: 'Sunday 7 May 2023',

@@ -46,6 +46,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
   [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
   [HubLinkNames.tribunalJudgements, PageUrls.ALL_JUDGMENTS],
+  [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
 ]);
 
 const COLORS = {

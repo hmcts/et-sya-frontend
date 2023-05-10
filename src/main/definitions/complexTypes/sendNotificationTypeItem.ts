@@ -1,4 +1,4 @@
-import { Document } from '../case';
+import { DocumentTypeItem } from './documentTypeItem';
 
 export interface SendNotificationTypeItem {
   id?: string;
@@ -74,14 +74,6 @@ export interface SendNotificationSelectHearingItem {
 
 export interface PseResponseType {
   from?: string;
-}
-
-export interface DocumentTypeItem {
-  id?: string;
-  value?: DocumentType;
-}
-
-export interface DocumentType {
-  shortDescription?: string;
-  uploadedDocument?: Document;
+  copyToOtherParty?: string;
+  supportingMaterial?: DocumentTypeItem[];
 }

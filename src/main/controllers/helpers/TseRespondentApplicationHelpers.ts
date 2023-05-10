@@ -7,7 +7,7 @@ import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { RESPONDENT } from '../../definitions/constants';
+import { Respondent, Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
@@ -21,7 +21,7 @@ import { getLanguageParam } from './RouterHelpers';
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
   return userCase?.genericTseApplicationCollection?.filter(
     app =>
-      app.value.applicant.includes(RESPONDENT) &&
+      app.value.applicant.includes(Applicant.RESPONDENT) &&
       app.value.type !== 'Order a witness to attend to give evidence' &&
       app.value.copyToOtherPartyYesOrNo.includes(YesOrNo.YES)
   );
@@ -89,6 +89,21 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
     });
     return respondentItems;
   }
+};
+
+export const getClaimantResponseDocDownload = (selectedApplication: GenericTseApplicationTypeItem): Document => {
+  let claimantResponseDocDownload = undefined;
+  const selectedAppRespondCollection = selectedApplication.value?.respondCollection;
+  for (let i = selectedAppRespondCollection?.length - 1; i >= 0; i--) {
+    const selectedAppRespondCollectionItem = selectedAppRespondCollection[i].value;
+    if (
+      selectedAppRespondCollectionItem.from === Applicant.CLAIMANT &&
+      selectedAppRespondCollectionItem.supportingMaterial !== undefined
+    ) {
+      claimantResponseDocDownload = selectedAppRespondCollectionItem.supportingMaterial[0].value.uploadedDocument;
+    }
+  }
+  return claimantResponseDocDownload;
 };
 
 export const setSelectedTseApplication = (

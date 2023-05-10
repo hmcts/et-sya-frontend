@@ -12,7 +12,7 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { CLAIMANT } from '../../../main/definitions/constants';
+import { Applicant } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -168,7 +168,7 @@ export default {
     {
       id: '124',
       value: {
-        applicant: CLAIMANT,
+        applicant: Applicant.CLAIMANT,
         date: '2019-05-02',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
@@ -177,7 +177,7 @@ export default {
     {
       id: '125',
       value: {
-        applicant: CLAIMANT,
+        applicant: Applicant.CLAIMANT,
         date: '2019-05-03',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
@@ -185,4 +185,30 @@ export default {
     },
   ],
   sendNotificationCollection: [selectedRequestOrOrder],
+  documentCollection: [
+    {
+      id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
+      value: {
+        typeOfDocument: 'ET1',
+        uploadedDocument: {
+          document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+          document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
+          document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+        },
+        shortDescription: 'Case Details - Sunday Ayeni',
+      },
+    },
+    {
+      id: '3db71007-d42c-43d5-a51b-57957f78ced3',
+      value: {
+        typeOfDocument: 'ACAS Certificate',
+        uploadedDocument: {
+          document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+          document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
+          document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+        },
+        shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+      },
+    },
+  ],
 };
