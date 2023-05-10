@@ -251,6 +251,7 @@ describe('Format Case Data to Frontend Model', () => {
       email: undefined,
       address1: undefined,
       address2: undefined,
+      addressEnterPostcode: undefined,
       addressPostcode: undefined,
       addressCountry: undefined,
       addressTown: undefined,
@@ -304,6 +305,7 @@ describe('Format Case Data to Frontend Model', () => {
       workAddress2: undefined,
       workAddressTown: undefined,
       workAddressCountry: undefined,
+      workEnterPostcode: undefined,
       workAddressPostcode: undefined,
       et3ResponseReceived: false,
       claimSummaryFile: undefined,
@@ -322,6 +324,7 @@ describe('Format Case Data to Frontend Model', () => {
       otherClaim: undefined,
       sendNotificationCollection: undefined,
       hearingCollection: undefined,
+      documentCollection: undefined,
     });
   });
 
@@ -459,6 +462,35 @@ describe('Format Case Data to Frontend Model', () => {
       responseRejectionDocumentDetail: undefined,
       responseEt3FormDocumentDetail: [],
       otherClaim: undefined,
+      sendNotificationCollection: undefined,
+      genericTseApplicationCollection: undefined,
+      documentCollection: [
+        {
+          id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
+          value: {
+            typeOfDocument: 'ET1',
+            uploadedDocument: {
+              document_binary_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+              document_filename: 'ET1_CASE_DOCUMENT_Sunday_Ayeni.pdf',
+              document_url: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
+            },
+            shortDescription: 'Case Details - Sunday Ayeni',
+          },
+        },
+        {
+          id: '3db71007-d42c-43d5-a51b-57957f78ced3',
+          value: {
+            typeOfDocument: 'ET1',
+
+            uploadedDocument: {
+              document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+              document_filename: 'ET1_WELSH_Sunday_Ayeni_R600227_21_75.pdf',
+              document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+            },
+            shortDescription: 'ET1 WELSH - R600227/21/75',
+          },
+        },
+      ],
       id: '1234',
     });
   });

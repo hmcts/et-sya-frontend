@@ -1,0 +1,12 @@
+{
+  "title": "All documents",
+  "date": "Date",
+  "description": "Description",
+  "document": "Document",
+  "tribunalDocs": "Tribunal documents",
+  "generalCorrespondence": "General correspondence from the tribunal",
+  "correspondenceLink": "View all general correspondence",
+  "acasDocs": "Acas documents",
+  "claimantDocs": "Claimant documents",
+  "respondentDocs": "Respondent documents"
+}

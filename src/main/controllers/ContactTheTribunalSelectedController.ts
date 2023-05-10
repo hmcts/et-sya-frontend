@@ -83,7 +83,8 @@ export default class ContactTheTribunalSelectedController {
       req.fileTooLarge,
       userCase.contactApplicationFile,
       'contactApplicationText',
-      'contactApplicationFile'
+      'contactApplicationFile',
+      logger
     );
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);

@@ -16,6 +16,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,
@@ -46,15 +47,26 @@ export default class NewJobPayController {
     this.form = new Form(<FormFields>this.newJobPayContent.fields);
   }
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.newJobPay = undefined;
+      req.session.userCase.newJobPayInterval = undefined;
+    }
+  };
+
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     await handlePostLogic(req, res, this.form, logger, PageUrls.FIRST_RESPONDENT_NAME);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.newJobPayContent, [TranslationKeys.COMMON, TranslationKeys.NEW_JOB_PAY]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.NEW_JOB_PAY, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }

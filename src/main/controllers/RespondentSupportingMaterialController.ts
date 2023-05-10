@@ -81,7 +81,8 @@ export default class RespondentSupportingMaterialController {
       req.fileTooLarge,
       userCase.supportingMaterialFile,
       'responseText',
-      'supportingMaterialFile'
+      'supportingMaterialFile',
+      logger
     );
 
     const supportingMaterialUrl =
