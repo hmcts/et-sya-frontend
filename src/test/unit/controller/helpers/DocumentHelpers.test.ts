@@ -275,7 +275,6 @@ it('should update document size and mime type values', async () => {
 
   expect(modifiedDoc.document_size).toEqual(10575);
   expect(modifiedDoc.document_mime_type).toEqual('pdf');
-=======
 it('should combine user case documents correctly', () => {
   expect(combineUserCaseDocuments([mockUserCaseWithDocumentsComplete])).toStrictEqual([
     { description: 'Case Details - Sunday Ayeni', id: '3aa7dfc1-378b-4fa8-9a17-89126fae5673', type: 'ET1' },
