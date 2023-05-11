@@ -24,7 +24,7 @@ export class GeneralCorrespondenceListController {
     ]);
 
     let correspondences;
-    if (userCase.sendNotificationCollection?.length > 0) {
+    if (userCase.sendNotificationCollection?.length) {
       correspondences = userCase.sendNotificationCollection.filter(it =>
         it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
       );
