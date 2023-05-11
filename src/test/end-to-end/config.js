@@ -13,6 +13,6 @@ module.exports = {
     key: 'privatekey',
     tunnelId: 'reformtunnel',
     waitForTimeout: 20000,
-    smartWait: 20000,
+    smartWait: 60000,
   },
 };
