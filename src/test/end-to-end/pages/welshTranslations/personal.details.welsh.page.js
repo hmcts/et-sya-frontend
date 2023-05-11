@@ -1,3 +1,4 @@
+const commonConfig = require('../../features/Data/commonConfig.json');
 const { I } = inject();
 
 module.exports = {
@@ -33,18 +34,17 @@ module.exports = {
   },
   enterPostcode() {
     //Enter postcode for claimant address
-    I.see('What is your contact or home address?');
+    I.see('Enter a UK postcode');
     I.refreshPage();
-    I.waitToHide('#address1', 10);
-    I.dontSeeElement('#address1');
-    I.fillField('#postcode', 'LS9 9HE');
-    I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput', 30);
-    I.selectOption(
-      '#selectAddressInput',
-      '{"fullAddress":"3, SKELTON AVENUE, LEEDS, LS9 9HE","street1":"3 SKELTON AVENUE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS9 9HE","country":"ENGLAND"}'
-    );
-    I.click('Save and continue');
+    I.fillField('#addressEnterPostcode', 'LS9 9HE');
+    I.click(commonConfig.saveAndContinue);
+    I.waitForVisible('#addressAddressTypes', 30);
+    I.see('Select an address');
+    I.see('Several addresses found');
+    I.selectOption('#addressAddressTypes', '3, Skelton Avenue, Leeds, LS9 9HE');
+    I.click(commonConfig.saveAndContinue);
+    I.see('What is your contact or home address?');
+    I.click(commonConfig.saveAndContinue);
   },
   enterTelephoneNumber() {
     //Enter telephone number

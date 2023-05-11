@@ -1,3 +1,4 @@
+import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -10,7 +11,6 @@ import {
 } from './definition';
 import { HubLinksStatuses } from './hub';
 import { UnknownRecord } from './util-types';
-import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -21,6 +21,12 @@ export interface CaseDate {
   year: string;
   month: string;
   day: string;
+}
+
+export interface AddressType {
+  selected?: boolean;
+  value?: number;
+  label?: string;
 }
 
 export interface Respondent {
@@ -128,6 +134,12 @@ export interface Case {
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
+  addressAddressTypes?: AddressType[];
+  addressAddresses?: Record<string, string>[];
+  respondentAddressTypes?: AddressType[];
+  respondentAddresses?: Record<string, string>[];
+  workAddressTypes?: AddressType[];
+  workAddresses?: Record<string, string>[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
@@ -184,8 +196,10 @@ export interface Case {
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
   rule92state?: boolean;
   documentCollection?: DocumentTypeItem[];
+  respondentEnterPostcode?: string;
+  workEnterPostcode?: string;
+  addressEnterPostcode?: string;
 }
-
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',

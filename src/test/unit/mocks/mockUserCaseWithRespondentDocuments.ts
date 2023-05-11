@@ -55,6 +55,5 @@ export const caseWithGenericTseApplications: CaseWithId = {
         type: 'Amend response',
       },
     },
-  ]
+  ],
 };
-

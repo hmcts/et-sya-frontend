@@ -2,6 +2,7 @@
   "enterPostcode": "Enter a UK postcode",
   "findAddress": "Find address",
   "saveAsDraft": "Save as draft",
+  "saveAndContinue": "Save and continue",
   "cannotFindAddress": "I cannot find the address in the list",
   "change": "Change",
   "postcode": "Postcode or area code (optional)",

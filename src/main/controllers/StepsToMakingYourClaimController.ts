@@ -53,7 +53,7 @@ export default class StepsToMakingYourClaimController {
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
           },
           {
-            url: setUrlLanguage(req, PageUrls.ADDRESS_DETAILS.toString()),
+            url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER.toString()),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },
