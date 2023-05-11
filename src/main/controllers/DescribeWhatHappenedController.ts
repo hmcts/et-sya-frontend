@@ -87,7 +87,8 @@ export default class DescribeWhatHappenedController {
     const claimSummaryError = getClaimSummaryError(
       formData,
       req.file,
-      req.session.userCase?.claimSummaryFile?.document_filename
+      req.session.userCase?.claimSummaryFile?.document_filename,
+      logger
     );
     if (!claimSummaryError) {
       try {

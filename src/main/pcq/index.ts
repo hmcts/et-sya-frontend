@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from 'config';
 import { Response } from 'express';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 import { handleUpdateDraftCase } from '../controllers/helpers/CaseHelpers';
 import { setUrlLanguage } from '../controllers/helpers/LanguageHelper';
@@ -46,7 +46,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
       const returnurl = getHost(res) + PageUrls.CHECK_ANSWERS;
 
       //Generate pcq id
-      const claimantPcqId: string = uuid();
+      const claimantPcqId: string = uuidv4();
 
       const params: PCQRequest = {
         serviceId: 'ET',

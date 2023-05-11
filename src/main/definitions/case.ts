@@ -20,6 +20,12 @@ export interface CaseDate {
   day: string;
 }
 
+export interface AddressType {
+  selected?: boolean;
+  value?: number;
+  label?: string;
+}
+
 export interface Respondent {
   respondentNumber?: number;
   respondentName?: string;
@@ -125,6 +131,12 @@ export interface Case {
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
+  addressAddressTypes?: AddressType[];
+  addressAddresses?: Record<string, string>[];
+  respondentAddressTypes?: AddressType[];
+  respondentAddresses?: Record<string, string>[];
+  workAddressTypes?: AddressType[];
+  workAddresses?: Record<string, string>[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
@@ -161,8 +173,10 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
+  respondentEnterPostcode?: string;
+  workEnterPostcode?: string;
+  addressEnterPostcode?: string;
 }
-
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
@@ -252,7 +266,7 @@ export const enum CaseDataCacheKey {
   TYPES_OF_CLAIM = 'typeOfClaim',
   OTHER_CLAIM_TYPE = 'otherClaimType',
   ACAS_MULTIPLE = 'acasMultiple',
-  VALID_NO_ACAS_REASON = 'validNoAcasReason'
+  VALID_NO_ACAS_REASON = 'validNoAcasReason',
 }
 
 export const enum HearingPreference {

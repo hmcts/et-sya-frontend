@@ -9,6 +9,8 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
+import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
+import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
@@ -54,6 +56,8 @@ import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustm
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
+import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
@@ -72,6 +76,8 @@ import ValidNoAcasReasonController from '../../controllers/ValidNoAcasReasonCont
 import VideoHearingsController from '../../controllers/VideoHearingsController';
 import WhistleblowingClaimsController from '../../controllers/WhistleblowingClaimsController';
 import WorkAddressController from '../../controllers/WorkAddressController';
+import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
+import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
@@ -217,6 +223,56 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().get);
+    app.post(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().post);
+    app.get(PageUrls.ADDRESS_POSTCODE_ENTER, new AddressPostCodeEnterController().get);
+    app.post(PageUrls.ADDRESS_POSTCODE_ENTER, new AddressPostCodeEnterController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_ENTER,
+      new AddressPostCodeEnterController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_ENTER,
+      new AddressPostCodeEnterController().post
+    );
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_SELECT,
+      new AddressPostCodeSelectController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_SELECT,
+      new AddressPostCodeSelectController().post
+    );
+
+    app.get(PageUrls.RESPONDENT_POSTCODE_SELECT, new RespondentPostCodeSelectController().get);
+    app.post(PageUrls.RESPONDENT_POSTCODE_SELECT, new RespondentPostCodeSelectController().post);
+    app.get(PageUrls.RESPONDENT_POSTCODE_ENTER, new RespondentPostCodeEnterController().get);
+    app.post(PageUrls.RESPONDENT_POSTCODE_ENTER, new RespondentPostCodeEnterController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_ENTER,
+      new RespondentPostCodeEnterController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_ENTER,
+      new RespondentPostCodeEnterController().post
+    );
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
+      new RespondentPostCodeSelectController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
+      new RespondentPostCodeSelectController().post
+    );
+
+    app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
+    app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
+    app.get(PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().get);
+    app.post(PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
     app.get(
       Urls.INFO,
       infoRequestHandler({

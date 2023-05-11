@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as path from 'path';
 
-import pact from '@pact-foundation/pact-node';
+import pact from '@pact-foundation/pact';
 import * as git from 'git-rev-sync';
 
 import { getConfigValue } from '../../configuration';

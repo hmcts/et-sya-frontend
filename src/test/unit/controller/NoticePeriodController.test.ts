@@ -23,6 +23,18 @@ describe('Notice Period Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NOTICE_PERIOD, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const controller = new NoticePeriodController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.noticePeriod = YesOrNo.NO;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.noticePeriod).toStrictEqual(undefined);
+  });
+
   it('should render the notice type page when yes radio button is selected', async () => {
     const body = { noticePeriod: YesOrNo.YES };
     const controller = new NoticePeriodController();

@@ -59,7 +59,7 @@ export default class SexAndTitleController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_DETAILS);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_POSTCODE_ENTER);
   };
 
   public get = (req: AppRequest, res: Response): void => {

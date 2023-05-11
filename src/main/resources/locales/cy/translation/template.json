@@ -28,6 +28,7 @@
   "contactCharges": "Gwybodaeth am brisiau galwadau",
   "scotlandOnly": "Alban yn unig",
   "noticeLengthInsetText": "Os nad ydych yn siŵr, edrychwch ar delerau ac amodau eich contract cyflogaeth.",
+  "clearSelection": "Clirio’r dewis",
   "sessionTimeout": {
     "modal": {
       "title": "Rydych ar fin allgofnodi",
