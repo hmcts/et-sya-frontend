@@ -74,6 +74,6 @@ export const shouldShowRespondentAcknolwedgement = (
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
   return (
     notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONCENDE))
+    notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE))
   );
 };

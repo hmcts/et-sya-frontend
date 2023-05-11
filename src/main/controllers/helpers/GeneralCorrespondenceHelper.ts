@@ -42,7 +42,7 @@ export const getCorrespondenceNotificationDetails = (
   );
 
   const docs = item.value.sendNotificationUploadDocument;
-  if (docs && docs.length) {
+  if (docs?.length) {
     docs.forEach(doc => {
       generalCorrespondenceNotification.push(
         {
@@ -82,7 +82,7 @@ export const updateGeneralCorrespondenceRedirectLinksAndStatus = (
   translations: AnyRecord
 ): void => {
   notifications.forEach(item => {
-    if (item.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONCENDE)) {
+    if (item.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)) {
       item.redirectUrl = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS.replace(
         ':itemId',
         `${item.id}${getLanguageParam(url)}`

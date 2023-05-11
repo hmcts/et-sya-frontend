@@ -26,7 +26,7 @@ export class GeneralCorrespondenceListController {
     let correspondences;
     if (userCase.sendNotificationCollection?.length > 0) {
       correspondences = userCase.sendNotificationCollection.filter(it =>
-        it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONCENDE)
+        it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
       );
       updateGeneralCorrespondenceRedirectLinksAndStatus(correspondences, req.url, translations);
     }

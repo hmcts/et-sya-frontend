@@ -495,7 +495,7 @@ export const AllDocumentTypes = {
 } as const;
 
 export const NotificationSubjects = {
-  GENERAL_CORRESPONCENDE: 'Other (General correspondence)',
+  GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
 } as const;
 
 export const DOCUMENT_CONTENT_TYPES = {

@@ -32,7 +32,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
     req.session.documentDownloadPage = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS;
 
     const documents = selectedCorrespondence.value.sendNotificationUploadDocument;
-    if (documents && documents.length) {
+    if (documents?.length) {
       for (const it of documents) {
         try {
           await getDocumentAdditionalInformation(it.value.uploadedDocument, req.session.user?.accessToken);

@@ -39,7 +39,7 @@ export const notificationType: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'notStartedYet',
-  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONCENDE],
+  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
 };
 
 export const mockNotificationItem: SendNotificationTypeItem = {
