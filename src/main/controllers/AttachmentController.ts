@@ -33,7 +33,10 @@ export default class AttachmentController {
       decisionDocId = getDecisionDocId(req, selectedApplication);
     }
 
-    if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    if (
+      req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
+      req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
+    ) {
       requestDocId = getRequestDocId(req);
     }
 

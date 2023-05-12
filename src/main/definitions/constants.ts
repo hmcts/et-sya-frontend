@@ -106,6 +106,8 @@ export const TranslationKeys = {
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
   ALL_DOCUMENTS: 'all-documents',
+  GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
   ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
   ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
   RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
@@ -213,6 +215,8 @@ export const PageUrls = {
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
   ALL_DOCUMENTS: '/all-documents',
+  GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
   RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
   RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
   WORK_POSTCODE_SELECT: '/work-postcode-select',
@@ -488,6 +492,10 @@ export const AllDocumentTypes = {
   ACAS_CERT: 'ACAS Certificate',
   RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
   TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+} as const;
+
+export const NotificationSubjects = {
+  GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
 } as const;
 
 export const DOCUMENT_CONTENT_TYPES = {

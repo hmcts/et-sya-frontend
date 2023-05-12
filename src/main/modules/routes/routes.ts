@@ -43,6 +43,8 @@ import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
 import EndDateController from '../../controllers/EndDateController';
+import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
+import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import LipOrRepController from '../../controllers/LipOrRepController';
@@ -343,5 +345,10 @@ export class Routes {
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
+    app.get(PageUrls.GENERAL_CORRESPONDENCE_LIST, new GeneralCorrespondenceListController().get);
+    app.get(
+      PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
+      new GeneralCorrespondenceNotificationDetailsController().get
+    );
   }
 }

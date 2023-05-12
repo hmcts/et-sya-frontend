@@ -1,8 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId } from '../definitions/case';
-import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -20,6 +18,17 @@ import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWith
 import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import {
+  shouldShowAcknowledgementAlert,
+  shouldShowRejectionAlert,
+  shouldShowRespondentAcknolwedgement,
+  shouldShowRespondentApplicationReceived,
+  shouldShowRespondentRejection,
+  shouldShowRespondentResponseReceived,
+  shouldShowSubmittedAlert,
+  updateHubLinkStatuses,
+  userCaseContainsGeneralCorrespondence,
+} from './helpers/CitizenHubHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -145,76 +154,4 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
     });
   }
-}
-
-function updateHubLinkStatuses(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  if (
-    hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-    userCase.et3ResponseReceived
-  ) {
-    hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
-  }
-
-  if (
-    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
-    (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
-  ) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
-  }
-
-  if (
-    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED &&
-    (userCase.acknowledgementOfClaimLetterDetail?.length || userCase.rejectionOfClaimDocumentDetail?.length)
-  ) {
-    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
-  }
-}
-
-function shouldShowSubmittedAlert(userCase: CaseWithId) {
-  return !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length;
-}
-
-function shouldShowAcknowledgementAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
-}
-
-function shouldShowRejectionAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
-}
-
-function shouldShowRespondentResponseReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL;
-}
-
-function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS;
-}
-
-function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.responseRejectionDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
-  );
-}
-
-function shouldShowRespondentAcknolwedgement(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.responseAcknowledgementDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
-  );
-}
-
-function userCaseContainsGeneralCorrespondence(notifications: SendNotificationTypeItem[]): boolean {
-  return (
-    notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes('Other (General correspondence)'))
-  );
 }
