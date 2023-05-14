@@ -1,5 +1,9 @@
+import logger from '@pact-foundation/pact/src/common/logger';
+import { Response } from 'express';
+
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
@@ -11,6 +15,7 @@ import { DecisionAndApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
+import { createDownloadLink, getDocumentsAdditionalInformation } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const activateJudgmentsLink = (
@@ -46,9 +51,59 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
   }
 };
 
+export const getJudgmentAttachments = async (
+  selectedJudgment: SendNotificationTypeItem,
+  req: AppRequest,
+  res: Response
+): Promise<DocumentTypeItem[]> => {
+  const judgmentAttachments = [];
+  if (selectedJudgment?.value?.sendNotificationUploadDocument) {
+    for (let i = 0; i < selectedJudgment?.value?.sendNotificationUploadDocument?.length; i++) {
+      if (selectedJudgment?.value?.sendNotificationUploadDocument[i]?.value?.uploadedDocument) {
+        judgmentAttachments[i] = selectedJudgment?.value?.sendNotificationUploadDocument[i];
+      }
+    }
+
+    if (judgmentAttachments.length) {
+      try {
+        await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        res.redirect('/not-found');
+      }
+      judgmentAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+    }
+  }
+  return judgmentAttachments;
+};
+
+export const getDecisionAttachments = async (
+  selectedDecision: TseAdminDecisionItem,
+  req: AppRequest,
+  res: Response
+): Promise<DocumentTypeItem[]> => {
+  const decisionAttachments = [];
+  for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
+    if (selectedDecision?.value?.responseRequiredDoc[i]?.value?.uploadedDocument) {
+      decisionAttachments[i] = selectedDecision?.value?.responseRequiredDoc[i];
+    }
+  }
+
+  if (decisionAttachments.length) {
+    try {
+      await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
+    } catch (err) {
+      logger.error(err.message);
+      res.redirect('/not-found');
+    }
+    decisionAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+  }
+  return decisionAttachments;
+};
+
 export const getJudgmentDetails = (
   selectedJudgment: SendNotificationTypeItem,
-  downloadLink: string,
+  judgmentAttachments: DocumentTypeItem[],
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   const judgmentDetails = [];
@@ -95,28 +150,31 @@ export const getJudgmentDetails = (
     });
   }
 
-  if (selectedJudgment.value.sendNotificationUploadDocument) {
-    judgmentDetails.push(
-      {
-        key: {
-          text: translations.description,
-          classes: 'govuk-!-font-weight-regular-m',
+  if (judgmentAttachments) {
+    for (let i = 0; i < judgmentAttachments.length; i++) {
+      judgmentDetails.push(
+        {
+          key: {
+            text: translations.description,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            text: judgmentAttachments[i].value.shortDescription,
+          },
         },
-        value: {
-          text: selectedJudgment.value.sendNotificationUploadDocument[0].value.shortDescription,
-        },
-      },
-      {
-        key: {
-          text: translations.document,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: downloadLink,
-        },
-      }
-    );
+        {
+          key: {
+            text: translations.document,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            html: judgmentAttachments[i].downloadLink,
+          },
+        }
+      );
+    }
   }
+
   judgmentDetails.push(
     {
       key: {
@@ -155,7 +213,7 @@ export const getDecisionDetails = (
   selectedDecision: TseAdminDecisionItem,
   selectedApplicationDocDownloadLink: string | void,
   selectedApplicationResponseDocDownloadLink: string | void,
-  downloadLink: string,
+  selectedAttachments: DocumentTypeItem[],
   translations: AnyRecord
 ): { key: unknown; value?: unknown; actions?: unknown }[][] => {
   const selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
@@ -324,16 +382,29 @@ export const getDecisionDetails = (
     });
   }
 
-  if (selectedDecision?.value.responseRequiredDoc) {
-    decisionDetails.push({
-      key: {
-        text: translations.document,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: downloadLink,
-      },
-    });
+  if (selectedAttachments) {
+    for (let i = 0; i < selectedAttachments.length; i++) {
+      decisionDetails.push(
+        {
+          key: {
+            text: translations.description,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            html: selectedAttachments[i].value.shortDescription,
+          },
+        },
+        {
+          key: {
+            text: translations.document,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            html: selectedAttachments[i].downloadLink,
+          },
+        }
+      );
+    }
   }
   decisionDetails.push(
     {
@@ -385,7 +456,7 @@ export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): TseAdminDecisionItem[] => {
-  if (decisionItems && decisionItems.length) {
+  if (decisionItems?.length) {
     decisionItems.forEach(item => {
       item.redirectUrl = `/judgment-details/${item.id}${getLanguageParam(url)}`;
       if (item.value.decisionState === undefined) {
@@ -472,7 +543,7 @@ export const getJudgmentBannerContent = (
 ): SendNotificationTypeItem[] => {
   const bannerContent: SendNotificationTypeItem[] = [];
 
-  if (items && items.length) {
+  if (items?.length) {
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].value.notificationState !== HubLinkStatus.VIEWED) {
         const rec: SendNotificationTypeItem = {
@@ -492,7 +563,7 @@ export const getDecisionBannerContent = (
 ): DecisionAndApplicationDetails[] => {
   const items = appsAndDecisions;
   const bannerContent: DecisionAndApplicationDetails[] = [];
-  if (items && items.length) {
+  if (items?.length) {
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
         const decisionBannerHeader =

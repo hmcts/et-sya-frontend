@@ -152,8 +152,7 @@ export const getApplicationDocDownloadLink = async (
   accessToken: string,
   res: Response
 ): Promise<string | void> => {
-  const applicationDocDownload =
-    selectedApplication?.value?.documentUpload === undefined ? undefined : selectedApplication.value.documentUpload;
+  const applicationDocDownload = selectedApplication?.value?.documentUpload;
 
   if (applicationDocDownload !== undefined) {
     try {
@@ -204,8 +203,9 @@ export const getDecisionDocDownload = (selectedAppAdminDecision: TseAdminDecisio
   const decisionDocDownload: string | any[] = [];
   if (selectedAppAdminDecision?.length) {
     for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
-      if (selectedAppAdminDecision[i].value.responseRequiredDoc !== undefined) {
-        decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc;
+      if (selectedAppAdminDecision[i].value?.responseRequiredDoc) {
+        decisionDocDownload[i] =
+          selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
       }
     }
   }

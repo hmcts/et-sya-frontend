@@ -12,6 +12,7 @@ import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseA
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, inScopeLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
+import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
@@ -99,6 +100,7 @@ export const updateJudgmentNotificationState = async (
   logger: Logger
 ): Promise<void> => {
   try {
+    selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
     await getCaseApi(req.session.user?.accessToken).updateJudgmentNotificationState(
       selectedJudgment,
       req.session.userCase
@@ -119,6 +121,7 @@ export const updateDecisionState = async (
   logger: Logger
 ): Promise<void> => {
   try {
+    selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
     await getCaseApi(req.session.user?.accessToken).updateDecisionState(selectedDecision, req.session.userCase);
     logger.info(`Updated state for selected decision: ${selectedDecision.id}`);
   } catch (error) {

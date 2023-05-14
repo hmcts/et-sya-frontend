@@ -108,35 +108,37 @@ export function getResponseDocId(selectedApplication: GenericTseApplicationTypeI
 }
 
 export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTseApplicationTypeItem): string {
-  let decisionDocId = undefined;
   const docId = req.params.docId;
-  const decisionDocIds = [];
+  const decisionDocUrls = [];
   if (selectedApplication?.value.adminDecision?.length) {
     const adminDecisions = selectedApplication.value.adminDecision;
     for (let i = adminDecisions.length - 1; i >= 0; i--) {
       if (adminDecisions[i].value.responseRequiredDoc !== undefined) {
-        decisionDocIds[i] = adminDecisions[i].value.responseRequiredDoc.document_url;
+        decisionDocUrls[i] = adminDecisions[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
       }
     }
   }
-  decisionDocId = decisionDocIds.map(it => getDocId(it)).find(id => id === docId);
-  return decisionDocId;
+  return decisionDocUrls.map(it => getDocId(it)).find(id => id === docId);
 }
 
 export function getSelectedAppDecisionDocId(
   req: AppRequest,
   appsAndDecisions: DecisionAndApplicationDetails[]
 ): string {
-  let selectedAppDecisionDocId = undefined;
   const docId = req.params.docId;
   const selectedAppDecisionDocIds = [];
-  for (let i = appsAndDecisions.length - 1; i >= 0; i--) {
-    if (appsAndDecisions[i].decisionOfApp.value.responseRequiredDoc !== undefined) {
-      selectedAppDecisionDocIds[i] = appsAndDecisions[i].decisionOfApp.value.responseRequiredDoc.document_url;
+  for (let i = 0; i < appsAndDecisions.length; i++) {
+    if (appsAndDecisions[i].decisionOfApp?.value?.responseRequiredDoc?.length) {
+      const parent = appsAndDecisions[i];
+      for (let j = 0; j < parent.decisionOfApp.value.responseRequiredDoc.length; j++) {
+        if (parent.decisionOfApp.value.responseRequiredDoc[j].downloadLink) {
+          const nested = parent.decisionOfApp.value.responseRequiredDoc[j];
+          selectedAppDecisionDocIds.push(nested.value.uploadedDocument.document_url);
+        }
+      }
     }
   }
-  selectedAppDecisionDocId = selectedAppDecisionDocIds.map(it => getDocId(it)).find(id => id === docId);
-  return selectedAppDecisionDocId;
+  return selectedAppDecisionDocIds.map(it => getDocId(it)).find(id => id === docId);
 }
 
 export function getSelectedAppDocId(req: AppRequest, appsAndDecisions: DecisionAndApplicationDetails[]): string {
