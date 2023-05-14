@@ -67,7 +67,7 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
       .send({ claimantWorkAddressQuestion: YesOrNo.NO })
       .expect(res => {
         expect(res.status).toEqual(302);
-        expect(res.header['location']).toEqual('/respondent/1/place-of-work');
+        expect(res.header['location']).toEqual('/respondent/1/work-postcode-enter');
       });
   });
 });

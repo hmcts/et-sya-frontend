@@ -21,6 +21,18 @@ describe('New Job Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.NEW_JOB, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const controller = new NewJobController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.newJob = YesOrNo.NO;
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.newJob).toStrictEqual(undefined);
+  });
+
   it('should render the respondent name page when neither radio button is selected', async () => {
     const body = { newJob: '' };
     const controller = new NewJobController();

@@ -62,7 +62,7 @@ describe('Sex and Title Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Mr',
@@ -80,7 +80,7 @@ describe('Sex and Title Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_DETAILS);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.ADDRESS_POSTCODE_ENTER);
     expect(req.session.userCase).toStrictEqual({
       claimantSex: Sex.MALE,
       preferredTitle: 'Pastor',
