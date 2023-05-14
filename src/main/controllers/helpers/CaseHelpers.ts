@@ -50,7 +50,31 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
+      const workEnterPostcode = req.session.userCase.workEnterPostcode;
+      const addressEnterPostcode = req.session.userCase.addressEnterPostcode;
+      const respondentEnterPostcode = req.session.userCase.respondentEnterPostcode;
+      const addressAddresses = req.session.userCase.addressAddresses;
+      const workAddresses = req.session.userCase.workAddresses;
+      const respondentAddresses = req.session.userCase.respondentAddresses;
+      const workAddressTypes = req.session.userCase.workAddressTypes;
+      const respondentAddressTypes = req.session.userCase.respondentAddressTypes;
+      const addressAddressTypes = req.session.userCase.addressAddressTypes;
       req.session.userCase = fromApiFormat(response.data);
+      if (req.session.userCase.workEnterPostcode === undefined) {
+        req.session.userCase.workEnterPostcode = workEnterPostcode;
+      }
+      if (req.session.userCase.addressEnterPostcode === undefined) {
+        req.session.userCase.addressEnterPostcode = addressEnterPostcode;
+      }
+      if (req.session.userCase.respondentEnterPostcode === undefined) {
+        req.session.userCase.respondentEnterPostcode = respondentEnterPostcode;
+      }
+      req.session.userCase.addressAddresses = addressAddresses;
+      req.session.userCase.workAddresses = workAddresses;
+      req.session.userCase.respondentAddresses = respondentAddresses;
+      req.session.userCase.workAddressTypes = workAddressTypes;
+      req.session.userCase.respondentAddressTypes = respondentAddressTypes;
+      req.session.userCase.addressAddressTypes = addressAddressTypes;
       req.session.save();
     } catch (error) {
       logger.error(error.message);
@@ -265,4 +289,31 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
+  userCase.selectedRequestOrOrder = undefined;
+};
+
+function toTitleCase(str: string): string {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  });
+}
+
+export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[]): Record<string, string>[] => {
+  return jsonArray.map(addressObj => {
+    const newObj: Record<string, string> = {};
+
+    for (const [key, value] of Object.entries(addressObj)) {
+      if (key === 'postcode') {
+        newObj[key] = value;
+      } else if (key === 'fullAddress') {
+        const postcode = addressObj.postcode;
+        const addressWithoutPostcode = value.replace(postcode, '').trim();
+        newObj[key] =
+          toTitleCase(addressWithoutPostcode) + (addressWithoutPostcode.endsWith(',') ? '' : ',') + ' ' + postcode;
+      } else {
+        newObj[key] = toTitleCase(value);
+      }
+    }
+    return newObj;
+  });
 };

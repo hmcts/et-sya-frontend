@@ -121,7 +121,7 @@ module.exports = {
     I.waitForVisible('#selectAddressInput', 30);
     I.selectOption(
       '#selectAddressInput',
-      '{"fullAddress":"7, VALLEY GARDENS, LEEDS, LS7 4QE","street1":"7 VALLEY GARDENS","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS7 4QE","country":"ENGLAND"}'
+      '{"fullAddress":"7, Valley Gardens, Leeds, LS7 4QE","street1":"7, Valley Gardens","street2":"","town":"Leeds","county":"Leeds","postcode":"LS7 4QE","country":"England"}'
     );
     I.click('Cadw a pharhau');
   },
