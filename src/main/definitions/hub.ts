@@ -45,6 +45,7 @@ export const hubLinksUrlMap = new Map<string, string>([
   [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
   [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
   [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
+  [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
   [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
 ]);
 
