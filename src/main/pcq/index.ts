@@ -83,7 +83,8 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
 };
 
 export const getHost = (res: Response): string => {
-  return res.locals.host === 'localhost' ? `${res.locals.host}:3001` : res.locals.host;
+  const host = res.locals?.host || 'defaultHost';
+  return host === 'localhost' ? `${host}:3001` : host;
 };
 
 export const callPCQHealth = (): Promise<string> => {
