@@ -24,8 +24,9 @@ module.exports = async function () {
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  I.see('What is your contact or home address?');
+  I.see('Enter a UK postcode');
   I.refreshPage();
+<<<<<<< HEAD
   I.waitToHide('#address1', 10);
   I.dontSeeElement('#address1');
   I.fillField('#postcode', 'LS9 9HE');
@@ -35,15 +36,25 @@ module.exports = async function () {
     '#selectAddressInput',
     '{"fullAddress":"3, Skelton Avenue, Leeds, LS9 9HE","street1":"3, Skelton Avenue","street2":"","town":"Leeds","county":"Leeds","postcode":"LS9 9HE","country":"England"}'
   );
+=======
+  I.fillField('#addressEnterPostcode', 'LS9 9HC');
   I.click(commonConfig.saveAndContinue);
-
-  await I.scrollPageToBottom();
-  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.waitForVisible('#addressAddressTypes', testConfig.TestWaitForTextTimeLimit);
+  I.see('Select an address');
+  I.see('No addresses found');
+  I.click(commonConfig.saveAndContinue);
+  I.fillField('#address1', '3 Skelton Avenue');
+  I.fillField('#address2', '');
+  I.fillField('#addressTown', 'Leeds');
+  I.fillField('#addressCountry', 'England');
+  I.fillField('#addressPostcode', 'LS9 9HE');
+>>>>>>> master
+  I.click(commonConfig.saveAndContinue);
   I.see('What is your telephone number?');
-  I.click(commonConfig.saveAndContinue);
 
   await I.scrollPageToBottom();
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  I.click(commonConfig.saveAndContinue);
   I.see('Communication preference');
   I.see('What format would you like to be contacted in?');
   I.see('Email');

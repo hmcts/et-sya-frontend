@@ -86,6 +86,12 @@ export const TranslationKeys = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
+  ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
+  ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
+  RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
+  RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
+  WORK_POSTCODE_SELECT: 'work-postcode-select',
+  WORK_POSTCODE_ENTER: 'work-postcode-enter',
 } as const;
 
 export const PageUrls = {
@@ -163,6 +169,12 @@ export const PageUrls = {
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
   ACCESSIBILITY_STATEMENT: '/accessibility',
+  RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
+  RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
+  WORK_POSTCODE_SELECT: '/work-postcode-select',
+  WORK_POSTCODE_ENTER: '/work-postcode-enter',
+  ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
+  ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
 } as const;
 
 export const InterceptPaths = {
