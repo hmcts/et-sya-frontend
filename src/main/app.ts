@@ -2,11 +2,6 @@ import * as path from 'path';
 
 // eslint-disable-next-line import/no-unresolved
 import { HTTPError } from 'HttpError';
-import * as bodyParser from 'body-parser';
-import config from 'config';
-import cookieParser from 'cookie-parser';
-import express, { NextFunction, Request, Response } from 'express';
-import favicon from 'serve-favicon';
 
 import { AppRequest } from './definitions/appRequest';
 import { CaseApiErrors, PageUrls, RedisErrors } from './definitions/constants';
@@ -21,6 +16,11 @@ import { Oidc } from './modules/oidc';
 import { PropertiesVolume } from './modules/properties-volume';
 import { Routes } from './modules/routes/routes';
 import { Session } from './modules/session';
+
+import config from 'config';
+import cookieParser from 'cookie-parser';
+import express, { NextFunction, Request, Response } from 'express';
+import favicon from 'serve-favicon';
 
 const env = process.env.NODE_ENV || 'development';
 const developmentMode = env === 'development';
@@ -44,8 +44,8 @@ new Session().enableFor(app);
 new HealthCheck().enableFor(app);
 
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
