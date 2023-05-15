@@ -12,12 +12,13 @@
 !src/main/**
 !config/**
 !webpack.config.js
+!.eslintrc.js
+!.eslintignore
+!.yarnrc.yml
+!node_modules
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-!.eslintrc.js
-!.eslintignore
-!.yarnrc.yml
-!node_modules
