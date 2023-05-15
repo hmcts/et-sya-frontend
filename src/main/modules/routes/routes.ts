@@ -12,6 +12,7 @@ import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
 import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
 import AllDocumentsController from '../../controllers/AllDocumentsController';
+import AllJudgmentsController from '../../controllers/AllJudgmentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AttachmentController from '../../controllers/AttachmentController';
@@ -47,6 +48,7 @@ import { GeneralCorrespondenceListController } from '../../controllers/GeneralCo
 import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
+import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
@@ -339,6 +341,8 @@ export class Routes {
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
+    app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
     app.get(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().get);
     app.post(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().post);
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);

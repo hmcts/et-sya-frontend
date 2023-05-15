@@ -16,7 +16,6 @@ const respondentApplicationsJSONRaw = fs.readFileSync(
 
 const respondentApplicationsJSON = JSON.parse(respondentApplicationsJSONRaw);
 const titleClass = 'govuk-heading-xl';
-//const tableHeaderClass = 'govuk-table__caption govuk-table__caption';
 const columnHeaderClass = 'govuk-table__header';
 const cellDataClass = 'govuk-table__cell';
 
@@ -85,7 +84,10 @@ describe('Respondent Applications page', () => {
   it('should display respondent applications second row data', () => {
     const cellDataClassData = htmlRes.getElementsByClassName(cellDataClass);
     expect(cellDataClassData[3].innerHTML).contains('8 March 2023', 'Application date does not exist');
-    expect(cellDataClassData[4].innerHTML).contains('Restrict publicity', ' Application type does not exist');
+    expect(cellDataClassData[4].innerHTML).contains(
+      '/respondent-application-details/abc1234?lng=en',
+      'Application url does not exist'
+    );
     expect(cellDataClassData[5].innerHTML).contains('Not started yet', 'Application status does not exist');
   });
 });

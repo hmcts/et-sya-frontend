@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, Document } from '../../definitions/case';
+import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
@@ -21,9 +21,9 @@ import { getLanguageParam } from './RouterHelpers';
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
   return userCase?.genericTseApplicationCollection?.filter(
     app =>
-      app.value.applicant.includes('Respondent') &&
+      app.value.applicant.includes(Applicant.RESPONDENT) &&
       app.value.type !== 'Order a witness to attend to give evidence' &&
-      app.value.copyToOtherPartyYesOrNo.includes('Yes')
+      app.value.copyToOtherPartyYesOrNo.includes(YesOrNo.YES)
   );
 };
 
@@ -119,28 +119,50 @@ export const setSelectedTseApplication = (
   }
 };
 
-export const getClaimantResponseDocDownloadLink = async (
+export const getResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
   logger: LoggerInstance,
   accessToken: string,
   res: Response
 ): Promise<string | void> => {
-  let claimantResponseDocDownload = undefined;
-
-  if (selectedApplication.value?.respondCollection?.length) {
-    claimantResponseDocDownload = getClaimantResponseDocDownload(selectedApplication);
+  let responseDocDownload = undefined;
+  let responseDoc = undefined;
+  const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
+  if (selectedApplicationRespondCollection?.length) {
+    responseDoc =
+      selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
+        ? undefined
+        : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
   }
-
-  if (claimantResponseDocDownload) {
+  if (responseDoc !== undefined) {
     try {
-      await getDocumentAdditionalInformation(claimantResponseDocDownload, accessToken);
+      await getDocumentAdditionalInformation(responseDoc, accessToken);
+    } catch (err) {
+      logger.error(err.message);
+      return res.redirect('/not-found');
+    }
+    responseDocDownload = createDownloadLink(responseDoc);
+  }
+  return responseDocDownload;
+};
+
+export const getApplicationDocDownloadLink = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  logger: LoggerInstance,
+  accessToken: string,
+  res: Response
+): Promise<string | void> => {
+  const applicationDocDownload = selectedApplication?.value?.documentUpload;
+
+  if (applicationDocDownload !== undefined) {
+    try {
+      await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
     } catch (err) {
       logger.error(err.message);
       return res.redirect('/not-found');
     }
   }
-
-  return createDownloadLink(claimantResponseDocDownload);
+  return createDownloadLink(applicationDocDownload);
 };
 
 export const getDecisionContent = async (
@@ -181,8 +203,9 @@ export const getDecisionDocDownload = (selectedAppAdminDecision: TseAdminDecisio
   const decisionDocDownload: string | any[] = [];
   if (selectedAppAdminDecision?.length) {
     for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
-      if (selectedAppAdminDecision[i].value.responseRequiredDoc !== undefined) {
-        decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc;
+      if (selectedAppAdminDecision[i].value?.responseRequiredDoc) {
+        decisionDocDownload[i] =
+          selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
       }
     }
   }

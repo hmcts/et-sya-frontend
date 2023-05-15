@@ -21,7 +21,7 @@ module.exports = async function () {
   I.see('Orders and requests from the tribunal');
   I.see('All orders and requests issued by the tribunal');
   I.see('Judgments from the tribunal');
-  I.see('View all judgements');
+  I.see('View all judgments');
   I.see('Case documents');
   I.see('All documents');
 
