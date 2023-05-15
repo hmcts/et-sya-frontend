@@ -10,9 +10,6 @@ import './print';
 import './cookie';
 import './set-focus';
 import './submit-claim';
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 sessionTimeout.ready(sessionTimeout.initialize);
 import './data-layer';

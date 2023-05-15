@@ -15,18 +15,6 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   //Enters Postcode for the respondent
   //I.seeElement('#postcode');
   I.refreshPage();
-<<<<<<< HEAD
-  I.waitToHide('#address1', 2);
-  I.dontSeeElement('#address1');
-  I.waitForElement('#postcode', testConfig.TestWaitForVisibilityTimeLimit);
-  I.fillField('#postcode', 'LS7 4QE');
-  I.click('#findAddressButton');
-  I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-  I.selectOption(
-    '#selectAddressInput',
-    '{"fullAddress":"7, Valley Gardens, Leeds, LS7 4QE","street1":"7, Valley Gardens","street2":"","town":"Leeds","county":"Leeds","postcode":"LS7 4QE","country":"England"}'
-  );
-=======
   I.waitForElement('#respondentEnterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
   I.fillField('#respondentEnterPostcode', 'LS7 4QE');
   I.click(commonConfig.saveAndContinue);
@@ -36,7 +24,6 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   I.selectOption('#respondentAddressTypes', '7, Valley Gardens, Leeds, LS7 4QE');
   I.click(commonConfig.saveAndContinue);
   I.see('What is the address of Gabby Greta?');
->>>>>>> master
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
@@ -53,16 +40,6 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.checkOption('#work-address-2');
     I.click(commonConfig.saveAndContinue);
-<<<<<<< HEAD
-    I.seeElement('#postcode');
-    I.fillField('#postcode', 'LS14 1AR');
-    I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-    I.selectOption(
-      '#selectAddressInput',
-      '{"fullAddress":"25, Ringwood Drive, Leeds, LS14 1AR","street1":"25, Ringwood Drive","street2":"","town":"Leeds","county":"Leeds","postcode":"LS14 1AR","country":"England"}'
-    );
-=======
     I.seeElement('#workEnterPostcode');
     I.fillField('#workEnterPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
@@ -72,7 +49,6 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.selectOption('#workAddressTypes', '25, Ringwood Drive, Leeds, LS14 1AR');
     I.click(commonConfig.saveAndContinue);
     I.see('What address did you work at?');
->>>>>>> master
     I.click(commonConfig.saveAndContinue);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   }
