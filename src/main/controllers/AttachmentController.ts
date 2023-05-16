@@ -95,7 +95,6 @@ export default class AttachmentController {
         docId !== judgmentDocId &&
         docId !== appDocId &&
         docId !== appDecisionDocId &&
-        docId !== getDocId(userCase.supportingMaterialFile.document_url) &&
         docId !== allDocsSelectedFileId
       ) {
         logger.info('bad request parameter');
