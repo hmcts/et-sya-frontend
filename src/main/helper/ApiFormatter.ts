@@ -91,6 +91,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     address2: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.AddressLine2,
     addressTown: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostTown,
     addressPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
+    addressEnterPostcode: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.PostCode,
     addressCountry: fromApiCaseData.case_data?.claimantType?.claimant_addressUK?.Country,
     typeOfClaim: fromApiCaseData.case_data?.typesOfClaim,
     dobDate: parseDateFromString(fromApiCaseData.case_data?.claimantIndType?.claimant_date_of_birth),
@@ -151,6 +152,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     workAddressTown: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostTown,
     workAddressCountry: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.Country,
     workAddressPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
+    workEnterPostcode: fromApiCaseData.case_data?.claimantWorkAddress?.claimant_work_address?.PostCode,
     et3ResponseReceived: hasResponseFromRespondentList(fromApiCaseData.case_data),
     submittedDate: parseDateFromString(fromApiCaseData?.case_data?.receiptDate),
     hubLinksStatuses: fromApiCaseData?.case_data?.hubLinksStatuses,
@@ -186,6 +188,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
     hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
+    documentCollection: fromApiCaseData.case_data?.documentCollection,
   };
 }
 
@@ -392,6 +395,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       respondentAddressTown: respondent.value?.respondent_address?.PostTown,
       respondentAddressCountry: respondent.value?.respondent_address?.Country,
       respondentAddressPostcode: respondent.value?.respondent_address?.PostCode,
+      respondentEnterPostcode: respondent.value?.respondent_address?.PostCode,
       acasCert: respondent.value?.respondent_ACAS_question,
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,

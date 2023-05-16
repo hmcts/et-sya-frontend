@@ -1,4 +1,5 @@
 import { HearingModel } from './api/caseApiResponse';
+import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
@@ -21,6 +22,12 @@ export interface CaseDate {
   year: string;
   month: string;
   day: string;
+}
+
+export interface AddressType {
+  selected?: boolean;
+  value?: number;
+  label?: string;
 }
 
 export interface Respondent {
@@ -128,6 +135,12 @@ export interface Case {
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;
   respondents?: Respondent[];
+  addressAddressTypes?: AddressType[];
+  addressAddresses?: Record<string, string>[];
+  respondentAddressTypes?: AddressType[];
+  respondentAddresses?: Record<string, string>[];
+  workAddressTypes?: AddressType[];
+  workAddresses?: Record<string, string>[];
   employmentAndRespondentCheck?: YesOrNo;
   ClaimantPcqId?: string;
   claimantPensionContribution?: YesOrNoOrNotSure;
@@ -188,8 +201,11 @@ export interface Case {
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
   rule92state?: boolean;
+  documentCollection?: DocumentTypeItem[];
+  respondentEnterPostcode?: string;
+  workEnterPostcode?: string;
+  addressEnterPostcode?: string;
 }
-
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
@@ -294,4 +310,5 @@ export interface Document {
   document_binary_url: string;
   document_size?: number;
   document_mime_type?: string;
+  createdOn?: string;
 }

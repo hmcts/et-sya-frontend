@@ -7,6 +7,7 @@ import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
@@ -96,7 +97,7 @@ export const getClaimantResponseDocDownload = (selectedApplication: GenericTseAp
   for (let i = selectedAppRespondCollection?.length - 1; i >= 0; i--) {
     const selectedAppRespondCollectionItem = selectedAppRespondCollection[i].value;
     if (
-      selectedAppRespondCollectionItem.from === 'Claimant' &&
+      selectedAppRespondCollectionItem.from === Applicant.CLAIMANT &&
       selectedAppRespondCollectionItem.supportingMaterial !== undefined
     ) {
       claimantResponseDocDownload = selectedAppRespondCollectionItem.supportingMaterial[0].value.uploadedDocument;

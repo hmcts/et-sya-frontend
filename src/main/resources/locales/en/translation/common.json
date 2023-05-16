@@ -68,5 +68,41 @@
   "CookieHide": "Hide this message",
   "CookieView": "View cookies",
   "CookieAccepted": "You’ve accepted additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.",
-  "CookieRejected": " <p class=\"govuk-body\">You’ve rejected additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.</p>"
+  "CookieRejected": " <p class=\"govuk-body\">You’ve rejected additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.</p>",
+  "enterPostcode": "Enter a UK postcode",
+  "manualAddress": "I live outside the UK",
+  "errors": {
+    "addressEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "addressAddressTypes": {
+      "notSelected": "Select an address"
+    },
+    "workEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "workAddressTypes": {
+      "notSelected": "Select an address"
+    },
+    "respondentEnterPostcode": {
+      "invalid": "Enter a valid postcode. For example, SW1 1AA",
+      "required": "Enter a postcode. For example, SW1 1AA"
+    },
+    "respondentAddressTypes": {
+      "notSelected": "Select an address"
+    }
+  },
+  "selectAddress": "Select an address",
+  "selectDefaultSeveral": "Several addresses found",
+  "selectDefaultSingle": "1 address found",
+  "selectDefaultNone": "No addresses found",
+  "cannotFindAddress": "I cannot find my address in the list",
+  "workPostcodeEnterTitle": "Work postcode enter",
+  "workPostcodeSelectTitle": "Work postcode select",
+  "addressPostcodeEnterTitle": "Address postcode enter",
+  "addressPostcodeSelectTitle": "Address postcode select",
+  "respondentPostcodeEnterTitle": "Respondent postcode enter",
+  "respondentPostcodeSelectTitle": "Respondent postcode select"
 }

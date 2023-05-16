@@ -1,6 +1,7 @@
 import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
+import { Logger } from '../../logger';
 
 export type Validator = (value: string | string[] | undefined) => void | string;
 
@@ -229,7 +230,7 @@ export const hasInvalidName = (fileName: string): string => {
   }
 };
 
-export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
+export const hasInvalidFileFormat = (value: Express.Multer.File, logger: Logger): string => {
   if (!value || !value.originalname) {
     return;
   }
@@ -238,6 +239,9 @@ export const hasInvalidFileFormat = (value: Express.Multer.File): string => {
     if (value.originalname.endsWith('.' + format)) {
       return;
     }
+  }
+  if (logger) {
+    logger.info('Invalid file name:' + value.originalname);
   }
   return 'invalidFileFormat';
 };

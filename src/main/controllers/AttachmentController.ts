@@ -24,6 +24,7 @@ export default class AttachmentController {
     let contactTribunalDocId;
     let contactTheTribunalSupportingFileId;
     let supportingFileId;
+    let allDocsSelectedFileId;
     const selectedApplication = userCase.selectedGenericTseApplication;
 
     if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
@@ -51,6 +52,12 @@ export default class AttachmentController {
       supportingFileId = getDocId(userCase.supportingMaterialFile?.document_url);
     }
 
+    if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+      allDocsSelectedFileId = userCase.documentCollection
+        .map(it => getDocId(it.value.uploadedDocument.document_url))
+        .find(it => docId === it);
+    }
+
     try {
       if (
         docId !== decisionDocId &&
@@ -59,7 +66,8 @@ export default class AttachmentController {
         docId !== claimantResponseDocId &&
         docId !== contactTribunalDocId &&
         docId !== contactTheTribunalSupportingFileId &&
-        docId !== supportingFileId
+        docId !== supportingFileId &&
+        docId !== allDocsSelectedFileId
       ) {
         logger.info('bad request parameter');
         return res.redirect('/not-found');

@@ -5,9 +5,8 @@ import {
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import { Document } from '../../../../main/definitions/case';
+import { DocumentType, DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import {
-  DocumentType,
-  DocumentTypeItem,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
