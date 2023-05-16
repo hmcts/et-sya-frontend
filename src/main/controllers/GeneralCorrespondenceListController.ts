@@ -19,6 +19,7 @@ export class GeneralCorrespondenceListController {
     };
 
     const content = getPageContent(req, <FormContent>{}, [
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
       TranslationKeys.GENERAL_CORRESPONDENCE_LIST,
     ]);
