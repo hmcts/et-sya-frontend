@@ -22,6 +22,21 @@ describe('Benefits Controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.BENEFITS, expect.anything());
   });
 
+  it('should clear fields', () => {
+    const benefitsController = new BenefitsController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+    request.session.userCase.employeeBenefits = YesOrNo.YES;
+    request.session.userCase.benefitsCharCount = 'blah';
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    benefitsController.get(request, response);
+    expect(request.session.userCase.employeeBenefits).toStrictEqual(undefined);
+    expect(request.session.userCase.benefitsCharCount).toStrictEqual(undefined);
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.BENEFITS, expect.anything());
+  });
+
   it('should render the new job page when no longer working and yes radio button is selected', async () => {
     const body = { employeeBenefits: YesOrNo.YES, benefitsCharCount: 'Test benefits text' };
     const userCase = { isStillWorking: StillWorking.NO_LONGER_WORKING };

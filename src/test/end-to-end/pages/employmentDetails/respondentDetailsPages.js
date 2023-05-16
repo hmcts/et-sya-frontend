@@ -15,21 +15,20 @@ module.exports = async function (workAddress, doYouHaveAcas) {
   //Enters Postcode for the respondent
   //I.seeElement('#postcode');
   I.refreshPage();
-  I.waitToHide('#address1', 2);
-  I.dontSeeElement('#address1');
-  I.waitForElement('#postcode', testConfig.TestWaitForVisibilityTimeLimit);
-  I.fillField('#postcode', 'LS7 4QE');
-  I.click('#findAddressButton');
-  I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-  I.selectOption(
-    '#selectAddressInput',
-    '{"fullAddress":"7, VALLEY GARDENS, LEEDS, LS7 4QE","street1":"7, VALLEY GARDENS","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS7 4QE","country":"ENGLAND"}'
-  );
+  I.waitForElement('#respondentEnterPostcode', testConfig.TestWaitForVisibilityTimeLimit);
+  I.fillField('#respondentEnterPostcode', 'LS7 4QE');
+  I.click(commonConfig.saveAndContinue);
+  I.waitForVisible('#respondentAddressTypes', 30);
+  I.see('Select an address');
+  I.see('Several addresses found');
+  I.selectOption('#respondentAddressTypes', '7, Valley Gardens, Leeds, LS7 4QE');
+  I.click(commonConfig.saveAndContinue);
+  I.see('What is the address of Gabby Greta?');
   I.click(commonConfig.saveAndContinue);
 
   //enter address for another location
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
-  I.see('Did you work at 7, VALLEY GARDENS?');
+  I.see('Did you work at 7, Valley Gardens?');
   //Did you work at address or another
   if (workAddress === 'Yes') {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
@@ -41,16 +40,16 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
     I.checkOption('#work-address-2');
     I.click(commonConfig.saveAndContinue);
-    I.seeElement('#postcode');
-    I.fillField('#postcode', 'LS14 1AR');
-    I.click('#findAddressButton');
-    I.waitForVisible('#selectAddressInput', testConfig.TestWaitForVisibilityTimeLimit);
-    I.selectOption(
-      '#selectAddressInput',
-      '{"fullAddress":"25, RINGWOOD DRIVE, LEEDS, LS14 1AR","street1":"25, RINGWOOD DRIVE","street2":"","town":"LEEDS","county":"LEEDS","postcode":"LS14 1AR","country":"ENGLAND"}'
-    );
+    I.seeElement('#workEnterPostcode');
+    I.fillField('#workEnterPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    //I.waitForElement('#acasCert', testConfig.TestWaitForTextTimeLimit);
+    I.waitForVisible('#workAddressTypes', 30);
+    I.see('Select an address');
+    I.see('Several addresses found');
+    I.selectOption('#workAddressTypes', '25, Ringwood Drive, Leeds, LS14 1AR');
+    I.click(commonConfig.saveAndContinue);
+    I.see('What address did you work at?');
+    I.click(commonConfig.saveAndContinue);
     await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   }
 

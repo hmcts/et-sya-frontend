@@ -3,7 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -25,16 +25,23 @@ export default class AboutHearingDocumentsController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
     req.session.errors = [];
-
-    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
     userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
     userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
+    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
 
     req.session.errors = aboutHearingDocumentsErrors(req);
-    if (req.session.errors.length) {
-      return res.redirect('/about-hearing-documents');
+    if (req.session?.errors?.length) {
+      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
     }
-    return res.redirect('/');
+
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.body.hearingDocumentsAreFor);
+    if (!foundHearing) {
+      req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
+      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
+    }
+
+    userCase.hearingDocumentsAreFor = foundHearing;
+    return res.redirect('/hearing-document-upload/' + userCase.hearingDocumentsAreFor.id);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

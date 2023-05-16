@@ -1,6 +1,10 @@
+import { AxiosResponse } from 'axios';
+
 import { AppRequest } from '../../definitions/appRequest';
-import { Document } from '../../definitions/case';
+import { CaseWithId, Document } from '../../definitions/case';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
@@ -15,9 +19,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
       size: (size / 1000000).toFixed(3),
       mimeType,
       originalDocumentName,
-      createdOn: new Intl.DateTimeFormat('en-GB', {
-        dateStyle: 'long',
-      }).format(new Date(createdOn)),
+      createdOn: new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn)),
       description: document.description,
     };
     Object.assign(
@@ -30,10 +32,24 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
 export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
-  const { size, mimeType } = docDetails.data;
+  const { createdOn, size, mimeType } = docDetails.data;
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'long',
+  }).format(new Date(createdOn));
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
+};
+
+export const getDocumentsAdditionalInformation = async (
+  documents: DocumentTypeItem[],
+  accessToken: string
+): Promise<void> => {
+  if (documents && documents.length) {
+    for (const doc of documents) {
+      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+    }
+  }
 };
 
 // merge arrays but make sure they are not undefined
@@ -43,7 +59,7 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
 export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file?.document_filename);
   let downloadLink = '';
-  if (file && file.document_size && file.document_mime_type && file.document_filename) {
+  if (file?.document_size && file.document_mime_type && file.document_filename) {
     const href = '/getSupportingMaterial/' + getDocId(file.document_url);
     downloadLink =
       `<a href='${href}' target='_blank' class='govuk-link'>` +
@@ -114,3 +130,62 @@ export function getRequestDocId(req: AppRequest): string {
   }
   return requestDocId;
 }
+
+export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetail[] => {
+  const combinedDocuments: DocumentDetail[] = [];
+  userCases?.forEach(userCase => {
+    combinedDocuments.push(userCase.et1SubmittedForm);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.acknowledgementOfClaimLetterDetail);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.rejectionOfClaimDocumentDetail);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseAcknowledgementDocumentDetail);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseRejectionDocumentDetail);
+    if (userCase.claimSummaryFile?.document_url) {
+      const document_url = userCase.claimSummaryFile.document_url;
+      const documentId = document_url?.substring(document_url?.lastIndexOf('/') + 1);
+      const claimSummaryFileDetail: DocumentDetail = {
+        description: 'Claim Summary File Detail',
+        id: documentId,
+        originalDocumentName: userCase.claimSummaryFile.document_filename,
+      };
+      combinedDocuments.push(claimSummaryFileDetail);
+    }
+  });
+  return combinedDocuments;
+};
+
+function pushDocumentsToCombinedDocuments(combinedDocuments: DocumentDetail[], documentDetailsList: DocumentDetail[]) {
+  documentDetailsList?.forEach(documentDetail => combinedDocuments.push(documentDetail));
+}
+
+export const findDocumentMimeTypeByExtension = (extension: string): string | undefined => {
+  const mimetype = Object.entries(DOCUMENT_CONTENT_TYPES).find(([, [ext]]) => ext === extension) || [];
+  return mimetype[1] ? mimetype[1][1] : undefined;
+};
+
+export const findContentTypeByDocumentDetail = (documentDetail: DocumentDetail): string => {
+  let contentType = documentDetail.mimeType;
+  if (!contentType && documentDetail.originalDocumentName) {
+    const originalDocumentExtension = documentDetail.originalDocumentName
+      .substring(documentDetail.originalDocumentName.indexOf('.') + 1)
+      ?.toLowerCase();
+    contentType = findDocumentMimeTypeByExtension(originalDocumentExtension);
+  }
+  return contentType;
+};
+
+export const findContentTypeByDocument = (document: AxiosResponse): string => {
+  let contentType = document.headers['content-type'];
+  if (!contentType) {
+    let fileName: string = document?.headers?.originalfilename;
+    if (!fileName) {
+      const contentDisposition = document.headers['content-disposition'];
+      fileName = contentDisposition?.substring(
+        contentDisposition?.indexOf('"') + 1,
+        contentDisposition?.lastIndexOf('"')
+      );
+    }
+    const fileExtension = fileName?.substring(fileName.indexOf('.') + 1)?.toLowerCase();
+    contentType = findDocumentMimeTypeByExtension(fileExtension);
+  }
+  return contentType;
+};

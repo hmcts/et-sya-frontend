@@ -7,6 +7,7 @@ import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
@@ -33,7 +34,7 @@ export const getRespondentBannerContent = (
 ): RespondentApplicationDetails[] => {
   const bannerContent: RespondentApplicationDetails[] = [];
 
-  if (items && items.length) {
+  if (items?.length) {
     for (let i = items.length - 1; i >= 0; i--) {
       if (items[i].value.applicationState === 'notStartedYet') {
         const dueDate = new Date(Date.parse(items[i].value.dueDate));
@@ -68,7 +69,7 @@ export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
-  if (items && items.length) {
+  if (items?.length) {
     userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
   }
 };
@@ -78,7 +79,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): GenericTseApplicationTypeItem[] => {
-  if (respondentItems && respondentItems.length) {
+  if (respondentItems?.length) {
     respondentItems.forEach(item => {
       const app = translations[item.value.type];
       item.linkValue = app;
@@ -96,7 +97,7 @@ export const getClaimantResponseDocDownload = (selectedApplication: GenericTseAp
   for (let i = selectedAppRespondCollection?.length - 1; i >= 0; i--) {
     const selectedAppRespondCollectionItem = selectedAppRespondCollection[i].value;
     if (
-      selectedAppRespondCollectionItem.from === 'Claimant' &&
+      selectedAppRespondCollectionItem.from === Applicant.CLAIMANT &&
       selectedAppRespondCollectionItem.supportingMaterial !== undefined
     ) {
       claimantResponseDocDownload = selectedAppRespondCollectionItem.supportingMaterial[0].value.uploadedDocument;

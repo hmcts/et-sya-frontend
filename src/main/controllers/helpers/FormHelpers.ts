@@ -56,6 +56,19 @@ export const assignFormData = (userCase: CaseWithId | undefined, fields: FormFie
   });
 };
 
+export const assignAddresses = (userCase: CaseWithId | undefined, fields: FormFields): void => {
+  if (!userCase) {
+    userCase = <CaseWithId>{};
+    return;
+  }
+  Object.entries(fields).forEach(([name, field]: [string, FormOptions]) => {
+    const caseName = (userCase as AnyRecord)[name];
+    if (caseName) {
+      field.values = caseName;
+    }
+  });
+};
+
 export const trimFormData = (formData: Partial<CaseWithId>): void => {
   (Object.keys(formData) as (keyof typeof formData)[]).forEach(key => {
     const value = formData[key];
@@ -104,7 +117,7 @@ export const createRadioBtnsForAboutHearingDocs = (
           label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
             item.value.listedDate
           )}`,
-          value: `HearingId=${hearing.id}&dateId=${item.id}`,
+          value: `${hearing.id}`,
           name: 'hearingDocumentsAreFor',
         }))
     )

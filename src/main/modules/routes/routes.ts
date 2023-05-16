@@ -10,11 +10,15 @@ import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
 import AddressDetailsController from '../../controllers/AddressDetailsController';
 import AddressLookupController from '../../controllers/AddressLookupController';
+import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
+import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
+import AllDocumentsController from '../../controllers/AllDocumentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
 import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
+import BundlesCompletedController from '../../controllers/BundlesCompletedController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -41,6 +45,8 @@ import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
 import EndDateController from '../../controllers/EndDateController';
+import HearingDocumentFileController from '../../controllers/HearingDocumentFileController';
+import HearingDocumentUploadController from '../../controllers/HearingDocumentUploadController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import LipOrRepController from '../../controllers/LipOrRepController';
@@ -68,6 +74,8 @@ import RespondentApplicationDetailsController from '../../controllers/Respondent
 import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
+import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
+import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -96,6 +104,8 @@ import ValidNoAcasReasonController from '../../controllers/ValidNoAcasReasonCont
 import VideoHearingsController from '../../controllers/VideoHearingsController';
 import WhistleblowingClaimsController from '../../controllers/WhistleblowingClaimsController';
 import WorkAddressController from '../../controllers/WorkAddressController';
+import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
+import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
 import { AppRequest } from '../../definitions/appRequest';
@@ -254,6 +264,56 @@ export class Routes {
     app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
     app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
     app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
+    app.get(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().get);
+    app.post(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().post);
+    app.get(PageUrls.ADDRESS_POSTCODE_ENTER, new AddressPostCodeEnterController().get);
+    app.post(PageUrls.ADDRESS_POSTCODE_ENTER, new AddressPostCodeEnterController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_ENTER,
+      new AddressPostCodeEnterController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_ENTER,
+      new AddressPostCodeEnterController().post
+    );
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_SELECT,
+      new AddressPostCodeSelectController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.ADDRESS_POSTCODE_SELECT,
+      new AddressPostCodeSelectController().post
+    );
+
+    app.get(PageUrls.RESPONDENT_POSTCODE_SELECT, new RespondentPostCodeSelectController().get);
+    app.post(PageUrls.RESPONDENT_POSTCODE_SELECT, new RespondentPostCodeSelectController().post);
+    app.get(PageUrls.RESPONDENT_POSTCODE_ENTER, new RespondentPostCodeEnterController().get);
+    app.post(PageUrls.RESPONDENT_POSTCODE_ENTER, new RespondentPostCodeEnterController().post);
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_ENTER,
+      new RespondentPostCodeEnterController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_ENTER,
+      new RespondentPostCodeEnterController().post
+    );
+    app.get(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
+      new RespondentPostCodeSelectController().get
+    );
+    app.post(
+      PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
+      new RespondentPostCodeSelectController().post
+    );
+
+    app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
+    app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
+    app.get(PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().get);
+    app.post(PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_ENTER, new WorkPostCodeEnterController().post);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
+    app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
     app.get(
       Urls.INFO,
       infoRequestHandler({
@@ -271,6 +331,7 @@ export class Routes {
     app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
     app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
     app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+
     app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
     app.post(
       PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
@@ -278,6 +339,15 @@ export class Routes {
       new RespondentSupportingMaterialController().post
     );
     app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+
+    app.get(PageUrls.HEARING_DOCUMENT_UPLOAD, new HearingDocumentUploadController().get);
+    app.post(
+      PageUrls.HEARING_DOCUMENT_UPLOAD,
+      handleUploads.single('hearingDocument'),
+      new HearingDocumentUploadController().post
+    );
+    app.get(PageUrls.HEARING_DOCUMENT_REMOVE, new HearingDocumentFileController().get);
+
     app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
     app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
     app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
@@ -288,5 +358,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
+    app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
+    app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
   }
 }

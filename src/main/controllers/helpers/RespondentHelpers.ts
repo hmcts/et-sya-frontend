@@ -30,6 +30,19 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.acasCert === YesOrNo.YES) {
     formData.noAcasReason = undefined;
   }
+  if (formData.workAddressTypes !== undefined) {
+    req.session.userCase.workAddressTypes = formData.workAddressTypes;
+  }
+  if (formData.workEnterPostcode !== undefined) {
+    req.session.userCase.workEnterPostcode = formData.workEnterPostcode;
+  }
+  if (formData.respondentAddressTypes !== undefined) {
+    req.session.userCase.respondentAddressTypes = formData.respondentAddressTypes;
+  }
+  if (formData.respondentEnterPostcode !== undefined) {
+    req.session.userCase.respondentEnterPostcode = formData.respondentEnterPostcode;
+  }
+
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
@@ -53,8 +66,41 @@ export const getRespondentRedirectUrl = (respondentNumber: string | number, page
   return ErrorPages.NOT_FOUND;
 };
 
+export const fillAddressAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.addressAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.address1 = address?.street1;
+    userCase.address2 = address?.street2;
+    userCase.addressTown = address?.town;
+    userCase.addressCountry = address?.country;
+    userCase.addressPostcode = address?.postcode;
+  }
+};
+
+export const fillWorkAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.workAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.workAddress1 = address?.street1;
+    userCase.workAddress2 = address?.street2;
+    userCase.workAddressTown = address?.town;
+    userCase.workAddressCountry = address?.country;
+    userCase.workAddressPostcode = address?.postcode;
+  }
+};
+
+export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): void => {
+  const address = userCase.respondentAddresses?.at(x as number);
+  if (!x.toString().includes('object')) {
+    userCase.respondentAddress1 = address?.street1;
+    userCase.respondentAddress2 = address?.street2;
+    userCase.respondentAddressTown = address?.town;
+    userCase.respondentAddressCountry = address?.country;
+    userCase.respondentAddressPostcode = address?.postcode;
+  }
+};
+
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
-  if (typeof selectedRespondentIndex !== 'undefined' && userCase.respondents !== undefined) {
+  if (typeof selectedRespondentIndex !== 'undefined' && userCase !== undefined && userCase.respondents !== undefined) {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
     userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex]?.respondentAddress1;
     userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex]?.respondentAddress2;
@@ -99,10 +145,31 @@ export const ValidRespondentUrls = {
   noacas5: respondent + 5 + PageUrls.NO_ACAS_NUMBER,
   workSame: respondent + 1 + PageUrls.WORK_ADDRESS,
   placeOfWork: respondent + 1 + PageUrls.PLACE_OF_WORK,
+  respondentPostcodeEnter1: respondent + 1 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter2: respondent + 2 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter3: respondent + 3 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter4: respondent + 4 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeEnter5: respondent + 5 + PageUrls.RESPONDENT_POSTCODE_ENTER,
+  respondentPostcodeSelect1: respondent + 1 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect2: respondent + 2 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect3: respondent + 3 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect4: respondent + 4 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+  respondentPostcodeSelect5: respondent + 5 + PageUrls.RESPONDENT_POSTCODE_SELECT,
+
+  workPostcodeEnter1: respondent + 1 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter2: respondent + 2 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter3: respondent + 3 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter4: respondent + 4 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeEnter5: respondent + 5 + PageUrls.WORK_POSTCODE_ENTER,
+  workPostcodeSelect1: respondent + 1 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect2: respondent + 2 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect3: respondent + 3 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect4: respondent + 4 + PageUrls.WORK_POSTCODE_SELECT,
+  workPostcodeSelect5: respondent + 5 + PageUrls.WORK_POSTCODE_SELECT,
 } as const;
 
 export const setNumbersToRespondents = (respondents: Respondent[]): void => {
-  if (respondents && respondents.length) {
+  if (respondents?.length) {
     respondents.forEach((it, index) => (it.respondentNumber = index + 1));
   }
 };

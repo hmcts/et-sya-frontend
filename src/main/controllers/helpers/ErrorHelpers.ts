@@ -10,6 +10,7 @@ import {
   isContent100CharsOrLess,
   isContent2500CharsOrLess,
   isFieldFilledIn,
+  isNotPdfFileType,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
@@ -17,6 +18,7 @@ import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definiti
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
+import { Logger } from '../../logger';
 
 export const returnSessionErrors = (req: AppRequest, form: Form): FormError[] => {
   const formData = form.getParsedBody(req.body, form.getFormFields());
@@ -213,11 +215,12 @@ export const getNewJobPartialPayInfoError = (formData: Partial<CaseWithId>): For
 export const getClaimSummaryError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
-  fileName: string
+  fileName: string,
+  logger: Logger
 ): FormError => {
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = hasInvalidFileFormat(file, logger);
   const fileNameInvalid = hasInvalidName(file?.originalname);
 
   if (!textProvided && !fileProvided) {
@@ -242,7 +245,8 @@ export const getFileUploadAndTextAreaError = (
   fileTooLarge: boolean,
   uploadedFile: Document,
   textAreaProperty: string,
-  uplodedFileProperty: string
+  uplodedFileProperty: string,
+  logger: Logger
 ): FormError => {
   const tooLong = isContent2500CharsOrLess(formDataText);
   if (tooLong) {
@@ -260,7 +264,7 @@ export const getFileUploadAndTextAreaError = (
     return { propertyName: uplodedFileProperty, errorType: 'invalidFileSize' };
   }
 
-  const fileFormatInvalid = hasInvalidFileFormat(file);
+  const fileFormatInvalid = hasInvalidFileFormat(file, logger);
   if (fileFormatInvalid) {
     return { propertyName: uplodedFileProperty, errorType: fileFormatInvalid };
   }
@@ -268,6 +272,32 @@ export const getFileUploadAndTextAreaError = (
   const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
     return { propertyName: uplodedFileProperty, errorType: fileNameInvalid };
+  }
+};
+
+export const getPdfUploadError = (
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document,
+  propertyName: string
+): FormError => {
+  const fileProvided = file !== undefined;
+  if (!fileProvided && !uploadedFile) {
+    return { propertyName, errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName, errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = isNotPdfFileType(file);
+  if (fileFormatInvalid) {
+    return { propertyName, errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName, errorType: fileNameInvalid };
   }
 };
 
@@ -312,7 +342,7 @@ export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyR
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
+      if (['contactApplicationFile', 'supportingMaterialFile', 'hearingDocument'].includes(errors[i].propertyName)) {
         return errors[i];
       }
     }
