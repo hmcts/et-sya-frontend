@@ -2,6 +2,7 @@ import { createDownloadLink } from '../../../../main/controllers/helpers/Documen
 import {
   activateJudgmentsLink,
   getDecisionDetails,
+  populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors,
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/JudgmentHelpers';
 import { YesOrNo } from '../../../../main/definitions/case';
@@ -95,6 +96,17 @@ describe('Judgment helper', () => {
     expect(populatedNotification.redirectUrl).toEqual('/judgment-details/a07ec825-85ae-4041-81da-126de3ad7a60?lng=en');
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should populate decisions with redirect link, status and colour', () => {
+    const populatedJudgment = populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors(
+      [caseWithDecisionsAndJudgments.genericTseApplicationCollection[0].value.adminDecision[0]],
+      'url',
+      translations
+    )[0];
+    expect(populatedJudgment.redirectUrl).toEqual('/judgment-details/1?lng=en');
+    expect(populatedJudgment.statusColor).toEqual('--red');
+    expect(populatedJudgment.displayStatus).toEqual('Not viewed yet');
   });
 
   it('should return expected details content for a decision', () => {

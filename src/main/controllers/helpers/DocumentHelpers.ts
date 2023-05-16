@@ -43,7 +43,7 @@ export const getDocumentsAdditionalInformation = async (
   documents: DocumentTypeItem[],
   accessToken: string
 ): Promise<void> => {
-  if (documents && documents.length) {
+  if (documents?.length) {
     for (const doc of documents) {
       await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
     }
