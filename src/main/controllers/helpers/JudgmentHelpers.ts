@@ -528,9 +528,7 @@ export const findSelectedDecision = (items: TseAdminDecisionItem[], param: strin
 };
 
 export const getJudgments = (userCase: CaseWithId): SendNotificationTypeItem[] => {
-  return userCase?.sendNotificationCollection?.filter(app =>
-    app.value.sendNotificationSubjectString.includes('Judgment')
-  );
+  return userCase?.sendNotificationCollection?.filter(app => app.value.sendNotificationSubjectString === 'Judgment');
 };
 
 export const findSelectedJudgment = (items: SendNotificationTypeItem[], param: string): SendNotificationTypeItem => {
