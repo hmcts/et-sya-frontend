@@ -65,6 +65,7 @@ import PcqController from '../../controllers/PcqController';
 import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
+import PrepareDocumentsForHearingController from '../../controllers/PrepareDocumentsForHearingController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
@@ -360,5 +361,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
+    app.get(PageUrls.PREPARE_DOCUMENTS_FOR_HEARING, new PrepareDocumentsForHearingController().get);
+    app.post(PageUrls.PREPARE_DOCUMENTS_FOR_HEARING, new PrepareDocumentsForHearingController().post);
   }
 }

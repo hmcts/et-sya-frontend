@@ -205,6 +205,7 @@ export interface Case {
   respondentEnterPostcode?: string;
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
+  bundlesRespondentAgreedWithOtherParty?: AgreedDocuments;
 }
 export const enum StillWorking {
   WORKING = 'Working',
@@ -302,6 +303,12 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum AgreedDocuments {
+  AGREED = 'Yes',
+  AGREEDBUT = 'We have agreed but there are some disputed documents',
+  NOTAGREED = 'No, we have not agreed and I want to provide my own documents',
 }
 
 export interface Document {
