@@ -51,10 +51,14 @@ export interface SendNotificationType {
   //Notification sent to Both parties, Claimant only or Respondent only
   sendNotificationNotify?: string;
   sendNotificationEccQuestion?: string;
+  sendNotificationDecision?: string;
+  sendNotificationSentBy?: string;
+  sendNotificationWhoMadeJudgement?: string;
 
   //Indicates the notification status
   notificationState?: string;
   respondCollection?: PseResponseTypeItem[];
+  sendNotificationSubjectString?: string;
 }
 
 export interface PseResponseTypeItem {

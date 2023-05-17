@@ -102,6 +102,8 @@ export const TranslationKeys = {
   RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
   TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
+  ALL_JUDGMENTS: 'all-judgments',
+  JUDGMENT_DETAILS: 'judgment-details',
   ABOUT_HEARING_DOCUMENTS: 'about-hearing-documents',
   HEARING_DOCUMENT_UPLOAD: 'hearing-document-upload',
   TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
@@ -109,6 +111,8 @@ export const TranslationKeys = {
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
   BUNDLES_COMPLETED: 'bundles-completed',
   ALL_DOCUMENTS: 'all-documents',
+  GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
   ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
   ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
   RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
@@ -212,6 +216,8 @@ export const PageUrls = {
   RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
   TRIBUNAL_ORDERS_AND_REQUESTS: '/tribunal-orders-and-requests',
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
+  ALL_JUDGMENTS: '/all-judgments',
+  JUDGMENT_DETAILS: '/judgment-details/:appId',
   GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
   ABOUT_HEARING_DOCUMENTS: '/about-hearing-documents',
   HEARING_DOCUMENT_UPLOAD: '/hearing-document-upload/:appId',
@@ -221,6 +227,8 @@ export const PageUrls = {
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
   BUNDLES_COMPLETED: '/bundles-completed',
   ALL_DOCUMENTS: '/all-documents',
+  GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
   RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
   RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
   WORK_POSTCODE_SELECT: '/work-postcode-select',
@@ -264,6 +272,7 @@ export const JavaApiUrls = {
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
@@ -496,6 +505,10 @@ export const AllDocumentTypes = {
   ACAS_CERT: 'ACAS Certificate',
   RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
   TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+} as const;
+
+export const NotificationSubjects = {
+  GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
 } as const;
 
 export const DOCUMENT_CONTENT_TYPES = {
