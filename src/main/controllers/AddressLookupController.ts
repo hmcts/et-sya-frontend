@@ -45,8 +45,8 @@ export default class AddressLookupController {
     if (postcode === 'SW1H 9AJ') {
       return [
         {
-          fullAddress: 'Ministry Of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
-          street1: '102 Ministry Of Justice, Seventh Floor, Petty France',
+          fullAddress: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+          street1: '102 Ministry of Justice, Seventh Floor, Petty France',
           street2: '',
           town: 'London',
           county: 'City Of Westminster',
