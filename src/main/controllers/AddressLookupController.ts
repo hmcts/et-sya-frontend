@@ -31,13 +31,13 @@ export default class AddressLookupController {
     if (postcode === 'SW1A 1AA') {
       return [
         {
-          fullAddress: 'BUCKINGHAM PALACE, LONDON, SW1A 1AA',
-          street1: 'BUCKINGHAM PALACE',
+          fullAddress: 'Buckingham Palace, London, SW1A 1AA',
+          street1: 'Buckingham Palace',
           street2: '',
-          town: 'LONDON',
-          county: 'CITY OF WESTMINSTER',
+          town: 'London',
+          county: 'City Of Westminster',
           postcode: 'SW1A 1AA',
-          country: 'ENGLAND',
+          country: 'England',
         },
       ];
     }
@@ -45,13 +45,13 @@ export default class AddressLookupController {
     if (postcode === 'SW1H 9AJ') {
       return [
         {
-          fullAddress: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
-          street1: '102 MINISTRY OF JUSTICE, SEVENTH FLOOR, PETTY FRANCE',
+          fullAddress: 'Ministry Of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
+          street1: '102 Ministry Of Justice, Seventh Floor, Petty France',
           street2: '',
-          town: 'LONDON',
-          county: 'CITY OF WESTMINSTER',
+          town: 'London',
+          county: 'City Of Westminster',
           postcode: 'SW1H 9AJ',
-          country: 'ENGLAND',
+          country: 'England',
         },
       ];
     }

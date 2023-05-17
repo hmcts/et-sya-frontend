@@ -31,7 +31,7 @@ describe('Check your answers confirmation page', () => {
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry Of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -292,7 +292,7 @@ describe('Check your answers confirmation page - New Job with start date', () =>
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry Of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -332,7 +332,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry Of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
