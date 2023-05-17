@@ -7,12 +7,21 @@ import {
   findContentTypeByDocument,
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
+  getDecisionDocId,
   getDocumentAdditionalInformation,
+  getJudgmentDocId,
+  getRequestDocId,
+  getResponseDocId,
+  getSelectedAppDocId,
+  getSelectedAppResponseDocId,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
-import { DocumentDetail } from '../../../../main/definitions/definition';
+import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { DecisionAndApplicationDetails, DocumentDetail } from '../../../../main/definitions/definition';
 import * as caseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
+import { mockRequest } from '../../mocks/mockRequest';
+import { caseWithDecisionsAndJudgments } from '../../mocks/mockUserCaseWithDecisionsAndJudgments';
 import mockUserCaseWithDocumentsComplete from '../../mocks/mockUserCaseWithDocumentsComplete';
 
 const TEST_DOCUMENT_CONTENT_TYPES = {
@@ -203,6 +212,12 @@ const documentWithoutContentTypeAndFileName = {
   data: 'text',
 };
 
+const testDoc1 = {
+  document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+  document_filename: 'testDoc1.pdf',
+  document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+};
+
 it('should combine documents correctly', () => {
   expect(
     combineDocuments(
@@ -325,4 +340,398 @@ describe('FindDocumentMimeTypeByExtension', () => {
       expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
     }
   );
+});
+
+describe('getResponseDocId', () => {
+  it('should return the correct response document ID', () => {
+    const selectedApplication = caseWithDecisionsAndJudgments.genericTseApplicationCollection[0];
+    const result = getResponseDocId(selectedApplication);
+    expect(result).toEqual('uuid2');
+  });
+
+  it('should return undefined when no response document is present', () => {
+    const selectedApplication: GenericTseApplicationTypeItem = {
+      value: {
+        respondCollection: [],
+      },
+    };
+    const result = getResponseDocId(selectedApplication);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when response document is not available', () => {
+    const selectedApplication: GenericTseApplicationTypeItem = {
+      value: {
+        respondCollection: [
+          {
+            value: {
+              supportingMaterial: [],
+            },
+          },
+        ],
+      },
+    };
+
+    const result = getResponseDocId(selectedApplication);
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('getDecisionDocId', () => {
+  it('should return the correct decision document ID', () => {
+    const req = mockRequest({});
+    req.params.docId = 'uuid3';
+    const selectedApplication = caseWithDecisionsAndJudgments.genericTseApplicationCollection[0];
+    const result = getDecisionDocId(req, selectedApplication);
+    expect(result).toEqual('uuid3');
+  });
+
+  it('should return undefined when no decision document matches the docId', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const selectedApplication = caseWithDecisionsAndJudgments.genericTseApplicationCollection[0];
+
+    const result = getDecisionDocId(req, selectedApplication);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when no admin decision is available', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const selectedApplication: GenericTseApplicationTypeItem = {
+      value: {
+        adminDecision: [],
+      },
+    };
+
+    const result = getDecisionDocId(req, selectedApplication);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when responseRequiredDoc is undefined', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const selectedApplication: GenericTseApplicationTypeItem = {
+      value: {
+        adminDecision: [
+          {
+            value: {
+              responseRequiredDoc: undefined,
+            },
+          },
+        ],
+      },
+    };
+
+    const result = getDecisionDocId(req, selectedApplication);
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('getSelectedAppDocId', () => {
+  it('should return the correct selected application document ID', () => {
+    const req = mockRequest({});
+    req.params.docId = '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          documentUpload: testDoc1,
+        },
+      },
+    ];
+
+    const result = getSelectedAppDocId(req, appsAndDecisions);
+    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+  });
+
+  it('should return undefined when no selected application document matches the docId', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          documentUpload: testDoc1,
+        },
+      },
+    ];
+
+    const result = getSelectedAppDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when no documentUpload is available', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {},
+      },
+    ];
+
+    const result: string = getSelectedAppDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when documentUpload is undefined', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          documentUpload: undefined,
+        },
+      },
+    ];
+
+    const result: string = getSelectedAppDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('getSelectedAppResponseDocId', () => {
+  it('should return the correct selected application response document ID', () => {
+    const req = mockRequest({});
+    req.params.docId = '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          respondCollection: [
+            {
+              value: {
+                supportingMaterial: [
+                  {
+                    value: {
+                      uploadedDocument: testDoc1,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ];
+
+    const result = getSelectedAppResponseDocId(req, appsAndDecisions);
+    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+  });
+
+  it('should return undefined when no selected application response document matches the docId', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          respondCollection: [
+            {
+              value: {
+                supportingMaterial: [
+                  {
+                    value: {
+                      uploadedDocument: testDoc1,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ];
+
+    const result = getSelectedAppResponseDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when no respondCollection is available', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {},
+      },
+    ];
+
+    const result = getSelectedAppResponseDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when supportingMaterial is empty', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+      {
+        value: {
+          respondCollection: [
+            {
+              value: {
+                supportingMaterial: [],
+              },
+            },
+          ],
+        },
+      },
+    ];
+
+    const result = getSelectedAppResponseDocId(req, appsAndDecisions);
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('getRequestDocId', () => {
+  it('should return the correct request document ID', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [
+                {
+                  value: {
+                    uploadedDocument: testDoc1,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
+    const result = getRequestDocId(req);
+    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+  });
+
+  it('should return undefined when no request document matches the docId', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [
+                {
+                  value: {
+                    uploadedDocument: testDoc1,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+    const result = getRequestDocId(req);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when sendNotificationUploadDocument is empty', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+    const result = getRequestDocId(req);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when session or userCase is undefined', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const result = getRequestDocId(req);
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('getJudgmentDocId', () => {
+  it('should return the correct judgment document ID', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [
+                {
+                  value: {
+                    uploadedDocument: testDoc1,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
+    const result = getJudgmentDocId(req);
+    console.log(result);
+    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+  });
+
+  it('should return undefined when no judgment document matches the docId', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [
+                {
+                  value: {
+                    uploadedDocument: testDoc1,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+
+    const result = getJudgmentDocId(req);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when no sendNotificationUploadDocument is available', () => {
+    const req = mockRequest({
+      session: {
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [],
+            },
+          },
+        },
+      },
+    });
+
+    const result = getJudgmentDocId(req);
+    expect(result).toBeUndefined();
+  });
+
+  it('should return undefined when session or userCase is undefined', () => {
+    const req = mockRequest({});
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+
+    const result = getJudgmentDocId(req);
+    expect(result).toBeUndefined();
+  });
 });

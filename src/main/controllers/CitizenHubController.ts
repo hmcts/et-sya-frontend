@@ -1,8 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { CaseWithId } from '../definitions/case';
-import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -20,6 +18,27 @@ import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWith
 import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import {
+  shouldShowAcknowledgementAlert,
+  shouldShowJudgmentReceived,
+  shouldShowRejectionAlert,
+  shouldShowRespondentAcknolwedgement,
+  shouldShowRespondentApplicationReceived,
+  shouldShowRespondentRejection,
+  shouldShowRespondentResponseReceived,
+  shouldShowSubmittedAlert,
+  updateHubLinkStatuses,
+  userCaseContainsGeneralCorrespondence,
+} from './helpers/CitizenHubHelper';
+import {
+  activateJudgmentsLink,
+  getAllAppsWithDecisions,
+  getDecisionBannerContent,
+  getDecisions,
+  getJudgmentBannerContent,
+  getJudgments,
+  matchDecisionsToApps,
+} from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
@@ -60,6 +79,12 @@ export default class CitizenHubController {
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
 
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
+
     if (!userCase.hubLinksStatuses) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
@@ -79,6 +104,21 @@ export default class CitizenHubController {
 
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
+
+    let decisions = undefined;
+    let appsAndDecisions = undefined;
+    if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
+      decisions = getDecisions(userCase);
+      const appsWithDecisions = getAllAppsWithDecisions(userCase);
+      appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+    }
+
+    let judgments = undefined;
+    if (userCase?.sendNotificationCollection?.length) {
+      judgments = getJudgments(userCase);
+    }
+
+    activateJudgmentsLink(judgments, decisions, req);
 
     // Mark respondent's response as waiting for the tribunal
     if (
@@ -108,12 +148,6 @@ export default class CitizenHubController {
       };
     });
 
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-    };
-
     const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
@@ -122,6 +156,15 @@ export default class CitizenHubController {
     if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
+
+    let judgmentBannerContent = undefined;
+    let decisionBannerContent = undefined;
+
+    if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
+      judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
+      decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
+    }
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
@@ -131,6 +174,8 @@ export default class CitizenHubController {
       currentState,
       sections,
       respondentBannerContent,
+      judgmentBannerContent,
+      decisionBannerContent,
       notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
@@ -141,80 +186,9 @@ export default class CitizenHubController {
       showRespondentApplicationReceived: shouldShowRespondentApplicationReceived(hubLinksStatuses),
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
+      showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
     });
   }
-}
-
-function updateHubLinkStatuses(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  if (
-    hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-    userCase.et3ResponseReceived
-  ) {
-    hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
-  }
-
-  if (
-    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED &&
-    (userCase.responseAcknowledgementDocumentDetail?.length || userCase.responseRejectionDocumentDetail?.length)
-  ) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_VIEWED;
-  }
-
-  if (
-    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED &&
-    (userCase.acknowledgementOfClaimLetterDetail?.length || userCase.rejectionOfClaimDocumentDetail?.length)
-  ) {
-    userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.NOT_VIEWED;
-  }
-}
-
-function shouldShowSubmittedAlert(userCase: CaseWithId) {
-  return !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length;
-}
-
-function shouldShowAcknowledgementAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.acknowledgementOfClaimLetterDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
-}
-
-function shouldShowRejectionAlert(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.rejectionOfClaimDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.VIEWED &&
-    hubLinksStatuses[HubLinkNames.Et1ClaimForm] !== HubLinkStatus.SUBMITTED_AND_VIEWED
-  );
-}
-
-function shouldShowRespondentResponseReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL;
-}
-
-function shouldShowRespondentApplicationReceived(hubLinksStatuses: HubLinksStatuses) {
-  return hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS;
-}
-
-function shouldShowRespondentRejection(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.responseRejectionDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
-  );
-}
-
-function shouldShowRespondentAcknolwedgement(userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses) {
-  return (
-    !!userCase?.responseAcknowledgementDocumentDetail?.length &&
-    hubLinksStatuses[HubLinkNames.RespondentResponse] !== HubLinkStatus.VIEWED
-  );
-}
-
-function userCaseContainsGeneralCorrespondence(notifications: SendNotificationTypeItem[]): boolean {
-  return (
-    notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes('Other (General correspondence)'))
-  );
 }

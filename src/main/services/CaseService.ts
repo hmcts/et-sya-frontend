@@ -7,6 +7,8 @@ import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
+import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { JavaApiUrls } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
@@ -141,6 +143,38 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));
+    }
+  };
+
+  updateJudgmentNotificationState = async (
+    selectedJudgment: SendNotificationTypeItem,
+    caseItem: CaseWithId
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.UPDATE_NOTIFICATION_STATE, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: selectedJudgment.id,
+        notification_state: HubLinkStatus.VIEWED,
+      });
+    } catch (error) {
+      throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));
+    }
+  };
+
+  updateDecisionState = async (
+    selectedDecision: TseAdminDecisionItem,
+    caseItem: CaseWithId
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.UPDATE_ADMIN_DECISION_STATE, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        admin_decision_id: selectedDecision.id,
+        decision_state: HubLinkStatus.VIEWED,
+      });
+    } catch (error) {
+      throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));
     }
   };
 

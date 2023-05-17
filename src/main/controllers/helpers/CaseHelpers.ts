@@ -8,8 +8,11 @@ import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
+import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, inScopeLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
+import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
@@ -110,6 +113,41 @@ export const updateSendNotificationState = async (req: AppRequest, logger: Logge
   try {
     await getCaseApi(req.session.user?.accessToken).updateSendNotificationState(req.session.userCase);
     logger.info(`Updated state for selectedRequestOrOrder: ${req.session.userCase.selectedRequestOrOrder.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const updateJudgmentNotificationState = async (
+  selectedJudgment: SendNotificationTypeItem,
+  req: AppRequest,
+  logger: Logger
+): Promise<void> => {
+  try {
+    selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
+    await getCaseApi(req.session.user?.accessToken).updateJudgmentNotificationState(
+      selectedJudgment,
+      req.session.userCase
+    );
+    logger.info(
+      `Updated state for selected judgment: ${
+        req.session.userCase.sendNotificationCollection[parseInt(selectedJudgment.value.number) - 1].id
+      }`
+    );
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const updateDecisionState = async (
+  selectedDecision: TseAdminDecisionItem,
+  req: AppRequest,
+  logger: Logger
+): Promise<void> => {
+  try {
+    selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
+    await getCaseApi(req.session.user?.accessToken).updateDecisionState(selectedDecision, req.session.userCase);
+    logger.info(`Updated state for selected decision: ${selectedDecision.id}`);
   } catch (error) {
     logger.error(error.message);
   }
@@ -251,6 +289,7 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.responseText = undefined;
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
+  userCase.selectedRequestOrOrder = undefined;
 };
 
 function toTitleCase(str: string): string {
