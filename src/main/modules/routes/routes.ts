@@ -12,6 +12,7 @@ import AddressDetailsController from '../../controllers/AddressDetailsController
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
 import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
+import AgreeingDocumentsForHearingController from '../../controllers/AgreeingDocumentsForHearingController';
 import AllDocumentsController from '../../controllers/AllDocumentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
 import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
@@ -65,7 +66,6 @@ import PcqController from '../../controllers/PcqController';
 import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
-import PrepareDocumentsForHearingController from '../../controllers/PrepareDocumentsForHearingController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
@@ -361,7 +361,7 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
-    app.get(PageUrls.PREPARE_DOCUMENTS_FOR_HEARING, new PrepareDocumentsForHearingController().get);
-    app.post(PageUrls.PREPARE_DOCUMENTS_FOR_HEARING, new PrepareDocumentsForHearingController().post);
+    app.get(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().get);
+    app.post(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().post);
   }
 }

@@ -13,34 +13,34 @@ import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-const logger = getLogger('PrepareDocumentsForHearingController');
+const logger = getLogger('AgreeingDocumentsForHearingController');
 
-export default class PrepareDocumentsForHearingController {
+export default class AgreeingDocumentsForHearingController {
   private readonly form: Form;
 
-  private readonly prepareDocumentsForHearingContent: FormContent = {
+  private readonly agreeingDocumentsForHearingContent: FormContent = {
     fields: {
-      prepareDocumentsForHearing: {
+      bundlesRespondentAgreedDocWith: {
         classes: 'govuk-radios',
-        id: 'prepareDocumentsForHearing',
+        id: 'bundlesRespondentAgreedDocWith',
         type: 'radios',
         label: (l: AnyRecord): string => l.legend,
         labelSize: 'l',
         labelHidden: false,
         values: [
           {
-            name: 'prepareDocumentsForHearing',
+            name: 'bundlesRespondentAgreedDocWith',
             label: (l: AnyRecord): string => l.yes,
-            value: AgreedDocuments.AGREED,
+            value: AgreedDocuments.YES,
           },
           {
-            name: 'prepareDocumentsForHearing',
+            name: 'bundlesRespondentAgreedDocWith',
             label: (l: AnyRecord): string => l.agreed,
             value: AgreedDocuments.AGREEDBUT,
             subFields: {
-              disputedDocuments: {
-                id: 'disputedDocumentsDetailText',
-                name: 'disputedDocumentsDetailText',
+              bundlesRespondentAgreedDocWithBut: {
+                id: 'bundlesRespondentAgreedDocWithBut',
+                name: 'bundlesRespondentAgreedDocWithBut',
                 type: 'textarea',
                 hint: (l: AnyRecord): string => l.agreedTextLabel,
                 classes: 'govuk-textarea',
@@ -50,13 +50,13 @@ export default class PrepareDocumentsForHearingController {
             },
           },
           {
-            name: 'prepareDocumentsForHearing',
+            name: 'bundlesRespondentAgreedDocWith',
             label: (l: AnyRecord): string => l.notAgreed,
             value: AgreedDocuments.NOTAGREED,
             subFields: {
-              notAgreed: {
-                id: 'notAgreedDetailText',
-                name: 'notAgreedDetailText',
+              bundlesRespondentAgreedDocWithNo: {
+                id: 'bundlesRespondentAgreedDocWithBut',
+                name: 'bundlesRespondentAgreedDocWithBut',
                 type: 'textarea',
                 hint: (l: AnyRecord): string => l.notAgreedTextLabel,
                 classes: 'govuk-textarea',
@@ -75,7 +75,7 @@ export default class PrepareDocumentsForHearingController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.prepareDocumentsForHearingContent.fields);
+    this.form = new Form(<FormFields>this.agreeingDocumentsForHearingContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -84,13 +84,13 @@ export default class PrepareDocumentsForHearingController {
 
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
-    const content = getPageContent(req, this.prepareDocumentsForHearingContent, [
+    const content = getPageContent(req, this.agreeingDocumentsForHearingContent, [
       TranslationKeys.COMMON,
-      TranslationKeys.PREPARE_DOCUMENTS_FOR_HEARING,
+      TranslationKeys.AGREEING_DOCUMENTS_FOR_HEARING,
       TranslationKeys.SIDEBAR_CONTACT_US,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('prepare-documents-for-hearing', {
+    res.render('agreeing-documents-for-hearing', {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
     });
