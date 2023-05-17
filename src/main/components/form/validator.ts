@@ -1,5 +1,3 @@
-import { PhoneNumberUtil } from 'google-libphonenumber';
-
 import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
 import { Logger } from '../../logger';
 
@@ -58,13 +56,15 @@ export const isValidUKTelNumber: Validator = value => {
   if (value === null || value === '') {
     return;
   }
-
   try {
-    const phoneUtil = PhoneNumberUtil.getInstance();
     if (!/^[+()\- \d]+$/.test(value as string)) {
       return 'nonnumeric';
     }
-    if (!phoneUtil.isValidNumberForRegion(phoneUtil.parse(value as string, 'GB'), 'GB')) {
+    if (
+      !/^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?#(\d{4}|\d{3}))?$/.test(
+        value as string
+      )
+    ) {
       return 'invalid';
     }
   } catch (e) {

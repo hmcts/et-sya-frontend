@@ -6,7 +6,16 @@ import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { getClaimantResponseDocId, getDecisionDocId, getRequestDocId } from './helpers/DocumentHelpers';
+import {
+  getDecisionDocId,
+  getJudgmentDocId,
+  getRequestDocId,
+  getResponseDocId,
+  getSelectedAppDecisionDocId,
+  getSelectedAppDocId,
+  getSelectedAppResponseDocId,
+} from './helpers/DocumentHelpers';
+import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './helpers/JudgmentHelpers';
 
 const logger = getLogger('AttachmentController');
 
@@ -17,30 +26,36 @@ export default class AttachmentController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const docId = req.params.docId;
     const userCase = req.session?.userCase;
-    let respondentAppDocId;
-    let claimantResponseDocId;
+    let responseDocId;
     let decisionDocId;
     let requestDocId;
-    let contactTribunalDocId;
     let contactTheTribunalSupportingFileId;
     let supportingFileId;
     let allDocsSelectedFileId;
     const selectedApplication = userCase.selectedGenericTseApplication;
+    const selectedApplicationDocUrl = selectedApplication?.value.documentUpload?.document_url;
+    let judgmentDocId;
+    let appDocId;
+    let decisions;
+    let appDecisionDocId;
 
     if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
-      respondentAppDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
-      claimantResponseDocId = getClaimantResponseDocId(selectedApplication);
+      appDocId = getDocId(selectedApplicationDocUrl);
+      responseDocId = getResponseDocId(selectedApplication);
       decisionDocId = getDecisionDocId(req, selectedApplication);
     }
 
-    if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    if (
+      req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
+      req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
+    ) {
       requestDocId = getRequestDocId(req);
     }
 
     if (req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS) {
-      contactTribunalDocId = undefined;
+      appDocId = undefined;
       if (selectedApplication?.value.documentUpload.document_url !== undefined) {
-        contactTribunalDocId = getDocId(selectedApplication?.value.documentUpload?.document_url);
+        appDocId = getDocId(selectedApplicationDocUrl);
       }
     }
 
@@ -50,6 +65,18 @@ export default class AttachmentController {
 
     if (userCase.supportingMaterialFile) {
       supportingFileId = getDocId(userCase.supportingMaterialFile?.document_url);
+    }
+
+    if (req.session.documentDownloadPage === PageUrls.JUDGMENT_DETAILS) {
+      judgmentDocId = getJudgmentDocId(req);
+      if (judgmentDocId === undefined) {
+        decisions = getDecisions(userCase);
+        const appsWithDecisions = getAllAppsWithDecisions(userCase);
+        const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+        appDocId = getSelectedAppDocId(req, appsAndDecisions);
+        responseDocId = getSelectedAppResponseDocId(req, appsAndDecisions);
+        appDecisionDocId = getSelectedAppDecisionDocId(req, appsAndDecisions);
+      }
     }
 
     if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
@@ -62,11 +89,12 @@ export default class AttachmentController {
       if (
         docId !== decisionDocId &&
         docId !== requestDocId &&
-        docId !== respondentAppDocId &&
-        docId !== claimantResponseDocId &&
-        docId !== contactTribunalDocId &&
+        docId !== responseDocId &&
         docId !== contactTheTribunalSupportingFileId &&
         docId !== supportingFileId &&
+        docId !== judgmentDocId &&
+        docId !== appDocId &&
+        docId !== appDecisionDocId &&
         docId !== allDocsSelectedFileId
       ) {
         logger.info('bad request parameter');

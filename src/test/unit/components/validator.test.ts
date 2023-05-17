@@ -1,5 +1,3 @@
-import { PhoneNumberUtil } from 'google-libphonenumber';
-
 import {
   arePayValuesNull,
   atLeastOneFieldIsChecked,
@@ -132,26 +130,18 @@ describe('Validation', () => {
       { mockRef: 'not a phone number', expected: 'nonnumeric' },
       { mockRef: '01234!567890', expected: 'nonnumeric' },
       { mockRef: '00361234567890', expected: 'invalid' },
+      { mockRef: '1234567890', expected: 'invalid' },
       { mockRef: '01234 567 890', expected: undefined },
       { mockRef: '01234 567890', expected: undefined },
       { mockRef: '+441234567890', expected: undefined },
-      { mockRef: '+4401234567890', expected: undefined },
-      { mockRef: '00441234567890', expected: undefined },
-      { mockRef: '004401234567890', expected: undefined },
+      { mockRef: '00441234567890', expected: 'invalid' },
+      { mockRef: '004401234567890', expected: 'invalid' },
       { mockRef: '01234567890', expected: undefined },
-      { mockRef: '1234567890', expected: undefined },
-      { mockRef: '+44 (07500) 900 983', expected: undefined },
+      { mockRef: '+44 (07500) 900 983', expected: 'invalid' },
       { mockRef: '(01629) 900 983', expected: undefined },
       { mockRef: '01234567B90', expected: 'nonnumeric' },
     ])('check telephone number validity when %o', ({ mockRef, expected }) => {
       expect(isValidUKTelNumber(mockRef)).toEqual(expected);
-    });
-    it('should catch exception from phone number util', () => {
-      const spy = jest.spyOn(PhoneNumberUtil, 'getInstance');
-      spy.mockImplementationOnce(() => {
-        throw new Error();
-      });
-      expect(isValidUKTelNumber('01234567890')).toEqual('invalid');
     });
   });
 
