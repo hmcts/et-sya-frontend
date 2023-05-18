@@ -80,29 +80,24 @@ export default class AgreeingDocumentsForHearingController {
 
     const selectedRadio = req.body.bundlesRespondentAgreedDocWith;
     userCase.bundlesRespondentAgreedDocWith = selectedRadio;
-    let agreedButText = req.body.bundlesRespondentAgreedDocWithBut;
-    let notAgreedText = req.body.bundlesRespondentAgreedDocWithNo;
+    const agreedButText = req.body.bundlesRespondentAgreedDocWithBut;
+    const notAgreedText = req.body.bundlesRespondentAgreedDocWithNo;
 
-    if (selectedRadio === AgreedDocuments.AGREEDBUT && agreedButText !== undefined) {
+    if (selectedRadio === AgreedDocuments.AGREEDBUT) {
       userCase.bundlesRespondentAgreedDocWithBut = agreedButText;
       userCase.bundlesRespondentAgreedDocWithNo = undefined;
-      notAgreedText = undefined;
-    } else if (selectedRadio === AgreedDocuments.NOTAGREED && notAgreedText !== undefined) {
+    } else if (selectedRadio === AgreedDocuments.NOTAGREED) {
       userCase.bundlesRespondentAgreedDocWithNo = notAgreedText;
       userCase.bundlesRespondentAgreedDocWithBut = undefined;
-      agreedButText = undefined;
     } else {
       userCase.bundlesRespondentAgreedDocWithBut = undefined;
       userCase.bundlesRespondentAgreedDocWithNo = undefined;
-      agreedButText = undefined;
-      notAgreedText = undefined;
     }
 
     req.session.errors = agreeingDocumentsForHearingErrors(req);
     if (req.session?.errors?.length) {
       return res.redirect(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
     }
-    req.session.errors = [];
     return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
   };
 
