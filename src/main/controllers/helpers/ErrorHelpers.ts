@@ -14,7 +14,7 @@ import {
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
+import { AgreedDocuments, CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -359,6 +359,26 @@ export const aboutHearingDocumentsErrors = (req: AppRequest): FormError[] => {
   }
   if (!req.body.whatAreTheseDocuments) {
     errors.push({ propertyName: 'whatAreTheseDocuments', errorType: 'required' });
+  }
+  return errors;
+};
+
+export const agreeingDocumentsForHearingErrors = (req: AppRequest): FormError[] => {
+  const errors: FormError[] = [];
+  if (!req.body.bundlesRespondentAgreedDocWith) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWith', errorType: 'required' });
+  }
+  if (
+    req.body.bundlesRespondentAgreedDocWith === AgreedDocuments.AGREEDBUT &&
+    !req.body.bundlesRespondentAgreedDocWithBut
+  ) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithBut', errorType: 'required' });
+  }
+  if (
+    req.body.bundlesRespondentAgreedDocWith === AgreedDocuments.NOTAGREED &&
+    !req.body.bundlesRespondentAgreedDocWithNo
+  ) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithNo', errorType: 'required' });
   }
   return errors;
 };

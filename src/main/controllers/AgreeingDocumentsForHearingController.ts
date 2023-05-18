@@ -7,13 +7,10 @@ import { AgreedDocuments } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
 
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { agreeingDocumentsForHearingErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-
-const logger = getLogger('AgreeingDocumentsForHearingController');
 
 export default class AgreeingDocumentsForHearingController {
   private readonly form: Form;
@@ -55,8 +52,8 @@ export default class AgreeingDocumentsForHearingController {
             value: AgreedDocuments.NOTAGREED,
             subFields: {
               bundlesRespondentAgreedDocWithNo: {
-                id: 'bundlesRespondentAgreedDocWithBut',
-                name: 'bundlesRespondentAgreedDocWithBut',
+                id: 'bundlesRespondentAgreedDocWithNo',
+                name: 'bundlesRespondentAgreedDocWithNo',
                 type: 'textarea',
                 hint: (l: AnyRecord): string => l.notAgreedTextLabel,
                 classes: 'govuk-textarea',
@@ -79,11 +76,46 @@ export default class AgreeingDocumentsForHearingController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.ABOUT_HEARING_DOCUMENTS);
+    const { userCase } = req.session;
+    req.session.errors = [];
+
+    const radios = req.body.bundlesRespondentAgreedDocWith;
+    let agreedButText = req.body.bundlesRespondentAgreedDocWithBut;
+    let notAgreedText = req.body.bundlesRespondentAgreedDocWithNo;
+
+    if (radios === AgreedDocuments.YES) {
+      userCase.bundlesRespondentAgreedDocWith = radios;
+      userCase.bundlesRespondentAgreedDocWithBut = undefined;
+      userCase.bundlesRespondentAgreedDocWithNo = undefined;
+      agreedButText = undefined;
+      notAgreedText = undefined;
+    }
+
+    if (radios === AgreedDocuments.AGREEDBUT && agreedButText !== undefined) {
+      userCase.bundlesRespondentAgreedDocWith = radios;
+      userCase.bundlesRespondentAgreedDocWithBut = agreedButText;
+      userCase.bundlesRespondentAgreedDocWithNo = undefined;
+      notAgreedText = undefined;
+    }
+
+    if (radios === AgreedDocuments.NOTAGREED && notAgreedText !== undefined) {
+      userCase.bundlesRespondentAgreedDocWith = radios;
+      userCase.bundlesRespondentAgreedDocWithNo = notAgreedText;
+      userCase.bundlesRespondentAgreedDocWithBut = undefined;
+      agreedButText = undefined;
+    }
+
+    req.session.errors = agreeingDocumentsForHearingErrors(req);
+    if (req.session?.errors?.length) {
+      return res.redirect(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
+    }
+    req.session.errors = [];
+    return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
+    console.log(userCase);
     const content = getPageContent(req, this.agreeingDocumentsForHearingContent, [
       TranslationKeys.COMMON,
       TranslationKeys.AGREEING_DOCUMENTS_FOR_HEARING,
