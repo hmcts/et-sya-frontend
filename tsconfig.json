@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "module": "commonjs",
-    "esModuleInterop": true,
+    "module": "es2020",
     "incremental": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
@@ -13,11 +12,5 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "lib": ["es2020", "dom.iterable", "dom"],
-    "baseUrl": "src/main",
-    "paths": {
-      "router/*": ["router/*"],
-      "routes/*": ["routes/*"]
-    },
-    "typeRoots": ["./node_modules/@types"]
   }
 }
