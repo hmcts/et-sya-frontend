@@ -5,7 +5,7 @@ import { AnyRecord } from '../../definitions/util-types';
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  downloadLink: string
+  downloadLink: string | void
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
     {

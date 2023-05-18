@@ -1,5 +1,7 @@
 import { Document, YesOrNo } from '../case';
 
+import { DocumentTypeItem } from './documentTypeItem';
+
 export interface GenericTseApplicationTypeItem {
   id?: string;
   value?: GenericTseApplicationType;
@@ -31,6 +33,9 @@ export interface GenericTseApplicationType {
 export interface TseAdminDecisionItem {
   id?: string;
   value?: TseAdminDecision;
+  redirectUrl?: string;
+  statusColor?: string;
+  displayStatus?: string;
 }
 
 export interface TseAdminDecision {
@@ -39,10 +44,11 @@ export interface TseAdminDecision {
   decisionMadeBy?: string;
   typeOfDecision?: string;
   selectPartyNotify?: string;
-  responseRequiredDoc?: Document;
+  responseRequiredDoc?: DocumentTypeItem[];
   additionalInformation?: string;
   decisionMadeByFullName?: string;
   enterNotificationTitle?: string;
+  decisionState?: string;
 }
 
 export interface TseRespondTypeItem {
