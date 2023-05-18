@@ -77,32 +77,25 @@ export default class AgreeingDocumentsForHearingController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { userCase } = req.session;
-    req.session.errors = [];
 
-    const radios = req.body.bundlesRespondentAgreedDocWith;
+    const selectedRadio = req.body.bundlesRespondentAgreedDocWith;
+    userCase.bundlesRespondentAgreedDocWith = selectedRadio;
     let agreedButText = req.body.bundlesRespondentAgreedDocWithBut;
     let notAgreedText = req.body.bundlesRespondentAgreedDocWithNo;
 
-    if (radios === AgreedDocuments.YES) {
-      userCase.bundlesRespondentAgreedDocWith = radios;
-      userCase.bundlesRespondentAgreedDocWithBut = undefined;
-      userCase.bundlesRespondentAgreedDocWithNo = undefined;
-      agreedButText = undefined;
-      notAgreedText = undefined;
-    }
-
-    if (radios === AgreedDocuments.AGREEDBUT && agreedButText !== undefined) {
-      userCase.bundlesRespondentAgreedDocWith = radios;
+    if (selectedRadio === AgreedDocuments.AGREEDBUT && agreedButText !== undefined) {
       userCase.bundlesRespondentAgreedDocWithBut = agreedButText;
       userCase.bundlesRespondentAgreedDocWithNo = undefined;
       notAgreedText = undefined;
-    }
-
-    if (radios === AgreedDocuments.NOTAGREED && notAgreedText !== undefined) {
-      userCase.bundlesRespondentAgreedDocWith = radios;
+    } else if (selectedRadio === AgreedDocuments.NOTAGREED && notAgreedText !== undefined) {
       userCase.bundlesRespondentAgreedDocWithNo = notAgreedText;
       userCase.bundlesRespondentAgreedDocWithBut = undefined;
       agreedButText = undefined;
+    } else {
+      userCase.bundlesRespondentAgreedDocWithBut = undefined;
+      userCase.bundlesRespondentAgreedDocWithNo = undefined;
+      agreedButText = undefined;
+      notAgreedText = undefined;
     }
 
     req.session.errors = agreeingDocumentsForHearingErrors(req);
@@ -115,14 +108,13 @@ export default class AgreeingDocumentsForHearingController {
 
   public get = (req: AppRequest, res: Response): void => {
     const userCase = req.session?.userCase;
-    console.log(userCase);
     const content = getPageContent(req, this.agreeingDocumentsForHearingContent, [
       TranslationKeys.COMMON,
       TranslationKeys.AGREEING_DOCUMENTS_FOR_HEARING,
       TranslationKeys.SIDEBAR_CONTACT_US,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('agreeing-documents-for-hearing', {
+    res.render(TranslationKeys.AGREEING_DOCUMENTS_FOR_HEARING, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
     });

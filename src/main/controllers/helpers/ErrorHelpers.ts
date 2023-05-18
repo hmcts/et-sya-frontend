@@ -365,19 +365,14 @@ export const aboutHearingDocumentsErrors = (req: AppRequest): FormError[] => {
 
 export const agreeingDocumentsForHearingErrors = (req: AppRequest): FormError[] => {
   const errors: FormError[] = [];
-  if (!req.body.bundlesRespondentAgreedDocWith) {
+  const radioButtons = req.body.bundlesRespondentAgreedDocWith;
+  if (!radioButtons) {
     errors.push({ propertyName: 'bundlesRespondentAgreedDocWith', errorType: 'required' });
   }
-  if (
-    req.body.bundlesRespondentAgreedDocWith === AgreedDocuments.AGREEDBUT &&
-    !req.body.bundlesRespondentAgreedDocWithBut
-  ) {
+  if (radioButtons === AgreedDocuments.AGREEDBUT && !req.body.bundlesRespondentAgreedDocWithBut) {
     errors.push({ propertyName: 'bundlesRespondentAgreedDocWithBut', errorType: 'required' });
   }
-  if (
-    req.body.bundlesRespondentAgreedDocWith === AgreedDocuments.NOTAGREED &&
-    !req.body.bundlesRespondentAgreedDocWithNo
-  ) {
+  if (radioButtons === AgreedDocuments.NOTAGREED && !req.body.bundlesRespondentAgreedDocWithNo) {
     errors.push({ propertyName: 'bundlesRespondentAgreedDocWithNo', errorType: 'required' });
   }
   return errors;
