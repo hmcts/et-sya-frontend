@@ -12,6 +12,7 @@ import AddressDetailsController from '../../controllers/AddressDetailsController
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
 import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
+import AgreeingDocumentsForHearingController from '../../controllers/AgreeingDocumentsForHearingController';
 import AllDocumentsController from '../../controllers/AllDocumentsController';
 import AllJudgmentsController from '../../controllers/AllJudgmentsController';
 import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
@@ -367,6 +368,8 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
+    app.get(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().get);
+    app.post(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().post);
     app.get(PageUrls.GENERAL_CORRESPONDENCE_LIST, new GeneralCorrespondenceListController().get);
     app.get(
       PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,

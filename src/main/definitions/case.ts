@@ -189,6 +189,9 @@ export interface Case {
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
   sendNotificationCollection?: SendNotificationTypeItem[];
+  bundlesRespondentAgreedDocWith?: AgreedDocuments;
+  bundlesRespondentAgreedDocWithBut?: string;
+  bundlesRespondentAgreedDocWithNo?: string;
 
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
@@ -206,6 +209,7 @@ export interface Case {
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
 }
+
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
@@ -302,6 +306,12 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum AgreedDocuments {
+  YES = 'Yes',
+  AGREEDBUT = 'We have agreed but there are some disputed documents',
+  NOTAGREED = 'No, we have not agreed and I want to provide my own documents',
 }
 
 export interface Document {
