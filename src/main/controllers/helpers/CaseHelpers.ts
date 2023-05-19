@@ -292,6 +292,12 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.selectedRequestOrOrder = undefined;
 };
 
+export const clearPrepareDocumentsForHearingFields = (userCase: CaseWithId): void => {
+  userCase.bundlesRespondentAgreedDocWith = undefined;
+  userCase.bundlesRespondentAgreedDocWithBut = undefined;
+  userCase.bundlesRespondentAgreedDocWithNo = undefined;
+};
+
 function toTitleCase(str: string): string {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();

@@ -120,6 +120,7 @@ export const TranslationKeys = {
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
   BUNDLES_DOCS_FOR_HEARING_CYA: 'bundles-docs-for-hearing-cya',
+  AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
 } as const;
 
 export const PageUrls = {
@@ -237,6 +238,7 @@ export const PageUrls = {
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
   BUNDLES_DOCS_FOR_HEARING_CYA: '/documents-for-hearing',
+  AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
 } as const;
 
 export const InterceptPaths = {
