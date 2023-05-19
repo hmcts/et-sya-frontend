@@ -11,6 +11,7 @@ export interface SendNotificationTypeItem {
 export interface SendNotificationType {
   number?: string;
   sendNotificationTitle?: string;
+  sendNotificationResponsesCount?: string;
 
   //Hearing title with date
   sendNotificationSelectHearing?: SendNotificationSelectHearingItem;
