@@ -17,7 +17,11 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import {
+  clearPrepareDocumentsForHearingFields,
+  clearTseFields,
+  handleUpdateHubLinksStatuses,
+} from './helpers/CaseHelpers';
 import {
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -74,6 +78,7 @@ export default class CitizenHubController {
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
+    clearPrepareDocumentsForHearingFields(userCase);
     req.session.documentDownloadPage = undefined;
     const currentState = currentStateFn(userCase);
 
