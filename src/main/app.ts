@@ -1,8 +1,7 @@
 import * as path from 'path';
 
 // eslint-disable-next-line import/no-unresolved
-import { HTTPError } from 'HttpError';
-
+import { HTTPError } from './HttpError';
 import { AppRequest } from './definitions/appRequest';
 import { CaseApiErrors, PageUrls, RedisErrors } from './definitions/constants';
 import setupDev from './development';

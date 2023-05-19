@@ -230,7 +230,7 @@ export const hasInvalidName = (fileName: string): string => {
   }
 };
 
-export const hasInvalidFileFormat = (value: Express.Multer.File, logger: Logger): string => {
+export const hasInvalidFileFormat = (value: Express.Multer.File, logger: typeof Logger): string => {
   if (!value || !value.originalname) {
     return;
   }

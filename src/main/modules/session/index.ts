@@ -1,12 +1,16 @@
+import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
+
 import config from 'config';
 import ConnectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
-import { ClientOpts, createClient } from 'redis';
 import FileStoreFactory from 'session-file-store';
 
-import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
+const redis = require('redis');
+
+type Redis = typeof redis;
+const { ClientOpts, createClient } = redis as Redis;
 
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
@@ -39,7 +43,7 @@ export class Session {
   private getStore(app: Application) {
     const redisHost = config.get('session.redis.host') as string;
     if (redisHost) {
-      const clientOptions: ClientOpts =
+      const clientOptions: typeof ClientOpts =
         redisHost === LOCAL_REDIS_SERVER
           ? {
               host: redisHost,

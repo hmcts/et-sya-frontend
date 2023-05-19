@@ -1,14 +1,15 @@
 import * as path from 'path';
-
-import config from 'config';
-import express from 'express';
-import nunjucks from 'nunjucks';
+import { resolve } from 'path';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
 
 import createFilters from './njkFilters';
+
+import config from 'config';
+import express from 'express';
+import nunjucks from 'nunjucks';
 
 export class Nunjucks {
   constructor(public developmentMode: boolean) {
@@ -17,8 +18,8 @@ export class Nunjucks {
 
   enableFor(app: express.Express): void {
     app.set('view engine', 'njk');
-    const govUkFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', 'govuk-frontend');
-    const hmctsFrontendPath = path.join(__dirname, '..', '..', '..', '..', 'node_modules', '@hmcts', 'frontend');
+    const govUkFrontendPath = resolve('govuk-frontend');
+    const hmctsFrontendPath = resolve('@hmcts/frontend');
     const nunEnv = nunjucks.configure(
       [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, hmctsFrontendPath],
       {

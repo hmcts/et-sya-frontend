@@ -1,9 +1,3 @@
-import { AxiosResponse } from 'axios';
-import { Response } from 'express';
-import { cloneDeep } from 'lodash';
-import { parse } from 'postcode';
-import { LoggerInstance } from 'winston';
-
 import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
@@ -19,6 +13,11 @@ import { resetValuesIfNeeded, trimFormData } from './FormHelpers';
 import { setUrlLanguage } from './LanguageHelper';
 import { setUserCaseForRespondent } from './RespondentHelpers';
 import { returnNextPage } from './RouterHelpers';
+
+import { AxiosResponse } from 'axios';
+import { Response } from 'express';
+import { cloneDeep } from 'lodash';
+import { parse } from 'postcode';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -42,7 +41,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
+export const handleUpdateDraftCase = async (req: AppRequest, logger: typeof Logger): Promise<void> => {
   if (!req.session.errors?.length) {
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
@@ -79,7 +78,7 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateHubLinksStatuses = (req: AppRequest, logger: Logger): void => {
+export const handleUpdateHubLinksStatuses = (req: AppRequest, logger: typeof Logger): void => {
   getCaseApi(req.session.user?.accessToken)
     .updateHubLinksStatuses(req.session.userCase)
     .then(() => {
@@ -139,7 +138,7 @@ export const isPostcodeInScope = (postCode: string): boolean => {
 export const handleUploadDocument = async (
   req: AppRequest,
   file: UploadedFile,
-  logger: Logger
+  logger: typeof Logger
 ): Promise<AxiosResponse<DocumentUploadResponse>> => {
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
@@ -156,7 +155,7 @@ export const handlePostLogic = async (
   req: AppRequest,
   res: Response,
   form: Form,
-  logger: LoggerInstance,
+  logger: typeof Logger,
   redirectUrl: string
 ): Promise<void> => {
   setUserCase(req, form);
@@ -167,7 +166,7 @@ export const handlePostLogicForRespondent = async (
   req: AppRequest,
   res: Response,
   form: Form,
-  logger: LoggerInstance,
+  logger: typeof Logger,
   redirectUrl: string
 ): Promise<void> => {
   setUserCaseForRespondent(req, form);
@@ -189,7 +188,7 @@ export const postLogic = async (
   req: AppRequest,
   res: Response,
   form: Form,
-  logger: LoggerInstance,
+  logger: typeof Logger,
   redirectUrl: string
 ): Promise<void> => {
   const errors = returnSessionErrors(req, form);

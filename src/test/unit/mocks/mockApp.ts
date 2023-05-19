@@ -1,7 +1,3 @@
-import express, { Express } from 'express';
-import { RedisClient } from 'redis';
-import redis from 'redis-mock';
-
 import { app } from '../../../main/app';
 import { AppSession } from '../../../main/definitions/appRequest';
 import { CaseDataCacheKey, CaseWithId } from '../../../main/definitions/case';
@@ -10,6 +6,9 @@ import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
+import express, { Express } from 'express';
+import { RedisClient } from 'redis';
+import redis from 'redis-mock';
 
 export function mockSession(
   typeOfClaimList: TypesOfClaim[],

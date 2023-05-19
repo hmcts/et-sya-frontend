@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { isFirstDateBeforeSecond } from '../../components/form/dateValidators';
 import { Form } from '../../components/form/form';
 import {
@@ -16,6 +14,8 @@ import { CaseWithId, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 import { Logger } from '../../logger';
+
+import { Response } from 'express';
 
 export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<CaseWithId>): FormError[] => {
   //call get custom errors and add to session errors
@@ -196,7 +196,7 @@ export const getClaimSummaryError = (
   formData: Partial<CaseWithId>,
   file: Express.Multer.File,
   fileName: string,
-  logger: Logger
+  logger: typeof Logger
 ): FormError => {
   const textProvided = isFieldFilledIn(formData.claimSummaryText) === undefined;
   const fileProvided = file !== undefined;
