@@ -89,7 +89,7 @@ export default class HearingDocumentUploadController {
       }
       return res.redirect(pageUrl);
     }
-    return res.redirect('/not-found');
+    return res.redirect(PageUrls.BUNDLES_DOCS_FOR_HEARING_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {

@@ -20,6 +20,7 @@ import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import BundlesCompletedController from '../../controllers/BundlesCompletedController';
+import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -365,6 +366,7 @@ export class Routes {
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
+    app.get(PageUrls.BUNDLES_DOCS_FOR_HEARING_CYA, new BundlesDocsForHearingCYAController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
     app.get(PageUrls.GENERAL_CORRESPONDENCE_LIST, new GeneralCorrespondenceListController().get);
     app.get(
