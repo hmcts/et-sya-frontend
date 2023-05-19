@@ -90,7 +90,12 @@
               {{iWantTo}}
             </h2>
             <p class="govuk-body">
-              <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+              {% if respondentIsSystemUser %}
+                <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+              {% else %}
+                <a href="{{PageUrls.RULE92_HOLDING_PAGE}}">
+              {% endif %}
+              
                 {{contactTribunalMyCase}}
               </a>
             </p>

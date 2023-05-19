@@ -228,5 +228,13 @@ export const mockedApiData: CaseApiDataResponse = {
         },
       },
     ],
+    repCollection: [
+      {
+        value: {
+          myHmctsYesNo: YesOrNo.YES,
+        },
+        id: '123',
+      },
+    ],
   },
 };

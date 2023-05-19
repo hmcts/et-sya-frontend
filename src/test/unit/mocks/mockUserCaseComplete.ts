@@ -215,4 +215,9 @@ export default {
       },
     },
   ],
+  representatives: [
+    {
+      hasMyHMCTSAccount: YesOrNo.YES,
+    },
+  ],
 };

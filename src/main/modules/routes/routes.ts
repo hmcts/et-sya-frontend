@@ -79,6 +79,7 @@ import RespondentPostCodeSelectController from '../../controllers/RespondentPost
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
+import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
@@ -354,5 +355,6 @@ export class Routes {
       PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
       new GeneralCorrespondenceNotificationDetailsController().get
     );
+    app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
   }
 }
