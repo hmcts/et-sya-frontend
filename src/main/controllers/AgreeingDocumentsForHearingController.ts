@@ -83,15 +83,23 @@ export default class AgreeingDocumentsForHearingController {
     const agreedButText = req.body.bundlesRespondentAgreedDocWithBut;
     const notAgreedText = req.body.bundlesRespondentAgreedDocWithNo;
 
-    if (selectedRadio === AgreedDocuments.AGREEDBUT) {
-      userCase.bundlesRespondentAgreedDocWithBut = agreedButText;
-      userCase.bundlesRespondentAgreedDocWithNo = undefined;
-    } else if (selectedRadio === AgreedDocuments.NOTAGREED) {
-      userCase.bundlesRespondentAgreedDocWithNo = notAgreedText;
-      userCase.bundlesRespondentAgreedDocWithBut = undefined;
-    } else {
-      userCase.bundlesRespondentAgreedDocWithBut = undefined;
-      userCase.bundlesRespondentAgreedDocWithNo = undefined;
+    switch (selectedRadio) {
+      case AgreedDocuments.AGREEDBUT:
+        userCase.bundlesRespondentAgreedDocWithBut = agreedButText;
+        userCase.bundlesRespondentAgreedDocWithNo = undefined;
+        break;
+      case AgreedDocuments.NOTAGREED:
+        userCase.bundlesRespondentAgreedDocWithNo = notAgreedText;
+        userCase.bundlesRespondentAgreedDocWithBut = undefined;
+        break;
+      case AgreedDocuments.YES:
+        userCase.bundlesRespondentAgreedDocWithNo = undefined;
+        userCase.bundlesRespondentAgreedDocWithBut = undefined;
+        break;
+      default:
+        req.session.errors = [];
+        req.session.errors.push({ propertyName: 'bundlesRespondentAgreedDocWith', errorType: 'required' });
+        return res.redirect(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
     }
 
     req.session.errors = agreeingDocumentsForHearingErrors(req);
