@@ -6,7 +6,9 @@ import { FormError } from '../../../main/definitions/form';
 import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
+
 import express, { Express } from 'express';
+
 const redis = require('redis');
 type RedisClient = any;
 

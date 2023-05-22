@@ -3063,6 +3063,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.1"\
       ],\
       [\
+        "immutable",\
+        "npm:4.3.0"\
+      ],\
+      [\
         "import-fresh",\
         "npm:3.3.0"\
       ],\
@@ -4747,6 +4751,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:2.1.2"\
       ],\
       [\
+        "sass",\
+        "npm:1.62.1"\
+      ],\
+      [\
         "sass-graph",\
         "npm:4.0.1"\
       ],\
@@ -5722,6 +5730,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
+            ["sass", "npm:1.62.1"],\
             ["sass-lint", "npm:1.13.1"],\
             ["sass-loader", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:13.2.2"],\
             ["send", "npm:0.18.0"],\
@@ -15739,6 +15748,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
+            ["sass", "npm:1.62.1"],\
             ["sass-lint", "npm:1.13.1"],\
             ["sass-loader", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:13.2.2"],\
             ["send", "npm:0.18.0"],\
@@ -17640,6 +17650,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ignore-by-default-npm-1.0.1-78ea10bc54-441509147b.zip/node_modules/ignore-by-default/",\
           "packageDependencies": [\
             ["ignore-by-default", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["immutable", [\
+        ["npm:4.3.0", {\
+          "packageLocation": "./.yarn/cache/immutable-npm-4.3.0-6120b6947c-bbd7ea99e2.zip/node_modules/immutable/",\
+          "packageDependencies": [\
+            ["immutable", "npm:4.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -23502,6 +23521,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["sass", [\
+        ["npm:1.62.1", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.62.1-c16d65fd28-1b1b3584b3.zip/node_modules/sass/",\
+          "packageDependencies": [\
+            ["sass", "npm:1.62.1"],\
+            ["chokidar", "npm:3.5.3"],\
+            ["immutable", "npm:4.3.0"],\
+            ["source-map-js", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["sass-graph", [\
         ["npm:4.0.1", {\
           "packageLocation": "./.yarn/cache/sass-graph-npm-4.0.1-62c3ce0d99-896f99253b.zip/node_modules/sass-graph/",\
@@ -23559,7 +23590,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["klona", "npm:2.0.6"],\
             ["neo-async", "npm:2.6.2"],\
             ["node-sass", "npm:8.0.0"],\
-            ["sass", null],\
+            ["sass", "npm:1.62.1"],\
             ["sass-embedded", null],\
             ["webpack", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:5.82.1"]\
           ],\

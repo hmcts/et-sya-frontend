@@ -11,6 +11,7 @@ const fileNameSuffix = devMode ? '-dev' : '.[contenthash]';
 const filename = `[name]${fileNameSuffix}.js`;
 
 module.exports = {
+  cache: false,
   plugins: [...govukFrontend.plugins, ...scss.plugins, ...HtmlWebpack.plugins, ...hmctsFrontend.plugins],
   entry: path.resolve(sourcePath, 'index.js'),
   mode: devMode ? 'development' : 'production',
