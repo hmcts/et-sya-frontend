@@ -205,8 +205,8 @@ describe('Check your answers confirmation page', () => {
     const pensionLink = employmentDetailsList[11].getAttribute('href');
     const benefitLink = employmentDetailsList[12].getAttribute('href');
 
-    expect(pastEmployerLink).equals(PageUrls.PAST_EMPLOYER, 'Incorrect href found');
-    expect(stillWorkingLink).equals(PageUrls.STILL_WORKING, 'Incorrect href found');
+    expect(pastEmployerLink).equals(PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(stillWorkingLink).equals(PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(jobTitleLink).equals(PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(employmentStartDateLink).equals(PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(contractNoticePeriodLink).equals(
