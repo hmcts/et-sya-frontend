@@ -197,8 +197,8 @@ export interface Case {
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
   hearingDocumentsAreFor?: HearingModel;
-  whoseHearingDocumentsAreYouUploading?: string;
-  whatAreTheseDocuments?: string;
+  whoseHearingDocumentsAreYouUploading?: WhoseHearingDocument;
+  whatAreTheseDocuments?: WhatAreTheHearingDocuments;
   hearingDocument?: Document;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
@@ -312,6 +312,17 @@ export const enum AgreedDocuments {
   YES = 'Yes',
   AGREEDBUT = 'We have agreed but there are some disputed documents',
   NOTAGREED = 'No, we have not agreed and I want to provide my own documents',
+}
+
+export const enum WhoseHearingDocument {
+  MINE = 'mine',
+  BOTH_PARTIES = 'bothParties',
+}
+
+export const enum WhatAreTheHearingDocuments {
+  ALL = 'allHearingDocs',
+  SUPPLEMENTARY = 'supplementary',
+  WITNESS_STATEMENTS = 'witnessStatements',
 }
 
 export interface Document {

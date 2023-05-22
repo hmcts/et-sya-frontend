@@ -1,11 +1,22 @@
 {
   "title": "Check your answers",
   "titleCya": "Check your answers",
-  "applicationType": "Application type",
-  "legend": "What do you want to tell or ask the tribunal?",
-  "supportingMaterial": "Supporting material",
-  "copyToOtherPartyYesOrNo": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
-  "copyToOtherPartyText": "Reason for not informing other party",
+  "q1": "Have you agreed these documents?",
+  "q2": "Select the hearing this document is for",
+  "q3": "Whose hearing document are you uploading?",
+  "q4": "What is this document?",
+  "q5": "Your documents",
+  "whoseHearingDocument": {
+    "mine": "My hearing documents only",
+    "bothParties": "Both parties’ hearing documents combined"
+  },
+  "whatAreTheHearingDocuments": {
+    "allHearingDocs": "All hearing documents",
+    "supplementary": "Supplementary or other documents",
+    "witnessStatements": "Witness statements only"
+  },
+  "important": "Important:",
+  "paragraphAboutSubmittingDocsInAdvance": "You will not be able to change this one you select ‘Submit’. If you need to submit further documents later, you must do so in advance of the hearing date. It wil be up to the tribunal whether they can be included in the hearing agenda. This document will also be sent to the other parties. ",
   "submitBtn": "Submit",
   "cancelLink": "Cancel"
 }

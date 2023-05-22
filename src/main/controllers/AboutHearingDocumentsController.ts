@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { WhatAreTheHearingDocuments, WhoseHearingDocument } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -41,6 +42,9 @@ export default class AboutHearingDocumentsController {
     }
 
     userCase.hearingDocumentsAreFor = foundHearing;
+    console.log('value 1', userCase.whoseHearingDocumentsAreYouUploading);
+    console.log('value 2', userCase.whatAreTheseDocuments);
+    console.log('value 3', userCase.hearingDocumentsAreFor);
     return res.redirect('/hearing-document-upload/' + userCase.hearingDocumentsAreFor.id);
   };
 
@@ -80,12 +84,12 @@ export default class AboutHearingDocumentsController {
             {
               label: (l: AnyRecord): string => l.Question2Radio1,
               name: 'whoseHearingDocumentsAreYouUploading',
-              value: 'MyHearingDocuments',
+              value: WhoseHearingDocument.MINE,
             },
             {
               label: (l: AnyRecord): string => l.Question2Radio2,
               name: 'whoseHearingDocumentsAreYouUploading',
-              value: 'BothPartiesHearingDocumentsCombined',
+              value: WhoseHearingDocument.BOTH_PARTIES,
             },
           ],
           validator: isFieldFilledIn,
@@ -101,17 +105,17 @@ export default class AboutHearingDocumentsController {
             {
               label: (l: AnyRecord): string => l.Question3Radio1,
               name: 'whatAreTheseDocuments',
-              value: 'AllHearingDocuments',
+              value: WhatAreTheHearingDocuments.ALL,
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio2,
               name: 'whatAreTheseDocuments',
-              value: 'SupplementaryOrOtherDocuments',
+              value: WhatAreTheHearingDocuments.SUPPLEMENTARY,
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio3,
               name: 'whatAreTheseDocuments',
-              value: 'WitnessStatementsOnly',
+              value: WhatAreTheHearingDocuments.WITNESS_STATEMENTS,
             },
           ],
           validator: isFieldFilledIn,

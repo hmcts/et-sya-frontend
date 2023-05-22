@@ -250,6 +250,7 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
+  BUNDLES_HEARING_DOCS_SUBMIT_CYA: '/bundlesHearingDocsSubmitCya',
 } as const;
 
 export const ErrorPages = {

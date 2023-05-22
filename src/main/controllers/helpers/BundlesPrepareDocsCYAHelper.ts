@@ -1,56 +1,92 @@
-import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { CaseWithId } from '../../definitions/case';
 import { CHANGE, PageUrls } from '../../definitions/constants';
-import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getCyaContent = (
   userCase: CaseWithId,
   translations: AnyRecord,
   languageParam: string,
-  contactTheTribunalSelectedUrl: string,
+  //  contactTheTribunalSelectedUrl: string,
   downloadLink: string,
-  typeOfApplication: string
+  whoseHearingDoc: string,
+  whatAreHearingDocs: string
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
     {
       key: {
-        text: translations.applicationType,
+        text: translations.q1,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: typeOfApplication,
+        text: userCase.bundlesRespondentAgreedDocWith,
       },
       actions: {
         items: [
           {
-            href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
+            href: PageUrls.AGREEING_DOCUMENTS_FOR_HEARING + languageParam,
             text: CHANGE,
-            visuallyHiddenText: translations.applicationType,
+            visuallyHiddenText: translations.q1,
           },
         ],
       },
     },
     {
       key: {
-        text: translations.legend,
+        text: translations.q2,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.contactApplicationText,
+        text: userCase.hearingDocumentsAreFor.id,
       },
       actions: {
         items: [
           {
-            href: contactTheTribunalSelectedUrl + languageParam,
+            href: PageUrls.ABOUT_HEARING_DOCUMENTS + languageParam,
             text: CHANGE,
-            visuallyHiddenText: translations.legend,
+            visuallyHiddenText: translations.q2,
           },
         ],
       },
     },
     {
       key: {
-        text: translations.supportingMaterial,
+        text: translations.q3,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: whoseHearingDoc,
+      },
+      actions: {
+        items: [
+          {
+            href: PageUrls.ABOUT_HEARING_DOCUMENTS + languageParam,
+            text: CHANGE,
+            visuallyHiddenText: translations.q3,
+          },
+        ],
+      },
+    },
+    {
+      key: {
+        text: translations.q4,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: whatAreHearingDocs,
+      },
+      actions: {
+        items: [
+          {
+            href: PageUrls.ABOUT_HEARING_DOCUMENTS + languageParam,
+            text: CHANGE,
+            visuallyHiddenText: translations.q4,
+          },
+        ],
+      },
+    },
+    {
+      key: {
+        text: translations.q5,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: { html: downloadLink },
@@ -58,56 +94,12 @@ export const getCyaContent = (
       actions: {
         items: [
           {
-            href: contactTheTribunalSelectedUrl + languageParam,
+            href: PageUrls.HEARING_DOCUMENT_UPLOAD + languageParam,
             text: CHANGE,
-            visuallyHiddenText: translations.supportingMaterial,
+            visuallyHiddenText: translations.q5,
           },
         ],
       },
     },
-    ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyYesOrNo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.copyToOtherPartyYesOrNo,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                  text: CHANGE,
-                  visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-                },
-              ],
-            },
-          },
-          ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
-            ? []
-            : [
-                {
-                  key: {
-                    text: translations.copyToOtherPartyText,
-                    classes: 'govuk-!-font-weight-regular-m',
-                  },
-                  value: {
-                    text: userCase.copyToOtherPartyText,
-                  },
-                  actions: {
-                    items: [
-                      {
-                        href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                        text: CHANGE,
-                        visuallyHiddenText: translations.copyToOtherPartyText,
-                      },
-                    ],
-                  },
-                },
-              ]),
-        ]),
   ];
 };
