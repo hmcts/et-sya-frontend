@@ -14,6 +14,7 @@
     "build:prod": "NODE_ENV=production yarn webpack --mode production --config webpack.config.js",
     "test": "npx if-env CI=true && exit 0 || yarn test:unit",
     "test:unit": "jest --maxWorkers=50%",
+    "test:views": "jest -c 'jest.views.config.js'",
     "test:pact": "jest -c jest.pact.config.js --detectOpenHandles --runInBand",
     "test:coverage": "jest --coverage",
     "test:routes": "jest -c jest.routes.config.js",
@@ -35,7 +36,6 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.21.0",
     "@babel/preset-typescript": "^7.21.5",
-    "@faker-js/faker": "^7.6.0",
     "@hmcts/cookie-manager": "^1.0.0",
     "@hmcts/frontend": "^0.0.50-alpha",
     "@hmcts/info-provider": "^1.0.0",
@@ -97,7 +97,7 @@
     "postcode": "^5.1.0",
     "prettier": "^2.8.8",
     "puppeteer": "^19.11.1",
-    "redis": "^3.1.2",
+    "redis": "^4.6.6",
     "redis-mock": "^0.56.3",
     "require-directory": "^2.1.1",
     "serve-favicon": "^2.5.0",
@@ -194,9 +194,6 @@
     "webpack-dev-middleware": "^6.1.0",
     "webpack-node-externals": "^3.0.0",
     "winston": "^3.8.2"
-  },
-  "peerDependencies": {
-    "@faker-js/faker": "^5.5.3"
   },
   "resolutions": {
     "pino-std-serializers": "^6.2.0"

@@ -7,8 +7,8 @@ import { AnyRecord } from '../../../main/definitions/util-types';
 
 import { mockUserDetails } from './mockUser';
 import express, { Express } from 'express';
-import { RedisClient } from 'redis';
-import redis from 'redis-mock';
+const redis = require('redis');
+type RedisClient = any;
 
 export function mockSession(
   typeOfClaimList: TypesOfClaim[],

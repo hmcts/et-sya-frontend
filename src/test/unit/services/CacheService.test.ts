@@ -35,7 +35,7 @@ describe('Get pre-login case data from Redis', () => {
   });
 
   it('should throw error if case data does not exist in Redis with the guid provided', async () => {
-    redisClient.flushdb();
+    redisClient.flushDb();
     const error = new Error(RedisErrors.REDIS_ERROR);
     error.name = RedisErrors.FAILED_TO_RETRIEVE;
     await expect(getPreloginCaseData(redisClient, guid)).rejects.toEqual(error);

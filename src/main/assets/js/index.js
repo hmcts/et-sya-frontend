@@ -1,6 +1,6 @@
-const govUkFrontend = require('govuk-frontend');
-
 const sessionTimeout = require('./session/utils');
+
+const govUkFrontend = require('govuk-frontend');
 
 import '../scss/main.scss';
 import './go-back';

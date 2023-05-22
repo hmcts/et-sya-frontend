@@ -6,12 +6,17 @@ import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
 import FileStoreFactory from 'session-file-store';
+import { log } from 'winston';
 
-const redis = require('redis');
+let redis;
+try {
+  redis = require('redis');
+} catch (err) {
+  log('error', 'Redis not found - continuing');
+}
 
 type Redis = typeof redis;
 const { ClientOpts, createClient } = redis as Redis;
-
 const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 

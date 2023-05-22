@@ -555,10 +555,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:8.40.0"\
       ],\
       [\
-        "@faker-js/faker",\
-        "npm:7.6.0"\
-      ],\
-      [\
         "@gar/promisify",\
         "npm:1.1.3"\
       ],\
@@ -4560,11 +4556,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "redis",\
-        "npm:3.1.2"\
-      ],\
-      [\
-        "redis-commands",\
-        "npm:1.7.0"\
+        "npm:4.6.6"\
       ],\
       [\
         "redis-errors",\
@@ -5604,7 +5596,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-proposal-decorators", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.0"],\
             ["@babel/preset-env", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.5"],\
             ["@babel/preset-typescript", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.5"],\
-            ["@faker-js/faker", "npm:7.6.0"],\
             ["@hmcts/cookie-manager", "npm:1.0.0"],\
             ["@hmcts/frontend", "npm:0.0.50-alpha"],\
             ["@hmcts/info-provider", "npm:1.1.0"],\
@@ -5727,7 +5718,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["puppeteer", "npm:19.11.1"],\
             ["qs", "npm:6.11.2"],\
             ["range-parser", "npm:1.2.1"],\
-            ["redis", "npm:3.1.2"],\
+            ["redis", "npm:4.6.6"],\
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
@@ -8556,15 +8547,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@eslint-js-npm-8.40.0-f1b4eeb9c4-e84936b8eb.zip/node_modules/@eslint/js/",\
           "packageDependencies": [\
             ["@eslint/js", "npm:8.40.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@faker-js/faker", [\
-        ["npm:7.6.0", {\
-          "packageLocation": "./.yarn/cache/@faker-js-faker-npm-7.6.0-fa135883e9-942af62217.zip/node_modules/@faker-js/faker/",\
-          "packageDependencies": [\
-            ["@faker-js/faker", "npm:7.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14450,13 +14432,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["denque", [\
-        ["npm:1.5.1", {\
-          "packageLocation": "./.yarn/cache/denque-npm-1.5.1-2dd42d2dcb-4375ad19d5.zip/node_modules/denque/",\
-          "packageDependencies": [\
-            ["denque", "npm:1.5.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:2.1.0", {\
           "packageLocation": "./.yarn/cache/denque-npm-2.1.0-578d0b6297-1d4ae1d05e.zip/node_modules/denque/",\
           "packageDependencies": [\
@@ -15638,7 +15613,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-proposal-decorators", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.0"],\
             ["@babel/preset-env", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.5"],\
             ["@babel/preset-typescript", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.21.5"],\
-            ["@faker-js/faker", "npm:7.6.0"],\
             ["@hmcts/cookie-manager", "npm:1.0.0"],\
             ["@hmcts/frontend", "npm:0.0.50-alpha"],\
             ["@hmcts/info-provider", "npm:1.1.0"],\
@@ -15761,7 +15735,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["puppeteer", "npm:19.11.1"],\
             ["qs", "npm:6.11.2"],\
             ["range-parser", "npm:1.2.1"],\
-            ["redis", "npm:3.1.2"],\
+            ["redis", "npm:4.6.6"],\
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
@@ -22922,17 +22896,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["redis", [\
-        ["npm:3.1.2", {\
-          "packageLocation": "./.yarn/cache/redis-npm-3.1.2-0dbc9973a0-baec421986.zip/node_modules/redis/",\
-          "packageDependencies": [\
-            ["redis", "npm:3.1.2"],\
-            ["denque", "npm:1.5.1"],\
-            ["redis-commands", "npm:1.7.0"],\
-            ["redis-errors", "npm:1.2.0"],\
-            ["redis-parser", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:4.6.6", {\
           "packageLocation": "./.yarn/cache/redis-npm-4.6.6-f574eb2d3e-fb2e667d91.zip/node_modules/redis/",\
           "packageDependencies": [\
@@ -22943,15 +22906,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@redis/json", "virtual:f574eb2d3ecba75bd98b86b404562bfd720046afefb7ec23071be063ba68a3aceaf654f6ce6f70be763730fa4dc494475c5a96b056df89f5cb6cabcb9cfc105d#npm:1.0.4"],\
             ["@redis/search", "virtual:f574eb2d3ecba75bd98b86b404562bfd720046afefb7ec23071be063ba68a3aceaf654f6ce6f70be763730fa4dc494475c5a96b056df89f5cb6cabcb9cfc105d#npm:1.1.2"],\
             ["@redis/time-series", "virtual:f574eb2d3ecba75bd98b86b404562bfd720046afefb7ec23071be063ba68a3aceaf654f6ce6f70be763730fa4dc494475c5a96b056df89f5cb6cabcb9cfc105d#npm:1.0.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["redis-commands", [\
-        ["npm:1.7.0", {\
-          "packageLocation": "./.yarn/cache/redis-commands-npm-1.7.0-528f61f9d8-d1ff7fbcb5.zip/node_modules/redis-commands/",\
-          "packageDependencies": [\
-            ["redis-commands", "npm:1.7.0"]\
           ],\
           "linkType": "HARD"\
         }]\
