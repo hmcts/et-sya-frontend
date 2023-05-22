@@ -7,14 +7,13 @@ import {
   handleErrors,
   returnSessionErrors,
 } from '../../../../main/controllers/helpers/ErrorHelpers';
-import { PayInterval, YesOrNo } from '../../../../main/definitions/case';
+import { NoAcasNumberReason, PayInterval, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
 import { mockRequest, mockRequestWithSaveException } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
-import mockUserCaseComplete from '../../mocks/mockUserCaseComplete';
 
 describe('Partial Pay errors', () => {
   it('should return error if pay interval does not exist', () => {
@@ -243,21 +242,55 @@ describe('ACAS Certificate Number Errors', () => {
     expect(errors).toEqual({ errorType: 'required', propertyName: 'otherClaim' });
   });
 
-  it('should return an error if invalid acas number provided - (has character which is not numeric and / after R)', () => {
+  it('should return an error if duplicate acas number provided', () => {
     const body = {
-      acasCertNum: 'R1234/6c91234',
+      acasCertNum: 'R123456/64/43',
       acasCert: YesOrNo.YES,
     };
     const req = mockRequest({
       session: mockSession([], [], []),
-      userCase: mockUserCaseComplete,
       body: { saveForLater: true, testFormField: 'test value' },
     });
-
+    req.session.userCase.respondents = [
+      {
+        respondentName: 'Version1',
+        acasCert: YesOrNo.YES,
+        acasCertNum: 'R123456/64/43',
+        noAcasReason: NoAcasNumberReason.ANOTHER,
+        respondentAddress1: 'Ad1',
+        respondentAddress2: 'Ad2',
+        respondentAddressTown: 'Town2',
+        respondentAddressCountry: 'Country2',
+        respondentAddressPostcode: 'SW1A 1AA',
+        ccdId: '3454xaa',
+      },
+      {
+        respondentName: 'Version1',
+        acasCert: YesOrNo.YES,
+        acasCertNum: 'R123456/64/43',
+        noAcasReason: NoAcasNumberReason.ANOTHER,
+        respondentAddress1: 'Ad1',
+        respondentAddress2: 'Ad2',
+        respondentAddressTown: 'Town2',
+        respondentAddressCountry: 'Country2',
+        respondentAddressPostcode: 'SW1A 1AA',
+        ccdId: '3454xaa',
+      },
+    ];
     const errors = getACASCertificateNumberError(req, body);
 
     expect(errors).toEqual({ errorType: 'duplicateAcasNumber', propertyName: 'acasCertNum' });
   });
+});
+
+it('should return an error if invalid acas number provided - (has character which is not numeric and / after R)', () => {
+  const body = {
+    acasCertNum: 'R1234/6c91234',
+    acasCert: YesOrNo.YES,
+  };
+  const errors = getACASCertificateNumberError(null, body);
+
+  expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
 });
 
 describe('returnSessionErrors + handleErrors', () => {

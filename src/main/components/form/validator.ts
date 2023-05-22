@@ -256,7 +256,7 @@ export const isAcasNumberValid: Validator = value => {
 
 export const isDuplicateAcasNumber = (req: AppRequest, value: string): string => {
   const acasNos = [];
-  if (req.session.userCase.respondents.length > 1) {
+  if (req?.session?.userCase?.respondents?.length > 1) {
     for (const r of req.session.userCase.respondents) {
       if (r.acasCertNum === value) {
         acasNos.push(r.acasCertNum);
