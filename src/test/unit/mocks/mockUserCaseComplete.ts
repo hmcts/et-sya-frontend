@@ -101,7 +101,7 @@ export default {
     {
       respondentName: 'Globo Corp',
       acasCert: YesOrNo.YES,
-      acasCertNum: 'R111111111111',
+      acasCertNum: 'R123456/32/32',
       noAcasReason: NoAcasNumberReason.ANOTHER,
       respondentAddress1: 'Respondent Address',
       respondentAddress2: 'That Road',
@@ -114,7 +114,7 @@ export default {
     {
       respondentName: 'Version1',
       acasCert: YesOrNo.YES,
-      acasCertNum: 'R111111111112',
+      acasCertNum: 'R123456/32/32',
       noAcasReason: NoAcasNumberReason.ANOTHER,
       respondentAddress1: 'Ad1',
       respondentAddress2: 'Ad2',

@@ -14,6 +14,7 @@ import { mockFile } from '../../mocks/mockFile';
 import { mockForm, mockFormField, mockValidationCheckWithRequiredError } from '../../mocks/mockForm';
 import { mockRequest, mockRequestWithSaveException } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
+import mockUserCaseComplete from '../../mocks/mockUserCaseComplete';
 
 describe('Partial Pay errors', () => {
   it('should return error if pay interval does not exist', () => {
@@ -140,7 +141,7 @@ describe('ACAS Certificate Number Errors', () => {
   it('should not return an error if correct acas number provided', () => {
     const body = { acasCertNum: 'R1234/5678/12' };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual(undefined);
   });
@@ -151,7 +152,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.NO,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual(undefined);
   });
@@ -162,7 +163,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'required', propertyName: 'acasCertNum' });
   });
@@ -173,7 +174,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
@@ -184,7 +185,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
@@ -195,7 +196,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
@@ -206,7 +207,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
@@ -217,7 +218,7 @@ describe('ACAS Certificate Number Errors', () => {
       acasCert: YesOrNo.YES,
     };
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(null, body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
   });
@@ -247,10 +248,15 @@ describe('ACAS Certificate Number Errors', () => {
       acasCertNum: 'R1234/6c91234',
       acasCert: YesOrNo.YES,
     };
+    const req = mockRequest({
+      session: mockSession([], [], []),
+      userCase: mockUserCaseComplete,
+      body: { saveForLater: true, testFormField: 'test value' },
+    });
 
-    const errors = getACASCertificateNumberError(body);
+    const errors = getACASCertificateNumberError(req, body);
 
-    expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });
+    expect(errors).toEqual({ errorType: 'duplicateAcasNumber', propertyName: 'acasCertNum' });
   });
 });
 

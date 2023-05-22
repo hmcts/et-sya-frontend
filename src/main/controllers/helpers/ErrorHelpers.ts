@@ -8,6 +8,7 @@ import {
   hasInvalidName,
   isAcasNumberValid,
   isContent100CharsOrLess,
+  isDuplicateAcasNumber,
   isFieldFilledIn,
   isPayIntervalNull,
 } from '../../components/form/validator';
@@ -24,7 +25,7 @@ export const getSessionErrors = (req: AppRequest, form: Form, formData: Partial<
   const payErrors = getPartialPayInfoError(formData);
   const newJobPayErrors = getNewJobPartialPayInfoError(formData);
   const hearingPreferenceErrors = getHearingPreferenceReasonError(formData);
-  const acasCertificateNumberError = getACASCertificateNumberError(formData);
+  const acasCertificateNumberError = getACASCertificateNumberError(req, formData);
   const otherClaimTypeError = getOtherClaimDescriptionError(formData);
   if (custErrors) {
     sessionErrors = [...sessionErrors, custErrors];
@@ -87,7 +88,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   }
 };
 
-export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): FormError => {
+export const getACASCertificateNumberError = (req: AppRequest, formData: Partial<CaseWithId>): FormError => {
   const certificateRadioButtonSelectedValue = formData.acasCert;
   const acasCertNum = formData.acasCertNum;
 
@@ -95,11 +96,14 @@ export const getACASCertificateNumberError = (formData: Partial<CaseWithId>): Fo
     let errorType = isFieldFilledIn(acasCertNum);
     if (errorType) {
       return { errorType, propertyName: 'acasCertNum' };
-    } else {
-      errorType = isAcasNumberValid(acasCertNum);
-      if (errorType) {
-        return { errorType, propertyName: 'acasCertNum' };
-      }
+    }
+    errorType = isAcasNumberValid(acasCertNum);
+    if (errorType) {
+      return { errorType, propertyName: 'acasCertNum' };
+    }
+    errorType = isDuplicateAcasNumber(req, acasCertNum);
+    if (errorType) {
+      return { errorType, propertyName: 'acasCertNum' };
     }
   }
 };
