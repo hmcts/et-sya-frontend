@@ -607,10 +607,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.2.1"\
       ],\
       [\
-        "@ioredis/commands",\
-        "npm:1.2.0"\
-      ],\
-      [\
         "@isaacs/cliui",\
         "npm:8.0.2"\
       ],\
@@ -907,10 +903,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:3.4.35"\
       ],\
       [\
-        "@types/connect-redis",\
-        "npm:0.0.20"\
-      ],\
-      [\
         "@types/cookie-parser",\
         "npm:1.4.3"\
       ],\
@@ -1080,7 +1072,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/redis",\
-        "npm:4.0.11"\
+        "npm:2.8.32"\
       ],\
       [\
         "@types/redis-mock",\
@@ -1976,7 +1968,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "connect-redis",\
-        "npm:6.1.3"\
+        "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.1.0"\
       ],\
       [\
         "console-control-strings",\
@@ -2189,10 +2181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "delegates",\
         "npm:1.0.0"\
-      ],\
-      [\
-        "denque",\
-        "npm:2.1.0"\
       ],\
       [\
         "depd",\
@@ -3115,10 +3103,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.4.0"\
       ],\
       [\
-        "ioredis",\
-        "npm:5.3.2"\
-      ],\
-      [\
         "ip",\
         "npm:2.0.0"\
       ],\
@@ -3673,10 +3657,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "lodash.get",\
         "npm:4.4.2"\
-      ],\
-      [\
-        "lodash.isarguments",\
-        "npm:3.1.0"\
       ],\
       [\
         "lodash.isempty",\
@@ -4563,16 +4543,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:4.6.6"\
       ],\
       [\
-        "redis-errors",\
-        "npm:1.2.0"\
-      ],\
-      [\
         "redis-mock",\
         "npm:0.56.3"\
-      ],\
-      [\
-        "redis-parser",\
-        "npm:3.0.0"\
       ],\
       [\
         "reflect-metadata",\
@@ -4961,10 +4933,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "stack-utils",\
         "npm:2.0.6"\
-      ],\
-      [\
-        "standard-as-callback",\
-        "npm:2.1.0"\
       ],\
       [\
         "statuses",\
@@ -5615,12 +5583,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@opentelemetry/instrumentation", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:0.39.1"],\
             ["@opentelemetry/sdk-trace-base", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:1.13.0"],\
             ["@pact-foundation/pact", "npm:9.18.1"],\
+            ["@redis/client", "npm:1.5.7"],\
             ["@rushstack/eslint-patch", "npm:1.2.0"],\
             ["@sinonjs/fake-timers", "npm:10.2.0"],\
             ["@types/body-parser", "npm:1.19.2"],\
             ["@types/chai-as-promised", "npm:7.1.5"],\
             ["@types/config", "npm:3.3.0"],\
-            ["@types/connect-redis", "npm:0.0.20"],\
             ["@types/cookie-parser", "npm:1.4.3"],\
             ["@types/cookiejar", "npm:2.1.2"],\
             ["@types/csurf", "npm:1.11.2"],\
@@ -5641,7 +5609,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/pino", "npm:7.0.5"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"],\
-            ["@types/redis", "npm:4.0.11"],\
             ["@types/redis-mock", "npm:0.17.1"],\
             ["@types/require-directory", "npm:2.1.2"],\
             ["@types/send", "npm:0.17.1"],\
@@ -5668,7 +5635,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chokidar", "npm:3.5.3"],\
             ["codeceptjs", "npm:3.4.1"],\
             ["config", "npm:3.3.9"],\
-            ["connect-redis", "npm:6.1.3"],\
+            ["connect-redis", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.1.0"],\
             ["cookie-parser", "npm:1.4.6"],\
             ["cookiejar", "npm:2.1.4"],\
             ["copy-webpack-plugin", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:11.0.0"],\
@@ -8692,15 +8659,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@ioredis/commands", [\
-        ["npm:1.2.0", {\
-          "packageLocation": "./.yarn/cache/@ioredis-commands-npm-1.2.0-47541de88b-9b20225ba3.zip/node_modules/@ioredis/commands/",\
-          "packageDependencies": [\
-            ["@ioredis/commands", "npm:1.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@isaacs/cliui", [\
         ["npm:8.0.2", {\
           "packageLocation": "./.yarn/cache/@isaacs-cliui-npm-8.0.2-f4364666d5-4a473b9b32.zip/node_modules/@isaacs/cliui/",\
@@ -9887,19 +9845,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/connect-redis", [\
-        ["npm:0.0.20", {\
-          "packageLocation": "./.yarn/cache/@types-connect-redis-npm-0.0.20-50a29648ff-11e22b06b2.zip/node_modules/@types/connect-redis/",\
-          "packageDependencies": [\
-            ["@types/connect-redis", "npm:0.0.20"],\
-            ["@types/express", "npm:4.17.17"],\
-            ["@types/express-session", "npm:1.17.7"],\
-            ["@types/redis", "npm:2.8.32"],\
-            ["ioredis", "npm:5.3.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/cookie-parser", [\
         ["npm:1.4.3", {\
           "packageLocation": "./.yarn/cache/@types-cookie-parser-npm-1.4.3-4bda65954a-f390f3af1b.zip/node_modules/@types/cookie-parser/",\
@@ -10340,14 +10285,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/redis", "npm:2.8.32"],\
             ["@types/node", "npm:20.1.4"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.0.11", {\
-          "packageLocation": "./.yarn/cache/@types-redis-npm-4.0.11-b44223a489-4b2d252368.zip/node_modules/@types/redis/",\
-          "packageDependencies": [\
-            ["@types/redis", "npm:4.0.11"],\
-            ["redis", "npm:4.6.6"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -13700,10 +13637,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["connect-redis", [\
-        ["npm:6.1.3", {\
-          "packageLocation": "./.yarn/cache/connect-redis-npm-6.1.3-c70f6106dc-1f61616e2a.zip/node_modules/connect-redis/",\
+        ["npm:7.1.0", {\
+          "packageLocation": "./.yarn/cache/connect-redis-npm-7.1.0-7fd9a8c503-fb493fae89.zip/node_modules/connect-redis/",\
           "packageDependencies": [\
-            ["connect-redis", "npm:6.1.3"]\
+            ["connect-redis", "npm:7.1.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/connect-redis-virtual-ad7044d04e/0/cache/connect-redis-npm-7.1.0-7fd9a8c503-fb493fae89.zip/node_modules/connect-redis/",\
+          "packageDependencies": [\
+            ["connect-redis", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.1.0"],\
+            ["@types/express-session", "npm:1.17.7"],\
+            ["express-session", "npm:1.17.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/express-session",\
+            "express-session"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14436,15 +14386,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/delegates-npm-1.0.0-9b1942d75f-a51744d9b5.zip/node_modules/delegates/",\
           "packageDependencies": [\
             ["delegates", "npm:1.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["denque", [\
-        ["npm:2.1.0", {\
-          "packageLocation": "./.yarn/cache/denque-npm-2.1.0-578d0b6297-1d4ae1d05e.zip/node_modules/denque/",\
-          "packageDependencies": [\
-            ["denque", "npm:2.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15633,12 +15574,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@opentelemetry/instrumentation", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:0.39.1"],\
             ["@opentelemetry/sdk-trace-base", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:1.13.0"],\
             ["@pact-foundation/pact", "npm:9.18.1"],\
+            ["@redis/client", "npm:1.5.7"],\
             ["@rushstack/eslint-patch", "npm:1.2.0"],\
             ["@sinonjs/fake-timers", "npm:10.2.0"],\
             ["@types/body-parser", "npm:1.19.2"],\
             ["@types/chai-as-promised", "npm:7.1.5"],\
             ["@types/config", "npm:3.3.0"],\
-            ["@types/connect-redis", "npm:0.0.20"],\
             ["@types/cookie-parser", "npm:1.4.3"],\
             ["@types/cookiejar", "npm:2.1.2"],\
             ["@types/csurf", "npm:1.11.2"],\
@@ -15659,7 +15600,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/pino", "npm:7.0.5"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"],\
-            ["@types/redis", "npm:4.0.11"],\
             ["@types/redis-mock", "npm:0.17.1"],\
             ["@types/require-directory", "npm:2.1.2"],\
             ["@types/send", "npm:0.17.1"],\
@@ -15686,7 +15626,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chokidar", "npm:3.5.3"],\
             ["codeceptjs", "npm:3.4.1"],\
             ["config", "npm:3.3.9"],\
-            ["connect-redis", "npm:6.1.3"],\
+            ["connect-redis", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:7.1.0"],\
             ["cookie-parser", "npm:1.4.6"],\
             ["cookiejar", "npm:2.1.4"],\
             ["copy-webpack-plugin", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:11.0.0"],\
@@ -17827,24 +17767,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["ioredis", [\
-        ["npm:5.3.2", {\
-          "packageLocation": "./.yarn/cache/ioredis-npm-5.3.2-58471071b1-9a23559133.zip/node_modules/ioredis/",\
-          "packageDependencies": [\
-            ["ioredis", "npm:5.3.2"],\
-            ["@ioredis/commands", "npm:1.2.0"],\
-            ["cluster-key-slot", "npm:1.1.2"],\
-            ["debug", "virtual:322999f7de4c7560cccd93e220e9166bc1505e196c636b0d30409139c8bf299bff696d8622b3d6433b35cc6a695fb2c1e9f160634eb53f2a2da1c97c80a9eb7f#npm:4.3.4"],\
-            ["denque", "npm:2.1.0"],\
-            ["lodash.defaults", "npm:4.2.0"],\
-            ["lodash.isarguments", "npm:3.1.0"],\
-            ["redis-errors", "npm:1.2.0"],\
-            ["redis-parser", "npm:3.0.0"],\
-            ["standard-as-callback", "npm:2.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["ip", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/ip-npm-2.0.0-204facb3cc-cfcfac6b87.zip/node_modules/ip/",\
@@ -19754,15 +19676,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.get-npm-4.4.2-7bda64ed87-e403047ddb.zip/node_modules/lodash.get/",\
           "packageDependencies": [\
             ["lodash.get", "npm:4.4.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["lodash.isarguments", [\
-        ["npm:3.1.0", {\
-          "packageLocation": "./.yarn/cache/lodash.isarguments-npm-3.1.0-9e74d350b8-ae1526f3eb.zip/node_modules/lodash.isarguments/",\
-          "packageDependencies": [\
-            ["lodash.isarguments", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -22929,30 +22842,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["redis-errors", [\
-        ["npm:1.2.0", {\
-          "packageLocation": "./.yarn/cache/redis-errors-npm-1.2.0-a81fd9b0f1-f28ac26921.zip/node_modules/redis-errors/",\
-          "packageDependencies": [\
-            ["redis-errors", "npm:1.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["redis-mock", [\
         ["npm:0.56.3", {\
           "packageLocation": "./.yarn/cache/redis-mock-npm-0.56.3-967bd7c6ea-8c1293a596.zip/node_modules/redis-mock/",\
           "packageDependencies": [\
             ["redis-mock", "npm:0.56.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["redis-parser", [\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/redis-parser-npm-3.0.0-7ebe40abcb-89290ae530.zip/node_modules/redis-parser/",\
-          "packageDependencies": [\
-            ["redis-parser", "npm:3.0.0"],\
-            ["redis-errors", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24310,15 +24204,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["stack-utils", "npm:2.0.6"],\
             ["escape-string-regexp", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["standard-as-callback", [\
-        ["npm:2.1.0", {\
-          "packageLocation": "./.yarn/cache/standard-as-callback-npm-2.1.0-8e47620bd4-88bec83ee2.zip/node_modules/standard-as-callback/",\
-          "packageDependencies": [\
-            ["standard-as-callback", "npm:2.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,7 +1,7 @@
 import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
 
 import config from 'config';
-import ConnectRedis from 'connect-redis';
+import RedisStore from 'connect-redis';
 import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
@@ -17,7 +17,6 @@ try {
 
 type Redis = typeof redis;
 const { ClientOpts, createClient } = redis as Redis;
-const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 
 const cookieMaxAge = 60 * (60 * 1000); // 60 minutes

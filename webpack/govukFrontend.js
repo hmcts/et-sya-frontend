@@ -3,7 +3,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const root = require.resolve('govuk-frontend');
-const sass = path.resolve(root, '../govuk/all.scss');
+const sass = path.join(root, '../govuk/all.scss');
 const javascript = path.join(root, 'all.js');
 const components = path.join(root, '../govuk/components');
 const assets = path.join(root, '../assets');

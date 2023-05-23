@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { resolve } from 'path';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { FormError, FormField, FormFields, FormInput } from '../../definitions/form';
@@ -18,8 +17,12 @@ export class Nunjucks {
 
   enableFor(app: express.Express): void {
     app.set('view engine', 'njk');
-    const govUkFrontendPath = resolve('govuk-frontend');
-    const hmctsFrontendPath = resolve('@hmcts/frontend');
+
+    const govUkFrontendPath = path.dirname(path.dirname(require.resolve('govuk-frontend')));
+    const hmctsFrontendPath = path.dirname(path.dirname(require.resolve('@hmcts/frontend')));
+
+    // const govUkFrontendPath = require.resolve('govuk-frontend');
+    // const hmctsFrontendPath = require.resolve('@hmcts/frontend');
     const nunEnv = nunjucks.configure(
       [path.join(__dirname, '..', '..', 'views'), govUkFrontendPath, hmctsFrontendPath],
       {
