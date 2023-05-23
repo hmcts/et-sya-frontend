@@ -68,7 +68,7 @@ export const getEmploymentDetails = (
         actions: {
           items: [
             {
-              href: PageUrls.PAST_EMPLOYER,
+              href: PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.didYouWorkFor,
             },
@@ -88,7 +88,7 @@ export const getEmploymentDetails = (
         actions: {
           items: [
             {
-              href: PageUrls.STILL_WORKING,
+              href: PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE,
               text: translations.change,
               visuallyHiddenText: translations.employmentDetails.isStillWorking,
             },
