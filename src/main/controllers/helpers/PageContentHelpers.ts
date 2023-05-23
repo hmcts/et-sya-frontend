@@ -87,7 +87,7 @@ export const getApplicationRespondByDate = (
 };
 
 export const generateAccordionItems = (applications: AnyRecord, translations: AnyRecord): string[] => {
-  const applicationsAccordionItems = applications.map((application: string) => {
+  return applications.map((application: string) => {
     const label = translations.sections[application].label;
     const href =
       application === 'documents'
@@ -109,5 +109,4 @@ export const generateAccordionItems = (applications: AnyRecord, translations: An
       },
     };
   });
-  return applicationsAccordionItems;
 };
