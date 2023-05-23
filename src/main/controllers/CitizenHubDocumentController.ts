@@ -43,7 +43,7 @@ export default class CitizenHubDocumentController {
     try {
       await getDocumentDetails(documents, req.session.user?.accessToken);
     } catch (err) {
-      logger.error(err.message);
+      logger.error(err.toString());
       return res.redirect('/not-found');
     }
 
