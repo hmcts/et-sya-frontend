@@ -74,8 +74,9 @@
       "link": "Welsh Translation required"
     },
     "documents": {
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "label": "Submit documents for a hearing",
+      "body": "Use this form if you’ve been ordered by the tribunal to provide documents for a hearing. This could be all documents including witness statements or supplementary documents.",
+      "link": "Submit documents for a hearing"
     }
   },
   "call": {
