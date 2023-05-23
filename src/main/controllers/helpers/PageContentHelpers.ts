@@ -109,6 +109,5 @@ export const generateAccordionItems = (applications: AnyRecord, translations: An
       },
     };
   });
-  console.log(applicationsAccordionItems);
   return applicationsAccordionItems;
 };
