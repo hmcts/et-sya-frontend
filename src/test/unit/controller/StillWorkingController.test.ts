@@ -56,7 +56,6 @@ describe('Are you still working controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.JOB_TITLE);
     expect(req.session.userCase).toStrictEqual({
-      endDate: undefined,
       isStillWorking: StillWorking.WORKING,
     });
   });

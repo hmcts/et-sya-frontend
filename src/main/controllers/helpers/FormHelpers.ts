@@ -96,7 +96,7 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
     formData.newJobPay = undefined;
     formData.newJobPayInterval = undefined;
   }
-  if (formData.isStillWorking === StillWorking.WORKING) {
+  if (formData.isStillWorking === StillWorking.WORKING && formData.endDate !== undefined) {
     formData.endDate = undefined;
   }
 };
