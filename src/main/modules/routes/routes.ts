@@ -70,6 +70,7 @@ import PcqController from '../../controllers/PcqController';
 import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
+import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
@@ -374,5 +375,6 @@ export class Routes {
       PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
       new GeneralCorrespondenceNotificationDetailsController().get
     );
+    app.get(PageUrls.PREPARE_DOCUMENTS, new PrepareDocumentsController().get);
   }
 }

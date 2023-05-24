@@ -7,6 +7,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
+import { generateAccordionItems } from './helpers/PageContentHelpers';
 
 /**
  * Controller for contact-the-tribunal page with a list of applications to start
@@ -17,25 +18,15 @@ export default class ContactTheTribunalController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
-    const applicationsAccordionItems = applications.map(application => {
-      const label = translations.sections[application].label;
-      return {
-        heading: {
-          text: label,
-        },
-        content: {
-          html:
-            "<p class='govuk-body'>" +
-            translations.sections[application].body +
-            '</p> <br>' +
-            "<a class='govuk-link govuk-body' href='/contact-the-tribunal/" +
-            application +
-            "'>" +
-            label +
-            '</a>',
-        },
-      };
-    });
+    const userCase = req.session.userCase;
+    const applicationsAccordionItems = generateAccordionItems(applications, translations);
+    const notifications = userCase?.sendNotificationCollection?.filter(
+      it => it.value.sendNotificationCaseManagement === 'Request'
+    );
+
+    if (!notifications?.length) {
+      applicationsAccordionItems.splice(applications.length - 1, 1);
+    }
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,

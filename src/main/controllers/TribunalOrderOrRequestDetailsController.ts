@@ -30,11 +30,18 @@ export default class TribunalOrderOrRequestDetailsController {
       }
     }
 
-    const redirectUrl =
-      PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
+    const selectedRedirectUrl =
+      selectedRequestOrOrder.value.sendNotificationCaseManagement === 'Request'
+        ? 'PREPARE_DOCUMENTS'
+        : 'TRIBUNAL_RESPOND_TO_ORDER';
+    const redirectUrl = `${PageUrls[selectedRedirectUrl].replace(':orderId', req.params.orderId)}${getLanguageParam(
+      req.url
+    )}`;
+
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
       r => r.value.from === Applicant.CLAIMANT
     );
+
     try {
       await getDocumentsAdditionalInformation(
         selectedRequestOrOrder.value.sendNotificationUploadDocument,
