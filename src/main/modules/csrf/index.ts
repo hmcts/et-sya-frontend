@@ -1,9 +1,9 @@
+import { HTTPError } from '../../HttpError';
+import { AppRequest } from '../../definitions/appRequest';
+
 import csurf from 'csurf';
 import type { Application } from 'express';
 import express, { NextFunction } from 'express';
-
-import { HTTPError } from '../../HttpError';
-import { AppRequest } from '../../definitions/appRequest';
 
 const { Logger } = require('@hmcts/nodejs-logging');
 const logger = Logger.getLogger('CSRF');
