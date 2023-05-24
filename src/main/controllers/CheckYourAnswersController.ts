@@ -16,6 +16,10 @@ export default class CheckYourAnswersController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
+    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim.length === 0) {
+      req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
+    }
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),

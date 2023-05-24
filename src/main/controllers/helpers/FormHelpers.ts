@@ -1,5 +1,5 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
+import { CaseWithId, StillWorking, YesOrNo, YesOrNoOrNotSure } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormContent, FormField, FormFields, FormInput, FormOptions } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -95,5 +95,8 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
     formData.newJobStartDate = undefined;
     formData.newJobPay = undefined;
     formData.newJobPayInterval = undefined;
+  }
+  if (formData.isStillWorking === StillWorking.WORKING) {
+    formData.endDate = undefined;
   }
 };
