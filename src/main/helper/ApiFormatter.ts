@@ -413,6 +413,7 @@ export const mapRepresentatives = (representatives: RepresentativeApiModel[]): R
   return representatives.map(rep => {
     return {
       hasMyHMCTSAccount: rep.value.myHmctsYesNo,
+      respondentId: rep.value.respondentId,
     };
   });
 };

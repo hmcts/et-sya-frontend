@@ -310,4 +310,5 @@ export interface Document {
 
 export interface Representative {
   hasMyHMCTSAccount?: YesOrNo;
+  respondentId?: string;
 }

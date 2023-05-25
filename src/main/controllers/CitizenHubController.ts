@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
   HubLinkNames,
@@ -20,6 +19,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
+  checkIfRespondentIsSystemUser,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
@@ -79,7 +79,6 @@ export default class CitizenHubController {
     const currentState = currentStateFn(userCase);
 
     const sendNotificationCollection = userCase?.sendNotificationCollection;
-    const repCollection = userCase.representatives;
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
@@ -191,9 +190,7 @@ export default class CitizenHubController {
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
-      respondentIsSystemUser:
-        repCollection !== undefined &&
-        !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined),
+      respondentIsSystemUser: checkIfRespondentIsSystemUser(userCase),
     });
   }
 }
