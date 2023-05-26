@@ -37,8 +37,8 @@ module.exports = async function () {
   // it will only get triggered once th case a leg rep registered on myHMCTS
   I.waitForElement('#main-content',20);
   I.see('This function is not currently available for this case, please return to the main page');
+  contactUs.verifyContactUs();
   I.click('//a[contains(.,"Close and return to case overview")]');
   I.waitForElement('#main-content',20);
   I.see('You have submitted your claim to the tribunal');
-  contactUs.verifyContactUs();
 };
