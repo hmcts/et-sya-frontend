@@ -40,4 +40,5 @@ module.exports = async function () {
   I.click('//a[contains(.,"Close and return to case overview")]');
   I.waitForElement('#main-content',20);
   I.see('You have submitted your claim to the tribunal');
+  contactUs.verifyContactUs();
 };
