@@ -34,7 +34,7 @@ module.exports = async function () {
 
   // The case at this point is does not have a legal rep with myHMCTS account hence the new behaviour
   // introduced in RET-3549 the old behaviour is now part of e2e
-  // it will only get triggered once th case a leg rep registered on myHMCTS
+  // it will only get triggered once the case a leg rep registered on myHMCTS
   I.waitForElement('#main-content',20);
   I.see('This function is not currently available for this case, please return to the main page');
   contactUs.verifyContactUs();
