@@ -24,6 +24,7 @@ export default class RespondentPostCodeEnterController {
       respondentEnterPostcode: {
         id: 'respondentEnterPostcode',
         type: 'text',
+        label: l => l.enterPostcode,
         classes: 'govuk-label govuk-!-width-one-half',
         attributes: {
           maxLength: 14,
@@ -49,6 +50,7 @@ export default class RespondentPostCodeEnterController {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    const respondentName = req.session.userCase.respondentName;
     const title = req.url?.includes('lng=cy')
       ? localesCy.respondentPostcodeEnterTitle
       : locales.respondentPostcodeEnterTitle;
@@ -56,6 +58,7 @@ export default class RespondentPostCodeEnterController {
       ...content,
       link,
       title,
+      respondentName,
     });
   };
 }

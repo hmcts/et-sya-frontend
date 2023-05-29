@@ -24,6 +24,7 @@ export default class WorkPostCodeEnterController {
       workEnterPostcode: {
         id: 'workEnterPostcode',
         type: 'text',
+        label: l => l.enterPostcode,
         classes: 'govuk-label govuk-!-width-one-half',
         attributes: {
           maxLength: 14,
