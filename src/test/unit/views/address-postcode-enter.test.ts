@@ -31,12 +31,10 @@ describe('Address Postcode enter page', () => {
       .get(PageUrls.ADDRESS_POSTCODE_ENTER)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
-        console.log(res.text);
       });
   });
 
   it('should display correct label', () => {
-    console.log(htmlRes.body);
     const label = htmlRes.getElementsByClassName(labelClass);
     expect(label[0].innerHTML).contains(expectedEnterPostcode, 'label does not exist');
   });

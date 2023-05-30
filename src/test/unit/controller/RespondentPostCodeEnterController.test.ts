@@ -11,7 +11,11 @@ describe('Respondent Postcode Enter Controller', () => {
   it('should render the Respondent Enter Postcode page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-
+    request.session.userCase.respondents = [];
+    request.session.userCase.respondents.push({
+      respondentNumber: 1,
+      respondentName: 'respondent',
+    });
     new RespondentPostCodeEnterController().get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('respondent-postcode-enter', expect.anything());
