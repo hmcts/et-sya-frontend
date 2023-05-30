@@ -48,8 +48,8 @@ describe('Address Lookup Controller', () => {
 
   it.each([
     { postcode: 'ZZ00 0ZZ', expected: [] },
-    { postcode: 'SW1H 9AJ', expected: [{ street1: '102 MINISTRY OF JUSTICE, SEVENTH FLOOR, PETTY FRANCE' }] },
-    { postcode: 'SW1A 1AA', expected: [{ street1: 'BUCKINGHAM PALACE' }] },
+    { postcode: 'SW1H 9AJ', expected: [{ street1: '102 Ministry of Justice, Seventh Floor, Petty France' }] },
+    { postcode: 'SW1A 1AA', expected: [{ street1: 'Buckingham Palace' }] },
   ])('returns a mock postcode %o', async ({ postcode, expected }) => {
     const controller = new AddressLookupController();
 
