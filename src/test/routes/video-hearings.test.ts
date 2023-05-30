@@ -1,9 +1,9 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { HearingPreference } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
   it('should return the video hearing choice page', async () => {

@@ -1,7 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
-import { Application, NextFunction, Response } from 'express';
-import redis from 'redis-mock';
-
 import * as authIndex from '../../../main/auth/index';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { AppRequest, UserDetails } from '../../../main/definitions/appRequest';
@@ -14,6 +10,10 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { mockUserDetails } from '../mocks/mockUser';
 import mockUserCaseApiResponseComplete from '../mocks/mockUserCaseResponseMinimal';
+
+import axios, { AxiosResponse } from 'axios';
+import { Application, NextFunction, Response } from 'express';
+import redis from 'redis-mock';
 
 jest.mock('axios');
 jest.mock('../../../main/auth/index');

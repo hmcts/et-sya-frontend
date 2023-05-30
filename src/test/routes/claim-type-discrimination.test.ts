@@ -1,9 +1,9 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
   it('should return the claim type discrimination page', async () => {

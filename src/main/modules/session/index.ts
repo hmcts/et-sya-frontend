@@ -1,22 +1,14 @@
-import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
-
 import config from 'config';
-import RedisStore from 'connect-redis';
+import ConnectRedis from 'connect-redis';
 import cookieParser from 'cookie-parser';
 import { Application } from 'express';
 import session from 'express-session';
+import { ClientOpts, createClient } from 'redis';
 import FileStoreFactory from 'session-file-store';
-import { log } from 'winston';
 
-let redis;
-try {
-  redis = require('redis');
-} catch (err) {
-  log('error', 'Redis not found - continuing');
-}
+import { LOCAL_REDIS_SERVER } from '../../definitions/constants';
 
-type Redis = typeof redis;
-const { ClientOpts, createClient } = redis as Redis;
+const RedisStore = ConnectRedis(session);
 const FileStore = FileStoreFactory(session);
 
 const cookieMaxAge = 60 * (60 * 1000); // 60 minutes
@@ -47,21 +39,21 @@ export class Session {
   private getStore(app: Application) {
     const redisHost = config.get('session.redis.host') as string;
     if (redisHost) {
-      const clientOptions: typeof ClientOpts =
+      const clientOptions: ClientOpts =
         redisHost === LOCAL_REDIS_SERVER
           ? {
-              host: redisHost,
-              port: 6379,
-              tls: false,
-              connect_timeout: 15000,
-            }
+            host: redisHost,
+            port: 6379,
+            tls: false,
+            connect_timeout: 15000,
+          }
           : {
-              host: redisHost,
-              port: 6380,
-              tls: true,
-              connect_timeout: 15000,
-              password: config.get('session.redis.key') as string,
-            };
+            host: redisHost,
+            port: 6380,
+            tls: true,
+            connect_timeout: 15000,
+            password: config.get('session.redis.key') as string,
+          };
 
       const client = createClient(clientOptions);
       app.locals.redisClient = client;

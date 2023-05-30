@@ -1,6 +1,6 @@
-import request from 'supertest';
-
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe('GET /', () => {
   it('should return the onboarding (home) page', async () => {

@@ -1,8 +1,8 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 import { FormFields } from '../../definitions/form';
+
+import { Response } from 'express';
 
 export const handleSaveAsDraft = (res: Response): void => {
   return res.redirect(PageUrls.CLAIM_SAVED);

@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.NEW_JOB_START_DATE}`, () => {
   it('should return the new job start date page', async () => {

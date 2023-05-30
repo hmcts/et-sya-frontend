@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.START_DATE}`, () => {
   it('should return the start date page', async () => {

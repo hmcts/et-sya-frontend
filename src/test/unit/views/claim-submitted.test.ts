@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import request from 'supertest';
-
 import pageJson from '../../../main/resources/locales/en/translation/claim-submitted.json';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const PAGE_URL = '/your-claim-has-been-submitted';
 const expectedTitle = 'Your claim has been submitted';

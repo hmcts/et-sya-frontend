@@ -1,6 +1,3 @@
-import config from 'config';
-import { Application, NextFunction, Response } from 'express';
-
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
@@ -11,6 +8,9 @@ import { getPreloginCaseData } from '../../services/CacheService';
 import { getCaseApi } from '../../services/CaseService';
 
 import { validateNoSignInEndpoints } from './noSignInRequiredEndpoints';
+
+import config from 'config';
+import { Application, NextFunction, Response } from 'express';
 
 const logger = getLogger('oidc');
 

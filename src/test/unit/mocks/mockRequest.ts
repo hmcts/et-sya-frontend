@@ -1,9 +1,9 @@
-import i18next from 'i18next';
-
 import { AppRequest, AppSession } from '../../../main/definitions/appRequest';
 import { CaseWithId, HearingPreference, Sex, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { languages } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
+
+import i18next from 'i18next';
 
 export const mockRequest = ({
   body,

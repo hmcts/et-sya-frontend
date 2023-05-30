@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { app } from '../../../main/app';
 import { PageUrls } from '../../../main/definitions/constants';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const cookiePreferencesJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/cookie-preferences.json'),

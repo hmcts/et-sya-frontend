@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { mockApp } from '../mocks/mockApp';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/return-to-existing';
 const translationRaw = fs.readFileSync(

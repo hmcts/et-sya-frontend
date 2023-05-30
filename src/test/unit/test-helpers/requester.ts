@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { CaseWithId } from '../../../main/definitions/case';
 import { mockApp } from '../mocks/mockApp';
+
+import request from 'supertest';
 
 // Request page and return html response
 export const getHtmlRes = (userCase: CaseWithId, url: string): Promise<Document> => {

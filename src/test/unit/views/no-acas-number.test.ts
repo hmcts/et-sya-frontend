@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { NoAcasNumberReason } from '../../../main/definitions/case';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const titleClass = 'govuk-heading-xl';
 const expectedTitle = 'Reason for not having a certificate number';

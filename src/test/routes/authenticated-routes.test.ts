@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import { app } from '../../main/app';
 import { AuthUrls, PageUrls } from '../../main/definitions/constants';
 import { noSignInRequiredEndpoints } from '../../main/modules/oidc/noSignInRequiredEndpoints';
+
+import request from 'supertest';
 
 const authenticatedRoutes = Object.values(PageUrls).filter(url => !noSignInRequiredEndpoints.includes(url));
 

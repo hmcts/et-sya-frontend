@@ -1,11 +1,11 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
 import { setChangeAnswersUrlLanguage, setCheckAnswersLanguage } from './helpers/LanguageHelper';
 import { ValidRespondentUrls } from './helpers/RespondentHelpers';
 import { returnValidUrl } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {

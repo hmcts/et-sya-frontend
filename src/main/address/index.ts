@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
-import config from 'config';
-
 import { getLogger } from '../logger';
 import { axiosErrorDetails } from '../services/AxiosErrorAdapter';
+
+import axios, { AxiosResponse } from 'axios';
+import config from 'config';
 
 const logger = getLogger('address');
 

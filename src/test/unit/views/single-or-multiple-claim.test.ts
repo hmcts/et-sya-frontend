@@ -1,7 +1,7 @@
+import { app } from '../../../main/app';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { app } from '../../../main/app';
 
 const PAGE_URL = '/single-or-multiple-claim';
 const titleClass = 'govuk-heading-xl';

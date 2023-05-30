@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -11,6 +9,8 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 export default class RespondentDetailsCheckController {
   private readonly form: Form;

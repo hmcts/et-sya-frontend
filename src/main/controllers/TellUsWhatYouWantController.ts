@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -10,6 +8,8 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('TellUsWhatYouWantController');
 

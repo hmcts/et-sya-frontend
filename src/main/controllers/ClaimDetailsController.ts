@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -12,6 +10,8 @@ import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers'
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
+
+import { Response } from 'express';
 
 const logger = getLogger('ClaimDetailsController');
 

@@ -1,12 +1,12 @@
-import axios from 'axios';
-import config from 'config';
-
 import PcqController from '../../../main/controllers/PcqController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import * as invokePCQ from '../../../main/pcq/index';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import axios from 'axios';
+import config from 'config';
 
 jest.mock('axios');
 jest.mock('config');

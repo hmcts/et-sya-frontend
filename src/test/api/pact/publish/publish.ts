@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as path from 'path';
 
-import pact from '@pact-foundation/pact';
-import * as git from 'git-rev-sync';
-
 import { getConfigValue } from '../../configuration';
 import {
   PACT_BRANCH_NAME,
@@ -12,6 +9,9 @@ import {
   PACT_BROKER_USERNAME,
   PACT_CONSUMER_VERSION,
 } from '../../configuration/references';
+
+import pact from '@pact-foundation/pact';
+import * as git from 'git-rev-sync';
 
 const publish = async (): Promise<void> => {
   try {

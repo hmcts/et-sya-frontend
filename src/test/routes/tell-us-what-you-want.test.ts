@@ -1,9 +1,9 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls } from '../../main/definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../../main/definitions/definition';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
   it('should return the tell us what you want page', async () => {

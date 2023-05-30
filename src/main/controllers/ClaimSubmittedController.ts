@@ -1,8 +1,8 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+
+import { Response } from 'express';
 
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {

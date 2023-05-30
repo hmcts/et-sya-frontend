@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -9,6 +7,8 @@ import getLegacyUrl from '../utils/getLegacyUrlFromLng';
 
 import { handlePostLogicPreLogin, isPostcodeInScope } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 export default class WorkPostcodeController {
   private readonly form: Form;

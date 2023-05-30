@@ -1,9 +1,9 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { StillWorking } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.PAY}`, () => {
   it('should return the pay before tax page', async () => {

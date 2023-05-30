@@ -1,10 +1,10 @@
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { CaseTypeId, NoAcasNumberReason, StillWorking, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls } from '../../../main/definitions/constants';
 import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const PAGE_URL = '/check-your-answers';
 const expectedTitle = 'Check your answers';

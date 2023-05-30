@@ -6,12 +6,13 @@
 /* eslint-disable jest/no-conditional-expect */
 
 //  using chai expect, rather than global jest expect
-import axios from 'axios';
-import chai from 'chai';
-import sinon from 'sinon';
-
 import SessionTimeout from '../../../../../main/assets/js/session/session-timeout';
 import * as i18n from '../../../../../main/resources/locales/en/translation/template.json';
+
+import axios from 'axios';
+import chai from 'chai';
+import sinon, { createSandbox, spy } from 'sinon';
+
 const expect = chai.expect;
 chai.use(require('sinon-chai'));
 
@@ -54,7 +55,7 @@ describe('Session Timeout', () => {
   });
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
+    sandbox = createSandbox();
     clock = sandbox.useFakeTimers();
   });
 
@@ -106,8 +107,8 @@ describe('Session Timeout', () => {
 
   describe('stop/start/restartCounters', () => {
     it('should stop counters', () => {
-      sinon.spy(clock, 'clearTimeout');
-      sinon.spy(clock, 'clearInterval');
+      spy(clock, 'clearTimeout');
+      spy(clock, 'clearInterval');
       sessionTimeout.stopCounters();
 
       expect(clock.clearTimeout).to.have.been.calledTwice;

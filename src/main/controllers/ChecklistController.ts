@@ -1,9 +1,9 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
+
+import { Response } from 'express';
 
 export default class ChecklistController {
   public get(req: AppRequest, res: Response): void {

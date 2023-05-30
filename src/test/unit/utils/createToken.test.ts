@@ -1,7 +1,7 @@
+import { createToken } from '../../../main/pcq/createToken';
+
 import config from 'config';
 import { v4 as uuidv4 } from 'uuid';
-
-import { createToken } from '../../../main/pcq/createToken';
 
 jest.mock('config');
 

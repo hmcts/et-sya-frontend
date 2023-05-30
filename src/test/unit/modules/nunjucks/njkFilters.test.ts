@@ -1,6 +1,6 @@
-import nunjucks from 'nunjucks';
-
 import createFilters from '../../../../../src/main/modules/nunjucks/njkFilters';
+
+import nunjucks from 'nunjucks';
 
 describe('njkFilters', () => {
   let env: nunjucks.Environment;

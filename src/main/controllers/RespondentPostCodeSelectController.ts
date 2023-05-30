@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { getAddressesForPostcode } from '../address';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,6 +11,8 @@ import locales from '../resources/locales/en/translation/common.json';
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('RespondentPostCodeSelectController');
 

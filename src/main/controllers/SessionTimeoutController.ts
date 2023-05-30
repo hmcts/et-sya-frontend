@@ -1,8 +1,8 @@
+import { AppRequest } from '../definitions/appRequest';
+
 import config from 'config';
 import { Response } from 'express';
 import moment from 'moment';
-
-import { AppRequest } from '../definitions/appRequest';
 
 export default class SessionTimeoutController {
   public getExtendSession = (req: AppRequest, res: Response): void => {

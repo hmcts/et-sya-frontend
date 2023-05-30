@@ -1,6 +1,6 @@
-import request from 'supertest';
-
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe('Info page', () => {
   describe('on GET', () => {

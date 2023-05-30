@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.VALID_ACAS_REASON}`, () => {
   it('should return the valid no acas reason page', async () => {

@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -11,6 +9,8 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('ClaimTypeDiscriminationController');
 

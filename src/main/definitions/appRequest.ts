@@ -1,9 +1,9 @@
-import { Request } from 'express';
-import { Session } from 'express-session';
-
 import { CaseWithId } from './case';
 import { FormError } from './form';
 import { AnyRecord } from './util-types';
+
+import { Request } from 'express';
+import { Session } from 'express-session';
 
 export interface AppRequest<T = Partial<AnyRecord>> extends Request {
   session: AppSession;

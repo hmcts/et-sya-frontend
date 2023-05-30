@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
-import request from 'supertest';
-
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
+
+import axios, { AxiosResponse } from 'axios';
+import request from 'supertest';
 
 const PAGE_URL = '/case-document/rejection-of-claim';
 const titleClass = 'govuk-heading-xl';

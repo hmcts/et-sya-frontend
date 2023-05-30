@@ -1,9 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
-
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 import { getHtmlRes } from '../test-helpers/requester';
+
+import axios, { AxiosResponse } from 'axios';
 
 const PAGE_URL = '/claim-details';
 const expectedTitle = 'Your claim details';

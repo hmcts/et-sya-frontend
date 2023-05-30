@@ -1,10 +1,10 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { LegacyUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 
 import { getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 export default class ContactAcasController {
   public get(req: AppRequest, res: Response): void {

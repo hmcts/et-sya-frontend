@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
@@ -16,6 +14,8 @@ import { getLogger } from '../logger';
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('RespondentAddressController');
 

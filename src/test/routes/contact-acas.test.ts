@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.CONTACT_ACAS}`, () => {
   it('should return the contact-acas page', async () => {

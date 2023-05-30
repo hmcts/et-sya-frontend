@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { convertToDateObject } from '../components/form/parser';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,6 +11,8 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 const end_date: DateFormFields = {
   ...EndDateFormFields,

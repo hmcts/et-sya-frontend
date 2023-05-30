@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { isValidPension } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -12,6 +10,8 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('PensionController');
 

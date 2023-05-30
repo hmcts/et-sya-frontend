@@ -1,8 +1,8 @@
-import { pactWith } from 'jest-pact';
-
 import { IdTokenJwtPayload } from '../../../../../main/auth';
 import { idamGetUserDetails } from '../../pactUtil';
 import { PactTestSetup } from '../settings/provider.mock';
+
+import { pactWith } from 'jest-pact';
 
 const { Matchers } = require('@pact-foundation/pact');
 const { somethingLike } = Matchers;

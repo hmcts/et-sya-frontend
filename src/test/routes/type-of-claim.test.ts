@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.TYPE_OF_CLAIM}`, () => {
   it('should return the type of claim page', async () => {

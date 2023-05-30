@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { CaseDataCacheKey, CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim } from '../../../main/definitions/definition';
 import * as caseSelectionService from '../../../main/services/CaseSelectionService';
 import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../mocks/mockApp';
 import { mockApplications } from '../mocks/mockApplications';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const claimantApplicationsJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/claimant-applications.json'),

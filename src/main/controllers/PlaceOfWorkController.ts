@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import {
   isValidAddressFirstLine,
   isValidAddressSecondLine,
@@ -15,6 +13,8 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { fillWorkAddressFields, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('PlaceOfWorkController');
 

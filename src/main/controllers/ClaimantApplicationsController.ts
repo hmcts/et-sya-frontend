@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
@@ -8,6 +6,8 @@ import { getUserApplications, getUserCasesByLastModified } from '../services/Cas
 
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 export default class ClaimantApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {

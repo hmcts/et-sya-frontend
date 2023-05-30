@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios';
-
 import { CaseWithId } from '../../definitions/case';
 import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
+
+import { AxiosResponse } from 'axios';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {

@@ -1,7 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
-import { Application } from 'express';
-import redis from 'redis-mock';
-
 import StepsToMakingYourClaimController from '../../../main/controllers/StepsToMakingYourClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
@@ -14,6 +10,10 @@ import { CaseApi } from '../../../main/services/CaseService';
 import { mockSession } from '../mocks/mockApp';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import axios, { AxiosResponse } from 'axios';
+import { Application } from 'express';
+import redis from 'redis-mock';
 
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');

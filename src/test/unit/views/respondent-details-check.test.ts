@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const titleClass = 'govuk-heading-l';
 const buttonClass = 'govuk-button';

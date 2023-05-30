@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { mockApp } from '../mocks/mockApp';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { mockApp } from '../mocks/mockApp';
 
 const translationRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/respondent-address.json'),

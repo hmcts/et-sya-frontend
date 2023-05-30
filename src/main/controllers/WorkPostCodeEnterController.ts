@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { isValidUKPostcode } from '../components/form/address_validator';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,6 +11,8 @@ import locales from '../resources/locales/en/translation/common.json';
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('WorkPostCodeEnterController');
 

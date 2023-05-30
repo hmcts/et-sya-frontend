@@ -1,9 +1,9 @@
 import * as crypto from 'crypto';
 
+import { PCQRequest } from '.';
+
 import logger from '@pact-foundation/pact/src/common/logger';
 import config from 'config';
-
-import { PCQRequest } from '.';
 
 const algorithm = 'aes-256-gcm';
 const bufferSize = 16;

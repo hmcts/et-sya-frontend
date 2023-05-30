@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe('Your claim has been saved page', () => {
   describe(`on GET ${PageUrls.CLAIM_SAVED}`, () => {

@@ -1,10 +1,10 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 export default class NewAccountLandingController {
   public get = (req: AppRequest, res: Response): void => {

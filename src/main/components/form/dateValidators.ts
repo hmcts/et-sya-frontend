@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
-
 import { CaseDate } from '../../definitions/case';
 import { InvalidField } from '../../definitions/form';
+
+import dayjs from 'dayjs';
 
 /**
  * All validators assume that date1 (and date2 if provided) are not null / undefined

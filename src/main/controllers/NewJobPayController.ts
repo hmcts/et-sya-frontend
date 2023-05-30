@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -17,6 +15,8 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const pay_before_tax: CurrencyFormFields = {
   ...DefaultCurrencyFormFields,

@@ -1,5 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
-
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, languages } from '../../../main/definitions/constants';
@@ -15,6 +13,8 @@ import { mockApplications } from '../mocks/mockApplications';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { mockEnglishClaimTypesTranslations } from '../mocks/mockTranslations';
+
+import axios, { AxiosResponse } from 'axios';
 
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');

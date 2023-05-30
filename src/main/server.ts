@@ -3,10 +3,10 @@ import * as fs from 'fs';
 import * as https from 'https';
 import * as path from 'path';
 
-import config from 'config';
-
 import { app } from './app';
 import { getLogger } from './logger';
+
+import config from 'config';
 
 const logger = getLogger('server');
 

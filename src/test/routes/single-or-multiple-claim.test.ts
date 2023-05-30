@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import { CaseType } from '../../main/definitions/case';
 import { LegacyUrls, PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
   it('should return the single or multiple claim page', async () => {

@@ -1,11 +1,11 @@
-import autobind from 'autobind-decorator';
-import { Response } from 'express';
-
 import { Address, getAddressesForPostcode } from '../address';
 import { AppRequest } from '../definitions/appRequest';
 import { UnknownRecord } from '../definitions/util-types';
 
 import { handleSaveAsDraft } from './helpers/RouterHelpers';
+
+import autobind from 'autobind-decorator';
+import { Response } from 'express';
 
 @autobind
 export default class AddressLookupController {

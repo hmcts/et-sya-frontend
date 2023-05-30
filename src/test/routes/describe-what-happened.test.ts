@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import * as helper from '../../main/controllers/helpers/CaseHelpers';
 import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.DESCRIBE_WHAT_HAPPENED}`, () => {
   it('should return the describe what happened page', async () => {

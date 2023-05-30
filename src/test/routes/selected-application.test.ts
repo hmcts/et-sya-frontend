@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 describe(`GET ${PageUrls.SELECTED_APPLICATION + '/newClaim' + languages.ENGLISH_URL_PARAMETER}`, () => {
   it('should return to home page in English language if new claim and current language is English', async () => {

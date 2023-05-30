@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -14,6 +12,8 @@ import { getCaseApi } from '../services/CaseService';
 import { getSectionStatus, getSectionStatusForEmployment, setUserCaseWithRedisData } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+
+import { Response } from 'express';
 
 const logger = getLogger('StepsToMakingYourClaimController');
 

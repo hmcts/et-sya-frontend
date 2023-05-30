@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 const PAGE_URL = PageUrls.CLAIM_SUBMITTED;
 

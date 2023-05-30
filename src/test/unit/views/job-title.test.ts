@@ -1,7 +1,7 @@
+import { mockApp } from '../mocks/mockApp';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/job-title';
 const titleClass = 'govuk-heading-xl';

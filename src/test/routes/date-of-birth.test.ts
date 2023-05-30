@@ -1,7 +1,7 @@
-import request from 'supertest';
-
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.DOB_DETAILS}`, () => {
   it('should return the date of birth page', async () => {

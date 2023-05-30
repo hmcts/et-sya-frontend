@@ -1,7 +1,5 @@
 import { nextTick } from 'process';
 
-import axios, { AxiosResponse } from 'axios';
-
 import {
   getSectionStatus,
   getSectionStatusForEmployment,
@@ -21,6 +19,8 @@ import { mockSession } from '../../mocks/mockApp';
 import { mockFile } from '../../mocks/mockFile';
 import { mockLogger } from '../../mocks/mockLogger';
 import { mockRequest } from '../../mocks/mockRequest';
+
+import axios, { AxiosResponse } from 'axios';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);

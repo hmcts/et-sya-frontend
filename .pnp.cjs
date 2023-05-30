@@ -607,6 +607,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.2.1"\
       ],\
       [\
+        "@ioredis/commands",\
+        "npm:1.2.0"\
+      ],\
+      [\
         "@isaacs/cliui",\
         "npm:8.0.2"\
       ],\
@@ -903,6 +907,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:3.4.35"\
       ],\
       [\
+        "@types/connect-redis",\
+        "npm:0.0.20"\
+      ],\
+      [\
         "@types/cookie-parser",\
         "npm:1.4.3"\
       ],\
@@ -1072,7 +1080,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@types/redis",\
-        "npm:2.8.32"\
+        "npm:4.0.11"\
       ],\
       [\
         "@types/redis-mock",\
@@ -2183,6 +2191,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.0.0"\
       ],\
       [\
+        "denque",\
+        "npm:2.1.0"\
+      ],\
+      [\
         "depd",\
         "npm:2.0.0"\
       ],\
@@ -3103,6 +3115,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:1.4.0"\
       ],\
       [\
+        "ioredis",\
+        "npm:5.3.2"\
+      ],\
+      [\
         "ip",\
         "npm:2.0.0"\
       ],\
@@ -3657,6 +3673,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "lodash.get",\
         "npm:4.4.2"\
+      ],\
+      [\
+        "lodash.isarguments",\
+        "npm:3.1.0"\
       ],\
       [\
         "lodash.isempty",\
@@ -4540,11 +4560,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "redis",\
-        "npm:4.6.6"\
+        "npm:3.1.2"\
+      ],\
+      [\
+        "redis-commands",\
+        "npm:1.7.0"\
+      ],\
+      [\
+        "redis-errors",\
+        "npm:1.2.0"\
       ],\
       [\
         "redis-mock",\
         "npm:0.56.3"\
+      ],\
+      [\
+        "redis-parser",\
+        "npm:3.0.0"\
       ],\
       [\
         "reflect-metadata",\
@@ -4933,6 +4965,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [\
         "stack-utils",\
         "npm:2.0.6"\
+      ],\
+      [\
+        "standard-as-callback",\
+        "npm:2.1.0"\
       ],\
       [\
         "statuses",\
@@ -5589,6 +5625,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/body-parser", "npm:1.19.2"],\
             ["@types/chai-as-promised", "npm:7.1.5"],\
             ["@types/config", "npm:3.3.0"],\
+            ["@types/connect-redis", "npm:0.0.20"],\
             ["@types/cookie-parser", "npm:1.4.3"],\
             ["@types/cookiejar", "npm:2.1.2"],\
             ["@types/csurf", "npm:1.11.2"],\
@@ -5609,6 +5646,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/pino", "npm:7.0.5"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"],\
+            ["@types/redis", "npm:4.0.11"],\
             ["@types/redis-mock", "npm:0.17.1"],\
             ["@types/require-directory", "npm:2.1.2"],\
             ["@types/send", "npm:0.17.1"],\
@@ -5645,6 +5683,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:4.3.4"],\
             ["eslint", "npm:8.40.0"],\
             ["eslint-config-prettier", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:8.8.0"],\
+            ["eslint-import-resolver-node", "npm:0.3.7"],\
             ["eslint-plugin-codeceptjs", "npm:1.3.0"],\
             ["eslint-plugin-import", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:2.27.5"],\
             ["eslint-plugin-jest", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:27.2.1"],\
@@ -5693,7 +5732,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["puppeteer", "npm:19.11.1"],\
             ["qs", "npm:6.11.2"],\
             ["range-parser", "npm:1.2.1"],\
-            ["redis", "npm:4.6.6"],\
+            ["redis", "npm:3.1.2"],\
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
@@ -8659,6 +8698,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@ioredis/commands", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/@ioredis-commands-npm-1.2.0-47541de88b-9b20225ba3.zip/node_modules/@ioredis/commands/",\
+          "packageDependencies": [\
+            ["@ioredis/commands", "npm:1.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@isaacs/cliui", [\
         ["npm:8.0.2", {\
           "packageLocation": "./.yarn/cache/@isaacs-cliui-npm-8.0.2-f4364666d5-4a473b9b32.zip/node_modules/@isaacs/cliui/",\
@@ -9845,6 +9893,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/connect-redis", [\
+        ["npm:0.0.20", {\
+          "packageLocation": "./.yarn/cache/@types-connect-redis-npm-0.0.20-50a29648ff-11e22b06b2.zip/node_modules/@types/connect-redis/",\
+          "packageDependencies": [\
+            ["@types/connect-redis", "npm:0.0.20"],\
+            ["@types/express", "npm:4.17.17"],\
+            ["@types/express-session", "npm:1.17.7"],\
+            ["@types/redis", "npm:2.8.32"],\
+            ["ioredis", "npm:5.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/cookie-parser", [\
         ["npm:1.4.3", {\
           "packageLocation": "./.yarn/cache/@types-cookie-parser-npm-1.4.3-4bda65954a-f390f3af1b.zip/node_modules/@types/cookie-parser/",\
@@ -10285,6 +10346,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/redis", "npm:2.8.32"],\
             ["@types/node", "npm:20.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.0.11", {\
+          "packageLocation": "./.yarn/cache/@types-redis-npm-4.0.11-b44223a489-4b2d252368.zip/node_modules/@types/redis/",\
+          "packageDependencies": [\
+            ["@types/redis", "npm:4.0.11"],\
+            ["redis", "npm:4.6.6"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14390,6 +14459,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["denque", [\
+        ["npm:1.5.1", {\
+          "packageLocation": "./.yarn/cache/denque-npm-1.5.1-2dd42d2dcb-4375ad19d5.zip/node_modules/denque/",\
+          "packageDependencies": [\
+            ["denque", "npm:1.5.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.1.0", {\
+          "packageLocation": "./.yarn/cache/denque-npm-2.1.0-578d0b6297-1d4ae1d05e.zip/node_modules/denque/",\
+          "packageDependencies": [\
+            ["denque", "npm:2.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["depd", [\
         ["npm:1.1.2", {\
           "packageLocation": "./.yarn/cache/depd-npm-1.1.2-b0c8414da7-6b406620d2.zip/node_modules/depd/",\
@@ -15580,6 +15665,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/body-parser", "npm:1.19.2"],\
             ["@types/chai-as-promised", "npm:7.1.5"],\
             ["@types/config", "npm:3.3.0"],\
+            ["@types/connect-redis", "npm:0.0.20"],\
             ["@types/cookie-parser", "npm:1.4.3"],\
             ["@types/cookiejar", "npm:2.1.2"],\
             ["@types/csurf", "npm:1.11.2"],\
@@ -15600,6 +15686,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/pino", "npm:7.0.5"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"],\
+            ["@types/redis", "npm:4.0.11"],\
             ["@types/redis-mock", "npm:0.17.1"],\
             ["@types/require-directory", "npm:2.1.2"],\
             ["@types/send", "npm:0.17.1"],\
@@ -15636,6 +15723,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:4.3.4"],\
             ["eslint", "npm:8.40.0"],\
             ["eslint-config-prettier", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:8.8.0"],\
+            ["eslint-import-resolver-node", "npm:0.3.7"],\
             ["eslint-plugin-codeceptjs", "npm:1.3.0"],\
             ["eslint-plugin-import", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:2.27.5"],\
             ["eslint-plugin-jest", "virtual:f5ad5c50e555c7231723c9741ef93661b3c2a1bfac895e8f02cdb75583d55d6a0103428c0fb9152033e746c2cfcd8d7e05d78c57797de8d82ad1a3daf7510120#npm:27.2.1"],\
@@ -15684,7 +15772,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["puppeteer", "npm:19.11.1"],\
             ["qs", "npm:6.11.2"],\
             ["range-parser", "npm:1.2.1"],\
-            ["redis", "npm:4.6.6"],\
+            ["redis", "npm:3.1.2"],\
             ["redis-mock", "npm:0.56.3"],\
             ["request", "npm:2.88.2"],\
             ["require-directory", "npm:2.1.1"],\
@@ -17767,6 +17855,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["ioredis", [\
+        ["npm:5.3.2", {\
+          "packageLocation": "./.yarn/cache/ioredis-npm-5.3.2-58471071b1-9a23559133.zip/node_modules/ioredis/",\
+          "packageDependencies": [\
+            ["ioredis", "npm:5.3.2"],\
+            ["@ioredis/commands", "npm:1.2.0"],\
+            ["cluster-key-slot", "npm:1.1.2"],\
+            ["debug", "virtual:322999f7de4c7560cccd93e220e9166bc1505e196c636b0d30409139c8bf299bff696d8622b3d6433b35cc6a695fb2c1e9f160634eb53f2a2da1c97c80a9eb7f#npm:4.3.4"],\
+            ["denque", "npm:2.1.0"],\
+            ["lodash.defaults", "npm:4.2.0"],\
+            ["lodash.isarguments", "npm:3.1.0"],\
+            ["redis-errors", "npm:1.2.0"],\
+            ["redis-parser", "npm:3.0.0"],\
+            ["standard-as-callback", "npm:2.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["ip", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/ip-npm-2.0.0-204facb3cc-cfcfac6b87.zip/node_modules/ip/",\
@@ -19676,6 +19782,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.get-npm-4.4.2-7bda64ed87-e403047ddb.zip/node_modules/lodash.get/",\
           "packageDependencies": [\
             ["lodash.get", "npm:4.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lodash.isarguments", [\
+        ["npm:3.1.0", {\
+          "packageLocation": "./.yarn/cache/lodash.isarguments-npm-3.1.0-9e74d350b8-ae1526f3eb.zip/node_modules/lodash.isarguments/",\
+          "packageDependencies": [\
+            ["lodash.isarguments", "npm:3.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -22828,6 +22943,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["redis", [\
+        ["npm:3.1.2", {\
+          "packageLocation": "./.yarn/cache/redis-npm-3.1.2-0dbc9973a0-baec421986.zip/node_modules/redis/",\
+          "packageDependencies": [\
+            ["redis", "npm:3.1.2"],\
+            ["denque", "npm:1.5.1"],\
+            ["redis-commands", "npm:1.7.0"],\
+            ["redis-errors", "npm:1.2.0"],\
+            ["redis-parser", "npm:3.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:4.6.6", {\
           "packageLocation": "./.yarn/cache/redis-npm-4.6.6-f574eb2d3e-fb2e667d91.zip/node_modules/redis/",\
           "packageDependencies": [\
@@ -22842,11 +22968,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["redis-commands", [\
+        ["npm:1.7.0", {\
+          "packageLocation": "./.yarn/cache/redis-commands-npm-1.7.0-528f61f9d8-d1ff7fbcb5.zip/node_modules/redis-commands/",\
+          "packageDependencies": [\
+            ["redis-commands", "npm:1.7.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["redis-errors", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/redis-errors-npm-1.2.0-a81fd9b0f1-f28ac26921.zip/node_modules/redis-errors/",\
+          "packageDependencies": [\
+            ["redis-errors", "npm:1.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["redis-mock", [\
         ["npm:0.56.3", {\
           "packageLocation": "./.yarn/cache/redis-mock-npm-0.56.3-967bd7c6ea-8c1293a596.zip/node_modules/redis-mock/",\
           "packageDependencies": [\
             ["redis-mock", "npm:0.56.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["redis-parser", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/redis-parser-npm-3.0.0-7ebe40abcb-89290ae530.zip/node_modules/redis-parser/",\
+          "packageDependencies": [\
+            ["redis-parser", "npm:3.0.0"],\
+            ["redis-errors", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24204,6 +24358,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["stack-utils", "npm:2.0.6"],\
             ["escape-string-regexp", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["standard-as-callback", [\
+        ["npm:2.1.0", {\
+          "packageLocation": "./.yarn/cache/standard-as-callback-npm-2.1.0-8e47620bd4-88bec83ee2.zip/node_modules/standard-as-callback/",\
+          "packageDependencies": [\
+            ["standard-as-callback", "npm:2.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\

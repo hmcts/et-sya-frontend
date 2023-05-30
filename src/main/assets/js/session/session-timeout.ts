@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
-import moment from 'moment';
-
 import { PageUrls, languages } from '../../../definitions/constants';
 import * as i18nWelsh from '../../../resources/locales/cy/translation/template.json';
 import * as i18n from '../../../resources/locales/en/translation/template.json';
 import { focusToGovUKErrorDiv } from '../set-focus';
+
+import axios, { AxiosResponse } from 'axios';
+import moment from 'moment';
 
 export default class SessionTimeout {
   public sessionExpirationTime: string;

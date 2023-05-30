@@ -1,9 +1,9 @@
-import request from 'supertest';
-
 import { CaseDataCacheKey, CaseType, YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { TypesOfClaim } from '../../main/definitions/definition';
 import { mockAppWithRedisClient, mockRedisClient, mockSession } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 // There is no routing in this page that is why the only test is being able to get the page itself without any error.
 // Page has links which are tested on the view tests

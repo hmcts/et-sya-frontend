@@ -1,8 +1,8 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
+
+import { Response } from 'express';
 
 const logger = getLogger('DownloadClaimController');
 

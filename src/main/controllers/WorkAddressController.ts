@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
@@ -15,6 +13,8 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentRedirectUrl, updateWorkAddress } from './helpers/RespondentHelpers';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('WorkAddressController');
 

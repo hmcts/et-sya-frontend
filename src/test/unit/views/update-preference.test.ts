@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { CaseTypeId } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const updatePreferenceJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/update-preference.json'),

@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys, responseRejectedDocTypes } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
@@ -7,6 +5,8 @@ import { getLogger } from '../logger';
 
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getDocumentDetails } from './helpers/DocumentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('CitizenHubDocumentController');
 

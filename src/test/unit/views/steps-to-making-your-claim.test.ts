@@ -4,13 +4,13 @@
 import fs from 'fs';
 import path from 'path';
 
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { CaseDataCacheKey, CaseType, CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { CaseState, TypesOfClaim, sectionStatus } from '../../../main/definitions/definition';
 import { mockAppWithRedisClient, mockRedisClient, mockSession, mockSessionWithUserCase } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const stepsToMakingYourClaimJSONRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/steps-to-making-your-claim.json'),

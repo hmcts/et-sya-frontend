@@ -1,7 +1,3 @@
-import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
-import config from 'config';
-import FormData from 'form-data';
-
 import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
@@ -11,6 +7,10 @@ import { JavaApiUrls } from '../definitions/constants';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
 
 import { axiosErrorDetails } from './AxiosErrorAdapter';
+
+import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
+import config from 'config';
+import FormData from 'form-data';
 
 export class CaseApi {
   constructor(private readonly axios: AxiosInstance) {}

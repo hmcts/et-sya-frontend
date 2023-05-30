@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { app } from '../../../main/app';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { app } from '../../../main/app';
 
 const lipOrRepJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/lip-or-representative.json'),

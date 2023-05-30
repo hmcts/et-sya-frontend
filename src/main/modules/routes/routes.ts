@@ -1,9 +1,5 @@
 import os from 'os';
 
-import { infoRequestHandler } from '@hmcts/info-provider';
-import { Application } from 'express';
-import { FileFilterCallback } from 'multer';
-
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
 import AccessibilityStatementController from '../../controllers/AccessibilityStatementController';
@@ -81,6 +77,10 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+
+import { infoRequestHandler } from '@hmcts/info-provider';
+import { Application } from 'express';
+import { FileFilterCallback } from 'multer';
 
 const multer = require('multer');
 const handleUploads = multer({

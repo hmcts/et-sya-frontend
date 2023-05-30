@@ -1,10 +1,10 @@
-import e from 'express';
-
 import AddressPostCodeSelectController from '../../../main/controllers/AddressPostCodeSelectController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { AppRequest } from '../../../main/definitions/appRequest';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import e from 'express';
 
 describe('AddressPostCodeSelectController', () => {
   let controller: AddressPostCodeSelectController;

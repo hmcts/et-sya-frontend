@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
@@ -9,6 +7,8 @@ import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
+
+import { Response } from 'express';
 
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {

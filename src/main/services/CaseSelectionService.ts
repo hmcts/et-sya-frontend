@@ -1,6 +1,3 @@
-import { AxiosResponse } from 'axios';
-import { Response } from 'express';
-
 import {
   translateOverallStatus,
   translateTypesOfClaims,
@@ -15,6 +12,9 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { getCaseApi } from './CaseService';
+
+import { AxiosResponse } from 'axios';
+import { Response } from 'express';
 
 const logger = getLogger('CaseSelectionService');
 

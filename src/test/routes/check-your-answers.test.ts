@@ -1,6 +1,6 @@
-import request from 'supertest';
-
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 const PAGE_URL = '/check-your-answers';
 

@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-import { expect } from 'chai';
-import request from 'supertest';
-
 import { StillWorking, WeeksOrMonths } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
+
+import { expect } from 'chai';
+import request from 'supertest';
 
 const noticeLengthWeeksJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/notice-length-weeks.json'),

@@ -1,8 +1,8 @@
-import AxiosForMock, { AxiosStatic } from 'axios';
-import config from 'config';
-
 import { getRedirectUrl, getUserDetails } from '../../../main/auth';
 import { AuthUrls, languages } from '../../../main/definitions/constants';
+
+import AxiosForMock, { AxiosStatic } from 'axios';
+import config from 'config';
 
 jest.mock('axios');
 

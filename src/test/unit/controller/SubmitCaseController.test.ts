@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import SubmitCaseController from '../../../main/controllers/SubmitClaimController';
 import { PageUrls } from '../../../main/definitions/constants';
 import * as CaseService from '../../../main/services/CaseService';
@@ -7,6 +5,8 @@ import { CaseApi } from '../../../main/services/CaseService';
 import { submittedCaseResponse } from '../mocks/mockEt1DataModel';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import axios from 'axios';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);

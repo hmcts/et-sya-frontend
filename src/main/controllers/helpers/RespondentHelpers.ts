@@ -1,9 +1,9 @@
-import { cloneDeep } from 'lodash';
-
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
+
+import { cloneDeep } from 'lodash';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());

@@ -1,8 +1,8 @@
-import axios from 'axios';
-
 import { getAddressesForPostcode } from '../../../main/address';
 import { emptyPostcodeResponse, validPostcodeResponse } from '../mocks/mockPostcodeResponses';
 import { addressLookupResponse } from '../mocks/mockedAddressLookupResponse';
+
+import axios from 'axios';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;

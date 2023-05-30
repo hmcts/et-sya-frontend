@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import {
@@ -18,6 +16,8 @@ import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWith
 import { getCaseApi } from '../services/CaseService';
 
 import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;

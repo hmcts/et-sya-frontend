@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { mockApp } from '../mocks/mockApp';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { mockApp } from '../mocks/mockApp';
 
 const dobJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/date-of-birth.json'),

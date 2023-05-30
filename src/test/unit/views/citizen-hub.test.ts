@@ -1,9 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-import axios, { AxiosResponse } from 'axios';
-import request from 'supertest';
-
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
@@ -14,6 +11,9 @@ import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockU
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
+
+import axios, { AxiosResponse } from 'axios';
+import request from 'supertest';
 
 const hubJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/citizen-hub.json'),

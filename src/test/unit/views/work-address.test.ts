@@ -1,7 +1,7 @@
+import { mockApp } from '../mocks/mockApp';
+
 import { expect } from 'chai';
 import request from 'supertest';
-
-import { mockApp } from '../mocks/mockApp';
 
 const titleClass = 'govuk-fieldset__legend--xl';
 const expectedTitle = 'Did you work at 1 The street?';

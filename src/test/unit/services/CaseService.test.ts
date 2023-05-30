@@ -1,6 +1,3 @@
-import axios from 'axios';
-import config from 'config';
-
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
   CaseType,
@@ -27,6 +24,9 @@ import {
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
+
+import axios from 'axios';
+import config from 'config';
 
 const token = 'testToken';
 

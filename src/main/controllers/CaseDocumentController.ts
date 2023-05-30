@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../definitions/appRequest';
 import { getLogger } from '../logger';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
@@ -10,6 +8,8 @@ import {
   findContentTypeByDocument,
   findContentTypeByDocumentDetail,
 } from './helpers/DocumentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('CaseDocumentController');
 

@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,6 +11,8 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+
+import { Response } from 'express';
 
 const compensation_amount: CurrencyFormFields = {
   ...DefaultCompensationCurrencyFormFields,

@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -13,6 +11,8 @@ import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('AcasCertNumController');
 

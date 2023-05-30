@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto';
 
-import redis from 'redis-mock';
-
 import { CaseDataCacheKey, CaseType, YesOrNo } from '../../../main/definitions/case';
 import { RedisErrors } from '../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../main/definitions/definition';
 import { cachePreloginCaseData, getPreloginCaseData } from '../../../main/services/CacheService';
+
+import redis from 'redis-mock';
 
 const redisClient = redis.createClient();
 const uuid = 'f0d62bc6-5c7b-4ac1-98d2-c745a2df79b8';

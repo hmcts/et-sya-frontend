@@ -1,7 +1,3 @@
-import axios from 'axios';
-import express from 'express';
-import redis from 'redis-mock';
-
 import TypeOfClaimController from '../../../main/controllers/TypeOfClaimController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseDataCacheKey } from '../../../main/definitions/case';
@@ -12,6 +8,10 @@ import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import axios from 'axios';
+import express from 'express';
+import redis from 'redis-mock';
 
 const app = express();
 const redisClient = redis.createClient();

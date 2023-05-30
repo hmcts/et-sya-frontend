@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-
 import { PageUrls, TranslationKeys } from '../definitions/constants';
+
+import { Request, Response } from 'express';
 
 export default class AccessibilityStatementController {
   public get(req: Request, res: Response): void {

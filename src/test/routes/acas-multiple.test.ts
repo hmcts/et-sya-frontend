@@ -1,8 +1,8 @@
-import request from 'supertest';
-
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls } from '../../main/definitions/constants';
 import { mockApp } from '../unit/mocks/mockApp';
+
+import request from 'supertest';
 
 describe(`GET ${PageUrls.ACAS_MULTIPLE_CLAIM}`, () => {
   it('should return the do you have an Acas certificate page', async () => {

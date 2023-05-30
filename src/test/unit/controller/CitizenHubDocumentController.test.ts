@@ -1,5 +1,3 @@
-import axios, { AxiosResponse } from 'axios';
-
 import CitizenHubDocumentController from '../../../main/controllers/CitizenHubDocumentController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { DocumentDetail } from '../../../main/definitions/definition';
@@ -8,6 +6,8 @@ import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import axios, { AxiosResponse } from 'axios';
 
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');

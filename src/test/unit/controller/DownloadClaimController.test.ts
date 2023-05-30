@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios';
-
 import DownloadClaimController from '../../../main/controllers/DownloadClaimController';
 import * as caseApi from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+import { AxiosResponse } from 'axios';
 
 describe('Download claim Controller', () => {
   const t = {};

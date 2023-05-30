@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { StillWorking, YesOrNo } from '../definitions/case';
@@ -11,6 +9,8 @@ import { getLogger } from '../logger';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { conditionalRedirect, getLanguageParam } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('NoticePeriodController');
 

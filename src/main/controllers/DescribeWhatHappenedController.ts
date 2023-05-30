@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -14,6 +12,8 @@ import { getClaimSummaryError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { getUploadedFileName } from './helpers/PageContentHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('DescribeWhatHappenedController');
 

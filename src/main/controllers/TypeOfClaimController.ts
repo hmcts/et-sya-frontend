@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -15,6 +13,8 @@ import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+
+import { Response } from 'express';
 
 const logger = getLogger('TypeOfClaimController');
 
