@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseWithId } from '../../../main/definitions/case';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/respondent-postcode-enter';
@@ -14,8 +15,10 @@ const expectedInputLabel = 'Enter a UK postcode';
 
 let htmlRes: Document;
 describe('Respondent address postcode enter page', () => {
+  const userCase = {} as CaseWithId;
+  userCase.respondentEnterPostcode = 'LS12DE';
   beforeAll(async () => {
-    await request(mockApp({}))
+    await request(mockApp({ userCase }))
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
@@ -47,6 +50,6 @@ describe('Respondent address postcode enter page', () => {
 
   it('should display continue button', () => {
     const button = htmlRes.getElementsByClassName(buttonClass);
-    expect(button[5].innerHTML).contains('Continue', 'Could not find the button');
+    expect(button[5].innerHTML).contains('Save and continue', 'Could not find the button');
   });
 });
