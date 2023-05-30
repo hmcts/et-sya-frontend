@@ -30,11 +30,12 @@ module.exports = async function () {
   I.see('Find legal advice (opens in new tab)');
   I.click("//span[@class='govuk-details__summary-text']");
   I.wait(1);
-  I.click("//a[contains(.,'Contact the tribunal about my case')]");
+
 
   // The case at this point is does not have a legal rep with myHMCTS account hence the new behaviour
   // introduced in RET-3549 the old behaviour is now part of e2e
   // it will only get triggered once the case a leg rep registered on myHMCTS
+  I.click('[href="/holding-page"]');
   I.waitForElement('#main-content',20);
   I.see('This function is not currently available for this case, please return to the main page');
   contactUs.verifyContactUs();
