@@ -8,6 +8,12 @@ import { FormContent, FormFields, FormFieldsFn } from '../../../main/definitions
 describe('Form', () => {
   const mockForm: FormContent = {
     fields: {
+      textField: {
+        type: 'text',
+        label: 'label1',
+        value: 'value',
+        validator: jest.fn().mockImplementation(isFieldFilledIn),
+      },
       field: {
         type: 'radios',
         values: [
@@ -61,6 +67,10 @@ describe('Form', () => {
       checkboxes: 'checkbox1',
     });
     expect(errors).toStrictEqual([]);
+  });
+
+  it('Should validate a textfield', async () => {
+    expect((mockForm.fields as FormFields)['textField'].label).toEqual('label1');
   });
 
   it('Should validate a form and return error', async () => {
