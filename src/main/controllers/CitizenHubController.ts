@@ -19,6 +19,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
+  checkIfRespondentIsSystemUser,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
@@ -189,6 +190,7 @@ export default class CitizenHubController {
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
+      respondentIsSystemUser: checkIfRespondentIsSystemUser(userCase),
     });
   }
 }

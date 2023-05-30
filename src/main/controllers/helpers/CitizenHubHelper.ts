@@ -1,4 +1,4 @@
-import { CaseWithId } from '../../definitions/case';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
@@ -79,5 +79,19 @@ export const userCaseContainsGeneralCorrespondence = (notifications: SendNotific
   return (
     notifications &&
     notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE))
+  );
+};
+
+export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => {
+  const repCollection = userCase.representatives;
+  const respondentCollection = userCase.respondents;
+
+  if (!respondentCollection || !repCollection) {
+    return false;
+  }
+
+  return (
+    respondentCollection.every(res => repCollection.some(rep => res.ccdId === rep.respondentId)) &&
+    !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined)
   );
 };

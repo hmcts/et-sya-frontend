@@ -199,6 +199,7 @@ export interface Case {
   respondentEnterPostcode?: string;
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
+  representatives?: Representative[];
 }
 export const enum StillWorking {
   WORKING = 'Working',
@@ -305,4 +306,9 @@ export interface Document {
   document_size?: number;
   document_mime_type?: string;
   createdOn?: string;
+}
+
+export interface Representative {
+  hasMyHMCTSAccount?: YesOrNo;
+  respondentId?: string;
 }

@@ -6,6 +6,7 @@ import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
@@ -16,6 +17,7 @@ import {
   CaseWithId,
   Document,
   EnglishOrWelsh,
+  Representative,
   Respondent,
   YesOrNo,
   ccdPreferredTitle,
@@ -188,6 +190,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
+    representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
   };
 }
 
@@ -399,6 +402,15 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
       acasCertNum: respondent.value?.respondent_ACAS,
       noAcasReason: respondent.value?.respondent_ACAS_no,
       ccdId: respondent?.id,
+    };
+  });
+};
+
+export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
+  return representatives?.map(rep => {
+    return {
+      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
+      respondentId: rep.value.respondentId,
     };
   });
 };

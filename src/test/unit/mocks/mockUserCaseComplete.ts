@@ -215,4 +215,10 @@ export default {
       },
     },
   ],
+  representatives: [
+    {
+      hasMyHMCTSAccount: YesOrNo.YES,
+      respondentId: '123',
+    },
+  ],
 };

@@ -161,6 +161,11 @@ describe('Should return data in api format', () => {
         document_binary_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c/binary',
       },
       otherClaim: 'other claim description',
+      representatives: [
+        {
+          hasMyHMCTSAccount: YesOrNo.YES,
+        },
+      ],
     };
     const apiData = toApiFormat(caseItem);
     expect(apiData).toEqual(mockEt1DataModelUpdate);
@@ -324,6 +329,7 @@ describe('Format Case Data to Frontend Model', () => {
       otherClaim: undefined,
       sendNotificationCollection: undefined,
       documentCollection: undefined,
+      representatives: undefined,
     });
   });
 

@@ -116,6 +116,7 @@ export const TranslationKeys = {
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
+  RULE92_HOLDING_PAGE: 'rule92-holding-page',
 } as const;
 
 export const PageUrls = {
@@ -227,6 +228,7 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  RULE92_HOLDING_PAGE: '/holding-page',
 } as const;
 
 export const InterceptPaths = {
