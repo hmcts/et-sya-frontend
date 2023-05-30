@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { CaseWithId } from '../../../main/definitions/case';
 import { mockApp } from '../mocks/mockApp';
 
 const PAGE_URL = '/respondent-postcode-enter';
@@ -15,10 +14,14 @@ const expectedInputLabel = 'Enter a UK postcode';
 
 let htmlRes: Document;
 describe('Respondent address postcode enter page', () => {
-  const userCase = {} as CaseWithId;
-  userCase.respondentEnterPostcode = 'LS12DE';
   beforeAll(async () => {
-    await request(mockApp({ userCase }))
+    await request(
+      mockApp({
+        userCase: {
+          respondentEnterPostcode: 'LS12DE',
+        },
+      })
+    )
       .get(PAGE_URL)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
