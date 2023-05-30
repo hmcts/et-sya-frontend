@@ -4,7 +4,6 @@ import path from 'path';
 import { expect } from 'chai';
 import request from 'supertest';
 
-import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
 
 const respondentPostCodeEnterJsonRaw = fs.readFileSync(
@@ -14,7 +13,7 @@ const respondentPostCodeEnterJsonRaw = fs.readFileSync(
 const respondentPostCodeEnterJson = JSON.parse(respondentPostCodeEnterJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const labelClass = 'govuk-label govuk-!-width-one-half';
+const labelClass = 'govuk-label govuk-label--m';
 const expectedRespondentPageHeader = respondentPostCodeEnterJson.respondentPageHeader;
 const expectedEnterPostcode = respondentPostCodeEnterJson.enterPostcode;
 const buttonClass = 'govuk-button';
@@ -28,7 +27,7 @@ describe('Respondent Postcode enter page', () => {
         },
       })
     )
-      .get(PageUrls.RESPONDENT_POSTCODE_ENTER)
+      .get('/respondent/1/respondent-postcode-enter')
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });

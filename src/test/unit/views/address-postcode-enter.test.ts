@@ -14,7 +14,7 @@ const addressPostCodeEnterJsonRaw = fs.readFileSync(
 const addressPostCodeEnterJson = JSON.parse(addressPostCodeEnterJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
-const labelClass = 'govuk-label govuk-!-width-one-half';
+const labelClass = 'govuk-label govuk-label--m';
 const expectedAddressPageHeader = addressPostCodeEnterJson.addressPageHeader;
 const expectedEnterPostcode = addressPostCodeEnterJson.enterPostcode;
 const buttonClass = 'govuk-button';
@@ -31,10 +31,12 @@ describe('Address Postcode enter page', () => {
       .get(PageUrls.ADDRESS_POSTCODE_ENTER)
       .then(res => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+        console.log(res.text);
       });
   });
 
   it('should display correct label', () => {
+    console.log(htmlRes.body);
     const label = htmlRes.getElementsByClassName(labelClass);
     expect(label[0].innerHTML).contains(expectedEnterPostcode, 'label does not exist');
   });
