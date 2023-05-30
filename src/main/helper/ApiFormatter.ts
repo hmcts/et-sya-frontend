@@ -407,10 +407,7 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
 };
 
 export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
-  if (representatives === undefined) {
-    return;
-  }
-  return representatives.map(rep => {
+  return representatives?.map(rep => {
     return {
       hasMyHMCTSAccount: rep.value.myHmctsYesNo,
       respondentId: rep.value.respondentId,

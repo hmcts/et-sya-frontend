@@ -86,12 +86,12 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
   const repCollection = userCase.representatives;
   const respondentCollection = userCase.respondents;
 
+  if (respondentCollection === undefined || repCollection === undefined) {
+    return false;
+  }
   return (
-    respondentCollection !== undefined &&
-    repCollection !== undefined &&
     respondentCollection.every(res => {
       return repCollection.some(rep => res.ccdId === rep.respondentId);
-    }) &&
-    !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined)
+    }) && !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined)
   );
 };
