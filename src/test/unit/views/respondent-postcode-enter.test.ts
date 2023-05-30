@@ -23,6 +23,12 @@ describe('Respondent Postcode enter page', () => {
     await request(
       mockApp({
         userCase: {
+          respondents: [
+            {
+              respondentNumber: 1,
+              respondentName: 'respondent',
+            },
+          ],
           respondentEnterPostcode: 'LS12DE',
         },
       })
