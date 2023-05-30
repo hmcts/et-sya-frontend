@@ -64,8 +64,8 @@ export const getRespondentSection = (
       value: {
         text:
           userCase.claimantWorkAddressQuestion === YesOrNo.YES
-            ? translations.respondentDetails.YES
-            : translations.respondentDetails.NO,
+            ? translations.respondentDetails.yes
+            : translations.respondentDetails.no,
       },
       actions: {
         items: [
