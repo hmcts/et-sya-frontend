@@ -63,6 +63,23 @@ describe('Form', () => {
     expect(errors).toStrictEqual([]);
   });
 
+  it('Should validate a textfield', async () => {
+    const mockForm1: FormContent = {
+      fields: {
+        textField: {
+          type: 'text',
+          label: 'label1',
+          value: 'value',
+          validator: jest.fn().mockImplementation(isFieldFilledIn),
+        },
+      },
+      submit: {
+        text: l => l.continue,
+      },
+    };
+    expect((mockForm1.fields as FormFields)['textField'].label).toEqual('label1');
+  });
+
   it('Should validate a form and return error', async () => {
     const errors = form.getErrors({ dateField: {} } as unknown as Case);
 
