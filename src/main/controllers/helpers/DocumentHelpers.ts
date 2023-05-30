@@ -207,6 +207,7 @@ export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetai
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.rejectionOfClaimDocumentDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseAcknowledgementDocumentDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseRejectionDocumentDetail);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseEt3FormDocumentDetail);
     if (userCase.claimSummaryFile?.document_url) {
       const document_url = userCase.claimSummaryFile.document_url;
       const documentId = document_url?.substring(document_url?.lastIndexOf('/') + 1);
