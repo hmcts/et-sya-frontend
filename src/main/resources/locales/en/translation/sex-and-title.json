@@ -4,7 +4,7 @@
   "p": "These details will be used to help progress your claim.",
   "male": "Male",
   "female": "Female",
-  "sex": "What is your sex?",
+  "sex": "What is your sex? (optional)",
   "preferNotToSay": "Prefer not to say",
   "preferredTitle": "What is your preferred title? (optional)",
   "errors": {
