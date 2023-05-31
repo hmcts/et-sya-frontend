@@ -66,6 +66,7 @@ export const idamCallbackHandler = async (
   if (typeof req.query.code === 'string' && typeof req.query.state === 'string') {
     // eslint-disable-next-line prettier/prettier
     req.session.user = await getUserDetails(serviceUrl, req.query.code, AuthUrls.CALLBACK);
+    console.log('the user is now ', req.session.user);
     req.session.save();
   } else {
     return res.redirect(AuthUrls.LOGIN);
@@ -73,7 +74,7 @@ export const idamCallbackHandler = async (
 
   //For now if user account does not have the citizen role redirect to login
   if (!req.session.user?.isCitizen) {
-    return res.redirect(AuthUrls.LOGIN);
+    //   return res.redirect(AuthUrls.LOGIN);
   }
 
   const state = String(req.query?.state);

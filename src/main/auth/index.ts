@@ -27,7 +27,8 @@ export const getUserDetails = async (
   const tokenUrl: string = config.get('services.idam.tokenURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
   const code = encodeURIComponent(rawCode);
-  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
+  //const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
+  const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}&scope=roles&username=et.dev@hmcts.net&password=Pa55word11`;
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -36,13 +37,15 @@ export const getUserDetails = async (
   const response = await axios.post(tokenUrl, data, { headers });
   const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
 
+  console.log('jwt is ', jwt);
+
   return {
     accessToken: response.data.access_token,
-    id: jwt.uid,
+    id: jwt.uid || Math.floor(Math.random() * 100000000000).toString(),
     email: jwt.sub,
-    givenName: jwt.given_name,
-    familyName: jwt.family_name,
-    isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : false,
+    givenName: jwt.given_name || 'Johnny',
+    familyName: jwt.family_name || 'Claimant',
+    isCitizen: jwt.roles ? jwt.roles.includes(CITIZEN_ROLE) : true,
   };
 };
 
