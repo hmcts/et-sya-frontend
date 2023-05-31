@@ -51,6 +51,21 @@ describe('Sex and Title Controller', () => {
     });
   });
 
+  it('should clear fields', () => {
+    const controller = new SexAndTitleController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.userCase.claimantSex = Sex.MALE;
+    request.session.userCase.preferredTitle = 'Mr.';
+
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.claimantSex).toStrictEqual(undefined);
+    expect(request.session.userCase.preferredTitle).toStrictEqual(undefined);
+  });
+
   it('should assign userCase from the page form data', async () => {
     const body = {
       claimantSex: Sex.MALE,
