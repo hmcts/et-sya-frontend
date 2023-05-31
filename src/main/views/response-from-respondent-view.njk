@@ -19,7 +19,7 @@
         {{h1}}
       </h1>
 
-      
+
 
       {% if et3AcceptedDocs.length %}
         {% set documentsRows = [] %}
@@ -75,7 +75,7 @@
 
 
       {% set documentsRows = [] %}
-      {% if et3Forms.length %}
+      {% if et3Forms.length and not et3RejectionDocs.length %}
        {% for et3Form in et3Forms %}
           {% set documentsRows = (documentsRows.push(
             [
@@ -89,7 +89,7 @@
             ), documentsRows) %}
         {% endfor %}
       {% endif %}
-      {% if et3SupportingDocs.length %}
+      {% if et3SupportingDocs.length and not et3RejectionDocs.length %}
         {% for et3SupportingDoc in et3SupportingDocs %}
           {% set documentsRows = (documentsRows.push(
             [
