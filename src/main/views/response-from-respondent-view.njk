@@ -19,8 +19,6 @@
         {{h1}}
       </h1>
 
-      
-
       {% if et3AcceptedDocs.length %}
         {% set documentsRows = [] %}
         {% for et3AcceptedDoc in et3AcceptedDocs %}
@@ -39,18 +37,9 @@
             ), documentsRows) %}
         {% endfor %}
 
-        {{ govukTable({
-          caption: h2,
-          captionClasses: "govuk-table__caption--m",
-          firstCellIsHeader: true,
-          rows: documentsRows
-        }) }}
-      {% endif %}
-
       {% if et3RejectionDocs.length %}
-        {% set documentsRows = [] %}
         {% for et3RejectionDoc in et3RejectionDocs %}
-          {% set documentsRows = (documentsRows.push(
+          {% set _ = (documentsRows.push(
             [
               {
                 text: et3RejectionDoc.createdOn
@@ -62,7 +51,7 @@
                 html: "<a href=\"/case-document/response-rejection\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+            )) %}
         {% endfor %}
 
         {{ govukTable({
@@ -73,11 +62,9 @@
         }) }}
       {% endif %}
 
-
-      {% set documentsRows = [] %}
       {% if et3Forms.length %}
        {% for et3Form in et3Forms %}
-          {% set documentsRows = (documentsRows.push(
+          {% set _ = (documentsRows.push(
             [
               {
                 text: et3FormText
@@ -86,7 +73,7 @@
                 html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+            )) %}
         {% endfor %}
       {% endif %}
       {% if et3SupportingDocs.length %}
