@@ -62,6 +62,7 @@ export default class CitizenHubDocumentController {
       hideContactUs: true,
       docs: documents,
       et3Forms: documents.filter(d => d.type === 'ET3'),
+      et3Attachments: documents.filter(d => d.type === 'ET3 Attachment'),
       et3SupportingDocs: documents.filter(d => d.type === 'et3Supporting'),
       et3AcceptedDocs: documents.filter(d => d.type === '2.11'),
       et3RejectionDocs: documents.filter(d => responseRejectedDocTypes.includes(d.type)),
