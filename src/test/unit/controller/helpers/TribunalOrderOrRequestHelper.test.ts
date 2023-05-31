@@ -13,7 +13,12 @@ import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
-import { mockNotificationItem } from '../../mocks/mockNotificationItem';
+import {
+  mockNotificationItem,
+  mockNotificationRespondOnlyReq,
+  mockNotificationResponseReq,
+  mockNotificationViewed,
+} from '../../mocks/mockNotificationItem';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Tribunal order or request helper', () => {
@@ -144,7 +149,42 @@ describe('Tribunal order or request helper', () => {
       '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
     );
     expect(populatedNotification.statusColor).toEqual('--red');
+    expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
+  });
+  it('should populate notification with correct status when required to respond and no response exists', () => {
+    const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
+      [mockNotificationResponseReq],
+      'url',
+      translations
+    )[0];
+    expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
+  });
+
+  it('hould populate notification with correct status when not required to respond', () => {
+    const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
+      [mockNotificationRespondOnlyReq],
+      'url',
+      translations
+    )[0];
+    expect(populatedNotification.redirectUrl).toEqual(
+      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
+    expect(populatedNotification.statusColor).toEqual('--red');
+    expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should populate correct status when viewed and not required to respond', () => {
+    const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
+      [mockNotificationViewed],
+      'url',
+      translations
+    )[0];
+    expect(populatedNotification.redirectUrl).toEqual(
+      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
+    expect(populatedNotification.statusColor).toEqual('--green');
+    expect(populatedNotification.displayStatus).toEqual('Viewed');
   });
 
   it('tribunal orders and requests section should keep its IN_PROGRESS status unchanged', () => {
