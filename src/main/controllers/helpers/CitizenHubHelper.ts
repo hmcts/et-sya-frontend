@@ -1,4 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
@@ -94,4 +95,13 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
     respondentCollection.every(res => repCollection.some(rep => res.ccdId === rep.respondentId)) &&
     !repCollection.some(r => r.hasMyHMCTSAccount === YesOrNo.NO || r.hasMyHMCTSAccount === undefined)
   );
+};
+
+export const activateRespondentApplicationsLink = (
+  items: GenericTseApplicationTypeItem[],
+  userCase: CaseWithId
+): void => {
+  if (items?.length) {
+    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
+  }
 };

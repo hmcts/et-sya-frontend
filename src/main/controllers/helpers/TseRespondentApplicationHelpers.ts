@@ -10,7 +10,7 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
+import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
@@ -62,15 +62,6 @@ export const getRespondentBannerContent = (
       }
     }
     return bannerContent;
-  }
-};
-
-export const activateRespondentApplicationsLink = (
-  items: GenericTseApplicationTypeItem[],
-  userCase: CaseWithId
-): void => {
-  if (items?.length) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
   }
 };
 
