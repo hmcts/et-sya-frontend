@@ -4,19 +4,19 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
-import { submitBundlesHearingDocs } from './helpers/CaseHelpers';
+import { clearBundlesFields, submitBundlesHearingDocs } from './helpers/CaseHelpers';
 
 const logger = getLogger('SubmitBundlesHearingDocController');
 
 export default class SubmitBundlesHearingDocsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
-      // const userCase = req.session?.userCase;
+      const { userCase } = req.session;
       await submitBundlesHearingDocs(req, logger);
-      // clearTseFields(userCase);
+      clearBundlesFields(userCase);
     } catch (error) {
       logger.info(error.message);
     }
-    return res.redirect(PageUrls.APPLICATION_COMPLETE);
+    return res.redirect(PageUrls.BUNDLES_COMPLETED);
   };
 }

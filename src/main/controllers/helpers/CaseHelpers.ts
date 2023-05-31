@@ -307,6 +307,16 @@ export const clearPrepareDocumentsForHearingFields = (userCase: CaseWithId): voi
   userCase.bundlesRespondentAgreedDocWithNo = undefined;
 };
 
+export const clearBundlesFields = (userCase: CaseWithId): void => {
+  userCase.whatAreTheseDocuments = undefined;
+  userCase.whoseHearingDocumentsAreYouUploading = undefined;
+  userCase.hearingDocumentsAreFor = undefined;
+  userCase.hearingDocument = undefined;
+  userCase.bundlesRespondentAgreedDocWith = undefined;
+  userCase.bundlesRespondentAgreedDocWithBut = undefined;
+  userCase.bundlesRespondentAgreedDocWithNo = undefined;
+};
+
 function toTitleCase(str: string): string {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();

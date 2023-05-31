@@ -250,7 +250,7 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
-  BUNDLES_HEARING_DOCS_SUBMIT_CYA: '/bundlesHearingDocsSubmitCya',
+  SUBMIT_BUNDLES_HEARING_DOCS_CYA: '/submitBundlesHearingDocsCya',
 } as const;
 
 export const ErrorPages = {
@@ -279,6 +279,7 @@ export const JavaApiUrls = {
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  SUBMIT_BUNDLES: 'cases/submit-bundles',
   DOWNLOAD_CLAIM_PDF: '/generate-pdf',
   UPLOAD_FILE: '/documents/upload/',
   DOCUMENT_DOWNLOAD: '/document/download/',

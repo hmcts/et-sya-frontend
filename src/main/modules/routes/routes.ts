@@ -92,6 +92,7 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import SubmitBundlesHearingDocsCYAController from '../../controllers/SubmitBundlesHearingDocsCYAController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -261,6 +262,7 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
     app.get(InterceptPaths.SUBMIT_RESPONDENT_CYA, new SubmitRespondentController().get);
+    app.get(InterceptPaths.SUBMIT_BUNDLES_HEARING_DOCS_CYA, new SubmitBundlesHearingDocsCYAController().get);
     app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,

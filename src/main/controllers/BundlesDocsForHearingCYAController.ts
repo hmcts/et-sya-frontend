@@ -7,7 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getCyaContent } from './helpers/BundlesPrepareDocsCYAHelper';
 import { createDownloadLinkForHearingDoc } from './helpers/DocumentHelpers';
-import { getPageContent } from './helpers/FormHelpers';
+import { createLabelForHearing, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -28,6 +28,8 @@ export default class BundlesDocsForHearingCYAController {
     };
 
     const downloadLink = createDownloadLinkForHearingDoc(userCase?.hearingDocument);
+    const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === userCase.hearingDocumentsAreFor);
+    const formattedSelectedHearing = createLabelForHearing(foundHearing);
 
     res.render(TranslationKeys.BUNDLES_DOCS_FOR_HEARING_CYA, {
       ...content,
@@ -39,15 +41,15 @@ export default class BundlesDocsForHearingCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      submitRef: InterceptPaths.BUNDLES_HEARING_DOCS_SUBMIT_CYA + getLanguageParam(req.url),
+      submitRef: InterceptPaths.SUBMIT_BUNDLES_HEARING_DOCS_CYA + getLanguageParam(req.url),
       cyaContent: getCyaContent(
         userCase,
         translations,
         getLanguageParam(req.url),
-        //   PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', 'userCase.contactApplicationType'),
         downloadLink,
         translations.whoseHearingDocument[userCase.whoseHearingDocumentsAreYouUploading],
-        translations.whatAreTheHearingDocuments[userCase.whatAreTheseDocuments]
+        translations.whatAreTheHearingDocuments[userCase.whatAreTheseDocuments],
+        formattedSelectedHearing
       ),
     });
   }

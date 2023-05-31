@@ -6,10 +6,10 @@ export const getCyaContent = (
   userCase: CaseWithId,
   translations: AnyRecord,
   languageParam: string,
-  //  contactTheTribunalSelectedUrl: string,
   downloadLink: string,
   whoseHearingDoc: string,
-  whatAreHearingDocs: string
+  whatAreHearingDocs: string,
+  selectedHearing: string
 ): { key: unknown; value?: unknown; actions?: unknown }[] => {
   return [
     {
@@ -36,7 +36,7 @@ export const getCyaContent = (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: userCase.hearingDocumentsAreFor.id,
+        text: selectedHearing,
       },
       actions: {
         items: [
