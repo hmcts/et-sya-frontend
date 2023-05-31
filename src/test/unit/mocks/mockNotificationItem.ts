@@ -42,7 +42,79 @@ export const notificationType: SendNotificationType = {
   sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
 };
 
+export const notificationResponseRequired: SendNotificationType = {
+  number: '1',
+  sendNotificationSelectHearing: {
+    selectedLabel: 'Hearing',
+  },
+  date: '2019-05-02',
+  sentBy: 'Tribunal',
+  sendNotificationCaseManagement: 'Order',
+  sendNotificationResponseTribunal: 'Yes - view document for details',
+  sendNotificationSelectParties: 'Both', //Respondent only
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationWhoCaseOrder: 'Judge',
+  sendNotificationFullName: 'Bob',
+  sendNotificationNotify: 'Both',
+  notificationState: 'notStartedYet',
+  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+};
+
+export const notificationRespondentRequiredtoRespond: SendNotificationType = {
+  number: '1',
+  sendNotificationSelectHearing: {
+    selectedLabel: 'Hearing',
+  },
+  date: '2019-05-02',
+  sentBy: 'Tribunal',
+  sendNotificationCaseManagement: 'Order',
+  sendNotificationResponseTribunal: 'Yes - view document for details',
+  sendNotificationSelectParties: 'Respondent only',
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationWhoCaseOrder: 'Judge',
+  sendNotificationFullName: 'Bob',
+  sendNotificationNotify: 'Both',
+  notificationState: 'notStartedYet',
+  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+};
+
+export const notificationViewed: SendNotificationType = {
+  number: '1',
+  sendNotificationSelectHearing: {
+    selectedLabel: 'Hearing',
+  },
+  date: '2019-05-02',
+  sentBy: 'Tribunal',
+  sendNotificationCaseManagement: 'Order',
+  sendNotificationResponseTribunal: 'Yes - view document for details',
+  sendNotificationSelectParties: 'Respondent only',
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationWhoCaseOrder: 'Judge',
+  sendNotificationFullName: 'Bob',
+  sendNotificationNotify: 'Both',
+  notificationState: 'viewed',
+  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+};
+
 export const mockNotificationItem: SendNotificationTypeItem = {
   id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
   value: notificationType,
+};
+
+export const mockNotificationResponseReq: SendNotificationTypeItem = {
+  id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
+  value: notificationResponseRequired,
+};
+
+export const mockNotificationRespondOnlyReq: SendNotificationTypeItem = {
+  id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
+  value: notificationRespondentRequiredtoRespond,
+};
+
+export const mockNotificationViewed: SendNotificationTypeItem = {
+  id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
+  value: notificationViewed,
 };
