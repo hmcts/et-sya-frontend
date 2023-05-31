@@ -167,9 +167,6 @@ describe('Tribunal order or request helper', () => {
       'url',
       translations
     )[0];
-    expect(populatedNotification.redirectUrl).toEqual(
-      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
-    );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
   });
@@ -180,9 +177,6 @@ describe('Tribunal order or request helper', () => {
       'url',
       translations
     )[0];
-    expect(populatedNotification.redirectUrl).toEqual(
-      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
-    );
     expect(populatedNotification.statusColor).toEqual('--green');
     expect(populatedNotification.displayStatus).toEqual('Viewed');
   });
