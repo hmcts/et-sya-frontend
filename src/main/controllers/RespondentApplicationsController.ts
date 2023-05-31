@@ -7,7 +7,6 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
 import {
-  activateRespondentApplicationsLink,
   getRespondentApplications,
   populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from './helpers/TseRespondentApplicationHelpers';
@@ -23,7 +22,6 @@ export default class RespondentApplicationsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    activateRespondentApplicationsLink(respondentApplications, userCase);
     populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(respondentApplications, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
