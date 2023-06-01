@@ -62,6 +62,7 @@
         {% for et3Form in et3Forms %}
           {% set _ = documentsRows.push(
             [
+              {text: ""},
               {
                 text: et3FormText
               },
@@ -77,6 +78,7 @@
         {% for et3SupportingDoc in et3SupportingDocs %}
           {% set _ = documentsRows.push(
             [
+              {text: ""},
               {
                 text: supportingMaterials
               },
@@ -89,6 +91,8 @@
       {% endif %}
 
       {{ govukTable({
+        caption: h2,
+        firstCellIsHeader: true,
         captionClasses: "govuk-table__caption--m",
         rows: documentsRows
       }) }}
