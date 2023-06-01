@@ -1,7 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
-import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
+import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
@@ -164,8 +164,33 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         ':orderId',
         `${item.id}${getLanguageParam(url)}`
       );
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
-      item.displayStatus = translations[item.value.notificationState];
+
+      const responseRequired =
+        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+      const isNotStarted = item.value.notificationState === HubLinkStatus.NOT_STARTED_YET;
+      const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
+      const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
+
+      switch (true) {
+        case responseRequired && hasResponded:
+          item.displayStatus = translations[HubLinkStatus.SUBMITTED];
+          item.statusColor = displayStatusColorMap.get(HubLinkStatus.SUBMITTED);
+          break;
+        case responseRequired && !hasResponded:
+          item.displayStatus = translations[HubLinkStatus.NOT_STARTED_YET];
+          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_STARTED_YET);
+          break;
+        case !responseRequired && (isNotStarted || isNotViewedYet):
+          item.displayStatus = translations[HubLinkStatus.NOT_VIEWED];
+          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_VIEWED);
+          break;
+        case !responseRequired && isViewed:
+          item.displayStatus = translations[HubLinkStatus.VIEWED];
+          item.statusColor = displayStatusColorMap.get(HubLinkStatus.VIEWED);
+          break;
+      }
     });
     return notifications;
   }
