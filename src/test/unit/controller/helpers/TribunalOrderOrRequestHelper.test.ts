@@ -17,6 +17,7 @@ import {
   mockNotificationItem,
   mockNotificationRespondOnlyReq,
   mockNotificationResponseReq,
+  mockNotificationSubmitted,
   mockNotificationViewed,
 } from '../../mocks/mockNotificationItem';
 import { mockRequest, mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -161,7 +162,7 @@ describe('Tribunal order or request helper', () => {
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
   });
 
-  it('hould populate notification with correct status when not required to respond', () => {
+  it('should populate notification with correct status when not required to respond', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationRespondOnlyReq],
       'url',
@@ -179,6 +180,16 @@ describe('Tribunal order or request helper', () => {
     )[0];
     expect(populatedNotification.statusColor).toEqual('--green');
     expect(populatedNotification.displayStatus).toEqual('Viewed');
+  });
+
+  it('should populate correct status when required to respond and has responded', () => {
+    const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
+      [mockNotificationSubmitted],
+      'url',
+      translations
+    )[0];
+    expect(populatedNotification.statusColor).toEqual('--green');
+    expect(populatedNotification.displayStatus).toEqual('Submitted');
   });
 
   it('tribunal orders and requests section should keep its IN_PROGRESS status unchanged', () => {
