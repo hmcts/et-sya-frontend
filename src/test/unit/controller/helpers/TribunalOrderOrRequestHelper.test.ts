@@ -152,6 +152,7 @@ describe('Tribunal order or request helper', () => {
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
   });
+
   it('should populate notification with correct status when required to respond and no response exists', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationResponseReq],

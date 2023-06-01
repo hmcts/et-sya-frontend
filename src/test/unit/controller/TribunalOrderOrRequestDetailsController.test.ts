@@ -34,6 +34,7 @@ describe('Respondent order or request details Controller', () => {
     controller.get(request, response);
     expect(response.render).toBeDefined();
   });
+
   it('should pass a value to indicate whether a response is required when true', async () => {
     const userCase: Partial<CaseWithId> = {
       sendNotificationCollection: [
@@ -64,6 +65,7 @@ describe('Respondent order or request details Controller', () => {
       })
     );
   });
+
   it('should pass a value to indicate whether a response is required when false', async () => {
     const userCase: Partial<CaseWithId> = {
       sendNotificationCollection: [
