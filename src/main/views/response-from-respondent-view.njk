@@ -21,21 +21,72 @@
 
       {% set documentsRows = [] %}
 
-      {% for docType, docs in { 'responseEt3': et3AcceptedDocs, 'rejectionLetter': et3RejectionDocs, 'et3FormText': et3Forms, 'supportingMaterials': et3SupportingDocs } %}
-        {% for doc in docs %}
-          {% set href = docType == 'responseEt3' or docType == 'rejectionLetter'
-            ? '/case-document/' + (docType == 'responseEt3' ? 'response-acknowledgement' : 'response-rejection')
-            : '/getCaseDocument/' + doc.id
-          %}
-          {% set documentsRows = (documentsRows.push(
+      {% if et3AcceptedDocs.length %}
+        {% for et3AcceptedDoc in et3AcceptedDocs %}
+          {% set _ = documentsRows.push(
             [
-              { text: doc.createdOn },
-              { text: docType },
-              { html: "<a href=\"" + href + "\" target=\"_blank\" class=\"govuk-link\">" + doc.originalDocumentName + "</a>" }
+              {
+                text: et3AcceptedDoc.createdOn
+              },
+              {
+                text: responseEt3
+              },
+              {
+                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
+              }
             ]
-          ), documentsRows) %}
+          ) %}
         {% endfor %}
-      {% endfor %}
+      {% endif %}
+
+      {% if et3RejectionDocs.length %}
+        {% for et3RejectionDoc in et3RejectionDocs %}
+          {% set _ = documentsRows.push(
+            [
+              {
+                text: et3RejectionDoc.createdOn
+              },
+              {
+                text: rejectionLetter
+              },
+              {
+                html: "<a href=\"/case-document/response-rejection\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
+              }
+            ]
+          ) %}
+        {% endfor %}
+      {% endif %}
+
+
+      {% if et3Forms.length %}
+        {% for et3Form in et3Forms %}
+          {% set _ = documentsRows.push(
+            [
+              {
+                text: et3FormText
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
+              }
+            ]
+          ) %}
+        {% endfor %}
+      {% endif %}
+
+      {% if et3SupportingDocs.length %}
+        {% for et3SupportingDoc in et3SupportingDocs %}
+          {% set _ = documentsRows.push(
+            [
+              {
+                text: supportingMaterials
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3SupportingDoc.originalDocumentName + "</a>"
+              }
+            ]
+          ) %}
+        {% endfor %}
+      {% endif %}
 
       {{ govukTable({
         captionClasses: "govuk-table__caption--m",
