@@ -58,7 +58,7 @@
       {% endif %}
 
 
-      {% if et3Forms.length %}
+      {% if et3Forms.length and not et3RejectionDocs.length %}
         {% for et3Form in et3Forms %}
           {% set _ = documentsRows.push(
             [
@@ -73,8 +73,7 @@
           ) %}
         {% endfor %}
       {% endif %}
-
-      {% if et3SupportingDocs.length %}
+      {% if et3SupportingDocs.length and not et3RejectionDocs.length %}
         {% for et3SupportingDoc in et3SupportingDocs %}
           {% set _ = documentsRows.push(
             [
