@@ -12,9 +12,7 @@ export class TribunalOrdersAndRequestsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection).filter(
-      it =>
-        //it.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
+      it => it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
     );
 
     const translations: AnyRecord = {
