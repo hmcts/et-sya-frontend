@@ -73,6 +73,24 @@
           ) %}
         {% endfor %}
       {% endif %}
+
+          {% if et3Attachments.length and not et3RejectionDocs.length %}
+              {% for et3Attachment in et3Attachments %}
+                {% set _ = documentsRows.push(
+                  [
+                    {text: ""},
+                    {
+                      text: et3AttachmentText
+                    },
+                    {
+                      html: "<a href=\"/getCaseDocument/" + et3Attachment.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Attachment.originalDocumentName + "</a>"
+                    }
+                  ]
+                ) %}
+              {% endfor %}
+            {% endif %}
+
+
       {% if et3SupportingDocs.length and not et3RejectionDocs.length %}
         {% for et3SupportingDoc in et3SupportingDocs %}
           {% set _ = documentsRows.push(
