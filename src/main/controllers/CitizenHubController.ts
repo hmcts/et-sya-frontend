@@ -150,7 +150,7 @@ export default class CitizenHubController {
     });
 
     const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
+    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations, logger);
 
     let respondentBannerContent = undefined;
 

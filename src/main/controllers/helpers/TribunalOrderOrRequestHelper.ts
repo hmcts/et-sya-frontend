@@ -1,3 +1,5 @@
+import { LoggerInstance } from 'winston';
+
 import { AppRequest } from '../../definitions/appRequest';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
@@ -156,7 +158,8 @@ export const getRepondentOrderOrRequestDetails = (
 export const populateNotificationsWithRedirectLinksAndStatusColors = (
   notifications: SendNotificationTypeItem[],
   url: string,
-  translations: AnyRecord
+  translations: AnyRecord,
+  logger: LoggerInstance
 ): SendNotificationTypeItem[] => {
   if (notifications?.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
     notifications.forEach(item => {
@@ -173,23 +176,27 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
+      const addDisplayStatusAndColor = (hubLinkStatus: HubLinkStatus): void => {
+        item.displayStatus = translations[hubLinkStatus];
+        item.statusColor = displayStatusColorMap.get(hubLinkStatus);
+      };
       switch (true) {
         case responseRequired && hasResponded:
-          item.displayStatus = translations[HubLinkStatus.SUBMITTED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.SUBMITTED);
+          addDisplayStatusAndColor(HubLinkStatus.SUBMITTED);
           break;
         case responseRequired && !hasResponded:
-          item.displayStatus = translations[HubLinkStatus.NOT_STARTED_YET];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_STARTED_YET);
+          addDisplayStatusAndColor(HubLinkStatus.NOT_STARTED_YET);
           break;
         case !responseRequired && (isNotStarted || isNotViewedYet):
-          item.displayStatus = translations[HubLinkStatus.NOT_VIEWED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_VIEWED);
+          addDisplayStatusAndColor(HubLinkStatus.NOT_VIEWED);
           break;
         case !responseRequired && isViewed:
-          item.displayStatus = translations[HubLinkStatus.VIEWED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.VIEWED);
+          addDisplayStatusAndColor(HubLinkStatus.VIEWED);
           break;
+        default:
+          logger.info('illegal Order or Request state exception');
+          logger.info('title: ', item.value.sendNotificationTitle);
+          logger.info('id: ', item.id);
       }
     });
     return notifications;

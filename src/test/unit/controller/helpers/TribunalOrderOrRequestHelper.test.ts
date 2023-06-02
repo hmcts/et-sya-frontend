@@ -13,6 +13,7 @@ import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
+import { mockLogger } from '../../mocks/mockLogger';
 import {
   mockNotificationItem,
   mockNotificationRespondOnlyReq,
@@ -144,7 +145,8 @@ describe('Tribunal order or request helper', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [notificationItem],
       'url',
-      translations
+      translations,
+      mockLogger
     )[0];
     expect(populatedNotification.redirectUrl).toEqual(
       '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
@@ -157,7 +159,8 @@ describe('Tribunal order or request helper', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationResponseReq],
       'url',
-      translations
+      translations,
+      mockLogger
     )[0];
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not started yet');
@@ -167,7 +170,8 @@ describe('Tribunal order or request helper', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationRespondOnlyReq],
       'url',
-      translations
+      translations,
+      mockLogger
     )[0];
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
@@ -177,7 +181,8 @@ describe('Tribunal order or request helper', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationViewed],
       'url',
-      translations
+      translations,
+      mockLogger
     )[0];
     expect(populatedNotification.statusColor).toEqual('--green');
     expect(populatedNotification.displayStatus).toEqual('Viewed');
@@ -187,7 +192,8 @@ describe('Tribunal order or request helper', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationSubmitted],
       'url',
-      translations
+      translations,
+      mockLogger
     )[0];
     expect(populatedNotification.statusColor).toEqual('--green');
     expect(populatedNotification.displayStatus).toEqual('Submitted');
