@@ -189,7 +189,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
           hubLinkStatus = HubLinkStatus.VIEWED;
           break;
         default:
-          throw new Error(`Illegal order/ request stautus :${item.value.sendNotificationTitle}, id: ${item.id}`);
+          throw new Error(`Illegal order/ request state, title: ${item.value.sendNotificationTitle}, id: ${item.id}`);
       }
       item.displayStatus = translations[hubLinkStatus];
       item.statusColor = displayStatusColorMap.get(hubLinkStatus);
