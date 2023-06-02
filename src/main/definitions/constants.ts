@@ -393,11 +393,20 @@ export const inScopeLocations = [
 ];
 
 export const et1DocTypes = ['ET1'];
-export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
+export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim', '2.7', '2.8', '7.7', '7.8', '7.8a'];
+export const acceptanceDocTypesAcknowledgementOfClaim = ['1.1', 'Acknowledgement of Claim'];
+export const acceptanceDocTypesNoticeOfClaim = ['2.7', '2.8'];
+export const acceptanceDocTypesNoticeOfHearing = ['7.7', '7.8', '7.8a'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
 export const et3FormDocTypes = ['ET3'];
+
+export const typeOfDoc = {
+  ACKNOWLEDGEMENT_OF_CLAIM: 'Acknowledgement of Claim',
+  NOTICE_OF_CLAIM: 'Notice of Claim',
+  NOTICE_OF_HEARING: 'Notice of Hearing',
+};
 
 export const languages = {
   WELSH: 'cy',

@@ -17,25 +17,27 @@
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
+        {% set acknowledgementOfClaimLetterRows = [] %}
         {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
-          {{ govukTable({
-            firstCellIsHeader: false,
-            caption: "Claim related information",
-            rows: [
-              [
-                {
-                  text: doc.createdOn
-                },
-                            {
-                  text: 'ET1 (Claim)'
-                },
-                {
-                    html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
-                }
-              ]
+          {% set acknowledgementOfClaimLetterRows = (acknowledgementOfClaimLetterRows.push(
+            [
+              {
+                text: doc.createdOn
+              },
+                          {
+                text: 'ET1 (Claim)'
+              },
+              {
+                  html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" + "[" + doc.typeOfDoc + ": " + doc.originalDocumentName + "]" + "</a>"
+              }
             ]
-          }) }}
+          ), acknowledgementOfClaimLetterRows) %}
         {% endfor %}
+        {{ govukTable({
+          firstCellIsHeader: false,
+          caption: "Claim related information",
+          rows: acknowledgementOfClaimLetterRows
+        }) }}
       {% endif %}
 
       {% if userCase.rejectionOfClaimDocumentDetail.length %}
