@@ -396,7 +396,7 @@ export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11'];
-export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
+export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', '10', '11'];
 export const et3FormDocTypes = ['ET3'];
 
 export const languages = {
