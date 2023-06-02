@@ -173,24 +173,26 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
+      let hubLinkStatus: HubLinkStatus;
+
       switch (true) {
         case responseRequired && hasResponded:
-          item.displayStatus = translations[HubLinkStatus.SUBMITTED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.SUBMITTED);
+          hubLinkStatus = HubLinkStatus.SUBMITTED;
           break;
         case responseRequired && !hasResponded:
-          item.displayStatus = translations[HubLinkStatus.NOT_STARTED_YET];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_STARTED_YET);
+          hubLinkStatus = HubLinkStatus.NOT_STARTED_YET;
           break;
         case !responseRequired && (isNotStarted || isNotViewedYet):
-          item.displayStatus = translations[HubLinkStatus.NOT_VIEWED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.NOT_VIEWED);
+          hubLinkStatus = HubLinkStatus.NOT_VIEWED;
           break;
         case !responseRequired && isViewed:
-          item.displayStatus = translations[HubLinkStatus.VIEWED];
-          item.statusColor = displayStatusColorMap.get(HubLinkStatus.VIEWED);
+          hubLinkStatus = HubLinkStatus.VIEWED;
           break;
+        default:
+          throw new Error(`Illegal order/ request state, title: ${item.value.sendNotificationTitle}, id: ${item.id}`);
       }
+      item.displayStatus = translations[hubLinkStatus];
+      item.statusColor = displayStatusColorMap.get(hubLinkStatus);
     });
     return notifications;
   }
