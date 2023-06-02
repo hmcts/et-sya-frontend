@@ -71,6 +71,13 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
 ]);
 
+export const displayStatusColorMap = new Map<HubLinkStatus, string>([
+  [HubLinkStatus.SUBMITTED, COLORS.GREEN],
+  [HubLinkStatus.VIEWED, COLORS.GREEN],
+  [HubLinkStatus.NOT_VIEWED, COLORS.RED],
+  [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
+]);
+
 export const sectionIndexToLinkNames: HubLinkNames[][] = [
   [HubLinkNames.Et1ClaimForm],
   [HubLinkNames.RespondentResponse],

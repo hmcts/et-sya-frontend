@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -35,6 +35,10 @@ export default class TribunalOrderOrRequestDetailsController {
     const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
       r => r.value.from === Applicant.CLAIMANT
     );
+    const responseRequired =
+      selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+      selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
     try {
       await getDocumentsAdditionalInformation(
         selectedRequestOrOrder.value.sendNotificationUploadDocument,
@@ -58,6 +62,7 @@ export default class TribunalOrderOrRequestDetailsController {
     res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
       ...content,
       respondButton,
+      responseRequired,
       orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
       redirectUrl,
       header: selectedRequestOrOrder.value.sendNotificationTitle,
