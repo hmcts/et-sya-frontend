@@ -201,18 +201,57 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
 export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTypeItem[], req: AppRequest): void => {
   const userCase = req.session?.userCase;
   if (items?.length && filterNotificationsWithRequestsOrOrders(items).length) {
-    const respOnly = items.some(
+    // check if they are not for claimant
+    const anyRequireResponse = items.some(
       item =>
-        item.value.sendNotificationSelectParties === Parties.RESPONDENT_ONLY &&
-        item.value.sendNotificationResponseTribunal === ResponseRequired.YES
+        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY
     );
+    const anyRequireResponseAndNotResponded = items.some(item => {
+      return (
+        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY &&
+        !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT)
+      );
+    });
 
-    if (userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] === HubLinkStatus.NOT_YET_AVAILABLE) {
-      if (respOnly) {
-        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      } else {
+    const anyNotViewed = items.some(item => {
+      return (
+        item.value.notificationState === HubLinkStatus.NOT_STARTED_YET ||
+        item.value.notificationState === HubLinkStatus.NOT_VIEWED
+      );
+    });
+    const allViewed = items.every(item => {
+      return item.value.notificationState === HubLinkStatus.VIEWED;
+    });
+    console.log('anyRequireResponse', anyRequireResponse);
+    console.log('anyRequireResponseAndNotResponded', anyRequireResponseAndNotResponded);
+    console.log('anyNotViewed', anyNotViewed);
+    console.log('allViewed', allViewed);
+
+    // all that require a response have been responded to
+    // anyRequireRponseAndNotRespond must be false
+    // and anyRequireresponse must be true
+    switch (true) {
+      case anyRequireResponseAndNotResponded:
+        console.log('case 1');
         userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
-      }
+        break;
+      case anyNotViewed:
+        console.log('case 2');
+        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+        break;
+      case anyRequireResponse && !anyRequireResponseAndNotResponded && allViewed:
+        console.log('case 3');
+        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+        break;
+      case allViewed:
+        console.log('case 4');
+        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
+        break;
+      default:
+        // eslint-disable-next-line no-console
+        console.log('Hublink - Order or Request state exception');
     }
   }
 };
