@@ -193,7 +193,7 @@ describe('Tribunal order or request helper', () => {
     expect(populatedNotification.displayStatus).toEqual('Submitted');
   });
 
-  it('tribunal orders and requests section should keep its IN_PROGRESS status unchanged', () => {
+  it('tribunal orders and requests section should be not started when a response is required', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
@@ -208,7 +208,69 @@ describe('Tribunal order or request helper', () => {
 
     activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
     expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
-      HubLinkStatus.IN_PROGRESS
+      HubLinkStatus.NOT_STARTED_YET
+    );
+  });
+  it('tribunal orders and requests section should be not viewed when not viewed and a response is not required', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.NOT_VIEWED
+    );
+  });
+  it('tribunal orders and requests section should be viewed when viewed and a response is not required', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+        notificationState: 'viewed',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
+  });
+  it('tribunal orders and requests section should be submitted when response is required and has been sent', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+        notificationState: 'viewed',
+        respondCollection: [
+          {
+            id: 'abc-12',
+            value: {
+              from: 'Claimant',
+            },
+          },
+        ],
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.SUBMITTED
     );
   });
 });
