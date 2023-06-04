@@ -125,6 +125,15 @@ export const mockRespondentApplicationDetails: GenericTseApplicationTypeItem[] =
   },
 ];
 
+export const mockSimpleRespApp: GenericTseApplicationType = {
+  number: '1',
+  type: 'Amend response',
+  applicant: 'Respondent',
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
+  applicationState: 'notStartedYet',
+  dueDate: '14 March 2023',
+};
+
 export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   date: '2 June 2023',
   type: 'Amend response',
@@ -148,4 +157,12 @@ export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
     },
   ],
   copyToOtherPartyYesOrNo: YesOrNo.YES,
+};
+
+export const mockRespAppWithDecisionNotViewed: GenericTseApplicationType = {
+  applicationState: 'notViewedYet',
+};
+
+export const mockRespAppWithDecisionViewed: GenericTseApplicationType = {
+  applicationState: 'viewed',
 };

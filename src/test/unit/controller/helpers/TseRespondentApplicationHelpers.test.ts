@@ -2,16 +2,18 @@ import {
   getRespondentBannerContent,
   populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/TseRespondentApplicationHelpers';
-import {
-  GenericTseApplicationType,
-  GenericTseApplicationTypeItem,
-} from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetails from '../../../../main/resources/locales/en/translation/application-details.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import common from '../../../../main/resources/locales/en/translation/common.json';
-import { mockRespAppWithClaimantResponse } from '../../mocks/mockApplications';
+import {
+  mockRespAppWithClaimantResponse,
+  mockRespAppWithDecisionNotViewed,
+  mockRespAppWithDecisionViewed,
+  mockSimpleRespApp,
+} from '../../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { clone } from '../../test-helpers/clone';
 
@@ -58,19 +60,10 @@ describe('Respondent application details', () => {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    it('correct details when no replies', () => {
-      const respondentApp = {
-        number: '1',
-        type: 'Amend response',
-        applicant: 'Respondent',
-        copyToOtherPartyYesOrNo: 'Yes',
-        applicationState: 'notStartedYet',
-        dueDate: '14 March 2023',
-      } as GenericTseApplicationType;
-
+    it('correct redirect name and url', () => {
       const item = {
         id: '1',
-        value: respondentApp,
+        value: clone(mockSimpleRespApp),
       } as GenericTseApplicationTypeItem;
       const items = [item];
 
@@ -78,11 +71,22 @@ describe('Respondent application details', () => {
 
       expect(item.value.type).toEqual('Amend response');
       expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
+    });
+
+    it('correct status when no replies', () => {
+      const item = {
+        id: '1',
+        value: clone(mockSimpleRespApp),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
       expect(item.statusColor).toEqual('--red');
       expect(item.displayStatus).toEqual('Not started yet');
     });
 
-    it('correct details when claimant replies', () => {
+    it('correct status when claimant replies', () => {
       const item = {
         id: '1',
         value: clone(mockRespAppWithClaimantResponse),
@@ -91,10 +95,34 @@ describe('Respondent application details', () => {
 
       populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
 
-      expect(item.value.type).toEqual('Amend response');
-      expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
       expect(item.statusColor).toEqual('--grey');
       expect(item.displayStatus).toEqual('Waiting for the tribunal');
+    });
+
+    it("correct status when tribunal records a decision and claimant didn't view", () => {
+      const item = {
+        id: '1',
+        value: clone(mockRespAppWithDecisionNotViewed),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--red');
+      expect(item.displayStatus).toEqual('Not viewed yet');
+    });
+
+    it('correct status when tribunal records a decision and claimant viewed', () => {
+      const item = {
+        id: '1',
+        value: clone(mockRespAppWithDecisionViewed),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--turquoise');
+      expect(item.displayStatus).toEqual('Viewed');
     });
   });
 });
