@@ -75,8 +75,12 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
       const app = translations[item.value.type];
       item.linkValue = app;
       item.redirectUrl = `/respondent-application-details/${item.id}${getLanguageParam(url)}`;
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
-      item.displayStatus = translations[item.value.applicationState];
+
+      const claimantResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+      const newState = claimantResponded ? HubLinkStatus.WAITING_FOR_TRIBUNAL : HubLinkStatus.NOT_STARTED_YET;
+
+      item.displayStatus = translations[newState];
+      item.statusColor = statusColorMap.get(newState);
     });
     return respondentItems;
   }

@@ -1,5 +1,8 @@
 import { YesOrNo } from '../../../main/definitions/case';
-import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationType,
+  GenericTseApplicationTypeItem,
+} from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { ApplicationTableRecord, CaseState, RespondentApplicationDetails } from '../../../main/definitions/definition';
 
 export const mockApplications: ApplicationTableRecord[] = [
@@ -121,3 +124,28 @@ export const mockRespondentApplicationDetails: GenericTseApplicationTypeItem[] =
     linkValue: 'Change personal details',
   },
 ];
+
+export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
+  date: '2 June 2023',
+  type: 'Amend response',
+  number: '2',
+  status: 'Open',
+  details: 'asd',
+  dueDate: '9 June 2023',
+  applicant: 'Respondent',
+  responsesCount: '1',
+  applicationState: 'inProgress',
+  respondCollection: [
+    {
+      id: 'ac55bb6d-ce54-4090-aa3e-1073b3bb5d82',
+      value: {
+        date: '2 June 2023',
+        from: 'Claimant',
+        response: 'sdfsdf',
+        copyToOtherParty: 'Yes',
+        hasSupportingMaterial: YesOrNo.NO,
+      },
+    },
+  ],
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
+};
