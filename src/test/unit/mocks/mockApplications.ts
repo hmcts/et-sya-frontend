@@ -134,7 +134,7 @@ export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   dueDate: '9 June 2023',
   applicant: 'Respondent',
   responsesCount: '1',
-  applicationState: 'inProgress',
+  applicationState: 'waitingForTheTribunal',
   respondCollection: [
     {
       id: 'ac55bb6d-ce54-4090-aa3e-1073b3bb5d82',
