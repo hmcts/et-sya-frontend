@@ -196,8 +196,6 @@ describe('Tribunal order or request helper', () => {
   it('tribunal orders and requests section should be not started when a response is required', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
-
     const notificationWithOrder = {
       value: {
         sendNotificationCaseManagement: 'Order',
@@ -211,10 +209,10 @@ describe('Tribunal order or request helper', () => {
       HubLinkStatus.NOT_STARTED_YET
     );
   });
+
   it('tribunal orders and requests section should be not viewed when not viewed and a response is not required', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationWithOrder = {
       value: {
@@ -229,10 +227,10 @@ describe('Tribunal order or request helper', () => {
       HubLinkStatus.NOT_VIEWED
     );
   });
+
   it('tribunal orders and requests section should be viewed when viewed and a response is not required', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationWithOrder = {
       value: {
@@ -246,10 +244,10 @@ describe('Tribunal order or request helper', () => {
     activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
     expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
   });
+
   it('tribunal orders and requests section should be submitted when response is required and has been sent', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationSubmitted = {
       value: {
@@ -277,7 +275,6 @@ describe('Tribunal order or request helper', () => {
   it('tribunal orders and requests section should be not started when a response is required for any notification', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationWithOrder = {
       value: {
@@ -300,10 +297,10 @@ describe('Tribunal order or request helper', () => {
       HubLinkStatus.NOT_STARTED_YET
     );
   });
+
   it('tribunal orders and requests section should be not viewed when a response not required for any notification', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationSubmitted = {
       value: {
@@ -335,10 +332,10 @@ describe('Tribunal order or request helper', () => {
       HubLinkStatus.NOT_VIEWED
     );
   });
+
   it('tribunal orders and requests section should be submitted when all notifications are viewed or submitted', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notificationSubmitted = {
       value: {
@@ -370,10 +367,10 @@ describe('Tribunal order or request helper', () => {
       HubLinkStatus.SUBMITTED
     );
   });
+
   it('tribunal orders and requests section should be viewed when all notifications are viewed', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
     const notification = {
       value: {
@@ -394,5 +391,15 @@ describe('Tribunal order or request helper', () => {
 
     activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], request);
     expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
+  });
+
+  it('tribunal orders and requests section should be not yet available when order / request notifications do not exist', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+
+    activateTribunalOrdersAndRequestsLink([], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.NOT_YET_AVAILABLE
+    );
   });
 });
