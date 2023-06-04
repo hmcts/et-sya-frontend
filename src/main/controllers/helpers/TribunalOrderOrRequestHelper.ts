@@ -240,8 +240,6 @@ export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTyp
     case allViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
       break;
-    default:
-      console.log('######## order request hub link status is as default ##############');
   }
 };
 

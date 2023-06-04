@@ -251,7 +251,7 @@ describe('Tribunal order or request helper', () => {
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
 
-    const notificationWithOrder = {
+    const notificationSubmitted = {
       value: {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
@@ -268,9 +268,131 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], request);
+    activateTribunalOrdersAndRequestsLink([notificationSubmitted], request);
     expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
       HubLinkStatus.SUBMITTED
     );
+  });
+
+  it('tribunal orders and requests section should be not started when a response is required for any notification', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    const notificationNoResponseRequired = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder, notificationNoResponseRequired], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.NOT_STARTED_YET
+    );
+  });
+  it('tribunal orders and requests section should be not viewed when a response not required for any notification', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationSubmitted = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+        notificationState: 'viewed',
+        respondCollection: [
+          {
+            id: 'abc-12',
+            value: {
+              from: 'Claimant',
+            },
+          },
+        ],
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    const notificationNoResponseRequired = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'something',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.NOT_VIEWED
+    );
+  });
+  it('tribunal orders and requests section should be submitted when all notifications are viewed or submitted', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notificationSubmitted = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+        notificationState: 'viewed',
+        respondCollection: [
+          {
+            id: 'abc-12',
+            value: {
+              from: 'Claimant',
+            },
+          },
+        ],
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    const notificationNoResponseRequired = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
+      HubLinkStatus.SUBMITTED
+    );
+  });
+  it('tribunal orders and requests section should be viewed when all notifications are viewed', () => {
+    const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+
+    const notification = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    const notificationNoResponseRequired = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: 'Both parties',
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
   });
 });
