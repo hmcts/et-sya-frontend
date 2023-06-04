@@ -6,6 +6,7 @@ import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
+import { clone } from '../../test-helpers/clone';
 
 describe('checkIfRespondentIsSystemUser', () => {
   it('should return false if respondents is undefined', () => {
@@ -91,7 +92,7 @@ describe('checkIfRespondentIsSystemUser', () => {
 describe('activateRespondentApplicationsLink', () => {
   let userCase: CaseWithId;
   beforeEach(() => {
-    userCase = JSON.parse(JSON.stringify(mockUserCase));
+    userCase = clone(mockUserCase);
   });
 
   it('should set hub link for respondent applications to in progress if applications exist', () => {
