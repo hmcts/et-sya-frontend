@@ -76,6 +76,7 @@ describe('Citizen Hub Document Controller', () => {
             originalDocumentName: 'sample.pdf',
             createdOn: '8 September 2022',
             description: 'description',
+            typeOfDoc: '',
             id: '1',
           },
         ],
