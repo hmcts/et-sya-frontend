@@ -1,6 +1,11 @@
 import { YesOrNo } from '../../../main/definitions/case';
-import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationType,
+  GenericTseApplicationTypeItem,
+} from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { ApplicationTableRecord, CaseState, RespondentApplicationDetails } from '../../../main/definitions/definition';
+import { HubLinkStatus } from '../../../main/definitions/hub';
+import { clone } from '../test-helpers/clone';
 
 export const mockApplications: ApplicationTableRecord[] = [
   {
@@ -121,3 +126,73 @@ export const mockRespondentApplicationDetails: GenericTseApplicationTypeItem[] =
     linkValue: 'Change personal details',
   },
 ];
+
+export const mockSimpleRespApp: GenericTseApplicationType = {
+  number: '1',
+  type: 'Amend response',
+  applicant: 'Respondent',
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
+  applicationState: 'notStartedYet',
+  dueDate: '14 March 2023',
+};
+
+export const mockSimpleRespAppTypeItem: GenericTseApplicationTypeItem = {
+  id: '1',
+  value: mockSimpleRespApp,
+};
+
+export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
+  date: '2 June 2023',
+  type: 'Amend response',
+  number: '2',
+  status: 'Open',
+  details: 'asd',
+  dueDate: '9 June 2023',
+  applicant: 'Respondent',
+  responsesCount: '1',
+  applicationState: 'waitingForTheTribunal',
+  respondCollection: [
+    {
+      id: 'ac55bb6d-ce54-4090-aa3e-1073b3bb5d82',
+      value: {
+        date: '2 June 2023',
+        from: 'Claimant',
+        response: 'sdfsdf',
+        copyToOtherParty: 'Yes',
+        hasSupportingMaterial: YesOrNo.NO,
+      },
+    },
+  ],
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
+};
+
+export const mockRespAppWithDecisionNotViewed: GenericTseApplicationType = {
+  date: '5 June 2023',
+  type: 'Amend response',
+  number: '1',
+  status: 'Open',
+  details: '1',
+  dueDate: '12 June 2023',
+  applicant: 'Respondent',
+  adminDecision: [
+    {
+      id: '416799df-f1fd-4b21-ac24-0e3dbb09b508',
+      value: {
+        date: '5 June 2023',
+        decision: 'Granted',
+        decisionMadeBy: 'Legal officer',
+        typeOfDecision: 'Judgment',
+        selectPartyNotify: 'Both parties',
+        decisionMadeByFullName: '1',
+        enterNotificationTitle: '1',
+      },
+    },
+  ],
+  responsesCount: '0',
+  applicationState: 'notViewedYet',
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
+};
+
+const decisionClone = clone(mockRespAppWithDecisionNotViewed);
+decisionClone.applicationState = HubLinkStatus.VIEWED;
+export const mockRespAppWithDecisionViewed: GenericTseApplicationType = decisionClone;

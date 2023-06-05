@@ -2,20 +2,23 @@ import {
   getRespondentBannerContent,
   populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/TseRespondentApplicationHelpers';
-import {
-  GenericTseApplicationType,
-  GenericTseApplicationTypeItem,
-} from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetails from '../../../../main/resources/locales/en/translation/application-details.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import common from '../../../../main/resources/locales/en/translation/common.json';
-import contactTheTribunalRaw from '../../../../main/resources/locales/en/translation/contact-the-tribunal.json';
+import {
+  mockRespAppWithClaimantResponse,
+  mockRespAppWithDecisionNotViewed,
+  mockRespAppWithDecisionViewed,
+  mockSimpleRespAppTypeItem,
+} from '../../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import { clone } from '../../test-helpers/clone';
 
-describe('should get respondent application details', () => {
-  it('should get Respondent Application Details', () => {
+describe('Respondent application details', () => {
+  it('should get correct banner content', () => {
     const application = {
       id: '124',
       value: {
@@ -50,39 +53,70 @@ describe('should get respondent application details', () => {
     ]);
   });
 
-  it('should populate respondent app items with redirect link, caption, statusColor and displayStatus', () => {
-    const translationJsons = { ...contactTheTribunalRaw, ...citizenHubRaw };
-
-    const req = mockRequestWithTranslation({}, translationJsons);
-
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
-    };
-    const respondentApp = {
-      number: '1',
-      type: 'Amend response',
-      applicant: 'Respondent',
-      copyToOtherPartyYesOrNo: 'Yes',
-      applicationState: 'notStartedYet',
-      dueDate: '14 March 2023',
-    } as GenericTseApplicationType;
-
-    const item = {
-      id: '1',
-      value: respondentApp,
-    } as GenericTseApplicationTypeItem;
-    const items = [item];
-
+  describe('respondent application list', () => {
     const url = 'testUrl';
+    const req = mockRequestWithTranslation({}, { ...citizenHubRaw });
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+    };
 
-    populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+    it('correct redirect name and url', () => {
+      const item = clone(mockSimpleRespAppTypeItem);
+      const items = [item];
 
-    expect(item.value.type).toEqual('Amend response');
-    expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
-    expect(item.statusColor).toEqual('--red');
-    expect(item.value.applicationState).toEqual('notStartedYet');
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.value.type).toEqual('Amend response');
+      expect(item.redirectUrl).toEqual('/respondent-application-details/1?lng=en');
+    });
+
+    it('correct status when no replies', () => {
+      const item = clone(mockSimpleRespAppTypeItem);
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--red');
+      expect(item.displayStatus).toEqual('Not started yet');
+    });
+
+    it('correct status when claimant replies', () => {
+      const item = {
+        id: '1',
+        value: clone(mockRespAppWithClaimantResponse),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--grey');
+      expect(item.displayStatus).toEqual('Waiting for the tribunal');
+    });
+
+    it("correct status when tribunal records a decision and claimant didn't view", () => {
+      const item = {
+        id: '1',
+        value: clone(mockRespAppWithDecisionNotViewed),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--red');
+      expect(item.displayStatus).toEqual('Not viewed yet');
+    });
+
+    it('correct status when tribunal records a decision and claimant viewed', () => {
+      const item = {
+        id: '1',
+        value: clone(mockRespAppWithDecisionViewed),
+      } as GenericTseApplicationTypeItem;
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--turquoise');
+      expect(item.displayStatus).toEqual('Viewed');
+    });
   });
 });

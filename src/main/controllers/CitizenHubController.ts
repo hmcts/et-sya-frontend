@@ -19,6 +19,7 @@ import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
+  activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -46,11 +47,7 @@ import {
   filterNotificationsWithRequestsOrOrders,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from './helpers/TribunalOrderOrRequestHelper';
-import {
-  activateRespondentApplicationsLink,
-  getRespondentApplications,
-  getRespondentBannerContent,
-} from './helpers/TseRespondentApplicationHelpers';
+import { getRespondentApplications, getRespondentBannerContent } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
