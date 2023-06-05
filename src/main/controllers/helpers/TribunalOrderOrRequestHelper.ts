@@ -1,4 +1,4 @@
-import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
@@ -198,7 +198,10 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
   }
 };
 
-export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTypeItem[], req: AppRequest): void => {
+export const activateTribunalOrdersAndRequestsLink = (
+  items: SendNotificationTypeItem[],
+  userCase: CaseWithId
+): void => {
   if (!items?.length) {
     return;
   }
@@ -209,18 +212,14 @@ export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTyp
     return;
   }
 
-  const userCase = req.session?.userCase;
-  const anyRequireResponse = notices.some(
-    item =>
-      item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-      item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY
-  );
+  const responseRequired = (item: SendNotificationTypeItem) =>
+    item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+    item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
+  const anyRequireResponse = notices.some(responseRequired);
+
   const anyRequireResponseAndNotResponded = notices.some(item => {
-    return (
-      item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-      item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY &&
-      !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT)
-    );
+    return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
   });
 
   const allViewed = notices.every(item => {
