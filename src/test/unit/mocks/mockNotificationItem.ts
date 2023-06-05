@@ -38,7 +38,7 @@ export const notificationType: SendNotificationType = {
   sendNotificationWhoCaseOrder: 'Judge',
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
-  notificationState: 'notStartedYet',
+  notificationState: 'notViewedYet',
   sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
 };
 
@@ -76,7 +76,7 @@ export const notificationRespondentRequiredtoRespond: SendNotificationType = {
   sendNotificationWhoCaseOrder: 'Judge',
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
-  notificationState: 'notStartedYet',
+  notificationState: 'notViewedYet',
   sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
 };
 
