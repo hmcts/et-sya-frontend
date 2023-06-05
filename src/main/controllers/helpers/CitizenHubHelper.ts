@@ -102,6 +102,6 @@ export const activateRespondentApplicationsLink = (
   userCase: CaseWithId
 ): void => {
   if (items?.length) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
+    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.NOT_STARTED_YET;
   }
 };

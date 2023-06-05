@@ -4,7 +4,7 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
-import { HubLinkNames } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
@@ -97,7 +97,7 @@ describe('activateRespondentApplicationsLink', () => {
 
   it('should set hub link for respondent applications to in progress if applications exist', () => {
     activateRespondentApplicationsLink([{}], userCase);
-    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe('inProgress');
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(HubLinkStatus.NOT_STARTED_YET);
   });
 
   it('should not set hub link for respondent applications to in progress if no applications exist', () => {
