@@ -126,7 +126,7 @@ export default class CitizenHubController {
       hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
     }
 
-    activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req);
+    activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
