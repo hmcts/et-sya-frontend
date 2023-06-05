@@ -62,6 +62,13 @@
         {% endfor %}
       {% endif %}
 
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      ET1 Documents
+    </span>
+        </summary>
+
       <dl class="govuk-summary-list">
 
         {% for thisDocument in et1Documents %}
@@ -74,7 +81,16 @@
             </dd>
           </div>
         {% endfor %}
-        <br/><br/>
+      </dl>
+      </details>
+
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Application Details
+    </span>
+        </summary>
+      <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key govuk-heading-m">
             {{ applicationDetails.header }}
@@ -113,7 +129,13 @@
           })
         }}
       {% endfor %}
-
+      </details>
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      Claim details
+    </span>
+        </summary>
       <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key govuk-heading-m">
@@ -208,7 +230,7 @@
               </div>
             {% endif %}
           </dl>
-
+      </details>
 
           {% set contactContent %}
           {% include "./citizen-hub-sidebar.njk" %}
