@@ -169,7 +169,6 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
       const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-      const isNotStarted = item.value.notificationState === HubLinkStatus.NOT_STARTED_YET;
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
@@ -182,7 +181,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         case responseRequired && !hasResponded:
           hubLinkStatus = HubLinkStatus.NOT_STARTED_YET;
           break;
-        case !responseRequired && (isNotStarted || isNotViewedYet):
+        case !responseRequired && isNotViewedYet:
           hubLinkStatus = HubLinkStatus.NOT_VIEWED;
           break;
         case !responseRequired && isViewed:
