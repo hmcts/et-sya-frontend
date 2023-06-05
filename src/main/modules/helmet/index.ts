@@ -6,7 +6,7 @@ export interface HelmetConfig {
   referrerPolicy: ReferrerPolicy;
 }
 
-const googleAnalyticsDomain = '*.google-analytics.com';
+const googleAnalyticsDomains = ['*.google-analytics.com', '*.analytics.google.com'];
 const tagManager = ['*.googletagmanager.com', 'https://tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
 const azureBlob = '*.blob.core.windows.net';
 const webChat = 'https://vcc-eu4.8x8.com';
@@ -31,7 +31,7 @@ export class Helmet {
     const scriptSrc = [
       self,
       ...tagManager,
-      googleAnalyticsDomain,
+      googleAnalyticsDomains,
       "'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU='",
       "'sha256-jRBbox3kYELTBlbH5MUuba3ueT9bVKJ2beih/WmA5XA='",
       "'sha256-sZMpt4mxRf2FbN1eXmS8x0BW1uGzJT/wjKE+ws9LwGM='",
@@ -43,13 +43,13 @@ export class Helmet {
       idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain, idamUrl];
+    const connectSrc = [self, googleAnalyticsDomains, idamUrl];
 
     const imgSrc = [
       self,
       azureBlob,
       ...tagManager,
-      googleAnalyticsDomain,
+      googleAnalyticsDomains,
       'data:',
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
