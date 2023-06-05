@@ -4,6 +4,8 @@ import {
   GenericTseApplicationTypeItem,
 } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { ApplicationTableRecord, CaseState, RespondentApplicationDetails } from '../../../main/definitions/definition';
+import { HubLinkStatus } from '../../../main/definitions/hub';
+import { clone } from '../test-helpers/clone';
 
 export const mockApplications: ApplicationTableRecord[] = [
   {
@@ -160,9 +162,32 @@ export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
 };
 
 export const mockRespAppWithDecisionNotViewed: GenericTseApplicationType = {
+  date: '5 June 2023',
+  type: 'Amend response',
+  number: '1',
+  status: 'Open',
+  details: '1',
+  dueDate: '12 June 2023',
+  applicant: 'Respondent',
+  adminDecision: [
+    {
+      id: '416799df-f1fd-4b21-ac24-0e3dbb09b508',
+      value: {
+        date: '5 June 2023',
+        decision: 'Granted',
+        decisionMadeBy: 'Legal officer',
+        typeOfDecision: 'Judgment',
+        selectPartyNotify: 'Both parties',
+        decisionMadeByFullName: '1',
+        enterNotificationTitle: '1',
+      },
+    },
+  ],
+  responsesCount: '0',
   applicationState: 'notViewedYet',
+  copyToOtherPartyYesOrNo: YesOrNo.YES,
 };
 
-export const mockRespAppWithDecisionViewed: GenericTseApplicationType = {
-  applicationState: 'viewed',
-};
+const decisionClone = clone(mockRespAppWithDecisionNotViewed);
+decisionClone.applicationState = HubLinkStatus.VIEWED;
+export const mockRespAppWithDecisionViewed: GenericTseApplicationType = decisionClone;
