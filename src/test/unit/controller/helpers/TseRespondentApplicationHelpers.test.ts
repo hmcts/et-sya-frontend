@@ -12,7 +12,7 @@ import {
   mockRespAppWithClaimantResponse,
   mockRespAppWithDecisionNotViewed,
   mockRespAppWithDecisionViewed,
-  mockSimpleRespApp,
+  mockSimpleRespAppTypeItem,
 } from '../../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { clone } from '../../test-helpers/clone';
@@ -61,10 +61,7 @@ describe('Respondent application details', () => {
     };
 
     it('correct redirect name and url', () => {
-      const item = {
-        id: '1',
-        value: clone(mockSimpleRespApp),
-      } as GenericTseApplicationTypeItem;
+      const item = clone(mockSimpleRespAppTypeItem);
       const items = [item];
 
       populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
@@ -74,10 +71,7 @@ describe('Respondent application details', () => {
     });
 
     it('correct status when no replies', () => {
-      const item = {
-        id: '1',
-        value: clone(mockSimpleRespApp),
-      } as GenericTseApplicationTypeItem;
+      const item = clone(mockSimpleRespAppTypeItem);
       const items = [item];
 
       populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);

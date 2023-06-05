@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+import { clone } from 'lodash';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -26,6 +27,7 @@ import {
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
+import { mockSimpleRespAppTypeItem } from '../mocks/mockApplications';
 import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
 import { mockEt1DataModelUpdate, mockHubLinkStatusesRequest } from '../mocks/mockEt1DataModel';
 
@@ -351,6 +353,21 @@ describe('update case', () => {
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.UPDATE_CASE_SUBMITTED);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
   });
+
+  it('should update resp application with decision to be viewed', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      selectedGenericTseApplication: clone(mockSimpleRespAppTypeItem),
+    };
+
+    await api.viewAdminDecisionForApplication(caseItem);
+
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.VIEW_AN_APPLICATION);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ applicationId: '1' });
+  });
 });
 
 describe('submitCase', () => {
@@ -569,6 +586,11 @@ describe('Rethrowing errors when axios requests fail', () => {
       serviceMethod: api.addResponseSendNotification,
       parameters: [caseItem],
       errorMessage: 'Error adding response to sendNotification: ' + error.message,
+    },
+    {
+      serviceMethod: api.viewAdminDecisionForApplication,
+      parameters: [caseItem],
+      errorMessage: "Error viewing admin decision on respondent's tse application: " + error.message,
     },
     {
       serviceMethod: api.updateSendNotificationState,

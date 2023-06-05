@@ -136,6 +136,11 @@ export const mockSimpleRespApp: GenericTseApplicationType = {
   dueDate: '14 March 2023',
 };
 
+export const mockSimpleRespAppTypeItem: GenericTseApplicationTypeItem = {
+  id: '1',
+  value: mockSimpleRespApp,
+};
+
 export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   date: '2 June 2023',
   type: 'Amend response',
