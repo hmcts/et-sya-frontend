@@ -26,7 +26,7 @@ export interface GenericTseApplicationType {
   responsesCount?: string;
   status?: string;
   dueDate?: string;
-  applicationState?: string;
+  applicationState?: string; // used for CUI and so viewed/not viewed refers to claimant
   adminDecision?: TseAdminDecisionItem[];
 }
 

@@ -3,8 +3,10 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
+import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
@@ -55,6 +57,17 @@ export default class RespondentApplicationDetailsController {
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.RESPONDENT_APPLICATION_DETAILS,
     ]);
+
+    try {
+      if (selectedApplication.value.applicationState === HubLinkStatus.NOT_VIEWED) {
+        await getCaseApi(req.session.user?.accessToken).viewAdminDecisionForApplication(req.session.userCase);
+        selectedApplication.value.applicationState = HubLinkStatus.VIEWED;
+        logger.info(`Viewed admin's decision for respondent's application for case: ${req.session.userCase.id}`);
+      }
+    } catch (error) {
+      logger.error(error.message);
+      res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
+    }
 
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,

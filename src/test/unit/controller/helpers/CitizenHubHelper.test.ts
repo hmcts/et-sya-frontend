@@ -1,6 +1,12 @@
-import { checkIfRespondentIsSystemUser } from '../../../../main/controllers/helpers/CitizenHubHelper';
+import {
+  activateRespondentApplicationsLink,
+  checkIfRespondentIsSystemUser,
+} from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
+import { HubLinkNames } from '../../../../main/definitions/hub';
+import mockUserCase from '../../mocks/mockUserCase';
+import { clone } from '../../test-helpers/clone';
 
 describe('checkIfRespondentIsSystemUser', () => {
   it('should return false if respondents is undefined', () => {
@@ -80,5 +86,22 @@ describe('checkIfRespondentIsSystemUser', () => {
       ],
     };
     expect(checkIfRespondentIsSystemUser(userCase)).toEqual(true);
+  });
+});
+
+describe('activateRespondentApplicationsLink', () => {
+  let userCase: CaseWithId;
+  beforeEach(() => {
+    userCase = clone(mockUserCase);
+  });
+
+  it('should set hub link for respondent applications to in progress if applications exist', () => {
+    activateRespondentApplicationsLink([{}], userCase);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe('inProgress');
+  });
+
+  it('should not set hub link for respondent applications to in progress if no applications exist', () => {
+    activateRespondentApplicationsLink(undefined, userCase);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBeUndefined();
   });
 });
