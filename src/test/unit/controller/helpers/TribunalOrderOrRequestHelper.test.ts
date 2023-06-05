@@ -298,7 +298,7 @@ describe('Tribunal order or request helper', () => {
     );
   });
 
-  it('tribunal orders and requests section should be not viewed when a response not required for any notification', () => {
+  it('should be not viewed when any remain not viewed and a response not required for any notification', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
 
@@ -368,7 +368,7 @@ describe('Tribunal order or request helper', () => {
     );
   });
 
-  it('tribunal orders and requests section should be viewed when all notifications are viewed', () => {
+  it('should be viewed when all notifications are viewed and they did not require a response', () => {
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
 
