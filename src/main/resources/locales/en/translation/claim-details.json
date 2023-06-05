@@ -2,6 +2,6 @@
   "title": "Your claim details",
   "h1": "Your claim details",
   "link": "<a href=\"#\" class=\"govuk-link\">link</a>",
-  "dateUploaded": "Date uploaded <unused placeholder - can be deleted>",
+  "claimRelatedInfo": "Claim related information",
   "document": "Document"
 }
