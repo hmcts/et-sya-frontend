@@ -64,7 +64,7 @@ describe('ET1 details', () => {
   it('should display correct number of summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
 
-    expect(summaryLists).toHaveLength(6);
+    expect(summaryLists).toHaveLength(7);
   });
 
   it('should display correct headings in the summary lists', () => {
