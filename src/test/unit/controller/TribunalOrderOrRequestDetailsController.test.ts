@@ -35,7 +35,7 @@ describe('Respondent order or request details Controller', () => {
     expect(response.render).toBeDefined();
   });
 
-  it('should pass a value to indicate whether a response is required when true', async () => {
+  it("should pass a value for 'respondButton' to indicate a response is required when true", async () => {
     const userCase: Partial<CaseWithId> = {
       sendNotificationCollection: [
         {
@@ -61,7 +61,7 @@ describe('Respondent order or request details Controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
       expect.objectContaining({
-        responseRequired: true,
+        respondButton: true,
       })
     );
   });
@@ -91,7 +91,7 @@ describe('Respondent order or request details Controller', () => {
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
       expect.objectContaining({
-        responseRequired: false,
+        respondButton: false,
       })
     );
   });

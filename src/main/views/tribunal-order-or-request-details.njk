@@ -17,9 +17,7 @@
       }) }}
 
       {% if respondButton %}
-        {% if responseRequired %}
           <p class="govuk-body">{{ tips }}</p>
-        {% endif %}
         {{ govukButton({
           text: respond,
           href: redirectUrl
