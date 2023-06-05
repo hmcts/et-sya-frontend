@@ -105,21 +105,6 @@ describe('Tribunal order or request helper', () => {
     expect(filteredNotifications[0].value.sendNotificationCaseManagement).toStrictEqual('Order');
   });
 
-  it('should activate tribunal orders and requests section with not-viewed status', () => {
-    const notificationWithOrder = {
-      value: {
-        sendNotificationCaseManagement: 'Order',
-        sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
-        sendNotificationResponseTribunal: ResponseRequired.YES,
-      } as SendNotificationType,
-    } as SendNotificationTypeItem;
-
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], mockUserCaseWithCitizenHubLinks);
-    expect(mockUserCaseWithCitizenHubLinks.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(
-      HubLinkStatus.NOT_VIEWED
-    );
-  });
-
   it('should populate notification with redirect link, status and color', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [notificationItem],
@@ -171,6 +156,20 @@ describe('Tribunal order or request helper', () => {
     )[0];
     expect(populatedNotification.statusColor).toEqual('--green');
     expect(populatedNotification.displayStatus).toEqual('Submitted');
+  });
+
+  it('should activate tribunal orders and requests section with not-viewed status', () => {
+    const userCase = { ...mockUserCaseWithCitizenHubLinks };
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_VIEWED);
   });
 
   it('should activate tribunal orders and requests section with not-started status', () => {
