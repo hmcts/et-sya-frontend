@@ -117,3 +117,4 @@ describe('ET1 documents', () => {
     expect(et1SupportDocLink.outerHTML).toContain('getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c');
   });
 });
+
