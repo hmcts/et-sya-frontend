@@ -32,10 +32,9 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const redirectUrl =
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
-    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
-      r => r.value.from === Applicant.CLAIMANT
-    );
-    const responseRequired =
+
+    const respondButton =
+      !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
       selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
       selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
 
@@ -62,7 +61,6 @@ export default class TribunalOrderOrRequestDetailsController {
     res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
       ...content,
       respondButton,
-      responseRequired,
       orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
       redirectUrl,
       header: selectedRequestOrOrder.value.sendNotificationTitle,
