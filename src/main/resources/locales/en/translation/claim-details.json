@@ -3,5 +3,7 @@
   "h1": "Your claim details",
   "link": "<a href=\"#\" class=\"govuk-link\">link</a>",
   "claimRelatedInfo": "Claim related information",
+  "approveClaim": "Acknowledgement of claim:",
+  "rejectClaim": "Rejection of claim:",
   "document": "Document"
 }

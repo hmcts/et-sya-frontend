@@ -1,5 +1,6 @@
 import {
-  fillAddressAddressFields, fillRespondentAddressFields,
+  fillAddressAddressFields,
+  fillRespondentAddressFields,
   fillWorkAddressFields,
   setUserCaseForRespondent,
 } from '../../../../main/controllers/helpers/RespondentHelpers';
