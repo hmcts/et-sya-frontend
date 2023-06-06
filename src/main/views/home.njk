@@ -33,12 +33,12 @@
       <div class="govuk-body">
           {{ contactUsForeword|safe }}
           <br><br>
-          {{ contactDuration|safe }}<br/>
-          {{ mainTelephone|safe }}<br/>
-          {{ welshTelephone|safe }}<br/>
-          {{ scotlandTelephone|safe }}<br/>
-          {{ englandOrWalesTextPhone|safe }}<br/>
-          {{ scotlandTextPhone|safe }}
+          {{ contactDuration }}<br/>
+          {{ mainTelephone }}<br/>
+          {{ welshTelephone }}<br/>
+          {{ scotlandTelephone }}<br/>
+          {{ englandOrWalesTextPhone }}<br/>
+          {{ scotlandTextPhone }}
           {% if i18n.language == "en" %}
             <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
           {% else %}
@@ -46,7 +46,7 @@
           {% endif %}
           <p class="govuk-body" style="margin:0;">
           <a href="https://www.gov.uk/call-charges" class="govuk-link">
-            {{ contactCharges|safe }}
+            {{ contactCharges }}
           </a>
           </p>
         </div>
