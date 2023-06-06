@@ -2,6 +2,8 @@
   "title": "Manylion eich hawliad",
   "h1": "Manylion eich hawliad",
   "link": "Dolen",
-  "dateUploaded": "Dyddiad llwytho",
+  "claimRelatedInfo": "Gwybodaeth sy'n gysylltiedig â hawliad",
+  "approveClaim": "Cydnabod derbyn yr Hawliad",
+  "rejectClaim": "Gwrthod yr Hawliad",
   "document": "Dogfen"
 }
