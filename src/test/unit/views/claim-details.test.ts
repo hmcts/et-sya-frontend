@@ -11,10 +11,7 @@ const titleClass = 'govuk-heading-xl';
 const summaryListClass = 'govuk-summary-list';
 const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
 
-// const tableSelector = "govuk-table";
-// const rowSelector = "govuk-table__row";
-// const cellSelector = "govuk-table__cell";
-// const tableHeaderSelector = 'govuk-table__header';
+const et1FormUrlSelector = 'govuk-link';
 
 const axiosResponse: AxiosResponse = {
   data: {
@@ -99,4 +96,24 @@ describe('ET1 details', () => {
 
     expect(entries).toHaveLength(numberOfEntries);
   });*/
+});
+
+describe('ET1 documents', () => {
+  it('Shows the et1 form', async () => {
+    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, claimSummaryFile: undefined }, PAGE_URL);
+
+    const et1FormLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[5].innerHTML;
+
+    expect(et1FormLink).toContain('ET1 Form');
+  });
+  it('Shows both the et1 form and the support document', async () => {
+    const caseDocumentsModifier = {};
+    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, ...caseDocumentsModifier }, PAGE_URL);
+    const et1FormLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[5];
+    const et1SupportDocLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[6];
+    expect(et1FormLink.innerHTML).toContain('ET1 Form');
+    expect(et1FormLink.outerHTML).toContain('getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673');
+    expect(et1SupportDocLink.innerHTML).toContain('ET1 support document');
+    expect(et1SupportDocLink.outerHTML).toContain('getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c');
+  });
 });
