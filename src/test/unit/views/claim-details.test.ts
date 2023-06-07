@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import mockUserCaseClaimDetails from '../mocks/mockUserCaseClaimDetails';
+import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 import { getHtmlRes } from '../test-helpers/requester';
 
 const PAGE_URL = '/claim-details';
