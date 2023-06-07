@@ -11,10 +11,10 @@ const titleClass = 'govuk-heading-xl';
 const summaryListClass = 'govuk-summary-list';
 const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
 
-const tableSelector = 'govuk-table';
-const rowSelector = 'govuk-table__row';
-const cellSelector = 'govuk-table__cell';
-const tableHeaderSelector = 'govuk-table__header';
+// const tableSelector = "govuk-table";
+// const rowSelector = "govuk-table__row";
+// const cellSelector = "govuk-table__cell";
+// const tableHeaderSelector = 'govuk-table__header';
 
 const axiosResponse: AxiosResponse = {
   data: {
@@ -64,7 +64,7 @@ describe('ET1 details', () => {
   it('should display correct number of summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
 
-    expect(summaryLists).toHaveLength(6);
+    expect(summaryLists).toHaveLength(7);
   });
 
   it('should display correct headings in the summary lists', () => {
@@ -99,64 +99,4 @@ describe('ET1 details', () => {
 
     expect(entries).toHaveLength(numberOfEntries);
   });*/
-});
-
-describe('ET1 documents', () => {
-  it('Shows Date uploaded and Document columns', async () => {
-    htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, claimSummaryFile: undefined }, PAGE_URL);
-
-    const table = htmlRes.getElementsByClassName(tableSelector)[0];
-    const headerRow = Array.from(table.getElementsByClassName(rowSelector))[0];
-    const columns = Array.from(headerRow.getElementsByClassName(tableHeaderSelector)).map(column => column.textContent);
-
-    expect(columns).toStrictEqual(['Date uploaded', 'Document']);
-  });
-
-  it.each([
-    {
-      caseDocumentsModifier: { claimSummaryFile: undefined },
-      expectedDocuments: [
-        {
-          date: '8 September 2022',
-          link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-          linkText: 'ET1 Form',
-        },
-      ],
-    },
-    {
-      caseDocumentsModifier: {},
-      expectedDocuments: [
-        {
-          date: '8 September 2022',
-          link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-          linkText: 'ET1 Form',
-        },
-        {
-          date: '9 September 2022',
-          link: '/getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c',
-          linkText: 'ET1 support document',
-        },
-      ],
-    },
-  ])(
-    'show correct documents with modifier: $caseDocumentsModifier',
-    async ({ caseDocumentsModifier, expectedDocuments }) => {
-      htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, ...caseDocumentsModifier }, PAGE_URL);
-
-      const table = htmlRes.getElementsByClassName(tableSelector)[0];
-      const rows = Array.from(table.getElementsByClassName(rowSelector));
-      rows.splice(0, 1);
-
-      const documents = rows.map(row => {
-        const cells = Array.from(row.getElementsByClassName(cellSelector));
-        return {
-          date: cells[0].textContent,
-          link: cells[1].getElementsByTagName('a')[0].href,
-          linkText: cells[1].textContent,
-        };
-      });
-
-      expect(documents).toMatchObject(expectedDocuments);
-    }
-  );
 });

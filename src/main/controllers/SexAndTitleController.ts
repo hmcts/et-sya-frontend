@@ -12,6 +12,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('SexAndTitleController');
 
@@ -62,7 +63,17 @@ export default class SexAndTitleController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.ADDRESS_POSTCODE_ENTER);
   };
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.claimantSex = undefined;
+      req.session.userCase.preferredTitle = undefined;
+    }
+  };
+
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.sexAndTitleContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SEX_AND_TITLE,
@@ -70,6 +81,7 @@ export default class SexAndTitleController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.SEX_AND_TITLE, {
       ...content,
+      languageParam: getLanguageParam(req.url).replace('?', ''),
     });
   };
 }

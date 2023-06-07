@@ -20,6 +20,20 @@
         <div class="govuk-summary-list__key govuk-heading-m">Claim related information</div>
       {% endif %}
 
+      <dl class="govuk-summary-list">
+
+        {% for thisDocument in et1Documents %}
+          <div class = "govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+              {{ document }}
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <a href="getCaseDocument/{{ thisDocument.id }}" target="_blank" class="govuk-link">{{ thisDocument.name }}</a>
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
+
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
         {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
           {{ govukTable({
@@ -30,10 +44,10 @@
                   text: doc.createdOn
                 },
                 {
-                  text: 'ET1 (Claim)'
+                  text: approveClaim
                 },
                 {
-                  html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                    html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
                 }
               ]
             ]
@@ -45,23 +59,24 @@
         {% for doc in userCase.rejectionOfClaimDocumentDetail %}
           {{ govukTable({
             firstCellIsHeader: false,
+            caption: claimRelatedInfo,
             rows: [
               [
                 {
                   text: doc.createdOn
                 },
                 {
-                  text: 'ET1 (Claim)'
+                  text: rejectClaim
                 },
                 {
-                  html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                    html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
                 }
               ]
             ]
           }) }}
         {% endfor %}
       {% endif %}
-
+      
       {% if userCase.genericTseApplicationCollection.length %}
         {% for tseApp in userCase.genericTseApplicationCollection %}
         {% if tseApp.value.applicant === "Claimant" %}
@@ -88,6 +103,7 @@
       {% endif %}
 
       <dl class="govuk-summary-list">
+
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key govuk-heading-m">
             {{ applicationDetails.header }}
@@ -155,7 +171,23 @@
               </ul>
             </dd>
           </div>
-        {% endif %}
+          
+          {% endif%}
+
+          {% if userCase.claimTypePay %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                {{ claimDetails.claimTypePay }}
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list">
+                  {% for item in userCase.claimTypePay %}
+                    <li>{{getContent(payClaims[item])}}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            </div>
+        {% endif%}
 
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
@@ -215,33 +247,6 @@
           </div>
         {% endif %}
       </dl>
-
-      {% set documentsRows = [] %}
-      {% for document in et1Documents %}
-        {% set documentsRows = (documentsRows.push(
-          [
-            {
-              text: document.date
-            },
-            {
-              html: "<a href=\"/getCaseDocument/" + document.id + "\" target=\"_blank\" class=\"govuk-link\">" + document.name + "</a>"
-            }
-          ]
-        ), documentsRows) %}
-      {% endfor %}
-
-      {{ govukTable({
-        firstCellIsHeader: false,
-        head: [
-          {
-            text: getContent(dateUploaded)
-          },
-          {
-            text: getContent(document)
-          }
-        ],
-        rows: documentsRows
-      }) }}
 
       <div class="govuk-body">
         <p>{{ translations.linkToAmendTheClaim | safe }}</p>

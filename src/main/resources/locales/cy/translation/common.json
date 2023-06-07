@@ -70,7 +70,17 @@
   "CookieAccepted": "Rydych wedi derbyn cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
   "CookieRejected": "Rydych chi wedi gwrthod cwcis ychwanegol. Gallwch <a class=\"govuk-link\" href=\"/cookies\">newid gosodiadau eich cwcis ar</a> unrhyw adeg.",
   "enterPostcode": "Rhowch god post yn y DU",
+  "addressPageHeader": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
+  "addressPageText": "Byddwn yn anfon unrhyw ohebiaeth i’r cyfeiriad hwn.",
+  "respondentPageHeader": "Beth yw cyfeiriad ",
+  "respondentPageText": "Dylai’r cyfeiriad fod ar eich slipiau cyflog, contract neu ddogfennau swyddogol eraill.",
+  "respondentInsetText": "Dylai hwn fod yr un cyfeiriad ar gyfer yr atebydd a roddwyd i Acas.",
   "manualAddress": "Rwy’n byw y tu allan i’r DU",
+  "respondentManualAddress": "Mae cyfeiriad yr atebydd y tu allan i'r DU",
+  "workManualAddress": "Mae fy nghyfeiriad gwaith y tu allan i'r DU",
+  "workAddressPageHeader": "Beth yw cod post y lle yr oeddech yn gweithio neu’r lle yr ydych yn gweithio?",
+  "workAddressPageText1": "Rydym angen hwn i benderfynu pa swyddfa Tribiwnlys Cyflogaeth fydd yn delio â’ch hawliad. Os oeddech yn gweithio o adref, rhowch god post eich cartref.",
+  "workAddressPageText2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch god post ble maent wedi’u lleoli.",
   "errors": {
     "addressEnterPostcode": {
       "required": "Rhowch god post. Er enghraifft, SW1 1AA",
