@@ -20,14 +20,5 @@
   "submitBtn": "Cyflwyno",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Argraffu’r dudalen hon </a> ar gyfer eich cofnodion",
   "change": "Newid",
-  "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau.",
-  "errors": {
-    "typeOfClaim": {
-      "required": "Dewiswch o leiaf un o'r opsiynau isod ar gyfer eich math o hawliad."
-    },
-    "otherClaim": {
-      "required": "Disgrifiwch y math o hawliad",
-      "tooLong": "Rhaid i’r disgrifiad fod yn 100 llythyren neu lai"
-    }
-  }
+  "submitError": "Mae’n ddrwg gennym, rydym yn cael problemau technegol wrth geisio prosesu eich hawliad. Rhowch gynnig arall arni ymhen ychydig o funudau."
 }
