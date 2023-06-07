@@ -12,7 +12,7 @@ import locales from '../resources/locales/en/translation/common.json';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentPostCodeEnterController');
 
@@ -48,17 +48,19 @@ export default class RespondentPostCodeEnterController {
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
+    const respondentIndex = getRespondentIndex(req);
+    const respondents = req.session.userCase.respondents;
+    const selectedRespondent = respondents[respondentIndex];
     assignFormData(req.session.userCase, this.form.getFormFields());
     const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
-    const respondentName = req.session.userCase.respondentName;
     const title = req.url?.includes('lng=cy')
       ? localesCy.respondentPostcodeEnterTitle
       : locales.respondentPostcodeEnterTitle;
     res.render(TranslationKeys.RESPONDENT_POSTCODE_ENTER, {
       ...content,
+      respondentName: selectedRespondent.respondentName,
       link,
       title,
-      respondentName,
     });
   };
 }
