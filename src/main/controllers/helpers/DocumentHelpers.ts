@@ -1,7 +1,13 @@
 import { AxiosResponse } from 'axios';
 
 import { CaseWithId } from '../../definitions/case';
-import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
+import {
+  DOCUMENT_CONTENT_TYPES,
+  acceptanceDocTypesAcknowledgementOfClaim,
+  acceptanceDocTypesNoticeOfClaim,
+  acceptanceDocTypesNoticeOfHearing,
+  typeOfDoc,
+} from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -20,6 +26,18 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
       documents.find(doc => doc.id === document.id),
       retrievedValues
     );
+  }
+};
+
+export const convertTypeOfDoc = (type: string): string => {
+  if (acceptanceDocTypesAcknowledgementOfClaim.includes(type)) {
+    return typeOfDoc.ACKNOWLEDGEMENT_OF_CLAIM;
+  } else if (acceptanceDocTypesNoticeOfClaim.includes(type)) {
+    return typeOfDoc.NOTICE_OF_CLAIM;
+  } else if (acceptanceDocTypesNoticeOfHearing.includes(type)) {
+    return typeOfDoc.NOTICE_OF_HEARING;
+  } else {
+    return '';
   }
 };
 
