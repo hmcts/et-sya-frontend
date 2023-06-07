@@ -1,3 +1,4 @@
+import { AppRequest } from '../../definitions/appRequest';
 import { ALLOWED_FILE_FORMATS } from '../../definitions/constants';
 import { Logger } from '../../logger';
 
@@ -251,4 +252,19 @@ export const isAcasNumberValid: Validator = value => {
   if (!/^[rR]\d{6}\/\d{2}\/\d{2}$/.test(valueAsString)) {
     return 'invalidAcasNumber';
   }
+};
+
+export const isDuplicateAcasNumber = (req: AppRequest, value: string): string => {
+  const acasNos = [];
+  if (req?.session?.userCase?.respondents?.length > 1) {
+    for (const r of req.session.userCase.respondents) {
+      if (r.acasCertNum === value) {
+        acasNos.push(r.acasCertNum);
+      }
+    }
+  }
+  if (acasNos.length > 1) {
+    return 'duplicateAcasNumber';
+  }
+  return;
 };

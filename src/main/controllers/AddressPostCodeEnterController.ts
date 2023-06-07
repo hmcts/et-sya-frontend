@@ -23,6 +23,7 @@ export default class AddressPostCodeEnterController {
       addressEnterPostcode: {
         id: 'addressEnterPostcode',
         type: 'text',
+        label: l => l.enterPostcode,
         classes: 'govuk-label govuk-!-width-one-half',
         attributes: {
           maxLength: 14,

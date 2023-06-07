@@ -16,6 +16,21 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
 
+
+      <dl class="govuk-summary-list">
+
+        {% for thisDocument in et1Documents %}
+          <div class = "govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+              {{ document }}
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <a href="getCaseDocument/{{ thisDocument.id }}" target="_blank" class="govuk-link">{{ thisDocument.name }}</a>
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
+
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
         {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
           {{ govukTable({
@@ -27,10 +42,10 @@
                   text: doc.createdOn
                 },
                             {
-                  text: 'ET1 (Claim)'
+                  text: approveClaim
                 },
                 {
-                    html: "<a href=\"/case-document/acknowledgement-of-claim\" class=\"govuk-link\">" +'[Acknowledgement of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                    html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
                 }
               ]
             ]
@@ -42,17 +57,17 @@
         {% for doc in userCase.rejectionOfClaimDocumentDetail %}
           {{ govukTable({
             firstCellIsHeader: false,
-            caption: "Claim related information",
+            caption: claimRelatedInfo,
             rows: [
               [
                 {
                   text: doc.createdOn
                 },
                             {
-                  text: 'ET1 (Claim)'
+                  text: rejectClaim
                 },
                 {
-                    html: "<a href=\"/case-document/rejection-of-claim\" class=\"govuk-link\">"+'[Rejection of Claim: ' + doc.originalDocumentName + "]" + "</a>"
+                    html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
                 }
               ]
             ]
@@ -60,7 +75,9 @@
         {% endfor %}
       {% endif %}
 
-      <dl class="govuk-summary-list">
+
+
+        <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key govuk-heading-m">
             {{ applicationDetails.header }}
@@ -195,32 +212,6 @@
             {% endif %}
           </dl>
 
-          {% set documentsRows = [] %}
-          {% for document in et1Documents %}
-            {% set documentsRows = (documentsRows.push(
-          [
-            {
-              text: document.date
-            },
-            {
-              html: "<a href=\"/getCaseDocument/" + document.id + "\" target=\"_blank\" class=\"govuk-link\">" + document.name + "</a>"
-            }
-          ]
-          ), documentsRows) %}
-          {% endfor %}
-
-          {{ govukTable({
-        firstCellIsHeader: false,
-        head: [
-          {
-            text: getContent(dateUploaded)
-          },
-          {
-            text: getContent(document)
-          }
-        ],
-        rows: documentsRows
-      }) }}
 
           {% set contactContent %}
           {% include "./citizen-hub-sidebar.njk" %}

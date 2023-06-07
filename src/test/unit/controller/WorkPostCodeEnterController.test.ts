@@ -41,5 +41,47 @@ describe('Work Postcode Enter Controller', () => {
       new WorkPostCodeEnterController().post(req, res);
       expect(req.session.userCase.workEnterPostcode).toEqual(postCode);
     });
+
+    it('should redirect to the same screen when no postcode is entered', async () => {
+      const errors = [{ propertyName: 'workEnterPostcode', errorType: 'required' }];
+      const body = { workEnterPostcode: '' };
+
+      const controller = new WorkPostCodeEnterController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(errors);
+    });
+
+    it('should redirect to the same screen when wrong postcode is entered', async () => {
+      const errors = [{ propertyName: 'workEnterPostcode', errorType: 'invalid' }];
+      const body = { workEnterPostcode: 'G44 555' };
+
+      const controller = new WorkPostCodeEnterController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(errors);
+    });
+
+    it('should get the label', async () => {
+      const errors = [{ propertyName: 'workEnterPostcode', errorType: 'required' }];
+      const body = { workEnterPostcode: '' };
+
+      const controller = new WorkPostCodeEnterController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(errors);
+    });
   });
 });
