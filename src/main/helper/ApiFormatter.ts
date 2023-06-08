@@ -13,6 +13,7 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
   CaseDate,
+  CaseTypeId,
   CaseWithId,
   Document,
   EnglishOrWelsh,
@@ -24,6 +25,7 @@ import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
+  acceptanceDocTypesEW,
   et1DocTypes,
   et3AttachmentDocTypes,
   et3FormDocTypes,
@@ -162,7 +164,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
-      acceptanceDocTypes
+      setAcceptanceDocTypes(fromApiCaseData?.case_type_id)
     ),
     rejectionOfClaimDocumentDetail: setDocumentValues(
       fromApiCaseData?.case_data?.documentCollection,
@@ -437,6 +439,14 @@ export const returnSubmittedEt1Form = (
       return documentDetailCollection[1];
     }
     return documentDetailCollection[0];
+  }
+};
+
+export const setAcceptanceDocTypes = (caseTypeID: CaseTypeId): string[] => {
+  if (caseTypeID === CaseTypeId.ENGLAND_WALES) {
+    return acceptanceDocTypesEW;
+  } else {
+    return acceptanceDocTypes;
   }
 };
 
