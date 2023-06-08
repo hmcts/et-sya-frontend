@@ -141,6 +141,11 @@ export const mockSimpleRespAppTypeItem: GenericTseApplicationTypeItem = {
   value: mockSimpleRespApp,
 };
 
+export const mockSimpleViewedRespAppTypeItem: GenericTseApplicationTypeItem = {
+  id: '1',
+  value: { ...mockSimpleRespApp, applicationState: 'inProgress' },
+};
+
 export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   date: '2 June 2023',
   type: 'Amend response',

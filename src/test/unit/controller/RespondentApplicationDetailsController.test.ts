@@ -6,7 +6,11 @@ import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
-import { mockRespAppWithClaimantResponse, mockRespAppWithDecisionNotViewed } from '../mocks/mockApplications';
+import {
+  mockRespAppWithClaimantResponse,
+  mockRespAppWithDecisionNotViewed,
+  mockSimpleRespAppTypeItem,
+} from '../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { clone } from '../test-helpers/clone';
@@ -55,6 +59,19 @@ describe('Respondent application details controller', () => {
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
     expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('viewed');
+  });
+
+  it("should change application state to in progress when viewing the respondent's application", async () => {
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: [clone(mockSimpleRespAppTypeItem)],
+    };
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+
+    await new RespondentApplicationDetailsController().get(request, response);
+
+    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+    expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
   });
 
   it('should return to main page on axios error to update application state', async () => {
