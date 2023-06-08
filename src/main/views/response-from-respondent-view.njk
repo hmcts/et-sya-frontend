@@ -32,7 +32,7 @@
                 text: acceptanceLetter
               },
               {
-                html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
+                html: "<a href='../getCaseDocument/"+ et3AcceptedDoc.id + "' class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
               }
             ]
           ) %}
@@ -50,7 +50,7 @@
                 text: rejectionLetter
               },
               {
-                html: "<a href=\"/case-document/response-rejection\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
+                html: "<a href='../getCaseDocument/"+ et3RejectionDoc.id + "' class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
               }
             ]
           ) %}
