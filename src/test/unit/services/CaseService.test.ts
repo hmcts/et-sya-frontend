@@ -366,7 +366,8 @@ describe('update case', () => {
     await api.changeApplicationStatus(caseItem, HubLinkStatus.VIEWED);
 
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.CHANGE_APPLICATION_STATUS);
-    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ applicationId: '1', new_status: HubLinkStatus.VIEWED });
+    console.table(mockedAxios.put.mock.calls[0][1]);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ application_id: '1', new_status: HubLinkStatus.VIEWED });
   });
 });
 
