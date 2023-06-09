@@ -1,15 +1,19 @@
 import { AxiosResponse } from 'axios';
 
 import { CaseWithId } from '../../definitions/case';
-import {
-  DOCUMENT_CONTENT_TYPES,
-  acceptanceDocTypesAcknowledgementOfClaim,
-  acceptanceDocTypesNoticeOfClaim,
-  acceptanceDocTypesNoticeOfHearing,
-  typeOfDoc,
-} from '../../definitions/constants';
+import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
+
+export const acceptanceDocTypesAcknowledgementOfClaim = ['1.1', 'Acknowledgement of Claim'];
+export const acceptanceDocTypesNoticeOfClaim = ['2.7', '2.8'];
+export const acceptanceDocTypesNoticeOfHearing = ['7.7', '7.8', '7.8a'];
+
+export const typeOfDoc = {
+  ACKNOWLEDGEMENT_OF_CLAIM: 'Acknowledgement of Claim',
+  NOTICE_OF_CLAIM: 'Notice of Claim',
+  NOTICE_OF_HEARING: 'Notice of Hearing',
+};
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
