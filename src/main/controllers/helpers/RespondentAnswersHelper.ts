@@ -4,6 +4,21 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
+const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: AnyRecord): string => {
+  switch (noAcasReason) {
+    case NoAcasNumberReason.ANOTHER:
+      return translations.acasReason.another;
+    case NoAcasNumberReason.EMPLOYER:
+      return translations.acasReason.employer;
+    case NoAcasNumberReason.NO_POWER:
+      return translations.acasReason.no_power;
+    case NoAcasNumberReason.UNFAIR_DISMISSAL:
+      return translations.acasReason.unfair_dismissal;
+    default:
+      return undefined;
+  }
+};
+
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
@@ -127,24 +142,7 @@ export const getRespondentSection = (
     },
   });
   if (respondent.acasCert === YesOrNo.NO) {
-    let reasonText;
-    switch (respondent.noAcasReason) {
-      case NoAcasNumberReason.ANOTHER:
-        reasonText = translations.acasReason.another;
-        break;
-      case NoAcasNumberReason.EMPLOYER:
-        reasonText = translations.acasReason.employer;
-        break;
-      case NoAcasNumberReason.NO_POWER:
-        reasonText = translations.acasReason.no_power;
-        break;
-      case NoAcasNumberReason.UNFAIR_DISMISSAL:
-        reasonText = translations.acasReason.unfair_dismissal;
-        break;
-      default:
-        reasonText = undefined;
-    }
-
+    const reasonText = getAcasReason(respondent.noAcasReason, translations);
     respondentSections.push({
       key: {
         text: translations.respondentDetails.noAcasReason,
@@ -227,5 +225,24 @@ export const getRespondentDetailsSection = (
       },
     }
   );
+  if (respondent.acasCert === YesOrNo.NO) {
+    respondentSections.push({
+      key: {
+        text: translations.noAcasReason,
+      },
+      value: {
+        html: getAcasReason(respondent.noAcasReason, translations),
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.ACAS_CERT_NUM + InterceptPaths.RESPONDENT_CHANGE,
+            text: translations.change,
+            visuallyHiddenText: translations.acasNum,
+          },
+        ],
+      },
+    });
+  }
   return respondentSections;
 };
