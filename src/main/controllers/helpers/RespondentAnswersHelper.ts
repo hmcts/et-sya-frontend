@@ -4,7 +4,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
 
-const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: AnyRecord): string => {
+export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: AnyRecord): string => {
   switch (noAcasReason) {
     case NoAcasNumberReason.ANOTHER:
       return translations.acasReason.another;
