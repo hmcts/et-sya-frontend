@@ -128,13 +128,12 @@ export function getSelectedAppDecisionDocId(
 ): string {
   const docId = req.params.docId;
   const selectedAppDecisionDocIds = [];
-  for (let i = 0; i < appsAndDecisions.length; i++) {
-    if (appsAndDecisions[i].decisionOfApp?.value?.responseRequiredDoc?.length) {
-      const parent = appsAndDecisions[i];
-      for (let j = 0; j < parent.decisionOfApp.value.responseRequiredDoc.length; j++) {
-        if (parent.decisionOfApp.value.responseRequiredDoc[j].downloadLink) {
-          const nested = parent.decisionOfApp.value.responseRequiredDoc[j];
-          selectedAppDecisionDocIds.push(nested.value.uploadedDocument.document_url);
+  for (const element of appsAndDecisions) {
+    if (element.decisionOfApp?.value?.responseRequiredDoc?.length) {
+      const responseRequiredDocs = element.decisionOfApp.value.responseRequiredDoc;
+      for (const doc of responseRequiredDocs) {
+        if (doc.downloadLink) {
+          selectedAppDecisionDocIds.push(doc.value.uploadedDocument.document_url);
         }
       }
     }

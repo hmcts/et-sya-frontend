@@ -77,9 +77,8 @@ export const shouldShowJudgmentReceived = (userCase: CaseWithId, hubLinksStatuse
 };
 
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
-  return (
-    notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE))
+  return notifications?.some(it =>
+    it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
   );
 };
 
