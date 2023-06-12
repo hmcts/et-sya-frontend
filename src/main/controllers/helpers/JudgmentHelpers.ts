@@ -151,7 +151,7 @@ export const getJudgmentDetails = (
   }
 
   if (judgmentAttachments) {
-    for (let i = 0; i < judgmentAttachments.length; i++) {
+    for (const element of judgmentAttachments) {
       judgmentDetails.push(
         {
           key: {
@@ -159,7 +159,7 @@ export const getJudgmentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            text: judgmentAttachments[i].value.shortDescription,
+            text: element.value.shortDescription,
           },
         },
         {
@@ -168,7 +168,7 @@ export const getJudgmentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: judgmentAttachments[i].downloadLink,
+            html: element.downloadLink,
           },
         }
       );
@@ -383,7 +383,7 @@ export const getDecisionDetails = (
   }
 
   if (selectedAttachments) {
-    for (let i = 0; i < selectedAttachments.length; i++) {
+    for (const element of selectedAttachments) {
       decisionDetails.push(
         {
           key: {
@@ -391,7 +391,7 @@ export const getDecisionDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: selectedAttachments[i].value.shortDescription,
+            html: element.value.shortDescription,
           },
         },
         {
@@ -400,7 +400,7 @@ export const getDecisionDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: selectedAttachments[i].downloadLink,
+            html: element.downloadLink,
           },
         }
       );
@@ -482,20 +482,14 @@ export function matchDecisionsToApps(
 ): DecisionAndApplicationDetails[] {
   const result = [];
   if (appOfDecision?.length) {
-    for (let i = 0; i < appOfDecision.length; i++) {
-      if (
-        (appOfDecision[i].value.applicant === Applicant.RESPONDENT &&
-          !appOfDecision[i].value.type.includes(applicationTypes.respondent.c) &&
-          appOfDecision[i].value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
-        appOfDecision[i].value.applicant === Applicant.CLAIMANT
-      ) {
-        const parent = appOfDecision[i];
-        for (let j = 0; j < parent.value.adminDecision.length; j++) {
-          if (parent.value.adminDecision[j].value.typeOfDecision === 'Judgment') {
-            const nested = parent.value.adminDecision[j];
-            const matchingChildren = decision.filter(child => child.id === nested.id);
+    for (const element of appOfDecision) {
+      if (isEligibleApplication) {
+        const adminDecisions = element.value.adminDecision;
+        for (const adminDecision of adminDecisions) {
+          if (adminDecision.value.typeOfDecision === 'Judgment') {
+            const matchingChildren = decision.filter(child => child.id === adminDecision.id);
             result.push({
-              ...parent,
+              ...adminDecisions,
               decisionOfApp: matchingChildren[0],
             });
           }
@@ -506,12 +500,21 @@ export function matchDecisionsToApps(
   return result;
 }
 
+const isEligibleApplication = (genericApp: GenericTseApplicationTypeItem): boolean => {
+  return (
+    (genericApp.value.applicant === Applicant.RESPONDENT &&
+      !genericApp.value.type.includes(applicationTypes.respondent.c) &&
+      genericApp.value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
+    genericApp.value.applicant === Applicant.CLAIMANT
+  );
+};
+
 export function getApplicationOfDecision(
   userCase: CaseWithId,
   selectedDecision: TseAdminDecisionItem
 ): GenericTseApplicationTypeItem {
   const data = userCase?.genericTseApplicationCollection;
-  const decisionApps = data?.filter(element => element.value.adminDecision && element.value.adminDecision.length);
+  const decisionApps = data?.filter(element => element.value?.adminDecision.length);
   const searchValue = selectedDecision;
   let appOfDecision = undefined;
 
