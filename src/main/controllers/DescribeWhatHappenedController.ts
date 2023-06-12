@@ -79,6 +79,11 @@ export default class DescribeWhatHappenedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log('CONTROLLER HAS BEEN HIT by' + req.ip);
+    if (req.body.url) {
+      logger.warn('Potential bot activity detected from IP: ' + req.ip);
+      res.status(200).end('Thank you for your submission. You will be contacted in due course.');
+      return;
+    }
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
