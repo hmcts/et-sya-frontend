@@ -77,6 +77,8 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    // eslint-disable-next-line no-console
+    console.log('CONTROLLER HAS BEEN HIT');
     if (req.fileTooLarge) {
       req.fileTooLarge = false;
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
