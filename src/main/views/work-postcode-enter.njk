@@ -12,13 +12,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ enterPostcode }}</h1>
-
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ workAddressPageHeader }}</h1>
+        <p class="govuk-body">{{ workAddressPageText1 }}</p>
+        <p class="govuk-body">{{ workAddressPageText2 }}</p>
       {% block form %}
         {% include "form/form.njk" %}
       {% endblock %}
         <p class="govuk-body">
-            <a href="{{ link }}" id="manualAddress" class="govuk-link" target="_self">{{ manualAddress }}</a>
+            <a href="{{ link }}" id="manualAddress" class="govuk-link" target="_self">{{ workManualAddress }}</a>
           </p>
     </div>
   </div>

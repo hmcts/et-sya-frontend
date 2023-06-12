@@ -19,38 +19,29 @@
         {{h1}}
       </h1>
 
-      
+      {% set documentsRows = [] %}
 
       {% if et3AcceptedDocs.length %}
-        {% set documentsRows = [] %}
         {% for et3AcceptedDoc in et3AcceptedDocs %}
-          {% set documentsRows = (documentsRows.push(
+          {% set _ = documentsRows.push(
             [
               {
                 text: et3AcceptedDoc.createdOn
               },
               {
-                text: responseEt3
+                text: acceptanceLetter
               },
               {
                 html: "<a href=\"/case-document/response-acknowledgement\" class=\"govuk-link\">" + et3AcceptedDoc.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+          ) %}
         {% endfor %}
-
-        {{ govukTable({
-          caption: h2,
-          captionClasses: "govuk-table__caption--m",
-          firstCellIsHeader: true,
-          rows: documentsRows
-        }) }}
       {% endif %}
 
       {% if et3RejectionDocs.length %}
-        {% set documentsRows = [] %}
         {% for et3RejectionDoc in et3RejectionDocs %}
-          {% set documentsRows = (documentsRows.push(
+          {% set _ = documentsRows.push(
             [
               {
                 text: et3RejectionDoc.createdOn
@@ -62,23 +53,16 @@
                 html: "<a href=\"/case-document/response-rejection\" class=\"govuk-link\">" + et3RejectionDoc.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+          ) %}
         {% endfor %}
-
-        {{ govukTable({
-          caption: h2,
-          captionClasses: "govuk-table__caption--m",
-          firstCellIsHeader: true,
-          rows: documentsRows
-        }) }}
       {% endif %}
 
 
-      {% set documentsRows = [] %}
-      {% if et3Forms.length %}
-       {% for et3Form in et3Forms %}
-          {% set documentsRows = (documentsRows.push(
+      {% if et3Forms.length and not et3RejectionDocs.length %}
+        {% for et3Form in et3Forms %}
+          {% set _ = documentsRows.push(
             [
+              {text: ""},
               {
                 text: et3FormText
               },
@@ -86,13 +70,32 @@
                 html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Form.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+          ) %}
         {% endfor %}
       {% endif %}
-      {% if et3SupportingDocs.length %}
+
+          {% if et3Attachments.length and not et3RejectionDocs.length %}
+              {% for et3Attachment in et3Attachments %}
+                {% set _ = documentsRows.push(
+                  [
+                    {text: ""},
+                    {
+                      text: et3AttachmentText
+                    },
+                    {
+                      html: "<a href=\"/getCaseDocument/" + et3Attachment.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Attachment.originalDocumentName + "</a>"
+                    }
+                  ]
+                ) %}
+              {% endfor %}
+            {% endif %}
+
+
+      {% if et3SupportingDocs.length and not et3RejectionDocs.length %}
         {% for et3SupportingDoc in et3SupportingDocs %}
-          {% set documentsRows = (documentsRows.push(
+          {% set _ = documentsRows.push(
             [
+              {text: ""},
               {
                 text: supportingMaterials
               },
@@ -100,11 +103,13 @@
                 html: "<a href=\"/getCaseDocument/" + et3Form.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3SupportingDoc.originalDocumentName + "</a>"
               }
             ]
-            ), documentsRows) %}
+          ) %}
         {% endfor %}
       {% endif %}
 
       {{ govukTable({
+        caption: h2,
+        firstCellIsHeader: true,
         captionClasses: "govuk-table__caption--m",
         rows: documentsRows
       }) }}
@@ -114,13 +119,13 @@
     <div class="govuk-grid-column-one-third-from-desktop">
 
       {% set sideBarContent %}
-      {% include "./citizen-hub-sidebar.njk" %}
+        {% include "./citizen-hub-sidebar.njk" %}
       {% endset %}
 
       {{ govukDetails({
-              summaryText: contact,
-              html: sideBarContent
-            }) }}
+        summaryText: contact,
+        html: sideBarContent
+      }) }}
 
     </div>
 
