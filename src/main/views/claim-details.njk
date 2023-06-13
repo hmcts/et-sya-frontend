@@ -40,7 +40,7 @@
                 text: doc.createdOn
               },
               {
-                text: convertTypeOfDoc(doc.type)
+                text: convertTypeOfDoc(doc.type, translations)
               },
               {
                 html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
