@@ -8,20 +8,10 @@ import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
+import { combineDocuments, convertTypeOfDoc, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
-
-const acceptanceDocTypesAcknowledgementOfClaim = ['1.1', 'Acknowledgement of Claim'];
-const acceptanceDocTypesNoticeOfClaim = ['2.7', '2.8'];
-const acceptanceDocTypesNoticeOfHearing = ['7.7', '7.8', '7.8a'];
-
-const typeOfDoc = {
-  ACKNOWLEDGEMENT_OF_CLAIM: 'Acknowledgement of Claim',
-  NOTICE_OF_CLAIM: 'Notice of Claim',
-  NOTICE_OF_HEARING: 'Notice of Hearing',
-};
 
 const logger = getLogger('ClaimDetailsController');
 
@@ -102,15 +92,3 @@ async function getET1Documents(userCase: CaseWithId, accessToken: string) {
 
   return et1DocumentDetails;
 }
-
-export const convertTypeOfDoc = (type: string): string => {
-  if (acceptanceDocTypesAcknowledgementOfClaim.includes(type)) {
-    return typeOfDoc.ACKNOWLEDGEMENT_OF_CLAIM;
-  } else if (acceptanceDocTypesNoticeOfClaim.includes(type)) {
-    return typeOfDoc.NOTICE_OF_CLAIM;
-  } else if (acceptanceDocTypesNoticeOfHearing.includes(type)) {
-    return typeOfDoc.NOTICE_OF_HEARING;
-  } else {
-    return '';
-  }
-};

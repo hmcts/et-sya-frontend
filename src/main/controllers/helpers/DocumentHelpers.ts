@@ -5,6 +5,16 @@ import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
 import { getCaseApi } from '../../services/CaseService';
 
+const acceptanceDocTypesAcknowledgementOfClaim = ['1.1', 'Acknowledgement of Claim'];
+const acceptanceDocTypesNoticeOfClaim = ['2.7', '2.8'];
+const acceptanceDocTypesNoticeOfHearing = ['7.7', '7.8', '7.8a'];
+
+const typeOfDoc = {
+  ACKNOWLEDGEMENT_OF_CLAIM: 'Acknowledgement of Claim',
+  NOTICE_OF_CLAIM: 'Notice of Claim',
+  NOTICE_OF_HEARING: 'Notice of Hearing',
+};
+
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
     const docDetails = await getCaseApi(accessToken).getDocumentDetails(document.id);
@@ -85,4 +95,16 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
     contentType = findDocumentMimeTypeByExtension(fileExtension);
   }
   return contentType;
+};
+
+export const convertTypeOfDoc = (type: string): string => {
+  if (acceptanceDocTypesAcknowledgementOfClaim.includes(type)) {
+    return typeOfDoc.ACKNOWLEDGEMENT_OF_CLAIM;
+  } else if (acceptanceDocTypesNoticeOfClaim.includes(type)) {
+    return typeOfDoc.NOTICE_OF_CLAIM;
+  } else if (acceptanceDocTypesNoticeOfHearing.includes(type)) {
+    return typeOfDoc.NOTICE_OF_HEARING;
+  } else {
+    return '';
+  }
 };
