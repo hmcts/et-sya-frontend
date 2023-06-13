@@ -62,10 +62,15 @@ export default class RespondentApplicationDetailsController {
     try {
       let newStatus;
 
-      if (currStatus === HubLinkStatus.NOT_VIEWED) {
-        newStatus = HubLinkStatus.VIEWED;
-      } else if (currStatus === HubLinkStatus.NOT_STARTED_YET || currStatus === HubLinkStatus.UPDATED) {
-        newStatus = HubLinkStatus.IN_PROGRESS;
+      switch (currStatus) {
+        case HubLinkStatus.NOT_VIEWED:
+          newStatus = HubLinkStatus.VIEWED;
+          break;
+        case HubLinkStatus.NOT_STARTED_YET:
+        case HubLinkStatus.UPDATED:
+          newStatus = HubLinkStatus.IN_PROGRESS;
+          break;
+        default:
       }
 
       if (newStatus) {
