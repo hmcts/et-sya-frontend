@@ -9,6 +9,7 @@ import { CaseApi } from '../../../main/services/CaseService';
 import {
   mockRespAppWithClaimantResponse,
   mockRespAppWithDecisionNotViewed,
+  mockRespAppWithRespRequstForInfo,
   mockSimpleRespAppTypeItem,
 } from '../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -43,35 +44,50 @@ describe('Respondent application details controller', () => {
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
   });
 
-  it("should change application state to viewed when viewing an admin's decision", async () => {
-    const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: [
-        {
-          id: '1',
-          value: clone(mockRespAppWithDecisionNotViewed),
-        },
-      ],
-    };
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+  describe('status changes when viewing applications', () => {
+    it("changes status to viewed when viewing an admin's decision", async () => {
+      const userCase: Partial<CaseWithId> = {
+        genericTseApplicationCollection: [
+          {
+            id: '1',
+            value: clone(mockRespAppWithDecisionNotViewed),
+          },
+        ],
+      };
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
 
-    await new RespondentApplicationDetailsController().get(request, response);
+      await new RespondentApplicationDetailsController().get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
-    expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('viewed');
-  });
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+      expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('viewed');
+    });
 
-  it("should change application state to in progress when viewing the respondent's application", async () => {
-    const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: [clone(mockSimpleRespAppTypeItem)],
-    };
-    const response = mockResponse();
-    const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+    it("changes status to in progress when viewing the respondent's application", async () => {
+      const userCase: Partial<CaseWithId> = {
+        genericTseApplicationCollection: [clone(mockSimpleRespAppTypeItem)],
+      };
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
 
-    await new RespondentApplicationDetailsController().get(request, response);
+      await new RespondentApplicationDetailsController().get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
-    expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+      expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
+    });
+
+    it("changes status to in progress when viewing application with a request for respondent's info", async () => {
+      const userCase: Partial<CaseWithId> = {
+        genericTseApplicationCollection: [clone(mockRespAppWithRespRequstForInfo)],
+      };
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+
+      await new RespondentApplicationDetailsController().get(request, response);
+
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+      expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
+    });
   });
 
   it('should return to main page on axios error to update application state', async () => {

@@ -146,6 +146,53 @@ export const mockSimpleViewedRespAppTypeItem: GenericTseApplicationTypeItem = {
   value: { ...mockSimpleRespApp, applicationState: 'inProgress' },
 };
 
+export const mockRespAppWithRespRequstForInfo: GenericTseApplicationTypeItem = {
+  id: '1',
+  value: {
+    date: '12 June 2023',
+    type: 'Change personal details',
+    number: '6',
+    status: 'Open',
+    details: 'look ma, flexUI populated',
+    dueDate: '19 June 2023',
+    applicant: 'Respondent',
+    responsesCount: '1',
+    applicationState: 'updated',
+    respondCollection: [
+      {
+        id: '507ada6b-62f9-4d98-8498-5358a56e5ade',
+        value: {
+          date: '12 June 2023',
+          from: 'Admin',
+          addDocument: [
+            {
+              id: '97fed2cc-19c0-4bcc-b599-cc10c03a488a',
+              value: {
+                uploadedDocument: {
+                  document_url: 'http://dm-store:8080/documents/bd9a7bea-e358-4025-8ccb-3f02ecd0839a',
+                  document_filename: '1. Welsh Case overview.docx',
+                  document_binary_url: 'http://dm-store:8080/documents/bd9a7bea-e358-4025-8ccb-3f02ecd0839a/binary',
+                },
+              },
+            },
+          ],
+          requestMadeBy: 'Legal officer',
+          isCmoOrRequest: 'Request',
+          madeByFullName: 'LO',
+          selectPartyNotify: 'Both parties',
+          isResponseRequired: 'Yes',
+          selectPartyRespond: 'Respondent',
+        },
+      },
+    ],
+    copyToOtherPartyYesOrNo: YesOrNo.YES,
+  },
+  linkValue: 'change personal details',
+  redirectUrl: '/respondent-application-details/d8540a12-80f9-48f4-800b-cea1210a5a13?lng=en',
+  displayStatus: 'Updated',
+  statusColor: '--blue',
+};
+
 export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   date: '2 June 2023',
   type: 'Amend response',

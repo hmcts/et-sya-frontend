@@ -64,7 +64,7 @@ export default class RespondentApplicationDetailsController {
 
       if (currStatus === HubLinkStatus.NOT_VIEWED) {
         newStatus = HubLinkStatus.VIEWED;
-      } else if (currStatus === HubLinkStatus.NOT_STARTED_YET) {
+      } else if (currStatus === HubLinkStatus.NOT_STARTED_YET || currStatus === HubLinkStatus.UPDATED) {
         newStatus = HubLinkStatus.IN_PROGRESS;
       }
 
