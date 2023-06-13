@@ -42,7 +42,7 @@ new Helmet(config.get('security'), [
 new I18Next().enableFor(app);
 new Session().enableFor(app);
 new HealthCheck().enableFor(app);
-app.enable('trust proxy');
+
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

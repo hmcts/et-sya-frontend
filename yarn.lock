@@ -6856,7 +6856,6 @@ __metadata:
     eslint-plugin-jest: ^27.2.1
     eslint-plugin-prettier: ^4.2.1
     express: ^4.18.2
-    express-rate-limit: ^6.7.0
     express-session: ^1.17.3
     git-rev-sync: 3.0.2
     google-libphonenumber: ^3.2.32
@@ -7015,15 +7014,6 @@ __metadata:
     jest-message-util: ^29.5.0
     jest-util: ^29.5.0
   checksum: 58f70b38693df6e5c6892db1bcd050f0e518d6f785175dc53917d4fa6a7359a048e5690e19ddcb96b65c4493881dd89a3dabdab1a84dfa55c10cdbdabf37b2d7
-  languageName: node
-  linkType: hard
-
-"express-rate-limit@npm:^6.7.0":
-  version: 6.7.0
-  resolution: "express-rate-limit@npm:6.7.0"
-  peerDependencies:
-    express: ^4 || ^5
-  checksum: 7bd3f298b202cdb11c3d7c2dcff9be12c6885be5e64fb112f6c79103ba93a8e5d899ce15a5a3ce48f82190ab3515bed403e067dc3e42fc2832558cbe2620f955
   languageName: node
   linkType: hard
 

@@ -5,10 +5,6 @@
 <form class="form" id="main-form" method="post" action="{{postAddress}}?_csrf={{ csrfToken }}" novalidate="novalidate" enctype="multipart/form-data">
   <input type="hidden" name="_csrf" value={{ csrfToken }}>
   {% block form_content %}
-    <div id="url-group" style="display: none;" aria-hidden="true">
-      <label for="url">If you are a human, please leave this field blank.</label>
-      <input type="text" id="url" name="url">
-    </div>
     {% include "./fields.njk" %}
     {% if "got-a-notice-period" in currentUrl %}
       {{ govukInsetText({
