@@ -139,7 +139,7 @@
   },
   "typeOfDoc": {
     "acknowledgementOfClaim": "Cydnabod derbyn yr Hawliad",
-    "noticeOfClaim": "Notice of claim (CY)",
-    "noticeOfHearing": "Notice of hearing (CY)"
+    "noticeOfClaim": "Notice of claim",
+    "noticeOfHearing": "Notice of hearing"
   }
 }
