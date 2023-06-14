@@ -191,7 +191,9 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   const updateCaseBody = getUpdateCaseBody(caseItem);
-  updateCaseBody.case_data.triageQuestions.typesOfClaim = updateCaseBody.case_data.typesOfClaim;
+  if (updateCaseBody.case_data.triageQuestions !== undefined) {
+    updateCaseBody.case_data.triageQuestions.typesOfClaim = updateCaseBody.case_data.typesOfClaim;
+  }
   return updateCaseBody;
 }
 export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
