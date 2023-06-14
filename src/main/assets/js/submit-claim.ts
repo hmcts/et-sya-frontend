@@ -3,7 +3,7 @@ import { InterceptPaths } from '../../definitions/constants';
 import { getById } from './selectors';
 
 const submitCaseButton = getById('main-form-submit') as HTMLButtonElement | null;
-const saveForLaterButton = getById('main-form-save-for-later') as HTMLLinkElement;
+const saveForLaterButton = getById('main-form-save-for-later') as HTMLAnchorElement;
 
 if (submitCaseButton) {
   submitCaseButton.addEventListener('click', disableSubmitCaseButton);
@@ -18,7 +18,7 @@ export function disableSubmitCaseButton(): void {
     window.location.href &&
     window.location.href.includes('check-your-answers')
   ) {
-    saveForLaterButton.disabled = true;
+    saveForLaterButton.href = '#';
     saveForLaterButton.className = 'govuk-button govuk-button--disabled';
     saveForLaterButton.ariaDisabled = 'true';
     submitCaseButton.disabled = true;
