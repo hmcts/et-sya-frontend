@@ -19,7 +19,7 @@ describe(`on POST ${PageUrls.NEW_JOB_START_DATE}`, () => {
       .post(PageUrls.NEW_JOB_START_DATE)
       .send({ 'newJobStartDate-day': '10', 'newJobStartDate-month': '10', 'newJobStartDate-year': '2030' })
       .expect(res => {
-        // expect(res.status).toStrictEqual(302);
+        expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NEW_JOB_PAY);
       });
   });
