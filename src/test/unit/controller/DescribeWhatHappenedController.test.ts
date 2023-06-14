@@ -68,4 +68,20 @@ describe('Describe-What-Happened Controller', () => {
       });
     });
   });
+
+  describe('Handling bot submissions', () => {
+    it('should return 200 and do nothing for bot form submissions', async () => {
+      jest.resetAllMocks();
+      const req = mockRequest({ body: { claimSummaryText: 'test', url: 'hello im a bot' } });
+      const res = mockResponse();
+      jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+
+      await new DescribeWhatHappenedController().post(req, res);
+
+      expect(res.redirect).not.toHaveBeenCalled();
+      expect(helper.handleUpdateDraftCase).not.toHaveBeenCalled();
+      expect(res.statusCode).toStrictEqual(200);
+      expect(res.end).toHaveBeenCalledWith('Thank you for your submission. You will be contacted in due course.');
+    });
+  });
 });

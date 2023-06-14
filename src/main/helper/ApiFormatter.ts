@@ -25,6 +25,7 @@ import {
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
+  et3AttachmentDocTypes,
   et3FormDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
@@ -181,6 +182,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3AttachmentDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
