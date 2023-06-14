@@ -7127,6 +7127,7 @@ __metadata:
     lodash: ^4.17.21
     mini-css-extract-plugin: ^2.7.5
     mocha: ^10.2.0
+    mocha-multi: 1.1.7
     mochawesome: 7.1.3
     multer: ^1.4.5-lts.1
     nock: ^13.3.0
@@ -9236,7 +9237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-string@npm:^1.0.5, is-string@npm:^1.0.7":
+"is-string@npm:^1.0.4, is-string@npm:^1.0.5, is-string@npm:^1.0.7":
   version: 1.0.7
   resolution: "is-string@npm:1.0.7"
   dependencies:
@@ -10630,6 +10631,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.once@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.once@npm:4.1.1"
+  checksum: d768fa9f9b4e1dc6453be99b753906f58990e0c45e7b2ca5a3b40a33111e5d17f6edf2f768786e2716af90a8e78f8f91431ab8435f761fef00f9b0c256f6d245
+  languageName: node
+  linkType: hard
+
 "lodash.union@npm:^4.6.0":
   version: 4.6.0
   resolution: "lodash.union@npm:4.6.0"
@@ -11135,14 +11143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:1.1.x":
-  version: 1.1.3
-  resolution: "minimist@npm:1.1.3"
-  checksum: 78546d2b50c8060377f18e36520d6b101d4f1375b0ed256f3158bf9a39103046d9ff8b8a2843ec17b6c2764c3d15aec5d8a0dc509ac6746f7e40624d23c003b7
-  languageName: node
-  linkType: hard
-
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.6":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
@@ -11296,6 +11297,21 @@ __metadata:
   peerDependencies:
     mocha: ">=2.2.5"
   checksum: fe86a177b3ec83b6084948c6e92e739b71ce549f8076fc58d2a113252ee9805c1e9256574e4b287bb95b99bc9ea9b3bf125277e3d24ff11618815564b8881a35
+  languageName: node
+  linkType: hard
+
+"mocha-multi@npm:1.1.7":
+  version: 1.1.7
+  resolution: "mocha-multi@npm:1.1.7"
+  dependencies:
+    debug: ^4.1.1
+    is-string: ^1.0.4
+    lodash.once: ^4.1.1
+    mkdirp: ^1.0.4
+    object-assign: ^4.1.1
+  peerDependencies:
+    mocha: ">=2.2.0 <7 || >=9"
+  checksum: 1718fccd9178ac38fad0fc63de436b3ece9e688818a1fe3a44bdea9ac26b4a3f6e731e35f19857fd6c769b01bb57b30f4f095902189031a372f1a556a96a1cbc
   languageName: node
   linkType: hard
 
