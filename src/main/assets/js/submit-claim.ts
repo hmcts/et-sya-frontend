@@ -18,7 +18,7 @@ export function disableSubmitCaseButton(): void {
     window.location.href &&
     window.location.href.includes('check-your-answers')
   ) {
-    saveForLaterButton.hidden = true;
+    saveForLaterButton.disabled = true;
     saveForLaterButton.className = 'govuk-button govuk-button--disabled';
     saveForLaterButton.ariaDisabled = 'true';
     submitCaseButton.disabled = true;
