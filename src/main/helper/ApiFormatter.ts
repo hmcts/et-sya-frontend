@@ -190,6 +190,11 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
 }
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
+  const s = getUpdateCaseBody(caseItem);
+  s.case_data.triageQuestions.typesOfClaim = s.case_data.typesOfClaim;
+  return s;
+}
+export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
