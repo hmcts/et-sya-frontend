@@ -41,5 +41,33 @@ describe('Address Postcode Enter Controller', () => {
       new AddressPostCodeEnterController().post(req, res);
       expect(req.session.userCase.addressEnterPostcode).toEqual(postCode);
     });
+
+    it('should redirect to the same screen when no postcode is entered', async () => {
+      const errors = [{ propertyName: 'addressEnterPostcode', errorType: 'required' }];
+      const body = { addressEnterPostcode: '' };
+
+      const controller = new AddressPostCodeEnterController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(errors);
+    });
+
+    it('should redirect to the same screen when wrong postcode is entered', async () => {
+      const errors = [{ propertyName: 'addressEnterPostcode', errorType: 'invalid' }];
+      const body = { addressEnterPostcode: 'G44 555' };
+
+      const controller = new AddressPostCodeEnterController();
+
+      const req = mockRequest({ body });
+      const res = mockResponse();
+      await controller.post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(req.path);
+      expect(req.session.errors).toEqual(errors);
+    });
   });
 });
