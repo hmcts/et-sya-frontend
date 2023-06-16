@@ -93,13 +93,18 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
 };
 
 export const convertTypeOfDoc = (type: string, translations: AnyRecord): unknown => {
-  if (acceptanceDocTypesAcknowledgementOfClaim.includes(type)) {
-    return translations.typeOfDoc.acknowledgementOfClaim;
-  } else if (acceptanceDocTypesNoticeOfClaim.includes(type)) {
-    return translations.typeOfDoc.noticeOfClaim;
-  } else if (acceptanceDocTypesNoticeOfHearing.includes(type)) {
-    return translations.typeOfDoc.noticeOfHearing;
-  } else {
-    return '';
+  switch (true) {
+    case acceptanceDocTypesAcknowledgementOfClaim.includes(type): {
+      return translations.typeOfDoc.acknowledgementOfClaim;
+    }
+    case acceptanceDocTypesNoticeOfClaim.includes(type): {
+      return translations.typeOfDoc.noticeOfClaim;
+    }
+    case acceptanceDocTypesNoticeOfHearing.includes(type): {
+      return translations.typeOfDoc.noticeOfHearing;
+    }
+    default: {
+      return '';
+    }
   }
 };
