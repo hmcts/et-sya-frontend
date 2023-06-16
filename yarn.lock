@@ -3773,6 +3773,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ajv@npm:5.5.2":
+  version: 5.5.2
+  resolution: "ajv@npm:5.5.2"
+  dependencies:
+    co: ^4.6.0
+    fast-deep-equal: ^1.0.0
+    fast-json-stable-stringify: ^2.0.0
+    json-schema-traverse: ^0.3.0
+  checksum: a69645c843e1676b0ae1c5192786e546427f808f386d26127c6585479378066c64341ceec0b127b6789d79628e71d2a732d402f575b98f9262db230d7b715a94
+  languageName: node
+  linkType: hard
+
 "ajv@npm:^4.7.0":
   version: 4.11.8
   resolution: "ajv@npm:4.11.8"
@@ -7088,6 +7100,7 @@ __metadata:
     "@types/supertest": ^2.0.12
     "@typescript-eslint/eslint-plugin": ^5.59.0
     "@typescript-eslint/parser": ^5.59.0
+    ajv: 5.5.2
     applicationinsights: 2.5.1
     autobind-decorator: ^2.4.0
     axios: ^0.27.2
@@ -7142,7 +7155,7 @@ __metadata:
     puppeteer: ^19.10.1
     redis: ^3.1.2
     redis-mock: ^0.56.3
-    request: ^2.88.2
+    request: 2.88.2
     require-directory: ^2.1.1
     sass-lint: ^1.13.1
     sass-loader: ^13.2.2
@@ -7378,6 +7391,13 @@ __metadata:
   version: 0.1.8
   resolution: "eyes@npm:0.1.8"
   checksum: c31703a92bf36ba75ee8d379ee7985c24ee6149f3a6175f44cec7a05b178c38bce9836d3ca48c9acb0329a960ac2c4b2ead4e60cdd4fe6e8c92cad7cd6913687
+  languageName: node
+  linkType: hard
+
+"fast-deep-equal@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "fast-deep-equal@npm:1.1.0"
+  checksum: 69b4c9534d9805f13a341aa72f69641d0b9ae3cc8beb25c64e68a257241c7bb34370266db27ae4fc3c4da0518448c01a5f587a096a211471c86a38facd9a1486
   languageName: node
   linkType: hard
 
@@ -10084,6 +10104,13 @@ __metadata:
   version: 2.3.1
   resolution: "json-parse-even-better-errors@npm:2.3.1"
   checksum: 798ed4cf3354a2d9ccd78e86d2169515a0097a5c133337807cdf7f1fc32e1391d207ccfc276518cc1d7d8d4db93288b8a50ba4293d212ad1336e52a8ec0a941f
+  languageName: node
+  linkType: hard
+
+"json-schema-traverse@npm:^0.3.0":
+  version: 0.3.1
+  resolution: "json-schema-traverse@npm:0.3.1"
+  checksum: a685c36222023471c25c86cddcff506306ecb8f8941922fd356008419889c41c38e1c16d661d5499d0a561b34f417693e9bb9212ba2b2b2f8f8a345a49e4ec1a
   languageName: node
   linkType: hard
 
@@ -13330,7 +13357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"request@npm:^2.88.2":
+"request@npm:2.88.2":
   version: 2.88.2
   resolution: "request@npm:2.88.2"
   dependencies:
