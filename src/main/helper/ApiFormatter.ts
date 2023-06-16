@@ -164,7 +164,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
-      setAcceptanceDocTypes(fromApiCaseData?.case_type_id)
+      fromApiCaseData?.case_type_id === CaseTypeId.ENGLAND_WALES ? acceptanceDocTypesEW : acceptanceDocTypes
     ),
     rejectionOfClaimDocumentDetail: setDocumentValues(
       fromApiCaseData?.case_data?.documentCollection,
@@ -446,14 +446,6 @@ export const returnSubmittedEt1Form = (
       return documentDetailCollection[1];
     }
     return documentDetailCollection[0];
-  }
-};
-
-export const setAcceptanceDocTypes = (caseTypeID: CaseTypeId): string[] => {
-  if (caseTypeID === CaseTypeId.ENGLAND_WALES) {
-    return acceptanceDocTypesEW;
-  } else {
-    return acceptanceDocTypes;
   }
 };
 
