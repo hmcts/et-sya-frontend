@@ -13,6 +13,7 @@ import { AppRequest, UserDetails } from '../definitions/appRequest';
 import {
   CaseDataCacheKey,
   CaseDate,
+  CaseTypeId,
   CaseWithId,
   Document,
   EnglishOrWelsh,
@@ -24,6 +25,7 @@ import {
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
+  acceptanceDocTypesEW,
   et1DocTypes,
   et3AttachmentDocTypes,
   et3FormDocTypes,
@@ -162,7 +164,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ),
     acknowledgementOfClaimLetterDetail: setDocumentValues(
       fromApiCaseData?.case_data?.servingDocumentCollection,
-      acceptanceDocTypes
+      fromApiCaseData?.case_type_id === CaseTypeId.ENGLAND_WALES ? acceptanceDocTypesEW : acceptanceDocTypes
     ),
     rejectionOfClaimDocumentDetail: setDocumentValues(
       fromApiCaseData?.case_data?.documentCollection,
