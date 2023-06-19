@@ -193,6 +193,63 @@ export const mockRespAppWithRespRequstForInfo: GenericTseApplicationTypeItem = {
   statusColor: '--blue',
 };
 
+export const mockRespAppWithRespRequstForInfoAndReply: GenericTseApplicationTypeItem = {
+  id: '1',
+  value: {
+    date: '19 June 2023',
+    type: 'Change personal details',
+    number: '11',
+    status: 'Open',
+    details: 'look ma, flexUI populated',
+    dueDate: '26 June 2023',
+    applicant: 'Respondent',
+    responsesCount: '2',
+    applicationState: 'updated',
+    respondCollection: [
+      {
+        id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
+        value: {
+          date: '19 June 2023',
+          from: 'Admin',
+          addDocument: [
+            {
+              id: '32dc537e-2789-454b-bb17-43e186c6c4e2',
+              value: {
+                uploadedDocument: {
+                  document_url: 'http://dm-store:8080/documents/4813c796-992a-4c27-ba11-ec35c01d4509',
+                  document_filename: 'et1_a_b.pdf',
+                  document_binary_url: 'http://dm-store:8080/documents/4813c796-992a-4c27-ba11-ec35c01d4509/binary',
+                },
+              },
+            },
+          ],
+          requestMadeBy: 'Case worker',
+          isCmoOrRequest: 'Request',
+          madeByFullName: 'case worker',
+          selectPartyNotify: 'Respondent only',
+          isResponseRequired: 'Yes',
+          selectPartyRespond: 'Respondent',
+        },
+      },
+      {
+        id: '943b0b04-fed0-4e54-9859-6295cfac64bd',
+        value: {
+          date: '19 June 2023',
+          from: 'Respondent',
+          response: 'asd',
+          copyToOtherParty: 'Yes',
+          hasSupportingMaterial: YesOrNo.NO,
+        },
+      },
+    ],
+    copyToOtherPartyYesOrNo: YesOrNo.YES,
+  },
+  linkValue: 'change personal details',
+  redirectUrl: '/respondent-application-details/5d3a4c68-42dc-4b77-9474-6f6043dc020f?lng=en',
+  displayStatus: 'Updated',
+  statusColor: '--blue',
+};
+
 export const mockRespAppWithClaimantResponse: GenericTseApplicationType = {
   date: '2 June 2023',
   type: 'Amend response',

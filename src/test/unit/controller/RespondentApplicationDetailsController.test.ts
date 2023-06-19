@@ -10,6 +10,7 @@ import {
   mockRespAppWithClaimantResponse,
   mockRespAppWithDecisionNotViewed,
   mockRespAppWithRespRequstForInfo,
+  mockRespAppWithRespRequstForInfoAndReply,
   mockSimpleRespAppTypeItem,
 } from '../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -45,7 +46,7 @@ describe('Respondent application details controller', () => {
   });
 
   describe('status changes when viewing applications', () => {
-    it("changes status to viewed when viewing an admin's decision", async () => {
+    it("changes to viewed when viewing an admin's decision", async () => {
       const userCase: Partial<CaseWithId> = {
         genericTseApplicationCollection: [
           {
@@ -63,7 +64,7 @@ describe('Respondent application details controller', () => {
       expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('viewed');
     });
 
-    it("changes status to in progress when viewing the respondent's application", async () => {
+    it("changes to in progress when viewing the respondent's application", async () => {
       const userCase: Partial<CaseWithId> = {
         genericTseApplicationCollection: [clone(mockSimpleRespAppTypeItem)],
       };
@@ -76,9 +77,22 @@ describe('Respondent application details controller', () => {
       expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
     });
 
-    it("changes status to in progress when viewing application with a request for respondent's info", async () => {
+    it("changes to in progress when viewing a request for respondent's info", async () => {
       const userCase: Partial<CaseWithId> = {
         genericTseApplicationCollection: [clone(mockRespAppWithRespRequstForInfo)],
+      };
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+
+      await new RespondentApplicationDetailsController().get(request, response);
+
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+      expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
+    });
+
+    it("changes to in progress when viewing respondent's provided info after a request", async () => {
+      const userCase: Partial<CaseWithId> = {
+        genericTseApplicationCollection: [clone(mockRespAppWithRespRequstForInfoAndReply)],
       };
       const response = mockResponse();
       const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
