@@ -168,6 +168,36 @@
   {% endfor %}
 {% endif %}
 
+{% for app in adminNotifications %}
+  {% set adminNotificationHtml %}
+    <h3 class="govuk-notification-banner__heading">
+      The tribunal has responded to {{app.from}} application to {{app.appName}}
+    </h3>
+
+    {% if app.isResponseRequired === "Yes" %}
+
+    <p class="govuk-body">
+        You must respond to this.
+    </p>
+
+     <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{app.appUrl}}">Respond to the tribunal</a>
+      </h3> 
+
+    {% else %}
+    <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{app.appUrl}}">View the response</a>
+      </h3>
+    {% endif %}  
+
+  {% endset %}
+  {{ govukNotificationBanner({
+          html: adminNotificationHtml,
+          titleText: important
+      }) 
+  }}
+{% endfor %}
+
 {% if showJudgmentReceived %}
   {% for item in judgmentBannerContent %}
     {% if item.value.notificationState !== 'viewed' %}

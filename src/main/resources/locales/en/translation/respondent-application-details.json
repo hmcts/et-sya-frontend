@@ -37,5 +37,11 @@
   "Reconsider judgement": "reconsider judgement",
   "Restrict publicity": "restrict publicity",
   "Strike out all or part of a claim": "strike out all or part of a claim",
-  "Vary or revoke an order": "vary or revoke an order"
+  "Vary or revoke an order": "vary or revoke an order",
+  "responseItem": "Response",
+  "orderOrRequest": "Case management order or request?",
+  "responseDue": "Response due",
+  "partyToRespond": "Party or parties to respond",
+  "description": "Description",
+  "requestMadeBy": "Request made by"
 }

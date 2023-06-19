@@ -17,16 +17,9 @@
       }) 
     }}
 
-      {% if respondButton %}
-        {{ govukButton({
-            text: respond,
-            href: redirectUrl
-          }) }}
-      {% endif %}
-
       {% for respCol in selectedApplication.value.respondCollection %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
         {% if respCol.value.from === "Claimant" %}
-          <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponseHeader }}</h2>
           {{ govukSummaryList({
               rows: [
                 {
@@ -66,8 +59,114 @@
                 }
               ]
             }) }}
+          {% endif %} 
+          {% if respCol.value.from === "Admin" %}
+          {{ govukSummaryList({
+              rows: [
+                {
+                  key: {
+                  text: responseItem,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.enterResponseTitle }
+                },
+                {
+                  key: {
+                  text: date,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.date }
+                },
+                {
+                  key: {
+                  text: sentBy,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: tribunal }
+                },
+                {
+                  key: {
+                  text: orderOrRequest,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.isCmoOrRequest }
+                },
+                {
+                  key: {
+                  text: responseDue,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.isResponseRequired }
+                },
+                {
+                  key: {
+                  text: partyToRespond,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.selectPartyRespond }
+                },
+                {
+                  key: {
+                  text: additionalInfo,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.additionalInformation }
+                },
+                {
+                  key: {
+                  text: description,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value?.addDocument[0].typeOfDocument }
+                },
+                {
+                  key: {
+                  text: document,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value?.addDocument[0].uploadedDocument.documentFilename }
+                },
+                {
+                  key: {
+                  text: requestMadeBy,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.requestMadeBy }
+                },
+                {
+                  key: {
+                  text: name,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.madeByFullName }
+                },
+                {
+                  key: {
+                  text: sentTo,
+                  classes: "govuk-!-font-weight-regular-m"
+                },
+                  value: { text: respCol.value.selectPartyNotify }
+                }
+                
+              ]
+            }) }}      
+        
         {% endif %}
       {% endfor %}
+
+      {% if respondButton %}
+        {{ govukButton({
+            text: respond,
+            href: redirectUrl
+          }) }}
+      {% endif %}
+
+      {% if adminRespondButton %}
+        {{ govukButton({
+            text: respond,
+            href: '/respond-to-tribunal-response'
+          }) }}
+      {% endif %}
 
       {% if selectedApplication.value.adminDecision.length %}
         <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>

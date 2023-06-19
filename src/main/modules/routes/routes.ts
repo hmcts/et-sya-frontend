@@ -68,6 +68,7 @@ import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
+import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
@@ -356,5 +357,6 @@ export class Routes {
       new GeneralCorrespondenceNotificationDetailsController().get
     );
     app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
+    app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
   }
 }

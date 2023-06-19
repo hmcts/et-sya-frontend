@@ -17,6 +17,7 @@ import { getLogger } from '../logger';
 import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../services/CaseService';
 
+import { getApplicationsWithTribunalOrderOrRequest } from './helpers/AdminNotificationHelper';
 import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
   activateRespondentApplicationsLink,
@@ -189,6 +190,7 @@ export default class CitizenHubController {
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: checkIfRespondentIsSystemUser(userCase),
+      adminNotifications: getApplicationsWithTribunalOrderOrRequest(userCase, translations, languageParam),
     });
   }
 }

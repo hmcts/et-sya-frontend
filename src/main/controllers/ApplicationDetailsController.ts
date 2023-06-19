@@ -6,7 +6,8 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getVisibleRequestFromAdmin, responseRequired } from './helpers/AdminNotificationHelper';
+import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -23,15 +24,20 @@ export default class ApplicationDetailsController {
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
 
+    const userCase = req.session.userCase;
+
     const selectedApplication = findSelectedGenericTseApplication(
-      req.session.userCase.genericTseApplicationCollection,
+      userCase.genericTseApplicationCollection,
       req.params.appId
     );
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
-    req.session.userCase.selectedGenericTseApplication = selectedApplication;
+    userCase.selectedGenericTseApplication = selectedApplication;
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
+
+    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, 'en');
+    const respondButton = responseRequired(adminRequest);
 
     if (document) {
       try {
@@ -44,6 +50,8 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
+    const allResponses = getAllResponses(selectedApplication.value.respondCollection, translations);
+
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
@@ -55,6 +63,8 @@ export default class ApplicationDetailsController {
       header,
       selectedApplication,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      respondButton,
+      allResponses,
     });
   };
 }

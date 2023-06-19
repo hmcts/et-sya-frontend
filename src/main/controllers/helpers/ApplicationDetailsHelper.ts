@@ -1,6 +1,11 @@
 import { YesOrNo } from '../../definitions/case';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseRespondTypeItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { AnyRecord } from '../../definitions/util-types';
+
+import { createDownloadLinkX } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
@@ -179,4 +184,138 @@ export const getTseApplicationDecisionDetails = (
     );
   }
   return tseApplicationDecisionDetails;
+};
+
+export const getAllResponses = (respondCollection: TseRespondTypeItem[], translations: AnyRecord): any => {
+  const allResponses = [];
+
+  for (const response of respondCollection) {
+    if (response.value.from === 'Respondent') {
+      allResponses.push([
+        {
+          key: {
+            text: translations.responder,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            text: response.value.from,
+          },
+        },
+        {
+          key: {
+            text: translations.responseDate,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.date },
+        },
+        {
+          key: {
+            text: translations.yourReponse,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.response },
+        },
+        {
+          key: {
+            text: translations.copyCorrespondence,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.copyToOtherParty },
+        },
+      ]);
+    }
+    if (response.value.from === 'Admin') {
+      allResponses.push([
+        {
+          key: {
+            text: translations.responseItem,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.enterResponseTitle },
+        },
+        {
+          key: {
+            text: translations.date,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.date },
+        },
+        {
+          key: {
+            text: translations.sentBy,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: translations.tribunal },
+        },
+        {
+          key: {
+            text: translations.orderOrRequest,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.isCmoOrRequest },
+        },
+        {
+          key: {
+            text: translations.responseDue,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.isResponseRequired },
+        },
+        {
+          key: {
+            text: translations.partyToRespond,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.selectPartyRespond },
+        },
+        {
+          key: {
+            text: translations.additionalInfo,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.additionalInformation },
+        },
+        {
+          key: {
+            text: translations.description,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.addDocument?.find(element => element !== undefined).value.typeOfDocument },
+        },
+        {
+          key: {
+            text: translations.document,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            html: createDownloadLinkX(
+              response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument
+            ),
+          },
+        },
+        {
+          key: {
+            text: translations.requestMadeBy,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.requestMadeBy },
+        },
+        {
+          key: {
+            text: translations.name,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.madeByFullName },
+        },
+        {
+          key: {
+            text: translations.sentTo,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.selectPartyNotify },
+        },
+      ]);
+    }
+  }
+  return allResponses;
 };
