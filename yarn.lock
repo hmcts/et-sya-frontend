@@ -7164,6 +7164,7 @@ __metadata:
     webpack-cli: ^5.0.2
     webpack-dev-middleware: ^6.0.2
     webpack-node-externals: ^3.0.0
+    xml2js: 0.4.0
   peerDependencies:
     "@faker-js/faker": ^5.5.3
   languageName: unknown
@@ -13790,6 +13791,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sax@npm:0.5.x":
+  version: 0.5.8
+  resolution: "sax@npm:0.5.8"
+  checksum: 03cc053e706114e721ff88fd7c8beef286a2ad7fd73d873eee602c010e6053b58964abfa93f3436363e94e8d273e680ad8b851ed27a18899f605cf3dffefaa77
+  languageName: node
+  linkType: hard
+
 "sax@npm:^1.2.4":
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
@@ -16153,10 +16161,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"xml2js@npm:0.4.0":
+  version: 0.4.0
+  resolution: "xml2js@npm:0.4.0"
+  dependencies:
+    sax: 0.5.x
+    xmlbuilder: ">=0.4.2"
+  checksum: 7ae78e4829e90743736a96175e512f5903930a159566f162fe14ee5cc2435eb8620b60362409e5269650ae4e39c53a9d2b1b29d205414f06b1f33dc446999ba8
+  languageName: node
+  linkType: hard
+
 "xml@npm:^1.0.0":
   version: 1.0.1
   resolution: "xml@npm:1.0.1"
   checksum: 11b5545ef3f8fec3fa29ce251f50ad7b6c97c103ed4d851306ec23366f5fa4699dd6a942262df52313a0cd1840ab26256da253c023bad3309d8ce46fe6020ca0
+  languageName: node
+  linkType: hard
+
+"xmlbuilder@npm:>=0.4.2":
+  version: 15.1.1
+  resolution: "xmlbuilder@npm:15.1.1"
+  checksum: 14f7302402e28d1f32823583d121594a9dca36408d40320b33f598bd589ca5163a352d076489c9c64d2dc1da19a790926a07bf4191275330d4de2b0d85bb1843
   languageName: node
   linkType: hard
 

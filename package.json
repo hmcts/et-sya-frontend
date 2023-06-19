@@ -91,7 +91,8 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "xml2js": "0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
