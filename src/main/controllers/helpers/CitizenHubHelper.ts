@@ -100,25 +100,25 @@ export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
-  if (items?.length) {
-    const respondentApplicationsStatuses = [
-      HubLinkStatus.NOT_STARTED_YET,
-      HubLinkStatus.NOT_VIEWED,
-      HubLinkStatus.UPDATED,
-      HubLinkStatus.IN_PROGRESS,
-      HubLinkStatus.VIEWED,
-      HubLinkStatus.WAITING_FOR_TRIBUNAL,
-    ];
-
-    let mostUrgentStatus;
-    for (const application of items) {
-      const currStatus = application.value.status as HubLinkStatus;
-      if (
-        respondentApplicationsStatuses.indexOf(currStatus) > respondentApplicationsStatuses.indexOf(mostUrgentStatus)
-      ) {
-        mostUrgentStatus = currStatus;
-      }
-    }
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = mostUrgentStatus;
+  if (!items?.length) {
+    return;
   }
+
+  const statusesInOrderOfUrgency = [
+    HubLinkStatus.NOT_STARTED_YET,
+    HubLinkStatus.NOT_VIEWED,
+    HubLinkStatus.UPDATED,
+    HubLinkStatus.IN_PROGRESS,
+    HubLinkStatus.VIEWED,
+    HubLinkStatus.WAITING_FOR_TRIBUNAL,
+  ];
+
+  let mostUrgentStatus;
+  for (const application of items) {
+    const currStatus = application.value.status as HubLinkStatus;
+    if (statusesInOrderOfUrgency.indexOf(currStatus) > statusesInOrderOfUrgency.indexOf(mostUrgentStatus)) {
+      mostUrgentStatus = currStatus;
+    }
+  }
+  userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = mostUrgentStatus;
 };
