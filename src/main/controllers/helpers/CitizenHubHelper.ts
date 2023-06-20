@@ -122,3 +122,15 @@ export const activateRespondentApplicationsLink = (
   }
   userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = mostUrgentStatus;
 };
+
+export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string): boolean => {
+  if (status === HubLinkStatus.NOT_YET_AVAILABLE) {
+    return false;
+  }
+
+  if (status === HubLinkStatus.WAITING_FOR_TRIBUNAL && linkName !== HubLinkNames.RespondentApplications) {
+    return false;
+  }
+
+  return true;
+};

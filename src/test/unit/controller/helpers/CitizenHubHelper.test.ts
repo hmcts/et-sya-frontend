@@ -1,11 +1,12 @@
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  shouldHubLinkBeClickable,
   statusesInOrderOfUrgency,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
-import { HubLinkNames } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
@@ -115,5 +116,25 @@ describe('activateRespondentApplicationsLink', () => {
   it('should not set hub status for respondent applications if no applications exist', () => {
     activateRespondentApplicationsLink(undefined, userCase);
     expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBeUndefined();
+  });
+});
+
+describe('shouldHubLinkBeClickable', () => {
+  it('should not be clickable if not yet available', () => {
+    expect(shouldHubLinkBeClickable(HubLinkStatus.NOT_YET_AVAILABLE, undefined)).toBe(false);
+  });
+
+  it('should not be clickable if awaiting tribunal and not respondent applications', () => {
+    expect(shouldHubLinkBeClickable(HubLinkStatus.WAITING_FOR_TRIBUNAL, HubLinkNames.Documents)).toBe(false);
+  });
+
+  it('should be clickable if awaiting tribunal and not respondent applications', () => {
+    expect(shouldHubLinkBeClickable(HubLinkStatus.WAITING_FOR_TRIBUNAL, HubLinkNames.RespondentApplications)).toBe(
+      true
+    );
+  });
+
+  it('should not be clickable otherwise', () => {
+    expect(shouldHubLinkBeClickable(HubLinkStatus.IN_PROGRESS, undefined)).toBe(true);
   });
 });
