@@ -77,9 +77,8 @@ export const shouldShowJudgmentReceived = (userCase: CaseWithId, hubLinksStatuse
 };
 
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
-  return (
-    notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE))
+  return notifications?.some(it =>
+    it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
   );
 };
 
@@ -102,6 +101,24 @@ export const activateRespondentApplicationsLink = (
   userCase: CaseWithId
 ): void => {
   if (items?.length) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.NOT_STARTED_YET;
+    const respondentApplicationsStatuses = [
+      HubLinkStatus.NOT_STARTED_YET,
+      HubLinkStatus.NOT_VIEWED,
+      HubLinkStatus.UPDATED,
+      HubLinkStatus.IN_PROGRESS,
+      HubLinkStatus.VIEWED,
+      HubLinkStatus.WAITING_FOR_TRIBUNAL,
+    ];
+
+    let mostUrgentStatus;
+    for (const application of items) {
+      const currStatus = application.value.status as HubLinkStatus;
+      if (
+        respondentApplicationsStatuses.indexOf(currStatus) > respondentApplicationsStatuses.indexOf(mostUrgentStatus)
+      ) {
+        mostUrgentStatus = currStatus;
+      }
+    }
+    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = mostUrgentStatus;
   }
 };
