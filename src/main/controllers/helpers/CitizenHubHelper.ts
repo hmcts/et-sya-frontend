@@ -96,14 +96,14 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
   );
 };
 
-export const statusesInOrderOfUrgency = [
-  HubLinkStatus.NOT_STARTED_YET,
-  HubLinkStatus.NOT_VIEWED,
-  HubLinkStatus.UPDATED,
-  HubLinkStatus.IN_PROGRESS,
-  HubLinkStatus.VIEWED,
-  HubLinkStatus.WAITING_FOR_TRIBUNAL,
-];
+export enum StatusesInOrderOfUrgency {
+  notStartedYet = 0,
+  notViewedYet = 1,
+  updated = 2,
+  inProgress = 3,
+  viewed = 4,
+  waitingForTheTribunal = 5,
+}
 
 export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
@@ -113,14 +113,13 @@ export const activateRespondentApplicationsLink = (
     return;
   }
 
-  let mostUrgentStatus;
-  for (const application of items) {
-    const currStatus = application.value.applicationState as HubLinkStatus;
-    if (statusesInOrderOfUrgency.indexOf(currStatus) > statusesInOrderOfUrgency.indexOf(mostUrgentStatus)) {
-      mostUrgentStatus = currStatus;
-    }
-  }
-  userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = mostUrgentStatus;
+  const mostUrgentStatus = Math.min(
+    ...items.map(o => StatusesInOrderOfUrgency[o.value.applicationState as keyof typeof StatusesInOrderOfUrgency])
+  );
+
+  userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = StatusesInOrderOfUrgency[
+    mostUrgentStatus
+  ] as HubLinkStatus;
 };
 
 export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string): boolean => {

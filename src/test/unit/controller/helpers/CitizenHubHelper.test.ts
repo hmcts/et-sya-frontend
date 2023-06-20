@@ -1,8 +1,8 @@
 import {
+  StatusesInOrderOfUrgency,
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   shouldHubLinkBeClickable,
-  statusesInOrderOfUrgency,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
@@ -100,22 +100,27 @@ describe('activateRespondentApplicationsLink', () => {
   });
 
   test.each([
-    [statusesInOrderOfUrgency[0], statusesInOrderOfUrgency[1]],
-    [statusesInOrderOfUrgency[1], statusesInOrderOfUrgency[2]],
-    [statusesInOrderOfUrgency[2], statusesInOrderOfUrgency[3]],
-    [statusesInOrderOfUrgency[3], statusesInOrderOfUrgency[4]],
-    [statusesInOrderOfUrgency[4], statusesInOrderOfUrgency[5]],
+    [StatusesInOrderOfUrgency[0], StatusesInOrderOfUrgency[1]],
+    [StatusesInOrderOfUrgency[1], StatusesInOrderOfUrgency[2]],
+    [StatusesInOrderOfUrgency[2], StatusesInOrderOfUrgency[3]],
+    [StatusesInOrderOfUrgency[3], StatusesInOrderOfUrgency[4]],
+    [StatusesInOrderOfUrgency[4], StatusesInOrderOfUrgency[5]],
   ])('set hub status for respondent applications based on the following application statuses ([%s, %s])', (a, b) => {
     activateRespondentApplicationsLink(
       [{ value: { applicationState: a } }, { value: { applicationState: b } }],
       userCase
     );
-    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(b);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(a);
   });
 
   it('should not set hub status for respondent applications if no applications exist', () => {
     activateRespondentApplicationsLink(undefined, userCase);
     expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBeUndefined();
+  });
+
+  it('should set status to undefined when an illegal status', () => {
+    activateRespondentApplicationsLink([{ value: { applicationState: 'jack' } }], userCase);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(undefined);
   });
 });
 
