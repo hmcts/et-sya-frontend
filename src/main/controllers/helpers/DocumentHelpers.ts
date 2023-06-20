@@ -3,7 +3,10 @@ import { AxiosResponse } from 'axios';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document } from '../../definitions/case';
 import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseRespondTypeItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
@@ -106,6 +109,26 @@ export function getResponseDocId(selectedApplication: GenericTseApplicationTypeI
     responseDocId = getDocId(responseDoc.document_url);
   }
   return responseDocId;
+}
+
+export function isValidResponseDocId(docId: string, respondCollection: TseRespondTypeItem[]): boolean {
+  for (const response of respondCollection) {
+    if (response.value.from === 'Claimant' || response.value.from === 'Respoondent') {
+      if (
+        docId ===
+        getDocId(
+          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
+        return true;
+      }
+    } else if (response.value.from === 'Admin') {
+      if (docId === getDocId(response.value?.addDocument[0].value?.uploadedDocument.document_url)) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTseApplicationTypeItem): string {

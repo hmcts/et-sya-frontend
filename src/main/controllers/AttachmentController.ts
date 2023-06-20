@@ -10,10 +10,10 @@ import {
   getDecisionDocId,
   getJudgmentDocId,
   getRequestDocId,
-  getResponseDocId,
   getSelectedAppDecisionDocId,
   getSelectedAppDocId,
   getSelectedAppResponseDocId,
+  isValidResponseDocId,
 } from './helpers/DocumentHelpers';
 import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './helpers/JudgmentHelpers';
 
@@ -38,11 +38,15 @@ export default class AttachmentController {
     let appDocId;
     let decisions;
     let appDecisionDocId;
+    let isResponseDoc: boolean;
 
-    if (req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS) {
+    if (
+      req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS ||
+      req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS
+    ) {
       appDocId = getDocId(selectedApplicationDocUrl);
-      responseDocId = getResponseDocId(selectedApplication);
       decisionDocId = getDecisionDocId(req, selectedApplication);
+      isResponseDoc = isValidResponseDocId(docId, selectedApplication.value.respondCollection);
     }
 
     if (
@@ -50,13 +54,6 @@ export default class AttachmentController {
       req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
     ) {
       requestDocId = getRequestDocId(req);
-    }
-
-    if (req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS) {
-      appDocId = undefined;
-      if (selectedApplication?.value.documentUpload.document_url !== undefined) {
-        appDocId = getDocId(selectedApplicationDocUrl);
-      }
     }
 
     if (userCase.contactApplicationFile) {
@@ -95,7 +92,8 @@ export default class AttachmentController {
         docId !== judgmentDocId &&
         docId !== appDocId &&
         docId !== appDecisionDocId &&
-        docId !== allDocsSelectedFileId
+        docId !== allDocsSelectedFileId &&
+        !isResponseDoc
       ) {
         logger.info('bad request parameter');
         return res.redirect('/not-found');

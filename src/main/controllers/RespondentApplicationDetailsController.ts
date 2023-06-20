@@ -8,7 +8,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getVisibleRequestFromAdmin, responseRequired } from './helpers/AdminNotificationHelper';
+import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -40,6 +41,13 @@ export default class RespondentApplicationDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
+    const allResponses = await getAllResponses(
+      selectedApplication.value.respondCollection,
+      translations,
+      req.session.user?.accessToken,
+      res
+    );
+
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
@@ -52,6 +60,8 @@ export default class RespondentApplicationDetailsController {
     );
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, 'en');
+    const adminRespondButton = responseRequired(adminRequest);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -92,6 +102,8 @@ export default class RespondentApplicationDetailsController {
       decisionContent,
       respondButton,
       responseDocDownloadLink,
+      adminRespondButton,
+      allResponses,
     });
   };
 }

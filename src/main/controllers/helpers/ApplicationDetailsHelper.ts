@@ -1,11 +1,13 @@
-import { YesOrNo } from '../../definitions/case';
+import { Response } from 'express';
+
+import { Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { AnyRecord } from '../../definitions/util-types';
 
-import { createDownloadLinkX } from './DocumentHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
@@ -186,11 +188,16 @@ export const getTseApplicationDecisionDetails = (
   return tseApplicationDecisionDetails;
 };
 
-export const getAllResponses = (respondCollection: TseRespondTypeItem[], translations: AnyRecord): any => {
+export const getAllResponses = async (
+  respondCollection: TseRespondTypeItem[],
+  translations: AnyRecord,
+  accessToken: string,
+  res: Response
+): Promise<any> => {
   const allResponses = [];
 
   for (const response of respondCollection) {
-    if (response.value.from === 'Respondent') {
+    if (response.value.from === 'Respondent' || response.value.from === 'Claimant') {
       allResponses.push([
         {
           key: {
@@ -214,6 +221,19 @@ export const getAllResponses = (respondCollection: TseRespondTypeItem[], transla
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: { text: response.value.response },
+        },
+        {
+          key: {
+            text: translations.supportingMaterial,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            html: await getSupportingMaterialDownloadLink(
+              response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
+              accessToken,
+              res
+            ),
+          },
         },
         {
           key: {
@@ -280,7 +300,7 @@ export const getAllResponses = (respondCollection: TseRespondTypeItem[], transla
             text: translations.description,
             classes: 'govuk-!-font-weight-regular-m',
           },
-          value: { text: response.value.addDocument?.find(element => element !== undefined).value.typeOfDocument },
+          value: { text: response.value.addDocument?.find(element => element !== undefined).value.shortDescription },
         },
         {
           key: {
@@ -288,8 +308,10 @@ export const getAllResponses = (respondCollection: TseRespondTypeItem[], transla
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: createDownloadLinkX(
-              response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument
+            html: await getSupportingMaterialDownloadLink(
+              response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
+              accessToken,
+              res
             ),
           },
         },
@@ -318,4 +340,22 @@ export const getAllResponses = (respondCollection: TseRespondTypeItem[], transla
     }
   }
   return allResponses;
+};
+
+export const getSupportingMaterialDownloadLink = async (
+  responseDoc: Document,
+  accessToken: string,
+  res: Response
+): Promise<string | void> => {
+  let responseDocDownload = undefined;
+  if (responseDoc !== undefined) {
+    try {
+      await getDocumentAdditionalInformation(responseDoc, accessToken);
+    } catch (err) {
+      return res.redirect('/not-found');
+    }
+    responseDocDownload = createDownloadLink(responseDoc);
+    console.log(responseDocDownload);
+  }
+  return responseDocDownload;
 };

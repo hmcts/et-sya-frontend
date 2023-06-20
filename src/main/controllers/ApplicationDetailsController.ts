@@ -50,7 +50,12 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    const allResponses = getAllResponses(selectedApplication.value.respondCollection, translations);
+    const allResponses = await getAllResponses(
+      selectedApplication.value.respondCollection,
+      translations,
+      req.session.user?.accessToken,
+      res
+    );
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
