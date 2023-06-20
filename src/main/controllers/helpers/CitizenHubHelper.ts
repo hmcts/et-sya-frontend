@@ -96,6 +96,15 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
   );
 };
 
+export const statusesInOrderOfUrgency = [
+  HubLinkStatus.NOT_STARTED_YET,
+  HubLinkStatus.NOT_VIEWED,
+  HubLinkStatus.UPDATED,
+  HubLinkStatus.IN_PROGRESS,
+  HubLinkStatus.VIEWED,
+  HubLinkStatus.WAITING_FOR_TRIBUNAL,
+];
+
 export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
@@ -103,15 +112,6 @@ export const activateRespondentApplicationsLink = (
   if (!items?.length) {
     return;
   }
-
-  const statusesInOrderOfUrgency = [
-    HubLinkStatus.NOT_STARTED_YET,
-    HubLinkStatus.NOT_VIEWED,
-    HubLinkStatus.UPDATED,
-    HubLinkStatus.IN_PROGRESS,
-    HubLinkStatus.VIEWED,
-    HubLinkStatus.WAITING_FOR_TRIBUNAL,
-  ];
 
   let mostUrgentStatus;
   for (const application of items) {

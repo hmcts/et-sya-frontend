@@ -1,20 +1,23 @@
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  statusesInOrderOfUrgency,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
-import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
+import { HubLinkNames } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
 describe('checkIfRespondentIsSystemUser', () => {
+  const DATE = 'August 19, 2022';
+
   it('should return false if respondents is undefined', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: DATE,
+      lastModified: DATE,
       respondents: undefined,
     };
     expect(checkIfRespondentIsSystemUser(userCase)).toEqual(false);
@@ -24,8 +27,8 @@ describe('checkIfRespondentIsSystemUser', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: DATE,
+      lastModified: DATE,
       respondents: [
         {
           ccdId: '1',
@@ -40,8 +43,8 @@ describe('checkIfRespondentIsSystemUser', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: DATE,
+      lastModified: DATE,
       respondents: [
         {
           ccdId: '1',
@@ -64,8 +67,8 @@ describe('checkIfRespondentIsSystemUser', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
-      createdDate: 'August 19, 2022',
-      lastModified: 'August 19, 2022',
+      createdDate: DATE,
+      lastModified: DATE,
       respondents: [
         {
           ccdId: '1',
@@ -95,9 +98,15 @@ describe('activateRespondentApplicationsLink', () => {
     userCase = clone(mockUserCase);
   });
 
-  it('should set hub link for respondent applications to in progress if applications exist', () => {
-    activateRespondentApplicationsLink([{}], userCase);
-    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(HubLinkStatus.NOT_STARTED_YET);
+  test.each([
+    [statusesInOrderOfUrgency[0], statusesInOrderOfUrgency[1]],
+    [statusesInOrderOfUrgency[1], statusesInOrderOfUrgency[2]],
+    [statusesInOrderOfUrgency[2], statusesInOrderOfUrgency[3]],
+    [statusesInOrderOfUrgency[3], statusesInOrderOfUrgency[4]],
+    [statusesInOrderOfUrgency[4], statusesInOrderOfUrgency[5]],
+  ])('set hub link for respondent applications based on the following application statuses ([%s, %s])', (a, b) => {
+    activateRespondentApplicationsLink([{ value: { status: a } }, { value: { status: b } }], userCase);
+    expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(b);
   });
 
   it('should not set hub link for respondent applications to in progress if no applications exist', () => {
