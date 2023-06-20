@@ -33,6 +33,9 @@
       {% endif %}
 
       {% if adminRespondButton %}
+        <p class="govuk-body">
+          {{ mustRespond }}
+        </p>
         {{ govukButton({
             text: respond,
             href: '/respond-to-tribunal-response'

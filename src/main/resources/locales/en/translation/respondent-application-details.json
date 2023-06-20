@@ -10,7 +10,7 @@
   "supportingMaterial": "Supporting material",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "otherPartyResponseHeader": "Other party response",
-  "responseFrom": "Response from",
+  "responder": "Response from",
   "responseDate": "Response date",
   "response": "What's your response to the respondent's application?",
   "decision": "Decision",
@@ -43,5 +43,6 @@
   "responseDue": "Response due",
   "partyToRespond": "Party or parties to respond",
   "description": "Description",
-  "requestMadeBy": "Request made by"
+  "requestMadeBy": "Request made by",
+  "mustRespond": "You must respond to the tribunal."
 }

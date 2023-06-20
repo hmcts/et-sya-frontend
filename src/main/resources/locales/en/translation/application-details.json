@@ -10,7 +10,7 @@
   "otherPartyResponse": "Other party response",
   "responder": "Response from",
   "responseDate": "Response date",
-  "yourReponse": "What's your response to the claimant's application?",
+  "response": "What's your response to the claimant's application?",
   "withdraw": "withdraw my claim",
   "change-details": "change my personal details",
   "postpone": "postpone a hearing",
@@ -39,5 +39,5 @@
   "description": "Description",
   "requestMadeBy": "Request made by",
   "respond": "Respond",
-  "mustRespond": "You must respond to the tribunal"
+  "mustRespond": "You must respond to the tribunal."
 }

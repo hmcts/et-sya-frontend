@@ -12,7 +12,7 @@ describe('Claimant Applications Controller', () => {
     common: {},
   };
 
-  it('should render the claimant application details page', () => {
+  it('should render the claimant application details page', async () => {
     const controller = new ApplicationDetailsController();
 
     const userCase: Partial<CaseWithId> = {
@@ -37,7 +37,7 @@ describe('Claimant Applications Controller', () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.APPLICATION_DETAILS, expect.anything());
   });

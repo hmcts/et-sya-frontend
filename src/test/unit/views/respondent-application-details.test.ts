@@ -27,7 +27,7 @@ const respondentAppRowHeader4 = respondentApplicationDetailsJSON.legend;
 const respondentAppRowHeader5 = respondentApplicationDetailsJSON.supportingMaterial;
 const respondentAppRowHeader6 = respondentApplicationDetailsJSON.copyCorrespondence;
 
-const claimantResponseRowHeader1 = respondentApplicationDetailsJSON.responseFrom;
+const claimantResponseRowHeader1 = respondentApplicationDetailsJSON.responder;
 const claimantResponseRowHeader2 = respondentApplicationDetailsJSON.responseDate;
 const claimantResponseRowHeader3 = respondentApplicationDetailsJSON.response;
 const claimantResponseRowHeader4 = respondentApplicationDetailsJSON.supportingMaterial;
@@ -45,7 +45,7 @@ const adminDecisionRowHeader9 = respondentApplicationDetailsJSON.decisionMadeBy;
 const adminDecisionRowHeader10 = respondentApplicationDetailsJSON.name;
 const adminDecisionRowHeader11 = '<br><br>Notification';
 
-const expectedResponseSummaryListHeader = respondentApplicationDetailsJSON.otherPartyResponseHeader;
+const expectedResponseSummaryListHeader = 'Response 1';
 
 let htmlRes: Document;
 
