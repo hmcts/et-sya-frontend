@@ -104,12 +104,15 @@ describe('activateRespondentApplicationsLink', () => {
     [statusesInOrderOfUrgency[2], statusesInOrderOfUrgency[3]],
     [statusesInOrderOfUrgency[3], statusesInOrderOfUrgency[4]],
     [statusesInOrderOfUrgency[4], statusesInOrderOfUrgency[5]],
-  ])('set hub link for respondent applications based on the following application statuses ([%s, %s])', (a, b) => {
-    activateRespondentApplicationsLink([{ value: { status: a } }, { value: { status: b } }], userCase);
+  ])('set hub status for respondent applications based on the following application statuses ([%s, %s])', (a, b) => {
+    activateRespondentApplicationsLink(
+      [{ value: { applicationState: a } }, { value: { applicationState: b } }],
+      userCase
+    );
     expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBe(b);
   });
 
-  it('should not set hub link for respondent applications to in progress if no applications exist', () => {
+  it('should not set hub status for respondent applications if no applications exist', () => {
     activateRespondentApplicationsLink(undefined, userCase);
     expect(userCase?.hubLinksStatuses[HubLinkNames.RespondentApplications]).toBeUndefined();
   });

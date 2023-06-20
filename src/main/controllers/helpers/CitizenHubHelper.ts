@@ -115,7 +115,7 @@ export const activateRespondentApplicationsLink = (
 
   let mostUrgentStatus;
   for (const application of items) {
-    const currStatus = application.value.status as HubLinkStatus;
+    const currStatus = application.value.applicationState as HubLinkStatus;
     if (statusesInOrderOfUrgency.indexOf(currStatus) > statusesInOrderOfUrgency.indexOf(mostUrgentStatus)) {
       mostUrgentStatus = currStatus;
     }
