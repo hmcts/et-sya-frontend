@@ -77,9 +77,8 @@ export const shouldShowJudgmentReceived = (userCase: CaseWithId, hubLinksStatuse
 };
 
 export const userCaseContainsGeneralCorrespondence = (notifications: SendNotificationTypeItem[]): boolean => {
-  return (
-    notifications &&
-    notifications.some(it => it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE))
+  return notifications?.some(it =>
+    it.value.sendNotificationSubject.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
   );
 };
 
@@ -97,11 +96,40 @@ export const checkIfRespondentIsSystemUser = (userCase: CaseWithId): boolean => 
   );
 };
 
+export enum StatusesInOrderOfUrgency {
+  notStartedYet = 0,
+  notViewedYet = 1,
+  updated = 2,
+  inProgress = 3,
+  viewed = 4,
+  waitingForTheTribunal = 5,
+}
+
 export const activateRespondentApplicationsLink = (
   items: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
-  if (items?.length) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
+  if (!items?.length) {
+    return;
   }
+
+  const mostUrgentStatus = Math.min(
+    ...items.map(o => StatusesInOrderOfUrgency[o.value.applicationState as keyof typeof StatusesInOrderOfUrgency])
+  );
+
+  userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = StatusesInOrderOfUrgency[
+    mostUrgentStatus
+  ] as HubLinkStatus;
+};
+
+export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string): boolean => {
+  if (status === HubLinkStatus.NOT_YET_AVAILABLE) {
+    return false;
+  }
+
+  if (status === HubLinkStatus.WAITING_FOR_TRIBUNAL && linkName !== HubLinkNames.RespondentApplications) {
+    return false;
+  }
+
+  return true;
 };

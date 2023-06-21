@@ -13,6 +13,7 @@ import {
   mockRespAppWithDecisionNotViewed,
   mockRespAppWithDecisionViewed,
   mockSimpleRespAppTypeItem,
+  mockSimpleViewedRespAppTypeItem,
 } from '../../mocks/mockApplications';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { clone } from '../../test-helpers/clone';
@@ -78,6 +79,16 @@ describe('Respondent application details', () => {
 
       expect(item.statusColor).toEqual('--red');
       expect(item.displayStatus).toEqual('Not started yet');
+    });
+
+    it('correct status when no replies and viewed', () => {
+      const item = clone(mockSimpleViewedRespAppTypeItem);
+      const items = [item];
+
+      populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(items, url, translations);
+
+      expect(item.statusColor).toEqual('--yellow');
+      expect(item.displayStatus).toEqual('In progress');
     });
 
     it('correct status when claimant replies', () => {

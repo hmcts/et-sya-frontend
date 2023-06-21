@@ -21,6 +21,7 @@ import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelp
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
@@ -138,7 +139,7 @@ export default class CitizenHubController {
           return {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
-            shouldShow: status !== HubLinkStatus.NOT_YET_AVAILABLE && status !== HubLinkStatus.WAITING_FOR_TRIBUNAL,
+            shouldShow: shouldHubLinkBeClickable(status, linkName),
             url: () => hubLinksUrlMap.get(linkName),
             statusColor: () => statusColorMap.get(status),
           };

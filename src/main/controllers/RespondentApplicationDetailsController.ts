@@ -58,11 +58,25 @@ export default class RespondentApplicationDetailsController {
       TranslationKeys.RESPONDENT_APPLICATION_DETAILS,
     ]);
 
+    const currStatus = selectedApplication.value.applicationState;
     try {
-      if (selectedApplication.value.applicationState === HubLinkStatus.NOT_VIEWED) {
-        await getCaseApi(req.session.user?.accessToken).viewAdminDecisionForApplication(req.session.userCase);
-        selectedApplication.value.applicationState = HubLinkStatus.VIEWED;
-        logger.info(`Viewed admin's decision for respondent's application for case: ${req.session.userCase.id}`);
+      let newStatus;
+
+      switch (currStatus) {
+        case HubLinkStatus.NOT_VIEWED:
+          newStatus = HubLinkStatus.VIEWED;
+          break;
+        case HubLinkStatus.NOT_STARTED_YET:
+        case HubLinkStatus.UPDATED:
+          newStatus = HubLinkStatus.IN_PROGRESS;
+          break;
+        default:
+      }
+
+      if (newStatus) {
+        await getCaseApi(req.session.user?.accessToken).changeApplicationStatus(req.session.userCase, newStatus);
+        selectedApplication.value.applicationState = newStatus;
+        logger.info(`New status for respondent's application for case: ${req.session.userCase.id} - ${newStatus}`);
       }
     } catch (error) {
       logger.error(error.message);

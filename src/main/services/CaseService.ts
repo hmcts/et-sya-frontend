@@ -133,15 +133,19 @@ export class CaseApi {
     }
   };
 
-  viewAdminDecisionForApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+  changeApplicationStatus = async (
+    caseItem: CaseWithId,
+    newStatus: HubLinkStatus
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.VIEW_AN_APPLICATION, {
+      return await this.axios.put(JavaApiUrls.CHANGE_APPLICATION_STATUS, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
-        applicationId: caseItem.selectedGenericTseApplication.id,
+        application_id: caseItem.selectedGenericTseApplication.id,
+        new_status: newStatus,
       });
     } catch (error) {
-      throw new Error("Error viewing admin decision on respondent's tse application: " + axiosErrorDetails(error));
+      throw new Error('Error changing tse application status: ' + axiosErrorDetails(error));
     }
   };
 

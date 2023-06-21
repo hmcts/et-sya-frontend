@@ -59,6 +59,13 @@ export interface TseRespondTypeItem {
 export interface TseRespondType {
   from?: string;
   date?: string;
+  addDocument?: DocumentTypeItem[];
+  requestMadeBy?: string;
+  isCmoOrRequest?: string;
+  madeByFullName?: string;
+  selectPartyNotify?: string;
+  isResponseRequired?: string;
+  selectPartyRespond?: string;
   response?: string;
   copyToOtherParty?: string;
   hasSupportingMaterial?: YesOrNo;

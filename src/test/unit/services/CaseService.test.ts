@@ -25,7 +25,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
-import { HubLinksStatuses } from '../../../main/definitions/hub';
+import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import { CaseApi, UploadedFile, getCaseApi } from '../../../main/services/CaseService';
 import { mockSimpleRespAppTypeItem } from '../mocks/mockApplications';
 import { mockClaimantTseRequest } from '../mocks/mockClaimantTseRequest';
@@ -354,7 +354,7 @@ describe('update case', () => {
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject(mockHubLinkStatusesRequest);
   });
 
-  it('should update resp application with decision to be viewed', async () => {
+  it('should update respondent application as viewed', async () => {
     const caseItem: CaseWithId = {
       id: '1234',
       state: CaseState.SUBMITTED,
@@ -363,10 +363,11 @@ describe('update case', () => {
       selectedGenericTseApplication: clone(mockSimpleRespAppTypeItem),
     };
 
-    await api.viewAdminDecisionForApplication(caseItem);
+    await api.changeApplicationStatus(caseItem, HubLinkStatus.VIEWED);
 
-    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.VIEW_AN_APPLICATION);
-    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ applicationId: '1' });
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.CHANGE_APPLICATION_STATUS);
+    console.table(mockedAxios.put.mock.calls[0][1]);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ application_id: '1', new_status: HubLinkStatus.VIEWED });
   });
 });
 
@@ -588,9 +589,9 @@ describe('Rethrowing errors when axios requests fail', () => {
       errorMessage: 'Error adding response to sendNotification: ' + error.message,
     },
     {
-      serviceMethod: api.viewAdminDecisionForApplication,
+      serviceMethod: api.changeApplicationStatus,
       parameters: [caseItem],
-      errorMessage: "Error viewing admin decision on respondent's tse application: " + error.message,
+      errorMessage: 'Error changing tse application status: ' + error.message,
     },
     {
       serviceMethod: api.updateSendNotificationState,

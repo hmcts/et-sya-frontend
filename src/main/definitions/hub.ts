@@ -36,6 +36,7 @@ export const enum HubLinkStatus {
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
   IN_PROGRESS = 'inProgress',
   NOT_STARTED_YET = 'notStartedYet',
+  UPDATED = 'updated',
 }
 
 export const hubLinksUrlMap = new Map<string, string>([
@@ -69,6 +70,7 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.SUBMITTED_AND_VIEWED, COLORS.TURQUOISE],
   [HubLinkStatus.IN_PROGRESS, COLORS.YELLOW],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
+  [HubLinkStatus.UPDATED, COLORS.BLUE],
 ]);
 
 export const displayStatusColorMap = new Map<HubLinkStatus, string>([
