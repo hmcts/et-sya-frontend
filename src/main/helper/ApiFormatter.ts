@@ -481,7 +481,8 @@ export const setDocumentValues = (
 };
 
 export const getDocId = (url: string): string => {
-  return url?.substring(url.lastIndexOf('/') + 1, url.length);
+  const x = url?.substring(url.lastIndexOf('/') + 1, url.length);
+  return x;
 };
 
 export const getFileExtension = (fileName: string): string => {

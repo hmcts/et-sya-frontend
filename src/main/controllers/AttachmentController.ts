@@ -6,16 +6,8 @@ import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import {
-  getDecisionDocId,
-  getJudgmentDocId,
-  getRequestDocId,
-  getSelectedAppDecisionDocId,
-  getSelectedAppDocId,
-  getSelectedAppResponseDocId,
-  isValidResponseDocId,
-} from './helpers/DocumentHelpers';
-import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './helpers/JudgmentHelpers';
+import { isDocFromJudgement, isDocInDocumentCollection, isDocOnApplicationPage } from './helpers/AllDocumentsHelper';
+import { getRequestDocId } from './helpers/DocumentHelpers';
 
 const logger = getLogger('AttachmentController');
 
@@ -26,84 +18,46 @@ export default class AttachmentController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const docId = req.params.docId;
     const userCase = req.session?.userCase;
-    let responseDocId;
-    let decisionDocId;
-    let requestDocId;
-    let contactTheTribunalSupportingFileId;
-    let supportingFileId;
-    let allDocsSelectedFileId;
-    const selectedApplication = userCase.selectedGenericTseApplication;
-    const selectedApplicationDocUrl = selectedApplication?.value.documentUpload?.document_url;
-    let judgmentDocId;
-    let appDocId;
-    let decisions;
-    let appDecisionDocId;
-    let isResponseDoc: boolean;
 
-    if (
-      req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS ||
-      req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS
-    ) {
-      appDocId = getDocId(selectedApplicationDocUrl);
-      decisionDocId = getDecisionDocId(req, selectedApplication);
-      isResponseDoc = isValidResponseDocId(docId, selectedApplication.value.respondCollection);
+    if (!docId) {
+      logger.info('no docId provided');
+      return res.redirect('/not-found');
     }
 
     if (
+      docId === getDocId(userCase.contactApplicationFile?.document_url) ||
+      docId === getDocId(userCase.supportingMaterialFile?.document_url)
+    ) {
+      await downloadDocument(req, res, docId);
+    } else if (isDocOnApplicationPage(req, docId)) {
+      await downloadDocument(req, res, docId);
+    } else if (
       req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
       req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
     ) {
-      requestDocId = getRequestDocId(req);
-    }
-
-    if (userCase.contactApplicationFile) {
-      contactTheTribunalSupportingFileId = getDocId(userCase.contactApplicationFile?.document_url);
-    }
-
-    if (userCase.supportingMaterialFile) {
-      supportingFileId = getDocId(userCase.supportingMaterialFile?.document_url);
-    }
-
-    if (req.session.documentDownloadPage === PageUrls.JUDGMENT_DETAILS) {
-      judgmentDocId = getJudgmentDocId(req);
-      if (judgmentDocId === undefined) {
-        decisions = getDecisions(userCase);
-        const appsWithDecisions = getAllAppsWithDecisions(userCase);
-        const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
-        appDocId = getSelectedAppDocId(req, appsAndDecisions);
-        responseDocId = getSelectedAppResponseDocId(req, appsAndDecisions);
-        appDecisionDocId = getSelectedAppDecisionDocId(req, appsAndDecisions);
+      if (docId === getRequestDocId(req)) {
+        await downloadDocument(req, res, docId);
       }
-    }
-
-    if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
-      allDocsSelectedFileId = userCase.documentCollection
-        .map(it => getDocId(it.value.uploadedDocument.document_url))
-        .find(it => docId === it);
-    }
-
-    try {
-      if (
-        docId !== decisionDocId &&
-        docId !== requestDocId &&
-        docId !== responseDocId &&
-        docId !== contactTheTribunalSupportingFileId &&
-        docId !== supportingFileId &&
-        docId !== judgmentDocId &&
-        docId !== appDocId &&
-        docId !== appDecisionDocId &&
-        docId !== allDocsSelectedFileId &&
-        !isResponseDoc
-      ) {
-        logger.info('bad request parameter');
-        return res.redirect('/not-found');
+    } else if (isDocFromJudgement(req, docId)) {
+      await downloadDocument(req, res, docId);
+    } else if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+      if (isDocInDocumentCollection(req, docId)) {
+        await downloadDocument(req, res, docId);
       }
-      const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
-      res.setHeader('Content-Type', document.headers['content-type']);
-      res.status(200).send(Buffer.from(document.data, 'binary'));
-    } catch (err) {
-      logger.error(err.message);
+    } else {
+      logger.info('bad request parameter');
       return res.redirect('/not-found');
     }
   }
 }
+
+const downloadDocument = async (req: AppRequest, res: Response, docId: string) => {
+  try {
+    const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
+    res.setHeader('Content-Type', document?.headers['content-type']);
+    res.status(200).send(Buffer.from(document?.data, 'binary'));
+  } catch (err) {
+    logger.error(err.message);
+    return res.redirect('/not-found');
+  }
+};
