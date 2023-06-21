@@ -6,7 +6,9 @@ import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
@@ -48,6 +50,7 @@ export default class CheckYourAnswersController {
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
       newRespondentNum,
+      addRespondentLink: getRespondentRedirectUrl(newRespondentNum, setUrlLanguage(req, PageUrls.RESPONDENT_NAME)),
     });
   }
 }
