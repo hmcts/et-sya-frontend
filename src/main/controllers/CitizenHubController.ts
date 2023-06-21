@@ -190,7 +190,11 @@ export default class CitizenHubController {
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: checkIfRespondentIsSystemUser(userCase),
-      adminNotifications: getApplicationsWithTribunalOrderOrRequest(userCase, translations, languageParam),
+      adminNotifications: getApplicationsWithTribunalOrderOrRequest(
+        userCase?.genericTseApplicationCollection,
+        translations,
+        languageParam
+      ),
     });
   }
 }

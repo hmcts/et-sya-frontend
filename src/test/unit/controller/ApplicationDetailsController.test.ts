@@ -1,10 +1,20 @@
+import axios, { AxiosResponse } from 'axios';
+
 import ApplicationDetailsController from '../../../main/controllers/ApplicationDetailsController';
+import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 import { CaseWithId } from '../../../main/definitions/case';
-import { Applicant, TranslationKeys } from '../../../main/definitions/constants';
+import { TranslationKeys } from '../../../main/definitions/constants';
 import applicationDetails from '../../../main/resources/locales/en/translation/application-details.json';
 import common from '../../../main/resources/locales/en/translation/common.json';
+import * as CaseService from '../../../main/services/CaseService';
+import { CaseApi } from '../../../main/services/CaseService';
+import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import mockUserCase from '../mocks/mockUserCase';
+
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
 
 describe('Claimant Applications Controller', () => {
   const translationJsons = { ...applicationDetails, ...common };
@@ -13,26 +23,21 @@ describe('Claimant Applications Controller', () => {
   };
 
   it('should render the claimant application details page', async () => {
+    const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+    mockClient.mockReturnValue(caseApi);
+    caseApi.getDocumentDetails = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        data: {
+          createdOn: '2022-05-11',
+          size: 1,
+          mimeType: 'pdf',
+        },
+      } as AxiosResponse<DocumentDetailsResponse>)
+    );
     const controller = new ApplicationDetailsController();
 
-    const userCase: Partial<CaseWithId> = {
-      genericTseApplicationCollection: [
-        {
-          id: '1',
-          value: {
-            applicant: Applicant.CLAIMANT,
-            date: '2022-05-05',
-            type: 'Amend my claim',
-            copyToOtherPartyText: 'Yes',
-            details: 'Help',
-            number: '1',
-            status: 'notViewedYet',
-            dueDate: '2022-05-12',
-            applicationState: 'notViewedYet',
-          },
-        },
-      ],
-    };
+    const userCase: Partial<CaseWithId> = mockUserCase;
+    userCase.genericTseApplicationCollection = mockGenericTseCollection;
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
@@ -40,5 +45,22 @@ describe('Claimant Applications Controller', () => {
     await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.APPLICATION_DETAILS, expect.anything());
+  });
+
+  it('should redirect to the claimant not found page', async () => {
+    const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+    mockClient.mockReturnValue(caseApi);
+    caseApi.getDocumentDetails = jest.fn().mockResolvedValue({});
+    const controller = new ApplicationDetailsController();
+
+    const userCase: Partial<CaseWithId> = mockUserCase;
+    userCase.genericTseApplicationCollection = mockGenericTseCollection;
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
   });
 });

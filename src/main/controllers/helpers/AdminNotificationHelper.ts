@@ -1,16 +1,13 @@
 import { AdminNotifcation } from '../../definitions/adminNotification';
-import { CaseWithId } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getApplicationsWithTribunalOrderOrRequest = (
-  userCase: CaseWithId,
+  apps: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
   languageParam: string
 ): AdminNotifcation[] => {
-  const apps = userCase?.genericTseApplicationCollection;
   const appsWithTribunalOrderOrRequest: AdminNotifcation[] = [];
-
   if (apps) {
     for (const app of apps) {
       const request = getVisibleRequestFromAdmin(app, translations, languageParam);
@@ -20,16 +17,6 @@ export const getApplicationsWithTribunalOrderOrRequest = (
     }
     return appsWithTribunalOrderOrRequest;
   }
-};
-
-const getNameText = (applicant: string, translations: AnyRecord): string => {
-  return applicant === 'Claimant' ? translations.your : translations.theRespondent;
-};
-
-const getAppUrl = (applicant: string, appId: string, languageParam: string) => {
-  return applicant === 'Claimant'
-    ? `/application-details/${appId}${languageParam}`
-    : `/respondent-application-details/${appId}${languageParam}`;
 };
 
 export const responseRequired = (adminRequest: AdminNotifcation): boolean => {
@@ -65,4 +52,14 @@ export const getVisibleRequestFromAdmin = (
       }
     }
   }
+};
+
+const getNameText = (applicant: string, translations: AnyRecord): string => {
+  return applicant === 'Claimant' ? translations.your : translations.theRespondent;
+};
+
+const getAppUrl = (applicant: string, appId: string, languageParam: string) => {
+  return applicant === 'Claimant'
+    ? `/application-details/${appId}${languageParam}`
+    : `/respondent-application-details/${appId}${languageParam}`;
 };
