@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Respondent } from '../definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
@@ -30,6 +29,8 @@ export default class CheckYourAnswersController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
+    const newRespondentNum = req.session.userCase?.respondents.length + 1;
+
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
       PageUrls,
@@ -46,11 +47,7 @@ export default class CheckYourAnswersController {
       getRespondentSection,
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
-      newRespondentNum: getNewRespondentNum(req.session.userCase?.respondents),
+      newRespondentNum,
     });
   }
 }
-
-const getNewRespondentNum = (respondents: Respondent[]): number => {
-  return respondents.length + 1;
-};
