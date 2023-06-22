@@ -2,6 +2,11 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseAdminDecisionItem,
+} from '../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
@@ -33,16 +38,16 @@ export default class JudgmentDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    let selectedDecision;
-    let decisions;
-    let header;
+    let selectedDecision: TseAdminDecisionItem;
+    let decisions: TseAdminDecisionItem[];
+    let header: string;
     let judgmentAttachments: DocumentTypeItem[] = [];
     let decisionAttachments: DocumentTypeItem[] = [];
-    let selectedDecisionApplication;
+    let selectedDecisionApplication: GenericTseApplicationTypeItem;
     let responseDocDownloadLink;
     let selectedApplicationDocDownloadLink;
 
-    let selectedJudgment;
+    let selectedJudgment: SendNotificationTypeItem;
     if (userCase?.sendNotificationCollection?.length) {
       selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
     }

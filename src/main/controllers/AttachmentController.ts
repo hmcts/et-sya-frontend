@@ -41,6 +41,7 @@ export default class AttachmentController {
     } else if (isDocFromJudgement(req, docId)) {
       await downloadDocument(req, res, docId);
     } else if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+      // TO DO - is this the only check we need rather than all of the above?
       if (isDocInDocumentCollection(req, docId)) {
         await downloadDocument(req, res, docId);
       }

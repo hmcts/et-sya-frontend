@@ -8,10 +8,10 @@ import { getDocId } from '../../helper/ApiFormatter';
 
 import {
   getDecisionDocId,
-  getJudgmentDocId,
   getSelectedAppDecisionDocId,
   getSelectedAppDocId,
   getSelectedAppResponseDocId,
+  isJudgmentDocId,
   isValidResponseDocId,
 } from './DocumentHelpers';
 import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './JudgmentHelpers';
@@ -126,19 +126,19 @@ export const documentHasToBeFiltered = (rule92: string, typeOfApp: string): bool
 
 export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
   if (req.session.documentDownloadPage === PageUrls.JUDGMENT_DETAILS) {
-    if (getJudgmentDocId(req) === undefined) {
-      const userCase = req.session?.userCase;
-      const decisions = getDecisions(userCase);
-      const appsWithDecisions = getAllAppsWithDecisions(userCase);
-      const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
-
-      if (
-        docId === getSelectedAppDocId(req, appsAndDecisions) ||
-        docId === getSelectedAppResponseDocId(req, appsAndDecisions) ||
-        docId === getSelectedAppDecisionDocId(req, appsAndDecisions)
-      ) {
-        return true;
-      }
+    const userCase = req.session?.userCase;
+    if (isJudgmentDocId(userCase, docId)) {
+      return true;
+    }
+    const decisions = getDecisions(userCase);
+    const appsWithDecisions = getAllAppsWithDecisions(userCase);
+    const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+    if (
+      docId === getSelectedAppDocId(docId, appsAndDecisions) ||
+      docId === getSelectedAppResponseDocId(docId, appsAndDecisions) ||
+      docId === getSelectedAppDecisionDocId(docId, appsAndDecisions)
+    ) {
+      return true;
     }
   }
   return false;

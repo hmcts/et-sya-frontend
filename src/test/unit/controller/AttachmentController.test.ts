@@ -6,6 +6,7 @@ import { notificationType } from '../mocks/mockNotificationItem';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import mockUserCase from '../mocks/mockUserCase';
+import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 
 describe('Attachment Controller', () => {
   const getCaseApiMock = jest.spyOn(CaseService, 'getCaseApi');
@@ -114,6 +115,37 @@ describe('Attachment Controller', () => {
     const request = mockRequest({ userCase });
     request.params.docId = '12345';
     request.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+
+    controller.get(request, response);
+    expect(getCaseApiMock).toHaveBeenCalled();
+  });
+
+  it('should call getCaseDocument if document id provided is doc from judgement', () => {
+    const controller = new AttachmentController();
+    const response = mockResponse();
+    const userCase = mockUserCase;
+    userCase.selectedRequestOrOrder = {
+      id: '1',
+      value: notificationType,
+    };
+    userCase.selectedRequestOrOrder.value.sendNotificationUploadDocument[0].value.uploadedDocument.document_url =
+      'http.site/12345';
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
+
+    controller.get(request, response);
+    expect(getCaseApiMock).toHaveBeenCalled();
+  });
+
+  it('should call getCaseDocument if document id is in document collection', () => {
+    const controller = new AttachmentController();
+    const response = mockResponse();
+    const userCase = mockUserCaseComplete;
+    userCase.documentCollection[0].value.uploadedDocument.document_url = 'http.site/12345';
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.documentDownloadPage = PageUrls.ALL_DOCUMENTS;
 
     controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();

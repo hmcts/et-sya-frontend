@@ -145,11 +145,7 @@ export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTs
   return decisionDocUrls.map(it => getDocId(it)).find(id => id === docId);
 }
 
-export function getSelectedAppDecisionDocId(
-  req: AppRequest,
-  appsAndDecisions: DecisionAndApplicationDetails[]
-): string {
-  const docId = req.params.docId;
+export function getSelectedAppDecisionDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
   const selectedAppDecisionDocIds = [];
   for (const element of appsAndDecisions) {
     if (element.decisionOfApp?.value?.responseRequiredDoc?.length) {
@@ -164,9 +160,8 @@ export function getSelectedAppDecisionDocId(
   return selectedAppDecisionDocIds.map(it => getDocId(it)).find(id => id === docId);
 }
 
-export function getSelectedAppDocId(req: AppRequest, appsAndDecisions: DecisionAndApplicationDetails[]): string {
+export function getSelectedAppDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
   let selectedAppDocId = undefined;
-  const docId = req.params.docId;
   const selectedAppDocIds = [];
   for (let i = appsAndDecisions.length - 1; i >= 0; i--) {
     if (appsAndDecisions[i].value.documentUpload !== undefined) {
@@ -177,12 +172,8 @@ export function getSelectedAppDocId(req: AppRequest, appsAndDecisions: DecisionA
   return selectedAppDocId;
 }
 
-export function getSelectedAppResponseDocId(
-  req: AppRequest,
-  appsAndDecisions: DecisionAndApplicationDetails[]
-): string {
+export function getSelectedAppResponseDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
   let selectedAppResponseDocId = undefined;
-  const docId = req.params.docId;
   const selectedAppResponseDocIds = [];
   for (let i = appsAndDecisions.length - 1; i >= 0; i--) {
     if (appsAndDecisions[i].value?.respondCollection?.length) {
@@ -210,15 +201,14 @@ export function getRequestDocId(req: AppRequest): string {
   return requestDocId;
 }
 
-export function getJudgmentDocId(req: AppRequest): string {
-  const docId = req.params.docId;
-  const userCase = req.session?.userCase;
+export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {
   const judgmentDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
-  let judgmentDocId = undefined;
   if (judgmentDoc?.length) {
-    judgmentDocId = judgmentDoc.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId);
+    return (
+      judgmentDoc.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId) !== undefined
+    );
   }
-  return judgmentDocId;
+  return false;
 }
 
 export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetail[] => {
