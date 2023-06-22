@@ -14,6 +14,7 @@ import {
   getDocumentAdditionalInformation,
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -25,7 +26,6 @@ export default class ApplicationDetailsController {
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
 
     const userCase = req.session.userCase;
-
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params.appId
@@ -36,7 +36,7 @@ export default class ApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
 
-    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, 'en');
+    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, getLanguageParam(req.url));
     const respondButton = responseRequired(adminRequest);
 
     if (document) {
