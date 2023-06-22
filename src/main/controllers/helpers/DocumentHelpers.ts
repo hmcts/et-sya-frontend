@@ -7,7 +7,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
+import { Applicant, DOCUMENT_CONTENT_TYPES, PageUrls } from '../../definitions/constants';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
@@ -113,7 +113,7 @@ export function getResponseDocId(selectedApplication: GenericTseApplicationTypeI
 
 export function isValidResponseDocId(docId: string, respondCollection: TseRespondTypeItem[]): boolean {
   for (const response of respondCollection) {
-    if (response.value.from === 'Claimant' || response.value.from === 'Respoondent') {
+    if (response.value.from === Applicant.CLAIMANT || response.value.from === Applicant.RESPONDENT) {
       if (
         docId ===
         getDocId(
@@ -122,7 +122,7 @@ export function isValidResponseDocId(docId: string, respondCollection: TseRespon
       ) {
         return true;
       }
-    } else if (response.value.from === 'Admin') {
+    } else if (response.value.from === Applicant.ADMIN) {
       if (docId === getDocId(response.value?.addDocument[0].value?.uploadedDocument.document_url)) {
         return true;
       }
@@ -190,15 +190,17 @@ export function getSelectedAppResponseDocId(docId: string, appsAndDecisions: Dec
   return selectedAppResponseDocId;
 }
 
-export function getRequestDocId(req: AppRequest): string {
-  const docId = req.params.docId;
-  const userCase = req.session?.userCase;
-  const requestDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
-  let requestDocId = undefined;
-  if (requestDoc?.length) {
-    requestDocId = requestDoc.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId);
+export function isRequestDocId(req: AppRequest, docId: string): boolean {
+  if (
+    req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
+    req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
+  ) {
+    const requestDoc = req.session?.userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
+    if (docId === requestDoc?.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId)) {
+      return true;
+    }
+    return false;
   }
-  return requestDocId;
 }
 
 export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {

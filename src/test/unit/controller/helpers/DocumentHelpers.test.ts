@@ -9,14 +9,15 @@ import {
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
   getDocumentAdditionalInformation,
-  getRequestDocId,
   getResponseDocId,
   getSelectedAppDocId,
   getSelectedAppResponseDocId,
   isJudgmentDocId,
+  isRequestDocId,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { PageUrls } from '../../../../main/definitions/constants';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../../../main/definitions/definition';
 import * as caseService from '../../../../main/services/CaseService';
 import { CaseApi } from '../../../../main/services/CaseService';
@@ -569,9 +570,10 @@ describe('getSelectedAppResponseDocId', () => {
 });
 
 describe('getRequestDocId', () => {
-  it('should return the correct request document ID', () => {
+  it('should return the correct request document ID for Tribunal page', () => {
     const req = mockRequest({
       session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -587,14 +589,37 @@ describe('getRequestDocId', () => {
         },
       },
     });
-    req.params.docId = '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
-    const result = getRequestDocId(req);
-    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    const result = isRequestDocId(req, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    expect(result).toBeTruthy();
+  });
+
+  it('should return the correct request document ID for general correspondence page', () => {
+    const req = mockRequest({
+      session: {
+        documentDownloadPage: PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              sendNotificationUploadDocument: [
+                {
+                  value: {
+                    uploadedDocument: testDoc1,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    const result = isRequestDocId(req, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    expect(result).toBeTruthy();
   });
 
   it('should return undefined when no request document matches the docId', () => {
     const req = mockRequest({
       session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -611,13 +636,14 @@ describe('getRequestDocId', () => {
       },
     });
     req.params.docId = '1a2b3c4d5e6f7g8h';
-    const result = getRequestDocId(req);
-    expect(result).toBeUndefined();
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when sendNotificationUploadDocument is empty', () => {
     const req = mockRequest({
       session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
         userCase: {
           selectedRequestOrOrder: {
             value: {
@@ -628,16 +654,15 @@ describe('getRequestDocId', () => {
       },
     });
     req.params.docId = '1a2b3c4d5e6f7g8h';
-    const result = getRequestDocId(req);
-    expect(result).toBeUndefined();
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when session or userCase is undefined', () => {
     const req = mockRequest({});
-    req.params.docId = '1a2b3c4d5e6f7g8h';
 
-    const result = getRequestDocId(req);
-    expect(result).toBeUndefined();
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
+    expect(result).toBeFalsy();
   });
 });
 

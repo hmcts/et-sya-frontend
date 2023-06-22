@@ -162,11 +162,13 @@ export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean 
 };
 
 export const isDocInDocumentCollection = (req: AppRequest, docId: string): boolean => {
-  const allDocsSelectedFileId = req.session?.userCase.documentCollection
-    .map(it => getDocId(it.value.uploadedDocument.document_url))
-    .find(it => docId === it);
-  if (docId === allDocsSelectedFileId) {
-    return true;
+  if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+    const allDocsSelectedFileId = req.session?.userCase.documentCollection
+      .map(it => getDocId(it.value.uploadedDocument.document_url))
+      .find(it => docId === it);
+    if (docId === allDocsSelectedFileId) {
+      return true;
+    }
   }
   return false;
 };

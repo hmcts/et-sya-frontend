@@ -5,6 +5,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
@@ -198,7 +199,7 @@ export const getAllResponses = async (
 
   if (respondCollection) {
     for (const response of respondCollection) {
-      if (response.value.from === 'Respondent' || response.value.from === 'Claimant') {
+      if (response.value.from === Applicant.RESPONDENT || response.value.from === Applicant.CLAIMANT) {
         allResponses.push([
           {
             key: {
@@ -245,7 +246,7 @@ export const getAllResponses = async (
           },
         ]);
       }
-      if (response.value.from === 'Admin') {
+      if (response.value.from === Applicant.ADMIN) {
         allResponses.push([
           {
             key: {

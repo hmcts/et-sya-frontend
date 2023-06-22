@@ -150,4 +150,17 @@ describe('Attachment Controller', () => {
     controller.get(request, response);
     expect(getCaseApiMock).toHaveBeenCalled();
   });
+
+  it('should call not found if document id is not in document collection', () => {
+    const controller = new AttachmentController();
+    const response = mockResponse();
+    const userCase = mockUserCaseComplete;
+    userCase.documentCollection[0].value.uploadedDocument.document_url = 'http.site/1256';
+    const request = mockRequest({ userCase });
+    request.params.docId = '12345';
+    request.session.documentDownloadPage = PageUrls.ALL_DOCUMENTS;
+
+    controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+  });
 });

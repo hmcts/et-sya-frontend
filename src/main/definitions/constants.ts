@@ -497,6 +497,7 @@ export const ResponseRequired = {
 export const Applicant = {
   CLAIMANT: 'Claimant',
   RESPONDENT: 'Respondent',
+  ADMIN: 'Admin',
 } as const;
 
 export const AllDocumentTypes = {

@@ -1,5 +1,6 @@
 import { AdminNotifcation } from '../../definitions/adminNotification';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant, Parties } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getApplicationsWithTribunalOrderOrRequest = (
@@ -35,8 +36,9 @@ export const getVisibleRequestFromAdmin = (
   if (app.value.respondCollection?.length > 0) {
     for (const response of app.value.respondCollection) {
       if (
-        response.value.from === 'Admin' &&
-        (response.value.selectPartyNotify === 'Claimant only' || response.value.selectPartyNotify === 'Both parties')
+        response.value.from === Applicant.ADMIN &&
+        (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||
+          response.value.selectPartyNotify === Parties.BOTH_PARTIES)
       ) {
         const adminNotification: AdminNotifcation = {
           appName: app.value.type,
@@ -55,11 +57,11 @@ export const getVisibleRequestFromAdmin = (
 };
 
 const getNameText = (applicant: string, translations: AnyRecord): string => {
-  return applicant === 'Claimant' ? translations.your : translations.theRespondent;
+  return applicant === Applicant.CLAIMANT ? translations.your : translations.theRespondent;
 };
 
 const getAppUrl = (applicant: string, appId: string, languageParam: string) => {
-  return applicant === 'Claimant'
+  return applicant === Applicant.CLAIMANT
     ? `/application-details/${appId}${languageParam}`
     : `/respondent-application-details/${appId}${languageParam}`;
 };
