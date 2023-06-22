@@ -21,11 +21,7 @@ export const getApplicationsWithTribunalOrderOrRequest = (
 };
 
 export const responseRequired = (adminRequest: AdminNotifcation): boolean => {
-  if (adminRequest?.isResponseRequired === 'Yes') {
-    return true;
-  } else {
-    return false;
-  }
+  return adminRequest?.isResponseRequired === 'Yes';
 };
 
 export const getVisibleRequestFromAdmin = (
@@ -33,7 +29,7 @@ export const getVisibleRequestFromAdmin = (
   translations: AnyRecord,
   languageParam: string
 ): AdminNotifcation => {
-  if (app.value.respondCollection?.length > 0) {
+  if (app.value.respondCollection?.length) {
     for (const response of app.value.respondCollection) {
       if (
         response.value.from === Applicant.ADMIN &&

@@ -19,7 +19,7 @@ export default class AttachmentController {
     const userCase = req.session?.userCase;
 
     if (!docId) {
-      logger.info('no docId provided');
+      logger.warn('no docId provided');
       return res.redirect('/not-found');
     }
 
@@ -40,7 +40,7 @@ export default class AttachmentController {
         return res.redirect('/not-found');
       }
     } else {
-      logger.info('bad request parameter');
+      logger.warn('bad request parameter');
       return res.redirect('/not-found');
     }
   }

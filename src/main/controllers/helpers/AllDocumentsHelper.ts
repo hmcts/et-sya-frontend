@@ -145,10 +145,7 @@ export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
 };
 
 export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean => {
-  if (
-    req.session.documentDownloadPage === PageUrls.RESPONDENT_APPLICATION_DETAILS ||
-    req.session.documentDownloadPage === PageUrls.APPLICATION_DETAILS
-  ) {
+  if (isApplicationSummaryPage(req.session.documentDownloadPage)) {
     const selectedApplication = req.session?.userCase.selectedGenericTseApplication;
     if (
       docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
@@ -174,10 +171,7 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
 };
 
 export const isApplicationSummaryPage = (page: string): boolean => {
-  if (page === PageUrls.RESPONDENT_APPLICATION_DETAILS || page === PageUrls.APPLICATION_DETAILS) {
-    return true;
-  }
-  return false;
+  return page === PageUrls.RESPONDENT_APPLICATION_DETAILS || page === PageUrls.APPLICATION_DETAILS;
 };
 
 export interface TableRow {

@@ -197,7 +197,7 @@ export const getAllResponses = async (
 ): Promise<any> => {
   const allResponses = [];
 
-  if (respondCollection) {
+  if (respondCollection?.length) {
     for (const response of respondCollection) {
       if (response.value.from === Applicant.RESPONDENT || response.value.from === Applicant.CLAIMANT) {
         allResponses.push([
@@ -353,7 +353,7 @@ const getSupportingMaterialDownloadLink = async (
   accessToken: string,
   res: Response
 ): Promise<string | void> => {
-  let responseDocDownload = undefined;
+  let responseDocDownload;
   if (responseDoc !== undefined) {
     try {
       await getDocumentAdditionalInformation(responseDoc, accessToken);

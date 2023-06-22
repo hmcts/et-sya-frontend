@@ -196,11 +196,9 @@ export function isRequestDocId(req: AppRequest, docId: string): boolean {
     req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
   ) {
     const requestDoc = req.session?.userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
-    if (docId === requestDoc?.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId)) {
-      return true;
-    }
-    return false;
+    return docId === requestDoc?.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId);
   }
+  return false;
 }
 
 export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {
