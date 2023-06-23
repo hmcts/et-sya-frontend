@@ -181,8 +181,12 @@ export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
-  RESPONDENT_NEXT_ANSWER: '?respondentNext=checkAnswer',
   SUBMIT_CASE: '/submitDraftCase',
+} as const;
+
+export const CheckAnswerRedirect = {
+  ADD: '?redirectTo=checkAnswer',
+  ANSWER: 'checkAnswer',
 } as const;
 
 export const ErrorPages = {

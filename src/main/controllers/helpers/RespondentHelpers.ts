@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ErrorPages, InterceptPaths, PageUrls, languages } from '../../definitions/constants';
+import { CheckAnswerRedirect, ErrorPages, PageUrls, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -51,11 +51,11 @@ export const getRespondentIndex = (req: AppRequest): number => {
 };
 
 export const isRespondentNextQuery = (req: AppRequest): boolean => {
-  return req.query.respondentNext === 'checkAnswer';
+  return req.query.redirectTo === CheckAnswerRedirect.ANSWER;
 };
 
 export const addRespondentNextQuery = (redirectToCheckAns: boolean, url: string): string => {
-  return redirectToCheckAns ? url + InterceptPaths.RESPONDENT_NEXT_ANSWER : url;
+  return redirectToCheckAns ? url + CheckAnswerRedirect.ADD : url;
 };
 
 export const getRespondentRedirectUrl = (
