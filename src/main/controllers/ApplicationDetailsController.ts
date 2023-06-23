@@ -36,8 +36,8 @@ export default class ApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
 
-    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, getLanguageParam(req.url));
-    const respondButton = responseRequired(adminRequest);
+    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, getLanguageParam(req.url));
+    const respondButton = responseRequired(adminRequests);
 
     if (document) {
       try {

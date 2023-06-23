@@ -51,7 +51,8 @@ export default class RespondentApplicationDetailsController {
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
-    const redirectUrl = `/respond-to-application/${selectedApplication.id}${getLanguageParam(req.url)}`;
+    const languageParam = getLanguageParam(req.url);
+    const redirectUrl = `/respond-to-application/${selectedApplication.id}${languageParam}`;
     const supportingMaterialDownloadLink = await getApplicationDocDownloadLink(
       selectedApplication,
       logger,
@@ -60,8 +61,8 @@ export default class RespondentApplicationDetailsController {
     );
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-    const adminRequest = getVisibleRequestFromAdmin(selectedApplication, translations, 'en');
-    const adminRespondButton = responseRequired(adminRequest);
+    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, languageParam);
+    const adminRespondButton = responseRequired(adminRequests);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,

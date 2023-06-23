@@ -1,5 +1,9 @@
 import { AdminNotifcation } from '../../definitions/adminNotification';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { YesOrNo } from '../../definitions/case';
+import {
+  GenericTseApplicationTypeItem,
+  TseRespondTypeItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, Parties } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -11,8 +15,11 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   const appsWithTribunalOrderOrRequest: AdminNotifcation[] = [];
   if (apps) {
     for (const app of apps) {
-      const request = getVisibleRequestFromAdmin(app, translations, languageParam);
-      if (request) {
+      const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
+      if (!allRequestsFromAdmin.length) {
+        return appsWithTribunalOrderOrRequest;
+      }
+      for (const request of allRequestsFromAdmin) {
         appsWithTribunalOrderOrRequest.push(request);
       }
     }
@@ -20,36 +27,49 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   }
 };
 
-export const responseRequired = (adminRequest: AdminNotifcation): boolean => {
-  return adminRequest?.isResponseRequired === 'Yes';
+export const responseRequired = (adminRequests: AdminNotifcation[]): boolean => {
+  if (!adminRequests.length) {
+    return false;
+  }
+  for (const request of adminRequests) {
+    if (request.isResponseRequired === YesOrNo.YES) {
+      return true;
+    }
+  }
 };
 
 export const getVisibleRequestFromAdmin = (
   app: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   languageParam: string
-): AdminNotifcation => {
-  if (app.value.respondCollection?.length) {
-    for (const response of app.value.respondCollection) {
-      if (
-        response.value.from === Applicant.ADMIN &&
-        (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||
-          response.value.selectPartyNotify === Parties.BOTH_PARTIES)
-      ) {
-        const adminNotification: AdminNotifcation = {
-          appName: app.value.type,
-          enterResponseTitle: response.value.enterResponseTitle,
-          responseId: response.id,
-          appId: app.id,
-          from: getNameText(app.value.applicant, translations),
-          isResponseRequired: response.value.isResponseRequired,
-          appUrl: getAppUrl(app.value.applicant, app.id, languageParam),
-        };
-        // Only return one tribunal request at a time
-        return adminNotification;
-      }
+): AdminNotifcation[] => {
+  const adminNotifications: AdminNotifcation[] = [];
+  if (!app.value.respondCollection?.length) {
+    return adminNotifications;
+  }
+  for (const response of app.value.respondCollection) {
+    if (isVisibleTribunalResponse(response)) {
+      const adminNotification: AdminNotifcation = {
+        appName: app.value.type,
+        enterResponseTitle: response.value.enterResponseTitle,
+        responseId: response.id,
+        appId: app.id,
+        from: getNameText(app.value.applicant, translations),
+        isResponseRequired: response.value.isResponseRequired,
+        appUrl: getAppUrl(app.value.applicant, app.id, languageParam),
+      };
+      adminNotifications.push(adminNotification);
     }
   }
+  return adminNotifications;
+};
+
+const isVisibleTribunalResponse = (response: TseRespondTypeItem) => {
+  return (
+    response.value.from === Applicant.ADMIN &&
+    (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||
+      response.value.selectPartyNotify === Parties.BOTH_PARTIES)
+  );
 };
 
 const getNameText = (applicant: string, translations: AnyRecord): string => {

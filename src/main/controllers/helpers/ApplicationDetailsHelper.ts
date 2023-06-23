@@ -195,154 +195,153 @@ export const getAllResponses = async (
   accessToken: string,
   res: Response
 ): Promise<any> => {
-  const allResponses = [];
-
-  if (respondCollection?.length) {
-    for (const response of respondCollection) {
-      if (response.value.from === Applicant.RESPONDENT || response.value.from === Applicant.CLAIMANT) {
-        allResponses.push([
-          {
-            key: {
-              text: translations.responder,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: response.value.from,
-            },
+  const allResponses: any[] = [];
+  if (!respondCollection?.length) {
+    return allResponses;
+  }
+  for (const response of respondCollection) {
+    if (response.value.from === Applicant.RESPONDENT || response.value.from === Applicant.CLAIMANT) {
+      allResponses.push([
+        {
+          key: {
+            text: translations.responder,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.responseDate,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.date },
+          value: {
+            text: response.value.from,
           },
-          {
-            key: {
-              text: translations.response,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.response },
+        },
+        {
+          key: {
+            text: translations.responseDate,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.supportingMaterial,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              html: await getSupportingMaterialDownloadLink(
-                response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
-                accessToken,
-                res
-              ),
-            },
+          value: { text: response.value.date },
+        },
+        {
+          key: {
+            text: translations.response,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.copyCorrespondence,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.copyToOtherParty },
+          value: { text: response.value.response },
+        },
+        {
+          key: {
+            text: translations.supportingMaterial,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-        ]);
-      }
-      if (response.value.from === Applicant.ADMIN) {
-        allResponses.push([
-          {
-            key: {
-              text: translations.responseItem,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.enterResponseTitle },
+          value: {
+            html: await getSupportingMaterialDownloadLink(
+              response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
+              accessToken,
+              res
+            ),
           },
-          {
-            key: {
-              text: translations.date,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.date },
+        },
+        {
+          key: {
+            text: translations.copyCorrespondence,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.sentBy,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: translations.tribunal },
+          value: { text: response.value.copyToOtherParty },
+        },
+      ]);
+    }
+    if (response.value.from === Applicant.ADMIN) {
+      allResponses.push([
+        {
+          key: {
+            text: translations.responseItem,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.orderOrRequest,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.isCmoOrRequest },
+          value: { text: response.value.enterResponseTitle },
+        },
+        {
+          key: {
+            text: translations.date,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.responseDue,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.isResponseRequired },
+          value: { text: response.value.date },
+        },
+        {
+          key: {
+            text: translations.sentBy,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.partyToRespond,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.selectPartyRespond },
+          value: { text: translations.tribunal },
+        },
+        {
+          key: {
+            text: translations.orderOrRequest,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.additionalInfo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.additionalInformation },
+          value: { text: response.value.isCmoOrRequest },
+        },
+        {
+          key: {
+            text: translations.responseDue,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.description,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.addDocument?.find(element => element !== undefined).value.shortDescription },
+          value: { text: response.value.isResponseRequired },
+        },
+        {
+          key: {
+            text: translations.partyToRespond,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.document,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              html: await getSupportingMaterialDownloadLink(
-                response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
-                accessToken,
-                res
-              ),
-            },
+          value: { text: response.value.selectPartyRespond },
+        },
+        {
+          key: {
+            text: translations.additionalInfo,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.requestMadeBy,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
-            },
+          value: { text: response.value.additionalInformation },
+        },
+        {
+          key: {
+            text: translations.description,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.name,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.madeByFullName },
+          value: { text: response.value.addDocument?.find(element => element !== undefined).value.shortDescription },
+        },
+        {
+          key: {
+            text: translations.document,
+            classes: 'govuk-!-font-weight-regular-m',
           },
-          {
-            key: {
-              text: translations.sentTo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: { text: response.value.selectPartyNotify },
+          value: {
+            html: await getSupportingMaterialDownloadLink(
+              response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
+              accessToken,
+              res
+            ),
           },
-        ]);
-      }
+        },
+        {
+          key: {
+            text: translations.requestMadeBy,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: {
+            text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
+          },
+        },
+        {
+          key: {
+            text: translations.name,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.madeByFullName },
+        },
+        {
+          key: {
+            text: translations.sentTo,
+            classes: 'govuk-!-font-weight-regular-m',
+          },
+          value: { text: response.value.selectPartyNotify },
+        },
+      ]);
     }
   }
   return allResponses;
@@ -361,7 +360,6 @@ const getSupportingMaterialDownloadLink = async (
       return res.redirect('/not-found');
     }
     responseDocDownload = createDownloadLink(responseDoc);
-    console.log(responseDocDownload);
   }
   return responseDocDownload;
 };
