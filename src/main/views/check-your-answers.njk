@@ -90,11 +90,7 @@
     }}
   {% endfor %}
 
-  {% if newRespondentNum <= 5 %}
-    <dl class="govuk-summary-list">
-      <a class="govuk-link" href="{{PageUrls.RESPONDENT_DETAILS_CHECK}}/respondentDetailsRedirectCheckAnswer">{{translations.addAnotherRespondent}}</a>
-    </dl>
-  {% endif %}
+  <p class="govuk-body"><a class="govuk-link" href="{{PageUrls.RESPONDENT_DETAILS_CHECK}}/respondentDetailsRedirectCheckAnswer">{{translations.addAnotherRespondent}}</a></p>
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">

@@ -12,7 +12,6 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
-    req.session.respondentDetailsRedirectCheckAnswer = false;
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
@@ -24,13 +23,13 @@ export default class CheckYourAnswersController {
       req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
     }
 
+    req.session.respondentDetailsRedirectCheckAnswer = undefined;
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
-
-    const newRespondentNum = req.session.userCase?.respondents.length + 1;
 
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
@@ -48,7 +47,6 @@ export default class CheckYourAnswersController {
       getRespondentSection,
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
-      newRespondentNum,
     });
   }
 }
