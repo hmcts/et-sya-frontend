@@ -12,7 +12,7 @@ import locales from '../resources/locales/en/translation/common.json';
 
 import { convertJsonArrayToTitleCase, handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignAddresses, assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { isRespondentNextQuery, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('WorkPostCodeSelectController');
 
@@ -34,7 +34,7 @@ export default class WorkPostCodeSelectController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK, getRespondentNext(req));
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK, isRespondentNextQuery(req));
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -65,7 +65,7 @@ export default class WorkPostCodeSelectController {
     }
     const content = getPageContent(req, this.postCodeSelectContent, [TranslationKeys.COMMON]);
     assignAddresses(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK, getRespondentNext(req));
+    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK, isRespondentNextQuery(req));
     const title = req.url?.includes('lng=cy') ? localesCy.workPostcodeSelectTitle : locales.workPostcodeSelectTitle;
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.WORK_POSTCODE_SELECT, {

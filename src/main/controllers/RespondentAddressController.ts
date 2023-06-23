@@ -18,8 +18,8 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import {
   fillRespondentAddressFields,
   getRespondentIndex,
-  getRespondentNext,
-  getRespondentRedirectUrl
+  getRespondentRedirectUrl,
+  isRespondentNextQuery,
 } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentAddressController');
@@ -110,7 +110,7 @@ export default class RespondentAddressController {
       userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
         ? PageUrls.ACAS_CERT_NUM
         : PageUrls.WORK_ADDRESS;
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage, getRespondentNext(req));
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage, isRespondentNextQuery(req));
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 

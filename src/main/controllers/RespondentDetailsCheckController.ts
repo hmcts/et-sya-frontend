@@ -9,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
-import { getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { addRespondentNextQuery, getRespondentRedirectUrl, isRespondentNextQuery } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentDetailsCheckController {
@@ -37,11 +37,11 @@ export default class RespondentDetailsCheckController {
     const newRespondentNum = respondents.length + 1;
     if (newRespondentNum > 5) {
       req.session.errors = [{ errorType: 'exceeded', propertyName: 'hiddenErrorField' }];
-      return res.redirect(PageUrls.RESPONDENT_DETAILS_CHECK);
+      return res.redirect(addRespondentNextQuery(isRespondentNextQuery(req), PageUrls.RESPONDENT_DETAILS_CHECK));
     } else {
       req.session.errors = [];
       const redirectUrl = setUrlLanguage(req, PageUrls.RESPONDENT_NAME);
-      return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl, getRespondentNext(req)));
+      return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl, isRespondentNextQuery(req)));
     }
   };
 
@@ -60,8 +60,9 @@ export default class RespondentDetailsCheckController {
       getRespondentDetailsSection,
       PageUrls,
       languageParam: getLanguageParam(req.url),
-      saveAndContinueNextPageUrls:
-        req.query.respondentNext === 'checkAnswer' ? PageUrls.CHECK_ANSWERS : PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
+      saveAndContinueNextPageUrls: isRespondentNextQuery(req)
+        ? PageUrls.CHECK_ANSWERS
+        : PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     });
   };
 }

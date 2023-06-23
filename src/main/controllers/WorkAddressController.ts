@@ -15,8 +15,8 @@ import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import {
   getRespondentIndex,
-  getRespondentNext,
   getRespondentRedirectUrl,
+  isRespondentNextQuery,
   updateWorkAddress,
 } from './helpers/RespondentHelpers';
 import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
@@ -53,8 +53,12 @@ export default class WorkAddressController {
       handleUpdateDraftCase(req, logger);
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       let redirectUrl = isRespondentAndWorkAddressSame
-        ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM, getRespondentNext(req))
-        : getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_ENTER, getRespondentNext(req));
+        ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM, isRespondentNextQuery(req))
+        : getRespondentRedirectUrl(
+            req.params.respondentNumber,
+            PageUrls.WORK_POSTCODE_ENTER,
+            isRespondentNextQuery(req)
+          );
       if (isRespondentAndWorkAddressSame) {
         const respondentIndex = getRespondentIndex(req);
         updateWorkAddress(req.session.userCase, req.session.userCase.respondents[respondentIndex]);

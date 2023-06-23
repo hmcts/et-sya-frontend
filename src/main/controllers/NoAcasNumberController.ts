@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex } from './helpers/RespondentHelpers';
+import { addRespondentNextQuery, getRespondentIndex, isRespondentNextQuery } from './helpers/RespondentHelpers';
 
 const logger = getLogger('NoAcasNumberController');
 
@@ -71,7 +71,7 @@ export default class NoAcasNumberController {
     if (req.body.saveForLater) {
       redirectUrl = PageUrls.CLAIM_SAVED;
     } else {
-      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+      redirectUrl = addRespondentNextQuery(isRespondentNextQuery(req), PageUrls.RESPONDENT_DETAILS_CHECK);
     }
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };

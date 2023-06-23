@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentRedirectUrl, isRespondentNextQuery } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentNameController');
 
@@ -45,7 +45,7 @@ export default class RespondentNameController {
     const redirectUrl = getRespondentRedirectUrl(
       req.params.respondentNumber,
       PageUrls.RESPONDENT_POSTCODE_ENTER,
-      getRespondentNext(req)
+      isRespondentNextQuery(req)
     );
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };

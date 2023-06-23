@@ -4,7 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, InterceptPaths, PageUrls } from '../definitions/constants';
 
 import { setChangeAnswersUrlLanguage, setCheckAnswersLanguage } from './helpers/LanguageHelper';
-import { ValidRespondentUrls } from './helpers/RespondentHelpers';
+import { ValidRespondentUrls, addRespondentNextQuery, isRespondentNextQuery } from './helpers/RespondentHelpers';
 import { returnValidUrl } from './helpers/RouterHelpers';
 
 export default class ChangeDetailsController {
@@ -16,7 +16,10 @@ export default class ChangeDetailsController {
       req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.CHECK_ANSWERS);
     } else if (req.query.redirect === 'respondent') {
       redirectUrl = req.url.replace(InterceptPaths.RESPONDENT_CHANGE, languageParam);
-      req.session.returnUrl = setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK);
+      req.session.returnUrl = addRespondentNextQuery(
+        isRespondentNextQuery(req),
+        setCheckAnswersLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK)
+      );
     } else {
       return res.redirect(ErrorPages.NOT_FOUND);
     }

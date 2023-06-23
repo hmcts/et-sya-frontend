@@ -50,25 +50,29 @@ export const getRespondentIndex = (req: AppRequest): number => {
   return parseInt(req.params.respondentNumber) - 1;
 };
 
-export const getRespondentNext = (req: AppRequest): boolean => {
+export const isRespondentNextQuery = (req: AppRequest): boolean => {
   return req.query.respondentNext === 'checkAnswer';
+};
+
+export const addRespondentNextQuery = (redirectToCheckAns: boolean, url: string): string => {
+  return redirectToCheckAns ? url + InterceptPaths.RESPONDENT_NEXT_ANSWER : url;
 };
 
 export const getRespondentRedirectUrl = (
   respondentNumber: string | number,
   pageUrl: string,
-  respondentNext: boolean
+  addNextQuery: boolean
 ): string => {
   const ValidUrls = Object.values(ValidRespondentUrls);
   for (const url of ValidUrls) {
     const welshUrl = url + languages.WELSH_URL_PARAMETER;
     const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
     if ('/respondent/' + respondentNumber.toString() + pageUrl === url) {
-      return respondentNext ? url + InterceptPaths.RESPONDENT_NEXT_ANSWER : url;
+      return addRespondentNextQuery(addNextQuery, url);
     } else if ('/respondent/' + respondentNumber.toString() + pageUrl === welshUrl) {
-      return respondentNext ? welshUrl + InterceptPaths.RESPONDENT_NEXT_ANSWER : welshUrl;
+      return addRespondentNextQuery(addNextQuery, welshUrl);
     } else if ('/respondent/' + respondentNumber.toString() + pageUrl === englishUrl) {
-      return respondentNext ? englishUrl + InterceptPaths.RESPONDENT_NEXT_ANSWER : englishUrl;
+      return addRespondentNextQuery(addNextQuery, englishUrl);
     }
   }
   return ErrorPages.NOT_FOUND;
