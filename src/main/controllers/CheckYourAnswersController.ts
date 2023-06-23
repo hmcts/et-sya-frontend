@@ -12,6 +12,7 @@ import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
+    req.session.respondentDetailsRedirectCheckAnswer = false;
     if (!req.session || !req.session.userCase) {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
