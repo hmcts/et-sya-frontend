@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -50,17 +50,25 @@ export const getRespondentIndex = (req: AppRequest): number => {
   return parseInt(req.params.respondentNumber) - 1;
 };
 
-export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
+export const getRespondentNext = (req: AppRequest): boolean => {
+  return req.query.respondentNext === 'checkAnswer';
+};
+
+export const getRespondentRedirectUrl = (
+  respondentNumber: string | number,
+  pageUrl: string,
+  respondentNext: boolean
+): string => {
   const ValidUrls = Object.values(ValidRespondentUrls);
   for (const url of ValidUrls) {
     const welshUrl = url + languages.WELSH_URL_PARAMETER;
     const englishUrl = url + languages.ENGLISH_URL_PARAMETER;
     if ('/respondent/' + respondentNumber.toString() + pageUrl === url) {
-      return url;
+      return respondentNext ? url + InterceptPaths.RESPONDENT_NEXT_ANSWER : url;
     } else if ('/respondent/' + respondentNumber.toString() + pageUrl === welshUrl) {
-      return welshUrl;
+      return respondentNext ? welshUrl + InterceptPaths.RESPONDENT_NEXT_ANSWER : welshUrl;
     } else if ('/respondent/' + respondentNumber.toString() + pageUrl === englishUrl) {
-      return englishUrl;
+      return respondentNext ? englishUrl + InterceptPaths.RESPONDENT_NEXT_ANSWER : englishUrl;
     }
   }
   return ErrorPages.NOT_FOUND;

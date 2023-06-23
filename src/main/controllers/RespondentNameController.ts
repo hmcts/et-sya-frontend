@@ -10,7 +10,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentNameController');
 
@@ -42,7 +42,11 @@ export default class RespondentNameController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_ENTER);
+    const redirectUrl = getRespondentRedirectUrl(
+      req.params.respondentNumber,
+      PageUrls.RESPONDENT_POSTCODE_ENTER,
+      getRespondentNext(req)
+    );
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 

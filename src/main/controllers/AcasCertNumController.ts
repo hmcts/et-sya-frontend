@@ -4,14 +4,14 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields, FormInput } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('AcasCertNumController');
@@ -71,10 +71,16 @@ export default class AcasCertNumController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
     if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)) {
-      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+      redirectUrl = getRespondentNext(req)
+        ? PageUrls.RESPONDENT_DETAILS_CHECK + InterceptPaths.RESPONDENT_NEXT_ANSWER
+        : PageUrls.RESPONDENT_DETAILS_CHECK;
     } else if (conditionalRedirect(req, this.form.getFormFields(), YesOrNo.NO)) {
       req.session.returnUrl = undefined;
-      redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.NO_ACAS_NUMBER);
+      redirectUrl = getRespondentRedirectUrl(
+        req.params.respondentNumber,
+        PageUrls.NO_ACAS_NUMBER,
+        getRespondentNext(req)
+      );
     } else {
       redirectUrl = PageUrls.ACAS_CERT_NUM;
     }

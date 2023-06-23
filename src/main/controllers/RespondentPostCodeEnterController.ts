@@ -12,7 +12,7 @@ import locales from '../resources/locales/en/translation/common.json';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentPostCodeEnterController');
 
@@ -42,7 +42,7 @@ export default class RespondentPostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_SELECT);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_SELECT, getRespondentNext(req));
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
@@ -52,7 +52,7 @@ export default class RespondentPostCodeEnterController {
     const respondents = req.session.userCase.respondents;
     const selectedRespondent = respondents[respondentIndex];
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS);
+    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_ADDRESS, getRespondentNext(req));
     const title = req.url?.includes('lng=cy')
       ? localesCy.respondentPostcodeEnterTitle
       : locales.respondentPostcodeEnterTitle;

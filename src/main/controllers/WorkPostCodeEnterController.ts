@@ -12,7 +12,7 @@ import locales from '../resources/locales/en/translation/common.json';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('WorkPostCodeEnterController');
 
@@ -42,14 +42,14 @@ export default class WorkPostCodeEnterController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_SELECT);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.WORK_POSTCODE_SELECT, getRespondentNext(req));
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
     const content = getPageContent(req, this.postCodeContent, [TranslationKeys.COMMON]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK);
+    const link = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.PLACE_OF_WORK, getRespondentNext(req));
     const title = req.url?.includes('lng=cy') ? localesCy.workPostcodeEnterTitle : locales.workPostcodeEnterTitle;
     res.render(TranslationKeys.WORK_POSTCODE_ENTER, {
       ...content,

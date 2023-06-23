@@ -14,7 +14,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillWorkAddressFields, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { fillWorkAddressFields, getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 
 const logger = getLogger('PlaceOfWorkController');
 
@@ -94,7 +94,11 @@ export default class PlaceOfWorkController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM);
+    const redirectUrl = getRespondentRedirectUrl(
+      req.params.respondentNumber,
+      PageUrls.ACAS_CERT_NUM,
+      getRespondentNext(req)
+    );
     await handlePostLogic(req, res, this.form, logger, req.body.saveForLater ? PageUrls.CLAIM_SAVED : redirectUrl);
   };
 

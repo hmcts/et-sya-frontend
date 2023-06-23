@@ -15,7 +15,12 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import {
+  fillRespondentAddressFields,
+  getRespondentIndex,
+  getRespondentNext,
+  getRespondentRedirectUrl
+} from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentAddressController');
 
@@ -105,7 +110,7 @@ export default class RespondentAddressController {
       userCase.respondents.length > 1 || userCase.pastEmployer === YesOrNo.NO
         ? PageUrls.ACAS_CERT_NUM
         : PageUrls.WORK_ADDRESS;
-    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage);
+    const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, nextPage, getRespondentNext(req));
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };
 

@@ -9,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
-import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentNext, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentDetailsCheckController {
@@ -41,7 +41,7 @@ export default class RespondentDetailsCheckController {
     } else {
       req.session.errors = [];
       const redirectUrl = setUrlLanguage(req, PageUrls.RESPONDENT_NAME);
-      return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl));
+      return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl, getRespondentNext(req)));
     }
   };
 
@@ -60,6 +60,8 @@ export default class RespondentDetailsCheckController {
       getRespondentDetailsSection,
       PageUrls,
       languageParam: getLanguageParam(req.url),
+      saveAndContinueNextPageUrls:
+        req.query.respondentNext === 'checkAnswer' ? PageUrls.CHECK_ANSWERS : PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     });
   };
 }
