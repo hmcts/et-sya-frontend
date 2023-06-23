@@ -57,19 +57,25 @@ export interface TseRespondTypeItem {
 }
 
 export interface TseRespondType {
+  // Generic
   from?: string;
   date?: string;
-  addDocument?: DocumentTypeItem[];
-  requestMadeBy?: string;
-  isCmoOrRequest?: string;
-  madeByFullName?: string;
-  selectPartyNotify?: string;
-  isResponseRequired?: string;
-  selectPartyRespond?: string;
+  // Respondent / Claimant Reply
   response?: string;
   copyToOtherParty?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterial?: TseRespondSupportingMaterialItem[];
+  // Admin Reply
+  addDocument?: DocumentTypeItem[];
+  additionalInformation?: string;
+  enterResponseTitle?: string;
+  isCmoOrRequest?: string;
+  cmoMadeBy?: string;
+  requestMadeBy?: string;
+  madeByFullName?: string;
+  isResponseRequired?: string;
+  selectPartyRespond?: string;
+  selectPartyNotify?: string;
 }
 
 export interface TseRespondSupportingMaterialItem {

@@ -15,42 +15,25 @@
         rows: appContent
       }) }}
 
-      {% if selectedApplication.value.respondCollection.length %}
-        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ otherPartyResponse }}</h2>
-          {% for respCol in selectedApplication.value.respondCollection %}
-            {{ govukSummaryList({
-              rows: [
-                {
-                  key: {
-                  text: responder,
-                  classes: "govuk-!-font-weight-regular-m"
-                },
-                  value: { text: respCol.value.from }
-                },
-                {
-                  key: {
-                  text: responseDate,
-                  classes: "govuk-!-font-weight-regular-m"
-                },
-                  value: { text: respCol.value.date }
-                },
-                {
-                  key: {
-                  text: yourReponse,
-                  classes: "govuk-!-font-weight-regular-m"
-                },
-                  value: { text: respCol.value.response }
-                },
-                {
-                  key: {
-                  text: copyCorrespondence,
-                  classes: "govuk-!-font-weight-regular-m"
-                },
-                  value: { text: respCol.value.copyToOtherParty }
-                }
-              ]
-            }) }}
-          {% endfor %}
+
+  {% for response in allResponses %}
+    <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+      {{ govukSummaryList({
+        rows: response
+        }) 
+      }}
+  {% endfor %}
+
+
+      {% if respondButton %}
+      <p class="govuk-body">
+        {{ mustRespond }}
+      </p>
+
+        {{ govukButton({
+            text: respond,
+            href: '/respond-to-tribunal-response'
+          }) }}
       {% endif %}
     </div>
 

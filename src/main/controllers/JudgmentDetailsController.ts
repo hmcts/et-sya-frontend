@@ -1,7 +1,11 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseAdminDecisionItem,
+} from '../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
@@ -33,21 +37,18 @@ export default class JudgmentDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    let selectedDecision;
-    let decisions;
-    let header;
-    let judgmentAttachments: DocumentTypeItem[] = [];
-    let decisionAttachments: DocumentTypeItem[] = [];
-    let selectedDecisionApplication;
-    let responseDocDownloadLink;
-    let selectedApplicationDocDownloadLink;
+    let selectedDecision: TseAdminDecisionItem;
+    let header: string;
+    let selectedDecisionApplication: GenericTseApplicationTypeItem;
+    let pageContent;
 
-    let selectedJudgment;
+    let selectedJudgment: SendNotificationTypeItem;
     if (userCase?.sendNotificationCollection?.length) {
       selectedJudgment = findSelectedJudgment(userCase.sendNotificationCollection, req.params.appId);
     }
 
     if (selectedJudgment === undefined) {
+      let decisions: TseAdminDecisionItem[];
       if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
         decisions = getDecisions(userCase);
       }
@@ -61,15 +62,28 @@ export default class JudgmentDetailsController {
       }
       selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
       const accessToken = req.session.user?.accessToken;
-      selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
+      const selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
         selectedDecisionApplication,
         logger,
         accessToken,
         res
       );
-      responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, logger, accessToken, res);
+      const responseDocDownloadLink = await getResponseDocDownloadLink(
+        selectedDecisionApplication,
+        logger,
+        accessToken,
+        res
+      );
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
-      decisionAttachments = await getDecisionAttachments(selectedDecision, req, res);
+      const decisionAttachments = await getDecisionAttachments(selectedDecision, req, res);
+      pageContent = getDecisionDetails(
+        userCase,
+        selectedDecision,
+        selectedApplicationDocDownloadLink,
+        responseDocDownloadLink,
+        decisionAttachments,
+        translations
+      );
     } else {
       userCase.selectedRequestOrOrder = selectedJudgment;
       header = selectedJudgment.value.sendNotificationTitle;
@@ -80,20 +94,9 @@ export default class JudgmentDetailsController {
           logger.info(error.message);
         }
       }
-      judgmentAttachments = await getJudgmentAttachments(selectedJudgment, req, res);
+      const judgmentAttachments = await getJudgmentAttachments(selectedJudgment, req, res);
+      pageContent = getJudgmentDetails(selectedJudgment, judgmentAttachments, translations);
     }
-
-    const pageContent =
-      selectedJudgment === undefined
-        ? getDecisionDetails(
-            userCase,
-            selectedDecision,
-            selectedApplicationDocDownloadLink,
-            responseDocDownloadLink,
-            decisionAttachments,
-            translations
-          )
-        : getJudgmentDetails(selectedJudgment, judgmentAttachments, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,

@@ -32,7 +32,7 @@ export default class AllDocumentsController {
     let tribunalDocuments = undefined;
     let acasClaimantRespondentTableRows = undefined;
 
-    if (docCollection && docCollection.length) {
+    if (docCollection?.length) {
       try {
         await getDocumentsAdditionalInformation(docCollection, req.session.user?.accessToken);
       } catch (err) {

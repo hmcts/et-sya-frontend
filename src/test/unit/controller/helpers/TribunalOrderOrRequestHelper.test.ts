@@ -366,4 +366,29 @@ describe('Tribunal order or request helper', () => {
     activateTribunalOrdersAndRequestsLink([], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
+
+  it('tribunal orders and requests section should remain as not yet available request when no response required', () => {
+    const userCase = { ...mockUserCaseWithCitizenHubLinks };
+
+    const notification = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    const notificationNoResponseRequired = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        notificationState: 'viewed',
+        sendNotificationNotify: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: 'No',
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_YET_AVAILABLE;
+
+    activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
+  });
 });

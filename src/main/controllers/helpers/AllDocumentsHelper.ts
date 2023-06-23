@@ -1,8 +1,20 @@
+import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
-import { AllDocumentTypes, Applicant } from '../../definitions/constants';
+import { AllDocumentTypes, Applicant, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
+import { getDocId } from '../../helper/ApiFormatter';
+
+import {
+  getDecisionDocId,
+  getSelectedAppDecisionDocId,
+  getSelectedAppDocId,
+  getSelectedAppResponseDocId,
+  isJudgmentDocId,
+  isValidResponseDocId,
+} from './DocumentHelpers';
+import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './JudgmentHelpers';
 
 /*
   Table rows prepared for Acas, Claimant and Respondents documents, Tribunal docs excluded, due to page design
@@ -110,6 +122,56 @@ export const documentHasToBeFiltered = (rule92: string, typeOfApp: string): bool
     ((applicationTypes.respondent.a.includes(typeOfApp) || applicationTypes.respondent.b.includes(typeOfApp)) &&
       rule92 === YesOrNo.NO)
   );
+};
+
+export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
+  if (req.session.documentDownloadPage === PageUrls.JUDGMENT_DETAILS) {
+    const userCase = req.session?.userCase;
+    if (isJudgmentDocId(userCase, docId)) {
+      return true;
+    }
+    const decisions = getDecisions(userCase);
+    const appsWithDecisions = getAllAppsWithDecisions(userCase);
+    const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+    if (
+      docId === getSelectedAppDocId(docId, appsAndDecisions) ||
+      docId === getSelectedAppResponseDocId(docId, appsAndDecisions) ||
+      docId === getSelectedAppDecisionDocId(docId, appsAndDecisions)
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isDocOnApplicationPage = (req: AppRequest, docId: string): boolean => {
+  if (isApplicationSummaryPage(req.session.documentDownloadPage)) {
+    const selectedApplication = req.session?.userCase.selectedGenericTseApplication;
+    if (
+      docId === getDocId(selectedApplication?.value.documentUpload?.document_url) ||
+      docId === getDecisionDocId(req, selectedApplication) ||
+      isValidResponseDocId(docId, selectedApplication.value.respondCollection)
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isDocInDocumentCollection = (req: AppRequest, docId: string): boolean => {
+  if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+    const allDocsSelectedFileId = req.session?.userCase.documentCollection
+      .map(it => getDocId(it.value.uploadedDocument.document_url))
+      .find(it => docId === it);
+    if (docId === allDocsSelectedFileId) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isApplicationSummaryPage = (page: string): boolean => {
+  return page === PageUrls.RESPONDENT_APPLICATION_DETAILS || page === PageUrls.APPLICATION_DETAILS;
 };
 
 export interface TableRow {
