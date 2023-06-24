@@ -20,7 +20,7 @@ describe(`on POST ${PageUrls.RETURN_TO_EXISTING}`, () => {
       .send({ returnToExisting: YesOrNo.YES })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual('https://employmenttribunals.service.gov.uk');
+        expect(res.header['location']).toStrictEqual('https://et-stg-azure.staging.et.dsd.io/apply');
       });
   });
 

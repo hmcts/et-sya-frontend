@@ -1,6 +1,8 @@
+import config from 'config';
+
 export const LegacyUrls = {
-  ET1: 'https://employmenttribunals.service.gov.uk/en/apply/application-number',
-  ET1_BASE: 'https://employmenttribunals.service.gov.uk',
+  ET1: config.get('services.et1Legacy.url').toString() + '/en/apply/application-number',
+  ET1_BASE: config.get('services.et1Legacy.url').toString(),
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',

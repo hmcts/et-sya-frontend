@@ -21,5 +21,6 @@ nodejs:
     PCQ_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/service-endpoint'
     PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
     PCQ_ENABLED: 'true'
+    ET1_URL: 'https://et-stg-azure.staging.et.dsd.io'
 idam-pr:
   enabled: false

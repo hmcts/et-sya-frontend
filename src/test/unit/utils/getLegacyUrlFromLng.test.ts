@@ -2,7 +2,7 @@ import { LegacyUrls } from '../../../main/definitions/constants';
 import getLegacyUrl from '../../../main/utils/getLegacyUrlFromLng';
 
 const expectedEnUrl = LegacyUrls.ET1;
-const expectedCyUrl = 'https://employmenttribunals.service.gov.uk/cy/apply/application-number';
+const expectedCyUrl = 'https://et-stg-azure.staging.et.dsd.io/cy/apply/application-number';
 const en = 'en';
 const cy = 'cy';
 
