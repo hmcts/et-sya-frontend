@@ -1,10 +1,10 @@
 import config from 'config';
-import { isUndefined } from 'lodash';
 
 export const LegacyUrls = {
-  ET1: !isUndefined(config.get('services.et1Legacy.url'))
-    ? config.get('services.et1Legacy.url').toString() + '/en/apply/application-number'
-    : 'https://et-stg-azure.staging.et.dsd.io',
+  ET1:
+    config.get('services.et1Legacy.url') !== undefined
+      ? config.get('services.et1Legacy.url').toString() + '/en/apply/application-number'
+      : 'https://et-stg-azure.staging.et.dsd.io/en/apply/application-number',
   ET1_BASE: config.get('services.et1Legacy.url').toString(),
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
