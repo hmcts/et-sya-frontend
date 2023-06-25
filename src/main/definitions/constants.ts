@@ -5,7 +5,10 @@ export const LegacyUrls = {
     config.get('services.et1Legacy.url') !== undefined
       ? config.get('services.et1Legacy.url').toString() + '/en/apply/application-number'
       : 'https://et-stg-azure.staging.et.dsd.io/en/apply/application-number',
-  ET1_BASE: config.get('services.et1Legacy.url').toString(),
+  ET1_BASE:
+    config.get('services.et1Legacy.url') !== undefined
+      ? config.get('services.et1Legacy.url').toString()
+      : 'https://et-stg-azure.staging.et.dsd.io',
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',
