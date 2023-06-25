@@ -36,7 +36,7 @@ new Nunjucks(developmentMode).enableFor(app);
 new Helmet(config.get('security'), [
   config.get('services.idam.authorizationURL'),
   config.get('services.pcq.url'),
-  config.get('services.et1Legacy.url'),
+  config.get('et1Legacy.url'),
 ]).enableFor(app);
 
 new I18Next().enableFor(app);
