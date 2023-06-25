@@ -2,12 +2,12 @@ import config from 'config';
 
 export const LegacyUrls = {
   ET1:
-    config.get('et1Legacy.url') !== undefined
-      ? config.get('et1Legacy.url').toString() + '/en/apply/application-number'
+    config.get('services.et1Legacy.url') !== undefined
+      ? config.get('services.et1Legacy.url').toString() + '/en/apply/application-number'
       : 'https://et-stg-azure.staging.et.dsd.io/en/apply/application-number',
   ET1_BASE:
-    config.get('et1Legacy.url') !== undefined
-      ? config.get('et1Legacy.url').toString()
+    config.get('services,et1Legacy.url') !== undefined
+      ? config.get('services.et1Legacy.url').toString()
       : 'https://et-stg-azure.staging.et.dsd.io',
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
