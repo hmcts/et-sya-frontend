@@ -18,7 +18,7 @@
       "host": "",
       "key": ""
     }
-  }
+  },
   "services": {
     "idam": {
       "clientID": "et-sya",
