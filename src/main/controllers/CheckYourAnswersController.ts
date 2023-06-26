@@ -23,6 +23,8 @@ export default class CheckYourAnswersController {
       req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
     }
 
+    req.session.respondentDetailsRedirectCheckAnswer = undefined;
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
