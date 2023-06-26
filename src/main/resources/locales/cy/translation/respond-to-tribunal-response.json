@@ -1,3 +1,10 @@
 {
-  "legend": "PLACEHOLDER"
+  "title": "Welsh Translation required",
+  "caption": "Welsh Translation required",
+  "h1": "Welsh Translation required",
+  "textInputLabel": "Welsh Translation required",
+  "textInputHint": "Welsh Translation required.",
+  "radioButtonLabel": "Welsh Translation required",
+  "radioButtonHint": "Welsh Translation required?",
+  "responseItem": "Welsh Translation required"
 }

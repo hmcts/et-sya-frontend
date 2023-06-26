@@ -1,3 +1,10 @@
 {
-  "legend": "PLACEHOLDER"
+  "title": "Respond to an application",
+  "caption": "Respond to an application",
+  "h1": "Your response",
+  "textInputLabel": "What's your response to the tribunal?",
+  "textInputHint": "Use this box to respond or you can upload material at the next step.",
+  "radioButtonLabel": "Supporting material",
+  "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "responseItem": "Response"
 }

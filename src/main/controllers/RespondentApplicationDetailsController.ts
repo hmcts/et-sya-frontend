@@ -53,6 +53,7 @@ export default class RespondentApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/respond-to-application/${selectedApplication.id}${languageParam}`;
+    const adminRespondRedirectUrl = `/respond-to-tribunal-response/${selectedApplication.id}${languageParam}`;
     const supportingMaterialDownloadLink = await getApplicationDocDownloadLink(
       selectedApplication,
       logger,
@@ -104,6 +105,7 @@ export default class RespondentApplicationDetailsController {
       respondButton,
       responseDocDownloadLink,
       adminRespondButton,
+      adminRespondRedirectUrl,
       allResponses,
     });
   };
