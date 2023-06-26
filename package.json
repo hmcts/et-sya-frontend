@@ -149,6 +149,7 @@
     "@faker-js/faker": "^5.5.3"
   },
   "resolutions": {
+    "semver": "^7.5.2",
     "pino-std-serializers": "^6.2.0",
     "minimist": "^1.2.6"
   },
