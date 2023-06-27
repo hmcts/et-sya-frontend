@@ -358,5 +358,6 @@ export class Routes {
     );
     app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
     app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
+    app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
   }
 }

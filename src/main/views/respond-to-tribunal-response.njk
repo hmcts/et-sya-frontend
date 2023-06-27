@@ -1,6 +1,8 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -8,15 +10,46 @@
 {% endblock %}
 
 {% block content %}
+{% block errorSummary %}
+  {% include "./error-summary.njk" %}
+{% endblock %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      {% block errorSummary %}
-        {% include "./error-summary.njk" %}
-      {% endblock %}
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        <span class="govuk-caption-l">{{ caption }}</span>
+        {{ h1 }}
+      </h1>
+
+      {{ govukSummaryList({
+        rows: appContent
+      }) }}
+
+    {% for response in allResponses %}
+      <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+      {{ govukSummaryList({
+        rows: response
+        }) 
+      }}
+    {% endfor %}
+
+      
 
       {% block form %}
         {% include "form/form.njk"%}
       {% endblock %}
+    </div>
+
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
+
+      <div class="govuk-!-margin-top-2">
+        {{ govukDetails({
+          summaryText: contact,
+          html: sideBarContent
+        }) }}
+      </div>
     </div>
   </div>
 {% endblock %}
