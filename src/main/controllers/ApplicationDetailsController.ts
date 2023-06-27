@@ -39,7 +39,7 @@ export default class ApplicationDetailsController {
     const languageParam = getLanguageParam(req.url);
     const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, languageParam);
     const respondButton = responseRequired(adminRequests);
-    const respondRedirectUrl = `/respond-to-tribunal-response/${selectedApplication.id}${languageParam}`;
+    const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
 
     if (document) {
       try {
