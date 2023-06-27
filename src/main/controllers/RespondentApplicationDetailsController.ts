@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
@@ -78,9 +79,13 @@ export default class RespondentApplicationDetailsController {
         case HubLinkStatus.NOT_VIEWED:
           newStatus = HubLinkStatus.VIEWED;
           break;
-        case HubLinkStatus.NOT_STARTED_YET:
         case HubLinkStatus.UPDATED:
           newStatus = HubLinkStatus.IN_PROGRESS;
+          break;
+        case HubLinkStatus.NOT_STARTED_YET:
+          if (YesOrNo.YES !== selectedApplication.value.claimantResponseRequired) {
+            newStatus = HubLinkStatus.IN_PROGRESS;
+          }
           break;
         default:
       }
