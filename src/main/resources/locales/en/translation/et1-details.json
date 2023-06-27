@@ -142,5 +142,6 @@
     "noticeOfClaim": "Notice of claim",
     "noticeOfHearing": "Notice of hearing"
   },
-  "addAnotherRespondent": "Add another respondent"
+  "addAnotherRespondent": "Add another respondent",
+  "delete": "Delete"
 }

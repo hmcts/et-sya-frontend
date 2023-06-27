@@ -153,6 +153,7 @@ export const PageUrls = {
   WORK_ADDRESS: '/work-address',
   ACAS_CERT_NUM: '/acas-cert-num',
   RESPONDENT_DETAILS_CHECK: '/respondent-details-check',
+  RESPONDENT_ADD_REDIRECT: '/respondentAddRedirectCYA',
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
   WORK_POSTCODE: '/work-postcode',

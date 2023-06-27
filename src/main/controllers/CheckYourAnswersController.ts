@@ -6,7 +6,7 @@ import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
-import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { getRespondentSection, getRespondentSectionTitleWithDelete } from './helpers/RespondentAnswersHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
@@ -31,6 +31,8 @@ export default class CheckYourAnswersController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
+    const newRespondentNum = req.session.userCase.respondents.length + 1;
+
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
       PageUrls,
@@ -45,8 +47,10 @@ export default class CheckYourAnswersController {
       yourDetails: getYourDetails(userCase, translations),
       employmentSection: getEmploymentDetails(userCase, translations),
       getRespondentSection,
+      getRespondentSectionTitleWithDelete,
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
+      isAddRespondent: newRespondentNum <= 5,
     });
   }
 }
