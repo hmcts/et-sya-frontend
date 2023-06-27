@@ -131,6 +131,7 @@ export default class RespondToTribunalResponseController {
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
+      hideContactUs: true,
     });
   };
 }

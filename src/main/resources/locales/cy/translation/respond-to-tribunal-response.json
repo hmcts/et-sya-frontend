@@ -6,5 +6,16 @@
   "textInputHint": "Welsh Translation required.",
   "radioButtonLabel": "Welsh Translation required",
   "radioButtonHint": "Welsh Translation required?",
-  "responseItem": "Welsh Translation required"
+  "responseItem": "Welsh Translation required",
+  "contact": "Welsh Translation required",
+  "errors": {
+    "hasSupportingMaterial": {
+      "required": "Welsh Translation required"
+    },
+    "responseText": {
+      "required": "Welsh Translation required",
+      "requiredFile": "Welsh Translation required",
+      "tooLong": "Welsh Translation required"
+    }
+  }
 }
