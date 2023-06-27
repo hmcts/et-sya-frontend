@@ -36,8 +36,10 @@ export default class ApplicationDetailsController {
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const document = selectedApplication.value?.documentUpload;
 
-    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, getLanguageParam(req.url));
+    const languageParam = getLanguageParam(req.url);
+    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, languageParam);
     const respondButton = responseRequired(adminRequests);
+    const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
 
     if (document) {
       try {
@@ -69,6 +71,7 @@ export default class ApplicationDetailsController {
       selectedApplication,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
       respondButton,
+      respondRedirectUrl,
       allResponses,
     });
   };
