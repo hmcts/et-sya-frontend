@@ -1,13 +1,11 @@
 import {
   combineDocuments,
   combineUserCaseDocuments,
-  convertTypeOfDoc,
   findContentTypeByDocument,
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { DocumentDetail } from '../../../../main/definitions/definition';
-import { AnyRecord } from '../../../../main/definitions/util-types';
 import mockUserCaseWithDocumentsComplete from '../../mocks/mockUserCaseWithDocumentsComplete';
 
 const TEST_DOCUMENT_CONTENT_TYPES = {
@@ -265,26 +263,4 @@ describe('FindDocumentMimeTypeByExtension', () => {
       expect(findDocumentMimeTypeByExtension(extension)).toStrictEqual(documentType);
     }
   );
-});
-
-describe('ConvertTypeOfDoc', () => {
-  const translations: AnyRecord = {
-    typeOfDoc: {
-      acknowledgementOfClaim: 'Acknowledgement of claim',
-      noticeOfClaim: 'Notice of claim',
-      noticeOfHearing: 'Notice of hearing',
-    },
-  };
-  it.each([
-    ['1.1', 'Acknowledgement of claim'],
-    ['Acknowledgement of Claim', 'Acknowledgement of claim'],
-    ['2.7', 'Notice of claim'],
-    ['2.8', 'Notice of claim'],
-    ['7.7', 'Notice of hearing'],
-    ['7.8', 'Notice of hearing'],
-    ['7.8a', 'Notice of hearing'],
-    ['Test', ''],
-  ])('%o document type should be display as %s', (type: string, result: string) => {
-    expect(convertTypeOfDoc(type, translations)).toStrictEqual(result);
-  });
 });

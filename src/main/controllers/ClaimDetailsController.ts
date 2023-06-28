@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
-import { combineDocuments, convertTypeOfDoc, getDocumentDetails } from './helpers/DocumentHelpers';
+import { combineDocuments, getDocumentDetails } from './helpers/DocumentHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
@@ -62,7 +62,6 @@ export default class ClaimDetailsController {
       employmentSection: getEmploymentDetails(userCase, translations),
       translations,
       getRespondentSection,
-      convertTypeOfDoc,
       showCompensationRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.COMPENSATION_ONLY),
       showTribunalRequest: !!userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION),
       showWhistleBlowingRequest: !!userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING),

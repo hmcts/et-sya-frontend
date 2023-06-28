@@ -32,27 +32,25 @@
       </dl>
 
       {% if userCase.acknowledgementOfClaimLetterDetail.length %}
-        {% set acknowledgementOfClaimLetterRows = [] %}
         {% for doc in userCase.acknowledgementOfClaimLetterDetail %}
-          {% set acknowledgementOfClaimLetterRows = (acknowledgementOfClaimLetterRows.push(
-            [
-              {
-                text: doc.createdOn
-              },
-              {
-                text: convertTypeOfDoc(doc.type, translations)
-              },
-              {
-                html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
-              }
+          {{ govukTable({
+            firstCellIsHeader: false,
+            caption: "Claim related information",
+            rows: [
+              [
+                {
+                  text: doc.createdOn
+                },
+                            {
+                  text: approveClaim
+                },
+                {
+                    html: "<a href='getCaseDocument/"+ doc.id + "' class=\"govuk-link\">" + doc.originalDocumentName + "</a>"
+                }
+              ]
             ]
-          ), acknowledgementOfClaimLetterRows) %}
+          }) }}
         {% endfor %}
-        {{ govukTable({
-          firstCellIsHeader: false,
-          caption: "Claim related information",
-          rows: acknowledgementOfClaimLetterRows
-        }) }}
       {% endif %}
 
       {% if userCase.rejectionOfClaimDocumentDetail.length %}
