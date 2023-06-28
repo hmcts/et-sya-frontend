@@ -193,6 +193,11 @@ export const mockRespAppWithRespRequstForInfo: GenericTseApplicationTypeItem = {
   statusColor: '--blue',
 };
 
+const requestForInfoClone = clone(mockRespAppWithRespRequstForInfo);
+requestForInfoClone.value.claimantResponseRequired = 'Yes';
+requestForInfoClone.value.applicationState = 'notStartedYet';
+export const mockRespAppWithRespRequstForClaimantInfo = requestForInfoClone;
+
 export const mockRespAppWithRespRequstForInfoAndReply: GenericTseApplicationTypeItem = {
   id: '1',
   value: {
@@ -304,4 +309,4 @@ export const mockRespAppWithDecisionNotViewed: GenericTseApplicationType = {
 
 const decisionClone = clone(mockRespAppWithDecisionNotViewed);
 decisionClone.applicationState = HubLinkStatus.VIEWED;
-export const mockRespAppWithDecisionViewed: GenericTseApplicationType = decisionClone;
+export const mockRespAppWithDecisionViewed = decisionClone;

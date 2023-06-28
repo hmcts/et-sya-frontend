@@ -9,6 +9,7 @@ import { CaseApi } from '../../../main/services/CaseService';
 import {
   mockRespAppWithClaimantResponse,
   mockRespAppWithDecisionNotViewed,
+  mockRespAppWithRespRequstForClaimantInfo,
   mockRespAppWithRespRequstForInfo,
   mockRespAppWithRespRequstForInfoAndReply,
   mockSimpleRespAppTypeItem,
@@ -101,6 +102,21 @@ describe('Respondent application details controller', () => {
 
       expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
       expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe('inProgress');
+    });
+
+    it("doesn't change to inProgress when viewing request for information from claimant", async () => {
+      const userCase: Partial<CaseWithId> = {
+        genericTseApplicationCollection: [clone(mockRespAppWithRespRequstForClaimantInfo)],
+      };
+      const response = mockResponse();
+      const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
+
+      await new RespondentApplicationDetailsController().get(request, response);
+
+      expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
+      expect(request.session.userCase.genericTseApplicationCollection.at(0).value.applicationState).toBe(
+        'notStartedYet'
+      );
     });
   });
 
