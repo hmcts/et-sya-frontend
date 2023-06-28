@@ -56,7 +56,6 @@ import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
-import RespondentDetailsRedirectCheckAnswerController from '../../controllers/RespondentDetailsRedirectCheckAnswerController';
 import RespondentNameController from '../../controllers/RespondentNameController';
 import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
 import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
@@ -224,7 +223,6 @@ export class Routes {
     app.get(PageUrls.WORK_POSTCODE, new WorkPostcodeController().get);
     app.post(PageUrls.WORK_POSTCODE, new WorkPostcodeController().post);
     app.get(InterceptPaths.CHANGE_DETAILS, new ChangeDetailsController().get);
-    app.get(InterceptPaths.RESPONDENT_DETAILS_REDIRECT_CYA, new RespondentDetailsRedirectCheckAnswerController().get);
     app.get(Urls.EXTEND_SESSION, new SessionTimeoutController().getExtendSession);
     app.get(InterceptPaths.SUBMIT_CASE, new SubmitClaimController().get);
     app.get(PageUrls.CLAIMANT_APPLICATIONS, new ClaimantApplicationsController().get);

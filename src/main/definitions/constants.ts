@@ -179,7 +179,6 @@ export const PageUrls = {
 
 export const InterceptPaths = {
   CHANGE_DETAILS: '*/change',
-  RESPONDENT_DETAILS_REDIRECT_CYA: '*/respondentDetailsRedirectCheckAnswer',
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
