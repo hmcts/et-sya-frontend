@@ -10,10 +10,10 @@ import {
   getDecisionDocId,
   getDocumentAdditionalInformation,
   getResponseDocId,
-  getSelectedAppDocId,
-  getSelectedAppResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
+  isSelectedAppDocId,
+  isSelectedAppResponseDocId,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
@@ -442,8 +442,8 @@ describe('getSelectedAppDocId', () => {
       },
     ];
 
-    const result = getSelectedAppDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
-    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    const result = isSelectedAppDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
+    expect(result).toBeTruthy();
   });
 
   it('should return undefined when no selected application document matches the docId', () => {
@@ -455,8 +455,8 @@ describe('getSelectedAppDocId', () => {
       },
     ];
 
-    const result = getSelectedAppDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result = isSelectedAppDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when no documentUpload is available', () => {
@@ -466,8 +466,8 @@ describe('getSelectedAppDocId', () => {
       },
     ];
 
-    const result: string = getSelectedAppDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result: boolean = isSelectedAppDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when documentUpload is undefined', () => {
@@ -482,19 +482,21 @@ describe('getSelectedAppDocId', () => {
       },
     ];
 
-    const result: string = getSelectedAppDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result: boolean = isSelectedAppDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 });
 
-describe('getSelectedAppResponseDocId', () => {
+describe('isSelectedAppResponseDocId', () => {
   it('should return the correct selected application response document ID', () => {
-    const appsAndDecisions: DecisionAndApplicationDetails[] = [
+    const appsWithDecisions: GenericTseApplicationTypeItem[] = [
       {
+        id: '1',
         value: {
           respondCollection: [
             {
               value: {
+                from: 'Claimant',
                 supportingMaterial: [
                   {
                     value: {
@@ -509,8 +511,8 @@ describe('getSelectedAppResponseDocId', () => {
       },
     ];
 
-    const result = getSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
-    expect(result).toEqual('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    const result = isSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsWithDecisions);
+    expect(result).toBeTruthy();
   });
 
   it('should return undefined when no selected application response document matches the docId', () => {
@@ -534,8 +536,8 @@ describe('getSelectedAppResponseDocId', () => {
       },
     ];
 
-    const result = getSelectedAppResponseDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result = isSelectedAppResponseDocId('1a2b3c4d5e6f7g8h', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when no respondCollection is available', () => {
@@ -545,8 +547,8 @@ describe('getSelectedAppResponseDocId', () => {
       },
     ];
 
-    const result = getSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result = isSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 
   it('should return undefined when supportingMaterial is empty', () => {
@@ -564,8 +566,8 @@ describe('getSelectedAppResponseDocId', () => {
       },
     ];
 
-    const result = getSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
-    expect(result).toBeUndefined();
+    const result = isSelectedAppResponseDocId('10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa', appsAndDecisions);
+    expect(result).toBeFalsy();
   });
 });
 

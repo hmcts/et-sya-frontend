@@ -8,13 +8,13 @@ import { getDocId } from '../../helper/ApiFormatter';
 
 import {
   getDecisionDocId,
-  getSelectedAppDecisionDocId,
-  getSelectedAppDocId,
-  getSelectedAppResponseDocId,
   isJudgmentDocId,
+  isSelectedAppDecisionDocId,
+  isSelectedAppDocId,
+  isSelectedAppResponseDocId,
   isValidResponseDocId,
 } from './DocumentHelpers';
-import { getAllAppsWithDecisions, getDecisions, matchDecisionsToApps } from './JudgmentHelpers';
+import { getAllAppsWithDecisions } from './JudgmentHelpers';
 
 /*
   Table rows prepared for Acas, Claimant and Respondents documents, Tribunal docs excluded, due to page design
@@ -130,13 +130,11 @@ export const isDocFromJudgement = (req: AppRequest, docId: string): boolean => {
     if (isJudgmentDocId(userCase, docId)) {
       return true;
     }
-    const decisions = getDecisions(userCase);
     const appsWithDecisions = getAllAppsWithDecisions(userCase);
-    const appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
     if (
-      docId === getSelectedAppDocId(docId, appsAndDecisions) ||
-      docId === getSelectedAppResponseDocId(docId, appsAndDecisions) ||
-      docId === getSelectedAppDecisionDocId(docId, appsAndDecisions)
+      isSelectedAppDocId(docId, appsWithDecisions) ||
+      isSelectedAppResponseDocId(docId, appsWithDecisions) ||
+      isSelectedAppDecisionDocId(docId, appsWithDecisions)
     ) {
       return true;
     }

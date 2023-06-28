@@ -34,6 +34,7 @@ export default class JudgmentDetailsController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.JUDGMENT_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 

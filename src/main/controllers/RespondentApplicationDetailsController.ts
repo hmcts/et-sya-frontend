@@ -9,7 +9,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { getVisibleRequestFromAdmin, responseRequired } from './helpers/AdminNotificationHelper';
+import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -63,8 +63,6 @@ export default class RespondentApplicationDetailsController {
     );
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, languageParam);
-    const adminRespondButton = responseRequired(adminRequests);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -109,7 +107,7 @@ export default class RespondentApplicationDetailsController {
       decisionContent,
       respondButton,
       responseDocDownloadLink,
-      adminRespondButton,
+      isAdminRespondButton: responseToTribunalRequired(selectedApplication),
       adminRespondRedirectUrl,
       allResponses,
     });

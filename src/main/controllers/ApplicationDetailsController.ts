@@ -6,7 +6,7 @@ import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { getVisibleRequestFromAdmin, responseRequired } from './helpers/AdminNotificationHelper';
+import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import {
   createDownloadLink,
@@ -37,8 +37,6 @@ export default class ApplicationDetailsController {
     const document = selectedApplication.value?.documentUpload;
 
     const languageParam = getLanguageParam(req.url);
-    const adminRequests = getVisibleRequestFromAdmin(selectedApplication, translations, languageParam);
-    const respondButton = responseRequired(adminRequests);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
 
     if (document) {
@@ -70,7 +68,7 @@ export default class ApplicationDetailsController {
       header,
       selectedApplication,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
-      respondButton,
+      isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,
     });

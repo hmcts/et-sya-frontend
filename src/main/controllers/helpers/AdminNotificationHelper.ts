@@ -27,15 +27,8 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   }
 };
 
-export const responseRequired = (adminRequests: AdminNotifcation[]): boolean => {
-  if (!adminRequests.length) {
-    return false;
-  }
-  for (const request of adminRequests) {
-    if (request.isResponseRequired === YesOrNo.YES) {
-      return true;
-    }
-  }
+export const responseToTribunalRequired = (selectedApplication: GenericTseApplicationTypeItem): boolean => {
+  return selectedApplication.value.claimantResponseRequired === YesOrNo.YES;
 };
 
 export const getVisibleRequestFromAdmin = (
