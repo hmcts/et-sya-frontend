@@ -167,6 +167,37 @@ export const caseWithDecisionsAndJudgments: CaseWithId = {
               enterNotificationTitle: 'Test decision title',
             },
           },
+          {
+            id: '2',
+            value: {
+              date: '2022-05-05',
+              decision: 'Granted',
+              decisionMadeBy: 'Judge',
+              typeOfDecision: 'Judgment',
+              selectPartyNotify: 'Both parties',
+              decisionMadeByFullName: 'Mr Test Judge',
+              decisionState: 'inProgress',
+              responseRequiredDoc: [
+                {
+                  id: '1',
+                  value: {
+                    typeOfDocument: 'Decision document',
+                    shortDescription: 'Decision document 1',
+                    uploadedDocument: decisionUploadedDoc1,
+                  },
+                },
+                {
+                  id: '2',
+                  value: {
+                    typeOfDocument: 'Decision document',
+                    shortDescription: 'Decision document 2',
+                    uploadedDocument: decisionUploadedDoc2,
+                  },
+                },
+              ],
+              enterNotificationTitle: 'Test decision title',
+            },
+          },
         ],
         respondCollection: [
           {

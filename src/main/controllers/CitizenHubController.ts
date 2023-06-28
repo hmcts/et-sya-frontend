@@ -41,7 +41,6 @@ import {
   getDecisions,
   getJudgmentBannerContent,
   getJudgments,
-  matchDecisionsToApps,
 } from './helpers/JudgmentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import {
@@ -81,6 +80,7 @@ export default class CitizenHubController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
@@ -109,8 +109,7 @@ export default class CitizenHubController {
     let appsAndDecisions = undefined;
     if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
       decisions = getDecisions(userCase);
-      const appsWithDecisions = getAllAppsWithDecisions(userCase);
-      appsAndDecisions = matchDecisionsToApps(appsWithDecisions, decisions);
+      appsAndDecisions = getAllAppsWithDecisions(userCase);
     }
 
     let judgments = undefined;
@@ -119,7 +118,6 @@ export default class CitizenHubController {
     }
 
     activateJudgmentsLink(judgments, decisions, req);
-
     // Mark respondent's response as waiting for the tribunal
     if (
       hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&

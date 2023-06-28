@@ -8,7 +8,7 @@ import {
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, DOCUMENT_CONTENT_TYPES, PageUrls } from '../../definitions/constants';
-import { DecisionAndApplicationDetails, DocumentDetail } from '../../definitions/definition';
+import { DocumentDetail } from '../../definitions/definition';
 import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -123,7 +123,12 @@ export function isValidResponseDocId(docId: string, respondCollection: TseRespon
         return true;
       }
     } else if (response.value.from === Applicant.ADMIN) {
-      if (docId === getDocId(response.value?.addDocument[0].value?.uploadedDocument.document_url)) {
+      if (
+        docId ===
+        getDocId(
+          response.value?.addDocument?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
         return true;
       }
     }
@@ -145,50 +150,48 @@ export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTs
   return decisionDocUrls.map(it => getDocId(it)).find(id => id === docId);
 }
 
-export function getSelectedAppDecisionDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
-  const selectedAppDecisionDocIds = [];
-  for (const element of appsAndDecisions) {
-    if (element.decisionOfApp?.value?.responseRequiredDoc?.length) {
-      const responseRequiredDocs = element.decisionOfApp.value.responseRequiredDoc;
-      for (const doc of responseRequiredDocs) {
-        if (doc.downloadLink) {
-          selectedAppDecisionDocIds.push(doc.value.uploadedDocument.document_url);
-        }
+export const isSelectedAppDecisionDocId = (
+  docId: string,
+  appWithDecisions: GenericTseApplicationTypeItem[]
+): boolean => {
+  for (const app of appWithDecisions) {
+    for (const decision of app.value.adminDecision) {
+      if (
+        docId ===
+        getDocId(
+          decision.value.responseRequiredDoc?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
+        return true;
       }
     }
   }
-  return selectedAppDecisionDocIds.map(it => getDocId(it)).find(id => id === docId);
-}
+  return false;
+};
 
-export function getSelectedAppDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
-  let selectedAppDocId = undefined;
-  const selectedAppDocIds = [];
-  for (let i = appsAndDecisions.length - 1; i >= 0; i--) {
-    if (appsAndDecisions[i].value.documentUpload !== undefined) {
-      selectedAppDocIds[i] = appsAndDecisions[i].value.documentUpload.document_url;
+export function isSelectedAppDocId(docId: string, appsWithDecisions: GenericTseApplicationTypeItem[]): boolean {
+  for (const app of appsWithDecisions) {
+    if (docId === getDocId(app.value.documentUpload?.document_url)) {
+      return true;
     }
   }
-  selectedAppDocId = selectedAppDocIds.map(it => getDocId(it)).find(id => id === docId);
-  return selectedAppDocId;
+  return false;
 }
 
-export function getSelectedAppResponseDocId(docId: string, appsAndDecisions: DecisionAndApplicationDetails[]): string {
-  let selectedAppResponseDocId = undefined;
-  const selectedAppResponseDocIds = [];
-  for (let i = appsAndDecisions.length - 1; i >= 0; i--) {
-    if (appsAndDecisions[i].value?.respondCollection?.length) {
-      const parent = appsAndDecisions[i];
-      for (let j = 0; j < parent.value.respondCollection?.length; j++) {
-        const nested = parent.value.respondCollection[j];
-        if (nested.value.supportingMaterial?.length) {
-          selectedAppResponseDocIds[i] = nested.value.supportingMaterial[0].value.uploadedDocument.document_url;
-        }
-      }
+export const isSelectedAppResponseDocId = (
+  docId: string,
+  appsWithDecisions: GenericTseApplicationTypeItem[]
+): boolean => {
+  for (const app of appsWithDecisions) {
+    if (!app.value.respondCollection?.length) {
+      continue;
+    }
+    if (isValidResponseDocId(docId, app.value.respondCollection)) {
+      return true;
     }
   }
-  selectedAppResponseDocId = selectedAppResponseDocIds.map(it => getDocId(it)).find(id => id === docId);
-  return selectedAppResponseDocId;
-}
+  return false;
+};
 
 export function isRequestDocId(req: AppRequest, docId: string): boolean {
   if (

@@ -69,7 +69,6 @@ export default class RespondToTribunalResponseController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
-    console.log(req.session.userCase.hasSupportingMaterial);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getApplicationResponseError(formData);
 
