@@ -25,7 +25,7 @@
 				"vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
 			},
 			"updated": "2023-06-27T22:32:05.000Z",
-			"recommendation": "Fix when newer version is out",
+			"recommendation": "",
 			"cwe": [],
 			"found_by": null,
 			"deleted": null,
