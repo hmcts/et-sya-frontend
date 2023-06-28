@@ -1,7 +1,9 @@
 import { createDownloadLink } from '../../../../main/controllers/helpers/DocumentHelpers';
 import {
   activateJudgmentsLink,
+  getAllAppsWithDecisions,
   getDecisionDetails,
+  getDecisions,
   populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors,
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/JudgmentHelpers';
@@ -107,6 +109,27 @@ describe('Judgment helper', () => {
     expect(populatedJudgment.redirectUrl).toEqual('/judgment-details/1?lng=en');
     expect(populatedJudgment.statusColor).toEqual('--red');
     expect(populatedJudgment.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should populate decisions with inProgress redirect link, status and colour', () => {
+    const populatedJudgment = populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors(
+      [caseWithDecisionsAndJudgments.genericTseApplicationCollection[0].value.adminDecision[1]],
+      'url',
+      translations
+    )[0];
+    expect(populatedJudgment.redirectUrl).toEqual('/judgment-details/2?lng=en');
+    expect(populatedJudgment.statusColor).toEqual('--yellow');
+    expect(populatedJudgment.displayStatus).toEqual('In progress');
+  });
+
+  it('should get all apps with decisions', () => {
+    const result = getAllAppsWithDecisions(caseWithDecisionsAndJudgments);
+    expect(result).toHaveLength(1);
+  });
+
+  it('should get all decisions', () => {
+    const result = getDecisions(caseWithDecisionsAndJudgments);
+    expect(result).toHaveLength(2);
   });
 
   it('should return expected details content for a decision', () => {

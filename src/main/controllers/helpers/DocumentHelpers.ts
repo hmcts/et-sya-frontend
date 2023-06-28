@@ -156,7 +156,12 @@ export const isSelectedAppDecisionDocId = (
 ): boolean => {
   for (const app of appWithDecisions) {
     for (const decision of app.value.adminDecision) {
-      if (docId === getDocId(decision.value.responseRequiredDoc[0].value.uploadedDocument.document_url)) {
+      if (
+        docId ===
+        getDocId(
+          decision.value.responseRequiredDoc?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
         return true;
       }
     }
