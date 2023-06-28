@@ -200,6 +200,8 @@ export interface Case {
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
   representatives?: Representative[];
+  // when responding to an application indiciates if responding to a tribunal order/request or not
+  isRespondingToRequestOrOrder?: boolean;
 }
 export const enum StillWorking {
   WORKING = 'Working',
