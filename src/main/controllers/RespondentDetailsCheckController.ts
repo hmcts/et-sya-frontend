@@ -60,9 +60,6 @@ export default class RespondentDetailsCheckController {
       getRespondentDetailsSection,
       PageUrls,
       languageParam: getLanguageParam(req.url),
-      saveAndContinueNextPageUrls: req.session.respondentDetailsRedirectCheckAnswer
-        ? PageUrls.CHECK_ANSWERS
-        : PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK,
     });
   };
 }
