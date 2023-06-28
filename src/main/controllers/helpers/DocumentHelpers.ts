@@ -3,12 +3,7 @@ import { AxiosResponse } from 'axios';
 import { CaseWithId } from '../../definitions/case';
 import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
-import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
-
-const acceptanceDocTypesAcknowledgementOfClaim = ['1.1', 'Acknowledgement of Claim'];
-const acceptanceDocTypesNoticeOfClaim = ['2.7', '2.8'];
-const acceptanceDocTypesNoticeOfHearing = ['7.7', '7.8', '7.8a'];
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
   for await (const document of documents) {
@@ -90,21 +85,4 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
     contentType = findDocumentMimeTypeByExtension(fileExtension);
   }
   return contentType;
-};
-
-export const convertTypeOfDoc = (type: string, translations: AnyRecord): unknown => {
-  switch (true) {
-    case acceptanceDocTypesAcknowledgementOfClaim.includes(type): {
-      return translations.typeOfDoc.acknowledgementOfClaim;
-    }
-    case acceptanceDocTypesNoticeOfClaim.includes(type): {
-      return translations.typeOfDoc.noticeOfClaim;
-    }
-    case acceptanceDocTypesNoticeOfHearing.includes(type): {
-      return translations.typeOfDoc.noticeOfHearing;
-    }
-    default: {
-      return '';
-    }
-  }
 };

@@ -394,7 +394,6 @@ export const inScopeLocations = [
 
 export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
-export const acceptanceDocTypesEW = ['1.1', 'Acknowledgement of Claim', '2.7', '2.8', '7.7', '7.8', '7.8a'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
