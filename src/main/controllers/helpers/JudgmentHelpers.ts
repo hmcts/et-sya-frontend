@@ -472,49 +472,15 @@ export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
 };
 
 export function getAllAppsWithDecisions(userCase: CaseWithId): GenericTseApplicationTypeItem[] {
-  const decisions = userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
-  return decisions;
+  return userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
 }
-
-export function matchDecisionsToApps(
-  appOfDecision: GenericTseApplicationTypeItem[],
-  decision: TseAdminDecisionItem[]
-): DecisionAndApplicationDetails[] {
-  const result = [];
-  if (appOfDecision?.length) {
-    for (const element of appOfDecision) {
-      if (isEligibleApplication) {
-        const adminDecisions = element.value.adminDecision;
-        for (const adminDecision of adminDecisions) {
-          if (adminDecision.value.typeOfDecision === 'Judgment') {
-            const matchingChildren = decision.filter(child => child.id === adminDecision.id);
-            result.push({
-              ...adminDecisions,
-              decisionOfApp: matchingChildren[0],
-            });
-          }
-        }
-      }
-    }
-  }
-  return result;
-}
-
-const isEligibleApplication = (genericApp: GenericTseApplicationTypeItem): boolean => {
-  return (
-    (genericApp.value.applicant === Applicant.RESPONDENT &&
-      !genericApp.value.type.includes(applicationTypes.respondent.c) &&
-      genericApp.value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
-    genericApp.value.applicant === Applicant.CLAIMANT
-  );
-};
 
 export function getApplicationOfDecision(
   userCase: CaseWithId,
   selectedDecision: TseAdminDecisionItem
 ): GenericTseApplicationTypeItem {
   const data = userCase?.genericTseApplicationCollection;
-  const decisionApps = data?.filter(element => element.value?.adminDecision.length);
+  const decisionApps = data?.filter(element => element.value.adminDecision?.length);
   const searchValue = selectedDecision;
   let appOfDecision = undefined;
 
@@ -558,26 +524,28 @@ export const getJudgmentBannerContent = (
 };
 
 export const getDecisionBannerContent = (
-  appsAndDecisions: DecisionAndApplicationDetails[],
+  appsWithDecisions: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
   languageParam: string
 ): DecisionAndApplicationDetails[] => {
-  const items = appsAndDecisions;
   const bannerContent: DecisionAndApplicationDetails[] = [];
-  if (items?.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
-        const decisionBannerHeader =
-          items[i].value.applicant === Applicant.CLAIMANT
-            ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
-            : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
-        const bannerDetails: DecisionAndApplicationDetails = {
-          decisionBannerHeader,
-          redirectUrl: `/judgment-details/${items[i].decisionOfApp?.id}${languageParam}`,
-          applicant: items[i].value.applicant,
-          applicationType: items[i].value.type,
-        };
-        bannerContent.push(bannerDetails);
+  if (appsWithDecisions?.length) {
+    for (const app of appsWithDecisions) {
+      for (const decision of app.value.adminDecision) {
+        if (decision.value.decisionState !== HubLinkStatus.VIEWED) {
+          const decisionBannerHeader =
+            app.value.applicant === Applicant.CLAIMANT
+              ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[app.value.type]
+              : translations.notificationBanner.decisionJudgment.headerRespondent + translations[app.value.type];
+
+          const bannerDetails: DecisionAndApplicationDetails = {
+            decisionBannerHeader,
+            redirectUrl: `/judgment-details/${decision?.id}${languageParam}`,
+            applicant: app.value.applicant,
+            applicationType: app.value.type,
+          };
+          bannerContent.push(bannerDetails);
+        }
       }
     }
     return bannerContent;
