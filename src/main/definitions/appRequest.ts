@@ -21,6 +21,7 @@ export interface AppSession extends Session {
   guid: string | undefined;
   fileTooLarge?: boolean;
   cookies?: string;
+  respondentRedirectCheckAnswer?: boolean;
 }
 
 export interface UserDetails {

@@ -19,6 +19,41 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
   }
 };
 
+const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
+  if (languageParam === '?lng=cy') {
+    return translations.details + ' ' + translations.respondentTitle + ' ' + index;
+  } else {
+    return translations.respondentTitle + ' ' + index + ' ' + translations.details;
+  }
+};
+
+export const getRespondentSectionTitleWithDelete = (
+  index: number,
+  translations: AnyRecord,
+  languageParam: string
+): unknown => {
+  const respondentSections = [];
+  respondentSections.push({
+    key: {
+      text: respondentTitle(index, translations, languageParam),
+      classes: 'govuk-heading-m',
+    },
+    value: {
+      text: '',
+    },
+    actions: {
+      items: [
+        {
+          href: '#',
+          text: translations.removeRespondent,
+          visuallyHiddenText: translations.removeRespondent,
+        },
+      ],
+    },
+  });
+  return respondentSections;
+};
+
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,

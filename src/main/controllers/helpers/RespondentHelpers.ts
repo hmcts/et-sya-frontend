@@ -121,6 +121,10 @@ export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent):
   userCase.workAddressPostcode = respondent.respondentAddressPostcode;
 };
 
+export const deleteRespondent = (userCase: CaseWithId, selectedRespondentIndex: number): void => {
+  userCase.respondents.splice(selectedRespondentIndex, 1);
+};
+
 const respondent = '/respondent/';
 export const ValidRespondentUrls = {
   name1: respondent + 1 + PageUrls.RESPONDENT_NAME,

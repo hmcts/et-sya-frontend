@@ -136,5 +136,7 @@
     "Religion or belief": "Crefydd neu gred",
     "Sex": "Rhyw (gan gynnwys cyflog cyfartal)",
     "Sexual orientation": "Cyfeiriadedd rhywiol"
-  }
+  },
+  "addAnotherRespondent": "Ychwanegu atebydd arall",
+  "removeRespondent": "removeRespondent [CY]"
 }
