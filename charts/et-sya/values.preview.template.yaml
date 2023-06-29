@@ -11,8 +11,52 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+  environment:
+    ET_SYA_API_HOST: http://{{ .Release.Name }}-et-sya-api
 idam-pr:
   enabled: true
   redirect_uris:
     ET Citizen Submit Your Appeal:
       - https://${SERVICE_FQDN}/oauth2/callback
+et-sya-api:
+  enabled: true
+  java:
+    imagePullPolicy: Always
+    image: hmctspublic.azurecr.io/et/sya-api:pr-397 # or pr
+    releaseNameOverride: ${SERVICE_NAME}-et-sya-api
+    ingressHost: et-sya-api-${SERVICE_FQDN}
+    keyVaults:
+      et-sya-api:
+        secrets:
+          - name: et-sya-api-s2s-secret
+            alias: ET_SYA_S2S_SECRET
+          - name: Ocp-Apim-Subscription-Key
+            alias: ACAS_KEY
+          - name: et-api-caseworker-user-name
+            alias: CASEWORKER_USER_NAME
+          - name: et-api-caseworker-password
+            alias: CASEWORKER_PASSWORD
+          - name: acas-idam-client-secret
+            alias: IDAM_CLIENT_SECRET
+          - name: et1-service-owner-notification-email
+            alias: ET1_SERVICE_OWNER_NOTIFICATION_EMAIL
+          - name: et1-ecm-dts-core-team-slack-notification-email
+            alias: ET1_ECM_DTS_CORE_TEAM_SLACK_NOTIFICATION_EMAIL
+      et:
+      secrets:
+        - app-insights-connection-string
+        - name: tornado-access-key
+          alias: TORNADO_ACCESS_KEY
+        - name: gov-notify-api-key
+          alias: GOV_NOTIFY_API_KEY
+  environment:
+    IDAM_API_BASEURL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net"
+    IDAM_JWKS_BASEURL: "https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/jwks"
+    CASE_DATA_STORE_BASEURL: "http://ccd-data-store-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    SERVICE_AUTH_PROVIDER_URL: "http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    ACAS_URL: "https://api-dev-acas-01.azure-api.net/ECCLDev"
+    MICRO_SERVICE: "et_sya_api"
+    TORNADO_URL: "https://docmosis.{{ .Values.global.environment }}.platform.hmcts.net/rs/render"
+    CASE_DOCUMENT_AM_URL: "http://ccd-case-document-am-api-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal"
+    CITIZEN_PORTAL_LINK: "https://et-sya.{{ .Values.global.environment }}.platform.hmcts.net/citizen-hub/"
+
