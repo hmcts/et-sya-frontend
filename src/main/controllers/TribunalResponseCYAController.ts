@@ -35,6 +35,7 @@ export default class TribunalResponseCYAController {
       submitRef = InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url);
       id = userCase.selectedRequestOrOrder.id;
     } else if (userCase.selectedGenericTseApplication) {
+      userCase.isRespondingToRequestOrOrder = true;
       submitRef = InterceptPaths.SUBMIT_RESPONDENT_CYA + getLanguageParam(req.url);
       id = userCase.selectedGenericTseApplication.id;
     }
