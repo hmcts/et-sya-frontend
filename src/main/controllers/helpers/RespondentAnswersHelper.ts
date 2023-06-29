@@ -44,7 +44,7 @@ export const getRespondentSectionTitleWithDelete = (
     actions: {
       items: [
         {
-          href: '#',
+          href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
           text: translations.removeRespondent,
           visuallyHiddenText: translations.removeRespondent,
         },
