@@ -2,6 +2,7 @@ import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
+import rateLimit from 'express-rate-limit';
 import { FileFilterCallback } from 'multer';
 
 import AcasCertNumController from '../../controllers/AcasCertNumController';
@@ -96,6 +97,12 @@ const handleUploads = multer({
       return callback(null, true);
     }
   },
+});
+
+const describeWhatHappenedLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  message: 'Too many requests from this IP, please try again later.',
 });
 
 export class Routes {
@@ -198,6 +205,7 @@ export class Routes {
     app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, describeWhatHappenedController.get);
     app.post(
       PageUrls.DESCRIBE_WHAT_HAPPENED,
+      describeWhatHappenedLimiter,
       handleUploads.single('claimSummaryFileName'),
       describeWhatHappenedController.post
     );

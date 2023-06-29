@@ -97,7 +97,7 @@ export default class TypeOfClaimController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
-    if (errors.length === 0 || errors === undefined) {
+    if (errors.length === 0) {
       let redirectUrl;
       if (
         conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
@@ -135,10 +135,7 @@ export default class TypeOfClaimController {
           throw err;
         }
       }
-      // Only called when returning from CYA page
-      if (req.session.userCase.id) {
-        await handleUpdateDraftCase(req, logger);
-      }
+      await handleUpdateDraftCase(req, logger);
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     } else {
