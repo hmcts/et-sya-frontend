@@ -11,14 +11,14 @@ const describeWhatHappenedJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/describe-what-happened.json'),
   'utf-8'
 );
-const summairiseYourClaimJson = JSON.parse(describeWhatHappenedJsonRaw);
+const summariseYourClaimJson = JSON.parse(describeWhatHappenedJsonRaw);
 
 const titleClass = 'govuk-heading-xl';
 const detailsClass = 'govuk-details';
 const buttonClass = 'govuk-button';
 const textInputId = 'claim-summary-text';
 const fileUploadId = 'claim-summary-file';
-const expectedTitle = summairiseYourClaimJson.h1;
+const expectedTitle = summariseYourClaimJson.h1;
 
 let htmlRes: Document;
 // eslint-disable-next-line jest/valid-title
@@ -49,6 +49,11 @@ describe('Describe What Happened page', () => {
   it('should display file upload', () => {
     const fileUpload = htmlRes.getElementById(fileUploadId);
     expect(fileUpload.id).equals(fileUploadId, 'Could not find file upload');
+  });
+
+  it('should NOT display honeypot fields', () => {
+    const honeypotField = htmlRes.getElementById('url-group');
+    expect(honeypotField.outerHTML).contains('display: none');
   });
 
   it('should display save and continue button', () => {
