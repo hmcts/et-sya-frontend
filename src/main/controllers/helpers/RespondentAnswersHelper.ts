@@ -33,24 +33,36 @@ export const getRespondentSectionTitleWithDelete = (
   languageParam: string
 ): unknown => {
   const respondentSections = [];
-  respondentSections.push({
-    key: {
-      text: respondentTitle(index, translations, languageParam),
-      classes: 'govuk-heading-m',
-    },
-    value: {
-      text: '',
-    },
-    actions: {
-      items: [
-        {
-          href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
-          text: translations.removeRespondent,
-          visuallyHiddenText: translations.removeRespondent,
-        },
-      ],
-    },
-  });
+  if (index === 1) {
+    respondentSections.push({
+      key: {
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
+      },
+      value: {
+        text: '',
+      },
+    });
+  } else {
+    respondentSections.push({
+      key: {
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
+      },
+      value: {
+        text: '',
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
+            text: translations.removeRespondent,
+            visuallyHiddenText: translations.removeRespondent,
+          },
+        ],
+      },
+    });
+  }
   return respondentSections;
 };
 
@@ -199,6 +211,19 @@ export const getRespondentSection = (
   }
 
   return respondentSections;
+};
+
+export const getRespondentDetailsCardActionItem = (index: string, translations: AnyRecord): unknown => {
+  if (Number(index) === 1) {
+    return '';
+  }
+  const respondentCardActionItem = [];
+  respondentCardActionItem.push({
+    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE,
+    text: translations.removeRespondent,
+    visuallyHiddenText: translations.removeRespondent,
+  });
+  return respondentCardActionItem;
 };
 
 export const getRespondentDetailsSection = (

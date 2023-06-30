@@ -121,8 +121,8 @@ export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent):
   userCase.workAddressPostcode = respondent.respondentAddressPostcode;
 };
 
-export const deleteRespondent = (userCase: CaseWithId, selectedRespondentIndex: number): void => {
-  userCase.respondents.splice(selectedRespondentIndex, 1);
+export const deleteRespondent = (respondents: Respondent[], selectedRespondentIndex: number): Respondent[] => {
+  return respondents.filter(r => respondents.indexOf(r) !== selectedRespondentIndex);
 };
 
 const respondent = '/respondent/';

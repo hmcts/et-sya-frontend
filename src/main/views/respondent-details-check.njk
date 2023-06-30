@@ -23,13 +23,7 @@
                 text: subTitle + loop.index
               },
               actions: {
-                items: [
-                  {
-                    href: '/respondent/' + loop.index + PageUrls.RESPONDENT_REMOVE,
-                    text: removeRespondent,
-                    visuallyHiddenText: removeRespondent
-                  }
-                ]
+                items: getRespondentDetailsCardActionItem(loop.index, translations)
               }
             },
             rows: getRespondentDetailsSection(respondent, loop.index, translations)

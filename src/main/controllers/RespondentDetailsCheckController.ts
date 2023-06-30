@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
+import { getRespondentDetailsCardActionItem, getRespondentDetailsSection } from './helpers/RespondentAnswersHelper';
 import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
@@ -58,6 +58,7 @@ export default class RespondentDetailsCheckController {
       respondents,
       translations,
       getRespondentDetailsSection,
+      getRespondentDetailsCard: getRespondentDetailsCardActionItem,
       PageUrls,
       languageParam: getLanguageParam(req.url),
     });
