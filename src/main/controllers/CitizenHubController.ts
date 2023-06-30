@@ -22,6 +22,7 @@ import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelp
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getAllClaimantApplications,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -32,6 +33,7 @@ import {
   shouldShowRespondentResponseReceived,
   shouldShowSubmittedAlert,
   updateHubLinkStatuses,
+  updateYourApplicationsStatusTag,
   userCaseContainsGeneralCorrespondence,
 } from './helpers/CitizenHubHelper';
 import {
@@ -91,6 +93,13 @@ export default class CitizenHubController {
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
+
+    const allClaimantApplications = getAllClaimantApplications(userCase);
+
+    if (allClaimantApplications?.length) {
+      // getApplicationStates(allClaimantApplications, req, logger);
+      updateYourApplicationsStatusTag(allClaimantApplications, userCase);
+    }
 
     if (
       (hubLinksStatuses[HubLinkNames.Documents] === HubLinkStatus.NOT_YET_AVAILABLE &&

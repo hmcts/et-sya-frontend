@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects } from '../../definitions/constants';
+import { Applicant, NotificationSubjects } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
@@ -132,4 +132,23 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
   }
 
   return true;
+};
+
+export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+  return userCase.genericTseApplicationCollection?.filter(item => item.value.applicant === Applicant.CLAIMANT);
+};
+
+export const updateYourApplicationsStatusTag = (
+  allClaimantApplications: GenericTseApplicationTypeItem[],
+  userCase: CaseWithId
+): void => {
+  const mostUrgentStatus = Math.min(
+    ...allClaimantApplications.map(
+      o => StatusesInOrderOfUrgency[o.value.applicationState as keyof typeof StatusesInOrderOfUrgency]
+    )
+  );
+
+  userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = StatusesInOrderOfUrgency[
+    mostUrgentStatus
+  ] as HubLinkStatus;
 };
