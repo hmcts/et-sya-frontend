@@ -3,7 +3,7 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 import rateLimit from 'express-rate-limit';
-import { FileFilterCallback } from 'multer';
+import multer, { FileFilterCallback } from 'multer';
 
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
@@ -23,8 +23,6 @@ import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
 import ChecklistController from '../../controllers/ChecklistController';
-import CitizenHubController from '../../controllers/CitizenHubController';
-import CitizenHubDocumentController from '../../controllers/CitizenHubDocumentController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
 import ClaimDetailsController from '../../controllers/ClaimDetailsController';
 import ClaimSavedController from '../../controllers/ClaimSavedController';
@@ -111,10 +109,11 @@ import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterCont
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
+import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
-const multer = require('multer');
 const handleUploads = multer({
   limits: {
     fileSize: FILE_SIZE_LIMIT,

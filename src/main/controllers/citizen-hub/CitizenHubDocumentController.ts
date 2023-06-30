@@ -1,12 +1,11 @@
 import { Response } from 'express';
 
-import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys, responseAcceptedDocTypes, responseRejectedDocTypes } from '../definitions/constants';
-import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
-import { getLogger } from '../logger';
-
-import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { getDocumentDetails } from './helpers/DocumentHelpers';
+import { AppRequest } from '../../definitions/appRequest';
+import { TranslationKeys, responseAcceptedDocTypes, responseRejectedDocTypes } from '../../definitions/constants';
+import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
+import { getLogger } from '../../logger';
+import { handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
+import { getDocumentDetails } from '../helpers/DocumentHelpers';
 
 const logger = getLogger('CitizenHubDocumentController');
 
