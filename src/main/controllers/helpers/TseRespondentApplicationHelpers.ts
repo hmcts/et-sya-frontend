@@ -196,8 +196,7 @@ export const getDecisionDocDownload = (selectedAppAdminDecision: TseAdminDecisio
   if (selectedAppAdminDecision?.length) {
     for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
       if (selectedAppAdminDecision[i].value?.responseRequiredDoc) {
-        decisionDocDownload[i] =
-          selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
+        decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument;
       }
     }
   }

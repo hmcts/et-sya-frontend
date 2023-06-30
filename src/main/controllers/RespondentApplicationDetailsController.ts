@@ -1,16 +1,15 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
-import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -68,26 +67,8 @@ export default class RespondentApplicationDetailsController {
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.RESPONDENT_APPLICATION_DETAILS,
     ]);
-
-    const currStatus = selectedApplication.value.applicationState;
     try {
-      let newStatus;
-
-      switch (currStatus) {
-        case HubLinkStatus.NOT_VIEWED:
-          newStatus = HubLinkStatus.VIEWED;
-          break;
-        case HubLinkStatus.UPDATED:
-          newStatus = HubLinkStatus.IN_PROGRESS;
-          break;
-        case HubLinkStatus.NOT_STARTED_YET:
-          if (YesOrNo.YES !== selectedApplication.value.claimantResponseRequired) {
-            newStatus = HubLinkStatus.IN_PROGRESS;
-          }
-          break;
-        default:
-      }
-
+      const newStatus = getNewApplicationStatus(selectedApplication);
       if (newStatus) {
         await getCaseApi(req.session.user?.accessToken).changeApplicationStatus(req.session.userCase, newStatus);
         selectedApplication.value.applicationState = newStatus;

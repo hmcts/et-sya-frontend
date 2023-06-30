@@ -39,5 +39,11 @@
   "description": "Welsh Translation required",
   "requestMadeBy": "Welsh Translation required",
   "respond": "Welsh Translation required",
-  "mustRespond": "Welsh Translation required"
+  "mustRespond": "Welsh Translation required",
+  "decision": "Welsh Translation required",
+  "notification": "Welsh Translation required",
+  "notificationWithSpace": "<br><br>Welsh Translation required",
+  "tableTopWithSpace": "<br><br>",
+  "decisionMadeBy": "Welsh Translation required",
+  "decisionType": "Welsh Translation required"
 }

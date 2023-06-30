@@ -1,13 +1,15 @@
-import logger from '@pact-foundation/pact/src/common/logger';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -15,6 +17,9 @@ import {
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
+
+const logger = getLogger('ApplicationDetailsController');
 
 export default class ApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -38,10 +43,12 @@ export default class ApplicationDetailsController {
 
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
+    const accessToken = req.session.user?.accessToken;
+    const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await getDocumentAdditionalInformation(document, accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');
@@ -53,7 +60,7 @@ export default class ApplicationDetailsController {
     const allResponses = await getAllResponses(
       selectedApplication.value.respondCollection,
       translations,
-      req.session.user?.accessToken,
+      accessToken,
       res
     );
 
@@ -63,6 +70,18 @@ export default class ApplicationDetailsController {
       TranslationKeys.APPLICATION_DETAILS,
     ]);
 
+    try {
+      const newStatus = getNewApplicationStatus(selectedApplication);
+      if (newStatus) {
+        await getCaseApi(req.session.user?.accessToken).changeApplicationStatus(req.session.userCase, newStatus);
+        selectedApplication.value.applicationState = newStatus;
+        logger.info(`New status for claimant's application for case: ${req.session.userCase.id} - ${newStatus}`);
+      }
+    } catch (error) {
+      logger.error(error.message);
+      res.redirect(PageUrls.YOUR_APPLICATIONS);
+    }
+
     res.render(TranslationKeys.APPLICATION_DETAILS, {
       ...content,
       header,
@@ -71,6 +90,7 @@ export default class ApplicationDetailsController {
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,
+      decisionContent,
     });
   };
 }
