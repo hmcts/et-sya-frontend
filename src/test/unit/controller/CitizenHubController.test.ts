@@ -3,7 +3,9 @@ import { nextTick } from 'process';
 import axios, { AxiosResponse } from 'axios';
 
 import CitizenHubController from '../../../main/controllers/CitizenHubController';
+import { getAllClaimantApplications } from '../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { Applicant } from '../../../main/definitions/constants';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -61,5 +63,36 @@ describe('Citizen Hub Controller', () => {
     controller.get(req, res);
     await new Promise(nextTick);
     expect(req.session.userCase).toBeDefined();
+  });
+});
+
+describe('filterClaimantApplications', () => {
+  const req = mockRequest({});
+  const userCase = req.session.userCase;
+
+  test('should filter claimant applications correctly', () => {
+    const genericTseApplicationCollection = [
+      { value: { applicant: Applicant.CLAIMANT } },
+      { value: { applicant: Applicant.RESPONDENT } },
+      { value: { applicant: Applicant.ADMIN } },
+      { value: { applicant: Applicant.CLAIMANT } },
+    ];
+
+    userCase.genericTseApplicationCollection = genericTseApplicationCollection;
+    const result = getAllClaimantApplications(userCase);
+    expect(result).toHaveLength(2);
+    expect(result[0].value.applicant).toBe(Applicant.CLAIMANT);
+    expect(result[1].value.applicant).toBe(Applicant.CLAIMANT);
+  });
+
+  test('should return an empty array when no claimant applications found', () => {
+    const genericTseApplicationCollection = [
+      { value: { applicant: Applicant.RESPONDENT } },
+      { value: { applicant: Applicant.ADMIN } },
+    ];
+
+    userCase.genericTseApplicationCollection = genericTseApplicationCollection;
+    const result = getAllClaimantApplications(userCase);
+    expect(result).toHaveLength(0);
   });
 });
