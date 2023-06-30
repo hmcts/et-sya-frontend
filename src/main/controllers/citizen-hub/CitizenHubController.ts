@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
-import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { AppRequest } from '../../definitions/appRequest';
+import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -9,16 +9,15 @@ import {
   hubLinksUrlMap,
   sectionIndexToLinkNames,
   statusColorMap,
-} from '../definitions/hub';
-import { AnyRecord } from '../definitions/util-types';
-import { formatDate, fromApiFormat, getDueDate } from '../helper/ApiFormatter';
-import { currentStateFn } from '../helper/state-sequence';
-import { getLogger } from '../logger';
-import mockUserCaseWithCitizenHubLinks from '../resources/mocks/mockUserCaseWithCitizenHubLinks';
-import { getCaseApi } from '../services/CaseService';
-
-import { getApplicationsWithTribunalOrderOrRequest } from './helpers/AdminNotificationHelper';
-import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+} from '../../definitions/hub';
+import { AnyRecord } from '../../definitions/util-types';
+import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
+import { currentStateFn } from '../../helper/state-sequence';
+import { getLogger } from '../../logger';
+import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
+import { getCaseApi } from '../../services/CaseService';
+import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
+import { clearTseFields, handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -33,7 +32,7 @@ import {
   shouldShowSubmittedAlert,
   updateHubLinkStatuses,
   userCaseContainsGeneralCorrespondence,
-} from './helpers/CitizenHubHelper';
+} from '../helpers/CitizenHubHelper';
 import {
   activateJudgmentsLink,
   getAllAppsWithDecisions,
@@ -41,14 +40,14 @@ import {
   getDecisions,
   getJudgmentBannerContent,
   getJudgments,
-} from './helpers/JudgmentHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+} from '../helpers/JudgmentHelpers';
+import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterNotificationsWithRequestsOrOrders,
   populateNotificationsWithRedirectLinksAndStatusColors,
-} from './helpers/TribunalOrderOrRequestHelper';
-import { getRespondentApplications, getRespondentBannerContent } from './helpers/TseRespondentApplicationHelpers';
+} from '../helpers/TribunalOrderOrRequestHelper';
+import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
