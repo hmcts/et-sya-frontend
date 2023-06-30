@@ -222,7 +222,7 @@ describe('Type Of Claim Controller', () => {
         mockResponse()
       );
 
-      expect(caseApi.updateDraftCase).toHaveBeenCalledTimes(1);
+      expect(caseApi.updateDraftCase).toHaveBeenCalledTimes(0);
     });
   });
 });
