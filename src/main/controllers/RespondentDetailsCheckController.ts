@@ -58,7 +58,7 @@ export default class RespondentDetailsCheckController {
       respondents,
       translations,
       getRespondentDetailsSection,
-      getRespondentDetailsCard: getRespondentDetailsCardActionItem,
+      getRespondentDetailsCardActionItem,
       PageUrls,
       languageParam: getLanguageParam(req.url),
     });
