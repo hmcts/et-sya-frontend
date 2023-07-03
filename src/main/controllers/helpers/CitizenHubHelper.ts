@@ -55,7 +55,7 @@ export const shouldShowRespondentResponseReceived = (hubLinksStatuses: HubLinksS
 // notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
 // Therefore make sure also that there's a notStartedYet application with no requests for information
 export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
-  return applications.some(
+  return applications?.some(
     app =>
       app.value.applicationState === HubLinkStatus.NOT_STARTED_YET && app.value.claimantResponseRequired === YesOrNo.NO
   );
