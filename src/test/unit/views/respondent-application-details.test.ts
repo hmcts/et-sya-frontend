@@ -230,7 +230,7 @@ describe('reply button link', () => {
         userCase: {
           genericTseApplicationCollection: [
             {
-              id: 'aae328f0-34f0-48f6-8638-75e3523beb4b',
+              id: 'abc123',
               value: {
                 date: '3 July 2023',
                 type: 'Change personal details',
@@ -285,8 +285,8 @@ describe('reply button link', () => {
     const buttons = htmlRes.getElementsByClassName('govuk-button');
     console.log(JSON.stringify(buttons));
 
-    expect(buttons.length).equal(0);
-    expect(buttons.item(0).getAttribute('href')).equal('link');
+    expect(buttons.length).to.equal(1);
+    expect((buttons[0] as HTMLAnchorElement).href).equal('link');
   });
 
   it('should link to respond-to-respondent', async () => {
@@ -295,7 +295,7 @@ describe('reply button link', () => {
         userCase: {
           genericTseApplicationCollection: [
             {
-              id: '12bf94a5-6eca-4124-9c52-5f90534af29c',
+              id: 'abc123',
               value: {
                 date: '3 July 2023',
                 type: 'Change personal details',
@@ -359,7 +359,7 @@ describe('reply button link', () => {
 
     const buttons = htmlRes.getElementsByClassName('govuk-button');
 
-    expect(buttons.length).equal(0);
-    expect(buttons.item(0).getAttribute('href')).equal('link');
+    expect(buttons.length).to.equal(1);
+    expect((buttons[0] as HTMLAnchorElement).href).equal('link');
   });
 });
