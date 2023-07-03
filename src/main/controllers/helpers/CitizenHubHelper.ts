@@ -57,7 +57,7 @@ export const shouldShowRespondentResponseReceived = (hubLinksStatuses: HubLinksS
 export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(
     app =>
-      app.value.applicationState === HubLinkStatus.NOT_STARTED_YET && app.value.claimantResponseRequired === YesOrNo.NO
+      app.value.applicationState === HubLinkStatus.NOT_STARTED_YET && app.value.claimantResponseRequired !== YesOrNo.YES
   );
 };
 
