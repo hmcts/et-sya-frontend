@@ -25,7 +25,7 @@
       }}
     {% endfor %}
 
-      {% if respondButton %}
+      {% if respondButton and not isAdminRespondButton %}
         {{ govukButton({
             text: respond,
             href: redirectUrl
