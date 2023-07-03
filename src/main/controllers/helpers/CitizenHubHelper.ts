@@ -51,8 +51,14 @@ export const shouldShowRespondentResponseReceived = (hubLinksStatuses: HubLinksS
   return hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL;
 };
 
-export const shouldShowRespondentApplicationReceived = (hubLinksStatuses: HubLinksStatuses): boolean => {
-  return hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS;
+// Only show new respondent applications if there are applications that are not started yet
+// notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
+// Therefore make sure also that there's a notStartedYet application with no requests for information
+export const shouldShowRespondentApplicationReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
+  return applications.some(
+    app =>
+      app.value.applicationState === HubLinkStatus.NOT_STARTED_YET && app.value.claimantResponseRequired === YesOrNo.NO
+  );
 };
 
 export const shouldShowRespondentRejection = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {

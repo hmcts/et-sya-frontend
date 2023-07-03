@@ -150,7 +150,8 @@ export default class CitizenHubController {
 
     let respondentBannerContent = undefined;
 
-    if (userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] === HubLinkStatus.IN_PROGRESS) {
+    const respAppsReceived = shouldShowRespondentApplicationReceived(userCase.genericTseApplicationCollection);
+    if (respAppsReceived) {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
 
@@ -180,7 +181,7 @@ export default class CitizenHubController {
       showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(hubLinksStatuses),
-      showRespondentApplicationReceived: shouldShowRespondentApplicationReceived(hubLinksStatuses),
+      showRespondentApplicationReceived: respAppsReceived,
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
