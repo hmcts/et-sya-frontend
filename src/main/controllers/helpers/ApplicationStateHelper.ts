@@ -1,30 +1,33 @@
 import { YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant } from '../../definitions/constants';
 import { HubLinkStatus } from '../../definitions/hub';
 
+/**
+ * Using the current state, checks if viewing an application should change its state
+ */
 export const getNewApplicationStatus = (selectedApplication: GenericTseApplicationTypeItem): HubLinkStatus => {
-  const currentStatus = selectedApplication.value.applicationState;
-  let newStatus;
-  switch (currentStatus) {
+  let newState;
+  switch (selectedApplication.value.applicationState) {
     case HubLinkStatus.NOT_VIEWED:
-      newStatus = HubLinkStatus.VIEWED;
+      newState = HubLinkStatus.VIEWED;
       break;
     case HubLinkStatus.UPDATED:
       if (
-        selectedApplication.value.applicant === 'Claimant' &&
+        selectedApplication.value.applicant === Applicant.CLAIMANT &&
         selectedApplication.value.respondentResponseRequired === undefined
       ) {
-        newStatus = HubLinkStatus.WAITING_FOR_TRIBUNAL;
+        newState = HubLinkStatus.WAITING_FOR_TRIBUNAL;
         break;
       }
-      newStatus = HubLinkStatus.IN_PROGRESS;
+      newState = HubLinkStatus.IN_PROGRESS;
       break;
     case HubLinkStatus.NOT_STARTED_YET:
       if (YesOrNo.YES !== selectedApplication.value.claimantResponseRequired) {
-        newStatus = HubLinkStatus.IN_PROGRESS;
+        newState = HubLinkStatus.IN_PROGRESS;
       }
       break;
     default:
   }
-  return newStatus;
+  return newState;
 };
