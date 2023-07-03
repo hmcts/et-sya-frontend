@@ -222,3 +222,144 @@ describe('Respondent Application details page', () => {
     expect(summaryListData[30].innerHTML).contains('Both parties', 'Decision party notification does not exist');
   });
 });
+
+describe('reply button link', () => {
+  it('should link to respond-to-tribunal', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          genericTseApplicationCollection: [
+            {
+              id: 'aae328f0-34f0-48f6-8638-75e3523beb4b',
+              value: {
+                date: '3 July 2023',
+                type: 'Change personal details',
+                number: '1',
+                status: 'Open',
+                details: 'look ma, flexUI populated',
+                dueDate: '10 July 2023',
+                applicant: 'Respondent',
+                responsesCount: '1',
+                applicationState: 'notStartedYet',
+                respondCollection: [
+                  {
+                    id: '77cc7dee-1187-45b1-ad0b-51f4d623efbd',
+                    value: {
+                      date: '3 July 2023',
+                      from: 'Admin',
+                      addDocument: [
+                        {
+                          id: '41266f16-355e-4e31-81a7-7f8e184836b6',
+                          value: {
+                            uploadedDocument: {
+                              document_url: 'http://dm-store:8080/documents/be30afc8-2c18-4f9f-a2ac-9c1b7f7be0da',
+                              document_filename: 'et1_a_b.pdf',
+                              document_binary_url:
+                                'http://dm-store:8080/documents/be30afc8-2c18-4f9f-a2ac-9c1b7f7be0da/binary',
+                            },
+                          },
+                        },
+                      ],
+                      requestMadeBy: 'Legal officer',
+                      isCmoOrRequest: 'Request',
+                      madeByFullName: 'asf',
+                      selectPartyNotify: 'Both parties',
+                      isResponseRequired: 'Yes',
+                      selectPartyRespond: 'Claimant',
+                    },
+                  },
+                ],
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                claimantResponseRequired: 'Yes',
+              },
+            },
+          ],
+        },
+      })
+    )
+      .get(reqUrl)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+
+    const buttons = htmlRes.getElementsByClassName('govuk-button');
+    console.log(JSON.stringify(buttons));
+
+    expect(buttons.length).equal(0);
+    expect(buttons.item(0).getAttribute('href')).equal('link');
+  });
+
+  it('should link to respond-to-respondent', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          genericTseApplicationCollection: [
+            {
+              id: '12bf94a5-6eca-4124-9c52-5f90534af29c',
+              value: {
+                date: '3 July 2023',
+                type: 'Change personal details',
+                number: '2',
+                status: 'Open',
+                details: 'look ma, flexUI populated',
+                dueDate: '10 July 2023',
+                applicant: 'Respondent',
+                responsesCount: '2',
+                applicationState: 'waitingForTheTribunal',
+                respondCollection: [
+                  {
+                    id: '20587e8a-a55d-4c4e-8a8a-6b0ca2a7d079',
+                    value: {
+                      date: '3 July 2023',
+                      from: 'Admin',
+                      addDocument: [
+                        {
+                          id: '8e7e6325-6f95-4433-aff6-69ee1a744021',
+                          value: {
+                            uploadedDocument: {
+                              document_url: 'http://dm-store:8080/documents/e8f02c1e-e4be-48c8-b7ed-0a6abe399940',
+                              document_filename: 'et1_a_b.pdf',
+                              document_binary_url:
+                                'http://dm-store:8080/documents/e8f02c1e-e4be-48c8-b7ed-0a6abe399940/binary',
+                            },
+                          },
+                        },
+                      ],
+                      requestMadeBy: 'Legal officer',
+                      isCmoOrRequest: 'Request',
+                      madeByFullName: 'sad',
+                      selectPartyNotify: 'Claimant only',
+                      isResponseRequired: 'Yes',
+                      selectPartyRespond: 'Claimant',
+                    },
+                  },
+                  {
+                    id: '272b5e2f-d881-47e8-b6a2-1b4a7c7fd0f9',
+                    value: {
+                      date: '3 July 2023',
+                      from: 'Claimant',
+                      response: 'ads',
+                      copyToOtherParty: 'Yes',
+                      hasSupportingMaterial: YesOrNo.NO,
+                    },
+                  },
+                ],
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                claimantResponseRequired: 'No',
+              },
+            },
+          ],
+        },
+      })
+    )
+      .get(reqUrl)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+
+    const buttons = htmlRes.getElementsByClassName('govuk-button');
+
+    expect(buttons.length).equal(0);
+    expect(buttons.item(0).getAttribute('href')).equal('link');
+  });
+});
