@@ -1,4 +1,5 @@
 import { YesOrNo } from '../../../main/definitions/case';
+import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../../main/definitions/constants';
 
 import {
@@ -8,7 +9,7 @@ import {
   responseUploadedDoc,
 } from './mockUserCaseWithDecisionsAndJudgments';
 
-export const mockGenericTseCollection = [
+export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
   {
     id: '1',
     value: {
