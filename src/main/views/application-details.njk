@@ -24,6 +24,15 @@
       }}
   {% endfor %}
 
+  {% if selectedApplication.value.adminDecision.length %}
+    <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
+    {{ govukSummaryList({
+      rows: decisionContent
+      }) 
+    }}
+    <br>
+  {% endif %}
+
 
       {% if isRespondButton %}
       <p class="govuk-body">

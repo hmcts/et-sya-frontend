@@ -135,7 +135,10 @@ export default class TypeOfClaimController {
           throw err;
         }
       }
-      await handleUpdateDraftCase(req, logger);
+      // Only called when returning from CYA page
+      if (req.session.userCase.id) {
+        await handleUpdateDraftCase(req, logger);
+      }
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
     } else {

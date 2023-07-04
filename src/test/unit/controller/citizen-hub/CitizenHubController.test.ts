@@ -2,14 +2,14 @@ import { nextTick } from 'process';
 
 import axios, { AxiosResponse } from 'axios';
 
-import CitizenHubController from '../../../main/controllers/CitizenHubController';
-import { getAllClaimantApplications } from '../../../main/controllers/helpers/CitizenHubHelper';
-import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { Applicant } from '../../../main/definitions/constants';
-import { CaseApi } from '../../../main/services/CaseService';
-import * as CaseService from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import CitizenHubController from '../../../../main/controllers/citizen-hub/CitizenHubController';
+import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
+import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
+import { Applicant } from '../../../../main/definitions/constants';
+import { CaseApi } from '../../../../main/services/CaseService';
+import * as CaseService from '../../../../main/services/CaseService';
+import { mockRequest } from '../../mocks/mockRequest';
+import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
