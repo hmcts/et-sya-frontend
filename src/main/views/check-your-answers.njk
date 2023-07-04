@@ -77,12 +77,7 @@
   {% for respondent in respondents %}
     {{
       govukSummaryList({
-        rows: getRespondentSectionTitleWithDelete(loop.index, translations, languageParam)
-      })
-    }}
-    {{
-      govukSummaryList({
-        rows: getRespondentSection(userCase, respondent, loop.index, translations)
+        rows: getRespondentSection(userCase, respondent, loop.index, translations, languageParam, true)
       })
     }}
   {% endfor %}

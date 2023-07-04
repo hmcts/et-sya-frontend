@@ -27,52 +27,47 @@ const respondentTitle = (index: number, translations: AnyRecord, languageParam: 
   }
 };
 
-export const getRespondentSectionTitleWithDelete = (
-  index: number,
-  translations: AnyRecord,
-  languageParam: string
-): unknown => {
-  const respondentSections = [];
-  if (index === 1) {
-    respondentSections.push({
-      key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
-      },
-      value: {
-        text: '',
-      },
-    });
-  } else {
-    respondentSections.push({
-      key: {
-        text: respondentTitle(index, translations, languageParam),
-        classes: 'govuk-heading-m',
-      },
-      value: {
-        text: '',
-      },
-      actions: {
-        items: [
-          {
-            href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
-            text: translations.removeRespondent,
-            visuallyHiddenText: translations.removeRespondent,
-          },
-        ],
-      },
-    });
-  }
-  return respondentSections;
-};
-
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
   index: number,
-  translations: AnyRecord
+  translations: AnyRecord,
+  languageParam: string,
+  addTitle: boolean
 ): unknown => {
   const respondentSections = [];
+  if (addTitle) {
+    if (index === 1) {
+      respondentSections.push({
+        key: {
+          text: respondentTitle(index, translations, languageParam),
+          classes: 'govuk-heading-m',
+        },
+        value: {
+          text: '',
+        },
+      });
+    } else {
+      respondentSections.push({
+        key: {
+          text: respondentTitle(index, translations, languageParam),
+          classes: 'govuk-heading-m',
+        },
+        value: {
+          text: '',
+        },
+        actions: {
+          items: [
+            {
+              href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
+              text: translations.removeRespondent,
+              visuallyHiddenText: translations.removeRespondent,
+            },
+          ],
+        },
+      });
+    }
+  }
   respondentSections.push(
     {
       key: {

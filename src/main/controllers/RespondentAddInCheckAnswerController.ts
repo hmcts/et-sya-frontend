@@ -9,7 +9,8 @@ import { getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 export default class RespondentAddInCheckAnswerController {
   public get = (req: AppRequest, res: Response): void => {
     req.session.respondentRedirectCheckAnswer = true;
-    const newRespondentNum = req.session.userCase.respondents.length + 1;
+    const newRespondentNum =
+      req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : 1;
     const redirectUrl = setUrlLanguage(req, PageUrls.RESPONDENT_NAME);
     return res.redirect(getRespondentRedirectUrl(newRespondentNum, redirectUrl));
   };
