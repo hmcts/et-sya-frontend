@@ -31,7 +31,8 @@ export default class CheckYourAnswersController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    const newRespondentNum = req.session.userCase.respondents.length + 1;
+    const newRespondentNum =
+      req.session.userCase.respondents === undefined ? 0 : req.session.userCase.respondents.length + 1;
 
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
