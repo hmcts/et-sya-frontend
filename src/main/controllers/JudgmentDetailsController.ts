@@ -54,14 +54,10 @@ export default class JudgmentDetailsController {
         decisions = getDecisions(userCase);
       }
       selectedDecision = findSelectedDecision(decisions, req.params.appId);
-      if (selectedDecision?.value?.decisionState !== HubLinkStatus.VIEWED) {
-        try {
-          await updateDecisionState(selectedDecision, req, logger);
-        } catch (error) {
-          logger.info(error.message);
-        }
-      }
       selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
+      if (selectedDecision.value?.decisionState !== HubLinkStatus.VIEWED) {
+        await updateDecisionState(selectedDecisionApplication.id, selectedDecision, req, logger);
+      }
       const accessToken = req.session.user?.accessToken;
       const selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
         selectedDecisionApplication,
