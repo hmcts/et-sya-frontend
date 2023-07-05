@@ -37,6 +37,7 @@ export const enum HubLinkStatus {
   IN_PROGRESS = 'inProgress',
   NOT_STARTED_YET = 'notStartedYet',
   UPDATED = 'updated',
+  READY_TO_VIEW = 'readyToView',
 }
 
 export const hubLinksUrlMap = new Map<string, string>([
@@ -71,6 +72,7 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.IN_PROGRESS, COLORS.YELLOW],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
   [HubLinkStatus.UPDATED, COLORS.BLUE],
+  [HubLinkStatus.READY_TO_VIEW, COLORS.BLUE],
 ]);
 
 export const displayStatusColorMap = new Map<HubLinkStatus, string>([

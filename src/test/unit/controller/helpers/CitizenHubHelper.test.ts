@@ -3,16 +3,81 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   shouldHubLinkBeClickable,
+  updateHubLinkStatuses,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
-import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
-describe('checkIfRespondentIsSystemUser', () => {
-  const DATE = 'August 19, 2022';
+const DATE = 'August 19, 2022';
 
+describe('updateHubLinkStatuses', () => {
+  it('should set RespondentResponse hubLink status to WAITING_FOR_TRIBUNAL', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: undefined,
+      et3ResponseReceived: true,
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+    hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.NOT_YET_AVAILABLE;
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.RespondentResponse]).toEqual(HubLinkStatus.WAITING_FOR_TRIBUNAL);
+  });
+
+  it('should set RespondentResponse hubLink status to READY_TO_VIEW', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: undefined,
+      responseAcknowledgementDocumentDetail: [
+        {
+          id: '5',
+          description: 'desc',
+        },
+      ],
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.RespondentResponse]).toEqual(HubLinkStatus.READY_TO_VIEW);
+  });
+
+  it('should set Et1ClaimForm hubLink status to NOT_VIEWED', () => {
+    const userCase: CaseWithId = {
+      id: '1',
+      state: CaseState.SUBMITTED,
+      createdDate: DATE,
+      lastModified: DATE,
+      respondents: undefined,
+      acknowledgementOfClaimLetterDetail: [
+        {
+          id: '5',
+          description: 'desc',
+        },
+      ],
+    };
+
+    const hubLinksStatuses: HubLinksStatuses = new HubLinksStatuses();
+
+    updateHubLinkStatuses(userCase, hubLinksStatuses);
+
+    expect(hubLinksStatuses[HubLinkNames.Et1ClaimForm]).toEqual(HubLinkStatus.NOT_VIEWED);
+  });
+});
+
+describe('checkIfRespondentIsSystemUser', () => {
   it('should return false if respondents is undefined', () => {
     const userCase: CaseWithId = {
       id: '1',
