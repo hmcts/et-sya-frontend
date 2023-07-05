@@ -9,6 +9,10 @@ import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
+import {
+  mockGenericTseCollectionAdminClaimantRespond,
+  mockGenericTseCollectionRespondentRespondsToAdminRequest,
+} from '../../mocks/mockGenericTseCollection';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
 
@@ -168,5 +172,25 @@ describe('updateYourApplicationsStatusTag', () => {
     expect(userCaseWithoutClaimantApp?.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(
       HubLinkStatus.NOT_YET_AVAILABLE
     );
+  });
+});
+
+describe('update citizen hub status when different to application status', () => {
+  let userCase: CaseWithId;
+  beforeEach(() => {
+    userCase = clone(mockUserCase);
+    userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
+  });
+
+  it('should update the hublink status to in progress when claimant responds to tribunal request', () => {
+    userCase.genericTseApplicationCollection = mockGenericTseCollectionAdminClaimantRespond;
+    updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.IN_PROGRESS);
+  });
+
+  it('should update the hublink status to updated when respondent responds to tribunal request', () => {
+    userCase.genericTseApplicationCollection = mockGenericTseCollectionRespondentRespondsToAdminRequest;
+    updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.UPDATED);
   });
 });
