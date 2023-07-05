@@ -127,7 +127,11 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
     return false;
   }
 
-  if (status === HubLinkStatus.WAITING_FOR_TRIBUNAL && linkName !== HubLinkNames.RespondentApplications) {
+  if (
+    status === HubLinkStatus.WAITING_FOR_TRIBUNAL &&
+    linkName !== HubLinkNames.RespondentApplications &&
+    linkName !== HubLinkNames.RequestsAndApplications
+  ) {
     return false;
   }
 
@@ -142,10 +146,54 @@ export const updateYourApplicationsStatusTag = (
   allClaimantApplications: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
+  const claimantAppsWaitingForTribunal = allClaimantApplications.filter(
+    it => it.value.applicationState === HubLinkStatus.WAITING_FOR_TRIBUNAL
+  );
+
+  let citizenHubHighestPriorityStatus: HubLinkStatus | undefined;
+
+  claimantAppsWaitingForTribunal.forEach(claimantApp => {
+    const respondCollection = claimantApp.value?.respondCollection;
+
+    if (!respondCollection || respondCollection.length <= 1) {
+      return;
+    }
+
+    const lastItem = respondCollection[respondCollection.length - 1];
+    const secondLastItem = respondCollection[respondCollection.length - 2];
+    const isAdmin = secondLastItem.value.from === Applicant.ADMIN;
+
+    if (
+      lastItem.value.from === Applicant.CLAIMANT &&
+      isAdmin &&
+      citizenHubHighestPriorityStatus !== HubLinkStatus.UPDATED
+    ) {
+      citizenHubHighestPriorityStatus = HubLinkStatus.IN_PROGRESS;
+      return;
+    }
+
+    if (
+      lastItem.value.from === Applicant.RESPONDENT &&
+      isAdmin &&
+      secondLastItem.value.selectPartyRespond === Applicant.RESPONDENT
+    ) {
+      citizenHubHighestPriorityStatus = HubLinkStatus.UPDATED;
+    }
+  });
+
   const mostUrgentStatus = Math.min(
-    ...allClaimantApplications.map(
-      o => StatusesInOrderOfUrgency[o.value.applicationState as keyof typeof StatusesInOrderOfUrgency]
-    )
+    ...allClaimantApplications
+      .map(o => {
+        const applicationState = o.value.applicationState as keyof typeof StatusesInOrderOfUrgency;
+        const citizenHubStatus = citizenHubHighestPriorityStatus as keyof typeof StatusesInOrderOfUrgency;
+
+        const citizenHubStatusPriority =
+          citizenHubStatus !== undefined ? StatusesInOrderOfUrgency[citizenHubStatus] : undefined;
+        const applicationStatePriority = StatusesInOrderOfUrgency[applicationState];
+
+        return [citizenHubStatusPriority, applicationStatePriority].filter(item => item !== undefined);
+      })
+      .flat()
   );
 
   userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = StatusesInOrderOfUrgency[

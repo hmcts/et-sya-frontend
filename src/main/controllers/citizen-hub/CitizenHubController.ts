@@ -96,7 +96,6 @@ export default class CitizenHubController {
     const allClaimantApplications = getAllClaimantApplications(userCase);
 
     if (allClaimantApplications?.length) {
-      // getApplicationStates(allClaimantApplications, req, logger);
       updateYourApplicationsStatusTag(allClaimantApplications, userCase);
     }
 
