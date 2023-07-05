@@ -37,7 +37,7 @@
       "enabled": "true"
     },
     "et1Legacy": {
-      "url": "https://employmenttribunals.service.gov.uk"
+      "url": "https://et-stg-azure.staging.et.dsd.io"
     }
   },
   "pact": {
