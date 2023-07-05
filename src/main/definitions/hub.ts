@@ -1,5 +1,3 @@
-import { PageUrls } from './constants';
-
 export enum HubLinkNames {
   Et1ClaimForm = 'et1ClaimForm',
   RespondentResponse = 'respondentResponse',
@@ -39,17 +37,6 @@ export const enum HubLinkStatus {
   UPDATED = 'updated',
   READY_TO_VIEW = 'readyToView',
 }
-
-export const hubLinksUrlMap = new Map<string, string>([
-  [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
-  [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
-  [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
-  [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
-  [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
-  [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
-  [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
-  [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
-]);
 
 const COLORS = {
   TURQUOISE: '--turquoise',
