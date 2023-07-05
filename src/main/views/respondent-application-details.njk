@@ -28,7 +28,8 @@
       {% if respondButton and not isAdminRespondButton %}
         {{ govukButton({
             text: respond,
-            href: redirectUrl
+            href: redirectUrl,
+            id: 'respond-button'
           }) }}
       {% endif %}
 
@@ -38,7 +39,8 @@
         </p>
         {{ govukButton({
             text: respond,
-            href: adminRespondRedirectUrl
+            href: adminRespondRedirectUrl,
+            id: 'respond-button'
           }) }}
       {% endif %}
 

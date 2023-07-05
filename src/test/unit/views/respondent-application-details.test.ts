@@ -1,9 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
+import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
 
 const respondentApplicationDetailsJSONRaw = fs.readFileSync(
@@ -47,6 +50,34 @@ const adminDecisionRowHeader11 = '<br><br>Notification';
 const expectedResponseSummaryListHeader = 'Response 1';
 
 let htmlRes: Document;
+
+jest.mock('axios');
+const axiosResponse: AxiosResponse = {
+  data: {
+    classification: 'PUBLIC',
+    size: 10575,
+    mimeType: 'application/pdf',
+    originalDocumentName: 'sample.pdf',
+    createdOn: '2022-09-08T14:39:32.000+00:00',
+    createdBy: '7',
+    lastModifiedBy: '7',
+    modifiedOn: '2022-09-08T14:40:49.000+00:00',
+    metadata: {
+      jurisdiction: '',
+      case_id: '1',
+      case_type_id: '',
+    },
+  },
+  status: 200,
+  statusText: '',
+  headers: undefined,
+  config: undefined,
+};
+
+const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+getCaseApiClientMock.mockReturnValue(caseApi);
+caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
 describe('Respondent Application details page', () => {
   beforeAll(async () => {
@@ -214,6 +245,40 @@ describe('Respondent Application details page', () => {
 });
 
 describe('reply button link', () => {
+  it('should link to respond-to-respondent when no responses yet', async () => {
+    await request(
+      mockApp({
+        userCase: {
+          genericTseApplicationCollection: [
+            {
+              id: 'abc123',
+              value: {
+                date: '3 July 2023',
+                type: 'Change personal details',
+                number: '1',
+                status: 'Open',
+                details: 'look ma, flexUI populated',
+                dueDate: '10 July 2023',
+                applicant: 'Respondent',
+                responsesCount: '1',
+                applicationState: 'notStartedYet',
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                claimantResponseRequired: 'No',
+              },
+            },
+          ],
+        },
+      })
+    )
+      .get(reqUrl)
+      .then(res => {
+        htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
+      });
+
+    const button = htmlRes.getElementById('respond-button');
+    expect((button as HTMLAnchorElement).href).toContain('/respond-to-application/abc123');
+  });
+
   it('should link to respond-to-tribunal', async () => {
     await request(
       mockApp({
@@ -272,14 +337,11 @@ describe('reply button link', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
 
-    const buttons = htmlRes.getElementsByClassName('govuk-button');
-    console.log(JSON.stringify(buttons));
-
-    expect(buttons).toHaveLength(1);
-    expect((buttons[0] as HTMLAnchorElement).href).toBe('link');
+    const button = htmlRes.getElementById('respond-button');
+    expect((button as HTMLAnchorElement).href).toContain('/respond-to-tribunal-response/abc123');
   });
 
-  it('should link to respond-to-respondent', async () => {
+  it("no links to respond when answered tribunal's request", async () => {
     await request(
       mockApp({
         userCase: {
@@ -347,9 +409,7 @@ describe('reply button link', () => {
         htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
       });
 
-    const buttons = htmlRes.getElementsByClassName('govuk-button');
-
-    expect(buttons).toHaveLength(1);
-    expect((buttons[0] as HTMLAnchorElement).href).toBe('link');
+    const button = htmlRes.getElementById('respond-button');
+    expect(button).toBeNull();
   });
 });
