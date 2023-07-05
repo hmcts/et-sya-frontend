@@ -13,8 +13,7 @@
     },
     "acasCertNum": {
       "required": "Dywedwch wrthym os oes gennych  rif cymodi cynnar Acas ar gyfer yr Atebydd",
-      "invalidAcasNumber": "Rhowch rif Acas mewn fformat cywir. Er enghraifft R123456/12/34",
-      "duplicateAcasNumber": "Rhowch rif Acas gwahanol. Mae hwn eisoes wedi'i gofnodi."
+      "invalidAcasNumber": "Rhowch rif Acas mewn fformat cywir. Er enghraifft R123456/12/34"
     }
   }
 }
