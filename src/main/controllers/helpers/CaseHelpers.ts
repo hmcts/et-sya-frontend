@@ -140,13 +140,14 @@ export const updateJudgmentNotificationState = async (
 };
 
 export const updateDecisionState = async (
+  appId: string,
   selectedDecision: TseAdminDecisionItem,
   req: AppRequest,
   logger: Logger
 ): Promise<void> => {
   try {
     selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
-    await getCaseApi(req.session.user?.accessToken).updateDecisionState(selectedDecision, req.session.userCase);
+    await getCaseApi(req.session.user?.accessToken).updateDecisionState(appId, selectedDecision, req.session.userCase);
     logger.info(`Updated state for selected decision: ${selectedDecision.id}`);
   } catch (error) {
     logger.error(error.message);
