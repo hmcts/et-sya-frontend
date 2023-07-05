@@ -180,6 +180,7 @@ export class CaseApi {
   };
 
   updateDecisionState = async (
+    appId: string,
     selectedDecision: TseAdminDecisionItem,
     caseItem: CaseWithId
   ): Promise<AxiosResponse<CaseApiDataResponse>> => {
@@ -187,8 +188,8 @@ export class CaseApi {
       return await this.axios.put(JavaApiUrls.UPDATE_ADMIN_DECISION_STATE, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
+        app_id: appId,
         admin_decision_id: selectedDecision.id,
-        decision_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));
