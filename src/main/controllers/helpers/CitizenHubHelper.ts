@@ -155,6 +155,10 @@ export const updateYourApplicationsStatusTag = (
   claimantAppsWaitingForTribunal.forEach(claimantApp => {
     const respondCollection = claimantApp.value?.respondCollection;
 
+    if (!respondCollection || respondCollection.length <= 1) {
+      return;
+    }
+
     const lastItem = respondCollection[respondCollection.length - 1];
     const secondLastItem = respondCollection[respondCollection.length - 2];
     const isAdmin = secondLastItem.value.from === Applicant.ADMIN;
