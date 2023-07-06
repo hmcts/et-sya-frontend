@@ -194,7 +194,9 @@ describe('update citizen hub status when different to application status', () =>
     userCase.genericTseApplicationCollection = mockGenericTseCollectionRespondentRespondsToAdminRequest;
     updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.UPDATED);
-=======
+  });
+});
+
 describe('getHubLinksUrlMap', () => {
   it('return correct links when respondent is sytem user', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
