@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects } from '../../definitions/constants';
+import { NotificationSubjects, PageUrls } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
@@ -132,4 +132,23 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
   }
 
   return true;
+};
+
+export const getHubLinksUrlMap = (isRespondentSystemUser: boolean): Map<string, string> => {
+  return new Map<string, string>([
+    [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+    [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+    [
+      HubLinkNames.ContactTribunal,
+      isRespondentSystemUser ? PageUrls.CONTACT_THE_TRIBUNAL : PageUrls.RULE92_HOLDING_PAGE,
+    ],
+    [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
+    [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+    [
+      HubLinkNames.TribunalOrders,
+      isRespondentSystemUser ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS : PageUrls.RULE92_HOLDING_PAGE,
+    ],
+    [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
+    [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
+  ]);
 };
