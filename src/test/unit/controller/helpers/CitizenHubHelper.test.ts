@@ -5,8 +5,10 @@ import {
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   updateYourApplicationsStatusTag,
+  shouldShowRespondentApplicationReceived,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
+import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
@@ -216,6 +218,41 @@ describe('should not update citizen hub status', () => {
     userCase.genericTseApplicationCollection = mockTseRespondentRespondsToAdminRequestNotViewed;
     updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.NOT_VIEWED);
+  });
+});
+
+describe('shouldShowRespondentApplicationReceived', () => {
+  test.each([
+    [
+      [
+        {
+          value: {
+            applicationState: HubLinkStatus.NOT_STARTED_YET,
+            claimantResponseRequired: YesOrNo.NO,
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            applicationState: HubLinkStatus.IN_PROGRESS,
+            claimantResponseRequired: YesOrNo.NO,
+          },
+        },
+        {
+          value: {
+            applicationState: HubLinkStatus.NOT_STARTED_YET,
+            claimantResponseRequired: YesOrNo.YES,
+          },
+        },
+      ],
+      false,
+    ],
+  ])('when %j return %s', (applications, expected) => {
+    expect(shouldShowRespondentApplicationReceived(applications as GenericTseApplicationTypeItem[])).toBe(expected);
   });
 });
 
