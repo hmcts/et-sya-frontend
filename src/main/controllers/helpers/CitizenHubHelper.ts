@@ -142,10 +142,19 @@ export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseAppl
   return userCase.genericTseApplicationCollection?.filter(item => item.value.applicant === Applicant.CLAIMANT);
 };
 
+export const getClaimantAppsAndUpdateStatusTag = (userCase: CaseWithId): void => {
+  const allClaimantApplications = getAllClaimantApplications(userCase);
+
+  if (allClaimantApplications?.length) {
+    updateYourApplicationsStatusTag(allClaimantApplications, userCase);
+  }
+};
+
 export const updateYourApplicationsStatusTag = (
   allClaimantApplications: GenericTseApplicationTypeItem[],
   userCase: CaseWithId
 ): void => {
+  // Filter apps with 'waiting for tribunal' status as these may have a different citizen hub status
   const claimantAppsWaitingForTribunal = allClaimantApplications.filter(
     it => it.value.applicationState === HubLinkStatus.WAITING_FOR_TRIBUNAL
   );
@@ -154,7 +163,7 @@ export const updateYourApplicationsStatusTag = (
 
   claimantAppsWaitingForTribunal.forEach(claimantApp => {
     const respondCollection = claimantApp.value?.respondCollection;
-
+    // Only apps with 2 or more responses are eligible to have a different citizen hub status
     if (!respondCollection || respondCollection.length <= 1) {
       return;
     }
@@ -162,7 +171,8 @@ export const updateYourApplicationsStatusTag = (
     const lastItem = respondCollection[respondCollection.length - 1];
     const secondLastItem = respondCollection[respondCollection.length - 2];
     const isAdmin = secondLastItem.value.from === Applicant.ADMIN;
-
+    // If claimant responds to tribunal request, hub link status set to 'In progress'
+    // Only set if it is not already set to 'Updated', as 'Updated' is the higher priority status
     if (
       lastItem.value.from === Applicant.CLAIMANT &&
       isAdmin &&
@@ -171,7 +181,7 @@ export const updateYourApplicationsStatusTag = (
       citizenHubHighestPriorityStatus = HubLinkStatus.IN_PROGRESS;
       return;
     }
-
+    // If respondent responds to tribunal respondent request, hub link status set to 'Updated'
     if (
       lastItem.value.from === Applicant.RESPONDENT &&
       isAdmin &&
@@ -180,7 +190,8 @@ export const updateYourApplicationsStatusTag = (
       citizenHubHighestPriorityStatus = HubLinkStatus.UPDATED;
     }
   });
-
+  // citizenHubHigherPriorityStatus has now been set to either 'In progress' or 'Updated'
+  // and is added to the applications priority check to display the highest priority citizen hub status
   const mostUrgentStatus = Math.min(
     ...allClaimantApplications
       .map(o => {

@@ -12,8 +12,10 @@ import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
 import {
-  mockGenericTseCollectionAdminClaimantRespond,
-  mockGenericTseCollectionRespondentRespondsToAdminRequest,
+  mockTseAdminClaimantRespondNotViewed,
+  mockTseAdminClaimantRespondWaitingForTrib,
+  mockTseRespondentRespondsToAdminRequestNotViewed,
+  mockTseRespondentRespondsToAdminRequestWaitingForTrib,
 } from '../../mocks/mockGenericTseCollection';
 import mockUserCase from '../../mocks/mockUserCase';
 import { clone } from '../../test-helpers/clone';
@@ -185,15 +187,35 @@ describe('update citizen hub status when different to application status', () =>
   });
 
   it('should update the hublink status to in progress when claimant responds to tribunal request', () => {
-    userCase.genericTseApplicationCollection = mockGenericTseCollectionAdminClaimantRespond;
+    userCase.genericTseApplicationCollection = mockTseAdminClaimantRespondWaitingForTrib;
     updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.IN_PROGRESS);
   });
 
   it('should update the hublink status to updated when respondent responds to tribunal request', () => {
-    userCase.genericTseApplicationCollection = mockGenericTseCollectionRespondentRespondsToAdminRequest;
+    userCase.genericTseApplicationCollection = mockTseRespondentRespondsToAdminRequestWaitingForTrib;
     updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.UPDATED);
+  });
+});
+
+describe('should not update citizen hub status', () => {
+  let userCase: CaseWithId;
+  beforeEach(() => {
+    userCase = clone(mockUserCase);
+    userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.NOT_VIEWED;
+  });
+
+  it('should not update the hublink status to in progress when claimant responds to tribunal request', () => {
+    userCase.genericTseApplicationCollection = mockTseAdminClaimantRespondNotViewed;
+    updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.NOT_VIEWED);
+  });
+
+  it('should not update the hublink status to updated when respondent responds to tribunal request', () => {
+    userCase.genericTseApplicationCollection = mockTseRespondentRespondsToAdminRequestNotViewed;
+    updateYourApplicationsStatusTag(userCase.genericTseApplicationCollection, userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toBe(HubLinkStatus.NOT_VIEWED);
   });
 });
 

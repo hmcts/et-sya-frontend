@@ -189,7 +189,65 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
   },
 ];
 
-export const mockGenericTseCollectionAdminClaimantRespond: GenericTseApplicationTypeItem[] = [
+export const mockTseAdminClaimantRespondNotViewed: GenericTseApplicationTypeItem[] = [
+  {
+    id: '1',
+    value: {
+      applicant: Applicant.CLAIMANT,
+      date: '2022-05-05',
+      type: 'Amend my claim',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+      details: 'Test application details text',
+      number: '1',
+      dueDate: '2022-05-12',
+      applicationState: HubLinkStatus.NOT_VIEWED,
+      documentUpload: applicationUploadedDoc,
+      respondCollection: [
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b14',
+          value: {
+            date: '11 May 2023',
+            from: Applicant.ADMIN,
+            enterResponseTitle: 'Test Admin text',
+            isCmoOrRequest: 'Request',
+            addDocument: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            requestMadeBy: 'Legal Officer',
+            isResponseRequired: 'Yes',
+            selectPartyNotify: Parties.BOTH_PARTIES,
+            selectPartyRespond: Applicant.CLAIMANT,
+          },
+        },
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b13',
+          value: {
+            date: '11 May 2023',
+            from: Applicant.CLAIMANT,
+            response: 'Test claimant response text',
+            copyToOtherParty: YesOrNo.YES,
+            supportingMaterial: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            hasSupportingMaterial: YesOrNo.YES,
+          },
+        },
+      ],
+    },
+  },
+];
+
+export const mockTseAdminClaimantRespondWaitingForTrib: GenericTseApplicationTypeItem[] = [
   {
     id: '1',
     value: {
@@ -247,7 +305,65 @@ export const mockGenericTseCollectionAdminClaimantRespond: GenericTseApplication
   },
 ];
 
-export const mockGenericTseCollectionRespondentRespondsToAdminRequest: GenericTseApplicationTypeItem[] = [
+export const mockTseRespondentRespondsToAdminRequestNotViewed: GenericTseApplicationTypeItem[] = [
+  {
+    id: '1',
+    value: {
+      applicant: Applicant.CLAIMANT,
+      date: '2022-05-05',
+      type: 'Amend my claim',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+      details: 'Test application details text',
+      number: '1',
+      dueDate: '2022-05-12',
+      applicationState: HubLinkStatus.NOT_VIEWED,
+      documentUpload: applicationUploadedDoc,
+      respondCollection: [
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b14',
+          value: {
+            date: '11 May 2023',
+            from: Applicant.ADMIN,
+            enterResponseTitle: 'Test Admin text',
+            isCmoOrRequest: 'Request',
+            addDocument: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            requestMadeBy: 'Legal Officer',
+            isResponseRequired: YesOrNo.YES,
+            selectPartyNotify: Parties.BOTH_PARTIES,
+            selectPartyRespond: Applicant.RESPONDENT,
+          },
+        },
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b13',
+          value: {
+            date: '11 May 2023',
+            from: Applicant.RESPONDENT,
+            response: 'Test respondent response text',
+            copyToOtherParty: YesOrNo.YES,
+            supportingMaterial: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            hasSupportingMaterial: YesOrNo.YES,
+          },
+        },
+      ],
+    },
+  },
+];
+
+export const mockTseRespondentRespondsToAdminRequestWaitingForTrib: GenericTseApplicationTypeItem[] = [
   {
     id: '1',
     value: {
