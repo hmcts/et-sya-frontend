@@ -6,7 +6,6 @@ import {
   HubLinkNames,
   HubLinkStatus,
   HubLinksStatuses,
-  hubLinksUrlMap,
   sectionIndexToLinkNames,
   statusColorMap,
 } from '../../definitions/hub';
@@ -22,6 +21,7 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getAllClaimantApplications,
+  getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -137,6 +137,8 @@ export default class CitizenHubController {
 
     updateHubLinkStatuses(userCase, hubLinksStatuses);
 
+    const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
+
     const sections = Array.from(Array(sectionIndexToLinkNames.length)).map((__ignored, index) => {
       return {
         title: (l: AnyRecord): string => l[`section${index + 1}`],
@@ -146,7 +148,7 @@ export default class CitizenHubController {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
             shouldShow: shouldHubLinkBeClickable(status, linkName),
-            url: () => hubLinksUrlMap.get(linkName),
+            url: () => getHubLinksUrlMap(isRespondentSystemUser).get(linkName),
             statusColor: () => statusColorMap.get(status),
           };
         }),
@@ -194,7 +196,7 @@ export default class CitizenHubController {
       showJudgmentReceived: shouldShowJudgmentReceived(userCase, hubLinksStatuses),
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
-      respondentIsSystemUser: checkIfRespondentIsSystemUser(userCase),
+      respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(
         userCase?.genericTseApplicationCollection,
         translations,
