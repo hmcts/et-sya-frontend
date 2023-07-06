@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects, PageUrls } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
@@ -47,8 +47,16 @@ export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses:
   );
 };
 
-export const shouldShowRespondentResponseReceived = (hubLinksStatuses: HubLinksStatuses): boolean => {
-  return hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.WAITING_FOR_TRIBUNAL;
+// Show response received if there's a respondent application where the respondent responded and hasn't been viewed yet
+export const shouldShowRespondentResponseReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
+  return applications?.some(app => {
+    const responses = app.value.respondCollection;
+    return (
+      responses &&
+      responses[responses.length - 1].value.from === Applicant.RESPONDENT &&
+      app.value.applicationState === HubLinkStatus.UPDATED
+    );
+  });
 };
 
 // Only show new respondent applications if there are applications that are not started yet
