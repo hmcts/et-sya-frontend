@@ -2,11 +2,13 @@ import {
   StatusesInOrderOfUrgency,
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   shouldShowRespondentApplicationReceived,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { PageUrls } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
@@ -178,5 +180,35 @@ describe('shouldShowRespondentApplicationReceived', () => {
     ],
   ])('when %j return %s', (applications, expected) => {
     expect(shouldShowRespondentApplicationReceived(applications as GenericTseApplicationTypeItem[])).toBe(expected);
+  });
+});
+
+describe('getHubLinksUrlMap', () => {
+  it('return correct links when respondent is sytem user', () => {
+    const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
+      [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
+      [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
+      [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
+      [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
+    ]);
+    expect(getHubLinksUrlMap(true)).toEqual(linksMap);
+  });
+
+  it('return correct links when respondent is non sytem user', () => {
+    const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
+      [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
+      [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
+      [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
+    ]);
+    expect(getHubLinksUrlMap(false)).toEqual(linksMap);
   });
 });
