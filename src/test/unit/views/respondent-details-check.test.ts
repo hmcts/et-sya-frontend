@@ -9,6 +9,8 @@ import { mockApp } from '../mocks/mockApp';
 const titleClass = 'govuk-heading-l';
 const buttonClass = 'govuk-button';
 const expectedTitle = 'Check the respondent details';
+const summaryListClass = 'govuk-summary-list';
+const summaryCardActionsClass = 'govuk-summary-card__actions';
 
 let htmlRes: Document;
 describe('Respondent Details check page', () => {
@@ -68,12 +70,12 @@ describe('Respondent Details Card Action Item Link', () => {
   });
 
   it('should display two respondents card', () => {
-    const summaryCardDiv = htmlRes.getElementsByClassName('govuk-summary-list');
+    const summaryCardDiv = htmlRes.getElementsByClassName(summaryListClass);
     expect(summaryCardDiv.length).equal(2);
   });
 
   it('should only display Remove respondent link for second one', () => {
-    const summaryCardActionLink = htmlRes.getElementsByClassName('govuk-summary-card__actions');
+    const summaryCardActionLink = htmlRes.getElementsByClassName(summaryCardActionsClass);
     expect(summaryCardActionLink.length).equal(1);
   });
 });
