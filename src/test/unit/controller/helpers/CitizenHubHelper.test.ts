@@ -4,16 +4,16 @@ import {
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
-  updateHubLinkStatuses,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
+  updateHubLinkStatuses,
   updateYourApplicationsStatusTag,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, PageUrls } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
-import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
 import {
   mockTseAdminClaimantRespondNotViewed,
