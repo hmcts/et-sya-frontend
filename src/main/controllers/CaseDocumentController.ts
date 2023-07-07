@@ -31,7 +31,7 @@ export default class CaseDocumentController {
       const userCases = await getUserCasesByLastModified(req);
       const allDocumentSets = combineUserCaseDocuments(userCases);
 
-      const details = allDocumentSets.find(doc => doc !== undefined && doc.id === docId);
+      const details = allDocumentSets.find(doc => doc && doc.id === docId);
       if (!details) {
         logger.info('requested document not found in userCase');
         return res.redirect('/not-found');

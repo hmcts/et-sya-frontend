@@ -12,9 +12,8 @@ export const setRespondentResponseHubLinkStatus = async (
   req: AppRequest,
   logger: LoggerInstance
 ): Promise<void> => {
-  const userCase = req.session.userCase;
   if (docDetails.type === ET3_FORM) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
+    req.session.userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
     await handleUpdateHubLinksStatuses(req, logger);
   }
 };
