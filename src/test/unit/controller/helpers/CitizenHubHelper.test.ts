@@ -5,10 +5,11 @@ import {
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   shouldShowRespondentApplicationReceived,
+  shouldShowRespondentResponseReceived,
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { PageUrls } from '../../../../main/definitions/constants';
+import { Applicant, PageUrls } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import mockUserCase from '../../mocks/mockUserCase';
@@ -145,6 +146,64 @@ describe('shouldHubLinkBeClickable', () => {
 
   it('should not be clickable otherwise', () => {
     expect(shouldHubLinkBeClickable(HubLinkStatus.IN_PROGRESS, undefined)).toBe(true);
+  });
+});
+
+describe('shouldShowRespondentResponseReceived', () => {
+  test.each([
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
+            applicationState: HubLinkStatus.UPDATED,
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                },
+              },
+            ],
+            applicationState: HubLinkStatus.UPDATED,
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
+            applicationState: HubLinkStatus.VIEWED,
+          },
+        },
+      ],
+      false,
+    ],
+  ])('for %j should return %s', (applications, expected) => {
+    expect(shouldShowRespondentResponseReceived(applications)).toBe(expected);
   });
 });
 
