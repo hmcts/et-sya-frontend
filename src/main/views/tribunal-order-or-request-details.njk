@@ -16,9 +16,8 @@
         rows: orderOrRequestContent
       }) }}
 
-
       {% if respondButton %}
-        <p class="govuk-body">{{ tips }}</p>
+          <p class="govuk-body">{{ tips }}</p>
         {{ govukButton({
           text: respond,
           href: redirectUrl
@@ -34,7 +33,7 @@
       </p>
 
       {% set sideBarContent %}
-        {% include "./citizen-hub-sidebar.njk" %}
+      {% include "./citizen-hub-sidebar.njk" %}
       {% endset %}
 
       {{ govukDetails({

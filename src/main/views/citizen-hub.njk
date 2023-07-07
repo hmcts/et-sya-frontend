@@ -74,7 +74,7 @@
 
                         {{ govukTag({
                       text: getContent(link.status),
-                      classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
+                      classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
                     }) }}
                       </li>
                     {% endfor %}
@@ -90,7 +90,11 @@
               {{iWantTo}}
             </h2>
             <p class="govuk-body">
-              <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+              {% if respondentIsSystemUser %}
+                <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+              {% else %}
+                <a href="{{PageUrls.RULE92_HOLDING_PAGE}}">
+              {% endif %}
                 {{contactTribunalMyCase}}
               </a>
             </p>

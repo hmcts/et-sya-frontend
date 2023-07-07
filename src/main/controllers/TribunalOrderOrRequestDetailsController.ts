@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -30,17 +30,13 @@ export default class TribunalOrderOrRequestDetailsController {
       }
     }
 
-    const selectedRedirectUrl =
-      selectedRequestOrOrder.value.sendNotificationCaseManagement === 'Request'
-        ? 'PREPARE_DOCUMENTS'
-        : 'TRIBUNAL_RESPOND_TO_ORDER';
-    const redirectUrl = `${PageUrls[selectedRedirectUrl].replace(':orderId', req.params.orderId)}${getLanguageParam(
-      req.url
-    )}`;
+    const redirectUrl =
+      PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
 
-    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
-      r => r.value.from === Applicant.CLAIMANT
-    );
+    const respondButton =
+      !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
+      selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+      selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
 
     try {
       await getDocumentsAdditionalInformation(

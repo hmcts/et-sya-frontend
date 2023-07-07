@@ -29,6 +29,17 @@ export default class TribunalResponseCYAController {
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
 
+    let submitRef;
+    let id;
+    if (userCase.selectedRequestOrOrder) {
+      submitRef = InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url);
+      id = userCase.selectedRequestOrOrder.id;
+    } else if (userCase.selectedGenericTseApplication) {
+      userCase.isRespondingToRequestOrOrder = true;
+      submitRef = InterceptPaths.SUBMIT_RESPONDENT_CYA + getLanguageParam(req.url);
+      id = userCase.selectedGenericTseApplication.id;
+    }
+
     res.render(TranslationKeys.TRIBUNAL_RESPONSE_CYA, {
       ...content,
       ...translations,
@@ -38,12 +49,12 @@ export default class TribunalResponseCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      submitRef: InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url),
+      submitRef,
       cyaContent: getRespondentCyaContent(
         userCase,
         translations,
         getLanguageParam(req.url),
-        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedRequestOrOrder.id),
+        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', id),
         downloadLink
       ),
     });

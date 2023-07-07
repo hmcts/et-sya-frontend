@@ -6,6 +6,7 @@ import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
@@ -16,6 +17,7 @@ import {
   CaseWithId,
   Document,
   EnglishOrWelsh,
+  Representative,
   Respondent,
   YesOrNo,
   ccdPreferredTitle,
@@ -26,6 +28,7 @@ import {
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
   et1DocTypes,
+  et3AttachmentDocTypes,
   et3FormDocTypes,
   rejectionDocTypes,
   responseAcceptedDocTypes,
@@ -182,6 +185,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseAcceptedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.et3NotificationDocCollection, responseRejectedDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3FormDocTypes),
+        setDocumentValues(fromApiCaseData?.case_data?.documentCollection, et3AttachmentDocTypes),
         setDocumentValues(fromApiCaseData?.case_data?.et3ResponseContestClaimDocument, undefined, true)
       ),
     ],
@@ -189,10 +193,18 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
     hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
+    representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
   };
 }
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
+  const updateCaseBody = getUpdateCaseBody(caseItem);
+  if (updateCaseBody.case_data.triageQuestions !== undefined) {
+    updateCaseBody.case_data.triageQuestions.typesOfClaim = updateCaseBody.case_data.typesOfClaim;
+  }
+  return updateCaseBody;
+}
+export function getUpdateCaseBody(caseItem: CaseWithId): UpdateCaseBody {
   return {
     case_id: caseItem.id,
     case_type_id: caseItem.caseTypeId,
@@ -404,6 +416,15 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   });
 };
 
+export const mapRepresentatives = (representatives: RepresentativeApiModel[]): Representative[] => {
+  return representatives?.map(rep => {
+    return {
+      hasMyHMCTSAccount: rep.value.myHmctsYesNo,
+      respondentId: rep.value.respondentId,
+    };
+  });
+};
+
 export const setRespondentApiFormat = (respondents: Respondent[]): RespondentRequestBody[] => {
   if (respondents === undefined) {
     return;
@@ -468,7 +489,7 @@ export const setDocumentValues = (
 };
 
 export const getDocId = (url: string): string => {
-  return url.substring(url.lastIndexOf('/') + 1, url.length);
+  return url?.substring(url.lastIndexOf('/') + 1, url.length);
 };
 
 export const getFileExtension = (fileName: string): string => {

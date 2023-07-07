@@ -36,6 +36,8 @@
   "inProgress": "In progress",
   "waitingForTheTribunal": "Waiting for the tribunal",
   "submittedAndViewed": "Submitted",
+  "updated": "Updated",
+  "readyToView": "Ready to view",
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
@@ -97,5 +99,7 @@
   "Strike out all or part of a claim": "strike out all or part of a claim",
   "Vary or revoke an order": "vary or revoke an order",
   "Withdraw all/part of claim": "withdraw all/part of claim",
-  "withdraw": "withdraw all/part of claim"
+  "withdraw": "withdraw all/part of claim",
+  "your": "your",
+  "theRespondent": "the respondent's"
 }

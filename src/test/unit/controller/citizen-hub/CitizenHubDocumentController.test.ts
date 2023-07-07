@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 
-import CitizenHubDocumentController from '../../../main/controllers/CitizenHubDocumentController';
-import { CaseWithId } from '../../../main/definitions/case';
-import { DocumentDetail } from '../../../main/definitions/definition';
-import { HubLinksStatuses } from '../../../main/definitions/hub';
-import { CaseApi } from '../../../main/services/CaseService';
-import * as caseService from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
-import { mockResponse } from '../mocks/mockResponse';
+import CitizenHubDocumentController from '../../../../main/controllers/citizen-hub/CitizenHubDocumentController';
+import { CaseWithId } from '../../../../main/definitions/case';
+import { DocumentDetail } from '../../../../main/definitions/definition';
+import { HubLinksStatuses } from '../../../../main/definitions/hub';
+import { CaseApi } from '../../../../main/services/CaseService';
+import * as caseService from '../../../../main/services/CaseService';
+import { mockRequest } from '../../mocks/mockRequest';
+import { mockResponse } from '../../mocks/mockResponse';
 
 jest.mock('axios');
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');

@@ -90,6 +90,11 @@ describe('allDocumentsHelper tests', () => {
     expect(result).toEqual('Acas documents');
   });
 
+  it('should return undefined table caption', () => {
+    const result = getTableCaption('N/A', translationJsons);
+    expect(result).toEqual(undefined);
+  });
+
   it('returns a sorted map of documents', () => {
     expect(sortedMap.get(AllDocumentTypes.CLAIMANT_CORRESPONDENCE)).toEqual([docs[0]]);
     expect(sortedMap.get(AllDocumentTypes.ACAS_CERT)).toEqual([docs[1]]);

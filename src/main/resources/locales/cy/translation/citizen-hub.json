@@ -36,6 +36,8 @@
   "optional": "Dewisol",
   "waitingForTheTribunal": "Aros am y tribiwnlys",
   "submittedAndViewed": "Wedi'i gyflwyno",
+  "updated": "Welsh Translation required",
+  "readyToView": "Welsh Translation required",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
   "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
@@ -97,5 +99,7 @@
   "Strike out all or part of a claim": "Welsh Translation required",
   "Vary or revoke an order": "Welsh Translation required",
   "Withdraw all/part of claim": "Welsh Translation required",
-  "withdraw": "Welsh Translation required"
+  "withdraw": "Welsh Translation required",
+  "your": "Welsh Translation required",
+  "theRespondent": "Welsh Translation required"
 }

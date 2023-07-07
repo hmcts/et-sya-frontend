@@ -9,6 +9,7 @@ import {
   handleUpdateHubLinksStatuses,
   handleUploadDocument,
   isPostcodeInScope,
+  respondToApplication,
   setUserCaseWithRedisData,
   submitClaimantTse,
   updateSendNotificationState,
@@ -327,7 +328,7 @@ describe('handle respond to application', () => {
       } as AxiosResponse<CaseApiDataResponse>)
     );
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    submitClaimantTse(req, mockLogger);
+    respondToApplication(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
   });
 });

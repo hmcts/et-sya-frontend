@@ -121,6 +121,7 @@ export class CaseApi {
         case_type_id: caseItem.caseTypeId,
         applicationId: caseItem.selectedGenericTseApplication.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
+        isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
         response: {
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
@@ -130,6 +131,22 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
+  changeApplicationStatus = async (
+    caseItem: CaseWithId,
+    newStatus: HubLinkStatus
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.CHANGE_APPLICATION_STATUS, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+        new_status: newStatus,
+      });
+    } catch (error) {
+      throw new Error('Error changing tse application status: ' + axiosErrorDetails(error));
     }
   };
 
@@ -163,6 +180,7 @@ export class CaseApi {
   };
 
   updateDecisionState = async (
+    appId: string,
     selectedDecision: TseAdminDecisionItem,
     caseItem: CaseWithId
   ): Promise<AxiosResponse<CaseApiDataResponse>> => {
@@ -170,8 +188,8 @@ export class CaseApi {
       return await this.axios.put(JavaApiUrls.UPDATE_ADMIN_DECISION_STATE, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
+        app_id: appId,
         admin_decision_id: selectedDecision.id,
-        decision_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error('Error updating judgment notification state: ' + axiosErrorDetails(error));

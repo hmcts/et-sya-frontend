@@ -325,7 +325,6 @@ describe('ACAS Certificate Number Errors', () => {
       acasCertNum: 'R1234/6c91234',
       acasCert: YesOrNo.YES,
     };
-
     const errors = getACASCertificateNumberError(body);
 
     expect(errors).toEqual({ errorType: 'invalidAcasNumber', propertyName: 'acasCertNum' });

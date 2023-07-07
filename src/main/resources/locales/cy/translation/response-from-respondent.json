@@ -2,8 +2,10 @@
   "title": "Ymateb gan yr atebydd (ET3)",
   "h1": "Ymateb gan yr atebydd (ET3)",
   "h2": "Gwybodaeth sy'n gysylltiedig â’r ymateb",
-  "rejectionLetter": "Llythyr gwrthod",
+  "acceptanceLetter": "Derbyniwyd yr ymateb",
+  "rejectionLetter": "Gwrthodwyd yr ymateb",
   "responseEt3": "Ymateb (ET3)",
   "et3FormText": "Ffurflen ET3",
-  "supportingMaterials": "Deunydd ategol"
+  "supportingMaterials": "Deunydd ategol",
+  "et3AttachmentText": "ET3 ymlyniad"
 }

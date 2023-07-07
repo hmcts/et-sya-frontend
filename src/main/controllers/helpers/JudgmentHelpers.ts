@@ -151,7 +151,7 @@ export const getJudgmentDetails = (
   }
 
   if (judgmentAttachments) {
-    for (let i = 0; i < judgmentAttachments.length; i++) {
+    for (const element of judgmentAttachments) {
       judgmentDetails.push(
         {
           key: {
@@ -159,7 +159,7 @@ export const getJudgmentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            text: judgmentAttachments[i].value.shortDescription,
+            text: element.value.shortDescription,
           },
         },
         {
@@ -168,7 +168,7 @@ export const getJudgmentDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: judgmentAttachments[i].downloadLink,
+            html: element.downloadLink,
           },
         }
       );
@@ -383,7 +383,7 @@ export const getDecisionDetails = (
   }
 
   if (selectedAttachments) {
-    for (let i = 0; i < selectedAttachments.length; i++) {
+    for (const element of selectedAttachments) {
       decisionDetails.push(
         {
           key: {
@@ -391,7 +391,7 @@ export const getDecisionDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: selectedAttachments[i].value.shortDescription,
+            html: element.value.shortDescription,
           },
         },
         {
@@ -400,7 +400,7 @@ export const getDecisionDetails = (
             classes: 'govuk-!-font-weight-regular-m',
           },
           value: {
-            html: selectedAttachments[i].downloadLink,
+            html: element.downloadLink,
           },
         }
       );
@@ -472,38 +472,7 @@ export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
 };
 
 export function getAllAppsWithDecisions(userCase: CaseWithId): GenericTseApplicationTypeItem[] {
-  const decisions = userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
-  return decisions;
-}
-
-export function matchDecisionsToApps(
-  appOfDecision: GenericTseApplicationTypeItem[],
-  decision: TseAdminDecisionItem[]
-): DecisionAndApplicationDetails[] {
-  const result = [];
-  if (appOfDecision?.length) {
-    for (let i = 0; i < appOfDecision.length; i++) {
-      if (
-        (appOfDecision[i].value.applicant === Applicant.RESPONDENT &&
-          !appOfDecision[i].value.type.includes(applicationTypes.respondent.c) &&
-          appOfDecision[i].value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
-        appOfDecision[i].value.applicant === Applicant.CLAIMANT
-      ) {
-        const parent = appOfDecision[i];
-        for (let j = 0; j < parent.value.adminDecision.length; j++) {
-          if (parent.value.adminDecision[j].value.typeOfDecision === 'Judgment') {
-            const nested = parent.value.adminDecision[j];
-            const matchingChildren = decision.filter(child => child.id === nested.id);
-            result.push({
-              ...parent,
-              decisionOfApp: matchingChildren[0],
-            });
-          }
-        }
-      }
-    }
-  }
-  return result;
+  return userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
 }
 
 export function getApplicationOfDecision(
@@ -511,7 +480,7 @@ export function getApplicationOfDecision(
   selectedDecision: TseAdminDecisionItem
 ): GenericTseApplicationTypeItem {
   const data = userCase?.genericTseApplicationCollection;
-  const decisionApps = data?.filter(element => element.value.adminDecision && element.value.adminDecision.length);
+  const decisionApps = data?.filter(element => element.value.adminDecision?.length);
   const searchValue = selectedDecision;
   let appOfDecision = undefined;
 
@@ -555,26 +524,28 @@ export const getJudgmentBannerContent = (
 };
 
 export const getDecisionBannerContent = (
-  appsAndDecisions: DecisionAndApplicationDetails[],
+  appsWithDecisions: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
   languageParam: string
 ): DecisionAndApplicationDetails[] => {
-  const items = appsAndDecisions;
   const bannerContent: DecisionAndApplicationDetails[] = [];
-  if (items?.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
-        const decisionBannerHeader =
-          items[i].value.applicant === Applicant.CLAIMANT
-            ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
-            : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
-        const bannerDetails: DecisionAndApplicationDetails = {
-          decisionBannerHeader,
-          redirectUrl: `/judgment-details/${items[i].decisionOfApp?.id}${languageParam}`,
-          applicant: items[i].value.applicant,
-          applicationType: items[i].value.type,
-        };
-        bannerContent.push(bannerDetails);
+  if (appsWithDecisions?.length) {
+    for (const app of appsWithDecisions) {
+      for (const decision of app.value.adminDecision) {
+        if (decision.value.decisionState !== HubLinkStatus.VIEWED) {
+          const decisionBannerHeader =
+            app.value.applicant === Applicant.CLAIMANT
+              ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[app.value.type]
+              : translations.notificationBanner.decisionJudgment.headerRespondent + translations[app.value.type];
+
+          const bannerDetails: DecisionAndApplicationDetails = {
+            decisionBannerHeader,
+            redirectUrl: `/judgment-details/${decision?.id}${languageParam}`,
+            applicant: app.value.applicant,
+            applicationType: app.value.type,
+          };
+          bannerContent.push(bannerDetails);
+        }
       }
     }
     return bannerContent;
