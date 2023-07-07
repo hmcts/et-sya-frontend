@@ -20,6 +20,7 @@ import { clearTseFields, handleUpdateHubLinksStatuses } from '../helpers/CaseHel
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
+  getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
@@ -90,6 +91,8 @@ export default class CitizenHubController {
     }
 
     const hubLinksStatuses = userCase.hubLinksStatuses;
+
+    getClaimantAppsAndUpdateStatusTag(userCase);
 
     if (
       (hubLinksStatuses[HubLinkNames.Documents] === HubLinkStatus.NOT_YET_AVAILABLE &&
