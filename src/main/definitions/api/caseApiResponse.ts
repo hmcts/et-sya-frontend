@@ -67,6 +67,7 @@ export interface CaseData {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   sendNotificationCollection?: SendNotificationTypeItem[];
   hearingCollection?: HearingModel[];
+  repCollection?: RepresentativeApiModel[];
 }
 
 export interface HearingModel {
@@ -121,7 +122,6 @@ export interface HearingModel {
 export interface HearingVenueItem {
   code: string;
   label: string;
-  repCollection?: RepresentativeApiModel[];
 }
 
 export interface RespondentApiModel {
