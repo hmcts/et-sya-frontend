@@ -104,12 +104,14 @@ export default class CitizenHubController {
       await handleUpdateHubLinksStatuses(req, logger);
     }
 
+    const allApplications = userCase?.genericTseApplicationCollection;
+
     const respondentApplications = getRespondentApplications(userCase);
     activateRespondentApplicationsLink(respondentApplications, userCase);
 
     let decisions = undefined;
     let appsAndDecisions = undefined;
-    if (userCase?.genericTseApplicationCollection?.filter(it => it.value.adminDecision?.length)) {
+    if (allApplications?.filter(it => it.value.adminDecision?.length)) {
       decisions = getDecisions(userCase);
       appsAndDecisions = getAllAppsWithDecisions(userCase);
     }
@@ -155,7 +157,7 @@ export default class CitizenHubController {
 
     let respondentBannerContent = undefined;
 
-    const respAppsReceived = shouldShowRespondentApplicationReceived(userCase.genericTseApplicationCollection);
+    const respAppsReceived = shouldShowRespondentApplicationReceived(allApplications);
     if (respAppsReceived) {
       respondentBannerContent = getRespondentBannerContent(respondentApplications, translations, languageParam);
     }
@@ -185,7 +187,7 @@ export default class CitizenHubController {
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
       showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
-      showRespondentResponseReceived: shouldShowRespondentResponseReceived(hubLinksStatuses),
+      showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
       showRespondentApplicationReceived: respAppsReceived,
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
@@ -193,11 +195,7 @@ export default class CitizenHubController {
       respondentResponseDeadline: userCase?.respondentResponseDeadline,
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
-      adminNotifications: getApplicationsWithTribunalOrderOrRequest(
-        userCase?.genericTseApplicationCollection,
-        translations,
-        languageParam
-      ),
+      adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
     });
   }
 }

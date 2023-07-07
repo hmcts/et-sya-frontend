@@ -6,7 +6,8 @@ import request from 'supertest';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
+import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant, PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
@@ -260,6 +261,23 @@ describe('Citizen hub page', () => {
             respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
           },
           et3ResponseReceived: true,
+          genericTseApplicationCollection: [
+            {
+              value: {
+                applicant: Applicant.RESPONDENT,
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                type: 'amend',
+                applicationState: HubLinkStatus.UPDATED,
+                respondCollection: [
+                  {
+                    value: {
+                      from: Applicant.RESPONDENT,
+                    },
+                  },
+                ],
+              },
+            },
+          ] as GenericTseApplicationTypeItem[],
         },
         selector: bannerHeaderSelector,
         expectedText: 'The tribunal has received a response from the respondent',
