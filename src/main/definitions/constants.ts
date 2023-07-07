@@ -458,12 +458,14 @@ export const inScopeLocations = [
   'DE',
 ];
 
+export const ET3_FORM = 'ET3';
+
 export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
-export const et3FormDocTypes = ['ET3'];
+export const et3FormDocTypes = [ET3_FORM];
 export const et3AttachmentDocTypes = ['ET3 Attachment'];
 
 export const CHANGE = 'Change';

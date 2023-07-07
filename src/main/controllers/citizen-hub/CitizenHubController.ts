@@ -119,13 +119,6 @@ export default class CitizenHubController {
     }
 
     activateJudgmentsLink(judgments, decisions, req);
-    // Mark respondent's response as waiting for the tribunal
-    if (
-      hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
-      userCase.et3ResponseReceived
-    ) {
-      hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
-    }
 
     activateTribunalOrdersAndRequestsLink(sendNotificationCollection, req.session?.userCase);
 
