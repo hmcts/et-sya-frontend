@@ -300,7 +300,27 @@ describe('shouldShowRespondentResponseReceived', () => {
                 },
               },
             ],
-            applicationState: HubLinkStatus.UPDATED,
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
           },
         },
       ],
@@ -317,7 +337,6 @@ describe('shouldShowRespondentResponseReceived', () => {
                 },
               },
             ],
-            applicationState: HubLinkStatus.UPDATED,
           },
         },
       ],
@@ -333,8 +352,12 @@ describe('shouldShowRespondentResponseReceived', () => {
                   from: Applicant.RESPONDENT,
                 },
               },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                },
+              },
             ],
-            applicationState: HubLinkStatus.VIEWED,
           },
         },
       ],
