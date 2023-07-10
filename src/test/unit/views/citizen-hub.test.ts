@@ -272,6 +272,7 @@ describe('Citizen hub page', () => {
                   {
                     value: {
                       from: Applicant.RESPONDENT,
+                      copyToOtherParty: YesOrNo.YES,
                     },
                   },
                 ],
