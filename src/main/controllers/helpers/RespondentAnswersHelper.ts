@@ -19,13 +19,55 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
   }
 };
 
+const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
+  if (languageParam === '?lng=cy') {
+    return translations.details + ' ' + translations.respondentTitle + ' ' + index;
+  } else {
+    return translations.respondentTitle + ' ' + index + ' ' + translations.details;
+  }
+};
+
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
   index: number,
-  translations: AnyRecord
+  translations: AnyRecord,
+  languageParam: string,
+  addTitle: boolean
 ): unknown => {
   const respondentSections = [];
+  if (addTitle) {
+    if (index === 1) {
+      respondentSections.push({
+        key: {
+          text: respondentTitle(index, translations, languageParam),
+          classes: 'govuk-heading-m',
+        },
+        value: {
+          text: '',
+        },
+      });
+    } else {
+      respondentSections.push({
+        key: {
+          text: respondentTitle(index, translations, languageParam),
+          classes: 'govuk-heading-m',
+        },
+        value: {
+          text: '',
+        },
+        actions: {
+          items: [
+            {
+              href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
+              text: translations.removeRespondent,
+              visuallyHiddenText: translations.removeRespondent,
+            },
+          ],
+        },
+      });
+    }
+  }
   respondentSections.push(
     {
       key: {
@@ -164,6 +206,19 @@ export const getRespondentSection = (
   }
 
   return respondentSections;
+};
+
+export const getRespondentDetailsCardActionItem = (index: string, translations: AnyRecord): unknown => {
+  if (Number(index) === 1) {
+    return '';
+  }
+  const respondentCardActionItem = [];
+  respondentCardActionItem.push({
+    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE,
+    text: translations.removeRespondent,
+    visuallyHiddenText: translations.removeRespondent,
+  });
+  return respondentCardActionItem;
 };
 
 export const getRespondentDetailsSection = (

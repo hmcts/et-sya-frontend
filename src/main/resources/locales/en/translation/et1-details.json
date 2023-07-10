@@ -136,5 +136,7 @@
     "Religion or belief": "Religion or belief",
     "Sex": "Sex (Including equal pay)",
     "Sexual orientation": "Sexual Orientation"
-  }
+  },
+  "addAnotherRespondent": "Add another respondent",
+  "removeRespondent": "Remove respondent"
 }
