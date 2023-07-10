@@ -5,6 +5,7 @@ import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { handleUpdateDraftCase } from './helpers/CaseHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentIndex, getRespondentsWithRemoved } from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentRemoveController');
@@ -18,9 +19,9 @@ export default class RespondentRemoveController {
     await handleUpdateDraftCase(req, logger);
 
     if (req.query !== undefined && req.query.redirect === 'answers') {
-      return res.redirect(PageUrls.CHECK_ANSWERS);
+      return res.redirect(setUrlLanguage(req, PageUrls.CHECK_ANSWERS));
     } else {
-      return res.redirect(PageUrls.RESPONDENT_DETAILS_CHECK);
+      return res.redirect(setUrlLanguage(req, PageUrls.RESPONDENT_DETAILS_CHECK));
     }
   };
 }

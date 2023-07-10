@@ -59,7 +59,7 @@ export const getRespondentSection = (
         actions: {
           items: [
             {
-              href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + '?redirect=answers',
+              href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
               text: translations.removeRespondent,
               visuallyHiddenText: translations.removeRespondent,
             },
@@ -208,13 +208,17 @@ export const getRespondentSection = (
   return respondentSections;
 };
 
-export const getRespondentDetailsCardActionItem = (index: string, translations: AnyRecord): unknown => {
+export const getRespondentDetailsCardActionItem = (
+  index: string,
+  translations: AnyRecord,
+  languageParam: string
+): unknown => {
   if (Number(index) === 1) {
     return '';
   }
   const respondentCardActionItem = [];
   respondentCardActionItem.push({
-    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE,
+    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam,
     text: translations.removeRespondent,
     visuallyHiddenText: translations.removeRespondent,
   });
