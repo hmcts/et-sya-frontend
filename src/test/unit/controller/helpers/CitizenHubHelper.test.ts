@@ -297,6 +297,7 @@ describe('shouldShowRespondentResponseReceived', () => {
               {
                 value: {
                   from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.YES,
                 },
               },
             ],
@@ -318,6 +319,7 @@ describe('shouldShowRespondentResponseReceived', () => {
               {
                 value: {
                   from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.YES,
                 },
               },
             ],
@@ -334,6 +336,7 @@ describe('shouldShowRespondentResponseReceived', () => {
               {
                 value: {
                   from: Applicant.CLAIMANT,
+                  copyToOtherParty: YesOrNo.YES,
                 },
               },
             ],
@@ -355,6 +358,29 @@ describe('shouldShowRespondentResponseReceived', () => {
               {
                 value: {
                   from: Applicant.CLAIMANT,
+                  copyToOtherParty: YesOrNo.YES,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.NO,
                 },
               },
             ],

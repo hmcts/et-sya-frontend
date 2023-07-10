@@ -51,7 +51,11 @@ export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses:
 export const shouldShowRespondentResponseReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(app => {
     const responses = app.value.respondCollection;
-    return responses && responses[responses.length - 1].value.from === Applicant.RESPONDENT;
+    return (
+      responses &&
+      responses[responses.length - 1].value.from === Applicant.RESPONDENT &&
+      responses[responses.length - 1].value.copyToOtherParty === YesOrNo.YES
+    );
   });
 };
 
