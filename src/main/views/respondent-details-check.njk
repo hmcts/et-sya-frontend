@@ -23,7 +23,7 @@
                 text: subTitle + loop.index
               },
               actions: {
-                items: getRespondentDetailsCardActionItem(loop.index, translations)
+                items: getRespondentDetailsCardActionItem(loop.index, translations, languageParam)
               }
             },
             rows: getRespondentDetailsSection(respondent, loop.index, translations)
