@@ -1,5 +1,7 @@
+import * as url from 'url';
+
 import config from 'config';
-import { Application, NextFunction, Response } from 'express';
+import { Application, NextFunction, Request, Response } from 'express';
 
 import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
@@ -30,7 +32,7 @@ export class Oidc {
     app.get(AuthUrls.LOGOUT, (req, res) => {
       req.session.destroy(() => {
         if (req.query.redirectUrl) {
-          return res.redirect(req.query.redirectUrl as string);
+          handleRedirectUrl(req, res);
         } else {
           return res.redirect(PageUrls.HOME);
         }
@@ -54,6 +56,15 @@ export class Oidc {
       }
     });
   }
+}
+
+function handleRedirectUrl(req: Request, res: Response) {
+  const parsedUrl = url.parse(req.query.redirectUrl as string);
+  if (parsedUrl.host !== req.headers.host) {
+    logger.warning('Unauthorised External Redirect Attempted');
+    return res.redirect(PageUrls.HOME);
+  }
+  return res.redirect(req.query.redirectUrl as string);
 }
 
 export const idamCallbackHandler = async (
