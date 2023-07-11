@@ -30,9 +30,12 @@ export class Oidc {
     });
 
     app.get(AuthUrls.LOGOUT, (req, res) => {
-      req.session.destroy(() => {
+      req.session.destroy(err => {
+        if (err) {
+          logger.error('Error destroying session');
+        }
         if (req.query.redirectUrl) {
-          handleRedirectUrl(req, res);
+          return handleRedirectUrl(req, res);
         } else {
           return res.redirect(PageUrls.HOME);
         }
@@ -61,7 +64,7 @@ export class Oidc {
 function handleRedirectUrl(req: Request, res: Response) {
   const parsedUrl = url.parse(req.query.redirectUrl as string);
   if (parsedUrl.host !== req.headers.host) {
-    logger.warning('Unauthorised External Redirect Attempted');
+    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href as string);
     return res.redirect(PageUrls.HOME);
   }
   return res.redirect(req.query.redirectUrl as string);
