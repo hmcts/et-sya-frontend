@@ -17,8 +17,9 @@ describe('Respondent Application status Helper tests', () => {
     expect(result).toEqual(HubLinkStatus.IN_PROGRESS);
   });
 
-  it('should change from not started yet to in progress', () => {
+  it('should change respondent app from not started yet to in progress', () => {
     mockApp.value.applicationState = HubLinkStatus.NOT_STARTED_YET;
+    mockApp.value.claimantResponseRequired = YesOrNo.NO;
     const result = getNewApplicationStatus(mockApp);
     expect(result).toEqual(HubLinkStatus.IN_PROGRESS);
   });
@@ -54,6 +55,7 @@ describe('Claimant Application status Helper tests', () => {
 
   it('should change from Not started yet to in progress', () => {
     mockApp.value.applicationState = HubLinkStatus.NOT_STARTED_YET;
+    mockApp.value.claimantResponseRequired = YesOrNo.NO;
     const result = getNewApplicationStatus(mockApp);
     expect(result).toEqual(HubLinkStatus.IN_PROGRESS);
   });
