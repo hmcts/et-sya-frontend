@@ -13,4 +13,11 @@ describe('Admin Notification tests', () => {
     const result = getApplicationsWithTribunalOrderOrRequest(mockGenericTseCollection, [], 'en');
     expect(result).toHaveLength(2);
   });
+
+  it('returns no applications when no responses', () => {
+    mockGenericTseCollection[0].value.respondCollection = [];
+    mockGenericTseCollection[1].value.respondCollection = [];
+    const result = getApplicationsWithTribunalOrderOrRequest(mockGenericTseCollection, [], 'en');
+    expect(result).toHaveLength(0);
+  });
 });
