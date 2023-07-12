@@ -20,4 +20,9 @@ describe('Admin Notification tests', () => {
     const result = getApplicationsWithTribunalOrderOrRequest(mockGenericTseCollection, [], 'en');
     expect(result).toHaveLength(0);
   });
+
+  it('does not enter code if empty apps are passed', () => {
+    const result = getApplicationsWithTribunalOrderOrRequest([], [], 'en');
+    expect(result).toHaveLength(0);
+  });
 });

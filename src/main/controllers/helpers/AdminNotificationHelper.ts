@@ -13,18 +13,15 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   languageParam: string
 ): AdminNotifcation[] => {
   const appsWithTribunalOrderOrRequest: AdminNotifcation[] = [];
-  if (apps) {
-    for (const app of apps) {
-      const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
-      if (!allRequestsFromAdmin.length) {
-        continue;
-      }
+  for (const app of apps || []) {
+    const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
+    if (allRequestsFromAdmin.length) {
       for (const request of allRequestsFromAdmin) {
         appsWithTribunalOrderOrRequest.push(request);
       }
     }
-    return appsWithTribunalOrderOrRequest;
   }
+  return appsWithTribunalOrderOrRequest;
 };
 
 export const responseToTribunalRequired = (selectedApplication: GenericTseApplicationTypeItem): boolean => {
