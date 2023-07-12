@@ -56,6 +56,7 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
           },
         },
       ],
+      claimantResponseRequired: YesOrNo.YES,
       respondCollection: [
         {
           id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b13',
@@ -144,6 +145,7 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
           },
         },
       ],
+      claimantResponseRequired: YesOrNo.YES,
       respondCollection: [
         {
           id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b15',
@@ -182,6 +184,26 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
             isResponseRequired: 'Yes',
             selectPartyNotify: 'Both parties',
             selectPartyRespond: 'Respondent',
+          },
+        },
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b16',
+          value: {
+            date: '11 May 2023',
+            from: 'Admin',
+            enterResponseTitle: 'Test Admin text',
+            isCmoOrRequest: 'Request',
+            addDocument: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            requestMadeBy: 'Legal Officer',
+            isResponseRequired: 'No',
+            selectPartyNotify: 'Both parties',
           },
         },
       ],
