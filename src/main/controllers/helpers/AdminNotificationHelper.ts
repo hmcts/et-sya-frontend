@@ -60,7 +60,7 @@ const isVisibleTribunalResponse = (response: TseRespondTypeItem, claimantRespons
       return isSentToClaimantByTribunal(response);
     }
   }
-  if (response.value.isResponseRequired !== YesOrNo.YES) {
+  if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
     return isSentToClaimantByTribunal(response);
   }
 };

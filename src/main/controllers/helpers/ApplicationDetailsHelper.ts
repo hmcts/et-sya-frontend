@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
@@ -7,6 +8,7 @@ import {
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
+import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
 import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
@@ -191,12 +193,13 @@ export const getTseApplicationDecisionDetails = (
 };
 
 export const getAllResponses = async (
-  respondCollection: TseRespondTypeItem[],
+  selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  accessToken: string,
+  req: AppRequest,
   res: Response
 ): Promise<any> => {
   const allResponses: any[] = [];
+  const respondCollection = selectedApplication.value.respondCollection;
   if (!respondCollection?.length) {
     return allResponses;
   }
@@ -206,9 +209,16 @@ export const getAllResponses = async (
       response.value.from === Applicant.CLAIMANT ||
       (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
     ) {
-      responseToAdd = await addNonAdminResponse(translations, response, accessToken, res);
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, res);
     } else if (isSentToClaimantByTribunal(response)) {
-      responseToAdd = await addAdminResponse(allResponses, translations, response, accessToken, res);
+      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken, res);
+      if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
+        await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
+          req.session.userCase,
+          selectedApplication.id,
+          response.id
+        );
+      }
     }
     if (responseToAdd !== undefined) {
       allResponses.push(responseToAdd);
