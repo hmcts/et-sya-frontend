@@ -78,6 +78,7 @@ export interface TseRespondType {
   isResponseRequired?: string;
   selectPartyRespond?: string;
   selectPartyNotify?: string;
+  viewedByClaimant?: string;
 }
 
 export interface TseRespondSupportingMaterialItem {

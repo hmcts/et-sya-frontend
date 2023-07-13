@@ -209,6 +209,82 @@ export const mockGenericTseCollection: GenericTseApplicationTypeItem[] = [
       ],
     },
   },
+  {
+    id: '2',
+    value: {
+      applicant: Applicant.CLAIMANT,
+      date: '2022-05-05',
+      type: 'Amend my claim',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+      details: 'Test application details text',
+      number: '1',
+      status: 'notViewedYet',
+      dueDate: '2022-05-12',
+      applicationState: 'notViewedYet',
+      documentUpload: applicationUploadedDoc,
+      respondCollection: [
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b15',
+          value: {
+            date: '11 May 2023',
+            from: 'Respondent',
+            response: 'Test respondent response text',
+            copyToOtherParty: YesOrNo.YES,
+            supportingMaterial: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            hasSupportingMaterial: YesOrNo.YES,
+          },
+        },
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b16',
+          value: {
+            date: '11 May 2023',
+            from: 'Admin',
+            enterResponseTitle: 'Test Admin text',
+            isCmoOrRequest: 'Request',
+            addDocument: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            requestMadeBy: 'Legal Officer',
+            isResponseRequired: 'No',
+            selectPartyNotify: 'Both parties',
+            viewedByClaimant: 'Yes',
+          },
+        },
+        {
+          id: '95263ac2-c8b3-40ed-9bf5-41fcd7dc2b16',
+          value: {
+            date: '11 May 2023',
+            from: 'Admin',
+            enterResponseTitle: 'Test Admin text',
+            isCmoOrRequest: 'Order',
+            addDocument: [
+              {
+                id: '4867c28c-845f-46ed-90a7-c3bc0ae73454',
+                value: {
+                  uploadedDocument: responseUploadedDoc,
+                },
+              },
+            ],
+            requestMadeBy: 'Legal Officer',
+            isResponseRequired: 'No',
+            selectPartyNotify: 'Both parties',
+          },
+        },
+      ],
+    },
+  },
 ];
 
 export const mockTseAdminClaimantRespondNotViewed: GenericTseApplicationTypeItem[] = [
