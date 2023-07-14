@@ -175,6 +175,7 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  COPY_CORRESPONDENCE_QUESTION: '/copy-correspondence-question',
 } as const;
 
 export const InterceptPaths = {

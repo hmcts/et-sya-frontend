@@ -30,6 +30,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopyCorrespondenceQuestionController from '../../controllers/CopyCorrespondenceQuestionController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -143,6 +144,7 @@ export class Routes {
     app.get(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().get);
     app.post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().post);
     app.get(PageUrls.CONTACT_ACAS, new ContactAcasController().get);
+    app.get(PageUrls.COPY_CORRESPONDENCE_QUESTION, new CopyCorrespondenceQuestionController().get);
     app.get(PageUrls.DOB_DETAILS, new DobController().get);
     app.post(PageUrls.DOB_DETAILS, new DobController().post);
     app.get(PageUrls.SEX_AND_TITLE, new SexAndTitleController().get);
