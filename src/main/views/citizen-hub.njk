@@ -4,11 +4,6 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% block beforeContent %}
-  {{ super() }}
-  {% include "back-link.njk"%}
-{% endblock %}
-
 {% block content %}
 
   <div class="govuk-grid-row">
