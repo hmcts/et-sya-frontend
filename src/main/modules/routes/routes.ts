@@ -30,6 +30,7 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
+import CopiedCorrespondenceConfirmationController from '../../controllers/CopiedCorrespondenceConfirmationController';
 import CopyCorrespondenceQuestionController from '../../controllers/CopyCorrespondenceQuestionController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -68,6 +69,7 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
@@ -83,8 +85,6 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import StoredApplicationConfirmationController from "../../controllers/StoredApplicationConfirmationController";
-import ApplicationSentConfirmationController from "../../controllers/ApplicationSentConfirmationController";
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -279,7 +279,7 @@ export class Routes {
     // R92 urls
     app.get(PageUrls.COPY_CORRESPONDENCE_QUESTION, new CopyCorrespondenceQuestionController().get);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
-    app.get(PageUrls.APPLICATION_SENT_CONFIRMATION, new ApplicationSentConfirmationController().get);
+    app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

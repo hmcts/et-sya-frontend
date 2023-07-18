@@ -5,11 +5,11 @@ import { PageUrls } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
 
-export default class ApplicationSentConfirmationController {
+export default class CopiedCorrespondenceConfirmationController {
   public get(req: AppRequest, res: Response): void {
     const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
-    res.render('application-sent-confirmation', {
-      ...req.t('application-sent-confirmation', { returnObjects: true }),
+    res.render('copied-correspondence-confirmation', {
+      ...req.t('copied-correspondence-confirmation', { returnObjects: true }),
       redirectUrl,
     });
   }
