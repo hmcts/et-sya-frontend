@@ -83,6 +83,8 @@ import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectCo
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import StoredApplicationConfirmationController from "../../controllers/StoredApplicationConfirmationController";
+import ApplicationSentConfirmationController from "../../controllers/ApplicationSentConfirmationController";
 
 const multer = require('multer');
 const handleUploads = multer({
@@ -144,7 +146,7 @@ export class Routes {
     app.get(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().get);
     app.post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().post);
     app.get(PageUrls.CONTACT_ACAS, new ContactAcasController().get);
-    app.get(PageUrls.COPY_CORRESPONDENCE_QUESTION, new CopyCorrespondenceQuestionController().get);
+
     app.get(PageUrls.DOB_DETAILS, new DobController().get);
     app.post(PageUrls.DOB_DETAILS, new DobController().post);
     app.get(PageUrls.SEX_AND_TITLE, new SexAndTitleController().get);
@@ -274,6 +276,10 @@ export class Routes {
       PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_POSTCODE_SELECT,
       new RespondentPostCodeSelectController().post
     );
+    // R92 urls
+    app.get(PageUrls.COPY_CORRESPONDENCE_QUESTION, new CopyCorrespondenceQuestionController().get);
+    app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
+    app.get(PageUrls.APPLICATION_SENT_CONFIRMATION, new ApplicationSentConfirmationController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

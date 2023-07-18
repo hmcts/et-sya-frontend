@@ -175,7 +175,11 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  // Rule 92 paths
   COPY_CORRESPONDENCE_QUESTION: '/copy-correspondence-question',
+  CHECK_YOUR_ANSWERS_RULE92: '/check-your-answers-rule92',
+  STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
+  APPLICATION_SENT_CONFIRMATION: '/application-sent-confirmation',
 } as const;
 
 export const InterceptPaths = {
