@@ -1,9 +1,7 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -12,64 +10,26 @@
 
 {% block content %}
   <div class="govuk-!-width-two-thirds">
-  <h1 class="govuk-heading-l">Copy this correspondence to the other party</h1>
-  {{ govukInsetText({
-    text: "The tribunal must operate in a way fair to both sides. This means that each party must see or hear what the other party tells the tribunal. The rules therefore require all communications with the tribunal to be copied to the other party, apart from in exceptional circumstances."
-  }) }}
-  <p class="govuk-body">To copy this correspondence to the other party, you must send it to them by post or email. They cannot view it in this service.</p>
-  <h2 class="govuk-heading-m">Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?</h2>
-
-  {% set textHtml %}
-    {{ govukInput({
-      id: "r92-give-details",
-      name: "r92-give-details",
-      type: "text",
-      autocomplete: "text",
-      classes: "govuk-!-width-one-third",
-      label: {
-        html: "<p class='govuk-body'><strong>Give details</strong></p>"
-      }
+    {{ govukPanel({
+      titleText: "You have stored your application"
     }) }}
-  {% endset -%}
 
-  {{ govukRadios({
-    classes: 'govuk-radios',
-    idPrefix: r92radios,
-    name: r92radios,
-    fieldset: {
-      legend: {
-        classes: "govuk-fieldset__legend--s"
+    <p class="govuk-heading-m">What happens next</p>
+    <p class="govuk-body">You must submit your application after copying the correspondence to the other party.</p>
+    <p class="govuk-body">To copy this correspondence to the other party, you must send it to them by post or email. You must include all supporting documents</p>
+    <p class="govuk-body"><a href="#" class="govuk-link">View this correspondence (opens in new tab)</a></p>
+    <p class="govuk-body">View the supporting documents:
+      <a href="#" class="govuk-link">[file_name_of_supporting_doc]</a></p>
+    {{
+    govukButton({
+      text: "Close and return to case overview",
+      classes: 'govuk-!-margin-right-2',
+      type: "submit",
+      preventDoubleClick: true,
+      attributes: {
+        id: 'return-to-case-overview'
       }
-    },
-    items: [
-      {
-        value: "radiosyes",
-        html: '<p class="govuk-body">Yes, I confirm I will copy this correspondence to the other party to satisfy the Employment Tribunal Rules of Procedure.</p>
-        <p class="govuk-body"><strong>Important:</strong> Do not submit your application until you have copied this correspondence to the other party.</p> <p>You should also notify the other party that any objections to your application should be sent to the tribunal as soon as possible and in any event by [application date plus 7 days]'
-      },
-      {
-        value: "radiosno",
-        html: '<p class="govuk-body">No, I do not want to copy this correspondence to the other party.</p>
-        <p class="govuk-body"><strong>Important:</strong> You must tell the tribunal why you do not want to inform the other party. The tribunal will consider your reasons and decide if you must inform the other party or not.</p>',
-        conditional: {
-          html: textHtml
-        }
-      }
-    ]
-  }) }}
-    <div class="govuk-button-group">
-  {{
-  govukButton({
-    text: "Submit",
-    classes: 'govuk-!-margin-right-2',
-    type: "submit",
-    preventDoubleClick: true,
-    attributes: {
-      id: 'main-form-submit'
-    }
-  })
-  }}
-      <a class="govuk-link" href="#">Cancel</a>
-    </div>
+    })
+    }}
   </div>
 {% endblock %}
