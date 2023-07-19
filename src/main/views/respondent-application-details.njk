@@ -1,0 +1,72 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "back-link.njk" %}
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
+
+      {{ govukSummaryList({
+      rows: appContent
+      }) 
+    }}
+
+    {% for response in allResponses %}
+    <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+      {{ govukSummaryList({
+        rows: response
+        }) 
+      }}
+    {% endfor %}
+
+      {% if respondButton and not isAdminRespondButton %}
+        {{ govukButton({
+            text: respond,
+            href: redirectUrl,
+            id: 'respond-button'
+          }) }}
+      {% endif %}
+
+      {% if isAdminRespondButton %}
+        <p class="govuk-body">
+          {{ mustRespond }}
+        </p>
+        {{ govukButton({
+            text: respond,
+            href: adminRespondRedirectUrl,
+            id: 'respond-button'
+          }) }}
+      {% endif %}
+
+      {% if selectedApplication.value.adminDecision.length %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
+        {{ govukSummaryList({
+          rows: decisionContent
+          }) 
+        }}
+        <br>
+      {% endif %}
+
+    </div>
+
+    {% set sideBarContent %}
+    {% include "./citizen-hub-sidebar.njk" %}
+    {% endset %}
+
+    {{ govukDetails({
+        summaryText: "Contact",
+        html: sideBarContent
+      }) }}
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include "./footer.njk" %}
+{% endblock %}

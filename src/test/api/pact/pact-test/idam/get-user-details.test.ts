@@ -1,6 +1,6 @@
 import { pactWith } from 'jest-pact';
 
-import { IdTokenJwtPayload } from '../../../../../main/auth';
+import { IdTokenJwtPayload } from '../../../../../main/auth/oldindex';
 import { idamGetUserDetails } from '../../pactUtil';
 import { PactTestSetup } from '../settings/provider.mock';
 

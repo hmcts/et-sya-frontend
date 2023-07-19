@@ -3,7 +3,7 @@ import os from 'os';
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
 import rateLimit from 'express-rate-limit';
-import { FileFilterCallback } from 'multer';
+import multer, { FileFilterCallback } from 'multer';
 
 import AcasCertNumController from '../../controllers/AcasCertNumController';
 import AcasMultipleController from '../../controllers/AcasMultipleController';
@@ -12,14 +12,17 @@ import AddressDetailsController from '../../controllers/AddressDetailsController
 import AddressLookupController from '../../controllers/AddressLookupController';
 import AddressPostCodeEnterController from '../../controllers/AddressPostCodeEnterController';
 import AddressPostCodeSelectController from '../../controllers/AddressPostCodeSelectController';
+import AllDocumentsController from '../../controllers/AllDocumentsController';
+import AllJudgmentsController from '../../controllers/AllJudgmentsController';
+import ApplicationCompleteController from '../../controllers/ApplicationCompleteController';
+import ApplicationDetailsController from '../../controllers/ApplicationDetailsController';
+import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
 import ChecklistController from '../../controllers/ChecklistController';
-import CitizenHubController from '../../controllers/CitizenHubController';
-import CitizenHubDocumentController from '../../controllers/CitizenHubDocumentController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
 import ClaimDetailsController from '../../controllers/ClaimDetailsController';
 import ClaimSavedController from '../../controllers/ClaimSavedController';
@@ -29,16 +32,24 @@ import ClaimTypePayController from '../../controllers/ClaimTypePayController';
 import ClaimantApplicationsController from '../../controllers/ClaimantApplicationsController';
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
+import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
+import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
+import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
+import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopiedCorrespondenceConfirmationController from '../../controllers/CopiedCorrespondenceConfirmationController';
 import CopyCorrespondenceQuestionController from '../../controllers/CopyCorrespondenceQuestionController';
+import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
 import EmploymentAndRespondentCheckController from '../../controllers/EmploymentAndRespondentCheckController';
 import EndDateController from '../../controllers/EndDateController';
+import { GeneralCorrespondenceListController } from '../../controllers/GeneralCorrespondenceListController';
+import GeneralCorrespondenceNotificationDetailsController from '../../controllers/GeneralCorrespondenceNotificationDetailsController';
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
+import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
@@ -56,12 +67,21 @@ import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
+import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
+import RespondToApplicationController from '../../controllers/RespondToApplicationController';
+import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
+import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
+import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
+import RespondentApplicationsController from '../../controllers/RespondentApplicationsController';
 import RespondentDetailsCheckController from '../../controllers/RespondentDetailsCheckController';
 import RespondentNameController from '../../controllers/RespondentNameController';
 import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
 import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
+import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
+import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
+import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
@@ -71,9 +91,17 @@ import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYou
 import StillWorkingController from '../../controllers/StillWorkingController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
+import SubmitRespondentController from '../../controllers/SubmitRespondentController';
+import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
 import TelNumberController from '../../controllers/TelNumberController';
 import TellUsWhatYouWantController from '../../controllers/TellUsWhatYouWantController';
+import TribunalOrderOrRequestDetailsController from '../../controllers/TribunalOrderOrRequestDetailsController';
+import { TribunalOrdersAndRequestsController } from '../../controllers/TribunalOrdersAndRequestsController';
 import TribunalRecommendationController from '../../controllers/TribunalRecommendationController';
+import TribunalRespondToOrderController from '../../controllers/TribunalRespondToOrderController';
+import TribunalResponseCYAController from '../../controllers/TribunalResponseCYAController';
+import TribunalResponseCompletedController from '../../controllers/TribunalResponseCompletedController';
+import TribunalResponseSubmitController from '../../controllers/TribunalResponseSubmitController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
 import ValidNoAcasReasonController from '../../controllers/ValidNoAcasReasonController';
@@ -83,22 +111,19 @@ import WorkAddressController from '../../controllers/WorkAddressController';
 import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterController';
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
+import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
+import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
-const multer = require('multer');
 const handleUploads = multer({
   limits: {
     fileSize: FILE_SIZE_LIMIT,
   },
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
-    const fileSize = parseInt(req.headers['content-length']);
-    if (fileSize > FILE_SIZE_LIMIT) {
-      req.fileTooLarge = true;
-      return callback(null, false);
-    } else {
-      return callback(null, true);
-    }
+    req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
+    return callback(null, !req.fileTooLarge);
   },
 });
 
@@ -235,6 +260,23 @@ export class Routes {
     app.get(PageUrls.CLAIM_DETAILS, new ClaimDetailsController().get);
     app.get(PageUrls.CITIZEN_HUB_DOCUMENT, new CitizenHubDocumentController().get);
     app.get(PageUrls.GET_CASE_DOCUMENT, new CaseDocumentController().get);
+    app.get(PageUrls.GET_SUPPORTING_MATERIAL, new AttachmentController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL, new ContactTheTribunalController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY, new CopyToOtherPartyController().post);
+    app.get(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
+    app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
+    app.get(InterceptPaths.SUBMIT_RESPONDENT_CYA, new SubmitRespondentController().get);
+    app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
+    app.post(
+      PageUrls.TRIBUNAL_CONTACT_SELECTED,
+      handleUploads.single('contactApplicationFile'),
+      new ContactTheTribunalSelectedController().post
+    );
+    app.get(PageUrls.REMOVE_FILE, new ContactTheTribunalFileController().get);
+    app.post(PageUrls.TRIBUNAL_CONTACT_SELECTED, new ContactTheTribunalSelectedController().post);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_COMPLETE, new RespondToApplicationCompleteController().get);
     app.get(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().get);
     app.post(PageUrls.ADDRESS_POSTCODE_SELECT, new AddressPostCodeSelectController().post);
     app.get(PageUrls.ADDRESS_POSTCODE_ENTER, new AddressPostCodeEnterController().get);
@@ -300,5 +342,37 @@ export class Routes {
         info: {},
       })
     );
+    app.get(PageUrls.APPLICATION_DETAILS, new ApplicationDetailsController().get);
+    app.get(PageUrls.YOUR_APPLICATIONS, new YourAppsToTheTribunalController().get);
+    app.get(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().get);
+    app.post(PageUrls.RESPOND_TO_APPLICATION_SELECTED, new RespondToApplicationController().post);
+    app.get(PageUrls.RESPONDENT_APPLICATIONS, new RespondentApplicationsController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_DETAILS, new RespondentApplicationDetailsController().get);
+    app.get(PageUrls.RESPONDENT_SUPPORTING_MATERIAL, new RespondentSupportingMaterialController().get);
+    app.post(
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL,
+      handleUploads.single('supportingMaterialFile'),
+      new RespondentSupportingMaterialController().post
+    );
+    app.get(PageUrls.REMOVE_SUPPORTING_MATERIAL, new RespondentSupportingMaterialFileController().get);
+    app.get(PageUrls.RESPONDENT_APPLICATION_CYA, new RespondentApplicationCYAController().get);
+    app.get(PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS, new TribunalOrdersAndRequestsController().get);
+    app.get(PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, new TribunalOrderOrRequestDetailsController().get);
+    app.get(PageUrls.ALL_JUDGMENTS, new AllJudgmentsController().get);
+    app.get(PageUrls.JUDGMENT_DETAILS, new JudgmentDetailsController().get);
+    app.get(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().get);
+    app.post(PageUrls.TRIBUNAL_RESPOND_TO_ORDER, new TribunalRespondToOrderController().post);
+    app.get(PageUrls.TRIBUNAL_RESPONSE_CYA, new TribunalResponseCYAController().get);
+    app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
+    app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
+    app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
+    app.get(PageUrls.GENERAL_CORRESPONDENCE_LIST, new GeneralCorrespondenceListController().get);
+    app.get(
+      PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
+      new GeneralCorrespondenceNotificationDetailsController().get
+    );
+    app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
+    app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
+    app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
   }
 }

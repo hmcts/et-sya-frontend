@@ -1,0 +1,40 @@
+{
+  "title": "Withdraw my claim",
+  "applicationType": "Withdraw my claim",
+  "applicationTitle": "I want to withdraw all or part of my claim",
+  "content": [
+    "<p class=\"govuk-body\">Use this form when you’ve reached a settlement or do not want to continue with all or part of your claim.</p>",
+    "<p class=\"govuk-body\">You can withdraw your whole claim or tell us which parts you want to withdraw.</p>",
+    "<p class=\"govuk-body\">This brings your claim or part of it to an end.</p>",
+    "<p class=\"govuk-body\">You can withdraw at any point before or during a hearing.</p>",
+    "<p class=\"govuk-body\">If you’re withdrawing because of a settlement, make sure you have the settlement in writing.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Withdrawal and dismissal</p>",
+    "<p class=\"govuk-body\">Once you have told the tribunal you want to withdraw your claim, the tribunal will usually issue a judgment dismissing the claim or part of the claim.</p>",
+    "<p class=\"govuk-body\">A dismissal judgment stops you from making that claim against the same respondents in the future.</p>",
+    "<p class=\"govuk-body\">The tribunal will use Rule 52 of the Employment Tribunal Rules of Procedure to decide whether a dismissal judgment is issued following a withdrawal.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Rule 52 of the Employment Tribunal Rules of Procedure</p>",
+    "<p class=\"govuk-body\">Rule 52 states that where a claim, or part of it, has been withdrawn under Rule 51, the tribunal shall issue a judgment dismissing it (which means that the claimant may not commence a further claim against the respondent raising the same, or substantially the same, complaint) unless:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the claimant has expressed at the time of withdrawal a wish to reserve the right to bring such a further claim and the tribunal is satisfied that there would be legitimate reason for doing so</li>",
+    "</ul>",
+    "<p class=\"govuk-body\">or</p>",
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the tribunal believes that to issue such a judgment would not be in the interests of justice</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body\">Withdrawal and dismissal through this service will be final unless:</p>",
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the tribunal contacts you needing more information</li>",
+    "<li>you have given an acceptable reason why dismissal should not happen</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>which parts of your claim you want withdrawn and dismissed</li>",
+    "<li>if you do not want your claim (or part of it) dismissed, you must explain why</li>",
+    "</ul>"
+  ]
+}

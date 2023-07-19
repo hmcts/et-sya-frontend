@@ -9,7 +9,10 @@ import {
   handleUpdateHubLinksStatuses,
   handleUploadDocument,
   isPostcodeInScope,
+  respondToApplication,
   setUserCaseWithRedisData,
+  submitClaimantTse,
+  updateSendNotificationState,
 } from '../../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../../main/definitions/api/documentApiResponse';
@@ -235,6 +238,34 @@ describe('handle update draft case', () => {
   });
 });
 
+describe('handle submit application', () => {
+  it('should successfully submit application', () => {
+    caseApi.submitClaimantTse = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+
+  it('should catch failure to submit application', async () => {
+    caseApi.submitClaimantTse = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    await new Promise(nextTick);
+
+    expect(mockLogger.error).toHaveBeenCalledWith('test error');
+  });
+});
+
 describe('handle update hub links statuses', () => {
   it('should successfully update hub links statuses', async () => {
     caseApi.updateHubLinksStatuses = jest.fn().mockResolvedValueOnce(
@@ -253,7 +284,7 @@ describe('handle update hub links statuses', () => {
     expect(mockLogger.info).toHaveBeenCalledWith('Updated hub links statuses for case: testUserCaseId');
   });
 
-  it('should catch failure whenupdate hub links statuses', async () => {
+  it('should catch failure when update hub links statuses', async () => {
     caseApi.updateHubLinksStatuses = jest.fn().mockRejectedValueOnce({ message: 'test error' });
 
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
@@ -281,5 +312,68 @@ describe('handle file upload', () => {
     handleUploadDocument(req, mockFile, mockLogger);
     await new Promise(nextTick);
     expect(mockLogger.info).toHaveBeenCalledWith('Uploaded document to: test.pdf');
+  });
+});
+
+describe('handle respond to application', () => {
+  it('should successfully submit respond to application', () => {
+    caseApi.respondToApplication = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    respondToApplication(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+});
+
+describe('update sendNotification state', () => {
+  it('should successfully update sendNotification state', () => {
+    caseApi.updateSendNotificationState = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    updateSendNotificationState(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
+  });
+
+  it('should catch failure when update sendNotification state', async () => {
+    caseApi.updateSendNotificationState = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    updateSendNotificationState(req, mockLogger);
+    await new Promise(nextTick);
+    expect(mockLogger.error).toHaveBeenCalledWith('test error');
+  });
+});
+
+describe('add response to send notification', () => {
+  it('should successfully submit response to send notification', () => {
+    caseApi.addResponseSendNotification = jest.fn().mockResolvedValueOnce(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          state: CaseState.SUBMITTED,
+          case_data: {},
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
+    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
+    submitClaimantTse(req, mockLogger);
+    expect(req.session.userCase).toBeDefined();
   });
 });
