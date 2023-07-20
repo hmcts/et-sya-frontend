@@ -71,7 +71,9 @@ export default class NoAcasNumberController {
     if (req.body.saveForLater) {
       redirectUrl = PageUrls.CLAIM_SAVED;
     } else {
-      redirectUrl = PageUrls.RESPONDENT_DETAILS_CHECK;
+      redirectUrl = req.session.respondentRedirectCheckAnswer
+        ? PageUrls.CHECK_ANSWERS
+        : PageUrls.RESPONDENT_DETAILS_CHECK;
     }
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };

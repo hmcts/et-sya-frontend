@@ -1,6 +1,6 @@
 export const LegacyUrls = {
-  ET1: 'https://employmenttribunals.service.gov.uk/en/apply/application-number',
-  ET1_BASE: 'https://employmenttribunals.service.gov.uk',
+  ET1: 'https://et-stg-azure.staging.et.dsd.io/en/apply/application-number',
+  ET1_BASE: 'https://et-stg-azure.staging.et.dsd.io',
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',
@@ -153,6 +153,8 @@ export const PageUrls = {
   WORK_ADDRESS: '/work-address',
   ACAS_CERT_NUM: '/acas-cert-num',
   RESPONDENT_DETAILS_CHECK: '/respondent-details-check',
+  RESPONDENT_ADD_REDIRECT: '/respondent-add-redirect-check-answer',
+  RESPONDENT_REMOVE: '/respondent-remove',
   NO_ACAS_NUMBER: '/no-acas-reason',
   EMPLOYMENT_RESPONDENT_TASK_CHECK: '/employment-respondent-task-check',
   WORK_POSTCODE: '/work-postcode',
