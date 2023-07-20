@@ -16,18 +16,20 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ h1 }}</h1>
-        <p class="govuk-body">
-          {{ p1 }}<br><br>
-          {{ p2 }}
-        </p>
-        {{ govukInsetText({
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ h1 }}</h1>
+      <p class="govuk-body">
+        {{ p1 }}<br><br>
+        {{ p2 }}
+      </p>
+      {{ govukInsetText({
         text: insetText
       }) }}
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-4">{{ h2 }}</h2>
+       <p class="govuk-body">{{ p3 }}</p>
 
       {% block form %}
         {% include "form/form.njk"%}
-      {% endblock %}  
+      {% endblock %}
     </div>
   </div>
 {% endblock %}
