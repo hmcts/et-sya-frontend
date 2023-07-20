@@ -3,7 +3,7 @@ import * as url from 'url';
 import config from 'config';
 import { Application, NextFunction, Request, Response } from 'express';
 
-import { getRedirectUrl, getUserDetails } from '../../auth/oldindex';
+import { getRedirectUrl, getUserDetails } from '../../auth';
 import { AppRequest } from '../../definitions/appRequest';
 import { AuthUrls, EXISTING_USER, HTTPS_PROTOCOL, PageUrls, RedisErrors, languages } from '../../definitions/constants';
 import { CaseState } from '../../definitions/definition';
