@@ -1,9 +1,9 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { isRespondentNameValid } from '../components/form/validator';
+import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, RespondentType, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -22,9 +22,60 @@ export default class RespondentNameController {
         id: 'respondentName',
         name: 'respondentName',
         type: 'text',
-        validator: isRespondentNameValid,
-        label: (l: AnyRecord): string => l.label,
-        attributes: { maxLength: 100 },
+        hidden: true,
+      },
+      respondentType: {
+        classes: 'govuk-radios',
+        id: 'respondentType',
+        type: 'radios',
+        hint: l => l.hint,
+        values: [
+          {
+            name: 'respondentType',
+            label: (l: AnyRecord): string => l.individualLabel,
+            value: RespondentType.INDIVIDUAL,
+            subFields: {
+              respondentFirstName: {
+                id: 'respondentFirstName',
+                name: 'respondentFirstName',
+                type: 'text',
+                classes: 'govuk-text',
+                attributes: { maxLength: 2500 },
+                label: (l: AnyRecord): string => l.firstNameLabel,
+                labelAsHint: true,
+                validator: isFieldFilledIn,
+              },
+              respondentLastName: {
+                id: 'respondentLastName',
+                name: 'respondentLastName',
+                type: 'text',
+                classes: 'govuk-text',
+                attributes: { maxLength: 2500 },
+                label: (l: AnyRecord): string => l.lastNameLabel,
+                labelAsHint: true,
+                validator: isFieldFilledIn,
+              },
+            },
+          },
+          {
+            name: 'respondentType',
+            label: (l: AnyRecord): string => l.companyLabel,
+            value: RespondentType.ORGANISATION,
+            subFields: {
+              respondentOrganisation: {
+                id: 'respondentOrganisation',
+                name: 'respondentOrganisation',
+                type: 'text',
+                classes: 'govuk-text',
+                attributes: { maxLength: 2500 },
+                label: (l: AnyRecord): string => l.orgLabel,
+                labelAsHint: true,
+                validator: isFieldFilledIn,
+              },
+            },
+          },
+        ],
+        validator: isFieldFilledIn,
       },
     },
     submit: {
@@ -42,6 +93,26 @@ export default class RespondentNameController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = req.session.userCase;
+    const selectedRadio = req.body.respondentType;
+    userCase.respondentType = selectedRadio;
+
+    switch (selectedRadio) {
+      case RespondentType.INDIVIDUAL:
+        req.body.respondentName = req.body.respondentFirstName + ' ' + req.body.respondentLastName;
+        req.body.respondentOrganisation = undefined;
+        break;
+      case RespondentType.ORGANISATION:
+        req.body.respondentName = req.body.respondentOrganisation;
+        req.body.respondentFirstName = undefined;
+        req.body.respondentLastName = undefined;
+        break;
+      default:
+        req.session.errors = [];
+        req.session.errors.push({ propertyName: 'respondentType', errorType: 'required' });
+        return res.redirect(getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_NAME));
+    }
+
     const redirectUrl = getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.RESPONDENT_POSTCODE_ENTER);
     await handlePostLogicForRespondent(req, res, this.form, logger, redirectUrl);
   };

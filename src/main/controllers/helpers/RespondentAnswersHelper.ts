@@ -1,5 +1,5 @@
 import { CaseWithId, NoAcasNumberReason, Respondent, YesOrNo } from '../../definitions/case';
-import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { InterceptPaths, PageUrls, RespondentType } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -180,24 +180,83 @@ export const getRespondentDetailsSection = (
   translations: AnyRecord
 ): unknown => {
   const respondentSections = [];
-  respondentSections.push(
-    {
+  respondentSections.push({
+    key: {
+      text: translations.respondentType,
+    },
+    value: {
+      text: respondent.respondentType,
+    },
+    actions: {
+      items: [
+        {
+          href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
+          text: translations.change,
+          visuallyHiddenText: translations.respondentType,
+        },
+      ],
+    },
+  });
+  if (respondent.respondentType === RespondentType.ORGANISATION) {
+    respondentSections.push({
       key: {
-        text: translations.name,
+        text: translations.respondentOrganisation,
       },
       value: {
-        text: respondent.respondentName,
+        text: respondent.respondentOrganisation,
       },
       actions: {
         items: [
           {
             href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
             text: translations.change,
-            visuallyHiddenText: translations.name,
+            visuallyHiddenText: translations.respondentOrganisation,
           },
         ],
       },
-    },
+    });
+  }
+
+  if (respondent.respondentType === RespondentType.INDIVIDUAL) {
+    respondentSections.push(
+      {
+        key: {
+          text: translations.respondentFirstName,
+        },
+        value: {
+          text: respondent.respondentFirstName,
+        },
+        actions: {
+          items: [
+            {
+              href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
+              text: translations.change,
+              visuallyHiddenText: translations.respondentFirstName,
+            },
+          ],
+        },
+      },
+      {
+        key: {
+          text: translations.respondentLastName,
+        },
+        value: {
+          text: respondent.respondentLastName,
+        },
+        actions: {
+          items: [
+            {
+              href: '/respondent/' + index + PageUrls.RESPONDENT_NAME + InterceptPaths.RESPONDENT_CHANGE,
+              text: translations.change,
+              visuallyHiddenText: translations.respondentLastName,
+            },
+          ],
+        },
+      }
+    );
+  }
+
+  respondentSections.push(
     {
       key: {
         text: translations.address,
