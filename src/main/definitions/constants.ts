@@ -514,6 +514,11 @@ export const Applicant = {
   ADMIN: 'Admin',
 } as const;
 
+export const RespondentType = {
+  INDIVIDUAL: 'Individual',
+  ORGANISATION: 'Organisation',
+} as const;
+
 export const AllDocumentTypes = {
   CLAIMANT_CORRESPONDENCE: 'Claimant correspondence',
   ACAS_CERT: 'ACAS Certificate',
