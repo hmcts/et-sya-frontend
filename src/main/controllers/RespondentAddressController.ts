@@ -15,7 +15,12 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { fillRespondentAddressFields, getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import {
+  fillRespondentAddressFields,
+  getRespondentIndex,
+  getRespondentOrgOrName,
+  getRespondentRedirectUrl,
+} from './helpers/RespondentHelpers';
 
 const logger = getLogger('RespondentAddressController');
 
@@ -114,6 +119,7 @@ export default class RespondentAddressController {
     const x = req.session.userCase.respondentAddressTypes;
     const respondentIndex = getRespondentIndex(req);
     const selectedRespondent = respondents[respondentIndex];
+    const respondentOrgOrName = getRespondentOrgOrName(selectedRespondent);
     const content = getPageContent(
       req,
       this.respondentAddressContent,
@@ -126,7 +132,7 @@ export default class RespondentAddressController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPONDENT_ADDRESS, {
       ...content,
-      respondentName: selectedRespondent.respondentName,
+      respondentName: respondentOrgOrName,
       previousPostcode: selectedRespondent.respondentAddressPostcode,
     });
   };
