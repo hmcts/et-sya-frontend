@@ -20,11 +20,13 @@
       </h1>
 
       {% set et3FormRows = [] %}
-       {% if et3Forms.length and not et3RejectionDocs.length %}
+       {% if et3Forms.length %}
          {% for et3Form in et3Forms %}
            {% set _ = et3FormRows.push(
              [
-               {text: ""},
+               {
+                 text: et3Form.createdOn
+               },
                {
                  text: et3FormText
                },
