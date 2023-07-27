@@ -201,6 +201,8 @@ describe('update case', () => {
       respondents: [
         {
           respondentName: 'Globo Corp',
+          respondentType: 'Organisation',
+          respondentOrganisation: 'Globo Corp',
           acasCert: YesOrNo.YES,
           acasCertNum: 'R111111111111',
           noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -453,6 +455,8 @@ describe('submitCase', () => {
       respondents: [
         {
           respondentName: 'Globo Corp',
+          respondentType: 'Organisation',
+          respondentOrganisation: 'Globo Corp',
           acasCert: YesOrNo.YES,
           acasCertNum: 'R111111111111',
           noAcasReason: NoAcasNumberReason.ANOTHER,

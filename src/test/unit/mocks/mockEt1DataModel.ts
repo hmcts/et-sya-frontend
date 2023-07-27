@@ -139,6 +139,8 @@ export const mockEt1DataModelUpdate = {
       {
         value: {
           respondent_name: 'Globo Corp',
+          respondentType: 'Organisation',
+          respondentOrganisation: 'Globo Corp',
           respondent_ACAS_question: YesOrNo.YES,
           respondent_ACAS: 'R111111111111',
           respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
