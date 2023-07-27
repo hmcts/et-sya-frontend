@@ -6,7 +6,6 @@ Object.keys(hubLinksStatuses).forEach(key => {
   hubLinksStatuses[key] = HubLinkStatus.OPTIONAL;
 });
 
-hubLinksStatuses[HubLinkNames.PersonalDetails] = HubLinkStatus.SUBMITTED;
 hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
 hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.WAITING_FOR_TRIBUNAL;
 hubLinksStatuses[HubLinkNames.HearingDetails] = HubLinkStatus.NOT_YET_AVAILABLE;

@@ -21,6 +21,9 @@ export interface AppSession extends Session {
   guid: string | undefined;
   fileTooLarge?: boolean;
   cookies?: string;
+  contactType?: string;
+  contactTribunalSelection?: string;
+  documentDownloadPage?: string;
 }
 
 export interface UserDetails {

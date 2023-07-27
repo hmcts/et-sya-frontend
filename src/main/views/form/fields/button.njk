@@ -1,0 +1,12 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukButton({
+  text: getContent(field.label),
+  classes: field.classes,
+  type: "submit",
+  preventDoubleClick: true,
+  disabled: field.disabled,
+  id: field.id,
+  name: field.name,
+  value: field.value
+}) }}

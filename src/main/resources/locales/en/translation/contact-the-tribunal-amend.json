@@ -1,0 +1,23 @@
+{
+  "title": "Amend my claim",
+  "applicationType": "Amend my claim",
+  "applicationTitle": "Apply to amend my claim",
+  "content": [
+    "<p class=\"govuk-body\">Use this form to apply to amend your ET1 claim.</p>",
+    "<p class=\"govuk-body\">The tribunal will decide if you can make the amendment by judging the fairness of the application. This decision may be made at a hearing.</p>",
+    "<p class=\"govuk-body\">The tribunal also needs to know if you consider the amendment minor or substantial.</p>",
+    "<p class=\"govuk-body\">An example of a minor amendment is correcting an error or minor detail made in the claim form.</p>",
+    "<p class=\"govuk-body\">An example of a substantial change would be adding a new kind of claim that needed more evidence to be heard by the tribunal.</p>",
+    "<p class=\"govuk-body\">Providing details of why you want to amend the claim and the importance of the amendment will help the tribunal to decide your application more quickly.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>what you want to amend in your claim. Be specific and refer to your claim form if possible. For example, tell us whether you want to add, remove or change details related to the question or section number</li>",
+    "<li>if you consider it a minor or substantial amendment</li>",
+    "<li>why you want to make this amendment</li>",
+    "<li>why you are asking to make this amendment now. For example, if you wish to add something to your claim, please explain why you did not include this in the original claim. This is particularly important if you are adding a new type of claim and the time limit has passed.</li>",
+    "<li>how this amendment will benefit you and how could it disadvantage you if not granted</li>",
+    "</ul>"
+  ]
+}

@@ -1,3 +1,6 @@
+import { DocumentTypeItem } from './complexTypes/documentTypeItem';
+import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -173,9 +176,32 @@ export interface Case {
   responseEt3FormDocumentDetail?: DocumentDetail[];
   otherClaim?: string;
   typeOfClaimString?: string;
+  // TSE
+  contactApplicationType?: string;
+  contactApplicationText?: string;
+  contactApplicationFile?: Document;
+  copyToOtherPartyYesOrNo?: YesOrNo;
+  copyToOtherPartyText?: string;
+  genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
+  selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  responseText?: string;
+  hasSupportingMaterial?: YesOrNo;
+  supportingMaterialFile?: Document;
+  sendNotificationCollection?: SendNotificationTypeItem[];
+
+  //Created for saving select order or request value;
+  selectedRequestOrOrder?: SendNotificationTypeItem;
+
+  /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
+  all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
+  rule92state?: boolean;
+  documentCollection?: DocumentTypeItem[];
   respondentEnterPostcode?: string;
   workEnterPostcode?: string;
   addressEnterPostcode?: string;
+  representatives?: Representative[];
+  // indiciates if responding to a tribunal order/request or not when responding to an application
+  isRespondingToRequestOrOrder?: boolean;
 }
 export const enum StillWorking {
   WORKING = 'Working',
@@ -279,4 +305,12 @@ export interface Document {
   document_url: string;
   document_filename: string;
   document_binary_url: string;
+  document_size?: number;
+  document_mime_type?: string;
+  createdOn?: string;
+}
+
+export interface Representative {
+  hasMyHMCTSAccount?: YesOrNo;
+  respondentId?: string;
 }

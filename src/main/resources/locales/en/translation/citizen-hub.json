@@ -9,15 +9,13 @@
   "iWantTo": "I want to...",
   "contactTribunalMyCase": "Contact the tribunal about my case",
   "findLegalAdvice": "Find legal advice (opens in new tab)",
-  "section1": "About you",
-  "section2": "Your claim",
-  "section3": "The response",
-  "section4": "Your hearings",
-  "section5": "Applications to the tribunal",
-  "section6": "Orders and requests from the tribunal",
-  "section7": "Judgments from the tribunal",
-  "section8": "Case documents",
-  "personalDetails": "View and edit your personal details",
+  "section1": "Your claim",
+  "section2": "The response",
+  "section3": "Your hearings",
+  "section4": "Applications to the tribunal",
+  "section5": "Orders and requests from the tribunal",
+  "section6": "Judgments from the tribunal",
+  "section7": "Case documents",
   "et1ClaimForm": "Your ET1 claim form",
   "respondentResponse": "Response from the respondent (ET3)",
   "hearingDetails": "View details of your hearings",
@@ -25,7 +23,7 @@
   "respondentApplications": "Respondent's applications",
   "contactTribunal": "Contact the tribunal about your case",
   "tribunalOrders": "All orders and requests issued by the tribunal",
-  "tribunalJudgements": "View all judgements",
+  "tribunalJudgements": "View all judgments",
   "documents": "All documents",
   "completed": "Completed",
   "submitted": "Submitted",
@@ -33,9 +31,13 @@
   "viewed": "Viewed",
   "important": "Important",
   "notViewedYet": "Not viewed yet",
+  "notStartedYet": "Not started yet",
   "notAvailableYet": "Not available yet",
+  "inProgress": "In progress",
   "waitingForTheTribunal": "Waiting for the tribunal",
   "submittedAndViewed": "Submitted",
+  "updated": "Updated",
+  "readyToView": "Ready to view",
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
@@ -62,6 +64,42 @@
     "respondentAcknowledgement": {
       "header": "The tribunal has acknowledged the respondent's response.",
       "link": "View the response"
+    },
+    "respondentApplicationReceived": {
+      "header": "The respondent has applied to ",
+      "p1TypeB": "You do not need to respond to this application.",
+      "p1": "If you have any objections or responses to their application you must send them to the tribunal as soon as possible and by ",
+      "p1a": " at the latest.",
+      "link": "Respond to the application"
+    },
+    "orderOrRequest": {
+      "responseRequired": "The tribunal has sent you a notification: ",
+      "noResponseRequired": "The tribunal has sent you a notification",
+      "link": "View the notification"
+    },
+    "judgment": {
+      "header": "The tribunal has made a decision on your case.",
+      "link": "View the decision"
+    },
+    "decisionJudgment": {
+      "headerClaimant": "The tribunal has made a decision on your application to ",
+      "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
+      "link": "View the decision"
     }
-  }
+  },
+  "Change personal details": "change personal details",
+  "Claimant not complied": "tell the tribunal the claimant has not complied",
+  "Consider a decision afresh": "consider a decision afresh",
+  "Contact the tribunal": "contact the tribunal",
+  "Order other party": "order other party",
+  "Order a witness to attend to give evidence": "order a witness to attend to give evidence",
+  "Postpone a hearing": "postpone a hearing",
+  "Reconsider judgement": "reconsider judgement",
+  "Restrict publicity": "restrict publicity",
+  "Strike out all or part of a claim": "strike out all or part of a claim",
+  "Vary or revoke an order": "vary or revoke an order",
+  "Withdraw all/part of claim": "withdraw all/part of claim",
+  "withdraw": "withdraw all/part of claim",
+  "your": "your",
+  "theRespondent": "the respondent's"
 }
