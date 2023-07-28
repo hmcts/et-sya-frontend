@@ -21,9 +21,9 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
 
 const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
   if (languageParam === '?lng=cy') {
-    return translations.details + ' ' + translations.respondentTitle + ' ' + index;
+    return translations.respondentDetails.details + translations.respondentDetails.header + index;
   } else {
-    return translations.respondentTitle + ' ' + index + ' ' + translations.details;
+    return translations.respondentDetails.header + index + translations.respondentDetails.details;
   }
 };
 
@@ -33,50 +33,41 @@ export const getRespondentSection = (
   index: number,
   translations: AnyRecord,
   languageParam: string,
-  addTitle: boolean
+  addRemoveButton: boolean
 ): unknown => {
   const respondentSections = [];
-  if (addTitle) {
-    if (index === 1) {
-      respondentSections.push({
-        key: {
-          text: respondentTitle(index, translations, languageParam),
-          classes: 'govuk-heading-m',
-        },
-        value: {
-          text: '',
-        },
-      });
-    } else {
-      respondentSections.push({
-        key: {
-          text: respondentTitle(index, translations, languageParam),
-          classes: 'govuk-heading-m',
-        },
-        value: {
-          text: '',
-        },
-        actions: {
-          items: [
-            {
-              href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
-              text: translations.removeRespondent,
-              visuallyHiddenText: translations.removeRespondent,
-            },
-          ],
-        },
-      });
-    }
-  }
-  respondentSections.push(
-    {
+  if (index === 1 || !addRemoveButton) {
+    respondentSections.push({
       key: {
-        text:
-          translations.respondentDetails.header + respondent.respondentNumber + translations.respondentDetails.details,
-        classes: 'govuk-summary-list__key govuk-heading-m',
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
       },
-      value: {},
-    },
+      value: {
+        text: '',
+      },
+    });
+  } else {
+    respondentSections.push({
+      key: {
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
+      },
+      value: {
+        text: '',
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
+            text: translations.removeRespondent,
+            visuallyHiddenText: translations.removeRespondent,
+          },
+        ],
+      },
+    });
+  }
+
+  respondentSections.push(
     {
       key: {
         text: translations.respondentDetails.respondentName,
