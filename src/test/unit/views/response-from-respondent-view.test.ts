@@ -1,17 +1,17 @@
 import fs from 'fs';
 import path from 'path';
 
+import axios, { AxiosResponse } from 'axios';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { NoAcasNumberReason, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
+import { ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim } from '../../../main/definitions/definition';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
-import {HubLinksStatuses} from "../../../main/definitions/hub";
-import {ClaimTypeDiscrimination, TellUsWhatYouWant, TypesOfClaim} from "../../../main/definitions/definition";
-import {NoAcasNumberReason, YesOrNo} from "../../../main/definitions/case";
-import {CaseApi} from "../../../main/services/CaseService";
-import axios, {AxiosResponse} from "axios";
-import * as caseService from "../../../main/services/CaseService";
 
 const responseFromRespondentJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/response-from-respondent.json'),
@@ -78,8 +78,8 @@ describe('Response From Respondent page', () => {
           ],
           responseEt3FormDocumentDetail: [
             {
-              id: "1",
-              description: "test description",
+              id: '1',
+              description: 'test description',
             },
           ],
           hubLinksStatuses: new HubLinksStatuses(),
@@ -99,4 +99,3 @@ describe('Response From Respondent page', () => {
     expect(title[0].innerHTML).contains(expectedCaption, 'ET3 Form Raws Caption does not exist');
   });
 });
-
