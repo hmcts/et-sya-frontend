@@ -1,16 +1,21 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 
 import { setUrlLanguage } from './helpers/LanguageHelper';
 
 export default class CopiedCorrespondenceConfirmationController {
   public get(req: AppRequest, res: Response): void {
+    const applicationType = '[Application type]';
+    const fileNameOfSupportingDoc = '[file_name_of_supporting_doc]';
     const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
-    res.render('copied-correspondence-confirmation', {
-      ...req.t('copied-correspondence-confirmation', { returnObjects: true }),
+    res.render(TranslationKeys.COPIED_CORRESPONDENCE_CONFIRMATION, {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.COPIED_CORRESPONDENCE_CONFIRMATION, { returnObjects: true }),
       redirectUrl,
+      applicationType,
+      fileNameOfSupportingDoc,
     });
   }
 }

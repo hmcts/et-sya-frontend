@@ -13,8 +13,8 @@
 
 {% block content %}
   <div class="govuk-!-width-two-thirds">
-    <h1 class="govuk-heading-xl">[Application type]</h1>
-    <p class="govuk-body">You have not submitted this application. Confirm you have copied this correspondence to the other party by post or email before you submit the application.</p>
+    <h1 class="govuk-heading-xl">{{applicationType}}</h1>
+    <p class="govuk-body">{{youHaveNotSubmitted}}</p>
     {{ govukTable({
       caption: "Your application",
       captionClasses: "govuk-table__caption--m",
@@ -54,18 +54,18 @@
         ]
       ]
     }) }}
-    <h2 class="govuk-heading-l">Confirm you have copied this correspondence to the other party</h2>
-    <p class="govuk-body">To submit your application to the tribunal, confirm you have copied this correspondence to the other party by post or email.</p>
-    <p class="govuk-body"><a href="#" class="govuk-link">View this correspondence (opens in new tab)</a></p>
-    <p class="govuk-body">View the supporting documents. <br/><a href="#" class="govuk-link">[file_name_of_supporting_doc] (opens in new tab)</a></p>
-    <h2 class="govuk-heading-m">Have you copied this correspondence to the other party?</h2>
-    <p class="govuk-body">I confirm that I have copied this correspondence to the other party. I have also notified the other party that any objections to my application should be sent to the tribunal as soon as possible and in any event within 7 days.</p>
+    <h2 class="govuk-heading-l">{{confirmYouHaveCopied}}</h2>
+    <p class="govuk-body">{{toSubmitYourApplication}}</p>
+    <p class="govuk-body"><a href="#" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
+    <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="#" class="govuk-link">{{fileNameOfSupportingDoc}} ({{opensInNewTab}})</a></p>
+    <h2 class="govuk-heading-m">{{haveYouCopied}}</h2>
+    <p class="govuk-body">{{iConfirmThatIHaveCopied}}</p>
     {{ govukCheckboxes({
       name: "tickbox",
       items: [
         {
           value: "yes",
-          text: "Yes"
+          text: yes
         }
       ]
     }) }}
@@ -73,7 +73,7 @@
     <div class="govuk-button-group">
     {{
     govukButton({
-      text: "Continue",
+      text: continue,
       classes: 'govuk-!-margin-right-2',
       type: "submit",
       preventDoubleClick: true,
@@ -82,7 +82,7 @@
       }
     })
     }}
-    <a class="govuk-link" href="#">Cancel</a>
+    <a class="govuk-link" href="#">{{cancel}}</a>
   </div>
   </div>
 {% endblock %}

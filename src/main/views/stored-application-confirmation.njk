@@ -11,25 +11,22 @@
 {% block content %}
   <div class="govuk-!-width-two-thirds">
     {{ govukPanel({
-      titleText: "You have stored your application"
+      titleText: titleText
     }) }}
 
-    <p class="govuk-heading-m">What happens next</p>
-    <p class="govuk-body">You must submit your application after copying the correspondence to the other party.</p>
-    <p class="govuk-body">To copy this correspondence to the other party, you must send it to them by post or email. You must include all supporting documents</p>
-    <p class="govuk-body"><a href="#" class="govuk-link">View this correspondence (opens in new tab)</a></p>
-    <p class="govuk-body">View the supporting documents:
-      <a href="#" class="govuk-link">[file_name_of_supporting_doc]</a></p>
-    {{
-    govukButton({
-      text: "Close and return to case overview",
+    <p class="govuk-heading-m">{{whatHappensNext}}</p>
+    <p class="govuk-body">{{youMustSubmitYourApplication}}</p>
+    <p class="govuk-body"><a href="{{viewThisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}}</a></p>
+    <p class="govuk-body">{{viewTheSupportingDocuments}}:
+      <a href="{{fileNameOfSupportingDocLink}}" class="govuk-link">{{fileNameOfSupportingDocName}}</a></p>
+    {{ govukButton({
+      text: closeAndReturn,
       classes: 'govuk-!-margin-right-2',
       type: "submit",
       preventDoubleClick: true,
       attributes: {
         id: 'return-to-case-overview'
       }
-    })
-    }}
+    }) }}
   </div>
 {% endblock %}

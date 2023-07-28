@@ -116,6 +116,10 @@ export const TranslationKeys = {
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
+  COPY_CORRESPONDENCE_QUESTION: 'copy-correspondence-question',
+  COPIED_CORRESPONDENCE_CONFIRMATION: 'copied-correspondence-confirmation',
+  CHECK_YOUR_ANSWERS_RULE92: 'check-your-answers-rule92',
+  STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;

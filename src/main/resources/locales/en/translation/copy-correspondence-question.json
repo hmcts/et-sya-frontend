@@ -1,0 +1,23 @@
+{
+  "title": "Copy this correspondence to the other party",
+  "theTribunalMustOperate": "The tribunal must operate in a way fair to both sides. This means that each party must see or hear what the other party tells the tribunal. The rules therefore require all communications with the tribunal to be copied to the other party, apart from in exceptional circumstances.",
+  "toCopyThisCorrespondence": "To copy this correspondence to the other party, you must send it to them by post or email. They cannot view it in this service.",
+  "doYouWantToCopy": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
+  "giveDetails": "Give details",
+  "yesIConfirmIWill": "Yes, I confirm I will copy this correspondence to the other party to satisfy the Employment Tribunal Rules of Procedure.",
+  "important": "Important",
+  "doNotSubmitYourApplication": "Do not submit your application until you have copied this correspondence to the other party.",
+  "youShouldAlsoNotify": "You should also notify the other party that any objections to your application should be sent to the tribunal as soon as possible and in any event by",
+  "noIDoNotWantTo": "No, I do not want to copy this correspondence to the other party.",
+  "youMustTellTheTribunal": "You must tell the tribunal why you do not want to inform the other party. The tribunal will consider your reasons and decide if you must inform the other party or not.",
+  "submitBtn": "Submit",
+  "errors": {
+    "copyToOtherPartyYesOrNo": {
+      "required": "Tell us if you want to copy this correspondence to the other party"
+    },
+    "copyToOtherPartyText": {
+      "required": "Tell the Tribunal why you do not want to inform the other party",
+      "tooLong": "Give details must be entered as less than 2500 characters"
+    }
+  }
+}
