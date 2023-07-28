@@ -4,11 +4,6 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% block beforeContent %}
-  {{ super() }}
-  {% include "back-link.njk"%}
-{% endblock %}
-
 {% block content %}
 
   <div class="govuk-grid-row">
@@ -74,7 +69,7 @@
 
                         {{ govukTag({
                       text: getContent(link.status),
-                      classes: "app-task-list__tag govuk-tag" + getContent(link.statusColor)
+                      classes: "no-text-transform app-task-list__tag govuk-tag" + getContent(link.statusColor)
                     }) }}
                       </li>
                     {% endfor %}
@@ -90,7 +85,11 @@
               {{iWantTo}}
             </h2>
             <p class="govuk-body">
-              <a href="https://www.gov.uk/guidance/employment-tribunal-offices-and-venues">
+              {% if respondentIsSystemUser %}
+                <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+              {% else %}
+                <a href="{{PageUrls.RULE92_HOLDING_PAGE}}">
+              {% endif %}
                 {{contactTribunalMyCase}}
               </a>
             </p>

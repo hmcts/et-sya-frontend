@@ -1,0 +1,41 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+            titleText: titleText
+        }) 
+      }}
+      <br>
+        <h2 class="govuk-heading-m">{{ pHead }}</h2>
+        {% if rule92 == "Yes" %}
+            <div class="govuk-body">
+                <p>{{ pYes.p1 }} <b>{{ applicationDate }}</b> {{ pYes.p1a }}</p>
+                <p>{{ pYes.p2 }}</p>
+                <p>{{ pYes.p3 }}</p>
+            </div>
+        {% else %}
+            <p class="govuk-body ">{{ pNo }}</p>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: button,
+        href: redirectUrl
+      }) }}
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

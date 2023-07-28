@@ -138,5 +138,6 @@
     "Sexual orientation": "Cyfeiriadedd rhywiol"
   },
   "addAnotherRespondent": "Ychwanegu atebydd arall",
-  "removeRespondent": "Dileu atebydd"
+  "removeRespondent": "Dileu atebydd",
+  "linkToAmendTheClaim": "Welsh translation required <a href='/contact-the-tribunal/amend?lng=cy' class=\"govuk-link\">Welsh translation required</a>"
 }

@@ -22,6 +22,9 @@ export interface AppSession extends Session {
   fileTooLarge?: boolean;
   cookies?: string;
   respondentRedirectCheckAnswer?: boolean;
+  contactType?: string;
+  contactTribunalSelection?: string;
+  documentDownloadPage?: string;
 }
 
 export interface UserDetails {

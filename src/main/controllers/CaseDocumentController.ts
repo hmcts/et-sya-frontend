@@ -5,6 +5,7 @@ import { getLogger } from '../logger';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
 
+import { setRespondentResponseHubLinkStatus } from './helpers/CaseDocumentHelper';
 import {
   combineUserCaseDocuments,
   findContentTypeByDocument,
@@ -30,11 +31,12 @@ export default class CaseDocumentController {
       const userCases = await getUserCasesByLastModified(req);
       const allDocumentSets = combineUserCaseDocuments(userCases);
 
-      const details = allDocumentSets.find(doc => doc.id === docId);
+      const details = allDocumentSets.find(doc => doc && doc.id === docId);
       if (!details) {
         logger.info('requested document not found in userCase');
         return res.redirect('/not-found');
       }
+
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
 
       let contentType = findContentTypeByDocumentDetail(details);
@@ -48,6 +50,8 @@ export default class CaseDocumentController {
         res.setHeader('Content-Type', 'application/pdf');
       }
       res.status(200).send(Buffer.from(document.data, 'binary'));
+
+      setRespondentResponseHubLinkStatus(details, req, logger);
     } catch (err) {
       logger.error(err.message);
       return res.redirect('/not-found');

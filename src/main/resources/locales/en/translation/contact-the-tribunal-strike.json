@@ -1,0 +1,27 @@
+{
+  "title": "Strike out the response",
+  "applicationType": "Strike out the response",
+  "applicationTitle": "Strike out all or part of the response",
+  "content": [
+    "<p class=\"govuk-body\">You can request that the tribunal strike out all or parts of the response.</p>",
+    "<p class=\"govuk-body\">If something is ‘struck out’ it is removed from the claim or response and cannot be relied upon.</p>",
+    "<p class=\"govuk-body\">The tribunal can strike out all or parts of the respondent's response on their own initiative or after a request from the claimant.</p>",
+    "<p class=\"govuk-body\">A strike out request must be based on at least one of the grounds of Rule 37 of the Employment Tribunals Rules of Procedure, which is when:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the response is scandalous, vexatious or has no reasonable prospect of success</li>",
+    "<li>the proceedings have been conducted in a way that is scandalous, unreasonable or vexatious</li>",
+    "<li>the respondent has not complied with tribunal orders or the Rules of Procedure</li>",
+    "<li>the response has not been actively pursued</li>",
+    "<li>it is no longer possible to have a fair hearing</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>why you think the response should be struck out</li>",
+    "<li>which ground or grounds in Rule 37 you say applies in your case</li>",
+    "<li>if you are referring to numbered points or paragraphs in a respondent's response, include these numbers or other references</li>",
+    "</ul>"
+  ]
+}

@@ -138,5 +138,6 @@
     "Sexual orientation": "Sexual Orientation"
   },
   "addAnotherRespondent": "Add another respondent",
-  "removeRespondent": "Remove respondent"
+  "removeRespondent": "Remove respondent",
+  "linkToAmendTheClaim": "If you need to, you can <a href='/contact-the-tribunal/amend?lng=en' class=\"govuk-link\">request to amend your claim</a>"
 }

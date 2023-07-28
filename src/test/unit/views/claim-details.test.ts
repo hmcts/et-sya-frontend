@@ -67,12 +67,13 @@ describe('ET1 details', () => {
   it('should display correct headings in the summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
 
-    expect(summaryLists[0].innerHTML).toMatch('Application details');
-    expect(summaryLists[1].innerHTML).toMatch('Claim details');
-    /*expect(summaryLists[2].innerHTML).toMatch('Employment details');
-    expect(summaryLists[3].innerHTML).toMatch('Respondent 1 details');
-    expect(summaryLists[4].innerHTML).toMatch('Respondent 2 details');
-    expect(summaryLists[5].innerHTML).toMatch('Your details');*/
+    expect(summaryLists[0].innerHTML).toMatch('Claim related information');
+    expect(summaryLists[1].innerHTML).toMatch('Application details');
+    expect(summaryLists[2].innerHTML).toMatch('Your details');
+    expect(summaryLists[3].innerHTML).toMatch('Employment details');
+    expect(summaryLists[4].innerHTML).toMatch('Respondent 1 details');
+    expect(summaryLists[5].innerHTML).toMatch('Respondent 2 details');
+    expect(summaryLists[6].innerHTML).toMatch('Claim details');
   });
 
   /*it.each([
