@@ -4,7 +4,11 @@
 
 <p class='govuk-body'>
   {{contactText}}
-  <a href='https://www.gov.uk/guidance/employment-tribunal-offices-and-venues'>
+  {% if respondentIsSystemUser %}
+    <a href="{{PageUrls.CONTACT_THE_TRIBUNAL}}">
+  {% else %}
+    <a href="{{PageUrls.RULE92_HOLDING_PAGE}}">
+  {% endif %}
     {{contactLink}}
   </a>
 </p>

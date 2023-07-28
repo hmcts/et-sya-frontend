@@ -47,6 +47,13 @@ export const getYourDetails = (
   return [
     {
       key: {
+        text: translations.personalDetails.header,
+        classes: 'govuk-summary-list__key govuk-heading-m',
+      },
+      value: {},
+    },
+    {
+      key: {
         text: translations.personalDetails.dob,
         classes: 'govuk-!-font-weight-regular-m',
       },

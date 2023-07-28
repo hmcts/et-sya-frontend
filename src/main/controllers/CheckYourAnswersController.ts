@@ -7,6 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
+import { setNumbersToRespondents } from './helpers/RespondentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
@@ -33,6 +34,8 @@ export default class CheckYourAnswersController {
 
     const newRespondentNum =
       req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : undefined;
+
+    setNumbersToRespondents(userCase.respondents);
 
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,

@@ -82,16 +82,42 @@ export const TranslationKeys = {
   CITIZEN_HUB_RESPONSE_REJECTION: 'response-rejection',
   CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT: 'response-acknowledgement',
   CITIZEN_HUB_RESPONSE_FROM_RESPONDENT: 'response-from-respondent',
+  CONTACT_THE_TRIBUNAL: 'contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: 'contact-the-tribunal-selected',
+  APPLICATION_COMPLETE: 'application-complete',
+  RESPOND_TO_APPLICATION_COMPLETE: 'respond-to-application-complete',
   WELSH: 'cy',
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
+  CONTACT_APPLICATION: 'contact-application',
+  COPY_TO_OTHER_PARTY: 'copy-to-other-party',
   ACCESSIBILITY_STATEMENT: 'accessibility-statement',
+  CONTACT_THE_TRIBUNAL_CYA: 'contact-the-tribunal-cya',
+  APPLICATION_DETAILS: 'application-details',
+  YOUR_APPLICATIONS: 'your-applications',
+  RESPOND_TO_APPLICATION: 'respond-to-application',
+  RESPONDENT_APPLICATIONS: 'respondent-applications',
+  RESPONDENT_APPLICATION_DETAILS: 'respondent-application-details',
+  RESPONDENT_SUPPORTING_MATERIAL: 'respondent-supporting-material',
+  RESPONDENT_APPLICATION_CYA: 'respondent-application-cya',
+  TRIBUNAL_ORDERS_AND_REQUESTS: 'tribunal-orders-and-requests',
+  TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
+  ALL_JUDGMENTS: 'all-judgments',
+  JUDGMENT_DETAILS: 'judgment-details',
+  TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
+  TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
+  TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
+  ALL_DOCUMENTS: 'all-documents',
+  GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
   ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
   ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
   RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
+  RULE92_HOLDING_PAGE: 'rule92-holding-page',
+  RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
 
 export const PageUrls = {
@@ -168,15 +194,45 @@ export const PageUrls = {
   CITIZEN_HUB_DOCUMENT: '/case-document/:documentType',
   CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT: '/case-document/' + TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT,
   GET_CASE_DOCUMENT: '/getCaseDocument/:docId',
+  GET_SUPPORTING_MATERIAL: '/getSupportingMaterial/:docId',
+  CONTACT_THE_TRIBUNAL: '/contact-the-tribunal',
+  TRIBUNAL_CONTACT_SELECTED: '/contact-the-tribunal/:selectedOption',
+  REMOVE_FILE: '/remove-tse-file/:application',
   PCQ: '/pcq',
   PCQ_WELSH: '/pcq?lng=cy',
+  CONTACT_APPLICATION: '/contact-application',
+  COPY_TO_OTHER_PARTY: '/copy-to-other-party',
+  CONTACT_THE_TRIBUNAL_CYA: '/contact-the-tribunal-cya',
+  APPLICATION_COMPLETE: '/application-complete',
   ACCESSIBILITY_STATEMENT: '/accessibility',
+  APPLICATION_DETAILS: '/application-details/:appId',
+  RESPOND_TO_APPLICATION_SELECTED: '/respond-to-application/:appId',
+  RESPOND_TO_APPLICATION: '/respond-to-application',
+  YOUR_APPLICATIONS: '/your-applications',
+  RESPONDENT_APPLICATIONS: '/respondent-applications',
+  RESPONDENT_APPLICATION_DETAILS: '/respondent-application-details/:appId',
+  RESPONDENT_SUPPORTING_MATERIAL: '/respondent-supporting-material/:appId',
+  REMOVE_SUPPORTING_MATERIAL: '/remove-supporting-material/:appId',
+  RESPOND_TO_APPLICATION_COMPLETE: '/respond-to-application-complete',
+  RESPONDENT_APPLICATION_CYA: '/respondent-application-cya',
+  TRIBUNAL_ORDERS_AND_REQUESTS: '/tribunal-orders-and-requests',
+  TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
+  ALL_JUDGMENTS: '/all-judgments',
+  JUDGMENT_DETAILS: '/judgment-details/:appId',
+  TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
+  TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
+  TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
+  ALL_DOCUMENTS: '/all-documents',
+  GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
+  GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
   RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
   RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
   WORK_POSTCODE_SELECT: '/work-postcode-select',
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  RULE92_HOLDING_PAGE: '/holding-page',
+  RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
 
 export const InterceptPaths = {
@@ -184,6 +240,10 @@ export const InterceptPaths = {
   ANSWERS_CHANGE: '/change?redirect=answers',
   RESPONDENT_CHANGE: '/change?redirect=respondent',
   SUBMIT_CASE: '/submitDraftCase',
+  REMOVE_FILE: '/remove-uploaded-file',
+  SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
+  SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
+  TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
 } as const;
 
 export const ErrorPages = {
@@ -202,16 +262,23 @@ export const AuthUrls = {
 } as const;
 
 export const JavaApiUrls = {
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+  UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_DETAILS: '/document/details/',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
   UPDATE_CASE_DRAFT: 'cases/update-case',
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
-  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
-  UPLOAD_FILE: '/documents/upload/',
-  DOCUMENT_DOWNLOAD: '/document/download/',
-  DOCUMENT_DETAILS: '/document/details/',
+  RESPOND_TO_APPLICATION: 'cases/respond-to-application',
+  CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
+  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
+  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
+  UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
 } as const;
 
 export const Urls = {
@@ -394,13 +461,17 @@ export const inScopeLocations = [
   'DE',
 ];
 
+export const ET3_FORM = 'ET3';
+
 export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
 export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
 export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
-export const et3FormDocTypes = ['ET3'];
+export const et3FormDocTypes = [ET3_FORM];
 export const et3AttachmentDocTypes = ['ET3 Attachment'];
+
+export const CHANGE = 'Change';
 
 export const languages = {
   WELSH: 'cy',
@@ -410,6 +481,40 @@ export const languages = {
   WELSH_URL_PARAMETER: '?lng=cy',
   ENGLISH_URL_PARAMETER: '?lng=en',
 };
+
+export const Rule92Types = {
+  CONTACT: 'Contact',
+  RESPOND: 'Respond',
+  TRIBUNAL: 'Tribunal',
+} as const;
+
+export const Parties = {
+  BOTH_PARTIES: 'Both parties',
+  CLAIMANT_ONLY: 'Claimant only',
+  RESPONDENT_ONLY: 'Respondent only',
+} as const;
+
+export const ResponseRequired = {
+  YES: 'Yes - view document for details',
+  NO: 'No',
+} as const;
+
+export const Applicant = {
+  CLAIMANT: 'Claimant',
+  RESPONDENT: 'Respondent',
+  ADMIN: 'Admin',
+} as const;
+
+export const AllDocumentTypes = {
+  CLAIMANT_CORRESPONDENCE: 'Claimant correspondence',
+  ACAS_CERT: 'ACAS Certificate',
+  RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
+  TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+} as const;
+
+export const NotificationSubjects = {
+  GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
+} as const;
 
 export const DOCUMENT_CONTENT_TYPES = {
   DOCX: ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],

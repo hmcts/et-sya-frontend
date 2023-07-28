@@ -171,3 +171,9 @@ export const ValidRespondentUrls = {
   workPostcodeSelect4: respondent + 4 + PageUrls.WORK_POSTCODE_SELECT,
   workPostcodeSelect5: respondent + 5 + PageUrls.WORK_POSTCODE_SELECT,
 } as const;
+
+export const setNumbersToRespondents = (respondents: Respondent[]): void => {
+  if (respondents?.length) {
+    respondents.forEach((it, index) => (it.respondentNumber = index + 1));
+  }
+};

@@ -6,21 +6,16 @@
   "received": "Ymateb wedi cyrraedd",
   "details": "Manylion eich gwrandawiad",
   "decision": "Y penderfyniad ar eich hawliad",
-
   "iWantTo": "Rwyf eisiau...",
   "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
   "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
-
-  "section1": "Amdanoch chi",
-  "section2": "Eich hawliad",
-  "section3": "Yr ymateb",
-  "section4": "Eich gwrandawiadau",
-  "section5": "Ceisiadau i’r tribiwnlys",
-  "section6": "Gorchmynion a cheisiadau gan y tribiwnlys",
-  "section7": "Dyfarniadau gan y tribiwnlys",
-  "section8": "Dogfennau’r achos",
-
-  "personalDetails": "Gweld a golygu eich manylion personol",
+  "section1": "Eich hawliad",
+  "section2": "Yr ymateb",
+  "section3": "Eich gwrandawiadau",
+  "section4": "Ceisiadau i’r tribiwnlys",
+  "section5": "Gorchmynion a cheisiadau gan y tribiwnlys",
+  "section6": "Dyfarniadau gan y tribiwnlys",
+  "section7": "Dogfennau’r achos",
   "et1ClaimForm": "Eich ffurflen hawlio ET1",
   "respondentResponse": "Ymateb gan yr atebydd (ET3)",
   "hearingDetails": "Gweld manylion eich gwrandawiadau",
@@ -30,9 +25,10 @@
   "tribunalOrders": "Pob gorchymyn a phob cais gan y tribiwnlys",
   "tribunalJudgements": "Gweld pob dyfarniad",
   "documents": "Pob dogfen",
-
+  "inProgress": "Yn mynd rhagddo",
   "notViewedYet": "Heb ei weld eto",
-  "notAvailableYet": "Ddim ar gael eto",
+  "notStartedYet": "Welsh Translation required",
+  "notAvailableYet": "Welsh Translation required",
   "completed": "Wedi’i gwblhau",
   "submitted": "Wedi'i gyflwyno",
   "viewed": "Wedi’i weld",
@@ -40,6 +36,8 @@
   "optional": "Dewisol",
   "waitingForTheTribunal": "Aros am y tribiwnlys",
   "submittedAndViewed": "Wedi'i gyflwyno",
+  "updated": "Welsh Translation required",
+  "readyToView": "Welsh Translation required",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
   "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
@@ -66,6 +64,42 @@
     "respondentAcknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd.",
       "link": "Gweld yr ymateb"
+    },
+    "respondentApplicationReceived": {
+      "header": "Welsh Translation required",
+      "p1TypeB": "Welsh Translation required",
+      "p1": "Welsh Translation required",
+      "p1a": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "orderOrRequest": {
+      "responseRequired": "Welsh Translation required",
+      "noResponseRequired": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "judgment": {
+      "header": "Welsh Translation required",
+      "link": "Welsh Translation required"
+    },
+    "decisionJudgment": {
+      "headerClaimant": "Welsh Translation required",
+      "headerRespondent": "Welsh Translation required",
+      "link": "Welsh Translation required"
     }
-  }
+  },
+  "Change personal details": "Welsh Translation required",
+  "Claimant not complied": "Welsh Translation required",
+  "Consider a decision afresh": "Welsh Translation required",
+  "Contact the tribunal": "Welsh Translation required",
+  "Order other party": "Welsh Translation required",
+  "Order a witness to attend to give evidence": "Welsh Translation required",
+  "Postpone a hearing": "Welsh Translation required",
+  "Reconsider judgement": "Welsh Translation required",
+  "Restrict publicity": "Welsh Translation required",
+  "Strike out all or part of a claim": "Welsh Translation required",
+  "Vary or revoke an order": "Welsh Translation required",
+  "Withdraw all/part of claim": "Welsh Translation required",
+  "withdraw": "Welsh Translation required",
+  "your": "Welsh Translation required",
+  "theRespondent": "Welsh Translation required"
 }

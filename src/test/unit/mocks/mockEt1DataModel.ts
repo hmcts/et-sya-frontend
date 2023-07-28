@@ -240,11 +240,10 @@ export const mockHubLinkStatusesRequest = {
   case_id: '1234',
   case_type_id: {},
   hub_links_statuses: {
-    contactTribunal: HubLinkStatus.NOT_YET_AVAILABLE,
+    contactTribunal: HubLinkStatus.OPTIONAL,
     documents: HubLinkStatus.NOT_YET_AVAILABLE,
     et1ClaimForm: HubLinkStatus.SUBMITTED,
     hearingDetails: HubLinkStatus.NOT_YET_AVAILABLE,
-    personalDetails: HubLinkStatus.NOT_YET_AVAILABLE,
     requestsAndApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentApplications: HubLinkStatus.NOT_YET_AVAILABLE,
     respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,

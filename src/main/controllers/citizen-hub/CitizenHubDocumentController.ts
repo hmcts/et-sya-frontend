@@ -1,12 +1,11 @@
 import { Response } from 'express';
 
-import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys, responseAcceptedDocTypes, responseRejectedDocTypes } from '../definitions/constants';
-import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
-import { getLogger } from '../logger';
-
-import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
-import { getDocumentDetails } from './helpers/DocumentHelpers';
+import { AppRequest } from '../../definitions/appRequest';
+import { TranslationKeys, responseAcceptedDocTypes, responseRejectedDocTypes } from '../../definitions/constants';
+import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
+import { getLogger } from '../../logger';
+import { handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
+import { getDocumentDetails } from '../helpers/DocumentHelpers';
 
 const logger = getLogger('CitizenHubDocumentController');
 
@@ -22,13 +21,10 @@ export default class CitizenHubDocumentController {
           userCase.hubLinksStatuses[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED_AND_VIEWED;
           return req.session?.userCase?.rejectionOfClaimDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_REJECTION:
-          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseRejectionDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_ACKNOWLEDGEMENT:
-          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseAcknowledgementDocumentDetail;
         case TranslationKeys.CITIZEN_HUB_RESPONSE_FROM_RESPONDENT:
-          userCase.hubLinksStatuses[HubLinkNames.RespondentResponse] = HubLinkStatus.VIEWED;
           return req.session?.userCase?.responseEt3FormDocumentDetail;
         default:
           return undefined;
@@ -52,7 +48,7 @@ export default class CitizenHubDocumentController {
       view = 'response-from-respondent-view';
     }
 
-    handleUpdateHubLinksStatuses(req, logger);
+    await handleUpdateHubLinksStatuses(req, logger);
 
     res.render(view, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
