@@ -2,7 +2,7 @@ nodejs:
   applicationPort: 3001
   aadIdentityName: et
   ingressHost: et-sya.{{ .Values.global.environment }}.platform.hmcts.net
-  image: 'hmctspublic.azurecr.io/et/sya:pr-924'
+  image: 'hmctspublic.azurecr.io/et/sya:latest'
   #  Uncomment once the vault containing the app insights key has been set up
   keyVaults:
     et:
