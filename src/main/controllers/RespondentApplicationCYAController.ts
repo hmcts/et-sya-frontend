@@ -14,6 +14,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 export default class RespondentApplicationCYAController {
   public get(req: AppRequest, res: Response): void {
     const userCase = req.session?.userCase;
+    userCase.isRespondingToRequestOrOrder = false;
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,

@@ -10,7 +10,7 @@
   "supportingMaterial": "Supporting material",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "otherPartyResponseHeader": "Other party response",
-  "responseFrom": "Response from",
+  "responder": "Response from",
   "responseDate": "Response date",
   "response": "What's your response to the respondent's application?",
   "decision": "Decision",
@@ -37,5 +37,12 @@
   "Reconsider judgement": "reconsider judgement",
   "Restrict publicity": "restrict publicity",
   "Strike out all or part of a claim": "strike out all or part of a claim",
-  "Vary or revoke an order": "vary or revoke an order"
+  "Vary or revoke an order": "vary or revoke an order",
+  "responseItem": "Response",
+  "orderOrRequest": "Case management order or request?",
+  "responseDue": "Response due",
+  "partyToRespond": "Party or parties to respond",
+  "description": "Description",
+  "requestMadeBy": "Request made by",
+  "mustRespond": "You must respond to the tribunal."
 }

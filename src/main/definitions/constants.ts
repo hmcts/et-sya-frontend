@@ -121,6 +121,8 @@ export const TranslationKeys = {
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
   AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
+  RULE92_HOLDING_PAGE: 'rule92-holding-page',
+  RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
 
 export const PageUrls = {
@@ -239,6 +241,8 @@ export const PageUrls = {
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
   AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
+  RULE92_HOLDING_PAGE: '/holding-page',
+  RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
 
 export const InterceptPaths = {
@@ -268,6 +272,10 @@ export const AuthUrls = {
 } as const;
 
 export const JavaApiUrls = {
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+  UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_DETAILS: '/document/details/',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
@@ -275,14 +283,12 @@ export const JavaApiUrls = {
   SUBMIT_CASE: 'cases/submit-case',
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
+  CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
+  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
+  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
-  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
-  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
-  UPLOAD_FILE: '/documents/upload/',
-  DOCUMENT_DOWNLOAD: '/document/download/',
-  DOCUMENT_DETAILS: '/document/details/',
-  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
 } as const;
 
 export const Urls = {
@@ -465,12 +471,16 @@ export const inScopeLocations = [
   'DE',
 ];
 
+export const ET3_FORM = 'ET3';
+
 export const et1DocTypes = ['ET1'];
 export const acceptanceDocTypes = ['1.1', 'Acknowledgement of Claim'];
 export const rejectionDocTypes = ['Rejection of claim'];
-export const responseAcceptedDocTypes = ['2.11'];
-export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15'];
-export const et3FormDocTypes = ['ET3'];
+export const responseAcceptedDocTypes = ['2.11', 'Letter 14'];
+export const responseRejectedDocTypes = ['2.12', '2.13', '2.14', '2.15', 'Letter 10', 'Letter 11'];
+export const et3FormDocTypes = [ET3_FORM];
+export const et3AttachmentDocTypes = ['ET3 Attachment'];
+
 export const CHANGE = 'Change';
 
 export const languages = {
@@ -502,6 +512,7 @@ export const ResponseRequired = {
 export const Applicant = {
   CLAIMANT: 'Claimant',
   RESPONDENT: 'Respondent',
+  ADMIN: 'Admin',
 } as const;
 
 export const AllDocumentTypes = {

@@ -77,6 +77,11 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body.url) {
+      logger.warn('Potential bot activity detected from IP: ' + req.ip);
+      res.status(200).end('Thank you for your submission. You will be contacted in due course.');
+      return;
+    }
     if (req.fileTooLarge) {
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);

@@ -1,6 +1,17 @@
-import { YesOrNo } from '../../definitions/case';
-import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Response } from 'express';
+
+import { AppRequest } from '../../definitions/appRequest';
+import { Document, YesOrNo } from '../../definitions/case';
+import {
+  GenericTseApplicationTypeItem,
+  TseRespondTypeItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
+import { getCaseApi } from '../../services/CaseService';
+
+import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
+import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
@@ -179,4 +190,212 @@ export const getTseApplicationDecisionDetails = (
     );
   }
   return tseApplicationDecisionDetails;
+};
+
+export const getAllResponses = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  translations: AnyRecord,
+  req: AppRequest,
+  res: Response
+): Promise<any> => {
+  const allResponses: any[] = [];
+  const respondCollection = selectedApplication.value.respondCollection;
+  if (!respondCollection?.length) {
+    return allResponses;
+  }
+  for (const response of respondCollection) {
+    let responseToAdd;
+    if (
+      response.value.from === Applicant.CLAIMANT ||
+      (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
+    ) {
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, res);
+    } else if (isSentToClaimantByTribunal(response)) {
+      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken, res);
+      if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
+        await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
+          req.session.userCase,
+          selectedApplication.id,
+          response.id
+        );
+      }
+    }
+    if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
+    }
+  }
+  return allResponses;
+};
+
+const getSupportingMaterialDownloadLink = async (
+  responseDoc: Document,
+  accessToken: string,
+  res: Response
+): Promise<string | void> => {
+  let responseDocDownload;
+  if (responseDoc !== undefined) {
+    try {
+      await getDocumentAdditionalInformation(responseDoc, accessToken);
+    } catch (err) {
+      return res.redirect('/not-found');
+    }
+    responseDocDownload = createDownloadLink(responseDoc);
+  }
+  return responseDocDownload;
+};
+
+const addAdminResponse = async (
+  allResponses: any[],
+  translations: AnyRecord,
+  response: TseRespondTypeItem,
+  accessToken: string,
+  res: Response
+): Promise<any> => {
+  allResponses.push([
+    {
+      key: {
+        text: translations.responseItem,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.enterResponseTitle },
+    },
+    {
+      key: {
+        text: translations.date,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.date },
+    },
+    {
+      key: {
+        text: translations.sentBy,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations.tribunal },
+    },
+    {
+      key: {
+        text: translations.orderOrRequest,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.isCmoOrRequest },
+    },
+    {
+      key: {
+        text: translations.responseDue,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.isResponseRequired },
+    },
+    {
+      key: {
+        text: translations.partyToRespond,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.selectPartyRespond },
+    },
+    {
+      key: {
+        text: translations.additionalInfo,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.additionalInformation },
+    },
+    {
+      key: {
+        text: translations.description,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.addDocument?.find(element => element !== undefined).value.shortDescription },
+    },
+    {
+      key: {
+        text: translations.document,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        html: await getSupportingMaterialDownloadLink(
+          response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
+          accessToken,
+          res
+        ),
+      },
+    },
+    {
+      key: {
+        text: translations.requestMadeBy,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
+      },
+    },
+    {
+      key: {
+        text: translations.name,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.madeByFullName },
+    },
+    {
+      key: {
+        text: translations.sentTo,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.selectPartyNotify },
+    },
+  ]);
+};
+
+const addNonAdminResponse = async (
+  translations: AnyRecord,
+  response: TseRespondTypeItem,
+  accessToken: string,
+  res: Response
+): Promise<any> => {
+  return [
+    {
+      key: {
+        text: translations.responder,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: response.value.from,
+      },
+    },
+    {
+      key: {
+        text: translations.responseDate,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.date },
+    },
+    {
+      key: {
+        text: translations.response,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.response },
+    },
+    {
+      key: {
+        text: translations.supportingMaterial,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        html: await getSupportingMaterialDownloadLink(
+          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
+          accessToken,
+          res
+        ),
+      },
+    },
+    {
+      key: {
+        text: translations.copyCorrespondence,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.copyToOtherParty },
+    },
+  ];
 };

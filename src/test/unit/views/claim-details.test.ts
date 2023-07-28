@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import * as caseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
-import mockUserCaseClaimDetails from '../mocks/mockUserCaseClaimDetails';
+import mockUserCaseComplete from '../mocks/mockUserCaseComplete';
 import { getHtmlRes } from '../test-helpers/requester';
 
 const PAGE_URL = '/claim-details';
@@ -11,10 +11,7 @@ const titleClass = 'govuk-heading-xl';
 const summaryListClass = 'govuk-summary-list';
 const summaryListHeadingClass = 'govuk-summary-list__key govuk-heading-m';
 
-const tableSelector = 'govuk-table';
-const rowSelector = 'govuk-table__row';
-const cellSelector = 'govuk-table__cell';
-const tableHeaderSelector = 'govuk-table__header';
+const et1FormUrlSelector = 'govuk-link';
 
 const axiosResponse: AxiosResponse = {
   data: {
@@ -52,7 +49,7 @@ let htmlRes: Document;
 
 describe('ET1 details', () => {
   beforeAll(async () => {
-    htmlRes = await getHtmlRes(mockUserCaseClaimDetails, PAGE_URL);
+    htmlRes = await getHtmlRes(mockUserCaseComplete, PAGE_URL);
   });
 
   it('should display title', () => {
@@ -64,18 +61,19 @@ describe('ET1 details', () => {
   it('should display correct number of summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListClass);
 
-    expect(summaryLists).toHaveLength(6);
+    expect(summaryLists).toHaveLength(7);
   });
 
   it('should display correct headings in the summary lists', () => {
     const summaryLists = htmlRes.getElementsByClassName(summaryListHeadingClass);
 
-    expect(summaryLists[0].innerHTML).toMatch('Application details');
-    expect(summaryLists[1].innerHTML).toMatch('Your details');
-    expect(summaryLists[2].innerHTML).toMatch('Employment details');
-    expect(summaryLists[3].innerHTML).toMatch('Respondent 1 details');
-    expect(summaryLists[4].innerHTML).toMatch('Respondent 2 details');
-    expect(summaryLists[5].innerHTML).toMatch('Claim details');
+    expect(summaryLists[0].innerHTML).toMatch('Claim related information');
+    expect(summaryLists[1].innerHTML).toMatch('Application details');
+    expect(summaryLists[2].innerHTML).toMatch('Your details');
+    expect(summaryLists[3].innerHTML).toMatch('Employment details');
+    expect(summaryLists[4].innerHTML).toMatch('Respondent 1 details');
+    expect(summaryLists[5].innerHTML).toMatch('Respondent 2 details');
+    expect(summaryLists[6].innerHTML).toMatch('Claim details');
   });
 
   /*it.each([
@@ -102,61 +100,21 @@ describe('ET1 details', () => {
 });
 
 describe('ET1 documents', () => {
-  it('Shows Date uploaded and Document columns', async () => {
-    htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, claimSummaryFile: undefined }, PAGE_URL);
+  it('Shows the et1 form', async () => {
+    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, claimSummaryFile: undefined }, PAGE_URL);
 
-    const table = htmlRes.getElementsByClassName(tableSelector)[0];
-    const headerRow = Array.from(table.getElementsByClassName(rowSelector))[0];
-    const columns = Array.from(headerRow.getElementsByClassName(tableHeaderSelector)).map(column => column.textContent);
+    const et1FormLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[5].innerHTML;
 
-    expect(columns).toStrictEqual(['Date uploaded', 'Document']);
+    expect(et1FormLink).toContain('ET1 Form');
   });
-
-  it.each([
-    {
-      caseDocumentsModifier: { claimSummaryFile: undefined },
-      expectedDocuments: [
-        {
-          date: '8 September 2022',
-          link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-          linkText: 'ET1 Form',
-        },
-      ],
-    },
-    {
-      caseDocumentsModifier: {},
-      expectedDocuments: [
-        {
-          date: '8 September 2022',
-          link: '/getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673',
-          linkText: 'ET1 Form',
-        },
-        {
-          date: '9 September 2022',
-          link: '/getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c',
-          linkText: 'ET1 support document',
-        },
-      ],
-    },
-  ])(
-    'show correct documents with modifier: $caseDocumentsModifier',
-    async ({ caseDocumentsModifier, expectedDocuments }) => {
-      htmlRes = await getHtmlRes({ ...mockUserCaseClaimDetails, ...caseDocumentsModifier }, PAGE_URL);
-
-      const table = htmlRes.getElementsByClassName(tableSelector)[0];
-      const rows = Array.from(table.getElementsByClassName(rowSelector));
-      rows.splice(0, 1);
-
-      const documents = rows.map(row => {
-        const cells = Array.from(row.getElementsByClassName(cellSelector));
-        return {
-          date: cells[0].textContent,
-          link: cells[1].getElementsByTagName('a')[0].href,
-          linkText: cells[1].textContent,
-        };
-      });
-
-      expect(documents).toMatchObject(expectedDocuments);
-    }
-  );
+  it('Shows both the et1 form and the support document', async () => {
+    const caseDocumentsModifier = {};
+    htmlRes = await getHtmlRes({ ...mockUserCaseComplete, ...caseDocumentsModifier }, PAGE_URL);
+    const et1FormLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[5];
+    const et1SupportDocLink = htmlRes.getElementsByClassName(et1FormUrlSelector)[6];
+    expect(et1FormLink.innerHTML).toContain('ET1 Form');
+    expect(et1FormLink.outerHTML).toContain('getCaseDocument/3aa7dfc1-378b-4fa8-9a17-89126fae5673');
+    expect(et1SupportDocLink.innerHTML).toContain('ET1 support document');
+    expect(et1SupportDocLink.outerHTML).toContain('getCaseDocument/a0c113ec-eede-472a-a59c-f2614b48177c');
+  });
 });

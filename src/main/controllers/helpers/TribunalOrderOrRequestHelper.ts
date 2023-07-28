@@ -1,7 +1,7 @@
-import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
-import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
+import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
@@ -164,29 +164,80 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         ':orderId',
         `${item.id}${getLanguageParam(url)}`
       );
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.notificationState);
-      item.displayStatus = translations[item.value.notificationState];
+
+      const responseRequired =
+        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+      const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
+      const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
+
+      let hubLinkStatus: HubLinkStatus;
+
+      switch (true) {
+        case responseRequired && hasResponded:
+          hubLinkStatus = HubLinkStatus.SUBMITTED;
+          break;
+        case responseRequired && !hasResponded:
+          hubLinkStatus = HubLinkStatus.NOT_STARTED_YET;
+          break;
+        case !responseRequired && isNotViewedYet:
+          hubLinkStatus = HubLinkStatus.NOT_VIEWED;
+          break;
+        case !responseRequired && isViewed:
+          hubLinkStatus = HubLinkStatus.VIEWED;
+          break;
+        default:
+          throw new Error(`Illegal order/ request state, title: ${item.value.sendNotificationTitle}, id: ${item.id}`);
+      }
+      item.displayStatus = translations[hubLinkStatus];
+      item.statusColor = displayStatusColorMap.get(hubLinkStatus);
     });
     return notifications;
   }
 };
 
-export const activateTribunalOrdersAndRequestsLink = (items: SendNotificationTypeItem[], req: AppRequest): void => {
-  const userCase = req.session?.userCase;
-  if (items?.length && filterNotificationsWithRequestsOrOrders(items).length) {
-    const respOnly = items.some(
-      item =>
-        item.value.sendNotificationSelectParties === Parties.RESPONDENT_ONLY &&
-        item.value.sendNotificationResponseTribunal === ResponseRequired.YES
-    );
+export const activateTribunalOrdersAndRequestsLink = (
+  items: SendNotificationTypeItem[],
+  userCase: CaseWithId
+): void => {
+  if (!items?.length) {
+    return;
+  }
+  const notices = filterNotificationsWithRequestsOrOrders(items).filter(
+    notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
+  );
+  if (!notices?.length) {
+    return;
+  }
 
-    if (userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] === HubLinkStatus.NOT_YET_AVAILABLE) {
-      if (respOnly) {
-        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      } else {
-        userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
-      }
-    }
+  const responseRequired = (item: SendNotificationTypeItem) =>
+    item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+    item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
+  const anyRequireResponse = notices.some(responseRequired);
+
+  const anyRequireResponseAndNotResponded = notices.some(item => {
+    return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+  });
+
+  const allViewed = notices.every(item => {
+    return item.value.notificationState === HubLinkStatus.VIEWED;
+  });
+
+  switch (true) {
+    case anyRequireResponseAndNotResponded:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+      break;
+    case !allViewed:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+      break;
+    case anyRequireResponse && !anyRequireResponseAndNotResponded:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+      break;
+    case allViewed:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
+      break;
   }
 };
 

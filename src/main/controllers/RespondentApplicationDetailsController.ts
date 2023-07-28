@@ -5,8 +5,11 @@ import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
-import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
+import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -38,10 +41,14 @@ export default class RespondentApplicationDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
+    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
+
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
-    const redirectUrl = `/respond-to-application/${selectedApplication.id}${getLanguageParam(req.url)}`;
+    const languageParam = getLanguageParam(req.url);
+    const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
+    const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
     const supportingMaterialDownloadLink = await getApplicationDocDownloadLink(
       selectedApplication,
       logger,
@@ -55,6 +62,17 @@ export default class RespondentApplicationDetailsController {
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.RESPONDENT_APPLICATION_DETAILS,
     ]);
+    try {
+      const newStatus = getNewApplicationStatus(selectedApplication);
+      if (newStatus) {
+        await getCaseApi(req.session.user?.accessToken).changeApplicationStatus(req.session.userCase, newStatus);
+        selectedApplication.value.applicationState = newStatus;
+        logger.info(`New status for respondent's application for case: ${req.session.userCase.id} - ${newStatus}`);
+      }
+    } catch (error) {
+      logger.error(error.message);
+      res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
+    }
 
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
@@ -65,6 +83,9 @@ export default class RespondentApplicationDetailsController {
       decisionContent,
       respondButton,
       responseDocDownloadLink,
+      isAdminRespondButton: responseToTribunalRequired(selectedApplication),
+      adminRespondRedirectUrl,
+      allResponses,
     });
   };
 }

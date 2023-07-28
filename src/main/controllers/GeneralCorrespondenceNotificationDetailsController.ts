@@ -17,10 +17,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     const selectedCorrespondence = userCase.sendNotificationCollection.find(it => it.id === req.params.itemId);
-    if (
-      selectedCorrespondence.value.notificationState === HubLinkStatus.NOT_STARTED_YET ||
-      selectedCorrespondence.value.notificationState === HubLinkStatus.NOT_VIEWED
-    ) {
+    if (selectedCorrespondence.value.notificationState === HubLinkStatus.NOT_VIEWED) {
       try {
         selectedCorrespondence.value.notificationState = HubLinkStatus.VIEWED;
         await updateSendNotificationState(req, logger);

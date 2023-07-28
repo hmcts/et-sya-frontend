@@ -1,5 +1,3 @@
-import { PageUrls } from './constants';
-
 export enum HubLinkNames {
   Et1ClaimForm = 'et1ClaimForm',
   RespondentResponse = 'respondentResponse',
@@ -36,18 +34,9 @@ export const enum HubLinkStatus {
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
   IN_PROGRESS = 'inProgress',
   NOT_STARTED_YET = 'notStartedYet',
+  UPDATED = 'updated',
+  READY_TO_VIEW = 'readyToView',
 }
-
-export const hubLinksUrlMap = new Map<string, string>([
-  [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
-  [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
-  [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
-  [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
-  [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
-  [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
-  [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
-  [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
-]);
 
 const COLORS = {
   TURQUOISE: '--turquoise',
@@ -68,6 +57,15 @@ export const statusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.WAITING_FOR_TRIBUNAL, COLORS.GREY],
   [HubLinkStatus.SUBMITTED_AND_VIEWED, COLORS.TURQUOISE],
   [HubLinkStatus.IN_PROGRESS, COLORS.YELLOW],
+  [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
+  [HubLinkStatus.UPDATED, COLORS.BLUE],
+  [HubLinkStatus.READY_TO_VIEW, COLORS.BLUE],
+]);
+
+export const displayStatusColorMap = new Map<HubLinkStatus, string>([
+  [HubLinkStatus.SUBMITTED, COLORS.GREEN],
+  [HubLinkStatus.VIEWED, COLORS.GREEN],
+  [HubLinkStatus.NOT_VIEWED, COLORS.RED],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
 ]);
 
