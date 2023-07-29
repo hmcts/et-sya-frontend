@@ -1,8 +1,15 @@
 import { AxiosResponse } from 'axios';
 
-import { CaseWithId } from '../../definitions/case';
-import { DOCUMENT_CONTENT_TYPES } from '../../definitions/constants';
+import { AppRequest } from '../../definitions/appRequest';
+import { CaseWithId, Document } from '../../definitions/case';
+import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
+import {
+  GenericTseApplicationTypeItem,
+  TseRespondTypeItem,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant, DOCUMENT_CONTENT_TYPES, PageUrls } from '../../definitions/constants';
 import { DocumentDetail } from '../../definitions/definition';
+import { getDocId, getFileExtension } from '../../helper/ApiFormatter';
 import { getCaseApi } from '../../services/CaseService';
 
 export const getDocumentDetails = async (documents: DocumentDetail[], accessToken: string): Promise<void> => {
@@ -23,19 +30,199 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
   }
 };
 
+export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
+  const docId = getDocId(doc.document_url);
+  const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
+  const { createdOn, size, mimeType } = docDetails.data;
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
+    dateStyle: 'long',
+  }).format(new Date(createdOn));
+  doc.document_mime_type = mimeType;
+  doc.document_size = size;
+  return doc;
+};
+
+export const getDocumentsAdditionalInformation = async (
+  documents: DocumentTypeItem[],
+  accessToken: string
+): Promise<void> => {
+  if (documents?.length) {
+    for (const doc of documents) {
+      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+    }
+  }
+};
+
 // merge arrays but make sure they are not undefined
 export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
+
+export const createDownloadLink = (file: Document): string => {
+  const mimeType = getFileExtension(file?.document_filename);
+  let downloadLink = '';
+  if (file?.document_size && file.document_mime_type && file.document_filename) {
+    const href = '/getSupportingMaterial/' + getDocId(file.document_url);
+    downloadLink =
+      `<a href='${href}' target='_blank' class='govuk-link'>` +
+      file.document_filename +
+      '(' +
+      mimeType +
+      ', ' +
+      formatBytes(file.document_size) +
+      ')' +
+      '</a>';
+  }
+  return downloadLink;
+};
+
+export const findSelectedGenericTseApplication = (
+  items: GenericTseApplicationTypeItem[],
+  param: string
+): GenericTseApplicationTypeItem => {
+  return items?.find(it => it.id === param);
+};
+
+export function formatBytes(bytes: number, decimals = 2): string {
+  if (!+bytes) {
+    return '0 Bytes';
+  }
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))}${sizes[i]}`;
+}
+
+export function getResponseDocId(selectedApplication: GenericTseApplicationTypeItem): string {
+  let responseDocId = undefined;
+  let responseDoc = undefined;
+  if (selectedApplication?.value?.respondCollection?.length) {
+    const selectedAppResponse = selectedApplication.value.respondCollection;
+    responseDoc = selectedAppResponse[0].value.supportingMaterial?.length
+      ? selectedAppResponse[0].value.supportingMaterial[0].value.uploadedDocument
+      : undefined;
+  }
+  if (responseDoc !== undefined) {
+    responseDocId = getDocId(responseDoc.document_url);
+  }
+  return responseDocId;
+}
+
+export function isValidResponseDocId(docId: string, respondCollection: TseRespondTypeItem[]): boolean {
+  for (const response of respondCollection) {
+    if (response.value.from === Applicant.CLAIMANT || response.value.from === Applicant.RESPONDENT) {
+      if (
+        docId ===
+        getDocId(
+          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
+        return true;
+      }
+    } else if (response.value.from === Applicant.ADMIN) {
+      if (
+        docId ===
+        getDocId(
+          response.value?.addDocument?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+export function getDecisionDocId(req: AppRequest, selectedApplication: GenericTseApplicationTypeItem): string {
+  const docId = req.params.docId;
+  const decisionDocUrls = [];
+  if (selectedApplication?.value.adminDecision?.length) {
+    const adminDecisions = selectedApplication.value.adminDecision;
+    for (let i = adminDecisions.length - 1; i >= 0; i--) {
+      if (adminDecisions[i].value.responseRequiredDoc !== undefined) {
+        decisionDocUrls[i] = adminDecisions[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
+      }
+    }
+  }
+  return decisionDocUrls.map(it => getDocId(it)).find(id => id === docId);
+}
+
+export const isSelectedAppDecisionDocId = (
+  docId: string,
+  appWithDecisions: GenericTseApplicationTypeItem[]
+): boolean => {
+  for (const app of appWithDecisions) {
+    for (const decision of app.value.adminDecision) {
+      if (
+        docId ===
+        getDocId(
+          decision.value.responseRequiredDoc?.find(element => element !== undefined).value.uploadedDocument.document_url
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+export function isSelectedAppDocId(docId: string, appsWithDecisions: GenericTseApplicationTypeItem[]): boolean {
+  for (const app of appsWithDecisions) {
+    if (docId === getDocId(app.value.documentUpload?.document_url)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export const isSelectedAppResponseDocId = (
+  docId: string,
+  appsWithDecisions: GenericTseApplicationTypeItem[]
+): boolean => {
+  for (const app of appsWithDecisions) {
+    if (!app.value.respondCollection?.length) {
+      continue;
+    }
+    if (isValidResponseDocId(docId, app.value.respondCollection)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export function isRequestDocId(req: AppRequest, docId: string): boolean {
+  if (
+    req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS ||
+    req.session.documentDownloadPage === PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS
+  ) {
+    const requestDoc = req.session?.userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
+    return docId === requestDoc?.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId);
+  }
+  return false;
+}
+
+export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {
+  const judgmentDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
+  if (judgmentDoc?.length) {
+    return (
+      judgmentDoc.map(it => getDocId(it.value.uploadedDocument.document_url)).find(id => id === docId) !== undefined
+    );
+  }
+  return false;
+}
 
 export const combineUserCaseDocuments = (userCases: CaseWithId[]): DocumentDetail[] => {
   const combinedDocuments: DocumentDetail[] = [];
   userCases?.forEach(userCase => {
     combinedDocuments.push(userCase.et1SubmittedForm);
+    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseEt3FormDocumentDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.acknowledgementOfClaimLetterDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.rejectionOfClaimDocumentDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseAcknowledgementDocumentDetail);
     pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseRejectionDocumentDetail);
-    pushDocumentsToCombinedDocuments(combinedDocuments, userCase.responseEt3FormDocumentDetail);
     if (userCase.claimSummaryFile?.document_url) {
       const document_url = userCase.claimSummaryFile.document_url;
       const documentId = document_url?.substring(document_url?.lastIndexOf('/') + 1);

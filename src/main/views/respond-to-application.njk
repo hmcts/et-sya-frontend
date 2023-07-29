@@ -1,0 +1,80 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  {% block errorSummary %}
+    {% include "error-summary.njk" %}
+  {% endblock %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 ">
+        <span class="govuk-caption-l">{{ caption }}</span>
+        {{ h1 }}
+      </h1>
+
+      <div class="govuk-body">
+        <p>{{ p1 }}<b>{{ applicationType }}</b>{{ p1a }}</p>
+        <p>{{ p2 }}<b>{{ respondByDate }}</b>{{ p2a }}</p>
+        <p>{{ p3 }}</p>
+      </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
+    </div>
+  </div>
+
+   {{ govukSummaryList({
+      rows: appContent
+      }) 
+    }}
+
+      <div class="govuk-body">
+        <p><b>{{ p4 }}</b></p>
+      </div>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ bullets.li1 }}</li>
+      <li>{{ bullets.li2 }}</li>
+      <li>{{ bullets.li3 }}</li>
+    </ul>
+
+    {{ govukDetails({
+        summaryText: details.summaryText,
+        html:  "<p class='govuk-body'>"+details.p1+"</p>
+                <p><a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">"+details.p2+"</a></p>
+                <p><a href=\"https://www.lawscot.org.uk/find-a-solicitor/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">"+details.p3+"</a></p>"
+      }) }}
+
+    {% block form %}
+      {% include "form/form.njk"%}
+    {% endblock %}
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body">
+      <a href="https://www.gov.uk/find-legal-advice" target="_blank">
+        {{findLegalAdvice}}
+      </a>
+    </p>
+
+    {% set sideBarContent %}
+    {% include "./citizen-hub-sidebar.njk" %}
+    {% endset %}
+
+    {{ govukDetails({
+        summaryText: "Contact",
+        html: sideBarContent
+      }) }}
+  </div>
+</div>
+{% endblock %}

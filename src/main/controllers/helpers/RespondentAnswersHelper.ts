@@ -19,14 +19,63 @@ export const getAcasReason = (noAcasReason: NoAcasNumberReason, translations: An
   }
 };
 
+const respondentTitle = (index: number, translations: AnyRecord, languageParam: string): string => {
+  if (languageParam === '?lng=cy') {
+    return translations.respondentDetails.details + translations.respondentDetails.header + index;
+  } else {
+    return translations.respondentDetails.header + index + translations.respondentDetails.details;
+  }
+};
+
 export const getRespondentSection = (
   userCase: CaseWithId,
   respondent: Respondent,
   index: number,
-  translations: AnyRecord
+  translations: AnyRecord,
+  languageParam: string,
+  addRemoveButton: boolean
 ): unknown => {
   const respondentSections = [];
+  if (index === 1 || !addRemoveButton) {
+    respondentSections.push({
+      key: {
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
+      },
+      value: {
+        text: '',
+      },
+    });
+  } else {
+    respondentSections.push({
+      key: {
+        text: respondentTitle(index, translations, languageParam),
+        classes: 'govuk-heading-m',
+      },
+      value: {
+        text: '',
+      },
+      actions: {
+        items: [
+          {
+            href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam + '&redirect=answers',
+            text: translations.removeRespondent,
+            visuallyHiddenText: translations.removeRespondent,
+          },
+        ],
+      },
+    });
+  }
+
   respondentSections.push(
+    {
+      key: {
+        text:
+          translations.respondentDetails.header + respondent.respondentNumber + translations.respondentDetails.details,
+        classes: 'govuk-summary-list__key govuk-heading-m',
+      },
+      value: {},
+    },
     {
       key: {
         text: translations.respondentDetails.respondentName,
@@ -164,6 +213,23 @@ export const getRespondentSection = (
   }
 
   return respondentSections;
+};
+
+export const getRespondentDetailsCardActionItem = (
+  index: string,
+  translations: AnyRecord,
+  languageParam: string
+): unknown => {
+  if (Number(index) === 1) {
+    return '';
+  }
+  const respondentCardActionItem = [];
+  respondentCardActionItem.push({
+    href: '/respondent/' + index + PageUrls.RESPONDENT_REMOVE + languageParam,
+    text: translations.removeRespondent,
+    visuallyHiddenText: translations.removeRespondent,
+  });
+  return respondentCardActionItem;
 };
 
 export const getRespondentDetailsSection = (

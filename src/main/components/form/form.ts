@@ -48,7 +48,7 @@ export class Form {
   /**
    * Pass the form body to any fields with a validator and return a list of errors
    */
-  public getErrors(body: Partial<Case>): FormError[] {
+  public getValidatorErrors(body: Partial<Case>): FormError[] {
     return Object.entries(this.fields).flatMap(fieldWithId => {
       return this.getErrorsFromField(body, ...fieldWithId);
     });

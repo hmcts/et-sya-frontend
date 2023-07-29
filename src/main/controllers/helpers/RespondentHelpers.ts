@@ -121,6 +121,10 @@ export const updateWorkAddress = (userCase: CaseWithId, respondent: Respondent):
   userCase.workAddressPostcode = respondent.respondentAddressPostcode;
 };
 
+export const getRespondentsWithRemoved = (respondents: Respondent[], selectedRespondentIndex: number): Respondent[] => {
+  return respondents.filter(r => respondents.indexOf(r) !== selectedRespondentIndex);
+};
+
 const respondent = '/respondent/';
 export const ValidRespondentUrls = {
   name1: respondent + 1 + PageUrls.RESPONDENT_NAME,
@@ -167,3 +171,9 @@ export const ValidRespondentUrls = {
   workPostcodeSelect4: respondent + 4 + PageUrls.WORK_POSTCODE_SELECT,
   workPostcodeSelect5: respondent + 5 + PageUrls.WORK_POSTCODE_SELECT,
 } as const;
+
+export const setNumbersToRespondents = (respondents: Respondent[]): void => {
+  if (respondents?.length) {
+    respondents.forEach((it, index) => (it.respondentNumber = index + 1));
+  }
+};
