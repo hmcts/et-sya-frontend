@@ -297,10 +297,10 @@ describe('shouldShowRespondentResponseReceived', () => {
               {
                 value: {
                   from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.YES,
                 },
               },
             ],
-            applicationState: HubLinkStatus.UPDATED,
           },
         },
       ],
@@ -316,8 +316,30 @@ describe('shouldShowRespondentResponseReceived', () => {
                   from: Applicant.CLAIMANT,
                 },
               },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.YES,
+                },
+              },
             ],
-            applicationState: HubLinkStatus.UPDATED,
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  copyToOtherParty: YesOrNo.YES,
+                },
+              },
+            ],
           },
         },
       ],
@@ -333,8 +355,35 @@ describe('shouldShowRespondentResponseReceived', () => {
                   from: Applicant.RESPONDENT,
                 },
               },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  copyToOtherParty: YesOrNo.YES,
+                },
+              },
             ],
-            applicationState: HubLinkStatus.VIEWED,
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                  copyToOtherParty: YesOrNo.NO,
+                },
+              },
+            ],
           },
         },
       ],
