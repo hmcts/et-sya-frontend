@@ -272,6 +272,10 @@ export const AuthUrls = {
 } as const;
 
 export const JavaApiUrls = {
+  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
+  UPLOAD_FILE: '/documents/upload/',
+  DOCUMENT_DOWNLOAD: '/document/download/',
+  DOCUMENT_DETAILS: '/document/details/',
   GET_CASES: 'cases/user-cases',
   GET_CASE: 'cases/user-case',
   INITIATE_CASE_DRAFT: 'cases/initiate-case',
@@ -280,14 +284,11 @@ export const JavaApiUrls = {
   UPDATE_CASE_SUBMITTED: 'cases/update-hub-links-statuses',
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
+  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
+  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
-  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
-  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
-  UPLOAD_FILE: '/documents/upload/',
-  DOCUMENT_DOWNLOAD: '/document/download/',
-  DOCUMENT_DETAILS: '/document/details/',
-  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
 } as const;
 
 export const Urls = {

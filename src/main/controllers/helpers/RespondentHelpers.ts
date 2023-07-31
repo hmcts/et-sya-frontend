@@ -42,6 +42,18 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.respondentEnterPostcode !== undefined) {
     req.session.userCase.respondentEnterPostcode = formData.respondentEnterPostcode;
   }
+  if (formData.respondentType !== undefined) {
+    req.session.userCase.respondentType = formData.respondentType;
+  }
+  if (formData.respondentFirstName !== undefined) {
+    req.session.userCase.respondentFirstName = formData.respondentFirstName;
+  }
+  if (formData.respondentLastName !== undefined) {
+    req.session.userCase.respondentLastName = formData.respondentLastName;
+  }
+  if (formData.respondentOrganisation !== undefined) {
+    req.session.userCase.respondentOrganisation = formData.respondentOrganisation;
+  }
 
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
@@ -53,7 +65,7 @@ export const getRespondentIndex = (req: AppRequest): number => {
 export const getRespondentOrgOrName = (selectedRespondent: Respondent): string => {
   return selectedRespondent.respondentType === RespondentType.ORGANISATION
     ? selectedRespondent.respondentOrganisation
-    : selectedRespondent.respondentFirstName + ' ' + selectedRespondent.respondentLastName;
+    : `${selectedRespondent.respondentFirstName} ${selectedRespondent.respondentLastName}`;
 };
 
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {

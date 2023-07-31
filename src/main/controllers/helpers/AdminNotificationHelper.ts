@@ -13,25 +13,22 @@ export const getApplicationsWithTribunalOrderOrRequest = (
   languageParam: string
 ): AdminNotifcation[] => {
   const appsWithTribunalOrderOrRequest: AdminNotifcation[] = [];
-  if (apps) {
-    for (const app of apps) {
-      const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
-      if (!allRequestsFromAdmin.length) {
-        return appsWithTribunalOrderOrRequest;
-      }
+  for (const app of apps || []) {
+    const allRequestsFromAdmin: AdminNotifcation[] = getVisibleRequestFromAdmin(app, translations, languageParam);
+    if (allRequestsFromAdmin.length) {
       for (const request of allRequestsFromAdmin) {
         appsWithTribunalOrderOrRequest.push(request);
       }
     }
-    return appsWithTribunalOrderOrRequest;
   }
+  return appsWithTribunalOrderOrRequest;
 };
 
 export const responseToTribunalRequired = (selectedApplication: GenericTseApplicationTypeItem): boolean => {
   return selectedApplication.value.claimantResponseRequired === YesOrNo.YES;
 };
 
-export const getVisibleRequestFromAdmin = (
+const getVisibleRequestFromAdmin = (
   app: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   languageParam: string
@@ -41,7 +38,7 @@ export const getVisibleRequestFromAdmin = (
     return adminNotifications;
   }
   for (const response of app.value.respondCollection) {
-    if (isVisibleTribunalResponse(response)) {
+    if (isVisibleTribunalResponse(response, app.value.claimantResponseRequired)) {
       const adminNotification: AdminNotifcation = {
         appName: app.value.type,
         enterResponseTitle: response.value.enterResponseTitle,
@@ -57,7 +54,18 @@ export const getVisibleRequestFromAdmin = (
   return adminNotifications;
 };
 
-const isVisibleTribunalResponse = (response: TseRespondTypeItem) => {
+const isVisibleTribunalResponse = (response: TseRespondTypeItem, claimantResponseRequired: string) => {
+  if (claimantResponseRequired === YesOrNo.YES) {
+    if (response.value.isResponseRequired === YesOrNo.YES) {
+      return isSentToClaimantByTribunal(response);
+    }
+  }
+  if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
+    return isSentToClaimantByTribunal(response);
+  }
+};
+
+export const isSentToClaimantByTribunal = (response: TseRespondTypeItem): boolean => {
   return (
     response.value.from === Applicant.ADMIN &&
     (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||

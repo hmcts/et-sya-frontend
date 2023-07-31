@@ -95,15 +95,20 @@ export default class RespondentNameController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     const selectedRadio = req.body.respondentType;
+    const respondentNameConcatenated = `${req.body.respondentFirstName} ${req.body.respondentLastName}`;
     userCase.respondentType = selectedRadio;
 
     switch (selectedRadio) {
       case RespondentType.INDIVIDUAL:
-        req.body.respondentName = req.body.respondentFirstName + ' ' + req.body.respondentLastName;
+        req.body.respondentName = respondentNameConcatenated;
+        userCase.respondentName = respondentNameConcatenated;
+        userCase.respondentFirstName = req.body.respondentFirstName;
+        userCase.respondentLastName = req.body.respondentLastName;
         req.body.respondentOrganisation = undefined;
         break;
       case RespondentType.ORGANISATION:
         req.body.respondentName = req.body.respondentOrganisation;
+        userCase.respondentName = req.body.respondentOrganisation;
         req.body.respondentFirstName = undefined;
         req.body.respondentLastName = undefined;
         break;
