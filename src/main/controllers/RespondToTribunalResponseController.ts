@@ -101,12 +101,7 @@ export default class RespondToTribunalResponseController {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const allResponses = await getAllResponses(
-      selectedApplication.value.respondCollection,
-      translations,
-      req.session.user?.accessToken,
-      res
-    );
+    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
 
     const document = selectedApplication.value?.documentUpload;
     if (document) {

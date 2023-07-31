@@ -215,6 +215,23 @@ export class CaseApi {
     }
   };
 
+  updateResponseAsViewed = async (
+    caseItem: CaseWithId,
+    appId: string,
+    responseId: string
+  ): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.TRIBUNAL_RESPONSE_VIEWED, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        appId,
+        responseId,
+      });
+    } catch (error) {
+      throw new Error('Error updating response to viewed: ' + axiosErrorDetails(error));
+    }
+  };
+
   getUserCase = async (id: string): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.post(JavaApiUrls.GET_CASE, { case_id: id });
