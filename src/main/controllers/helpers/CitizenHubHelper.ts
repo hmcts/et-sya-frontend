@@ -47,14 +47,14 @@ export const shouldShowRejectionAlert = (userCase: CaseWithId, hubLinksStatuses:
   );
 };
 
-// Show response received if there's a respondent application where the respondent responded and hasn't been viewed yet
+// Show response received if there's a respondent application where the respondent was the last to respond
 export const shouldShowRespondentResponseReceived = (applications: GenericTseApplicationTypeItem[]): boolean => {
   return applications?.some(app => {
     const responses = app.value.respondCollection;
     return (
       responses &&
       responses[responses.length - 1].value.from === Applicant.RESPONDENT &&
-      app.value.applicationState === HubLinkStatus.UPDATED
+      responses[responses.length - 1].value.copyToOtherParty === YesOrNo.YES
     );
   });
 };

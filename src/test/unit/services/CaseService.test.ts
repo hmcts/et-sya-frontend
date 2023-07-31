@@ -339,6 +339,12 @@ describe('update case', () => {
       },
     });
   });
+});
+
+describe('update case from claimant actions', () => {
+  beforeEach(() => {
+    mockedAxios.put.mockClear();
+  });
 
   it('should update hub links statuses', async () => {
     const caseItem: CaseWithId = {
@@ -368,6 +374,26 @@ describe('update case', () => {
     expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.CHANGE_APPLICATION_STATUS);
     console.table(mockedAxios.put.mock.calls[0][1]);
     expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({ application_id: '1', new_status: HubLinkStatus.VIEWED });
+  });
+
+  it('should send update tribunal response as viewed', async () => {
+    const caseItem: CaseWithId = {
+      id: '1234',
+      state: CaseState.SUBMITTED,
+      createdDate: 'August 19, 2022',
+      lastModified: 'August 19, 2022',
+      selectedGenericTseApplication: clone(mockSimpleRespAppTypeItem),
+    };
+
+    await api.updateResponseAsViewed(caseItem, '12', '13');
+
+    expect(mockedAxios.put.mock.calls[0][0]).toBe(JavaApiUrls.TRIBUNAL_RESPONSE_VIEWED);
+    expect(mockedAxios.put.mock.calls[0][1]).toMatchObject({
+      case_id: caseItem.id,
+      case_type_id: caseItem.caseTypeId,
+      appId: '12',
+      responseId: '13',
+    });
   });
 });
 
