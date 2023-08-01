@@ -41,12 +41,7 @@ export default class RespondentApplicationDetailsController {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    const allResponses = await getAllResponses(
-      selectedApplication.value.respondCollection,
-      translations,
-      req.session.user?.accessToken,
-      res
-    );
+    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
 
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
