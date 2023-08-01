@@ -2,14 +2,21 @@
 const testConfig = require('../../config.js');
 const commonConfig = require('../../features/Data/commonConfig.json');
 
-module.exports = async function (workAddress, doYouHaveAcas) {
+module.exports = async function (workAddress, doYouHaveAcas, individual) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
   //checks user is on respondent-name page and then enters a respondent name
   I.see("What is the name of the respondent you're making the claim against?");
-  I.seeElement('#respondentName');
-  I.fillField('#respondentName', 'Gabby Greta');
+  I.see('Enter name of respondent');
+  if (individual === 'Yes') {
+    I.checkOption('#respondentType');
+    I.fillField('#respondentFirstName', 'Gabby');
+    I.fillField('#respondentLastName', 'Greta');
+  } else {
+    I.checkOption('#respondentType-2');
+    I.fillField('#respondentOrganisation', 'Gabby Greta');
+  }
   I.click(commonConfig.saveAndContinue);
 
   //Enters Postcode for the respondent
