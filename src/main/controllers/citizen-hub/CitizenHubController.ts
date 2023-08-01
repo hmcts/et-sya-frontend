@@ -16,6 +16,7 @@ import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
+import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
 import {
   clearPrepareDocumentsForHearingFields,
   clearTseFields,
