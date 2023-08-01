@@ -95,9 +95,7 @@ export default class CitizenHubController {
     getClaimantAppsAndUpdateStatusTag(userCase);
 
     if (
-      (hubLinksStatuses[HubLinkNames.Documents] === HubLinkStatus.NOT_YET_AVAILABLE &&
-        userCase.documentCollection &&
-        userCase.documentCollection.length) ||
+      (userCase.documentCollection && userCase.documentCollection.length) ||
       userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
     ) {
       userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.NOT_YET_AVAILABLE;
