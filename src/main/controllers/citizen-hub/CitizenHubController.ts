@@ -105,7 +105,7 @@ export default class CitizenHubController {
         userCase.documentCollection.length) ||
       userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
     ) {
-      userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.OPTIONAL;
+      userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.NOT_YET_AVAILABLE;
       await handleUpdateHubLinksStatuses(req, logger);
     }
 
