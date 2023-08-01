@@ -2,7 +2,7 @@
 const testConfig = require('../../config.js');
 const commonConfig = require('../../features/Data/commonConfig.json');
 
-module.exports = async function (individual, workAddress, doYouHaveAcas) {
+module.exports = async function (workAddress, doYouHaveAcas, individual) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const I = this;
 
@@ -15,7 +15,7 @@ module.exports = async function (individual, workAddress, doYouHaveAcas) {
     I.fillField('#respondentLastName', 'Greta');
   } else {
     I.checkOption('#respondentType-2');
-    I.fillField('#respondentOrganisation', 'Gabby Greta Inc');
+    I.fillField('#respondentOrganisation', 'Gabby Greta');
   }
   I.click(commonConfig.saveAndContinue);
 
