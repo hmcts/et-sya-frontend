@@ -11,7 +11,7 @@ describe('Tell Us What You Want Controller', () => {
   };
 
   beforeAll(() => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   });
 
   it('should render the tell us what you want page', () => {

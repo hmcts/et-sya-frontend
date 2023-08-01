@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.UPDATE_PREFERENCES}`, () => {
 
 describe(`POST ${PageUrls.UPDATE_PREFERENCES}`, () => {
   describe('Correct input', () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
     test('goes to next page when selecting just Email radio button', async () => {
       await request(mockApp({}))

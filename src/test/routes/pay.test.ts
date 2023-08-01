@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.PAY}`, () => {
 });
 
 describe(`on POST ${PageUrls.PAY}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the pay after tax page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.PAY)

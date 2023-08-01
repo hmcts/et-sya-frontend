@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.TELEPHONE_NUMBER}`, () => {
 });
 
 describe(`on POST ${PageUrls.TELEPHONE_NUMBER}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should go to update preferences page when phone number has been entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.TELEPHONE_NUMBER)

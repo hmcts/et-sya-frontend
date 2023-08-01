@@ -36,7 +36,7 @@ describe('Update Preference Controller', () => {
 
   it('should add the update preference form value to the userCase', async () => {
     const body = { claimantContactPreference: 'Email' };
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
     const controller = new UpdatePreferenceController();
 

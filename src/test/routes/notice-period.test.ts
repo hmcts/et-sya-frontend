@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.NOTICE_PERIOD}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should return the notice type page when the Yes radio button is selected', async () => {
     await request(mockApp({}))
       .post(`${PageUrls.NOTICE_PERIOD}`)
@@ -33,7 +33,7 @@ describe(`on POST ${PageUrls.NOTICE_PERIOD} with Yes`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_PERIOD} with No`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should return the Average Weekly Hours page when the No radio button is selected', async () => {
     await request(mockApp({}))
       .post(`${PageUrls.NOTICE_PERIOD}`)

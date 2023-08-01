@@ -12,7 +12,7 @@ describe('Whistleblowing Claims Controller', () => {
   };
 
   beforeAll(() => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   });
 
   it('should render the whistleblowing claims page', () => {

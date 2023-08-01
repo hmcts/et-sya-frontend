@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.PERSONAL_DETAILS_CHECK}`, () => {
 });
 
 describe(`POST ${PageUrls.PERSONAL_DETAILS_CHECK}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should go to the claim steps page', async () => {
     await request(mockApp({}))
       .post(PageUrls.PERSONAL_DETAILS_CHECK)

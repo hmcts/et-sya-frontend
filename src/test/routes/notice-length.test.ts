@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.NOTICE_LENGTH}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_LENGTH}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the average weekly hours page when a valid notice length is entered and save and continue button is clicked', async () => {
     await request(
       mockApp({

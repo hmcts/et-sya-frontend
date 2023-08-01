@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.VIDEO_HEARINGS}`, () => {
 });
 
 describe(`on POST ${PageUrls.VIDEO_HEARINGS}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test("should return the reasonable adjustments page when 'video' and 'save and continue' are selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.VIDEO_HEARINGS)

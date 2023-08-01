@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.NEW_JOB_START_DATE}`, () => {
 });
 
 describe(`on POST ${PageUrls.NEW_JOB_START_DATE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should navigate to the new job pay page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.NEW_JOB_START_DATE)

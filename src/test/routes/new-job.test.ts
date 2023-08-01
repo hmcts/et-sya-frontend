@@ -15,7 +15,7 @@ describe(`GET ${PageUrls.NEW_JOB}`, () => {
 
 describe(`on POST ${PageUrls.NEW_JOB} with Yes`, () => {
   test('should return the new job page when Yes radio button is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(mockApp({}))
       .post(`${PageUrls.NEW_JOB}`)
       .send({ newJob: YesOrNo.YES })
@@ -29,7 +29,7 @@ describe(`on POST ${PageUrls.NEW_JOB} with Yes`, () => {
 // TODO - redirect to the Respondent Name page
 describe(`on POST ${PageUrls.NEW_JOB} with No`, () => {
   test('should return the home page when the No radio button is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(mockApp({}))
       .post(`${PageUrls.NEW_JOB}`)
       .send({ newJob: YesOrNo.NO })

@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should navigate to the describe what happened page when TypesOfClaim.PAY_RELATED_CLAIM not selected', async () => {
     await request(mockApp({ session: mockSession([TypesOfClaim.DISCRIMINATION], [], []) }))
       .post(PageUrls.CLAIM_TYPE_DISCRIMINATION)

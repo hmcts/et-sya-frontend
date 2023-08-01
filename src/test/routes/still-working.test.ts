@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.STILL_WORKING}`, () => {
 });
 
 describe(`on POST ${PageUrls.STILL_WORKING}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should return the employment details - job title page when Still working for them button is selected', async () => {
     await request(mockApp({}))
       .post(PageUrls.STILL_WORKING)

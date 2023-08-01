@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.WHISTLEBLOWING_CLAIMS}`, () => {
 });
 
 describe(`on POST ${PageUrls.WHISTLEBLOWING_CLAIMS}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the claim details check page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.WHISTLEBLOWING_CLAIMS)

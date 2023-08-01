@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
 });
 
 describe(`on POST ${PageUrls.AVERAGE_WEEKLY_HOURS}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should navigate to the pay before tax page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.AVERAGE_WEEKLY_HOURS)

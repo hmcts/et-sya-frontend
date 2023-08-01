@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.END_DATE}`, () => {
 });
 
 describe(`on POST ${PageUrls.END_DATE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the notice period page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.END_DATE)

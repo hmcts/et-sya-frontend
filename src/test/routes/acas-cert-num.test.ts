@@ -27,7 +27,7 @@ describe(`GET ${PageUrls.ACAS_CERT_NUM}`, () => {
 });
 
 describe(`on POST ${PageUrls.ACAS_CERT_NUM}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should go to the types of claim page when the Yes radio button is selected', async () => {
     await request(mockApp({}))
       .post(pageUrl)

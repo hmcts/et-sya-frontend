@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK}`, () => {
 });
 
 describe(`POST ${PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should go to the claim steps page', async () => {
     await request(mockApp({}))
       .post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK)

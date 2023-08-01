@@ -28,7 +28,7 @@ describe(`GET ${PageUrls.WORK_ADDRESS}`, () => {
 
 describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   test('should load acas number page if yes is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(
       mockApp({
         userCase: {
@@ -50,7 +50,7 @@ describe(`on POST ${PageUrls.WORK_ADDRESS}`, () => {
   });
 
   test('should load place of work page if no is selected', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(
       mockApp({
         userCase: {

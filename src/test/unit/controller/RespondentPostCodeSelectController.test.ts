@@ -14,7 +14,7 @@ describe('RespondentPostCodeSelectController', () => {
   let addressTypes = {};
 
   beforeEach(() => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
     controller = new RespondentPostCodeSelectController();
     req = mockRequest({ session: { userCase: {} } });
     res = mockResponse;

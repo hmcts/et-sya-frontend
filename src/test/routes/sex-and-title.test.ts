@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.SEX_AND_TITLE}`, () => {
 });
 
 describe(`POST ${PageUrls.SEX_AND_TITLE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should go to the address details page', async () => {
     await request(mockApp({}))
       .post(PageUrls.SEX_AND_TITLE)

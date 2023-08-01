@@ -17,7 +17,7 @@ import { mockResponse } from '../mocks/mockResponse';
 
 const stepsToMakingYourClaimController = new StepsToMakingYourClaimController();
 const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
-jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
 // All page includes links there is no redirect page that is why did not check
 // response.redirect

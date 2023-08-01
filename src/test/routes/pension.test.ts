@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.PENSION}`, () => {
 });
 
 describe(`on POST ${PageUrls.PENSION}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test("should return the benefits page when 'yes' radio button is selected, a valid pension contribution is entered and 'save and continue' are selected", async () => {
     await request(
       mockApp({

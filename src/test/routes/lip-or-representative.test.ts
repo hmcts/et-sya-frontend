@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
 });
 
 describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test("should return the Single or Multiple claims page when (no) 'representing myself' is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)

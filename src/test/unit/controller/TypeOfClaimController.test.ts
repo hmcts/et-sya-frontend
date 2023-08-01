@@ -76,7 +76,7 @@ describe('Type Of Claim Controller', () => {
         ],
         otherClaim: 'Help',
       };
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
 
       const controller = new TypeOfClaimController();
 
@@ -100,7 +100,7 @@ describe('Type Of Claim Controller', () => {
       const body = {
         typeOfClaim: [TypesOfClaim.WHISTLE_BLOWING, TypesOfClaim.DISCRIMINATION],
       };
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
 
       const controller = new TypeOfClaimController();
 
@@ -175,7 +175,7 @@ describe('Type Of Claim Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
 
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
 
       jest.spyOn(res, 'redirect');
 
@@ -189,7 +189,7 @@ describe('Type Of Claim Controller', () => {
       const req = mockRequest({ body });
       const res = mockResponse();
 
-      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+      jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
 
       jest.spyOn(res, 'redirect');
 

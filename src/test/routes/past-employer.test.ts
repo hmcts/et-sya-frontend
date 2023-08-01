@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.PAST_EMPLOYER}`, () => {
 });
 
 describe(`on POST ${PageUrls.PAST_EMPLOYER}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
   test('should reload the current page when the Yes radio button is selected', async () => {
     await request(mockApp({}))

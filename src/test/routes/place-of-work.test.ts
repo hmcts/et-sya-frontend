@@ -17,7 +17,7 @@ describe(`GET ${PageUrls.PLACE_OF_WORK}`, () => {
 });
 
 describe(`on POST ${PageUrls.PLACE_OF_WORK}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should redirect to acas number page on submit', async () => {
     await request(mockApp({}))
       .post(pageUrl)

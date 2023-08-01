@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.CLAIM_TYPE_PAY}`, () => {
 
 describe(`on POST ${PageUrls.CLAIM_TYPE_PAY}`, () => {
   test('should navigate to the tell us what you want page when save and continue button is clicked', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(mockApp({}))
       .post(PageUrls.CLAIM_TYPE_PAY)
       .send({ claimTypePay: ['holidayPay'] })

@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.BENEFITS}`, () => {
 });
 
 describe(`on POST ${PageUrls.BENEFITS}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should navigate to the respondent name when either working or notice and save and continue button is clicked', async () => {
     await request(
       mockApp({

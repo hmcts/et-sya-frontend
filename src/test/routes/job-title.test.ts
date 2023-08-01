@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.JOB_TITLE}`, () => {
 });
 
 describe(`on POST ${PageUrls.JOB_TITLE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the start date page when a job title is entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.JOB_TITLE)

@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
 });
 
 describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test(
     'should navigate to the compensation page when TellUsWhatYouWant.COMPENSATION_ONLY selected ' +
       'and save and continue button is clicked',

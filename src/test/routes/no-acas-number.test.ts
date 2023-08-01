@@ -26,7 +26,7 @@ describe(`GET ${PageUrls.NO_ACAS_NUMBER}`, () => {
 });
 
 describe(`on POST ${PageUrls.NO_ACAS_NUMBER}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should load respondent details check page when an answer is selected', async () => {
     await request(mockApp({}))
       .post(pageUrl)

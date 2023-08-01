@@ -13,7 +13,7 @@ describe(`GET ${PageUrls.ADDRESS_DETAILS}`, () => {
 });
 
 describe(`on POST ${PageUrls.ADDRESS_DETAILS}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test('should return the telephone details page when valid address is entered', async () => {
     await request(mockApp({}))
       .post(PageUrls.ADDRESS_DETAILS)

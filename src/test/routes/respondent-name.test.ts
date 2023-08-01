@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.RESPONDENT_NAME}`, () => {
 
 describe(`on POST ${PageUrls.RESPONDENT_NAME}`, () => {
   test('should go to the respondent address page when name is given', async () => {
-    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
     await request(mockApp({}))
       .post(PageUrls.FIRST_RESPONDENT_NAME)
       .send({ respondentName: 'Globo Gym' })

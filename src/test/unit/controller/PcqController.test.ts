@@ -33,7 +33,7 @@ describe('PCQGetController', () => {
     const redirectMock = jest.fn();
     res.redirect = redirectMock;
 
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
     mockedAxios.get.mockImplementationOnce(() =>
       Promise.resolve({

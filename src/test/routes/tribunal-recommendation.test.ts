@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.TRIBUNAL_RECOMMENDATION}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test(
     'should navigate to PageUrls.CLAIM_DETAILS_CHECK when TypesOfClaim.WHISTLE_BLOWING is not selected and ' +
       'save and continue button is clicked',

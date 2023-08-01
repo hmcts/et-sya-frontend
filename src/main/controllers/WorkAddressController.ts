@@ -40,12 +40,18 @@ export default class WorkAddressController {
     this.form = new Form(<FormFields>this.workAddressFormContent.fields);
   }
 
-  public post = (req: AppRequest, res: Response): void => {
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
     const { saveForLater } = req.body;
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      handleUpdateDraftCase(req, logger);
+      const caseUpdated: boolean = await handleUpdateDraftCase(req, logger);
+      if (!caseUpdated) {
+        const caseUpdateError = { errorType: 'caseUpdateError', propertyName: 'caseHelper' };
+        errors.push(caseUpdateError);
+        handleErrors(req, res, errors);
+        return;
+      }
       const isRespondentAndWorkAddressSame = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES);
       let redirectUrl = isRespondentAndWorkAddressSame
         ? getRespondentRedirectUrl(req.params.respondentNumber, PageUrls.ACAS_CERT_NUM)

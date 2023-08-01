@@ -33,7 +33,7 @@ describe('Hearing Preferences Controller', () => {
   it('should add the videoHearings form value to the userCase', async () => {
     const body = { hearingPreferences: 'Phone' };
 
-    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
 
     const controller = new VideoHearingsController();
 

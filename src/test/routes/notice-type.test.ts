@@ -20,7 +20,7 @@ describe(`GET ${PageUrls.NOTICE_TYPE}`, () => {
 });
 
 describe(`on POST ${PageUrls.NOTICE_TYPE}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementationOnce(() => Promise.resolve(true));
   test('should navigate to the notice length page when weeks radio button is selected and save and continue button is clicked', async () => {
     await request(
       mockApp({

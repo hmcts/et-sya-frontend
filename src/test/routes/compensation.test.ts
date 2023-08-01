@@ -14,7 +14,7 @@ describe(`GET ${PageUrls.COMPENSATION}`, () => {
 });
 
 describe(`on POST ${PageUrls.COMPENSATION}`, () => {
-  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve());
+  jest.spyOn(helper, 'handleUpdateDraftCase').mockImplementation(() => Promise.resolve(true));
   test(
     'should navigate to claim details check page when ' +
       'TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION or TypesOfClaim.WHISTLE_BLOWING not selected',
