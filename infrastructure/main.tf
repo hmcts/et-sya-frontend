@@ -4,9 +4,10 @@ provider "azurerm" {
 
 locals {
   vaultName = "${var.product}-${var.env}"
+  tagEnv = var.env == "aat" ? "staging" : var.env
   tags = merge(var.common_tags,
     tomap({
-      "environment" = var.env,
+      "environment" = local.tagEnv,
       "managedBy" = "Employment Tribunals",
       "Team Contact" = "#et-devs",
       "application" = "employment-tribunals",
