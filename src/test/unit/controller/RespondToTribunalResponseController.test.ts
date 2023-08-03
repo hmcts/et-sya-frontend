@@ -1,3 +1,5 @@
+import url, { Url } from 'url';
+
 import RespondToTribunalResponseController from '../../../main/controllers/RespondToTribunalResponseController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
@@ -12,6 +14,11 @@ describe('Respond to tribunal response Controller', () => {
     'respond-to-application': {},
     common: {},
   };
+
+  const urlMock = {
+    host: 'http://localhost:3001',
+  } as unknown as Url;
+  jest.spyOn(url, 'parse').mockReturnValue(urlMock);
 
   it('should render the Respond to Tribunal response page for respondent application', async () => {
     const controller = new RespondToTribunalResponseController();

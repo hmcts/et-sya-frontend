@@ -19,7 +19,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, handleOpenRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
 
@@ -75,9 +75,10 @@ export default class RespondToTribunalResponseController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(
-        `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${getLanguageParam(req.url)}`
-      );
+      const redirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${getLanguageParam(
+        req.url
+      )}`;
+      return handleOpenRedirect(req, res, redirectUrl, logger);
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES

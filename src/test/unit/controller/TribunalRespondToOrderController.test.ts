@@ -1,3 +1,5 @@
+import url, { Url } from 'url';
+
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
@@ -12,6 +14,11 @@ describe('Tribunal Respond to Order Controller', () => {
     respondToTribunalOrder: {},
     common: {},
   };
+
+  const urlMock = {
+    host: 'http://localhost:3001',
+  } as unknown as Url;
+  jest.spyOn(url, 'parse').mockReturnValue(urlMock);
 
   it('should render the Respond to Order page', () => {
     const translationJsons = { ...respondJsonRaw, ...common };

@@ -1,4 +1,7 @@
-import { Response } from 'express';
+import * as UrlModule from 'url';
+
+import { Request, Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
@@ -55,4 +58,13 @@ export const getLanguageParam = (url: string): string => {
     return languages.WELSH_URL_PARAMETER;
   }
   return languages.ENGLISH_URL_PARAMETER;
+};
+
+export const handleOpenRedirect = (req: Request, res: Response, redirectUrl: string, logger: LoggerInstance): void => {
+  const parsedUrl = UrlModule.parse(redirectUrl);
+  if (parsedUrl.host !== req.headers.host) {
+    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
+    return res.redirect(PageUrls.HOME);
+  }
+  return res.redirect(redirectUrl);
 };

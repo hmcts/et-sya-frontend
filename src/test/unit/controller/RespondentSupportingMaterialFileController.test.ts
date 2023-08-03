@@ -1,3 +1,5 @@
+import url, { Url } from 'url';
+
 import RespondentSupportingMaterialFileController from '../../../main/controllers/RespondentSupportingMaterialFileController';
 import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
@@ -6,6 +8,11 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respondent supporting material file controller', () => {
   it('should remove uploaded file and refresh the page', () => {
+    const urlMock = {
+      host: 'http://localhost:3001',
+    } as unknown as Url;
+    jest.spyOn(url, 'parse').mockReturnValue(urlMock);
+
     const controller = new RespondentSupportingMaterialFileController();
     const req = mockRequest({});
     req.params.appId = '1';
