@@ -68,6 +68,7 @@ import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustm
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
 import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
+import RespondentAddInCheckAnswerController from '../../controllers/RespondentAddInCheckAnswerController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
@@ -76,6 +77,7 @@ import RespondentDetailsCheckController from '../../controllers/RespondentDetail
 import RespondentNameController from '../../controllers/RespondentNameController';
 import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
 import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
+import RespondentRemoveController from '../../controllers/RespondentRemoveController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
@@ -165,6 +167,8 @@ export class Routes {
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER, new NoAcasNumberController().post);
     app.get(PageUrls.RESPONDENT_DETAILS_CHECK, new RespondentDetailsCheckController().get);
     app.post(PageUrls.RESPONDENT_DETAILS_CHECK, new RespondentDetailsCheckController().post);
+    app.get(PageUrls.RESPONDENT_ADD_REDIRECT, new RespondentAddInCheckAnswerController().get);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_REMOVE, new RespondentRemoveController().get);
     app.get(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().get);
     app.post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().post);
     app.get(PageUrls.CONTACT_ACAS, new ContactAcasController().get);

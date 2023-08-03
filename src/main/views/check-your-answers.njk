@@ -62,10 +62,16 @@
   }) }}
 
   {% for respondent in respondents %}
-    {{ govukSummaryList({
-      rows: getRespondentSection(userCase, respondent, loop.index, translations)
-    }) }}
+    {{
+      govukSummaryList({
+        rows: getRespondentSection(userCase, respondent, loop.index, translations, languageParam, true)
+      })
+    }}
   {% endfor %}
+
+  {% if isAddRespondent %}
+    <p class="govuk-body"><a class="govuk-link" href="{{PageUrls.RESPONDENT_ADD_REDIRECT}}{{languageParam}}">{{translations.addAnotherRespondent}}</a></p>
+  {% endif %}
 
   <dl class="govuk-summary-list">
     <div class="govuk-summary-list__row">
