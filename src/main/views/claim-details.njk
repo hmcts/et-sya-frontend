@@ -132,7 +132,7 @@
 
       {% for respondent in userCase.respondents %}
         {{ govukSummaryList({
-          rows: getRespondentSection(userCase, respondent, loop.index, translations)
+          rows: getRespondentSection(userCase, respondent, loop.index, translations, '', false)
         }) }}
       {% endfor %}
 

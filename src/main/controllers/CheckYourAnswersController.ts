@@ -24,11 +24,16 @@ export default class CheckYourAnswersController {
       req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
     }
 
+    req.session.respondentRedirectCheckAnswer = undefined;
+
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
+
+    const newRespondentNum =
+      req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : undefined;
 
     setNumbersToRespondents(userCase.respondents);
 
@@ -48,6 +53,7 @@ export default class CheckYourAnswersController {
       getRespondentSection,
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
+      isAddRespondent: newRespondentNum <= 5,
     });
   }
 }
