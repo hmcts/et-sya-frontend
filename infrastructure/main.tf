@@ -4,6 +4,16 @@ provider "azurerm" {
 
 locals {
   vaultName = "${var.product}-${var.env}"
+  tags = merge(var.common_tags,
+    tomap({
+      "environment" = var.env,
+      "managedBy" = var.team_name,
+      "Team Contact" = var.team_contact,
+      "application" = "employment-tribunals",
+      "businessArea" = "CFT",
+      "builtFrom" = "et-sya"
+    })
+  )
 }
 
 module "et-frontend-session-storage" {
