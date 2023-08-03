@@ -7,8 +7,8 @@ locals {
   tags = merge(var.common_tags,
     tomap({
       "environment" = var.env,
-      "managedBy" = var.team_name,
-      "Team Contact" = var.team_contact,
+      "managedBy" = "Employment Tribunals",
+      "Team Contact" = "#et-devs",
       "application" = "employment-tribunals",
       "businessArea" = "CFT",
       "builtFrom" = "et-sya"
