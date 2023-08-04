@@ -63,8 +63,8 @@ export class Helmet {
     const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'"];
 
     if (app.locals.developmentMode) {
-      connectSrc.push('https://localhost:5062/login');
-      scriptSrc.push('https://localhost:5062/login');
+      connectSrc.push('https://localhost:5000/login');
+      scriptSrc.push('https://localhost:5000/login');
       scriptSrc.push("'unsafe-eval'");
     }
     app.use(
