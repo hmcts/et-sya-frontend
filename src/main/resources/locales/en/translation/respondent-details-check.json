@@ -12,5 +12,13 @@
     "hiddenErrorField": {
       "exceeded": "You can only add up to 5 respondents in this section. If you need to enter the details of more respondents you can do this in the 'Describe what happened to you' section of the service or include the details as part of an attachment. Please ensure you provide an acas certifcate number or valid reason for not having this for each additional respondent."
     }
-  }
+  },
+  "noAcasReason": "Why do you not have an Acas Number?",
+  "acasReason": {
+    "another": "Another person I’m making a claim with has an Acas early conciliation certificate number",
+    "no_power": "Acas doesn’t have the power to conciliate on some or all of my claim",
+    "employer": "My employer has already been in touch with Acas",
+    "unfair_dismissal": "The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
+  },
+  "removeRespondent": "Remove respondent"
 }

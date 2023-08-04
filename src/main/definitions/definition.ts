@@ -1,4 +1,5 @@
 import { CaseWithId } from './case';
+import { GenericTseApplicationType, TseAdminDecisionItem } from './complexTypes/genericTseApplicationTypeItem';
 export const enum TypesOfClaim {
   BREACH_OF_CONTRACT = 'breachOfContract',
   DISCRIMINATION = 'discrimination',
@@ -80,4 +81,32 @@ export interface DocumentDetail {
   originalDocumentName?: string;
   createdOn?: string;
   type?: string;
+}
+
+export interface RespondentApplicationDetails {
+  respondentApplicationHeader?: string;
+  respondToRespondentAppRedirectUrl?: string;
+  dueDate?: Date;
+  dueDateDayMonthYear?: string;
+  respondByDate?: string;
+  applicant?: string;
+  copyToOtherPartyYesOrNo?: string;
+  applicationType?: string;
+  number?: string;
+  applicationState?: string;
+  type?: string;
+  date?: string;
+}
+
+export interface DecisionAndApplicationDetails {
+  decisionOfApp?: TseAdminDecisionItem;
+  id?: string;
+  value?: GenericTseApplicationType;
+  linkValue?: string;
+  redirectUrl?: string;
+  statusColor?: string;
+  displayStatus?: string;
+  applicant?: string;
+  decisionBannerHeader?: string;
+  applicationType?: string;
 }

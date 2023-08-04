@@ -1,0 +1,38 @@
+{
+  "title": "Order a witness to attend",
+  "applicationType": "Order a witness to attend",
+  "applicationTitle": "Order a witness to attend to give evidence",
+  "content": [
+    "<p class=\"govuk-body\">You can ask the tribunal to order a witness to attend to give evidence.</p>",
+    "<p class=\"govuk-body\">The witness must be in Great Britain (England, Scotland and Wales). This does not include Northern Ireland.</p>",
+    "<p class=\"govuk-body\">The tribunal can limit the number of witnesses to be called to give evidence on a particular issue, especially if that issue is not central to the case.</p>",
+    "<p class=\"govuk-body\">You should realise that, if you call a witness to give evidence on your own behalf, you are not generally entitled to challenge or contradict what the witness says.</p>",
+    "<p class=\"govuk-body\">You may also be liable for the costs incurred by the witness’s attendance.</p>",
+    "<p class=\"govuk-body\">You should consider whether the evidence of this witness is likely to help your case.</p>",
+
+    "<p class=\"govuk-body-m govuk-!-font-weight-bold\">Details to include in your application:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the witness’s full name and address</li>",
+    "<li>why the attendance of this witness is necessary for a fair hearing. The tribunal needs to understand why the evidence is relevant, and why there is no alternative way of establishing the same points at the hearing without ordering a witness to attend</li>",
+    "<li>if you have asked this witness to attend voluntarily. If you have, tell us when you asked and what their response was</li>",
+    "<li>If you have not asked the witness to attend yet, explain why</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body\">If the order is granted, the witness will be ordered to attend on the first day of the hearing. If you want them to attend on another day or days, tell us:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>the dates apart from the first day of the hearing that you want the witness to attend</li>",
+    "<li>why their attendance is necessary on those dates</li>",
+    "</ul>",
+
+    "<p class=\"govuk-body\">If you want the witness to bring documents, tell us:</p>",
+
+    "<ul class=\"govuk-list govuk-list--bullet\">",
+    "<li>why these documents are relevant to the issues in this case</li>",
+    "<li>why an order to disclose the documents would not be enough</li>",
+    "<li>if you have already asked the witness or anyone else to provide these documents. If you have, tell us when you asked and what their response was</li>",
+    "<li>if you have not asked the witness to provide the documents yet, explain why</li>",
+    "</ul>"
+  ]
+}

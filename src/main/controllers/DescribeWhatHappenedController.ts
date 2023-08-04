@@ -77,12 +77,17 @@ export default class DescribeWhatHappenedController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.body.url) {
+      logger.warn('Potential bot activity detected from IP: ' + req.ip);
+      res.status(200).end('Thank you for your submission. You will be contacted in due course.');
+      return;
+    }
     if (req.fileTooLarge) {
-      req.fileTooLarge = false;
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'invalidFileSize' }];
       return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
     }
     req.session.errors = [];
+
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const claimSummaryError = getClaimSummaryError(
       formData,
@@ -90,26 +95,33 @@ export default class DescribeWhatHappenedController {
       req.session.userCase?.claimSummaryFile?.document_filename,
       logger
     );
-    if (!claimSummaryError) {
-      try {
-        const result = await handleUploadDocument(req, req.file, logger);
-        if (result?.data) {
-          req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
-        }
-      } catch (error) {
-        logger.info(error);
-        req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
-      } finally {
-        this.uploadedFileName = '';
 
-        const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
-        await handlePostLogic(req, res, this.form, logger, redirectUrl);
-      }
-    } else {
+    if (claimSummaryError) {
       req.session.errors.push(claimSummaryError);
       return res.redirect(PageUrls.DESCRIBE_WHAT_HAPPENED);
     }
+
+    if (req.file) {
+      await this.uploadFile(req);
+    }
+
+    this.uploadedFileName = '';
+
+    const redirectUrl = setUrlLanguageFromSessionLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT);
+    await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };
+
+  private async uploadFile(req: AppRequest) {
+    try {
+      const result = await handleUploadDocument(req, req.file, logger);
+      if (result?.data) {
+        req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
+      }
+    } catch (error) {
+      logger.info(error);
+      req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
+    }
+  }
 
   public get = (req: AppRequest, res: Response): void => {
     this.uploadedFileName = getUploadedFileName(req.session?.userCase?.claimSummaryFile?.document_filename);

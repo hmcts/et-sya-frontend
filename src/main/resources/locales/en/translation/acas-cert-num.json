@@ -13,8 +13,7 @@
     },
     "acasCertNum": {
       "required": "Tell us if you have an Acas early conciliation number for Respondent",
-      "invalidAcasNumber": "Enter Acas number in correct format. For example R123456/12/34",
-      "duplicateAcasNumber": "Enter a different Acas number. This has been already entered."
+      "invalidAcasNumber": "Enter Acas number in correct format. For example R123456/12/34"
     }
   }
 }

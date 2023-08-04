@@ -1,0 +1,30 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block beforeContent %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+            titleText: titleText
+        }) 
+      }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: button,
+        href: redirectUrl
+      }) }}
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

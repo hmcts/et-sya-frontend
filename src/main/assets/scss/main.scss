@@ -123,3 +123,7 @@ $govuk-blue: #1d70b8;
   border-top: 2px solid $govuk-blue;
   padding-top: 40px;
 }
+
+.no-text-transform {
+  text-transform: none;
+}

@@ -8,8 +8,11 @@ import { Form } from '../../components/form/form';
 import { DocumentUploadResponse } from '../../definitions/api/documentApiResponse';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
+import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, inScopeLocations } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
+import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
@@ -79,15 +82,85 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
   }
 };
 
-export const handleUpdateHubLinksStatuses = (req: AppRequest, logger: Logger): void => {
-  getCaseApi(req.session.user?.accessToken)
-    .updateHubLinksStatuses(req.session.userCase)
-    .then(() => {
-      logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
-    })
-    .catch(error => {
-      logger.error(error.message);
-    });
+export const handleUpdateHubLinksStatuses = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+    logger.info(`Updated hub links statuses for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitClaimantTse(req.session.userCase);
+    logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const respondToApplication = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).respondToApplication(req.session.userCase);
+    logger.info(`Responded to application for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const updateSendNotificationState = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).updateSendNotificationState(req.session.userCase);
+    logger.info(`Updated state for selectedRequestOrOrder: ${req.session.userCase.selectedRequestOrOrder.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const updateJudgmentNotificationState = async (
+  selectedJudgment: SendNotificationTypeItem,
+  req: AppRequest,
+  logger: Logger
+): Promise<void> => {
+  try {
+    selectedJudgment.value.notificationState = HubLinkStatus.VIEWED;
+    await getCaseApi(req.session.user?.accessToken).updateJudgmentNotificationState(
+      selectedJudgment,
+      req.session.userCase
+    );
+    logger.info(
+      `Updated state for selected judgment: ${
+        req.session.userCase.sendNotificationCollection[parseInt(selectedJudgment.value.number) - 1].id
+      }`
+    );
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const updateDecisionState = async (
+  appId: string,
+  selectedDecision: TseAdminDecisionItem,
+  req: AppRequest,
+  logger: Logger
+): Promise<void> => {
+  try {
+    selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
+    await getCaseApi(req.session.user?.accessToken).updateDecisionState(appId, selectedDecision, req.session.userCase);
+    logger.info(`Updated state for selected decision: ${selectedDecision.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
+export const addResponseSendNotification = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).addResponseSendNotification(req.session.userCase);
+    logger.info(`Responded to sendNotification: ${req.session.userCase.selectedRequestOrOrder.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
 };
 
 export const getSectionStatus = (
@@ -144,7 +217,7 @@ export const handleUploadDocument = async (
   try {
     const result: AxiosResponse<DocumentUploadResponse> = await getCaseApi(
       req.session.user?.accessToken
-    ).uploadDocument(file, 'ET_EnglandWales');
+    ).uploadDocument(file, req.session.userCase?.caseTypeId);
     logger.info(`Uploaded document to: ${result.data._links.self.href}`);
     return result;
   } catch (err) {
@@ -209,11 +282,24 @@ export const postLogic = async (
   }
 };
 
+export const clearTseFields = (userCase: CaseWithId): void => {
+  userCase.contactApplicationText = undefined;
+  userCase.contactApplicationFile = undefined;
+  userCase.copyToOtherPartyYesOrNo = undefined;
+  userCase.copyToOtherPartyText = undefined;
+  userCase.responseText = undefined;
+  userCase.hasSupportingMaterial = undefined;
+  userCase.supportingMaterialFile = undefined;
+  userCase.selectedRequestOrOrder = undefined;
+  userCase.isRespondingToRequestOrOrder = undefined;
+};
+
 function toTitleCase(str: string): string {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
   });
 }
+
 export const convertJsonArrayToTitleCase = (jsonArray: Record<string, string>[]): Record<string, string>[] => {
   return jsonArray.map(addressObj => {
     const newObj: Record<string, string> = {};
