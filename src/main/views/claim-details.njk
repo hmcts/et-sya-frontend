@@ -132,7 +132,7 @@
 
       {% for respondent in userCase.respondents %}
         {{ govukSummaryList({
-          rows: getRespondentSection(userCase, respondent, loop.index, translations)
+          rows: getRespondentSection(userCase, respondent, loop.index, translations, '', false)
         }) }}
       {% endfor %}
 
@@ -230,10 +230,6 @@
           </div>
         {% endif %}
       </dl>
-
-      <div class="govuk-body">
-        <p>{{ translations.linkToAmendTheClaim | safe }}</p>
-      </div>
 
       {% set contactContent %}
         {% include "./citizen-hub-sidebar.njk" %}
