@@ -23,5 +23,6 @@
     "no_power": "Acas doesn’t have the power to conciliate on some or all of my claim",
     "employer": "My employer has already been in touch with Acas",
     "unfair_dismissal": "The claim consists only of a complaint of unfair dismissal which contains an application for interim relief"
-  }
+  },
+  "removeRespondent": "Remove respondent"
 }
