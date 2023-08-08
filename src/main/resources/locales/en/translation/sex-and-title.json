@@ -11,7 +11,8 @@
     "preferredTitle": {
       "required": "Select a list option from the \"What is your preferred title\" dropdown",
       "lengthError": "Your preferred title must be a minimum of 2 characters",
-      "numberError": "Tell us your preferred title? This must not include numbers"
+      "numberError": "Tell us your preferred title? This must not include numbers",
+      "updateCaseError": "An error happened while updating the case. Go back to steps to make claim page by clicking here."
     }
   }
 }

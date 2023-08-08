@@ -18,7 +18,8 @@
       "invalidDate": "Rhaid i’r dyddiad geni fod yn ddyddiad go iawn.",
       "invalidDateInFuture": "Rhaid i’r dyddiad fod yn y gorffennol.",
       "invalidDateTooFarInPast": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol.",
-      "invalidDateTooRecent": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol."
+      "invalidDateTooRecent": "Rhaid i’r dyddiad fod rhwng 10 mlynedd a 100 mlynedd yn y gorffennol.",
+      "updateCaseError": "Digwyddodd gwall wrth ddiweddaru'r achos. Ewch yn ôl i'r dudalen camau i wneud cais trwy glicio yma."
     }
   }
 }

@@ -21,6 +21,7 @@ const dob_date: DateFormFields = {
 };
 
 const logger = getLogger('DobController');
+let caseUpdateError = 'false';
 
 export default class DobController {
   private readonly form: Form;
@@ -36,6 +37,7 @@ export default class DobController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     await handlePostLogic(req, res, this.form, logger, PageUrls.SEX_AND_TITLE);
+    caseUpdateError = 'true';
   };
 
   public get = (req: AppRequest, res: Response): void => {
@@ -64,6 +66,7 @@ export default class DobController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.DATE_OF_BIRTH, {
       ...content,
+      caseUpdateError,
     });
   };
 }

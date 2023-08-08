@@ -15,6 +15,7 @@ export interface AppSession extends Session {
   returnUrl: string;
   lang: string | undefined;
   errors: FormError[] | undefined;
+  updateCaseError?: string;
   userCase: CaseWithId;
   submittedCase?: CaseWithId;
   user: UserDetails;

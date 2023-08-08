@@ -45,7 +45,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
   req.session.userCase.typeOfClaim = JSON.parse(userDataMap.get(CaseDataCacheKey.TYPES_OF_CLAIM));
 };
 
-export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
+export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<boolean> => {
   if (!req.session.errors?.length) {
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
@@ -76,8 +76,10 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
       req.session.save();
+      return true;
     } catch (error) {
       logger.error(error.message);
+      return false;
     }
   }
 };
@@ -269,7 +271,13 @@ export const postLogic = async (
   const { saveForLater } = req.body;
   if (errors.length === 0) {
     req.session.errors = [];
-    await handleUpdateDraftCase(req, logger);
+    const caseUpdated: boolean = await handleUpdateDraftCase(req, logger);
+    if (!caseUpdated) {
+      req.session.userCase.id = 'update case error';
+      //const updateCaseError = { errorType: 'error', propertyName: 'updateCase' };
+      //req.session.returnUrl
+      return;
+    }
     if (saveForLater) {
       redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
       return res.redirect(redirectUrl);

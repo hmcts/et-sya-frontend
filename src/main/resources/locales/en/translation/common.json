@@ -81,6 +81,7 @@
   "manualAddress": "I live outside the UK",
   "respondentManualAddress": "The respondent address is outside the UK",
   "workManualAddress": "My work address is outside the UK",
+  "updateCaseError": "An error happened while updating the case. Go back to steps to make claim page by clicking here.",
   "errors": {
     "addressEnterPostcode": {
       "invalid": "Enter a valid postcode. For example, SW1 1AA",
@@ -102,6 +103,9 @@
     },
     "respondentAddressTypes": {
       "notSelected": "Select an address"
+    },
+    "updateCase": {
+      "error": "An error happened while updating the case. Go back to steps to make claim page by clicking here."
     }
   },
   "selectAddress": "Select an address",

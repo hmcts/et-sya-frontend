@@ -1,14 +1,26 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block content %}
-{{ 
+
+  {{ govukErrorSummary({
+    titleText: errorSummaryTitle,
+    errorList: [
+      {
+        text: app.userCase.id,
+        href: '/steps-to-making-your-claim'
+      }
+    ]
+  }) if app.userCase.id
+ }}
+
+{{
   govukErrorSummary({
     titleText: errorSummaryTitle,
     errorList: getErrors(form.fields)
   }) if getErrors(form.fields).length > 0
 }}
 
-{{ 
+{{
   govukErrorSummary({
     titleText: errorSummaryTitle,
     errorList: [

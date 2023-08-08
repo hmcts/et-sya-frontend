@@ -81,6 +81,7 @@
   "workAddressPageHeader": "Beth yw cod post y lle yr oeddech yn gweithio neu’r lle yr ydych yn gweithio?",
   "workAddressPageText1": "Rydym angen hwn i benderfynu pa swyddfa Tribiwnlys Cyflogaeth fydd yn delio â’ch hawliad. Os oeddech yn gweithio o adref, rhowch god post eich cartref.",
   "workAddressPageText2": "Os ydych yn gwneud hawliad yn erbyn rhywun nad ydych wedi gweithio iddynt, rhowch god post ble maent wedi’u lleoli.",
+  "updateCaseError": "Digwyddodd gwall wrth ddiweddaru'r achos. Ewch yn ôl i'r dudalen camau i wneud cais trwy glicio yma.",
   "errors": {
     "addressEnterPostcode": {
       "required": "Rhowch god post. Er enghraifft, SW1 1AA",
