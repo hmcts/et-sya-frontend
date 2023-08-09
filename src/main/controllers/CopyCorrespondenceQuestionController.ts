@@ -90,7 +90,7 @@ export default class CopyCorrespondenceQuestionController {
     req.session.errors = [];
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
-      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
+      return res.redirect(PageUrls.COPY_CORRESPONDENCE_QUESTION + languageParam);
     }
     let redirectPage = '';
     if (req.session.contactType === Rule92Types.CONTACT) {
