@@ -3,12 +3,12 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
+import { getCaptionText, getTodayPlus7DaysStrings } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -90,31 +90,36 @@ export default class CopyCorrespondenceQuestionController {
     req.session.errors = [];
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
-      return res.redirect(PageUrls.COPY_CORRESPONDENCE_QUESTION + languageParam);
+      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
     }
-    return res.redirect(PageUrls.CHECK_YOUR_ANSWERS_RULE92 + languageParam);
+    let redirectPage = '';
+    if (req.session.contactType === Rule92Types.CONTACT) {
+      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
+    } else if (req.session.contactType === Rule92Types.RESPOND) {
+      redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+    } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
+      redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
+    }
+    return res.redirect(redirectPage);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
+    };
+
     const content = getPageContent(req, this.CopyCorrespondenceQuestionContent, [
       TranslationKeys.COMMON,
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COPY_CORRESPONDENCE_QUESTION,
     ]);
-    const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
+
     res.render(TranslationKeys.COPY_CORRESPONDENCE_QUESTION, {
       ...content,
-      cancelLink: redirectUrl,
-      appDatePlusSeven: getTodayPlus7DaysStrings(req),
+      cancelLink: setUrlLanguage(req, PageUrls.CHECKLIST),
+      applicationType: getCaptionText(req, translations),
+      appDatePlusSeven: getTodayPlus7DaysStrings(),
     });
   };
 }
-
-const getTodayPlus7DaysStrings = (req: AppRequest): string => {
-  const applicationDate = new Date();
-  applicationDate.setDate(applicationDate.getDate() + 7);
-  return applicationDate.toLocaleDateString(retrieveCurrentLocale(req?.url), {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-};

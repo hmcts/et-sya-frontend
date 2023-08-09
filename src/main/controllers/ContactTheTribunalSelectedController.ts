@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/CopyToOtherPartyHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -108,7 +109,7 @@ export default class ContactTheTribunalSelectedController {
 
     const redirectPage = applicationTypes.claimant.c.includes(userCase.contactApplicationType)
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
-      : PageUrls.COPY_TO_OTHER_PARTY;
+      : copyToOtherPartyRedirectUrl(req.session.userCase);
 
     return res.redirect(redirectPage);
   };
