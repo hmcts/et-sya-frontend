@@ -8622,7 +8622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-in-the-middle@npm:1.3.5":
+"import-in-the-middle@npm:1.4.2":
   version: 1.3.5
   resolution: "import-in-the-middle@npm:1.4.2"
   dependencies:
