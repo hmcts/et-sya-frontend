@@ -402,6 +402,10 @@ export const mapRespondents = (respondents: RespondentApiModel[]): Respondent[] 
   return respondents.map(respondent => {
     return {
       respondentName: respondent.value?.respondent_name,
+      respondentType: respondent.value?.respondentType,
+      respondentFirstName: respondent.value?.respondentFirstName,
+      respondentLastName: respondent.value?.respondentLastName,
+      respondentOrganisation: respondent.value?.respondentOrganisation,
       respondentAddress1: respondent.value?.respondent_address?.AddressLine1,
       respondentAddress2: respondent.value?.respondent_address?.AddressLine2,
       respondentAddressTown: respondent.value?.respondent_address?.PostTown,
@@ -433,6 +437,10 @@ export const setRespondentApiFormat = (respondents: Respondent[]): RespondentReq
     return {
       value: {
         respondent_name: respondent.respondentName,
+        respondentType: respondent.respondentType,
+        respondentFirstName: respondent.respondentFirstName,
+        respondentLastName: respondent.respondentLastName,
+        respondentOrganisation: respondent.respondentOrganisation,
         respondent_address: {
           AddressLine1: respondent.respondentAddress1,
           AddressLine2: respondent.respondentAddress2,

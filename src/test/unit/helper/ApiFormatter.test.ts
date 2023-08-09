@@ -141,6 +141,8 @@ describe('Should return data in api format', () => {
       respondents: [
         {
           respondentName: 'Globo Corp',
+          respondentType: 'Organisation',
+          respondentOrganisation: 'Globo Corp',
           acasCert: YesOrNo.YES,
           acasCertNum: 'R111111111111',
           noAcasReason: NoAcasNumberReason.ANOTHER,

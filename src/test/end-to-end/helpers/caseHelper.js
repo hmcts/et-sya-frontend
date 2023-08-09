@@ -26,8 +26,8 @@ async function noLongerWorkingForRespondentJourney(I, noticePeriod, newJob, noti
   await I.noLongerWorkingJourney(noticePeriod, newJob, noticePeriodLength);
 }
 
-async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas) {
-  await I.respondentDetailsJourney(workAddress, doYouHaveAcas);
+async function enterRespondentDetailsJourney(I, workAddress, doYouHaveAcas,individual) {
+  await I.respondentDetailsJourney(workAddress, doYouHaveAcas,individual);
 }
 
 async function stepsToMakingYourClaim(I, clickCheckYourAnswers = false) {
