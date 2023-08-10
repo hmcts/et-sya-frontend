@@ -46,11 +46,16 @@ export default class ApplicationDetailsController {
     const accessToken = req.session.user?.accessToken;
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
+    if (!decisionContent) {
+      logger.error("Couldn't get decision content. Ending journey here")
+      return
+    }
+
     if (document) {
       try {
         await getDocumentAdditionalInformation(document, accessToken);
       } catch (err) {
-        logger.error(err.message);
+        logger.error(`HERE (${res.closed}): ${err.message}`);
         return res.redirect('/not-found');
       }
     }
