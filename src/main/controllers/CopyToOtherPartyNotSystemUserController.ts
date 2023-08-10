@@ -8,16 +8,15 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCaptionText, getTodayPlus7DaysStrings } from './helpers/CopyToOtherPartyHelper';
+import { getCancelLink, getCaptionText, getTodayPlus7DaysStrings } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-export default class CopyCorrespondenceQuestionController {
+export default class CopyToOtherPartyNotSystemUserController {
   private readonly form: Form;
 
-  private readonly CopyCorrespondenceQuestionContent: FormContent = {
+  private readonly CopyToOtherPartyNotSystemUserContent: FormContent = {
     fields: {
       copyToOtherPartyYesOrNo: {
         classes: 'govuk-radios',
@@ -76,7 +75,7 @@ export default class CopyCorrespondenceQuestionController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.CopyCorrespondenceQuestionContent.fields);
+    this.form = new Form(<FormFields>this.CopyToOtherPartyNotSystemUserContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -90,7 +89,7 @@ export default class CopyCorrespondenceQuestionController {
     req.session.errors = [];
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
-      return res.redirect(PageUrls.COPY_CORRESPONDENCE_QUESTION + languageParam);
+      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languageParam);
     }
     let redirectPage = '';
     if (req.session.contactType === Rule92Types.CONTACT) {
@@ -104,22 +103,21 @@ export default class CopyCorrespondenceQuestionController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const translations: AnyRecord = {
+    const applicationTypeTranslations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
     };
 
-    const content = getPageContent(req, this.CopyCorrespondenceQuestionContent, [
+    const content = getPageContent(req, this.CopyToOtherPartyNotSystemUserContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.COPY_CORRESPONDENCE_QUESTION,
+      TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
     ]);
 
-    res.render(TranslationKeys.COPY_CORRESPONDENCE_QUESTION, {
+    res.render(TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, {
       ...content,
-      cancelLink: setUrlLanguage(req, PageUrls.CHECKLIST),
-      applicationType: getCaptionText(req, translations),
+      applicationType: getCaptionText(req, applicationTypeTranslations),
       appDatePlusSeven: getTodayPlus7DaysStrings(),
+      cancelLink: getCancelLink(req),
     });
   };
 }

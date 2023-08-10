@@ -38,7 +38,7 @@ import ContactTheTribunalFileController from '../../controllers/ContactTheTribun
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopiedCorrespondenceConfirmationController from '../../controllers/CopiedCorrespondenceConfirmationController';
-import CopyCorrespondenceQuestionController from '../../controllers/CopyCorrespondenceQuestionController';
+import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
@@ -320,7 +320,8 @@ export class Routes {
       new RespondentPostCodeSelectController().post
     );
     // R92 urls
-    app.get(PageUrls.COPY_CORRESPONDENCE_QUESTION, new CopyCorrespondenceQuestionController().get);
+    app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);
+    app.post(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().post);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
     app.get(PageUrls.CHECK_YOUR_ANSWERS_RULE92, new CheckYourAnswersRule92Controller().get);

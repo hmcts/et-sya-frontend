@@ -13,7 +13,7 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
   PageUrls.ACCESSIBILITY_STATEMENT,
-  PageUrls.COPY_CORRESPONDENCE_QUESTION, //TODO revert this once other pages are in
+  PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, //TODO revert this once other pages are in
   PageUrls.STORED_APPLICATION_CONFIRMATION, // Same as above
   PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, // Same as above
   PageUrls.CHECK_YOUR_ANSWERS_RULE92, // Same as above

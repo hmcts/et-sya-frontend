@@ -5,6 +5,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getDueDate } from '../../helper/ApiFormatter';
 
 import { checkIfRespondentIsSystemUser } from './CitizenHubHelper';
+import { getLanguageParam } from './RouterHelpers';
 
 export const getTodayPlus7DaysStrings = (): string => {
   const today = new Date();
@@ -13,7 +14,7 @@ export const getTodayPlus7DaysStrings = (): string => {
 
 export const copyToOtherPartyRedirectUrl = (userCase: CaseWithId): string => {
   const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
-  return isRespondentSystemUser ? PageUrls.COPY_TO_OTHER_PARTY : PageUrls.COPY_CORRESPONDENCE_QUESTION;
+  return isRespondentSystemUser ? PageUrls.COPY_TO_OTHER_PARTY : PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;
 };
 
 export const getCaptionText = (req: AppRequest, translations: AnyRecord): string => {
@@ -29,4 +30,9 @@ export const getCaptionText = (req: AppRequest, translations: AnyRecord): string
     return translations.respondToTribunal;
   }
   return '';
+};
+
+export const getCancelLink = (req: AppRequest): string => {
+  const languageParam = getLanguageParam(req.url);
+  return `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
 };

@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCaptionText } from './helpers/CopyToOtherPartyHelper';
+import { getCancelLink, getCaptionText } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -95,12 +95,10 @@ export default class CopyToOtherPartyController {
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
-    const languageParam = getLanguageParam(req.url);
-    const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
       copyToOtherPartyYesOrNo: getCaptionText(req, translations),
-      cancelLink: redirectUrl,
+      cancelLink: getCancelLink(req),
     });
   };
 }

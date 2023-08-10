@@ -56,7 +56,7 @@ describe('copyToOtherPartyRedirectUrl', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should return /copy-correspondence-question', () => {
+  it('should return /copy-to-other-party-not-system-user', () => {
     const userCase: CaseWithId = {
       id: '1',
       state: CaseState.SUBMITTED,
@@ -64,7 +64,7 @@ describe('copyToOtherPartyRedirectUrl', () => {
       lastModified: date,
       respondents: undefined,
     };
-    const expected = PageUrls.COPY_CORRESPONDENCE_QUESTION;
+    const expected = PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;
     const actual = copyToOtherPartyRedirectUrl(userCase);
     expect(actual).toEqual(expected);
   });

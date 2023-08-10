@@ -116,7 +116,7 @@ export const TranslationKeys = {
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
-  COPY_CORRESPONDENCE_QUESTION: 'copy-correspondence-question',
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: 'copy-to-other-party-not-system-user',
   COPIED_CORRESPONDENCE_CONFIRMATION: 'copied-correspondence-confirmation',
   CHECK_YOUR_ANSWERS_RULE92: 'check-your-answers-rule92',
   STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
@@ -234,7 +234,7 @@ export const PageUrls = {
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
   // Rule 92 paths
-  COPY_CORRESPONDENCE_QUESTION: '/copy-correspondence-question',
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
   COPIED_CORRESPONDENCE_CONFIRMATION: '/copied-correspondence-confirmation',
   CHECK_YOUR_ANSWERS_RULE92: '/check-your-answers-rule92',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
