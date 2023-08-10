@@ -16,8 +16,8 @@ def component = "sya"
 
 def secrets = [
     'et-aat': [
-        secret('test-username', 'TEST_CASE_USERNAME'),
-        secret('test-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {

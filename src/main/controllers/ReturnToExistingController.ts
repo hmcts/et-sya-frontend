@@ -1,10 +1,11 @@
+import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -51,7 +52,7 @@ export default class ReturnToExistingController {
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? LegacyUrls.ET1_BASE
+      ? `${config.get('services.et1Legacy.url')}`
       : PageUrls.CLAIMANT_APPLICATIONS;
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };
