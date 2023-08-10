@@ -118,7 +118,7 @@ import CitizenHubController from '../../controllers/citizen-hub/CitizenHubContro
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import CheckYourAnswersRule92Controller from "../../controllers/CheckYourAnswersRule92Controller";
+import ContactTheTribunalCYANotSystemUserController from "../../controllers/ContactTheTribunalCYANotSystemUserController";
 
 const handleUploads = multer({
   limits: {
@@ -328,7 +328,7 @@ export class Routes {
     app.post(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().post);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
-    app.get(PageUrls.CHECK_YOUR_ANSWERS_RULE92, new CheckYourAnswersRule92Controller().get);
+    app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

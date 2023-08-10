@@ -92,12 +92,16 @@ export default class CopyToOtherPartyNotSystemUserController {
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languageParam);
     }
     let redirectPage = '';
-    if (req.session.contactType === Rule92Types.CONTACT) {
-      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
-    } else if (req.session.contactType === Rule92Types.RESPOND) {
-      redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
-    } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
-      redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
+    if (req.body.copyToOtherPartyYesOrNo === YesOrNo.NO) {
+      if (req.session.contactType === Rule92Types.CONTACT) {
+        redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
+      } else if (req.session.contactType === Rule92Types.RESPOND) {
+        redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+      } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
+        redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
+      }
+    } else {
+      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER + languageParam;
     }
     return res.redirect(redirectPage);
   };

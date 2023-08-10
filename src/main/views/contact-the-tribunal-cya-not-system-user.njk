@@ -1,0 +1,40 @@
+{% extends "template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row ">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">{{ title }}</h1>
+
+      {{ govukSummaryList({
+        rows: cyaContent
+      }) }}
+
+      <p class="govuk-body">{{youCannotMakeFurtherChanges}}</p>
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: storeApplication,
+          type: submit,
+          classes: 'govuk-!-margin-right-6',
+          href: storedUrl,
+          preventDoubleClick: true,
+          attributes: {
+            id: 'main-form-submit'
+          }
+        }) }}
+        <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

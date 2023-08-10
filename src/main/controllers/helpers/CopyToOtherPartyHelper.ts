@@ -5,7 +5,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getDueDate } from '../../helper/ApiFormatter';
 
 import { checkIfRespondentIsSystemUser } from './CitizenHubHelper';
-import { getLanguageParam } from './RouterHelpers';
+import { setUrlLanguage } from './LanguageHelper';
 
 export const getTodayPlus7DaysStrings = (): string => {
   const today = new Date();
@@ -33,6 +33,6 @@ export const getCaptionText = (req: AppRequest, translations: AnyRecord): string
 };
 
 export const getCancelLink = (req: AppRequest): string => {
-  const languageParam = getLanguageParam(req.url);
-  return `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
+  const userCase = req.session?.userCase;
+  return setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
 };
