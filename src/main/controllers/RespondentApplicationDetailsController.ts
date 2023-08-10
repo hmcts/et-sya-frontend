@@ -61,7 +61,7 @@ export default class RespondentApplicationDetailsController {
       res
     );
 
-    if (!supportingMaterialDownloadLink) {
+    if (supportingMaterialDownloadLink === undefined) {
       logger.error(`supportingMaterialDownloadLink errored and redirected to not-found - ending prematurely`)
       return;
     }

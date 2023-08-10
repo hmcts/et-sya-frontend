@@ -165,7 +165,7 @@ export const getDecisionContent = async (
   res: Response
 ): Promise<any[] | void> => {
   const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
-  let decisionContent = undefined;
+  let decisionContent = [] as any[];
   const decisionDocDownload: string | any[] = getDecisionDocDownload(selectedAppAdminDecision);
 
   const decisionDocDownloadLink = [];
