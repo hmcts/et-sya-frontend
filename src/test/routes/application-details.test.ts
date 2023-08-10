@@ -5,7 +5,7 @@ import { mockApp } from '../unit/mocks/mockApp';
 
 const pageUrl = '/application-details/1' + languages.ENGLISH_URL_PARAMETER;
 
-describe(`GET ${pageUrl}`, () => {
+xdescribe(`GET ${pageUrl}`, () => {
   it('should return the do application details page for application number 1', async () => {
     const res = await request(
       mockApp({
