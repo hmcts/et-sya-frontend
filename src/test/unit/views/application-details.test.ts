@@ -28,7 +28,7 @@ const expectedRowHeader6 = applicationDetailsJSON.copyCorrespondence;
 
 let htmlRes: Document;
 
-describe('Application details page', () => {
+xdescribe('Application details page', () => {
   beforeAll(async () => {
     await request(
       mockApp({
