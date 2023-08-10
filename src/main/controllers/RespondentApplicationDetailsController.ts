@@ -45,6 +45,11 @@ export default class RespondentApplicationDetailsController {
 
     const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
 
+    if (!decisionContent) {
+      logger.error("Couldn't get decision content. Ending journey here")
+      return
+    }
+
     const header = translations.applicationTo + translations[selectedApplication.value.type];
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
@@ -55,6 +60,11 @@ export default class RespondentApplicationDetailsController {
       accessToken,
       res
     );
+
+    if (!supportingMaterialDownloadLink) {
+      logger.error(`supportingMaterialDownloadLink errored and redirected to not-found - ending prematurely`)
+      return;
+    }
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
     const content = getPageContent(req, <FormContent>{}, [
