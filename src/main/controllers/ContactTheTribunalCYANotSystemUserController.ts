@@ -1,14 +1,14 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
+import { getCancelLink } from './helpers/CopyToOtherPartyHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ContactTheTribunalCYANotSystemUserController {
@@ -33,8 +33,8 @@ export default class ContactTheTribunalCYANotSystemUserController {
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, {
       ...content,
       ...translations,
-      cancelPage: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
-      storedUrl: setUrlLanguage(req, PageUrls.STORED_APPLICATION_CONFIRMATION),
+      cancelPage: getCancelLink(req),
+      storedUrl: InterceptPaths.STORE_NOT_SYSTEM_USER_CYA + getLanguageParam(req.url),
       cyaContent: getCyaContent(
         userCase,
         translations,

@@ -253,6 +253,7 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
+  STORE_NOT_SYSTEM_USER_CYA: '/store-not-system-user-cya',
 } as const;
 
 export const ErrorPages = {

@@ -33,13 +33,14 @@ import ClaimantApplicationsController from '../../controllers/ClaimantApplicatio
 import CompensationController from '../../controllers/CompensationController';
 import ContactAcasController from '../../controllers/ContactAcasController';
 import ContactTheTribunalCYAController from '../../controllers/ContactTheTribunalCYAController';
+import ContactTheTribunalCYANotSystemUserController from '../../controllers/ContactTheTribunalCYANotSystemUserController';
 import ContactTheTribunalController from '../../controllers/ContactTheTribunalController';
 import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
 import CopiedCorrespondenceConfirmationController from '../../controllers/CopiedCorrespondenceConfirmationController';
-import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
+import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
 import DobController from '../../controllers/DobController';
 import DownloadClaimController from '../../controllers/DownloadClaimController';
@@ -92,6 +93,7 @@ import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
+import StoreNotSystemUserController from "../../controllers/StoreNotSystemUserController";
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -118,7 +120,6 @@ import CitizenHubController from '../../controllers/citizen-hub/CitizenHubContro
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
-import ContactTheTribunalCYANotSystemUserController from "../../controllers/ContactTheTribunalCYANotSystemUserController";
 
 const handleUploads = multer({
   limits: {
@@ -329,6 +330,7 @@ export class Routes {
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
+    app.get(InterceptPaths.STORE_NOT_SYSTEM_USER_CYA, new StoreNotSystemUserController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
