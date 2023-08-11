@@ -3,7 +3,6 @@
     "outDir": "./dist/",
     "module": "commonjs",
     "esModuleInterop": true,
-    "incremental": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2020",
