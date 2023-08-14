@@ -1,5 +1,4 @@
 /* eslint-disable jest/no-done-callback,jest/expect-expect */
-import { fail } from 'assert';
 
 import { PageUrls } from '../../main/definitions/constants';
 
