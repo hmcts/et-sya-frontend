@@ -9,6 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
+import { copyToOtherPartyRedirectUrl } from "./helpers/CopyToOtherPartyHelper";
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -76,7 +77,7 @@ export default class TribunalRespondToOrderController {
       ? res.redirect(
           PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
         )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+      : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

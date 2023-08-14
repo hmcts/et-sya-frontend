@@ -11,6 +11,7 @@ import { getLogger } from '../logger';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
+import { copyToOtherPartyRedirectUrl } from "./helpers/CopyToOtherPartyHelper";
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -84,7 +85,7 @@ export default class RespondToTribunalResponseController {
       ? res.redirect(
           PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
         )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+      : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

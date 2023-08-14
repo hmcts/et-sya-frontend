@@ -100,6 +100,15 @@ export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promis
   }
 };
 
+export const storeClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).storeClaimantTse(req.session.userCase);
+    logger.info(`Stored claimant tse for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const respondToApplication = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
     await getCaseApi(req.session.user?.accessToken).respondToApplication(req.session.userCase);

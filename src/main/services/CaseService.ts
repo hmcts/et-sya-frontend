@@ -114,6 +114,26 @@ export class CaseApi {
     }
   };
 
+  storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+          storedPending: true,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error Storing claimant tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {

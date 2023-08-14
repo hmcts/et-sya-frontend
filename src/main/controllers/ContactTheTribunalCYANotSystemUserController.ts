@@ -34,7 +34,7 @@ export default class ContactTheTribunalCYANotSystemUserController {
       ...content,
       ...translations,
       cancelPage: getCancelLink(req),
-      storedUrl: InterceptPaths.STORE_NOT_SYSTEM_USER_CYA + getLanguageParam(req.url),
+      storedUrl: InterceptPaths.STORE_TRIBUNAL_CYA + getLanguageParam(req.url),
       cyaContent: getCyaContent(
         userCase,
         translations,

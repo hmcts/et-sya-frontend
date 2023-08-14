@@ -182,6 +182,7 @@ export interface Case {
   contactApplicationFile?: Document;
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
+  storedPending?: YesOrNo;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   responseText?: string;

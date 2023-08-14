@@ -92,8 +92,8 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import StoreTseController from '../../controllers/StoreTseController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
-import StoreNotSystemUserController from "../../controllers/StoreNotSystemUserController";
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -330,7 +330,7 @@ export class Routes {
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
-    app.get(InterceptPaths.STORE_NOT_SYSTEM_USER_CYA, new StoreNotSystemUserController().get);
+    app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

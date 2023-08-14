@@ -2,6 +2,7 @@ import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
+import { copyToOtherPartyRedirectUrl } from "./CopyToOtherPartyHelper";
 
 export const getCyaContent = (
   userCase: CaseWithId,
@@ -79,7 +80,7 @@ export const getCyaContent = (
             actions: {
               items: [
                 {
-                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+                  href: copyToOtherPartyRedirectUrl(userCase) + languageParam,
                   text: CHANGE,
                   visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
                 },
@@ -100,7 +101,7 @@ export const getCyaContent = (
                   actions: {
                     items: [
                       {
-                        href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+                        href: copyToOtherPartyRedirectUrl(userCase) + languageParam,
                         text: CHANGE,
                         visuallyHiddenText: translations.copyToOtherPartyText,
                       },

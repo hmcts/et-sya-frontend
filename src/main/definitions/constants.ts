@@ -253,7 +253,7 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
-  STORE_NOT_SYSTEM_USER_CYA: '/store-not-system-user-cya',
+  STORE_TRIBUNAL_CYA: '/store-tribunal-cya',
 } as const;
 
 export const ErrorPages = {
@@ -285,6 +285,7 @@ export const JavaApiUrls = {
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  STORE_CLAIMANT_APPLICATION: 'cases/store-claimant-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
