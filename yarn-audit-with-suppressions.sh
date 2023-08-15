@@ -33,7 +33,7 @@ command -v jq >/dev/null 2>&1 || { echo >&2 "jq is required but it's not install
 
 # Temporary files cleanup function
 cleanup() {
-rm -f new_vulnerabilities unneeded_suppressions sorted-yarn-audit-issues sorted-yarn-audit-known-issues active_suppressions unused_suppressions
+rm -f new_vulnerabilities unneeded_suppressions yarn-audit-result sorted-yarn-audit-issues sorted-yarn-audit-known-issues active_suppressions unused_suppressions
 
 }
 
