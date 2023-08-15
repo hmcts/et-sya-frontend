@@ -23,8 +23,7 @@ export const mockRequest = ({
     t: () => t,
   } as unknown as AppRequest;
 
-  // @ts-ignore
-  req.t = jest.fn().mockReturnValue(req);
+  (req.t as any) = jest.fn().mockReturnValue(req);
   req.body = body;
   req.file = file;
   req.params = {
@@ -72,8 +71,7 @@ export const mockRequestEmpty = ({
     t: () => t,
   } as unknown as AppRequest;
 
-  // @ts-ignore
-  req.t = jest.fn().mockReturnValue(req);
+  (req.t as any) = jest.fn().mockReturnValue(req);
   req.body = body;
   req.file = file;
   req.params = {
@@ -112,8 +110,7 @@ export const mockRequestWithTranslation = (
     t: () => t,
   } as unknown as AppRequest;
 
-  // @ts-ignore
-  req.t = jest.fn().mockReturnValue(translations);
+  (req.t as any) = jest.fn().mockReturnValue(translations);
   req.body = body;
   req.params = {
     respondentNumber: '1',
@@ -169,8 +166,7 @@ export const mockRequestWithSaveException = ({
     t: () => t,
   } as unknown as AppRequest;
 
-  // @ts-ignore
-  req.t = jest.fn().mockReturnValue(req);
+  (req.t as any) = jest.fn().mockReturnValue(req);
   req.body = body;
   req.params = {
     respondentNumber: '1',
