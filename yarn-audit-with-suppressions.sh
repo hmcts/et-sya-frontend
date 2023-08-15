@@ -42,7 +42,7 @@ print_guidance() {
 cat <<EOF
   Security vulnerabilities were found that were not ignored.
   You can still push your code if desired using the following:
-  `git push --no-verify`
+          git push --no-verify
   However, if nobody has made a start on fixing the vulnerability, you might as well have a bash now!
 EOF
 
