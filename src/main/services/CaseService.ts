@@ -116,7 +116,7 @@ export class CaseApi {
 
   storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
-      return await this.axios.put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
+      return await this.axios.put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
@@ -130,7 +130,7 @@ export class CaseApi {
         },
       });
     } catch (error) {
-      throw new Error('Error Storing claimant tse application: ' + axiosErrorDetails(error));
+      throw new Error('Error storing claimant tse application: ' + axiosErrorDetails(error));
     }
   };
 

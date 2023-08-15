@@ -13,20 +13,18 @@
     {{ govukPanel({
       titleText: titleText
     }) }}
-
     <p class="govuk-heading-m">{{whatHappensNext}}</p>
     <p class="govuk-body">{{youMustSubmitYourApplication}}</p>
     <p class="govuk-body"><a href="{{viewThisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}}</a></p>
-    <p class="govuk-body">{{viewTheSupportingDocuments}}:
-      <a href="{{fileNameOfSupportingDocLink}}" class="govuk-link">{{fileNameOfSupportingDocName}}</a></p>
-    {{ govukButton({
-      text: closeAndReturn,
-      classes: 'govuk-!-margin-right-2',
-      type: "submit",
-      preventDoubleClick: true,
-      attributes: {
-        id: 'return-to-case-overview'
-      }
-    }) }}
+    <p class="govuk-body">{{viewSupportingDoc}}</p>
+  </div>
+
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: closeAndReturn,
+        href: redirectUrl
+      }) }}
+    </div>
   </div>
 {% endblock %}

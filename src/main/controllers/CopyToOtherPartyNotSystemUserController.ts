@@ -101,7 +101,13 @@ export default class CopyToOtherPartyNotSystemUserController {
         redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
       }
     } else {
-      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER + languageParam;
+      if (req.session.contactType === Rule92Types.CONTACT) {
+        redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER + languageParam;
+      } else if (req.session.contactType === Rule92Types.RESPOND) {
+        redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
+      } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
+        redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
+      }
     }
     return res.redirect(redirectPage);
   };
