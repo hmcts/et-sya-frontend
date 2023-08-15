@@ -6967,7 +6967,7 @@ __metadata:
     govuk-frontend: ^4.6.0
     helmet: ^6.1.5
     html-webpack-plugin: ^5.5.1
-    husky: ^8.0.0
+    husky: ^8.0.3
     i18next: ^23.0.0
     i18next-http-middleware: ^3.3.0
     jest: ^29.5.0
@@ -8532,7 +8532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^8.0.0":
+"husky@npm:^8.0.3":
   version: 8.0.3
   resolution: "husky@npm:8.0.3"
   bin:
