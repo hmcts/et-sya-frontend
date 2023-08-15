@@ -6960,7 +6960,6 @@ __metadata:
     ts-node: ^10.9.1
     tsconfig-paths: ^4.2.0
     typescript: ^5.0.4
-    url-parse: 1.5.6
     uuid: ^9.0.0
     webdriverio: ^8.8.6
     webpack: ^5.80.0
@@ -15168,16 +15167,6 @@ __metadata:
   version: 4.0.1
   resolution: "url-join@npm:4.0.1"
   checksum: f74e868bf25dbc8be6a8d7237d4c36bb5b6c62c72e594d5ab1347fe91d6af7ccd9eb5d621e30152e4da45c2e9a26bec21390e911ab54a62d4d82e76028374ee5
-  languageName: node
-  linkType: hard
-
-"url-parse@npm:1.5.6":
-  version: 1.5.6
-  resolution: "url-parse@npm:1.5.6"
-  dependencies:
-    querystringify: ^2.1.1
-    requires-port: ^1.0.0
-  checksum: f2176a2035b5f14ba3ebeb94b6f7e112d1f1e60ce95dd23214ac3b5b293899f7cbc8d1a43df4e3c9755bc07151e974b745898353549277da4b854a308d19e143
   languageName: node
   linkType: hard
 
