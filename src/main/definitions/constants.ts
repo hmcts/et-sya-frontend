@@ -118,8 +118,9 @@ export const TranslationKeys = {
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
   COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: 'copy-to-other-party-not-system-user',
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
-  COPIED_CORRESPONDENCE_CONFIRMATION: 'copied-correspondence-confirmation',
+  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: 'tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
+  COPIED_CORRESPONDENCE_CONFIRMATION: 'copied-correspondence-confirmation',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
@@ -235,11 +236,12 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
-  // Rule 92 paths
+  // Rule 92 not system user
   COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
-  COPIED_CORRESPONDENCE_CONFIRMATION: '/copied-correspondence-confirmation',
+  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
+  COPIED_CORRESPONDENCE_CONFIRMATION: '/copied-correspondence-confirmation',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
