@@ -49,7 +49,7 @@ export default class RespondentSupportingMaterialController {
             id: 'upload',
             type: 'button',
             name: 'upload',
-            value: 'true',
+            value: 'true'
           },
         },
       },

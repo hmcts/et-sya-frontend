@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -13,7 +13,7 @@ import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
+  populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -44,20 +44,34 @@ export default class ApplicationDetailsController {
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
     const accessToken = req.session.user?.accessToken;
-    const decisionContent = await getDecisionContent(logger, selectedApplication, translations, accessToken, res);
+
+    let decisionContent;
+
+    try {
+      decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
+    } catch(e) {
+      logger.error(e.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, accessToken);
+        await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
     }
 
     const downloadLink = createDownloadLink(document);
 
-    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
+    let allResponses
+    try {
+      allResponses = await getAllResponses(selectedApplication, translations, req);
+    } catch(e) {
+      logger.error(e.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -81,7 +95,7 @@ export default class ApplicationDetailsController {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication.value, translations, downloadLink),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,

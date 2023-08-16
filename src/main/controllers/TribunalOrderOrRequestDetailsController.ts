@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
+import { Applicant, ErrorPages, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -45,7 +45,7 @@ export default class TribunalOrderOrRequestDetailsController {
       );
     } catch (err) {
       logger.error(err.message);
-      res.redirect('/not-found');
+      res.redirect(ErrorPages.NOT_FOUND);
     }
 
     const translations: AnyRecord = {

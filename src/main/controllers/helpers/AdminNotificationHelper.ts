@@ -2,7 +2,7 @@ import { AdminNotifcation } from '../../definitions/adminNotification';
 import { YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
-  TseRespondTypeItem,
+  TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, Parties } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
@@ -38,7 +38,7 @@ const getVisibleRequestFromAdmin = (
     return adminNotifications;
   }
   for (const response of app.value.respondCollection) {
-    if (isVisibleTribunalResponse(response, app.value.claimantResponseRequired)) {
+    if (isVisibleTribunalResponse(response.value, app.value.claimantResponseRequired)) {
       const adminNotification: AdminNotifcation = {
         appName: app.value.type,
         enterResponseTitle: response.value.enterResponseTitle,
@@ -54,23 +54,19 @@ const getVisibleRequestFromAdmin = (
   return adminNotifications;
 };
 
-const isVisibleTribunalResponse = (response: TseRespondTypeItem, claimantResponseRequired: string) => {
+const isVisibleTribunalResponse = (response: TseRespondType, claimantResponseRequired: string) => {
   if (claimantResponseRequired === YesOrNo.YES) {
-    if (response.value.isResponseRequired === YesOrNo.YES) {
+    if (response.isResponseRequired === YesOrNo.YES) {
       return isSentToClaimantByTribunal(response);
     }
   }
-  if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
+  if (response.isResponseRequired !== YesOrNo.YES && response.viewedByClaimant !== YesOrNo.YES) {
     return isSentToClaimantByTribunal(response);
   }
 };
 
-export const isSentToClaimantByTribunal = (response: TseRespondTypeItem): boolean => {
-  return (
-    response.value.from === Applicant.ADMIN &&
-    (response.value.selectPartyNotify === Parties.CLAIMANT_ONLY ||
-      response.value.selectPartyNotify === Parties.BOTH_PARTIES)
-  );
+export const isSentToClaimantByTribunal = (response: TseRespondType): boolean => {
+  return response.from === Applicant.ADMIN && response.selectPartyNotify !== Parties.RESPONDENT_ONLY
 };
 
 const getNameText = (applicant: string, translations: AnyRecord): string => {

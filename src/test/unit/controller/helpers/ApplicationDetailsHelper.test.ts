@@ -35,7 +35,7 @@ describe('Application details', () => {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink');
+    const appContent = getTseApplicationDetails(selectedApplication.value, translations, 'downloadLink');
 
     expect(appContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Applicant' });
     expect(appContent[0].value).toEqual({ text: 'James' });

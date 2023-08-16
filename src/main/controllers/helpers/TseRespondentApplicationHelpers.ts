@@ -1,10 +1,9 @@
-import { Response } from 'express';
-import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
   GenericTseApplicationTypeItem,
+  GenericTseApplicationType,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
@@ -15,7 +14,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
 import { clearTseFields } from './CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -111,60 +110,40 @@ export const setSelectedTseApplication = (
   }
 };
 
-export const getResponseDocDownloadLink = async (
-  selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
-): Promise<string | void> => {
-  let responseDocDownload = undefined;
-  let responseDoc = undefined;
+export const getResponseDocDownloadLink = async (selectedApplication: GenericTseApplicationTypeItem, accessToken: string) => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
-  if (selectedApplicationRespondCollection?.length) {
-    responseDoc =
-      selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
-        ? undefined
-        : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
+
+  if (!selectedApplicationRespondCollection?.length) {
+    return '';
   }
-  if (responseDoc !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(responseDoc, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
-    responseDocDownload = createDownloadLink(responseDoc);
+
+  const responseDoc = selectedApplicationRespondCollection[0].value?.supportingMaterial?.[0].value.uploadedDocument;
+
+  if (!responseDoc) {
+    return '';
   }
-  return responseDocDownload;
+
+  await populateDocumentMetadata(responseDoc, accessToken);
+  return createDownloadLink(responseDoc);
 };
 
-export const getApplicationDocDownloadLink = async (
-  selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
-): Promise<string | void> => {
-  const applicationDocDownload = selectedApplication?.value?.documentUpload;
+export const getApplicationDocDownloadLink = async (application: GenericTseApplicationTypeItem, accessToken: string) => {
+  const applicationDocDownload = application?.value?.documentUpload;
 
-  if (applicationDocDownload !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
+  if (!applicationDocDownload) {
+    return '';
   }
+
+  await populateDocumentMetadata(applicationDocDownload, accessToken);
   return createDownloadLink(applicationDocDownload);
 };
 
 export const getDecisionContent = async (
-  logger: LoggerInstance,
-  selectedApplication: GenericTseApplicationTypeItem,
+  selectedApplication: GenericTseApplicationType,
   translations: AnyRecord,
   accessToken: string,
-  res: Response
 ): Promise<any[] | void> => {
-  const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
+  const selectedAppAdminDecision = selectedApplication.adminDecision;
   let decisionContent = undefined;
   const decisionDocDownload: string | any[] = getDecisionDocDownload(selectedAppAdminDecision);
 
@@ -172,12 +151,7 @@ export const getDecisionContent = async (
   if (decisionDocDownload.length > 0) {
     for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
       if (decisionDocDownload[i]) {
-        try {
-          await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          return res.redirect('/not-found');
-        }
+        await populateDocumentMetadata(decisionDocDownload[i], accessToken);
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }

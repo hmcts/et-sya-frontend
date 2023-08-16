@@ -6,7 +6,7 @@ import {
   TseAdminDecisionItem,
 } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -59,18 +59,24 @@ export default class JudgmentDetailsController {
         await updateDecisionState(selectedDecisionApplication.id, selectedDecision, req, logger);
       }
       const accessToken = req.session.user?.accessToken;
-      const selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
-        selectedDecisionApplication,
-        logger,
-        accessToken,
-        res
-      );
-      const responseDocDownloadLink = await getResponseDocDownloadLink(
-        selectedDecisionApplication,
-        logger,
-        accessToken,
-        res
-      );
+      let selectedApplicationDocDownloadLink; 
+      
+      try { 
+        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(selectedDecisionApplication, accessToken);
+      } catch(e) {
+        logger.error(e.message);
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
+
+      let responseDocDownloadLink;
+      
+      try { 
+        responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, accessToken);
+      } catch (e) {
+        logger.error(e.message);
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
+
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
       const decisionAttachments = await getDecisionAttachments(selectedDecision, req, res);
       pageContent = getDecisionDetails(

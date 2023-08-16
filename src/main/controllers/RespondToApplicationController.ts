@@ -4,14 +4,14 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
@@ -96,10 +96,10 @@ export default class RespondToApplicationController {
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
     }
     const downloadLink = createDownloadLink(document);
@@ -118,7 +118,7 @@ export default class RespondToApplicationController {
       applicationType,
       respondByDate,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication.value, translations, downloadLink),
     });
   };
 }
