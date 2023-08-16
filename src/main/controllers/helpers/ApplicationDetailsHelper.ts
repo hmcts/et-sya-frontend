@@ -10,7 +10,7 @@ import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers'
 import { TseRespondType } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { GovUkSummaryRow } from 'definitions/nunjucks';
 
-export const getTseApplicationDetails = (application: GenericTseApplicationType, translations: AnyRecord, downloadLink: string): { key: unknown; value?: unknown; actions?: unknown }[] => {
+export const getTseApplicationDetails = (application: GenericTseApplicationType, translations: AnyRecord, downloadLink: string) => {
   const rows = [
     addSummaryRow(translations.applicant, application.applicant),
     addSummaryRow(translations.requestDate, application.date),
@@ -21,7 +21,7 @@ export const getTseApplicationDetails = (application: GenericTseApplicationType,
   ];
 
   if (application.copyToOtherPartyText) {
-    rows.push(addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyText))
+    rows.push(addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyText));
   }
 
   return rows;
@@ -31,15 +31,12 @@ export const getTseApplicationDecisionDetails = (
   application: GenericTseApplicationType,
   translations: AnyRecord,
   decisionDocDownloadLink: string[]
-): Array<GovUkSummaryRow> => {
-  const adminDecisions = [...application.adminDecision].reverse();
+): Array<Array<GovUkSummaryRow>> => {
   const reversedDownloadLinks = [...decisionDocDownloadLink].reverse()
 
-  return adminDecisions.map(({ value: decision }, i) => {
-    let tableTopSpacing = i > 0 ? translations.tableTopWithSpace : '';
-    let notification = i > 0 ? translations.notificationWithSpace : translations.notification;
-    return [
-      { key: { html: notification }, value: { html: tableTopSpacing + decision.enterNotificationTitle } },
+  return [...application.adminDecision].reverse().map(({ value: decision }, i) =>
+    [
+      addSummaryRow(translations.notification, decision.enterNotificationTitle),
       addSummaryRow(translations.decision, decision.decision),
       addSummaryRow(translations.date, decision.date),
       addSummaryRow(translations.sentBy, translations.tribunal),
@@ -50,7 +47,7 @@ export const getTseApplicationDecisionDetails = (
       addSummaryRow(translations.name, decision.decisionMadeByFullName),
       addSummaryRow(translations.sentTo, decision.selectPartyNotify)
     ]
-  }).flat()
+  )
 };
 
 export const getAllResponses = async (

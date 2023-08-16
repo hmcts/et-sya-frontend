@@ -78,7 +78,14 @@ export default class JudgmentDetailsController {
       }
 
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
-      const decisionAttachments = await getDecisionAttachments(selectedDecision, req, res);
+      
+      let decisionAttachments;
+      try { decisionAttachments = await getDecisionAttachments(selectedDecision, req); }
+      catch(e){
+        logger.error(e.message);
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
+
       pageContent = getDecisionDetails(
         userCase,
         selectedDecision,
