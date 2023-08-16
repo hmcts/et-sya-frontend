@@ -5,7 +5,12 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix && prettier --write",
+    "*.{css,scss}": "stylelint --fix && prettier --write"
+  },
   "scripts": {
+    "postinstall": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
     "start": "NODE_ENV=production ./node_modules/.bin/ts-node -r tsconfig-paths/register src/main/server.ts",
     "start:dev": "nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
@@ -87,6 +92,7 @@
     "redis": "^3.1.2",
     "redis-mock": "^0.56.3",
     "require-directory": "^2.1.1",
+    "sass": "^1.65.1",
     "serve-favicon": "^2.5.0",
     "session-file-store": "^1.5.0",
     "ts-node": "^10.9.1",
@@ -124,14 +130,13 @@
     "eslint-plugin-prettier": "^4.2.1",
     "git-rev-sync": "3.0.2",
     "html-webpack-plugin": "^5.5.1",
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.6.2",
     "jest-pact": "0.9.4",
     "jest_workaround": "^0.79.19",
     "lint-staged": "^13.2.1",
     "mini-css-extract-plugin": "^2.7.5",
     "nock": "^13.3.0",
-    "node-sass": "^8.0.0",
     "nodemon": "^2.0.22",
     "pa11y": "^6.2.3",
     "path": "^0.12.7",
