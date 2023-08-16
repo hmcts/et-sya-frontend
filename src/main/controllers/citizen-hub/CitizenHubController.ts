@@ -52,7 +52,6 @@ import { getRespondentApplications, getRespondentBannerContent } from '../helper
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
-
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.

@@ -1,0 +1,16 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": true
+    },
+    "experimental": {
+      "plugins": [["jest_workaround", {}]]
+    },
+    "externalHelpers": true
+  },
+  "module": {
+    "type": "commonjs"
+  }
+}
