@@ -32,11 +32,13 @@
         {{ govukButton({ id: 'respond-button', text: respond, href: adminRespondRedirectUrl }) }}
       {% endif %}
 
-      <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
+      {% if decisionContent %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
 
-      {% for decision in decisionContent %}
-        {{ govukSummaryList({ rows: decision }) }}
-      {% endfor %}
+        {% for decision in decisionContent %}
+          {{ govukSummaryList({ rows: decision }) }}
+        {% endfor %}
+      {% endif %}
 
     </div>
 

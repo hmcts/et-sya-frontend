@@ -25,7 +25,7 @@ describe('General correspondence helper', () => {
     );
   });
 
-  it('should return expected correspondece notification details content', () => {
+  it('should return expected correspondence notification details content', () => {
     const pageContent = getCorrespondenceNotificationDetails(translations, notificationItem);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
     expect(pageContent[0].value).toEqual({ text: '2019-05-02' });
@@ -47,7 +47,7 @@ describe('General correspondence helper', () => {
       text: 'Document',
     });
     expect(pageContent[4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
     expect(pageContent[5].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',

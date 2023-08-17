@@ -40,7 +40,7 @@ export default class RespondentApplicationDetailsController {
     try { 
       responseDocDownloadLink = await getResponseDocDownloadLink(selectedApplication, accessToken);
     } catch (e) {
-      logger.error(e.message);
+      logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     } 
 
@@ -52,7 +52,7 @@ export default class RespondentApplicationDetailsController {
     let allResponses
     try { allResponses = await getAllResponses(selectedApplication, translations, req); }
     catch(e) {
-      logger.error(e.message)
+      logger.error(e)
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
@@ -61,7 +61,7 @@ export default class RespondentApplicationDetailsController {
     try {
       decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
     } catch (e) {
-      logger.error(e.message)
+      logger.error(e)
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
@@ -75,7 +75,7 @@ export default class RespondentApplicationDetailsController {
     try {
       supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
     } catch (e) {
-      logger.error(e.message);
+      logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
@@ -89,7 +89,7 @@ export default class RespondentApplicationDetailsController {
     try {
       const newStatus = getNewApplicationStatus(selectedApplication);
       if (newStatus) {
-        await getCaseApi(req.session.user?.accessToken).changeApplicationStatus(req.session.userCase, newStatus);
+        await getCaseApi(accessToken).changeApplicationStatus(req.session.userCase, newStatus);
         selectedApplication.value.applicationState = newStatus;
         logger.info(`New status for respondent's application for case: ${req.session.userCase.id} - ${newStatus}`);
       }
@@ -97,7 +97,7 @@ export default class RespondentApplicationDetailsController {
       logger.error(error.message);
       res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
     }
-
+    
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,

@@ -21,7 +21,7 @@ export const getTseApplicationDetails = (application: GenericTseApplicationType,
   ];
 
   if (application.copyToOtherPartyText) {
-    rows.push(addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyText));
+    rows.push(addSummaryRow(translations.copyToOtherPartyText, application.copyToOtherPartyText));
   }
 
   return rows;
@@ -87,10 +87,14 @@ const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessTo
 };
 
 const getRowsForAdminResponse = async (translations: AnyRecord, response: TseRespondType, accessToken: string): Promise<Array<GovUkSummaryRow>> => {
-  const firstDocument = response.addDocument?.find(e => e).value.uploadedDocument;
-  const supportingMaterialDownloadLink = await getSupportingMaterialDownloadLink(firstDocument, accessToken);
-
   const requestMadeBy = response.isCmoOrRequest === 'Request' ? response.requestMadeBy : response.cmoMadeBy
+
+  const firstDocument = response.addDocument?.find(e => e).value;
+  let downloadLink = ''; 
+
+  if (firstDocument) {
+    downloadLink = await getSupportingMaterialDownloadLink(firstDocument.uploadedDocument, accessToken);
+  }
 
   return [
     addSummaryRow(translations.responseItem, response.enterResponseTitle),
@@ -100,9 +104,9 @@ const getRowsForAdminResponse = async (translations: AnyRecord, response: TseRes
     addSummaryRow(translations.responseDue, response.isResponseRequired),
     addSummaryRow(translations.partyToRespond, response.selectPartyRespond),
     addSummaryRow(translations.additionalInfo, response.additionalInformation),
-    addSummaryRow(translations.description, response.addDocument?.find(e => e).value.shortDescription),
-    addSummaryRow(translations.document, undefined, supportingMaterialDownloadLink),
     addSummaryRow(translations.requestMadeBy, requestMadeBy),
+    addSummaryRow(translations.description, firstDocument?.shortDescription),
+    addSummaryRow(translations.document, undefined, downloadLink),
     addSummaryRow(translations.name, response.madeByFullName),
     addSummaryRow(translations.sentTo, response.selectPartyNotify),
   ];
@@ -110,18 +114,21 @@ const getRowsForAdminResponse = async (translations: AnyRecord, response: TseRes
 
 const getRowsForNonAdminResponse = async (translations: AnyRecord, response: TseRespondType, accessToken: string) => {
   const firstDocument = response.supportingMaterial?.find(e => e).value.uploadedDocument;
-  const supportingMaterialDownloadLink = await getSupportingMaterialDownloadLink(firstDocument, accessToken);
+  let downloadLink = '';
+  if (firstDocument) {
+    downloadLink = await getSupportingMaterialDownloadLink(firstDocument, accessToken);
+  }
 
   return [
     addSummaryRow(translations.responder, response.from),
     addSummaryRow(translations.responseDate, response.date),
     addSummaryRow(translations.response, response.response),
-    addSummaryRow(translations.supportingMaterial, undefined, supportingMaterialDownloadLink),
+    addSummaryRow(translations.supportingMaterial, undefined, downloadLink),
     addSummaryRow(translations.copyCorrespondence, response.copyToOtherParty),
   ];
 };
 
-function addSummaryRow(keyText: string, valueText?: string, valueHtml?: string) {
+function addSummaryRow(keyText: string, valueText?: string, valueHtml?: string): GovUkSummaryRow {
   return {
     key: {
       text: keyText,

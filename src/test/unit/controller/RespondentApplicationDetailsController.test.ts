@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
-import { CaseWithId } from '../../../main/definitions/case';
+import { CaseWithId, Document } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import * as caseService from '../../../main/services/CaseService';
@@ -17,11 +17,30 @@ import {
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { clone } from '../test-helpers/clone';
+import { DocumentDetailsResponse } from 'definitions/api/documentDetailsResponse';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const getCaseApiMock = jest.spyOn(caseService, 'getCaseApi');
 const api = new CaseApi(mockedAxios);
+
+const mockDocumentDetailsResponse: DocumentDetailsResponse = {
+  createdOn: '2000-01-01',
+  size: 420,
+  mimeType: 'application/pdf',
+  classification: 'PUBLIC',
+  originalDocumentName: 'mockDocumentName',
+  createdBy: 'mockCreatedBy',
+  lastModifiedBy: 'mockLastModifiedBy',
+  modifiedOn: '2000-01-01',
+  metadata: {
+    jurisdiction: 'EMPLOYMENT',
+    case_id: '1',
+    case_type_id: '1'
+   }
+}
+
+api.getDocumentDetails = jest.fn().mockResolvedValue({ data: mockDocumentDetailsResponse });
 
 describe('Respondent application details controller', () => {
   getCaseApiMock.mockReturnValue(api);
@@ -42,7 +61,6 @@ describe('Respondent application details controller', () => {
     const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
 
     await new RespondentApplicationDetailsController().get(request, response);
-
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
   });
 
