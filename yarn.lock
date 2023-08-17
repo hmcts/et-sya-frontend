@@ -2391,90 +2391,90 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-darwin-arm64@npm:1.3.76"
+"@swc/core-darwin-arm64@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-darwin-arm64@npm:1.3.77"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-darwin-x64@npm:1.3.76"
+"@swc/core-darwin-x64@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-darwin-x64@npm:1.3.77"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.76"
+"@swc/core-linux-arm-gnueabihf@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.77"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.76"
+"@swc/core-linux-arm64-gnu@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.77"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-linux-arm64-musl@npm:1.3.76"
+"@swc/core-linux-arm64-musl@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-linux-arm64-musl@npm:1.3.77"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-linux-x64-gnu@npm:1.3.76"
+"@swc/core-linux-x64-gnu@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-linux-x64-gnu@npm:1.3.77"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.76"
+"@swc/core-linux-x64-musl@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.77"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.76"
+"@swc/core-win32-arm64-msvc@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.77"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.76"
+"@swc/core-win32-ia32-msvc@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.77"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core-win32-x64-msvc@npm:1.3.76"
+"@swc/core-win32-x64-msvc@npm:1.3.77":
+  version: 1.3.77
+  resolution: "@swc/core-win32-x64-msvc@npm:1.3.77"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
 "@swc/core@npm:^1.3.76":
-  version: 1.3.76
-  resolution: "@swc/core@npm:1.3.76"
+  version: 1.3.77
+  resolution: "@swc/core@npm:1.3.77"
   dependencies:
-    "@swc/core-darwin-arm64": 1.3.76
-    "@swc/core-darwin-x64": 1.3.76
-    "@swc/core-linux-arm-gnueabihf": 1.3.76
-    "@swc/core-linux-arm64-gnu": 1.3.76
-    "@swc/core-linux-arm64-musl": 1.3.76
-    "@swc/core-linux-x64-gnu": 1.3.76
-    "@swc/core-linux-x64-musl": 1.3.76
-    "@swc/core-win32-arm64-msvc": 1.3.76
-    "@swc/core-win32-ia32-msvc": 1.3.76
-    "@swc/core-win32-x64-msvc": 1.3.76
+    "@swc/core-darwin-arm64": 1.3.77
+    "@swc/core-darwin-x64": 1.3.77
+    "@swc/core-linux-arm-gnueabihf": 1.3.77
+    "@swc/core-linux-arm64-gnu": 1.3.77
+    "@swc/core-linux-arm64-musl": 1.3.77
+    "@swc/core-linux-x64-gnu": 1.3.77
+    "@swc/core-linux-x64-musl": 1.3.77
+    "@swc/core-win32-arm64-msvc": 1.3.77
+    "@swc/core-win32-ia32-msvc": 1.3.77
+    "@swc/core-win32-x64-msvc": 1.3.77
   peerDependencies:
     "@swc/helpers": ^0.5.0
   dependenciesMeta:
@@ -2501,7 +2501,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: f0401ccdd9073fa597c90e2503e6d71fd593593120cd92e2796bafbb43b443e072dbae3349e00fa9ded0d2dd669e463bc8587c41da4979ba31434249a30c36c7
+  checksum: 95841974c6734c154426b7d3ee33e3b8a58ea870382918b18dd546de38160ed80b1079f35d3e8a4000d11d8ec3ed1e8bf5af6c83b5cb766dd925a42827e250db
   languageName: node
   linkType: hard
 
@@ -3333,19 +3333,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/config@npm:8.15.0":
-  version: 8.15.0
-  resolution: "@wdio/config@npm:8.15.0"
+"@wdio/config@npm:8.15.4":
+  version: 8.15.4
+  resolution: "@wdio/config@npm:8.15.4"
   dependencies:
     "@wdio/logger": 8.11.0
     "@wdio/types": 8.15.0
-    "@wdio/utils": 8.15.0
+    "@wdio/utils": 8.15.4
     decamelize: ^6.0.0
     deepmerge-ts: ^5.0.0
     glob: ^10.2.2
     import-meta-resolve: ^3.0.0
     read-pkg-up: ^10.0.0
-  checksum: 37d148937085b6cd3b506d0fefb4eba06ceb8f7e3abe208960a379044d2028e13902c5203e1d9fcf306c46176b730eba0b7caa99bbf8282ec5920e477cc4f275
+  checksum: 398d1e12490f8000492e8fa2d79f9cc959fb1148b5a9d21a182373ba1f843424fe5f9340f26a341424a9f0e1e4547aa6eb3058fc8043757b99f5e0084e66ab10
   languageName: node
   linkType: hard
 
@@ -3386,9 +3386,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wdio/utils@npm:8.15.0":
-  version: 8.15.0
-  resolution: "@wdio/utils@npm:8.15.0"
+"@wdio/utils@npm:8.15.4":
+  version: 8.15.4
+  resolution: "@wdio/utils@npm:8.15.4"
   dependencies:
     "@puppeteer/browsers": ^1.6.0
     "@wdio/logger": 8.11.0
@@ -3403,7 +3403,7 @@ __metadata:
     import-meta-resolve: ^3.0.0
     safaridriver: ^0.1.0
     wait-port: ^1.0.4
-  checksum: 4db17b70c22984bffdf77a5cfab656967322db2c4e5e114160a503d2c6a9012639fd9bffb156926d2f7548f5adf00df57ff076b2a092e64e99424fcf4ccf6ab7
+  checksum: 17c86b5a9977a2f92a53678642029efe9ae55300eda29cc4698cc2253c9032e27af0d476cd6a42a162ff2027095934de83226e6fec75481834f948315d3f8a94
   languageName: node
   linkType: hard
 
@@ -11521,14 +11521,14 @@ __metadata:
   linkType: hard
 
 "nock@npm:^13.3.0":
-  version: 13.3.2
-  resolution: "nock@npm:13.3.2"
+  version: 13.3.3
+  resolution: "nock@npm:13.3.3"
   dependencies:
     debug: ^4.1.0
     json-stringify-safe: ^5.0.1
     lodash: ^4.17.21
     propagate: ^2.0.0
-  checksum: 1d7d5fda1816a3a0d2cb47f10283db139fcd15be6975db6f9b260efa781d5f0eeadf9bd7aab6db61191c519dd99bcd4c5c061e77880341be60abc39cd6163c1f
+  checksum: e3e4f0fb777ac63d74f89bbb7aebe8e815b891b64ac71983d91686f725fdab856fe189cf2fe23d4add9f5dd5da53f3568106a61116a771ce0f4ed0f5ad7b035b
   languageName: node
   linkType: hard
 
@@ -15484,36 +15484,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webdriver@npm:8.15.0":
-  version: 8.15.0
-  resolution: "webdriver@npm:8.15.0"
+"webdriver@npm:8.15.4":
+  version: 8.15.4
+  resolution: "webdriver@npm:8.15.4"
   dependencies:
     "@types/node": ^20.1.0
     "@types/ws": ^8.5.3
-    "@wdio/config": 8.15.0
+    "@wdio/config": 8.15.4
     "@wdio/logger": 8.11.0
     "@wdio/protocols": 8.14.6
     "@wdio/types": 8.15.0
-    "@wdio/utils": 8.15.0
+    "@wdio/utils": 8.15.4
     deepmerge-ts: ^5.1.0
     got: ^ 12.6.1
     ky: ^0.33.0
     ws: ^8.8.0
-  checksum: 5e6e81fc5479cafc2019704a8d7f3732deb6f42af4489a6da4cc53fe9d3d5c1cc37fcaed8cc566d7e0a47bdf2e78dc2a08c8e4a730ae4e7387d5aacc4b2ebe24
+  checksum: a82e1a8365b1451fe6fce952e3a76472a2e3aa3f1118c14fb73d7ebc1316d5fcbd8d7d6d354873161785f279894c3396412de128b43c05867f2522b5a8868102
   languageName: node
   linkType: hard
 
 "webdriverio@npm:^8.8.6":
-  version: 8.15.0
-  resolution: "webdriverio@npm:8.15.0"
+  version: 8.15.4
+  resolution: "webdriverio@npm:8.15.4"
   dependencies:
     "@types/node": ^20.1.0
-    "@wdio/config": 8.15.0
+    "@wdio/config": 8.15.4
     "@wdio/logger": 8.11.0
     "@wdio/protocols": 8.14.6
     "@wdio/repl": 8.10.1
     "@wdio/types": 8.15.0
-    "@wdio/utils": 8.15.0
+    "@wdio/utils": 8.15.4
     archiver: ^5.0.0
     aria-query: ^5.0.0
     css-shorthand-properties: ^1.1.1
@@ -15530,13 +15530,13 @@ __metadata:
     resq: ^1.9.1
     rgb2hex: 0.2.5
     serialize-error: ^11.0.1
-    webdriver: 8.15.0
+    webdriver: 8.15.4
   peerDependencies:
     devtools: ^8.14.0
   peerDependenciesMeta:
     devtools:
       optional: true
-  checksum: 5248547361d9bba9b984c46294b87d03593dd7e1dc6ddf0582621e30e6b1d340114d114f71a8e1cba58580fa2bcbba96c4fb1ffa6051d424e697730686d5f021
+  checksum: f8436737ff9a75a02f9cc7dd710d36cd2721113d980c0e8f41694679a6ade5136c8c5c0d2d4975be3f2e407e72c287e96b68c60060b31e6f7438633bc7fa7474
   languageName: node
   linkType: hard
 
