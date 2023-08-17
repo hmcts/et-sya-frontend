@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
-
+import axios from 'axios';
+import { DocumentDetailsResponse } from 'definitions/api/documentDetailsResponse';
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
-import { CaseWithId, Document } from '../../../main/definitions/case';
+import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';
 import * as caseService from '../../../main/services/CaseService';
@@ -17,7 +17,6 @@ import {
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { clone } from '../test-helpers/clone';
-import { DocumentDetailsResponse } from 'definitions/api/documentDetailsResponse';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -36,9 +35,9 @@ const mockDocumentDetailsResponse: DocumentDetailsResponse = {
   metadata: {
     jurisdiction: 'EMPLOYMENT',
     case_id: '1',
-    case_type_id: '1'
-   }
-}
+    case_type_id: '1',
+  },
+};
 
 api.getDocumentDetails = jest.fn().mockResolvedValue({ data: mockDocumentDetailsResponse });
 

@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -19,7 +19,6 @@ import {
   getResponseDocDownloadLink,
   setSelectedTseApplication,
 } from './helpers/TseRespondentApplicationHelpers';
-import { ErrorPages } from '../definitions/constants';
 
 const logger = getLogger('RespondentApplicationDetailsController');
 
@@ -36,32 +35,33 @@ export default class RespondentApplicationDetailsController {
 
     const accessToken = req.session.user?.accessToken;
     let responseDocDownloadLink;
-    
-    try { 
+
+    try {
       responseDocDownloadLink = await getResponseDocDownloadLink(selectedApplication, accessToken);
     } catch (e) {
       logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
-    } 
+    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
-    let allResponses
-    try { allResponses = await getAllResponses(selectedApplication, translations, req); }
-    catch(e) {
-      logger.error(e)
+    let allResponses;
+    try {
+      allResponses = await getAllResponses(selectedApplication, translations, req);
+    } catch (e) {
+      logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
-    let decisionContent
+    let decisionContent;
 
     try {
       decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
     } catch (e) {
-      logger.error(e)
+      logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
@@ -70,7 +70,7 @@ export default class RespondentApplicationDetailsController {
     const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
     const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
 
-    let supportingMaterialDownloadLink
+    let supportingMaterialDownloadLink;
 
     try {
       supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
@@ -97,7 +97,7 @@ export default class RespondentApplicationDetailsController {
       logger.error(error.message);
       res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
     }
-    
+
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,

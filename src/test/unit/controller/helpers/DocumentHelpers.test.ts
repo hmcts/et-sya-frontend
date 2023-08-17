@@ -8,12 +8,12 @@ import {
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
-  populateDocumentMetadata,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
   isSelectedAppDocId,
   isSelectedAppResponseDocId,
+  populateDocumentMetadata,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';

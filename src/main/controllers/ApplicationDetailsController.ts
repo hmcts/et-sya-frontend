@@ -49,7 +49,7 @@ export default class ApplicationDetailsController {
 
     try {
       decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
-    } catch(e) {
+    } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
@@ -65,10 +65,10 @@ export default class ApplicationDetailsController {
 
     const downloadLink = createDownloadLink(document);
 
-    let allResponses
+    let allResponses;
     try {
       allResponses = await getAllResponses(selectedApplication, translations, req);
-    } catch(e) {
+    } catch (e) {
       logger.error(e.message);
       return res.redirect(ErrorPages.NOT_FOUND);
     }

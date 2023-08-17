@@ -59,18 +59,21 @@ export default class JudgmentDetailsController {
         await updateDecisionState(selectedDecisionApplication.id, selectedDecision, req, logger);
       }
       const accessToken = req.session.user?.accessToken;
-      let selectedApplicationDocDownloadLink; 
-      
-      try { 
-        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(selectedDecisionApplication, accessToken);
-      } catch(e) {
+      let selectedApplicationDocDownloadLink;
+
+      try {
+        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
+          selectedDecisionApplication,
+          accessToken
+        );
+      } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
       }
 
       let responseDocDownloadLink;
-      
-      try { 
+
+      try {
         responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, accessToken);
       } catch (e) {
         logger.error(e.message);
@@ -78,10 +81,11 @@ export default class JudgmentDetailsController {
       }
 
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
-      
+
       let decisionAttachments;
-      try { decisionAttachments = await getDecisionAttachments(selectedDecision, req); }
-      catch(e){
+      try {
+        decisionAttachments = await getDecisionAttachments(selectedDecision, req);
+      } catch (e) {
         logger.error(e.message);
         return res.redirect(ErrorPages.NOT_FOUND);
       }

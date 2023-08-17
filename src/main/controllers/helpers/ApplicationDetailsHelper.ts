@@ -1,23 +1,30 @@
-
+import { GovUkSummaryRow } from '../../definitions/nunjucks';
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
-import { GenericTseApplicationType, GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import {
+  GenericTseApplicationType,
+  GenericTseApplicationTypeItem,
+  TseRespondType,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
+
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
-import { TseRespondType } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { GovUkSummaryRow } from 'definitions/nunjucks';
 
-export const getTseApplicationDetails = (application: GenericTseApplicationType, translations: AnyRecord, downloadLink: string) => {
+export const getTseApplicationDetails = (
+  application: GenericTseApplicationType,
+  translations: AnyRecord,
+  downloadLink: string
+) => {
   const rows = [
     addSummaryRow(translations.applicant, application.applicant),
     addSummaryRow(translations.requestDate, application.date),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryRow(translations.supportingMaterial, undefined, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo),
   ];
 
   if (application.copyToOtherPartyText) {
@@ -31,11 +38,12 @@ export const getTseApplicationDecisionDetails = (
   application: GenericTseApplicationType,
   translations: AnyRecord,
   decisionDocDownloadLink: string[]
-): Array<Array<GovUkSummaryRow>> => {
-  const reversedDownloadLinks = [...decisionDocDownloadLink].reverse()
+): GovUkSummaryRow[][] => {
+  const reversedDownloadLinks = [...decisionDocDownloadLink].reverse();
 
-  return [...application.adminDecision].reverse().map(({ value: decision }, i) =>
-    [
+  return [...application.adminDecision]
+    .reverse()
+    .map(({ value: decision }, i) => [
       addSummaryRow(translations.notification, decision.enterNotificationTitle),
       addSummaryRow(translations.decision, decision.decision),
       addSummaryRow(translations.date, decision.date),
@@ -45,9 +53,8 @@ export const getTseApplicationDecisionDetails = (
       addSummaryRow(translations.document, undefined, reversedDownloadLinks[i]),
       addSummaryRow(translations.decisionMadeBy, decision.decisionMadeBy),
       addSummaryRow(translations.name, decision.decisionMadeByFullName),
-      addSummaryRow(translations.sentTo, decision.selectPartyNotify)
-    ]
-  )
+      addSummaryRow(translations.sentTo, decision.selectPartyNotify),
+    ]);
 };
 
 export const getAllResponses = async (
@@ -60,7 +67,7 @@ export const getAllResponses = async (
     return [];
   }
 
-  const allResponses: Array<Array<GovUkSummaryRow>> = [];
+  const allResponses: GovUkSummaryRow[][] = [];
   const { user, userCase } = req.session;
 
   for (const { id, value: response } of respondCollection) {
@@ -70,7 +77,7 @@ export const getAllResponses = async (
         await getCaseApi(user.accessToken).updateResponseAsViewed(userCase, selectedApplication.id, id);
       }
     } else if (response.from !== Applicant.ADMIN) {
-      allResponses.push(await getRowsForNonAdminResponse(translations, response, user.accessToken))
+      allResponses.push(await getRowsForNonAdminResponse(translations, response, user.accessToken));
     }
   }
 
@@ -86,11 +93,15 @@ const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessTo
   return createDownloadLink(responseDoc);
 };
 
-const getRowsForAdminResponse = async (translations: AnyRecord, response: TseRespondType, accessToken: string): Promise<Array<GovUkSummaryRow>> => {
-  const requestMadeBy = response.isCmoOrRequest === 'Request' ? response.requestMadeBy : response.cmoMadeBy
+const getRowsForAdminResponse = async (
+  translations: AnyRecord,
+  response: TseRespondType,
+  accessToken: string
+): Promise<GovUkSummaryRow[]> => {
+  const requestMadeBy = response.isCmoOrRequest === 'Request' ? response.requestMadeBy : response.cmoMadeBy;
 
   const firstDocument = response.addDocument?.find(e => e).value;
-  let downloadLink = ''; 
+  let downloadLink = '';
 
   if (firstDocument) {
     downloadLink = await getSupportingMaterialDownloadLink(firstDocument.uploadedDocument, accessToken);
@@ -132,11 +143,11 @@ function addSummaryRow(keyText: string, valueText?: string, valueHtml?: string):
   return {
     key: {
       text: keyText,
-      classes: 'govuk-!-font-weight-regular-m'
+      classes: 'govuk-!-font-weight-regular-m',
     },
     value: {
       text: valueText,
-      html: valueHtml
-    }
-  }
+      html: valueHtml,
+    },
+  };
 }
