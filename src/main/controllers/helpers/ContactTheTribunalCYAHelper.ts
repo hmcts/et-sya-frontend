@@ -3,7 +3,7 @@ import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
 
-import { copyToOtherPartyRedirectUrl } from './CopyToOtherPartyHelper';
+import { copyToOtherPartyRedirectUrl } from './Rule92NotSystemUserHelper';
 
 export const getCyaContent = (
   userCase: CaseWithId,

@@ -6,10 +6,10 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
-import { getCancelLink } from './helpers/CopyToOtherPartyHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 export default class ContactTheTribunalCYANotSystemUserController {
   public get(req: AppRequest, res: Response): void {
@@ -19,13 +19,11 @@ export default class ContactTheTribunalCYANotSystemUserController {
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
       TranslationKeys.CONTACT_THE_TRIBUNAL_CYA,
-      TranslationKeys.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER,
     ]);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.contactApplicationFile);

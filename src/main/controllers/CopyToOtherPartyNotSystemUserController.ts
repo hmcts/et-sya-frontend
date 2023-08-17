@@ -8,7 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCancelLink, getCaptionText, getTodayPlus7DaysStrings } from './helpers/CopyToOtherPartyHelper';
+import { getCancelLink, getCaptionText, getTodayPlus7DaysStrings } from './helpers/Rule92NotSystemUserHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';

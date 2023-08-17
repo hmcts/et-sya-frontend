@@ -9,7 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { copyToOtherPartyRedirectUrl } from "./helpers/CopyToOtherPartyHelper";
+import { copyToOtherPartyRedirectUrl } from "./helpers/Rule92NotSystemUserHelper";
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';

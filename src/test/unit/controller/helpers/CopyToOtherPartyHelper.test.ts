@@ -2,7 +2,7 @@ import {
   copyToOtherPartyRedirectUrl,
   getCaptionText,
   getTodayPlus7DaysStrings,
-} from '../../../../main/controllers/helpers/CopyToOtherPartyHelper';
+} from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, Rule92Types } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';

@@ -9,7 +9,7 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
-import { copyToOtherPartyRedirectUrl } from "./helpers/CopyToOtherPartyHelper";
+import { copyToOtherPartyRedirectUrl } from "./helpers/Rule92NotSystemUserHelper";
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';

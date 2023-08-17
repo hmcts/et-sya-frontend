@@ -327,10 +327,10 @@ export class Routes {
     // R92 urls
     app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().post);
-    app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
-    app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
     app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
+    app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
+    app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

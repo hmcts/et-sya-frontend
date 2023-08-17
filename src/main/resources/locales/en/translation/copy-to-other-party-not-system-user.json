@@ -10,7 +10,6 @@
   "youShouldAlsoNotify": "You should also notify the other party that any objections to your application should be sent to the tribunal as soon as possible and in any event by",
   "noIDoNotWantTo": "No, I do not want to copy this correspondence to the other party.",
   "youMustTellTheTribunal": "You must tell the tribunal why you do not want to inform the other party. The tribunal will consider your reasons and decide if you must inform the other party or not.",
-  "submitBtn": "Submit",
   "errors": {
     "copyToOtherPartyYesOrNo": {
       "required": "Tell us if you want to copy this correspondence to the other party"

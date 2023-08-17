@@ -20,7 +20,7 @@
     <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
       {{ govukSummaryList({
         rows: response
-        }) 
+        })
       }}
   {% endfor %}
 
@@ -28,11 +28,17 @@
     <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
     {{ govukSummaryList({
       rows: decisionContent
-      }) 
+      })
     }}
     <br>
   {% endif %}
 
+      {% if isDisplayStoredButton %}
+        {{ govukButton({
+            text: respond,
+            href: storedToSubmitRedirectUrl
+          }) }}
+      {% endif %}
 
       {% if isRespondButton %}
       <p class="govuk-body">

@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { copyToOtherPartyRedirectUrl } from "./helpers/CopyToOtherPartyHelper";
+import { copyToOtherPartyRedirectUrl } from "./helpers/Rule92NotSystemUserHelper";
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
