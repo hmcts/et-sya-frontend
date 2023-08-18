@@ -66,7 +66,7 @@ const isVisibleTribunalResponse = (response: TseRespondType, claimantResponseReq
 };
 
 export const isSentToClaimantByTribunal = (response: TseRespondType): boolean => {
-  return response.from === Applicant.ADMIN && response.selectPartyNotify !== Parties.RESPONDENT_ONLY
+  return response.from === Applicant.ADMIN && response.selectPartyNotify !== Parties.RESPONDENT_ONLY;
 };
 
 const getNameText = (applicant: string, translations: AnyRecord): string => {

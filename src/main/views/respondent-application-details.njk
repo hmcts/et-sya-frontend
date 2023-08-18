@@ -12,45 +12,32 @@
       {% include "back-link.njk" %}
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4 govuk-!-margin-top-1">{{ header }}</h1>
 
-      {{ govukSummaryList({
-      rows: appContent
-      }) 
-    }}
+      {{ govukSummaryList({ rows: appContent }) }}
 
-    {% for response in allResponses %}
-    <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
-      {{ govukSummaryList({
-        rows: response
-        }) 
-      }}
-    {% endfor %}
+      {% for response in allResponses %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">
+          {{ responseItem }} {{ loop.index }}
+        </h2>
+        {{ govukSummaryList({ rows: response }) }}
+      {% endfor %}
 
       {% if respondButton and not isAdminRespondButton %}
-        {{ govukButton({
-            text: respond,
-            href: redirectUrl,
-            id: 'respond-button'
-          }) }}
+        {{ govukButton({ id: 'respond-button', text: respond, href: redirectUrl }) }}
       {% endif %}
 
       {% if isAdminRespondButton %}
         <p class="govuk-body">
           {{ mustRespond }}
         </p>
-        {{ govukButton({
-            text: respond,
-            href: adminRespondRedirectUrl,
-            id: 'respond-button'
-          }) }}
+        {{ govukButton({ id: 'respond-button', text: respond, href: adminRespondRedirectUrl }) }}
       {% endif %}
 
-      {% if selectedApplication.value.adminDecision.length %}
+      {% if decisionContent %}
         <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ decision }}</h2>
-        {{ govukSummaryList({
-          rows: decisionContent
-          }) 
-        }}
-        <br>
+
+        {% for decision in decisionContent %}
+          {{ govukSummaryList({ rows: decision }) }}
+        {% endfor %}
       {% endif %}
 
     </div>
@@ -59,10 +46,7 @@
     {% include "./citizen-hub-sidebar.njk" %}
     {% endset %}
 
-    {{ govukDetails({
-        summaryText: "Contact",
-        html: sideBarContent
-      }) }}
+    {{ govukDetails({ summaryText: "Contact", html: sideBarContent }) }}
   </div>
 </div>
 {% endblock %}

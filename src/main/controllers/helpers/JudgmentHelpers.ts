@@ -79,8 +79,7 @@ export const getJudgmentAttachments = async (
 
 export const getDecisionAttachments = async (
   selectedDecision: TseAdminDecisionItem,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<DocumentTypeItem[]> => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
@@ -90,12 +89,7 @@ export const getDecisionAttachments = async (
   }
 
   if (decisionAttachments.length) {
-    try {
-      await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      res.redirect('/not-found');
-    }
+    await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
     decisionAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
   }
   return decisionAttachments;

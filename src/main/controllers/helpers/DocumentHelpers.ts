@@ -34,9 +34,7 @@ export const populateDocumentMetadata = async (doc: Document, accessToken: strin
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { createdOn, size, mimeType } = docDetails.data;
-  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'long',
-  }).format(new Date(createdOn));
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn));
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
@@ -65,7 +63,7 @@ export const createDownloadLink = (file: Document): string => {
   const mimeType = getFileExtension(file.document_filename);
   const href = `/getSupportingMaterial/${getDocId(file.document_url)}`;
   const size = formatBytes(file.document_size);
-  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename}(${mimeType}, ${size})</a>`;
+  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename} (${mimeType}, ${size})</a>`;
 };
 
 export const findSelectedGenericTseApplication = (

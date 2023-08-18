@@ -45,7 +45,7 @@ export default class TribunalOrderOrRequestDetailsController {
       );
     } catch (err) {
       logger.error(err.message);
-      res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     const translations: AnyRecord = {

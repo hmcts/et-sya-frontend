@@ -45,7 +45,7 @@ const adminDecisionRowHeader7 = respondentApplicationDetailsJSON.additionalInfo;
 const adminDecisionRowHeader8 = respondentApplicationDetailsJSON.document;
 const adminDecisionRowHeader9 = respondentApplicationDetailsJSON.decisionMadeBy;
 const adminDecisionRowHeader10 = respondentApplicationDetailsJSON.name;
-const adminDecisionRowHeader11 = '<br><br>Notification';
+const adminDecisionRowHeader11 = 'Notification';
 
 const expectedResponseSummaryListHeader = 'Response 1';
 
@@ -231,7 +231,7 @@ describe('Respondent Application details page', () => {
 
   it('should display remaining admin decisions in descending order by application number', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListValueClass);
-    expect(summaryListData[21].innerHTML).toContain('<br><br>Decision title 1 test text');
+    expect(summaryListData[21].innerHTML).toContain('Decision title 1 test text');
     expect(summaryListData[22].innerHTML).toContain('Granted');
     expect(summaryListData[23].innerHTML).toContain('3 March 2023');
     expect(summaryListData[24].innerHTML).toContain('Tribunal');

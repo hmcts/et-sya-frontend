@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
@@ -23,6 +24,24 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 const getCaseApiMock = jest.spyOn(caseService, 'getCaseApi');
 const api = new CaseApi(mockedAxios);
 
+const mockDocumentDetailsResponse: DocumentDetailsResponse = {
+  createdOn: '2000-01-01',
+  size: 420,
+  mimeType: 'application/pdf',
+  classification: 'PUBLIC',
+  originalDocumentName: 'mockDocumentName',
+  createdBy: 'mockCreatedBy',
+  lastModifiedBy: 'mockLastModifiedBy',
+  modifiedOn: '2000-01-01',
+  metadata: {
+    jurisdiction: 'EMPLOYMENT',
+    case_id: '1',
+    case_type_id: '1',
+  },
+};
+
+api.getDocumentDetails = jest.fn().mockResolvedValue({ data: mockDocumentDetailsResponse });
+
 describe('Respondent application details controller', () => {
   getCaseApiMock.mockReturnValue(api);
   beforeEach(() => {
@@ -42,7 +61,6 @@ describe('Respondent application details controller', () => {
     const request = mockRequestWithTranslation({ userCase }, respondentApplicationDetailsRaw);
 
     await new RespondentApplicationDetailsController().get(request, response);
-
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, expect.anything());
   });
 

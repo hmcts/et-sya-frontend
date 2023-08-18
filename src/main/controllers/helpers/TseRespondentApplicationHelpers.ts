@@ -1,9 +1,8 @@
-
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
-  GenericTseApplicationTypeItem,
   GenericTseApplicationType,
+  GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
@@ -110,7 +109,10 @@ export const setSelectedTseApplication = (
   }
 };
 
-export const getResponseDocDownloadLink = async (selectedApplication: GenericTseApplicationTypeItem, accessToken: string) => {
+export const getResponseDocDownloadLink = async (
+  selectedApplication: GenericTseApplicationTypeItem,
+  accessToken: string
+): Promise<string> => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
 
   if (!selectedApplicationRespondCollection?.length) {
@@ -127,7 +129,10 @@ export const getResponseDocDownloadLink = async (selectedApplication: GenericTse
   return createDownloadLink(responseDoc);
 };
 
-export const getApplicationDocDownloadLink = async (application: GenericTseApplicationTypeItem, accessToken: string) => {
+export const getApplicationDocDownloadLink = async (
+  application: GenericTseApplicationTypeItem,
+  accessToken: string
+) => {
   const applicationDocDownload = application?.value?.documentUpload;
 
   if (!applicationDocDownload) {
@@ -141,7 +146,7 @@ export const getApplicationDocDownloadLink = async (application: GenericTseAppli
 export const getDecisionContent = async (
   selectedApplication: GenericTseApplicationType,
   translations: AnyRecord,
-  accessToken: string,
+  accessToken: string
 ): Promise<any[] | void> => {
   const selectedAppAdminDecision = selectedApplication.adminDecision;
   let decisionContent = undefined;

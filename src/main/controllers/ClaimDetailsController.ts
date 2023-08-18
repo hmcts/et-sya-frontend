@@ -53,6 +53,7 @@ export default class ClaimDetailsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
 
     populateAppItemsWithRedirectLinksCaptionsAndStatusColors(
