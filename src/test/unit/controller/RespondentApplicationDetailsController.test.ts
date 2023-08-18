@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { DocumentDetailsResponse } from 'definitions/api/documentDetailsResponse';
+import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
+
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
 import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';

@@ -112,7 +112,7 @@ export const setSelectedTseApplication = (
 export const getResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
   accessToken: string
-) => {
+): Promise<string> => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
 
   if (!selectedApplicationRespondCollection?.length) {

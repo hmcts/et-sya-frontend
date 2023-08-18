@@ -77,7 +77,10 @@ export const getJudgmentAttachments = async (
   return judgmentAttachments;
 };
 
-export const getDecisionAttachments = async (selectedDecision: TseAdminDecisionItem, req: AppRequest) => {
+export const getDecisionAttachments = async (
+  selectedDecision: TseAdminDecisionItem,
+  req: AppRequest
+): Promise<DocumentTypeItem[]> => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
     if (selectedDecision?.value?.responseRequiredDoc[i]?.value?.uploadedDocument) {

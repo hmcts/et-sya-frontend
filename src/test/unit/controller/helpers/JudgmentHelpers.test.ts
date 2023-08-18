@@ -18,7 +18,7 @@ import {
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
-import { HubLinksStatuses } from '../../../../main/definitions/hub';
+import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import allJudgmentsRaw from '../../../../main/resources/locales/en/translation/all-judgments.json';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
@@ -87,6 +87,9 @@ describe('Judgment helper', () => {
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
 
     activateJudgmentsLink([notification], [selectedDecision], request);
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements]).toEqual(
+      HubLinkStatus.IN_PROGRESS
+    );
   });
 
   it('should populate judgments with redirect link, status and colour', () => {

@@ -1,4 +1,3 @@
-import { GovUkSummaryRow } from '../../definitions/nunjucks';
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
@@ -7,6 +6,7 @@ import {
   TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
+import { GovUkSummaryRow } from '../../definitions/nunjucks';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -17,7 +17,7 @@ export const getTseApplicationDetails = (
   application: GenericTseApplicationType,
   translations: AnyRecord,
   downloadLink: string
-) => {
+): GovUkSummaryRow[] => {
   const rows = [
     addSummaryRow(translations.applicant, application.applicant),
     addSummaryRow(translations.requestDate, application.date),
@@ -61,7 +61,7 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-) => {
+): Promise<GovUkSummaryRow[][]> => {
   const respondCollection = selectedApplication.value.respondCollection;
   if (!respondCollection?.length) {
     return [];

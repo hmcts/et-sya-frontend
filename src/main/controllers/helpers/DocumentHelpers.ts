@@ -30,7 +30,7 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
   }
 };
 
-export const populateDocumentMetadata = async (doc: Document, accessToken: string) => {
+export const populateDocumentMetadata = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { createdOn, size, mimeType } = docDetails.data;
