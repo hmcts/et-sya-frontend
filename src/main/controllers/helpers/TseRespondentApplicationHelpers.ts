@@ -132,7 +132,7 @@ export const getResponseDocDownloadLink = async (
 export const getApplicationDocDownloadLink = async (
   application: GenericTseApplicationTypeItem,
   accessToken: string
-) => {
+): Promise<string> => {
   const applicationDocDownload = application?.value?.documentUpload;
 
   if (!applicationDocDownload) {
