@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 
 import RespondentApplicationDetailsController from '../../../main/controllers/RespondentApplicationDetailsController';
+import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 import { CaseWithId } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import respondentApplicationDetailsRaw from '../../../main/resources/locales/en/translation/respondent-application-details.json';

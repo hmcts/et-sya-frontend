@@ -1,4 +1,4 @@
-import { DocumentDetailsResponse } from "../../../main/definitions/api/documentDetailsResponse";
+import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 
 export const mockDocumentDetailsResponse: DocumentDetailsResponse = {
   createdOn: '2000-01-01',
@@ -16,4 +16,4 @@ export const mockDocumentDetailsResponse: DocumentDetailsResponse = {
   },
 };
 
-export const mockDocumentDetailsResponseData = { data: mockDocumentDetailsResponse }
+export const mockDocumentDetailsResponseData = { data: mockDocumentDetailsResponse };
