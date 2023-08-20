@@ -1,3 +1,4 @@
+import { SummaryListRow } from '../../definitions/govuk/govukSummaryList';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
@@ -10,8 +11,8 @@ export const getCyaContent = (
   contactTheTribunalSelectedUrl: string,
   downloadLink: string,
   typeOfApplication: string
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
+): SummaryListRow[] => {
+  const cyaContent: SummaryListRow[] = [
     {
       key: {
         text: translations.applicationType,
@@ -65,49 +66,49 @@ export const getCyaContent = (
         ],
       },
     },
-    ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyYesOrNo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.copyToOtherPartyYesOrNo,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                  text: CHANGE,
-                  visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-                },
-              ],
-            },
-          },
-          ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
-            ? []
-            : [
-                {
-                  key: {
-                    text: translations.copyToOtherPartyText,
-                    classes: 'govuk-!-font-weight-regular-m',
-                  },
-                  value: {
-                    text: userCase.copyToOtherPartyText,
-                  },
-                  actions: {
-                    items: [
-                      {
-                        href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                        text: CHANGE,
-                        visuallyHiddenText: translations.copyToOtherPartyText,
-                      },
-                    ],
-                  },
-                },
-              ]),
-        ]),
   ];
+
+  if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType)) {
+    cyaContent.push({
+      key: {
+        text: translations.copyToOtherPartyYesOrNo,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: userCase.copyToOtherPartyYesOrNo,
+      },
+      actions: {
+        items: [
+          {
+            href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+            text: CHANGE,
+            visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
+          },
+        ],
+      },
+    });
+
+    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
+      cyaContent.push({
+        key: {
+          text: translations.copyToOtherPartyText,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+        value: {
+          text: userCase.copyToOtherPartyText,
+        },
+        actions: {
+          items: [
+            {
+              href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
+              text: CHANGE,
+              visuallyHiddenText: translations.copyToOtherPartyText,
+            },
+          ],
+        },
+      });
+    }
+  }
+
+  return cyaContent;
 };
