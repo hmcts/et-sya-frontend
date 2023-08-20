@@ -1,6 +1,6 @@
-import { SummaryListRow } from '../../definitions/govuk/govukSummaryList';
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE, PageUrls } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -12,101 +12,28 @@ export const getCyaContent = (
   downloadLink: string,
   typeOfApplication: string
 ): SummaryListRow[] => {
+  const { applicationType, legend, supportingMaterial, change, copyToOtherPartyYesOrNo, copyToOtherPartyText } = translations;
   const cyaContent: SummaryListRow[] = [
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: typeOfApplication,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.applicationType,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.contactApplicationText,
-      },
-      actions: {
-        items: [
-          {
-            href: contactTheTribunalSelectedUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.legend,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
-
-      actions: {
-        items: [
-          {
-            href: contactTheTribunalSelectedUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.supportingMaterial,
-          },
-        ],
-      },
-    },
+    addSummaryRow(applicationType, typeOfApplication, undefined,
+      createChangeAction(PageUrls.CONTACT_THE_TRIBUNAL + languageParam, change, applicationType)
+    ),
+    addSummaryRow(legend, userCase.contactApplicationText, undefined,
+      createChangeAction(contactTheTribunalSelectedUrl + languageParam, change, legend)
+    ),
+    addSummaryRow(supportingMaterial, undefined, downloadLink,
+      createChangeAction(contactTheTribunalSelectedUrl + languageParam, change, supportingMaterial)
+    ),
   ];
 
   if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType)) {
-    cyaContent.push({
-      key: {
-        text: translations.copyToOtherPartyYesOrNo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.copyToOtherPartyYesOrNo,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-          },
-        ],
-      },
-    });
+    cyaContent.push(addSummaryRow(copyToOtherPartyYesOrNo, userCase.copyToOtherPartyYesOrNo, undefined,
+      createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, copyToOtherPartyYesOrNo)
+    ));
 
     if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
-      cyaContent.push({
-        key: {
-          text: translations.copyToOtherPartyText,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.copyToOtherPartyText,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-              text: CHANGE,
-              visuallyHiddenText: translations.copyToOtherPartyText,
-            },
-          ],
-        },
-      });
+      cyaContent.push(addSummaryRow(copyToOtherPartyText, userCase.copyToOtherPartyText, undefined,
+        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, copyToOtherPartyText)
+      ));
     }
   }
 

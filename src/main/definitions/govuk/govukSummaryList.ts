@@ -1,15 +1,13 @@
-export function addSummaryRow(keyText: string, valueText?: string, valueHtml?: string, actions?: SummaryListActions): SummaryListRow {
+export function addSummaryRow(key: string, text: SummaryListContent['text'], html?: string, actions?: SummaryListActions): SummaryListRow {
   return {
-    key: {
-      text: keyText,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
-    value: {
-      text: valueText,
-      html: valueHtml,
-    },
+    key: { text: key, classes: 'govuk-!-font-weight-regular-m' },
+    value: { text: text, html: html, },
     actions
   };
+}
+
+export function createChangeAction(href: string, text: string, visuallyHiddenText?: string): SummaryListActions {
+  return { items: [{ href, text, visuallyHiddenText: visuallyHiddenText || text }] };
 }
 
 export interface SummaryListOptions {
@@ -21,13 +19,13 @@ export interface SummaryListOptions {
 
 export interface SummaryListRow {
   key: SummaryListContent;
-  value: SummaryListContent;
+  value?: SummaryListContent;
   actions?: SummaryListActions;
   classes?: string;
 }
 
 export interface SummaryListContent {
-  text?: string;
+  text?: string | string[];
   html?: string;
   classes?: string;
 }

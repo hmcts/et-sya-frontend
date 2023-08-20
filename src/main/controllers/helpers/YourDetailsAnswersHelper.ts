@@ -1,3 +1,4 @@
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import {
   CaseTypeId,
   CaseWithId,
@@ -10,7 +11,7 @@ import {
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
-import { answersAddressFormatter } from './PageContentHelpers';
+import { answersAddressFormatter, formatCaseDateDDMMYYYY } from './PageContentHelpers';
 
 const getTranslationsForSexEnum = function (userCase: CaseWithId, translations: AnyRecord) {
   let translation = translations.personalDetails.preferNotToSay;
@@ -43,221 +44,62 @@ const getTranslationsForHearingPreferences = function (userCase: CaseWithId, tra
 export const getYourDetails = (
   userCase: CaseWithId,
   translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-summary-list__key govuk-heading-m',
-      },
-      value: {},
-    },
-    {
-      key: {
-        text: translations.personalDetails.dob,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.dobDate === undefined
-            ? ''
-            : userCase.dobDate.day + '-' + userCase.dobDate.month + '-' + userCase.dobDate.year,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.dob,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.sex,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: getTranslationsForSexEnum(userCase, translations),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.sex,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.title,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.preferredTitle === undefined ? translations.personalDetails.notSelected : userCase.preferredTitle,
-      },
+): SummaryListRow[] => {
+  const { change } = translations;
+  const { disability, yes, no, takePartInHearing, dob, header, sex, title, notSelected, contactOrHomeAddress, howToBeContacted, email, post, languageLabel, welsh, english, hearingLabel } = translations.personalDetails;
+  const { telephone, notProvided } = translations.contactDetails;
 
-      actions: {
-        items: [
-          {
-            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.title,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.contactOrHomeAddress,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: answersAddressFormatter(
-          userCase.address1,
-          userCase.address2,
-          userCase.addressTown,
-          userCase.addressCountry,
-          userCase.addressPostcode
-        ),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.contactOrHomeAddress,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.contactDetails.telephone,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.telNumber === undefined ? translations.contactDetails.notProvided : userCase.telNumber,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.contactDetails.telephone,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.howToBeContacted,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.claimantContactPreference === EmailOrPost.EMAIL
-            ? translations.personalDetails.email
-            : translations.personalDetails.post,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.howToBeContacted,
-          },
-        ],
-      },
-    },
-    ...(userCase.caseTypeId === CaseTypeId.SCOTLAND
-      ? [] // England only fields
-      : [
-          {
-            key: {
-              text: translations.personalDetails.languageLabel,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH
-                  ? translations.personalDetails.welsh
-                  : translations.personalDetails.english,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.personalDetails.howToBeContacted,
-                },
-              ],
-            },
-          },
-          {
-            key: {
-              text: translations.personalDetails.hearingLabel,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH
-                  ? translations.personalDetails.welsh
-                  : translations.personalDetails.english,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.personalDetails.howToBeContacted,
-                },
-              ],
-            },
-          },
-        ]),
-    {
-      key: {
-        text: translations.personalDetails.takePartInHearing,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: getTranslationsForHearingPreferences(userCase, translations),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.takePartInHearing,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.disability,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.reasonableAdjustments === YesOrNo.YES
-            ? translations.personalDetails.yes + ', ' + userCase.reasonableAdjustmentsDetail
-            : translations.personalDetails.no,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.disability,
-          },
-        ],
-      },
-    },
+  const rows = [
+    { key: { text: header, classes: 'govuk-summary-list__key govuk-heading-m', }, value: {}, },
+    addSummaryRow(dob, formatCaseDateDDMMYYYY(userCase.dobDate) ?? '', undefined,
+      createChangeAction(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, change, dob)
+    ),
+    addSummaryRow(sex, getTranslationsForSexEnum(userCase, translations), undefined,
+      createChangeAction(
+        PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, change, sex)
+    ),
+    addSummaryRow(title, userCase.preferredTitle === undefined ? notSelected : userCase.preferredTitle, undefined,
+      createChangeAction(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, change, title)
+    ),
+    addSummaryRow(contactOrHomeAddress,
+      answersAddressFormatter(
+        userCase.address1,
+        userCase.address2,
+        userCase.addressTown,
+        userCase.addressCountry,
+        userCase.addressPostcode
+      ),
+      undefined,
+      createChangeAction(PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE, change, contactOrHomeAddress)
+    ),
+    addSummaryRow(telephone, userCase.telNumber === undefined ? notProvided : userCase.telNumber, undefined,
+      createChangeAction(PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE, change, telephone)
+    ),
+    addSummaryRow(howToBeContacted, userCase.claimantContactPreference === EmailOrPost.EMAIL ? email : post, undefined,
+      createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
+    ),
   ];
+
+  if (userCase.caseTypeId === CaseTypeId.ENGLAND_WALES) {
+    rows.push(
+      addSummaryRow(languageLabel, userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH ? welsh : english, undefined,
+        createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
+      ),
+      addSummaryRow(hearingLabel, userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH ? welsh : english, undefined,
+        createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
+      )
+    )
+  }
+
+  rows.push(
+    // TODO: Return to this, we're passing an array in and apparently this is fine though docs don't mention it
+    addSummaryRow(takePartInHearing, getTranslationsForHearingPreferences(userCase, translations), undefined,
+      createChangeAction(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, change, takePartInHearing)
+    ),
+    addSummaryRow(disability, userCase.reasonableAdjustments === YesOrNo.YES ? `${yes}, ${userCase.reasonableAdjustmentsDetail}` : no, undefined,
+      createChangeAction(PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE, change, disability)
+    ),
+  )
+
+  return rows;
 };

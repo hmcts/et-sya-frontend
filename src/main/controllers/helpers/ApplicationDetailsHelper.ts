@@ -1,3 +1,4 @@
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
@@ -6,7 +7,6 @@ import {
   TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
-import { GovUkSummaryRow } from '../../definitions/nunjucks';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -17,7 +17,7 @@ export const getTseApplicationDetails = (
   application: GenericTseApplicationType,
   translations: AnyRecord,
   downloadLink: string
-): GovUkSummaryRow[] => {
+): SummaryListRow[] => {
   const rows = [
     addSummaryRow(translations.applicant, application.applicant),
     addSummaryRow(translations.requestDate, application.date),
@@ -38,7 +38,7 @@ export const getTseApplicationDecisionDetails = (
   application: GenericTseApplicationType,
   translations: AnyRecord,
   decisionDocDownloadLink: string[]
-): GovUkSummaryRow[][] => {
+): SummaryListRow[][] => {
   const reversedDownloadLinks = [...decisionDocDownloadLink].reverse();
 
   return [...application.adminDecision]
@@ -61,13 +61,13 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-): Promise<GovUkSummaryRow[][]> => {
+): Promise<SummaryListRow[][]> => {
   const respondCollection = selectedApplication.value.respondCollection;
   if (!respondCollection?.length) {
     return [];
   }
 
-  const allResponses: GovUkSummaryRow[][] = [];
+  const allResponses: SummaryListRow[][] = [];
   const { user, userCase } = req.session;
 
   for (const { id, value: response } of respondCollection) {
@@ -97,7 +97,7 @@ const getRowsForAdminResponse = async (
   translations: AnyRecord,
   response: TseRespondType,
   accessToken: string
-): Promise<GovUkSummaryRow[]> => {
+): Promise<SummaryListRow[]> => {
   const requestMadeBy = response.isCmoOrRequest === 'Request' ? response.requestMadeBy : response.cmoMadeBy;
 
   const firstDocument = response.addDocument?.find(e => e).value;
@@ -139,15 +139,4 @@ const getRowsForNonAdminResponse = async (translations: AnyRecord, response: Tse
   ];
 };
 
-function addSummaryRow(keyText: string, valueText?: string, valueHtml?: string): GovUkSummaryRow {
-  return {
-    key: {
-      text: keyText,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
-    value: {
-      text: valueText,
-      html: valueHtml,
-    },
-  };
-}
+

@@ -1,3 +1,4 @@
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
@@ -10,144 +11,49 @@ import { getLanguageParam } from './RouterHelpers';
 export const getRepondentOrderOrRequestDetails = (
   translations: AnyRecord,
   item: SendNotificationTypeItem
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+): SummaryListRow[] => {
   const respondentRequestOrOrderDetails = [];
 
   if (item.value.sendNotificationSelectHearing) {
-    respondentRequestOrOrderDetails.push({
-      key: {
-        text: translations.hearing,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationSelectHearing.selectedLabel,
-      },
-    });
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.hearing, item.value.sendNotificationSelectHearing.selectedLabel)
+    );
   }
 
   respondentRequestOrOrderDetails.push(
-    {
-      key: {
-        text: translations.dateSent,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.sentBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: 'Tribunal',
-      },
-    },
-    {
-      key: {
-        text: translations.orderOrRequest,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationCaseManagement,
-      },
-    },
-    {
-      key: {
-        text: translations.responseDue,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationResponseTribunal,
-      },
-    },
-    {
-      key: {
-        text: translations.partyToRespond,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationSelectParties,
-      },
-    }
+    addSummaryRow(translations.dateSent, item.value.date),
+    // Should 'Tribunal' here be a translation reference?
+    addSummaryRow(translations.sentBy, 'Tribunal'),
+    addSummaryRow(translations.orderOrRequest, item.value.sendNotificationCaseManagement),
+    addSummaryRow(translations.responseDue, item.value.sendNotificationResponseTribunal),
+    addSummaryRow(translations.partyToRespond, item.value.sendNotificationSelectParties)
   );
 
   if (item.value.sendNotificationAdditionalInfo) {
-    respondentRequestOrOrderDetails.push({
-      key: {
-        text: translations.addInfo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationAdditionalInfo,
-      },
-    });
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.addInfo, item.value.sendNotificationAdditionalInfo)
+    );
   }
 
-  const docs = item.value.sendNotificationUploadDocument;
-  if (docs?.length) {
-    docs.forEach(doc => {
-      respondentRequestOrOrderDetails.push(
-        {
-          key: {
-            text: translations.description,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: { text: doc.value.shortDescription },
-        },
-        {
-          key: {
-            text: translations.document,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: { html: createDownloadLink(doc.value.uploadedDocument) },
-        }
-      );
-    });
-  }
+  const docs = item.value.sendNotificationUploadDocument || [];
+  respondentRequestOrOrderDetails.push(...docs.flatMap(doc => [
+    addSummaryRow(translations.description, doc.value.shortDescription),
+    addSummaryRow(translations.document, undefined, createDownloadLink(doc.value.uploadedDocument)),
+  ]));
 
   if (item.value.sendNotificationWhoCaseOrder) {
-    respondentRequestOrOrderDetails.push({
-      key: {
-        text: translations.orderMadeBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationWhoCaseOrder,
-      },
-    });
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.orderMadeBy, item.value.sendNotificationWhoCaseOrder)
+    );
   } else {
-    respondentRequestOrOrderDetails.push({
-      key: {
-        text: translations.requestMadeBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationRequestMadeBy,
-      },
-    });
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.requestMadeBy, item.value.sendNotificationRequestMadeBy)
+    );
   }
 
   respondentRequestOrOrderDetails.push(
-    {
-      key: {
-        text: translations.fullName,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationFullName,
-      },
-    },
-    {
-      key: {
-        text: translations.sentTo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: item.value.sendNotificationNotify,
-      },
-    }
+    addSummaryRow(translations.fullName, item.value.sendNotificationFullName),
+    addSummaryRow(translations.sentTo, item.value.sendNotificationNotify)
   );
 
   return respondentRequestOrOrderDetails;
@@ -244,10 +150,5 @@ export const activateTribunalOrdersAndRequestsLink = (
 export const filterNotificationsWithRequestsOrOrders = (
   items: SendNotificationTypeItem[]
 ): SendNotificationTypeItem[] => {
-  return items?.filter(
-    it =>
-      it.value.sendNotificationCaseManagement !== undefined &&
-      it.value.sendNotificationCaseManagement !== '' &&
-      it.value.sendNotificationCaseManagement !== null
-  );
+  return items?.filter(it => it.value.sendNotificationCaseManagement);
 };

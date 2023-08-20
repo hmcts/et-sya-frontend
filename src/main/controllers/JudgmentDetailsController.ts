@@ -109,7 +109,7 @@ export default class JudgmentDetailsController {
         }
       }
       const judgmentAttachments = await getJudgmentAttachments(selectedJudgment, req, res);
-      pageContent = getJudgmentDetails(selectedJudgment, judgmentAttachments, translations);
+      pageContent = getJudgmentDetails(selectedJudgment.value, judgmentAttachments, translations);
     }
 
     const content = getPageContent(req, <FormContent>{}, [

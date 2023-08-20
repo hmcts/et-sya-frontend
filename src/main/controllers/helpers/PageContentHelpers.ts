@@ -1,3 +1,4 @@
+import { CaseDate } from 'definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
@@ -85,3 +86,11 @@ export const getApplicationRespondByDate = (
     return dateString;
   }
 };
+
+export function formatCaseDateDDMMYYYY(caseDate: CaseDate): string {
+  if (!caseDate) {
+    return
+  }
+  // Purposefully not adding padding here because the original methods did no such formatting either
+  return `${caseDate.day}-${caseDate.month}-${caseDate.year}`
+}
