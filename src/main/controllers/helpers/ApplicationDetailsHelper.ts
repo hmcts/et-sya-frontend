@@ -1,4 +1,3 @@
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
@@ -7,6 +6,7 @@ import {
   TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -138,5 +138,3 @@ const getRowsForNonAdminResponse = async (translations: AnyRecord, response: Tse
     addSummaryRow(translations.copyCorrespondence, response.copyToOtherParty),
   ];
 };
-
-

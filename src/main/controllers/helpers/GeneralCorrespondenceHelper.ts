@@ -1,6 +1,6 @@
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -14,7 +14,7 @@ export const getCorrespondenceNotificationDetails = (
   const generalCorrespondenceNotification = [
     addSummaryRow(translations.dateSent, item.value.date),
     addSummaryRow(translations.sentBy, translations.tribunal),
-    addSummaryRow(translations.addInfo, item.value.sendNotificationAdditionalInfo)
+    addSummaryRow(translations.addInfo, item.value.sendNotificationAdditionalInfo),
   ];
 
   const docs = item.value.sendNotificationUploadDocument || [];

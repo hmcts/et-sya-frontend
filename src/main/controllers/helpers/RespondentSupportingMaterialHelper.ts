@@ -1,6 +1,6 @@
-import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { CaseWithId } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getFilesRows = (
@@ -15,7 +15,10 @@ export const getFilesRows = (
   }
 
   return [
-    addSummaryRow(userCase.supportingMaterialFile.document_filename, '', undefined,
+    addSummaryRow(
+      userCase.supportingMaterialFile.document_filename,
+      '',
+      undefined,
       createChangeAction(PageUrls.REMOVE_SUPPORTING_MATERIAL.replace(':appId', appId), remove, remove)
     ),
   ];

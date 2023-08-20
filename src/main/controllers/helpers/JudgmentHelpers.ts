@@ -8,16 +8,19 @@ import {
   GenericTseApplicationTypeItem,
   TseAdminDecisionItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { SendNotificationType, SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
+import {
+  SendNotificationType,
+  SendNotificationTypeItem,
+} from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { DecisionAndApplicationDetails } from '../../definitions/definition';
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink, getDocumentsAdditionalInformation } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 
 export const activateJudgmentsLink = (
   judgmentItems: SendNotificationTypeItem[],
@@ -104,7 +107,7 @@ export const getJudgmentDetails = (
   const judgmentDetails = [
     addSummaryRow(translations.decision, judgment.sendNotificationDecision),
     addSummaryRow(translations.dateSent, judgment.date),
-    addSummaryRow(translations.sentBy, judgment.sendNotificationSentBy)
+    addSummaryRow(translations.sentBy, judgment.sendNotificationSentBy),
   ];
 
   if (judgment.sendNotificationAdditionalInfo) {
@@ -112,10 +115,12 @@ export const getJudgmentDetails = (
   }
 
   if (judgmentAttachments) {
-    judgmentDetails.push(...judgmentAttachments.flatMap((attachment) => [
-      addSummaryRow(translations.description, attachment.value.shortDescription),
-      addSummaryRow(translations.document, undefined, attachment.downloadLink),
-    ]));
+    judgmentDetails.push(
+      ...judgmentAttachments.flatMap(attachment => [
+        addSummaryRow(translations.description, attachment.value.shortDescription),
+        addSummaryRow(translations.document, undefined, attachment.downloadLink),
+      ])
+    );
   }
 
   judgmentDetails.push(
@@ -163,8 +168,9 @@ export const getDecisionDetails = (
     addSummaryRow(translations.copyCorrespondence, selectedDecisionApplication?.value.copyToOtherPartyYesOrNo)
   );
 
-  if (selectedDecisionApplication?.value.respondCollection) {
-    const { from, date, response, supportingMaterial } = selectedDecisionApplication?.value.respondCollection[0].value;
+  // Bit strange here how we only care for the first response
+  if (selectedDecisionApplication?.value.respondCollection?.length > 0) {
+    const { from, date, response, supportingMaterial } = selectedDecisionApplication.value.respondCollection[0].value;
     responseDetails.push(
       addSummaryRow(translations.responseFrom, from),
       // Not sure if these should be writing HTML - it feels wrong, but this is what the original code set...
@@ -178,7 +184,7 @@ export const getDecisionDetails = (
       );
     }
     responseDetails.push(
-      addSummaryRow(translations.copyCorrespondence, selectedDecisionApplication?.value.copyToOtherPartyYesOrNo)
+      addSummaryRow(translations.copyCorrespondence, selectedDecisionApplication.value.copyToOtherPartyYesOrNo)
     );
   }
 
@@ -189,16 +195,16 @@ export const getDecisionDetails = (
   );
 
   if (selectedDecision?.value.additionalInformation) {
-    decisionDetails.push(
-      addSummaryRow(translations.additionalInfo, selectedDecision?.value.additionalInformation)
-    );
+    decisionDetails.push(addSummaryRow(translations.additionalInfo, selectedDecision?.value.additionalInformation));
   }
 
-  decisionDetails.push(...selectedAttachments.flatMap((element) => [
-    // This also probably should not be HTML - but original code used HTML
-    addSummaryRow(translations.description, undefined, element.value.shortDescription),
-    addSummaryRow(translations.document, undefined, element.downloadLink),
-  ]));
+  decisionDetails.push(
+    ...selectedAttachments.flatMap(element => [
+      // This also probably should not be HTML - but original code used HTML
+      addSummaryRow(translations.description, undefined, element.value.shortDescription),
+      addSummaryRow(translations.document, undefined, element.downloadLink),
+    ])
+  );
 
   decisionDetails.push(
     addSummaryRow(translations.decisionMadeBy, selectedDecision?.value.decisionMadeBy),
@@ -262,7 +268,10 @@ export function getApplicationOfDecision(
   return appOfDecision;
 }
 
-export const findSelectedDecision = (items: TseAdminDecisionItem[], param: string): TseAdminDecisionItem | undefined => {
+export const findSelectedDecision = (
+  items: TseAdminDecisionItem[],
+  param: string
+): TseAdminDecisionItem | undefined => {
   return items?.find(it => it.id === param);
 };
 

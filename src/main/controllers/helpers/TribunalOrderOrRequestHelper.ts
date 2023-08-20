@@ -1,7 +1,7 @@
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -36,10 +36,12 @@ export const getRepondentOrderOrRequestDetails = (
   }
 
   const docs = item.value.sendNotificationUploadDocument || [];
-  respondentRequestOrOrderDetails.push(...docs.flatMap(doc => [
-    addSummaryRow(translations.description, doc.value.shortDescription),
-    addSummaryRow(translations.document, undefined, createDownloadLink(doc.value.uploadedDocument)),
-  ]));
+  respondentRequestOrOrderDetails.push(
+    ...docs.flatMap(doc => [
+      addSummaryRow(translations.description, doc.value.shortDescription),
+      addSummaryRow(translations.document, undefined, createDownloadLink(doc.value.uploadedDocument)),
+    ])
+  );
 
   if (item.value.sendNotificationWhoCaseOrder) {
     respondentRequestOrOrderDetails.push(
