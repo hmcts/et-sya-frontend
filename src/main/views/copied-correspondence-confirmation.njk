@@ -1,5 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
@@ -13,51 +14,18 @@
 
 {% block content %}
   <div class="govuk-!-width-two-thirds">
+
     <h1 class="govuk-heading-xl">{{applicationType}}</h1>
     <p class="govuk-body">{{youHaveNotSubmitted}}</p>
-    {{ govukTable({
-      caption: "Your application",
-      captionClasses: "govuk-table__caption--m",
-      firstCellIsHeader: true,
-      head: [
-        {
-          text: "[Question]"
-        },
-        {
-          text: "[Answer]"
-        }
-      ],
-      rows: [
-        [
-          {
-            text: "[Question]"
-          },
-          {
-            text: "[Answer]"
-          }
-        ],
-        [
-          {
-            html: "<p class='govuk-body'>[Question]<br>Supporting Material</p>"
-          },
-          {
-            html: "<p class='govuk-body'>[Answer]<br><a href='#' class='govuk-link'>Supporting Material</a></p>"
-          }
-        ],
-        [
-          {
-            text: "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?"
-          },
-          {
-            text: "Yes"
-          }
-        ]
-      ]
-    }) }}
+      {{ govukSummaryList({
+        rows: appContent
+      }) }}
+
     <h2 class="govuk-heading-l">{{confirmYouHaveCopied}}</h2>
     <p class="govuk-body">{{toSubmitYourApplication}}</p>
-    <p class="govuk-body"><a href="#" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
-    <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="#" class="govuk-link">{{fileNameOfSupportingDoc}} ({{opensInNewTab}})</a></p>
+    <p class="govuk-body"><a href="{{thisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
+    <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="{{thisCorrespondenceFileLink}}" class="govuk-link">{{thisCorrespondenceFileName}} ({{opensInNewTab}})</a></p>
+
     <h2 class="govuk-heading-m">{{haveYouCopied}}</h2>
     <p class="govuk-body">{{iConfirmThatIHaveCopied}}</p>
     {{ govukCheckboxes({
@@ -84,5 +52,6 @@
     }}
     <a class="govuk-link" href="#">{{cancel}}</a>
   </div>
+
   </div>
 {% endblock %}

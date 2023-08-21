@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 
+import { getLanguageParam } from './helpers/RouterHelpers';
 import {
   getCancelLink,
   getViewSupportingDoc,
@@ -13,8 +14,9 @@ import {
 export default class StoredApplicationConfirmationController {
   public get(req: AppRequest, res: Response): void {
     const userCase = req.session?.userCase;
+    const languageParam = getLanguageParam(req.url);
 
-    const viewThisCorrespondenceLink = getViewThisCorrespondenceLink(req);
+    const viewThisCorrespondenceLink = getViewThisCorrespondenceLink(userCase, languageParam);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),

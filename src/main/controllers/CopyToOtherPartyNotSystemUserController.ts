@@ -8,10 +8,10 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCancelLink, getCaptionText, getTodayPlus7DaysStrings } from './helpers/Rule92NotSystemUserHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getCancelLink, getCaptionText, getTodayPlus7DaysStrings } from './helpers/Rule92NotSystemUserHelper';
 
 export default class CopyToOtherPartyNotSystemUserController {
   private readonly form: Form;
@@ -109,10 +109,6 @@ export default class CopyToOtherPartyNotSystemUserController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const applicationTypeTranslations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-    };
-
     const content = getPageContent(req, this.CopyToOtherPartyNotSystemUserContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -121,7 +117,7 @@ export default class CopyToOtherPartyNotSystemUserController {
 
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, {
       ...content,
-      applicationType: getCaptionText(req, applicationTypeTranslations),
+      applicationType: getCaptionText(req),
       appDatePlusSeven: getTodayPlus7DaysStrings(),
       cancelLink: getCancelLink(req),
     });

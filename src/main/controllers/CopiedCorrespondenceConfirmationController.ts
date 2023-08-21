@@ -1,10 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 
-import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getCaptionText, getTseApplicationDetailsTable } from './helpers/Rule92NotSystemUserHelper';
 
 export default class CopiedCorrespondenceConfirmationController {
   public get(req: AppRequest, res: Response): void {
@@ -13,14 +13,13 @@ export default class CopiedCorrespondenceConfirmationController {
       ...req.t(TranslationKeys.COPIED_CORRESPONDENCE_CONFIRMATION, { returnObjects: true }),
     };
 
-    const applicationType = '[Application type]';
-    const fileNameOfSupportingDoc = '[file_name_of_supporting_doc]';
-    const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
     res.render(TranslationKeys.COPIED_CORRESPONDENCE_CONFIRMATION, {
       ...translations,
-      redirectUrl,
-      applicationType,
-      fileNameOfSupportingDoc,
+      applicationType: getCaptionText(req),
+      appContent: getTseApplicationDetailsTable(req),
+      thisCorrespondenceLink: '#',
+      thisCorrespondenceFileLink: '#',
+      thisCorrespondenceFileName: '[file_name_of_supporting_doc]',
     });
   }
 }

@@ -1,6 +1,6 @@
 import {
   copyToOtherPartyRedirectUrl,
-  getCaptionText,
+  getCaptionTextWithTranslations,
   getTodayPlus7DaysStrings,
 } from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
@@ -79,7 +79,7 @@ describe('getCaptionText', () => {
   it('should return Respond caption', () => {
     req.session.contactType = Rule92Types.RESPOND;
     const expected = 'Respond to an application';
-    const actual = getCaptionText(req, translations);
+    const actual = getCaptionTextWithTranslations(req, translations);
     expect(actual).toEqual(expected);
   });
 });

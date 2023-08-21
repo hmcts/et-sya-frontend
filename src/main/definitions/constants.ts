@@ -241,7 +241,7 @@ export const PageUrls = {
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
   TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
-  COPIED_CORRESPONDENCE_CONFIRMATION: '/copied-correspondence-confirmation',
+  COPIED_CORRESPONDENCE_CONFIRMATION: '/copied-correspondence-confirmation/:appId',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;

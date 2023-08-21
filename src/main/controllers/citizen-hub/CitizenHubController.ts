@@ -43,6 +43,7 @@ import {
   getJudgments,
 } from '../helpers/JudgmentHelpers';
 import { getLanguageParam } from '../helpers/RouterHelpers';
+import { getStoredPendingApplicationLinks } from '../helpers/Rule92NotSystemUserHelper';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterNotificationsWithRequestsOrOrders,
@@ -186,6 +187,7 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
+      storedPendingApplicationLinks: getStoredPendingApplicationLinks(allApplications, languageParam),
     });
   }
 }
