@@ -1,13 +1,15 @@
 import {
   copyToOtherPartyRedirectUrl,
-  getCaptionTextWithTranslations,
-  getTodayPlus7DaysStrings,
+
 } from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, Rule92Types } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
-import { AnyRecord } from '../../../../main/definitions/util-types';
 import { mockRequest } from '../../mocks/mockRequest';
+import {
+  getCaptionTextForCopyToOtherParty,
+  getTodayPlus7DaysStrings
+} from "../../../../main/controllers/helpers/CopyToOtherPartyHelper";
 
 describe('getTodayPlus7DaysStrings', () => {
   it('should return 7 days after today in GB format', () => {
@@ -70,16 +72,13 @@ describe('copyToOtherPartyRedirectUrl', () => {
   });
 });
 
-describe('getCaptionText', () => {
+describe('getCaptionTextWithRequest', () => {
   const req = mockRequest({});
-  const translations: AnyRecord = {
-    respondToApplication: 'Respond to an application',
-  };
 
   it('should return Respond caption', () => {
     req.session.contactType = Rule92Types.RESPOND;
     const expected = 'Respond to an application';
-    const actual = getCaptionTextWithTranslations(req, translations);
+    const actual = getCaptionTextForCopyToOtherParty(req);
     expect(actual).toEqual(expected);
   });
 });

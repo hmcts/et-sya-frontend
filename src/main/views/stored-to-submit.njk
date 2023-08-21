@@ -1,11 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -26,31 +21,10 @@
     <p class="govuk-body"><a href="{{thisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
     <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="{{thisCorrespondenceFileLink}}" class="govuk-link">{{thisCorrespondenceFileName}} ({{opensInNewTab}})</a></p>
 
-    <h2 class="govuk-heading-m">{{haveYouCopied}}</h2>
-    <p class="govuk-body">{{iConfirmThatIHaveCopied}}</p>
-    {{ govukCheckboxes({
-      name: "tickbox",
-      items: [
-        {
-          value: "yes",
-          text: yes
-        }
-      ]
-    }) }}
+    {% block form %}
+      {% include "form/form.njk"%}
+    {% endblock %}
 
-    <div class="govuk-button-group">
-    {{
-    govukButton({
-      text: continue,
-      classes: 'govuk-!-margin-right-2',
-      type: "submit",
-      preventDoubleClick: true,
-      attributes: {
-        id: 'main-form-submit'
-      }
-    })
-    }}
-    <a class="govuk-link" href="#">{{cancel}}</a>
   </div>
 
   </div>

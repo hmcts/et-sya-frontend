@@ -38,7 +38,6 @@ import ContactTheTribunalController from '../../controllers/ContactTheTribunalCo
 import ContactTheTribunalFileController from '../../controllers/ContactTheTribunalFileController';
 import ContactTheTribunalSelectedController from '../../controllers/ContactTheTribunalSelectedController';
 import CookiePreferencesController from '../../controllers/CookiePreferencesController';
-import CopiedCorrespondenceConfirmationController from '../../controllers/CopiedCorrespondenceConfirmationController';
 import CopyToOtherPartyController from '../../controllers/CopyToOtherPartyController';
 import CopyToOtherPartyNotSystemUserController from '../../controllers/CopyToOtherPartyNotSystemUserController';
 import DescribeWhatHappenedController from '../../controllers/DescribeWhatHappenedController';
@@ -94,6 +93,7 @@ import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYou
 import StillWorkingController from '../../controllers/StillWorkingController';
 import StoreTseController from '../../controllers/StoreTseController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
+import StoredToSubmitController from '../../controllers/StoredToSubmitController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -330,7 +330,7 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
     app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
-    app.get(PageUrls.COPIED_CORRESPONDENCE_CONFIRMATION, new CopiedCorrespondenceConfirmationController().get);
+    app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

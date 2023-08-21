@@ -6,5 +6,9 @@
   "opensInNewTab": "opens in new tab",
   "viewTheSupportingDocuments": "View the supporting documents.",
   "haveYouCopied": "Have you copied this correspondence to the other party?",
-  "iConfirmThatIHaveCopied": "I confirm that I have copied this correspondence to the other party. I have also notified the other party that any objections to my application should be sent to the tribunal as soon as possible and in any event within 7 days."
+  "iConfirmThatIHaveCopied": "I confirm that I have copied this correspondence to the other party. I have also notified the other party that any objections to my application should be sent to the tribunal as soon as possible and in any event within 7 days.",
+  "YesIConfirm": {
+    "title": "Arrears claim",
+    "checkbox": "Yes, I confirm that I copied this correspondence to the other party by post or email."
+  }
 }
