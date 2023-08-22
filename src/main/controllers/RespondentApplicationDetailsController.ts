@@ -25,6 +25,7 @@ const logger = getLogger('RespondentApplicationDetailsController');
 export default class RespondentApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     req.session.documentDownloadPage = PageUrls.RESPONDENT_APPLICATION_DETAILS;
 
     const selectedApplication = findSelectedGenericTseApplication(
@@ -40,7 +41,7 @@ export default class RespondentApplicationDetailsController {
       responseDocDownloadLink = await getResponseDocDownloadLink(selectedApplication, accessToken);
     } catch (e) {
       logger.error(e);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const translations: AnyRecord = {
@@ -53,30 +54,27 @@ export default class RespondentApplicationDetailsController {
       allResponses = await getAllResponses(selectedApplication, translations, req);
     } catch (e) {
       logger.error(e);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     let decisionContent;
-
     try {
       decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
     } catch (e) {
       logger.error(e);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
-    const languageParam = getLanguageParam(req.url);
     const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${selectedApplication.id}${languageParam}`;
     const adminRespondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
 
     let supportingMaterialDownloadLink;
-
     try {
       supportingMaterialDownloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
     } catch (e) {
       logger.error(e);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const respondButton = !selectedApplication.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);

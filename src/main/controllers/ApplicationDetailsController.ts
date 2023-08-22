@@ -46,12 +46,11 @@ export default class ApplicationDetailsController {
     const accessToken = req.session.user?.accessToken;
 
     let decisionContent;
-
     try {
       decisionContent = await getDecisionContent(selectedApplication.value, translations, accessToken);
     } catch (e) {
       logger.error(e.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     if (document) {
@@ -59,7 +58,7 @@ export default class ApplicationDetailsController {
         await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
 
@@ -70,7 +69,7 @@ export default class ApplicationDetailsController {
       allResponses = await getAllResponses(selectedApplication, translations, req);
     } catch (e) {
       logger.error(e.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const content = getPageContent(req, <FormContent>{}, [

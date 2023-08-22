@@ -85,7 +85,7 @@ describe('Respondent application CYA controller helper', () => {
     });
   });
 
-  it('should return content without Rule92 section if Rule92 page skipped(e.g.it is has ECC)', () => {
+  it('should return content without Rule92 section if Rule92 page skipped (e.g.it is has ECC)', () => {
     const translationJsons = { ...respondentCYARaw };
     const req = mockRequestWithTranslation({}, translationJsons);
     const userCase = req.session.userCase;

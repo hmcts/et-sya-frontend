@@ -17,6 +17,7 @@ const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     req.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
 
@@ -30,8 +31,7 @@ export default class TribunalOrderOrRequestDetailsController {
       }
     }
 
-    const redirectUrl =
-      PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
+    const redirectUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + languageParam;
 
     const respondButton =
       !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
@@ -45,7 +45,7 @@ export default class TribunalOrderOrRequestDetailsController {
       );
     } catch (err) {
       logger.error(err.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const translations: AnyRecord = {

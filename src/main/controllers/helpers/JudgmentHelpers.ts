@@ -199,7 +199,7 @@ export const getDecisionDetails = (
   }
 
   decisionDetails.push(
-    ...selectedAttachments.flatMap(element => [
+    ...(selectedAttachments || []).flatMap(element => [
       // This also probably should not be HTML - but original code used HTML
       addSummaryHtmlRow(translations.description, element.value.shortDescription),
       addSummaryHtmlRow(translations.document, element.downloadLink),

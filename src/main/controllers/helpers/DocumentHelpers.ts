@@ -56,7 +56,7 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
-  if (!file || !file.document_size || !file.document_mime_type || !file.document_filename) {
+  if (!file?.document_size || !file.document_mime_type || !file.document_filename) {
     return '';
   }
 

@@ -70,6 +70,6 @@ describe('Judgment Details Controller', () => {
 
     const controller = new JudgmentDetailsController();
     await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+    expect(response.redirect).toHaveBeenCalledWith(`${ErrorPages.NOT_FOUND}?lng=en`);
   });
 });

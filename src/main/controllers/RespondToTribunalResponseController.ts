@@ -89,6 +89,7 @@ export default class RespondToTribunalResponseController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params.appId
@@ -107,7 +108,7 @@ export default class RespondToTribunalResponseController {
       allResponses = await getAllResponses(selectedApplication, translations, req);
     } catch (e) {
       logger.error(e);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const document = selectedApplication.value?.documentUpload;
@@ -116,7 +117,7 @@ export default class RespondToTribunalResponseController {
         await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
     const downloadLink = createDownloadLink(document);

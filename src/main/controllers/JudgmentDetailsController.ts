@@ -24,12 +24,14 @@ import {
   getJudgmentAttachments,
   getJudgmentDetails,
 } from './helpers/JudgmentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getApplicationDocDownloadLink, getResponseDocDownloadLink } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('JudgmentDetailsController');
 export default class JudgmentDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     req.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
 
     const translations: AnyRecord = {
@@ -68,7 +70,7 @@ export default class JudgmentDetailsController {
         );
       } catch (e) {
         logger.error(e.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
 
       let responseDocDownloadLink;
@@ -77,7 +79,7 @@ export default class JudgmentDetailsController {
         responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, accessToken);
       } catch (e) {
         logger.error(e.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
 
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
@@ -87,7 +89,7 @@ export default class JudgmentDetailsController {
         decisionAttachments = await getDecisionAttachments(selectedDecision, req);
       } catch (e) {
         logger.error(e.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
 
       pageContent = getDecisionDetails(

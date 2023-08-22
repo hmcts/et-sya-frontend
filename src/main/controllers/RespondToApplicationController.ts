@@ -89,7 +89,7 @@ export default class RespondToApplicationController {
     };
 
     const selectedApplication = req.session.userCase.selectedGenericTseApplication;
-
+    const languageParam = getLanguageParam(req.url);
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
     const document = selectedApplication.value?.documentUpload;
@@ -99,7 +99,7 @@ export default class RespondToApplicationController {
         await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
     const downloadLink = createDownloadLink(document);
@@ -110,7 +110,6 @@ export default class RespondToApplicationController {
       TranslationKeys.RESPOND_TO_APPLICATION,
     ]);
 
-    const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.RESPOND_TO_APPLICATION, {
       cancelLink: redirectUrl,
