@@ -118,7 +118,6 @@ export const TranslationKeys = {
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
   COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: 'copy-to-other-party-not-system-user',
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
-  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: 'tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
   STORED_TO_SUBMIT: 'stored-to-submit',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
@@ -239,7 +238,6 @@ export const PageUrls = {
   // Rule 92 not system user
   COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
-  TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
   RULE92_HOLDING_PAGE: '/holding-page',
