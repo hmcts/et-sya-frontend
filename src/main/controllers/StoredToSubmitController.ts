@@ -17,16 +17,13 @@ import { getCaptionTextForStoredContact, getTseApplicationDetailsTable } from '.
 export default class StoredToSubmitController {
   private readonly form: Form;
 
-  private readonly StoredContactToSubmitContent: FormContent = {
+  private readonly StoredToSubmitContent: FormContent = {
     fields: {
       confirmCopied: {
         id: 'confirmCopied',
-        label: l => l.haveYouCopied,
-        labelHidden: false,
-        labelSize: 'm',
+        labelHidden: true,
         type: 'checkboxes',
         isPageHeading: true,
-        hint: l => l.iConfirmThatIHaveCopied,
         validator: atLeastOneFieldIsChecked,
         values: [
           {
@@ -44,7 +41,7 @@ export default class StoredToSubmitController {
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.StoredContactToSubmitContent.fields);
+    this.form = new Form(<FormFields>this.StoredToSubmitContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -55,7 +52,7 @@ export default class StoredToSubmitController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.StoredContactToSubmitContent, [
+    const content = getPageContent(req, this.StoredToSubmitContent, [
       TranslationKeys.COMMON,
       TranslationKeys.STORED_TO_SUBMIT,
     ]);

@@ -21,6 +21,9 @@
     <p class="govuk-body"><a href="{{thisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
     <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="{{thisCorrespondenceFileLink}}" class="govuk-link">{{thisCorrespondenceFileName}} ({{opensInNewTab}})</a></p>
 
+    <h3 class="govuk-heading-m">{{haveYouCopied}}</h3>
+    <p class="govuk-body">{{iConfirmThatIHaveCopied}}</p>
+
     {% block form %}
       {% include "form/form.njk"%}
     {% endblock %}
