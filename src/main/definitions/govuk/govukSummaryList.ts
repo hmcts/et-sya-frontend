@@ -1,4 +1,8 @@
-export function addSummaryRow(key: string, text: SummaryListContent['text'], actions?: SummaryListActions): SummaryListRow {
+export function addSummaryRow(
+  key: string,
+  text: SummaryListContent['text'],
+  actions?: SummaryListActions
+): SummaryListRow {
   return {
     key: { text: key, classes: 'govuk-!-font-weight-regular-m' },
     value: { text },
