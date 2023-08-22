@@ -48,17 +48,17 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section1.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.DOB_DETAILS.toString()),
+            url: setUrlLanguage(req, PageUrls.DOB_DETAILS),
             linkTxt: (l: AnyRecord): string => l.section1.link1Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.dobDate),
           },
           {
-            url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER.toString()),
+            url: setUrlLanguage(req, PageUrls.ADDRESS_POSTCODE_ENTER),
             linkTxt: (l: AnyRecord): string => l.section1.link2Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.address1),
           },
           {
-            url: setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES.toString()),
+            url: setUrlLanguage(req, PageUrls.UPDATE_PREFERENCES),
             linkTxt: (l: AnyRecord): string => l.section1.link3Text,
             status: (): string => getSectionStatus(userCase?.personalDetailsCheck, userCase?.claimantContactPreference),
           },
@@ -68,7 +68,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section2.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.PAST_EMPLOYER.toString()),
+            url: setUrlLanguage(req, PageUrls.PAST_EMPLOYER),
             linkTxt: (l: AnyRecord): string => l.section2.link1Text,
             status: (): string =>
               getSectionStatusForEmployment(
@@ -79,7 +79,7 @@ export default class StepsToMakingYourClaimController {
               ),
           },
           {
-            url: setUrlLanguage(req, PageUrls.FIRST_RESPONDENT_NAME.toString()),
+            url: setUrlLanguage(req, PageUrls.FIRST_RESPONDENT_NAME),
             linkTxt: (l: AnyRecord): string => l.section2.link2Text,
             status: (): string =>
               getSectionStatus(userCase?.employmentAndRespondentCheck, userCase?.respondents?.length),
@@ -90,7 +90,7 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section3.title,
         links: [
           {
-            url: setUrlLanguage(req, PageUrls.DESCRIBE_WHAT_HAPPENED.toString()),
+            url: setUrlLanguage(req, PageUrls.DESCRIBE_WHAT_HAPPENED),
             linkTxt: (l: AnyRecord): string => l.section3.link1Text,
             status: (): string =>
               getSectionStatus(
@@ -101,7 +101,7 @@ export default class StepsToMakingYourClaimController {
               ),
           },
           {
-            url: setUrlLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT.toString()),
+            url: setUrlLanguage(req, PageUrls.TELL_US_WHAT_YOU_WANT),
             linkTxt: (l: AnyRecord): string => l.section3.link2Text,
             status: (): string => getSectionStatus(userCase?.claimDetailsCheck, userCase?.tellUsWhatYouWant?.length),
           },
@@ -111,21 +111,21 @@ export default class StepsToMakingYourClaimController {
         title: (l: AnyRecord): string => l.section4.title,
         links: [
           {
-            url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ.toString()) : ''),
+            url: (): string => (allSectionsCompleted ? setUrlLanguage(req, PageUrls.PCQ) : ''),
             linkTxt: (l: AnyRecord): string => l.section4.link1Text,
             status: (): string => (allSectionsCompleted ? sectionStatus.notStarted : sectionStatus.cannotStartYet),
           },
         ],
       },
     ];
-    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION.toString())) {
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_DISCRIMINATION.toString());
-    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
-      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_PAY.toString());
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.DISCRIMINATION)) {
+      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_DISCRIMINATION);
+    } else if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM)) {
+      sections[2].links[0].url = setUrlLanguage(req, PageUrls.CLAIM_TYPE_PAY);
     }
-    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL.toString())) {
+    if (req.session.userCase?.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       req.session.userCase.pastEmployer = YesOrNo.YES;
-      sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING.toString());
+      sections[1].links[0].url = setUrlLanguage(req, PageUrls.STILL_WORKING);
     }
     res.render(TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM, {
       ...content,

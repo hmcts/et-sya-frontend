@@ -8,17 +8,17 @@ export const getFilesRows = (
   appId: string,
   translations: AnyRecord
 ): SummaryListRow[] => {
-  const { remove } = translations.remove;
+  const { remove } = translations;
 
   if (!userCase?.supportingMaterialFile) {
-    return [addSummaryRow(translations.noFilesUpload, '')];
+    // TODO: Remove the html from the translation file for this
+    return [{ key: { html: translations.noFilesUpload, classes: 'govuk-!-font-weight-regular-m' } }];
   }
 
   return [
     addSummaryRow(
       userCase.supportingMaterialFile.document_filename,
       '',
-      undefined,
       createChangeAction(PageUrls.REMOVE_SUPPORTING_MATERIAL.replace(':appId', appId), remove, remove)
     ),
   ];

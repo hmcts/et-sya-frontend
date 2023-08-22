@@ -34,24 +34,11 @@ const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, transl
 };
 
 export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
-  const { change } = translations;
-  const { didYouWorkFor, endDate, header, isStillWorking, jobTitle, startDate, no, noticePeriod, noticeEnds, yes } =
-    translations.employmentDetails;
-  const {
-    noticePeriodWeeksOrMonths,
-    months,
-    weeks,
-    noticeLength,
-    weeklyHours,
-    payBeforeTax,
-    payAfterTax,
-    payPeriod,
-    pensionScheme,
-    benefits,
-    newJob,
-    newStartDate,
-    newPayBeforeTax,
-  } = translations.employmentDetails;
+  const { change, employmentDetails } = translations;
+  const { benefits, didYouWorkFor, endDate, header, isStillWorking, jobTitle, months, newJob } = employmentDetails;
+  const { newPayBeforeTax, newStartDate, no, noticeEnds, noticeLength, noticePeriod } = employmentDetails;
+  const { noticePeriodWeeksOrMonths, payAfterTax, payBeforeTax, payPeriod, pensionScheme } = employmentDetails;
+  const { startDate, weeks, weeklyHours, yes } = employmentDetails;
 
   const rows: SummaryListRow[] = [{ key: { text: header, classes: 'govuk-summary-list__key govuk-heading-m' } }];
 
@@ -60,8 +47,7 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         didYouWorkFor,
         no,
-        undefined,
-        createChangeAction(PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE, translations.change, didYouWorkFor)
+        createChangeAction(PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE, change, didYouWorkFor)
       )
     );
 
@@ -73,7 +59,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         didYouWorkFor,
         yes,
-        undefined,
         createChangeAction(PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE, change, didYouWorkFor)
       )
     );
@@ -83,19 +68,16 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
     addSummaryRow(
       isStillWorking,
       getTranslationsForStillWorkingEnum(userCase, translations),
-      undefined,
       createChangeAction(PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE, change, isStillWorking)
     ),
     addSummaryRow(
       jobTitle,
       userCase.jobTitle,
-      undefined,
       createChangeAction(PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE, change, jobTitle)
     ),
     addSummaryRow(
       startDate,
       formatCaseDateDDMMYYYY(userCase.startDate) ?? '',
-      undefined,
       createChangeAction(PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE, change, startDate)
     )
   );
@@ -106,7 +88,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         addSummaryRow(
           endDate,
           formatCaseDateDDMMYYYY(userCase.endDate) ?? '',
-          undefined,
           createChangeAction(PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE, change, endDate)
         )
       );
@@ -116,7 +97,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         noticePeriod,
         userCase.noticePeriod === YesOrNo.YES ? yes : no,
-        undefined,
         createChangeAction(PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE, change, noticePeriod)
       )
     );
@@ -126,7 +106,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         noticeEnds,
         formatCaseDateDDMMYYYY(userCase.noticeEnds) ?? '',
-        undefined,
         createChangeAction(PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE, change, noticeEnds)
       )
     );
@@ -136,13 +115,11 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         noticePeriodWeeksOrMonths,
         userCase.noticePeriodUnit === WeeksOrMonths.MONTHS ? months : weeks,
-        undefined,
         createChangeAction(PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE, change, noticePeriodWeeksOrMonths)
       ),
       addSummaryRow(
         noticeLength,
         userCase.noticePeriodLength,
-        undefined,
         createChangeAction(PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE, change, noticeLength)
       )
     );
@@ -150,26 +127,22 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
   rows.push(
     addSummaryRow(
       weeklyHours,
-      userCase.avgWeeklyHrs.toString(),
-      undefined,
+      userCase.avgWeeklyHrs,
       createChangeAction(PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE, change, weeklyHours)
     ),
     addSummaryRow(
       payBeforeTax,
-      userCase.payBeforeTax.toString(),
-      undefined,
+      userCase.payBeforeTax,
       createChangeAction(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, change, payBeforeTax)
     ),
     addSummaryRow(
       payAfterTax,
-      userCase.payAfterTax.toString(),
-      undefined,
+      userCase.payAfterTax,
       createChangeAction(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, change, payAfterTax)
     ),
     addSummaryRow(
       payPeriod,
       getTranslationsForPayIntervalEnum(userCase, translations),
-      undefined,
       createChangeAction(PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE, change, payPeriod)
     ),
     addSummaryRow(
@@ -177,13 +150,11 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       userCase?.claimantPensionContribution === YesOrNoOrNotSure.YES
         ? `${yes}: ${userCase.claimantPensionWeeklyContribution}`
         : no,
-      undefined,
       createChangeAction(PageUrls.PENSION + InterceptPaths.ANSWERS_CHANGE, change, pensionScheme)
     ),
     addSummaryRow(
       benefits,
       userCase?.employeeBenefits === YesOrNo.YES ? `${yes}: ${userCase.benefitsCharCount}` : no,
-      undefined,
       createChangeAction(PageUrls.BENEFITS + InterceptPaths.ANSWERS_CHANGE, change, benefits)
     )
   );
@@ -192,7 +163,6 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
       addSummaryRow(
         newJob,
         userCase.newJob,
-        undefined,
         createChangeAction(PageUrls.NEW_JOB + InterceptPaths.ANSWERS_CHANGE, change, newJob)
       )
     );
@@ -201,19 +171,16 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         addSummaryRow(
           newStartDate,
           formatCaseDateDDMMYYYY(userCase.newJobStartDate) ?? '',
-          undefined,
           createChangeAction(PageUrls.NEW_JOB_START_DATE + InterceptPaths.ANSWERS_CHANGE, change, newStartDate)
         ),
         addSummaryRow(
           newPayBeforeTax,
-          userCase.newJobPay.toString(),
-          undefined,
+          userCase.newJobPay,
           createChangeAction(PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE, change, newPayBeforeTax)
         ),
         addSummaryRow(
           payPeriod,
           userCase.newJobPayInterval,
-          undefined,
           createChangeAction(PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE, change, payPeriod)
         )
       );

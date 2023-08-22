@@ -42,46 +42,26 @@ const getTranslationsForHearingPreferences = function (userCase: CaseWithId, tra
 };
 
 export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
-  const { change } = translations;
-  const {
-    disability,
-    yes,
-    no,
-    takePartInHearing,
-    dob,
-    header,
-    sex,
-    title,
-    notSelected,
-    contactOrHomeAddress,
-    howToBeContacted,
-    email,
-    post,
-    languageLabel,
-    welsh,
-    english,
-    hearingLabel,
-  } = translations.personalDetails;
-  const { telephone, notProvided } = translations.contactDetails;
+  const { change, personalDetails, contactDetails } = translations;
+  const { contactOrHomeAddress, disability, dob, email, english, hearingLabel, howToBeContacted } = personalDetails;
+  const { languageLabel, no, notSelected, post, sex, takePartInHearing, title, welsh, yes, header } = personalDetails;
+  const { telephone, notProvided } = contactDetails;
 
   const rows = [
     { key: { text: header, classes: 'govuk-summary-list__key govuk-heading-m' }, value: {} },
     addSummaryRow(
       dob,
       formatCaseDateDDMMYYYY(userCase.dobDate) ?? '',
-      undefined,
       createChangeAction(PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE, change, dob)
     ),
     addSummaryRow(
       sex,
       getTranslationsForSexEnum(userCase, translations),
-      undefined,
       createChangeAction(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, change, sex)
     ),
     addSummaryRow(
       title,
-      userCase.preferredTitle === undefined ? notSelected : userCase.preferredTitle,
-      undefined,
+      userCase.preferredTitle ?? notSelected,
       createChangeAction(PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE, change, title)
     ),
     addSummaryRow(
@@ -93,19 +73,16 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
         userCase.addressCountry,
         userCase.addressPostcode
       ),
-      undefined,
       createChangeAction(PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE, change, contactOrHomeAddress)
     ),
     addSummaryRow(
       telephone,
-      userCase.telNumber === undefined ? notProvided : userCase.telNumber,
-      undefined,
+      userCase.telNumber ?? notProvided,
       createChangeAction(PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE, change, telephone)
     ),
     addSummaryRow(
       howToBeContacted,
       userCase.claimantContactPreference === EmailOrPost.EMAIL ? email : post,
-      undefined,
       createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
     ),
   ];
@@ -115,13 +92,11 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
       addSummaryRow(
         languageLabel,
         userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH ? welsh : english,
-        undefined,
         createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
       ),
       addSummaryRow(
         hearingLabel,
         userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH ? welsh : english,
-        undefined,
         createChangeAction(PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE, change, howToBeContacted)
       )
     );
@@ -132,13 +107,11 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
     addSummaryRow(
       takePartInHearing,
       getTranslationsForHearingPreferences(userCase, translations),
-      undefined,
       createChangeAction(PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE, change, takePartInHearing)
     ),
     addSummaryRow(
       disability,
       userCase.reasonableAdjustments === YesOrNo.YES ? `${yes}, ${userCase.reasonableAdjustmentsDetail}` : no,
-      undefined,
       createChangeAction(PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE, change, disability)
     )
   );

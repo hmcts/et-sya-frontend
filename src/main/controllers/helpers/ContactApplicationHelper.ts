@@ -12,8 +12,7 @@ export const getFiles = (userCase: CaseWithId, application: string, translations
   return [
     addSummaryRow(
       userCase.contactApplicationFile.document_filename,
-      undefined,
-      undefined,
+      '',
       createChangeAction(PageUrls.REMOVE_FILE.replace(':application', application), remove, remove)
     ),
   ];

@@ -1,12 +1,23 @@
 export function addSummaryRow(
   key: string,
   text: SummaryListContent['text'],
-  html?: string,
   actions?: SummaryListActions
 ): SummaryListRow {
   return {
     key: { text: key, classes: 'govuk-!-font-weight-regular-m' },
-    value: { text, html },
+    value: { text },
+    actions,
+  };
+}
+
+export function addSummaryHtmlRow(
+  key: string,
+  text: SummaryListContent['html'],
+  actions?: SummaryListActions
+): SummaryListRow {
+  return {
+    key: { text: key, classes: 'govuk-!-font-weight-regular-m' },
+    value: { html: text },
     actions,
   };
 }
@@ -30,7 +41,7 @@ export interface SummaryListRow {
 }
 
 export interface SummaryListContent {
-  text?: string | string[];
+  text?: string | string[] | number;
   html?: string;
   classes?: string;
 }

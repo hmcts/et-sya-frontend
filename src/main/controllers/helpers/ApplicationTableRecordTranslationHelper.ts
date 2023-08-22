@@ -8,21 +8,18 @@ export const translateTypesOfClaims = (rec: ApplicationTableRecord, translations
 
 export const translateTypeOfClaim = (typeOfClaims: string, translations: AnyRecord): string => {
   switch (typeOfClaims) {
-    case TypesOfClaim.UNFAIR_DISMISSAL.toString():
+    case TypesOfClaim.UNFAIR_DISMISSAL:
       return translations.claimTypes.unfairDismissal;
-    case TypesOfClaim.PAY_RELATED_CLAIM.toString():
+    case TypesOfClaim.PAY_RELATED_CLAIM:
       return translations.claimTypes.payRelated;
-    case TypesOfClaim.DISCRIMINATION.toString():
+    case TypesOfClaim.DISCRIMINATION:
       return translations.claimTypes.discrimination;
-    case TypesOfClaim.WHISTLE_BLOWING.toString():
+    case TypesOfClaim.WHISTLE_BLOWING:
       return translations.claimTypes.whistleBlowing;
-    case TypesOfClaim.BREACH_OF_CONTRACT.toString():
+    case TypesOfClaim.BREACH_OF_CONTRACT:
       return translations.claimTypes.breachOfContract;
-    case TypesOfClaim.OTHER_TYPES.toString():
+    case TypesOfClaim.OTHER_TYPES:
       return translations.claimTypes.otherTypesOfClaims;
-
-    default:
-      return undefined;
   }
 };
 

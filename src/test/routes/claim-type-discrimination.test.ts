@@ -21,7 +21,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       .send({ claimTypeDiscrimination: ['age'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED.toString());
+        expect(res.header['location']).toStrictEqual(PageUrls.DESCRIBE_WHAT_HAPPENED);
       });
   });
   // This case occurs only when TypesOfClaim.WHISTLE_BLOWING and TypesOfClaim.PAY_RELATED_CLAIM are selected
@@ -33,7 +33,7 @@ describe(`on POST ${PageUrls.CLAIM_TYPE_DISCRIMINATION}`, () => {
       .send({ claimTypeDiscrimination: ['age'] })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
-        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_TYPE_PAY.toString());
+        expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_TYPE_PAY);
       });
   });
 });

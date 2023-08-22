@@ -84,9 +84,9 @@ export default class ClaimTypeDiscriminationController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    let redirectUrl = PageUrls.DESCRIBE_WHAT_HAPPENED.toString();
-    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM.toString())) {
-      redirectUrl = PageUrls.CLAIM_TYPE_PAY.toString();
+    let redirectUrl: string = PageUrls.DESCRIBE_WHAT_HAPPENED;
+    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.PAY_RELATED_CLAIM)) {
+      redirectUrl = PageUrls.CLAIM_TYPE_PAY;
     }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };

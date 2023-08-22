@@ -171,7 +171,7 @@ describe('Steps to making your claim page', () => {
           htmlRes = new DOMParser().parseFromString(res.text, 'text/html');
         });
       const links = htmlRes.querySelectorAll(linkClass);
-      expect(links[3].outerHTML).contains(PageUrls.STILL_WORKING.toString());
+      expect(links[3].outerHTML).contains(PageUrls.STILL_WORKING);
     }
   );
   it(

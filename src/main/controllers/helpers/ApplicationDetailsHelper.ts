@@ -6,7 +6,7 @@ import {
   TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -23,7 +23,7 @@ export const getTseApplicationDetails = (
     addSummaryRow(translations.requestDate, application.date),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
-    addSummaryRow(translations.supportingMaterial, undefined, downloadLink),
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
     addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo),
   ];
 
@@ -50,7 +50,7 @@ export const getTseApplicationDecisionDetails = (
       addSummaryRow(translations.sentBy, translations.tribunal),
       addSummaryRow(translations.decisionType, decision.typeOfDecision),
       addSummaryRow(translations.additionalInfo, decision.additionalInformation),
-      addSummaryRow(translations.document, undefined, reversedDownloadLinks[i]),
+      addSummaryHtmlRow(translations.document, reversedDownloadLinks[i]),
       addSummaryRow(translations.decisionMadeBy, decision.decisionMadeBy),
       addSummaryRow(translations.name, decision.decisionMadeByFullName),
       addSummaryRow(translations.sentTo, decision.selectPartyNotify),
@@ -117,7 +117,7 @@ const getRowsForAdminResponse = async (
     addSummaryRow(translations.additionalInfo, response.additionalInformation),
     addSummaryRow(translations.requestMadeBy, requestMadeBy),
     addSummaryRow(translations.description, firstDocument?.shortDescription),
-    addSummaryRow(translations.document, undefined, downloadLink),
+    addSummaryHtmlRow(translations.document, downloadLink),
     addSummaryRow(translations.name, response.madeByFullName),
     addSummaryRow(translations.sentTo, response.selectPartyNotify),
   ];
@@ -134,7 +134,7 @@ const getRowsForNonAdminResponse = async (translations: AnyRecord, response: Tse
     addSummaryRow(translations.responder, response.from),
     addSummaryRow(translations.responseDate, response.date),
     addSummaryRow(translations.response, response.response),
-    addSummaryRow(translations.supportingMaterial, undefined, downloadLink),
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
     addSummaryRow(translations.copyCorrespondence, response.copyToOtherParty),
   ];
 };

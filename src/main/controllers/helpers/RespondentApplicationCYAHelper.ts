@@ -1,7 +1,12 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
-import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
+import {
+  SummaryListRow,
+  addSummaryHtmlRow,
+  addSummaryRow,
+  createChangeAction,
+} from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getRespondentCyaContent = (
@@ -15,12 +20,10 @@ export const getRespondentCyaContent = (
     addSummaryRow(
       translations.legend,
       userCase.responseText,
-      undefined,
       createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.legend)
     ),
-    addSummaryRow(
+    addSummaryHtmlRow(
       translations.supportingMaterial,
-      undefined,
       downloadLink,
       createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.supportingMaterial)
     ),
@@ -31,17 +34,15 @@ export const getRespondentCyaContent = (
       addSummaryRow(
         translations.copyToOtherPartyYesOrNo,
         userCase.copyToOtherPartyYesOrNo,
-        undefined,
         createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyYesOrNo)
       )
     );
 
-    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.YES) {
+    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
       result.push(
         addSummaryRow(
           translations.copyToOtherPartyText,
           userCase.copyToOtherPartyText,
-          undefined,
           createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyText)
         )
       );

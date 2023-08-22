@@ -15,7 +15,7 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { DecisionAndApplicationDetails } from '../../definitions/definition';
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -118,7 +118,7 @@ export const getJudgmentDetails = (
     judgmentDetails.push(
       ...judgmentAttachments.flatMap(attachment => [
         addSummaryRow(translations.description, attachment.value.shortDescription),
-        addSummaryRow(translations.document, undefined, attachment.downloadLink),
+        addSummaryHtmlRow(translations.document, attachment.downloadLink),
       ])
     );
   }
@@ -161,7 +161,7 @@ export const getDecisionDetails = (
 
   if (selectedDecisionApplication?.value.documentUpload) {
     applicationDetails.push(
-      addSummaryRow(translations.supportingMaterial, undefined, selectedApplicationDocDownloadLink || '')
+      addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationDocDownloadLink || '')
     );
   }
   applicationDetails.push(
@@ -174,13 +174,13 @@ export const getDecisionDetails = (
     responseDetails.push(
       addSummaryRow(translations.responseFrom, from),
       // Not sure if these should be writing HTML - it feels wrong, but this is what the original code set...
-      addSummaryRow(translations.date, undefined, date),
-      addSummaryRow(`${translations.responsePart1}${responseFrom}${translations.responsePart2}`, undefined, response)
+      addSummaryHtmlRow(translations.date, date),
+      addSummaryHtmlRow(`${translations.responsePart1}${responseFrom}${translations.responsePart2}`, response)
     );
 
     if (supportingMaterial) {
       responseDetails.push(
-        addSummaryRow(translations.supportingMaterial, undefined, selectedApplicationResponseDocDownloadLink || '')
+        addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationResponseDocDownloadLink || '')
       );
     }
     responseDetails.push(
@@ -201,8 +201,8 @@ export const getDecisionDetails = (
   decisionDetails.push(
     ...selectedAttachments.flatMap(element => [
       // This also probably should not be HTML - but original code used HTML
-      addSummaryRow(translations.description, undefined, element.value.shortDescription),
-      addSummaryRow(translations.document, undefined, element.downloadLink),
+      addSummaryHtmlRow(translations.description, element.value.shortDescription),
+      addSummaryHtmlRow(translations.document, element.downloadLink),
     ])
   );
 

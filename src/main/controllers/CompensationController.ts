@@ -49,7 +49,7 @@ export default class CompensationController {
     let redirectUrl;
     if (req.session.userCase.tellUsWhatYouWant?.includes(TellUsWhatYouWant.TRIBUNAL_RECOMMENDATION)) {
       redirectUrl = PageUrls.TRIBUNAL_RECOMMENDATION;
-    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+    } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING)) {
       redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
       redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;

@@ -1,6 +1,6 @@
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { NotificationSubjects, PageUrls } from '../../definitions/constants';
-import { SummaryListRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -21,7 +21,7 @@ export const getCorrespondenceNotificationDetails = (
   docs.forEach(doc => {
     generalCorrespondenceNotification.push(
       addSummaryRow(translations.description, doc.value.shortDescription),
-      addSummaryRow(translations.document, undefined, createDownloadLink(doc.value.uploadedDocument))
+      addSummaryHtmlRow(translations.document, createDownloadLink(doc.value.uploadedDocument))
     );
   });
 
