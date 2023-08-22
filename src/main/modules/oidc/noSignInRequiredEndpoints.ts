@@ -13,10 +13,6 @@ export const noSignInRequiredEndpoints: string[] = [
   PageUrls.COOKIE_PREFERENCES,
   PageUrls.RETURN_TO_EXISTING,
   PageUrls.ACCESSIBILITY_STATEMENT,
-  PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, //TODO revert this once other pages are in
-  PageUrls.STORED_APPLICATION_CONFIRMATION, // Same as above
-  PageUrls.STORED_TO_SUBMIT, // Same as above
-  PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, // Same as above
   Urls.INFO,
 ];
 

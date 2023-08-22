@@ -2,3 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Nice commit pal."
+
+yarn lint-staged
