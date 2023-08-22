@@ -9,7 +9,6 @@ import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
-import { copyToOtherPartyRedirectUrl } from "./helpers/Rule92NotSystemUserHelper";
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -116,7 +115,7 @@ export default class RespondentSupportingMaterialController {
     ) {
       return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA);
     }
-    return res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase));
+    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
 
   public get = (req: AppRequest, res: Response): void => {
