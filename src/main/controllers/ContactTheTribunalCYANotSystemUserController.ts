@@ -30,7 +30,6 @@ export default class ContactTheTribunalCYANotSystemUserController {
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, {
       ...content,
-      ...translations,
       cancelPage: getCancelLink(req),
       storedUrl: InterceptPaths.STORE_TRIBUNAL_CYA + getLanguageParam(req.url),
       cyaContent: getCyaContent(
