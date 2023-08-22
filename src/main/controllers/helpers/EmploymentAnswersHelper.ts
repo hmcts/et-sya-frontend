@@ -82,26 +82,17 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
     )
   );
 
-  if ([StillWorking.WORKING, StillWorking.NO_LONGER_WORKING].includes(userCase.isStillWorking)) {
-    if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-      rows.push(
-        addSummaryRow(
-          endDate,
-          formatCaseDateDDMMYYYY(userCase.endDate) ?? '',
-          createChangeAction(PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE, change, endDate)
-        )
-      );
-    }
-    // As long as isStillWorking is not "NOTICE"
+  if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
     rows.push(
       addSummaryRow(
-        noticePeriod,
-        userCase.noticePeriod === YesOrNo.YES ? yes : no,
-        createChangeAction(PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE, change, noticePeriod)
+        endDate,
+        formatCaseDateDDMMYYYY(userCase.endDate) ?? '',
+        createChangeAction(PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE, change, endDate)
       )
     );
-  } else {
-    // Only if isStillWorking is "NOTICE"
+  }
+
+  if (userCase.isStillWorking === StillWorking.NOTICE) {
     rows.push(
       addSummaryRow(
         noticeEnds,
@@ -109,7 +100,16 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
         createChangeAction(PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE, change, noticeEnds)
       )
     );
+  } else {
+    rows.push(
+      addSummaryRow(
+        noticePeriod,
+        userCase.noticePeriod === YesOrNo.YES ? yes : no,
+        createChangeAction(PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE, change, noticePeriod)
+      )
+    );
   }
+
   if (userCase.noticePeriod === YesOrNo.YES || userCase.isStillWorking === StillWorking.NOTICE) {
     rows.push(
       addSummaryRow(
