@@ -75,17 +75,18 @@ export default class RespondToTribunalResponseController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      const redirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${getLanguageParam(
+      const pageUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${getLanguageParam(
         req.url
       )}`;
-      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
+      return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     req.session.errors = [];
-    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+    const redirectUrl =
+      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
