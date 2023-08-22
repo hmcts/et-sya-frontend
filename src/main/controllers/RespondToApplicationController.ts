@@ -15,7 +15,7 @@ import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
-import { getLanguageParam, handleOpenRedirect } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -72,14 +72,14 @@ export default class RespondToApplicationController {
       req.session.errors = [];
       req.session.errors.push(error);
       const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`;
-      return handleOpenRedirect(req, res, redirectUrl, logger);
+      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
         : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
-    return handleOpenRedirect(req, res, redirectUrl, logger);
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

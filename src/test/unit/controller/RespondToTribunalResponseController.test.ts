@@ -1,4 +1,4 @@
-import url, { Url } from 'url';
+import url from 'url';
 
 import RespondToTribunalResponseController from '../../../main/controllers/RespondToTribunalResponseController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
@@ -7,6 +7,7 @@ import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers'
 
 describe('Respond to tribunal response Controller', () => {
   const translationJsons = { ...respondJsonRaw, ...common };
@@ -17,8 +18,8 @@ describe('Respond to tribunal response Controller', () => {
 
   const urlMock = {
     host: 'http://localhost:3001',
-  } as unknown as Url;
-  jest.spyOn(url, 'parse').mockReturnValue(urlMock);
+  } as url.UrlWithStringQuery;
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
 
   it('should render the Respond to Tribunal response page for respondent application', async () => {
     const controller = new RespondToTribunalResponseController();

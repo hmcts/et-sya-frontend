@@ -4,7 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
-import { getLanguageParam, handleOpenRedirect } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondentSupportingMaterialFileController');
 
@@ -13,6 +13,6 @@ export default class RespondentSupportingMaterialFileController {
     req.session.userCase.supportingMaterialFile = undefined;
     const redirectUrl =
       PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
-    return handleOpenRedirect(req, res, redirectUrl, logger);
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 }

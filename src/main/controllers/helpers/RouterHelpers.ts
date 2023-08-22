@@ -1,4 +1,4 @@
-import * as UrlModule from 'url';
+import * as urlModule from 'url';
 
 import { Request, Response } from 'express';
 import { LoggerInstance } from 'winston';
@@ -60,11 +60,16 @@ export const getLanguageParam = (url: string): string => {
   return languages.ENGLISH_URL_PARAMETER;
 };
 
-export const handleOpenRedirect = (req: Request, res: Response, redirectUrl: string, logger: LoggerInstance): void => {
-  const parsedUrl = UrlModule.parse(redirectUrl);
+export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger: LoggerInstance): string => {
+  const parsedUrl = getParsedUrl(redirectUrl);
   if (parsedUrl.host !== req.headers.host) {
     logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
-    return res.redirect(PageUrls.HOME);
+    return PageUrls.HOME;
   }
-  return res.redirect(redirectUrl);
+  return redirectUrl;
 };
+
+export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
+  return urlModule.parse(redirectUrl);
+}
+

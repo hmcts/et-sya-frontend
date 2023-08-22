@@ -7,7 +7,6 @@
 
 $govuk-grey: #b1b4b6;
 $govuk-blue: #1d70b8;
-$govuk-link-blue: #1669b1;
 
 .govuk-phase-banner__text {
   width: 100%;
@@ -15,10 +14,6 @@ $govuk-link-blue: #1669b1;
   .language {
     float: right;
   }
-}
-
-.govuk-link {
-  color: $govuk-link-blue;
 }
 
 // interupt the user with important information
