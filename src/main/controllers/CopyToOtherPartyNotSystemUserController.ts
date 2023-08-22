@@ -3,12 +3,16 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCaptionTextForCopyToOtherParty, getTodayPlus7DaysStrings } from './helpers/CopyToOtherPartyHelper';
+import {
+  getCaptionTextForCopyToOtherParty,
+  getRedirectPageUrlNotSystemUser,
+  getTodayPlus7DaysStrings,
+} from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -92,21 +96,7 @@ export default class CopyToOtherPartyNotSystemUserController {
       req.session.errors.push(copyToOtherPartyError);
       return res.redirect(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languageParam);
     }
-    let redirectPage = '';
-    if (req.body.copyToOtherPartyYesOrNo === YesOrNo.NO) {
-      if (req.session.contactType === Rule92Types.CONTACT) {
-        redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
-      } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
-        redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
-      }
-    } else {
-      if (req.session.contactType === Rule92Types.CONTACT) {
-        redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER + languageParam;
-      } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
-        redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER + languageParam;
-      }
-    }
-    return res.redirect(redirectPage);
+    return res.redirect(getRedirectPageUrlNotSystemUser(req) + languageParam);
   };
 
   public get = (req: AppRequest, res: Response): void => {
