@@ -5,7 +5,8 @@ import { AnyRecord } from '../../definitions/util-types';
 
 export const getFiles = (userCase: CaseWithId, application: string, translations: AnyRecord): SummaryListRow[] => {
   if (!userCase?.contactApplicationFile) {
-    return [addSummaryRow(translations.noFilesUpload, '')];
+    // TODO: Remove html in the translations file
+    return [{ key: { html: translations.noFilesUpload, classes: 'govuk-!-font-weight-regular-m' } }];
   }
 
   const { remove } = translations;

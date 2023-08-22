@@ -71,6 +71,10 @@ export const getAllResponses = async (
   const { user, userCase } = req.session;
 
   for (const { id, value: response } of respondCollection) {
+    if (response.from === Applicant.RESPONDENT && response.copyToOtherParty === YesOrNo.NO) {
+      continue;
+    }
+
     if (isSentToClaimantByTribunal(response)) {
       allResponses.push(await getRowsForAdminResponse(translations, response, req.session.user?.accessToken));
       if (response.isResponseRequired !== YesOrNo.YES && response.viewedByClaimant !== YesOrNo.YES) {
