@@ -39,7 +39,7 @@ export default class TribunalRecommendationController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     let redirectUrl;
-    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
+    if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING)) {
       redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
       redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;

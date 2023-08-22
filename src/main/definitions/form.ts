@@ -1,4 +1,5 @@
 import { Case, CaseDate } from './case';
+import { SummaryListRow } from './govuk/govukSummaryList';
 import { AnyRecord } from './util-types';
 
 type LanguageLookup = (lang: AnyRecord) => string;
@@ -46,7 +47,7 @@ export interface FormOptions {
   validator?: ValidationCheck;
   parser?: Parser;
   subFields?: Record<string, FormField>;
-  rows?: { key: unknown; value?: unknown; actions?: unknown }[];
+  rows?: SummaryListRow[];
 }
 
 export interface FormInput {

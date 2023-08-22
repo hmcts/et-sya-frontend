@@ -6,7 +6,7 @@ import {
   TseAdminDecisionItem,
 } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -24,12 +24,14 @@ import {
   getJudgmentAttachments,
   getJudgmentDetails,
 } from './helpers/JudgmentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 import { getApplicationDocDownloadLink, getResponseDocDownloadLink } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('JudgmentDetailsController');
 export default class JudgmentDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     req.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
 
     const translations: AnyRecord = {
@@ -59,20 +61,37 @@ export default class JudgmentDetailsController {
         await updateDecisionState(selectedDecisionApplication.id, selectedDecision, req, logger);
       }
       const accessToken = req.session.user?.accessToken;
-      const selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
-        selectedDecisionApplication,
-        logger,
-        accessToken,
-        res
-      );
-      const responseDocDownloadLink = await getResponseDocDownloadLink(
-        selectedDecisionApplication,
-        logger,
-        accessToken,
-        res
-      );
+      let selectedApplicationDocDownloadLink;
+
+      try {
+        selectedApplicationDocDownloadLink = await getApplicationDocDownloadLink(
+          selectedDecisionApplication,
+          accessToken
+        );
+      } catch (e) {
+        logger.error(e.message);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+      }
+
+      let responseDocDownloadLink;
+
+      try {
+        responseDocDownloadLink = await getResponseDocDownloadLink(selectedDecisionApplication, accessToken);
+      } catch (e) {
+        logger.error(e.message);
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+      }
+
       header = translations.applicationTo + translations[selectedDecisionApplication?.value?.type];
-      const decisionAttachments = await getDecisionAttachments(selectedDecision, req, res);
+
+      let decisionAttachments;
+      try {
+        decisionAttachments = await getDecisionAttachments(selectedDecision, req);
+      } catch (e) {
+        logger.error(e.message);
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+      }
+
       pageContent = getDecisionDetails(
         userCase,
         selectedDecision,
@@ -92,7 +111,7 @@ export default class JudgmentDetailsController {
         }
       }
       const judgmentAttachments = await getJudgmentAttachments(selectedJudgment, req, res);
-      pageContent = getJudgmentDetails(selectedJudgment, judgmentAttachments, translations);
+      pageContent = getJudgmentDetails(selectedJudgment.value, judgmentAttachments, translations);
     }
 
     const content = getPageContent(req, <FormContent>{}, [

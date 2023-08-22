@@ -1,14 +1,14 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
-import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getCorrespondenceNotificationDetails } from './helpers/GeneralCorrespondenceHelper';
 
@@ -32,10 +32,10 @@ export default class GeneralCorrespondenceNotificationDetailsController {
     if (documents?.length) {
       for (const it of documents) {
         try {
-          await getDocumentAdditionalInformation(it.value.uploadedDocument, req.session.user?.accessToken);
+          await populateDocumentMetadata(it.value.uploadedDocument, req.session.user?.accessToken);
         } catch (err) {
           logger.error(err.message);
-          res.redirect('/not-found');
+          res.redirect(ErrorPages.NOT_FOUND);
         }
       }
     }

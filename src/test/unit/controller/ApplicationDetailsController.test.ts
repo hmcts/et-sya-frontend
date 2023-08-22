@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import ApplicationDetailsController from '../../../main/controllers/ApplicationDetailsController';
 import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 import { CaseWithId } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
 import applicationDetails from '../../../main/resources/locales/en/translation/application-details.json';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import * as CaseService from '../../../main/services/CaseService';
@@ -61,6 +61,6 @@ describe('Claimant Applications Controller', () => {
 
     await controller.get(request, response);
 
-    expect(response.redirect).toHaveBeenCalledWith('/not-found');
+    expect(response.redirect).toHaveBeenCalledWith(`${ErrorPages.NOT_FOUND}?lng=en`);
   });
 });

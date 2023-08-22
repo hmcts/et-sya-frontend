@@ -15,8 +15,6 @@
   "response": "What's your response to the respondent's application?",
   "decision": "Decision",
   "notification": "Notification",
-  "notificationWithSpace": "<br><br>Notification",
-  "tableTopWithSpace": "<br><br>",
   "date": "Date",
   "sentBy": "Sent by",
   "decisionType": "Type of decision",

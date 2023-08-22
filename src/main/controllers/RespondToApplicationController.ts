@@ -4,14 +4,14 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
@@ -89,17 +89,17 @@ export default class RespondToApplicationController {
     };
 
     const selectedApplication = req.session.userCase.selectedGenericTseApplication;
-
+    const languageParam = getLanguageParam(req.url);
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
     const document = selectedApplication.value?.documentUpload;
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect('/not-found');
+        res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
     const downloadLink = createDownloadLink(document);
@@ -110,7 +110,6 @@ export default class RespondToApplicationController {
       TranslationKeys.RESPOND_TO_APPLICATION,
     ]);
 
-    const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.RESPOND_TO_APPLICATION, {
       cancelLink: redirectUrl,
@@ -118,7 +117,7 @@ export default class RespondToApplicationController {
       applicationType,
       respondByDate,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication.value, translations, downloadLink),
     });
   };
 }

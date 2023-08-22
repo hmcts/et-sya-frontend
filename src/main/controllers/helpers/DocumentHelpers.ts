@@ -30,13 +30,11 @@ export const getDocumentDetails = async (documents: DocumentDetail[], accessToke
   }
 };
 
-export const getDocumentAdditionalInformation = async (doc: Document, accessToken: string): Promise<Document> => {
+export const populateDocumentMetadata = async (doc: Document, accessToken: string): Promise<Document> => {
   const docId = getDocId(doc.document_url);
   const docDetails = await getCaseApi(accessToken).getDocumentDetails(docId);
   const { createdOn, size, mimeType } = docDetails.data;
-  doc.createdOn = new Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'long',
-  }).format(new Date(createdOn));
+  doc.createdOn = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long' }).format(new Date(createdOn));
   doc.document_mime_type = mimeType;
   doc.document_size = size;
   return doc;
@@ -48,7 +46,7 @@ export const getDocumentsAdditionalInformation = async (
 ): Promise<void> => {
   if (documents?.length) {
     for (const doc of documents) {
-      await getDocumentAdditionalInformation(doc.value.uploadedDocument, accessToken);
+      await populateDocumentMetadata(doc.value.uploadedDocument, accessToken);
     }
   }
 };
@@ -58,21 +56,14 @@ export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
-  const mimeType = getFileExtension(file?.document_filename);
-  let downloadLink = '';
-  if (file?.document_size && file.document_mime_type && file.document_filename) {
-    const href = '/getSupportingMaterial/' + getDocId(file.document_url);
-    downloadLink =
-      `<a href='${href}' target='_blank' class='govuk-link'>` +
-      file.document_filename +
-      '(' +
-      mimeType +
-      ', ' +
-      formatBytes(file.document_size) +
-      ')' +
-      '</a>';
+  if (!file?.document_size || !file.document_mime_type || !file.document_filename) {
+    return '';
   }
-  return downloadLink;
+
+  const mimeType = getFileExtension(file.document_filename);
+  const href = `/getSupportingMaterial/${getDocId(file.document_url)}`;
+  const size = formatBytes(file.document_size);
+  return `<a href='${href}' target='_blank' class='govuk-link'>${file.document_filename} (${mimeType}, ${size})</a>`;
 };
 
 export const findSelectedGenericTseApplication = (

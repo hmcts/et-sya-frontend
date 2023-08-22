@@ -42,8 +42,6 @@
   "mustRespond": "You must respond to the tribunal.",
   "decision": "Decision",
   "notification": "Notification",
-  "notificationWithSpace": "<br><br>Notification",
-  "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Decision made by",
   "decisionType": "Type of decision"
 }

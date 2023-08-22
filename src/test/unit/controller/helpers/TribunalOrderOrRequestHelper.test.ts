@@ -71,7 +71,7 @@ describe('Tribunal order or request helper', () => {
       text: 'Document',
     });
     expect(pageContent[8].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
     expect(pageContent[9].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',

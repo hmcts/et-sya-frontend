@@ -1,401 +1,144 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
+  GenericTseApplicationType,
   GenericTseApplicationTypeItem,
-  TseRespondTypeItem,
+  TseRespondType,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
-import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
-  selectedApplication: GenericTseApplicationTypeItem,
+  application: GenericTseApplicationType,
   translations: AnyRecord,
-  downloadLink: string | void
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.applicant,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedApplication.value.applicant,
-      },
-    },
-    {
-      key: {
-        text: translations.requestDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedApplication.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: translations[selectedApplication.value.type],
-      },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: selectedApplication.value.details },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
-    },
-    {
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: selectedApplication.value.copyToOtherPartyYesOrNo },
-    },
-    ...(selectedApplication.value.copyToOtherPartyYesOrNo === YesOrNo.YES
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyText,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: selectedApplication.value.copyToOtherPartyText,
-            },
-          },
-        ]),
+  downloadLink: string
+): SummaryListRow[] => {
+  const rows = [
+    addSummaryRow(translations.applicant, application.applicant),
+    addSummaryRow(translations.requestDate, application.date),
+    addSummaryRow(translations.applicationType, translations[application.type]),
+    addSummaryRow(translations.legend, application.details),
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
+    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo),
   ];
+
+  if (application.copyToOtherPartyText) {
+    rows.push(addSummaryRow(translations.copyToOtherPartyText, application.copyToOtherPartyText));
+  }
+
+  return rows;
 };
 
 export const getTseApplicationDecisionDetails = (
-  selectedApplication: GenericTseApplicationTypeItem,
+  application: GenericTseApplicationType,
   translations: AnyRecord,
-  decisionDocDownloadLink: string[] | undefined
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  const tseApplicationDecisionDetails = [];
+  decisionDocDownloadLink: string[]
+): SummaryListRow[][] => {
+  const reversedDownloadLinks = [...decisionDocDownloadLink].reverse();
 
-  let tableTopSpacing = '';
-  let notification = translations.notification;
-
-  for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
-    if (i !== selectedApplication.value?.adminDecision.length - 1) {
-      tableTopSpacing = translations.tableTopWithSpace;
-      notification = translations.notificationWithSpace;
-    }
-    tseApplicationDecisionDetails.push(
-      {
-        key: {
-          html: notification,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: tableTopSpacing + selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
-        },
-      },
-      {
-        key: {
-          text: translations.decision,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decision,
-        },
-      },
-      {
-        key: {
-          text: translations.date,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.date,
-        },
-      },
-      {
-        key: {
-          text: translations.sentBy,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: translations.tribunal,
-        },
-      },
-      {
-        key: {
-          text: translations.decisionType,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.typeOfDecision,
-        },
-      },
-      {
-        key: {
-          text: translations.additionalInfo,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.additionalInformation,
-        },
-      },
-      {
-        key: {
-          text: translations.document,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: { html: decisionDocDownloadLink[i] },
-      },
-      {
-        key: {
-          text: translations.decisionMadeBy,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decisionMadeBy,
-        },
-      },
-      {
-        key: {
-          text: translations.name,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decisionMadeByFullName,
-        },
-      },
-      {
-        key: {
-          text: translations.sentTo,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.selectPartyNotify,
-        },
-      }
-    );
-  }
-  return tseApplicationDecisionDetails;
+  return [...application.adminDecision]
+    .reverse()
+    .map(({ value: decision }, i) => [
+      addSummaryRow(translations.notification, decision.enterNotificationTitle),
+      addSummaryRow(translations.decision, decision.decision),
+      addSummaryRow(translations.date, decision.date),
+      addSummaryRow(translations.sentBy, translations.tribunal),
+      addSummaryRow(translations.decisionType, decision.typeOfDecision),
+      addSummaryRow(translations.additionalInfo, decision.additionalInformation),
+      addSummaryHtmlRow(translations.document, reversedDownloadLinks[i]),
+      addSummaryRow(translations.decisionMadeBy, decision.decisionMadeBy),
+      addSummaryRow(translations.name, decision.decisionMadeByFullName),
+      addSummaryRow(translations.sentTo, decision.selectPartyNotify),
+    ]);
 };
 
 export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  req: AppRequest,
-  res: Response
-): Promise<any> => {
-  const allResponses: any[] = [];
+  req: AppRequest
+): Promise<SummaryListRow[][]> => {
   const respondCollection = selectedApplication.value.respondCollection;
   if (!respondCollection?.length) {
-    return allResponses;
+    return [];
   }
-  for (const response of respondCollection) {
-    let responseToAdd;
-    if (
-      response.value.from === Applicant.CLAIMANT ||
-      (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
-    ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, res);
-    } else if (isSentToClaimantByTribunal(response)) {
-      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken, res);
-      if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
-        await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
-          req.session.userCase,
-          selectedApplication.id,
-          response.id
-        );
+
+  const allResponses: SummaryListRow[][] = [];
+  const { user, userCase } = req.session;
+
+  for (const { id, value: response } of respondCollection) {
+    if (response.from === Applicant.RESPONDENT && response.copyToOtherParty === YesOrNo.NO) {
+      continue;
+    }
+
+    if (isSentToClaimantByTribunal(response)) {
+      allResponses.push(await getRowsForAdminResponse(translations, response, req.session.user?.accessToken));
+      if (response.isResponseRequired !== YesOrNo.YES && response.viewedByClaimant !== YesOrNo.YES) {
+        await getCaseApi(user.accessToken).updateResponseAsViewed(userCase, selectedApplication.id, id);
       }
-    }
-    if (responseToAdd !== undefined) {
-      allResponses.push(responseToAdd);
+    } else if (response.from !== Applicant.ADMIN) {
+      allResponses.push(await getRowsForNonAdminResponse(translations, response, user.accessToken));
     }
   }
+
   return allResponses;
 };
 
-const getSupportingMaterialDownloadLink = async (
-  responseDoc: Document,
-  accessToken: string,
-  res: Response
-): Promise<string | void> => {
-  let responseDocDownload;
-  if (responseDoc !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(responseDoc, accessToken);
-    } catch (err) {
-      return res.redirect('/not-found');
-    }
-    responseDocDownload = createDownloadLink(responseDoc);
+const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessToken: string) => {
+  if (!responseDoc) {
+    throw new Error('Document was null');
   }
-  return responseDocDownload;
+
+  await populateDocumentMetadata(responseDoc, accessToken);
+  return createDownloadLink(responseDoc);
 };
 
-const addAdminResponse = async (
-  allResponses: any[],
+const getRowsForAdminResponse = async (
   translations: AnyRecord,
-  response: TseRespondTypeItem,
-  accessToken: string,
-  res: Response
-): Promise<any> => {
-  allResponses.push([
-    {
-      key: {
-        text: translations.responseItem,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.enterResponseTitle },
-    },
-    {
-      key: {
-        text: translations.date,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.date },
-    },
-    {
-      key: {
-        text: translations.sentBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: translations.tribunal },
-    },
-    {
-      key: {
-        text: translations.orderOrRequest,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.isCmoOrRequest },
-    },
-    {
-      key: {
-        text: translations.responseDue,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.isResponseRequired },
-    },
-    {
-      key: {
-        text: translations.partyToRespond,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.selectPartyRespond },
-    },
-    {
-      key: {
-        text: translations.additionalInfo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.additionalInformation },
-    },
-    {
-      key: {
-        text: translations.description,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.addDocument?.find(element => element !== undefined).value.shortDescription },
-    },
-    {
-      key: {
-        text: translations.document,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: await getSupportingMaterialDownloadLink(
-          response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken,
-          res
-        ),
-      },
-    },
-    {
-      key: {
-        text: translations.requestMadeBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
-      },
-    },
-    {
-      key: {
-        text: translations.name,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.madeByFullName },
-    },
-    {
-      key: {
-        text: translations.sentTo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.selectPartyNotify },
-    },
-  ]);
-};
+  response: TseRespondType,
+  accessToken: string
+): Promise<SummaryListRow[]> => {
+  const requestMadeBy = response.isCmoOrRequest === 'Request' ? response.requestMadeBy : response.cmoMadeBy;
 
-const addNonAdminResponse = async (
-  translations: AnyRecord,
-  response: TseRespondTypeItem,
-  accessToken: string,
-  res: Response
-): Promise<any> => {
+  const firstDocument = response.addDocument?.find(e => e).value;
+  let downloadLink = '';
+
+  if (firstDocument) {
+    downloadLink = await getSupportingMaterialDownloadLink(firstDocument.uploadedDocument, accessToken);
+  }
+
   return [
-    {
-      key: {
-        text: translations.responder,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: response.value.from,
-      },
-    },
-    {
-      key: {
-        text: translations.responseDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.date },
-    },
-    {
-      key: {
-        text: translations.response,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.response },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: await getSupportingMaterialDownloadLink(
-          response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken,
-          res
-        ),
-      },
-    },
-    {
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: response.value.copyToOtherParty },
-    },
+    addSummaryRow(translations.responseItem, response.enterResponseTitle),
+    addSummaryRow(translations.date, response.date),
+    addSummaryRow(translations.sentBy, translations.tribunal),
+    addSummaryRow(translations.orderOrRequest, response.isCmoOrRequest),
+    addSummaryRow(translations.responseDue, response.isResponseRequired),
+    addSummaryRow(translations.partyToRespond, response.selectPartyRespond),
+    addSummaryRow(translations.additionalInfo, response.additionalInformation),
+    addSummaryRow(translations.requestMadeBy, requestMadeBy),
+    addSummaryRow(translations.description, firstDocument?.shortDescription),
+    addSummaryHtmlRow(translations.document, downloadLink),
+    addSummaryRow(translations.name, response.madeByFullName),
+    addSummaryRow(translations.sentTo, response.selectPartyNotify),
+  ];
+};
+
+const getRowsForNonAdminResponse = async (translations: AnyRecord, response: TseRespondType, accessToken: string) => {
+  const firstDocument = response.supportingMaterial?.find(e => e).value.uploadedDocument;
+  let downloadLink = '';
+  if (firstDocument) {
+    downloadLink = await getSupportingMaterialDownloadLink(firstDocument, accessToken);
+  }
+
+  return [
+    addSummaryRow(translations.responder, response.from),
+    addSummaryRow(translations.responseDate, response.date),
+    addSummaryRow(translations.response, response.response),
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
+    addSummaryRow(translations.copyCorrespondence, response.copyToOtherParty),
   ];
 };

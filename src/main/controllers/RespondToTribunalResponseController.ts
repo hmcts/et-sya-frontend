@@ -14,7 +14,7 @@ import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
+  populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -89,6 +89,7 @@ export default class RespondToTribunalResponseController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const languageParam = getLanguageParam(req.url);
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params.appId
@@ -101,15 +102,22 @@ export default class RespondToTribunalResponseController {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
+    let allResponses;
+
+    try {
+      allResponses = await getAllResponses(selectedApplication, translations, req);
+    } catch (e) {
+      logger.error(e);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
 
     const document = selectedApplication.value?.documentUpload;
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
     const downloadLink = createDownloadLink(document);
@@ -122,7 +130,7 @@ export default class RespondToTribunalResponseController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication.value, translations, downloadLink),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,

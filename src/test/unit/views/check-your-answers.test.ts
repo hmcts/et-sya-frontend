@@ -22,6 +22,7 @@ describe('Check your answers confirmation page', () => {
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
@@ -281,6 +282,7 @@ describe('Check your answers confirmation page - New Job with start date', () =>
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
@@ -321,6 +323,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
