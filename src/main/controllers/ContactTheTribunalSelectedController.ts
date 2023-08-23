@@ -87,10 +87,9 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
+    const redirectUrl = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
-      //TODO Handle redirect to Welsh page
-      const redirectUrl = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
 
@@ -104,7 +103,6 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      const redirectUrl = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
