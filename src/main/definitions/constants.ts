@@ -240,6 +240,7 @@ export const PageUrls = {
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
+  STORED_TO_SUBMIT_CYA: '/stored-to-submit-cya',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;

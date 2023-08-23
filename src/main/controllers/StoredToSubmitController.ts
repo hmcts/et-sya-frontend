@@ -7,12 +7,15 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { handlePostLogic } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 import { getCaptionTextForStoredContact, getTseApplicationDetailsTable } from './helpers/StoredContactToSubmitHelper';
+
+const logger = getLogger('StoredToSubmitController');
 
 export default class StoredToSubmitController {
   private readonly form: Form;
@@ -21,14 +24,16 @@ export default class StoredToSubmitController {
     fields: {
       confirmCopied: {
         id: 'confirmCopied',
-        labelHidden: true,
+        label: l => l.haveYouCopied,
+        labelHidden: false,
+        labelSize: 'm',
         type: 'checkboxes',
-        isPageHeading: true,
+        hint: l => l.iConfirmThatIHaveCopied,
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            id: 'yes',
-            label: l => l.YesIConfirm.checkbox,
+            name: 'yes',
+            label: l => l.yesIConfirm,
             value: YesOrNo.YES,
           },
         ],
@@ -45,10 +50,7 @@ export default class StoredToSubmitController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    setUserCase(req, this.form);
-    const languageParam = getLanguageParam(req.url);
-    const redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER + languageParam;
-    return res.redirect(redirectPage);
+    await handlePostLogic(req, res, this.form, logger, PageUrls.STORED_TO_SUBMIT_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {
