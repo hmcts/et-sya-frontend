@@ -301,7 +301,6 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.supportingMaterialFile = undefined;
   userCase.selectedRequestOrOrder = undefined;
   userCase.isRespondingToRequestOrOrder = undefined;
-  userCase.storedPending = undefined;
 };
 
 function toTitleCase(str: string): string {

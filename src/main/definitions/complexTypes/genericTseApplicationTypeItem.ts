@@ -30,7 +30,6 @@ export interface GenericTseApplicationType {
   respondentResponseRequired?: string;
   claimantResponseRequired?: string;
   adminDecision?: TseAdminDecisionItem[];
-  storedPending?: YesOrNo;
 }
 
 export interface TseAdminDecisionItem {

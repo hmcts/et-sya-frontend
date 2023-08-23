@@ -1,5 +1,5 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../../definitions/case';
+import { CaseWithId, appStatus } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { PageUrls } from '../../definitions/constants';
 
@@ -29,6 +29,6 @@ export const getStoredPendingApplicationLinks = (
   languageParam: string
 ): string[] => {
   return apps
-    ?.filter(app => app.value.storedPending === YesOrNo.YES)
+    ?.filter(app => app.value.status === appStatus.UNSUBMITTED)
     .map(app => getStoredToSubmitLink(app.id, languageParam));
 };

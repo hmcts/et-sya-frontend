@@ -182,7 +182,6 @@ export interface Case {
   contactApplicationFile?: Document;
   copyToOtherPartyYesOrNo?: YesOrNo;
   copyToOtherPartyText?: string;
-  storedPending?: YesOrNo;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   responseText?: string;
@@ -300,6 +299,10 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum appStatus {
+  UNSUBMITTED = 'Unsubmitted',
 }
 
 export interface Document {
