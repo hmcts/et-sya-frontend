@@ -1,3 +1,5 @@
+import { YesOrNo } from '../../definitions/case';
+
 import { DocumentTypeItem } from './documentTypeItem';
 
 export interface SendNotificationTypeItem {
@@ -11,6 +13,8 @@ export interface SendNotificationTypeItem {
 export interface SendNotificationType {
   number?: string;
   sendNotificationTitle?: string;
+
+  sendNotificationLetter?: YesOrNo;
 
   //Hearing title with date
   sendNotificationSelectHearing?: SendNotificationSelectHearingItem;
@@ -34,7 +38,11 @@ export interface SendNotificationType {
 
   sendNotificationAdditionalInfo?: string;
 
+  sendNotificationResponsesCount?: string;
+
   sendNotificationUploadDocument?: DocumentTypeItem[];
+
+  sendNotificationResponseTribunalTable?: YesOrNo;
 
   //Case management order made by Legal officer, Judge or CaseWorker
   sendNotificationWhoCaseOrder?: string;

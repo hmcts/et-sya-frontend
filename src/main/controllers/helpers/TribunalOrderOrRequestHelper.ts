@@ -1,6 +1,6 @@
 import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -158,7 +158,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): SendNotificationTypeItem[] => {
-  if (notifications?.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
+  if (notifications?.length && filterSendNotifications(notifications).length) {
     notifications.forEach(item => {
       item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
         ':orderId',
@@ -204,7 +204,7 @@ export const activateTribunalOrdersAndRequestsLink = (
   if (!items?.length) {
     return;
   }
-  const notices = filterNotificationsWithRequestsOrOrders(items).filter(
+  const notices = filterSendNotifications(items).filter(
     notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
   );
   if (!notices?.length) {
@@ -241,13 +241,10 @@ export const activateTribunalOrdersAndRequestsLink = (
   }
 };
 
-export const filterNotificationsWithRequestsOrOrders = (
-  items: SendNotificationTypeItem[]
-): SendNotificationTypeItem[] => {
+export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
     it =>
-      it.value.sendNotificationCaseManagement !== undefined &&
-      it.value.sendNotificationCaseManagement !== '' &&
-      it.value.sendNotificationCaseManagement !== null
+      it.value.sendNotificationSubjectString === NotificationSubjects.ORDER_OR_REQUEST ||
+      it.value.sendNotificationSubjectString === NotificationSubjects.GENERAL_CORRESPONDENCE
   );
 };
