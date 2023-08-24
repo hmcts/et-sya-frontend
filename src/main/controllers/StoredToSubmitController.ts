@@ -10,7 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
-import { getPageContent } from './helpers/FormHelpers';
+import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 import { getCaptionTextForStoredContact, getTseApplicationDetailsTable } from './helpers/StoredContactToSubmitHelper';
@@ -32,7 +32,7 @@ export default class StoredToSubmitController {
         validator: atLeastOneFieldIsChecked,
         values: [
           {
-            name: 'yes',
+            name: 'confirmCopied',
             label: l => l.yesIConfirm,
             value: YesOrNo.YES,
           },
@@ -58,8 +58,8 @@ export default class StoredToSubmitController {
       TranslationKeys.COMMON,
       TranslationKeys.STORED_TO_SUBMIT,
     ]);
-
-    res.render(TranslationKeys.STORED_TO_SUBMIT, {
+    assignFormData(req.session.userCase, this.form.getFormFields());
+    res.render('stored-to-submit', {
       ...content,
       applicationType: getCaptionTextForStoredContact(req),
       appContent: getTseApplicationDetailsTable(req),

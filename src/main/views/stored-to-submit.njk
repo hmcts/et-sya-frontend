@@ -1,6 +1,6 @@
 {% extends "template.njk" %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -8,10 +8,17 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-!-width-two-thirds">
+  {{
+    govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: getErrors(form.fields)
+    }) if getErrors(form.fields).length > 0
+  }}
 
+  <div class="govuk-!-width-two-thirds">
     <h1 class="govuk-heading-xl">{{applicationType}}</h1>
     <p class="govuk-body">{{youHaveNotSubmitted}}</p>
+
       {{ govukSummaryList({
         rows: appContent
       }) }}
@@ -21,14 +28,9 @@
     <p class="govuk-body"><a href="{{thisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
     <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="{{thisCorrespondenceFileLink}}" class="govuk-link">{{thisCorrespondenceFileName}} ({{opensInNewTab}})</a></p>
 
-    <h3 class="govuk-heading-m">{{haveYouCopied}}</h3>
-    <p class="govuk-body">{{iConfirmThatIHaveCopied}}</p>
-
     {% block form %}
-      {% include "form/form.njk"%}
+      {% include "form/form.njk" %}
     {% endblock %}
-
-  </div>
 
   </div>
 {% endblock %}

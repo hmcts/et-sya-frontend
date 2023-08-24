@@ -331,6 +331,7 @@ export class Routes {
     app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);
