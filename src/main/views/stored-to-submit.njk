@@ -16,17 +16,23 @@
   }}
 
   <div class="govuk-!-width-two-thirds">
-    <h1 class="govuk-heading-xl">{{applicationType}}</h1>
-    <p class="govuk-body">{{youHaveNotSubmitted}}</p>
+    <h1 class="govuk-heading-xl">{{ applicationType }}</h1>
+    <p class="govuk-body">{{ youHaveNotSubmitted }}</p>
 
       {{ govukSummaryList({
         rows: appContent
       }) }}
 
-    <h2 class="govuk-heading-l">{{confirmYouHaveCopied}}</h2>
-    <p class="govuk-body">{{toSubmitYourApplication}}</p>
-    <p class="govuk-body"><a href="{{thisCorrespondenceLink}}" class="govuk-link">{{viewThisCorrespondence}} ({{opensInNewTab}})</a></p>
-    <p class="govuk-body">{{viewTheSupportingDocuments}} <br/><a href="{{thisCorrespondenceFileLink}}" class="govuk-link">{{thisCorrespondenceFileName}} ({{opensInNewTab}})</a></p>
+    <h2 class="govuk-heading-l">{{ confirmYouHaveCopied }}</h2>
+    <p class="govuk-body">{{ toSubmitYourApplication }}</p>
+    <p class="govuk-body"><a href="{{ viewCorrespondenceLink }}" class="govuk-link">{{ viewThisCorrespondence }} ({{ opensInNewTab }})</a></p>
+
+    {% if document %}
+    <p class="govuk-body">
+      {{ viewTheSupportingDocuments }} <br/>
+      <a href="{{ viewCorrespondenceFileLink }}" class="govuk-link">{{ document.document_filename }} ({{ opensInNewTab }})</a>
+    </p>
+    {% endif %}
 
     {% block form %}
       {% include "form/form.njk" %}

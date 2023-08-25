@@ -10,10 +10,16 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { handlePostLogic } from './helpers/CaseHelpers';
+import {
+  createDownloadLink,
+  findSelectedGenericTseApplication,
+  getDocumentAdditionalInformation,
+  getDocumentLink,
+} from './helpers/DocumentHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
-import { getCaptionTextForStoredContact, getTseApplicationDetailsTable } from './helpers/StoredContactToSubmitHelper';
+import { getCaptionTextForStoredContact, getTseApplicationDetailsHelper } from './helpers/StoredContactToSubmitHelper';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -53,19 +59,37 @@ export default class StoredToSubmitController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.STORED_TO_SUBMIT_CYA);
   };
 
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const userCase = req.session.userCase;
+    const selectedApplication = findSelectedGenericTseApplication(
+      userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    userCase.selectedGenericTseApplication = selectedApplication;
+
+    const document = selectedApplication.value?.documentUpload;
+    const accessToken = req.session.user?.accessToken;
+    if (document) {
+      try {
+        await getDocumentAdditionalInformation(document, accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        return res.redirect('/not-found');
+      }
+    }
+
     const content = getPageContent(req, this.StoredToSubmitContent, [
       TranslationKeys.COMMON,
       TranslationKeys.STORED_TO_SUBMIT,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
-    res.render('stored-to-submit', {
+    res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
-      applicationType: getCaptionTextForStoredContact(req),
-      appContent: getTseApplicationDetailsTable(req),
-      thisCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
-      thisCorrespondenceFileLink: '#',
-      thisCorrespondenceFileName: '[file_name_of_supporting_doc]',
+      applicationType: getCaptionTextForStoredContact(req, selectedApplication),
+      appContent: getTseApplicationDetailsHelper(req, selectedApplication, createDownloadLink(document)),
+      viewCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
+      document,
+      viewCorrespondenceFileLink: getDocumentLink(document),
       cancelLink: getCancelLink(req),
     });
   };

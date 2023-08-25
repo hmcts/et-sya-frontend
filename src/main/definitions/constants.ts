@@ -120,6 +120,7 @@ export const TranslationKeys = {
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
   STORED_TO_SUBMIT: 'stored-to-submit',
+  STORED_TO_SUBMIT_CYA: 'stored-to-submit-cya',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
@@ -255,6 +256,7 @@ export const InterceptPaths = {
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
   STORE_TRIBUNAL_CYA: '/store-tribunal-cya',
+  SUBMIT_STORED_TRIBUNAL_CYA: '/submit-stored-tribunal-cya',
 } as const;
 
 export const ErrorPages = {
