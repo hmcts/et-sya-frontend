@@ -1,10 +1,20 @@
+import axios from 'axios';
+
 import RespondToTribunalResponseController from '../../../main/controllers/RespondToTribunalResponseController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { TranslationKeys } from '../../../main/definitions/constants';
+import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
+import * as CaseService from '../../../main/services/CaseService';
+import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.mock('axios');
+const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
+const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
+const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+mockClient.mockReturnValue(caseApi);
 
 describe('Respond to tribunal response Controller', () => {
   const translationJsons = { ...respondJsonRaw, ...common };
@@ -112,5 +122,20 @@ describe('Respond to tribunal response Controller', () => {
     const controller = new RespondToTribunalResponseController();
     await controller.post(request, res);
     expect(res.redirect).toHaveBeenCalledWith('/respond-to-tribunal-response/1?lng=en');
+  });
+
+  it('should redirect to not found page when response document cannot be resolved', async () => {
+    caseApi.getDocumentDetails = jest.fn().mockReturnValue(documentRejection);
+
+    const userCase: Partial<CaseWithId> = {
+      genericTseApplicationCollection: mockGenericTseCollection.slice(0, 1),
+    };
+
+    const response = mockResponse();
+    const request = mockRequestWithTranslation({ userCase }, translationJsons);
+
+    const controller = new RespondToTribunalResponseController();
+    await controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });
