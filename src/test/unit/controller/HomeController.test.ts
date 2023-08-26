@@ -1,7 +1,7 @@
 import HomeController from '../../../main/controllers/HomeController';
-import { setUrlLanguage } from '../../../main/controllers/helpers/LanguageHelper';
-import { PageUrls } from '../../../main/definitions/constants';
+import { LegacyUrls, PageUrls } from '../../../main/definitions/constants';
 import { AnyRecord } from '../../../main/definitions/util-types';
+import getLegacyUrl from '../../../main/utils/getLegacyUrlFromLng';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -15,7 +15,7 @@ describe('Onboarding Controller', () => {
   it('should render the onboarding (home) page', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
-    const redirectUrl = setUrlLanguage(request, PageUrls.CHECKLIST);
+    const redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, request.language);
 
     homeController.get(request, response);
 
