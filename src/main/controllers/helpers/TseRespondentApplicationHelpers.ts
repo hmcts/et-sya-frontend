@@ -1,6 +1,3 @@
-import { Response } from 'express';
-import { LoggerInstance } from 'winston';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
@@ -113,9 +110,7 @@ export const setSelectedTseApplication = (
 
 export const getResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<string | void> => {
   let responseDocDownload = undefined;
   let responseDoc = undefined;
@@ -127,12 +122,7 @@ export const getResponseDocDownloadLink = async (
         : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
   }
   if (responseDoc !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(responseDoc, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
+    await getDocumentAdditionalInformation(responseDoc, accessToken);
     responseDocDownload = createDownloadLink(responseDoc);
   }
   return responseDocDownload;
@@ -140,29 +130,20 @@ export const getResponseDocDownloadLink = async (
 
 export const getApplicationDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<string | void> => {
   const applicationDocDownload = selectedApplication?.value?.documentUpload;
 
   if (applicationDocDownload !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
+    await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
   }
   return createDownloadLink(applicationDocDownload);
 };
 
 export const getDecisionContent = async (
-  logger: LoggerInstance,
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<any[] | void> => {
   const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
   let decisionContent = undefined;
@@ -172,12 +153,7 @@ export const getDecisionContent = async (
   if (decisionDocDownload.length > 0) {
     for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
       if (decisionDocDownload[i]) {
-        try {
-          await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          return res.redirect('/not-found');
-        }
+        await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }
