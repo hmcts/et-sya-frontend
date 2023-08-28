@@ -244,7 +244,7 @@ export const activateTribunalOrdersAndRequestsLink = (
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
     it =>
-      it.value.sendNotificationSubjectString === NotificationSubjects.ORDER_OR_REQUEST ||
-      it.value.sendNotificationSubjectString === NotificationSubjects.GENERAL_CORRESPONDENCE
+      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) ||
+      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
   );
 };
