@@ -21,51 +21,65 @@ export const getContactTribunalCyaContent = (req: AppRequest, languageParam: str
     ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
     ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
   };
-  const contactTheTribunalSelectedUrl = PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(
-    ':selectedOption',
-    userCase.contactApplicationType
-  );
-  const downloadLink = createDownloadLink(selectedApplication.value.documentUpload);
-  const typeOfApplication = translations[selectedApplication.value.type];
 
-  const { applicationType, legend, supportingMaterial, copyToOtherPartyYesOrNo, copyToOtherPartyText } = translations;
+  const {
+    applicationType,
+    legend,
+    supportingMaterial,
+    copyToOtherPartyYesOrNo,
+    copyToOtherPartyText,
+    haveYouSentCopyQuestion,
+    haveYouSentCopyAnswer,
+  } = translations;
+
   const cyaContent: SummaryListRow[] = [
-    addSummaryRow(
-      applicationType,
-      typeOfApplication,
-      createChangeAction(PageUrls.CONTACT_THE_TRIBUNAL + languageParam, CHANGE, applicationType)
-    ),
-    addSummaryRow(
-      legend,
-      userCase.contactApplicationText,
-      createChangeAction(contactTheTribunalSelectedUrl + languageParam, CHANGE, legend)
-    ),
-    addSummaryHtmlRow(
-      supportingMaterial,
-      downloadLink,
-      createChangeAction(contactTheTribunalSelectedUrl + languageParam, CHANGE, supportingMaterial)
-    ),
+    addSummaryRow(applicationType, translations[selectedApplication.value.type], createChangeAction('', '', '')),
+    addSummaryRow(legend, selectedApplication.value.details, createChangeAction('', '', '')),
   ];
 
-  if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType)) {
+  if (selectedApplication.value.documentUpload !== undefined) {
+    cyaContent.push(
+      addSummaryHtmlRow(
+        supportingMaterial,
+        createDownloadLink(selectedApplication.value.documentUpload),
+        createChangeAction('', '', '')
+      )
+    );
+  } else {
+    cyaContent.push(addSummaryRow(supportingMaterial, '', createChangeAction('', '', '')));
+  }
+
+  if (!applicationTypes.claimant.c.includes(selectedApplication.value.type)) {
     cyaContent.push(
       addSummaryRow(
         copyToOtherPartyYesOrNo,
-        userCase.copyToOtherPartyYesOrNo,
-        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyYesOrNo)
+        selectedApplication.value.copyToOtherPartyYesOrNo,
+        createChangeAction('', '', '')
       )
     );
 
-    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
+    if (selectedApplication.value.copyToOtherPartyYesOrNo === YesOrNo.NO) {
       cyaContent.push(
         addSummaryRow(
           copyToOtherPartyText,
-          userCase.copyToOtherPartyText,
-          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyText)
+          selectedApplication.value.copyToOtherPartyText,
+          createChangeAction('', '', '')
         )
       );
     }
   }
+
+  cyaContent.push(
+    addSummaryRow(
+      haveYouSentCopyQuestion,
+      haveYouSentCopyAnswer,
+      createChangeAction(
+        PageUrls.STORED_TO_SUBMIT.replace(':appId', selectedApplication.id) + languageParam,
+        CHANGE,
+        haveYouSentCopyQuestion
+      )
+    )
+  );
 
   return cyaContent;
 };

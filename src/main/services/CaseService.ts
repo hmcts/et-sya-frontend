@@ -134,6 +134,18 @@ export class CaseApi {
     }
   };
 
+  submitStoredClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.SUBMIT_STORED_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+      });
+    } catch (error) {
+      throw new Error('Error submitting stored tse application status: ' + axiosErrorDetails(error));
+    }
+  };
+
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {

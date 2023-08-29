@@ -334,6 +334,7 @@ export class Routes {
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
     app.get(PageUrls.STORED_TO_SUBMIT_CYA, new StoredToSubmitCYAController().get);
+    app.get(InterceptPaths.SUBMIT_STORED_TRIBUNAL_CYA, new StoreTseController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);
     app.post(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().post);

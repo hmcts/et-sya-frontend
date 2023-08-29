@@ -9,6 +9,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
+import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { handlePostLogic } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
@@ -19,7 +20,6 @@ import {
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
-import { getCaptionTextForStoredContact, getTseApplicationDetailsHelper } from './helpers/StoredContactToSubmitHelper';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -78,15 +78,22 @@ export default class StoredToSubmitController {
       }
     }
 
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
+      ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+    };
+
     const content = getPageContent(req, this.StoredToSubmitContent, [
       TranslationKeys.COMMON,
       TranslationKeys.STORED_TO_SUBMIT,
     ]);
+
     assignFormData(req.session.userCase, this.form.getFormFields());
+
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
-      applicationType: getCaptionTextForStoredContact(req, selectedApplication),
-      appContent: getTseApplicationDetailsHelper(req, selectedApplication, createDownloadLink(document)),
+      applicationType: translations.applicationTo + translations[selectedApplication.value.type],
+      appContent: getTseApplicationDetails(selectedApplication, translations, createDownloadLink(document)),
       viewCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
       document,
       viewCorrespondenceFileLink: getDocumentLink(document),
