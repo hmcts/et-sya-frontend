@@ -1,14 +1,14 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { LegacyUrls, PageUrls, TranslationKeys } from '../definitions/constants';
-import getLegacyUrl from '../utils/getLegacyUrlFromLng';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 
+import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class HomeController {
   public get(req: AppRequest, res: Response): void {
-    const redirectUrl = getLegacyUrl(LegacyUrls.ET1_APPLY + LegacyUrls.ET1_PATH, req.language);
+    const redirectUrl = setUrlLanguage(req, PageUrls.CHECKLIST);
     res.render(TranslationKeys.HOME, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.HOME, { returnObjects: true }),
