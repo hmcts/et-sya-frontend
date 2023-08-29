@@ -39,3 +39,5 @@ src/test/end-to-end/functional-output/*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.swc/*
