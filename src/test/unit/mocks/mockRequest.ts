@@ -147,6 +147,7 @@ export const mockRequestWithTranslation = (
     save: jest.fn(done => (done ? done() : true)),
     lang: 'en',
     errors: undefined,
+    user: { accessToken: 'token' },
   } as unknown as AppSession;
   return req;
 };
