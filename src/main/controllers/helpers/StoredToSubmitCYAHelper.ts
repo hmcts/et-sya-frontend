@@ -33,39 +33,23 @@ export const getContactTribunalCyaContent = (req: AppRequest, languageParam: str
   } = translations;
 
   const cyaContent: SummaryListRow[] = [
-    addSummaryRow(applicationType, translations[selectedApplication.value.type], createChangeAction('', '', '')),
-    addSummaryRow(legend, selectedApplication.value.details, createChangeAction('', '', '')),
+    addSummaryRow(applicationType, translations[selectedApplication.value.type]),
+    addSummaryRow(legend, selectedApplication.value.details),
   ];
 
   if (selectedApplication.value.documentUpload !== undefined) {
     cyaContent.push(
-      addSummaryHtmlRow(
-        supportingMaterial,
-        createDownloadLink(selectedApplication.value.documentUpload),
-        createChangeAction('', '', '')
-      )
+      addSummaryHtmlRow(supportingMaterial, createDownloadLink(selectedApplication.value.documentUpload))
     );
   } else {
-    cyaContent.push(addSummaryRow(supportingMaterial, '', createChangeAction('', '', '')));
+    cyaContent.push(addSummaryRow(supportingMaterial, ''));
   }
 
   if (!applicationTypes.claimant.c.includes(selectedApplication.value.type)) {
-    cyaContent.push(
-      addSummaryRow(
-        copyToOtherPartyYesOrNo,
-        selectedApplication.value.copyToOtherPartyYesOrNo,
-        createChangeAction('', '', '')
-      )
-    );
+    cyaContent.push(addSummaryRow(copyToOtherPartyYesOrNo, selectedApplication.value.copyToOtherPartyYesOrNo));
 
     if (selectedApplication.value.copyToOtherPartyYesOrNo === YesOrNo.NO) {
-      cyaContent.push(
-        addSummaryRow(
-          copyToOtherPartyText,
-          selectedApplication.value.copyToOtherPartyText,
-          createChangeAction('', '', '')
-        )
-      );
+      cyaContent.push(addSummaryRow(copyToOtherPartyText, selectedApplication.value.copyToOtherPartyText));
     }
   }
 

@@ -242,6 +242,7 @@ export const PageUrls = {
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
   STORED_TO_SUBMIT_CYA: '/stored-to-submit-cya',
+  STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
@@ -256,7 +257,7 @@ export const InterceptPaths = {
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
   STORE_TRIBUNAL_CYA: '/store-tribunal-cya',
-  SUBMIT_STORED_TRIBUNAL_CYA: '/submit-stored-tribunal-cya',
+  STORED_TO_SUBMIT_UPDATE: '/stored-to-submit-update',
 } as const;
 
 export const ErrorPages = {

@@ -4,15 +4,15 @@ import { AppRequest } from '../definitions/appRequest';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
-import { submitStoredClaimantTse } from './helpers/CaseHelpers';
+import { storedToSubmitClaimantTse } from './helpers/CaseHelpers';
 
-const logger = getLogger('SubmitStoredTseController');
+const logger = getLogger('StoredToSubmitUpdateController');
 
-export default class SubmitStoredTseController {
+export default class StoredToSubmitUpdateController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       const userCase = req.session?.userCase;
-      await submitStoredClaimantTse(req, logger);
+      await storedToSubmitClaimantTse(req, logger);
       userCase.selectedGenericTseApplication = undefined;
       userCase.confirmCopied = undefined;
     } catch (error) {

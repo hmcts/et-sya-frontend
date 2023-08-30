@@ -134,7 +134,7 @@ export class CaseApi {
     }
   };
 
-  submitStoredClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+  storedToSubmitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.SUBMIT_STORED_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,

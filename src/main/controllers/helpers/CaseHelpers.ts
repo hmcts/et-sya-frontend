@@ -109,9 +109,9 @@ export const storeClaimantTse = async (req: AppRequest, logger: Logger): Promise
   }
 };
 
-export const submitStoredClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
+export const storedToSubmitClaimantTse = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
-    await getCaseApi(req.session.user?.accessToken).submitStoredClaimantTse(req.session.userCase);
+    await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
     logger.info(`Stored claimant tse for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);

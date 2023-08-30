@@ -20,7 +20,7 @@ export default class StoredToSubmitCYAController {
     res.render(TranslationKeys.STORED_TO_SUBMIT_CYA, {
       ...content,
       cancelPage: getCancelLink(req),
-      submitUrl: InterceptPaths.SUBMIT_STORED_TRIBUNAL_CYA + getLanguageParam(req.url),
+      submitUrl: InterceptPaths.STORED_TO_SUBMIT_UPDATE + getLanguageParam(req.url),
       cyaContent: getContactTribunalCyaContent(req, getLanguageParam(req.url)),
     });
   }
