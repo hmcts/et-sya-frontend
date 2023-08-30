@@ -1,6 +1,3 @@
-import logger from '@pact-foundation/pact/src/common/logger';
-import { Response } from 'express';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
@@ -53,8 +50,7 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
 
 export const getJudgmentAttachments = async (
   selectedJudgment: SendNotificationTypeItem,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<DocumentTypeItem[]> => {
   const judgmentAttachments = [];
   if (selectedJudgment?.value?.sendNotificationUploadDocument) {
@@ -65,12 +61,7 @@ export const getJudgmentAttachments = async (
     }
 
     if (judgmentAttachments.length) {
-      try {
-        await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        res.redirect('/not-found');
-      }
+      await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
       judgmentAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
   }
@@ -79,8 +70,7 @@ export const getJudgmentAttachments = async (
 
 export const getDecisionAttachments = async (
   selectedDecision: TseAdminDecisionItem,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<DocumentTypeItem[]> => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
@@ -90,12 +80,7 @@ export const getDecisionAttachments = async (
   }
 
   if (decisionAttachments.length) {
-    try {
-      await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      res.redirect('/not-found');
-    }
+    await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
     decisionAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
   }
   return decisionAttachments;
