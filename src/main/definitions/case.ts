@@ -303,7 +303,7 @@ export const enum HearingPreference {
 }
 
 export const enum appStatus {
-  UNSUBMITTED = 'Unsubmitted',
+  STORED = 'Stored',
 }
 
 export interface Document {

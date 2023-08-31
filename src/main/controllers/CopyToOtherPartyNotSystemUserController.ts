@@ -8,11 +8,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import {
-  getCaptionTextForCopyToOtherParty,
-  getRedirectPageUrlNotSystemUser,
-  getTodayPlus7DaysStrings,
-} from './helpers/CopyToOtherPartyHelper';
+import { getCaptionTextForCopyToOtherParty, getRedirectPageUrlNotSystemUser } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -42,8 +38,6 @@ export default class CopyToOtherPartyNotSystemUserController {
               l.doNotSubmitYourApplication +
               '</p><p class="govuk-body">' +
               l.youShouldAlsoNotify +
-              ' ' +
-              l.appDatePlusSeven +
               '</p>',
             value: YesOrNo.YES,
           },
@@ -109,7 +103,6 @@ export default class CopyToOtherPartyNotSystemUserController {
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, {
       ...content,
       applicationType: getCaptionTextForCopyToOtherParty(req),
-      appDatePlusSeven: getTodayPlus7DaysStrings(),
       cancelLink: getCancelLink(req),
     });
   };

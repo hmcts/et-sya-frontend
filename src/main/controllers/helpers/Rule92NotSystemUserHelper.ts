@@ -29,6 +29,6 @@ export const getStoredPendingApplicationLinks = (
   languageParam: string
 ): string[] => {
   return apps
-    ?.filter(app => app.value.status === appStatus.UNSUBMITTED)
+    ?.filter(app => app.value.status === appStatus.STORED)
     .map(app => getStoredToSubmitLink(app.id, languageParam));
 };
