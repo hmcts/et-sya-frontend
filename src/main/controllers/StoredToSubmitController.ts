@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -46,8 +46,7 @@ export default class StoredToSubmitController {
       },
     },
     submit: {
-      text: (l: AnyRecord): string => l.continue,
-      classes: 'govuk-!-margin-right-2',
+      text: (l: AnyRecord): string => l.submitBtn,
     },
   };
 
@@ -56,7 +55,7 @@ export default class StoredToSubmitController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, PageUrls.STORED_TO_SUBMIT_CYA);
+    await handlePostLogic(req, res, this.form, logger, InterceptPaths.STORED_TO_SUBMIT_UPDATE);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

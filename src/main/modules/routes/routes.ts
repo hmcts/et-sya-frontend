@@ -93,7 +93,6 @@ import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYou
 import StillWorkingController from '../../controllers/StillWorkingController';
 import StoreTseController from '../../controllers/StoreTseController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
-import StoredToSubmitCYAController from '../../controllers/StoredToSubmitCYAController';
 import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
 import StoredToSubmitController from '../../controllers/StoredToSubmitController';
 import StoredToSubmitUpdateController from '../../controllers/StoredToSubmitUpdateController';
@@ -336,7 +335,6 @@ export class Routes {
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
-    app.get(PageUrls.STORED_TO_SUBMIT_CYA, new StoredToSubmitCYAController().get);
     app.get(InterceptPaths.STORED_TO_SUBMIT_UPDATE, new StoredToSubmitUpdateController().get);
     app.get(PageUrls.STORED_TO_SUBMIT_COMPLETE, new StoredToSubmitCompleteController().get);
 
