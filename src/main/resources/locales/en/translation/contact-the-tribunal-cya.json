@@ -9,7 +9,5 @@
   "submitBtn": "Submit",
   "cancelLink": "Cancel",
   "youCannotMakeFurtherChanges": "You cannot make further changes to this correspondence after you store it",
-  "storeApplication": "Store application",
-  "haveYouSentCopyQuestion": "Have you sent a copy of your application or correspondence to the other party?",
-  "haveYouSentCopyAnswer": "Yes, I have sent a copy of this application / correspondence to the other party."
+  "storeApplication": "Store application"
 }

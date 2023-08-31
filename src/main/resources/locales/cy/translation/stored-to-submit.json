@@ -6,5 +6,12 @@
   "opensInNewTab": "yn agor mewn tab newydd",
   "viewTheSupportingDocuments": "Gweld y dogfennau ategol",
   "haveYouCopied": "Ydych chi wedi anfon yr ohebiaeth hon at y parti arall?",
-  "iConfirmThatIHaveCopied": "Rwy'n cadarnhau fy mod wedi anfon yr ohebiaeth hon at y parti arall. Rwyf hefyd wedi hysbysu'r parti arall y dylai unrhyw wrthwynebiadau i'm cais gael eu hanfon i'r tribiwnlys cyn gynted â phosibl a beth bynnag o fewn 7 diwrnod."
+  "iConfirmThatIHaveCopied": "Rwy'n cadarnhau fy mod wedi anfon yr ohebiaeth hon at y parti arall. Rwyf hefyd wedi hysbysu'r parti arall y dylai unrhyw wrthwynebiadau i'm cais gael eu hanfon i'r tribiwnlys cyn gynted â phosibl a beth bynnag o fewn 7 diwrnod.",
+  "yesIConfirm": "Ydw, rwy'n cadarnhau fy mod wedi anfon yr ohebiaeth hon at y parti arall drwy'r post neu e-bost.",
+  "submitBtn": "Cyflwyno",
+  "errors": {
+    "confirmCopied": {
+      "required": "Have you copied this correspondence to the other party?"
+    }
+  }
 }
