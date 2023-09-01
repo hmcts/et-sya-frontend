@@ -33,7 +33,7 @@ export const enum HubLinkStatus {
   WAITING_FOR_TRIBUNAL = 'waitingForTheTribunal',
   SUBMITTED_AND_VIEWED = 'submittedAndViewed',
   IN_PROGRESS = 'inProgress',
-  STORED = 'Stored',
+  STORED = 'stored',
   NOT_STARTED_YET = 'notStartedYet',
   UPDATED = 'updated',
   READY_TO_VIEW = 'readyToView',
