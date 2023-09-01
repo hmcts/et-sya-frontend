@@ -13,7 +13,7 @@ export default class StoreTseController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     try {
       const userCase = req.session?.userCase;
-      userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
+      userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.STORED;
       await handleUpdateHubLinksStatuses(req, logger);
       await storeClaimantTse(req, logger);
       clearTseFields(userCase);

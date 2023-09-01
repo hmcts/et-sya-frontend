@@ -25,12 +25,12 @@
 
     <h2 class="govuk-heading-l">{{ confirmYouHaveCopied }}</h2>
     <p class="govuk-body">{{ toSubmitYourApplication }}</p>
-    <p class="govuk-body"><a href="{{ viewCorrespondenceLink }}" class="govuk-link">{{ viewThisCorrespondence }} ({{ opensInNewTab }})</a></p>
+    <p class="govuk-body"><a href="{{ viewCorrespondenceLink }}" class="govuk-link" target="_blank">{{ viewThisCorrespondence }} ({{ opensInNewTab }})</a></p>
 
     {% if document %}
     <p class="govuk-body">
       {{ viewTheSupportingDocuments }} <br/>
-      <a href="{{ viewCorrespondenceFileLink }}" class="govuk-link">{{ document.document_filename }} ({{ opensInNewTab }})</a>
+      <a href="{{ viewCorrespondenceFileLink }}" class="govuk-link" target="_blank">{{ document.document_filename }} ({{ opensInNewTab }})</a>
     </p>
     {% endif %}
 
