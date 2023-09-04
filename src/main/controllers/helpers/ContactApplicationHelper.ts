@@ -9,7 +9,14 @@ export const getFiles = (
   translations: AnyRecord
 ): SummaryListRow[] => {
   if (userCase === undefined || userCase.contactApplicationFile === undefined) {
-    return [addSummaryRow(translations.noFilesUpload, '')];
+    return [
+      {
+        key: {
+          html: translations.noFilesUpload,
+          classes: 'govuk-!-font-weight-regular-m',
+        },
+      },
+    ];
   } else {
     return [
       addSummaryRow(

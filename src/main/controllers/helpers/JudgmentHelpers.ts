@@ -110,7 +110,7 @@ export const getJudgmentDetails = (
     for (const element of judgmentAttachments) {
       judgmentDetails.push(
         addSummaryRow(translations.description, element.value.shortDescription),
-        addSummaryRow(translations.document, element.downloadLink)
+        addSummaryHtmlRow(translations.document, element.downloadLink)
       );
     }
   }
@@ -161,7 +161,7 @@ export const getDecisionDetails = (
   if (selectedDecisionApplication?.value.respondCollection) {
     responseDetails.push(
       addSummaryRow(translations.responseFrom, selectedDecisionApplication?.value.respondCollection[0].value.from),
-      addSummaryRow(translations.date, selectedDecisionApplication?.value.respondCollection[0].value.date),
+      addSummaryHtmlRow(translations.date, selectedDecisionApplication?.value.respondCollection[0].value.date),
       addSummaryHtmlRow(
         translations.responsePart1 + responseFrom + translations.responsePart2,
         selectedDecisionApplication?.value.respondCollection[0].value.response
@@ -169,7 +169,9 @@ export const getDecisionDetails = (
     );
 
     if (selectedDecisionApplication?.value.respondCollection[0].value.supportingMaterial) {
-      responseDetails.push(addSummaryRow(translations.supportingMaterial, selectedApplicationResponseDocDownloadLink));
+      responseDetails.push(
+        addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationResponseDocDownloadLink)
+      );
     }
 
     responseDetails.push(
