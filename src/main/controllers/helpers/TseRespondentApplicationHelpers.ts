@@ -12,7 +12,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
 import { clearTseFields } from './CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation, populateDocumentMetadata } from './DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -69,8 +69,7 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 ): GenericTseApplicationTypeItem[] => {
   if (respondentItems?.length) {
     respondentItems.forEach(item => {
-      const app = translations[item.value.type];
-      item.linkValue = app;
+      item.linkValue = translations[item.value.type];
       item.redirectUrl = `/respondent-application-details/${item.id}${getLanguageParam(url)}`;
 
       item.displayStatus = translations[item.value.applicationState];
@@ -111,21 +110,23 @@ export const setSelectedTseApplication = (
 export const getResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
   accessToken: string
-): Promise<string | void> => {
-  let responseDocDownload = undefined;
-  let responseDoc = undefined;
+): Promise<string> => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
-  if (selectedApplicationRespondCollection?.length) {
-    responseDoc =
-      selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
-        ? undefined
-        : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
+  if (!selectedApplicationRespondCollection?.length) {
+    return '';
   }
-  if (responseDoc !== undefined) {
-    await getDocumentAdditionalInformation(responseDoc, accessToken);
-    responseDocDownload = createDownloadLink(responseDoc);
+
+  const responseDoc =
+    selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
+      ? undefined
+      : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
+
+  if (!responseDoc) {
+    return '';
   }
-  return responseDocDownload;
+
+  await populateDocumentMetadata(responseDoc, accessToken);
+  return createDownloadLink(responseDoc);
 };
 
 export const getApplicationDocDownloadLink = async (
@@ -155,7 +156,7 @@ export const getDecisionContent = async (
   if (decisionDocDownload.length > 0) {
     for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
       if (decisionDocDownload[i]) {
-        await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
+        await populateDocumentMetadata(decisionDocDownload[i], accessToken);
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }

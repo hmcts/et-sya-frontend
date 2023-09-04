@@ -10,7 +10,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
-import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
@@ -112,13 +112,10 @@ export const getAllResponses = async (
   return allResponses;
 };
 
-const getSupportingMaterialDownloadLink = async (
-  responseDoc: Document,
-  accessToken: string
-): Promise<string | void> => {
+const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessToken: string): Promise<string> => {
   let responseDocDownload;
   if (responseDoc !== undefined) {
-    await getDocumentAdditionalInformation(responseDoc, accessToken);
+    await populateDocumentMetadata(responseDoc, accessToken);
     responseDocDownload = createDownloadLink(responseDoc);
   }
   return responseDocDownload;

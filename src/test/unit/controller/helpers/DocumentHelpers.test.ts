@@ -8,12 +8,12 @@ import {
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
-  getDocumentAdditionalInformation,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
   isSelectedAppDocId,
   isSelectedAppResponseDocId,
+  populateDocumentMetadata,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
@@ -287,7 +287,7 @@ it('should update document size and mime type values', async () => {
   getCaseApiClientMock.mockReturnValue(caseApi);
   caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-  const modifiedDoc = await getDocumentAdditionalInformation(doc, testRawId);
+  const modifiedDoc = await populateDocumentMetadata(doc, testRawId);
 
   expect(modifiedDoc.document_size).toEqual(10575);
   expect(modifiedDoc.document_mime_type).toEqual('pdf');
