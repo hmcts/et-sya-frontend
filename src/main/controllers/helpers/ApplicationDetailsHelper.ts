@@ -61,85 +61,18 @@ export const getTseApplicationDecisionDetails = (
           html: tableTopSpacing + selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
         },
       },
-      {
-        key: {
-          text: translations.decision,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decision,
-        },
-      },
-      {
-        key: {
-          text: translations.date,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.date,
-        },
-      },
-      {
-        key: {
-          text: translations.sentBy,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: translations.tribunal,
-        },
-      },
-      {
-        key: {
-          text: translations.decisionType,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.typeOfDecision,
-        },
-      },
-      {
-        key: {
-          text: translations.additionalInfo,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.additionalInformation,
-        },
-      },
-      {
-        key: {
-          text: translations.document,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: { html: decisionDocDownloadLink[i] },
-      },
-      {
-        key: {
-          text: translations.decisionMadeBy,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decisionMadeBy,
-        },
-      },
-      {
-        key: {
-          text: translations.name,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.decisionMadeByFullName,
-        },
-      },
-      {
-        key: {
-          text: translations.sentTo,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedApplication.value.adminDecision[i].value.selectPartyNotify,
-        },
-      }
+      addSummaryRow(translations.decision, selectedApplication.value.adminDecision[i].value.decision),
+      addSummaryRow(translations.date, selectedApplication.value.adminDecision[i].value.date),
+      addSummaryRow(translations.sentBy, translations.tribunal),
+      addSummaryRow(translations.decisionType, selectedApplication.value.adminDecision[i].value.typeOfDecision),
+      addSummaryRow(
+        translations.additionalInfo,
+        selectedApplication.value.adminDecision[i].value.additionalInformation
+      ),
+      addSummaryHtmlRow(translations.document, decisionDocDownloadLink[i]),
+      addSummaryRow(translations.decisionMadeBy, selectedApplication.value.adminDecision[i].value.decisionMadeBy),
+      addSummaryRow(translations.name, selectedApplication.value.adminDecision[i].value.decisionMadeByFullName),
+      addSummaryRow(translations.sentTo, selectedApplication.value.adminDecision[i].value.selectPartyNotify)
     );
   }
   return tseApplicationDecisionDetails;
