@@ -8,6 +8,7 @@ import {
   YesOrNo,
 } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { answersAddressFormatter } from './PageContentHelpers';
@@ -40,224 +41,126 @@ const getTranslationsForHearingPreferences = function (userCase: CaseWithId, tra
   return hearingPreferences;
 };
 
-export const getYourDetails = (
-  userCase: CaseWithId,
-  translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.personalDetails.header,
-        classes: 'govuk-summary-list__key govuk-heading-m',
-      },
-      value: {},
-    },
-    {
-      key: {
-        text: translations.personalDetails.dob,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.dobDate === undefined
-            ? ''
-            : userCase.dobDate.day + '-' + userCase.dobDate.month + '-' + userCase.dobDate.year,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.dob,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.sex,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: getTranslationsForSexEnum(userCase, translations),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.sex,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.title,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.preferredTitle === undefined ? translations.personalDetails.notSelected : userCase.preferredTitle,
-      },
+export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
+  const rows: SummaryListRow[] = [];
 
-      actions: {
-        items: [
-          {
-            href: PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.title,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.contactOrHomeAddress,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: answersAddressFormatter(
-          userCase.address1,
-          userCase.address2,
-          userCase.addressTown,
-          userCase.addressCountry,
-          userCase.addressPostcode
-        ),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.contactOrHomeAddress,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.contactDetails.telephone,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.telNumber === undefined ? translations.contactDetails.notProvided : userCase.telNumber,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.contactDetails.telephone,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.howToBeContacted,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.claimantContactPreference === EmailOrPost.EMAIL
-            ? translations.personalDetails.email
-            : translations.personalDetails.post,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.howToBeContacted,
-          },
-        ],
-      },
-    },
-    ...(userCase.caseTypeId === CaseTypeId.SCOTLAND
-      ? [] // England only fields
-      : [
-          {
-            key: {
-              text: translations.personalDetails.languageLabel,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH
-                  ? translations.personalDetails.welsh
-                  : translations.personalDetails.english,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.personalDetails.howToBeContacted,
-                },
-              ],
-            },
-          },
-          {
-            key: {
-              text: translations.personalDetails.hearingLabel,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH
-                  ? translations.personalDetails.welsh
-                  : translations.personalDetails.english,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.personalDetails.howToBeContacted,
-                },
-              ],
-            },
-          },
-        ]),
-    {
-      key: {
-        text: translations.personalDetails.takePartInHearing,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: getTranslationsForHearingPreferences(userCase, translations),
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.takePartInHearing,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.personalDetails.disability,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text:
-          userCase.reasonableAdjustments === YesOrNo.YES
-            ? translations.personalDetails.yes + ', ' + userCase.reasonableAdjustmentsDetail
-            : translations.personalDetails.no,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
-            text: translations.change,
-            visuallyHiddenText: translations.personalDetails.disability,
-          },
-        ],
-      },
-    },
-  ];
+  rows.push(
+    addSummaryRow(translations.personalDetails.header, ''),
+    addSummaryRow(
+      translations.personalDetails.dob,
+      userCase.dobDate === undefined
+        ? ''
+        : userCase.dobDate.day + '-' + userCase.dobDate.month + '-' + userCase.dobDate.year,
+      createChangeAction(
+        PageUrls.DOB_DETAILS + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.dob
+      )
+    ),
+    addSummaryRow(
+      translations.personalDetails.sex,
+      getTranslationsForSexEnum(userCase, translations),
+      createChangeAction(
+        PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.sex
+      )
+    ),
+    addSummaryRow(
+      translations.personalDetails.title,
+      userCase.preferredTitle ?? translations.personalDetails.notSelected,
+      createChangeAction(
+        PageUrls.SEX_AND_TITLE + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.title
+      )
+    ),
+    addSummaryRow(
+      translations.personalDetails.contactOrHomeAddress,
+      answersAddressFormatter(
+        userCase.address1,
+        userCase.address2,
+        userCase.addressTown,
+        userCase.addressCountry,
+        userCase.addressPostcode
+      ),
+      createChangeAction(
+        PageUrls.ADDRESS_DETAILS + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.contactOrHomeAddress
+      )
+    ),
+    addSummaryRow(
+      translations.contactDetails.telephone,
+      userCase.telNumber ?? translations.contactDetails.notProvided,
+      createChangeAction(
+        PageUrls.TELEPHONE_NUMBER + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.contactDetails.telephone
+      )
+    ),
+    addSummaryRow(
+      translations.personalDetails.howToBeContacted,
+      userCase.claimantContactPreference === EmailOrPost.EMAIL
+        ? translations.personalDetails.email
+        : translations.personalDetails.post,
+      createChangeAction(
+        PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.howToBeContacted
+      )
+    )
+  );
+
+  if (userCase.caseTypeId === CaseTypeId.ENGLAND_WALES) {
+    rows.push(
+      addSummaryRow(
+        translations.personalDetails.languageLabel,
+        userCase.claimantContactLanguagePreference === EnglishOrWelsh.WELSH
+          ? translations.personalDetails.welsh
+          : translations.personalDetails.english,
+        createChangeAction(
+          PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.howToBeContacted
+        )
+      ),
+      addSummaryRow(
+        translations.personalDetails.hearingLabel,
+        userCase.claimantHearingLanguagePreference === EnglishOrWelsh.WELSH
+          ? translations.personalDetails.welsh
+          : translations.personalDetails.english,
+        createChangeAction(
+          PageUrls.UPDATE_PREFERENCES + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.personalDetails.howToBeContacted
+        )
+      )
+    );
+  }
+
+  rows.push(
+    addSummaryRow(
+      translations.personalDetails.takePartInHearing,
+      getTranslationsForHearingPreferences(userCase, translations),
+      createChangeAction(
+        PageUrls.VIDEO_HEARINGS + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.takePartInHearing
+      )
+    ),
+    addSummaryRow(
+      translations.personalDetails.disability,
+      userCase.reasonableAdjustments === YesOrNo.YES
+        ? translations.personalDetails.yes + ', ' + userCase.reasonableAdjustmentsDetail
+        : translations.personalDetails.no,
+      createChangeAction(
+        PageUrls.REASONABLE_ADJUSTMENTS + InterceptPaths.ANSWERS_CHANGE,
+        translations.change,
+        translations.personalDetails.disability
+      )
+    )
+  );
+
+  return rows;
 };
