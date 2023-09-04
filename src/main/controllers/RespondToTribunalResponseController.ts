@@ -11,15 +11,12 @@ import { getLogger } from '../logger';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import {
-  createDownloadLink,
-  findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
-} from './helpers/DocumentHelpers';
+import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getApplicationDocDownloadLink } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
 
@@ -89,6 +86,8 @@ export default class RespondToTribunalResponseController {
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
+    const accessToken = req.session.user?.accessToken;
+
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
       req.params.appId
@@ -109,16 +108,13 @@ export default class RespondToTribunalResponseController {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
-    const document = selectedApplication.value?.documentUpload;
-    if (document) {
-      try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
-      }
+    let downloadLink;
+    try {
+      downloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
+    } catch (e) {
+      logger.error(e.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
-    const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.SIDEBAR_CONTACT_US,
