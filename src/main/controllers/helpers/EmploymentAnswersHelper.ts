@@ -36,7 +36,13 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
 
   if (userCase.pastEmployer === YesOrNo.NO) {
     employmentDetails.push(
-      addSummaryRow(translations.employmentDetails.header, ''),
+      {
+        key: {
+          text: translations.employmentDetails.header,
+          classes: 'govuk-summary-list__key govuk-heading-m',
+        },
+        value: {},
+      },
       addSummaryRow(
         translations.employmentDetails.didYouWorkFor,
         translations.employmentDetails.no,
@@ -50,7 +56,13 @@ export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyReco
   } else {
     if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
       employmentDetails.push(
-        addSummaryRow(translations.employmentDetails.header, ''),
+        {
+          key: {
+            text: translations.employmentDetails.header,
+            classes: 'govuk-summary-list__key govuk-heading-m',
+          },
+          value: {},
+        },
         addSummaryRow(
           translations.employmentDetails.didYouWorkFor,
           translations.employmentDetails.yes,

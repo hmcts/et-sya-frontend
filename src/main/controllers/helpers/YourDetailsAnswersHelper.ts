@@ -45,7 +45,13 @@ export const getYourDetails = (userCase: CaseWithId, translations: AnyRecord): S
   const rows: SummaryListRow[] = [];
 
   rows.push(
-    addSummaryRow(translations.personalDetails.header, ''),
+    {
+      key: {
+        text: translations.personalDetails.header,
+        classes: 'govuk-summary-list__key govuk-heading-m',
+      },
+      value: {},
+    },
     addSummaryRow(
       translations.personalDetails.dob,
       userCase.dobDate === undefined
