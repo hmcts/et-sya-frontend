@@ -1,47 +1,26 @@
 import { CaseWithId } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getFiles = (
   userCase: CaseWithId | undefined,
   selectedApplication: string,
   translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+): SummaryListRow[] => {
   if (userCase === undefined || userCase.contactApplicationFile === undefined) {
-    return [
-      {
-        key: {
-          html: translations.noFilesUpload,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: '',
-        },
-        actions: {
-          items: [],
-        },
-      },
-    ];
+    return [addSummaryRow(translations.noFilesUpload, '')];
   } else {
     return [
-      {
-        key: {
-          text: userCase.contactApplicationFile.document_filename,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: '',
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.REMOVE_FILE.replace(':application', selectedApplication),
-              text: translations.remove,
-              visuallyHiddenText: translations.remove,
-            },
-          ],
-        },
-      },
+      addSummaryRow(
+        userCase.contactApplicationFile.document_filename,
+        '',
+        createChangeAction(
+          PageUrls.REMOVE_FILE.replace(':application', selectedApplication),
+          translations.remove,
+          translations.remove
+        )
+      ),
     ];
   }
 };

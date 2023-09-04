@@ -40,7 +40,7 @@ export const getTseApplicationDecisionDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   decisionDocDownloadLink: string[] | undefined
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+): SummaryListRow[] => {
   const tseApplicationDecisionDetails = [];
 
   let tableTopSpacing = '';

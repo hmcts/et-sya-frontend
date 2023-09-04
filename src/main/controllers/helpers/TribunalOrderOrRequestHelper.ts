@@ -1,7 +1,7 @@
 import { CaseWithId } from '../../definitions/case';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
-import { addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -11,7 +11,7 @@ import { getLanguageParam } from './RouterHelpers';
 export const getRepondentOrderOrRequestDetails = (
   translations: AnyRecord,
   item: SendNotificationTypeItem
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+): SummaryListRow[] => {
   const respondentRequestOrOrderDetails = [];
 
   if (item.value.sendNotificationSelectHearing) {
