@@ -20,12 +20,14 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
-  rows.push(addSummaryRow(translations.applicant, application.applicant));
-  rows.push(addSummaryRow(translations.requestDate, application.date));
-  rows.push(addSummaryRow(translations.applicationType, translations[application.type]));
-  rows.push(addSummaryRow(translations.legend, application.details));
-  rows.push(addSummaryHtmlRow(translations.supportingMaterial, downloadLink));
-  rows.push(addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo));
+  rows.push(
+    addSummaryRow(translations.applicant, application.applicant),
+    addSummaryRow(translations.requestDate, application.date),
+    addSummaryRow(translations.applicationType, translations[application.type]),
+    addSummaryRow(translations.legend, application.details),
+    addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
+    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+  );
 
   if (application.copyToOtherPartyText) {
     rows.push(addSummaryRow(translations.copyToOtherPartyText, application.copyToOtherPartyText));

@@ -25,18 +25,12 @@ export const getCyaContent = (
       applicationType,
       typeOfApplication,
       createChangeAction(PageUrls.CONTACT_THE_TRIBUNAL + languageParam, CHANGE, applicationType)
-    )
-  );
-
-  rows.push(
+    ),
     addSummaryRow(
       legend,
       userCase.contactApplicationText,
       createChangeAction(contactTheTribunalSelectedUrl + languageParam, CHANGE, legend)
-    )
-  );
-
-  rows.push(
+    ),
     addSummaryHtmlRow(
       supportingMaterial,
       downloadLink,
