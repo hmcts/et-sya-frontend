@@ -1,5 +1,3 @@
-import { Response } from 'express';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
@@ -195,8 +193,7 @@ export const getTseApplicationDecisionDetails = (
 export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<any> => {
   const allResponses: any[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
@@ -209,9 +206,9 @@ export const getAllResponses = async (
       response.value.from === Applicant.CLAIMANT ||
       (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
     ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, res);
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken);
     } else if (isSentToClaimantByTribunal(response)) {
-      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken, res);
+      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken);
       if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
         await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
           req.session.userCase,
@@ -229,16 +226,11 @@ export const getAllResponses = async (
 
 const getSupportingMaterialDownloadLink = async (
   responseDoc: Document,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<string | void> => {
   let responseDocDownload;
   if (responseDoc !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(responseDoc, accessToken);
-    } catch (err) {
-      return res.redirect('/not-found');
-    }
+    await getDocumentAdditionalInformation(responseDoc, accessToken);
     responseDocDownload = createDownloadLink(responseDoc);
   }
   return responseDocDownload;
@@ -248,8 +240,7 @@ const addAdminResponse = async (
   allResponses: any[],
   translations: AnyRecord,
   response: TseRespondTypeItem,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<any> => {
   allResponses.push([
     {
@@ -316,8 +307,7 @@ const addAdminResponse = async (
       value: {
         html: await getSupportingMaterialDownloadLink(
           response.value.addDocument?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken,
-          res
+          accessToken
         ),
       },
     },
@@ -350,8 +340,7 @@ const addAdminResponse = async (
 const addNonAdminResponse = async (
   translations: AnyRecord,
   response: TseRespondTypeItem,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<any> => {
   return [
     {
@@ -385,8 +374,7 @@ const addNonAdminResponse = async (
       value: {
         html: await getSupportingMaterialDownloadLink(
           response.value.supportingMaterial?.find(element => element !== undefined).value.uploadedDocument,
-          accessToken,
-          res
+          accessToken
         ),
       },
     },
