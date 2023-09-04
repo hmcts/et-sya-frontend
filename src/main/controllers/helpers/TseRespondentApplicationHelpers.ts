@@ -12,7 +12,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
 import { clearTseFields } from './CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink, getDocumentAdditionalInformation, populateDocumentMetadata } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -131,12 +131,14 @@ export const getResponseDocDownloadLink = async (
 export const getApplicationDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
   accessToken: string
-): Promise<string | void> => {
+): Promise<string> => {
   const applicationDocDownload = selectedApplication?.value?.documentUpload;
 
-  if (applicationDocDownload !== undefined) {
-    await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
+  if (!applicationDocDownload) {
+    return '';
   }
+
+  await populateDocumentMetadata(applicationDocDownload, accessToken);
   return createDownloadLink(applicationDocDownload);
 };
 

@@ -5,6 +5,7 @@ import {
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant } from '../../definitions/constants';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
@@ -14,71 +15,23 @@ import { createDownloadLink, getDocumentAdditionalInformation } from './Document
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  downloadLink: string | void
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.applicant,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedApplication.value.applicant,
-      },
-    },
-    {
-      key: {
-        text: translations.requestDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedApplication.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: translations[selectedApplication.value.type],
-      },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: selectedApplication.value.details },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
-    },
-    {
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { text: selectedApplication.value.copyToOtherPartyYesOrNo },
-    },
-    ...(selectedApplication.value.copyToOtherPartyYesOrNo === YesOrNo.YES
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyText,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: selectedApplication.value.copyToOtherPartyText,
-            },
-          },
-        ]),
-  ];
+  downloadLink: string
+): SummaryListRow[] => {
+  const application = selectedApplication.value;
+  const rows: SummaryListRow[] = [];
+
+  rows.push(addSummaryRow(translations.applicant, application.applicant));
+  rows.push(addSummaryRow(translations.requestDate, application.date));
+  rows.push(addSummaryRow(translations.applicationType, translations[application.type]));
+  rows.push(addSummaryRow(translations.legend, application.details));
+  rows.push(addSummaryHtmlRow(translations.supportingMaterial, downloadLink));
+  rows.push(addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo));
+
+  if (application.copyToOtherPartyText) {
+    rows.push(addSummaryRow(translations.copyToOtherPartyText, application.copyToOtherPartyText));
+  }
+
+  return rows;
 };
 
 export const getTseApplicationDecisionDetails = (
