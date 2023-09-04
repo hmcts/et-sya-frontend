@@ -4,18 +4,18 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getApplicationDocDownloadLink } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -82,8 +82,6 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
-    const accessToken = req.session.user?.accessToken;
-
     req.session.contactType = Rule92Types.RESPOND;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
@@ -94,14 +92,17 @@ export default class RespondToApplicationController {
 
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
+    const document = selectedApplication.value?.documentUpload;
 
-    let downloadLink;
-    try {
-      downloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
-    } catch (e) {
-      logger.error(e.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+    if (document) {
+      try {
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        return res.redirect('/not-found');
+      }
     }
+    const downloadLink = createDownloadLink(document);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.COMMON,

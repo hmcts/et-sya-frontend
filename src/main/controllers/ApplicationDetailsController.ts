@@ -10,10 +10,14 @@ import { getCaseApi } from '../services/CaseService';
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
-import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
+import {
+  createDownloadLink,
+  findSelectedGenericTseApplication,
+  populateDocumentMetadata,
+} from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getApplicationDocDownloadLink, getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
+import { getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('ApplicationDetailsController');
 
@@ -35,6 +39,7 @@ export default class ApplicationDetailsController {
     userCase.selectedGenericTseApplication = selectedApplication;
 
     const header = translations.applicationTo + translations[selectedApplication.value.type];
+    const document = selectedApplication.value?.documentUpload;
 
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
@@ -48,13 +53,16 @@ export default class ApplicationDetailsController {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
-    let downloadLink;
-    try {
-      downloadLink = await getApplicationDocDownloadLink(selectedApplication, accessToken);
-    } catch (e) {
-      logger.error(e.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+    if (document) {
+      try {
+        await populateDocumentMetadata(document, accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        return res.redirect(ErrorPages.NOT_FOUND);
+      }
     }
+
+    const downloadLink = createDownloadLink(document);
 
     let allResponses;
     try {
