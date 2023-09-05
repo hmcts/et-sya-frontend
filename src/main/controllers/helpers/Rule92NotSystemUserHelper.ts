@@ -1,7 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, appStatus } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { PageUrls } from '../../definitions/constants';
+import { Applicant, PageUrls } from '../../definitions/constants';
 
 import { checkIfRespondentIsSystemUser } from './CitizenHubHelper';
 import { setUrlLanguage } from './LanguageHelper';
@@ -20,10 +20,6 @@ export const getAppDetailsLink = (appId: string, languageParam: string): string 
   return PageUrls.APPLICATION_DETAILS.replace(':appId', appId) + languageParam;
 };
 
-export const getStoredToSubmitLink = (appId: string, languageParam: string): string => {
-  return PageUrls.STORED_TO_SUBMIT.replace(':appId', appId) + languageParam;
-};
-
 export const getStoredPendingApplicationLinks = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
@@ -31,4 +27,13 @@ export const getStoredPendingApplicationLinks = (
   return apps
     ?.filter(app => app.value.status === appStatus.STORED)
     .map(app => getStoredToSubmitLink(app.id, languageParam));
+};
+
+const getStoredToSubmitLink = (appId: string, languageParam: string): string => {
+  return PageUrls.STORED_TO_SUBMIT.replace(':appId', appId) + languageParam;
+};
+
+export const getLatestApplication = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem => {
+  const filteredItem = items?.filter(it => it.value.applicant === Applicant.CLAIMANT);
+  return filteredItem[filteredItem.length - 1];
 };

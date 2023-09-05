@@ -441,20 +441,6 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
-    expect(getHubLinksUrlMap(true)).toEqual(linksMap);
-  });
-
-  it('return correct links when respondent is non sytem user', () => {
-    const linksMap: Map<string, string> = new Map<string, string>([
-      [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
-      [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
-      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE],
-      [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
-      [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
-      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE],
-      [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
-      [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
-    ]);
-    expect(getHubLinksUrlMap(false)).toEqual(linksMap);
+    expect(getHubLinksUrlMap()).toEqual(linksMap);
   });
 });
