@@ -275,8 +275,8 @@ export const findContentTypeByDocument = (document: AxiosResponse): string => {
 };
 
 export const getDocumentLink = (file: Document): string => {
-  if (file) {
-    return PageUrls.GET_SUPPORTING_MATERIAL.replace(':docId', getDocId(file.document_url));
+  if (!file) {
+    return '';
   }
-  return '';
+  return PageUrls.GET_SUPPORTING_MATERIAL.replace(':docId', getDocId(file.document_url));
 };
