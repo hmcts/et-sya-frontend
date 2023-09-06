@@ -45,7 +45,7 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterNotificationsWithRequestsOrOrders,
+  filterSendNotifications,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
@@ -142,7 +142,7 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
+    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
