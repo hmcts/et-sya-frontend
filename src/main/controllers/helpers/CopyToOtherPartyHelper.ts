@@ -2,7 +2,6 @@ import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
-import { getDueDate } from '../../helper/ApiFormatter';
 
 export const getCaptionTextForCopyToOtherParty = (req: AppRequest): string => {
   const contactType = req.session.contactType;
@@ -37,9 +36,4 @@ export const getRedirectPageUrlNotSystemUser = (req: AppRequest): string => {
     }
   }
   return PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;
-};
-
-export const getTodayPlus7DaysStrings = (): string => {
-  const today = new Date();
-  return getDueDate(today.toString(), 7);
 };

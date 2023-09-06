@@ -1,29 +1,9 @@
-import {
-  copyToOtherPartyRedirectUrl,
-
-} from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
+import { getCaptionTextForCopyToOtherParty } from '../../../../main/controllers/helpers/CopyToOtherPartyHelper';
+import { copyToOtherPartyRedirectUrl } from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, Rule92Types } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { mockRequest } from '../../mocks/mockRequest';
-import {
-  getCaptionTextForCopyToOtherParty,
-  getTodayPlus7DaysStrings
-} from "../../../../main/controllers/helpers/CopyToOtherPartyHelper";
-
-describe('getTodayPlus7DaysStrings', () => {
-  it('should return 7 days after today in GB format', () => {
-    const today = new Date();
-    today.setDate(today.getDate() + 7);
-    const expected = today.toLocaleDateString('en-GB', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-    const actual = getTodayPlus7DaysStrings();
-    expect(actual).toEqual(expected);
-  });
-});
 
 describe('copyToOtherPartyRedirectUrl', () => {
   const date = 'August 19, 2022';

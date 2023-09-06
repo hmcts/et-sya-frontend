@@ -8,9 +8,11 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
+import { getCaptionTextForCopyToOtherParty } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 export default class CopyToOtherPartyController {
   private readonly form: Form;
@@ -84,35 +86,16 @@ export default class CopyToOtherPartyController {
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    let captionSubject = '';
-    let captionText = '';
-    const contactType = req.session.contactType;
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
-    };
-    if (contactType === Rule92Types.CONTACT) {
-      captionSubject = req.session.userCase.contactApplicationType;
-      captionText = translations.sections[captionSubject]?.caption;
-    }
-    if (contactType === Rule92Types.RESPOND) {
-      captionText = translations.respondToApplication;
-    }
-    if (contactType === Rule92Types.TRIBUNAL) {
-      captionText = translations.respondToTribunal;
-    }
     const content = getPageContent(req, this.CopyToOtherPartyContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
-    const languageParam = getLanguageParam(req.url);
-    const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
-      copyToOtherPartyYesOrNo: captionText,
-      cancelLink: redirectUrl,
+      copyToOtherPartyYesOrNo: getCaptionTextForCopyToOtherParty(req),
+      cancelLink: getCancelLink(req),
     });
   };
 }
