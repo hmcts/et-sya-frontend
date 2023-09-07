@@ -1,9 +1,7 @@
-import { getCaptionTextForCopyToOtherParty } from '../../../../main/controllers/helpers/CopyToOtherPartyHelper';
 import { copyToOtherPartyRedirectUrl } from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
-import { PageUrls, Rule92Types } from '../../../../main/definitions/constants';
+import { PageUrls } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
-import { mockRequest } from '../../mocks/mockRequest';
 
 describe('copyToOtherPartyRedirectUrl', () => {
   const date = 'August 19, 2022';
@@ -48,17 +46,6 @@ describe('copyToOtherPartyRedirectUrl', () => {
     };
     const expected = PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;
     const actual = copyToOtherPartyRedirectUrl(userCase);
-    expect(actual).toEqual(expected);
-  });
-});
-
-describe('getCaptionTextWithRequest', () => {
-  const req = mockRequest({});
-
-  it('should return Respond caption', () => {
-    req.session.contactType = Rule92Types.RESPOND;
-    const expected = 'Respond to an application';
-    const actual = getCaptionTextForCopyToOtherParty(req);
     expect(actual).toEqual(expected);
   });
 });
