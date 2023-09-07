@@ -15,6 +15,8 @@ import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
+import localesCy from '../../resources/locales/cy/translation/common.json';
+import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
@@ -75,8 +77,14 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
+      req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
+      req.session.userCase.updateDraftCaseError = req.url?.includes('lng=cy')
+        ? localesCy.updateDraftErrorMessage
+        : locales.updateDraftErrorMessage;
+      req.session.returnUrl = req.url;
+      req.session.save();
       logger.error(error.message);
     }
   }
