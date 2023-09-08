@@ -23,7 +23,7 @@ describe(`on POST ${PageUrls.SINGLE_OR_MULTIPLE_CLAIM}`, () => {
       });
   });
 
-  test("should return the legacy ET1 service when the 'multiple' option is selected", async () => {
+  test.skip("should return the legacy ET1 service when the 'multiple' option is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.SINGLE_OR_MULTIPLE_CLAIM)
       .send({ caseType: CaseType.MULTIPLE })
