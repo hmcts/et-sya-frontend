@@ -2124,7 +2124,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@opentelemetry/instrumentation@npm:0.41.2":
+"@opentelemetry/instrumentation@npm:^0.41.2":
   version: 0.41.2
   resolution: "@opentelemetry/instrumentation@npm:0.41.2"
   dependencies:
@@ -8833,7 +8833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"import-in-the-middle@npm:1.4.2":
+"import-in-the-middle@npm:^1.4.2":
   version: 1.4.2
   resolution: "import-in-the-middle@npm:1.4.2"
   dependencies:

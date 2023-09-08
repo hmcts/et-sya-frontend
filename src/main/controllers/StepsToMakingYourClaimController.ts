@@ -20,6 +20,9 @@ const logger = getLogger('StepsToMakingYourClaimController');
 export default class StepsToMakingYourClaimController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const redirectUrl = setUrlLanguage(req, PageUrls.CLAIM_SAVED);
+    if (req.session.userCase?.updateDraftCaseError !== undefined) {
+      req.session.userCase.updateDraftCaseError = undefined;
+    }
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
