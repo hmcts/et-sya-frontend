@@ -9,6 +9,7 @@ import {
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
   getDocumentAdditionalInformation,
+  getDocumentLink,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
@@ -737,5 +738,19 @@ describe('getJudgmentDocId', () => {
 
     const result = isJudgmentDocId(req.session.userCase, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
     expect(result).toBeFalsy();
+  });
+});
+
+describe('getDocumentLink', () => {
+  const doc: Document = {
+    document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+    document_filename: 'test.pdf',
+    document_binary_url: '',
+  };
+
+  it('should return document link', () => {
+    const expected = '/getSupportingMaterial/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
+    const actual = getDocumentLink(doc);
+    expect(actual).toEqual(expected);
   });
 });
