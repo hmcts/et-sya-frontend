@@ -116,10 +116,7 @@ export const getResponseDocDownloadLink = async (
     return '';
   }
 
-  const responseDoc =
-    selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
-      ? undefined
-      : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
+  const responseDoc = selectedApplicationRespondCollection[0].value?.supportingMaterial?.[0].value.uploadedDocument;
 
   if (!responseDoc) {
     return '';
