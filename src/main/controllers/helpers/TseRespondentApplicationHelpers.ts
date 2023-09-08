@@ -157,11 +157,19 @@ export const getDecisionContent = async (
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }
-    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    decisionContent = getTseApplicationDecisionDetails(
+      selectedApplication.value,
+      translations,
+      decisionDocDownloadLink
+    );
   }
 
   if (selectedAppAdminDecision?.length) {
-    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    decisionContent = getTseApplicationDecisionDetails(
+      selectedApplication.value,
+      translations,
+      decisionDocDownloadLink
+    );
   }
 
   return decisionContent;

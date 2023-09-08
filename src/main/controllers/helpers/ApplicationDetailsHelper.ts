@@ -1,6 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { Document, YesOrNo } from '../../definitions/case';
 import {
+  GenericTseApplicationType,
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
@@ -37,7 +38,7 @@ export const getTseApplicationDetails = (
 };
 
 export const getTseApplicationDecisionDetails = (
-  selectedApplication: GenericTseApplicationTypeItem,
+  selectedApplication: GenericTseApplicationType,
   translations: AnyRecord,
   decisionDocDownloadLink: string[] | undefined
 ): SummaryListRow[] => {
@@ -46,12 +47,12 @@ export const getTseApplicationDecisionDetails = (
   let tableTopSpacing = '';
   let notification = translations.notification;
 
-  for (let i = selectedApplication.value?.adminDecision.length - 1; i >= 0; i--) {
-    if (i !== selectedApplication.value?.adminDecision.length - 1) {
+  for (let i = selectedApplication?.adminDecision.length - 1; i >= 0; i--) {
+    if (i !== selectedApplication?.adminDecision.length - 1) {
       tableTopSpacing = translations.tableTopWithSpace;
       notification = translations.notificationWithSpace;
     }
-    const adminDecision = selectedApplication.value.adminDecision[i].value;
+    const adminDecision = selectedApplication.adminDecision[i].value;
     tseApplicationDecisionDetails.push(
       {
         key: {
