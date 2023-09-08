@@ -7,19 +7,31 @@ import contactTheTribunalRaw from '../../../../main/resources/locales/en/transla
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Contact the tribunal CYA controller', () => {
-  it('should return expected CYA content', () => {
-    const translationJsons = { ...contactTheTribunalRaw, ...contactTheTribunalCYARaw };
-    const req = mockRequestWithTranslation({}, translationJsons);
-    const userCase = req.session.userCase;
-    userCase.contactApplicationText = 'contactApplicationText';
-    userCase.contactApplicationType = 'withdraw';
-    userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
-    userCase.copyToOtherPartyText = 'copyToOtherPartyText';
+  const translationJsons = { ...contactTheTribunalRaw, ...contactTheTribunalCYARaw };
+  const req = mockRequestWithTranslation({}, translationJsons);
+  const userCase = req.session.userCase;
+  userCase.contactApplicationText = 'contactApplicationText';
+  userCase.contactApplicationType = 'withdraw';
+  userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
+  userCase.copyToOtherPartyText = 'copyToOtherPartyText';
 
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
-    };
+  const translations: AnyRecord = {
+    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
+  };
+
+  it('should return expected CYA content', () => {
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
 
     const appContent = getCyaContent(
       userCase,
@@ -92,6 +104,31 @@ describe('Contact the tribunal CYA controller', () => {
           href: '/copy-to-other-party?lng=cy',
           text: CHANGE,
           visuallyHiddenText: 'Reason for not informing other party',
+        },
+      ],
+    });
+  });
+
+  it('should return expected CYA content with not system user', () => {
+    userCase.respondents = undefined;
+    userCase.representatives = undefined;
+
+    const appContent = getCyaContent(
+      userCase,
+      translations,
+      '?lng=cy',
+      '/contact-the-tribunal/withdraw',
+      'downloadLink',
+      'I want to change my personal details'
+    );
+
+    expect(appContent[3].actions).toEqual({
+      items: [
+        {
+          href: '/copy-to-other-party-not-system-user?lng=cy',
+          text: CHANGE,
+          visuallyHiddenText:
+            'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
         },
       ],
     });
