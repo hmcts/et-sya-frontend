@@ -7,7 +7,6 @@ export const getCaptionTextForCopyToOtherParty = (req: AppRequest, translations:
   const contactType = req.session.contactType;
   if (contactType === Rule92Types.CONTACT) {
     const captionSubject = req.session.userCase.contactApplicationType;
-    console.log(captionSubject);
     return translations.sections[captionSubject]?.caption;
   }
   if (contactType === Rule92Types.RESPOND) {
