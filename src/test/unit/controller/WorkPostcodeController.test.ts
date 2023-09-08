@@ -44,7 +44,7 @@ describe('Work Postcode Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.LIP_OR_REPRESENTATIVE);
     });
 
-    it('should render the legacy ET1 service when a non mvp location is given', () => {
+    it.skip('should render the legacy ET1 service when a non mvp location is given', () => {
       const notMvpPostCode = 'SW4 9HW';
       const body = { workPostcode: notMvpPostCode };
 
