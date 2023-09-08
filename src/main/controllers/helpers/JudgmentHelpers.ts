@@ -132,12 +132,12 @@ export const getDecisionDetails = (
   translations: AnyRecord
 ): SummaryListRow[][] => {
   const selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
+  const respond = selectedDecisionApplication?.value.respondCollection[0].value;
+
   let responseFrom;
   if (selectedDecisionApplication?.value.respondCollection?.length) {
     responseFrom =
-      selectedDecisionApplication?.value.respondCollection[0].value.from === Applicant.CLAIMANT
-        ? translations.responseFromRespondent
-        : translations.responseFromClaimant;
+      respond.from === Applicant.CLAIMANT ? translations.responseFromRespondent : translations.responseFromClaimant;
   }
   const applicationDetails: SummaryListRow[] = [];
   const responseDetails: SummaryListRow[] = [];
@@ -160,15 +160,12 @@ export const getDecisionDetails = (
 
   if (selectedDecisionApplication?.value.respondCollection) {
     responseDetails.push(
-      addSummaryRow(translations.responseFrom, selectedDecisionApplication?.value.respondCollection[0].value.from),
-      addSummaryHtmlRow(translations.date, selectedDecisionApplication?.value.respondCollection[0].value.date),
-      addSummaryHtmlRow(
-        translations.responsePart1 + responseFrom + translations.responsePart2,
-        selectedDecisionApplication?.value.respondCollection[0].value.response
-      )
+      addSummaryRow(translations.responseFrom, respond.from),
+      addSummaryHtmlRow(translations.date, respond.date),
+      addSummaryHtmlRow(translations.responsePart1 + responseFrom + translations.responsePart2, respond.response)
     );
 
-    if (selectedDecisionApplication?.value.respondCollection[0].value.supportingMaterial) {
+    if (respond.supportingMaterial) {
       responseDetails.push(
         addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationResponseDocDownloadLink)
       );

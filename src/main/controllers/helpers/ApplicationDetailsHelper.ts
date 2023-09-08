@@ -51,6 +51,7 @@ export const getTseApplicationDecisionDetails = (
       tableTopSpacing = translations.tableTopWithSpace;
       notification = translations.notificationWithSpace;
     }
+    const adminDecision = selectedApplication.value.adminDecision[i].value;
     tseApplicationDecisionDetails.push(
       {
         key: {
@@ -58,21 +59,18 @@ export const getTseApplicationDecisionDetails = (
           classes: 'govuk-!-font-weight-regular-m',
         },
         value: {
-          html: tableTopSpacing + selectedApplication.value.adminDecision[i].value.enterNotificationTitle,
+          html: tableTopSpacing + adminDecision.enterNotificationTitle,
         },
       },
-      addSummaryRow(translations.decision, selectedApplication.value.adminDecision[i].value.decision),
-      addSummaryRow(translations.date, selectedApplication.value.adminDecision[i].value.date),
+      addSummaryRow(translations.decision, adminDecision.decision),
+      addSummaryRow(translations.date, adminDecision.date),
       addSummaryRow(translations.sentBy, translations.tribunal),
-      addSummaryRow(translations.decisionType, selectedApplication.value.adminDecision[i].value.typeOfDecision),
-      addSummaryRow(
-        translations.additionalInfo,
-        selectedApplication.value.adminDecision[i].value.additionalInformation
-      ),
+      addSummaryRow(translations.decisionType, adminDecision.typeOfDecision),
+      addSummaryRow(translations.additionalInfo, adminDecision.additionalInformation),
       addSummaryHtmlRow(translations.document, decisionDocDownloadLink[i]),
-      addSummaryRow(translations.decisionMadeBy, selectedApplication.value.adminDecision[i].value.decisionMadeBy),
-      addSummaryRow(translations.name, selectedApplication.value.adminDecision[i].value.decisionMadeByFullName),
-      addSummaryRow(translations.sentTo, selectedApplication.value.adminDecision[i].value.selectPartyNotify)
+      addSummaryRow(translations.decisionMadeBy, adminDecision.decisionMadeBy),
+      addSummaryRow(translations.name, adminDecision.decisionMadeByFullName),
+      addSummaryRow(translations.sentTo, adminDecision.selectPartyNotify)
     );
   }
   return tseApplicationDecisionDetails;
