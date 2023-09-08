@@ -1,15 +1,13 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { YesOrNo } from '../../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../../definitions/constants';
+import { PageUrls, Rule92Types } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
-export const getCaptionTextForCopyToOtherParty = (req: AppRequest): string => {
+export const getCaptionTextForCopyToOtherParty = (req: AppRequest, translations: AnyRecord): string => {
   const contactType = req.session.contactType;
-  const translations: AnyRecord = {
-    ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
-  };
   if (contactType === Rule92Types.CONTACT) {
     const captionSubject = req.session.userCase.contactApplicationType;
+    console.log(captionSubject);
     return translations.sections[captionSubject]?.caption;
   }
   if (contactType === Rule92Types.RESPOND) {

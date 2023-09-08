@@ -92,9 +92,14 @@ export default class CopyToOtherPartyController {
       TranslationKeys.COPY_TO_OTHER_PARTY,
     ]);
 
+    const captionTranslations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
+    };
+
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
       ...content,
-      copyToOtherPartyYesOrNo: getCaptionTextForCopyToOtherParty(req),
+      copyToOtherPartyYesOrNo: getCaptionTextForCopyToOtherParty(req, captionTranslations),
       cancelLink: getCancelLink(req),
     });
   };

@@ -99,9 +99,14 @@ export default class CopyToOtherPartyNotSystemUserController {
       TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
     ]);
 
+    const captionTranslations: AnyRecord = {
+      ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
+    };
+
     res.render(TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, {
       ...content,
-      applicationType: getCaptionTextForCopyToOtherParty(req),
+      applicationType: getCaptionTextForCopyToOtherParty(req, captionTranslations),
       cancelLink: getCancelLink(req),
     });
   };
