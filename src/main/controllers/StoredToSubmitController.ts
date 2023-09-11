@@ -66,7 +66,7 @@ export default class StoredToSubmitController {
     );
     userCase.selectedGenericTseApplication = selectedApplication;
 
-    const document = selectedApplication.value?.documentUpload;
+    const document = selectedApplication?.value?.documentUpload;
     const accessToken = req.session.user?.accessToken;
     if (document) {
       try {

@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
@@ -61,6 +62,8 @@ export default class CopyToOtherPartyNotSystemUserController {
                 labelSize: 's',
                 isPageHeading: true,
                 classes: 'govuk-textarea',
+                maxlength: 2500,
+                validator: isContent2500CharsOrLess,
               },
             },
           },

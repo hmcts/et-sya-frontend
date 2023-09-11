@@ -157,6 +157,25 @@ describe('Copy to other party not system user Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
+  it('should render the same page when No is selected but summary text excess 2500', async () => {
+    const errors = [{ propertyName: 'copyToOtherPartyText', errorType: 'tooLong' }];
+    const body = { copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: '1'.repeat(2501), continue: true };
+
+    const controller = new CopyToOtherPartyNotSystemUserController();
+
+    const req = mockRequest({ body });
+    const res = mockResponse();
+    req.params.languageParam = languages.ENGLISH;
+    req.session.errors = [];
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
+    );
+    expect(req.session.errors).toEqual(errors);
+  });
+
   it('should add the responses to the session userCase', async () => {
     const body = { copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: 'Test response' };
     const controller = new CopyToOtherPartyNotSystemUserController();
