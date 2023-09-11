@@ -1,6 +1,4 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: 'ts-jest',
   displayName: 'unit',
   testEnvironment: 'node',
   cache: true,
@@ -13,4 +11,7 @@ module.exports = {
     '<rootDir>/src/test/unit/test-helpers',
     '<rootDir>/src/test/unit/views',
   ],
+  transform: {
+    '^.+\\.(ts|tsx)$': '@swc/jest',
+  },
 };

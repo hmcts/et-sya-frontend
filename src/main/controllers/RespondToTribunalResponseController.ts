@@ -101,7 +101,13 @@ export default class RespondToTribunalResponseController {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const allResponses = await getAllResponses(selectedApplication, translations, req, res);
+    let allResponses;
+    try {
+      allResponses = await getAllResponses(selectedApplication, translations, req);
+    } catch (e) {
+      logger.error(e.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
 
     const document = selectedApplication.value?.documentUpload;
     if (document) {
