@@ -1,7 +1,7 @@
 {
-  "youHaveNotSubmitted": "You have not submitted this application. Confirm you have copied this correspondence to the other party by post or email before you submit the application.",
+  "youHaveNotSubmitted": "Please Confirm you have copied this correspondence to the other party by post or email before you submit the application.",
   "confirmYouHaveCopied": "Confirm you have copied this correspondence to the other party",
-  "toSubmitYourApplication": "To submit your application to the tribunal, confirm you have copied this correspondence to the other party by post or email.",
+  "toSubmitYourApplication": "Please confirm you have copied this correspondence to the other party by post or email.",
   "viewThisCorrespondence": "View this correspondence",
   "opensInNewTab": "opens in new tab",
   "viewTheSupportingDocuments": "View the supporting documents.",
@@ -11,7 +11,7 @@
   "submitBtn": "Submit",
   "errors": {
     "confirmCopied": {
-      "required": "Have you copied this correspondence to the other party?"
+      "required": "You must confirm you have copied the correspondence to the other party by post or email"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "youHaveNotSubmitted": "Dydych chi ddim wedi cyflwyno'r cais hwn. Cadarnhewch eich bod wedi anfon yr ohebiaeth hon at y parti arall drwy'r post neu e-bost cyn i chi gyflwyno'r cais.",
+  "youHaveNotSubmitted": "Welsh Translation required",
   "confirmYouHaveCopied": "Cadarnhewch eich bod wedi anfon yr ohebiaeth hon at y parti arall",
-  "toSubmitYourApplication": "I gyflwyno'ch cais i'r tribiwnlys, cadarnhewch eich bod wedi anfon yr ohebiaeth hon at y parti arall drwy'r post neu drwy e-bost.",
+  "toSubmitYourApplication": "Welsh Translation required",
   "viewThisCorrespondence": "Gweld yr ohebiaeth hon",
   "opensInNewTab": "yn agor mewn tab newydd",
   "viewTheSupportingDocuments": "Gweld y dogfennau ategol",
@@ -11,7 +11,7 @@
   "submitBtn": "Cyflwyno",
   "errors": {
     "confirmCopied": {
-      "required": "Have you copied this correspondence to the other party?"
+      "required": "Welsh Translation required"
     }
   }
 }
