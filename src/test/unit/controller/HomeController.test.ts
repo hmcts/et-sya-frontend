@@ -16,7 +16,6 @@ describe('Onboarding Controller', () => {
     const response = mockResponse();
     const request = mockRequest({ t });
     const redirectUrl = setUrlLanguage(request, PageUrls.CHECKLIST);
-
     homeController.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith('home', {

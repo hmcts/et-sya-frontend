@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn lint-staged
-echo "Nice commit pal."
+
+./yarn-audit-with-suppressions.sh
