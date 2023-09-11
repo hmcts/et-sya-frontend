@@ -24,7 +24,7 @@ export default class StoredApplicationConfirmationController {
 
     const latestApplication = getLatestApplication(userCase.genericTseApplicationCollection);
 
-    const document = latestApplication.value?.documentUpload;
+    const document = latestApplication?.value?.documentUpload;
     if (document) {
       try {
         await getDocumentAdditionalInformation(document, accessToken);

@@ -302,7 +302,7 @@ export const enum HearingPreference {
   NEITHER = 'Neither',
 }
 
-export const enum appStatus {
+export const enum tseStatus {
   STORED = 'Stored',
 }
 

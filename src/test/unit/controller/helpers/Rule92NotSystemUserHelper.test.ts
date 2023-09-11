@@ -5,7 +5,7 @@ import {
   getLatestApplication,
   getStoredPendingApplicationLinks,
 } from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
-import { CaseWithId, YesOrNo, appStatus } from '../../../../main/definitions/case';
+import { CaseWithId, YesOrNo, tseStatus } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
@@ -88,7 +88,7 @@ describe('getStoredPendingApplicationLinks', () => {
         id: '123',
         value: {
           number: '2345',
-          status: appStatus.STORED,
+          status: tseStatus.STORED,
         },
       },
       {
@@ -102,7 +102,7 @@ describe('getStoredPendingApplicationLinks', () => {
         id: '567',
         value: {
           number: '6789',
-          status: appStatus.STORED,
+          status: tseStatus.STORED,
         },
       },
     ];
@@ -119,7 +119,7 @@ describe('getLatestApplication', () => {
     value: {
       applicant: Applicant.CLAIMANT,
       number: '2345',
-      status: appStatus.STORED,
+      status: tseStatus.STORED,
     },
   };
   req.session.userCase.genericTseApplicationCollection = [claimantItem1];
@@ -128,7 +128,7 @@ describe('getLatestApplication', () => {
     value: {
       applicant: Applicant.RESPONDENT,
       number: '4567',
-      status: appStatus.STORED,
+      status: tseStatus.STORED,
     },
   };
   req.session.userCase.genericTseApplicationCollection.push(respondentItem1);
