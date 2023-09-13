@@ -1,4 +1,3 @@
-import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
@@ -52,7 +51,7 @@ export default class ReturnToExistingController {
 
   public post = (req: AppRequest, res: Response): void => {
     const redirectUrl = conditionalRedirect(req, this.form.getFormFields(), YesOrNo.YES)
-      ? `${config.get('services.et1Legacy.url')}`
+      ? process.env.ET1_BASE_URL ?? 'https://et-stg-azure.staging.et.dsd.io'
       : PageUrls.CLAIMANT_APPLICATIONS;
     handlePostLogicPreLogin(req, res, this.form, redirectUrl);
   };

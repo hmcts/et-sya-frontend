@@ -1,4 +1,3 @@
-import config from 'config';
 import { Application } from 'express';
 
 const healthcheck = require('@hmcts/nodejs-healthcheck');
@@ -12,7 +11,7 @@ export class HealthCheck {
       ? healthcheck.raw(() => (app.locals.redisClient.ping() ? healthcheck.up() : healthcheck.down()))
       : null;
 
-    const idamUrl = config.get('services.idam.tokenURL') as string;
+    const idamUrl: string = process.env.IDAM_API_URL ?? 'http://localhost:5000/o/token';
 
     healthcheck.addTo(app, {
       checks: {

@@ -3,7 +3,6 @@ import * as path from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { HTTPError } from 'HttpError';
 import * as bodyParser from 'body-parser';
-import config from 'config';
 import cookieParser from 'cookie-parser';
 import express, { NextFunction, Request, Response } from 'express';
 import favicon from 'serve-favicon';
@@ -33,10 +32,10 @@ new PropertiesVolume().enableFor(app);
 new AppInsights().enable();
 new Nunjucks(developmentMode).enableFor(app);
 
-new Helmet(config.get('security'), [
-  config.get('services.idam.authorizationURL'),
-  config.get('services.pcq.url'),
-  config.get('services.et1Legacy.url'),
+new Helmet({ referrerPolicy: 'origin' }, [
+  process.env.IDAM_WEB_URL ?? 'https://idam-web-public.aat.platform.hmcts.net/login',
+  process.env.PCQ_URL ?? 'https://pcq.aat.platform.hmcts.net/service-endpoint',
+  process.env.ET1_BASE_URL ?? 'https://et-stg-azure.staging.et.dsd.io',
 ]).enableFor(app);
 
 new I18Next().enableFor(app);
