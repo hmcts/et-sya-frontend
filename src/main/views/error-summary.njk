@@ -4,7 +4,7 @@
 {% set errors = [] %}
 {% set formErrors = getErrors(form.fields) %}
 {% if formErrors|length %}
-{% set _ = errors.push(formErrors) %}
+{% set errors = errors.concat(formErrors) %}
 {% endif %}
 {% if (userCase.updateDraftCaseError|length) %}
 {% set _ = errors.push({
