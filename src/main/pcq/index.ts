@@ -37,7 +37,7 @@ export const invokePCQ = async (req: AppRequest, res: Response): Promise<void> =
     const healthResp = await callPCQHealth();
     logger.info(`PCQ status is ${healthResp}`);
 
-    const pcqUrl: string = process.env.PCQ_HEALTH_URL ?? config.get('services.pcq.health');
+    const pcqUrl: string = process.env.PCQ_URL ?? config.get('services.pcq.url');
     const pcqId = req.session.userCase?.ClaimantPcqId;
 
     if (!pcqId && healthResp === 'UP') {
