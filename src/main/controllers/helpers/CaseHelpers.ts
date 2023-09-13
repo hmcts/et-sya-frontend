@@ -204,13 +204,14 @@ export const getSectionStatusForEmployment = (
 };
 
 export const isPostcodeInScope = (postCode: string): boolean => {
+  const excludedPostCodes = ['YO7', 'YO21', 'YO22'];
   const {
     outcode, // => "SW1A"
     area, // => "SW"
     district, // => "SW1"
   } = parse(postCode);
   for (const location of inScopeLocations) {
-    if (location === outcode || location === area || location === district) {
+    if ((location === outcode || location === area || location === district) && !excludedPostCodes.includes(outcode)) {
       return true;
     }
   }
