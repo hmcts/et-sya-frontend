@@ -37,7 +37,7 @@ export class Session {
   }
 
   private getStore(app: Application) {
-    const redisHost: string = process.env.REDIS_HOST ?? '127.0.0.1';
+    const redisHost: string = process.env.REDIS_HOST ?? config.get('session.redis.host');
     if (redisHost) {
       const clientOptions: ClientOpts =
         redisHost === LOCAL_REDIS_SERVER
