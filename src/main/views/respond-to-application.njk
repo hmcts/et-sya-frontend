@@ -23,7 +23,7 @@
       </h1>
 
       <div class="govuk-body">
-        <p>{{ p1 }}<b>{{ applicationType }}</b>{{ p1a }}</p>
+        <p>{{ p1 }}{{ applicantType }}{{ p1a }}<b>{{ applicationType }}</b>{{ p1b }}</p>
         <p>{{ p2 }}<b>{{ respondByDate }}</b>{{ p2a }}</p>
         <p>{{ p3 }}</p>
       </div>
@@ -36,7 +36,7 @@
 
    {{ govukSummaryList({
       rows: appContent
-      }) 
+      })
     }}
 
       <div class="govuk-body">
