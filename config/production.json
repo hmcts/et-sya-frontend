@@ -1,7 +1,7 @@
 {
   "session": {
     "redis": {
-      "host": "REDIS_HOST",
+      "host": "$REDIS_HOST",
       "key": ""
     }
   }
