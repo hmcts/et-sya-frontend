@@ -1,9 +1,9 @@
 {
-  "title": "Copy this correspondence to the other party",
+  "title": "Anfon copi o’r ohebiaeth hon at y parti arall",
   "theTribunalMustOperate": "Rhaid i'r tribiwnlys weithredu mewn ffordd deg i'r ddwy ochr. Mae hyn yn golygu bod yn rhaid i bob parti weld neu glywed yr hyn y mae'r parti arall yn ei ddweud wrth y tribiwnlys. Mae'r rheolau felly yn ei gwneud yn ofynnol anfon pob gohebiaeth gyda'r tribiwnlys at y parti arall, ac eithrio mewn amgylchiadau eithriadol.",
   "toCopyThisCorrespondence": "I anfon yr ohebiaeth hon at parti arall, rhaid i chi ei hanfon drwy'r post neu drwy e-bost. Nid yw’r parti arall yn gallu  ei weld yn y gwasanaeth hwn.",
-  "doYouWantToCopy": "Welsh Translation required",
-  "giveDetails": "Welsh Translation required",
+  "doYouWantToCopy": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
+  "giveDetails": "Rhowch fanylion",
   "yesIConfirmIWill": "Ydw, rwy'n cadarnhau y byddaf yn anfon yr ohebiaeth hon at y parti arall i fodloni Rheolau Trefniadaeth y Tribiwnlys Cyflogaeth.",
   "important": "Pwysig",
   "doNotSubmitYourApplication": "Peidiwch â chyflwyno eich cais nes eich bod wedi anfon yr ohebiaeth hon at y parti arall.",
@@ -12,10 +12,10 @@
   "youMustTellTheTribunal": "Mae'n rhaid i chi ddweud wrth y tribiwnlys pam nad ydych chi am roi gwybod i'r parti arall. Bydd y tribiwnlys yn ystyried eich rhesymau ac yn penderfynu a oes rhaid i chi hysbysu'r parti arall ai peidio.",
   "errors": {
     "copyToOtherPartyYesOrNo": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym os ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall"
     },
     "copyToOtherPartyText": {
-      "required": "Welsh Translation required",
+      "required": "Dywedwch wrth y tribiwnlys pam nad ydych chi eisiau rhoi gwybod i’r parti arall",
       "tooLong": "Welsh Translation required"
     }
   }
