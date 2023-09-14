@@ -36,7 +36,7 @@ new Nunjucks(developmentMode).enableFor(app);
 new Helmet({ referrerPolicy: 'origin' }, [
   process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL'),
   process.env.PCQ_URL ?? config.get('services.pcq.url'),
-  process.env.ET1_BASE_URL ?? config.get('services.et1legacy.url'),
+  process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url'),
 ]).enableFor(app);
 
 new I18Next().enableFor(app);
