@@ -75,7 +75,8 @@
     "orderOrRequest": {
       "responseRequired": "Welsh Translation required",
       "noResponseRequired": "Welsh Translation required",
-      "link": "Welsh Translation required"
+      "link": "Welsh Translation required",
+      "respond": "Welsh Translation required"
     },
     "judgment": {
       "header": "Welsh Translation required",
