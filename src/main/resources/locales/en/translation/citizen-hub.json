@@ -73,9 +73,10 @@
       "link": "Respond to the application"
     },
     "orderOrRequest": {
-      "responseRequired": "The tribunal has sent you a notification: ",
+      "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
-      "link": "View the notification"
+      "link": "View the notification",
+      "respond": "Respond to the tribunal"
     },
     "judgment": {
       "header": "The tribunal has made a decision on your case.",

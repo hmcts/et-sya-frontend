@@ -153,6 +153,16 @@ export const getRepondentOrderOrRequestDetails = (
   return respondentRequestOrOrderDetails;
 };
 
+export const getRedirectUrlForNotification = (id: string, responseRequired: boolean, url: string): string => {
+  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+
+  if (responseRequired) {
+    pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
+  }
+
+  return pageUrl.replace(':orderId', `${id}${getLanguageParam(url)}`);
+};
+
 export const populateNotificationsWithRedirectLinksAndStatusColors = (
   notifications: SendNotificationTypeItem[],
   url: string,
@@ -160,11 +170,6 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
 ): SendNotificationTypeItem[] => {
   if (notifications?.length && filterSendNotifications(notifications).length) {
     notifications.forEach(item => {
-      item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
-        ':orderId',
-        `${item.id}${getLanguageParam(url)}`
-      );
-
       const responseRequired =
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
@@ -192,6 +197,10 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       }
       item.displayStatus = translations[hubLinkStatus];
       item.statusColor = displayStatusColorMap.get(hubLinkStatus);
+      item.redirectUrl = getRedirectUrlForNotification(item.id, false, url);
+      item.bannerUrl = getRedirectUrlForNotification(item.id, responseRequired, url);
+      const linkKey = responseRequired ? 'respond' : 'link';
+      item.linkText = translations.notificationBanner.orderOrRequest[linkKey];
     });
     return notifications;
   }

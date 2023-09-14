@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -160,7 +161,7 @@ export default class CitizenHubController {
       decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
     }
 
-    res.render(TranslationKeys.CITIZEN_HUB, {
+    const data = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
@@ -186,6 +187,26 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-    });
+      bannerNotifications: filterNotificationsToAlert(notifications),
+    };
+
+    res.render(TranslationKeys.CITIZEN_HUB, data);
   }
+}
+
+/**
+ * Returns a filtered list of notifications where ANY criteria is matched:
+ * 1. Notification is not viewed
+ * 2. A response on the notification is not viewed
+ * 3. A response on the notification is viewed and requires a response where none has been given yet
+ */
+function filterNotificationsToAlert(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
+  return notifications?.filter(o => {
+    if (o.value.notificationState !== 'viewed') {
+      return true;
+    }
+    return o.value.respondNotificationTypeCollection?.some(
+      r => r.value.state !== 'viewed' || r.value.isClaimantResponseDue
+    );
+  });
 }

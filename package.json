@@ -19,6 +19,7 @@
     "build:prod": "NODE_ENV=production yarn webpack --mode production --config webpack.config.js",
     "test": "npx if-env CI=true && exit 0 || yarn test:unit",
     "test:unit": "jest --maxWorkers=50%",
+    "test:unit:slow": "jest --maxWorkers=25%",
     "test:pact": "jest -c jest.pact.config.js --detectOpenHandles --runInBand",
     "test:coverage": "jest --coverage",
     "test:routes": "jest -c jest.routes.config.js",

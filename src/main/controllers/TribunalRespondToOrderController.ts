@@ -92,10 +92,13 @@ export default class TribunalRespondToOrderController {
       TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
     ]);
 
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, userCase.selectedRequestOrOrder),
+      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
     });
   };
 }
