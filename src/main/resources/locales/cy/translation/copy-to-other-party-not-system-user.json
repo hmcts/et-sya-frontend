@@ -16,7 +16,7 @@
     },
     "copyToOtherPartyText": {
       "required": "Dywedwch wrth y tribiwnlys pam nad ydych chi eisiau rhoi gwybod i’r parti arall",
-      "tooLong": "Welsh Translation required"
+      "tooLong": "Rhowch fanylion. Caniateir defnyddio hyd at 2500 o nodau"
     }
   }
 }
