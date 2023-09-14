@@ -1,3 +1,4 @@
+import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
@@ -105,7 +106,7 @@ export default class TypeOfClaimController {
       ) {
         redirectUrl = PageUrls.CLAIM_STEPS;
       } else {
-        const url: string = process.env.ET1_BASE_URL ?? 'https://et-stg-azure.staging.et.dsd.io';
+        const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1legacy.url');
         redirectUrl = `${url}`;
       }
       if (req.app?.locals) {
