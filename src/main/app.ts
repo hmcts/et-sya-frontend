@@ -33,7 +33,7 @@ new PropertiesVolume().enableFor(app);
 new AppInsights().enable();
 new Nunjucks(developmentMode).enableFor(app);
 
-new Helmet({ referrerPolicy: 'origin' }, [
+new Helmet(config.get('security'), [
   process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL'),
   process.env.PCQ_URL ?? config.get('services.pcq.url'),
   process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url'),
