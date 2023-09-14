@@ -1,0 +1,36 @@
+{% set id = params.id %}
+
+<div class="govuk-accordion {%- if params.classes %} {{ params.classes }}{% endif -%}" data-module="govuk-accordion" id="{{ id }}"
+  {%- if params.hideAllSectionsText %} data-i18n.hide-all-sections="{{ params.hideAllSectionsText }}"{% endif %}
+  {%- if params.hideSectionText %} data-i18n.hide-section="{{ params.hideSectionText }}"{% endif %}
+  {%- if params.showAllSectionsText %} data-i18n.show-all-sections="{{ params.showAllSectionsText }}"{% endif %}
+  {%- if params.showSectionText %} data-i18n.show-section="{{ params.showSectionText }}"{% endif %}
+  {%- for attribute, value in params.attributes %} {{attribute}}="{{value}}"{% endfor %}>
+  {% for item in params.items %}
+    {% if item %}
+        <div class="govuk-accordion__section {%- if item.expanded %} govuk-accordion__section--expanded{% endif %}">
+            <div class="govuk-accordion__section-header">
+                <h{{ headingLevel }} class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="{{ id }}-heading-{{ loop.index }}">
+                        {{ item.heading.text }}
+                    </span>
+                </h{{ headingLevel }}>
+                {% if item.summary.html or item.summary.text %}
+                    <div class="govuk-accordion__section-summary govuk-body" id="{{ id }}-summary-{{ loop.index }}">
+                        {{ item.summary.text }}
+                    </div>
+                {% endif %}
+            </div>
+            <div id="{{ id }}-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="{{ id }}-heading-{{ loop.index }}">
+                <p class='govuk-body'>
+                    {{ item.content.bodyText }}
+                </p>
+                <br>
+                <a class='govuk-link govuk-body' href="{{ item.content.link.href }}">
+                    {{ item.content.link.text }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>

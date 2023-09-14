@@ -1,6 +1,6 @@
 {% extends "template.njk" %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+{% from "components/accordion/macro.njk" import govukAccordion %}
 
 
 {% block beforeContent %}
@@ -17,9 +17,14 @@
         {{ landing_text.p2 }} <br><br>
         {{ landing_text.p3 }}
       </p>
+
       {{ govukAccordion({
         id: "contact-options",
-        items: applicationsAccordionItems
+        items: applicationsAccordionItems,
+        showAllSectionsText: showAllSectionsText,
+        hideAllSectionsText: hideAllSectionsText,
+        showSectionText: showSectionText,
+        hideSectionText: hideSectionText
       }) }}
 
       <h2 class="govuk-heading-m">{{ call.h1 }}</h2>
