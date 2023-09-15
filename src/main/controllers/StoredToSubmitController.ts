@@ -14,8 +14,8 @@ import { handlePostLogic } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
   getDocumentLink,
+  populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -70,7 +70,7 @@ export default class StoredToSubmitController {
     const accessToken = req.session.user?.accessToken;
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, accessToken);
+        await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');

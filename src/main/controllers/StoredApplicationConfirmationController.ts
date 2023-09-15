@@ -5,7 +5,7 @@ import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { getDocumentAdditionalInformation, getDocumentLink } from './helpers/DocumentHelpers';
+import { getDocumentLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink, getLatestApplication } from './helpers/Rule92NotSystemUserHelper';
 
@@ -27,7 +27,7 @@ export default class StoredApplicationConfirmationController {
     const document = latestApplication?.value?.documentUpload;
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, accessToken);
+        await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect(ErrorPages.NOT_FOUND);
