@@ -14,7 +14,7 @@ import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
+  populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
@@ -112,7 +112,7 @@ export default class RespondToTribunalResponseController {
     const document = selectedApplication.value?.documentUpload;
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect(ErrorPages.NOT_FOUND);
