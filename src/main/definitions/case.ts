@@ -203,6 +203,7 @@ export interface Case {
   confirmCopied?: string;
   // indiciates if responding to a tribunal order/request or not when responding to an application
   isRespondingToRequestOrOrder?: boolean;
+  updateDraftCaseError?: string;
 }
 export const enum StillWorking {
   WORKING = 'Working',

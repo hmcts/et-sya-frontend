@@ -8,13 +8,12 @@ import {
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
-  getDocumentAdditionalInformation,
-  getDocumentLink,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
   isSelectedAppDocId,
   isSelectedAppResponseDocId,
+  populateDocumentMetadata,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
@@ -247,7 +246,7 @@ it('should create proper download link for TSE CYA', () => {
     document_mime_type: 'pdf',
   };
   const mockLink =
-    "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>";
+    "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>";
   const createdLink = createDownloadLink(doc);
   expect(mockLink).toStrictEqual(createdLink);
 });
@@ -288,7 +287,7 @@ it('should update document size and mime type values', async () => {
   getCaseApiClientMock.mockReturnValue(caseApi);
   caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
 
-  const modifiedDoc = await getDocumentAdditionalInformation(doc, testRawId);
+  const modifiedDoc = await populateDocumentMetadata(doc, testRawId);
 
   expect(modifiedDoc.document_size).toEqual(10575);
   expect(modifiedDoc.document_mime_type).toEqual('pdf');
@@ -738,19 +737,5 @@ describe('getJudgmentDocId', () => {
 
     const result = isJudgmentDocId(req.session.userCase, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
     expect(result).toBeFalsy();
-  });
-});
-
-describe('getDocumentLink', () => {
-  const doc: Document = {
-    document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
-    document_filename: 'test.pdf',
-    document_binary_url: '',
-  };
-
-  it('should return document link', () => {
-    const expected = '/getSupportingMaterial/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa';
-    const actual = getDocumentLink(doc);
-    expect(actual).toEqual(expected);
   });
 });

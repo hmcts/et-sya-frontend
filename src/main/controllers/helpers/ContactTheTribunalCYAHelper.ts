@@ -1,9 +1,13 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { CHANGE, PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
+import {
+  SummaryListRow,
+  addSummaryHtmlRow,
+  addSummaryRow,
+  createChangeAction,
+} from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
-
-import { copyToOtherPartyRedirectUrl } from './Rule92NotSystemUserHelper';
 
 export const getCyaContent = (
   userCase: CaseWithId,
@@ -12,104 +16,47 @@ export const getCyaContent = (
   contactTheTribunalSelectedUrl: string,
   downloadLink: string,
   typeOfApplication: string
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: typeOfApplication,
-      },
-      actions: {
-        items: [
-          {
-            href: PageUrls.CONTACT_THE_TRIBUNAL + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.applicationType,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.contactApplicationText,
-      },
-      actions: {
-        items: [
-          {
-            href: contactTheTribunalSelectedUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.legend,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
+): SummaryListRow[] => {
+  const rows: SummaryListRow[] = [];
+  const { applicationType, legend, supportingMaterial, copyToOtherPartyYesOrNo, copyToOtherPartyText } = translations;
 
-      actions: {
-        items: [
-          {
-            href: contactTheTribunalSelectedUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.supportingMaterial,
-          },
-        ],
-      },
-    },
-    ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
-      ? []
-      : [
-          {
-            key: {
-              text: translations.copyToOtherPartyYesOrNo,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.copyToOtherPartyYesOrNo,
-            },
-            actions: {
-              items: [
-                {
-                  href: copyToOtherPartyRedirectUrl(userCase) + languageParam,
-                  text: CHANGE,
-                  visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-                },
-              ],
-            },
-          },
-          ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
-            ? []
-            : [
-                {
-                  key: {
-                    text: translations.copyToOtherPartyText,
-                    classes: 'govuk-!-font-weight-regular-m',
-                  },
-                  value: {
-                    text: userCase.copyToOtherPartyText,
-                  },
-                  actions: {
-                    items: [
-                      {
-                        href: copyToOtherPartyRedirectUrl(userCase) + languageParam,
-                        text: CHANGE,
-                        visuallyHiddenText: translations.copyToOtherPartyText,
-                      },
-                    ],
-                  },
-                },
-              ]),
-        ]),
-  ];
+  rows.push(
+    addSummaryRow(
+      applicationType,
+      typeOfApplication,
+      createChangeAction(PageUrls.CONTACT_THE_TRIBUNAL + languageParam, CHANGE, applicationType)
+    ),
+    addSummaryRow(
+      legend,
+      userCase.contactApplicationText,
+      createChangeAction(contactTheTribunalSelectedUrl + languageParam, CHANGE, legend)
+    ),
+    addSummaryHtmlRow(
+      supportingMaterial,
+      downloadLink,
+      createChangeAction(contactTheTribunalSelectedUrl + languageParam, CHANGE, supportingMaterial)
+    )
+  );
+
+  if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType)) {
+    rows.push(
+      addSummaryRow(
+        copyToOtherPartyYesOrNo,
+        userCase.copyToOtherPartyYesOrNo,
+        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyYesOrNo)
+      )
+    );
+
+    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
+      rows.push(
+        addSummaryRow(
+          copyToOtherPartyText,
+          userCase.copyToOtherPartyText,
+          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyText)
+        )
+      );
+    }
+  }
+
+  return rows;
 };
