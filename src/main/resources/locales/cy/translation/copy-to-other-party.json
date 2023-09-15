@@ -1,22 +1,22 @@
 {
-  "title": "Welsh translation required",
+  "title": "Anfon copi o’r ohebiaeth hon at y parti arall",
   "respondToApplication": "Welsh translation required",
   "respondToTribunal": "Welsh translation required",
-  "contact": "Welsh translation required",
+  "contact": "Cysylltu",
   "application": "Welsh translation required",
   "tribunal": "Welsh translation required",
-  "h1": "Welsh translation required",
-  "p1": "Welsh translation required.",
-  "legend": "Welsh translation required",
-  "hintText": "Welsh translation required",
-  "yes": "Welsh translation required",
-  "no": "Welsh translation required",
+  "h1": "Anfon copi o’r ohebiaeth hon at y parti arall",
+  "p1": "Rhaid i'r tribiwnlys weithredu mewn ffordd sy’n deg i'r ddwy ochr. Mae hyn yn golygu bod rhaid i bob parti weld neu glywed beth mae'r parti arall yn ei ddweud wrth y tribiwnlys. Mae’r rheolau felly’n ei gwneud yn ofynnol i bob cyfathrebiad â’r tribiwnlys gael ei gopïo i’r parti arall, oni bai mewn amgylchiadau eithriadol.",
+  "legend": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
+  "hintText": "Rhowch fanylion",
+  "yes": "Oes, gallaf gadarnhau fy mod eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth. Trwy ddewis yr opsiwn hwn, anfonir copi o’r ohebiaeth hon at y parti arall ar ôl iddi gael ei chyflwyno. Bydd y parti arall yn cael gwybod y dylid anfon unrhyw wrthwynebiadau i’ch cais at y tribiwnlys cyn gynted â phosibl, ac ym mhob achos o fewn 7 diwrnod.",
+  "no": "Nac oes, nid wyf eisiau anfon copi o’r ohebiaeth hon at y parti arall. Rhaid i chi ddweud wrth y tribiwnlys pam nad ydych chi eisiau rhoi gwybod i’r parti arall. Bydd y tribiwnlys yn ystyried eich rhesymau ac yn penderfynu a oes rhaid i chi roi gwybod i’r parti arall ai peidio.",
   "errors": {
     "copyToOtherPartyYesOrNo": {
-      "required": "Welsh translation required"
+      "required": "Dywedwch wrthym os ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall"
     },
     "copyToOtherPartyText": {
-      "required": "Welsh translation required",
+      "required": "Dywedwch wrth y tribiwnlys pam nad ydych chi eisiau rhoi gwybod i’r parti arall",
       "tooLong": "Welsh translation required"
     }
   }
