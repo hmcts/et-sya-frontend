@@ -36,12 +36,17 @@
   "optional": "Dewisol",
   "waitingForTheTribunal": "Aros am y tribiwnlys",
   "submittedAndViewed": "Wedi'i gyflwyno",
-  "updated": "Welsh Translation required",
+  "updated": "Wedi ei ddiweddaru",
   "readyToView": "Welsh Translation required",
   "submittedAlert": "Rydych wedi cyflwyno eich hawliad i’r tribiwnlys",
   "processClaim": "Rydym yn anelu at brosesu eich hawliad erbyn",
   "busyPeriod": ". Yn ystod cyfnodau prysur gallai hyn gymryd mwy o amser.",
+  "tribunalRespondedP1": "Welsh translation required",
+  "tribunalRespondedP2": "Welsh translation required",
+  "respondToTribunal": "Ymateb i'r tribiwnlys",
+  "mustRespond": "Welsh translation required",
   "notificationBanner": {
+    "viewResponse": "Gweld yr ymateb",
     "acknowledgement": {
       "header": "Mae’r tribiwnlys wedi cydnabod eich hawliad",
       "link": "Gweld y gydnabyddiaeth o dderbyn yr hawliad",
@@ -62,8 +67,7 @@
       "link": "Gweld y llythyr gwrthod"
     },
     "respondentAcknowledgement": {
-      "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd.",
-      "link": "Gweld yr ymateb"
+      "header": "Mae’r tribiwnlys wedi cydnabod ymateb yr atebydd."
     },
     "respondentApplicationReceived": {
       "header": "Mae'r atebydd wedi gwneud ",

@@ -41,7 +41,12 @@
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
+  "tribunalRespondedP1": "The tribunal has responded to ",
+  "tribunalRespondedP2": " application to ",
+  "respondToTribunal": "Respond to the tribunal",
+  "mustRespond": "You must respond to this.",
   "notificationBanner": {
+    "viewResponse": "View the response",
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",
       "link": "View the Acknowledgement of Claim",
@@ -62,8 +67,7 @@
       "link": "View the rejection letter"
     },
     "respondentAcknowledgement": {
-      "header": "The tribunal has acknowledged the respondent's response.",
-      "link": "View the response"
+      "header": "The tribunal has acknowledged the respondent's response."
     },
     "respondentApplicationReceived": {
       "header": "The respondent has applied to ",
