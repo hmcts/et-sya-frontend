@@ -9,6 +9,8 @@ import {
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
+import { copyToOtherPartyRedirectUrl } from './Rule92NotSystemUserHelper';
+
 export const getCyaContent = (
   userCase: CaseWithId,
   translations: AnyRecord,
@@ -43,7 +45,7 @@ export const getCyaContent = (
       addSummaryRow(
         copyToOtherPartyYesOrNo,
         userCase.copyToOtherPartyYesOrNo,
-        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyYesOrNo)
+        createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, CHANGE, copyToOtherPartyYesOrNo)
       )
     );
 
@@ -52,7 +54,7 @@ export const getCyaContent = (
         addSummaryRow(
           copyToOtherPartyText,
           userCase.copyToOtherPartyText,
-          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, copyToOtherPartyText)
+          createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, CHANGE, copyToOtherPartyText)
         )
       );
     }
