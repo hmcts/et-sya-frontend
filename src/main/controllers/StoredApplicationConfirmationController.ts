@@ -3,7 +3,9 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
+import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
 import { getDocumentLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -13,7 +15,16 @@ const logger = getLogger('StoredApplicationConfirmationController');
 
 export default class StoredApplicationConfirmationController {
   public async get(req: AppRequest, res: Response): Promise<void> {
-    const userCase = req.session?.userCase;
+    try {
+      req.session.userCase = fromApiFormat(
+        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
+      );
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
+
+    const userCase = req.session.userCase;
     const accessToken = req.session.user?.accessToken;
     const languageParam = getLanguageParam(req.url);
 
