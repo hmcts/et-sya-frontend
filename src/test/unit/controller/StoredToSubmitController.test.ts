@@ -1,10 +1,37 @@
+import axios, { AxiosResponse } from 'axios';
+
 import StoredToSubmitController from '../../../main/controllers/StoredToSubmitController';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Copy to other party Controller', () => {
+describe('Stored to Submit Controller', () => {
+  jest.mock('axios');
+  const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+  jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+  caseApi.updateDraftCase = jest.fn().mockResolvedValue(
+    Promise.resolve({
+      data: {
+        created_date: '2022-08-19T09:19:25.79202',
+        last_modified: '2022-08-19T09:19:25.817549',
+        case_data: {
+          genericTseApplicationCollection: [
+            {
+              id: '1',
+              value: {
+                applicant: 'Claimant',
+              },
+            },
+          ],
+        },
+      },
+    } as AxiosResponse<CaseApiDataResponse>)
+  );
+
   const t = {
     'stored-to-submit': {},
     'your-applications': { 'Amend my claim': 'Amend my claim' },
@@ -30,7 +57,7 @@ describe('Copy to other party Controller', () => {
     genericTseApplicationCollection: tseAppCollection,
   };
 
-  it('should render the copy to other party page', () => {
+  it('should render the stored to submit page', () => {
     const controller = new StoredToSubmitController();
     const res = mockResponse();
     const req = mockRequest({ t, session: { userCase } });
@@ -41,12 +68,12 @@ describe('Copy to other party Controller', () => {
     expect(res.render).toHaveBeenCalledWith(TranslationKeys.STORED_TO_SUBMIT, expect.anything());
   });
 
-  it('should redirect to contact the tribunal check your answers page when yes is selected', async () => {
+  it('should redirect to update page when yes is selected', async () => {
     const body = { confirmCopied: YesOrNo.YES };
 
     const controller = new StoredToSubmitController();
 
-    const req = mockRequest({ body });
+    const req = mockRequest({ body, session: { userCase } });
     const res = mockResponse();
     req.params.appId = '1';
     req.url = PageUrls.STORED_TO_SUBMIT + languages.ENGLISH_URL_PARAMETER;

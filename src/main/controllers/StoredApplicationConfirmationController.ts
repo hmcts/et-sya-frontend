@@ -41,7 +41,7 @@ export default class StoredApplicationConfirmationController {
       return res.redirect(ErrorPages.NOT_FOUND);
     }
 
-    const document = latestApplication?.value?.documentUpload;
+    const document = latestApplication.value?.documentUpload;
     if (document) {
       try {
         await populateDocumentMetadata(document, accessToken);

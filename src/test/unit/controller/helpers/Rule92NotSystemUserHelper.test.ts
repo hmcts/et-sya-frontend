@@ -133,13 +133,13 @@ describe('getLatestApplication', () => {
   };
   req.session.userCase.genericTseApplicationCollection.push(respondentItem1);
 
-  it('should return last application 123', () => {
+  it('should return last application 123', async () => {
     const expected = claimantItem1;
-    const actual = getLatestApplication(req.session.userCase.genericTseApplicationCollection);
+    const actual = await getLatestApplication(req.session.userCase.genericTseApplicationCollection);
     expect(actual).toEqual(expected);
   });
 
-  it('should return last application 345', () => {
+  it('should return last application 345', async () => {
     const claimantItem2: GenericTseApplicationTypeItem = {
       id: '567',
       value: {
@@ -151,7 +151,7 @@ describe('getLatestApplication', () => {
     req.session.userCase.genericTseApplicationCollection.push(claimantItem2);
 
     const expected = claimantItem2;
-    const actual = getLatestApplication(req.session.userCase.genericTseApplicationCollection);
+    const actual = await getLatestApplication(req.session.userCase.genericTseApplicationCollection);
     expect(actual).toEqual(expected);
   });
 });
