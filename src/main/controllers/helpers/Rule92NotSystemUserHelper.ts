@@ -33,7 +33,9 @@ const getStoredToSubmitLink = (appId: string, languageParam: string): string => 
   return PageUrls.STORED_TO_SUBMIT.replace(':appId', appId) + languageParam;
 };
 
-export const getLatestApplication = (items: GenericTseApplicationTypeItem[]): GenericTseApplicationTypeItem => {
+export const getLatestApplication = async (
+  items: GenericTseApplicationTypeItem[]
+): Promise<GenericTseApplicationTypeItem> => {
   const filteredItem = items?.filter(it => it.value.applicant === Applicant.CLAIMANT);
   return filteredItem[filteredItem.length - 1];
 };

@@ -22,7 +22,13 @@ export default class StoredApplicationConfirmationController {
       ...req.t(TranslationKeys.STORED_APPLICATION_CONFIRMATION, { returnObjects: true }),
     };
 
-    const latestApplication = getLatestApplication(userCase.genericTseApplicationCollection);
+    let latestApplication;
+    try {
+      latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
+    } catch (err) {
+      logger.error(err.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
+    }
 
     const document = latestApplication?.value?.documentUpload;
     if (document) {
