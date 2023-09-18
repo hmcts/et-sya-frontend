@@ -9,67 +9,67 @@
   "sections": {
     "withdraw": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
       "body": "Welsh Translation required"
     },
     "change-details": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Rwyf eisiau newid fy manylion personol",
       "body": "Welsh Translation required"
     },
     "postpone": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i ohirio fy ngwrandawiad",
       "body": "Welsh Translation required"
     },
     "vary": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i amrywio neu ddirymu gorchymyn ",
       "body": "Welsh Translation required"
     },
     "reconsider-decision": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i benderfyniad gael ei ystyried o’r newydd",
       "body": "Welsh Translation required"
     },
     "amend": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i ddiwygio fy hawliad",
       "body": "Welsh Translation required"
     },
     "respondent": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
       "body": "Welsh Translation required"
     },
     "witness": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
       "body": "Welsh Translation required"
     },
     "non-compliance": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
       "body": "Welsh Translation required"
     },
     "publicity": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
       "body": "Welsh Translation required"
     },
     "strike": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Dileu’r cyfan neu ran o’r ymateb",
       "body": "Welsh Translation required"
     },
     "reconsider-judgement": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Gwneud cais i ddyfarniad gael ei ailystyried",
       "body": "Welsh Translation required"
     },
     "other": {
       "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
+      "label": "Cysylltu â’r tribiwnlys am rywbeth arall",
       "body": "Welsh Translation required",
       "link": "Welsh Translation required"
     },

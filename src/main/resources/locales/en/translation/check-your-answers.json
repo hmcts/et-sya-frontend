@@ -19,7 +19,7 @@
   "emailConfirmation": "We’ll send you an email confirmation once you’ve submitted your claim.",
   "submitBtn": "Submit",
   "printLinkTxt": "<a class=\"govuk-link\" id=\"print\">Print this page </a> for your records",
-  "change": "Change",
+  "change": "Change cya",
   "submitError": "Sorry, we’re having technical problems processing your application. Please try again in a few minutes.",
   "errors": {
     "typeOfClaim": {
