@@ -225,6 +225,7 @@ export class Routes {
     app.post(PageUrls.NEW_JOB_START_DATE, new NewJobStartDateController().post);
     app.get(PageUrls.CLAIM_SUBMITTED, new ClaimSubmittedController().get);
     app.get(PageUrls.CHECK_ANSWERS, new CheckYourAnswersController().get);
+    app.post(PageUrls.CHECK_ANSWERS, new CheckYourAnswersController().post);
     app.get(PageUrls.END_DATE, new EndDateController().get);
     app.post(PageUrls.END_DATE, new EndDateController().post);
     app.get(PageUrls.CLAIM_TYPE_DISCRIMINATION, new ClaimTypeDiscriminationController().get);
