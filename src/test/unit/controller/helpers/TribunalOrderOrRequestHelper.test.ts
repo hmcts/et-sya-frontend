@@ -1,5 +1,6 @@
 import {
   activateTribunalOrdersAndRequestsLink,
+  filterActionableNotifications,
   filterSendNotifications,
   getRepondentOrderOrRequestDetails,
   populateNotificationsWithRedirectLinksAndStatusColors,
@@ -28,6 +29,7 @@ import {
   mockNotificationViewed,
 } from '../../mocks/mockNotificationItem';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
 
 describe('Tribunal order or request helper', () => {
   const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw };
@@ -419,5 +421,71 @@ describe('Tribunal order or request helper', () => {
 
     activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
+  });
+
+  describe('filterActionableNotifications', () => {
+    const makeUnviewedNotification = (): SendNotificationType => {
+      return { ...selectedRequestOrOrder.value, notificationState: undefined };
+    };
+
+    test('should show unviewed notification', async () => {
+      const notification: SendNotificationTypeItem = { id: '1', value: makeUnviewedNotification() };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+    });
+
+    test('should show notification with an unviewed tribunal response', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [{ id: '1', value: getOrderOrRequestTribunalResponse() }],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+    });
+
+    test('should show notification when a tribunal response requires a response from the claimant and has none', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [
+            { id: '1', value: { ...getOrderOrRequestTribunalResponse(), isClaimantResponseDue: ResponseRequired.YES } },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+    });
+
+    test('should not show notification when claimant has responded', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [
+            {
+              id: '1',
+              value: {
+                ...getOrderOrRequestTribunalResponse(),
+                state: HubLinkStatus.VIEWED,
+                isClaimantResponseDue: undefined,
+              },
+            },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+    });
   });
 });

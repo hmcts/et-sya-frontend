@@ -21,6 +21,7 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
+    request.params.orderId = '123';
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
   });

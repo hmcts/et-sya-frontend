@@ -173,7 +173,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       const responseRequired =
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
+      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
@@ -257,3 +257,20 @@ export const filterSendNotifications = (items: SendNotificationTypeItem[]): Send
       it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
   );
 };
+
+/**
+ * Returns a filtered list of notifications where ANY criteria is matched:
+ * 1. Notification is not viewed
+ * 2. A response on the notification is not viewed
+ * 3. A response on the notification is viewed and requires a response where none has been given yet
+ */
+export function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
+  return notifications?.filter(o => {
+    if (o.value.notificationState !== HubLinkStatus.VIEWED) {
+      return true;
+    }
+    return o.value.respondNotificationTypeCollection?.some(
+      r => r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue
+    );
+  });
+}

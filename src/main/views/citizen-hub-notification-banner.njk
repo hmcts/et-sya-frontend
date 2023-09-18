@@ -232,7 +232,7 @@
 {% endif %}
 
 {% if showOrderOrRequestReceived %}
-  {% for order in bannerNotifications %}
+  {% for order in notifications %}
     {% set htmlForOrderOrRequestReceived %}
     {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
       <h3 class="govuk-notification-banner__heading">

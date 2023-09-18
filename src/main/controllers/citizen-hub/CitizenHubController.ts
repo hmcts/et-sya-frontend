@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -46,6 +45,7 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
+  filterActionableNotifications,
   filterSendNotifications,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
@@ -172,7 +172,6 @@ export default class CitizenHubController {
       respondentBannerContent,
       judgmentBannerContent,
       decisionBannerContent,
-      notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
@@ -187,26 +186,9 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-      bannerNotifications: filterNotificationsToAlert(notifications),
+      notifications: filterActionableNotifications(notifications),
     };
 
     res.render(TranslationKeys.CITIZEN_HUB, data);
   }
-}
-
-/**
- * Returns a filtered list of notifications where ANY criteria is matched:
- * 1. Notification is not viewed
- * 2. A response on the notification is not viewed
- * 3. A response on the notification is viewed and requires a response where none has been given yet
- */
-function filterNotificationsToAlert(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications?.filter(o => {
-    if (o.value.notificationState !== 'viewed') {
-      return true;
-    }
-    return o.value.respondNotificationTypeCollection?.some(
-      r => r.value.state !== 'viewed' || r.value.isClaimantResponseDue
-    );
-  });
 }
