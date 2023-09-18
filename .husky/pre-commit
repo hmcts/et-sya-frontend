@@ -3,5 +3,3 @@
 
 yarn lint-staged
 echo "Nice commit pal."
-
-yarn lint-staged
