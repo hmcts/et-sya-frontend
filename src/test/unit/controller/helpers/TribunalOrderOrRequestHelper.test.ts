@@ -4,12 +4,14 @@ import {
   filterSendNotifications,
   getRepondentOrderOrRequestDetails,
   populateNotificationsWithRedirectLinksAndStatusColors,
+  setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import {
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import {
+  Applicant,
   NotificationSubjects,
   Parties,
   ResponseRequired,
@@ -433,9 +435,64 @@ describe('Tribunal order or request helper', () => {
 
       const actual = filterActionableNotifications([notification]);
       expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeFalsy();
     });
 
-    test('should show notification with an unviewed tribunal response', () => {
+    test('should not show viewed notification', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: { ...makeUnviewedNotification(), notificationState: HubLinkStatus.VIEWED },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should show viewed notification that requires a claimant response and has none', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationResponseTribunal: ResponseRequired.YES,
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
+    });
+
+    test('should not show viewed notification that requires a claimant response and has one', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationResponseTribunal: ResponseRequired.YES,
+          respondCollection: [{ id: '1', value: { from: Applicant.CLAIMANT } }],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should show viewed notification with an unviewed tribunal response', () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
@@ -447,9 +504,13 @@ describe('Tribunal order or request helper', () => {
 
       const actual = filterActionableNotifications([notification]);
       expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
     });
 
-    test('should show notification when a tribunal response requires a response from the claimant and has none', () => {
+    test('should show viewed notification when response requires a response from claimant and has none', () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
@@ -463,9 +524,13 @@ describe('Tribunal order or request helper', () => {
 
       const actual = filterActionableNotifications([notification]);
       expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
     });
 
-    test('should not show notification when claimant has responded', () => {
+    test('should not show viewed notification when claimant has responded', () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
@@ -486,6 +551,9 @@ describe('Tribunal order or request helper', () => {
 
       const actual = filterActionableNotifications([notification]);
       expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
     });
   });
 });

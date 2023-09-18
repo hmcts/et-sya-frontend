@@ -1,5 +1,8 @@
 import { CaseWithId } from '../../definitions/case';
-import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
+import {
+  SendNotificationType,
+  SendNotificationTypeItem,
+} from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
@@ -198,9 +201,8 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       item.displayStatus = translations[hubLinkStatus];
       item.statusColor = displayStatusColorMap.get(hubLinkStatus);
       item.redirectUrl = getRedirectUrlForNotification(item.id, false, url);
-      item.bannerUrl = getRedirectUrlForNotification(item.id, responseRequired, url);
-      const linkKey = responseRequired ? 'respond' : 'link';
-      item.linkText = translations.notificationBanner.orderOrRequest[linkKey];
+      item.respondUrl = getRedirectUrlForNotification(item.id, responseRequired, url);
+      setNotificationBannerData(item);
     });
     return notifications;
   }
@@ -269,8 +271,46 @@ export function filterActionableNotifications(notifications: SendNotificationTyp
     if (o.value.notificationState !== HubLinkStatus.VIEWED) {
       return true;
     }
+
+    if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
+      return true;
+    }
+
     return o.value.respondNotificationTypeCollection?.some(
       r => r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue
     );
   });
+}
+
+/**
+ * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
+ * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
+ * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is unviewed.
+ */
+export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
+  const actionableNotifications = filterActionableNotifications([notification]);
+  if (!actionableNotifications.length) {
+    notification.showAlert = false;
+    return;
+  }
+
+  notification.showAlert = true;
+  notification.needsResponse = false;
+
+  const value = actionableNotifications[0].value;
+  const responses = value.respondNotificationTypeCollection;
+
+  const hasAnyResponsesDue = responses?.some(r => r.value.isClaimantResponseDue);
+
+  if (hasAnyResponsesDue || (requiresResponse(notification.value) && !hasClaimantResponded(notification.value))) {
+    notification.needsResponse = true;
+  }
+}
+
+function requiresResponse(notification: SendNotificationType) {
+  return notification.sendNotificationResponseTribunal === ResponseRequired.YES;
+}
+
+function hasClaimantResponded(notification: SendNotificationType) {
+  return notification.respondCollection?.filter(o => o.value.from === Applicant.CLAIMANT).length > 0;
 }

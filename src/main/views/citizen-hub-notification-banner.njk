@@ -234,22 +234,26 @@
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
     {% set htmlForOrderOrRequestReceived %}
-    {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
+    {% if order.showAlert %}
       <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.orderOrRequest.responseRequired }}
+        {% if order.needsResponse %}
+          {{ notificationBanner.orderOrRequest.responseRequired }}
+        {% else %}
+          {{ notificationBanner.orderOrRequest.noResponseRequired }}
+        {% endif %}
       </h3>
-    {% else %}
-      <h3 class="govuk-notification-banner__heading">
-        {{ notificationBanner.orderOrRequest.noResponseRequired }}
-      </h3>
-    {% endif %}
-    <p class="govuk-body">
-      <a class="govuk-link" href="{{ order.bannerUrl }}">{{ order.linkText }}</a>
-    </p>
-    {% endset %}
-    {{ govukNotificationBanner({
+      <p class="govuk-body">
+        {% if order.needsResponse %}
+          <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }}</a>
+        {% else %}
+          <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
+        {% endif %}
+      </p>
+      {% endset %}
+      {{ govukNotificationBanner({
           html: htmlForOrderOrRequestReceived,
           titleText: important
         }) }}
+    {% endif %}
   {% endfor %}
 {% endif %}

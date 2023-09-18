@@ -7,10 +7,12 @@ export interface SendNotificationTypeItem {
   id?: string;
   value?: SendNotificationType;
   redirectUrl?: string;
-  bannerUrl?: string;
+  respondUrl?: string;
   statusColor?: string;
   displayStatus?: string;
   linkText?: string;
+  needsResponse?: boolean;
+  showAlert?: boolean;
 }
 
 export interface SendNotificationType {
