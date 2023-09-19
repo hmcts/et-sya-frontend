@@ -12,7 +12,7 @@ export class HealthCheck {
       ? healthcheck.raw(() => (app.locals.redisClient.ping() ? healthcheck.up() : healthcheck.down()))
       : null;
 
-    const idamUrl = config.get('services.idam.tokenURL') as string;
+    const idamUrl: string = process.env.IDAM_API_URL ?? config.get('services.idam.tokenURL');
 
     healthcheck.addTo(app, {
       checks: {
