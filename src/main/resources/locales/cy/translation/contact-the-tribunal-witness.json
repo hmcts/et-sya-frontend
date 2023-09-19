@@ -1,32 +1,57 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Gorchymyn tyst i fynychu",
+  "applicationType": "Gorchymyn tyst i fynychu",
+  "applicationTitle": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    { "type": "paragraph", "text": "Gallwch ofyn i’r tribiwnlys orchymyn bod tyst yn bresennol i roi tystiolaeth." },
+    {
+      "type": "paragraph",
+      "text": "Rhaid i’r tyst fod ym Mhrydain Fawr (Cymru, Lloegr a’r Alban). Nid yw hyn yn cynnwys Gogledd Iwerddon."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gall y tribiwnlys gyfyngu ar nifer y tystion i gael eu galw i roi tystiolaeth ar fater penodol, yn enwedig os nad yw'r mater hwnnw yn ganolog i'r achos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Dylech sylweddoli, os ydych chi’n galw tyst i roi tystiolaeth ar eich rhan, nid oes gennych hawl yn gyffredinol i herio na gwrth-ddweud yr hyn y mae'r tyst yn ei ddweud."
+    },
+    { "type": "paragraph", "text": "Efallai y byddwch hefyd yn atebol am y costau o ganlyniad i bresenoldeb y tyst." },
+    { "type": "paragraph", "text": "Dylech ystyried a yw tystiolaeth y tyst hwn yn debygol o helpu eich achos." },
+
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "enw a chyfeiriad llawn y tyst",
+        "pam fod presenoldeb y tyst hwn yn angenrheidiol ar gyfer gwrandawiad teg. Mae angen i’r tribiwnlys ddeall pam fod y dystiolaeth yn berthnasol, a pham nad oes ffordd amgen o sefydlu’r un pwyntiau yn y gwrandawiad heb orchymyn i’r tyst fod yn bresennol",
+        "os ydych wedi gofyn i’r tyst hwn fynychu o’i wirfodd ei hun. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch ofyn a beth oedd ei ymateb",
+        "Os nad ydych wedi gofyn i’r tyst fynychu eto, esboniwch pam"
+      ]
+    },
+
+    {
+      "type": "paragraph",
+      "text": "Os bydd y gorchymyn yn cael ei ganiatáu, bydd y tyst yn cael ei orchymyn i fod yn bresennol ar ddiwrnod cyntaf y gwrandawiad. Os ydych eisiau iddo fynychu ar ddiwrnod neu ddiwrnodau eraill, dywedwch wrthym:"
+    },
+
+    {
+      "type": "list",
+      "items": [
+        "y dyddiadau ar wahân i ddiwrnod cyntaf y gwrandawiad rydych eisiau i’r tyst fynychu",
+        "pam bod ei bresenoldeb yn angenrheidiol ar y dyddiadau hynny"
+      ]
+    },
+    { "type": "paragraph", "text": "Os ydych eisiau i’r tyst ddod â dogfennau efo nhw, dywedwch wrthym:" },
+
+    {
+      "type": "list",
+      "items": [
+        "pam fod y dogfennau hyn yn berthnasol i’r materion yn yr achos hwn",
+        "pam na fyddai gorchymyn i ddatgelu’r dogfennau yn ddigon",
+        "os ydych eisoes wedi gofyn i’r tyst neu unrhyw un arall ddarparu’r dogfennau hyn. Os ydych wedi gwneud hynny, dywedwch wrthym pryd y gwnaethoch ofyn a beth oedd ei ymateb",
+        "os nad ydych wedi gofyn i’r tyst ddarparu’r dogfennau eto, esboniwch pam"
+      ]
+    }
   ]
 }

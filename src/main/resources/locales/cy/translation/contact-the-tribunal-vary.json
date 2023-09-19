@@ -1,28 +1,49 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Amrywio neu ddirymu gorchymyn",
+  "applicationType": "Amrywio neu ddirymu gorchymyn",
+  "applicationTitle": "Gwneud cais i amrywio neu ddirymu gorchymyn",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i amrywio neu ddirymu gorchymyn y mae’r tribiwnlys wedi ei gyhoeddi."
+    },
+    {
+      "type": "paragraph",
+      "text": "Fel arfer, ni fydd gorchmynion tribiwnlys yn cael eu hamrywio na’u dirymu oni bai bod newid materol wedi bod mewn amgylchiadau ers i’r gorchymyn gael ei wneud, sy’n gwneud yr amrywiad er budd cyfiawnder."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd y tribiwnlys yn ystyried eich rhesymau dros amrywio neu ddirymu’r gorchymyn ac unrhyw ddeunyddiau ategol y byddwch yn eu darparu ac yna’n gwneud penderfyniad."
+    },
+
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "y gorchymyn rydych am ei amrywio neu ei ddirymu",
+        "y dyddiad y cyhoeddodd y tribiwnlys y gorchymyn",
+        "eglurwch pa ran o’r gorchymyn rydych am ei amrywio neu ei ddirymu",
+        "sut i amrywio'r gorchymyn. Er enghraifft, efallai y byddwch yn dweud bod gorchymyn rheoli achos wedi gofyn am ddatganiad o effaith ond mae angen mwy o amser arnoch i’w gyflwyno",
+        "pam ei fod er budd cyfiawnder i amrywio neu ddirymu’r gorchymyn hwn. Dywedwch wrthym am unrhyw newidiadau perthnasol yn eich amgylchiadau ers i’r gorchymyn gael ei wneud ac ystyriwch ofynion yr ‘amcan pennaf’ yn Rheol 2 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Rheol 2 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth" },
+    {
+      "type": "paragraph",
+      "text": "Amcan pennaf y Rheolau yw galluogi tribiwnlysoedd cyflogaeth i ddelio ag achosion yn deg ac yn gyfiawn."
+    },
+    { "type": "paragraph", "text": "Mae delio ag achos yn deg ac yn gyfiawn yn cynnwys:" },
+
+    {
+      "type": "list",
+      "items": [
+        "sicrhau bod sefyllfa’r partïon yn gyfartal",
+        "ymdrin ag achosion mewn ffyrdd sy’n gymesur â chymhlethdod a phwysigrwydd y materion",
+        "osgoi ffurfioldeb diangen a cheisio hyblygrwydd yn yr achos",
+        "osgoi oedi, i’r graddau y mae’n gydnaws ag ystyried y materion yn briodol",
+        "arbed costau"
+      ]
+    }
   ]
 }

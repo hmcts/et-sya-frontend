@@ -1,13 +1,16 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Cysylltu â’r tribiwnlys",
+  "applicationType": "Cysylltu â’r tribiwnlys",
+  "applicationTitle": "Cysylltu â’r tribiwnlys",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    { "type": "paragraph", "text": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos." },
+    { "type": "bold-paragraph", "text": "Peidiwch â defnyddio'r ffurflen hon i:" },
+    {
+      "type": "list",
+      "items": [
+        "geisio cyngor cyfreithiol gan y tribiwnlys. Mae’r tribiwnlys yn gorff barnwrol annibynnol ac ni all roi cyngor cyfreithiol i chi",
+        "dweud wrthym am gynigion neu drafodaethau setlo, sy’n breifat ac yn gyfrinachol i’r partïon"
+      ]
+    }
   ]
 }
