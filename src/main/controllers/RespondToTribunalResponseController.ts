@@ -10,7 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
+import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -100,12 +100,6 @@ export default class RespondToTribunalResponseController {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
-
-    try {
-      await updateSendNotificationState(req, logger);
-    } catch (error) {
-      logger.info(error.message);
-    }
 
     let allResponses;
     try {

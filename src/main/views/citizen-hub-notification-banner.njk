@@ -233,8 +233,8 @@
 
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
-    {% set htmlForOrderOrRequestReceived %}
     {% if order.showAlert %}
+      {% set htmlForOrderOrRequestReceived %}
       <h3 class="govuk-notification-banner__heading">
         {% if order.needsResponse %}
           {{ notificationBanner.orderOrRequest.responseRequired }}
