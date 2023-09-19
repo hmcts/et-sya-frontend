@@ -12,8 +12,8 @@ export const getFiles = (
     return [
       {
         key: {
-          html: translations.noFilesUpload,
-          classes: 'govuk-!-font-weight-regular-m',
+          text: translations.noFilesUpload,
+          classes: 'govuk-body govuk-!-font-weight-regular govuk-!-width-three-quarters',
         },
       },
     ];
