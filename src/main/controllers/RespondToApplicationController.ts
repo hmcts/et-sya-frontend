@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
@@ -96,7 +96,7 @@ export default class RespondToApplicationController {
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, req.session.user?.accessToken);
+        await populateDocumentMetadata(document, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect('/not-found');
@@ -118,6 +118,7 @@ export default class RespondToApplicationController {
       applicationType,
       respondByDate,
       selectedApplication,
+      applicantType: selectedApplication.value.applicant,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
     });
   };

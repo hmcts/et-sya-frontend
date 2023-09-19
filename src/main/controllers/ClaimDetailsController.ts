@@ -51,6 +51,7 @@ export default class ClaimDetailsController {
     // Because these translations don't have the CYA 'change' translation, they don't show the change action.
     // However, this is just a quick fix to make it look like a table rather than the summary details that it actually is.
     const translations: AnyRecord = {
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };

@@ -106,7 +106,7 @@ export default class TypeOfClaimController {
       ) {
         redirectUrl = PageUrls.CLAIM_STEPS;
       } else {
-        const url: string = config.get('services.et1Legacy.url');
+        const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
         redirectUrl = `${url}`;
       }
       if (req.app?.locals) {
