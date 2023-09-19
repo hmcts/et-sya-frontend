@@ -215,12 +215,13 @@
     {% endif %}
   </dl>
 
+<form class="form" id="main-form" method="post" action="" novalidate="true">
+ <input type="hidden" name="_csrf" value={{ csrfToken }}>
   <div class="govuk-form-group">
     {{ govukButton({
       text: submitBtn,
       classes: 'govuk-!-margin-right-2',
       type: "submit",
-      href: InterceptPaths.SUBMIT_CASE + languageParam,
       preventDoubleClick: true,
       attributes: {
         id: 'main-form-submit'
@@ -233,7 +234,6 @@
       classes: 'govuk-button--secondary',
       preventDoubleClick: true,
       name: 'saveForLater',
-      href: PageUrls.CLAIM_SAVED + languageParam,
       value: true,
       attributes: {
         id: 'main-form-save-for-later'
@@ -241,4 +241,5 @@
       value: true
     }) }}
   </div>
+  </form>
 {% endblock %}
