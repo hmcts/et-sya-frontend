@@ -160,8 +160,8 @@ export default class CitizenHubController {
       judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
       decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
     }
-
-    const data = {
+    
+    res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
@@ -187,8 +187,6 @@ export default class CitizenHubController {
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
       notifications: filterActionableNotifications(notifications),
-    };
-
-    res.render(TranslationKeys.CITIZEN_HUB, data);
+    });
   }
 }
