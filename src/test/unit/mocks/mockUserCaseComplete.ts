@@ -13,7 +13,7 @@ import {
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
 import { RespondNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, ResponseRequired } from '../../../main/definitions/constants';
+import { Applicant, Parties, ResponseRequired } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -33,9 +33,9 @@ export const getOrderOrRequestTribunalResponse = (): RespondNotificationType => 
     respondNotificationCmoOrRequest: 'Case management order',
     respondNotificationDate: '2019-05-03',
     respondNotificationFullName: 'Judge Dredd',
-    respondNotificationPartyToNotify: 'Both',
+    respondNotificationPartyToNotify: Parties.BOTH_PARTIES,
     respondNotificationRequestMadeBy: 'Legal officer',
-    respondNotificationResponseRequired: 'required',
+    respondNotificationResponseRequired: ResponseRequired.YES,
     respondNotificationTitle: 'title',
     respondNotificationUploadDocument: [
       {

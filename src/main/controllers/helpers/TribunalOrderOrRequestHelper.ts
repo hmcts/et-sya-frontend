@@ -1,11 +1,12 @@
 import { CaseWithId } from '../../definitions/case';
 import {
+  RespondNotificationType,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
-import { AnyRecord } from '../../definitions/util-types';
+import { AnyRecord, TypeItem } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
@@ -267,19 +268,21 @@ export const filterSendNotifications = (items: SendNotificationTypeItem[]): Send
  * 3. A response on the notification is viewed and requires a response where none has been given yet
  */
 export function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications?.filter(o => {
-    if (o.value.notificationState !== HubLinkStatus.VIEWED) {
-      return true;
-    }
+  return notifications
+    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
+    .filter(o => {
+      if (o.value.notificationState !== HubLinkStatus.VIEWED) {
+        return true;
+      }
 
-    if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
-      return true;
-    }
+      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
+        return true;
+      }
 
-    return o.value.respondNotificationTypeCollection?.some(
-      r => r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue
-    );
-  });
+      return o.value.respondNotificationTypeCollection?.some(
+        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
+      );
+    });
 }
 
 /**
@@ -298,7 +301,7 @@ export function setNotificationBannerData(notification: SendNotificationTypeItem
   notification.needsResponse = false;
 
   const value = actionableNotifications[0].value;
-  const responses = value.respondNotificationTypeCollection;
+  const responses = value.respondNotificationTypeCollection?.filter(claimantRelevant) || [];
 
   const hasAnyResponsesDue = responses?.some(r => r.value.isClaimantResponseDue);
 
@@ -308,9 +311,16 @@ export function setNotificationBannerData(notification: SendNotificationTypeItem
 }
 
 function requiresResponse(notification: SendNotificationType) {
-  return notification.sendNotificationResponseTribunal === ResponseRequired.YES;
+  return (
+    notification.sendNotificationResponseTribunal === ResponseRequired.YES &&
+    notification.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY
+  );
 }
 
 function hasClaimantResponded(notification: SendNotificationType) {
   return notification.respondCollection?.filter(o => o.value.from === Applicant.CLAIMANT).length > 0;
 }
+
+const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
+  return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
+};

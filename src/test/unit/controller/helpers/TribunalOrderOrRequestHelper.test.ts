@@ -455,6 +455,50 @@ describe('Tribunal order or request helper', () => {
       expect(notification.needsResponse).toBeFalsy();
     });
 
+    test('should not show notification to responent only', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          sendNotificationNotify: Parties.RESPONDENT_ONLY,
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should not show viewed notification with respondent only tribunal response', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationNotify: Parties.BOTH_PARTIES,
+          respondNotificationTypeCollection: [
+            {
+              id: '1',
+              value: {
+                ...getOrderOrRequestTribunalResponse(),
+                respondNotificationPartyToNotify: Parties.RESPONDENT_ONLY,
+              },
+            },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
     test('should show viewed notification that requires a claimant response and has none', async () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
