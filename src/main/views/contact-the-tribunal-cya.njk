@@ -1,4 +1,9 @@
-{% extends "template.njk" %}
+{% if featureTemplate %}
+  {% extends "template-language-disabled.njk" %}
+{% else %}
+  {% extends "template.njk" %}
+{% endif %}
+
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}

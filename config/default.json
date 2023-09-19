@@ -38,6 +38,9 @@
     },
     "et1Legacy": {
       "url": "https://et-stg-azure.staging.et.dsd.io"
+    },
+    "launchDarkly": {
+      "key": "TO BE PICKED UP FROM ENV"
     }
   },
   "pact": {
