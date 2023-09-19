@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
@@ -12,7 +13,7 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ContactTheTribunalCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -31,6 +32,9 @@ export default class ContactTheTribunalCYAController {
 
     const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
+    const featureTemplate = await getFlagValue('testFeature', null);
+    const languageParam = getLanguageParam(req.url);
+
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
       ...content,
       ...translations,
@@ -40,15 +44,16 @@ export default class ContactTheTribunalCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      submitRef: InterceptPaths.SUBMIT_TRIBUNAL_CYA + getLanguageParam(req.url),
+      submitRef: InterceptPaths.SUBMIT_TRIBUNAL_CYA + languageParam,
       cyaContent: getCyaContent(
         userCase,
         translations,
-        getLanguageParam(req.url),
+        languageParam,
         PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
         downloadLink,
         translations.sections[userCase.contactApplicationType].label
       ),
+      featureTemplate,
     });
   }
 }

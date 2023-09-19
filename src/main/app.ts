@@ -34,9 +34,9 @@ new AppInsights().enable();
 new Nunjucks(developmentMode).enableFor(app);
 
 new Helmet(config.get('security'), [
-  config.get('services.idam.authorizationURL'),
-  config.get('services.pcq.url'),
-  config.get('services.et1Legacy.url'),
+  process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL'),
+  process.env.PCQ_URL ?? config.get('services.pcq.url'),
+  process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url'),
 ]).enableFor(app);
 
 new I18Next().enableFor(app);
