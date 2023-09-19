@@ -13,7 +13,8 @@ import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
+import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -72,8 +73,8 @@ export default class ContactTheTribunalSelectedController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
-
     userCase.contactApplicationText = req.body.contactApplicationText;
+    const languageParam = getLanguageParam(req.url);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
@@ -88,8 +89,7 @@ export default class ContactTheTribunalSelectedController {
     );
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
-      //TODO Handle redirect to Welsh page
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}${languageParam}`);
     }
 
     if (req.body.upload) {
@@ -102,7 +102,7 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}${languageParam}`);
     }
     req.session.errors = [];
 
@@ -110,15 +110,18 @@ export default class ContactTheTribunalSelectedController {
       ? PageUrls.CONTACT_THE_TRIBUNAL_CYA
       : PageUrls.COPY_TO_OTHER_PARTY;
 
-    return res.redirect(redirectPage);
+    const redirectUrl = setUrlLanguageFromSessionLanguage(req, redirectPage);
+
+    return res.redirect(redirectUrl);
   };
 
   public get = (req: AppRequest, res: Response): void => {
+    const languageParam = getLanguageParam(req.url);
     req.session.contactType = Rule92Types.CONTACT;
     const selectedApplication = req.params.selectedOption;
     if (!applications.includes(selectedApplication)) {
       logger.info('bad request parameter: "' + selectedApplication + '"');
-      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL);
+      res.redirect(PageUrls.CONTACT_THE_TRIBUNAL + languageParam);
       return;
     }
 
