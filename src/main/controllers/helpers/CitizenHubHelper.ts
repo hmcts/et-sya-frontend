@@ -117,6 +117,7 @@ export enum StatusesInOrderOfUrgency {
   inProgress = 3,
   viewed = 4,
   waitingForTheTribunal = 5,
+  stored = 6,
 }
 
 export const activateRespondentApplicationsLink = (
