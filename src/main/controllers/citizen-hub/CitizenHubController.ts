@@ -160,7 +160,7 @@ export default class CitizenHubController {
       judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
       decisionBannerContent = getDecisionBannerContent(appsAndDecisions, translations, languageParam);
     }
-    
+
     res.render(TranslationKeys.CITIZEN_HUB, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
