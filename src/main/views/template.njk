@@ -93,11 +93,6 @@ if isLoggedIn %}
 
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
-  {% if "lng=cy" in currentUrl %}
-    {% set phaseBarText = "Lorem" %}
-  {% else %}
-    {% set phaseBarText = "beta" %}
-  {% endif %}
 
   {% if welshEnabled %}
     {% set queryStringConcat = "" %}
@@ -126,7 +121,7 @@ if isLoggedIn %}
 
   {{ govukPhaseBanner({
       tag: {
-          text: phaseBarText
+          text: beta
       },
       html: phaseBarHtml
   }) }}
