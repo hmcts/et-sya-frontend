@@ -1,5 +1,5 @@
+import * as LaunchDarkly from '@launchdarkly/node-server-sdk';
 import config from 'config';
-import * as LaunchDarkly from 'launchdarkly-node-server-sdk';
 
 let ldClient: LaunchDarkly.LDClient;
 

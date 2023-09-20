@@ -2047,6 +2047,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@launchdarkly/js-sdk-common@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@launchdarkly/js-sdk-common@npm:1.1.0"
+  checksum: d7d98005973fb02637f9e064d360c06a3a7cfada3e853d3966b28ac69d288c28bba20aece4ab0a3b8444cd75ea0edd8ea303a384dbf834ce8e5b77f3750c7701
+  languageName: node
+  linkType: hard
+
+"@launchdarkly/js-server-sdk-common@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@launchdarkly/js-server-sdk-common@npm:1.2.3"
+  dependencies:
+    "@launchdarkly/js-sdk-common": 1.1.0
+    semver: 7.5.4
+  checksum: 720bbc0d176a09713033ebaedcb10e7dd1f78422834d18719eed83d1ad1c2b6517ddc39ce23097404265c04dbb477edd25f270f8a9b39d9a3d275a0cf8c3ac15
+  languageName: node
+  linkType: hard
+
+"@launchdarkly/node-server-sdk@npm:^8.2.4":
+  version: 8.2.4
+  resolution: "@launchdarkly/node-server-sdk@npm:8.2.4"
+  dependencies:
+    "@launchdarkly/js-server-sdk-common": 1.2.3
+    https-proxy-agent: ^5.0.1
+    launchdarkly-eventsource: 2.0.1
+  checksum: aacb68785bc57bdf1e459caeffe506384e56891c6546a28e07bfc684c1f9a4ff3f0f3b4efb3edd4e417aa36e7dc155885d3179f3807f5f0d0d038b97fa2895a8
+  languageName: node
+  linkType: hard
+
 "@microsoft/applicationinsights-web-snippet@npm:^1.0.1":
   version: 1.0.1
   resolution: "@microsoft/applicationinsights-web-snippet@npm:1.0.1"
@@ -4257,7 +4285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.3, async@npm:^3.2.4":
+"async@npm:^3.2.3":
   version: 3.2.4
   resolution: "async@npm:3.2.4"
   checksum: 43d07459a4e1d09b84a20772414aa684ff4de085cbcaec6eea3c7a8f8150e8c62aa6cd4e699fe8ee93c3a5b324e777d34642531875a0817a35697522c1b02e89
@@ -5223,13 +5251,6 @@ __metadata:
     kind-of: ^6.0.2
     shallow-clone: ^3.0.0
   checksum: 770f912fe4e6f21873c8e8fbb1e99134db3b93da32df271d00589ea4a29dbe83a9808a322c93f3bcaf8584b8b4fa6fc269fc8032efbaa6728e0c9886c74467d2
-  languageName: node
-  linkType: hard
-
-"clone@npm:2.x":
-  version: 2.1.2
-  resolution: "clone@npm:2.1.2"
-  checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
   languageName: node
   linkType: hard
 
@@ -7032,6 +7053,7 @@ __metadata:
     "@hmcts/nodejs-logging": ^4.0.4
     "@hmcts/properties-volume": ^0.0.14
     "@jest/globals": ^29.5.0
+    "@launchdarkly/node-server-sdk": ^8.2.4
     "@pact-foundation/pact": 9.18.1
     "@swc/core": ^1.3.76
     "@swc/helpers": ^0.5.1
@@ -7093,7 +7115,6 @@ __metadata:
     jest-pact: 0.9.4
     jest_workaround: ^0.79.19
     jwt-decode: ^3.1.2
-    launchdarkly-node-server-sdk: ^7.0.0
     lint-staged: ^13.2.1
     lodash: ^4.17.21
     mini-css-extract-plugin: ^2.7.5
@@ -10339,25 +10360,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"launchdarkly-eventsource@npm:1.4.4":
-  version: 1.4.4
-  resolution: "launchdarkly-eventsource@npm:1.4.4"
-  checksum: 7d153b1523b27236057d8155c50a785b7838637c4283b4d984fdf3a7f7a6bb7afc384a0e84275d2ae50bcf38a180731e86c74455ba3ed110ffcbfade0c8a7f33
-  languageName: node
-  linkType: hard
-
-"launchdarkly-node-server-sdk@npm:^7.0.0":
-  version: 7.0.3
-  resolution: "launchdarkly-node-server-sdk@npm:7.0.3"
-  dependencies:
-    async: ^3.2.4
-    launchdarkly-eventsource: 1.4.4
-    lru-cache: ^6.0.0
-    node-cache: ^5.1.0
-    semver: ^7.5.4
-    tunnel: 0.0.6
-    uuid: ^8.3.2
-  checksum: d21b91ea8880d2845fc16f80f3df39780e471471fc5cbe791ae0251a3dc1da03e0b4cf2a706241db972c98e75e968971b0b1a7cfb9882c82cef10dccb8ddf400
+"launchdarkly-eventsource@npm:2.0.1":
+  version: 2.0.1
+  resolution: "launchdarkly-eventsource@npm:2.0.1"
+  checksum: 6eb3d38ef89fb53203e4a1a0af1da5bdce01d28e4127bd2db524d522d9ab3d4f44de174c7ecf20d56f532a1f78caa662e8d5567b309b68e968121e1e2a45d4b8
   languageName: node
   linkType: hard
 
@@ -11568,15 +11574,6 @@ __metadata:
   dependencies:
     node-gyp: latest
   checksum: 2369986bb0881ccd9ef6bacdf39550e07e089a9c8ede1cbc5fc7712d8e2faa4d50da0e487e333d4125f8c7a616c730131d1091676c9d499af1d74560756b4a18
-  languageName: node
-  linkType: hard
-
-"node-cache@npm:^5.1.0":
-  version: 5.1.2
-  resolution: "node-cache@npm:5.1.2"
-  dependencies:
-    clone: 2.x
-  checksum: b0bdd81a6fee4754fb984a05246b510bb35dc54721116d465899bf4229ee3287fdafb47da526900ee9924fb402ed5c7d8050049d37d8bf2d26dbafc23a2c3205
   languageName: node
   linkType: hard
 
@@ -14990,13 +14987,6 @@ __metadata:
   dependencies:
     safe-buffer: ^5.0.1
   checksum: 05f6510358f8afc62a057b8b692f05d70c1782b70db86d6a1e0d5e28a32389e52fa6e7707b6c5ecccacc031462e4bc35af85ecfe4bbc341767917b7cf6965711
-  languageName: node
-  linkType: hard
-
-"tunnel@npm:0.0.6":
-  version: 0.0.6
-  resolution: "tunnel@npm:0.0.6"
-  checksum: c362948df9ad34b649b5585e54ce2838fa583aa3037091aaed66793c65b423a264e5229f0d7e9a95513a795ac2bd4cb72cda7e89a74313f182c1e9ae0b0994fa
   languageName: node
   linkType: hard
 
