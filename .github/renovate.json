@@ -1,60 +1,6 @@
 {
-  "enabledManagers": ["helm-requirements", "nvm", "npm"],
-  "labels": ["dependencies"],
-  "helm-requirements": {
-    "fileMatch": ["\\Chart.yaml$"],
-    "aliases": {
-      "hmctspublic": "https://hmctspublic.azurecr.io/helm/v1/repo/"
-    }
-  },
-  "groupName": "all dependencies",
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["local>hmcts/.github:renovate-config", "local>hmcts/.github//renovate/automerge-all"],
   "separateMajorMinor": false,
-  "groupSlug": "all",
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["*"],
-      "groupName": "all dependencies",
-      "groupSlug": "all"
-    },
-    {
-      "matchPackageNames": ["ansi-regex"],
-      "allowedVersions": "<=5"
-    },
-    {
-      "matchPackageNames": ["redis"],
-      "allowedVersions": "<=3"
-    },
-    {
-      "matchPackageNames": ["@faker-js/faker"],
-      "allowedVersions": "<=5"
-    },
-    {
-      "matchPackageNames": ["jest", "ts-jest"],
-      "allowedVersions": "<=27"
-    },
-    {
-      "matchPackageNames": ["mocha"],
-      "allowedVersions": "<=9"
-    },
-    {
-      "matchPackageNames": ["@pact-foundation/pact"],
-      "allowedVersions": "<=9"
-    },
-    {
-      "matchPackageNames": ["jest-pact"],
-      "allowedVersions": "<=0.9.4"
-    },
-    {
-      "matchPackageNames": ["axios"],
-      "allowedVersions": "<=0"
-    },
-    {
-      "matchPackageNames": ["connect-redis"],
-      "allowedVersions": "<=6"
-    }
-  ],
-  "lockFileMaintenance": {
-    "enabled": false
-  },
-  "schedule": ["before 6am on Monday"]
+  "groupName": "all"
 }
