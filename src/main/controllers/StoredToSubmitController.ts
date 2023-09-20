@@ -10,15 +10,17 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { handlePostLogic } from './helpers/CaseHelpers';
+import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
   getDocumentLink,
   populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
+import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 const logger = getLogger('StoredToSubmitController');
@@ -55,7 +57,14 @@ export default class StoredToSubmitController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(req, res, this.form, logger, InterceptPaths.STORED_TO_SUBMIT_UPDATE);
+    setUserCase(req, this.form);
+    const errors = returnSessionErrors(req, this.form);
+    if (errors.length === 0) {
+      req.session.errors = [];
+      returnNextPage(req, res, setUrlLanguage(req, InterceptPaths.STORED_TO_SUBMIT_UPDATE));
+    } else {
+      handleErrors(req, res, errors);
+    }
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
