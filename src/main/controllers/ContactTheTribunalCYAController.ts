@@ -27,13 +27,21 @@ export default class ContactTheTribunalCYAController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
-    const featureTemplate = await getFlagValue('welsh-language', null);
+    const featureTemplate = await getFlagValue('testFeature', null);
     const languageParam = getLanguageParam(req.url);
+
+    const cyaContent = getCyaContent(
+      userCase,
+      translations,
+      languageParam,
+      PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
+      downloadLink,
+      translations.sections[userCase.contactApplicationType].label
+    );
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA, {
       ...content,
@@ -45,14 +53,7 @@ export default class ContactTheTribunalCYAController {
       errors: req.session.errors,
       cancelPage,
       submitRef: InterceptPaths.SUBMIT_TRIBUNAL_CYA + languageParam,
-      cyaContent: getCyaContent(
-        userCase,
-        translations,
-        languageParam,
-        PageUrls.TRIBUNAL_CONTACT_SELECTED.replace(':selectedOption', userCase.contactApplicationType),
-        downloadLink,
-        translations.sections[userCase.contactApplicationType].label
-      ),
+      cyaContent,
       featureTemplate,
     });
   }
