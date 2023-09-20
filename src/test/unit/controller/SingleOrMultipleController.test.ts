@@ -32,7 +32,7 @@ describe('Single or Multiple Claim Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.ACAS_MULTIPLE_CLAIM);
   });
 
-  it.skip("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {
+  it("should render the legacy ET1 service when the 'multiple' claim option is selected", () => {
     const body = { caseType: CaseType.MULTIPLE };
     const controller = new SingleOrMultipleController();
 

@@ -25,7 +25,7 @@ describe(`on POST ${PageUrls.LIP_OR_REPRESENTATIVE}`, () => {
       });
   });
 
-  test.skip("should return the legacy ET1 service when (yes) the 'making a claim for someone else' option is selected", async () => {
+  test("should return the legacy ET1 service when (yes) the 'making a claim for someone else' option is selected", async () => {
     await request(mockApp({}))
       .post(PageUrls.LIP_OR_REPRESENTATIVE)
       .send({ claimantRepresentedQuestion: YesOrNo.YES })

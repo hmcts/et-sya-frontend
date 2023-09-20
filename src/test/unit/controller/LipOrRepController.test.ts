@@ -31,7 +31,7 @@ describe('Litigation in Person or Representative Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/single-or-multiple-claim');
   });
 
-  it.skip("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
+  it("should render the legacy ET1 service when - yes - they are 'making a claim for someone else' option is selected", () => {
     const body = { claimantRepresentedQuestion: YesOrNo.YES };
     const controller = new LipOrRepController();
 
