@@ -1,6 +1,6 @@
 import { getRespondentCyaContent } from '../../../../main/controllers/helpers/RespondentApplicationCYAHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { TranslationKeys, WELSH_CHANGE } from '../../../../main/definitions/constants';
+import { CHANGE, TranslationKeys, WELSH_CHANGE } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import respondentCYARaw from '../../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -21,10 +21,56 @@ describe('Respondent application CYA controller helper', () => {
     const appContent = getRespondentCyaContent(
       userCase,
       translations,
+      '?lng=en',
+      '/supporting-material',
+      'downloadLink'
+    );
+
+    const displayWelshDownloadLink = getRespondentCyaContent(
+      userCase,
+      translations,
       '?lng=cy',
       '/supporting-material',
       'downloadLink'
     );
+
+    expect(displayWelshDownloadLink[0].actions).toEqual({
+      items: [
+        {
+          href: '/supporting-material?lng=cy',
+          text: WELSH_CHANGE,
+          visuallyHiddenText: "What's your response to the respondent's application?",
+        },
+      ],
+    });
+    expect(displayWelshDownloadLink[1].actions).toEqual({
+      items: [
+        {
+          href: '/supporting-material?lng=cy',
+          text: WELSH_CHANGE,
+          visuallyHiddenText: 'Supporting material',
+        },
+      ],
+    });
+    expect(displayWelshDownloadLink[2].actions).toEqual({
+      items: [
+        {
+          href: '/copy-to-other-party?lng=cy',
+          text: WELSH_CHANGE,
+          visuallyHiddenText:
+            'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+        },
+      ],
+    });
+    expect(displayWelshDownloadLink[3].actions).toEqual({
+      items: [
+        {
+          href: '/copy-to-other-party?lng=cy',
+          text: WELSH_CHANGE,
+          visuallyHiddenText: 'Reason for not informing other party',
+        },
+      ],
+    });
 
     expect(appContent[0].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
@@ -34,8 +80,8 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[0].actions).toEqual({
       items: [
         {
-          href: '/supporting-material?lng=cy',
-          text: WELSH_CHANGE,
+          href: '/supporting-material?lng=en',
+          text: CHANGE,
           visuallyHiddenText: "What's your response to the respondent's application?",
         },
       ],
@@ -48,8 +94,8 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[1].actions).toEqual({
       items: [
         {
-          href: '/supporting-material?lng=cy',
-          text: WELSH_CHANGE,
+          href: '/supporting-material?lng=en',
+          text: CHANGE,
           visuallyHiddenText: 'Supporting material',
         },
       ],
@@ -62,8 +108,8 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[2].actions).toEqual({
       items: [
         {
-          href: '/copy-to-other-party?lng=cy',
-          text: WELSH_CHANGE,
+          href: '/copy-to-other-party?lng=en',
+          text: CHANGE,
           visuallyHiddenText:
             'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
         },
@@ -77,8 +123,8 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[3].actions).toEqual({
       items: [
         {
-          href: '/copy-to-other-party?lng=cy',
-          text: WELSH_CHANGE,
+          href: '/copy-to-other-party?lng=en',
+          text: CHANGE,
           visuallyHiddenText: 'Reason for not informing other party',
         },
       ],
