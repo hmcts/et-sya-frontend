@@ -5,12 +5,12 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Contact Application Controller', () => {
-  it('should render contact application page', async () => {
+  it('should render contact application page', () => {
     const controller = new ContactTheTribunalController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, contactTheTribunal);
 
-    await controller.get(request, response);
+    controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.CONTACT_THE_TRIBUNAL, expect.anything());
   });
 });

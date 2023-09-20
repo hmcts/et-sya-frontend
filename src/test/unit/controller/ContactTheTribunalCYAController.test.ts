@@ -8,7 +8,7 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
-describe('Contact Application Controller', () => {
+describe('Contact Application Check Your Answers Controller', () => {
   const translationJsons = { ...common, ...contactTribCyaTranslation, ...contactTribTranslation };
 
   const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
