@@ -472,6 +472,7 @@ export const et3FormDocTypes = [ET3_FORM];
 export const et3AttachmentDocTypes = ['ET3 Attachment'];
 
 export const CHANGE = 'Change';
+export const WELSH_CHANGE = 'Newid';
 
 export const languages = {
   WELSH: 'cy',

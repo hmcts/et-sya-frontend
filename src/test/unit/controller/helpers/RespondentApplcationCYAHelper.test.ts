@@ -1,6 +1,6 @@
 import { getRespondentCyaContent } from '../../../../main/controllers/helpers/RespondentApplicationCYAHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { CHANGE, TranslationKeys } from '../../../../main/definitions/constants';
+import { TranslationKeys, WELSH_CHANGE } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import respondentCYARaw from '../../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -35,7 +35,7 @@ describe('Respondent application CYA controller helper', () => {
       items: [
         {
           href: '/supporting-material?lng=cy',
-          text: CHANGE,
+          text: WELSH_CHANGE,
           visuallyHiddenText: "What's your response to the respondent's application?",
         },
       ],
@@ -49,7 +49,7 @@ describe('Respondent application CYA controller helper', () => {
       items: [
         {
           href: '/supporting-material?lng=cy',
-          text: CHANGE,
+          text: WELSH_CHANGE,
           visuallyHiddenText: 'Supporting material',
         },
       ],
@@ -63,7 +63,7 @@ describe('Respondent application CYA controller helper', () => {
       items: [
         {
           href: '/copy-to-other-party?lng=cy',
-          text: CHANGE,
+          text: WELSH_CHANGE,
           visuallyHiddenText:
             'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
         },
@@ -78,7 +78,7 @@ describe('Respondent application CYA controller helper', () => {
       items: [
         {
           href: '/copy-to-other-party?lng=cy',
-          text: CHANGE,
+          text: WELSH_CHANGE,
           visuallyHiddenText: 'Reason for not informing other party',
         },
       ],
