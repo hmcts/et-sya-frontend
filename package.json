@@ -170,5 +170,5 @@
     "import-in-the-middle": "^1.4.2",
     "@opentelemetry/instrumentation": "^0.41.2"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.3"
 }
