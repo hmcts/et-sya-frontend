@@ -2,14 +2,14 @@ import ContactTheTribunalCYAController from '../../../main/controllers/ContactTh
 import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
-import translation2 from '../../../main/resources/locales/en/translation/contact-the-tribunal-cya.json';
-import translation3 from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
+import contactTribCyaTranslation from '../../../main/resources/locales/en/translation/contact-the-tribunal-cya.json';
+import contactTribTranslation from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
 
 describe('Contact Application Controller', () => {
-  const translationJsons = { ...common, ...translation2, ...translation3 };
+  const translationJsons = { ...common, ...contactTribCyaTranslation, ...contactTribTranslation };
 
   const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockClient.mockResolvedValue(true);
