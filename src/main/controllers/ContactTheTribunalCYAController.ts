@@ -32,7 +32,7 @@ export default class ContactTheTribunalCYAController {
 
     const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
-    const featureTemplate = await getFlagValue('testFeature', null);
+    const featureTemplate = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
 
     const cyaContent = getCyaContent(
