@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import StoredApplicationConfirmationController from '../../../main/controllers/StoredApplicationConfirmationController';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { Applicant, ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import { Applicant, ErrorPages, TranslationKeys, languages } from '../../../main/definitions/constants';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -44,13 +44,12 @@ describe('Store application Complete Controller tests', () => {
     const request = mockRequest({ t });
 
     const userCase = request.session.userCase;
-    const genericTseApplicationCollection = [
+    userCase.genericTseApplicationCollection = [
       { value: { applicant: Applicant.CLAIMANT } },
       { value: { applicant: Applicant.RESPONDENT } },
       { value: { applicant: Applicant.ADMIN } },
       { value: { applicant: Applicant.CLAIMANT } },
     ];
-    userCase.genericTseApplicationCollection = genericTseApplicationCollection;
     request.session.userCase = userCase;
 
     await controller.get(request, response);
@@ -71,7 +70,7 @@ describe('Store application Complete Controller tests', () => {
     const request = mockRequest({});
 
     await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should return NOT_FOUND when getCaseApi', async () => {
@@ -81,6 +80,6 @@ describe('Store application Complete Controller tests', () => {
     const request = mockRequest({});
 
     await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + languages.ENGLISH_URL_PARAMETER);
   });
 });

@@ -15,18 +15,18 @@ const logger = getLogger('StoredApplicationConfirmationController');
 
 export default class StoredApplicationConfirmationController {
   public async get(req: AppRequest, res: Response): Promise<void> {
+    const languageParam = getLanguageParam(req.url);
     try {
       req.session.userCase = fromApiFormat(
         (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
       );
     } catch (error) {
       logger.error(error.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const userCase = req.session.userCase;
     const accessToken = req.session.user?.accessToken;
-    const languageParam = getLanguageParam(req.url);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
@@ -38,7 +38,7 @@ export default class StoredApplicationConfirmationController {
       latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
     } catch (err) {
       logger.error(err.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     const document = latestApplication.value?.documentUpload;
@@ -47,7 +47,7 @@ export default class StoredApplicationConfirmationController {
         await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect(ErrorPages.NOT_FOUND);
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
 
