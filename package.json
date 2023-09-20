@@ -168,7 +168,7 @@
     "shelljs": "^0.8.5",
     "merge": "^2.1.1",
     "import-in-the-middle": "^1.4.2",
-    "@opentelemetry/instrumentation": "^0.41.2"
+    "@opentelemetry/instrumentation": "^0.43.0"
   },
   "packageManager": "yarn@3.6.3"
 }
