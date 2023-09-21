@@ -17,9 +17,9 @@ export default class RespondentApplicationsController {
     const respondentApplications = getRespondentApplications(userCase);
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
     };
 
     populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors(respondentApplications, req.url, translations);
