@@ -13,7 +13,7 @@ import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
-  getDocumentAdditionalInformation,
+  populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -55,7 +55,7 @@ export default class ApplicationDetailsController {
 
     if (document) {
       try {
-        await getDocumentAdditionalInformation(document, accessToken);
+        await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
         return res.redirect(ErrorPages.NOT_FOUND);

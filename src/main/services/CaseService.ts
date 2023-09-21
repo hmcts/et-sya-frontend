@@ -269,7 +269,7 @@ export class CaseApi {
 export const getCaseApi = (token: string): CaseApi => {
   return new CaseApi(
     axiosService.create({
-      baseURL: config.get('services.etSyaApi.host'),
+      baseURL: process.env.ET_SYA_API_HOST ?? config.get('services.etSyaApi.host'),
       headers: {
         Authorization: 'Bearer ' + token,
         Accept: '*/*',
