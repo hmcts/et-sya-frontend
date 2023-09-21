@@ -17,7 +17,7 @@ import {
   getDocumentLink,
   populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
-import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
+import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
@@ -60,7 +60,8 @@ export default class StoredToSubmitController {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
-      handleErrors(req, res, errors);
+      req.session.errors = errors;
+      return res.redirect(req.url);
     }
     req.session.errors = [];
     returnNextPage(req, res, setUrlLanguage(req, InterceptPaths.STORED_TO_SUBMIT_UPDATE));

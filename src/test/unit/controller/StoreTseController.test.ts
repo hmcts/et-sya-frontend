@@ -1,5 +1,6 @@
 import StoreTseController from '../../../main/controllers/StoreTseController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import * as StoreTseCaseHelpers from '../../../main/controllers/helpers/StoreTseCaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import { mockRequest } from '../mocks/mockRequest';
@@ -39,7 +40,7 @@ describe('Store tell something else Controller', () => {
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
-    jest.spyOn(CaseHelper, 'storeClaimantTse').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(StoreTseCaseHelpers, 'storeClaimantTse').mockImplementationOnce(() => Promise.resolve());
     await new StoreTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);

@@ -11,7 +11,6 @@ import {
   isPostcodeInScope,
   respondToApplication,
   setUserCaseWithRedisData,
-  storeClaimantTse,
   submitClaimantTse,
   updateSendNotificationState,
 } from '../../../../main/controllers/helpers/CaseHelpers';
@@ -376,33 +375,5 @@ describe('add response to send notification', () => {
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     submitClaimantTse(req, mockLogger);
     expect(req.session.userCase).toBeDefined();
-  });
-});
-
-describe('handle store application storeClaimantTse', () => {
-  it('should successfully store application', () => {
-    caseApi.storeClaimantTse = jest.fn().mockResolvedValueOnce(
-      Promise.resolve({
-        data: {
-          created_date: '2022-08-19T09:19:25.79202',
-          last_modified: '2022-08-19T09:19:25.817549',
-          state: CaseState.SUBMITTED,
-          case_data: {},
-        },
-      } as AxiosResponse<CaseApiDataResponse>)
-    );
-    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    storeClaimantTse(req, mockLogger);
-    expect(req.session.userCase).toBeDefined();
-  });
-
-  it('should catch failure to store application', async () => {
-    caseApi.storeClaimantTse = jest.fn().mockRejectedValueOnce({ message: 'test error' });
-
-    const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    storeClaimantTse(req, mockLogger);
-    await new Promise(nextTick);
-
-    expect(mockLogger.error).toHaveBeenCalledWith('test error');
   });
 });

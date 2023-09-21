@@ -90,12 +90,12 @@ describe('Stored to Submit Controller', () => {
     const controller = new StoredToSubmitController();
     const req = mockRequest({ body });
     const res = mockResponse();
-    req.url = PageUrls.STORED_TO_SUBMIT + languages.ENGLISH_URL_PARAMETER;
+    req.url = PageUrls.STORED_TO_SUBMIT.replace(':appId', '1234') + languages.ENGLISH_URL_PARAMETER;
     req.session.errors = [];
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.STORED_TO_SUBMIT + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith('/stored-to-submit/1234?lng=en');
     expect(req.session.errors).toEqual(errors);
   });
 });

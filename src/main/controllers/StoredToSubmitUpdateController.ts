@@ -5,7 +5,8 @@ import { PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
-import { handleUpdateHubLinksStatuses, storedToSubmitClaimantTse } from './helpers/CaseHelpers';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { storedToSubmitClaimantTse } from './helpers/StoreTseCaseHelpers';
 
 const logger = getLogger('StoredToSubmitUpdateController');
 

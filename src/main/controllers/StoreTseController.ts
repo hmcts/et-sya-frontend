@@ -5,7 +5,8 @@ import { PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
-import { clearTseFields, handleUpdateHubLinksStatuses, storeClaimantTse } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { storeClaimantTse } from './helpers/StoreTseCaseHelpers';
 
 const logger = getLogger('StoreTseController');
 
