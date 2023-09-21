@@ -25,6 +25,8 @@ export default class TribunalResponseCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
@@ -55,7 +57,8 @@ export default class TribunalResponseCYAController {
         translations,
         getLanguageParam(req.url),
         PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', id),
-        downloadLink
+        downloadLink,
+        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', id)
       ),
     });
   }

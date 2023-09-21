@@ -26,6 +26,8 @@ export default class RespondentApplicationCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
@@ -45,7 +47,8 @@ export default class RespondentApplicationCYAController {
         translations,
         getLanguageParam(req.url),
         PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedGenericTseApplication.id),
-        downloadLink
+        downloadLink,
+        PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', userCase.selectedGenericTseApplication.id)
       ),
     });
   }
