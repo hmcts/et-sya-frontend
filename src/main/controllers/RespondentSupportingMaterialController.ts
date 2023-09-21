@@ -11,9 +11,8 @@ import { getLogger } from '../logger';
 import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
+import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -86,7 +85,7 @@ export default class RespondentSupportingMaterialController {
     );
 
     const supportingMaterialUrl =
-      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + setChangeAnswersUrlLanguage(req);
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
