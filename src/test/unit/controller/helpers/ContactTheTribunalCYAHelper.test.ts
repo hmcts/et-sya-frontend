@@ -109,7 +109,7 @@ describe('Contact the tribunal CYA controller', () => {
     });
   });
 
-  it('should return expected CYA content with not system user', () => {
+  it('should return expected CYA content with non-system user', () => {
     userCase.respondents = undefined;
     userCase.representatives = undefined;
 

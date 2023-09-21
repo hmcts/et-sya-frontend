@@ -235,7 +235,7 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
-  // Rule 92 not system user
+  // Rule 92 non-system user
   COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',

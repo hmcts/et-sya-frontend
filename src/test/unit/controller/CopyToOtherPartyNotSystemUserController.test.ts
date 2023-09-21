@@ -157,7 +157,7 @@ describe('Copy to other party not system user Controller', () => {
     expect(req.session.errors).toEqual(errors);
   });
 
-  it('should render the same page when No is selected but summary text excess 2500', async () => {
+  it('should render the same page when No is selected but summary text exceeds 2500 characters', async () => {
     const errors = [{ propertyName: 'copyToOtherPartyText', errorType: 'tooLong' }];
     const body = { copyToOtherPartyYesOrNo: YesOrNo.NO, copyToOtherPartyText: '1'.repeat(2501), continue: true };
 

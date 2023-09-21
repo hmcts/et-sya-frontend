@@ -327,7 +327,7 @@ export class Routes {
       new RespondentPostCodeSelectController().post
     );
 
-    // R92 - Not system user - Store
+    // R92 - Non-system user - Store
     app.get(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().get);
     app.post(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, new CopyToOtherPartyNotSystemUserController().post);
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);

@@ -4,7 +4,7 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { InterceptPaths, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -59,15 +59,15 @@ export default class StoredToSubmitController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
-    if (errors.length === 0) {
-      req.session.errors = [];
-      returnNextPage(req, res, setUrlLanguage(req, InterceptPaths.STORED_TO_SUBMIT_UPDATE));
-    } else {
+    if (errors.length > 0) {
       handleErrors(req, res, errors);
     }
+    req.session.errors = [];
+    returnNextPage(req, res, setUrlLanguage(req, InterceptPaths.STORED_TO_SUBMIT_UPDATE));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const languageParam = getLanguageParam(req.url);
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
       userCase.genericTseApplicationCollection,
@@ -82,7 +82,7 @@ export default class StoredToSubmitController {
         await populateDocumentMetadata(document, accessToken);
       } catch (err) {
         logger.error(err.message);
-        return res.redirect('/not-found');
+        return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
       }
     }
 

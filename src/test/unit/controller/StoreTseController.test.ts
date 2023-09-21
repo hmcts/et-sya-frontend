@@ -39,7 +39,7 @@ describe('Store tell something else Controller', () => {
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
-    jest.spyOn(CaseHelper, 'submitClaimantTse').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'storeClaimantTse').mockImplementationOnce(() => Promise.resolve());
     await new StoreTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
