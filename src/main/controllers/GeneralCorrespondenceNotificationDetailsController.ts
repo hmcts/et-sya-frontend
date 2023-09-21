@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
-import { getDocumentAdditionalInformation } from './helpers/DocumentHelpers';
+import { populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getCorrespondenceNotificationDetails } from './helpers/GeneralCorrespondenceHelper';
 
@@ -32,7 +32,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
     if (documents?.length) {
       for (const it of documents) {
         try {
-          await getDocumentAdditionalInformation(it.value.uploadedDocument, req.session.user?.accessToken);
+          await populateDocumentMetadata(it.value.uploadedDocument, req.session.user?.accessToken);
         } catch (err) {
           logger.error(err.message);
           res.redirect('/not-found');

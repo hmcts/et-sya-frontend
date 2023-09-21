@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
 export default class CheckYourAnswersController {
@@ -36,7 +36,6 @@ export default class CheckYourAnswersController {
       req.session.userCase.respondents !== undefined ? req.session.userCase.respondents.length + 1 : undefined;
 
     setNumbersToRespondents(userCase.respondents);
-
     res.render(TranslationKeys.CHECK_ANSWERS, {
       ...translations,
       PageUrls,
@@ -56,4 +55,9 @@ export default class CheckYourAnswersController {
       isAddRespondent: newRespondentNum <= 5,
     });
   }
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    const redirectUrl = req.body.saveForLater ? PageUrls.CLAIM_SAVED : InterceptPaths.SUBMIT_CASE;
+    await returnNextPage(req, res, redirectUrl);
+  };
 }

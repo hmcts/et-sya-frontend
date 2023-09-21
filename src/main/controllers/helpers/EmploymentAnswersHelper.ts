@@ -8,6 +8,7 @@ import {
 } from '../../definitions/case';
 import { InterceptPaths, PageUrls } from '../../definitions/constants';
 import { TypesOfClaim } from '../../definitions/definition';
+import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 const getTranslationsForStillWorkingEnum = function (userCase: CaseWithId, translations: AnyRecord) {
@@ -30,10 +31,7 @@ const getTranslationsForPayIntervalEnum = function (userCase: CaseWithId, transl
   return translation;
 };
 
-export const getEmploymentDetails = (
-  userCase: CaseWithId,
-  translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+export const getEmploymentDetails = (userCase: CaseWithId, translations: AnyRecord): SummaryListRow[] => {
   const employmentDetails = [];
 
   if (userCase.pastEmployer === YesOrNo.NO) {
@@ -45,24 +43,15 @@ export const getEmploymentDetails = (
         },
         value: {},
       },
-      {
-        key: {
-          text: translations.employmentDetails.didYouWorkFor,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: translations.employmentDetails.no,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.didYouWorkFor,
-            },
-          ],
-        },
-      }
+      addSummaryRow(
+        translations.employmentDetails.didYouWorkFor,
+        translations.employmentDetails.no,
+        createChangeAction(
+          PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.didYouWorkFor
+        )
+      )
     );
   } else {
     if (!userCase.typeOfClaim?.includes(TypesOfClaim.UNFAIR_DISMISSAL)) {
@@ -74,397 +63,230 @@ export const getEmploymentDetails = (
           },
           value: {},
         },
-        {
-          key: {
-            text: translations.employmentDetails.didYouWorkFor,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            text: translations.employmentDetails.yes,
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
-                text: translations.change,
-                visuallyHiddenText: translations.employmentDetails.didYouWorkFor,
-              },
-            ],
-          },
-        }
+        addSummaryRow(
+          translations.employmentDetails.didYouWorkFor,
+          translations.employmentDetails.yes,
+          createChangeAction(
+            PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.didYouWorkFor
+          )
+        )
       );
     }
+
     employmentDetails.push(
-      {
-        key: {
-          text: translations.employmentDetails.isStillWorking,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: getTranslationsForStillWorkingEnum(userCase, translations),
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.isStillWorking,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.jobTitle,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.jobTitle,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.jobTitle,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.startDate,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text:
-            userCase.startDate === undefined
-              ? ''
-              : userCase.startDate.day + '-' + userCase.startDate.month + '-' + userCase.startDate.year,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.startDate,
-            },
-          ],
-        },
-      }
+      addSummaryRow(
+        translations.employmentDetails.isStillWorking,
+        getTranslationsForStillWorkingEnum(userCase, translations),
+        createChangeAction(
+          PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.isStillWorking
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.jobTitle,
+        userCase.jobTitle,
+        createChangeAction(
+          PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.jobTitle
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.startDate,
+        userCase.startDate === undefined
+          ? ''
+          : userCase.startDate.day + '-' + userCase.startDate.month + '-' + userCase.startDate.year,
+        createChangeAction(
+          PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.startDate
+        )
+      )
     );
+
     if (
       userCase.isStillWorking === StillWorking.WORKING ||
       userCase.isStillWorking === StillWorking.NO_LONGER_WORKING
     ) {
       if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-        employmentDetails.push({
-          key: {
-            text: translations.employmentDetails.endDate,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            text:
-              userCase.endDate === undefined
-                ? ''
-                : userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year,
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
-                text: translations.change,
-                visuallyHiddenText: translations.employmentDetails.endDate,
-              },
-            ],
-          },
-        });
-      }
-      employmentDetails.push({
-        key: {
-          text: translations.employmentDetails.noticePeriod,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text:
-            userCase.noticePeriod === YesOrNo.YES
-              ? translations.employmentDetails.yes
-              : translations.employmentDetails.no,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.noticePeriod,
-            },
-          ],
-        },
-      });
-    } else {
-      employmentDetails.push({
-        key: {
-          text: translations.employmentDetails.noticeEnds,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text:
-            userCase.noticeEnds === undefined
+        employmentDetails.push(
+          addSummaryRow(
+            translations.employmentDetails.endDate,
+            userCase.endDate === undefined
               ? ''
-              : userCase.noticeEnds.day + '-' + userCase.noticeEnds.month + '-' + userCase.noticeEnds.year,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.noticeEnds,
-            },
-          ],
-        },
-      });
+              : userCase.endDate.day + '-' + userCase.endDate.month + '-' + userCase.endDate.year,
+            createChangeAction(
+              PageUrls.END_DATE + InterceptPaths.ANSWERS_CHANGE,
+              translations.change,
+              translations.employmentDetails.endDate
+            )
+          )
+        );
+      }
+      employmentDetails.push(
+        addSummaryRow(
+          translations.employmentDetails.noticePeriod,
+          userCase.noticePeriod === YesOrNo.YES
+            ? translations.employmentDetails.yes
+            : translations.employmentDetails.no,
+          createChangeAction(
+            PageUrls.NOTICE_PERIOD + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.noticePeriod
+          )
+        )
+      );
+    } else {
+      employmentDetails.push(
+        addSummaryRow(
+          translations.employmentDetails.noticeEnds,
+          userCase.noticeEnds === undefined
+            ? ''
+            : userCase.noticeEnds.day + '-' + userCase.noticeEnds.month + '-' + userCase.noticeEnds.year,
+          createChangeAction(
+            PageUrls.NOTICE_END + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.noticeEnds
+          )
+        )
+      );
     }
     if (userCase.noticePeriod === YesOrNo.YES || userCase.isStillWorking === StillWorking.NOTICE) {
       employmentDetails.push(
-        {
-          key: {
-            text: translations.employmentDetails.noticePeriodWeeksOrMonths,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            text:
-              userCase.noticePeriodUnit === WeeksOrMonths.MONTHS
-                ? translations.employmentDetails.months
-                : translations.employmentDetails.weeks,
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE,
-                text: translations.change,
-                visuallyHiddenText: translations.employmentDetails.noticePeriodWeeksOrMonths,
-              },
-            ],
-          },
-        },
-        {
-          key: {
-            text: translations.employmentDetails.noticeLength,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            text: userCase.noticePeriodLength,
-          },
-          actions: {
-            items: [
-              {
-                href: PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE,
-                text: translations.change,
-                visuallyHiddenText: translations.employmentDetails.noticeLength,
-              },
-            ],
-          },
-        }
+        addSummaryRow(
+          translations.employmentDetails.noticePeriodWeeksOrMonths,
+          userCase.noticePeriodUnit === WeeksOrMonths.MONTHS
+            ? translations.employmentDetails.months
+            : translations.employmentDetails.weeks,
+          createChangeAction(
+            PageUrls.NOTICE_TYPE + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.noticePeriodWeeksOrMonths
+          )
+        ),
+        addSummaryRow(
+          translations.employmentDetails.noticeLength,
+          userCase.noticePeriodLength,
+          createChangeAction(
+            PageUrls.NOTICE_LENGTH + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.noticeLength
+          )
+        )
       );
     }
     employmentDetails.push(
-      {
-        key: {
-          text: translations.employmentDetails.weeklyHours,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.avgWeeklyHrs,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.weeklyHours,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.payBeforeTax,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.payBeforeTax,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.payBeforeTax,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.payAfterTax,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.payAfterTax,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.payAfterTax,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.payPeriod,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: getTranslationsForPayIntervalEnum(userCase, translations),
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.payPeriod,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.pensionScheme,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text:
-            userCase?.claimantPensionContribution === YesOrNoOrNotSure.YES
-              ? translations.employmentDetails.yes + ': ' + userCase.claimantPensionWeeklyContribution
-              : translations.employmentDetails.no,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.PENSION + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.pensionScheme,
-            },
-          ],
-        },
-      },
-      {
-        key: {
-          text: translations.employmentDetails.benefits,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text:
-            userCase?.employeeBenefits === YesOrNo.YES
-              ? translations.employmentDetails.yes + ': ' + userCase.benefitsCharCount
-              : translations.employmentDetails.no,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.BENEFITS + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.benefits,
-            },
-          ],
-        },
-      }
+      addSummaryRow(
+        translations.employmentDetails.weeklyHours,
+        userCase.avgWeeklyHrs,
+        createChangeAction(
+          PageUrls.AVERAGE_WEEKLY_HOURS + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.weeklyHours
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.payBeforeTax,
+        userCase.payBeforeTax,
+        createChangeAction(
+          PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.payBeforeTax
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.payAfterTax,
+        userCase.payAfterTax,
+        createChangeAction(
+          PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.payAfterTax
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.payPeriod,
+        getTranslationsForPayIntervalEnum(userCase, translations),
+        createChangeAction(
+          PageUrls.PAY + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.payPeriod
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.pensionScheme,
+        userCase?.claimantPensionContribution === YesOrNoOrNotSure.YES
+          ? translations.employmentDetails.yes + ': ' + userCase.claimantPensionWeeklyContribution
+          : translations.employmentDetails.no,
+        createChangeAction(
+          PageUrls.PENSION + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.pensionScheme
+        )
+      ),
+      addSummaryRow(
+        translations.employmentDetails.benefits,
+        userCase?.employeeBenefits === YesOrNo.YES
+          ? translations.employmentDetails.yes + ': ' + userCase.benefitsCharCount
+          : translations.employmentDetails.no,
+        createChangeAction(
+          PageUrls.BENEFITS + InterceptPaths.ANSWERS_CHANGE,
+          translations.change,
+          translations.employmentDetails.benefits
+        )
+      )
     );
+
     if (userCase.isStillWorking === StillWorking.NO_LONGER_WORKING) {
-      employmentDetails.push({
-        key: {
-          text: translations.employmentDetails.newJob,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: userCase.newJob,
-        },
-        actions: {
-          items: [
-            {
-              href: PageUrls.NEW_JOB + InterceptPaths.ANSWERS_CHANGE,
-              text: translations.change,
-              visuallyHiddenText: translations.employmentDetails.newJob,
-            },
-          ],
-        },
-      });
+      employmentDetails.push(
+        addSummaryRow(
+          translations.employmentDetails.newJob,
+          userCase.newJob,
+          createChangeAction(
+            PageUrls.NEW_JOB + InterceptPaths.ANSWERS_CHANGE,
+            translations.change,
+            translations.employmentDetails.newJob
+          )
+        )
+      );
+
       if (userCase.newJob === YesOrNo.YES) {
         employmentDetails.push(
-          {
-            key: {
-              text: translations.employmentDetails.newStartDate,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text:
-                userCase.newJobStartDate === undefined
-                  ? ''
-                  : userCase.newJobStartDate.day +
-                    '-' +
-                    userCase.newJobStartDate.month +
-                    '-' +
-                    userCase.newJobStartDate.year,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.NEW_JOB_START_DATE + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.employmentDetails.newStartDate,
-                },
-              ],
-            },
-          },
-          {
-            key: {
-              text: translations.employmentDetails.newPayBeforeTax,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.newJobPay,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.employmentDetails.newPayBeforeTax,
-                },
-              ],
-            },
-          },
-          {
-            key: {
-              text: translations.employmentDetails.payPeriod,
-              classes: 'govuk-!-font-weight-regular-m',
-            },
-            value: {
-              text: userCase.newJobPayInterval,
-            },
-            actions: {
-              items: [
-                {
-                  href: PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
-                  text: translations.change,
-                  visuallyHiddenText: translations.employmentDetails.payPeriod,
-                },
-              ],
-            },
-          }
+          addSummaryRow(
+            translations.employmentDetails.newStartDate,
+            userCase.newJobStartDate === undefined
+              ? ''
+              : userCase.newJobStartDate.day +
+                  '-' +
+                  userCase.newJobStartDate.month +
+                  '-' +
+                  userCase.newJobStartDate.year,
+            createChangeAction(
+              PageUrls.NEW_JOB_START_DATE + InterceptPaths.ANSWERS_CHANGE,
+              translations.change,
+              translations.employmentDetails.newStartDate
+            )
+          ),
+          addSummaryRow(
+            translations.employmentDetails.newPayBeforeTax,
+            userCase.newJobPay,
+            createChangeAction(
+              PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
+              translations.change,
+              translations.employmentDetails.newPayBeforeTax
+            )
+          ),
+          addSummaryRow(
+            translations.employmentDetails.payPeriod,
+            userCase.newJobPayInterval,
+            createChangeAction(
+              PageUrls.NEW_JOB_PAY + InterceptPaths.ANSWERS_CHANGE,
+              translations.change,
+              translations.employmentDetails.payPeriod
+            )
+          )
         );
       }
     }
