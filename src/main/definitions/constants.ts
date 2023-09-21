@@ -572,3 +572,5 @@ export const DOCUMENT_CONTENT_TYPES = {
   RTF: ['rtf', 'application/rtf'],
   RTX: ['rtx', 'application/rtf'],
 };
+
+export const TseStatusStored = 'Stored';

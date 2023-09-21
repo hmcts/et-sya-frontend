@@ -1,7 +1,7 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, tseStatus } from '../../definitions/case';
+import { CaseWithId } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant, PageUrls } from '../../definitions/constants';
+import { Applicant, PageUrls, TseStatusStored } from '../../definitions/constants';
 
 import { checkIfRespondentIsSystemUser } from './CitizenHubHelper';
 import { setUrlLanguage } from './LanguageHelper';
@@ -25,7 +25,7 @@ export const getStoredPendingApplicationLinks = (
   languageParam: string
 ): string[] => {
   return apps
-    ?.filter(app => app.value.status === tseStatus.STORED)
+    ?.filter(app => app.value.status === TseStatusStored)
     .map(app => getStoredToSubmitLink(app.id, languageParam));
 };
 

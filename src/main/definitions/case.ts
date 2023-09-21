@@ -303,10 +303,6 @@ export const enum HearingPreference {
   NEITHER = 'Neither',
 }
 
-export const enum tseStatus {
-  STORED = 'Stored',
-}
-
 export interface Document {
   document_url: string;
   document_filename: string;
