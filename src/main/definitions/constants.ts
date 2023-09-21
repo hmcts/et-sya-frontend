@@ -1,6 +1,6 @@
 export const LegacyUrls = {
-  ET1: 'https://et-stg-azure.staging.et.dsd.io/en/apply/application-number',
-  ET1_BASE: 'https://et-stg-azure.staging.et.dsd.io',
+  ET1: 'https://et-pet-et1.aat.platform.hmcts.net/en/apply/application-number',
+  ET1_BASE: 'https://et-pet-et1.aat.platform.hmcts.net',
   ET1_APPLY: '/apply',
   ET1_PATH: '/application-number',
   ACAS_EC_URL: 'https://www.acas.org.uk/early-conciliation',

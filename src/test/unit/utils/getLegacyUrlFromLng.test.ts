@@ -7,17 +7,17 @@ const en = 'en';
 const cy = 'cy';
 
 describe('Get Legacy Url with correct language', () => {
-  it.skip('should return en url when language is English', () => {
+  it('should return en url when language is English', () => {
     const path = `${LegacyUrls.ET1_APPLY}${LegacyUrls.ET1_PATH}`;
     const url = getLegacyUrl(path, en);
     expect(url).toBe(expectedEnUrl);
   });
-  it.skip('should return cy url when language is Welsh', () => {
+  it('should return cy url when language is Welsh', () => {
     const path = `${LegacyUrls.ET1_APPLY}${LegacyUrls.ET1_PATH}`;
     const url = getLegacyUrl(path, cy);
     expect(url).toBe(expectedCyUrl);
   });
-  it.skip('should return en url when language is undefined', () => {
+  it('should return en url when language is undefined', () => {
     const path = `${LegacyUrls.ET1_APPLY}${LegacyUrls.ET1_PATH}`;
     const url = getLegacyUrl(path, undefined);
     expect(url).toBe(expectedEnUrl);
