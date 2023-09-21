@@ -8041,7 +8041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@npm:2.3.2, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -8051,7 +8051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
@@ -12604,23 +12604,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.37.0":
-  version: 1.37.0
-  resolution: "playwright-core@npm:1.37.0"
+"playwright-core@npm:1.38.0":
+  version: 1.38.0
+  resolution: "playwright-core@npm:1.38.0"
   bin:
     playwright-core: cli.js
-  checksum: be91857b1bb56890b3929ed8cd529f5f5abe4b748f709abc8dbe5b0ee4c0e158247c3958fbccec6a52394dafe4619bc0e69c93d1b129a71b31ab3697771e4c5a
+  checksum: 9eb43fc6c3cb392d5f35b0fd0b7291b38a8cbdc3cbb944a8261f744f30d09196dfa3b5d84aa02ffc09af87d08d31b385b007b6af20d0b6cd50a29344f3b0db8d
   languageName: node
   linkType: hard
 
 "playwright@npm:^1.32.3":
-  version: 1.37.0
-  resolution: "playwright@npm:1.37.0"
+  version: 1.38.0
+  resolution: "playwright@npm:1.38.0"
   dependencies:
-    playwright-core: 1.37.0
+    fsevents: 2.3.2
+    playwright-core: 1.38.0
+  dependenciesMeta:
+    fsevents:
+      optional: true
   bin:
     playwright: cli.js
-  checksum: f07d1d69e4a13db428cb45af0e2cd5697cb490c7139e399adfc5702b547f741b6411b6442a9c91c0b39f374e0cb466b742de0b15490872a771ab8bdc68e767c5
+  checksum: c5356690a391d5dd41f814d4e2694b93ba9e79381ce63de752da1c6c59b1f9c69bc6be853d973d0542d73a44a6b15f7c0081a164a64cd27b6b31207710c0ab34
   languageName: node
   linkType: hard
 
