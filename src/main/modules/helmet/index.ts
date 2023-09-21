@@ -28,7 +28,7 @@ export class Helmet {
   }
 
   private setContentSecurityPolicy(app: express.Express, formActionUrls: string[]): void {
-    const idamUrl = envConfig.get('services.idam.authorizationURL').toString();
+    const idamUrl = process.env.IDAM_WEB_URL ?? envConfig.get('services.idam.authorizationURL').toString();
     const scriptSrc = [
       self,
       ...tagManager,
