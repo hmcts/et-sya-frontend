@@ -1,6 +1,6 @@
 #!groovy
 
-@Library("Infrastructure@DTSPO-14754/sonar-scanner")
+@Library("Infrastructure")
 
 import uk.gov.hmcts.contino.AppPipelineDsl
 
