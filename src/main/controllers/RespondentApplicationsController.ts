@@ -5,6 +5,7 @@ import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { getPageContent } from './helpers/FormHelpers';
 import {
   getRespondentApplications,
@@ -15,6 +16,17 @@ export default class RespondentApplicationsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     const respondentApplications = getRespondentApplications(userCase);
+
+    if (respondentApplications?.length > 1) {
+      for (const app of respondentApplications) {
+        const translatedDate = new Date(app.value?.date).toLocaleDateString(retrieveCurrentLocale(req.url), {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+        app.value.date = translatedDate;
+      }
+    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
