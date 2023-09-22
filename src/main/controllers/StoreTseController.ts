@@ -32,6 +32,6 @@ export default class StoreTseController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    return res.redirect(PageUrls.STORED_APPLICATION_CONFIRMATION);
+    return res.redirect(PageUrls.STORED_APPLICATION_CONFIRMATION + languageParam);
   };
 }

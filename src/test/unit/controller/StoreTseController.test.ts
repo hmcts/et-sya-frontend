@@ -7,13 +7,14 @@ import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Store tell something else Controller', () => {
-  it('should redirect to PageUrls.STORED_APPLICATION_CONFIRMATION', () => {
+  it('should redirect to PageUrls.STORED_APPLICATION_CONFIRMATION', async () => {
     const controller = new StoreTseController();
     const response = mockResponse();
     const request = mockRequest({});
-    request.url = PageUrls.APPLICATION_COMPLETE;
-    controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.STORED_APPLICATION_CONFIRMATION);
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
+    await controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en');
   });
 
   it('should change hublink status to STORED before submitting the case', () => {
