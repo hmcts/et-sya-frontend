@@ -217,6 +217,8 @@
 
 <form class="form" id="main-form" method="post" action="">
  <input type="hidden" name="_csrf" value={{ csrfToken }}>
+
+ <input type="hidden" name="idempotency_Token" value={{ idempotencyToken }}>
   <div class="govuk-form-group">
     {{ govukButton({
       text: submitBtn,
