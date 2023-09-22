@@ -66,8 +66,8 @@ export default class CheckYourAnswersController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.session.idempotencyToken === req.body.idempotency_Token) {
       const redirectUrl = req.body.saveForLater ? PageUrls.CLAIM_SAVED : InterceptPaths.SUBMIT_CASE;
-      await returnNextPage(req, res, redirectUrl);
       req.session.idempotencyToken = null;
+      await returnNextPage(req, res, redirectUrl);
     } else {
       logger.error("Idempotency token hasn't matched.");
     }
