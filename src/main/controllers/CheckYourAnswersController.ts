@@ -66,9 +66,21 @@ export default class CheckYourAnswersController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     if (req.session.idempotencyToken === req.body.idempotency_Token) {
       const redirectUrl = req.body.saveForLater ? PageUrls.CLAIM_SAVED : InterceptPaths.SUBMIT_CASE;
+      logger.info(
+        'IF part: req.session.idempotencyToken: ' +
+          req.session.idempotencyToken +
+          ' . req.body.idempotency_Token: ' +
+          req.body.idempotency_Token
+      );
       req.session.idempotencyToken = null;
       await returnNextPage(req, res, redirectUrl);
     } else {
+      logger.info(
+        'ELSE part: req.session.idempotencyToken: ' +
+          req.session.idempotencyToken +
+          ' . req.body.idempotency_Token: ' +
+          req.body.idempotency_Token
+      );
       logger.error("Idempotency token hasn't matched.");
     }
   };
