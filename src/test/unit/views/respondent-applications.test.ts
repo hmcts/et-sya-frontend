@@ -1,12 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 
+import axios, { AxiosResponse } from 'axios';
 import { expect } from 'chai';
 import request from 'supertest';
 
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkStatus } from '../../../main/definitions/hub';
+import { CaseApi } from '../../../main/services/CaseService';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
 
 const respondentApplicationsJSONRaw = fs.readFileSync(
@@ -23,33 +27,46 @@ let htmlRes: Document;
 
 describe('Respondent Applications page', () => {
   beforeAll(async () => {
+    const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+    const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+    mockClient.mockReturnValue(caseApi);
+    caseApi.getUserCase = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        data: {
+          created_date: '2022-08-19T09:19:25.79202',
+          last_modified: '2022-08-19T09:19:25.817549',
+          case_data: {
+            genericTseApplicationCollection: [
+              {
+                id: 'abc123',
+                value: {
+                  date: '7 March 2023',
+                  type: 'Amend response',
+                  applicationState: 'notStartedYet',
+                  number: '1',
+                  applicant: 'Respondent',
+                  copyToOtherPartyYesOrNo: YesOrNo.YES,
+                },
+              },
+              {
+                id: 'abc1234',
+                value: {
+                  date: '8 March 2023',
+                  type: 'Restrict publicity',
+                  applicationState: 'notStartedYet',
+                  number: '2',
+                  applicant: 'Respondent',
+                  copyToOtherPartyYesOrNo: YesOrNo.YES,
+                },
+              },
+            ],
+          },
+        },
+      } as AxiosResponse<CaseApiDataResponse>)
+    );
     await request(
       mockApp({
         userCase: {
-          genericTseApplicationCollection: [
-            {
-              id: 'abc123',
-              value: {
-                date: '7 March 2023',
-                type: 'Amend response',
-                applicationState: 'notStartedYet',
-                number: '1',
-                applicant: 'Respondent',
-                copyToOtherPartyYesOrNo: YesOrNo.YES,
-              },
-            },
-            {
-              id: 'abc1234',
-              value: {
-                date: '8 March 2023',
-                type: 'Restrict publicity',
-                applicationState: 'notStartedYet',
-                number: '2',
-                applicant: 'Respondent',
-                copyToOtherPartyYesOrNo: YesOrNo.YES,
-              },
-            },
-          ],
           hubLinksStatuses: {
             respondentApplications: HubLinkStatus.IN_PROGRESS,
           },
