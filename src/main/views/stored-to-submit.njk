@@ -1,6 +1,8 @@
 {% extends "template.njk" %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -11,8 +13,13 @@
   {{
     govukErrorSummary({
       titleText: errorSummaryTitle,
-      errorList: getErrors(form.fields)
-    }) if getErrors(form.fields).length > 0
+      errorList: [
+        {
+          text: errorMessage,
+          href: '#confirmCopied'
+        }
+      ]
+    }) if errors.length > 0
   }}
 
   <div class="govuk-!-width-two-thirds">
@@ -37,8 +44,38 @@
     <form class="form" id="main-form" method="post" action="" novalidate="true">
       <input type="hidden" name="_csrf" value={{ csrfToken }}>
       {% block form_content %}
-        {% include "form/fields.njk" %}
-        {% include "form/saveButtons.njk" %}
+
+        {{ govukCheckboxes({
+          name: 'confirmCopied',
+          fieldset: {
+            legend: {
+              text: haveYouCopied,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            text: iConfirmThatIHaveCopied
+          },
+          items: [
+            {
+              value: 'Yes',
+              text: yesIConfirm
+            }
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: submitBtn,
+            preventDoubleClick: true,
+            attributes: {
+              id: 'main-form-submit'
+            }
+          }) }}
+          <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
+        </div>
+
       {% endblock %}
     </form>
 
