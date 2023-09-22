@@ -47,7 +47,7 @@ describe('General correspondence helper', () => {
       text: 'Document',
     });
     expect(pageContent[4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf(pdf, 1000Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
     expect(pageContent[5].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
