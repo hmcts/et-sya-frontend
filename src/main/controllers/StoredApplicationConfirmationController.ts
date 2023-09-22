@@ -8,8 +8,9 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { getDocumentLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
+import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getAppDetailsLink, getCancelLink, getLatestApplication } from './helpers/Rule92NotSystemUserHelper';
+import { getLatestApplication } from './helpers/Rule92NotSystemUserHelper';
 
 const logger = getLogger('StoredApplicationConfirmationController');
 

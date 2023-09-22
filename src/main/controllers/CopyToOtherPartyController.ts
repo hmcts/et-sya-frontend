@@ -11,8 +11,8 @@ import { setUserCase } from './helpers/CaseHelpers';
 import { getCaptionTextForCopyToOtherParty } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 export default class CopyToOtherPartyController {
   private readonly form: Form;

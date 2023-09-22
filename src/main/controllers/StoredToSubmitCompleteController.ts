@@ -4,7 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { TranslationKeys } from '../definitions/constants';
 
-import { getCancelLink } from './helpers/Rule92NotSystemUserHelper';
+import { getCancelLink } from './helpers/LinkHelpers';
 
 export default class StoredToSubmitCompleteController {
   public get(req: AppRequest, res: Response): void {

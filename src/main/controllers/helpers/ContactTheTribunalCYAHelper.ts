@@ -9,7 +9,7 @@ import {
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
-import { copyToOtherPartyRedirectUrl } from './Rule92NotSystemUserHelper';
+import { copyToOtherPartyRedirectUrl } from './LinkHelpers';
 
 export const getCyaContent = (
   userCase: CaseWithId,

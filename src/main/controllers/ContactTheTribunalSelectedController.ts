@@ -11,10 +11,10 @@ import { getLogger } from '../logger';
 
 import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
-import { copyToOtherPartyRedirectUrl } from './helpers/Rule92NotSystemUserHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 

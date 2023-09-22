@@ -8,8 +8,8 @@ import { AnyRecord } from '../definitions/util-types';
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 export default class ContactTheTribunalCYANotSystemUserController {
   public get(req: AppRequest, res: Response): void {

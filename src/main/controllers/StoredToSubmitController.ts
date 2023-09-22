@@ -20,8 +20,8 @@ import {
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
-import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
 
 const logger = getLogger('StoredToSubmitController');
 
