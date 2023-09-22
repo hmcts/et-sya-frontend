@@ -51,7 +51,6 @@ const getVisibleRequestFromAdmin = (
       adminNotifications.push(adminNotification);
     }
   }
-  console.log(adminNotifications);
   return adminNotifications;
 };
 
