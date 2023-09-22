@@ -16,7 +16,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
-import { ErrorListContent } from '../../definitions/govuk/govukErrorSummary';
+import { ErrorListContent, ErrorMessage } from '../../definitions/govuk/govukErrorSummary';
 import { AnyRecord } from '../../definitions/util-types';
 import { Logger } from '../../logger';
 
@@ -337,5 +337,11 @@ const getErrorListItem = (textString: string, hrefString: string): ErrorListCont
   return {
     text: textString,
     href: hrefString,
+  };
+};
+
+export const getErrorMessageItem = (textString: string): ErrorMessage => {
+  return {
+    text: textString,
   };
 };

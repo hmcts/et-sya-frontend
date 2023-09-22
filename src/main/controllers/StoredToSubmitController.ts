@@ -12,7 +12,7 @@ import {
   getDocumentLink,
   populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
-import { getErrorList } from './helpers/ErrorHelpers';
+import { getErrorList, getErrorMessageItem } from './helpers/ErrorHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/Rule92NotSystemUserHelper';
@@ -69,6 +69,7 @@ export default class StoredToSubmitController {
       viewCorrespondenceFileLink: getDocumentLink(document),
       cancelLink: getCancelLink(req),
       errorLists: getErrorList(req.session.errors, translations),
+      confirmCopiedErrorMessage: getErrorMessageItem(translations.errors.confirmCopied.required),
     });
   };
 }
