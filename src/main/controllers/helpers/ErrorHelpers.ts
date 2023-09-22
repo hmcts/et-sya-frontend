@@ -16,6 +16,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
+import { ErrorListContent } from '../../definitions/govuk/govukErrorSummary';
 import { AnyRecord } from '../../definitions/util-types';
 import { Logger } from '../../logger';
 
@@ -320,4 +321,21 @@ export const getLastFileError = (errors: FormError[]): FormError => {
       }
     }
   }
+};
+
+export const getErrorList = (errors: FormError[], translations: AnyRecord): ErrorListContent[] => {
+  const list: ErrorListContent[] = [];
+  if (errors?.length > 0) {
+    for (const error of errors) {
+      list.push(getErrorListItem(translations.errors[error.propertyName][error.errorType], '#' + error.propertyName));
+    }
+  }
+  return list;
+};
+
+const getErrorListItem = (textString: string, hrefString: string): ErrorListContent => {
+  return {
+    text: textString,
+    href: hrefString,
+  };
 };

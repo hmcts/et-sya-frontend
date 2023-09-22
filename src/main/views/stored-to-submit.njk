@@ -13,13 +13,8 @@
   {{
     govukErrorSummary({
       titleText: errorSummaryTitle,
-      errorList: [
-        {
-          text: errorMessage,
-          href: '#confirmCopied'
-        }
-      ]
-    }) if errors.length > 0
+      errorList: errorLists
+    }) if errorLists.length > 0
   }}
 
   <div class="govuk-!-width-two-thirds">
