@@ -3,6 +3,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ super() }}
@@ -11,7 +13,12 @@
 
 {% block content %}
   {% block errorSummary %}
-    {% include "error-summary.njk" %}
+    {% set errors = req.session.errors %}
+    {{ govukErrorSummary({
+      titleText: errorSummaryTitle,
+      errorList: errors
+    }) if errors.length > 0
+    }}
   {% endblock %}
 
   <div class="govuk-grid-row">
@@ -23,9 +30,55 @@
       }) }}
       <p class="govuk-body">{{toCopyThisCorrespondence}}</p>
 
-      {% block form %}
-        {% include "form/form.njk"%}
-      {% endblock %}
+      <form class="form" id="main-form" method="post" action="" novalidate="true">
+        <input type="hidden" name="_csrf" value={{ csrfToken }}>
+        {{ govukRadios({
+          name: "copyToOtherPartyYesOrNo",
+          fieldset: {
+            legend: {
+              text: doYouWantToCopy,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: [
+            {
+              value: YesOrNo.YES,
+              html: '<p class="govuk-body">' +
+                yesIConfirmIWill +
+                '</p><p class="govuk-body"><strong>' +
+                important +
+                ':</strong> ' +
+                doNotSubmitYourApplication +
+                '</p><p class="govuk-body">' +
+                youShouldAlsoNotify +
+                '</p>'
+            },
+            {
+              value: YesOrNo.NO,
+              html: '<p class="govuk-body">' +
+                noIDoNotWantTo +
+                '</p><p class="govuk-body"><strong>' +
+                important +
+                ':</strong> ' +
+                youMustTellTheTribunal +
+                '</p>'
+            }
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: continue,
+            preventDoubleClick: true,
+            attributes: {
+              id: 'main-form-submit'
+            }
+          }) }}
+          <a class="govuk-link" href={{ cancelLink }}>{{ cancel }}</a>
+        </div>
+
+      </form>
     </div>
 
     <div class="govuk-grid-column-one-third">
