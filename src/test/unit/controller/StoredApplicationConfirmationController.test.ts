@@ -19,18 +19,25 @@ describe('Store application Complete Controller tests', () => {
     'stored-application-confirmation': {},
     common: {},
   };
+  const genericTseApplicationCollection = [
+    { value: { applicant: Applicant.CLAIMANT } },
+    { value: { applicant: Applicant.RESPONDENT } },
+    { value: { applicant: Applicant.ADMIN } },
+    { value: { applicant: Applicant.CLAIMANT } },
+  ];
 
   it('should render the Store application Complete page', async () => {
     const controller = new StoredApplicationConfirmationController();
     caseApi.getUserCase = jest.fn().mockResolvedValue(
       Promise.resolve({
         data: {
+          id: '135',
           created_date: '2022-08-19T09:19:25.79202',
           last_modified: '2022-08-19T09:19:25.817549',
           case_data: {
             genericTseApplicationCollection: [
               {
-                id: '1',
+                id: '246',
                 value: {
                   applicant: 'Claimant',
                 },
@@ -44,16 +51,19 @@ describe('Store application Complete Controller tests', () => {
     const request = mockRequest({ t });
 
     const userCase = request.session.userCase;
-    userCase.genericTseApplicationCollection = [
-      { value: { applicant: Applicant.CLAIMANT } },
-      { value: { applicant: Applicant.RESPONDENT } },
-      { value: { applicant: Applicant.ADMIN } },
-      { value: { applicant: Applicant.CLAIMANT } },
-    ];
+    userCase.genericTseApplicationCollection = genericTseApplicationCollection;
     request.session.userCase = userCase;
 
     await controller.get(request, response);
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.STORED_APPLICATION_CONFIRMATION, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.STORED_APPLICATION_CONFIRMATION,
+      expect.objectContaining({
+        redirectUrl: '/citizen-hub/135',
+        viewThisCorrespondenceLink: '/application-details/246?lng=en',
+        document: undefined,
+        documentLink: '',
+      })
+    );
   });
 
   it('should return NOT_FOUND when getLatestApplication', async () => {
