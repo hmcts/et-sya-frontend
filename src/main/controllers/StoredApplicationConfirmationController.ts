@@ -10,7 +10,7 @@ import { getCaseApi } from '../services/CaseService';
 import { getDocumentLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getLatestApplication } from './helpers/Rule92NotSystemUserHelper';
+import { getLatestApplication } from './helpers/StoredApplicationConfirmationHelpers';
 
 const logger = getLogger('StoredApplicationConfirmationController');
 

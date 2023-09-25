@@ -1,8 +1,10 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, TseStatusStored } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
+
+import { getStoredToSubmitLink } from './LinkHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -241,4 +243,12 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean): Map<string, 
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
   ]);
+};
+export const getStoredPendingApplicationLinks = (
+  apps: GenericTseApplicationTypeItem[],
+  languageParam: string
+): string[] => {
+  return apps
+    ?.filter(app => app.value.status === TseStatusStored)
+    .map(app => getStoredToSubmitLink(app.id, languageParam));
 };

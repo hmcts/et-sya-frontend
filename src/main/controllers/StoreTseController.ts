@@ -26,6 +26,12 @@ export default class StoreTseController {
 
     try {
       await storeClaimantTse(req, logger);
+    } catch (error) {
+      logger.info(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    try {
       clearTseFields(userCase);
     } catch (error) {
       logger.info(error.message);

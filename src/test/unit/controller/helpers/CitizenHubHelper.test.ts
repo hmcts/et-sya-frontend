@@ -3,6 +3,7 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
+  getStoredPendingApplicationLinks,
   shouldHubLinkBeClickable,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
@@ -11,7 +12,7 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant, PageUrls } from '../../../../main/definitions/constants';
+import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
@@ -456,5 +457,36 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
     expect(getHubLinksUrlMap(false)).toEqual(linksMap);
+  });
+});
+
+describe('getStoredPendingApplicationLinks', () => {
+  it('should return /stored-to-submit with application id', () => {
+    const tseCollection: GenericTseApplicationTypeItem[] = [
+      {
+        id: '123',
+        value: {
+          number: '2345',
+          status: 'Stored',
+        },
+      },
+      {
+        id: '345',
+        value: {
+          number: '4567',
+          status: 'Open',
+        },
+      },
+      {
+        id: '567',
+        value: {
+          number: '6789',
+          status: 'Stored',
+        },
+      },
+    ];
+    const expected: string[] = ['/stored-to-submit/123?lng=en', '/stored-to-submit/567?lng=en'];
+    const actual = getStoredPendingApplicationLinks(tseCollection, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
   });
 });

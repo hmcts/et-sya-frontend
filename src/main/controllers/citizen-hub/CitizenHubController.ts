@@ -22,6 +22,7 @@ import {
   checkIfRespondentIsSystemUser,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
+  getStoredPendingApplicationLinks,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -43,7 +44,6 @@ import {
   getJudgments,
 } from '../helpers/JudgmentHelpers';
 import { getLanguageParam } from '../helpers/RouterHelpers';
-import { getStoredPendingApplicationLinks } from '../helpers/Rule92NotSystemUserHelper';
 import {
   activateTribunalOrdersAndRequestsLink,
   filterNotificationsWithRequestsOrOrders,

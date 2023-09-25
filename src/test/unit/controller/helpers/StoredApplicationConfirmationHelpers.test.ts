@@ -1,41 +1,7 @@
-import {
-  getLatestApplication,
-  getStoredPendingApplicationLinks,
-} from '../../../../main/controllers/helpers/Rule92NotSystemUserHelper';
+import { getLatestApplication } from '../../../../main/controllers/helpers/StoredApplicationConfirmationHelpers';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant, languages } from '../../../../main/definitions/constants';
+import { Applicant } from '../../../../main/definitions/constants';
 import { mockRequest } from '../../mocks/mockRequest';
-
-describe('getStoredPendingApplicationLinks', () => {
-  it('should return /stored-to-submit with application id', () => {
-    const tseCollection: GenericTseApplicationTypeItem[] = [
-      {
-        id: '123',
-        value: {
-          number: '2345',
-          status: 'Stored',
-        },
-      },
-      {
-        id: '345',
-        value: {
-          number: '4567',
-          status: 'Open',
-        },
-      },
-      {
-        id: '567',
-        value: {
-          number: '6789',
-          status: 'Stored',
-        },
-      },
-    ];
-    const expected: string[] = ['/stored-to-submit/123?lng=en', '/stored-to-submit/567?lng=en'];
-    const actual = getStoredPendingApplicationLinks(tseCollection, languages.ENGLISH_URL_PARAMETER);
-    expect(actual).toEqual(expected);
-  });
-});
 
 describe('getLatestApplication', () => {
   const req = mockRequest({});
