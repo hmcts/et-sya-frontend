@@ -119,7 +119,7 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
     });
   };
 }
