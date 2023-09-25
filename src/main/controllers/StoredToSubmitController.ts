@@ -18,7 +18,7 @@ import {
   populateDocumentMetadata,
 } from './helpers/DocumentHelpers';
 import { returnSessionErrors } from './helpers/ErrorHelpers';
-import { assignFormData, getPageContent } from './helpers/FormHelpers';
+import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
@@ -96,8 +96,6 @@ export default class StoredToSubmitController {
       TranslationKeys.COMMON,
       TranslationKeys.STORED_TO_SUBMIT,
     ]);
-
-    assignFormData(req.session.userCase, this.form.getFormFields());
 
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,

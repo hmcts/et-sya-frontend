@@ -11,6 +11,13 @@ describe('Submit stored application Complete Controller tests', () => {
 
     controller.get(request, response);
 
-    expect(response.render).toHaveBeenCalledWith(TranslationKeys.APPLICATION_COMPLETE, expect.anything());
+    expect(response.render).toHaveBeenCalledWith(
+      TranslationKeys.APPLICATION_COMPLETE,
+      expect.objectContaining({
+        applicationDate: '',
+        rule92: 'No',
+        redirectUrl: '/citizen-hub/1234',
+      })
+    );
   });
 });

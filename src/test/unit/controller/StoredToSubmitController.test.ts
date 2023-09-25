@@ -4,15 +4,20 @@ import StoredToSubmitController from '../../../main/controllers/StoredToSubmitCo
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { InterceptPaths, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import applicationDetailsJsonRaw from '../../../main/resources/locales/en/translation/application-details.json';
+import yourApplicationsJsonRaw from '../../../main/resources/locales/en/translation/your-applications.json';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
-import { mockRequest } from '../mocks/mockRequest';
+import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
+jest.mock('axios');
+const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
 describe('Stored to Submit Controller', () => {
-  jest.mock('axios');
-  const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
-  jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+  const controller = new StoredToSubmitController();
+
   caseApi.updateDraftCase = jest.fn().mockResolvedValue(
     Promise.resolve({
       data: {
@@ -32,15 +37,9 @@ describe('Stored to Submit Controller', () => {
     } as AxiosResponse<CaseApiDataResponse>)
   );
 
-  const t = {
-    'stored-to-submit': {},
-    'your-applications': { 'Amend my claim': 'Amend my claim' },
-    'application-details': { applicationTo: 'Application to ' },
-    common: {},
-  };
   const tseAppCollection = [
     {
-      id: '1',
+      id: '234',
       value: {
         applicant: 'Claimant',
         date: '2022-05-05',
@@ -54,25 +53,32 @@ describe('Stored to Submit Controller', () => {
     },
   ];
   const userCase: Partial<CaseWithId> = {
+    id: '345',
     genericTseApplicationCollection: tseAppCollection,
   };
 
   it('should render the stored to submit page', () => {
-    const controller = new StoredToSubmitController();
+    const translationJsons = { ...yourApplicationsJsonRaw, ...applicationDetailsJsonRaw };
     const res = mockResponse();
-    const req = mockRequest({ t, session: { userCase } });
-    req.params.appId = '1';
+    const req = mockRequestWithTranslation({ session: { userCase } }, translationJsons);
+    req.params.appId = '234';
 
     controller.get(req, res);
 
-    expect(res.render).toHaveBeenCalledWith(TranslationKeys.STORED_TO_SUBMIT, expect.anything());
+    expect(res.render).toHaveBeenCalledWith(
+      TranslationKeys.STORED_TO_SUBMIT,
+      expect.objectContaining({
+        applicationType: 'Application to Amend my claim',
+        viewCorrespondenceLink: '/application-details/234?lng=en',
+        document: undefined,
+        viewCorrespondenceFileLink: '',
+        cancelLink: '/citizen-hub/345',
+      })
+    );
   });
 
   it('should redirect to update page when yes is selected', async () => {
     const body = { confirmCopied: YesOrNo.YES };
-
-    const controller = new StoredToSubmitController();
-
     const req = mockRequest({ body, session: { userCase } });
     const res = mockResponse();
     req.params.appId = '1';
@@ -86,8 +92,6 @@ describe('Stored to Submit Controller', () => {
   it('should render the same page when nothing is selected', async () => {
     const errors = [{ propertyName: 'confirmCopied', errorType: 'required' }];
     const body = { continue: true };
-
-    const controller = new StoredToSubmitController();
     const req = mockRequest({ body });
     const res = mockResponse();
     req.url = PageUrls.STORED_TO_SUBMIT.replace(':appId', '1234') + languages.ENGLISH_URL_PARAMETER;
