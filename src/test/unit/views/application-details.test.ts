@@ -85,10 +85,10 @@ describe('Application details page', () => {
 
   it('should display application details', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListClass);
-    expect(summaryListData[0].innerHTML).contains('Applicant', 'Application date does not exist');
-    expect(summaryListData[1].innerHTML).contains('7 March 2023', ' Application type does not exist');
+    expect(summaryListData[0].innerHTML).contains('Applicant', 'Applicant date does not exist');
+    expect(summaryListData[1].innerHTML).contains('7 March 2023', ' Application date does not exist');
     expect(summaryListData[3].innerHTML).contains('Test text', ' Application type does not exist');
     expect(summaryListData[4].innerHTML).contains('', ' Application type does not exist');
-    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application type does not exist');
+    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application copyToOtherPartyYesOrNo does not exist');
   });
 });

@@ -11,23 +11,21 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
-import { retrieveCurrentLocale } from './ApplicationTableRecordTranslationHelper';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   downloadLink: string,
-  url: string
+  locale: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
-  const locale = retrieveCurrentLocale(url);
   const yesNoTranslation: string =
     application.copyToOtherPartyYesOrNo === YesOrNo.YES ? translations.yes : translations.no;
 
-  const dateToShow = new Date(application.date).toLocaleDateString(locale, {
+  const dateInLocale = new Date(application.date).toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -35,7 +33,7 @@ export const getTseApplicationDetails = (
 
   rows.push(
     addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, dateToShow),
+    addSummaryRow(translations.requestDate, dateInLocale),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
