@@ -11,12 +11,7 @@ const copyToOtherPartyNotSystemUserJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/copy-to-other-party-not-system-user.json'),
   'utf-8'
 );
-
 const copyToOtherPartyNotSystemUserJson = JSON.parse(copyToOtherPartyNotSystemUserJsonRaw);
-
-const expectedTitle = copyToOtherPartyNotSystemUserJson.title;
-const expectedInset = copyToOtherPartyNotSystemUserJson.theTribunalMustOperate;
-const expectedP1 = copyToOtherPartyNotSystemUserJson.toCopyThisCorrespondence;
 
 const insetText = 'govuk-inset-text';
 const titleClass = 'govuk-heading-l';
@@ -38,17 +33,23 @@ describe('Copy to the other party page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(expectedTitle, 'Page title does not exist');
+    expect(title[0].innerHTML).contains(copyToOtherPartyNotSystemUserJson.title, 'Page title does not exist');
   });
 
   it('should display inset text', () => {
     const title = htmlRes.getElementsByClassName(insetText);
-    expect(title[0].innerHTML).contains(expectedInset, 'Inset text does not exist');
+    expect(title[0].innerHTML).contains(
+      copyToOtherPartyNotSystemUserJson.theTribunalMustOperate,
+      'Inset text does not exist'
+    );
   });
 
   it('should display first paragraph', () => {
     const p1 = htmlRes.getElementsByClassName(detailsClass);
-    expect(p1[6].innerHTML).contains(expectedP1, 'First paragraph does not exist');
+    expect(p1[6].innerHTML).contains(
+      copyToOtherPartyNotSystemUserJson.toCopyThisCorrespondence,
+      'First paragraph does not exist'
+    );
   });
 
   it('should display radio buttons', () => {
