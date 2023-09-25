@@ -9,6 +9,7 @@ import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiRespon
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkStatus } from '../../../main/definitions/hub';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
@@ -27,6 +28,8 @@ let htmlRes: Document;
 
 describe('Respondent Applications page', () => {
   beforeAll(async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     const mockClient = jest.spyOn(CaseService, 'getCaseApi');
     mockClient.mockReturnValue(caseApi);

@@ -7,6 +7,7 @@ import { YesOrNo } from '../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
@@ -15,6 +16,8 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 
 describe('Respondent Applications Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   it('should render respondent applications page', async () => {
     const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
     const mockClient = jest.spyOn(CaseService, 'getCaseApi');

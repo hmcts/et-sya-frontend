@@ -6,6 +6,7 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
@@ -47,10 +48,13 @@ export default class RespondentApplicationsController {
         TranslationKeys.RESPONDENT_APPLICATIONS,
       ]);
 
+      const welshEnabled = await getFlagValue('welsh-language', null);
+
       res.render(TranslationKeys.RESPONDENT_APPLICATIONS, {
         ...content,
         respondentApplications,
         translations,
+        welshEnabled,
       });
     } catch (error) {
       logger.error(error.message);
