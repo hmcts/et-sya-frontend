@@ -1,7 +1,7 @@
 {% if featureTemplate %}
-  {% extends "template-language-disabled.njk" %}
-{% else %}
   {% extends "template.njk" %}
+{% else %}
+  {% extends "template-language-disabled.njk" %}
 {% endif %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
