@@ -13,5 +13,6 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+        - launch-darkly-sdk-key
 idam-pr:
   enabled: false

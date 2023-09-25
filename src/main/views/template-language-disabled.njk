@@ -1,0 +1,141 @@
+{% extends "govuk/template.njk" %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/timeout-modal.njk" import timeoutModal with context %}
+{% from "components/web-chat.njk" import webChatModal %}
+
+{% block head %}
+  {% include "webpack/css.njk" %}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
+  {% if "perftest" in currentHost %}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M8XNFRG');</script>
+    <!-- End Google Tag Manager -->
+  {% else %}
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer'
+            ? '&l=' + l
+            : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f
+          .parentNode
+          .insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-M29HRGV');
+    </script>
+    <!-- End Google Tag Manager -->
+  {% endif %}
+  <meta name="format-detection" content="telephone=no">
+{% endblock %}
+
+{% block bodyStart %}
+  {% if "perftest" in currentHost %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8XNFRG" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  {% else %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M29HRGV" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  {% endif %}
+  <!-- Hidden session object for user already logged in check -->
+  <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="{{isLoggedIn}}">
+  <!-- End of hidden session object for user already logged in check-->
+{% endblock %}
+
+{% set logInOrOut = {
+  href: "/logout",
+  text: signOut,
+  active: false
+}
+if isLoggedIn %}
+
+{% block header %}
+  {% include "cookie-banner.njk" %}
+  {{ govukHeader({
+    containerClasses: "govuk-width-container",
+    homepageUrl: "https://www.gov.uk",
+    serviceName: serviceName,
+    serviceUrl: "/",
+    navigationClasses: 'govuk-header__navigation--end',
+    navigation: [logInOrOut]
+  }) }}
+{% endblock %}
+
+{% block pageTitle %}
+  {{ title }}
+  -
+  {{ serviceName }}
+  -
+  {{ govUk }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% set smartSurveyPageInfo = currentUrl | replace("/", "") %}
+
+  {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
+
+  {{ timeoutModal() }}
+
+  {{ govukPhaseBanner({
+      tag: {
+          text: beta
+      },
+      html: phaseBarHtml
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
+  {% include "webpack/js.njk" %}
+{% endblock %}
+
+{% block footer %}
+  {% if "/" !== currentUrl and "/?lng=en" != currentUrl and "/?lng=cy" != currentUrl and hideContactUs === undefined %}
+    <div class="govuk-width-container">
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span id="contact-us-dropdown-link" class="govuk-details__summary-text">
+            {{ contactUsTitle }}
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          {{ contactUsForeword }}
+          <br><br>
+          {{ contactDuration }}<br/>
+          {{ mainTelephone }}<br/>
+          {{ welshTelephone }}<br/>
+          {{ scotlandTelephone }}<br/>
+          {{ englandOrWalesTextPhone }}<br/>
+          {{ scotlandTextPhone }}
+          {% if i18n.language == "en" %}
+            <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
+          {% else %}
+            <br/><br/>
+          {% endif %}
+          <a href="https://www.gov.uk/call-charges" class="govuk-link">{{ contactCharges }}</a>
+        </div>
+      </details>
+    </div>
+  {% endif %}
+
+  {% include "./footer.njk" %}
+{% endblock %}
