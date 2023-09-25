@@ -574,3 +574,6 @@ export const DOCUMENT_CONTENT_TYPES = {
 };
 
 export const TseStatusStored = 'Stored';
+
+export const YES = 'Yes';
+export const NO = 'No';

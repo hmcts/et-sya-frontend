@@ -6,10 +6,10 @@ import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
-import { CaseWithId, YesOrNo } from '../definitions/case';
+import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls } from '../definitions/constants';
+import { JavaApiUrls, YES } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -126,7 +126,7 @@ export class CaseApi {
           contactApplicationFile: caseItem.contactApplicationFile,
           copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
           copyToOtherPartyText: caseItem.copyToOtherPartyText,
-          storedPending: YesOrNo.YES,
+          storedPending: YES,
         },
       });
     } catch (error) {
