@@ -1,10 +1,10 @@
 {
   "title": "Anfon copi o’r ohebiaeth hon at y parti arall",
-  "respondToApplication": "Welsh translation required",
-  "respondToTribunal": "Welsh translation required",
+  "respondToApplication": "Ymateb i gais",
+  "respondToTribunal": "Ymateb i’r Tribiwnlys",
   "contact": "Cysylltu",
-  "application": "Welsh translation required",
-  "tribunal": "Welsh translation required",
+  "application": "Cais",
+  "tribunal": "Tribiwnlys",
   "h1": "Anfon copi o’r ohebiaeth hon at y parti arall",
   "p1": "Rhaid i'r tribiwnlys weithredu mewn ffordd sy’n deg i'r ddwy ochr. Mae hyn yn golygu bod rhaid i bob parti weld neu glywed beth mae'r parti arall yn ei ddweud wrth y tribiwnlys. Mae’r rheolau felly’n ei gwneud yn ofynnol i bob cyfathrebiad â’r tribiwnlys gael ei gopïo i’r parti arall, oni bai mewn amgylchiadau eithriadol.",
   "legend": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
@@ -17,7 +17,7 @@
     },
     "copyToOtherPartyText": {
       "required": "Dywedwch wrth y tribiwnlys pam nad ydych chi eisiau rhoi gwybod i’r parti arall",
-      "tooLong": "Welsh translation required"
+      "tooLong": "Rhaid i’ch manylion fod yn llai na 2500 o nodau"
     }
   }
 }
