@@ -20,21 +20,21 @@ export default class StoreTseController {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.STORED;
       await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     try {
       await getCaseApi(req.session.user?.accessToken).storeClaimantTse(req.session.userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     try {
       clearTseFields(userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 

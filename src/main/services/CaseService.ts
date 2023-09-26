@@ -130,7 +130,7 @@ export class CaseApi {
         },
       })
       .catch(function (error) {
-        throw new Error('Error submitting stored tse application status: ' + error);
+        throw new Error('Error store tse application status: ' + error);
       });
   };
 
