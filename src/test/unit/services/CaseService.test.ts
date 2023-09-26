@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from 'config';
 import { clone } from 'lodash';
 
 import { UserDetails } from '../../../main/definitions/appRequest';
@@ -113,10 +112,6 @@ describe('Axios get to retrieve draft cases', () => {
 });
 
 describe('getCaseApi', () => {
-  beforeAll(() => {
-    config.get('services.etSyaApi.host');
-    return 'http://randomurl';
-  });
   test('should create a CaseApi', () => {
     expect(getCaseApi(token)).toBeInstanceOf(CaseApi);
   });

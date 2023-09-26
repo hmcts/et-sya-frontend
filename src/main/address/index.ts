@@ -8,13 +8,13 @@ const logger = getLogger('address');
 
 export const getAddressesForPostcode = async (postcode: string): Promise<Address[]> => {
   try {
-    const url: string = config.get('services.addressLookup.url');
+    const url: string = process.env.ADDRESS_LOOK_UP_URL ?? config.get('services.addressLookup.url');
     const response: AxiosResponse<PostcodeResponse> = await axios.get(url, {
       headers: {
         accept: 'application/json',
       },
       params: {
-        key: config.get('services.addressLookup.token'),
+        key: process.env.ADDRESS_LOOKUP_TOKEN ?? config.get('services.addressLookup.token'),
         postcode,
       },
     });
