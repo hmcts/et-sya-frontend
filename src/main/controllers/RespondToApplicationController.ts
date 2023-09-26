@@ -8,6 +8,7 @@ import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
@@ -104,6 +105,7 @@ export default class RespondToApplicationController {
       }
     }
     const downloadLink = createDownloadLink(document);
+    const featureTemplate = await getFlagValue('welsh-language', null);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.COMMON,
@@ -120,6 +122,7 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
+      featureTemplate,
       appContent: getTseApplicationDetails(
         selectedApplication,
         translations,
