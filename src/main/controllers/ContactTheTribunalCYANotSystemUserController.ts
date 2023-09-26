@@ -1,9 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { getCyaContent } from './helpers/ContactTheTribunalCYAHelper';
 import { createDownloadLink } from './helpers/DocumentHelpers';
@@ -11,9 +12,16 @@ import { getPageContent } from './helpers/FormHelpers';
 import { getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
+const logger = getLogger('ContactTheTribunalCYANotSystemUserController');
+
 export default class ContactTheTribunalCYANotSystemUserController {
   public get(req: AppRequest, res: Response): void {
+    const languageParam = getLanguageParam(req.url);
     const userCase = req.session?.userCase;
+    if (userCase.contactApplicationType === undefined) {
+      logger.error('Selected application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,

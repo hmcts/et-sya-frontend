@@ -94,7 +94,7 @@ export default class StoredToSubmitController {
       userCase.genericTseApplicationCollection,
       req.params.appId
     );
-    if (!selectedApplication) {
+    if (selectedApplication === undefined) {
       logger.error('Selected application not found');
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
