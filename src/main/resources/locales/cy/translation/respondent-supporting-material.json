@@ -9,7 +9,7 @@
   "genericGuidanceItem3": "Os ydych yn llwytho dogfennau ysgrifenedig gyda newidiadau wedi’u marcio, gwnewch yn siŵr bod y nodwedd hon ymlaen ar eich cyfrifiadur",
   "boxLabel": "Defnyddiwch y blwch hwn i ddarparu unrhyw ddeunydd ategol. Gallwch lwytho ffeil hefyd os ydych yn dymuno gwneud hynny.",
   "remove": "Dileu",
-  "noFilesUpload": "<p class=\"govuk-body\">Nid oes ffeiliau wedi cael eu llwytho</p>",
+  "noFilesUpload": "Nid oes ffeiliau wedi cael eu llwytho",
   "uploadFileButton": "Llwytho ffeil",
   "files": {
     "title": "Llwytho ffeil",
