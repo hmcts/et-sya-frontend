@@ -84,7 +84,7 @@ export default class StoredToSubmitController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    return res.redirect(PageUrls.APPLICATION_COMPLETE);
+    return res.redirect(PageUrls.APPLICATION_COMPLETE + languageParam);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -94,9 +94,13 @@ export default class StoredToSubmitController {
       userCase.genericTseApplicationCollection,
       req.params.appId
     );
+    if (!selectedApplication) {
+      logger.error('Selected application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
     userCase.selectedGenericTseApplication = selectedApplication;
 
-    const document = selectedApplication?.value?.documentUpload;
+    const document = selectedApplication.value?.documentUpload;
     const accessToken = req.session.user?.accessToken;
     if (document) {
       try {

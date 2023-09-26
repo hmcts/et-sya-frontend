@@ -1,9 +1,11 @@
-import axios, { AxiosResponse } from 'axios';
+import AxiosInstance, { AxiosResponse } from 'axios';
 
 import StoredToSubmitController from '../../../main/controllers/StoredToSubmitController';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { InterceptPaths, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { HubLinksStatuses } from '../../../main/definitions/hub';
 import applicationDetailsJsonRaw from '../../../main/resources/locales/en/translation/application-details.json';
 import yourApplicationsJsonRaw from '../../../main/resources/locales/en/translation/your-applications.json';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -12,7 +14,30 @@ import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 jest.mock('axios');
-const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+const mockCaseApi = {
+  axios: AxiosInstance,
+  createCase: jest.fn(),
+  getUserCases: jest.fn(),
+  downloadClaimPdf: jest.fn(),
+  getCaseDocument: jest.fn(),
+  getDocumentDetails: jest.fn(),
+  updateDraftCase: jest.fn(),
+  updateHubLinksStatuses: jest.fn(),
+  submitClaimantTse: jest.fn(),
+  storeClaimantTse: jest.fn(),
+  storedToSubmitClaimantTse: jest.fn(),
+  respondToApplication: jest.fn(),
+  changeApplicationStatus: jest.fn(),
+  updateSendNotificationState: jest.fn(),
+  updateJudgmentNotificationState: jest.fn(),
+  updateDecisionState: jest.fn(),
+  addResponseSendNotification: jest.fn(),
+  updateResponseAsViewed: jest.fn(),
+  getUserCase: jest.fn(),
+  submitCase: jest.fn(),
+  uploadDocument: jest.fn(),
+};
+const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
 jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
 describe('Stored to Submit Controller', () => {
@@ -37,7 +62,7 @@ describe('Stored to Submit Controller', () => {
     } as AxiosResponse<CaseApiDataResponse>)
   );
 
-  const tseAppCollection = [
+  const tseAppCollection: GenericTseApplicationTypeItem[] = [
     {
       id: '234',
       value: {
@@ -81,12 +106,14 @@ describe('Stored to Submit Controller', () => {
     const body = { confirmCopied: YesOrNo.YES };
     const req = mockRequest({ body, session: { userCase } });
     const res = mockResponse();
-    req.params.appId = '1';
+    req.params.appId = '234';
     req.url = PageUrls.STORED_TO_SUBMIT + languages.ENGLISH_URL_PARAMETER;
+    req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    req.session.userCase.selectedGenericTseApplication = tseAppCollection[0];
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(InterceptPaths.STORED_TO_SUBMIT_UPDATE + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.APPLICATION_COMPLETE + languages.ENGLISH_URL_PARAMETER);
   });
 
   it('should render the same page when nothing is selected', async () => {
