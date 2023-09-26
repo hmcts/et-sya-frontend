@@ -3,8 +3,7 @@
   "submitDate": "Dyddiad cyflwyno",
   "application": "y Cais",
   "status": "Statws",
-  "copyToOtherPartyYes": "Welsh Translation required",
-  "Amend response": "Welsh Translation required",
+  "Amend response": "Gwneud cais i ddiwygio fy hawliad",
   "Change personal details": "Newid manylion personol",
   "Claimant not complied": "Ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
   "Consider a decision afresh": "Ystyried penderfyniad o’r newydd",
@@ -12,8 +11,8 @@
   "Order other party": "Orchymyn i’r parti arall",
   "Order a witness to attend to give evidence": "Orchymyn tyst i fod yn bresennol i roi tystiolaeth",
   "Postpone a hearing": "Ohirio gwrandawiad",
-  "Reconsider judgement": "Cais i ailystyried dyfarniad",
-  "Restrict publicity": "Cais i gyfyngu ar gyhoeddusrwydd",
+  "Reconsider judgement": "Ailystyried dyfarniad",
+  "Restrict publicity": "Gyfyngu ar gyhoeddusrwydd",
   "Strike out all or part of a claim": "Dileu'r hawliad cyfan neu ran o'r hawliad",
   "Vary or revoke an order": "Amrywio neu ddiddymu gorchymyn"
 }
