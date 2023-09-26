@@ -5,6 +5,7 @@ import { AnyRecord } from '../../definitions/util-types';
 
 export const getFiles = (
   userCase: CaseWithId | undefined,
+  languageParam: string,
   selectedApplication: string,
   translations: AnyRecord
 ): SummaryListRow[] => {
@@ -12,8 +13,8 @@ export const getFiles = (
     return [
       {
         key: {
-          html: translations.noFilesUpload,
-          classes: 'govuk-!-font-weight-regular-m',
+          text: translations.noFilesUpload,
+          classes: 'govuk-body govuk-!-font-weight-regular govuk-!-width-three-quarters',
         },
       },
     ];
@@ -23,7 +24,7 @@ export const getFiles = (
         userCase.contactApplicationFile.document_filename,
         '',
         createChangeAction(
-          PageUrls.REMOVE_FILE.replace(':application', selectedApplication),
+          PageUrls.REMOVE_FILE.replace(':application', selectedApplication + languageParam),
           translations.remove,
           translations.remove
         )
