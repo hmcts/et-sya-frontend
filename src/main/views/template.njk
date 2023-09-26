@@ -94,7 +94,7 @@ if isLoggedIn %}
   {% set phaseBarHtml = '<a class="govuk-link" href="' + phaseBanner.smartSurveyFeedbackUrl + smartSurveyPageInfo + '" target="_blank">' + phaseBanner.feedback + "</a> " + phaseBanner.additionalText %}
 
 
-  {% if welshEnabled %}
+  {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
     {% set queryStringConcat = "" %}
 
     {% if "lng=" in currentUrl %}
@@ -115,6 +115,7 @@ if isLoggedIn %}
     {% endif %}
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
+  {% else %}  
   {% endif %}
 
   {{ timeoutModal() }}
