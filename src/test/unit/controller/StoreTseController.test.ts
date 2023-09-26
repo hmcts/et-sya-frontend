@@ -1,10 +1,16 @@
+import AxiosInstance from 'axios';
+
 import StoreTseController from '../../../main/controllers/StoreTseController';
-import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import * as StoreTseCaseHelpers from '../../../main/controllers/helpers/StoreTseCaseHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
+import * as CaseService from '../../../main/services/CaseService';
+import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+
+jest.mock('axios');
+const caseApi = new CaseApi(AxiosInstance as jest.Mocked<typeof AxiosInstance>);
+jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
 describe('Store tell something else Controller', () => {
   it('should redirect to PageUrls.STORED_APPLICATION_CONFIRMATION', async () => {
@@ -40,8 +46,6 @@ describe('Store tell something else Controller', () => {
       document_mime_type: 'pdf',
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
-    jest.spyOn(StoreTseCaseHelpers, 'storeClaimantTse').mockImplementationOnce(() => Promise.resolve());
     await new StoreTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);

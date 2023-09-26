@@ -4,10 +4,10 @@ import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
+import { clearTseFields } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { storeClaimantTse } from './helpers/StoreTseCaseHelpers';
 
 const logger = getLogger('StoreTseController');
 
@@ -18,14 +18,14 @@ export default class StoreTseController {
 
     try {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.STORED;
-      await handleUpdateHubLinksStatuses(req, logger);
+      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     } catch (error) {
       logger.info(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     try {
-      await storeClaimantTse(req, logger);
+      await getCaseApi(req.session.user?.accessToken).storeClaimantTse(req.session.userCase);
     } catch (error) {
       logger.info(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);

@@ -48,7 +48,7 @@ caseApi.getUserCase = jest.fn().mockResolvedValue(
   } as AxiosResponse<CaseApiDataResponse>)
 );
 
-describe('Application complete page', () => {
+describe('Stored application confirmation page', () => {
   beforeAll(async () => {
     await request(mockApp({}))
       .get(PageUrls.STORED_APPLICATION_CONFIRMATION)
@@ -69,7 +69,7 @@ describe('Application complete page', () => {
 
   it('should display paragraph header', () => {
     const title = htmlRes.getElementsByClassName(pHeader);
-    expect(title[2].innerHTML).contains(storedAppComfirmationJson.whatHappensNext, 'Panel title does not exist');
+    expect(title[2].innerHTML).contains(storedAppComfirmationJson.whatHappensNext, 'Paragraph header does not exist');
   });
 
   it('should display save and continue and save as draft buttons', () => {
