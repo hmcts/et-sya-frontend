@@ -32,7 +32,7 @@ export default class ContactTheTribunalCYAController {
 
     const downloadLink = createDownloadLink(userCase?.contactApplicationFile);
 
-    const featureTemplate = await getFlagValue('welsh-language', null);
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const languageParam = getLanguageParam(req.url);
 
     const cyaContent = getCyaContent(
@@ -55,7 +55,7 @@ export default class ContactTheTribunalCYAController {
       cancelPage,
       submitRef: InterceptPaths.SUBMIT_TRIBUNAL_CYA + languageParam,
       cyaContent,
-      featureTemplate,
+      welshEnabled,
     });
   }
 }
