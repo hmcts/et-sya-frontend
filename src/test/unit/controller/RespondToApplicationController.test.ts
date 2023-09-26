@@ -1,6 +1,7 @@
 import RespondToApplicationController from '../../../main/controllers/RespondToApplicationController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -13,7 +14,10 @@ describe('Respond to application Controller', () => {
     common: {},
   };
 
-  it('should render the Respond to application page', () => {
+  const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockClient.mockResolvedValue(true);
+
+  it('should render the Respond to application page', async () => {
     const controller = new RespondToApplicationController();
     const tseAppCollection = [
       {
@@ -39,7 +43,7 @@ describe('Respond to application Controller', () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
 
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPOND_TO_APPLICATION, expect.anything());
   });
 
