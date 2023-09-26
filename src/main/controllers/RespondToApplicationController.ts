@@ -105,7 +105,7 @@ export default class RespondToApplicationController {
       }
     }
     const downloadLink = createDownloadLink(document);
-    const featureTemplate = await getFlagValue('welsh-language', null);
+    const welshEnabled = await getFlagValue('welsh-language', null);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.COMMON,
@@ -122,7 +122,7 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
-      featureTemplate,
+      welshEnabled,
       appContent: getTseApplicationDetails(
         selectedApplication,
         translations,
