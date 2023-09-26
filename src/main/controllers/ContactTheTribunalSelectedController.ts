@@ -74,7 +74,8 @@ export default class ContactTheTribunalSelectedController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session.userCase;
     userCase.contactApplicationText = req.body.contactApplicationText;
-    const languageParam = getLanguageParam(req.url);
+    const redirectPageWithErrorMessages = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
+    const redirectUrlWithErrorMessages = setUrlLanguageFromSessionLanguage(req, redirectPageWithErrorMessages);
 
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     req.session.errors = [];
@@ -89,7 +90,7 @@ export default class ContactTheTribunalSelectedController {
     );
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}${languageParam}`);
+      return res.redirect(redirectUrlWithErrorMessages);
     }
 
     if (req.body.upload) {
@@ -102,7 +103,7 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}${languageParam}`);
+      return res.redirect(redirectUrlWithErrorMessages);
     }
     req.session.errors = [];
 
