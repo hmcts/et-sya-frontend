@@ -4,13 +4,14 @@ import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { ErrorPages, InterceptPaths, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -19,9 +20,8 @@ import {
 } from './helpers/DocumentHelpers';
 import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
-import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StoredToSubmitController');
 
@@ -57,14 +57,34 @@ export default class StoredToSubmitController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    setUserCase(req, this.form);
+    const languageParam = getLanguageParam(req.url);
+    const userCase = req.session?.userCase;
+
     const errors = returnSessionErrors(req, this.form);
     if (errors.length > 0) {
       req.session.errors = errors;
       return res.redirect(req.url);
     }
     req.session.errors = [];
-    returnNextPage(req, res, setUrlLanguage(req, InterceptPaths.STORED_TO_SUBMIT_UPDATE));
+
+    try {
+      userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
+      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    try {
+      await getCaseApi(req.session.user?.accessToken).storedToSubmitClaimantTse(req.session.userCase);
+      userCase.selectedGenericTseApplication = undefined;
+      userCase.confirmCopied = undefined;
+    } catch (error) {
+      logger.error(error.message);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    return res.redirect(PageUrls.APPLICATION_COMPLETE);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
