@@ -11,6 +11,7 @@ import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
+import { retrieveCurrentLocale } from './ApplicationTableRecordTranslationHelper';
 import { clearTseFields } from './CaseHelpers';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
@@ -69,6 +70,11 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 ): GenericTseApplicationTypeItem[] => {
   if (respondentItems?.length) {
     respondentItems.forEach(item => {
+      item.value.date = new Date(item.value?.date).toLocaleDateString(retrieveCurrentLocale(url), {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
       item.linkValue = translations[item.value.type];
       item.redirectUrl = `/respondent-application-details/${item.id}${getLanguageParam(url)}`;
 
