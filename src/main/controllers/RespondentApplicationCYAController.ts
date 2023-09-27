@@ -10,9 +10,11 @@ import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 export default class RespondentApplicationCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     userCase.isRespondingToRequestOrOrder = false;
 
@@ -50,6 +52,7 @@ export default class RespondentApplicationCYAController {
         downloadLink,
         PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', userCase.selectedGenericTseApplication.id)
       ),
+      welshEnabled,
     });
   }
 }

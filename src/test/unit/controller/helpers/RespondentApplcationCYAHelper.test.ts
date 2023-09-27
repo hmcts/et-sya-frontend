@@ -5,8 +5,13 @@ import { AnyRecord } from '../../../../main/definitions/util-types';
 import common from '../../../../main/resources/locales/en/translation/common.json';
 import respondentCYARaw from '../../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
+
 
 describe('Respondent application CYA controller helper', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
+  
   it('should return expected content', () => {
     const translationJsons = { ...respondentCYARaw, ...common };
     const req = mockRequestWithTranslation({}, translationJsons);
