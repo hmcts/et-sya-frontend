@@ -102,7 +102,7 @@ describe('Respondent application CYA controller helper', () => {
     const appContent = getRespondentCyaContent(
       userCase,
       translations,
-      '?lng=cy',
+      languages.ENGLISH_URL_PARAMETER,
       '/supporting-material',
       'downloadLink',
       '/respond-to-application'
