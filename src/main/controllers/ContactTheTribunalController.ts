@@ -20,10 +20,6 @@ export default class ContactTheTribunalController {
     };
     const languageParam = getLanguageParam(req.url);
     const welshEnabled = await getFlagValue('welsh-language', null);
-    const showAllSectionsText = translations.showAllSections;
-    const hideAllSectionsText = translations.hideAllSections;
-    const showSectionText = translations.showSection;
-    const hideSectionText = translations.hideSection;
     const applicationsAccordionItems = applications.map(application => {
       const label = translations.sections[application].label;
       return {
@@ -48,11 +44,11 @@ export default class ContactTheTribunalController {
       ...content,
       hideContactUs: true,
       applicationsAccordionItems,
-      showAllSectionsText,
-      hideAllSectionsText,
-      showSectionText,
-      hideSectionText,
       welshEnabled,
+      showAllSectionsText: translations.showAllSections,
+      hideAllSectionsText: translations.hideAllSections,
+      showSectionText: translations.showSection,
+      hideSectionText: translations.hideSection,
     });
   }
 }
