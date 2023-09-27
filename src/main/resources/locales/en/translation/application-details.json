@@ -6,6 +6,8 @@
   "applicationType": "Application type",
   "legend": "What do you want to tell or ask the tribunal?",
   "supportingMaterial": "Supporting material",
+  "Respondent": "Respondent",
+  "Claimant": "Claimant",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "otherPartyResponse": "Other party response",
   "responder": "Response from",
@@ -45,5 +47,7 @@
   "notificationWithSpace": "<br><br>Notification",
   "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Decision made by",
-  "decisionType": "Type of decision"
+  "decisionType": "Type of decision",
+  "Yes": "Yes",
+  "No": "No"
 }

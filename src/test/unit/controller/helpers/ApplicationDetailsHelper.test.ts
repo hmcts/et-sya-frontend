@@ -15,7 +15,7 @@ describe('Application details', () => {
       number: '1',
       status: 'inProgress',
       type: 'withdraw',
-      applicant: 'James',
+      applicant: 'Claimant',
       date: '2022-12-12',
       details: 'test details',
       copyToOtherPartyYesOrNo: YesOrNo.NO,
@@ -38,7 +38,7 @@ describe('Application details', () => {
     const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink');
 
     expect(appContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Applicant' });
-    expect(appContent[0].value).toEqual({ text: 'James' });
+    expect(appContent[0].value).toEqual({ text: 'Claimant' });
     expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application date' });
     expect(appContent[1].value).toEqual({ text: '2022-12-12' });
     expect(appContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application type' });

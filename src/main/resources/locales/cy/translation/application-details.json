@@ -4,6 +4,8 @@
   "applicant": "Welsh Translation required",
   "requestDate": "Welsh Translation required",
   "applicationType": "Welsh Translation required",
+  "Claimant": "Ceisydd",
+  "Respondent": "Atebydd",
   "legend": "Welsh Translation required",
   "supportingMaterial": "Welsh Translation required",
   "copyCorrespondence": "Welsh Translation required",
@@ -45,5 +47,7 @@
   "notificationWithSpace": "<br><br>Welsh Translation required",
   "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Welsh Translation required",
-  "decisionType": "Welsh Translation required"
+  "decisionType": "Welsh Translation required",
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

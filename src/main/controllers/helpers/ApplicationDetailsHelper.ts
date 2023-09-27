@@ -22,12 +22,12 @@ export const getTseApplicationDetails = (
   const rows: SummaryListRow[] = [];
 
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
+    addSummaryRow(translations.applicant, translations[application.applicant]),
     addSummaryRow(translations.requestDate, application.date),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {

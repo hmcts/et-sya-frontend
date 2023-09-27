@@ -8,6 +8,7 @@
   "legend": "What do you want to tell or ask the tribunal?",
   "respond": "Respond",
   "supportingMaterial": "Supporting material",
+  "Respondent": "Respondent",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "otherPartyResponseHeader": "Other party response",
   "responder": "Response from",
@@ -44,5 +45,7 @@
   "partyToRespond": "Party or parties to respond",
   "description": "Description",
   "requestMadeBy": "Request made by",
-  "mustRespond": "You must respond to the tribunal."
+  "mustRespond": "You must respond to the tribunal.",
+  "Yes": "Yes",
+  "No": "No"
 }
