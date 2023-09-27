@@ -12,7 +12,7 @@ export const getFiles = (
     return [
       {
         key: {
-          html: translations.noFilesUpload,
+          html: '<p class="govuk-body">' + translations.noFilesUpload + '</p>',
           classes: 'govuk-!-font-weight-regular-m',
         },
       },

@@ -9,7 +9,7 @@
   "genericGuidanceItem3": "if you are uploading written documents with tracked changes, make sure that tracked changes are turned on",
   "boxLabel": "Use this box to provide any supporting material. You can also upload a file if you wish.",
   "remove": "Remove",
-  "noFilesUpload": "<p class=\"govuk-body\">No files uploaded</p>",
+  "noFilesUpload": "No files uploaded",
   "uploadFileButton": "Upload file",
   "files": {
     "title": "Upload a file",
