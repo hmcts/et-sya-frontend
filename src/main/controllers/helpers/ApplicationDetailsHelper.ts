@@ -8,6 +8,7 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
@@ -17,7 +18,7 @@ export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   downloadLink: string,
-  locale: string
+  url: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
@@ -25,15 +26,9 @@ export const getTseApplicationDetails = (
   const yesNoTranslation: string =
     application.copyToOtherPartyYesOrNo === YesOrNo.YES ? translations.yes : translations.no;
 
-  const dateInLocale = new Date(application.date).toLocaleDateString(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   rows.push(
     addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, dateInLocale),
+    addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),

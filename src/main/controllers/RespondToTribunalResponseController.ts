@@ -10,7 +10,6 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
@@ -130,12 +129,7 @@ export default class RespondToTribunalResponseController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,

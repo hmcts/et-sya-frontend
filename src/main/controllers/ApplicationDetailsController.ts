@@ -10,7 +10,6 @@ import { getCaseApi } from '../services/CaseService';
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -96,12 +95,7 @@ export default class ApplicationDetailsController {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,

@@ -11,7 +11,6 @@ import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
@@ -123,12 +122,7 @@ export default class RespondToApplicationController {
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
       welshEnabled,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
     });
   };
 }
