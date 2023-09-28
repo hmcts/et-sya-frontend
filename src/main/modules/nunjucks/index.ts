@@ -152,7 +152,7 @@ export class Nunjucks {
       res.locals.pagePath = req.path;
       nunEnv.addGlobal('currentUrl', req.url);
       nunEnv.addGlobal('currentHost', req?.headers?.host?.toLowerCase());
-      nunEnv.addGlobal('dateInLocale', (dateToTransform: Date) => dateInLocale(dateToTransform, req.url));
+      nunEnv.addGlobal('dateToLocale', (dateToTransform: Date) => dateInLocale(dateToTransform, req.url));
       next();
     });
   }

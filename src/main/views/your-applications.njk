@@ -22,7 +22,7 @@
          {% if app.value.applicant === "Claimant" %}
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-              {{ dateInLocale(app.value.date) }}
+              {{ dateToLocale(app.value.date) }}
             </td>
             <td class="govuk-table__cell">
               <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link"> {{ app.linkValue }} </a>
