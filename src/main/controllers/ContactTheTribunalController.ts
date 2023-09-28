@@ -45,10 +45,6 @@ export default class ContactTheTribunalController {
       hideContactUs: true,
       applicationsAccordionItems,
       welshEnabled,
-      showAllSectionsText: translations.showAllSections,
-      hideAllSectionsText: translations.hideAllSections,
-      showSectionText: translations.showSection,
-      hideSectionText: translations.hideSection,
     });
   }
 }
