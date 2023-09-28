@@ -2,6 +2,7 @@ import RespondentSupportingMaterialController from '../../../main/controllers/Re
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import respondentSupportingMaterial from '../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -32,13 +33,15 @@ describe('Respondent supporting material controller', () => {
     });
   });
 
-  it('should render respondent supporting material controller page', () => {
+  it('should render respondent supporting material controller page', async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     const controller = new RespondentSupportingMaterialController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t }, translationJsons);
     request.params.appId = '1';
 
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, expect.anything());
   });
 
