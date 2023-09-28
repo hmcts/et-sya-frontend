@@ -10,6 +10,7 @@ import { getCaseApi } from '../services/CaseService';
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -91,7 +92,12 @@ export default class RespondentApplicationDetailsController {
       header,
       selectedApplication,
       redirectUrl,
-      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        supportingMaterialDownloadLink,
+        retrieveCurrentLocale(req.url)
+      ),
       decisionContent,
       respondButton,
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),

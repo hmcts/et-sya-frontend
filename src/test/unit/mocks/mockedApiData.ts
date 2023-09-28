@@ -160,8 +160,9 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '124',
         value: {
+          type: 'Amend response',
           applicant: Applicant.CLAIMANT,
-          date: '2019-05-02',
+          date: '2 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
         },
@@ -169,8 +170,9 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         id: '125',
         value: {
+          type: 'Amend response',
           applicant: Applicant.CLAIMANT,
-          date: '2019-05-03',
+          date: '3 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
         },

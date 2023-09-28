@@ -10,6 +10,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
@@ -119,7 +120,12 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        downloadLink,
+        retrieveCurrentLocale(req.url)
+      ),
     });
   };
 }
