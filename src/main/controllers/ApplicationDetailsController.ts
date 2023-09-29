@@ -5,6 +5,7 @@ import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants'
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
@@ -91,6 +92,8 @@ export default class ApplicationDetailsController {
       res.redirect(PageUrls.YOUR_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.APPLICATION_DETAILS, {
       ...content,
       header,
@@ -105,6 +108,7 @@ export default class ApplicationDetailsController {
       respondRedirectUrl,
       allResponses,
       decisionContent,
+      welshEnabled,
     });
   };
 }

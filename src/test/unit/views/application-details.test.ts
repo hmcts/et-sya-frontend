@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const applicationDetailsJSONRaw = fs.readFileSync(
@@ -29,6 +30,8 @@ const expectedRowHeader6 = applicationDetailsJSON.copyCorrespondence;
 let htmlRes: Document;
 
 describe('Application details page', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({

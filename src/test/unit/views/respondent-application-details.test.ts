@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../main/services/CaseService';
 import * as caseService from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
@@ -50,6 +51,9 @@ const adminDecisionRowHeader11 = '<br><br>Notification';
 const expectedResponseSummaryListHeader = 'Response 1';
 
 let htmlRes: Document;
+
+const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+mockLdClient.mockResolvedValue(true);
 
 jest.mock('axios');
 const axiosResponse: AxiosResponse = {

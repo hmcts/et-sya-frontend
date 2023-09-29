@@ -8,6 +8,7 @@ import { ErrorPages, PageUrls, Rule92Types, TranslationKeys } from '../definitio
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
@@ -127,6 +128,8 @@ export default class RespondToTribunalResponseController {
       TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE,
     ]);
     assignFormData(req.session.userCase, this.form.getFormFields());
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
       appContent: getTseApplicationDetails(
@@ -138,6 +141,7 @@ export default class RespondToTribunalResponseController {
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,
+      welshEnabled,
     });
   };
 }

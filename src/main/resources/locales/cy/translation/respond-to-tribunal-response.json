@@ -17,5 +17,7 @@
       "requiredFile": "Welsh Translation required",
       "tooLong": "Welsh Translation required"
     }
-  }
+  },
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

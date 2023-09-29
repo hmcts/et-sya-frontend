@@ -5,6 +5,7 @@ import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../definitions
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
@@ -87,6 +88,8 @@ export default class RespondentApplicationDetailsController {
       res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
@@ -103,6 +106,7 @@ export default class RespondentApplicationDetailsController {
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),
       adminRespondRedirectUrl,
       allResponses,
+      welshEnabled,
     });
   };
 }

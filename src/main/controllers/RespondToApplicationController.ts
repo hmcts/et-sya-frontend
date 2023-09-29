@@ -8,6 +8,7 @@ import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
@@ -111,6 +112,8 @@ export default class RespondToApplicationController {
       TranslationKeys.RESPOND_TO_APPLICATION,
     ]);
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.RESPOND_TO_APPLICATION, {
@@ -126,6 +129,7 @@ export default class RespondToApplicationController {
         downloadLink,
         retrieveCurrentLocale(req.url)
       ),
+      welshEnabled,
     });
   };
 }

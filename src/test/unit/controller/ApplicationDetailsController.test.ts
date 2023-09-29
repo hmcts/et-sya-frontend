@@ -4,6 +4,7 @@ import ApplicationDetailsController from '../../../main/controllers/ApplicationD
 import { DocumentDetailsResponse } from '../../../main/definitions/api/documentDetailsResponse';
 import { CaseWithId } from '../../../main/definitions/case';
 import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import applicationDetails from '../../../main/resources/locales/en/translation/application-details.json';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import * as CaseService from '../../../main/services/CaseService';
@@ -25,6 +26,8 @@ describe('Claimant Applications Controller', () => {
   };
 
   it('should render the claimant application details page', async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     const mockClient = jest.spyOn(CaseService, 'getCaseApi');
     mockClient.mockReturnValue(caseApi);
     caseApi.getDocumentDetails = jest.fn().mockResolvedValue(
