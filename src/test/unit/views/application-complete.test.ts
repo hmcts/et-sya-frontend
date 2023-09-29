@@ -23,7 +23,7 @@ const expectedParagraphYes1 = applicationCompleteJson.pYes.p1;
 const expectedParagraphYes1a = applicationCompleteJson.pYes.p1a;
 const expectedParagraphYes2 = applicationCompleteJson.pYes.p2;
 const expectedParagraphYes3 = applicationCompleteJson.pYes.p3;
-const applicationDate = new Date('2023-09-28T13:18:01.949Z');
+const applicationDate = new Date();
 applicationDate.setDate(applicationDate.getDate() + 7);
 const dateString = applicationDate.toLocaleDateString('en-GB', {
   year: 'numeric',
