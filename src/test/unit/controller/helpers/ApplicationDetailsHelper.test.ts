@@ -7,6 +7,7 @@ import {
 import { TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import applicationDetailsRaw from '../../../../main/resources/locales/en/translation/application-details.json';
+import yourApplicationsRaw from '../../../../main/resources/locales/en/translation/your-applications.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('Application details', () => {
@@ -27,12 +28,13 @@ describe('Application details', () => {
       linkValue: 'withdraw',
     } as GenericTseApplicationTypeItem;
 
-    const translationJsons = { ...applicationDetailsRaw };
+    const translationJsons = { ...applicationDetailsRaw, ...yourApplicationsRaw };
 
     const req = mockRequestWithTranslation({}, translationJsons);
     req.session.userCase.genericTseApplicationCollection = [selectedApplication];
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
 
     const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink', 'en-GB');
@@ -42,7 +44,7 @@ describe('Application details', () => {
     expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application date' });
     expect(appContent[1].value).toEqual({ text: '12 December 2022' });
     expect(appContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application type' });
-    expect(appContent[2].value).toEqual({ text: 'withdraw my claim' });
+    expect(appContent[2].value).toEqual({ text: 'Withdraw my claim' });
     expect(appContent[3].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'What do you want to tell or ask the tribunal?',

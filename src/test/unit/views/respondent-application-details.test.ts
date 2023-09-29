@@ -150,7 +150,7 @@ describe('Respondent Application details page', () => {
 
   it('should display title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).toContain(respondentApplicationDetailsJSON.applicationTo + 'amend response');
+    expect(title[0].innerHTML).toContain(respondentApplicationDetailsJSON.applicationTo + 'Amend response');
   });
 
   it('should display respondent application row headers', () => {
@@ -167,7 +167,7 @@ describe('Respondent Application details page', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListValueClass);
     expect(summaryListData[0].innerHTML).toContain('Respondent');
     expect(summaryListData[1].innerHTML).toContain('7 March 2023');
-    expect(summaryListData[2].innerHTML).toContain('amend response');
+    expect(summaryListData[2].innerHTML).toContain('Amend response');
     expect(summaryListData[3].innerHTML).toContain('Test text');
     expect(summaryListData[4].innerHTML).toContain('');
     expect(summaryListData[5].innerHTML).toContain(YesOrNo.YES);
