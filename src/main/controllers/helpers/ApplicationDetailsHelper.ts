@@ -235,7 +235,7 @@ const addNonAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.from,
+        text: translations[response.value.from],
       },
     },
     {
@@ -269,7 +269,7 @@ const addNonAdminResponse = async (
         text: translations.copyCorrespondence,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.copyToOtherParty },
+      value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
 };
