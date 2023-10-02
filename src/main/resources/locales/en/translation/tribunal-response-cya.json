@@ -6,5 +6,7 @@
   "copyToOtherPartyYesOrNo": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "copyToOtherPartyText": "Reason for not informing other party",
   "submitBtn": "Submit",
-  "cancelLink": "Cancel"
+  "cancelLink": "Cancel",
+  "youCannotMakeFurtherChanges": "You cannot make further changes to this correspondence after you store it",
+  "storeApplication": "Store application"
 }
