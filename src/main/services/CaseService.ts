@@ -9,7 +9,7 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls } from '../definitions/constants';
+import { JavaApiUrls, YES } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -112,6 +112,38 @@ export class CaseApi {
     } catch (error) {
       throw new Error('Error submitting claimant tse application: ' + axiosErrorDetails(error));
     }
+  };
+
+  storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
+        claimant_tse: {
+          contactApplicationType: caseItem.contactApplicationType,
+          contactApplicationText: caseItem.contactApplicationText,
+          contactApplicationFile: caseItem.contactApplicationFile,
+          copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
+          copyToOtherPartyText: caseItem.copyToOtherPartyText,
+          storedPending: YES,
+        },
+      })
+      .catch(function (error) {
+        throw new Error('Error store tse application status: ' + error);
+      });
+  };
+
+  storedToSubmitClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_CLAIMANT_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application status: ' + error);
+      });
   };
 
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {

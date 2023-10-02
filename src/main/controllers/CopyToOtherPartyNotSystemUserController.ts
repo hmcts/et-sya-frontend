@@ -1,50 +1,69 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
+import { isContent2500CharsOrLess } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase } from './helpers/CaseHelpers';
-import { getCaptionTextForCopyToOtherParty } from './helpers/CopyToOtherPartyHelper';
+import { getCaptionTextForCopyToOtherParty, getRedirectPageUrlNotSystemUser } from './helpers/CopyToOtherPartyHelper';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
-export default class CopyToOtherPartyController {
+export default class CopyToOtherPartyNotSystemUserController {
   private readonly form: Form;
 
-  private readonly CopyToOtherPartyContent: FormContent = {
+  private readonly CopyToOtherPartyNotSystemUserContent: FormContent = {
     fields: {
       copyToOtherPartyYesOrNo: {
         classes: 'govuk-radios',
         id: 'copyToOtherPartyYesOrNo',
         type: 'radios',
-        label: (l: AnyRecord): string => l.legend,
+        label: (l: AnyRecord): string => l.doYouWantToCopy,
         labelHidden: false,
-        labelSize: 'l',
+        labelSize: 'm',
         values: [
           {
             name: 'copyToOtherPartyYesOrNo',
-            label: (l: AnyRecord): string => l.yes,
+            label: (l: AnyRecord): string =>
+              '<p class="govuk-body">' +
+              l.yesIConfirmIWill +
+              '</p><p class="govuk-body"><strong>' +
+              l.important +
+              ':</strong> ' +
+              l.doNotSubmitYourApplication +
+              '</p><p class="govuk-body">' +
+              l.youShouldAlsoNotify +
+              '</p>',
             value: YesOrNo.YES,
           },
           {
             name: 'copyToOtherPartyYesOrNo',
-            label: (l: AnyRecord): string => l.no,
+            label: (l: AnyRecord): string =>
+              '<p class="govuk-body">' +
+              l.noIDoNotWantTo +
+              '</p><p class="govuk-body"><strong>' +
+              l.important +
+              ':</strong> ' +
+              l.youMustTellTheTribunal +
+              '</p>',
             value: YesOrNo.NO,
             subFields: {
               copyToOtherPartyText: {
                 id: 'copyToOtherPartyText',
                 name: 'copyToOtherPartyText',
                 type: 'textarea',
-                label: (l: AnyRecord): string => l.hintText,
-                labelSize: 'm',
+                label: (l: AnyRecord): string => l.giveDetails,
+                labelSize: 's',
                 isPageHeading: true,
                 classes: 'govuk-textarea',
+                maxlength: 2500,
+                validator: isContent2500CharsOrLess,
               },
             },
           },
@@ -53,12 +72,11 @@ export default class CopyToOtherPartyController {
     },
     submit: {
       text: (l: AnyRecord): string => l.continue,
-      classes: 'govuk-!-margin-right-2',
     },
   };
 
   constructor() {
-    this.form = new Form(<FormFields>this.CopyToOtherPartyContent.fields);
+    this.form = new Form(<FormFields>this.CopyToOtherPartyNotSystemUserContent.fields);
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
@@ -72,24 +90,16 @@ export default class CopyToOtherPartyController {
     req.session.errors = [];
     if (copyToOtherPartyError) {
       req.session.errors.push(copyToOtherPartyError);
-      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY + languageParam);
+      return res.redirect(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languageParam);
     }
-    let redirectPage = '';
-    if (req.session.contactType === Rule92Types.CONTACT) {
-      redirectPage = PageUrls.CONTACT_THE_TRIBUNAL_CYA + languageParam;
-    } else if (req.session.contactType === Rule92Types.RESPOND) {
-      redirectPage = PageUrls.RESPONDENT_APPLICATION_CYA + languageParam;
-    } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
-      redirectPage = PageUrls.TRIBUNAL_RESPONSE_CYA + languageParam;
-    }
-    return res.redirect(redirectPage);
+    return res.redirect(getRedirectPageUrlNotSystemUser(req) + languageParam);
   };
 
   public get = (req: AppRequest, res: Response): void => {
-    const content = getPageContent(req, this.CopyToOtherPartyContent, [
+    const content = getPageContent(req, this.CopyToOtherPartyNotSystemUserContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.COPY_TO_OTHER_PARTY,
+      TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
     ]);
 
     const captionTranslations: AnyRecord = {
@@ -97,9 +107,9 @@ export default class CopyToOtherPartyController {
       ...req.t(TranslationKeys.COPY_TO_OTHER_PARTY, { returnObjects: true }),
     };
 
-    res.render(TranslationKeys.COPY_TO_OTHER_PARTY, {
+    res.render(TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER, {
       ...content,
-      copyToOtherPartyYesOrNo: getCaptionTextForCopyToOtherParty(req, captionTranslations),
+      applicationType: getCaptionTextForCopyToOtherParty(req, captionTranslations),
       cancelLink: getCancelLink(req),
     });
   };

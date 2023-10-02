@@ -3,6 +3,7 @@
   "applicationTo": "Application to ",
   "applicant": "Applicant",
   "requestDate": "Application date",
+  "storedDate": "Application stored date",
   "applicationType": "Application type",
   "legend": "What do you want to tell or ask the tribunal?",
   "supportingMaterial": "Supporting material",

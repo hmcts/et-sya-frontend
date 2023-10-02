@@ -22,6 +22,7 @@ import {
   checkIfRespondentIsSystemUser,
   getClaimantAppsAndUpdateStatusTag,
   getHubLinksUrlMap,
+  getStoredPendingApplicationLinks,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
   shouldShowJudgmentReceived,
@@ -186,6 +187,7 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
+      storedPendingApplicationLinks: getStoredPendingApplicationLinks(allApplications, languageParam),
     });
   }
 }

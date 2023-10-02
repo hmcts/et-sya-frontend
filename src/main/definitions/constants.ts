@@ -116,6 +116,10 @@ export const TranslationKeys = {
   RESPONDENT_POSTCODE_ENTER: 'respondent-postcode-enter',
   WORK_POSTCODE_SELECT: 'work-postcode-select',
   WORK_POSTCODE_ENTER: 'work-postcode-enter',
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: 'copy-to-other-party-not-system-user',
+  CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
+  STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
+  STORED_TO_SUBMIT: 'stored-to-submit',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
@@ -231,6 +235,12 @@ export const PageUrls = {
   WORK_POSTCODE_ENTER: '/work-postcode-enter',
   ADDRESS_POSTCODE_SELECT: '/address-postcode-select',
   ADDRESS_POSTCODE_ENTER: '/address-postcode-enter',
+  // Rule 92 non-system user
+  COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER: '/copy-to-other-party-not-system-user',
+  CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
+  STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation',
+  STORED_TO_SUBMIT: '/stored-to-submit/:appId',
+  STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
@@ -244,6 +254,7 @@ export const InterceptPaths = {
   SUBMIT_TRIBUNAL_CYA: '/submitTribunalCya',
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
+  STORE_TRIBUNAL_CYA: '/storeTribunalCya',
 } as const;
 
 export const ErrorPages = {
@@ -275,6 +286,7 @@ export const JavaApiUrls = {
   RESPOND_TO_APPLICATION: 'cases/respond-to-application',
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
+  SUBMIT_STORED_CLAIMANT_APPLICATION: 'cases/submit-stored-claimant-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
@@ -559,3 +571,8 @@ export const DOCUMENT_CONTENT_TYPES = {
   RTF: ['rtf', 'application/rtf'],
   RTX: ['rtx', 'application/rtf'],
 };
+
+export const TseStatusStored = 'Stored';
+
+export const YES = 'Yes';
+export const NO = 'No';

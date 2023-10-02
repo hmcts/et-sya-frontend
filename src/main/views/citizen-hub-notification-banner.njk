@@ -182,19 +182,19 @@
 
      <h3 class="govuk-notification-banner__heading">
         <a class="govuk-link" href="{{app.appUrl}}">Respond to the tribunal</a>
-      </h3> 
+      </h3>
 
     {% else %}
     <h3 class="govuk-notification-banner__heading">
         <a class="govuk-link" href="{{app.appUrl}}">View the response</a>
       </h3>
-    {% endif %}  
+    {% endif %}
 
   {% endset %}
   {{ govukNotificationBanner({
           html: adminNotificationHtml,
           titleText: important
-      }) 
+      })
   }}
 {% endfor %}
 
@@ -255,3 +255,17 @@
     {% endif %}
   {% endfor %}
 {% endif %}
+
+{% for link in storedPendingApplicationLinks %}
+  {% set storedPendingApplicationHtml %}
+    <h3 class="govuk-notification-banner__heading">{{notificationBanner.storedPending.header}}</h3>
+    <p class="govuk-body">{{notificationBanner.storedPending.line1}}</p>
+    <p class="govuk-body">{{notificationBanner.storedPending.line2}}</p>
+    <p class="govuk-body"><a class="govuk-link" href="{{link}}">{{notificationBanner.storedPending.link}}</a></p>
+  {% endset %}
+  {{ govukNotificationBanner({
+        html: storedPendingApplicationHtml,
+        titleText: important
+    })
+  }}
+{% endfor %}

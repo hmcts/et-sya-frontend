@@ -1,0 +1,36 @@
+{% extends "template.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {% include "back-link.njk"%}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-!-width-two-thirds">
+    {{ govukPanel({
+      titleText: titleText
+    }) }}
+    <p class="govuk-heading-m">{{ whatHappensNext }}</p>
+    <p class="govuk-body">{{ youMustSubmitYourApplication }}</p>
+    <p class="govuk-body"><a href="{{ viewThisCorrespondenceLink }}" class="govuk-link" target="_blank">{{ viewThisCorrespondence }} ({{ opensInNewTab }})</a></p>
+
+    {% if document %}
+    <p class="govuk-body">
+      {{ viewTheSupportingDocuments }} <br/>
+      <a href="{{ documentLink }}" class="govuk-link" target="_blank">{{ document.document_filename }}</a>
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="govuk-width-container">
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: closeAndReturn,
+        href: redirectUrl
+      }) }}
+    </div>
+  </div>
+{% endblock %}
