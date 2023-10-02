@@ -94,7 +94,9 @@ describe('Copy to other party not system user Controller', () => {
 
     await controller.post(req, res);
 
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.TRIBUNAL_RESPONSE_CYA + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(
+      PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should redirect to tribunal check your answers page when no is selected and summary text provided', async () => {
