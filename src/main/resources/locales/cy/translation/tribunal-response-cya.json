@@ -6,5 +6,7 @@
   "copyToOtherPartyYesOrNo": "Welsh Translation required",
   "copyToOtherPartyText": "Welsh Translation required",
   "submitBtn": "Cadw a pharhau",
-  "cancelLink": "Allgofnodi"
+  "cancelLink": "Allgofnodi",
+  "youCannotMakeFurtherChanges": "Ni allwch wneud newidiadau pellach i'r ohebiaeth hon ar ôl i chi ei storio",
+  "storeApplication": "Gwneud cais i storio’r wybodaeth"
 }
