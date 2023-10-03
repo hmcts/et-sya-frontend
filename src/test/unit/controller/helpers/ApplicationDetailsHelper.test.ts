@@ -61,4 +61,31 @@ describe('Application details', () => {
     });
     expect(appContent[6].value).toEqual({ text: 'test reason' });
   });
+
+  it('should return expected application details with Stored wordings', () => {
+    const genericTseApplicationType = {
+      number: '1',
+      status: 'Stored',
+      type: 'withdraw',
+      applicant: 'Claimant',
+      date: '2022-12-12',
+      details: 'test details',
+      copyToOtherPartyYesOrNo: YesOrNo.YES,
+    } as GenericTseApplicationType;
+
+    const selectedApplication = {
+      value: genericTseApplicationType,
+      linkValue: 'withdraw',
+    } as GenericTseApplicationTypeItem;
+
+    const translationJsons = { ...applicationDetailsRaw };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+    };
+
+    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink');
+
+    expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application stored date' });
+  });
 });
