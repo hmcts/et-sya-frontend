@@ -1,6 +1,5 @@
 import * as path from 'path';
 
-import config from 'config';
 import express from 'express';
 import nunjucks from 'nunjucks';
 
@@ -28,7 +27,6 @@ export class Nunjucks {
       }
     );
     createFilters(nunEnv);
-    nunEnv.addGlobal('welshEnabled', process.env.FT_WELSH === 'true' || config.get('featureFlags.welsh') === 'true');
 
     nunEnv.addGlobal('getContent', function (prop: ((param: string) => string) | string): string {
       return typeof prop === 'function' ? prop(this.ctx) : prop;
