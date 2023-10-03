@@ -16,9 +16,9 @@
   },
   "details": {
     "summaryText": "Dod o hyd i gymorth cyfreithiol ",
-    "p1": "Welsh Translation required.",
-    "p2": "Welsh Translation required.",
-    "p3": "Welsh Translation required."
+    "p1": "Os oes angen cymorth neu gyngor cyfreithiol arnoch cyn ymateb, cysylltwch â Chymdeithas y Gyfraith i ddod o hyd i weithwyr proffesiynol ym maes y gyfraith.",
+    "p2": "Chwilio am weithwyr proffesiynol ym maes y gyfraith yng Nghymru a Lloegr (yn agor mewn tab newydd).",
+    "p3": "Chwilio am weithwyr proffesiynol ym maes y gyfraith yn Yr Alban (yn agor mewn tab newydd)."
   },
   "applicationTo": "Welsh Translation required ",
   "applicant": "Ceisydd",
@@ -46,12 +46,12 @@
   "Vary or revoke an order": "amrywio neu ddiddymu gorchymyn",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Welsh Translation required?"
+      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol hefyd"
     },
     "responseText": {
-      "required": "Welsh Translation required",
-      "requiredFile": "Welsh Translation required",
-      "tooLong": "Welsh Translation required"
+      "required": "Darparwch fanylion eich ymateb a/neu llwythwch ddeunydd ategol",
+      "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
+      "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
   }
 }
