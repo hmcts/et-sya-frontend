@@ -248,7 +248,7 @@ export const getStoredPendingApplication = (
   languageParam: string
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
-  for (const app of apps) {
+  for (const app of apps || []) {
     if (app.value.status === TseStatusStored) {
       const storeNotification: StoreNotification = {
         viewUrl: getStoredToSubmitLink(app.id, languageParam),
