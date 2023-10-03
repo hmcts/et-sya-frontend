@@ -49,12 +49,15 @@ import {
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
+import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
+
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
+    const welshEnabled = await getFlagValue('welsh-language', null);
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -186,6 +189,8 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
+      languageParam: getLanguageParam(req.url),
+      welshEnabled,
     });
   }
 }
