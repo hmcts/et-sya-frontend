@@ -256,12 +256,12 @@
   {% endfor %}
 {% endif %}
 
-{% for link in storedPendingApplicationLinks %}
+{% for app in storedPendingApplication %}
   {% set storedPendingApplicationHtml %}
     <h3 class="govuk-notification-banner__heading">{{notificationBanner.storedPending.header}}</h3>
     <p class="govuk-body">{{notificationBanner.storedPending.line1}}</p>
     <p class="govuk-body">{{notificationBanner.storedPending.line2}}</p>
-    <p class="govuk-body"><a class="govuk-link" href="{{link}}">{{notificationBanner.storedPending.link}}</a></p>
+    <p class="govuk-body"><a class="govuk-link" href="{{app.viewUrl}}">{{notificationBanner.storedPending.link}}</a></p>
   {% endset %}
   {{ govukNotificationBanner({
         html: storedPendingApplicationHtml,
