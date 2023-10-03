@@ -195,6 +195,9 @@ export interface Case {
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
   rule92state?: boolean;
+  viewCorrespondenceLink?: string;
+  viewCorrespondenceDoc?: Document;
+
   documentCollection?: DocumentTypeItem[];
   respondentEnterPostcode?: string;
   workEnterPostcode?: string;
