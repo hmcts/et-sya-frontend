@@ -6,7 +6,7 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { setUserCase } from './helpers/CaseHelpers';
 import { getCopyToOtherPartyError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -83,7 +83,8 @@ export default class CopyToOtherPartyController {
     return res.redirect(redirectPage);
   };
 
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     let captionSubject = '';
     let captionText = '';
     const contactType = req.session.contactType;
@@ -113,6 +114,7 @@ export default class CopyToOtherPartyController {
       ...content,
       copyToOtherPartyYesOrNo: captionText,
       cancelLink: redirectUrl,
+      welshEnabled,
     });
   };
 }
