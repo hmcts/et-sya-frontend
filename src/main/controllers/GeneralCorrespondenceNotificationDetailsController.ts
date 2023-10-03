@@ -52,7 +52,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
 
     res.render(TranslationKeys.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS, {
       ...content,
-      correspondenceContent: getCorrespondenceNotificationDetails(translations, selectedCorrespondence),
+      correspondenceContent: getCorrespondenceNotificationDetails(translations, selectedCorrespondence, req.url),
     });
   };
 }
