@@ -103,6 +103,8 @@ describe('Citizen hub page', () => {
     ])(
       'should show correct completed tasks in progress bar: %o',
       async ({ expectedCompleted, caseApiDataResponse }) => {
+        const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+        mockLdClient.mockResolvedValue(true);
         caseApi.getUserCase = jest.fn().mockResolvedValue(
           Promise.resolve({
             data: {
@@ -291,7 +293,8 @@ describe('Citizen hub page', () => {
       async ({ userCaseDetails, selector, expectedText }) => {
         mockedCase = { ...mockedCase, ...userCaseDetails };
         mockFromApiFormat.mockReturnValue(mockedCase);
-
+        const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+        mockLdClient.mockResolvedValue(true);
         await request(
           mockApp({
             userCase: {} as Partial<CaseWithId>,
@@ -309,6 +312,8 @@ describe('Citizen hub page', () => {
 
   describe('Alert containing a link to view the response acknowledgement documents on the citizen hub page', () => {
     it('should render link to Rejection of response document Page', async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
@@ -358,6 +363,8 @@ describe('Citizen hub page', () => {
 
   describe('Should not show the alert when the corresponding hublink has been viewed', () => {
     it('Notification banner should not appear - the notificaiton banner selector should return null', async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
