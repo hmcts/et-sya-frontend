@@ -6,6 +6,7 @@ import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp, mockSession } from '../mocks/mockApp';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 const copyToOtherPartyJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/copy-to-other-party.json'),
@@ -26,6 +27,8 @@ const expectedCaptionApplication = copyToOtherPartyJson.respondToApplication;
 let htmlRes: Document;
 describe('Copy to the other party page', () => {
   beforeAll(async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     await request(mockApp({}))
       .get(PageUrls.COPY_TO_OTHER_PARTY)
       .then(res => {
