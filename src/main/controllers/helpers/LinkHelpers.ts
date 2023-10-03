@@ -14,10 +14,6 @@ export const getAppDetailsLink = (appId: string, languageParam: string): string 
   return PageUrls.APPLICATION_DETAILS.replace(':appId', appId) + languageParam;
 };
 
-export const getTribunalOrderOrRequestDetailsLink = (orderId: string, languageParam: string): string => {
-  return PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', orderId) + languageParam;
-};
-
 export const getStoredToSubmitLink = (appId: string, languageParam: string): string => {
   return PageUrls.STORED_TO_SUBMIT.replace(':appId', appId) + languageParam;
 };

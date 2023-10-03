@@ -3,14 +3,11 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
-import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './helpers/CaseHelpers';
-import { getAppDetailsLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getLatestApplication } from './helpers/StoredApplicationConfirmationHelpers';
 
 const logger = getLogger('StoreTseController');
 
@@ -38,24 +35,6 @@ export default class StoreTseController {
       clearTseFields(userCase);
     } catch (error) {
       logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
-
-    try {
-      req.session.userCase = fromApiFormat(
-        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
-      );
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
-
-    try {
-      const latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
-      req.session.userCase.viewCorrespondenceLink = getAppDetailsLink(latestApplication.id, languageParam);
-      req.session.userCase.viewCorrespondenceDoc = latestApplication.value.documentUpload;
-    } catch (err) {
-      logger.error(err.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
