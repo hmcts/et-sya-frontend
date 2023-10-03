@@ -8,10 +8,12 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { clearTseFields } from './helpers/CaseHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('TribunalResponseStoreController');
 export default class TribunalResponseStoreController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const languageParam = getLanguageParam(req.url);
     const userCase = req.session?.userCase;
 
     try {
@@ -19,14 +21,14 @@ export default class TribunalResponseStoreController {
       await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     } catch (error) {
       logger.error(error.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     try {
       await getCaseApi(req.session.user?.accessToken).storeResponseSendNotification(req.session.userCase);
     } catch (error) {
       logger.error(error.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     try {
@@ -34,7 +36,7 @@ export default class TribunalResponseStoreController {
       clearTseFields(userCase);
     } catch (error) {
       logger.error(error.message);
-      return res.redirect(ErrorPages.NOT_FOUND);
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
     return res.redirect(PageUrls.STORED_APPLICATION_CONFIRMATION);
