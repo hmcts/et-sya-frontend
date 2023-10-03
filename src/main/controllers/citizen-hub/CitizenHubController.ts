@@ -136,7 +136,7 @@ export default class CitizenHubController {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
             shouldShow: shouldHubLinkBeClickable(status, linkName),
-            url: () => getHubLinksUrlMap(isRespondentSystemUser).get(linkName),
+            url: () => getHubLinksUrlMap().get(linkName),
             statusColor: () => statusColorMap.get(status),
           };
         }),
