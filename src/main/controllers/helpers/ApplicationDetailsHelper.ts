@@ -5,7 +5,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant } from '../../definitions/constants';
+import { Applicant, TseStatusStored } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
@@ -21,9 +21,15 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
+  rows.push(addSummaryRow(translations.applicant, application.applicant));
+
+  if (application.status === TseStatusStored) {
+    rows.push(addSummaryRow(translations.storedDate, application.date));
+  } else {
+    rows.push(addSummaryRow(translations.requestDate, application.date));
+  }
+
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, application.date),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
