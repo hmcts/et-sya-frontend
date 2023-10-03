@@ -3,8 +3,11 @@ import request from 'supertest';
 import { YesOrNo } from '../../main/definitions/case';
 import { PageUrls, languages } from '../../main/definitions/constants';
 import { mockApp, mockSession } from '../unit/mocks/mockApp';
+import * as LaunchDarkly from '../../main/modules/featureFlag/launchDarkly';
 
 describe(`GET ${PageUrls.COPY_TO_OTHER_PARTY}`, () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   it('should return the Rule 92 page', async () => {
     const res = await request(mockApp({})).get(PageUrls.COPY_TO_OTHER_PARTY);
     expect(res.type).toStrictEqual('text/html');
