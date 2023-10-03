@@ -15,6 +15,7 @@ import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockU
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 const hubJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/citizen-hub.json'),
@@ -167,6 +168,8 @@ describe('Citizen hub page', () => {
 
   describe('Hub content', () => {
     beforeAll(async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue(mockUserCaseWithCitizenHubLinks);
