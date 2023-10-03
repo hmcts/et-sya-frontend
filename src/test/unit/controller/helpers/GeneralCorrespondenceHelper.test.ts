@@ -28,7 +28,7 @@ describe('General correspondence helper', () => {
   it('should return expected correspondece notification details content', () => {
     const pageContent = getCorrespondenceNotificationDetails(translations, notificationItem, 'any url');
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
-    expect(pageContent[0].value).toEqual({ text: '2019-05-02' });
+    expect(pageContent[0].value).toEqual({ text: '2 May 2019' });
     expect(pageContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Sent by' });
     expect(pageContent[1].value).toEqual({ text: 'Tribunal' });
     expect(pageContent[2].key).toEqual({

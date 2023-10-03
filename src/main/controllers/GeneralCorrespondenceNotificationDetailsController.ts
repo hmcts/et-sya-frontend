@@ -6,6 +6,7 @@ import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { populateDocumentMetadata } from './helpers/DocumentHelpers';
@@ -49,10 +50,11 @@ export default class GeneralCorrespondenceNotificationDetailsController {
       TranslationKeys.COMMON,
       TranslationKeys.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
     ]);
-
+    const welshEnabled = await getFlagValue('welsh-language', null);
     res.render(TranslationKeys.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS, {
       ...content,
       correspondenceContent: getCorrespondenceNotificationDetails(translations, selectedCorrespondence, req.url),
+      welshEnabled,
     });
   };
 }
