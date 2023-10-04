@@ -2,8 +2,8 @@
   "titleText": "Rydych wedi anfon eich ymateb i’r tribiwnlys",
   "h1": "Beth fydd yn digwydd nesaf",
   "p1": {
-    "rule92Yes": "Welsh translation required",
-    "rule92No": "Welsh translation required"
+    "rule92Yes": "Rydych wedi ymateb i’r tribiwnlys ac wedi copïo eich ymateb i'r parti arall.",
+    "rule92No": "Rydych wedi ymateb i’r tribiwnlys."
   },
   "p2": "Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf.",
   "button": "Cau a dychwelyd i’r trosolwg o’r achos"
