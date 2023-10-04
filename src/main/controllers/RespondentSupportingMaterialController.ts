@@ -7,13 +7,13 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormatDocument } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setUrlLanguage } from './helpers/LanguageHelper';
+import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -86,7 +86,7 @@ export default class RespondentSupportingMaterialController {
     );
 
     const supportingMaterialUrl =
-      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url);
+      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + setChangeAnswersUrlLanguage(req);
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
@@ -118,7 +118,7 @@ export default class RespondentSupportingMaterialController {
     return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
   };
 
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
     const content = getPageContent(req, this.supportingMaterialContent, [
       TranslationKeys.COMMON,
@@ -138,6 +138,7 @@ export default class RespondentSupportingMaterialController {
     };
 
     const hintTextToAnApplication = req.session.contactType === Rule92Types.RESPOND;
+    const welshEnabled = await getFlagValue('welsh-language', null);
 
     res.render(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, {
       PageUrls,
@@ -148,6 +149,7 @@ export default class RespondentSupportingMaterialController {
       errorMessage: getFileErrorMessage(req.session.errors, translations.errors.supportingMaterialFile),
       ...content,
       hintTextToAnApplication,
+      welshEnabled,
     });
   };
 }
