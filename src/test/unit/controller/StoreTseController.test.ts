@@ -1,7 +1,8 @@
-import AxiosInstance from 'axios';
+import AxiosInstance, { AxiosResponse } from 'axios';
 
 import StoreTseController from '../../../main/controllers/StoreTseController';
-import { PageUrls } from '../../../main/definitions/constants';
+import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
+import { Applicant, PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -35,15 +36,45 @@ const mockCaseApi = {
 const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
 jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
+caseApi.getUserCase = jest.fn().mockResolvedValue(
+  Promise.resolve({
+    data: {
+      id: '135',
+      created_date: '2022-08-19T09:19:25.79202',
+      last_modified: '2022-08-19T09:19:25.817549',
+      case_data: {
+        genericTseApplicationCollection: [
+          {
+            id: '246',
+            value: {
+              applicant: 'Claimant',
+            },
+          },
+        ],
+      },
+    },
+  } as AxiosResponse<CaseApiDataResponse>)
+);
+
+const genericTseApplicationCollection = [
+  { value: { applicant: Applicant.CLAIMANT } },
+  { value: { applicant: Applicant.RESPONDENT } },
+  { value: { applicant: Applicant.ADMIN } },
+  { value: { applicant: Applicant.CLAIMANT } },
+];
+
 describe('Store tell something else Controller', () => {
   it('should redirect to PageUrls.STORED_APPLICATION_CONFIRMATION', async () => {
     const controller = new StoreTseController();
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.genericTseApplicationCollection = genericTseApplicationCollection;
     request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
+
     await controller.get(request, response);
-    expect(response.redirect).toHaveBeenCalledWith(PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en');
+
+    expect(response.redirect).toHaveBeenCalledWith('/stored-application-confirmation/246?lng=en');
   });
 
   it('should change hublink status to STORED before submitting the case', () => {
