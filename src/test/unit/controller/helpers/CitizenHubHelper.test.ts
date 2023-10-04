@@ -3,7 +3,7 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
-  getStoredPendingApplicationLinks,
+  getStoredPendingApplication,
   shouldHubLinkBeClickable,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
@@ -15,6 +15,7 @@ import { GenericTseApplicationTypeItem } from '../../../../main/definitions/comp
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
+import { StoreNotification } from '../../../../main/definitions/storeNotification';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
 import {
   mockTseAdminClaimantRespondNotViewed,
@@ -471,8 +472,11 @@ describe('getStoredPendingApplicationLinks', () => {
         },
       },
     ];
-    const expected: string[] = ['/stored-to-submit/123?lng=en', '/stored-to-submit/567?lng=en'];
-    const actual = getStoredPendingApplicationLinks(tseCollection, languages.ENGLISH_URL_PARAMETER);
+    const expected: StoreNotification[] = [
+      { viewUrl: '/stored-to-submit/123?lng=en' },
+      { viewUrl: '/stored-to-submit/567?lng=en' },
+    ];
+    const actual = getStoredPendingApplication(tseCollection, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });
