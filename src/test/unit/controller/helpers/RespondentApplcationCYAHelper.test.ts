@@ -13,6 +13,17 @@ describe('Respondent application CYA controller helper', () => {
     userCase.responseText = 'responseText';
     userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
     userCase.copyToOtherPartyText = 'copyToOtherPartyText';
+    userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
@@ -78,6 +89,37 @@ describe('Respondent application CYA controller helper', () => {
       items: [
         {
           href: '/copy-to-other-party?lng=cy',
+          text: CHANGE,
+          visuallyHiddenText: 'Reason for not informing other party',
+        },
+      ],
+    });
+  });
+
+  it('should return expected content with non system user', () => {
+    const translationJsons = { ...respondentCYARaw };
+    const req = mockRequestWithTranslation({}, translationJsons);
+    const userCase = req.session.userCase;
+    userCase.responseText = 'responseText';
+    userCase.copyToOtherPartyYesOrNo = YesOrNo.NO;
+    userCase.copyToOtherPartyText = 'copyToOtherPartyText';
+
+    const translations: AnyRecord = {
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+    };
+
+    const appContent = getRespondentCyaContent(
+      userCase,
+      translations,
+      '?lng=cy',
+      '/supporting-material',
+      'downloadLink'
+    );
+
+    expect(appContent[3].actions).toEqual({
+      items: [
+        {
+          href: '/copy-to-other-party-not-system-user?lng=cy',
           text: CHANGE,
           visuallyHiddenText: 'Reason for not informing other party',
         },

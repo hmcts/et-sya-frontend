@@ -19,6 +19,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
@@ -84,7 +85,7 @@ export default class RespondToTribunalResponseController {
       ? res.redirect(
           PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
         )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+      : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
