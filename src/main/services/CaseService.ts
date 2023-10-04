@@ -174,7 +174,6 @@ export class CaseApi {
         applicationId: caseItem.selectedGenericTseApplication.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
-        isStoredPending: true,
         response: {
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
