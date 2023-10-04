@@ -3,6 +3,7 @@ import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/ge
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, TseStatusStored } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
+import { StoreNotification } from '../../definitions/storeNotification';
 
 import { getStoredToSubmitLink } from './LinkHelpers';
 
@@ -241,11 +242,19 @@ export const getHubLinksUrlMap = (): Map<string, string> => {
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
   ]);
 };
-export const getStoredPendingApplicationLinks = (
+
+export const getStoredPendingApplication = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
-): string[] => {
-  return apps
-    ?.filter(app => app.value.status === TseStatusStored)
-    .map(app => getStoredToSubmitLink(app.id, languageParam));
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const app of apps || []) {
+    if (app.value.status === TseStatusStored) {
+      const storeNotification: StoreNotification = {
+        viewUrl: getStoredToSubmitLink(app.id, languageParam),
+      };
+      storeNotifications.push(storeNotification);
+    }
+  }
+  return storeNotifications;
 };
