@@ -91,8 +91,10 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import StoreRespondentController from '../../controllers/StoreRespondentController';
 import StoreTseController from '../../controllers/StoreTseController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
+import StoredResponseAppConfirmationController from '../../controllers/StoredResponseAppConfirmationController';
 import StoredResponseTribunalConfirmationController from '../../controllers/StoredResponseTribunalConfirmationController';
 import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
 import StoredToSubmitController from '../../controllers/StoredToSubmitController';
@@ -335,8 +337,10 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, new ContactTheTribunalCYANotSystemUserController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER, new TribunalResponseCYANotSystemUserController().get);
     app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
+    app.get(InterceptPaths.STORE_RESPONDENT_CYA, new StoreRespondentController().get);
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_STORE_CYA, new TribunalResponseStoreController().get);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
+    app.get(PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION, new StoredResponseAppConfirmationController().get);
     app.get(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION, new StoredResponseTribunalConfirmationController().get);
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);

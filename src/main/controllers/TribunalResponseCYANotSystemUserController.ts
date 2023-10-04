@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
@@ -34,7 +34,7 @@ export default class TribunalResponseCYANotSystemUserController {
       id = userCase.selectedRequestOrOrder.id;
     } else if (userCase.selectedGenericTseApplication) {
       userCase.isRespondingToRequestOrOrder = true;
-      storedUrl = ErrorPages.NOT_FOUND; // InterceptPaths.SUBMIT_RESPONDENT_CYA + getLanguageParam(req.url);
+      storedUrl = InterceptPaths.STORE_RESPONDENT_CYA + getLanguageParam(req.url);
       id = userCase.selectedGenericTseApplication.id;
     }
 
