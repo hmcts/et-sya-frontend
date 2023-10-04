@@ -125,7 +125,11 @@ export const mockedApiData: CaseApiDataResponse = {
       {
         value: {
           responseReceived: YesOrNo.YES,
-          respondent_name: 'Globo Corp',
+          respondentType: 'Organisation',
+          respondentOrganisation: 'Globo Corp',
+          respondent_name: undefined,
+          respondentFirstName: undefined,
+          respondentLastName: undefined,
           respondent_ACAS_question: YesOrNo.YES,
           respondent_ACAS: 'R111111111111',
           respondent_ACAS_no: NoAcasNumberReason.ANOTHER,
@@ -141,7 +145,11 @@ export const mockedApiData: CaseApiDataResponse = {
       },
       {
         value: {
-          respondent_name: 'Version1',
+          respondentType: 'Individual',
+          respondentFirstName: 'George',
+          respondentLastName: 'Costanza',
+          respondent_name: undefined,
+          respondentOrganisation: undefined,
           respondent_ACAS_question: YesOrNo.YES,
           respondent_ACAS: 'R111111111112',
           respondent_ACAS_no: NoAcasNumberReason.ANOTHER,

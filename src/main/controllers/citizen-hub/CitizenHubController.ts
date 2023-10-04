@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { getApplicationsWithTribunalOrderOrRequest } from '../../controllers/helpers/AdminNotificationHelper';
 import { AppRequest } from '../../definitions/appRequest';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
@@ -15,7 +16,6 @@ import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
-import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
 import {
   clearPrepareDocumentsForHearingFields,
   clearTseFields,

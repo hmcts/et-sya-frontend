@@ -1,6 +1,10 @@
 {
   "title": "Check the respondent details",
   "subTitle": "Respondent ",
+  "respondentType": "Respondent type",
+  "respondentFirstName": "First name",
+  "respondentLastName": "Last name",
+  "respondentOrganisation": "Organisation name",
   "name": "Name",
   "address": "Address",
   "acasNum": "Acas certificate number",

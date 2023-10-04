@@ -1,7 +1,7 @@
 import NoAcasNumberController from '../../../main/controllers/NoAcasNumberController';
 import RespondentNameController from '../../../main/controllers/RespondentNameController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, RespondentType, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { userCaseWithRespondent } from '../mocks/mockUserCaseWithRespondent';
@@ -38,7 +38,11 @@ describe('Respondent Name Controller', () => {
   });
 
   it('should create new respondent and add the respondent name to the session', async () => {
-    const body = { respondentName: 'Globo Gym' };
+    const body = {
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+    };
 
     const controller = new RespondentNameController();
 
@@ -50,12 +54,20 @@ describe('Respondent Name Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-postcode-enter');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
-      respondentName: 'Globo Gym',
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+      respondentName: 'George Costanza',
+      respondentOrganisation: undefined,
     });
   });
 
   it('should update selected respondent with new respondent name', async () => {
-    const body = { respondentName: 'Globe Gym' };
+    const body = {
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+    };
 
     const controller = new RespondentNameController();
 
@@ -69,12 +81,20 @@ describe('Respondent Name Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith('/respondent/1/respondent-postcode-enter');
     expect(req.session.userCase.respondents[0]).toStrictEqual({
       respondentNumber: 1,
-      respondentName: 'Globe Gym',
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+      respondentName: 'George Costanza',
+      respondentOrganisation: undefined,
     });
   });
 
   it('should redirect to respondent details check if there is a returnUrl', async () => {
-    const body = { respondentName: 'Globe Gym' };
+    const body = {
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+    };
 
     const controller = new RespondentNameController();
 
@@ -87,7 +107,12 @@ describe('Respondent Name Controller', () => {
     expect(res.redirect).toHaveBeenCalledWith(PageUrls.RESPONDENT_DETAILS_CHECK);
   });
   it('should redirect to your claim has been saved page and save respondent name when a a name is entered and save as draft clicked', async () => {
-    const body = { respondentName: 'Globe Gym', saveForLater: true };
+    const body = {
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+      saveForLater: true,
+    };
 
     const controller = new RespondentNameController();
 
@@ -125,13 +150,19 @@ describe('Respondent Name Controller', () => {
   });
 
   it('should add respondent name to the session userCase', async () => {
-    const body = { respondentName: 'Globe Gym' };
+    const body = {
+      respondentType: RespondentType.INDIVIDUAL,
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+    };
     const controller = new RespondentNameController();
     const req = mockRequest({ body });
     const res = mockResponse();
 
     await controller.post(req, res);
-    expect(req.session.userCase.respondents[0].respondentName).toStrictEqual('Globe Gym');
+    expect(req.session.userCase.respondents[0].respondentType).toStrictEqual(RespondentType.INDIVIDUAL);
+    expect(req.session.userCase.respondents[0].respondentFirstName).toStrictEqual('George');
+    expect(req.session.userCase.respondents[0].respondentLastName).toStrictEqual('Costanza');
     expect(req.session.userCase.respondents[0].respondentNumber).toStrictEqual(1);
   });
 });

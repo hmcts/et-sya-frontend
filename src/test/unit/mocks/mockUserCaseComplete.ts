@@ -120,7 +120,11 @@ export default {
   otherClaim: 'other type of claims',
   respondents: [
     {
-      respondentName: 'Globo Corp',
+      respondentType: 'Organisation',
+      respondentOrganisation: 'Globo Corp',
+      respondentName: undefined,
+      respondentFirstName: undefined,
+      respondentLastName: undefined,
       acasCert: YesOrNo.YES,
       acasCertNum: 'R111111111111',
       noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -133,7 +137,11 @@ export default {
       ccdId: '3453xaa',
     },
     {
-      respondentName: 'Version1',
+      respondentType: 'Individual',
+      respondentFirstName: 'George',
+      respondentLastName: 'Costanza',
+      respondentName: undefined,
+      respondentOrganisation: undefined,
       acasCert: YesOrNo.YES,
       acasCertNum: 'R111111111112',
       noAcasReason: NoAcasNumberReason.ANOTHER,

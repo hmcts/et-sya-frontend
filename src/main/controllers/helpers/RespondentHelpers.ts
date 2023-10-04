@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import { Form } from '../../components/form/form';
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Respondent, YesOrNo } from '../../definitions/case';
-import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
+import { ErrorPages, PageUrls, RespondentType, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
@@ -42,12 +42,30 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   if (formData.respondentEnterPostcode !== undefined) {
     req.session.userCase.respondentEnterPostcode = formData.respondentEnterPostcode;
   }
+  if (formData.respondentType !== undefined) {
+    req.session.userCase.respondentType = formData.respondentType;
+  }
+  if (formData.respondentFirstName !== undefined) {
+    req.session.userCase.respondentFirstName = formData.respondentFirstName;
+  }
+  if (formData.respondentLastName !== undefined) {
+    req.session.userCase.respondentLastName = formData.respondentLastName;
+  }
+  if (formData.respondentOrganisation !== undefined) {
+    req.session.userCase.respondentOrganisation = formData.respondentOrganisation;
+  }
 
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
 };
 
 export const getRespondentIndex = (req: AppRequest): number => {
   return parseInt(req.params.respondentNumber) - 1;
+};
+
+export const getRespondentOrgOrName = (selectedRespondent: Respondent): string => {
+  return selectedRespondent.respondentType === RespondentType.ORGANISATION
+    ? selectedRespondent.respondentOrganisation
+    : `${selectedRespondent.respondentFirstName} ${selectedRespondent.respondentLastName}`;
 };
 
 export const getRespondentRedirectUrl = (respondentNumber: string | number, pageUrl: string): string => {
@@ -102,6 +120,10 @@ export const fillRespondentAddressFields = (x: unknown, userCase: CaseWithId): v
 export const mapSelectedRespondentValuesToCase = (selectedRespondentIndex: number, userCase: CaseWithId): void => {
   if (typeof selectedRespondentIndex !== 'undefined' && userCase !== undefined && userCase.respondents !== undefined) {
     userCase.respondentName = userCase.respondents[selectedRespondentIndex]?.respondentName;
+    userCase.respondentType = userCase.respondents[selectedRespondentIndex]?.respondentType;
+    userCase.respondentFirstName = userCase.respondents[selectedRespondentIndex]?.respondentFirstName;
+    userCase.respondentLastName = userCase.respondents[selectedRespondentIndex]?.respondentLastName;
+    userCase.respondentOrganisation = userCase.respondents[selectedRespondentIndex]?.respondentOrganisation;
     userCase.respondentAddress1 = userCase.respondents[selectedRespondentIndex]?.respondentAddress1;
     userCase.respondentAddress2 = userCase.respondents[selectedRespondentIndex]?.respondentAddress2;
     userCase.respondentAddressTown = userCase.respondents[selectedRespondentIndex]?.respondentAddressTown;

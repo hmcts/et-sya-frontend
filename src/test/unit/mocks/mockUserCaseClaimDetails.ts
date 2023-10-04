@@ -98,6 +98,8 @@ export default {
   respondents: [
     {
       respondentName: 'Globo Corp',
+      respondentType: 'Organisation',
+      respondentOrganisation: 'Globo Corp',
       acasCert: YesOrNo.YES,
       acasCertNum: 'R111111111111',
       noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -110,6 +112,8 @@ export default {
     },
     {
       respondentName: 'Version1',
+      respondentType: 'Organisation',
+      respondentOrganisation: 'Version1',
       acasCert: YesOrNo.YES,
       acasCertNum: 'R111111111112',
       noAcasReason: NoAcasNumberReason.ANOTHER,

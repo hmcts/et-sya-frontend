@@ -33,6 +33,10 @@ export interface AddressType {
 export interface Respondent {
   respondentNumber?: number;
   respondentName?: string;
+  respondentType?: string;
+  respondentFirstName?: string;
+  respondentLastName?: string;
+  respondentOrganisation?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
@@ -52,6 +56,10 @@ export interface Respondent {
 export interface RespondentApiModel {
   respondentNumber?: number;
   respondentName?: string;
+  respondentType?: string;
+  respondentFirstName?: string;
+  respondentLastName?: string;
+  respondentOrganisation?: string;
   respondentAddress1?: string;
   respondentAddress2?: string;
   respondentAddressTown?: string;
@@ -151,6 +159,10 @@ export interface Case {
   hearingAssistance?: string;
   workPostcode?: string;
   respondentName?: string;
+  respondentType?: string;
+  respondentFirstName?: string;
+  respondentLastName?: string;
+  respondentOrganisation?: string;
   claimantSex?: Sex;
   preferredTitle?: string;
   respondentAddress1?: string;

@@ -3,12 +3,27 @@
   "h1": "Beth yw enw’r atebydd rydych yn gwneud yr hawliad yn ei erbyn?",
   "p1": "Rhowch enw’r sefydliad. Os nad yw’n sefydliad - er enghraifft, oherwydd roeddech yn cael eich cyflogi gan unigolyn a oedd yn gweithredu fel unig fasnachwr - rhowch enw’r unigolyn.",
   "p2": "Dylai hyn fod yr un fath ag enw'r atebydd(atebwyr) ar y dystysgrif ACAS. Os nad ydyn nhw'r un fath efallai y bydd eich hawliad yn cael ei wrthod.",
+  "p3": "Welsh translation required",
+  "h2": "Welsh translation required",
   "insetText": "Byddwch yn gallu ychwanegu rhagor o atebwyr yn hwyrach ymlaen os ydych angen.",
-  "label": "Rhowch enw’r atebydd",
+  "hint": "Welsh translation required",
+  "orgLabel": "Welsh translation required",
+  "individualLabel": "Welsh translation required",
+  "companyLabel": "Welsh translation required",
+  "firstNameLabel": "Welsh translation required",
+  "lastNameLabel": "Welsh translation required",
   "errors": {
-    "respondentName": {
-      "required": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau",
-      "invalidLength": "Rhowch enw'r atebydd - rhwng 1-100 o lythrennau"
+    "respondentType": {
+      "required": "Welsh translation required"
+    },
+    "respondentFirstName": {
+      "required": "Welsh translation required"
+    },
+    "respondentLastName": {
+      "required": "Welsh translation required"
+    },
+    "respondentOrganisation": {
+      "required": "Welsh translation required"
     }
   }
 }

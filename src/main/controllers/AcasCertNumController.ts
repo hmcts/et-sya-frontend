@@ -11,7 +11,7 @@ import { getLogger } from '../logger';
 
 import { handlePostLogicForRespondent } from './helpers/CaseHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
-import { getRespondentIndex, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
+import { getRespondentIndex, getRespondentOrgOrName, getRespondentRedirectUrl } from './helpers/RespondentHelpers';
 import { conditionalRedirect } from './helpers/RouterHelpers';
 
 const logger = getLogger('AcasCertNumController');
@@ -86,7 +86,8 @@ export default class AcasCertNumController {
   public get = (req: AppRequest, res: Response): void => {
     const respondents = req.session.userCase.respondents;
     const respondentIndex = getRespondentIndex(req);
-    const currentRespondentName = respondents[respondentIndex].respondentName;
+    const selectedRespondent = respondents[respondentIndex];
+    const respondentOrgOrName = getRespondentOrgOrName(selectedRespondent);
     const content = getPageContent(
       req,
       this.acasCertNumContent,
@@ -94,11 +95,11 @@ export default class AcasCertNumController {
       respondentIndex
     );
     const acasCert = Object.entries(this.form.getFormFields())[0][1] as FormInput;
-    acasCert.label = (l: AnyRecord): string => l.legend + currentRespondentName + '?';
+    acasCert.label = (l: AnyRecord): string => l.legend + respondentOrgOrName + '?';
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.ACAS_CERT_NUM, {
       ...content,
-      respondentName: currentRespondentName,
+      respondentName: respondentOrgOrName,
     });
   };
 }

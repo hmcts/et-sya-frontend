@@ -4,6 +4,10 @@ import { Et1Address } from './et1Address';
 
 export interface RespondentType {
   respondent_name?: string;
+  respondentType?: string;
+  respondentFirstName?: string;
+  respondentLastName?: string;
+  respondentOrganisation?: string;
   respondent_address?: Et1Address;
   respondent_ACAS_question?: YesOrNo;
   respondent_ACAS?: string;
