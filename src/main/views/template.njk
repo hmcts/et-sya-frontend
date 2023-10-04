@@ -99,7 +99,7 @@ if isLoggedIn %}
     {% set phaseBarText = "beta" %}
   {% endif %}
 
-  {% if welshEnabled %}
+  {% if welshEnabled == null or welshEnabled === 'undefined' or welshEnabled === true %}
     {% set queryStringConcat = "" %}
 
     {% if "lng=" in currentUrl %}
@@ -120,6 +120,7 @@ if isLoggedIn %}
     {% endif %}
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
+  {% else %}  
   {% endif %}
 
   {{ timeoutModal() }}

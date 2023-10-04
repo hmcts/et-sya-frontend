@@ -38,6 +38,9 @@
     },
     "et1Legacy": {
       "url": "https://et-pet-et1.aat.platform.hmcts.net"
+    },
+    "launchDarkly": {
+      "key": "TO BE PICKED UP FROM ENV"
     }
   },
   "pact": {
