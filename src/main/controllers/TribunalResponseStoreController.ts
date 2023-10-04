@@ -18,7 +18,7 @@ export default class TribunalResponseStoreController {
     const userCase = req.session?.userCase;
 
     try {
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.IN_PROGRESS;
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
       await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
     } catch (error) {
       logger.error(error.message);
@@ -51,6 +51,6 @@ export default class TribunalResponseStoreController {
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    return res.redirect(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION.replace(':orderId', orderId));
+    return res.redirect(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION.replace(':orderId', orderId) + languageParam);
   };
 }

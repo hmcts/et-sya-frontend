@@ -1,8 +1,10 @@
 import AxiosInstance, { AxiosResponse } from 'axios';
 
-import StoreTseController from '../../../main/controllers/StoreTseController';
+import SubmitTseController from '../../../main/controllers/SubmitTribunalCYAController';
+import TribunalResponseStoreController from '../../../main/controllers/TribunalResponseStoreController';
+import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { Applicant, PageUrls } from '../../../main/definitions/constants';
+import { PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -13,13 +15,13 @@ jest.mock('axios');
 const mockCaseApi = {
   axios: AxiosInstance,
   updateHubLinksStatuses: jest.fn(),
-  storeClaimantTse: jest.fn(),
+  storeResponseSendNotification: jest.fn(),
   getUserCase: jest.fn(),
 };
 const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
 jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
-describe('Store tell something else Controller', () => {
+describe('Tribunal response store controller', () => {
   caseApi.getUserCase = jest.fn().mockResolvedValue(
     Promise.resolve({
       data: {
@@ -40,35 +42,27 @@ describe('Store tell something else Controller', () => {
     } as AxiosResponse<CaseApiDataResponse>)
   );
 
-  const genericTseApplicationCollection = [
-    { value: { applicant: Applicant.CLAIMANT } },
-    { value: { applicant: Applicant.RESPONDENT } },
-    { value: { applicant: Applicant.ADMIN } },
-    { value: { applicant: Applicant.CLAIMANT } },
-  ];
-
-  it('should redirect to PageUrls.STORED_APPLICATION_CONFIRMATION', async () => {
-    const controller = new StoreTseController();
+  it('should redirect to PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION', async () => {
+    const controller = new TribunalResponseStoreController();
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    request.session.userCase.genericTseApplicationCollection = genericTseApplicationCollection;
-    request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
+    request.session.userCase.selectedRequestOrOrder = { id: '246' };
+    request.url = PageUrls.TRIBUNAL_RESPONSE_COMPLETED;
 
     await controller.get(request, response);
 
-    expect(response.redirect).toHaveBeenCalledWith('/stored-application-confirmation/246?lng=en');
+    expect(response.redirect).toHaveBeenCalledWith('/stored-response-tribunal-confirmation/246?lng=en');
   });
 
   it('should change hublink status to STORED before storing the case', () => {
-    const controller = new StoreTseController();
+    const controller = new TribunalResponseStoreController();
     const response = mockResponse();
     const request = mockRequest({});
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+    request.session.userCase.selectedRequestOrOrder = { id: '246' };
     controller.get(request, response);
-    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications]).toStrictEqual(
-      HubLinkStatus.STORED
-    );
+    expect(request.session.userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.STORED);
   });
 
   it('should clear TSE fields after submitting the case and updating hublink statuses', async () => {
@@ -83,7 +77,9 @@ describe('Store tell something else Controller', () => {
       document_mime_type: 'pdf',
     };
     request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
-    await new StoreTseController().get(request, response);
+    jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'submitClaimantTse').mockImplementationOnce(() => Promise.resolve());
+    await new SubmitTseController().get(request, response);
     expect(request.session.userCase.contactApplicationText).toStrictEqual(undefined);
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);

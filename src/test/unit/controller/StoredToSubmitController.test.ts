@@ -16,26 +16,8 @@ import { mockResponse } from '../mocks/mockResponse';
 jest.mock('axios');
 const mockCaseApi = {
   axios: AxiosInstance,
-  createCase: jest.fn(),
-  getUserCases: jest.fn(),
-  downloadClaimPdf: jest.fn(),
-  getCaseDocument: jest.fn(),
-  getDocumentDetails: jest.fn(),
-  updateDraftCase: jest.fn(),
   updateHubLinksStatuses: jest.fn(),
-  submitClaimantTse: jest.fn(),
-  storeClaimantTse: jest.fn(),
   storedToSubmitClaimantTse: jest.fn(),
-  respondToApplication: jest.fn(),
-  changeApplicationStatus: jest.fn(),
-  updateSendNotificationState: jest.fn(),
-  updateJudgmentNotificationState: jest.fn(),
-  updateDecisionState: jest.fn(),
-  addResponseSendNotification: jest.fn(),
-  updateResponseAsViewed: jest.fn(),
-  getUserCase: jest.fn(),
-  submitCase: jest.fn(),
-  uploadDocument: jest.fn(),
 };
 const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
 jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
