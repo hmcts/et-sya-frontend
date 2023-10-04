@@ -50,8 +50,8 @@
     },
     "responseText": {
       "required": "Darparu manylion eich ymateb a/neu lwytho deunydd ategol",
-      "requiredFile": "Welsh Translation required",
-      "tooLong": "Welsh Translation required"
+      "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
+      "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
   }
 }
