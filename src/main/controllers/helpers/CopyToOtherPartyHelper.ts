@@ -29,7 +29,7 @@ export const getRedirectPageUrlNotSystemUser = (req: AppRequest): string => {
     if (req.session.contactType === Rule92Types.CONTACT) {
       return PageUrls.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER;
     } else if (req.session.contactType === Rule92Types.TRIBUNAL) {
-      return PageUrls.TRIBUNAL_RESPONSE_CYA;
+      return PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER;
     }
   }
   return PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;

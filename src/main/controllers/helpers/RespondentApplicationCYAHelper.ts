@@ -1,5 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE, PageUrls } from '../../definitions/constants';
+import { CHANGE } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import {
   SummaryListRow,
@@ -8,6 +8,8 @@ import {
   createChangeAction,
 } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+
+import { copyToOtherPartyRedirectUrl } from './LinkHelpers';
 
 export const getRespondentCyaContent = (
   userCase: CaseWithId,
@@ -36,7 +38,11 @@ export const getRespondentCyaContent = (
       addSummaryRow(
         translations.copyToOtherPartyYesOrNo,
         userCase.copyToOtherPartyYesOrNo,
-        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyYesOrNo)
+        createChangeAction(
+          copyToOtherPartyRedirectUrl(userCase) + languageParam,
+          CHANGE,
+          translations.copyToOtherPartyYesOrNo
+        )
       )
     );
 
@@ -45,7 +51,11 @@ export const getRespondentCyaContent = (
         addSummaryRow(
           translations.copyToOtherPartyText,
           userCase.copyToOtherPartyText,
-          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyText)
+          createChangeAction(
+            copyToOtherPartyRedirectUrl(userCase) + languageParam,
+            CHANGE,
+            translations.copyToOtherPartyText
+          )
         )
       );
     }
