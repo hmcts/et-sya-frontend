@@ -3,7 +3,7 @@ import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
-  getStoredPendingApplication,
+  getStoredPendingBannerList,
   shouldHubLinkBeClickable,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
@@ -476,7 +476,7 @@ describe('getStoredPendingApplicationLinks', () => {
       { viewUrl: '/stored-to-submit/123?lng=en' },
       { viewUrl: '/stored-to-submit/567?lng=en' },
     ];
-    const actual = getStoredPendingApplication(tseCollection, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(tseCollection, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });

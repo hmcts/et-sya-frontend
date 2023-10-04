@@ -14,10 +14,6 @@ export const getAppDetailsLink = (appId: string, languageParam: string): string 
   return PageUrls.APPLICATION_DETAILS.replace(':appId', appId) + languageParam;
 };
 
-export const getStoredToSubmitLink = (appId: string, languageParam: string): string => {
-  return PageUrls.STORED_TO_SUBMIT.replace(':appId', appId) + languageParam;
-};
-
 export const copyToOtherPartyRedirectUrl = (userCase: CaseWithId): string => {
   const isRespondentSystemUser = checkIfRespondentIsSystemUser(userCase);
   return isRespondentSystemUser ? PageUrls.COPY_TO_OTHER_PARTY : PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER;

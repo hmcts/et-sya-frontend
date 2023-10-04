@@ -5,8 +5,6 @@ import { Applicant, NotificationSubjects, PageUrls, TseStatusStored } from '../.
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
-import { getStoredToSubmitLink } from './LinkHelpers';
-
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
     hubLinksStatuses[HubLinkNames.RespondentResponse] === HubLinkStatus.NOT_YET_AVAILABLE &&
@@ -243,7 +241,16 @@ export const getHubLinksUrlMap = (): Map<string, string> => {
   ]);
 };
 
-export const getStoredPendingApplication = (
+export const getStoredPendingBannerList = (
+  apps: GenericTseApplicationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  storeNotifications.push(...getStoredPendingApplication(apps, languageParam));
+  return storeNotifications;
+};
+
+const getStoredPendingApplication = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
@@ -251,7 +258,7 @@ export const getStoredPendingApplication = (
   for (const app of apps || []) {
     if (app.value.status === TseStatusStored) {
       const storeNotification: StoreNotification = {
-        viewUrl: getStoredToSubmitLink(app.id, languageParam),
+        viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
       };
       storeNotifications.push(storeNotification);
     }
