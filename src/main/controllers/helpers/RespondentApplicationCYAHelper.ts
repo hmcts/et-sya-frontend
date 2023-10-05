@@ -1,5 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE, PageUrls } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import {
   SummaryListRow,
@@ -14,20 +14,22 @@ export const getRespondentCyaContent = (
   translations: AnyRecord,
   languageParam: string,
   supportingMaterialUrl: string,
-  downloadLink: string
+  downloadLink: string,
+  responseUrl: string
 ): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
+  const { legend, supportingMaterial, change } = translations;
 
   rows.push(
     addSummaryRow(
-      translations.legend,
+      legend,
       userCase.responseText,
-      createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.legend)
+      createChangeAction(responseUrl + languageParam, change, translations.legend)
     ),
     addSummaryHtmlRow(
-      translations.supportingMaterial,
+      supportingMaterial,
       downloadLink,
-      createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.supportingMaterial)
+      createChangeAction(supportingMaterialUrl + languageParam, change, translations.supportingMaterial)
     )
   );
 
@@ -36,7 +38,7 @@ export const getRespondentCyaContent = (
       addSummaryRow(
         translations.copyToOtherPartyYesOrNo,
         userCase.copyToOtherPartyYesOrNo,
-        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyYesOrNo)
+        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, translations.copyToOtherPartyYesOrNo)
       )
     );
 
@@ -45,7 +47,7 @@ export const getRespondentCyaContent = (
         addSummaryRow(
           translations.copyToOtherPartyText,
           userCase.copyToOtherPartyText,
-          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, CHANGE, translations.copyToOtherPartyText)
+          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, translations.copyToOtherPartyText)
         )
       );
     }
