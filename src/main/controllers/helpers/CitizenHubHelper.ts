@@ -266,7 +266,8 @@ const getStoredPendingApplication = (
         .filter(r => r.value.from === Applicant.CLAIMANT && r.value.storedPending === YES)
         .forEach(r =>
           storeNotifications.push({
-            viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+            viewUrl:
+              PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
           })
         );
     }

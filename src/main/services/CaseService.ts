@@ -187,6 +187,20 @@ export class CaseApi {
     }
   };
 
+  storedToSubmitRespondToApp = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        application_id: caseItem.selectedGenericTseApplication.id,
+        response_id: caseItem.selectedTseResponse.id,
+        isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
+  };
+
   changeApplicationStatus = async (
     caseItem: CaseWithId,
     newStatus: HubLinkStatus

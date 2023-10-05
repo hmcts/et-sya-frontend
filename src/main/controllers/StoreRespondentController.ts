@@ -2,7 +2,6 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls } from '../definitions/constants';
-import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
@@ -15,14 +14,6 @@ const logger = getLogger('StoreRespondentController');
 export default class StoreRespondentController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const languageParam = getLanguageParam(req.url);
-
-    try {
-      req.session.userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
 
     try {
       await getCaseApi(req.session.user?.accessToken).storeRespondToApplication(req.session.userCase);
