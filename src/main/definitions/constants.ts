@@ -293,6 +293,7 @@ export const JavaApiUrls = {
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   SUBMIT_STORED_CLAIMANT_APPLICATION: 'cases/submit-stored-claimant-application',
+  SUBMIT_STORED_RESPOND_TO_APPLICATION: 'cases/submit-stored-respond-to-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
