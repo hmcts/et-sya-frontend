@@ -21,7 +21,7 @@
           {% set tribunalDocsRows = (tribunalDocsRows.push(
             [
               {
-                text: tribunalDoc.value.uploadedDocument.createdOn
+                text: dateStringToLocale(tribunalDoc.value.uploadedDocument.createdOn) 
               },
               {
                 text: tribunalDoc.value.shortDescription
@@ -68,7 +68,7 @@
               {% set docsRows = (docsRows.push(
                 [
                   {
-                    text: doc.date
+                    text: dateStringToLocale(doc.date)
                   },
                   {
                     text: doc.description
@@ -109,7 +109,7 @@
 
       <div class="govuk-!-margin-top-2">
         {{ govukDetails({
-          summaryText: "Contact",
+          summaryText: contact,
           html: sideBarContent
         }) }}
       </div>
