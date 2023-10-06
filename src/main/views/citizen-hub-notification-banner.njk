@@ -93,7 +93,7 @@
   </h3>
 
   <p class="govuk-body">
-    <a class="govuk-link" href="/case-document/response-acknowledgement">{{notificationBanner.respondentAcknowledgement.link}}</a>.
+    <a class="govuk-link" href="/case-document/response-acknowledgement">{{notificationBanner.viewResponse}}</a>.
   </p>
 {% endif %}
 
@@ -171,22 +171,22 @@
 {% for app in adminNotifications %}
   {% set adminNotificationHtml %}
     <h3 class="govuk-notification-banner__heading">
-      The tribunal has responded to {{app.from}} application to {{app.appName}}
+      {{tribunalRespondedP1 + app.from + tribunalRespondedP2 + app.appName}}
     </h3>
 
     {% if app.isResponseRequired === "Yes" %}
 
     <p class="govuk-body">
-        You must respond to this.
+        {{ mustRespond }}
     </p>
 
      <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{app.appUrl}}">Respond to the tribunal</a>
+        <a class="govuk-link" href="{{app.appUrl}}">{{ respondToTribunal }}</a>
       </h3> 
 
     {% else %}
     <h3 class="govuk-notification-banner__heading">
-        <a class="govuk-link" href="{{app.appUrl}}">View the response</a>
+        <a class="govuk-link" href="{{app.appUrl}}">{{ notificationBanner.viewResponse }}</a>
       </h3>
     {% endif %}  
 
