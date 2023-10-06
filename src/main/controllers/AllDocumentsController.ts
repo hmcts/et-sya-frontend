@@ -20,6 +20,8 @@ export default class AllDocumentsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
       ...req.t(TranslationKeys.ALL_DOCUMENTS, { returnObjects: true }),
+      ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATIONS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [

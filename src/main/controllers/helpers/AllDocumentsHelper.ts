@@ -38,7 +38,7 @@ export const prepareTableRows = (
     .map(docSection => {
       return {
         caption: getTableCaption(docSection[0].value.typeOfDocument, translations),
-        rows: docSection.map(it => mapDocumentToTableRow(it)),
+        rows: docSection.map(it => mapDocumentToTableRow(it, translations)),
       };
     });
 };
@@ -55,11 +55,15 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
       return undefined;
   }
 };
-
-export const mapDocumentToTableRow = (item: DocumentTypeItem): TableRow => {
+// short description
+export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
+  console.log('##');
+  console.log('the short desc is ' + item.value.shortDescription);
+  console.log('translation is  ' + translations[item.value.shortDescription]);
+  console.log('##');
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription,
+    description: item.value.shortDescription + ' t= ' + translations[item.value.shortDescription],
     downloadLink: item.downloadLink,
   };
 };
