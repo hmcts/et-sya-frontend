@@ -10,9 +10,11 @@ import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 export default class TribunalResponseCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -25,6 +27,8 @@ export default class TribunalResponseCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
@@ -55,8 +59,10 @@ export default class TribunalResponseCYAController {
         translations,
         getLanguageParam(req.url),
         PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', id),
-        downloadLink
+        downloadLink,
+        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', id)
       ),
+      welshEnabled,
     });
   }
 }
