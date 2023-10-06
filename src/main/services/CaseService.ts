@@ -166,6 +166,27 @@ export class CaseApi {
     }
   };
 
+  storeRespondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        applicationId: caseItem.selectedGenericTseApplication.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
+        response: {
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+          storedPending: YES,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error responding to tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
   changeApplicationStatus = async (
     caseItem: CaseWithId,
     newStatus: HubLinkStatus
