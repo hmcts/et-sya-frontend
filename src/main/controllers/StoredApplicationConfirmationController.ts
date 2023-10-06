@@ -3,29 +3,21 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
-import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
-import { getCaseApi } from '../services/CaseService';
 
-import { getDocumentLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
+import {
+  findSelectedGenericTseApplication,
+  getDocumentLink,
+  populateDocumentMetadata,
+} from './helpers/DocumentHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getLatestApplication } from './helpers/StoredApplicationConfirmationHelpers';
 
 const logger = getLogger('StoredApplicationConfirmationController');
 
 export default class StoredApplicationConfirmationController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     const languageParam = getLanguageParam(req.url);
-    try {
-      req.session.userCase = fromApiFormat(
-        (await getCaseApi(req.session.user?.accessToken).getUserCase(req.session.userCase.id)).data
-      );
-    } catch (error) {
-      logger.error(error.message);
-      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
-    }
-
     const userCase = req.session.userCase;
     const accessToken = req.session.user?.accessToken;
 
@@ -34,15 +26,21 @@ export default class StoredApplicationConfirmationController {
       ...req.t(TranslationKeys.STORED_APPLICATION_CONFIRMATION, { returnObjects: true }),
     };
 
-    let latestApplication;
-    try {
-      latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
-    } catch (err) {
-      logger.error(err.message);
+    if (req.params.appId === undefined) {
+      logger.error('Application ID not found');
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
     }
 
-    const document = latestApplication.value?.documentUpload;
+    const selectedApplication = findSelectedGenericTseApplication(
+      userCase.genericTseApplicationCollection,
+      req.params.appId
+    );
+    if (selectedApplication === undefined) {
+      logger.error('Latest application not found');
+      return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
+    }
+
+    const document = selectedApplication.value.documentUpload;
     if (document) {
       try {
         await populateDocumentMetadata(document, accessToken);
@@ -55,7 +53,7 @@ export default class StoredApplicationConfirmationController {
     res.render(TranslationKeys.STORED_APPLICATION_CONFIRMATION, {
       ...translations,
       redirectUrl: getCancelLink(req),
-      viewThisCorrespondenceLink: getAppDetailsLink(latestApplication.id, languageParam),
+      viewThisCorrespondenceLink: getAppDetailsLink(selectedApplication.id, languageParam),
       document,
       documentLink: getDocumentLink(document),
     });
