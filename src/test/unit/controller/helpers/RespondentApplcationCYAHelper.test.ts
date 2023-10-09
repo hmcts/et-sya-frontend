@@ -1,13 +1,19 @@
 import { getRespondentCyaContent } from '../../../../main/controllers/helpers/RespondentApplicationCYAHelper';
 import { YesOrNo } from '../../../../main/definitions/case';
-import { CHANGE, TranslationKeys } from '../../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
+import common from '../../../../main/resources/locales/en/translation/common.json';
 import respondentCYARaw from '../../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
+
 
 describe('Respondent application CYA controller helper', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
+  
   it('should return expected content', () => {
-    const translationJsons = { ...respondentCYARaw };
+    const translationJsons = { ...respondentCYARaw, ...common };
     const req = mockRequestWithTranslation({}, translationJsons);
     const userCase = req.session.userCase;
     userCase.responseText = 'responseText';
@@ -16,14 +22,17 @@ describe('Respondent application CYA controller helper', () => {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const appContent = getRespondentCyaContent(
       userCase,
       translations,
-      '?lng=cy',
+      languages.ENGLISH_URL_PARAMETER,
       '/supporting-material',
-      'downloadLink'
+      'downloadLink',
+      '/respond-to-application'
     );
 
     expect(appContent[0].key).toEqual({
@@ -34,52 +43,51 @@ describe('Respondent application CYA controller helper', () => {
     expect(appContent[0].actions).toEqual({
       items: [
         {
-          href: '/supporting-material?lng=cy',
-          text: CHANGE,
-          visuallyHiddenText: "What's your response to the respondent's application?",
+          href: PageUrls.RESPOND_TO_APPLICATION + languages.ENGLISH_URL_PARAMETER,
+          text: common.change,
+          visuallyHiddenText: respondentCYARaw.legend,
         },
       ],
     });
     expect(appContent[1].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Supporting material',
+      text: respondentCYARaw.supportingMaterial,
     });
     expect(appContent[1].value).toEqual({ html: 'downloadLink' });
     expect(appContent[1].actions).toEqual({
       items: [
         {
-          href: '/supporting-material?lng=cy',
-          text: CHANGE,
-          visuallyHiddenText: 'Supporting material',
+          href: '/supporting-material?lng=en',
+          text: common.change,
+          visuallyHiddenText: respondentCYARaw.supportingMaterial,
         },
       ],
     });
     expect(appContent[2].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+      text: respondentCYARaw.copyToOtherPartyYesOrNo,
     });
-    expect(appContent[2].value).toEqual({ text: 'No' });
+    expect(appContent[2].value).toEqual({ text: YesOrNo.NO });
     expect(appContent[2].actions).toEqual({
       items: [
         {
-          href: '/copy-to-other-party?lng=cy',
-          text: CHANGE,
-          visuallyHiddenText:
-            'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+          href: PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER,
+          text: common.change,
+          visuallyHiddenText: respondentCYARaw.copyToOtherPartyYesOrNo,
         },
       ],
     });
     expect(appContent[3].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Reason for not informing other party',
+      text: respondentCYARaw.copyToOtherPartyText,
     });
     expect(appContent[3].value).toEqual({ text: 'copyToOtherPartyText' });
     expect(appContent[3].actions).toEqual({
       items: [
         {
-          href: '/copy-to-other-party?lng=cy',
-          text: CHANGE,
-          visuallyHiddenText: 'Reason for not informing other party',
+          href: PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER,
+          text: common.change,
+          visuallyHiddenText: respondentCYARaw.copyToOtherPartyText,
         },
       ],
     });
@@ -99,9 +107,10 @@ describe('Respondent application CYA controller helper', () => {
     const appContent = getRespondentCyaContent(
       userCase,
       translations,
-      '?lng=cy',
+      languages.ENGLISH_URL_PARAMETER,
       '/supporting-material',
-      'downloadLink'
+      'downloadLink',
+      '/respond-to-application'
     );
     expect(appContent[2]).toEqual(undefined);
   });

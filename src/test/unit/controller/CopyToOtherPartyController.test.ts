@@ -5,14 +5,17 @@ import contactTheTribunalJsonRaw from '../../../main/resources/locales/en/transl
 import copyJsonRaw from '../../../main/resources/locales/en/translation/copy-to-other-party.json';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Copy to other party Controller', () => {
   const t = {
     'copy-to-other-party': {},
     common: {},
   };
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
 
-  it('should render the copy to other party page', () => {
+  it('should render the copy to other party page', async () => {
     const translationJsons = { ...contactTheTribunalJsonRaw, ...copyJsonRaw };
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
@@ -20,29 +23,29 @@ describe('Copy to other party Controller', () => {
     request.session.contactType = Rule92Types.CONTACT;
     request.session.userCase.contactApplicationType = 'withdraw';
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
   });
 
-  it('should render the copy to other party page for response', () => {
+  it('should render the copy to other party page for response', async () => {
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
     const request = mockRequest({ t });
     request.session.contactType = Rule92Types.RESPOND;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
   });
 
-  it('should render the copy to other party page for tribunal', () => {
+  it('should render the copy to other party page for tribunal', async () => {
     const controller = new CopyToOtherPartyController();
     const response = mockResponse();
     const request = mockRequest({ t });
     request.session.contactType = Rule92Types.TRIBUNAL;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.COPY_TO_OTHER_PARTY, expect.anything());
   });
