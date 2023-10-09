@@ -77,9 +77,9 @@
       "link": "Ymateb i’r cais"
     },
     "orderOrRequest": {
-      "responseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch: ",
+      "responseRequired": "Welsh Translation required ",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
-      "link": "Gweld yr hysbysiad"
+      "link": "Gweld yr hysbysiad",
       "respond": "Welsh Translation required"
     },
     "judgment": {
