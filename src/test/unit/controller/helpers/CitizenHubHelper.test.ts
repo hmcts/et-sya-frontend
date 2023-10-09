@@ -11,7 +11,7 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant, PageUrls } from '../../../../main/definitions/constants';
+import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
 import mockUserCaseWithoutTseApp from '../../../../main/resources/mocks/mockUserCaseWithoutTseApp';
@@ -430,7 +430,7 @@ describe('shouldShowRespondentApplicationReceived', () => {
 });
 
 describe('getHubLinksUrlMap', () => {
-  it('return correct links when respondent is sytem user', () => {
+  it('returns correct links when respondent is system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
@@ -441,10 +441,27 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
-    expect(getHubLinksUrlMap(true)).toEqual(linksMap);
+    expect(getHubLinksUrlMap(true, languages.ENGLISH_URL_PARAMETER)).toEqual(linksMap);
   });
 
-  it('return correct links when respondent is non sytem user', () => {
+  it('returns correct links when respondent is system user in Welsh', () => {
+    const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [
+        HubLinkNames.RespondentResponse,
+        PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
+      ],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
+    ]);
+    expect(getHubLinksUrlMap(true, languages.WELSH_URL_PARAMETER)).toEqual(linksMap);
+  });
+
+  it('returns correct links when respondent is non-system user in English', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
@@ -455,6 +472,23 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
-    expect(getHubLinksUrlMap(false)).toEqual(linksMap);
+    expect(getHubLinksUrlMap(false, languages.ENGLISH_URL_PARAMETER)).toEqual(linksMap);
+  });
+
+  it('returns correct links when respondent is non-system user in Welsh', () => {
+    const linksMap: Map<string, string> = new Map<string, string>([
+      [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + languages.WELSH_URL_PARAMETER],
+      [
+        HubLinkNames.RespondentResponse,
+        PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
+      ],
+      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
+    ]);
+    expect(getHubLinksUrlMap(false, languages.WELSH_URL_PARAMETER)).toEqual(linksMap);
   });
 });
