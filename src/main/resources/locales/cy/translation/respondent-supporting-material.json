@@ -1,20 +1,20 @@
 {
-  "title": "Welsh translation required",
-  "hintTextApplication": "Welsh translation required",
+  "title": "Deunydd ategol gan yr atebydd",
+  "hintTextApplication": "Ymateb i gais",
   "hintTextTribunal": "Welsh translation required",
-  "titleResponse": "Welsh translation required",
-  "subTitle": "Welsh translation required",
-  "genericGuidanceItem1": "Welsh translation required",
-  "genericGuidanceItem2": "Welsh translation required",
-  "genericGuidanceItem3": "Welsh translation required",
-  "boxLabel": "Welsh translation required",
-  "remove": "Welsh translation required",
-  "noFilesUpload": "<p class=\"govuk-body\">Welsh translation required</p>",
-  "uploadFileButton": "Welsh translation required",
+  "titleResponse": "Darparu deunydd ategol",
+  "subTitle": "Ystyriwch y canlynol wrth ddarparu deunyddiau:",
+  "genericGuidanceItem1": "Gallwch lwytho llythyrau, lluniau neu ddogfennau i gefnogi eich ymateb",
+  "genericGuidanceItem2": "Os ydych yn tynnu llun o lythyr, rhowch ef ar arwyneb gwastad a dal y camera yn union uwch ei ben",
+  "genericGuidanceItem3": "Os ydych yn llwytho dogfennau ysgrifenedig gyda newidiadau wedi’u marcio, gwnewch yn siŵr bod y nodwedd hon ymlaen ar eich cyfrifiadur",
+  "boxLabel": "Defnyddiwch y blwch hwn i ddarparu unrhyw ddeunydd ategol. Gallwch lwytho ffeil hefyd os ydych yn dymuno gwneud hynny.",
+  "remove": "Dileu",
+  "noFilesUpload": "Nid oes ffeiliau wedi cael eu llwytho",
+  "uploadFileButton": "Llwytho ffeil",
   "files": {
-    "title": "Welsh translation required",
-    "button": "Welsh translation required",
-    "uploaded": "Welsh translation required"
+    "title": "Llwytho ffeil",
+    "button": "Llwytho ffeil",
+    "uploaded": "Ffeiliau sydd wedi’u llwytho"
   },
   "errors": {
     "responseText": {
