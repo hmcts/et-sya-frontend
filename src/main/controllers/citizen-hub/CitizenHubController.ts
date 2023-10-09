@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -13,6 +14,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
 import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
+import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
@@ -50,8 +52,6 @@ import {
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
-import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
-
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
@@ -146,7 +146,7 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
+    const notifications: SendNotificationTypeItem[] = filterSendNotifications(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
