@@ -63,7 +63,9 @@ export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyR
   console.log('##');
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription + ' t= ' + translations[item.value.shortDescription],
+    description: item.value.shortDescription
+      ? item.value.shortDescription + ' t= ' + translations[item.value.shortDescription]
+      : '',
     downloadLink: item.downloadLink,
   };
 };
