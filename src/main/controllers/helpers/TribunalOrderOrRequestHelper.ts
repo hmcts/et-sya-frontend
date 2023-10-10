@@ -135,7 +135,9 @@ export const activateTribunalOrdersAndRequestsLink = (
     return;
   }
   const notices = filterSendNotifications(items).filter(
-    notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
+    notice =>
+      notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
   );
   if (!notices?.length) {
     return;
