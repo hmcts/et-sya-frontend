@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
@@ -146,7 +145,7 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications: SendNotificationTypeItem[] = filterSendNotifications(userCase?.sendNotificationCollection);
+    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
