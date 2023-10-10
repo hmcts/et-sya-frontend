@@ -71,11 +71,6 @@ export const getRedirectUrlForNotification = (
   responseRequired: boolean,
   url: string
 ): string => {
-  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
-
-  if (responseRequired) {
-    pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
-  }
   if (notification.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)) {
     return PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS.replace(
       ':itemId',
@@ -83,6 +78,10 @@ export const getRedirectUrlForNotification = (
     );
   }
 
+  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+  if (responseRequired) {
+    pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
+  }
   return pageUrl.replace(':orderId', `${notification.id}${getLanguageParam(url)}`);
 };
 
