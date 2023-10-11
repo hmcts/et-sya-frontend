@@ -13,6 +13,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
 import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
+import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
@@ -49,7 +50,8 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterNotificationsWithRequestsOrOrders,
+  filterActionableNotifications,
+  filterSendNotifications,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
@@ -59,6 +61,7 @@ const DAYS_FOR_PROCESSING = 7;
 export default class CitizenHubController {
   public async get(req: AppRequest, res: Response): Promise<void> {
     // Fake userCase for a11y tests. This isn't a nice way to do it but explained in commit.
+    const welshEnabled = await getFlagValue('welsh-language', null);
     if (process.env.IN_TEST === 'true' && req.params.caseId === 'a11y') {
       req.session.userCase = mockUserCaseWithCitizenHubLinks;
     } else {
@@ -140,14 +143,14 @@ export default class CitizenHubController {
             linkTxt: (l: AnyRecord): string => l[linkName],
             status: (l: AnyRecord): string => l[status],
             shouldShow: shouldHubLinkBeClickable(status, linkName),
-            url: () => getHubLinksUrlMap(isRespondentSystemUser).get(linkName),
+            url: () => getHubLinksUrlMap(isRespondentSystemUser, languageParam).get(linkName),
             statusColor: () => statusColorMap.get(status),
           };
         }),
       };
     });
 
-    const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection);
+    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
     populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
@@ -176,7 +179,6 @@ export default class CitizenHubController {
       respondentBannerContent,
       judgmentBannerContent,
       decisionBannerContent,
-      notifications,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
@@ -191,6 +193,9 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
+      notifications: filterActionableNotifications(notifications),
+      languageParam: getLanguageParam(req.url),
+      welshEnabled,
     });
   }
 }
