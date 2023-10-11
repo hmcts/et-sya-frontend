@@ -1,6 +1,12 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE, PageUrls } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
+import {
+  SummaryListRow,
+  addSummaryHtmlRow,
+  addSummaryRow,
+  createChangeAction,
+} from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getRespondentCyaContent = (
@@ -8,91 +14,44 @@ export const getRespondentCyaContent = (
   translations: AnyRecord,
   languageParam: string,
   supportingMaterialUrl: string,
-  downloadLink: string
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
-  return [
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: userCase.responseText,
-      },
-      actions: {
-        items: [
-          {
-            href: supportingMaterialUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.legend,
-          },
-        ],
-      },
-    },
-    {
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: { html: downloadLink },
+  downloadLink: string,
+  responseUrl: string
+): SummaryListRow[] => {
+  const rows: SummaryListRow[] = [];
+  const { legend, supportingMaterial, change } = translations;
 
-      actions: {
-        items: [
-          {
-            href: supportingMaterialUrl + languageParam,
-            text: CHANGE,
-            visuallyHiddenText: translations.supportingMaterial,
-          },
-        ],
-      },
-    },
-    ...(applicationTypes.claimant.c.includes(userCase.contactApplicationType)
-      ? []
-      : [
-          ...(!userCase.copyToOtherPartyYesOrNo
-            ? []
-            : [
-                {
-                  key: {
-                    text: translations.copyToOtherPartyYesOrNo,
-                    classes: 'govuk-!-font-weight-regular-m',
-                  },
-                  value: {
-                    text: userCase.copyToOtherPartyYesOrNo,
-                  },
-                  actions: {
-                    items: [
-                      {
-                        href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                        text: CHANGE,
-                        visuallyHiddenText: translations.copyToOtherPartyYesOrNo,
-                      },
-                    ],
-                  },
-                },
-                ...(userCase.copyToOtherPartyYesOrNo === YesOrNo.YES
-                  ? []
-                  : [
-                      {
-                        key: {
-                          text: translations.copyToOtherPartyText,
-                          classes: 'govuk-!-font-weight-regular-m',
-                        },
-                        value: {
-                          text: userCase.copyToOtherPartyText,
-                        },
-                        actions: {
-                          items: [
-                            {
-                              href: PageUrls.COPY_TO_OTHER_PARTY + languageParam,
-                              text: CHANGE,
-                              visuallyHiddenText: translations.copyToOtherPartyText,
-                            },
-                          ],
-                        },
-                      },
-                    ]),
-              ]),
-        ]),
-  ];
+  rows.push(
+    addSummaryRow(
+      legend,
+      userCase.responseText,
+      createChangeAction(responseUrl + languageParam, change, translations.legend)
+    ),
+    addSummaryHtmlRow(
+      supportingMaterial,
+      downloadLink,
+      createChangeAction(supportingMaterialUrl + languageParam, change, translations.supportingMaterial)
+    )
+  );
+
+  if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType) && userCase.copyToOtherPartyYesOrNo) {
+    rows.push(
+      addSummaryRow(
+        translations.copyToOtherPartyYesOrNo,
+        userCase.copyToOtherPartyYesOrNo,
+        createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, translations.copyToOtherPartyYesOrNo)
+      )
+    );
+
+    if (userCase.copyToOtherPartyYesOrNo === YesOrNo.NO) {
+      rows.push(
+        addSummaryRow(
+          translations.copyToOtherPartyText,
+          userCase.copyToOtherPartyText,
+          createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, translations.copyToOtherPartyText)
+        )
+      );
+    }
+  }
+
+  return rows;
 };

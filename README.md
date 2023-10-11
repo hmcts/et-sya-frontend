@@ -64,6 +64,16 @@ This will start the frontend container exposing the application's port
 In order to test if the application is up, you can visit https://localhost:3001 in your browser.
 You should get a very basic home page (no styles, etc.).
 
+### Running with CFTLIB
+
+As CFTLIB may have different ports for IDAM API we need to have the following environment variables defined
+
+IDAM_WEB_URL=http://localhost:XXXX/login
+
+IDAM_API_URL=http://localhost:XXXX/o/token
+
+XXXX is the port which CFTLIB uses for IDAM
+
 ## Developing
 
 ### Code style
@@ -144,7 +154,7 @@ to the responses. Apart from default Helmet functions, following headers are set
 
 There is a configuration section related with those headers, where you can specify:
 
-- `referrerPolicy` - value of the `Referrer-Policy` header
+- `referrerPolicy` - value of the `Referrer-Policy` header.
 
 Here's an example setup:
 

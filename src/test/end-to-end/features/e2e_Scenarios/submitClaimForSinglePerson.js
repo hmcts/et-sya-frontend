@@ -32,7 +32,6 @@ Scenario('Submit a single claim for myself with the Complete PCQ/Equality', asyn
   await checkYourAnswers(I);
   await claimSubmitted(I);
 })
-  .tag('@RET-BAT')
   .tag('RET-XB')
   .retry(2);
 
@@ -54,6 +53,7 @@ Scenario('Submit a single claim for myself without the Complete PCQ/Equality', a
   await claimSubmitted(I);
 })
   .tag('@RET-BAT')
+  .tag('@RET-PR')
   .retry(2);
 
 Scenario('Return to Existing Claim Route', async ({ I }) => {

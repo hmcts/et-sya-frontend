@@ -22,6 +22,7 @@ describe('Check your answers confirmation page', () => {
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
@@ -31,7 +32,7 @@ describe('Check your answers confirmation page', () => {
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -205,8 +206,8 @@ describe('Check your answers confirmation page', () => {
     const pensionLink = employmentDetailsList[11].getAttribute('href');
     const benefitLink = employmentDetailsList[12].getAttribute('href');
 
-    expect(pastEmployerLink).equals(PageUrls.PAST_EMPLOYER, 'Incorrect href found');
-    expect(stillWorkingLink).equals(PageUrls.STILL_WORKING, 'Incorrect href found');
+    expect(pastEmployerLink).equals(PageUrls.PAST_EMPLOYER + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
+    expect(stillWorkingLink).equals(PageUrls.STILL_WORKING + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(jobTitleLink).equals(PageUrls.JOB_TITLE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(employmentStartDateLink).equals(PageUrls.START_DATE + InterceptPaths.ANSWERS_CHANGE, 'Incorrect href found');
     expect(contractNoticePeriodLink).equals(
@@ -281,6 +282,7 @@ describe('Check your answers confirmation page - New Job with start date', () =>
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
@@ -292,7 +294,7 @@ describe('Check your answers confirmation page - New Job with start date', () =>
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,
@@ -321,6 +323,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
     await request(
       mockApp({
         userCase: {
+          caseTypeId: CaseTypeId.ENGLAND_WALES,
           typeOfClaim: [TypesOfClaim.DISCRIMINATION, TypesOfClaim.WHISTLE_BLOWING],
           claimantWorkAddressQuestion: YesOrNo.NO,
           pastEmployer: YesOrNo.YES,
@@ -332,7 +335,7 @@ describe('Check your answers confirmation page - New Job with undefined', () => 
             {
               respondentNumber: 1,
               respondentName: 'John Does',
-              respondentAddress1: 'MINISTRY OF JUSTICE, SEVENTH FLOOR, 102, PETTY FRANCE, LONDON, SW1H 9AJ',
+              respondentAddress1: 'Ministry of Justice, Seventh Floor, 102, Petty France, London, SW1H 9AJ',
               acasCert: YesOrNo.NO,
               acasCertNum: '12345',
               noAcasReason: NoAcasNumberReason.ANOTHER,

@@ -2,7 +2,7 @@
 
 properties([
 // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-pipelineTriggers([cron('H 05 * * *')]),
+pipelineTriggers([cron('H 8 * * 1-5')]),
 parameters([
         string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
     ])
@@ -16,8 +16,8 @@ def component = "sya"
 
 def secrets = [
     'et-aat': [
-        secret('test-username', 'TEST_CASE_USERNAME'),
-        secret('test-password', 'TEST_CASE_PASSWORD')
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {

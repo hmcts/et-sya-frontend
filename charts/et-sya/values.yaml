@@ -13,6 +13,7 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+        - launch-darkly-sdk-key
   environment:
     IDAM_WEB_URL: 'https://idam-web-public.{{ .Values.global.environment }}.platform.hmcts.net/login'
     IDAM_API_URL: 'https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net/o/token'
@@ -21,5 +22,6 @@ nodejs:
     PCQ_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/service-endpoint'
     PCQ_HEALTH_URL: 'https://pcq.{{ .Values.global.environment }}.platform.hmcts.net/health'
     PCQ_ENABLED: 'true'
+    ET1_BASE_URL: 'https://et-pet-et1.{{ .Values.global.environment }}.platform.hmcts.net'
 idam-pr:
   enabled: false

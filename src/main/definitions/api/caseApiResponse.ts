@@ -6,6 +6,7 @@ import { ClaimantIndividual } from '../complexTypes/claimantIndividual';
 import { ClaimantRequests } from '../complexTypes/claimantRequests';
 import { GenericTseApplicationTypeItem } from '../complexTypes/genericTseApplicationTypeItem';
 import { NewEmploymentDetails } from '../complexTypes/newEmploymentDetails';
+import { RepresentativeType } from '../complexTypes/representative';
 import { RespondentType } from '../complexTypes/respondent';
 import { SendNotificationTypeItem } from '../complexTypes/sendNotificationTypeItem';
 import { TaskListCheckType } from '../complexTypes/taskListCheckType';
@@ -66,6 +67,7 @@ export interface CaseData {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   sendNotificationCollection?: SendNotificationTypeItem[];
   hearingCollection?: HearingModel[];
+  repCollection?: RepresentativeApiModel[];
 }
 
 export interface HearingModel {
@@ -120,6 +122,7 @@ export interface HearingModel {
 export interface HearingVenueItem {
   code: string;
   label: string;
+  repCollection?: RepresentativeApiModel[];
 }
 
 export interface RespondentApiModel {
@@ -138,4 +141,9 @@ export interface DocumentApiModel {
       document_binary_url: string;
     };
   };
+}
+
+export interface RepresentativeApiModel {
+  value?: RepresentativeType;
+  id?: string;
 }

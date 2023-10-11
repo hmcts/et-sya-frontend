@@ -2,7 +2,8 @@ import os from 'os';
 
 import { infoRequestHandler } from '@hmcts/info-provider';
 import { Application } from 'express';
-import { FileFilterCallback } from 'multer';
+import rateLimit from 'express-rate-limit';
+import multer, { FileFilterCallback } from 'multer';
 
 import AboutHearingDocumentsController from '../../controllers/AboutHearingDocumentsController';
 import AcasCertNumController from '../../controllers/AcasCertNumController';
@@ -26,8 +27,6 @@ import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
 import ChecklistController from '../../controllers/ChecklistController';
-import CitizenHubController from '../../controllers/CitizenHubController';
-import CitizenHubDocumentController from '../../controllers/CitizenHubDocumentController';
 import ClaimDetailsCheckController from '../../controllers/ClaimDetailsCheckController';
 import ClaimDetailsController from '../../controllers/ClaimDetailsController';
 import ClaimSavedController from '../../controllers/ClaimSavedController';
@@ -71,9 +70,12 @@ import PcqController from '../../controllers/PcqController';
 import PensionController from '../../controllers/PensionController';
 import PersonalDetailsCheckController from '../../controllers/PersonalDetailsCheckController';
 import PlaceOfWorkController from '../../controllers/PlaceOfWorkController';
+import PrepareDocumentsController from '../../controllers/PrepareDocumentsController';
 import ReasonableAdjustmentsController from '../../controllers/ReasonableAdjustmentsController';
 import RespondToApplicationCompleteController from '../../controllers/RespondToApplicationCompleteController';
 import RespondToApplicationController from '../../controllers/RespondToApplicationController';
+import RespondToTribunalResponseController from '../../controllers/RespondToTribunalResponseController';
+import RespondentAddInCheckAnswerController from '../../controllers/RespondentAddInCheckAnswerController';
 import RespondentAddressController from '../../controllers/RespondentAddressController';
 import RespondentApplicationCYAController from '../../controllers/RespondentApplicationCYAController';
 import RespondentApplicationDetailsController from '../../controllers/RespondentApplicationDetailsController';
@@ -82,9 +84,11 @@ import RespondentDetailsCheckController from '../../controllers/RespondentDetail
 import RespondentNameController from '../../controllers/RespondentNameController';
 import RespondentPostCodeEnterController from '../../controllers/RespondentPostCodeEnterController';
 import RespondentPostCodeSelectController from '../../controllers/RespondentPostCodeSelectController';
+import RespondentRemoveController from '../../controllers/RespondentRemoveController';
 import RespondentSupportingMaterialController from '../../controllers/RespondentSupportingMaterialController';
 import RespondentSupportingMaterialFileController from '../../controllers/RespondentSupportingMaterialFileController';
 import ReturnToExistingController from '../../controllers/ReturnToExistingController';
+import Rule92HoldingPageController from '../../controllers/Rule92HoldingPageController';
 import SelectedApplicationController from '../../controllers/SelectedApplicationController';
 import SessionTimeoutController from '../../controllers/SessionTimeoutController';
 import SexAndTitleController from '../../controllers/SexAndTitleController';
@@ -115,10 +119,11 @@ import WorkPostCodeEnterController from '../../controllers/WorkPostCodeEnterCont
 import WorkPostCodeSelectController from '../../controllers/WorkPostCodeSelectController';
 import WorkPostcodeController from '../../controllers/WorkPostcodeController';
 import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTribunalController';
+import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
+import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
 import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
-const multer = require('multer');
 const handleUploads = multer({
   limits: {
     fileSize: FILE_SIZE_LIMIT,
@@ -127,6 +132,12 @@ const handleUploads = multer({
     req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
     return callback(null, !req.fileTooLarge);
   },
+});
+
+const describeWhatHappenedLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 5,
+  message: 'Too many requests from this IP, please try again later.',
 });
 
 export class Routes {
@@ -164,6 +175,8 @@ export class Routes {
     app.post(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.NO_ACAS_NUMBER, new NoAcasNumberController().post);
     app.get(PageUrls.RESPONDENT_DETAILS_CHECK, new RespondentDetailsCheckController().get);
     app.post(PageUrls.RESPONDENT_DETAILS_CHECK, new RespondentDetailsCheckController().post);
+    app.get(PageUrls.RESPONDENT_ADD_REDIRECT, new RespondentAddInCheckAnswerController().get);
+    app.get(PageUrls.RESPONDENT_REST_PREFIX + PageUrls.RESPONDENT_REMOVE, new RespondentRemoveController().get);
     app.get(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().get);
     app.post(PageUrls.EMPLOYMENT_RESPONDENT_TASK_CHECK, new EmploymentAndRespondentCheckController().post);
     app.get(PageUrls.CONTACT_ACAS, new ContactAcasController().get);
@@ -229,6 +242,7 @@ export class Routes {
     app.get(PageUrls.DESCRIBE_WHAT_HAPPENED, describeWhatHappenedController.get);
     app.post(
       PageUrls.DESCRIBE_WHAT_HAPPENED,
+      describeWhatHappenedLimiter,
       handleUploads.single('claimSummaryFileName'),
       describeWhatHappenedController.post
     );
@@ -378,5 +392,9 @@ export class Routes {
       PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS,
       new GeneralCorrespondenceNotificationDetailsController().get
     );
+    app.get(PageUrls.PREPARE_DOCUMENTS, new PrepareDocumentsController().get);
+    app.get(PageUrls.RULE92_HOLDING_PAGE, new Rule92HoldingPageController().get);
+    app.get(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().get);
+    app.post(PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE, new RespondToTribunalResponseController().post);
   }
 }

@@ -21,7 +21,6 @@
   "Strike out all or part of a claim": "Welsh Translation required",
   "Vary or revoke an order": "Welsh Translation required",
   "otherPartyResponseHeader": "Welsh Translation required",
-  "responseFrom": "Welsh Translation required",
   "responseDate": "Welsh Translation required",
   "response": "Welsh Translation required",
   "decision": "Welsh Translation required",
@@ -37,5 +36,13 @@
   "name": "Welsh Translation required",
   "sentTo": "Welsh Translation required",
   "tribunal": "Welsh Translation required",
-  "claimant": "Welsh Translation required"
+  "claimant": "Welsh Translation required",
+  "responseItem": "Welsh Translation required",
+  "orderOrRequest": "Welsh Translation required",
+  "responseDue": "Welsh Translation required",
+  "partyToRespond": "Welsh Translation required",
+  "description": "Welsh Translation required",
+  "responder": "Welsh Translation required",
+  "requestMadeBy": "Welsh Translation required",
+  "mustRespond": "Welsh Translation required"
 }

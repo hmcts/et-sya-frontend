@@ -1,7 +1,8 @@
-import { LegacyUrls } from '../definitions/constants';
+import config from 'config';
 
 export default function getLegacyUrlFromLng(path: string, lng = 'en'): URL['href'] {
-  const legacyUrl = new URL(LegacyUrls.ET1_BASE);
+  const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
+  const legacyUrl = new URL(`${url}`);
   legacyUrl.pathname = lng + path;
   return legacyUrl.href;
 }

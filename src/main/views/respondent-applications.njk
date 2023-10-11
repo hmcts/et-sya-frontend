@@ -41,7 +41,7 @@
               <td class="govuk-table__cell">
                 {{ govukTag({
                     text: app.displayStatus,
-                    classes: "govuk-tag" + app.statusColor
+                    classes: "no-text-transform govuk-tag" + app.statusColor
                 }) }}
               </td>
             </tr>
@@ -57,7 +57,7 @@
 
       <div class="govuk-!-margin-top-2">
         {{ govukDetails({
-          summaryText: "Contact",
+          summaryText: contact,
           html: sideBarContent
         }) }}
       </div>

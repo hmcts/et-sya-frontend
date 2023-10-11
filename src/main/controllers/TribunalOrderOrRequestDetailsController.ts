@@ -1,9 +1,8 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, TranslationKeys } from '../definitions/constants';
+import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
-import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
@@ -22,19 +21,20 @@ export default class TribunalOrderOrRequestDetailsController {
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
-    if (selectedRequestOrOrder.value.notificationState !== HubLinkStatus.VIEWED) {
-      try {
-        await updateSendNotificationState(req, logger);
-      } catch (error) {
-        logger.info(error.message);
-      }
+    try {
+      await updateSendNotificationState(req, logger);
+    } catch (error) {
+      logger.info(error.message);
     }
 
     const redirectUrl =
       PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId) + getLanguageParam(req.url);
-    const respondButton = !selectedRequestOrOrder.value.respondCollection?.some(
-      r => r.value.from === Applicant.CLAIMANT
-    );
+
+    const respondButton =
+      !selectedRequestOrOrder.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) &&
+      selectedRequestOrOrder.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+      selectedRequestOrOrder.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
     try {
       await getDocumentsAdditionalInformation(
         selectedRequestOrOrder.value.sendNotificationUploadDocument,

@@ -1,10 +1,11 @@
+import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { LegacyUrls, PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
@@ -97,7 +98,7 @@ export default class TypeOfClaimController {
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
-    if (errors.length === 0 || errors === undefined) {
+    if (errors.length === 0) {
       let redirectUrl;
       if (
         conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
@@ -105,7 +106,8 @@ export default class TypeOfClaimController {
       ) {
         redirectUrl = PageUrls.CLAIM_STEPS;
       } else {
-        redirectUrl = LegacyUrls.ET1_BASE;
+        const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
+        redirectUrl = `${url}`;
       }
       if (req.app?.locals) {
         const redisClient = req.app.locals?.redisClient;

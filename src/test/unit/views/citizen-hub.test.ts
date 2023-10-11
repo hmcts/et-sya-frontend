@@ -6,10 +6,12 @@ import request from 'supertest';
 
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
-import { PageUrls } from '../../../main/definitions/constants';
+import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { Applicant, PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
@@ -101,6 +103,8 @@ describe('Citizen hub page', () => {
     ])(
       'should show correct completed tasks in progress bar: %o',
       async ({ expectedCompleted, caseApiDataResponse }) => {
+        const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+        mockLdClient.mockResolvedValue(true);
         caseApi.getUserCase = jest.fn().mockResolvedValue(
           Promise.resolve({
             data: {
@@ -166,6 +170,8 @@ describe('Citizen hub page', () => {
 
   describe('Hub content', () => {
     beforeAll(async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
       mockFromApiFormat.mockReturnValue(mockUserCaseWithCitizenHubLinks);
@@ -260,6 +266,24 @@ describe('Citizen hub page', () => {
             respondentResponse: HubLinkStatus.NOT_YET_AVAILABLE,
           },
           et3ResponseReceived: true,
+          genericTseApplicationCollection: [
+            {
+              value: {
+                applicant: Applicant.RESPONDENT,
+                copyToOtherPartyYesOrNo: YesOrNo.YES,
+                type: 'amend',
+                applicationState: HubLinkStatus.UPDATED,
+                respondCollection: [
+                  {
+                    value: {
+                      from: Applicant.RESPONDENT,
+                      copyToOtherParty: YesOrNo.YES,
+                    },
+                  },
+                ],
+              },
+            },
+          ] as GenericTseApplicationTypeItem[],
         },
         selector: bannerHeaderSelector,
         expectedText: 'The tribunal has received a response from the respondent',
@@ -269,7 +293,8 @@ describe('Citizen hub page', () => {
       async ({ userCaseDetails, selector, expectedText }) => {
         mockedCase = { ...mockedCase, ...userCaseDetails };
         mockFromApiFormat.mockReturnValue(mockedCase);
-
+        const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+        mockLdClient.mockResolvedValue(true);
         await request(
           mockApp({
             userCase: {} as Partial<CaseWithId>,
@@ -287,6 +312,8 @@ describe('Citizen hub page', () => {
 
   describe('Alert containing a link to view the response acknowledgement documents on the citizen hub page', () => {
     it('should render link to Rejection of response document Page', async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');
@@ -336,6 +363,8 @@ describe('Citizen hub page', () => {
 
   describe('Should not show the alert when the corresponding hublink has been viewed', () => {
     it('Notification banner should not appear - the notificaiton banner selector should return null', async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(true);
       caseApi.getUserCase = jest.fn().mockResolvedValue({ body: {} });
 
       const mockFromApiFormat = jest.spyOn(ApiFormatter, 'fromApiFormat');

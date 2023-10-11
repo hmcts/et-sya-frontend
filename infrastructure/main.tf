@@ -4,12 +4,17 @@ provider "azurerm" {
 
 locals {
   vaultName = "${var.product}-${var.env}"
-}
-
-data "azurerm_subnet" "core_infra_redis_subnet" {
-  name                 = "core-infra-subnet-1-${var.env}"
-  virtual_network_name = "core-infra-vnet-${var.env}"
-  resource_group_name = "core-infra-${var.env}"
+  tagEnv = var.env == "aat" ? "staging" : var.env
+  tags = merge(var.common_tags,
+    tomap({
+      "environment" = local.tagEnv,
+      "managedBy" = "Employment Tribunals",
+      "Team Contact" = "#et-devs",
+      "application" = "employment-tribunals",
+      "businessArea" = "CFT",
+      "builtFrom" = "et-sya"
+    })
+  )
 }
 
 module "et-frontend-session-storage" {
@@ -17,7 +22,10 @@ module "et-frontend-session-storage" {
   product  = "${var.product}-${var.component}-session-storage"
   location = var.location
   env      = var.env
-  subnetid = data.azurerm_subnet.core_infra_redis_subnet.id
+  private_endpoint_enabled = true
+  redis_version = "6"
+  business_area = "cft"
+  public_network_access_enabled = false
   common_tags  = var.common_tags
 }
 

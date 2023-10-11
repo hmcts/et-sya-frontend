@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -12,7 +13,8 @@ import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelpe
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class TribunalResponseCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -25,9 +27,22 @@ export default class TribunalResponseCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
+
+    let submitRef;
+    let id;
+    if (userCase.selectedRequestOrOrder) {
+      submitRef = InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url);
+      id = userCase.selectedRequestOrOrder.id;
+    } else if (userCase.selectedGenericTseApplication) {
+      userCase.isRespondingToRequestOrOrder = true;
+      submitRef = InterceptPaths.SUBMIT_RESPONDENT_CYA + getLanguageParam(req.url);
+      id = userCase.selectedGenericTseApplication.id;
+    }
 
     res.render(TranslationKeys.TRIBUNAL_RESPONSE_CYA, {
       ...content,
@@ -38,14 +53,16 @@ export default class TribunalResponseCYAController {
       InterceptPaths,
       errors: req.session.errors,
       cancelPage,
-      submitRef: InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url),
+      submitRef,
       cyaContent: getRespondentCyaContent(
         userCase,
         translations,
         getLanguageParam(req.url),
-        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedRequestOrOrder.id),
-        downloadLink
+        PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', id),
+        downloadLink,
+        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', id)
       ),
+      welshEnabled,
     });
   }
 }

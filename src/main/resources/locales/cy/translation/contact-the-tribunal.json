@@ -1,104 +1,104 @@
 {
-  "title": "Welsh Translation required",
-  "h1": "Welsh Translation required",
+  "title": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
+  "h1": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "landing_text": {
-    "p1": "Welsh Translation required",
-    "p2": "Welsh Translation required",
-    "p3": "Welsh Translation required"
+    "p1": "Defnyddiwch y ffurflen briodol i gyfathrebu â'r tribiwnlys.",
+    "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at yr atebydd a fydd yn cael cyfle i ymateb.",
+    "p3": "Efallai y byddwch yn gallu gofyn nad yw rhai manylion yn cael eu rhannu gyda’r atebydd."
   },
   "sections": {
     "withdraw": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Tynnu fy hawliad yn ôl",
+      "label": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
+      "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad."
     },
     "change-details": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Newid fy manylion personol",
+      "label": "Rwyf eisiau newid fy manylion personol",
+      "body": "Newid y manylion personol a bu i chi eu rhoi wrth wneud eich hawliad."
     },
     "postpone": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Gohirio gwrandawiad",
+      "label": "Gwneud cais i ohirio fy ngwrandawiad",
+      "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
     },
     "vary": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Amrywio neu ddirymu gorchymyn",
+      "label": "Gwneud cais i amrywio neu ddirymu gorchymyn",
+      "body": "Gwneud cais i amrywio neu ddirymu gorchymyn y mae'r tribiwnlys wedi ei gyhoeddi. Er enghraifft, efallai y bydd angen mwy o amser arnoch i gyflwyno rhywbeth neu eisiau newid nifer y tudalennau yn eich dogfennau gwrandawiad."
     },
     "reconsider-decision": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Ystyried penderfyniad o'r newydd",
+      "label": "Gwneud cais i benderfyniad gael ei ystyried o'r newydd",
+      "body": "Os ydych yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eich achos chi, gallwch ofyn i farnwr cyflogaeth edrych ar y penderfyniad hwnnw eto."
     },
     "amend": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Diwygio fy hawliad",
+      "label": "Gwneud cais i ddiwygio fy hawliad",
+      "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad."
     },
     "respondent": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Gorchymyn yr atebydd",
+      "label": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
+      "body": "Gwneud cais i orchymyn bod yr atebydd yn gwneud neu’n darparu rhywbeth."
     },
     "witness": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Gorchymyn tyst i fynychu",
+      "label": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
+      "body": "Gwneud cais i orchymyn bod tyst yn bresennol i roi tystiolaeth yn eich achos chi."
     },
     "non-compliance": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
+      "label": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
+      "body": "Dweud wrthym nad yw’r atebydd wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
     },
     "publicity": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Cyfyngu ar gyhoeddusrwydd",
+      "label": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
+      "body": "Gwneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn eich achos chi. Gall y tribiwnlys gynnal gwrandawiadau yn breifat neu gadw manylion partïon a thystion penodol yn gyfrinachol os oes angen."
     },
     "strike": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Dileu’r ymateb",
+      "label": "Dileu’r cyfan neu ran o’r ymateb",
+      "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb yr atebydd."
     },
     "reconsider-judgement": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "caption": "Ailystyried dyfarniad",
+      "label": "Gwneud cais i ddyfarniad gael ei ailystyried",
+      "body": "Gofyn i ddyfarniad a wnaed gan farnwr gael ei ailystyried."
     },
     "other": {
-      "caption": "Welsh Translation required",
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required",
-      "link": "Welsh Translation required"
+      "caption": "Cysylltu â’r tribiwnlys",
+      "label": "Cysylltu â'r tribiwnlys am rywbeth arall",
+      "body": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos chi. Rhywbeth sydd ddim yn dod o dan yr opsiynau eraill ar y dudalen hon.",
+      "link": "Cysylltu â’r tribiwnlys am rywbeth arall"
     },
     "documents": {
-      "label": "Welsh Translation required",
-      "body": "Welsh Translation required"
+      "label": "Cyflwyno dogfennau ar gyfer gwrandawiad",
+      "body": "Defnyddiwch y ffurflen hon os yw'r tribiwnlys wedi gorchymyn i chi ddarparu dogfennau ar gyfer gwrandawiad. Gallai hyn gynnwys yr holl ddogfennau gan gynnwys datganiadau tystion neu ddogfennau atodol."
     }
   },
   "call": {
-    "h1": "Welsh Translation required",
-    "p1": "Welsh Translation required",
-    "p2": "Welsh Translation required",
+    "h1": "Ffonio canolfan gyswllt cwsmeriaid y Tribiwnlys Cyflogaeth",
+    "p1": "Ffoniwch os oes gennych unrhyw gwestiynau ynglŷn â’ch hawliad. Ni allant roi cyngor cyfreithiol i chi na phrosesu unrhyw ddiweddariadau i'ch achos.",
+    "p2": "Defnyddiwch y ffurflenni cyswllt i wneud cais neu i ddarparu rhywbeth i'r tribiwnlys.",
     "english": {
-      "h1": "Welsh Translation required",
-      "p1": "Welsh Translation required",
-      "p2": "Welsh Translation required"
+      "h1": "Cymru a Lloegr",
+      "p1": "Rhif ffôn: 0300 123 1024",
+      "p2": "Ffôn testun: 18001 0300 123 1024"
     },
     "welsh": {
-      "h1": "Welsh Translation required",
-      "p1": "Welsh Translation required"
+      "h1": "Gwasanaeth Cymraeg",
+      "p1": "Rhif ffôn: 0300 303 5176"
     },
     "scottish": {
-      "h1": "Welsh Translation required",
-      "p1": "Welsh Translation required",
-      "p2": "Welsh Translation required"
+      "h1": "Yr Alban",
+      "p1": "Rhif ffôn: 0300 790 6234",
+      "p2": "Ffôn testun: 18001 0300 790 6234"
     },
-    "p3": "Welsh Translation required",
-    "p4": "Welsh Translation required",
-    "p5": "Welsh Translation required",
-    "link": "Welsh Translation required"
+    "p3": "Dydd Llun i ddydd Iau, 8.30am - 5pm.",
+    "p4": "Dydd Gwener 8.30am - 4pm.",
+    "p5": "Nid yw’r ganolfan ar agor ar wyliau banc.",
+    "link": "Gwybodaeth am gost galwadau (agor mewn tab newydd)"
   }
 }

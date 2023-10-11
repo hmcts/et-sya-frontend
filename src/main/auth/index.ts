@@ -11,8 +11,8 @@ export const getRedirectUrl = (
   guid: string,
   languageParam: string
 ): string => {
-  const clientID: string = config.get('services.idam.clientID');
-  const loginUrl: string = config.get('services.idam.authorizationURL');
+  const clientID: string = process.env.IDAM_CLIENT_ID ?? config.get('services.idam.clientID');
+  const loginUrl: string = process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPage);
   return `${loginUrl}?client_id=${clientID}&response_type=code&redirect_uri=${callbackUrl}&state=${guid}&ui_locales=${languageParam}`;
 };
@@ -22,12 +22,13 @@ export const getUserDetails = async (
   rawCode: string,
   callbackUrlPageLink: string
 ): Promise<UserDetails> => {
-  const id: string = config.get('services.idam.clientID');
+  const id: string = process.env.IDAM_CLIENT_ID ?? config.get('services.idam.clientID');
   const secret: string = config.get('services.idam.clientSecret');
-  const tokenUrl: string = config.get('services.idam.tokenURL');
+  const tokenUrl: string = process.env.IDAM_API_URL ?? config.get('services.idam.tokenURL');
   const callbackUrl = encodeURI(serviceUrl + callbackUrlPageLink);
   const code = encodeURIComponent(rawCode);
   const data = `client_id=${id}&client_secret=${secret}&grant_type=authorization_code&redirect_uri=${callbackUrl}&code=${code}`;
+
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded',

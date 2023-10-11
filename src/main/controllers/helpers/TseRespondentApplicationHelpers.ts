@@ -1,6 +1,3 @@
-import { Response } from 'express';
-import { LoggerInstance } from 'winston';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, Document, YesOrNo } from '../../definitions/case';
 import {
@@ -10,12 +7,13 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { RespondentApplicationDetails } from '../../definitions/definition';
-import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
+import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
 import { getTseApplicationDecisionDetails } from './ApplicationDetailsHelper';
+import { retrieveCurrentLocale } from './ApplicationTableRecordTranslationHelper';
 import { clearTseFields } from './CaseHelpers';
-import { createDownloadLink, getDocumentAdditionalInformation } from './DocumentHelpers';
+import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getRespondentApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -65,15 +63,6 @@ export const getRespondentBannerContent = (
   }
 };
 
-export const activateRespondentApplicationsLink = (
-  items: GenericTseApplicationTypeItem[],
-  userCase: CaseWithId
-): void => {
-  if (items?.length) {
-    userCase.hubLinksStatuses[HubLinkNames.RespondentApplications] = HubLinkStatus.IN_PROGRESS;
-  }
-};
-
 export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
   respondentItems: GenericTseApplicationTypeItem[],
   url: string,
@@ -81,11 +70,16 @@ export const populateRespondentItemsWithRedirectLinksCaptionsAndStatusColors = (
 ): GenericTseApplicationTypeItem[] => {
   if (respondentItems?.length) {
     respondentItems.forEach(item => {
-      const app = translations[item.value.type];
-      item.linkValue = app;
+      item.value.date = new Date(item.value?.date).toLocaleDateString(retrieveCurrentLocale(url), {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      item.linkValue = translations[item.value.type];
       item.redirectUrl = `/respondent-application-details/${item.id}${getLanguageParam(url)}`;
-      item.statusColor = statusColorMap.get(<HubLinkStatus>item.value.applicationState);
+
       item.displayStatus = translations[item.value.applicationState];
+      item.statusColor = statusColorMap.get(item.value.applicationState as HubLinkStatus);
     });
     return respondentItems;
   }
@@ -121,56 +115,41 @@ export const setSelectedTseApplication = (
 
 export const getResponseDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
-): Promise<string | void> => {
-  let responseDocDownload = undefined;
-  let responseDoc = undefined;
+  accessToken: string
+): Promise<string> => {
   const selectedApplicationRespondCollection = selectedApplication?.value?.respondCollection;
-  if (selectedApplicationRespondCollection?.length) {
-    responseDoc =
-      selectedApplicationRespondCollection[0].value?.supportingMaterial === undefined
-        ? undefined
-        : selectedApplicationRespondCollection[0].value?.supportingMaterial[0].value.uploadedDocument;
+  if (!selectedApplicationRespondCollection?.length) {
+    return '';
   }
-  if (responseDoc !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(responseDoc, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
-    responseDocDownload = createDownloadLink(responseDoc);
+
+  const responseDoc = selectedApplicationRespondCollection[0].value?.supportingMaterial?.[0].value.uploadedDocument;
+
+  if (!responseDoc) {
+    return '';
   }
-  return responseDocDownload;
+
+  await populateDocumentMetadata(responseDoc, accessToken);
+  return createDownloadLink(responseDoc);
 };
 
 export const getApplicationDocDownloadLink = async (
   selectedApplication: GenericTseApplicationTypeItem,
-  logger: LoggerInstance,
-  accessToken: string,
-  res: Response
-): Promise<string | void> => {
+  accessToken: string
+): Promise<string> => {
   const applicationDocDownload = selectedApplication?.value?.documentUpload;
 
-  if (applicationDocDownload !== undefined) {
-    try {
-      await getDocumentAdditionalInformation(applicationDocDownload, accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      return res.redirect('/not-found');
-    }
+  if (!applicationDocDownload) {
+    return '';
   }
+
+  await populateDocumentMetadata(applicationDocDownload, accessToken);
   return createDownloadLink(applicationDocDownload);
 };
 
 export const getDecisionContent = async (
-  logger: LoggerInstance,
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  accessToken: string,
-  res: Response
+  accessToken: string
 ): Promise<any[] | void> => {
   const selectedAppAdminDecision = selectedApplication.value?.adminDecision;
   let decisionContent = undefined;
@@ -180,20 +159,23 @@ export const getDecisionContent = async (
   if (decisionDocDownload.length > 0) {
     for (let i = decisionDocDownload.length - 1; i >= 0; i--) {
       if (decisionDocDownload[i]) {
-        try {
-          await getDocumentAdditionalInformation(decisionDocDownload[i], accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          return res.redirect('/not-found');
-        }
+        await populateDocumentMetadata(decisionDocDownload[i], accessToken);
         decisionDocDownloadLink[i] = createDownloadLink(decisionDocDownload[i]);
       }
     }
-    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    decisionContent = getTseApplicationDecisionDetails(
+      selectedApplication.value,
+      translations,
+      decisionDocDownloadLink
+    );
   }
 
   if (selectedAppAdminDecision?.length) {
-    decisionContent = getTseApplicationDecisionDetails(selectedApplication, translations, decisionDocDownloadLink);
+    decisionContent = getTseApplicationDecisionDetails(
+      selectedApplication.value,
+      translations,
+      decisionDocDownloadLink
+    );
   }
 
   return decisionContent;
@@ -204,8 +186,7 @@ export const getDecisionDocDownload = (selectedAppAdminDecision: TseAdminDecisio
   if (selectedAppAdminDecision?.length) {
     for (let i = selectedAppAdminDecision.length - 1; i >= 0; i--) {
       if (selectedAppAdminDecision[i].value?.responseRequiredDoc) {
-        decisionDocDownload[i] =
-          selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument.document_url;
+        decisionDocDownload[i] = selectedAppAdminDecision[i].value.responseRequiredDoc[0].value.uploadedDocument;
       }
     }
   }

@@ -26,7 +26,9 @@ export interface GenericTseApplicationType {
   responsesCount?: string;
   status?: string;
   dueDate?: string;
-  applicationState?: string;
+  applicationState?: string; // used for CUI and so viewed/not viewed refers to claimant
+  respondentResponseRequired?: string;
+  claimantResponseRequired?: string;
   adminDecision?: TseAdminDecisionItem[];
 }
 
@@ -57,12 +59,26 @@ export interface TseRespondTypeItem {
 }
 
 export interface TseRespondType {
+  // Generic
   from?: string;
   date?: string;
+  // Respondent / Claimant Reply
   response?: string;
   copyToOtherParty?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterial?: TseRespondSupportingMaterialItem[];
+  // Admin Reply
+  addDocument?: DocumentTypeItem[];
+  additionalInformation?: string;
+  enterResponseTitle?: string;
+  isCmoOrRequest?: string;
+  cmoMadeBy?: string;
+  requestMadeBy?: string;
+  madeByFullName?: string;
+  isResponseRequired?: string;
+  selectPartyRespond?: string;
+  selectPartyNotify?: string;
+  viewedByClaimant?: string;
 }
 
 export interface TseRespondSupportingMaterialItem {

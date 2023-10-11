@@ -15,6 +15,8 @@ import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
 import { Logger } from '../../logger';
+import localesCy from '../../resources/locales/cy/translation/common.json';
+import locales from '../../resources/locales/en/translation/common.json';
 import { UploadedFile, getCaseApi } from '../../services/CaseService';
 
 import { handleErrors, returnSessionErrors } from './ErrorHelpers';
@@ -75,8 +77,14 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.workAddressTypes = workAddressTypes;
       req.session.userCase.respondentAddressTypes = respondentAddressTypes;
       req.session.userCase.addressAddressTypes = addressAddressTypes;
+      req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
+      req.session.userCase.updateDraftCaseError = req.url?.includes('lng=cy')
+        ? localesCy.updateDraftErrorMessage
+        : locales.updateDraftErrorMessage;
+      req.session.returnUrl = req.url;
+      req.session.save();
       logger.error(error.message);
     }
   }
@@ -149,13 +157,14 @@ export const updateJudgmentNotificationState = async (
 };
 
 export const updateDecisionState = async (
+  appId: string,
   selectedDecision: TseAdminDecisionItem,
   req: AppRequest,
   logger: Logger
 ): Promise<void> => {
   try {
     selectedDecision.value.decisionState = HubLinkStatus.VIEWED;
-    await getCaseApi(req.session.user?.accessToken).updateDecisionState(selectedDecision, req.session.userCase);
+    await getCaseApi(req.session.user?.accessToken).updateDecisionState(appId, selectedDecision, req.session.userCase);
     logger.info(`Updated state for selected decision: ${selectedDecision.id}`);
   } catch (error) {
     logger.error(error.message);
@@ -204,13 +213,14 @@ export const getSectionStatusForEmployment = (
 };
 
 export const isPostcodeInScope = (postCode: string): boolean => {
+  const excludedPostCodes = ['YO7', 'YO21', 'YO22'];
   const {
     outcode, // => "SW1A"
     area, // => "SW"
     district, // => "SW1"
   } = parse(postCode);
   for (const location of inScopeLocations) {
-    if (location === outcode || location === area || location === district) {
+    if ((location === outcode || location === area || location === district) && !excludedPostCodes.includes(outcode)) {
       return true;
     }
   }
@@ -299,6 +309,7 @@ export const clearTseFields = (userCase: CaseWithId): void => {
   userCase.hasSupportingMaterial = undefined;
   userCase.supportingMaterialFile = undefined;
   userCase.selectedRequestOrOrder = undefined;
+  userCase.isRespondingToRequestOrOrder = undefined;
 };
 
 export const clearPrepareDocumentsForHearingFields = (userCase: CaseWithId): void => {

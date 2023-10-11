@@ -1,6 +1,3 @@
-import logger from '@pact-foundation/pact/src/common/logger';
-import { Response } from 'express';
-
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { DocumentTypeItem } from '../../definitions/complexTypes/documentTypeItem';
@@ -12,6 +9,7 @@ import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNot
 import { Applicant } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import { DecisionAndApplicationDetails } from '../../definitions/definition';
+import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
 
@@ -53,8 +51,7 @@ export const populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors = (
 
 export const getJudgmentAttachments = async (
   selectedJudgment: SendNotificationTypeItem,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<DocumentTypeItem[]> => {
   const judgmentAttachments = [];
   if (selectedJudgment?.value?.sendNotificationUploadDocument) {
@@ -65,12 +62,7 @@ export const getJudgmentAttachments = async (
     }
 
     if (judgmentAttachments.length) {
-      try {
-        await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        res.redirect('/not-found');
-      }
+      await getDocumentsAdditionalInformation(judgmentAttachments, req.session.user?.accessToken);
       judgmentAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
   }
@@ -79,8 +71,7 @@ export const getJudgmentAttachments = async (
 
 export const getDecisionAttachments = async (
   selectedDecision: TseAdminDecisionItem,
-  req: AppRequest,
-  res: Response
+  req: AppRequest
 ): Promise<DocumentTypeItem[]> => {
   const decisionAttachments = [];
   for (let i = 0; i < selectedDecision?.value?.responseRequiredDoc?.length; i++) {
@@ -90,12 +81,7 @@ export const getDecisionAttachments = async (
   }
 
   if (decisionAttachments.length) {
-    try {
-      await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
-    } catch (err) {
-      logger.error(err.message);
-      res.redirect('/not-found');
-    }
+    await getDocumentsAdditionalInformation(decisionAttachments, req.session.user?.accessToken);
     decisionAttachments.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
   }
   return decisionAttachments;
@@ -105,105 +91,34 @@ export const getJudgmentDetails = (
   selectedJudgment: SendNotificationTypeItem,
   judgmentAttachments: DocumentTypeItem[],
   translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[] => {
+): SummaryListRow[] => {
   const judgmentDetails = [];
 
   judgmentDetails.push(
-    {
-      key: {
-        text: translations.decision,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationDecision,
-      },
-    },
-    {
-      key: {
-        text: translations.dateSent,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.sentBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationSentBy,
-      },
-    }
+    addSummaryRow(translations.decision, selectedJudgment.value.sendNotificationDecision),
+    addSummaryRow(translations.dateSent, selectedJudgment.value.date),
+    addSummaryRow(translations.sentBy, selectedJudgment.value.sendNotificationSentBy)
   );
 
   if (selectedJudgment.value.sendNotificationAdditionalInfo) {
-    judgmentDetails.push({
-      key: {
-        text: translations.additionalInfo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationAdditionalInfo,
-      },
-    });
+    judgmentDetails.push(
+      addSummaryRow(translations.additionalInfo, selectedJudgment.value.sendNotificationAdditionalInfo)
+    );
   }
 
   if (judgmentAttachments) {
-    for (let i = 0; i < judgmentAttachments.length; i++) {
+    for (const element of judgmentAttachments) {
       judgmentDetails.push(
-        {
-          key: {
-            text: translations.description,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            text: judgmentAttachments[i].value.shortDescription,
-          },
-        },
-        {
-          key: {
-            text: translations.document,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            html: judgmentAttachments[i].downloadLink,
-          },
-        }
+        addSummaryRow(translations.description, element.value.shortDescription),
+        addSummaryHtmlRow(translations.document, element.downloadLink)
       );
     }
   }
 
   judgmentDetails.push(
-    {
-      key: {
-        text: translations.judgmentMadeBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationWhoMadeJudgement,
-      },
-    },
-
-    {
-      key: {
-        text: translations.name,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationFullName2,
-      },
-    },
-    {
-      key: {
-        text: translations.sentTo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedJudgment.value.sendNotificationNotify,
-      },
-    }
+    addSummaryRow(translations.judgmentMadeBy, selectedJudgment.value.sendNotificationWhoMadeJudgement),
+    addSummaryRow(translations.name, selectedJudgment.value.sendNotificationFullName2),
+    addSummaryRow(translations.sentTo, selectedJudgment.value.sendNotificationNotify)
   );
   return judgmentDetails;
 };
@@ -211,230 +126,78 @@ export const getJudgmentDetails = (
 export const getDecisionDetails = (
   userCase: CaseWithId,
   selectedDecision: TseAdminDecisionItem,
-  selectedApplicationDocDownloadLink: string | void,
-  selectedApplicationResponseDocDownloadLink: string | void,
+  selectedApplicationDocDownloadLink: string,
+  selectedApplicationResponseDocDownloadLink: string,
   selectedAttachments: DocumentTypeItem[],
   translations: AnyRecord
-): { key: unknown; value?: unknown; actions?: unknown }[][] => {
+): SummaryListRow[][] => {
   const selectedDecisionApplication = getApplicationOfDecision(userCase, selectedDecision);
+  const respond = selectedDecisionApplication?.value.respondCollection[0].value;
+
   let responseFrom;
   if (selectedDecisionApplication?.value.respondCollection?.length) {
     responseFrom =
-      selectedDecisionApplication?.value.respondCollection[0].value.from === Applicant.CLAIMANT
-        ? translations.responseFromRespondent
-        : translations.responseFromClaimant;
+      respond.from === Applicant.CLAIMANT ? translations.responseFromRespondent : translations.responseFromClaimant;
   }
-  const applicationDetails = [];
-  const responseDetails = [];
-  const decisionDetails = [];
+  const applicationDetails: SummaryListRow[] = [];
+  const responseDetails: SummaryListRow[] = [];
+  const decisionDetails: SummaryListRow[] = [];
 
   applicationDetails.push(
-    {
-      key: {
-        text: translations.applicant,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecisionApplication?.value.applicant,
-      },
-    },
-    {
-      key: {
-        text: translations.applicationType,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecisionApplication?.value.type,
-      },
-    },
-    {
-      key: {
-        text: translations.applicationDate,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecisionApplication?.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.legend,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecisionApplication?.value.details,
-      },
-    }
+    addSummaryRow(translations.applicant, selectedDecisionApplication?.value.applicant),
+    addSummaryRow(translations.applicationType, selectedDecisionApplication?.value.type),
+    addSummaryRow(translations.applicationDate, selectedDecisionApplication?.value.date),
+    addSummaryRow(translations.legend, selectedDecisionApplication?.value.details)
   );
 
   if (selectedDecisionApplication?.value.documentUpload) {
-    applicationDetails.push({
-      key: {
-        text: translations.supportingMaterial,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        html: selectedApplicationDocDownloadLink,
-      },
-    });
+    applicationDetails.push(addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationDocDownloadLink));
   }
-  applicationDetails.push({
-    key: {
-      text: translations.copyCorrespondence,
-      classes: 'govuk-!-font-weight-regular-m',
-    },
-    value: {
-      text: selectedDecisionApplication?.value.copyToOtherPartyYesOrNo,
-    },
-  });
+
+  applicationDetails.push(
+    addSummaryRow(translations.copyCorrespondence, selectedDecisionApplication?.value.copyToOtherPartyYesOrNo)
+  );
 
   if (selectedDecisionApplication?.value.respondCollection) {
     responseDetails.push(
-      {
-        key: {
-          text: translations.responseFrom,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          text: selectedDecisionApplication?.value.respondCollection[0].value.from,
-        },
-      },
-      {
-        key: {
-          text: translations.date,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: selectedDecisionApplication?.value.respondCollection[0].value.date,
-        },
-      },
-      {
-        key: {
-          text: translations.responsePart1 + responseFrom + translations.responsePart2,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: selectedDecisionApplication?.value.respondCollection[0].value.response,
-        },
-      }
+      addSummaryRow(translations.responseFrom, respond.from),
+      addSummaryHtmlRow(translations.date, respond.date),
+      addSummaryHtmlRow(translations.responsePart1 + responseFrom + translations.responsePart2, respond.response)
     );
 
-    if (selectedDecisionApplication?.value.respondCollection[0].value.supportingMaterial) {
-      responseDetails.push({
-        key: {
-          text: translations.supportingMaterial,
-          classes: 'govuk-!-font-weight-regular-m',
-        },
-        value: {
-          html: selectedApplicationResponseDocDownloadLink,
-        },
-      });
+    if (respond.supportingMaterial) {
+      responseDetails.push(
+        addSummaryHtmlRow(translations.supportingMaterial, selectedApplicationResponseDocDownloadLink)
+      );
     }
-    responseDetails.push({
-      key: {
-        text: translations.copyCorrespondence,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecisionApplication?.value.copyToOtherPartyYesOrNo,
-      },
-    });
+
+    responseDetails.push(
+      addSummaryRow(translations.copyCorrespondence, selectedDecisionApplication?.value.copyToOtherPartyYesOrNo)
+    );
   }
+
   decisionDetails.push(
-    {
-      key: {
-        text: translations.decision,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.enterNotificationTitle,
-      },
-    },
-    {
-      key: {
-        text: translations.dateSent,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.date,
-      },
-    },
-    {
-      key: {
-        text: translations.sentBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.decisionMadeBy,
-      },
-    }
+    addSummaryRow(translations.decision, selectedDecision?.value.enterNotificationTitle),
+    addSummaryRow(translations.dateSent, selectedDecision?.value.date),
+    addSummaryRow(translations.sentBy, selectedDecision?.value.decisionMadeBy)
   );
 
   if (selectedDecision?.value.additionalInformation) {
-    decisionDetails.push({
-      key: {
-        text: translations.additionalInfo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.additionalInformation,
-      },
-    });
+    decisionDetails.push(addSummaryRow(translations.additionalInfo, selectedDecision?.value.additionalInformation));
   }
 
   if (selectedAttachments) {
-    for (let i = 0; i < selectedAttachments.length; i++) {
+    for (const element of selectedAttachments) {
       decisionDetails.push(
-        {
-          key: {
-            text: translations.description,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            html: selectedAttachments[i].value.shortDescription,
-          },
-        },
-        {
-          key: {
-            text: translations.document,
-            classes: 'govuk-!-font-weight-regular-m',
-          },
-          value: {
-            html: selectedAttachments[i].downloadLink,
-          },
-        }
+        addSummaryHtmlRow(translations.description, element.value.shortDescription),
+        addSummaryHtmlRow(translations.document, element.downloadLink)
       );
     }
   }
   decisionDetails.push(
-    {
-      key: {
-        text: translations.decisionMadeBy,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.decisionMadeBy,
-      },
-    },
-
-    {
-      key: {
-        text: translations.name,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.decisionMadeByFullName,
-      },
-    },
-    {
-      key: {
-        text: translations.sentTo,
-        classes: 'govuk-!-font-weight-regular-m',
-      },
-      value: {
-        text: selectedDecision?.value.selectPartyNotify,
-      },
-    }
+    addSummaryRow(translations.decisionMadeBy, selectedDecision?.value.decisionMadeBy),
+    addSummaryRow(translations.name, selectedDecision?.value.decisionMadeByFullName),
+    addSummaryRow(translations.sentTo, selectedDecision?.value.selectPartyNotify)
   );
   return [applicationDetails, responseDetails, decisionDetails];
 };
@@ -472,38 +235,7 @@ export const populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors = (
 };
 
 export function getAllAppsWithDecisions(userCase: CaseWithId): GenericTseApplicationTypeItem[] {
-  const decisions = userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
-  return decisions;
-}
-
-export function matchDecisionsToApps(
-  appOfDecision: GenericTseApplicationTypeItem[],
-  decision: TseAdminDecisionItem[]
-): DecisionAndApplicationDetails[] {
-  const result = [];
-  if (appOfDecision?.length) {
-    for (let i = 0; i < appOfDecision.length; i++) {
-      if (
-        (appOfDecision[i].value.applicant === Applicant.RESPONDENT &&
-          !appOfDecision[i].value.type.includes(applicationTypes.respondent.c) &&
-          appOfDecision[i].value.copyToOtherPartyYesOrNo === YesOrNo.YES) ||
-        appOfDecision[i].value.applicant === Applicant.CLAIMANT
-      ) {
-        const parent = appOfDecision[i];
-        for (let j = 0; j < parent.value.adminDecision.length; j++) {
-          if (parent.value.adminDecision[j].value.typeOfDecision === 'Judgment') {
-            const nested = parent.value.adminDecision[j];
-            const matchingChildren = decision.filter(child => child.id === nested.id);
-            result.push({
-              ...parent,
-              decisionOfApp: matchingChildren[0],
-            });
-          }
-        }
-      }
-    }
-  }
-  return result;
+  return userCase?.genericTseApplicationCollection.filter(obj => obj.value.adminDecision?.length);
 }
 
 export function getApplicationOfDecision(
@@ -511,7 +243,7 @@ export function getApplicationOfDecision(
   selectedDecision: TseAdminDecisionItem
 ): GenericTseApplicationTypeItem {
   const data = userCase?.genericTseApplicationCollection;
-  const decisionApps = data?.filter(element => element.value.adminDecision && element.value.adminDecision.length);
+  const decisionApps = data?.filter(element => element.value.adminDecision?.length);
   const searchValue = selectedDecision;
   let appOfDecision = undefined;
 
@@ -555,26 +287,28 @@ export const getJudgmentBannerContent = (
 };
 
 export const getDecisionBannerContent = (
-  appsAndDecisions: DecisionAndApplicationDetails[],
+  appsWithDecisions: GenericTseApplicationTypeItem[],
   translations: AnyRecord,
   languageParam: string
 ): DecisionAndApplicationDetails[] => {
-  const items = appsAndDecisions;
   const bannerContent: DecisionAndApplicationDetails[] = [];
-  if (items?.length) {
-    for (let i = items.length - 1; i >= 0; i--) {
-      if (items[i].decisionOfApp?.value?.decisionState !== HubLinkStatus.VIEWED) {
-        const decisionBannerHeader =
-          items[i].value.applicant === Applicant.CLAIMANT
-            ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[items[i].value.type]
-            : translations.notificationBanner.decisionJudgment.headerRespondent + translations[items[i].value.type];
-        const bannerDetails: DecisionAndApplicationDetails = {
-          decisionBannerHeader,
-          redirectUrl: `/judgment-details/${items[i].decisionOfApp?.id}${languageParam}`,
-          applicant: items[i].value.applicant,
-          applicationType: items[i].value.type,
-        };
-        bannerContent.push(bannerDetails);
+  if (appsWithDecisions?.length) {
+    for (const app of appsWithDecisions) {
+      for (const decision of app.value.adminDecision) {
+        if (decision.value.decisionState !== HubLinkStatus.VIEWED) {
+          const decisionBannerHeader =
+            app.value.applicant === Applicant.CLAIMANT
+              ? translations.notificationBanner.decisionJudgment.headerClaimant + translations[app.value.type]
+              : translations.notificationBanner.decisionJudgment.headerRespondent + translations[app.value.type];
+
+          const bannerDetails: DecisionAndApplicationDetails = {
+            decisionBannerHeader,
+            redirectUrl: `/judgment-details/${decision?.id}${languageParam}`,
+            applicant: app.value.applicant,
+            applicationType: app.value.type,
+          };
+          bannerContent.push(bannerDetails);
+        }
       }
     }
     return bannerContent;

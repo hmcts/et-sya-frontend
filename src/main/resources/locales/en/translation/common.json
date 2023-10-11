@@ -70,7 +70,17 @@
   "CookieAccepted": "You’ve accepted additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.",
   "CookieRejected": " <p class=\"govuk-body\">You’ve rejected additional cookies. You can <a class=\"govuk-link\" href=\"/cookies\">change your cookie settings</a> at any time.</p>",
   "enterPostcode": "Enter a UK postcode",
+  "addressPageHeader": "What is your contact or home address?",
+  "addressPageText": "We'll send any correspondence to this address.",
+  "respondentPageHeader": "What is the address of ",
+  "respondentPageText": "You should be able to find the address on your payslips, contract or other official documents.",
+  "respondentInsetText": "This should be the same respondent address given to Acas.",
+  "workAddressPageHeader": "What’s the postcode where you worked or work?",
+  "workAddressPageText1": "This will decide which Employment Tribunal office deals with your claim. If you worked at home, enter your home postcode.",
+  "workAddressPageText2": "If you’re claiming against someone you did not work for, enter the postcode of where they are based.",
   "manualAddress": "I live outside the UK",
+  "respondentManualAddress": "The respondent address is outside the UK",
+  "workManualAddress": "My work address is outside the UK",
   "errors": {
     "addressEnterPostcode": {
       "invalid": "Enter a valid postcode. For example, SW1 1AA",
@@ -104,5 +114,6 @@
   "addressPostcodeEnterTitle": "Address postcode enter",
   "addressPostcodeSelectTitle": "Address postcode select",
   "respondentPostcodeEnterTitle": "Respondent postcode enter",
-  "respondentPostcodeSelectTitle": "Respondent postcode select"
+  "respondentPostcodeSelectTitle": "Respondent postcode select",
+  "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details."
 }

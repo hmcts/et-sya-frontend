@@ -25,7 +25,7 @@ export default class ClaimSubmittedController {
       attachmentsText: formatAttachmentsText(submittedCase.claimSummaryFile?.document_filename, pageTranslations),
       downloadLink: '/getCaseDocument/' + submittedCase.et1SubmittedForm?.id,
       tribunalOfficeText: returnManagingOffice(submittedCase.managingOffice, pageTranslations),
-      emailText: submittedCase.tribunalCorrespondenceEmail,
+      emailText: returnEmailText(submittedCase.tribunalCorrespondenceEmail, submittedCase.managingOffice),
       telephoneText: submittedCase.tribunalCorrespondenceTelephone,
       PageUrls,
     });
@@ -45,6 +45,13 @@ function returnManagingOffice(managingOffice: string, pageTranslations: AnyRecor
     return pageTranslations[managingOffice];
   }
   return managingOffice;
+}
+
+function returnEmailText(tribunalCorrespondenceEmail: string, managingOffice: string): string {
+  if (managingOffice === 'Unassigned') {
+    return 'employmentJurisdictionalSupportTeamInbox@justice.gov.uk';
+  }
+  return tribunalCorrespondenceEmail;
 }
 
 const formatAttachmentsText = (fileName: string, translations: AnyRecord) => {

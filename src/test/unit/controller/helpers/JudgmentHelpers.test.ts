@@ -1,7 +1,9 @@
 import { createDownloadLink } from '../../../../main/controllers/helpers/DocumentHelpers';
 import {
   activateJudgmentsLink,
+  getAllAppsWithDecisions,
   getDecisionDetails,
+  getDecisions,
   populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors,
   populateJudgmentItemsWithRedirectLinksCaptionsAndStatusColors,
 } from '../../../../main/controllers/helpers/JudgmentHelpers';
@@ -109,6 +111,27 @@ describe('Judgment helper', () => {
     expect(populatedJudgment.displayStatus).toEqual('Not viewed yet');
   });
 
+  it('should populate decisions with inProgress redirect link, status and colour', () => {
+    const populatedJudgment = populateDecisionItemsWithRedirectLinksCaptionsAndStatusColors(
+      [caseWithDecisionsAndJudgments.genericTseApplicationCollection[0].value.adminDecision[1]],
+      'url',
+      translations
+    )[0];
+    expect(populatedJudgment.redirectUrl).toEqual('/judgment-details/2?lng=en');
+    expect(populatedJudgment.statusColor).toEqual('--yellow');
+    expect(populatedJudgment.displayStatus).toEqual('In progress');
+  });
+
+  it('should get all apps with decisions', () => {
+    const result = getAllAppsWithDecisions(caseWithDecisionsAndJudgments);
+    expect(result).toHaveLength(1);
+  });
+
+  it('should get all decisions', () => {
+    const result = getDecisions(caseWithDecisionsAndJudgments);
+    expect(result).toHaveLength(2);
+  });
+
   it('should return expected details content for a decision', () => {
     decisionDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     const applicationCollection = caseWithDecisionsAndJudgments.genericTseApplicationCollection[0];
@@ -135,7 +158,7 @@ describe('Judgment helper', () => {
     expect(pageContent[0][3].value).toEqual({ text: 'Test application details text' });
     expect(pageContent[0][4].key).toEqual({ classes: summaryListClass, text: translations.supportingMaterial });
     expect(pageContent[0][4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid1' target='_blank' class='govuk-link'>mockApplicationDocumentUpload(mockApplicationDocumentUpload, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid1' target='_blank' class='govuk-link'>mockApplicationDocumentUpload (mockApplicationDocumentUpload, 5Bytes)</a>",
     });
     expect(pageContent[0][5].key).toEqual({ classes: summaryListClass, text: translations.copyCorrespondence });
     expect(pageContent[0][5].value).toEqual({ text: YesOrNo.YES });
@@ -151,7 +174,7 @@ describe('Judgment helper', () => {
     expect(pageContent[1][2].value).toEqual({ html: 'Test respondent response text' });
     expect(pageContent[1][3].key).toEqual({ classes: summaryListClass, text: translations.supportingMaterial });
     expect(pageContent[1][3].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid2' target='_blank' class='govuk-link'>mockResponseDocumentUpload(mockResponseDocumentUpload, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid2' target='_blank' class='govuk-link'>mockResponseDocumentUpload (mockResponseDocumentUpload, 5Bytes)</a>",
     });
     expect(pageContent[1][4].key).toEqual({ classes: summaryListClass, text: translations.copyCorrespondence });
     expect(pageContent[1][4].value).toEqual({ text: YesOrNo.YES });
@@ -166,13 +189,13 @@ describe('Judgment helper', () => {
     expect(pageContent[2][3].value).toEqual({ html: 'Decision document 1' });
     expect(pageContent[2][4].key).toEqual({ classes: summaryListClass, text: translations.document });
     expect(pageContent[2][4].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid3' target='_blank' class='govuk-link'>mockDecisionDocumentUpload1(mockDecisionDocumentUpload1, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid3' target='_blank' class='govuk-link'>mockDecisionDocumentUpload1 (mockDecisionDocumentUpload1, 5Bytes)</a>",
     });
     expect(pageContent[2][5].key).toEqual({ classes: summaryListClass, text: translations.description });
     expect(pageContent[2][5].value).toEqual({ html: 'Decision document 2' });
     expect(pageContent[2][6].key).toEqual({ classes: summaryListClass, text: translations.document });
     expect(pageContent[2][6].value).toEqual({
-      html: "<a href='/getSupportingMaterial/uuid4' target='_blank' class='govuk-link'>mockDecisionDocumentUpload2(mockDecisionDocumentUpload2, 5Bytes)</a>",
+      html: "<a href='/getSupportingMaterial/uuid4' target='_blank' class='govuk-link'>mockDecisionDocumentUpload2 (mockDecisionDocumentUpload2, 5Bytes)</a>",
     });
     expect(pageContent[2][7].key).toEqual({ classes: summaryListClass, text: translations.decisionMadeBy });
     expect(pageContent[2][7].value).toEqual({ text: 'Judge' });

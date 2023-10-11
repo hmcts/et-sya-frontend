@@ -37,7 +37,10 @@
       "enabled": "true"
     },
     "et1Legacy": {
-      "url": "https://employmenttribunals.service.gov.uk"
+      "url": "https://et-pet-et1.aat.platform.hmcts.net"
+    },
+    "launchDarkly": {
+      "key": "TO BE PICKED UP FROM ENV"
     }
   },
   "pact": {

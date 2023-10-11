@@ -19,6 +19,12 @@
         </p>
      {% endif %}
 
+      {% if "/sex-and-title" in currentUrl %}
+             <p class="govuk-body">
+             <a href="{{PageUrls.SEX_AND_TITLE}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
+             </p>
+      {% endif %}
+
      {% if "/pay" in currentUrl %}
         <p class="govuk-body">
         <a href="{{PageUrls.PAY}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
