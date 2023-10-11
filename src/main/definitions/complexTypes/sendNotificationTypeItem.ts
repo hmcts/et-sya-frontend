@@ -18,7 +18,6 @@ export interface SendNotificationTypeItem {
 export interface SendNotificationType {
   number?: string;
   sendNotificationTitle?: string;
-  sendNotificationResponsesCount?: string;
 
   sendNotificationLetter?: YesOrNo;
 
