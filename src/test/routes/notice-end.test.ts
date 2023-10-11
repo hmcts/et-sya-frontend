@@ -17,7 +17,7 @@ describe(`on POST ${PageUrls.NOTICE_END}`, () => {
   test('should navigate to the notice type page when save and continue button is clicked', async () => {
     await request(mockApp({}))
       .post(PageUrls.NOTICE_END)
-      .send({ 'noticeEnds-day': '10', 'noticeEnds-month': '10', 'noticeEnds-year': '2077' })
+      .send({ 'noticeEnds-day': '10', 'noticeEnds-month': '10', 'noticeEnds-year': new Date().getFullYear() + 1 })
       .expect(res => {
         expect(res.status).toStrictEqual(302);
         expect(res.header['location']).toStrictEqual(PageUrls.NOTICE_TYPE);
