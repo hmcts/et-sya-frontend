@@ -1,11 +1,9 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, TseStatusStored } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, TseStatusStored, YES } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
-
-import { getStoredToSubmitLink } from './LinkHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -243,7 +241,16 @@ export const getHubLinksUrlMap = (): Map<string, string> => {
   ]);
 };
 
-export const getStoredPendingApplication = (
+export const getStoredPendingBannerList = (
+  apps: GenericTseApplicationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  storeNotifications.push(...getStoredPendingApplication(apps, languageParam));
+  return storeNotifications;
+};
+
+const getStoredPendingApplication = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
@@ -251,9 +258,18 @@ export const getStoredPendingApplication = (
   for (const app of apps || []) {
     if (app.value.status === TseStatusStored) {
       const storeNotification: StoreNotification = {
-        viewUrl: getStoredToSubmitLink(app.id, languageParam),
+        viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
       };
       storeNotifications.push(storeNotification);
+    } else if (app.value.respondCollection) {
+      app.value.respondCollection
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.storedPending === YES)
+        .forEach(r =>
+          storeNotifications.push({
+            viewUrl:
+              PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+          })
+        );
     }
   }
   return storeNotifications;

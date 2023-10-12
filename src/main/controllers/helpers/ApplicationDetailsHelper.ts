@@ -277,3 +277,11 @@ const addNonAdminResponse = async (
     },
   ];
 };
+
+export const getResponseDisplay = async (
+  response: TseRespondTypeItem,
+  translations: AnyRecord,
+  supportingMaterialLink: string
+): Promise<SummaryListRow[]> => {
+  return addNonAdminResponse(translations, response, supportingMaterialLink);
+};
