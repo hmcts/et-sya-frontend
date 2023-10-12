@@ -294,13 +294,7 @@ export const JavaApiUrls = {
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
-  SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   SUBMIT_BUNDLES: 'cases/submit-bundles',
-  DOWNLOAD_CLAIM_PDF: '/generate-pdf',
-  UPLOAD_FILE: '/documents/upload/',
-  DOCUMENT_DOWNLOAD: '/document/download/',
-  DOCUMENT_DETAILS: '/document/details/',
-  ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
 } as const;
 
 export const Urls = {
