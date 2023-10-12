@@ -241,6 +241,7 @@ export const PageUrls = {
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: '/contact-the-tribunal-cya-not-system-user',
   TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation/:appId',
+  STORED_RESPONSE_APPLICATION_CONFIRMATION: '/stored-response-application-confirmation/:appId',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
   STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
   RULE92_HOLDING_PAGE: '/holding-page',
@@ -257,6 +258,7 @@ export const InterceptPaths = {
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
   STORE_TRIBUNAL_CYA: '/storeTribunalCya',
+  STORE_RESPONDENT_CYA: '/storeRespondentCya',
 } as const;
 
 export const ErrorPages = {
@@ -289,6 +291,7 @@ export const JavaApiUrls = {
   CHANGE_APPLICATION_STATUS: 'cases/change-application-status',
   SUBMIT_CLAIMANT_APPLICATION: 'cases/submit-claimant-application',
   SUBMIT_STORED_CLAIMANT_APPLICATION: 'cases/submit-stored-claimant-application',
+  SUBMIT_STORED_RESPOND_TO_APPLICATION: 'cases/submit-stored-respond-to-application',
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
