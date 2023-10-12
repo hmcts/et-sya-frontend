@@ -15,11 +15,11 @@ import { getLanguageParam } from './helpers/RouterHelpers';
  */
 export default class ContactTheTribunalController {
   public async get(req: AppRequest, res: Response): Promise<void> {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
     const languageParam = getLanguageParam(req.url);
-    const welshEnabled = await getFlagValue('welsh-language', null);
     const applicationsAccordionItems = applications.map(application => {
       const label = translations.sections[application].label;
       return {

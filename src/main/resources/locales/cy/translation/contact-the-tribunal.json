@@ -12,67 +12,67 @@
   },
   "sections": {
     "withdraw": {
-      "caption": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
+      "caption": "Tynnu fy hawliad yn ôl",
       "label": "Rhoi gwybod fy mod eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
       "body": "Pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau â’ch hawliad."
     },
     "change-details": {
-      "caption": "Rwyf eisiau newid fy manylion personol",
+      "caption": "Newid fy manylion personol",
       "label": "Rwyf eisiau newid fy manylion personol",
       "body": "Newid y manylion personol a bu i chi eu rhoi wrth wneud eich hawliad."
     },
     "postpone": {
-      "caption": "Gwneud cais i ohirio fy ngwrandawiad",
+      "caption": "Gohirio gwrandawiad",
       "label": "Gwneud cais i ohirio fy ngwrandawiad",
       "body": "Gofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
     },
     "vary": {
-      "caption": "Gwneud cais i amrywio neu ddirymu gorchymyn",
+      "caption": "Amrywio neu ddirymu gorchymyn",
       "label": "Gwneud cais i amrywio neu ddirymu gorchymyn",
       "body": "Gwneud cais i amrywio neu ddirymu gorchymyn y mae'r tribiwnlys wedi ei gyhoeddi. Er enghraifft, efallai y bydd angen mwy o amser arnoch i gyflwyno rhywbeth neu eisiau newid nifer y tudalennau yn eich dogfennau gwrandawiad."
     },
     "reconsider-decision": {
-      "caption": "Gwneud cais i benderfyniad gael ei ystyried o'r newydd",
+      "caption": "Ystyried penderfyniad o'r newydd",
       "label": "Gwneud cais i benderfyniad gael ei ystyried o'r newydd",
       "body": "Os ydych yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eich achos chi, gallwch ofyn i farnwr cyflogaeth edrych ar y penderfyniad hwnnw eto."
     },
     "amend": {
-      "caption": "Gwneud cais i ddiwygio fy hawliad",
+      "caption": "Diwygio fy hawliad",
       "label": "Gwneud cais i ddiwygio fy hawliad",
       "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad."
     },
     "respondent": {
-      "caption": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
+      "caption": "Gorchymyn yr atebydd",
       "label": "Gorchymyn bod yr atebydd yn gwneud rhywbeth",
       "body": "Gwneud cais i orchymyn bod yr atebydd yn gwneud neu’n darparu rhywbeth."
     },
     "witness": {
-      "caption": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
+      "caption": "Gorchymyn tyst i fynychu",
       "label": "Gorchymyn bod tyst yn bresennol i roi tystiolaeth",
       "body": "Gwneud cais i orchymyn bod tyst yn bresennol i roi tystiolaeth yn eich achos chi."
     },
     "non-compliance": {
-      "caption": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
+      "caption": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
       "label": "Dweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio â gorchymyn",
       "body": "Dweud wrthym nad yw’r atebydd wedi cydymffurfio â rhan o orchymyn, neu orchymyn cyfan, gan y tribiwnlys."
     },
     "publicity": {
-      "caption": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
+      "caption": "Cyfyngu ar gyhoeddusrwydd",
       "label": "Gwneud cais i gyfyngu ar gyhoeddusrwydd",
       "body": "Gwneud cais i atal neu gyfyngu ar gyhoeddusrwydd yn eich achos chi. Gall y tribiwnlys gynnal gwrandawiadau yn breifat neu gadw manylion partïon a thystion penodol yn gyfrinachol os oes angen."
     },
     "strike": {
-      "caption": "Dileu’r cyfan neu ran o’r ymateb",
+      "caption": "Dileu’r ymateb",
       "label": "Dileu’r cyfan neu ran o’r ymateb",
       "body": "Gallwch ofyn i’r tribiwnlys ddileu’r cyfan neu rannau o ymateb yr atebydd."
     },
     "reconsider-judgement": {
-      "caption": "Gwneud cais i ddyfarniad gael ei ailystyried",
+      "caption": "Ailystyried dyfarniad",
       "label": "Gwneud cais i ddyfarniad gael ei ailystyried",
       "body": "Gofyn i ddyfarniad a wnaed gan farnwr gael ei ailystyried."
     },
     "other": {
-      "caption": "Cysylltu â'r tribiwnlys am rywbeth arall",
+      "caption": "Cysylltu â’r tribiwnlys",
       "label": "Cysylltu â'r tribiwnlys am rywbeth arall",
       "body": "Dweud neu ofyn i’r tribiwnlys am rywbeth sy’n berthnasol i’ch achos chi. Rhywbeth sydd ddim yn dod o dan yr opsiynau eraill ar y dudalen hon.",
       "link": "Cysylltu â’r tribiwnlys am rywbeth arall"

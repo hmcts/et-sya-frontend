@@ -5,11 +5,11 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
-
 describe('Contact Application Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
+
   it('should render contact application page', async () => {
-    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
-    mockLdClient.mockResolvedValue(true);
     const controller = new ContactTheTribunalController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, contactTheTribunal);

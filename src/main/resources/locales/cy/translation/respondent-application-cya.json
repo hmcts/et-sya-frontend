@@ -1,10 +1,10 @@
 {
   "title": "Gwiriwch eich atebion",
   "titleCya": "Gwiriwch eich atebion",
-  "legend": "Welsh Translation required",
-  "supportingMaterial": "Welsh Translation required",
-  "copyToOtherPartyYesOrNo": "Welsh Translation required",
-  "copyToOtherPartyText": "Welsh Translation required",
+  "legend": "Beth yw eich ymateb i’r gais yr atebydd?",
+  "supportingMaterial": "Deunydd ategol",
+  "copyToOtherPartyYesOrNo": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
+  "copyToOtherPartyText": "Rheswm dros beidio â hysbysu’r parti arall",
   "submitBtn": "Cadw a pharhau",
   "cancelLink": "Allgofnodi"
 }
