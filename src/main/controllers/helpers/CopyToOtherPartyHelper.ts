@@ -4,18 +4,19 @@ import { PageUrls, Rule92Types } from '../../definitions/constants';
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getCaptionTextForCopyToOtherParty = (req: AppRequest, translations: AnyRecord): string => {
+  let captionText = '';
   const contactType = req.session.contactType;
   if (contactType === Rule92Types.CONTACT) {
     const captionSubject = req.session.userCase.contactApplicationType;
-    return translations.sections[captionSubject]?.caption;
+    captionText = translations.sections[captionSubject]?.caption;
   }
   if (contactType === Rule92Types.RESPOND) {
-    return translations.respondToApplication;
+    captionText = translations.respondToApplication;
   }
   if (contactType === Rule92Types.TRIBUNAL) {
-    return translations.respondToTribunal;
+    captionText = translations.respondToTribunal;
   }
-  return '';
+  return captionText;
 };
 
 export const getRedirectPageUrlNotSystemUser = (req: AppRequest): string => {

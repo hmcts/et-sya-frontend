@@ -1,6 +1,7 @@
 import CopyToOtherPartyNotSystemUserController from '../../../main/controllers/CopyToOtherPartyNotSystemUserController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys, languages } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalJsonRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import copyJsonRaw from '../../../main/resources/locales/en/translation/copy-to-other-party.json';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -8,15 +9,17 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('Copy to other party not system user Controller', () => {
   const translationJsons = { ...contactTheTribunalJsonRaw, ...copyJsonRaw };
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   const controller = new CopyToOtherPartyNotSystemUserController();
 
-  it('should render the copy to other party page', () => {
+  it('should render the copy to other party page', async () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
     request.session.contactType = Rule92Types.CONTACT;
     request.session.userCase.contactApplicationType = 'withdraw';
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
@@ -27,12 +30,12 @@ describe('Copy to other party not system user Controller', () => {
     );
   });
 
-  it('should render the copy to other party page for response', () => {
+  it('should render the copy to other party page for response', async () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
     request.session.contactType = Rule92Types.RESPOND;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
@@ -43,12 +46,12 @@ describe('Copy to other party not system user Controller', () => {
     );
   });
 
-  it('should render the copy to other party page for tribunal', () => {
+  it('should render the copy to other party page for tribunal', async () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
     request.session.contactType = Rule92Types.TRIBUNAL;
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       TranslationKeys.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER,
