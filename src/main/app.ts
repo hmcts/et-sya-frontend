@@ -1,5 +1,6 @@
 import * as path from 'path';
 
+import logger from '@pact-foundation/pact/src/common/logger';
 // eslint-disable-next-line import/no-unresolved
 import { HTTPError } from 'HttpError';
 import * as bodyParser from 'body-parser';
@@ -30,18 +31,34 @@ app.locals.ENV = env;
 app.locals.developmentMode = developmentMode;
 
 new PropertiesVolume().enableFor(app);
+logger.info('Properties volume enabled');
+
 new AppInsights().enable();
+logger.info('App insights');
+logMemUsage();
+
 new Nunjucks(developmentMode).enableFor(app);
+logger.info('Nunjucks');
+logMemUsage();
 
 new Helmet(config.get('security'), [
   process.env.IDAM_WEB_URL ?? config.get('services.idam.authorizationURL'),
   process.env.PCQ_URL ?? config.get('services.pcq.url'),
   process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url'),
 ]).enableFor(app);
+logger.info('Helmet');
+logMemUsage();
 
 new I18Next().enableFor(app);
+logger.info('I18Next');
+logMemUsage();
+
 new Session().enableFor(app);
+logger.info('Sessions');
+logMemUsage();
 new HealthCheck().enableFor(app);
+logger.info('Healthcheck');
+logMemUsage();
 app.enable('trust proxy');
 app.use(favicon(path.join(__dirname, '/public/assets/images/favicon.ico')));
 app.use(bodyParser.json());
@@ -54,8 +71,14 @@ app.use((req, res, next) => {
 });
 
 new CSRFToken().enableFor(app);
+logger.info('CSRF');
+logMemUsage();
 new Oidc().enableFor(app);
+logger.info('OIDC');
+logMemUsage();
 new Routes().enableFor(app);
+logger.info('Routes');
+logMemUsage();
 
 setupDev(app, developmentMode);
 // returning "not found" page for requests with paths not resolved by the router
@@ -86,3 +109,12 @@ app.use((err: HTTPError, req: AppRequest, res: express.Response) => {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function logMemUsage() {
+  const used = process.memoryUsage();
+  logger.info(`rss ${Math.round((used.rss / 1024 / 1024) * 100) / 100} MB`);
+  logger.info(`heapUsed ${Math.round((used.heapUsed / 1024 / 1024) * 100) / 100} MB`);
+  logger.info(`heapTotal ${Math.round((used.heapTotal / 1024 / 1024) * 100) / 100} MB`);
+  logger.info(`arrayBuffers ${Math.round((used.arrayBuffers / 1024 / 1024) * 100) / 100} MB`);
+  logger.info(`external ${Math.round((used.external / 1024 / 1024) * 100) / 100} MB`);
+}
