@@ -63,6 +63,9 @@ withPipeline(type, product, component) {
       ])
       }
       loadVaultSecrets(inTestFalse)
+    sh """
+       yarn playwright install
+    """
   }
   afterAlways('smoketest:preview') {
     loadVaultSecrets(inTestTrue)
