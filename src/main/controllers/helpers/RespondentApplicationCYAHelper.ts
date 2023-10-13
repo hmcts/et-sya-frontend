@@ -1,5 +1,4 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import {
   SummaryListRow,
@@ -16,20 +15,22 @@ export const getRespondentCyaContent = (
   translations: AnyRecord,
   languageParam: string,
   supportingMaterialUrl: string,
-  downloadLink: string
+  downloadLink: string,
+  responseUrl: string
 ): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
+  const { legend, supportingMaterial, change } = translations;
 
   rows.push(
     addSummaryRow(
-      translations.legend,
+      legend,
       userCase.responseText,
-      createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.legend)
+      createChangeAction(responseUrl + languageParam, change, translations.legend)
     ),
     addSummaryHtmlRow(
-      translations.supportingMaterial,
+      supportingMaterial,
       downloadLink,
-      createChangeAction(supportingMaterialUrl + languageParam, CHANGE, translations.supportingMaterial)
+      createChangeAction(supportingMaterialUrl + languageParam, change, translations.supportingMaterial)
     )
   );
 
@@ -40,7 +41,7 @@ export const getRespondentCyaContent = (
         userCase.copyToOtherPartyYesOrNo,
         createChangeAction(
           copyToOtherPartyRedirectUrl(userCase) + languageParam,
-          CHANGE,
+          change,
           translations.copyToOtherPartyYesOrNo
         )
       )
@@ -53,7 +54,7 @@ export const getRespondentCyaContent = (
           userCase.copyToOtherPartyText,
           createChangeAction(
             copyToOtherPartyRedirectUrl(userCase) + languageParam,
-            CHANGE,
+            change,
             translations.copyToOtherPartyText
           )
         )

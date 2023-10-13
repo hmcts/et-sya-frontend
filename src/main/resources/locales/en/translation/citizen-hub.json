@@ -42,7 +42,12 @@
   "submittedAlert": "You have submitted your claim to the tribunal",
   "processClaim": "We aim to process your claim by",
   "busyPeriod": ". In busy periods it may take longer.",
+  "tribunalRespondedP1": "The tribunal has responded to ",
+  "tribunalRespondedP2": " application to ",
+  "respondToTribunal": "Respond to the tribunal",
+  "mustRespond": "You must respond to this.",
   "notificationBanner": {
+    "viewResponse": "View the response",
     "acknowledgement": {
       "header": "The tribunal has acknowledged your claim",
       "link": "View the Acknowledgement of Claim",
@@ -63,8 +68,7 @@
       "link": "View the rejection letter"
     },
     "respondentAcknowledgement": {
-      "header": "The tribunal has acknowledged the respondent's response.",
-      "link": "View the response"
+      "header": "The tribunal has acknowledged the respondent's response."
     },
     "respondentApplicationReceived": {
       "header": "The respondent has applied to ",
@@ -74,9 +78,10 @@
       "link": "Respond to the application"
     },
     "orderOrRequest": {
-      "responseRequired": "The tribunal has sent you a notification: ",
+      "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
-      "link": "View the notification"
+      "link": "View the notification",
+      "respond": "Respond to the tribunal"
     },
     "judgment": {
       "header": "The tribunal has made a decision on your case.",
@@ -107,6 +112,7 @@
   "Vary or revoke an order": "vary or revoke an order",
   "Withdraw all/part of claim": "withdraw all/part of claim",
   "withdraw": "withdraw all/part of claim",
+  "Amend response": "amend response",
   "your": "your",
   "theRespondent": "the respondent's"
 }
