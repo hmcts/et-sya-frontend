@@ -1,35 +1,25 @@
 #!groovy
 
-@Library("Infrastructure")
+properties([
+// H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
+pipelineTriggers([cron('H 8 * * 1-5')]),
+parameters([
+        string(name: 'TEST_URL', defaultValue: 'https://et-sya.aat.platform.hmcts.net', description: 'The URL you want to run tests against'),
+    ])
+])
 
-import uk.gov.hmcts.contino.AppPipelineDsl
+@Library("Infrastructure")
 
 def type = "nodejs"
 def product = "et"
 def component = "sya"
-def branchesToSync = ['perftest', 'demo', 'ithc']
-
-def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
 
 def secrets = [
-    'et-${env}': [
-        secret('test-username', 'TEST_CASE_USERNAME'),
-        secret('test-password', 'TEST_CASE_PASSWORD')
+    'et-aat': [
+        secret('et-citizen-10-user-name', 'TEST_CASE_USERNAME'),
+        secret('et-citizen-10-password', 'TEST_CASE_PASSWORD')
     ]
 ]
-
-def inTestTrue = [
-    'et-${env}': [
-        secret('true', 'IN_TEST')
-    ]
-]
-
-def inTestFalse = [
-    'et-${env}': [
-        secret('', 'IN_TEST')
-    ]
-]
-
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     [ $class: 'AzureKeyVaultSecret',
       secretType: 'Secret',
@@ -39,54 +29,37 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
-withPipeline(type, product, component) {
-  loadVaultSecrets(secrets)
-  disableLegacyDeployment()
-  syncBranchesWithMaster(branchesToSync)
-  enableSlackNotifications('#et-builds')
 
-  afterAlways('build') {
-    yarnBuilder.yarn('build')
-  }
+withNightlyPipeline(type, product, component) {
+    loadVaultSecrets(secrets)
+    enableFullFunctionalTest()
+    enableCrossBrowserTest()
+    enableFortifyScan('et-aat')
 
-  afterAlways('smoketest:aat') {
-    loadVaultSecrets(inTestTrue)
-      stage('Accessibility') {
-          yarnBuilder.yarn('tests:a11y')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : "functional-output/accessibility-report",
-              reportFiles          : 'a11y.html',
-              reportName           : 'Accessibility results'
-      ])
-      }
-      loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
-  }
-  afterAlways('smoketest:preview') {
-    loadVaultSecrets(inTestTrue)
-      stage('Accessibility') {
-          yarnBuilder.yarn('tests:a11y')
-          publishHTML([
-              allowMissing         : true,
-              alwaysLinkToLastBuild: true,
-              keepAll              : true,
-              reportDir            : "functional-output/accessibility-report",
-              reportFiles          : 'a11y.html',
-              reportName           : 'Accessibility results'
-        ])
-      }
-      loadVaultSecrets(inTestFalse)
-    sh """
-       yarn playwright install
-    """
-  }
+    env.TEST_URL = params.TEST_URL
+    env.RUNNING_ENV = params.ENVIRONMENT
 
-  enablePactAs([
-    AppPipelineDsl.PactRoles.CONSUMER
-   ])
+    afterSuccess('crossBrowserTest') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
+        enableSlackNotifications('#et-builds')
+    }
+
+    afterSuccess('fullFunctionalTest') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
+
+        publishHTML target: [
+                allowMissing : true,
+                alwaysLinkToLastBuild: true,
+                keepAll : true,
+                reportDir : "functional-output/reports/",
+                reportFiles : "ET-sya-functional-tests.html",
+                reportName : "ET SYA Functional Tests Report"
+        ]
+        //enableSlackNotification('#et-builds')
+    }
+
+    afterSuccess('fortify-scan') {
+        steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+    }
+
 }
