@@ -175,11 +175,11 @@ export class CaseApi {
         supportingMaterialFile: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
         response: {
+          status: caseItem.responseStatus,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
           copyNoGiveDetails: caseItem.copyToOtherPartyText,
-          storedPending: YES,
         },
       });
     } catch (error) {

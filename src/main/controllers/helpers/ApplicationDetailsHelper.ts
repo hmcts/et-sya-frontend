@@ -5,7 +5,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import { Applicant, TseStatusStored } from '../../definitions/constants';
+import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
@@ -23,7 +23,7 @@ export const getTseApplicationDetails = (
 
   rows.push(addSummaryRow(translations.applicant, application.applicant));
 
-  if (application.status === TseStatusStored) {
+  if (application.status === TseStatus.STORED_STATE) {
     rows.push(addSummaryRow(translations.storedDate, application.date));
   } else {
     rows.push(addSummaryRow(translations.requestDate, application.date));

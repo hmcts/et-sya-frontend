@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, TseStatusStored, YES } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, ResponseStatus, TseStatus } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -143,15 +143,11 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
     return false;
   }
 
-  if (
+  return !(
     status === HubLinkStatus.WAITING_FOR_TRIBUNAL &&
     linkName !== HubLinkNames.RespondentApplications &&
     linkName !== HubLinkNames.RequestsAndApplications
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -256,14 +252,14 @@ const getStoredPendingApplication = (
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   for (const app of apps || []) {
-    if (app.value.status === TseStatusStored) {
+    if (app.value.status === TseStatus.STORED_STATE) {
       const storeNotification: StoreNotification = {
         viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
       };
       storeNotifications.push(storeNotification);
     } else if (app.value.respondCollection) {
       app.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.storedPending === YES)
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
         .forEach(r =>
           storeNotifications.push({
             viewUrl:

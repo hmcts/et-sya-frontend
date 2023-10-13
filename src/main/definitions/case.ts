@@ -185,6 +185,7 @@ export interface Case {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   selectedTseResponse?: TseRespondTypeItem;
+  responseStatus?: string;
   responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;

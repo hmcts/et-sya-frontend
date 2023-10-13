@@ -578,7 +578,16 @@ export const DOCUMENT_CONTENT_TYPES = {
   RTX: ['rtx', 'application/rtf'],
 };
 
-export const TseStatusStored = 'Stored';
-
 export const YES = 'Yes';
 export const NO = 'No';
+
+export const TseStatus = {
+  OPEN_STATE: 'Open',
+  CLOSED_STATE: 'Closed',
+  STORED_STATE: 'Stored',
+} as const;
+
+export const ResponseStatus = {
+  OPEN_STATE: 'Open',
+  STORED_STATE: 'Stored',
+} as const;
