@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -8,12 +9,13 @@ import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
+const logger = getLogger('TribunalRespondToOrderController');
 export default class TribunalRespondToOrderController {
   private readonly form: Form;
   private readonly respondToTribunalOrder: FormContent = {
@@ -92,10 +94,19 @@ export default class TribunalRespondToOrderController {
       TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
     ]);
 
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
+    try {
+      await updateSendNotificationState(req, logger);
+    } catch (error) {
+      logger.info(error.message);
+    }
+
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, userCase.selectedRequestOrOrder),
+      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
     });
   };
 }

@@ -1,16 +1,25 @@
+import { YesOrNo } from '../../definitions/case';
+import { TypeItem } from '../../definitions/util-types';
+
 import { DocumentTypeItem } from './documentTypeItem';
 
 export interface SendNotificationTypeItem {
   id?: string;
   value?: SendNotificationType;
   redirectUrl?: string;
+  respondUrl?: string;
   statusColor?: string;
   displayStatus?: string;
+  linkText?: string;
+  needsResponse?: boolean;
+  showAlert?: boolean;
 }
 
 export interface SendNotificationType {
   number?: string;
   sendNotificationTitle?: string;
+
+  sendNotificationLetter?: YesOrNo;
 
   //Hearing title with date
   sendNotificationSelectHearing?: SendNotificationSelectHearingItem;
@@ -34,7 +43,11 @@ export interface SendNotificationType {
 
   sendNotificationAdditionalInfo?: string;
 
+  sendNotificationResponsesCount?: string;
+
   sendNotificationUploadDocument?: DocumentTypeItem[];
+
+  sendNotificationResponseTribunalTable?: YesOrNo;
 
   //Case management order made by Legal officer, Judge or CaseWorker
   sendNotificationWhoCaseOrder?: string;
@@ -57,13 +70,25 @@ export interface SendNotificationType {
 
   //Indicates the notification status
   notificationState?: string;
-  respondCollection?: PseResponseTypeItem[];
+  respondCollection?: TypeItem<PseResponseType>[];
+  respondNotificationTypeCollection?: TypeItem<RespondNotificationType>[];
   sendNotificationSubjectString?: string;
 }
 
-export interface PseResponseTypeItem {
-  id?: string;
-  value?: PseResponseType;
+export interface RespondNotificationType {
+  respondNotificationDate?: string;
+  respondNotificationTitle?: string;
+  respondNotificationAdditionalInfo?: string;
+  respondNotificationUploadDocument?: DocumentTypeItem[];
+  respondNotificationCmoOrRequest?: string;
+  respondNotificationResponseRequired?: string;
+  respondNotificationWhoRespond?: string;
+  respondNotificationCaseManagementMadeBy?: string;
+  respondNotificationRequestMadeBy?: string;
+  respondNotificationFullName?: string;
+  respondNotificationPartyToNotify?: string;
+  state?: string;
+  isClaimantResponseDue?: string;
 }
 
 export interface SendNotificationSelectHearingItem {
@@ -76,4 +101,8 @@ export interface PseResponseType {
   from?: string;
   copyToOtherParty?: string;
   supportingMaterial?: DocumentTypeItem[];
+  date?: string;
+  response?: string;
+  hasSupportingMaterial?: string;
+  copyNoGiveDetails?: string;
 }
