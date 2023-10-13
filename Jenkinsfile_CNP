@@ -78,6 +78,9 @@ withPipeline(type, product, component) {
         ])
       }
       loadVaultSecrets(inTestFalse)
+    sh """
+       yarn playwright install
+    """
   }
 
   enablePactAs([
