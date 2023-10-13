@@ -531,6 +531,7 @@ export const AllDocumentTypes = {
 
 export const NotificationSubjects = {
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
+  ORDER_OR_REQUEST: 'Case management orders / requests',
 } as const;
 
 export const DOCUMENT_CONTENT_TYPES = {

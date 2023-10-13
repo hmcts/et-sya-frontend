@@ -1,14 +1,22 @@
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterNotificationsWithRequestsOrOrders,
+  filterActionableNotifications,
+  filterSendNotifications,
   getRepondentOrderOrRequestDetails,
   populateNotificationsWithRedirectLinksAndStatusColors,
+  setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import {
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { Parties, ResponseRequired, TranslationKeys } from '../../../../main/definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  Parties,
+  ResponseRequired,
+  TranslationKeys,
+} from '../../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
@@ -16,17 +24,20 @@ import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/t
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
   mockNotificationItem,
+  mockNotificationItemOther,
   mockNotificationRespondOnlyReq,
   mockNotificationResponseReq,
   mockNotificationSubmitted,
   mockNotificationViewed,
 } from '../../mocks/mockNotificationItem';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
 
 describe('Tribunal order or request helper', () => {
   const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw };
   const req = mockRequestWithTranslation({}, translationJsons);
   const notificationItem = mockNotificationItem;
+  const notificationItemOther = mockNotificationItemOther;
 
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
@@ -90,19 +101,25 @@ describe('Tribunal order or request helper', () => {
     expect(pageContent[11].value).toEqual({ text: 'Both' });
   });
 
-  it('should filter only orders and requests', () => {
+  it('should filter only orders, requests or Other (General correspondence)', () => {
     const notificationWithoutOrderOrRequest = {
       value: {
         sendNotificationCaseManagement: undefined,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    const filteredNotifications = filterNotificationsWithRequestsOrOrders([
+    const filteredNotifications = filterSendNotifications([
       notificationWithoutOrderOrRequest,
       notificationItem,
+      notificationItemOther,
     ]);
-    expect(filteredNotifications).toHaveLength(1);
-    expect(filteredNotifications[0].value.sendNotificationCaseManagement).toStrictEqual('Order');
+    expect(filteredNotifications).toHaveLength(2);
+    expect(filteredNotifications[0].value.sendNotificationSubjectString).toStrictEqual(
+      NotificationSubjects.ORDER_OR_REQUEST
+    );
+    expect(filteredNotifications[1].value.sendNotificationSubjectString).toStrictEqual(
+      NotificationSubjects.GENERAL_CORRESPONDENCE
+    );
   });
 
   it('should populate notification with redirect link, status and color', () => {
@@ -165,6 +182,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -179,6 +197,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -193,6 +212,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -207,6 +227,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -221,6 +242,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
         notificationState: 'viewed',
       } as SendNotificationType,
     } as SendNotificationTypeItem;
@@ -236,6 +258,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
         notificationState: 'viewed',
         respondCollection: [
           {
@@ -258,6 +281,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
     const notificationNoResponseRequired = {
@@ -266,6 +290,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: 'Both parties',
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -280,6 +305,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
         notificationState: 'viewed',
         respondCollection: [
           {
@@ -297,6 +323,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'something',
         sendNotificationNotify: 'Both parties',
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -311,6 +338,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationCaseManagement: 'Order',
         sendNotificationSelectParties: Parties.CLAIMANT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
         notificationState: 'viewed',
         respondCollection: [
           {
@@ -328,6 +356,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: 'Both parties',
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -344,6 +373,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: 'Both parties',
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
     const notificationNoResponseRequired = {
@@ -352,6 +382,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: 'Both parties',
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -376,6 +407,7 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
     const notificationNoResponseRequired = {
@@ -384,11 +416,188 @@ describe('Tribunal order or request helper', () => {
         notificationState: 'viewed',
         sendNotificationNotify: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: 'No',
+        sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_YET_AVAILABLE;
 
     activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
+  });
+
+  describe('filterActionableNotifications', () => {
+    const makeUnviewedNotification = (): SendNotificationType => {
+      return { ...selectedRequestOrOrder.value, notificationState: undefined };
+    };
+
+    test('should show unviewed notification', async () => {
+      const notification: SendNotificationTypeItem = { id: '1', value: makeUnviewedNotification() };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should not show viewed notification', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: { ...makeUnviewedNotification(), notificationState: HubLinkStatus.VIEWED },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should not show notification to responent only', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          sendNotificationNotify: Parties.RESPONDENT_ONLY,
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should not show viewed notification with respondent only tribunal response', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationNotify: Parties.BOTH_PARTIES,
+          respondNotificationTypeCollection: [
+            {
+              id: '1',
+              value: {
+                ...getOrderOrRequestTribunalResponse(),
+                respondNotificationPartyToNotify: Parties.RESPONDENT_ONLY,
+              },
+            },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should show viewed notification that requires a claimant response and has none', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationResponseTribunal: ResponseRequired.YES,
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
+    });
+
+    test('should not show viewed notification that requires a claimant response and has one', async () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          sendNotificationResponseTribunal: ResponseRequired.YES,
+          respondCollection: [{ id: '1', value: { from: Applicant.CLAIMANT } }],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+      expect(notification.needsResponse).toBeFalsy();
+    });
+
+    test('should show viewed notification with an unviewed tribunal response', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [{ id: '1', value: getOrderOrRequestTribunalResponse() }],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
+    });
+
+    test('should show viewed notification when response requires a response from claimant and has none', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [
+            { id: '1', value: { ...getOrderOrRequestTribunalResponse(), isClaimantResponseDue: ResponseRequired.YES } },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(1);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeTruthy();
+      expect(notification.needsResponse).toBeTruthy();
+    });
+
+    test('should not show viewed notification when claimant has responded', () => {
+      const notification: SendNotificationTypeItem = {
+        id: '1',
+        value: {
+          ...makeUnviewedNotification(),
+          notificationState: HubLinkStatus.VIEWED,
+          respondNotificationTypeCollection: [
+            {
+              id: '1',
+              value: {
+                ...getOrderOrRequestTribunalResponse(),
+                state: HubLinkStatus.VIEWED,
+                isClaimantResponseDue: undefined,
+              },
+            },
+          ],
+        },
+      };
+
+      const actual = filterActionableNotifications([notification]);
+      expect(actual).toHaveLength(0);
+
+      setNotificationBannerData(notification);
+      expect(notification.showAlert).toBeFalsy();
+    });
   });
 });

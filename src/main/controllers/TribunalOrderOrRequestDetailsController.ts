@@ -3,7 +3,6 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
-import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
@@ -22,12 +21,10 @@ export default class TribunalOrderOrRequestDetailsController {
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
-    if (selectedRequestOrOrder.value.notificationState !== HubLinkStatus.VIEWED) {
-      try {
-        await updateSendNotificationState(req, logger);
-      } catch (error) {
-        logger.info(error.message);
-      }
+    try {
+      await updateSendNotificationState(req, logger);
+    } catch (error) {
+      logger.info(error.message);
     }
 
     const redirectUrl =

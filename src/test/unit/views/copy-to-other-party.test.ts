@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp, mockSession } from '../mocks/mockApp';
 
 const copyToOtherPartyJsonRaw = fs.readFileSync(
@@ -26,6 +27,8 @@ const expectedCaptionApplication = copyToOtherPartyJson.respondToApplication;
 let htmlRes: Document;
 describe('Copy to the other party page', () => {
   beforeAll(async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     await request(mockApp({}))
       .get(PageUrls.COPY_TO_OTHER_PARTY)
       .then(res => {
