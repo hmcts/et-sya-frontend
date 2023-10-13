@@ -11,7 +11,7 @@
   },
   "scripts": {
     "postinstall": "[ -f .husky/_ ] && echo 'Husky already installed' || husky install",
-    "start": "NODE_ENV=production ./node_modules/.bin/ts-node -r tsconfig-paths/register src/main/server.ts",
+    "start": "NODE_ENV=production yarn node src/main/server.ts",
     "start:dev": "nodemon --config nodemon.json",
     "start:dev-red": "redis-server 2>&1 & nodemon --config nodemon.json",
     "lint": "sass-lint -v -q && eslint . --ext .js,.jsx,.ts,.tsx --fix && prettier --check ./src/",
