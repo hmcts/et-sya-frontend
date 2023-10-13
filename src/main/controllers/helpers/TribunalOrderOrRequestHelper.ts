@@ -1,13 +1,9 @@
 import { CaseWithId } from '../../definitions/case';
-import {
-  RespondNotificationType,
-  SendNotificationType,
-  SendNotificationTypeItem,
-} from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
+import { Applicant, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
-import { AnyRecord, TypeItem } from '../../definitions/util-types';
+import { AnyRecord } from '../../definitions/util-types';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
@@ -66,27 +62,22 @@ export const getRepondentOrderOrRequestDetails = (
   return respondentRequestOrOrderDetails;
 };
 
-export const getRedirectUrlForNotification = (id: string, responseRequired: boolean, url: string): string => {
-  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
-
-  if (responseRequired) {
-    pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
-  }
-
-  return pageUrl.replace(':orderId', `${id}${getLanguageParam(url)}`);
-};
-
 export const populateNotificationsWithRedirectLinksAndStatusColors = (
   notifications: SendNotificationTypeItem[],
   url: string,
   translations: AnyRecord
 ): SendNotificationTypeItem[] => {
-  if (notifications?.length && filterSendNotifications(notifications).length) {
+  if (notifications?.length && filterNotificationsWithRequestsOrOrders(notifications).length) {
     notifications.forEach(item => {
+      item.redirectUrl = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(
+        ':orderId',
+        `${item.id}${getLanguageParam(url)}`
+      );
+
       const responseRequired =
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
+      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
@@ -110,9 +101,6 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       }
       item.displayStatus = translations[hubLinkStatus];
       item.statusColor = displayStatusColorMap.get(hubLinkStatus);
-      item.redirectUrl = getRedirectUrlForNotification(item.id, false, url);
-      item.respondUrl = getRedirectUrlForNotification(item.id, responseRequired, url);
-      setNotificationBannerData(item);
     });
     return notifications;
   }
@@ -125,7 +113,7 @@ export const activateTribunalOrdersAndRequestsLink = (
   if (!items?.length) {
     return;
   }
-  const notices = filterSendNotifications(items).filter(
+  const notices = filterNotificationsWithRequestsOrOrders(items).filter(
     notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
   );
   if (!notices?.length) {
@@ -162,74 +150,13 @@ export const activateTribunalOrdersAndRequestsLink = (
   }
 };
 
-export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
+export const filterNotificationsWithRequestsOrOrders = (
+  items: SendNotificationTypeItem[]
+): SendNotificationTypeItem[] => {
   return items?.filter(
     it =>
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
+      it.value.sendNotificationCaseManagement !== undefined &&
+      it.value.sendNotificationCaseManagement !== '' &&
+      it.value.sendNotificationCaseManagement !== null
   );
-};
-
-/**
- * Returns a filtered list of notifications where ANY criteria is matched:
- * 1. Notification is not viewed
- * 2. A response on the notification is not viewed
- * 3. A response on the notification is viewed and requires a response where none has been given yet
- */
-export function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications
-    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
-    .filter(o => {
-      if (o.value.notificationState !== HubLinkStatus.VIEWED) {
-        return true;
-      }
-
-      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
-        return true;
-      }
-
-      return o.value.respondNotificationTypeCollection?.some(
-        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
-      );
-    });
-}
-
-/**
- * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
- * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
- * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is unviewed.
- */
-export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
-  const actionableNotifications = filterActionableNotifications([notification]);
-  if (!actionableNotifications.length) {
-    notification.showAlert = false;
-    return;
-  }
-
-  notification.showAlert = true;
-  notification.needsResponse = false;
-
-  const value = actionableNotifications[0].value;
-  const responses = value.respondNotificationTypeCollection?.filter(claimantRelevant) || [];
-
-  const hasAnyResponsesDue = responses?.some(r => r.value.isClaimantResponseDue);
-
-  if (hasAnyResponsesDue || (requiresResponse(notification.value) && !hasClaimantResponded(notification.value))) {
-    notification.needsResponse = true;
-  }
-}
-
-function requiresResponse(notification: SendNotificationType) {
-  return (
-    notification.sendNotificationResponseTribunal === ResponseRequired.YES &&
-    notification.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY
-  );
-}
-
-function hasClaimantResponded(notification: SendNotificationType) {
-  return notification.respondCollection?.filter(o => o.value.from === Applicant.CLAIMANT).length > 0;
-}
-
-const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
-  return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
 };

@@ -174,7 +174,7 @@
       {{tribunalRespondedP1 + app.from + tribunalRespondedP2 + app.appName}}
     </h3>
 
-  {% if app.isResponseRequired === "Yes" %}
+    {% if app.isResponseRequired === "Yes" %}
 
     <p class="govuk-body">
         {{ mustRespond }}
@@ -182,9 +182,9 @@
 
      <h3 class="govuk-notification-banner__heading">
         <a class="govuk-link" href="{{app.appUrl}}">{{ respondToTribunal }}</a>
-      </h3>
+      </h3> 
 
-  {% else %}
+    {% else %}
     <h3 class="govuk-notification-banner__heading">
         <a class="govuk-link" href="{{app.appUrl}}">{{ notificationBanner.viewResponse }}</a>
       </h3>
@@ -216,15 +216,15 @@
     {% endif %}
   {% endfor %}
   {% for item in decisionBannerContent %}
-    {% set htmlForDecisionReceived %}
-    <h3 class="govuk-notification-banner__heading">
-      {{item.decisionBannerHeader}}
-    </h3>
-    <h3 class="govuk-notification-banner__heading">
-      <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.decisionJudgment.link}}</a>
-    </h3>
-    {% endset %}
-    {{ govukNotificationBanner({
+      {% set htmlForDecisionReceived %}
+      <h3 class="govuk-notification-banner__heading">
+        {{item.decisionBannerHeader}}
+      </h3>
+      <h3 class="govuk-notification-banner__heading">
+        <a class="govuk-link" href="{{item.redirectUrl}}">{{notificationBanner.decisionJudgment.link}}</a>
+      </h3>
+      {% endset %}
+      {{ govukNotificationBanner({
           html: htmlForDecisionReceived,
           titleText: important
           }) }}
@@ -233,21 +233,19 @@
 
 {% if showOrderOrRequestReceived %}
   {% for order in notifications %}
-    {% if order.showAlert %}
+    {% if order.value.notificationState !== 'viewed' %}
       {% set htmlForOrderOrRequestReceived %}
-      <h3 class="govuk-notification-banner__heading">
-        {% if order.needsResponse %}
-          {{ notificationBanner.orderOrRequest.responseRequired }}
-        {% else %}
+      {% if order.value.sendNotificationResponseTribunal === 'Yes - view document for details' %}
+        <h3 class="govuk-notification-banner__heading">
+          {{ notificationBanner.orderOrRequest.responseRequired + order.value.sendNotificationTitle}}
+        </h3>
+      {% else %}
+        <h3 class="govuk-notification-banner__heading">
           {{ notificationBanner.orderOrRequest.noResponseRequired }}
-        {% endif %}
-      </h3>
+        </h3>
+      {% endif %}
       <p class="govuk-body">
-        {% if order.needsResponse %}
-          <a class="govuk-link" href="{{ order.respondUrl }}">{{ notificationBanner.orderOrRequest.respond }}</a>
-        {% else %}
-          <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
-        {% endif %}
+        <a class="govuk-link" href="{{ order.redirectUrl }}">{{ notificationBanner.orderOrRequest.link }}</a>
       </p>
       {% endset %}
       {{ govukNotificationBanner({

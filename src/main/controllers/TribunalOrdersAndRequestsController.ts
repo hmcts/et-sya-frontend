@@ -6,12 +6,12 @@ import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
-import { filterSendNotifications } from './helpers/TribunalOrderOrRequestHelper';
+import { filterNotificationsWithRequestsOrOrders } from './helpers/TribunalOrderOrRequestHelper';
 
 export class TribunalOrdersAndRequestsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection).filter(
+    const notifications = filterNotificationsWithRequestsOrOrders(userCase?.sendNotificationCollection).filter(
       it => it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
     );
 
