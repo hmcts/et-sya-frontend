@@ -6,6 +6,7 @@ import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
 import { clearTseFields, handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
+import { YesOrNo } from '../definitions/case';
 
 const logger = getLogger('SubmitTseController');
 
@@ -16,6 +17,7 @@ export default class SubmitTseController {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
       await handleUpdateHubLinksStatuses(req, logger);
       await submitClaimantTse(req, logger);
+      userCase.rule92state = userCase.copyToOtherPartyYesOrNo && userCase.copyToOtherPartyYesOrNo === YesOrNo.YES;
       clearTseFields(userCase);
     } catch (error) {
       logger.info(error.message);
