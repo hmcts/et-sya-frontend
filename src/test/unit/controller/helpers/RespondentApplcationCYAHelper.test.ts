@@ -104,7 +104,7 @@ describe('Respondent application CYA controller helper', () => {
   });
 
   it('should return expected content with non system user', () => {
-    const translationJsons = { ...respondentCYARaw };
+    const translationJsons = { ...respondentCYARaw, ...common };
     const req = mockRequestWithTranslation({}, translationJsons);
     const userCase = req.session.userCase;
     userCase.responseText = 'responseText';
@@ -113,21 +113,24 @@ describe('Respondent application CYA controller helper', () => {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const appContent = getRespondentCyaContent(
       userCase,
       translations,
-      '?lng=cy',
+      languages.ENGLISH_URL_PARAMETER,
       '/supporting-material',
-      'downloadLink'
+      'downloadLink',
+      '/respond-to-application'
     );
 
     expect(appContent[3].actions).toEqual({
       items: [
         {
-          href: '/copy-to-other-party-not-system-user?lng=cy',
-          text: CHANGE,
+          href: '/copy-to-other-party-not-system-user?lng=en',
+          text: common.change,
           visuallyHiddenText: 'Reason for not informing other party',
         },
       ],
