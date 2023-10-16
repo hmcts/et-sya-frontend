@@ -7,6 +7,7 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase } from './helpers/CaseHelpers';
 import { getCaptionTextForCopyToOtherParty, getRedirectPageUrlNotSystemUser } from './helpers/CopyToOtherPartyHelper';
@@ -95,7 +96,9 @@ export default class CopyToOtherPartyNotSystemUserController {
     return res.redirect(getRedirectPageUrlNotSystemUser(req) + languageParam);
   };
 
-  public get = (req: AppRequest, res: Response): void => {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     const content = getPageContent(req, this.CopyToOtherPartyNotSystemUserContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -111,6 +114,7 @@ export default class CopyToOtherPartyNotSystemUserController {
       ...content,
       applicationType: getCaptionTextForCopyToOtherParty(req, captionTranslations),
       cancelLink: getCancelLink(req),
+      welshEnabled,
     });
   };
 }

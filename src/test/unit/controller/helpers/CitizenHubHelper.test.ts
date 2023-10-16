@@ -467,7 +467,7 @@ describe('getHubLinksUrlMap', () => {
     const linksMap: Map<string, string> = new Map<string, string>([
       [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
       [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
-      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
       [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE],
@@ -484,7 +484,7 @@ describe('getHubLinksUrlMap', () => {
         HubLinkNames.RespondentResponse,
         PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + languages.WELSH_URL_PARAMETER,
       ],
-      [HubLinkNames.ContactTribunal, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
