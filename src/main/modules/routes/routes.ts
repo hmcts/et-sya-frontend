@@ -22,6 +22,7 @@ import AttachmentController from '../../controllers/AttachmentController';
 import AverageWeeklyHoursController from '../../controllers/AverageWeeklyHoursController';
 import BenefitsController from '../../controllers/BenefitsController';
 import BundlesCompletedController from '../../controllers/BundlesCompletedController';
+import BundlesDocsForHearingCYAController from '../../controllers/BundlesDocsForHearingCYAController';
 import CaseDocumentController from '../../controllers/CaseDocumentController';
 import ChangeDetailsController from '../../controllers/ChangeDetailsController';
 import CheckYourAnswersController from '../../controllers/CheckYourAnswersController';
@@ -95,6 +96,7 @@ import SingleOrMultipleController from '../../controllers/SingleOrMultipleContro
 import StartDateController from '../../controllers/StartDateController';
 import StepsToMakingYourClaimController from '../../controllers/StepsToMakingYourClaimController';
 import StillWorkingController from '../../controllers/StillWorkingController';
+import SubmitBundlesHearingDocsCYAController from '../../controllers/SubmitBundlesHearingDocsCYAController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -274,6 +276,7 @@ export class Routes {
     app.get(PageUrls.CONTACT_THE_TRIBUNAL_CYA, new ContactTheTribunalCYAController().get);
     app.get(InterceptPaths.SUBMIT_TRIBUNAL_CYA, new SubmitTseController().get);
     app.get(InterceptPaths.SUBMIT_RESPONDENT_CYA, new SubmitRespondentController().get);
+    app.get(InterceptPaths.SUBMIT_BUNDLES_HEARING_DOCS_CYA, new SubmitBundlesHearingDocsCYAController().get);
     app.get(PageUrls.APPLICATION_COMPLETE, new ApplicationCompleteController().get);
     app.post(
       PageUrls.TRIBUNAL_CONTACT_SELECTED,
@@ -380,6 +383,7 @@ export class Routes {
     app.get(InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA, new TribunalResponseSubmitController().get);
     app.get(PageUrls.TRIBUNAL_RESPONSE_COMPLETED, new TribunalResponseCompletedController().get);
     app.get(PageUrls.BUNDLES_COMPLETED, new BundlesCompletedController().get);
+    app.get(PageUrls.BUNDLES_DOCS_FOR_HEARING_CYA, new BundlesDocsForHearingCYAController().get);
     app.get(PageUrls.ALL_DOCUMENTS, new AllDocumentsController().get);
     app.get(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().get);
     app.post(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING, new AgreeingDocumentsForHearingController().post);

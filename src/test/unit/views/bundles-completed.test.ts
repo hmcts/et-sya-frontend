@@ -14,7 +14,6 @@ const bundlesCompletedJsonRaw = fs.readFileSync(
 const bundlesCompletedJson = JSON.parse(bundlesCompletedJsonRaw);
 const titleClass = 'govuk-panel__title';
 const panelClass = 'govuk-panel govuk-panel--confirmation';
-const pHeader = 'govuk-heading-m';
 const buttonClass = 'govuk-button';
 const expectedTitle = bundlesCompletedJson.titleText;
 
@@ -38,9 +37,10 @@ describe('Bundles completed page', () => {
     expect(title[0].innerHTML).contains(expectedTitle, 'Panel title does not exist');
   });
 
-  it('should display paragraph header', () => {
-    const title = htmlRes.getElementsByClassName(pHeader);
-    expect(title[1].innerHTML).contains(bundlesCompletedJson.pHead, 'Paragraph title does not exist');
+  it('should display What happens next within the main content', () => {
+    const maincontent = htmlRes.querySelector('#main-content');
+    const title = maincontent.querySelectorAll('.govuk-grid-column-two-thirds >.govuk-heading-m');
+    expect(title[0].innerHTML).contains('What happens next', 'Paragraph title does not exist');
   });
 
   it('should display save and continue and save as draft buttons', () => {

@@ -3,13 +3,14 @@ import { Response } from 'express';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
+import { WhatAreTheHearingDocuments, WhoseHearingDocument } from '../definitions/case';
 import { PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
 import { aboutHearingDocumentsErrors } from './helpers/ErrorHelpers';
-import { assignFormData, createRadioBtnsForAboutHearingDocs, getPageContent } from './helpers/FormHelpers';
+import { assignFormData, createRadioBtnsForHearings, getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('AboutHearingDocumentsController');
@@ -27,21 +28,20 @@ export default class AboutHearingDocumentsController {
     req.session.errors = [];
     userCase.whoseHearingDocumentsAreYouUploading = req.body.whoseHearingDocumentsAreYouUploading;
     userCase.whatAreTheseDocuments = req.body.whatAreTheseDocuments;
-    userCase.hearingDocumentsAreFor = req.body.hearingDocumentsAreFor;
-
-    req.session.errors = aboutHearingDocumentsErrors(req);
-    if (req.session?.errors?.length) {
-      return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
-    }
 
     const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === req.body.hearingDocumentsAreFor);
     if (!foundHearing) {
       req.session.errors.push({ propertyName: 'hearingDocumentsAreFor', errorType: 'required' });
+    } else {
+      userCase.hearingDocumentsAreFor = foundHearing.id;
+    }
+
+    req.session.errors = [...req.session.errors, ...aboutHearingDocumentsErrors(req)];
+    if (req.session?.errors?.length) {
       return res.redirect(PageUrls.ABOUT_HEARING_DOCUMENTS);
     }
 
-    userCase.hearingDocumentsAreFor = foundHearing;
-    return res.redirect('/hearing-document-upload/' + userCase.hearingDocumentsAreFor.id);
+    return res.redirect('/hearing-document-upload/' + foundHearing.id);
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -50,8 +50,7 @@ export default class AboutHearingDocumentsController {
       return res.redirect(`/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`);
     }
 
-    const radioBtns = createRadioBtnsForAboutHearingDocs(req.session?.userCase?.hearingCollection);
-
+    const radioBtns = createRadioBtnsForHearings(req.session?.userCase?.hearingCollection);
     if (!radioBtns?.length) {
       logger.info('no hearing collection with future dates, redirecting to citizen hub');
       return res.redirect(`/citizen-hub/${req.session.userCase.id}${getLanguageParam(req.url)}`);
@@ -80,12 +79,12 @@ export default class AboutHearingDocumentsController {
             {
               label: (l: AnyRecord): string => l.Question2Radio1,
               name: 'whoseHearingDocumentsAreYouUploading',
-              value: 'MyHearingDocuments',
+              value: WhoseHearingDocument.MINE,
             },
             {
               label: (l: AnyRecord): string => l.Question2Radio2,
               name: 'whoseHearingDocumentsAreYouUploading',
-              value: 'BothPartiesHearingDocumentsCombined',
+              value: WhoseHearingDocument.BOTH_PARTIES,
             },
           ],
           validator: isFieldFilledIn,
@@ -101,17 +100,17 @@ export default class AboutHearingDocumentsController {
             {
               label: (l: AnyRecord): string => l.Question3Radio1,
               name: 'whatAreTheseDocuments',
-              value: 'AllHearingDocuments',
+              value: WhatAreTheHearingDocuments.ALL,
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio2,
               name: 'whatAreTheseDocuments',
-              value: 'SupplementaryOrOtherDocuments',
+              value: WhatAreTheHearingDocuments.SUPPLEMENTARY,
             },
             {
               label: (l: AnyRecord): string => l.Question3Radio3,
               name: 'whatAreTheseDocuments',
-              value: 'WitnessStatementsOnly',
+              value: WhatAreTheHearingDocuments.WITNESS_STATEMENTS,
             },
           ],
           validator: isFieldFilledIn,

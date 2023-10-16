@@ -11,6 +11,7 @@ export default class BundlesCompletedController {
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
 
     res.render(TranslationKeys.BUNDLES_COMPLETED, {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
       ...req.t(TranslationKeys.BUNDLES_COMPLETED, { returnObjects: true }),
       redirectUrl,

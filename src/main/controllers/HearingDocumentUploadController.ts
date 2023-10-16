@@ -89,7 +89,11 @@ export default class HearingDocumentUploadController {
       }
       return res.redirect(pageUrl);
     }
-    return res.redirect('/not-found');
+    if (!userCase.hearingDocument) {
+      req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'required' });
+      return res.redirect(pageUrl);
+    }
+    return res.redirect(PageUrls.BUNDLES_DOCS_FOR_HEARING_CYA);
   };
 
   public get = (req: AppRequest, res: Response): void => {

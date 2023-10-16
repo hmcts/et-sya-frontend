@@ -15,6 +15,11 @@
         rows: cyaContent
       }) }}
 
+       {% if showParagraphAboutSubmittingDocsInAdvance %}
+       <h3 class="govuk-heading-s">{{ important }}</h3>
+        <p class="govuk-body govuk-!-margin-bottom-6">{{ paragraphAboutSubmittingDocsInAdvance }}</p>
+       {% endif %}
+
       <div class="govuk-button-group">
         {{ govukButton({
           text: submitBtn,

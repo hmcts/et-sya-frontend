@@ -114,6 +114,27 @@ export class CaseApi {
     }
   };
 
+  submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      const data = {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        claimant_bundles: {
+          agreedDocWith: caseItem.bundlesRespondentAgreedDocWith || '',
+          agreedDocWithBut: caseItem.bundlesRespondentAgreedDocWithBut || '',
+          agreedDocWithNo: caseItem.bundlesRespondentAgreedDocWithNo || '',
+          hearing: caseItem.hearingDocumentsAreFor,
+          whatDocuments: caseItem.whatAreTheseDocuments,
+          whoseDocuments: caseItem.whoseHearingDocumentsAreYouUploading,
+          uploadFile: caseItem.hearingDocument,
+        },
+      };
+      return await this.axios.put(JavaApiUrls.SUBMIT_BUNDLES, data);
+    } catch (error) {
+      throw new Error('Error submitting bundles: ' + axiosErrorDetails(error));
+    }
+  };
+
   respondToApplication = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.RESPOND_TO_APPLICATION, {

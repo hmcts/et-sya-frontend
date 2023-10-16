@@ -106,22 +106,40 @@ const formatDate = (rawDate: Date): string =>
     year: 'numeric',
   }).format(new Date(rawDate));
 
-export const createRadioBtnsForAboutHearingDocs = (
+export const createLabelForHearing = (hearing: HearingModel): string => {
+  // filter out hearings with dates in the past
+  // hearings can have multiple dates set so
+  // reduce to find the earliest date set for that particular hearing
+  const hearingsInFuture = hearing.value.hearingDateCollection.filter(
+    item => new Date(item.value.listedDate) > new Date()
+  );
+
+  if (!hearingsInFuture.length) {
+    return;
+  }
+  const earliestDate = hearingsInFuture.reduce((a, b) =>
+    new Date(a.value.listedDate) > new Date(b.value.listedDate) ? b : a
+  );
+  return `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
+    earliestDate.value.listedDate
+  )}`;
+};
+
+export const createRadioBtnsForHearings = (
   hearingCollection: HearingModel[]
-): { name: string; label: string; value: string }[] =>
-  hearingCollection
-    .flatMap(hearing =>
-      hearing.value.hearingDateCollection
-        .filter(item => new Date(item.value.listedDate) > new Date())
-        .map(item => ({
-          label: `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
-            item.value.listedDate
-          )}`,
-          value: `${hearing.id}`,
-          name: 'hearingDocumentsAreFor',
-        }))
-    )
-    .map((hearing, index) => ({
-      ...hearing,
-      label: `${index + 1} ${hearing.label}`,
-    }));
+): { name: string; label: string; value: string }[] | undefined => {
+  const filtered = hearingCollection.filter(hearing => !!createLabelForHearing(hearing));
+
+  if (!filtered.length) {
+    return;
+  }
+
+  return filtered.map((hearing, index) => {
+    const label = createLabelForHearing(hearing);
+    return {
+      label: `${index + 1} ${label}`,
+      value: `${hearing.id}`,
+      name: 'hearingDocumentsAreFor',
+    };
+  });
+};

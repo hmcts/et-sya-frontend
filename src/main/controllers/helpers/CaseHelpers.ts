@@ -108,6 +108,15 @@ export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promis
   }
 };
 
+export const submitBundlesHearingDocs = async (req: AppRequest, logger: Logger): Promise<void> => {
+  try {
+    await getCaseApi(req.session.user?.accessToken).submitBundlesHearingDoc(req.session.userCase);
+    logger.info(`Submitted bundles hearing doc info for case: ${req.session.userCase.id}`);
+  } catch (error) {
+    logger.error(error.message);
+  }
+};
+
 export const respondToApplication = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
     await getCaseApi(req.session.user?.accessToken).respondToApplication(req.session.userCase);
@@ -304,6 +313,16 @@ export const clearTseFields = (userCase: CaseWithId): void => {
 };
 
 export const clearPrepareDocumentsForHearingFields = (userCase: CaseWithId): void => {
+  userCase.bundlesRespondentAgreedDocWith = undefined;
+  userCase.bundlesRespondentAgreedDocWithBut = undefined;
+  userCase.bundlesRespondentAgreedDocWithNo = undefined;
+};
+
+export const clearBundlesFields = (userCase: CaseWithId): void => {
+  userCase.whatAreTheseDocuments = undefined;
+  userCase.whoseHearingDocumentsAreYouUploading = undefined;
+  userCase.hearingDocumentsAreFor = undefined;
+  userCase.hearingDocument = undefined;
   userCase.bundlesRespondentAgreedDocWith = undefined;
   userCase.bundlesRespondentAgreedDocWithBut = undefined;
   userCase.bundlesRespondentAgreedDocWithNo = undefined;
