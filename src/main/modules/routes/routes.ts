@@ -97,6 +97,7 @@ import StoredApplicationConfirmationController from '../../controllers/StoredApp
 import StoredResponseAppConfirmationController from '../../controllers/StoredResponseAppConfirmationController';
 import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
 import StoredToSubmitController from '../../controllers/StoredToSubmitController';
+import StoredToSubmitResponseController from '../../controllers/StoredToSubmitResponseController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -340,6 +341,8 @@ export class Routes {
     app.get(PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION, new StoredResponseAppConfirmationController().get);
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
+    app.get(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().post);
     app.get(PageUrls.STORED_TO_SUBMIT_COMPLETE, new StoredToSubmitCompleteController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);

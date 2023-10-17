@@ -1,11 +1,16 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, TseStatusStored, languages } from '../../definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  PageUrls,
+  ResponseStatus,
+  TseStatus,
+  languages,
+} from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
-
-import { getStoredToSubmitLink } from './LinkHelpers';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
   if (
@@ -145,15 +150,11 @@ export const shouldHubLinkBeClickable = (status: HubLinkStatus, linkName: string
     return false;
   }
 
-  if (
+  return !(
     status === HubLinkStatus.WAITING_FOR_TRIBUNAL &&
     linkName !== HubLinkNames.RespondentApplications &&
     linkName !== HubLinkNames.RequestsAndApplications
-  ) {
-    return false;
-  }
-
-  return true;
+  );
 };
 
 export const getAllClaimantApplications = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
@@ -252,17 +253,35 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   ]);
 };
 
-export const getStoredPendingApplication = (
+export const getStoredPendingBannerList = (
+  apps: GenericTseApplicationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  storeNotifications.push(...getStoredPendingApplication(apps, languageParam));
+  return storeNotifications;
+};
+
+const getStoredPendingApplication = (
   apps: GenericTseApplicationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   for (const app of apps || []) {
-    if (app.value.status === TseStatusStored) {
+    if (app.value.status === TseStatus.STORED_STATE) {
       const storeNotification: StoreNotification = {
-        viewUrl: getStoredToSubmitLink(app.id, languageParam),
+        viewUrl: PageUrls.STORED_TO_SUBMIT.replace(':appId', app.id) + languageParam,
       };
       storeNotifications.push(storeNotification);
+    } else if (app.value.respondCollection) {
+      app.value.respondCollection
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .forEach(r =>
+          storeNotifications.push({
+            viewUrl:
+              PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+          })
+        );
     }
   }
   return storeNotifications;

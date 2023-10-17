@@ -1,5 +1,5 @@
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
-import { GenericTseApplicationTypeItem } from './complexTypes/genericTseApplicationTypeItem';
+import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
@@ -184,6 +184,8 @@ export interface Case {
   copyToOtherPartyText?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
+  selectedTseResponse?: TseRespondTypeItem;
+  responseStatus?: string;
   responseText?: string;
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;

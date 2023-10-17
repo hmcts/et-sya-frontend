@@ -62,6 +62,7 @@ export interface TseRespondType {
   // Generic
   from?: string;
   date?: string;
+  status?: string;
   // Respondent / Claimant Reply
   response?: string;
   copyToOtherParty?: string;
