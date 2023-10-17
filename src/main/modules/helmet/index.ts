@@ -45,7 +45,7 @@ export class Helmet {
       idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain1, googleAnalyticsDomain2, idamUrl];
+    const connectSrc = [self, googleAnalyticsDomain1, googleAnalyticsDomain2, idamUrl, 'https://bf24054dsx.bf.dynatrace.com', '*://*.8x8.com'];
 
     const imgSrc = [
       self,
@@ -56,11 +56,13 @@ export class Helmet {
       'data:',
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
+      'https://fonts.googleapis.com',
+      '*://*.8x8.com'
     ];
 
     const frameSrc = [self, webChat];
 
-    const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'"];
+    const styleSrc = [self, "'unsafe-hashes'", "'unsafe-inline'", '*.fonts.googleapis.com', '*.tagmanager.google.com'];
 
     if (app.locals.developmentMode) {
       connectSrc.push('https://localhost:5000/login');
@@ -72,7 +74,7 @@ export class Helmet {
         directives: {
           connectSrc,
           defaultSrc: ["'none'"],
-          fontSrc: [self, 'data:'],
+          fontSrc: [self, 'data:', 'https://fonts.gstatic.com'],
           imgSrc,
           frameSrc,
           objectSrc: [self],
