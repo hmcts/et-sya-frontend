@@ -8,7 +8,7 @@ export interface HelmetConfig {
 
 const googleAnalyticsDomain1 = '*.google-analytics.com';
 const googleAnalyticsDomain2 = '*.analytics.google.com';
-const tagManager = ['*.googletagmanager.com', 'https://tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
+const tagManager = ['*.googletagmanager.com', '*.tagmanager.google.com', 'https://vcc-eu4.8x8.com'];
 const azureBlob = '*.blob.core.windows.net';
 const webChat = 'https://vcc-eu4.8x8.com';
 const self = "'self'";
