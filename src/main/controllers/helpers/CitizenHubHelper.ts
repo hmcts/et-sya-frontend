@@ -242,12 +242,7 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
     [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
     [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
-    [
-      HubLinkNames.TribunalOrders,
-      isRespondentSystemUser
-        ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]
-        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
-    ],
+    [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
   ]);

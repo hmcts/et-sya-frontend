@@ -470,7 +470,7 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
-      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
     ]);
@@ -487,7 +487,7 @@ describe('getHubLinksUrlMap', () => {
       [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + languages.WELSH_URL_PARAMETER],
-      [HubLinkNames.TribunalOrders, PageUrls.RULE92_HOLDING_PAGE + languages.WELSH_URL_PARAMETER],
+      [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + languages.WELSH_URL_PARAMETER],
       [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + languages.WELSH_URL_PARAMETER],
     ]);

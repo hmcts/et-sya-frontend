@@ -242,6 +242,7 @@ export const PageUrls = {
   TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER: '/tribunal-response-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: '/stored-application-confirmation/:appId',
   STORED_RESPONSE_APPLICATION_CONFIRMATION: '/stored-response-application-confirmation/:appId',
+  STORED_RESPONSE_TRIBUNAL_CONFIRMATION: '/stored-response-tribunal-confirmation/:orderId',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
   STORED_TO_SUBMIT_RESPONSE: '/stored-to-submit-response/:appId/:responseId',
   STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
@@ -259,6 +260,7 @@ export const InterceptPaths = {
   SUBMIT_RESPONDENT_CYA: '/submitRespondentCya',
   TRIBUNAL_RESPONSE_SUBMIT_CYA: '/tribunalResponseSubmitCya',
   STORE_TRIBUNAL_CYA: '/storeTribunalCya',
+  TRIBUNAL_RESPONSE_STORE_CYA: '/tribunalResponseStoreCya',
   STORE_RESPONDENT_CYA: '/storeRespondentCya',
 } as const;
 
