@@ -66,14 +66,23 @@ export const getRepondentOrderOrRequestDetails = (
   return respondentRequestOrOrderDetails;
 };
 
-export const getRedirectUrlForNotification = (id: string, responseRequired: boolean, url: string): string => {
-  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
+export const getRedirectUrlForNotification = (
+  notification: SendNotificationTypeItem,
+  responseRequired: boolean,
+  url: string
+): string => {
+  if (notification.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)) {
+    return PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS.replace(
+      ':itemId',
+      `${notification.id}${getLanguageParam(url)}`
+    );
+  }
 
+  let pageUrl: string = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
   if (responseRequired) {
     pageUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER;
   }
-
-  return pageUrl.replace(':orderId', `${id}${getLanguageParam(url)}`);
+  return pageUrl.replace(':orderId', `${notification.id}${getLanguageParam(url)}`);
 };
 
 export const populateNotificationsWithRedirectLinksAndStatusColors = (
@@ -110,8 +119,8 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       }
       item.displayStatus = translations[hubLinkStatus];
       item.statusColor = displayStatusColorMap.get(hubLinkStatus);
-      item.redirectUrl = getRedirectUrlForNotification(item.id, false, url);
-      item.respondUrl = getRedirectUrlForNotification(item.id, responseRequired, url);
+      item.redirectUrl = getRedirectUrlForNotification(item, false, url);
+      item.respondUrl = getRedirectUrlForNotification(item, responseRequired, url);
       setNotificationBannerData(item);
     });
     return notifications;
@@ -126,7 +135,9 @@ export const activateTribunalOrdersAndRequestsLink = (
     return;
   }
   const notices = filterSendNotifications(items).filter(
-    notice => notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
+    notice =>
+      notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+      notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
   );
   if (!notices?.length) {
     return;
