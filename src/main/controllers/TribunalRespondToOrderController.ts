@@ -1,5 +1,6 @@
 import { Response } from 'express';
 
+import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
@@ -9,7 +10,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { setUserCase } from './helpers/CaseHelpers';
+import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
@@ -97,10 +98,19 @@ export default class TribunalRespondToOrderController {
       TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER,
     ]);
 
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
+    userCase.selectedRequestOrOrder = selectedRequestOrOrder;
+
+    try {
+      await updateSendNotificationState(req, logger);
+    } catch (error) {
+      logger.info(error.message);
+    }
+
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, userCase.selectedRequestOrOrder),
+      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
     });
   };
 }

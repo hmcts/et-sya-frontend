@@ -1,4 +1,4 @@
-import { Document } from '../../../main/definitions/case';
+import { Document, YesOrNo } from '../../../main/definitions/case';
 import { DocumentType, DocumentTypeItem } from '../../../main/definitions/complexTypes/documentTypeItem';
 import {
   SendNotificationType,
@@ -39,7 +39,24 @@ export const notificationType: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'notViewedYet',
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+};
+
+export const notificationTypeOther: SendNotificationType = {
+  date: '23 August 2023',
+  number: '1',
+  notificationState: 'notViewedYet',
+  sendNotificationTitle: 'Other type test',
+  sendNotificationLetter: YesOrNo.NO,
+  sendNotificationNotify: 'Both parties',
+  sendNotificationSentBy: 'Tribunal',
   sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+  sendNotificationSubjectString: NotificationSubjects.GENERAL_CORRESPONDENCE,
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationResponsesCount: '0',
+  sendNotificationResponseTribunalTable: YesOrNo.YES,
 };
 
 export const notificationResponseRequired: SendNotificationType = {
@@ -58,7 +75,8 @@ export const notificationResponseRequired: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'notStartedYet',
-  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
 };
 
 export const notificationRespondentRequiredtoRespond: SendNotificationType = {
@@ -77,7 +95,8 @@ export const notificationRespondentRequiredtoRespond: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'notViewedYet',
-  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
 };
 
 export const notificationViewed: SendNotificationType = {
@@ -96,7 +115,8 @@ export const notificationViewed: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'viewed',
-  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
 };
 
 export const notificationSubmitted: SendNotificationType = {
@@ -115,7 +135,8 @@ export const notificationSubmitted: SendNotificationType = {
   sendNotificationFullName: 'Bob',
   sendNotificationNotify: 'Both',
   notificationState: 'viewed',
-  sendNotificationSubject: [NotificationSubjects.GENERAL_CORRESPONDENCE],
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
   respondCollection: [
     {
       id: '123-abc-123',
@@ -130,6 +151,11 @@ export const notificationSubmitted: SendNotificationType = {
 export const mockNotificationItem: SendNotificationTypeItem = {
   id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
   value: notificationType,
+};
+
+export const mockNotificationItemOther: SendNotificationTypeItem = {
+  id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf29',
+  value: notificationTypeOther,
 };
 
 export const mockNotificationResponseReq: SendNotificationTypeItem = {
