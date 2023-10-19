@@ -1,18 +1,19 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Parties, TranslationKeys } from '../definitions/constants';
+import { NotificationSubjects, Parties, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 
 import { getPageContent } from './helpers/FormHelpers';
-import { filterSendNotifications } from './helpers/TribunalOrderOrRequestHelper';
 
 export class TribunalOrdersAndRequestsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection).filter(
-      it => it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY
+    const notifications = userCase?.sendNotificationCollection.filter(
+      it =>
+        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
     );
 
     const translations: AnyRecord = {
