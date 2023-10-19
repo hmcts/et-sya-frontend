@@ -8,6 +8,7 @@ import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ApplicationCompleteController {
   public get(req: AppRequest, res: Response): void {
+    const userCase = req.session?.userCase;
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     const applicationDate = new Date();
@@ -17,12 +18,11 @@ export default class ApplicationCompleteController {
       month: 'long',
       day: 'numeric',
     });
-
     res.render(TranslationKeys.APPLICATION_COMPLETE, {
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_COMPLETE, { returnObjects: true }),
       applicationDate: dateString,
-      rule92: req.session.userCase.copyToOtherPartyYesOrNo,
+      rule92: userCase.rule92state,
       redirectUrl,
     });
   }

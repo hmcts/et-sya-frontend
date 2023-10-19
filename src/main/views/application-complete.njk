@@ -15,14 +15,14 @@
       }}
       <br>
         <h2 class="govuk-heading-m">{{ pHead }}</h2>
-        {% if rule92 == "Yes" %}
+        {% if rule92 %}
             <div class="govuk-body">
                 <p>{{ pYes.p1 }} <b>{{ applicationDate }}</b> {{ pYes.p1a }}</p>
                 <p>{{ pYes.p2 }}</p>
                 <p>{{ pYes.p3 }}</p>
             </div>
         {% else %}
-            <p class="govuk-body ">{{ pNo }}</p>
+            <p class="govuk-body">{{ pNo }}</p>
         {% endif %}
     </div>
   </div>
