@@ -62,7 +62,9 @@ export const getLanguageParam = (url: string): string => {
 
 export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger: LoggerInstance): string => {
   const parsedUrl = getParsedUrl(redirectUrl);
-  if (parsedUrl.host !== req.headers.host) {
+  if (parsedUrl.host === null) {
+    logger.info('No change to host in request. Redirect is safe');
+  } else if (parsedUrl.host !== req.headers.host) {
     logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
     logger.error(`Host ${parsedUrl.host} did not match to ${req.headers.host}`);
     return PageUrls.HOME;
