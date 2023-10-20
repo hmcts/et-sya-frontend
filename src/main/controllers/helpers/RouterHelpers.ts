@@ -64,6 +64,7 @@ export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger:
   const parsedUrl = getParsedUrl(redirectUrl);
   if (parsedUrl.host !== req.headers.host) {
     logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
+    logger.error(`Host ${parsedUrl.host} did not match to ${req.headers.host}`);
     return PageUrls.HOME;
   }
   return redirectUrl;
@@ -71,5 +72,4 @@ export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger:
 
 export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
   return urlModule.parse(redirectUrl);
-}
-
+};
