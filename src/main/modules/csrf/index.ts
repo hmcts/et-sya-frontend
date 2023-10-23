@@ -1,4 +1,3 @@
-import csurf from 'csurf';
 import type { Application } from 'express';
 import express, { NextFunction } from 'express';
 
@@ -6,11 +5,10 @@ import { HTTPError } from '../../HttpError';
 import { AppRequest } from '../../definitions/appRequest';
 
 const { Logger } = require('@hmcts/nodejs-logging');
+const csrf = require('tiny-csrf');
 const logger = Logger.getLogger('CSRF');
 
 const INVALID_CSRF_CODE = 'EBADCSRFTOKEN';
-
-const csrf = csurf({ cookie: false }); // DON'T ENABLE COOKIE, VULNERABILITY WITH CSURF
 
 export default class CSRFToken {
   public enableFor(app: Application): void {

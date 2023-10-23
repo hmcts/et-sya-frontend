@@ -5,8 +5,8 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockApp, mockSession } from '../mocks/mockApp';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
+import { mockApp, mockSession } from '../mocks/mockApp';
 
 const copyToOtherPartyJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/copy-to-other-party.json'),

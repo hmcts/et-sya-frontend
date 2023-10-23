@@ -1,11 +1,11 @@
 import CopyToOtherPartyController from '../../../main/controllers/CopyToOtherPartyController';
 import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys, languages } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalJsonRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import copyJsonRaw from '../../../main/resources/locales/en/translation/copy-to-other-party.json';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Copy to other party Controller', () => {
   const t = {

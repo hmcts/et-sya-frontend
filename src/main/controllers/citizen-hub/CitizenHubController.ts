@@ -13,6 +13,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { formatDate, fromApiFormat, getDueDate } from '../../helper/ApiFormatter';
 import { currentStateFn } from '../../helper/state-sequence';
 import { getLogger } from '../../logger';
+import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
@@ -50,8 +51,6 @@ import {
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
-import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
-
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
