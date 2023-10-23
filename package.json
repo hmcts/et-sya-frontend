@@ -171,5 +171,5 @@
     "merge": "^2.1.1",
     "import-in-the-middle": "^1.4.2"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@4.0.0"
 }
