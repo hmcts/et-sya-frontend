@@ -524,7 +524,7 @@ describe('getStoredPendingApplicationLinks', () => {
       { viewUrl: '/stored-to-submit/123?lng=en' },
       { viewUrl: '/stored-to-submit/567?lng=en' },
     ];
-    const actual = getStoredPendingBannerList(tseCollection, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(tseCollection, null, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });

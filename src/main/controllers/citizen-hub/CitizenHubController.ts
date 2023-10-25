@@ -189,7 +189,7 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-      storedPendingApplication: getStoredPendingBannerList(allApplications, languageParam),
+      storedPendingApplication: getStoredPendingBannerList(allApplications, notifications, languageParam),
       notifications: filterActionableNotifications(notifications),
       languageParam: getLanguageParam(req.url),
       welshEnabled,

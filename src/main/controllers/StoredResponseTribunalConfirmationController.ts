@@ -1,11 +1,11 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 
-import { getCancelLink } from './helpers/LinkHelpers';
+import { getCancelLink, getSendNotificationDetailsLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('StoredResponseTribunalConfirmationController');
@@ -27,8 +27,7 @@ export default class StoredResponseTribunalConfirmationController {
     res.render(TranslationKeys.STORED_APPLICATION_CONFIRMATION, {
       ...translations,
       redirectUrl: getCancelLink(req),
-      viewThisCorrespondenceLink:
-        PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS.replace(':orderId', req.params.orderId) + languageParam,
+      viewThisCorrespondenceLink: getSendNotificationDetailsLink(req.params.orderId, languageParam),
     });
   }
 }
