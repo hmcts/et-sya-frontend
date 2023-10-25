@@ -2,6 +2,7 @@ import {
   copyToOtherPartyRedirectUrl,
   getAppDetailsLink,
   getCancelLink,
+  getSendNotificationDetailsLink,
 } from '../../../../main/controllers/helpers/LinkHelpers';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, languages } from '../../../../main/definitions/constants';
@@ -28,6 +29,14 @@ describe('getAppDetailsLink', () => {
   it('should return /application-details with application id', () => {
     const expected = '/application-details/1234?lng=en';
     const actual = getAppDetailsLink('1234', languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe('getSendNotificationDetailsLink', () => {
+  it('should return /application-details with application id', () => {
+    const expected = '/tribunal-order-or-request-details/1234?lng=en';
+    const actual = getSendNotificationDetailsLink('1234', languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });
