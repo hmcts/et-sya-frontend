@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -12,7 +13,8 @@ import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelpe
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class RespondentApplicationCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     userCase.isRespondingToRequestOrOrder = false;
 
@@ -26,6 +28,8 @@ export default class RespondentApplicationCYAController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
@@ -45,8 +49,10 @@ export default class RespondentApplicationCYAController {
         translations,
         getLanguageParam(req.url),
         PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', userCase.selectedGenericTseApplication.id),
-        downloadLink
+        downloadLink,
+        PageUrls.RESPOND_TO_APPLICATION_SELECTED.replace(':appId', userCase.selectedGenericTseApplication.id)
       ),
+      welshEnabled,
     });
   }
 }

@@ -1,7 +1,7 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls } from '../../definitions/constants';
+import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 
 export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): void => {
@@ -226,21 +226,29 @@ export const updateYourApplicationsStatusTag = (
   ] as HubLinkStatus;
 };
 
-export const getHubLinksUrlMap = (isRespondentSystemUser: boolean): Map<string, string> => {
+export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam: string): Map<string, string> => {
+  const baseUrls = {
+    [languages.ENGLISH_URL_PARAMETER]: '',
+    [languages.WELSH_URL_PARAMETER]: languages.WELSH_URL_PARAMETER,
+  };
   return new Map<string, string>([
-    [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS],
-    [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT],
+    [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
+    [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
     [
       HubLinkNames.ContactTribunal,
-      isRespondentSystemUser ? PageUrls.CONTACT_THE_TRIBUNAL : PageUrls.RULE92_HOLDING_PAGE,
+      isRespondentSystemUser
+        ? PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]
+        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
     ],
-    [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS],
-    [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS],
+    [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
+    [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
     [
       HubLinkNames.TribunalOrders,
-      isRespondentSystemUser ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS : PageUrls.RULE92_HOLDING_PAGE,
+      isRespondentSystemUser
+        ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]
+        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
     ],
-    [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS],
-    [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS],
+    [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
+    [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
   ]);
 };

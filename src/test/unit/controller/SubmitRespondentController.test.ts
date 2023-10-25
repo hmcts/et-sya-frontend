@@ -1,10 +1,41 @@
+import SubmitRespondentController from '../../../main/controllers/SubmitRespondentController';
 import SubmitTseController from '../../../main/controllers/SubmitTribunalCYAController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
+import { PageUrls, languages } from '../../../main/definitions/constants';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Submit respondent controller', () => {
+  it('should redirect to PageUrls.RESPONDENT_APPLICATION_COMPLETE', async () => {
+    const controller = new SubmitRespondentController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.url = PageUrls.RESPOND_TO_APPLICATION_COMPLETE;
+
+    jest.spyOn(CaseHelper, 'handleUpdateHubLinksStatuses').mockImplementationOnce(() => Promise.resolve());
+    jest.spyOn(CaseHelper, 'respondToApplication').mockImplementationOnce(() => Promise.resolve());
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(
+      PageUrls.RESPOND_TO_APPLICATION_COMPLETE + languages.ENGLISH_URL_PARAMETER
+    );
+  });
+
+  it('should set rule92state based on Rule 92 answer', async () => {
+    const controller = new SubmitRespondentController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.userCase.copyToOtherPartyYesOrNo = YesOrNo.YES;
+
+    jest.spyOn(CaseHelper, 'respondToApplication').mockImplementationOnce(() => Promise.resolve());
+
+    await controller.get(request, response);
+    expect(request.session.userCase.rule92state).toStrictEqual(true);
+  });
+
   it('should clear TSE fields after submitting the case and updating hublink statuses', async () => {
     const response = mockResponse();
     const request = mockRequest({});
