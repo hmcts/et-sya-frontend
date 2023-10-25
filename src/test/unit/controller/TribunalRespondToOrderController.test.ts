@@ -1,11 +1,21 @@
+import axios from 'axios';
+
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/tribunal-respond-to-order.json';
+import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import mockUserCaseComplete, { selectedRequestOrOrder } from '../mocks/mockUserCaseComplete';
+
+jest.mock('axios');
+const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
+
+const mockClient = jest.spyOn(CaseService, 'getCaseApi');
+mockClient.mockReturnValue(caseApi);
+caseApi.updateSendNotificationState = jest.fn().mockResolvedValue({});
 
 describe('Tribunal Respond to Order Controller', () => {
   const t = {
@@ -13,7 +23,7 @@ describe('Tribunal Respond to Order Controller', () => {
     common: {},
   };
 
-  it('should render the Respond to Order page', () => {
+  it('should render the Respond to Order page', async () => {
     const translationJsons = { ...respondJsonRaw, ...common };
     const controller = new TribunalRespondToOrderController();
     const userCase: Partial<CaseWithId> = mockUserCaseComplete;
@@ -21,7 +31,8 @@ describe('Tribunal Respond to Order Controller', () => {
 
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t, userCase }, translationJsons);
-    controller.get(request, response);
+    request.params.orderId = '123';
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, expect.anything());
   });
 

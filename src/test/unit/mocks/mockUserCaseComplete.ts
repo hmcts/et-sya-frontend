@@ -12,7 +12,8 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { Applicant } from '../../../main/definitions/constants';
+import { RespondNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import { Applicant, Parties, ResponseRequired } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -20,6 +21,41 @@ import {
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
+
+/**
+ * Creates a notification response from the tribunal requesting more information that has not been viewed yet.
+ */
+export const getOrderOrRequestTribunalResponse = (): RespondNotificationType => {
+  return {
+    isClaimantResponseDue: ResponseRequired.YES,
+    respondNotificationAdditionalInfo: 'additional info',
+    respondNotificationCaseManagementMadeBy: 'Legal officer',
+    respondNotificationCmoOrRequest: 'Case management order',
+    respondNotificationDate: '2019-05-03',
+    respondNotificationFullName: 'Judge Dredd',
+    respondNotificationPartyToNotify: Parties.BOTH_PARTIES,
+    respondNotificationRequestMadeBy: 'Legal officer',
+    respondNotificationResponseRequired: ResponseRequired.YES,
+    respondNotificationTitle: 'title',
+    respondNotificationUploadDocument: [
+      {
+        downloadLink: 'http://dm-store:8080/documents/3aa7dfc1-378b-4fa8-9a17-89126fae5673/binary',
+        id: '00000000-0000-0000-0000-000000000000',
+        value: {
+          typeOfDocument: 'ACAS Certificate',
+          uploadedDocument: {
+            document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
+            document_filename: 'ET1_ACAS_CERTIFICATE_Sunday_Ayeni_R600227_21_75.pdf',
+            document_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa',
+          },
+          shortDescription: 'ACAS Certificate - Sunday Ayeni - R600227/21/75',
+        },
+      },
+    ],
+    respondNotificationWhoRespond: 'Legal officer',
+    state: undefined,
+  };
+};
 
 export const selectedRequestOrOrder = {
   id: '123',
@@ -177,6 +213,7 @@ export default {
         date: '2 May 2019',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
+        type: 'Order a witness to attend to give evidence',
       },
     },
     {
@@ -187,6 +224,7 @@ export default {
         date: '3 May 2019',
         copyToOtherPartyYesOrNo: YesOrNo.YES,
         status: 'inProgress',
+        type: 'Order a witness to attend to give evidence',
       },
     },
   ],

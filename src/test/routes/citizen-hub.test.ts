@@ -6,6 +6,7 @@ import { PageUrls } from '../../main/definitions/constants';
 import * as CaseService from '../../main/services/CaseService';
 import { CaseApi } from '../../main/services/CaseService';
 import { mockApp } from '../unit/mocks/mockApp';
+import * as LaunchDarkly from '../../main/modules/featureFlag/launchDarkly';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
@@ -22,6 +23,8 @@ const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
 
 describe(`GET ${PageUrls.CITIZEN_HUB}`, () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   it('should return the citizen hub page', async () => {
     const res = await request(mockApp({})).get(PageUrls.CITIZEN_HUB.replace(':caseId', '1111222233334444'));
 

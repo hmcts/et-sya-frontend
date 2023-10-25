@@ -10,6 +10,7 @@ import { CaseApi } from '../../../../main/services/CaseService';
 import * as CaseService from '../../../../main/services/CaseService';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
@@ -35,6 +36,8 @@ describe('Citizen Hub Controller', () => {
   afterAll(() => {
     process.env = OLD_ENV;
   });
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
 
   it('should redirect to not found with request.url when case api fails', async () => {
     const controller = new CitizenHubController();
