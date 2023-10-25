@@ -2,6 +2,8 @@ nodejs:
   # Don't modify below here
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
+  devmemoryLimits: 1024Mi
+  devmemoryRequests: 512Mi
   keyVaults:
     et:
       resourceGroup: et
@@ -11,6 +13,7 @@ nodejs:
         - redis-access-key
         - os-places-token
         - pcq-token-key
+        - launch-darkly-sdk-key
 idam-pr:
   enabled: true
   redirect_uris:
