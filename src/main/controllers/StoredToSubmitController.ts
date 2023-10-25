@@ -1,9 +1,7 @@
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
-import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
@@ -22,35 +20,14 @@ import { returnSessionErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getAppDetailsLink, getCancelLink } from './helpers/LinkHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { StoredToSubmitContentForm } from './helpers/StoredToSubmitHelpers';
 
 const logger = getLogger('StoredToSubmitController');
 
 export default class StoredToSubmitController {
   private readonly form: Form;
 
-  private readonly StoredToSubmitContent: FormContent = {
-    fields: {
-      confirmCopied: {
-        id: 'confirmCopied',
-        label: l => l.haveYouCopied,
-        labelHidden: false,
-        labelSize: 'm',
-        type: 'checkboxes',
-        hint: l => l.iConfirmThatIHaveCopied,
-        validator: atLeastOneFieldIsChecked,
-        values: [
-          {
-            name: 'confirmCopied',
-            label: l => l.yesIConfirm,
-            value: YesOrNo.YES,
-          },
-        ],
-      },
-    },
-    submit: {
-      text: (l: AnyRecord): string => l.submitBtn,
-    },
-  };
+  private readonly StoredToSubmitContent: FormContent = StoredToSubmitContentForm;
 
   constructor() {
     this.form = new Form(<FormFields>this.StoredToSubmitContent.fields);

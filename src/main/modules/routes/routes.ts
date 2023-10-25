@@ -95,6 +95,7 @@ import StoreRespondentController from '../../controllers/StoreRespondentControll
 import StoreTseController from '../../controllers/StoreTseController';
 import StoredApplicationConfirmationController from '../../controllers/StoredApplicationConfirmationController';
 import StoredResponseAppConfirmationController from '../../controllers/StoredResponseAppConfirmationController';
+import StoredResponseTribunalConfirmationController from '../../controllers/StoredResponseTribunalConfirmationController';
 import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
 import StoredToSubmitController from '../../controllers/StoredToSubmitController';
 import StoredToSubmitResponseController from '../../controllers/StoredToSubmitResponseController';
@@ -110,6 +111,7 @@ import TribunalRespondToOrderController from '../../controllers/TribunalRespondT
 import TribunalResponseCYAController from '../../controllers/TribunalResponseCYAController';
 import TribunalResponseCYANotSystemUserController from '../../controllers/TribunalResponseCYANotSystemUserController';
 import TribunalResponseCompletedController from '../../controllers/TribunalResponseCompletedController';
+import TribunalResponseStoreController from '../../controllers/TribunalResponseStoreController';
 import TribunalResponseSubmitController from '../../controllers/TribunalResponseSubmitController';
 import TypeOfClaimController from '../../controllers/TypeOfClaimController';
 import UpdatePreferenceController from '../../controllers/UpdatePreferenceController';
@@ -337,8 +339,10 @@ export class Routes {
     app.get(PageUrls.TRIBUNAL_RESPONSE_CYA_NOT_SYSTEM_USER, new TribunalResponseCYANotSystemUserController().get);
     app.get(InterceptPaths.STORE_TRIBUNAL_CYA, new StoreTseController().get);
     app.get(InterceptPaths.STORE_RESPONDENT_CYA, new StoreRespondentController().get);
+    app.get(InterceptPaths.TRIBUNAL_RESPONSE_STORE_CYA, new TribunalResponseStoreController().get);
     app.get(PageUrls.STORED_APPLICATION_CONFIRMATION, new StoredApplicationConfirmationController().get);
     app.get(PageUrls.STORED_RESPONSE_APPLICATION_CONFIRMATION, new StoredResponseAppConfirmationController().get);
+    app.get(PageUrls.STORED_RESPONSE_TRIBUNAL_CONFIRMATION, new StoredResponseTribunalConfirmationController().get);
     app.get(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().get);
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
     app.get(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().get);

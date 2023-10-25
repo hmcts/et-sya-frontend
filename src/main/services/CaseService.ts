@@ -282,6 +282,26 @@ export class CaseApi {
     }
   };
 
+  storeResponseSendNotification = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    try {
+      return await this.axios.put(JavaApiUrls.ADD_RESPONSE_TO_SEND_NOTIFICATION, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        send_notification_id: caseItem.selectedRequestOrOrder.id,
+        supportingMaterialFile: caseItem.supportingMaterialFile,
+        pseResponseType: {
+          status: caseItem.responseStatus,
+          response: caseItem.responseText,
+          hasSupportingMaterial: caseItem.hasSupportingMaterial,
+          copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
+          copyNoGiveDetails: caseItem.copyToOtherPartyText,
+        },
+      });
+    } catch (error) {
+      throw new Error('Error adding store response to sendNotification: ' + axiosErrorDetails(error));
+    }
+  };
+
   updateResponseAsViewed = async (
     caseItem: CaseWithId,
     appId: string,
