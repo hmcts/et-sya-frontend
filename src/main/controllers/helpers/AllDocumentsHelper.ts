@@ -55,17 +55,15 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
       return undefined;
   }
 };
-// short description
+
 export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
-  console.log('##');
-  console.log('the short desc is ' + item.value.shortDescription);
-  console.log('translation is  ' + translations[item.value.shortDescription]);
-  console.log('##');
+  // if there is a short desccription and a translation exists, use it, otherwise leave blank
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription
-      ? item.value.shortDescription + ' t= ' + translations[item.value.shortDescription]
-      : '',
+    description:
+      item.value.shortDescription && translations[item.value.shortDescription]
+        ? translations[item.value.shortDescription]
+        : '',
     downloadLink: item.downloadLink,
   };
 };
