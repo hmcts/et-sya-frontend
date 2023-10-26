@@ -1,6 +1,6 @@
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
-import { SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
+import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
 import {
   CaseState,
   ClaimOutcomes,
@@ -10,7 +10,7 @@ import {
   TellUsWhatYouWant,
 } from './definition';
 import { HubLinksStatuses } from './hub';
-import { UnknownRecord } from './util-types';
+import { TypeItem, UnknownRecord } from './util-types';
 
 export enum Checkbox {
   Checked = 'checked',
@@ -185,6 +185,7 @@ export interface Case {
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   selectedGenericTseApplication?: GenericTseApplicationTypeItem;
   selectedTseResponse?: TseRespondTypeItem;
+  selectedPseResponse?: TypeItem<PseResponseType>;
   responseStatus?: string;
   responseText?: string;
   hasSupportingMaterial?: YesOrNo;

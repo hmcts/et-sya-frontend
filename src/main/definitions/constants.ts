@@ -245,6 +245,7 @@ export const PageUrls = {
   STORED_RESPONSE_TRIBUNAL_CONFIRMATION: '/stored-response-tribunal-confirmation/:orderId',
   STORED_TO_SUBMIT: '/stored-to-submit/:appId',
   STORED_TO_SUBMIT_RESPONSE: '/stored-to-submit-response/:appId/:responseId',
+  STORED_TO_SUBMIT_TRIBUNAL: '/stored-to-submit-tribunal/:orderId/:responseId',
   STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
@@ -298,6 +299,7 @@ export const JavaApiUrls = {
   TRIBUNAL_RESPONSE_VIEWED: 'cases/tribunal-response-viewed',
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
+  SUBMIT_STORED_RESPOND_TO_TRIBUNAL: '/sendNotification/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
 } as const;
 

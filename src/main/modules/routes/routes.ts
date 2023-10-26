@@ -99,6 +99,7 @@ import StoredResponseTribunalConfirmationController from '../../controllers/Stor
 import StoredToSubmitCompleteController from '../../controllers/StoredToSubmitCompleteController';
 import StoredToSubmitController from '../../controllers/StoredToSubmitController';
 import StoredToSubmitResponseController from '../../controllers/StoredToSubmitResponseController';
+import StoredToSubmitTribunalController from '../../controllers/StoredToSubmitTribunalController';
 import SubmitClaimController from '../../controllers/SubmitClaimController';
 import SubmitRespondentController from '../../controllers/SubmitRespondentController';
 import SubmitTseController from '../../controllers/SubmitTribunalCYAController';
@@ -347,6 +348,8 @@ export class Routes {
     app.post(PageUrls.STORED_TO_SUBMIT, new StoredToSubmitController().post);
     app.get(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().get);
     app.post(PageUrls.STORED_TO_SUBMIT_RESPONSE, new StoredToSubmitResponseController().post);
+    app.get(PageUrls.STORED_TO_SUBMIT_TRIBUNAL, new StoredToSubmitTribunalController().get);
+    app.post(PageUrls.STORED_TO_SUBMIT_TRIBUNAL, new StoredToSubmitTribunalController().post);
     app.get(PageUrls.STORED_TO_SUBMIT_COMPLETE, new StoredToSubmitCompleteController().get);
 
     app.get(PageUrls.WORK_POSTCODE_SELECT, new WorkPostCodeSelectController().get);

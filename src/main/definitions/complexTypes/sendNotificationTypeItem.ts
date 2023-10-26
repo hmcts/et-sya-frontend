@@ -99,6 +99,7 @@ export interface SendNotificationSelectHearingItem {
 
 export interface PseResponseType {
   from?: string;
+  status?: string;
   copyToOtherParty?: string;
   supportingMaterial?: DocumentTypeItem[];
   date?: string;

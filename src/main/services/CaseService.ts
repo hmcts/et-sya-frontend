@@ -302,6 +302,19 @@ export class CaseApi {
     }
   };
 
+  storedToSubmitRespondToTribunal = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    return this.axios
+      .put(JavaApiUrls.SUBMIT_STORED_RESPOND_TO_TRIBUNAL, {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        order_id: caseItem.selectedRequestOrOrder.id,
+        response_id: caseItem.selectedPseResponse.id,
+      })
+      .catch(function (error) {
+        throw new Error('Error submitting stored tse application respond status: ' + error);
+      });
+  };
+
   updateResponseAsViewed = async (
     caseItem: CaseWithId,
     appId: string,

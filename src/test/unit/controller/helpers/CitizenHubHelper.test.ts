@@ -12,6 +12,7 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
@@ -496,7 +497,7 @@ describe('getHubLinksUrlMap', () => {
 });
 
 describe('getStoredPendingApplicationLinks', () => {
-  it('should return /stored-to-submit with application id', () => {
+  it('should return STORED_TO_SUBMIT with application id', () => {
     const tseCollection: GenericTseApplicationTypeItem[] = [
       {
         id: '123',
@@ -524,7 +525,87 @@ describe('getStoredPendingApplicationLinks', () => {
       { viewUrl: '/stored-to-submit/123?lng=en' },
       { viewUrl: '/stored-to-submit/567?lng=en' },
     ];
-    const actual = getStoredPendingBannerList(tseCollection, languages.ENGLISH_URL_PARAMETER);
+    const actual = getStoredPendingBannerList(tseCollection, null, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return STORED_TO_SUBMIT_RESPONSE with application id', () => {
+    const tseCollection: GenericTseApplicationTypeItem[] = [
+      {
+        id: '111',
+        value: {
+          number: '1',
+          status: 'Open',
+          respondCollection: [
+            {
+              id: '12345',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+                status: 'Stored',
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: '222',
+        value: {
+          number: '2',
+          status: 'Open',
+          respondCollection: [
+            {
+              id: '23456',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+    ];
+    const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-response/111/12345?lng=en' }];
+    const actual = getStoredPendingBannerList(tseCollection, null, languages.ENGLISH_URL_PARAMETER);
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return STORED_TO_SUBMIT_TRIBUNAL with order id', () => {
+    const sendNotificationTypeItems: SendNotificationTypeItem[] = [
+      {
+        id: '111',
+        value: {
+          number: '1',
+          respondCollection: [
+            {
+              id: '12345',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+                status: 'Stored',
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: '222',
+        value: {
+          number: '2',
+          respondCollection: [
+            {
+              id: '23456',
+              value: {
+                from: Applicant.CLAIMANT,
+                copyToOtherParty: YesOrNo.YES,
+              },
+            },
+          ],
+        },
+      },
+    ];
+    const expected: StoreNotification[] = [{ viewUrl: '/stored-to-submit-tribunal/111/12345?lng=en' }];
+    const actual = getStoredPendingBannerList(null, sendNotificationTypeItems, languages.ENGLISH_URL_PARAMETER);
     expect(actual).toEqual(expected);
   });
 });

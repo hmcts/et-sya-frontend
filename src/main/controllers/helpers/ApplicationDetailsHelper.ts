@@ -117,7 +117,10 @@ export const getAllResponses = async (
   return allResponses;
 };
 
-const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessToken: string): Promise<string> => {
+export const getSupportingMaterialDownloadLink = async (
+  responseDoc: Document,
+  accessToken: string
+): Promise<string> => {
   let responseDocDownload;
   if (responseDoc !== undefined) {
     await populateDocumentMetadata(responseDoc, accessToken);
@@ -281,7 +284,7 @@ const addNonAdminResponse = async (
 export const getResponseDisplay = async (
   response: TseRespondTypeItem,
   translations: AnyRecord,
-  supportingMaterialLink: string
+  accessToken: string
 ): Promise<SummaryListRow[]> => {
-  return addNonAdminResponse(translations, response, supportingMaterialLink);
+  return addNonAdminResponse(translations, response, accessToken);
 };

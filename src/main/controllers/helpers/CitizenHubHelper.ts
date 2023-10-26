@@ -250,10 +250,12 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
 
 export const getStoredPendingBannerList = (
   apps: GenericTseApplicationTypeItem[],
+  notifications: SendNotificationTypeItem[],
   languageParam: string
 ): StoreNotification[] => {
   const storeNotifications: StoreNotification[] = [];
   storeNotifications.push(...getStoredPendingApplication(apps, languageParam));
+  storeNotifications.push(...getStoredPendingNotification(notifications, languageParam));
   return storeNotifications;
 };
 
@@ -275,6 +277,27 @@ const getStoredPendingApplication = (
           storeNotifications.push({
             viewUrl:
               PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', r.id) + languageParam,
+          })
+        );
+    }
+  }
+  return storeNotifications;
+};
+
+const getStoredPendingNotification = (
+  items: SendNotificationTypeItem[],
+  languageParam: string
+): StoreNotification[] => {
+  const storeNotifications: StoreNotification[] = [];
+  for (const item of items || []) {
+    if (item.value.respondCollection) {
+      item.value.respondCollection
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .forEach(r =>
+          storeNotifications.push({
+            viewUrl:
+              PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', item.id).replace(':responseId', r.id) +
+              languageParam,
           })
         );
     }
