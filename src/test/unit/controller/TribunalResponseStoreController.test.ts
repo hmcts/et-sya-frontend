@@ -4,24 +4,24 @@ import SubmitTseController from '../../../main/controllers/SubmitTribunalCYACont
 import TribunalResponseStoreController from '../../../main/controllers/TribunalResponseStoreController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
-import { PageUrls } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-jest.mock('axios');
-const mockCaseApi = {
-  axios: AxiosInstance,
-  updateHubLinksStatuses: jest.fn(),
-  storeResponseSendNotification: jest.fn(),
-  getUserCase: jest.fn(),
-};
-const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
 describe('Tribunal response store controller', () => {
+  jest.mock('axios');
+  const mockCaseApi = {
+    axios: AxiosInstance,
+    updateHubLinksStatuses: jest.fn(),
+    storeResponseSendNotification: jest.fn(),
+    getUserCase: jest.fn(),
+  };
+  const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+  jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
   caseApi.getUserCase = jest.fn().mockResolvedValue(
     Promise.resolve({
       data: {
@@ -84,5 +84,72 @@ describe('Tribunal response store controller', () => {
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyText).toStrictEqual(undefined);
+  });
+});
+
+describe('Tribunal response store controller return error page', () => {
+  const controller = new TribunalResponseStoreController();
+  const response = mockResponse();
+  const request = mockRequest({});
+  request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+  request.session.userCase.selectedRequestOrOrder = { id: '246' };
+
+  it('should return error page when updateHubLinksStatuses failed', () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page when storeResponseSendNotification failed', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+      updateHubLinksStatuses: jest.fn(),
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page when getUserCase failed', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+      updateHubLinksStatuses: jest.fn(),
+      storeResponseSendNotification: jest.fn(),
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page when orderId not found', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+      updateHubLinksStatuses: jest.fn(),
+      storeResponseSendNotification: jest.fn(),
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    request.session.userCase.selectedRequestOrOrder = undefined;
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 });

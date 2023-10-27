@@ -4,7 +4,7 @@ import StoredToSubmitTribunalController from '../../../main/controllers/StoredTo
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { SendNotificationTypeItem } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import applicationDetailsJsonRaw from '../../../main/resources/locales/en/translation/application-details.json';
 import tribunalRespondToOrderJsonRaw from '../../../main/resources/locales/en/translation/tribunal-respond-to-order.json';
@@ -13,15 +13,6 @@ import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-jest.mock('axios');
-const mockCaseApi = {
-  axios: AxiosInstance,
-  updateHubLinksStatuses: jest.fn(),
-  storedToSubmitRespondToTribunal: jest.fn(),
-};
-const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
 const sendNotificationTypeItems: SendNotificationTypeItem[] = [
   {
@@ -44,8 +35,59 @@ const sendNotificationTypeItems: SendNotificationTypeItem[] = [
   },
 ];
 
-describe('Stored to Submit Tribunal Controller', () => {
-  const controller = new StoredToSubmitTribunalController();
+const userCase: Partial<CaseWithId> = {
+  id: '123',
+  sendNotificationCollection: sendNotificationTypeItems,
+};
+
+const controller = new StoredToSubmitTribunalController();
+
+describe('Stored to Submit Tribunal Controller GET', () => {
+  const translationJsons = {
+    ...tribunalRespondToOrderJsonRaw,
+    ...applicationDetailsJsonRaw,
+    ...tribunalResponseCyaJsonRaw,
+  };
+  const res = mockResponse();
+  const req = mockRequestWithTranslation({ session: { userCase } }, translationJsons);
+  req.params.orderId = '234';
+  req.params.responseId = '567';
+  req.url = '/stored-to-submit-tribunal/234/567?lng=en';
+
+  it('should render the stored to submit page', async () => {
+    await controller.get(req, res);
+
+    expect(res.render).toHaveBeenCalledWith(
+      TranslationKeys.STORED_TO_SUBMIT,
+      expect.objectContaining({
+        applicationType: 'Respond to the tribunal',
+        viewCorrespondenceLink: '/tribunal-order-or-request-details/234?lng=en',
+        cancelLink: '/citizen-hub/123?lng=en',
+      })
+    );
+  });
+
+  it('should return error page for Selected response not found', async () => {
+    req.params.responseId = 'Test';
+    await controller.get(req, res);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+
+  it('should return error page for Selected send notification not found', async () => {
+    req.params.orderId = 'Test';
+    await controller.get(req, res);
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+});
+
+describe('Stored to Submit Tribunal Controller POST', () => {
+  jest.mock('axios');
+  const mockCaseApi = {
+    axios: AxiosInstance,
+    storedToSubmitRespondToTribunal: jest.fn(),
+  };
+  const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+  jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
   caseApi.updateDraftCase = jest.fn().mockResolvedValue(
     Promise.resolve({
@@ -58,35 +100,6 @@ describe('Stored to Submit Tribunal Controller', () => {
       },
     } as AxiosResponse<CaseApiDataResponse>)
   );
-
-  const userCase: Partial<CaseWithId> = {
-    id: '123',
-    sendNotificationCollection: sendNotificationTypeItems,
-  };
-
-  it('should render the stored to submit page', async () => {
-    const translationJsons = {
-      ...tribunalRespondToOrderJsonRaw,
-      ...applicationDetailsJsonRaw,
-      ...tribunalResponseCyaJsonRaw,
-    };
-    const res = mockResponse();
-    const req = mockRequestWithTranslation({ session: { userCase } }, translationJsons);
-    req.params.orderId = '234';
-    req.params.responseId = '567';
-    req.url = '/stored-to-submit-tribunal/234/567?lng=en';
-
-    await controller.get(req, res);
-
-    expect(res.render).toHaveBeenCalledWith(
-      TranslationKeys.STORED_TO_SUBMIT,
-      expect.objectContaining({
-        applicationType: 'Respond to the tribunal',
-        viewCorrespondenceLink: '/tribunal-order-or-request-details/234?lng=en',
-        cancelLink: '/citizen-hub/123?lng=en',
-      })
-    );
-  });
 
   it('should redirect to update page when yes is selected', async () => {
     const body = { confirmCopied: YesOrNo.YES };
@@ -114,5 +127,28 @@ describe('Stored to Submit Tribunal Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith('/stored-to-submit-response/234/567?lng=en');
     expect(req.session.errors).toEqual(errors);
+  });
+});
+
+describe('Stored to Submit Tribunal Controller POST return error page', () => {
+  const body = { confirmCopied: YesOrNo.YES };
+  const req = mockRequest({ body, session: { userCase } });
+  const res = mockResponse();
+  req.params.orderId = '234';
+  req.url = '/stored-to-submit-tribunal/234/567?lng=en';
+  req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+  req.session.userCase.selectedRequestOrOrder = sendNotificationTypeItems[0];
+
+  it('should render the same page when nothing is selected', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 });
