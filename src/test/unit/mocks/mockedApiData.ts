@@ -165,7 +165,6 @@ export const mockedApiData: CaseApiDataResponse = {
           date: '2 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
-          type: 'Order a witness to attend to give evidence',
         },
       },
       {
@@ -176,7 +175,6 @@ export const mockedApiData: CaseApiDataResponse = {
           date: '3 May 2019',
           copyToOtherPartyYesOrNo: YesOrNo.YES,
           status: 'inProgress',
-          type: 'Order a witness to attend to give evidence',
         },
       },
     ],
