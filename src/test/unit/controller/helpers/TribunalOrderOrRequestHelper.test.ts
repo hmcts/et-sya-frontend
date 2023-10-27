@@ -165,6 +165,20 @@ describe('Tribunal order or request helper', () => {
     expect(populatedNotification.displayStatus).toEqual('Viewed');
   });
 
+  it('should populate correct status when viewed general correspondence', () => {
+    mockNotificationViewed.value.sendNotificationSubjectString = NotificationSubjects.GENERAL_CORRESPONDENCE;
+    const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
+      [mockNotificationViewed],
+      'url',
+      translations
+    )[0];
+    expect(populatedNotification.redirectUrl).toEqual(
+      '/general-correspondence-notification-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
+    expect(populatedNotification.statusColor).toEqual('--green');
+    expect(populatedNotification.displayStatus).toEqual('Viewed');
+  });
+
   it('should populate correct status when required to respond and has responded', () => {
     const populatedNotification = populateNotificationsWithRedirectLinksAndStatusColors(
       [mockNotificationSubmitted],
