@@ -106,50 +106,48 @@ describe('Respondent supporting material controller', () => {
     });
   });
 
-  describe('RespondentSupportingMaterialController POST', () => {
-    it('should return TRIBUNAL_RESPONSE_CYA', async () => {
-      const req = mockRequest({
-        body: { responseText: 'test' },
-      });
-      const res = mockResponse();
-      req.session.contactType = Rule92Types.TRIBUNAL;
-      req.session.userCase.selectedRequestOrOrder = {
-        id: '1',
-        value: {
-          sendNotificationSubject: ['Employer Contract Claim'],
-        },
-      };
-      await new RespondentSupportingMaterialController().post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith('/tribunal-response-cya');
+  it('should return TRIBUNAL_RESPONSE_CYA', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
     });
+    const res = mockResponse();
+    req.session.contactType = Rule92Types.TRIBUNAL;
+    req.session.userCase.selectedRequestOrOrder = {
+      id: '1',
+      value: {
+        sendNotificationSubject: ['Employer Contract Claim'],
+      },
+    };
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/tribunal-response-cya?lng=en');
+  });
 
-    it('should return COPY_TO_OTHER_PARTY', async () => {
-      const req = mockRequest({
-        body: { responseText: 'test' },
-      });
-      const res = mockResponse();
-      req.session.userCase.respondents = [
-        {
-          ccdId: '1',
-        },
-      ];
-      req.session.userCase.representatives = [
-        {
-          respondentId: '1',
-          hasMyHMCTSAccount: YesOrNo.YES,
-        },
-      ];
-      await new RespondentSupportingMaterialController().post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party');
+  it('should return COPY_TO_OTHER_PARTY', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
     });
+    const res = mockResponse();
+    req.session.userCase.respondents = [
+      {
+        ccdId: '1',
+      },
+    ];
+    req.session.userCase.representatives = [
+      {
+        respondentId: '1',
+        hasMyHMCTSAccount: YesOrNo.YES,
+      },
+    ];
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party?lng=en');
+  });
 
-    it('should return COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER', async () => {
-      const req = mockRequest({
-        body: { responseText: 'test' },
-      });
-      const res = mockResponse();
-      await new RespondentSupportingMaterialController().post(req, res);
-      expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party-not-system-user');
+  it('should return COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER', async () => {
+    const req = mockRequest({
+      body: { responseText: 'test' },
     });
+    const res = mockResponse();
+    await new RespondentSupportingMaterialController().post(req, res);
+    expect(res.redirect).toHaveBeenCalledWith('/copy-to-other-party-not-system-user?lng=en');
   });
 });
