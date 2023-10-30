@@ -1,5 +1,5 @@
 import StoredResponseAppConfirmationController from '../../../main/controllers/StoredResponseAppConfirmationController';
-import { Applicant, TranslationKeys } from '../../../main/definitions/constants';
+import { Applicant, ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
@@ -27,5 +27,15 @@ describe('Store application Complete Controller tests', () => {
         viewThisCorrespondenceLink: '/application-details/246?lng=en',
       })
     );
+  });
+
+  it('should return error page when Application ID not found', async () => {
+    const controller = new StoredResponseAppConfirmationController();
+    const response = mockResponse();
+    const request = mockRequest({ t });
+
+    await controller.get(request, response);
+
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 });

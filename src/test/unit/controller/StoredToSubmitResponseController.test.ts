@@ -4,7 +4,7 @@ import StoredToSubmitResponseController from '../../../main/controllers/StoredTo
 import { CaseApiDataResponse } from '../../../main/definitions/api/caseApiResponse';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
-import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
 import { HubLinksStatuses } from '../../../main/definitions/hub';
 import applicationDetailsJsonRaw from '../../../main/resources/locales/en/translation/application-details.json';
 import yourApplicationsJsonRaw from '../../../main/resources/locales/en/translation/your-applications.json';
@@ -12,15 +12,6 @@ import { CaseApi } from '../../../main/services/CaseService';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-
-jest.mock('axios');
-const mockCaseApi = {
-  axios: AxiosInstance,
-  updateHubLinksStatuses: jest.fn(),
-  storedToSubmitRespondToApp: jest.fn(),
-};
-const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
 
 const tseAppCollection: GenericTseApplicationTypeItem[] = [
   {
@@ -49,26 +40,14 @@ const tseAppCollection: GenericTseApplicationTypeItem[] = [
   },
 ];
 
-describe('Stored to Submit Controller', () => {
-  const controller = new StoredToSubmitResponseController();
+const userCase: Partial<CaseWithId> = {
+  id: '123',
+  genericTseApplicationCollection: tseAppCollection,
+};
 
-  caseApi.updateDraftCase = jest.fn().mockResolvedValue(
-    Promise.resolve({
-      data: {
-        created_date: '2022-08-19T09:19:25.79202',
-        last_modified: '2022-08-19T09:19:25.817549',
-        case_data: {
-          genericTseApplicationCollection: tseAppCollection,
-        },
-      },
-    } as AxiosResponse<CaseApiDataResponse>)
-  );
+const controller = new StoredToSubmitResponseController();
 
-  const userCase: Partial<CaseWithId> = {
-    id: '123',
-    genericTseApplicationCollection: tseAppCollection,
-  };
-
+describe('Stored to Submit Controller GET', () => {
   it('should render the stored to submit page', async () => {
     const translationJsons = { ...yourApplicationsJsonRaw, ...applicationDetailsJsonRaw };
     const res = mockResponse();
@@ -88,6 +67,40 @@ describe('Stored to Submit Controller', () => {
       })
     );
   });
+
+  it('should return error page when Selected application not found', async () => {
+    const translationJsons = { ...yourApplicationsJsonRaw, ...applicationDetailsJsonRaw };
+    const res = mockResponse();
+    const req = mockRequestWithTranslation({ session: { userCase } }, translationJsons);
+    req.params.appId = 'Test';
+
+    await controller.get(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
+  });
+});
+
+describe('Stored to Submit Controller POST', () => {
+  jest.mock('axios');
+  const mockCaseApi = {
+    axios: AxiosInstance,
+    updateHubLinksStatuses: jest.fn(),
+    storedToSubmitRespondToApp: jest.fn(),
+  };
+  const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+  jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+  caseApi.updateDraftCase = jest.fn().mockResolvedValue(
+    Promise.resolve({
+      data: {
+        created_date: '2022-08-19T09:19:25.79202',
+        last_modified: '2022-08-19T09:19:25.817549',
+        case_data: {
+          genericTseApplicationCollection: tseAppCollection,
+        },
+      },
+    } as AxiosResponse<CaseApiDataResponse>)
+  );
 
   it('should redirect to update page when yes is selected', async () => {
     const body = { confirmCopied: YesOrNo.YES };
@@ -115,5 +128,28 @@ describe('Stored to Submit Controller', () => {
 
     expect(res.redirect).toHaveBeenCalledWith('/stored-to-submit-response/234/567?lng=en');
     expect(req.session.errors).toEqual(errors);
+  });
+});
+
+describe('Stored to Submit Controller POST return error page', () => {
+  const body = { confirmCopied: YesOrNo.YES };
+  const req = mockRequest({ body, session: { userCase } });
+  const res = mockResponse();
+  req.params.appId = '234';
+  req.url = '/stored-to-submit-response/234/567?lng=en';
+  req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
+  req.session.userCase.selectedGenericTseApplication = tseAppCollection[0];
+
+  it('should redirect to update page when yes is selected', async () => {
+    jest.mock('axios');
+    const mockCaseApi = {
+      axios: AxiosInstance,
+    };
+    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
+    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
+
+    await controller.post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
 });
