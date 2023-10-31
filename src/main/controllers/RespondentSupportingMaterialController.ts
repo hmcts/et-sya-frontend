@@ -13,7 +13,9 @@ import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -103,7 +105,7 @@ export default class RespondentSupportingMaterialController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
-      return res.redirect(supportingMaterialUrl);
+      return res.redirect(supportingMaterialUrl + getLanguageParam(req.url));
     }
     req.session.errors = [];
 
@@ -113,9 +115,9 @@ export default class RespondentSupportingMaterialController {
       userCase.selectedRequestOrOrder.value.sendNotificationSubject?.length &&
       userCase.selectedRequestOrOrder.value.sendNotificationSubject.includes('Employer Contract Claim')
     ) {
-      return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA);
+      return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url));
     }
-    return res.redirect(PageUrls.COPY_TO_OTHER_PARTY);
+    return res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
