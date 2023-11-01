@@ -40,7 +40,7 @@ const getVisibleRequestFromAdmin = (
   for (const response of app.value.respondCollection) {
     if (isVisibleTribunalResponse(response, app.value.claimantResponseRequired)) {
       const adminNotification: AdminNotifcation = {
-        appName: app.value.type,
+        appName: translations[app.value.type],
         enterResponseTitle: response.value.enterResponseTitle,
         responseId: response.id,
         appId: app.id,
