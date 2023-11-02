@@ -6,6 +6,7 @@ import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockApp } from '../mocks/mockApp';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 const respondToApplicationCompleteJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/respond-to-application-complete.json'),
@@ -24,6 +25,8 @@ const expectedRule92NoParagraph = respondToApplicationCompleteJson.p1.rule92No;
 let htmlRes: Document;
 
 describe('Respond to application complete - Rule 92 answer Yes', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
@@ -65,6 +68,8 @@ describe('Respond to application complete - Rule 92 answer Yes', () => {
 });
 
 describe('Respond to application complete - Rule 92 answer No', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
