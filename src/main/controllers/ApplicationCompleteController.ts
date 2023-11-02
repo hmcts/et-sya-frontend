@@ -2,12 +2,14 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class ApplicationCompleteController {
-  public get(req: AppRequest, res: Response): void {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
@@ -24,6 +26,7 @@ export default class ApplicationCompleteController {
       applicationDate: dateString,
       rule92: userCase.rule92state,
       redirectUrl,
+      welshEnabled,
     });
-  }
+  };
 }
