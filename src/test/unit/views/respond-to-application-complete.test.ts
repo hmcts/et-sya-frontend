@@ -109,5 +109,3 @@ describe('Respond to application complete - Rule 92 answer No', () => {
     expect(button[5].innerHTML).contains(respondToApplicationCompleteJson.button, 'Could not find the button');
   });
 });
-
-

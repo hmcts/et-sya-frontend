@@ -1,9 +1,9 @@
 import ContactTheTribunalController from '../../../main/controllers/ContactTheTribunalController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunal from '../../../main/resources/locales/en/translation/contact-the-tribunal.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Contact Application Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');

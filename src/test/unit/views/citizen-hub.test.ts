@@ -11,11 +11,11 @@ import { Applicant, PageUrls } from '../../../main/definitions/constants';
 import { CaseState } from '../../../main/definitions/definition';
 import { HubLinkStatus } from '../../../main/definitions/hub';
 import * as ApiFormatter from '../../../main/helper/ApiFormatter';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import * as CaseService from '../../../main/services/CaseService';
 import { CaseApi } from '../../../main/services/CaseService';
 import { mockApp } from '../mocks/mockApp';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 const hubJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/citizen-hub.json'),
