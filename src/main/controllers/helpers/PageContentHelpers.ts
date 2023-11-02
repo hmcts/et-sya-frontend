@@ -86,13 +86,17 @@ export const getApplicationRespondByDate = (
   }
 };
 
-export const generateAccordionItems = (applications: AnyRecord, translations: AnyRecord): string[] => {
+export const generateAccordionItems = (
+  applications: AnyRecord,
+  translations: AnyRecord,
+  languageParam: string
+): string[] => {
   return applications.map((application: string) => {
     const label = translations.sections[application].label;
     const href =
       application === 'documents'
-        ? '/tribunal-orders-and-requests>' + label + '</a>'
-        : '/contact-the-tribunal/' + application + '>' + label + '</a>';
+        ? '/tribunal-orders-and-requests>' + label + languageParam + '</a>'
+        : '/contact-the-tribunal/' + application + '>' + label + languageParam + '</a>';
 
     return {
       heading: {

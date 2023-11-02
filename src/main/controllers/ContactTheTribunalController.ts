@@ -9,6 +9,7 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { generateAccordionItems } from './helpers/PageContentHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 /**
  * Controller for contact-the-tribunal page with a list of applications to start
@@ -21,7 +22,8 @@ export default class ContactTheTribunalController {
     };
 
     const userCase = req.session.userCase;
-    const applicationsAccordionItems = generateAccordionItems(applications, translations);
+    const languageParam = getLanguageParam(req.url);
+    const applicationsAccordionItems = generateAccordionItems(applications, translations, languageParam);
     const notifications = userCase?.sendNotificationCollection?.filter(
       it => it.value.sendNotificationCaseManagement === 'Request'
     );

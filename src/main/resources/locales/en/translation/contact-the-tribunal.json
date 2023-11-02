@@ -1,6 +1,10 @@
 {
   "title": "Contact the Tribunal",
   "h1": "Contact the tribunal about your case",
+  "showAllSections": "Show all sections",
+  "hideAllSections": "Hide all sections",
+  "showSection": "Show",
+  "hideSection": "Hide",
   "landing_text": {
     "p1": "Use the appropriate form to communicate with the tribunal.",
     "p2": "These requests and applications will be reviewed by the tribunal and copied to the respondent who will have an opportunity to respond.",
