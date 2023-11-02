@@ -294,7 +294,7 @@ export const JavaApiUrls = {
   ADD_RESPONSE_TO_SEND_NOTIFICATION: '/sendNotification/add-response-send-notification',
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
-  SUBMIT_BUNDLES: 'cases/submit-bundles',
+  SUBMIT_BUNDLES: 'bundles/submit-bundles',
 } as const;
 
 export const Urls = {
