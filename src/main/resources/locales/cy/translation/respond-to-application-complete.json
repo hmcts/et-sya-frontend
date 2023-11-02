@@ -1,11 +1,11 @@
 {
-  "title": "Welsh translation required",
-  "titleText": "Welsh translation required",
-  "h1": "Welsh translation required",
+  "title": "Ymateb wedi'i gwblhau",
+  "titleText": "Rydych wedi anfon eich ymateb i’r tribiwnlys",
+  "h1": "Beth fydd yn digwydd nesaf",
   "p1": {
-    "rule92No": "Welsh translation required",
-    "rule92Yes": "Welsh translation required"
+    "rule92No": "Rydych wedi anfon eich ymateb i’r tribiwnlys.",
+    "rule92Yes": "Rydych wedi anfon eich ymateb i’r tribiwnlys ac anfon copi at yr atebydd."
   },
-  "p2": "Welsh translation required",
-  "button": "Welsh translation required"
+  "p2": "Bydd y tribiwnlys yn ystyried pob gohebiaeth ac yn rhoi gwybod i chi beth fydd yn digwydd nesaf.",
+  "button": "Cau a dychwelyd i’r trosolwg o’r achos"
 }

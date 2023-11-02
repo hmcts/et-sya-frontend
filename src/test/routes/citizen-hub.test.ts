@@ -3,10 +3,10 @@ import request from 'supertest';
 
 import { CaseApiDataResponse } from '../../main/definitions/api/caseApiResponse';
 import { PageUrls } from '../../main/definitions/constants';
+import * as LaunchDarkly from '../../main/modules/featureFlag/launchDarkly';
 import * as CaseService from '../../main/services/CaseService';
 import { CaseApi } from '../../main/services/CaseService';
 import { mockApp } from '../unit/mocks/mockApp';
-import * as LaunchDarkly from '../../main/modules/featureFlag/launchDarkly';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);

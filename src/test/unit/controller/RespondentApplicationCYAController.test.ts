@@ -1,9 +1,8 @@
 import RespondentApplicationCYAController from '../../../main/controllers/RespondentApplicationCYAController';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import jsonRaw from '../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
-
 
 describe('Tribunal Response CYA Controller', () => {
   const translationJsons = { ...jsonRaw };
