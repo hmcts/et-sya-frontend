@@ -1,10 +1,10 @@
 {
-  "title": "Welsh Translation required",
-  "dateSent": "Welsh Translation required",
-  "sentBy": "Welsh Translation required",
-  "addInfo": "Welsh Translation required",
+  "title": "Gweld cydnabyddiaeth o rywbeth cyffredinol",
+  "dateSent": "Dyddiad anfon",
+  "sentBy": "Afonwyd gan",
+  "addInfo": "Gwybodaeth ychwanegol",
   "description": "Disgrifiad",
   "document": "Dogfen",
-  "sentTo": "Welsh Translation required",
-  "tribunal": "Welsh Translation required"
+  "sentTo": "Anfonwyd at",
+  "tribunal": "Tribiwnlys"
 }

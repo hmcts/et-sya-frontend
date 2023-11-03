@@ -26,6 +26,7 @@ export default class ApplicationDetailsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
@@ -94,7 +95,7 @@ export default class ApplicationDetailsController {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,

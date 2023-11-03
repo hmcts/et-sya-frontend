@@ -100,6 +100,7 @@ export default class RespondToTribunalResponseController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     let allResponses;
@@ -129,7 +130,7 @@ export default class RespondToTribunalResponseController {
     assignFormData(req.session.userCase, this.form.getFormFields());
     res.render(TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE, {
       ...content,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
       allResponses,
       cancelLink: setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id)),
       hideContactUs: true,

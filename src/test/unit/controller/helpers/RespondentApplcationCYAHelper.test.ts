@@ -2,16 +2,15 @@ import { getRespondentCyaContent } from '../../../../main/controllers/helpers/Re
 import { YesOrNo } from '../../../../main/definitions/case';
 import { PageUrls, TranslationKeys, languages } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../../main/resources/locales/en/translation/common.json';
 import respondentCYARaw from '../../../../main/resources/locales/en/translation/respondent-application-cya.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
-import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
-
 
 describe('Respondent application CYA controller helper', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
-  
+
   it('should return expected content', () => {
     const translationJsons = { ...respondentCYARaw, ...common };
     const req = mockRequestWithTranslation({}, translationJsons);
