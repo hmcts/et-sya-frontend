@@ -6,6 +6,7 @@ import {
 } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { Applicant, TranslationKeys } from '../../../../main/definitions/constants';
 import { AnyRecord } from '../../../../main/definitions/util-types';
+import commonTranslation from '../../../../main/resources/locales/en/translation/common.json';
 import applicationDetailsRaw from '../../../../main/resources/locales/en/translation/respondent-application-details.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
@@ -52,7 +53,7 @@ describe('Respondent application details', () => {
       linkValue: 'amend response',
     } as GenericTseApplicationTypeItem;
 
-    const translationJsons = { ...applicationDetailsRaw };
+    const translationJsons = { ...applicationDetailsRaw, ...commonTranslation };
     const summaryListClass = 'govuk-!-font-weight-regular-m';
 
     const req = mockRequestWithTranslation({}, translationJsons);
@@ -61,7 +62,7 @@ describe('Respondent application details', () => {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink');
+    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink', 'en-GB');
 
     expect(appContent[0].key).toEqual({ classes: summaryListClass, text: 'Applicant' });
     expect(appContent[0].value).toEqual({ text: 'Respondent' });

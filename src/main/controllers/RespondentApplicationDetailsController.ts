@@ -91,7 +91,7 @@ export default class RespondentApplicationDetailsController {
       header,
       selectedApplication,
       redirectUrl,
-      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink, req.url),
       decisionContent,
       respondButton,
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),

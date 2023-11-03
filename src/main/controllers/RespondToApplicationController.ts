@@ -8,6 +8,7 @@ import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { setUserCase } from './helpers/CaseHelpers';
@@ -16,7 +17,6 @@ import { getResponseErrors as getApplicationResponseError } from './helpers/Erro
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -121,7 +121,7 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
       welshEnabled,
     });
   };
