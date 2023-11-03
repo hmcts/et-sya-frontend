@@ -2,11 +2,12 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
-
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 export default class TribunalResponseCompletedController {
-  public get(req: AppRequest, res: Response): void {
+  public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${userCase?.id}${languageParam}`;
@@ -15,6 +16,7 @@ export default class TribunalResponseCompletedController {
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_COMPLETED, { returnObjects: true }),
       rule92: userCase.rule92state,
       redirectUrl,
+      welshEnabled,
     });
   }
 }

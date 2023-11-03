@@ -6,11 +6,11 @@ import CitizenHubController from '../../../../main/controllers/citizen-hub/Citiz
 import { getAllClaimantApplications } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseApiDataResponse } from '../../../../main/definitions/api/caseApiResponse';
 import { Applicant } from '../../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import { CaseApi } from '../../../../main/services/CaseService';
 import * as CaseService from '../../../../main/services/CaseService';
 import { mockRequest } from '../../mocks/mockRequest';
 import { mockResponse } from '../../mocks/mockResponse';
-import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 
 jest.mock('axios');
 const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);

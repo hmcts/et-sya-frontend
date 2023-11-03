@@ -1,8 +1,8 @@
 import TribunalResponseCYAController from '../../../main/controllers/TribunalResponseCYAController';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import tribunalResponseRaw from '../../../main/resources/locales/en/translation/tribunal-response-cya.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Tribunal Response CYA Controller', () => {
   const translationJsons = { ...tribunalResponseRaw };
