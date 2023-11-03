@@ -83,6 +83,7 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     req.session.contactType = Rule92Types.RESPOND;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
@@ -104,7 +105,6 @@ export default class RespondToApplicationController {
       }
     }
     const downloadLink = createDownloadLink(document);
-    const welshEnabled = await getFlagValue('welsh-language', null);
 
     const content = getPageContent(req, this.respondToApplicationContent, [
       TranslationKeys.COMMON,
@@ -121,8 +121,8 @@ export default class RespondToApplicationController {
       respondByDate,
       selectedApplication,
       applicantType: selectedApplication.value.applicant,
-      welshEnabled,
       appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, req.url),
+      welshEnabled,
     });
   };
 }

@@ -8,6 +8,8 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respond to application Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   const translationJsons = { ...respondJsonRaw, ...common };
   const t = {
     'respond-to-application': {},

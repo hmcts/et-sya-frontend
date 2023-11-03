@@ -46,10 +46,10 @@
   "Vary or revoke an order": "amrywio neu ddiddymu gorchymyn",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol hefyd"
+      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"
     },
     "responseText": {
-      "required": "Darparwch fanylion eich ymateb a/neu llwythwch ddeunydd ategol",
+      "required": "Darparu manylion eich ymateb a/neu lwytho deunydd ategol",
       "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
       "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
