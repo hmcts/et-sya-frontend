@@ -18,6 +18,7 @@ import { getResponseErrors as getApplicationResponseError } from './helpers/Erro
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -84,6 +85,7 @@ export default class RespondToApplicationController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     req.session.contactType = Rule92Types.RESPOND;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPOND_TO_APPLICATION, { returnObjects: true }),
