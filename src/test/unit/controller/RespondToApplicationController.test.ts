@@ -6,10 +6,13 @@ import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
 mockLdClient.mockResolvedValue(true);
 describe('Respond to application Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   const translationJsons = { ...respondJsonRaw, ...common };
   const t = {
     'respond-to-application': {},

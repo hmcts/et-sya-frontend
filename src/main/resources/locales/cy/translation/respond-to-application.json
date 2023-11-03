@@ -46,12 +46,12 @@
   "Vary or revoke an order": "Welsh Translation required",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Welsh Translation required?"
+      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"
     },
     "responseText": {
-      "required": "Welsh Translation required",
-      "requiredFile": "Welsh Translation required",
-      "tooLong": "Welsh Translation required"
+      "required": "Darparu manylion eich ymateb a/neu lwytho deunydd ategol",
+      "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
+      "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
   },
   "Yes": "Ydw",

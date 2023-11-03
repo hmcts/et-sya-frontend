@@ -45,7 +45,14 @@ export class Helmet {
       idamUrl,
     ];
 
-    const connectSrc = [self, googleAnalyticsDomain1, googleAnalyticsDomain2, idamUrl, 'https://bf24054dsx.bf.dynatrace.com', '*://*.8x8.com'];
+    const connectSrc = [
+      self,
+      googleAnalyticsDomain1,
+      googleAnalyticsDomain2,
+      idamUrl,
+      'https://bf24054dsx.bf.dynatrace.com',
+      '*://*.8x8.com',
+    ];
 
     const imgSrc = [
       self,
@@ -57,7 +64,7 @@ export class Helmet {
       'https://ssl.gstatic.com',
       'https://www.gstatic.com',
       'https://fonts.googleapis.com',
-      '*://*.8x8.com'
+      '*://*.8x8.com',
     ];
 
     const frameSrc = [self, webChat];

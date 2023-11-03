@@ -115,5 +115,6 @@
   "addressPostcodeSelectTitle": "Cyfeiriad cod post dewis",
   "respondentPostcodeEnterTitle": "Rhowch god post yr ymatebydd",
   "respondentPostcodeSelectTitle": "Dewis cod post yr ymatebydd",
-  "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion."
+  "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
+  "beta": "beta"
 }
