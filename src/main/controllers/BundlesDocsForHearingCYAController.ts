@@ -1,9 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getCyaContent } from './helpers/BundlesPrepareDocsCYAHelper';
 import { createDownloadLinkForHearingDoc } from './helpers/DocumentHelpers';
@@ -30,6 +31,7 @@ export default class BundlesDocsForHearingCYAController {
     const downloadLink = createDownloadLinkForHearingDoc(userCase?.hearingDocument);
     const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === userCase.hearingDocumentsAreFor);
     const formattedSelectedHearing = createLabelForHearing(foundHearing);
+    const bundlesEnabled = getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     res.render(TranslationKeys.BUNDLES_DOCS_FOR_HEARING_CYA, {
       ...content,
@@ -51,6 +53,7 @@ export default class BundlesDocsForHearingCYAController {
         translations.whatAreTheHearingDocuments[userCase.whatAreTheseDocuments],
         formattedSelectedHearing
       ),
+      bundlesEnabled,
     });
   }
 }

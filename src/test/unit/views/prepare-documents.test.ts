@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const prepareDocumentsJsonRaw = fs.readFileSync(
@@ -20,6 +21,8 @@ const link = 'govuk-link';
 
 let htmlRes: Document;
 describe('Prepare documents page', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(mockApp({}))
       .get(PageUrls.PREPARE_DOCUMENTS)

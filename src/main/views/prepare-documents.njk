@@ -27,14 +27,25 @@
           text: insetText
         }) }}
     <br>
-      <div class="govuk-button-group">
-          {{ govukButton({
-            text: button,
-            href: redirectUrl,
-            isStartButton: true
-          }) }}
-          <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
-      </div>     
+      {% if bundlesEnabled %}
+        <div class="govuk-button-group">
+            {{ govukButton({
+              text: button,
+              href: redirectUrl,
+              isStartButton: true
+            }) }}
+            <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
+        </div>
+      {% else %}
+        <div class="govuk-button-group">
+            {{ govukButton({
+              text: button,
+              href: cancelLink,
+              disabled: true
+            }) }}
+            <a class="govuk-link" href={{ cancelPage }}>{{ cancelLink }}</a>
+        </div>
+      {% endif %}       
     </div>
     
     <div class="govuk-grid-column-one-third-from-desktop">
