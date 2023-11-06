@@ -8,7 +8,6 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-import { getLogger } from '../logger';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
