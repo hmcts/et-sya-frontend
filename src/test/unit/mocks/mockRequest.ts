@@ -29,6 +29,9 @@ export const mockRequest = ({
   req.params = {
     respondentNumber: '1',
   };
+  req.headers = {
+    host: 'http://localhost:3001',
+  };
   req.cookies = {
     i18next: languages.ENGLISH,
   };
@@ -115,6 +118,9 @@ export const mockRequestWithTranslation = (
   req.params = {
     respondentNumber: '1',
     appId: '1',
+  };
+  req.headers = {
+    host: 'http://localhost:3001',
   };
   req.session = {
     userCase: {
