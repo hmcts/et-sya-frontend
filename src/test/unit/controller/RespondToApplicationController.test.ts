@@ -9,8 +9,6 @@ import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 import { safeUrlMock } from '../mocks/mockUrl';
 
-const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
-mockLdClient.mockResolvedValue(true);
 describe('Respond to application Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
