@@ -114,8 +114,6 @@ export default class RespondToApplicationController {
       TranslationKeys.RESPOND_TO_APPLICATION,
     ]);
 
-    const welshEnabled = await getFlagValue('welsh-language', null);
-
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
     res.render(TranslationKeys.RESPOND_TO_APPLICATION, {
