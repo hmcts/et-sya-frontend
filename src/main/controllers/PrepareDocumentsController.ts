@@ -7,11 +7,11 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class PrepareDocumentsController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const languageParam = getLanguageParam(req.url);
     const redirectUrl = PageUrls.AGREEING_DOCUMENTS_FOR_HEARING + languageParam;
     const cancelPage = `/citizen-hub/${req.session.userCase?.id}${languageParam}`;
-    const bundlesEnabled = getFlagValue(FEATURE_FLAGS.BUNDLES, null);
+    const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     res.render(TranslationKeys.PREPARE_DOCUMENTS, {
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),

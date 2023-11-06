@@ -13,7 +13,7 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class BundlesDocsForHearingCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -31,7 +31,7 @@ export default class BundlesDocsForHearingCYAController {
     const downloadLink = createDownloadLinkForHearingDoc(userCase?.hearingDocument);
     const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === userCase.hearingDocumentsAreFor);
     const formattedSelectedHearing = createLabelForHearing(foundHearing);
-    const bundlesEnabled = getFlagValue(FEATURE_FLAGS.BUNDLES, null);
+    const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     res.render(TranslationKeys.BUNDLES_DOCS_FOR_HEARING_CYA, {
       ...content,
