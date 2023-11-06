@@ -270,7 +270,7 @@ export const getRespondentDetailsSection = (
         text: translations.acasNum,
       },
       value: {
-        html: respondent.acasCertNum === undefined ? translations.unProvided : respondent.acasCertNum,
+        html: respondent.acasCertNum ?? translations.unProvided,
       },
       actions: {
         items: [
