@@ -24,6 +24,5 @@ export async function getFlagValue(
     };
   }
   const flagValue = await ldClient.variation(key, user, defaultValue);
-  ldClient.close();
   return flagValue;
 }

@@ -21,7 +21,7 @@
 
        {% endif %}
 
-        {% if bundlesEnabled not undefined and not bundlesEnabled %}
+        {% if showParagraphAboutSubmittingDocsInAdvance and not bundlesEnabled %}
           <div class="govuk-button-group">
             {{ govukButton({
               text: submitBtn,
@@ -29,7 +29,7 @@
               classes: 'govuk-!-margin-right-6',
               href: cancelLink,
               preventDoubleClick: true,
-              disabled: true
+              disabled: true,
               attributes: {
                 id: 'main-form-submit'
               }
