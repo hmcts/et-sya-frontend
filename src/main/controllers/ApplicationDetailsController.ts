@@ -28,6 +28,7 @@ export default class ApplicationDetailsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;

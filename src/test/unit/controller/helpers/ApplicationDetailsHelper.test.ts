@@ -29,7 +29,6 @@ describe('Application details', () => {
     } as GenericTseApplicationTypeItem;
 
     const translationJsons = { ...applicationDetailsRaw, ...yourApplicationsRaw };
-
     const req = mockRequestWithTranslation({}, translationJsons);
     req.session.userCase.genericTseApplicationCollection = [selectedApplication];
     const translations: AnyRecord = {

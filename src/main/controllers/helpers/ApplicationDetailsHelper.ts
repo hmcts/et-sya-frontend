@@ -8,6 +8,7 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
@@ -22,6 +23,9 @@ export const getTseApplicationDetails = (
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
+
+  const yesNoTranslation: string =
+    application.copyToOtherPartyYesOrNo === YesOrNo.YES ? translations.yes : translations.no;
 
   rows.push(
     addSummaryRow(translations.applicant, translations[application.applicant]),

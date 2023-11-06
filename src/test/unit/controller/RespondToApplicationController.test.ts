@@ -1,4 +1,5 @@
 import RespondToApplicationController from '../../../main/controllers/RespondToApplicationController';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { TranslationKeys } from '../../../main/definitions/constants';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
@@ -6,7 +7,7 @@ import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
+import { safeUrlMock } from '../mocks/mockUrl';
 
 const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
 mockLdClient.mockResolvedValue(true);
@@ -19,7 +20,12 @@ describe('Respond to application Controller', () => {
     common: {},
   };
 
+  const urlMock = safeUrlMock;
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+
   it('should render the Respond to application page', async () => {
+    const mockClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockClient.mockResolvedValue(true);
     const controller = new RespondToApplicationController();
     const tseAppCollection = [
       {

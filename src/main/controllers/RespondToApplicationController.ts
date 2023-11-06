@@ -17,8 +17,7 @@ import { createDownloadLink, populateDocumentMetadata } from './helpers/Document
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getApplicationRespondByDate } from './helpers/PageContentHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
-import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToApplicationController');
 
@@ -74,14 +73,15 @@ export default class RespondToApplicationController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(`${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`);
+      const redirectUrl = `${PageUrls.RESPOND_TO_APPLICATION}/${req.params.appId}${getLanguageParam(req.url)}`;
+      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
-    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+    const redirectUrl =
+      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
+        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

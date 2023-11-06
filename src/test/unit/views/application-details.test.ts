@@ -92,6 +92,6 @@ describe('Application details page', () => {
     expect(summaryListData[1].innerHTML).contains('7 March 2023', ' Application type does not exist');
     expect(summaryListData[3].innerHTML).contains('Test text', ' Application type does not exist');
     expect(summaryListData[4].innerHTML).contains('', ' Application type does not exist');
-    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application type does not exist');
+    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application copyToOtherPartyYesOrNo does not exist');
   });
 });

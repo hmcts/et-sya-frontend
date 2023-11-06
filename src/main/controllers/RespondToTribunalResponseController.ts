@@ -21,7 +21,7 @@ import {
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('RespondToTribunalResponseController');
 
@@ -73,20 +73,21 @@ export default class RespondToTribunalResponseController {
     setUserCase(req, this.form);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getApplicationResponseError(formData);
+    const languageParam = getLanguageParam(req.url);
 
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(
-        `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${getLanguageParam(req.url)}`
-      );
+      const pageUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${req.params.appId}${languageParam}`;
+      return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     req.session.errors = [];
-    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        )
-      : res.redirect(PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url));
+    const redirectUrl =
+      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
+        : PageUrls.COPY_TO_OTHER_PARTY + languageParam;
+
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -101,6 +102,7 @@ export default class RespondToTribunalResponseController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     let allResponses;
