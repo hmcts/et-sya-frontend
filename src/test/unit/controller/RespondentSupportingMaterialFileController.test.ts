@@ -1,11 +1,16 @@
 import RespondentSupportingMaterialFileController from '../../../main/controllers/RespondentSupportingMaterialFileController';
 import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { safeUrlMock } from '../mocks/mockUrl';
 
 describe('Respondent supporting material file controller', () => {
   it('should remove uploaded file and refresh the page', () => {
+    const urlMock = safeUrlMock;
+    jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+
     const controller = new RespondentSupportingMaterialFileController();
     const req = mockRequest({});
     req.params.appId = '1';
