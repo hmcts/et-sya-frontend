@@ -14,6 +14,7 @@ import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
+import { returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -86,10 +87,10 @@ export default class ContactTheTribunalSelectedController {
       'contactApplicationFile',
       logger
     );
+    const redirectUrl = `${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`;
     if (contactApplicationError) {
       req.session.errors.push(contactApplicationError);
-      //TODO Handle redirect to Welsh page
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
 
     if (req.body.upload) {
@@ -102,7 +103,7 @@ export default class ContactTheTribunalSelectedController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
-      return res.redirect(`${PageUrls.CONTACT_THE_TRIBUNAL}/${req.params.selectedOption}`);
+      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
 

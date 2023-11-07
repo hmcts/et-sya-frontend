@@ -9,7 +9,7 @@ import { returnValidUrl } from './helpers/RouterHelpers';
 
 export default class ChangeDetailsController {
   public get = (req: AppRequest, res: Response): void => {
-    let redirectUrl = req.url;
+    let redirectUrl;
     const languageParam = setChangeAnswersUrlLanguage(req);
     if (req.query.redirect === 'answers') {
       redirectUrl = req.url.replace(InterceptPaths.ANSWERS_CHANGE, languageParam);

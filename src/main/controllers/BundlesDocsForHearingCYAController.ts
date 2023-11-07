@@ -1,10 +1,10 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
-
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCyaContent } from './helpers/BundlesPrepareDocsCYAHelper';
 import { createDownloadLinkForHearingDoc } from './helpers/DocumentHelpers';
 import { createLabelForHearing, getPageContent } from './helpers/FormHelpers';
@@ -12,7 +12,7 @@ import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class BundlesDocsForHearingCYAController {
-  public get(req: AppRequest, res: Response): void {
+  public async get(req: AppRequest, res: Response): Promise<void> {
     const userCase = req.session?.userCase;
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -30,6 +30,7 @@ export default class BundlesDocsForHearingCYAController {
     const downloadLink = createDownloadLinkForHearingDoc(userCase?.hearingDocument);
     const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === userCase.hearingDocumentsAreFor);
     const formattedSelectedHearing = createLabelForHearing(foundHearing);
+    const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     res.render(TranslationKeys.BUNDLES_DOCS_FOR_HEARING_CYA, {
       ...content,
@@ -51,6 +52,7 @@ export default class BundlesDocsForHearingCYAController {
         translations.whatAreTheHearingDocuments[userCase.whatAreTheseDocuments],
         formattedSelectedHearing
       ),
+      bundlesEnabled,
     });
   }
 }
