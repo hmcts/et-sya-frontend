@@ -55,7 +55,7 @@ export class Form {
   }
 
   private getErrorsFromField(body: Partial<Case>, id: string, field: FormField): FormError[] {
-    const errorType = field?.validator((body as AnyRecord)[id], body);
+    const errorType = field.validator && field.validator((body as AnyRecord)[id], body);
     const errors: FormError[] = [];
 
     if (errorType) {
