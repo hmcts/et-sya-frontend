@@ -35,7 +35,7 @@ export const getUserDetails = async (
   };
 
   const response = await axios.post(tokenUrl, data, { headers });
-  const jwt = jwtDecode(response.data.id_token) as IdTokenJwtPayload;
+  const jwt: IdTokenJwtPayload = jwtDecode(response.data.id_token);
 
   return {
     accessToken: response.data.access_token,

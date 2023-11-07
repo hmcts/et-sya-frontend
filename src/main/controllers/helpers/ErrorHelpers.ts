@@ -97,7 +97,7 @@ export const getOtherClaimDescriptionError = (formData: Partial<CaseWithId>): Fo
   const otherClaimTextarea = formData.otherClaim;
 
   if (
-    (claimTypesCheckbox as string[])?.includes('otherTypesOfClaims') &&
+    claimTypesCheckbox?.includes('otherTypesOfClaims') &&
     (!otherClaimTextarea || otherClaimTextarea.trim().length === 0)
   ) {
     const errorType = isFieldFilledIn(otherClaimTextarea);
@@ -137,15 +137,13 @@ export const handleErrors = (req: AppRequest, res: Response, sessionErrors: Form
   if (saveForLater && (requiredErrExists || !sessionErrors.length)) {
     req.session.errors = [];
     return res.redirect(PageUrls.CLAIM_SAVED);
-  } else {
-    if (sessionErrors.length) {
-      req.session.save(err => {
-        if (err) {
-          throw err;
-        }
-        return res.redirect(req.url);
-      });
-    }
+  } else if (sessionErrors.length) {
+    req.session.save(err => {
+      if (err) {
+        throw err;
+      }
+      return res.redirect(req.url);
+    });
   }
 };
 

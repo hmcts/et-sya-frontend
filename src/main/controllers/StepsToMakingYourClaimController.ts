@@ -28,7 +28,7 @@ export default class StepsToMakingYourClaimController {
       TranslationKeys.STEPS_TO_MAKING_YOUR_CLAIM,
     ]);
     const { userCase } = req.session;
-    if (req.app && req.app.locals && req.app.locals.redisClient && req.session.guid) {
+    if (req.app?.locals && req.app.locals.redisClient && req.session.guid) {
       const redisClient = req.app.locals.redisClient;
       const caseData = await getPreloginCaseData(redisClient, req.session.guid);
       if (userCase.id === undefined) {

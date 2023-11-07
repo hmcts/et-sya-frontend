@@ -6,7 +6,7 @@ import { AnyRecord } from '../definitions/util-types';
 
 export default class ClaimSubmittedController {
   public get(req: AppRequest, res: Response): void {
-    if (req.session && req.session.userCase) {
+    if (req?.session.userCase) {
       req.session.submittedCase = req.session.userCase;
       req.session.userCase = null;
     }
