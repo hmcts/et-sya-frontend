@@ -226,6 +226,7 @@ export default {
       },
     },
   ],
+  hearingCollection: undefined,
   sendNotificationCollection: [selectedRequestOrOrder],
   documentCollection: [
     {

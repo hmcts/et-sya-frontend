@@ -1,8 +1,8 @@
 import TribunalResponseCompletedController from '../../../main/controllers/TribunalResponseCompletedController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Tribunal Response Completed Controller tests', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');

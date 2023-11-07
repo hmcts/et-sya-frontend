@@ -8,6 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
+import { generateAccordionItems } from './helpers/PageContentHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 /**
@@ -19,22 +20,17 @@ export default class ContactTheTribunalController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
+
+    const userCase = req.session.userCase;
     const languageParam = getLanguageParam(req.url);
-    const applicationsAccordionItems = applications.map(application => {
-      const label = translations.sections[application].label;
-      return {
-        heading: {
-          text: label,
-        },
-        content: {
-          bodyText: translations.sections[application].body,
-          link: {
-            href: `/contact-the-tribunal/${application}${languageParam}`,
-            text: label,
-          },
-        },
-      };
-    });
+    const applicationsAccordionItems = generateAccordionItems(applications, translations, languageParam);
+    const notifications = userCase?.sendNotificationCollection?.filter(
+      it => it.value.sendNotificationCaseManagement === 'Request'
+    );
+
+    if (!notifications?.length) {
+      applicationsAccordionItems.splice(applications.length - 1, 1);
+    }
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.COMMON,

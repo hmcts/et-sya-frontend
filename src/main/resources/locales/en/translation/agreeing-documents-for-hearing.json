@@ -1,0 +1,24 @@
+{
+  "title": "Agreeing documents",
+  "caption": "Prepare documents for a hearing",
+  "h2": "Have you agreed these documents with the other party?",
+  "p1": "You may have been told in an order from the tribunal to work with the other party to agree on the documents that will be relied upon at the hearing.",
+  "agreed": "We have agreed but there are some disputed documents",
+  "notAgreed": "No, we have not agreed and I want to provide my own documents",
+  "agreedTextLabel": "<b>Tell us which documents are disputed<b>",
+  "notAgreedTextLabel": "<b>Tell us why you've not been able to agree with the other party<b>",
+  "cancelLink": "Cancel",
+  "errors": {
+    "bundlesRespondentAgreedDocWith": {
+      "required": "Select if you have agreed with the other party"
+    },
+    "bundlesRespondentAgreedDocWithBut": {
+      "required": "Tell us which documents are disputed",
+      "exceeded": "Free text details must be entered as less than 2500 characters"
+    },
+    "bundlesRespondentAgreedDocWithNo": {
+      "required": "Tell us why you've not been able to agree with the other party",
+      "exceeded": "Free text details must be entered as less than 2500 characters"
+    }
+  }
+}

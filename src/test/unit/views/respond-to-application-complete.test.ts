@@ -5,8 +5,8 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
-import { mockApp } from '../mocks/mockApp';
 import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
+import { mockApp } from '../mocks/mockApp';
 
 const respondToApplicationCompleteJsonRaw = fs.readFileSync(
   path.resolve(__dirname, '../../../main/resources/locales/en/translation/respond-to-application-complete.json'),

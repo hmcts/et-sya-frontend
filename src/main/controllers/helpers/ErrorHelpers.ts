@@ -10,10 +10,11 @@ import {
   isContent100CharsOrLess,
   isContent2500CharsOrLess,
   isFieldFilledIn,
+  isNotPdfFileType,
   isPayIntervalNull,
 } from '../../components/form/validator';
 import { AppRequest } from '../../definitions/appRequest';
-import { CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
+import { AgreedDocuments, CaseWithId, Document, HearingPreference, YesOrNo } from '../../definitions/case';
 import { PageUrls } from '../../definitions/constants';
 import { FormError } from '../../definitions/form';
 import { AnyRecord } from '../../definitions/util-types';
@@ -274,6 +275,33 @@ export const getFileUploadAndTextAreaError = (
   }
 };
 
+export const getPdfUploadError = (
+  file: Express.Multer.File,
+  fileTooLarge: boolean,
+  uploadedFile: Document,
+  propertyName: string
+): FormError => {
+  const fileProvided = file !== undefined;
+
+  if (!fileProvided && !uploadedFile) {
+    return { propertyName, errorType: 'required' };
+  }
+
+  if (fileTooLarge) {
+    return { propertyName, errorType: 'invalidFileSize' };
+  }
+
+  const fileFormatInvalid = isNotPdfFileType(file);
+  if (fileFormatInvalid) {
+    return { propertyName, errorType: fileFormatInvalid };
+  }
+
+  const fileNameInvalid = hasInvalidName(file?.originalname);
+  if (fileNameInvalid) {
+    return { propertyName, errorType: fileNameInvalid };
+  }
+};
+
 export const getResponseErrors = (formData: Partial<CaseWithId>): FormError => {
   const text = formData.responseText;
   const radio = formData.hasSupportingMaterial;
@@ -315,9 +343,35 @@ export const getFileErrorMessage = (errors: FormError[], errorTranslations: AnyR
 export const getLastFileError = (errors: FormError[]): FormError => {
   if (errors?.length > 0) {
     for (let i = errors.length - 1; i >= 0; i--) {
-      if (['contactApplicationFile', 'supportingMaterialFile'].includes(errors[i].propertyName)) {
+      if (['contactApplicationFile', 'supportingMaterialFile', 'hearingDocument'].includes(errors[i].propertyName)) {
         return errors[i];
       }
     }
   }
+};
+
+export const aboutHearingDocumentsErrors = (req: AppRequest): FormError[] => {
+  const errors: FormError[] = [];
+  if (!req.body.whoseHearingDocumentsAreYouUploading) {
+    errors.push({ propertyName: 'whoseHearingDocumentsAreYouUploading', errorType: 'required' });
+  }
+  if (!req.body.whatAreTheseDocuments) {
+    errors.push({ propertyName: 'whatAreTheseDocuments', errorType: 'required' });
+  }
+  return errors;
+};
+
+export const agreeingDocumentsForHearingErrors = (req: AppRequest): FormError[] => {
+  const errors: FormError[] = [];
+  const radioButtons = req.body.bundlesRespondentAgreedDocWith;
+  if (!radioButtons) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWith', errorType: 'required' });
+  }
+  if (radioButtons === AgreedDocuments.AGREEDBUT && !req.body.bundlesRespondentAgreedDocWithBut) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithBut', errorType: 'required' });
+  }
+  if (radioButtons === AgreedDocuments.NOTAGREED && !req.body.bundlesRespondentAgreedDocWithNo) {
+    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithNo', errorType: 'required' });
+  }
+  return errors;
 };

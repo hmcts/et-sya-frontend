@@ -17,7 +17,11 @@ import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 import mockUserCaseWithCitizenHubLinks from '../../resources/mocks/mockUserCaseWithCitizenHubLinks';
 import { getCaseApi } from '../../services/CaseService';
 import { getApplicationsWithTribunalOrderOrRequest } from '../helpers/AdminNotificationHelper';
-import { clearTseFields, handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
+import {
+  clearPrepareDocumentsForHearingFields,
+  clearTseFields,
+  handleUpdateHubLinksStatuses,
+} from '../helpers/CaseHelpers';
 import {
   activateRespondentApplicationsLink,
   checkIfRespondentIsSystemUser,
@@ -75,6 +79,7 @@ export default class CitizenHubController {
     const languageParam = getLanguageParam(req.url);
 
     clearTseFields(userCase);
+    clearPrepareDocumentsForHearingFields(userCase);
     req.session.documentDownloadPage = undefined;
     const currentState = currentStateFn(userCase);
 

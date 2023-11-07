@@ -2,8 +2,9 @@ import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
-import { getLanguageParam } from './helpers/RouterHelpers';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
+
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 export default class TribunalResponseCompletedController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -18,5 +19,5 @@ export default class TribunalResponseCompletedController {
       redirectUrl,
       welshEnabled,
     });
-  }
+  };
 }

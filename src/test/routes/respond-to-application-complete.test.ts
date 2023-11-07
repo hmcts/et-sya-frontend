@@ -1,8 +1,8 @@
 import request from 'supertest';
 
 import { PageUrls } from '../../main/definitions/constants';
-import { mockApp } from '../unit/mocks/mockApp';
 import * as LaunchDarkly from '../../main/modules/featureFlag/launchDarkly';
+import { mockApp } from '../unit/mocks/mockApp';
 
 describe(`GET ${PageUrls.RESPOND_TO_APPLICATION_COMPLETE}`, () => {
   it('should return the response complete page', async () => {
