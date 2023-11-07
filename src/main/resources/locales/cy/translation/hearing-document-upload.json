@@ -1,0 +1,40 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Welsh translation required",
+  "headingCaption": "Welsh translation required",
+  "p1": "Welsh translation required",
+  "bullet1": "Welsh translation required",
+  "bullet2": "Welsh translation required",
+  "bullet3": "Welsh translation required",
+  "bullet4": "Welsh translation required",
+  "bullet5": "Welsh translation required",
+  "p2": "Welsh translation required",
+  "p3": "Welsh translation required <a href=\"http://test\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">Welsh translation required</a>",
+
+  "fileUpload": {
+    "linkText": "Welsh translation required",
+    "hint": " Welsh translation required",
+    "hintExisting": "Welsh translation required {{filename}}</p></b>"
+  },
+  "acceptedFormats": {
+    "label": "Welsh translation required",
+    "p1": "Welsh translation required pdf"
+  },
+  "remove": "Welsh translation required",
+  "noFilesUpload": "<p class=\"govuk-body\">Welsh translation required</p>",
+  "uploadFileButton": "Welsh translation required",
+  "files": {
+    "title": "Welsh translation required",
+    "button": "Welsh translation required",
+    "uploaded": "Welsh translation required"
+  },
+  "errors": {
+    "hearingDocument": {
+      "required": "Welsh translation required",
+      "invalidFileFormat": "Welsh translation required",
+      "invalidFileName": "Welsh translation required",
+      "invalidFileSize": "Welsh translation required",
+      "backEndError": "Welsh translation required"
+    }
+  }
+}

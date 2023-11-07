@@ -1,8 +1,8 @@
 import RespondToApplicationCompleteController from '../../../main/controllers/RespondToApplicationCompleteController';
 import { TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
-import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 
 describe('Respond to Application Complete Controller tests', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
