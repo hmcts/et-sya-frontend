@@ -69,7 +69,7 @@ describe('Respondent application details', () => {
     expect(appContent[1].key).toEqual({ classes: summaryListClass, text: 'Application date' });
     expect(appContent[1].value).toEqual({ text: '2 March 2023' });
     expect(appContent[2].key).toEqual({ classes: summaryListClass, text: 'Application type' });
-    expect(appContent[2].value).toEqual({ text: 'amend response' });
+    expect(appContent[2].value).toEqual({ text: 'Amend response' });
     expect(appContent[3].key).toEqual({
       classes: summaryListClass,
       text: 'What do you want to tell or ask the tribunal?',

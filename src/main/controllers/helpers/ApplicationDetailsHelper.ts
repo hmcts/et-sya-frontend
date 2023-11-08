@@ -8,31 +8,28 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
-import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
+import { returnTranslatedDateString } from './DateHelper';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   downloadLink: string,
-  url: string
+  locale: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
-  const yesNoTranslation: string =
-    application.copyToOtherPartyYesOrNo === YesOrNo.YES ? translations.yes : translations.no;
-
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
+    addSummaryRow(translations.applicant, translations[application.applicant]),
+    addSummaryRow(translations.requestDate, returnTranslatedDateString(application.date, locale)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, yesNoTranslation)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {
@@ -238,7 +235,7 @@ const addNonAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.from,
+        text: translations[response.value.from],
       },
     },
     {
@@ -272,7 +269,7 @@ const addNonAdminResponse = async (
         text: translations.copyCorrespondence,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.copyToOtherParty },
+      value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
 };
