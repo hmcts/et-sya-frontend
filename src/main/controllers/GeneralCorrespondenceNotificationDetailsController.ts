@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
@@ -24,7 +24,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
         selectedCorrespondence.value.notificationState = HubLinkStatus.VIEWED;
         await updateSendNotificationState(req, logger);
       } catch (error) {
-        logger.info(error.message);
+        logger.error(error.message);
       }
     }
     req.session.documentDownloadPage = PageUrls.GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS;
@@ -36,7 +36,7 @@ export default class GeneralCorrespondenceNotificationDetailsController {
           await populateDocumentMetadata(it.value.uploadedDocument, req.session.user?.accessToken);
         } catch (err) {
           logger.error(err.message);
-          res.redirect('/not-found');
+          res.redirect(ErrorPages.NOT_FOUND);
         }
       }
     }

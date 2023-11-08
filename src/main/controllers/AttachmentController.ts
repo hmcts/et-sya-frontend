@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { ErrorPages } from '../definitions/constants';
 import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
@@ -20,7 +21,7 @@ export default class AttachmentController {
 
     if (!docId) {
       logger.warn('no docId provided');
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     if (
@@ -37,11 +38,11 @@ export default class AttachmentController {
         res.status(200).send(Buffer.from(document?.data, 'binary'));
       } catch (err) {
         logger.error(err.message);
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
     } else {
       logger.warn('bad request parameter');
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
   }
 }

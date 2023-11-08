@@ -83,7 +83,7 @@ export default class HearingDocumentUploadController {
           userCase.hearingDocument = fromApiFormatDocument(result.data);
         }
       } catch (error) {
-        logger.info(error);
+        logger.error(error);
         req.session.errors.push({ propertyName: 'hearingDocument', errorType: 'backEndError' });
         return res.redirect(pageUrl);
       }

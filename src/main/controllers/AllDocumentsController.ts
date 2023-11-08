@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { AllDocumentTypes, PageUrls, TranslationKeys } from '../definitions/constants';
+import { AllDocumentTypes, ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -37,7 +37,7 @@ export default class AllDocumentsController {
         await getDocumentsAdditionalInformation(docCollection, req.session.user?.accessToken);
       } catch (err) {
         logger.error(err.message);
-        res.redirect('/not-found');
+        res.redirect(ErrorPages.NOT_FOUND);
       }
 
       docCollection.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));

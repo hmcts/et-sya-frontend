@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
+import { Applicant, ErrorPages, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
@@ -24,7 +24,7 @@ export default class TribunalOrderOrRequestDetailsController {
     try {
       await updateSendNotificationState(req, logger);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
     }
 
     const redirectUrl =
@@ -42,7 +42,7 @@ export default class TribunalOrderOrRequestDetailsController {
       );
     } catch (err) {
       logger.error(err.message);
-      res.redirect('/not-found');
+      res.redirect(ErrorPages.NOT_FOUND);
     }
 
     const translations: AnyRecord = {

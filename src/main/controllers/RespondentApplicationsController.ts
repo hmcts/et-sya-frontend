@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { TranslationKeys } from '../definitions/constants';
+import { ErrorPages, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { fromApiFormat } from '../helper/ApiFormatter';
@@ -47,7 +47,7 @@ export default class RespondentApplicationsController {
       });
     } catch (error) {
       logger.error(error.message);
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
   };
 }

@@ -100,7 +100,7 @@ export default class ContactTheTribunalSelectedController {
           userCase.contactApplicationFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
-        logger.info(error);
+        logger.error(error);
         req.session.errors.push({ propertyName: 'contactApplicationFile', errorType: 'backEndError' });
       }
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));

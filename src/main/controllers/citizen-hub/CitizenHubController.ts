@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { PageUrls, TranslationKeys } from '../../definitions/constants';
+import { ErrorPages, PageUrls, TranslationKeys } from '../../definitions/constants';
 import {
   HubLinkNames,
   HubLinkStatus,
@@ -71,7 +71,7 @@ export default class CitizenHubController {
         );
       } catch (error) {
         logger.error(error.message);
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
     }
 

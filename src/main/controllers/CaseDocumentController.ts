@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { ErrorPages } from '../definitions/constants';
 import { getLogger } from '../logger';
 import { getUserCasesByLastModified } from '../services/CaseSelectionService';
 import { getCaseApi } from '../services/CaseService';
@@ -23,7 +24,7 @@ export default class CaseDocumentController {
     try {
       if (!req.params?.docId) {
         logger.info('bad request parameter');
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
 
       const docId = req.params.docId;
@@ -34,7 +35,7 @@ export default class CaseDocumentController {
       const details = allDocumentSets.find(doc => doc && doc.id === docId);
       if (!details) {
         logger.info('requested document not found in userCase');
-        return res.redirect('/not-found');
+        return res.redirect(ErrorPages.NOT_FOUND);
       }
 
       const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
@@ -54,7 +55,7 @@ export default class CaseDocumentController {
       setRespondentResponseHubLinkStatus(details, req, logger);
     } catch (err) {
       logger.error(err.message);
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
   }
 }

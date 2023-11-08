@@ -1,7 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../../definitions/appRequest';
-import { TranslationKeys, responseAcceptedDocTypes, responseRejectedDocTypes } from '../../definitions/constants';
+import {
+  ErrorPages,
+  TranslationKeys,
+  responseAcceptedDocTypes,
+  responseRejectedDocTypes,
+} from '../../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../definitions/hub';
 import { getLogger } from '../../logger';
 import { handleUpdateHubLinksStatuses } from '../helpers/CaseHelpers';
@@ -34,13 +39,13 @@ export default class CitizenHubDocumentController {
     const documents = mapParamToDoc(req?.params?.documentType);
     if (!documents) {
       logger.info('no documents found for ', req?.params?.documentType);
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
     try {
       await getDocumentDetails(documents, req.session.user?.accessToken);
     } catch (err) {
       logger.error(err.message);
-      return res.redirect('/not-found');
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
 
     let view = 'document-view';

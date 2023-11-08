@@ -104,7 +104,7 @@ export default class JudgmentDetailsController {
         try {
           await updateJudgmentNotificationState(selectedJudgment, req, logger);
         } catch (error) {
-          logger.info(error.message);
+          logger.error(error.message);
         }
       }
 

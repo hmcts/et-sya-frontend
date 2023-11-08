@@ -101,7 +101,7 @@ export default class RespondentSupportingMaterialController {
           userCase.supportingMaterialFile = fromApiFormatDocument(result.data);
         }
       } catch (error) {
-        logger.info(error);
+        logger.error(error);
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
       return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));

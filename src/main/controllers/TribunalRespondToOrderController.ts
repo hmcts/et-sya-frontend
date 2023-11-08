@@ -103,7 +103,7 @@ export default class TribunalRespondToOrderController {
     try {
       await updateSendNotificationState(req, logger);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
     }
 
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {

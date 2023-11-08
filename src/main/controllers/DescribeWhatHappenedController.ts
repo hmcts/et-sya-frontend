@@ -118,7 +118,7 @@ export default class DescribeWhatHappenedController {
         req.session.userCase.claimSummaryFile = fromApiFormatDocument(result.data);
       }
     } catch (error) {
-      logger.info(error);
+      logger.error(error);
       req.session.errors = [{ propertyName: 'claimSummaryFileName', errorType: 'backEndError' }];
     }
   }

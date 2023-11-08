@@ -1,18 +1,19 @@
 import SubmitTseController from '../../../main/controllers/SubmitTribunalCYAController';
 import TribunalResponseSubmitController from '../../../main/controllers/TribunalResponseSubmitController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
-import { PageUrls } from '../../../main/definitions/constants';
+import { ErrorPages, PageUrls } from '../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Tribunal response submit controller', () => {
-  it('should redirect to PageUrls.APPLICATION_COMPLETE', () => {
+  it('should redirect to PageUrls.APPLICATION_COMPLETE', async () => {
     const controller = new TribunalResponseSubmitController();
     const response = mockResponse();
     const request = mockRequest({});
+    request.session.userCase.hubLinksStatuses = new HubLinksStatuses();
     request.url = PageUrls.TRIBUNAL_RESPONSE_COMPLETED;
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.redirect).toHaveBeenCalledWith(PageUrls.TRIBUNAL_RESPONSE_COMPLETED);
   });
 
@@ -46,5 +47,14 @@ describe('Tribunal response submit controller', () => {
     expect(request.session.userCase.contactApplicationFile).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyYesOrNo).toStrictEqual(undefined);
     expect(request.session.userCase.copyToOtherPartyText).toStrictEqual(undefined);
+  });
+
+  it('should redirect to ErrorPages.NOT_FOUND', () => {
+    const controller = new TribunalResponseSubmitController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.url = PageUrls.TRIBUNAL_RESPONSE_COMPLETED;
+    controller.get(request, response);
+    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND);
   });
 });

@@ -14,7 +14,7 @@ export default class DownloadClaimController {
       res.setHeader('Content-Disposition', 'attachment; filename=submitted-claim.pdf');
       res.status(200).send(Buffer.from(pdf.data, 'binary'));
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
       res.redirect('not-found');
     }
   }
