@@ -1,7 +1,8 @@
 import ContactTheTribunalSelectedController from '../../../main/controllers/ContactTheTribunalSelectedController';
 import * as helper from '../../../main/controllers/helpers/CaseHelpers';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
-import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
+import { PageUrls, TranslationKeys, languages } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import contactTheTribunalSelectedRaw from '../../../main/resources/locales/en/translation/contact-the-tribunal-selected.json';
 import { mockFile } from '../mocks/mockFile';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -15,7 +16,9 @@ describe('Contact Application Controller', () => {
   const helperMock = jest.spyOn(helper, 'handleUploadDocument');
   const translationJsons = { ...contactTheTribunalSelectedRaw };
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+    mockLdClient.mockResolvedValue(true);
     jest.spyOn(helper, 'submitClaimantTse').mockImplementation(() => Promise.resolve());
     const uploadResponse: DocumentUploadResponse = {
       originalDocumentName: 'test.txt',
@@ -32,13 +35,13 @@ describe('Contact Application Controller', () => {
     });
   });
 
-  it('should render contact application page', () => {
+  it('should render contact application page', async () => {
     const controller = new ContactTheTribunalSelectedController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({ t }, translationJsons);
     request.params.selectedOption = 'withdraw';
 
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
   });
 
@@ -47,7 +50,7 @@ describe('Contact Application Controller', () => {
       const req = mockRequestWithTranslation({ body: { contactApplicationText: 'test' } }, translationJsons);
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
-      new ContactTheTribunalSelectedController().get(req, res);
+      await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
     });
 
@@ -60,7 +63,7 @@ describe('Contact Application Controller', () => {
       };
       req.params.selectedOption = 'withdraw';
       const res = mockResponse();
-      new ContactTheTribunalSelectedController().get(req, res);
+      await new ContactTheTribunalSelectedController().get(req, res);
       expect(res.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_CONTACT_SELECTED, expect.anything());
     });
 
@@ -69,8 +72,8 @@ describe('Contact Application Controller', () => {
       req.params.selectedOption = 'not-allowed';
       const res = mockResponse();
 
-      new ContactTheTribunalSelectedController().get(req, res);
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL);
+      await new ContactTheTribunalSelectedController().get(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL + languages.ENGLISH_URL_PARAMETER);
     });
   });
 
@@ -133,7 +136,7 @@ describe('Contact Application Controller', () => {
       });
     });
 
-    it('should redirect to copy-to-other-party page when non-type-c application', async () => {
+    it('should redirect to copy-to-other-party page when non-type-c application - in English language', async () => {
       const req = mockRequest({
         body: {
           upload: false,
@@ -144,14 +147,34 @@ describe('Contact Application Controller', () => {
           contactApplicationType: 'withdraw',
         },
       });
+      req.session.lang = languages.ENGLISH;
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
     });
 
-    it('should redirect to CYA page when type-c application', async () => {
+    it('should redirect to copy-to-other-party page when non-type-c application - in Welsh language', async () => {
+      const req = mockRequest({
+        body: {
+          upload: false,
+          contactApplicationText: 'test',
+          contactApplicationFile: mockFile,
+        },
+        userCase: {
+          contactApplicationType: 'withdraw',
+        },
+      });
+      req.session.lang = languages.WELSH;
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.WELSH_URL_PARAMETER);
+    });
+
+    it('should redirect to CYA page when type-c application - English language', async () => {
       const req = mockRequest({
         body: {
           upload: false,
@@ -162,11 +185,31 @@ describe('Contact Application Controller', () => {
           contactApplicationType: 'witness',
         },
       });
+      req.session.lang = languages.ENGLISH;
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA);
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.ENGLISH_URL_PARAMETER);
     });
+  });
+
+  it('should redirect to CYA page when type-c application - Welsh language', async () => {
+    const req = mockRequest({
+      body: {
+        upload: false,
+        contactApplicationText: 'test',
+        contactApplicationFile: mockFile,
+      },
+      userCase: {
+        contactApplicationType: 'witness',
+      },
+    });
+    req.session.lang = languages.WELSH;
+    const res = mockResponse();
+
+    await new ContactTheTribunalSelectedController().post(req, res);
+
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.CONTACT_THE_TRIBUNAL_CYA + languages.WELSH_URL_PARAMETER);
   });
 });
