@@ -53,5 +53,7 @@
       "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
       "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
-  }
+  },
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }
