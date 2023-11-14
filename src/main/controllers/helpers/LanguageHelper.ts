@@ -27,7 +27,7 @@ export const setCheckAnswersLanguage = (req: AppRequest, sessionUrl: string): st
   return sessionUrl + languages.ENGLISH_URL_PARAMETER;
 };
 
-// Use the session language to set post url language param in describe what happened controller as the language param doesn't get appended if there's a csrf token in the url
+// Use the session language to set post url language param if there's a csrf token in the url
 export const setUrlLanguageFromSessionLanguage = (req: AppRequest, redirectUrl: string): string => {
   if (req.session.lang === languages.WELSH) {
     if (!redirectUrl.includes(languages.WELSH_URL_PARAMETER)) {
