@@ -1,35 +1,67 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Tynnu fy hawliad yn ôl",
+  "applicationType": "Tynnu fy hawliad yn ôl",
+  "applicationTitle": "Rwyf eisiau tynnu’r cyfan neu ran o’m hawliad yn ôl",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon pan fyddwch wedi cyrraedd setliad neu ddim eisiau parhau gyda’r cyfan neu ran o’ch hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Gallwch dynnu eich hawliad cyfan yn ôl neu ddweud wrthym pa rannau rydych eisiau eu tynnu’n ôl."
+    },
+    { "type": "paragraph", "text": "Daw hyn â’ch hawliad neu ran ohono i ben." },
+    { "type": "paragraph", "text": "Gallwch dynnu’ch hawliad yn ôl ar unrhyw adeg cyn neu yn ystod gwrandawiad." },
+    {
+      "type": "paragraph",
+      "text": "Os ydych chi’n tynnu’ch hawliad yn ôl oherwydd setliad, gwnewch yn siŵr bod gennych chi'r setliad yn ysgrifenedig."
+    },
+
+    { "type": "bold-paragraph", "text": "Tynnu’n ôl a dileu" },
+    {
+      "type": "paragraph",
+      "text": "Unwaith y byddwch yn dweud wrth y tribiwnlys eich bod eisiau tynnu eich hawliad yn ôl, fel arfer bydd y tribiwnlys yn cyhoeddi dyfarniad yn dileu’r hawliad neu ran o’r hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Mae dyfarniad dileu yn eich atal rhag gwneud yr hawliad hwnnw yn erbyn yr un atebwyr yn y dyfodol."
+    },
+    {
+      "type": "paragraph",
+      "text": "Bydd y tribiwnlys yn defnyddio Rheol 52 o Reolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth i benderfynu a yw dyfarniad dileu yn cael ei gyhoeddi yn dilyn tynnu hawliad yn ôl."
+    },
+
+    { "type": "bold-paragraph", "text": "Rheol 52 Rheolau Trefniadaeth y Tribiwnlysoedd Cyflogaeth" },
+    {
+      "type": "paragraph",
+      "text": "Mae Rheol 52 yn nodi, pan fo hawliad, neu ran ohono, wedi’i dynnu’n ôl o dan Reol 51, bydd y tribiwnlys yn cyhoeddi dyfarniad yn ei ddileu (sy’n golygu na all yr hawlydd ddechrau hawliad pellach yn erbyn yr atebydd sy’n codi’r un cwyn, neu gŵyn tebyg) oni bai:"
+    },
+    {
+      "type": "list",
+      "items": [
+        "mae’r hawlydd wedi mynegi ar adeg y tynnu’n ôl ddymuniad i gadw’r hawl i godi hawliad pellach ac mae’r tribiwnlys yn fodlon y byddai rheswm dilys dros wneud hynny"
+      ]
+    },
+    { "type": "paragraph", "text": "neu" },
+    { "type": "list", "items": ["mae’r tribiwnlys o’r farn na fyddai cyhoeddi dyfarniad o’r fath er budd cyfiawnder"] },
+
+    { "type": "paragraph", "text": "Bydd tynnu’n ôl a dileu drwy'r gwasanaeth hwn yn derfynol oni bai:" },
+    {
+      "type": "list",
+      "items": [
+        "bod y tribiwnlys yn cysylltu â chi yn gofyn am fwy o wybodaeth",
+        "rydych wedi rhoi rheswm derbyniol pam na ddylid dileu’r hawliad"
+      ]
+    },
+
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "pa rannau o’ch hawliad yr ydych eisiau eu tynnu’n ôl a’u dileu",
+        "os nad ydych eisiau i’ch hawliad (neu ran ohono) gael ei ddileu, rhaid i chi egluro pam"
+      ]
+    }
   ]
 }

@@ -24,20 +24,33 @@
     ]
   }) if errorMessage.length > 0 }}
 
-  <div class="govuk-grid-row">
+   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-hint">{{ applicationType }}</span>
       <h2 class="govuk-heading-xl govuk-!-margin-bottom-4 ">{{ applicationTitle }}</h2>
-      {{ getContentSafe(content | join) }}
-      <p class="govuk-body-m govuk-!-font-weight-bold">{{ genericGuidance }}</p>
+
+      {% for item in content %}
+        {% if item.type == 'paragraph' %}
+          <p class="govuk-body">{{ item.text }}</p>
+        {% elif item.type == 'bold-paragraph' %}
+          <p class="govuk-body-m govuk-!-font-weight-bold">{{ item.text }}</p>
+        {% elif item.type == 'list' %}
+          <ul class="govuk-list govuk-list--bullet">
+            {% for listItem in item.items %}
+              <li>{{ listItem }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+        <p class="govuk-body-m govuk-!-font-weight-bold">{{ genericGuidance }}</p>
       <p class="govuk-body">{{ subTitle }}</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>{{ genericGuidanceItem1 }}</li>
         <li>{{ genericGuidanceItem2 }}</li>
         <li>{{ genericGuidanceItem3 }}</li>
       </ul>
-      <span class="govuk-hint">{{ contactTemplateText }}</span>
-      {% include "form/multipartForm.njk"%}
+      
+      {% include "form/multipartForm.njk" %}
     </div>
     <div class="govuk-grid-column-one-third">
       <p class="govuk-body">
@@ -51,7 +64,7 @@
       {% endset %}
 
       {{ govukDetails({
-        summaryText: "Contact",
+        summaryText: contact,
         html: sideBarContent
       }) }}
     </div>
