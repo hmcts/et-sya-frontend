@@ -25,7 +25,7 @@ export default class ContactTheTribunalController {
     };
 
     const languageParam = getLanguageParam(req.url);
-    let applicationsToDisplay = [...applications];
+    let applicationsToDisplay;
 
     // if bundles not enabled or no hearings in future then remove documents from displayed application types
     const allowBundlesFlow =
@@ -33,6 +33,8 @@ export default class ContactTheTribunalController {
 
     if (!allowBundlesFlow) {
       applicationsToDisplay = applications.filter(app => app !== DOCUMENTS);
+    } else {
+      applicationsToDisplay = applications;
     }
 
     const applicationsAccordionItems = applicationsToDisplay.map(application => {
