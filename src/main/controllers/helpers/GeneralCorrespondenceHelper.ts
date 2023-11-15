@@ -3,17 +3,19 @@ import { NotificationSubjects, PageUrls } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getCorrespondenceNotificationDetails = (
   translations: AnyRecord,
-  item: SendNotificationTypeItem
+  item: SendNotificationTypeItem,
+  url: string
 ): SummaryListRow[] => {
   const generalCorrespondenceNotification = [];
   generalCorrespondenceNotification.push(
-    addSummaryRow(translations.dateSent, item.value.date),
+    addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
     addSummaryRow(translations.sentBy, translations.tribunal),
     addSummaryRow(translations.addInfo, item.value.sendNotificationAdditionalInfo)
   );

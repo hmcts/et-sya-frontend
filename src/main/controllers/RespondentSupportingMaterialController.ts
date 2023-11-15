@@ -14,6 +14,7 @@ import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/Er
 import { getPageContent } from './helpers/FormHelpers';
 import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
+import { returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -90,7 +91,7 @@ export default class RespondentSupportingMaterialController {
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
-      return res.redirect(supportingMaterialUrl);
+      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
 
     if (req.body.upload) {
@@ -103,7 +104,7 @@ export default class RespondentSupportingMaterialController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
-      return res.redirect(supportingMaterialUrl);
+      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
     req.session.errors = [];
 

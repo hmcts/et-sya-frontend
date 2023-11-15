@@ -115,5 +115,6 @@
   "addressPostcodeSelectTitle": "Address postcode select",
   "respondentPostcodeEnterTitle": "Respondent postcode enter",
   "respondentPostcodeSelectTitle": "Respondent postcode select",
-  "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details."
+  "updateDraftErrorMessage": "There is an error while updating your case. Please click this error message to go back to steps to making your claim and re-enter the details.",
+  "beta": "beta"
 }

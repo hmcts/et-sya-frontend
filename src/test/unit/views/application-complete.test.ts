@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { PageUrls } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const applicationCompleteJsonRaw = fs.readFileSync(
@@ -34,6 +35,8 @@ const expectedDateString = ' <b>' + dateString + '</b> ';
 let htmlRes: Document;
 
 describe('Application complete page - Rule 92 answer Yes', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
@@ -82,6 +85,8 @@ describe('Application complete page - Rule 92 answer Yes', () => {
 });
 
 describe('Application complete page - Rule 92 answer No', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({

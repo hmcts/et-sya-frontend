@@ -12,6 +12,7 @@ export default [
   'strike',
   'reconsider-judgement',
   'other',
+  'documents',
 ];
 
 export const applicationTypes = {

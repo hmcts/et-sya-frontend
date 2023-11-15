@@ -1,0 +1,24 @@
+{
+  "title": "Welsh translation required",
+  "h1": "Welsh translation required",
+  "headingCaption": "Welsh translation required",
+  "Question1": "Welsh translation required",
+  "Question2": "Welsh translation required",
+  "Question2Radio1": "Welsh translation required",
+  "Question2Radio2": "Welsh translation required",
+  "Question3": "Welsh translation required",
+  "Question3Radio1": "Welsh translation required",
+  "Question3Radio2": "Welsh translation required",
+  "Question3Radio3": "Welsh translation required",
+  "errors": {
+    "hearingDocumentsAreFor": {
+      "required": "Welsh translation required"
+    },
+    "whoseHearingDocumentsAreYouUploading": {
+      "required": "Welsh translation required"
+    },
+    "whatAreTheseDocuments": {
+      "required": "Welsh translation required"
+    }
+  }
+}

@@ -1,18 +1,30 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Newid fy manylion personol",
+  "applicationType": "Newid fy manylion personol",
+  "applicationTitle": "Rwyf eisiau newid fy manylion personol",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i wneud cais i newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os byddwch yn newid eich cyfeiriad post neu eich cyfeiriad e-bost, byddwn yn anfon unrhyw lythyrau i’r cyfeiriad newydd."
+    },
+    {
+      "type": "paragraph",
+      "text": "Os byddwch yn newid eich rhif ffôn, byddwn yn cysylltu â chi ar y rhif newydd os bydd gennym unrhyw gwestiynau am eich hawliad."
+    },
+    { "type": "bold-paragraph", "text": "Manylion y gellid gwneud cais i’w newid:" },
+    {
+      "type": "list",
+      "items": [
+        "enw",
+        "rhyw a’r teitl sydd orau gennych",
+        "cyfeiriad cyswllt neu gyfeiriad cartref",
+        "rhif ffôn",
+        "cyfeiriad e-bost"
+      ]
+    }
   ]
 }

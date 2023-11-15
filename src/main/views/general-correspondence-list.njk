@@ -29,7 +29,7 @@
           {% for correspondence in correspondences %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                {{ correspondence.value.date }}
+                {{ dateStringToLocale(correspondence.value.date) }}
               </td>
               <td class="govuk-table__cell">
                 <a href="{{ getContent(correspondence.redirectUrl) }}" class="govuk-link">
@@ -61,7 +61,7 @@
       {% endset %}
 
       {{ govukDetails({
-        summaryText: "Contact",
+        summaryText: contact,
         html: sideBarContent
       }) }}
     </div>

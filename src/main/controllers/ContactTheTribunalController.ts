@@ -8,6 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 /**
  * Controller for contact-the-tribunal page with a list of applications to start
@@ -19,6 +20,7 @@ export default class ContactTheTribunalController {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
     };
 
+    const languageParam = getLanguageParam(req.url);
     const applicationsAccordionItems = applications.map(application => {
       const label = translations.sections[application].label;
       return {
@@ -26,15 +28,11 @@ export default class ContactTheTribunalController {
           text: label,
         },
         content: {
-          html:
-            "<p class='govuk-body'>" +
-            translations.sections[application].body +
-            '</p> <br>' +
-            "<a class='govuk-link govuk-body' href='/contact-the-tribunal/" +
-            application +
-            "'>" +
-            label +
-            '</a>',
+          bodyText: translations.sections[application].body,
+          link: {
+            href: `/contact-the-tribunal/${application}${languageParam}`,
+            text: label,
+          },
         },
       };
     });

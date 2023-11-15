@@ -1,4 +1,7 @@
-import { Response } from 'express';
+import * as urlModule from 'url';
+
+import { Request, Response } from 'express';
+import { LoggerInstance } from 'winston';
 
 import { AppRequest } from '../../definitions/appRequest';
 import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
@@ -55,4 +58,20 @@ export const getLanguageParam = (url: string): string => {
     return languages.WELSH_URL_PARAMETER;
   }
   return languages.ENGLISH_URL_PARAMETER;
+};
+
+export const returnSafeRedirectUrl = (req: Request, redirectUrl: string, logger: LoggerInstance): string => {
+  const parsedUrl = getParsedUrl(redirectUrl);
+  if (parsedUrl.host === null) {
+    logger.info('No change to host in request. Redirect is safe');
+  } else if (parsedUrl.host !== req.headers.host) {
+    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
+    logger.error(`Host ${parsedUrl.host} did not match to ${req.headers.host}`);
+    return PageUrls.HOME;
+  }
+  return redirectUrl;
+};
+
+export const getParsedUrl = (redirectUrl: string): urlModule.UrlWithStringQuery => {
+  return urlModule.parse(redirectUrl);
 };

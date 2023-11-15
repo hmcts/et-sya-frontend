@@ -11,23 +11,25 @@ import { AnyRecord } from '../../definitions/util-types';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
+import { returnTranslatedDateString } from './DateHelper';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  downloadLink: string
+  downloadLink: string,
+  locale: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
-    addSummaryRow(translations.requestDate, application.date),
+    addSummaryRow(translations.applicant, translations[application.applicant]),
+    addSummaryRow(translations.requestDate, returnTranslatedDateString(application.date, locale)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {
@@ -233,7 +235,7 @@ const addNonAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.from,
+        text: translations[response.value.from],
       },
     },
     {
@@ -267,7 +269,7 @@ const addNonAdminResponse = async (
         text: translations.copyCorrespondence,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.copyToOtherParty },
+      value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
 };
