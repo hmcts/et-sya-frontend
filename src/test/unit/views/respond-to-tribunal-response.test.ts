@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const textJSONRaw = JSON.parse(
@@ -23,6 +24,8 @@ const responseHint = 'govuk-hint';
 
 let htmlRes: Document;
 describe('Respond to Tribunal response page', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({

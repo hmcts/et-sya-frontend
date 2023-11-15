@@ -23,16 +23,13 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
-  const yesNoTranslation: string =
-    application.copyToOtherPartyYesOrNo === YesOrNo.YES ? translations.yes : translations.no;
-
   rows.push(
-    addSummaryRow(translations.applicant, application.applicant),
+    addSummaryRow(translations.applicant, translations[application.applicant]),
     addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, yesNoTranslation)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {
@@ -238,7 +235,7 @@ const addNonAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.from,
+        text: translations[response.value.from],
       },
     },
     {
@@ -272,7 +269,7 @@ const addNonAdminResponse = async (
         text: translations.copyCorrespondence,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.copyToOtherParty },
+      value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
 };

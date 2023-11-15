@@ -1,16 +1,22 @@
 {
-  "title": "Welsh Translation required",
-  "applicationType": "Welsh Translation required",
-  "applicationTitle": "Welsh Translation required",
+  "title": "Gohirio gwrandawiad",
+  "applicationType": "Gohirio gwrandawiad",
+  "applicationTitle": "Gwneud cais i ohirio fy ngwrandawiad",
   "content": [
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required",
-    "Welsh Translation required"
+    {
+      "type": "paragraph",
+      "text": "Defnyddiwch y ffurflen hon i ofyn i’r tribiwnlys ohirio eich gwrandawiad i ddyddiad diweddarach."
+    },
+    { "type": "bold-paragraph", "text": "Manylion i’w cynnwys yn eich cais:" },
+    {
+      "type": "list",
+      "items": [
+        "pa wrandawiad ydych chi’n gofyn iddo gael ei ohirio. Os yw’r gwrandawiad rydych chi’n gofyn iddo gael ei ohirio wedi’i restru dros sawl diwrnod, dywedwch wrthym pa ddiwrnod neu ddiwrnodau rydych chi eisiau gohirio",
+        "y rheswm dros pam rydych chi’n gofyn iddo gael ei ohirio. Bydd y tribiwnlys yn defnyddio’r wybodaeth hon i benderfynu a ddylid caniatáu eich cais ai peidio",
+        "unrhyw ddogfennau hanfodol i gefnogi eich cais. Er enghraifft, efallai y byddwch eisiau llwytho nodyn meddygol neu ohebiaeth gan dyst na all fod yn bresennol",
+        "dyddiadau’r wythnos o fewn y 3 mis nesaf pan na allwch chi, eich tystion neu gynrychiolwyr fynychu gwrandawiad wedi’i aildrefnu",
+        "y rhesymau dros pam na allwch fod yn bresennol ar y dyddiadau hynny"
+      ]
+    }
   ]
 }

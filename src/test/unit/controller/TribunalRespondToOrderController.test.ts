@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import TribunalRespondToOrderController from '../../../main/controllers/TribunalRespondToOrderController';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { PageUrls, TranslationKeys } from '../../../main/definitions/constants';
 import common from '../../../main/resources/locales/en/translation/common.json';
@@ -8,6 +9,7 @@ import respondJsonRaw from '../../../main/resources/locales/en/translation/tribu
 import * as CaseService from '../../../main/services/CaseService';
 import { mockRequest, mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { safeUrlMock } from '../mocks/mockUrl';
 import mockUserCaseComplete, { selectedRequestOrOrder } from '../mocks/mockUserCaseComplete';
 
 jest.mock('axios');
@@ -22,6 +24,9 @@ describe('Tribunal Respond to Order Controller', () => {
     respondToTribunalOrder: {},
     common: {},
   };
+
+  const urlMock = safeUrlMock;
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
 
   it('should render the Respond to Order page', async () => {
     const translationJsons = { ...respondJsonRaw, ...common };
