@@ -1,5 +1,5 @@
 import { AppRequest } from '../../definitions/appRequest';
-import { Parties, languages } from '../../definitions/constants';
+import { languages } from '../../definitions/constants';
 
 export const setUrlLanguage = (req: AppRequest, redirectUrl: string): string => {
   if (req.url?.includes(languages.WELSH_URL_PARAMETER)) {
@@ -40,16 +40,4 @@ export const setUrlLanguageFromSessionLanguage = (req: AppRequest, redirectUrl: 
     }
   }
   return redirectUrl;
-};
-
-export const setSentToLanguage = (languageParam: string, sentTo: string): string => {
-  const welshTranslations: { [key: string]: string } = {
-    [Parties.BOTH_PARTIES]: Parties.BOTH_PARTIES_WELSH,
-    [Parties.CLAIMANT_ONLY]: Parties.CLAIMANT_ONLY_WELSH,
-    [Parties.RESPONDENT_ONLY]: Parties.RESPONDENT_ONLY_WELSH,
-  };
-
-  return languageParam === languages.WELSH_URL_PARAMETER
-    ? welshTranslations[sentTo as keyof typeof welshTranslations] || sentTo
-    : sentTo;
 };

@@ -6,5 +6,8 @@
   "description": "Description",
   "document": "Document",
   "sentTo": "Sent to",
-  "tribunal": "Tribunal"
+  "tribunal": "Tribunal",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only",
+  "Respondent only": "Respondent only"
 }
