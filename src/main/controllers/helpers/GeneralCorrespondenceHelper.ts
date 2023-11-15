@@ -6,6 +6,7 @@ import { AnyRecord } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink } from './DocumentHelpers';
+import { setSentToLanguage } from './LanguageHelper';
 import { getLanguageParam } from './RouterHelpers';
 
 export const getCorrespondenceNotificationDetails = (
@@ -13,6 +14,7 @@ export const getCorrespondenceNotificationDetails = (
   item: SendNotificationTypeItem,
   url: string
 ): SummaryListRow[] => {
+  const languageParam = getLanguageParam(url);
   const generalCorrespondenceNotification = [];
   generalCorrespondenceNotification.push(
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
@@ -30,7 +32,8 @@ export const getCorrespondenceNotificationDetails = (
     });
   }
 
-  generalCorrespondenceNotification.push(addSummaryRow(translations.sentTo, item.value.sendNotificationNotify));
+  const translatedSentTo = setSentToLanguage(languageParam, item.value.sendNotificationNotify);
+  generalCorrespondenceNotification.push(addSummaryRow(translations.sentTo, translatedSentTo));
 
   return generalCorrespondenceNotification;
 };
