@@ -13,7 +13,8 @@ const INVALID_CSRF_CODE = 'EBADCSRFTOKEN';
 export default class CSRFToken {
   public enableFor(app: Application): void {
     app.use(csrf, (req, res, next) => {
-      res.locals.csrfToken = req.csrfToken();
+      const token = csrf.create();
+      res.locals.csrfToken = token;
       next();
     });
 

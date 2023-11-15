@@ -25,7 +25,7 @@ export default class JobTitleController {
         label: (l: AnyRecord): string => l.jobTitle,
         hint: (l: AnyRecord): string => l.hint,
         attributes: {
-          autocomplete: 'organization-title',
+          autocomplete: 'organization',
         },
         validator: isJobTitleValid,
       },
