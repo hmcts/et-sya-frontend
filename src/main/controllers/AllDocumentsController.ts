@@ -9,6 +9,7 @@ import { getLogger } from '../logger';
 import { createSortedDocumentsMap, prepareTableRows } from './helpers/AllDocumentsHelper';
 import { createDownloadLink, getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('AllDocumentsController');
 export default class AllDocumentsController {
@@ -16,6 +17,7 @@ export default class AllDocumentsController {
     const userCase = req.session?.userCase;
     const docCollection = userCase.documentCollection;
     req.session.documentDownloadPage = PageUrls.ALL_DOCUMENTS;
+    const languageParam = getLanguageParam(req.url);
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
@@ -53,6 +55,7 @@ export default class AllDocumentsController {
       translations,
       tribunalDocuments,
       acasClaimantRespondentTableRows,
+      languageParam,
     });
   };
 }
