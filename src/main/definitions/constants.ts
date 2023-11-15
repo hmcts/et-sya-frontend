@@ -508,6 +508,9 @@ export const Parties = {
   BOTH_PARTIES: 'Both parties',
   CLAIMANT_ONLY: 'Claimant only',
   RESPONDENT_ONLY: 'Respondent only',
+  BOTH_PARTIES_WELSH: 'Y ddau barti',
+  CLAIMANT_ONLY_WELSH: 'Hawlydd yn unig',
+  RESPONDENT_ONLY_WELSH: 'Atebydd yn unig',
 } as const;
 
 export const ResponseRequired = {
