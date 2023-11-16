@@ -57,7 +57,7 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
 };
 
 export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
-  // if there is a short desccription and a translation exists, use it, otherwise leave blank
+  // if there is a short description and a translation exists, use it, otherwise leave blank
   return {
     date: item.value.uploadedDocument.createdOn,
     description:
