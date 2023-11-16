@@ -19,6 +19,7 @@ export default class PrepareDocumentsController {
 
     res.render(TranslationKeys.PREPARE_DOCUMENTS, {
       ...req.t(TranslationKeys.SIDEBAR_CONTACT_US, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.PREPARE_DOCUMENTS, { returnObjects: true }),
       redirectUrl,
       hideContactUs: true,
