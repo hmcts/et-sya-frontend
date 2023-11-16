@@ -31,7 +31,10 @@ export const getCorrespondenceNotificationDetails = (
   }
 
   generalCorrespondenceNotification.push(
-    addSummaryRow(translations.sentTo, translations[item.value.sendNotificationNotify])
+    addSummaryRow(
+      translations.sentTo,
+      translations[item.value.sendNotificationNotify] || item.value.sendNotificationNotify
+    )
   );
 
   return generalCorrespondenceNotification;
