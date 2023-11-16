@@ -48,7 +48,10 @@ describe('Prepare documents page', () => {
   });
 
   it('should display Cancel link', () => {
-    const cancel = htmlRes.getElementsByClassName(link);
-    expect(cancel[3].innerHTML).contains('Cancel', 'Could not find the link');
+    const allLinks = htmlRes.getElementsByClassName(link);
+    const actual = Array.prototype.slice.call(allLinks).map((element: any) => {
+      return element.innerHTML;
+    });
+    expect(actual.some((el: string) => el === 'Cancel')).to.be.true;
   });
 });

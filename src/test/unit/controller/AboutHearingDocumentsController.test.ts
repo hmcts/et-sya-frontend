@@ -1,133 +1,15 @@
 import AboutHearingDocumentsController from '../../../main/controllers/AboutHearingDocumentsController';
 import aboutHearingDocumentsJson from '../../../main/resources/locales/en/translation/about-hearing-documents.json';
+import { mockHearingCollectionFutureDates } from '../mocks/mockHearing';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-const futureDate1 = new Date();
-const futureDate2 = new Date();
-futureDate1.setDate(new Date().getDate() + 30);
-futureDate2.setDate(new Date().getDate() + 60);
-
-const hearingCollection = [
-  {
-    id: '12345abc',
-    value: {
-      Hearing_type: 'Hearing',
-      Hearing_notes: 'notes',
-      Hearing_stage: 'Stage 1',
-      Hearing_venue: {
-        value: {
-          code: 'RCJ',
-          label: 'RCJ',
-        },
-        list_items: [
-          {
-            code: 'Field House',
-            label: 'Field House',
-          },
-          {
-            code: 'Fox Court rm 1',
-            label: 'Fox Court rm 1',
-          },
-          {
-            code: 'London Central',
-            label: 'London Central',
-          },
-          {
-            code: 'RCJ',
-            label: 'RCJ',
-          },
-        ],
-        selectedCode: 'RCJ',
-        selectedLabel: 'RCJ',
-      },
-      hearingFormat: ['In person', 'Telephone', 'Video'],
-      hearingNumber: '3333',
-      hearingSitAlone: 'Sit Alone',
-      judicialMediation: 'Yes',
-      hearingEstLengthNum: 22,
-      hearingPublicPrivate: 'Public',
-      hearingDateCollection: [
-        {
-          id: '3890feaa-ad4b-4822-9040-3bc09279450a',
-          value: {
-            listedDate: futureDate1,
-            Hearing_status: 'Listed',
-            hearingVenueDay: {
-              value: {
-                code: 'Field House',
-                label: 'Field House',
-              },
-              list_items: [
-                {
-                  code: 'Field House',
-                  label: 'Field House',
-                },
-                {
-                  code: 'Fox Court rm 1',
-                  label: 'Fox Court rm 1',
-                },
-                {
-                  code: 'London Central',
-                  label: 'London Central',
-                },
-                {
-                  code: 'RCJ',
-                  label: 'RCJ',
-                },
-              ],
-              selectedCode: 'Field House',
-              selectedLabel: 'Field House',
-            },
-            hearingTimingStart: new Date(futureDate1),
-            hearingTimingFinish: new Date(futureDate1),
-          },
-        },
-        {
-          id: 'asdfasdfasfa',
-          value: {
-            listedDate: new Date(futureDate2),
-            Hearing_status: 'Listed',
-            hearingVenueDay: {
-              value: {
-                code: 'RCJ',
-                label: 'RCJ',
-              },
-              list_items: [
-                {
-                  code: 'Field House',
-                  label: 'Field House',
-                },
-                {
-                  code: 'Fox Court rm 1',
-                  label: 'Fox Court rm 1',
-                },
-                {
-                  code: 'London Central',
-                  label: 'London Central',
-                },
-                {
-                  code: 'RCJ',
-                  label: 'RCJ',
-                },
-              ],
-              selectedCode: 'RCJ',
-              selectedLabel: 'RCJ',
-            },
-            hearingTimingStart: new Date(futureDate2),
-            hearingTimingFinish: new Date(futureDate2),
-          },
-        },
-      ],
-    },
-  },
-];
 describe('About Hearing Documents Controller', () => {
   it('should render the About Hearing Documents page', () => {
     const controller = new AboutHearingDocumentsController();
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, aboutHearingDocumentsJson);
-    request.session.userCase.hearingCollection = hearingCollection;
+    request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
     controller.get(request, response);
     expect(response.render).toHaveBeenCalledWith('about-hearing-documents', expect.anything());
   });
@@ -140,7 +22,7 @@ describe('About Hearing Documents Controller', () => {
     };
     const response = mockResponse();
     const request = mockRequestWithTranslation({ body }, aboutHearingDocumentsJson);
-    request.session.userCase.hearingCollection = hearingCollection;
+    request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
 
     const controller = new AboutHearingDocumentsController();
 
@@ -155,7 +37,7 @@ describe('About Hearing Documents Controller', () => {
     };
     const response = mockResponse();
     const request = mockRequestWithTranslation({ body }, aboutHearingDocumentsJson);
-    request.session.userCase.hearingCollection = hearingCollection;
+    request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
 
     const controller = new AboutHearingDocumentsController();
 
@@ -173,7 +55,7 @@ describe('About Hearing Documents Controller', () => {
     };
     const response = mockResponse();
     const request = mockRequestWithTranslation({ body }, aboutHearingDocumentsJson);
-    request.session.userCase.hearingCollection = hearingCollection;
+    request.session.userCase.hearingCollection = mockHearingCollectionFutureDates;
 
     const controller = new AboutHearingDocumentsController();
 
