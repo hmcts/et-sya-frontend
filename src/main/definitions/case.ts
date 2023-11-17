@@ -1,3 +1,4 @@
+import { HearingModel } from './api/caseApiResponse';
 import { DocumentTypeItem } from './complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, TseRespondTypeItem } from './complexTypes/genericTseApplicationTypeItem';
 import { PseResponseType, SendNotificationTypeItem } from './complexTypes/sendNotificationTypeItem';
@@ -191,9 +192,17 @@ export interface Case {
   hasSupportingMaterial?: YesOrNo;
   supportingMaterialFile?: Document;
   sendNotificationCollection?: SendNotificationTypeItem[];
+  bundlesRespondentAgreedDocWith?: AgreedDocuments;
+  bundlesRespondentAgreedDocWithBut?: string;
+  bundlesRespondentAgreedDocWithNo?: string;
 
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
+  hearingCollection?: HearingModel[];
+  hearingDocumentsAreFor?: HearingModel['id'];
+  whoseHearingDocumentsAreYouUploading?: WhoseHearingDocument;
+  whatAreTheseDocuments?: WhatAreTheHearingDocuments;
+  hearingDocument?: Document;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
@@ -208,6 +217,7 @@ export interface Case {
   isRespondingToRequestOrOrder?: boolean;
   updateDraftCaseError?: string;
 }
+
 export const enum StillWorking {
   WORKING = 'Working',
   NOTICE = 'Notice',
@@ -304,6 +314,23 @@ export const enum HearingPreference {
   VIDEO = 'Video',
   PHONE = 'Phone',
   NEITHER = 'Neither',
+}
+
+export const enum AgreedDocuments {
+  YES = 'Yes',
+  AGREEDBUT = 'We have agreed but there are some disputed documents',
+  NOTAGREED = 'No, we have not agreed and I want to provide my own documents',
+}
+
+export const enum WhoseHearingDocument {
+  MINE = 'mine',
+  BOTH_PARTIES = 'bothParties',
+}
+
+export const enum WhatAreTheHearingDocuments {
+  ALL = 'allHearingDocs',
+  SUPPLEMENTARY = 'supplementary',
+  WITNESS_STATEMENTS = 'witnessStatements',
 }
 
 export interface Document {

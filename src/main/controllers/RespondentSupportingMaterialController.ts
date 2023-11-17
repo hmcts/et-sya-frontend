@@ -16,6 +16,7 @@ import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageH
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -92,7 +93,7 @@ export default class RespondentSupportingMaterialController {
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
-      return res.redirect(supportingMaterialUrl);
+      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
 
     if (req.body.upload) {
@@ -106,6 +107,7 @@ export default class RespondentSupportingMaterialController {
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
       return res.redirect(supportingMaterialUrl + getLanguageParam(req.url));
+//      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
     req.session.errors = [];
 

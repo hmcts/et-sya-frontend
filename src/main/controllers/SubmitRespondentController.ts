@@ -1,12 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { clearTseFields, handleUpdateHubLinksStatuses, respondToApplication } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { YesOrNo } from '../definitions/case';
 
 const logger = getLogger('SubmitRespondentController');
 

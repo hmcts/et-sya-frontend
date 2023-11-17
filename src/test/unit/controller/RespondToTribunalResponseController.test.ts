@@ -1,20 +1,25 @@
 import axios from 'axios';
 
 import RespondToTribunalResponseController from '../../../main/controllers/RespondToTribunalResponseController';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { CaseWithId, YesOrNo } from '../../../main/definitions/case';
 import { ErrorPages, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import common from '../../../main/resources/locales/en/translation/common.json';
 import respondJsonRaw from '../../../main/resources/locales/en/translation/respond-to-application.json';
 import * as CaseService from '../../../main/services/CaseService';
 import { mockGenericTseCollection } from '../mocks/mockGenericTseCollection';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { safeUrlMock } from '../mocks/mockUrl';
 
 jest.mock('axios');
 const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
 const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
+const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+mockLdClient.mockResolvedValue(true);
 
 describe('Respond to tribunal response Controller', () => {
   const translationJsons = { ...respondJsonRaw, ...common };
@@ -22,6 +27,9 @@ describe('Respond to tribunal response Controller', () => {
     'respond-to-application': {},
     common: {},
   };
+
+  const urlMock = safeUrlMock;
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
 
   it('should render the Respond to Tribunal response page for respondent application', async () => {
     const controller = new RespondToTribunalResponseController();

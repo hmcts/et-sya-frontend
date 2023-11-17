@@ -104,12 +104,16 @@ export const TranslationKeys = {
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: 'tribunal-order-or-request-details',
   ALL_JUDGMENTS: 'all-judgments',
   JUDGMENT_DETAILS: 'judgment-details',
+  ABOUT_HEARING_DOCUMENTS: 'about-hearing-documents',
+  HEARING_DOCUMENT_UPLOAD: 'hearing-document-upload',
   TRIBUNAL_RESPOND_TO_ORDER: 'tribunal-respond-to-order',
   TRIBUNAL_RESPONSE_CYA: 'tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: 'tribunal-response-completed',
+  BUNDLES_COMPLETED: 'bundles-completed',
   ALL_DOCUMENTS: 'all-documents',
   GENERAL_CORRESPONDENCE_LIST: 'general-correspondence-list',
   GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: 'general-correspondence-notification-details',
+  PREPARE_DOCUMENTS: 'prepare-documents',
   ADDRESS_POSTCODE_SELECT: 'address-postcode-select',
   ADDRESS_POSTCODE_ENTER: 'address-postcode-enter',
   RESPONDENT_POSTCODE_SELECT: 'respondent-postcode-select',
@@ -121,6 +125,8 @@ export const TranslationKeys = {
   CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER: 'contact-the-tribunal-cya-not-system-user',
   STORED_APPLICATION_CONFIRMATION: 'stored-application-confirmation',
   STORED_TO_SUBMIT: 'stored-to-submit',
+  BUNDLES_DOCS_FOR_HEARING_CYA: 'bundles-docs-for-hearing-cya',
+  AGREEING_DOCUMENTS_FOR_HEARING: 'agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: 'rule92-holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: 'respond-to-tribunal-response',
 } as const;
@@ -224,12 +230,18 @@ export const PageUrls = {
   TRIBUNAL_ORDER_OR_REQUEST_DETAILS: '/tribunal-order-or-request-details/:orderId',
   ALL_JUDGMENTS: '/all-judgments',
   JUDGMENT_DETAILS: '/judgment-details/:appId',
+  GET_TRIBUNAL_ORDER_DOCUMENT: '/getTribunalOrderDocument/:docId',
+  ABOUT_HEARING_DOCUMENTS: '/about-hearing-documents',
+  HEARING_DOCUMENT_UPLOAD: '/hearing-document-upload/:appId',
+  HEARING_DOCUMENT_REMOVE: '/hearing-document-remove/:appId',
   TRIBUNAL_RESPOND_TO_ORDER: '/tribunal-respond-to-order/:orderId',
   TRIBUNAL_RESPONSE_CYA: '/tribunal-response-cya',
   TRIBUNAL_RESPONSE_COMPLETED: '/tribunal-response-completed',
+  BUNDLES_COMPLETED: '/bundles-completed',
   ALL_DOCUMENTS: '/all-documents',
   GENERAL_CORRESPONDENCE_LIST: '/general-correspondence-list',
   GENERAL_CORRESPONDENCE_NOTIFICATION_DETAILS: '/general-correspondence-notification-details/:itemId',
+  PREPARE_DOCUMENTS: '/prepare-documents',
   RESPONDENT_POSTCODE_SELECT: '/respondent-postcode-select',
   RESPONDENT_POSTCODE_ENTER: '/respondent-postcode-enter',
   WORK_POSTCODE_SELECT: '/work-postcode-select',
@@ -247,6 +259,8 @@ export const PageUrls = {
   STORED_TO_SUBMIT_RESPONSE: '/stored-to-submit-response/:appId/:responseId',
   STORED_TO_SUBMIT_TRIBUNAL: '/stored-to-submit-tribunal/:orderId/:responseId',
   STORED_TO_SUBMIT_COMPLETE: '/stored-to-submit-complete',
+  BUNDLES_DOCS_FOR_HEARING_CYA: '/documents-for-hearing',
+  AGREEING_DOCUMENTS_FOR_HEARING: '/agreeing-documents-for-hearing',
   RULE92_HOLDING_PAGE: '/holding-page',
   RESPOND_TO_TRIBUNAL_RESPONSE: '/respond-to-tribunal-response/:appId',
 } as const;
@@ -263,6 +277,7 @@ export const InterceptPaths = {
   STORE_TRIBUNAL_CYA: '/storeTribunalCya',
   TRIBUNAL_RESPONSE_STORE_CYA: '/tribunalResponseStoreCya',
   STORE_RESPONDENT_CYA: '/storeRespondentCya',
+  SUBMIT_BUNDLES_HEARING_DOCS_CYA: '/submitBundlesHearingDocsCya',
 } as const;
 
 export const ErrorPages = {
@@ -301,6 +316,7 @@ export const JavaApiUrls = {
   UPDATE_NOTIFICATION_STATE: '/sendNotification/update-notification-state',
   SUBMIT_STORED_RESPOND_TO_TRIBUNAL: '/store/submit-stored-respond-to-tribunal',
   UPDATE_ADMIN_DECISION_STATE: '/tseAdmin/update-admin-decision-state',
+  SUBMIT_BUNDLES: 'bundles/submit-bundles',
 } as const;
 
 export const Urls = {
@@ -595,4 +611,7 @@ export const TseStatus = {
 export const ResponseStatus = {
   OPEN_STATE: 'Open',
   STORED_STATE: 'Stored',
+export const FEATURE_FLAGS = {
+  WELSH: 'welsh-language',
+  BUNDLES: 'bundles',
 } as const;

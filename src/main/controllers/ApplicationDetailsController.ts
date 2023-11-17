@@ -5,11 +5,13 @@ import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants'
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -26,6 +28,7 @@ export default class ApplicationDetailsController {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
       ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;
@@ -90,15 +93,23 @@ export default class ApplicationDetailsController {
       res.redirect(PageUrls.YOUR_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.APPLICATION_DETAILS, {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        downloadLink,
+        retrieveCurrentLocale(req.url)
+      ),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,
       decisionContent,
+      welshEnabled,
     });
   };
 }

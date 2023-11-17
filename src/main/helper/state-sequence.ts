@@ -10,7 +10,7 @@ export class StateSequence {
     this.stateIndex = 0;
   }
 
-  public at(currentState: string): StateSequence {
+  public at(currentState: string): this {
     this.stateIndex = this.states.indexOf(currentState);
     return this;
   }

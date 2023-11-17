@@ -13,10 +13,11 @@ import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers'
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
+
 export default class TribunalRespondToOrderController {
   private readonly form: Form;
   private readonly respondToTribunalOrder: FormContent = {
@@ -70,9 +71,11 @@ export default class TribunalRespondToOrderController {
     if (error) {
       req.session.errors = [];
       req.session.errors.push(error);
-      return res.redirect(
-        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', req.params.orderId + getLanguageParam(req.url))
+      const redirectUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(
+        ':orderId',
+        req.params.orderId + getLanguageParam(req.url)
       );
+      return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
     return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
@@ -80,6 +83,13 @@ export default class TribunalRespondToOrderController {
           PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
         )
       : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
+/*
+    const redirectUrl =
+      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
+        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
+        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+    return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
+*/
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {

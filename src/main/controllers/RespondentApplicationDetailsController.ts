@@ -5,11 +5,13 @@ import { Applicant, ErrorPages, PageUrls, TranslationKeys } from '../definitions
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
 
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
+import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { findSelectedGenericTseApplication } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -86,17 +88,25 @@ export default class RespondentApplicationDetailsController {
       res.redirect(PageUrls.RESPONDENT_APPLICATIONS);
     }
 
+    const welshEnabled = await getFlagValue('welsh-language', null);
+
     res.render(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, {
       ...content,
       header,
       selectedApplication,
       redirectUrl,
-      appContent: getTseApplicationDetails(selectedApplication, translations, supportingMaterialDownloadLink),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        supportingMaterialDownloadLink,
+        retrieveCurrentLocale(req.url)
+      ),
       decisionContent,
       respondButton,
       isAdminRespondButton: responseToTribunalRequired(selectedApplication),
       adminRespondRedirectUrl,
       allResponses,
+      welshEnabled,
     });
   };
 }

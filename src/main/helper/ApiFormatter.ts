@@ -1,5 +1,6 @@
 import { isDateEmpty } from '../components/form/dateValidators';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
@@ -191,6 +192,7 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ],
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
+    hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
   };
@@ -372,11 +374,7 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  return new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
 
 export const getDueDate = (date: string, daysUntilDue: number): string => {
@@ -512,5 +510,6 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   }
 
   items?.sort(sortByDate);
+
   return items;
 };

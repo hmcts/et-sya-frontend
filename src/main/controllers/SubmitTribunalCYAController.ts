@@ -1,12 +1,12 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { YesOrNo } from '../definitions/case';
 import { PageUrls } from '../definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../definitions/hub';
 import { getLogger } from '../logger';
 
 import { clearTseFields, handleUpdateHubLinksStatuses, submitClaimantTse } from './helpers/CaseHelpers';
-import { YesOrNo } from '../definitions/case';
 
 const logger = getLogger('SubmitTseController');
 

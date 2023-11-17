@@ -38,7 +38,7 @@ export const prepareTableRows = (
     .map(docSection => {
       return {
         caption: getTableCaption(docSection[0].value.typeOfDocument, translations),
-        rows: docSection.map(it => mapDocumentToTableRow(it)),
+        rows: docSection.map(it => mapDocumentToTableRow(it, translations)),
       };
     });
 };
@@ -56,10 +56,14 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
   }
 };
 
-export const mapDocumentToTableRow = (item: DocumentTypeItem): TableRow => {
+export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
+  // if there is a short description and a translation exists, use it, otherwise leave blank
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription,
+    description:
+      item.value.shortDescription && translations[item.value.shortDescription]
+        ? translations[item.value.shortDescription]
+        : '',
     downloadLink: item.downloadLink,
   };
 };

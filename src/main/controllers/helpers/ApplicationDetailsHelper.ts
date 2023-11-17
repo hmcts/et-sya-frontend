@@ -8,6 +8,7 @@ import {
 import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
@@ -16,7 +17,8 @@ import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers'
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
-  downloadLink: string
+  downloadLink: string,
+  url: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
@@ -30,10 +32,12 @@ export const getTseApplicationDetails = (
   }
 
   rows.push(
+    addSummaryRow(translations.applicant, translations[application.applicant]),
+    addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
-    addSummaryRow(translations.copyCorrespondence, application.copyToOtherPartyYesOrNo)
+    addSummaryRow(translations.copyCorrespondence, translations[application.copyToOtherPartyYesOrNo])
   );
 
   if (application.copyToOtherPartyText) {
@@ -242,7 +246,7 @@ const addNonAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.from,
+        text: translations[response.value.from],
       },
     },
     {
@@ -276,7 +280,7 @@ const addNonAdminResponse = async (
         text: translations.copyCorrespondence,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.copyToOtherParty },
+      value: { text: translations[response.value.copyToOtherParty] },
     },
   ];
 };
