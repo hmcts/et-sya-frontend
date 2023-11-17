@@ -89,6 +89,7 @@ export interface HearingModel {
     Hearing_notes?: string;
     Hearing_date_start?: Date;
     Hearing_judge_name?: string;
+    Hearing_venue_Scotland?: string;
     Hearing_venue?: {
       value: HearingVenueItem;
       list_items: HearingVenueItem[];
