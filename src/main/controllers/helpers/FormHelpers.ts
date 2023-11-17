@@ -120,9 +120,8 @@ export const createLabelForHearing = (hearing: HearingModel): string => {
   const earliestDate = hearingsInFuture.reduce((a, b) =>
     new Date(a.value.listedDate) > new Date(b.value.listedDate) ? b : a
   );
-  return `${hearing.value.Hearing_type} - ${hearing.value?.Hearing_venue?.value?.label} - ${formatDate(
-    earliestDate.value.listedDate
-  )}`;
+  const venue = hearing.value?.Hearing_venue_Scotland || hearing.value?.Hearing_venue?.value?.label;
+  return `${hearing.value.Hearing_type} - ${venue} - ${formatDate(earliestDate.value.listedDate)}`;
 };
 
 export const createRadioBtnsForHearings = (
