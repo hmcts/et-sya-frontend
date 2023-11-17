@@ -19,7 +19,7 @@ describe('allDocumentsHelper tests', () => {
   const mockDocumentTypeItem: DocumentTypeItem = {
     id: 'mockId',
     value: {
-      shortDescription: 'short description',
+      shortDescription: 'Description',
       uploadedDocument: uploadedDoc,
     },
     downloadLink: 'mockDownloadLink',
@@ -79,9 +79,9 @@ describe('allDocumentsHelper tests', () => {
   });
 
   it('map document to table row', () => {
-    const result = mapDocumentToTableRow(mockDocumentTypeItem);
+    const result = mapDocumentToTableRow(mockDocumentTypeItem, translationJsons);
     expect(result.date).toEqual('Test date');
-    expect(result.description).toEqual('short description');
+    expect(result.description).toEqual('');
     expect(result.downloadLink).toEqual('mockDownloadLink');
   });
 
@@ -122,8 +122,8 @@ describe('allDocumentsHelper tests', () => {
   it('should prepare table rows', () => {
     const tableRows = prepareTableRows(sortedMap, translationJsons, caseWithGenericTseApplications);
     expect(tableRows).toHaveLength(3);
-    expect(tableRows[0].rows[0].description).toEqual('ACAS Certificate');
-    expect(tableRows[1].rows[0].description).toEqual('Claimant correspondence');
-    expect(tableRows[2].rows[0].description).toEqual('Respondent correspondence');
+    expect(tableRows[0].caption).toEqual('Acas documents');
+    expect(tableRows[1].caption).toEqual('Claimant documents');
+    expect(tableRows[2].caption).toEqual('Respondent documents');
   });
 });

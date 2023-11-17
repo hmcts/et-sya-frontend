@@ -8,24 +8,24 @@ import {
 import { Applicant } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getCaseApi } from '../../services/CaseService';
 
 import { isSentToClaimantByTribunal } from './AdminNotificationHelper';
-import { returnTranslatedDateString } from './DateHelper';
 import { createDownloadLink, populateDocumentMetadata } from './DocumentHelpers';
 
 export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   downloadLink: string,
-  locale: string
+  url: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
   rows.push(
     addSummaryRow(translations.applicant, translations[application.applicant]),
-    addSummaryRow(translations.requestDate, returnTranslatedDateString(application.date, locale)),
+    addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
