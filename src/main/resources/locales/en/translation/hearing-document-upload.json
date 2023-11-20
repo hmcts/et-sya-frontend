@@ -9,7 +9,7 @@
   "bullet4": "you only include relevant documents and material for your case",
   "bullet5": "the PDF document falls within any page limits given by the tribunal",
   "p2": "If you’re referencing one section of a document like a contract of employment, say which part in the index.",
-  "p3": "If you need to refer to previous case documents, go to your <a href=\"https://solicitors.lawsociety.org.uk/\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">case documents (opens in new tab)</a>",
+  "p3": "If you need to refer to previous case documents, go to your <a href=\"/all-documents?lng=en\" class=\"govuk-link\" rel=\"noreferrer noopener\" target=\"_blank\">case documents (opens in new tab)</a>",
 
   "fileUpload": {
     "linkText": "Or upload your summary as a separate document (optional)",
