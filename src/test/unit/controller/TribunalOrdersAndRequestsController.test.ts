@@ -4,10 +4,14 @@ import {
   SendNotificationTypeItem,
 } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Parties, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
 describe('Respondent orders and requests Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
+
   it('should render Respondent orders and requests page', async () => {
     const notificationItems: SendNotificationTypeItem[] = [
       {
