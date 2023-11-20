@@ -40,5 +40,14 @@
   "Restrict publicity": "restrict publicity",
   "Strike out all or part of a claim": "strike out all or part of a claim",
   "Vary or revoke an order": "vary or revoke an order",
-  "Withdraw all/part of claim": "withdraw all/part of claim"
+  "Withdraw all/part of claim": "withdraw all/part of claim",
+  "Granted": "Granted",
+  "Granted in part": "Granted in part",
+  "Refused": "Refused",
+  "Other": "Other",
+  "Legal officer": "Legal officer",
+  "Judge": "Judge",
+  "Tribunal": "Tribunal",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only"
 }

@@ -77,10 +77,10 @@
       "link": "Ymateb i’r cais"
     },
     "orderOrRequest": {
-      "responseRequired": "Welsh Translation required ",
+      "responseRequired": "Mae'r tribiwnlys yn gofyn am rywfaint o wybodaeth gennych chi.",
       "noResponseRequired": "Mae’r tribiwnlys wedi anfon hysbysiad atoch",
       "link": "Gweld yr hysbysiad",
-      "respond": "Welsh Translation required"
+      "respond": "Ymateb i’r Tribiwnlys"
     },
     "judgment": {
       "header": "Mae’r tribiwnlys wedi gwneud penderfyniad mewn perthynas â’ch achos.",

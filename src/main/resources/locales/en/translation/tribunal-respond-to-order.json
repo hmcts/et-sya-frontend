@@ -19,6 +19,14 @@
   "textInputHint": "Use this box to respond or you can upload material at the next step.",
   "radioButtonLabel": "Supporting material",
   "radioButtonHint": "Do you have any supporting material you want to provide?",
+  "tribunal": "Tribunal",
+  "Legal officer": "Legal officer",
+  "Judge": "Judge",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only",
+  "Case management order": "Case management order",
+  "Yes - view document for details": "Yes - view document for details",
+  "Request": "Request",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"
@@ -26,7 +34,7 @@
     "responseText": {
       "required": "Provide details of your response &/or upload supporting material",
       "requiredFile": "Provide details of your response &/or upload a file",
-      "tooLong": "Response details must be 2500 characters or less additional details can be uploaded using the support material option"
+      "tooLong": "Response details must be 2500 characters or less. Additional details can be uploaded using the support material option"
     }
   }
 }

@@ -15,5 +15,14 @@
   "sentTo": "Sent to",
   "eccNotification": "What is the ECC notification?",
   "tips": "You must respond to the tribunal",
-  "respond": "Respond"
+  "respond": "Respond",
+  "tribunal": "Tribunal",
+  "Case management order": "Case management order",
+  "Request": "Request",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only",
+  "Yes - view document for details": "Yes - view document for details",
+  "Legal officer": "Legal officer",
+  "Judge": "Judge",
+  "Caseworker": "Caseworker"
 }
