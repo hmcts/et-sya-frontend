@@ -31,7 +31,7 @@
           {% for app in judgments %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                {{ app.value.date }}
+                {{ dateStringToLocale(app.value.date) }}
               </td>
               <td class="govuk-table__cell">
                 <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
@@ -49,7 +49,7 @@
           {% for app in decisions %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                {{ app.value.date }}
+                {{ dateStringToLocale(app.value.date) }}
               </td>
               <td class="govuk-table__cell">
                 <a href="{{ getContent(app.redirectUrl) }}" class="govuk-link">
@@ -75,7 +75,7 @@
 
       <div class="govuk-!-margin-top-2">
         {{ govukDetails({
-          summaryText: "Contact",
+          summaryText: contact,
           html: sideBarContent
         }) }}
       </div>
