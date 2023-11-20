@@ -3,6 +3,7 @@ import {
   filterActionableNotifications,
   filterSendNotifications,
   getTribunalOrderOrRequestDetails,
+  populateAllOrdersItemsWithCorrectStatusTranslations,
   populateNotificationsWithRedirectLinksAndStatusColors,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
@@ -135,6 +136,18 @@ describe('Tribunal order or request helper', () => {
     );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should populate order/request item with redirect link and status', () => {
+    const populatedOrderOrRequest = populateAllOrdersItemsWithCorrectStatusTranslations(
+      [notificationItem],
+      translations,
+      'url'
+    )[0];
+    expect(populatedOrderOrRequest.redirectUrl).toEqual(
+      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
+    expect(populatedOrderOrRequest.displayStatus).toEqual('Not viewed yet');
   });
 
   it('should populate notification with correct status when required to respond and no response exists', () => {

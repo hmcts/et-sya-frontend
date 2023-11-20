@@ -8,11 +8,11 @@ import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
 
-describe('Respondent orders and requests Controller', () => {
+describe('Tribunal orders and requests Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
 
-  it('should render Respondent orders and requests page', async () => {
+  it('should render tribunal orders and requests page', async () => {
     const notificationItems: SendNotificationTypeItem[] = [
       {
         value: {
@@ -30,12 +30,12 @@ describe('Respondent orders and requests Controller', () => {
       },
     ];
 
-    const respondentOrdersAndRequestsController = new TribunalOrdersAndRequestsController();
+    const tribunalOrdersAndRequestsController = new TribunalOrdersAndRequestsController();
     const request = mockRequest({});
     request.session.userCase.sendNotificationCollection = notificationItems;
     const response = mockResponse();
 
-    await respondentOrdersAndRequestsController.get(request, response);
+    await tribunalOrdersAndRequestsController.get(request, response);
     expect(response.render).toHaveBeenCalledWith(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, expect.anything());
   });
 });
