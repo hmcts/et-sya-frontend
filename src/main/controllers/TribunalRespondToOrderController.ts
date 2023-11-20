@@ -8,12 +8,13 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -85,6 +86,7 @@ export default class TribunalRespondToOrderController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
@@ -109,7 +111,8 @@ export default class TribunalRespondToOrderController {
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
+      orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),
+      welshEnabled,
     });
   };
 }
