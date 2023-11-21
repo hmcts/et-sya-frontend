@@ -17,7 +17,7 @@ describe('Application details', () => {
       status: 'inProgress',
       type: 'withdraw',
       applicant: 'Claimant',
-      date: '2022-12-12',
+      date: '12 December 2022',
       details: 'test details',
       copyToOtherPartyYesOrNo: YesOrNo.NO,
       copyToOtherPartyText: 'test reason',
@@ -36,7 +36,12 @@ describe('Application details', () => {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink', 'en-GB');
+    const appContent = getTseApplicationDetails(
+      selectedApplication,
+      translations,
+      'downloadLink',
+      genericTseApplicationType.date
+    );
 
     expect(appContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Applicant' });
     expect(appContent[0].value).toEqual({ text: 'Claimant' });
