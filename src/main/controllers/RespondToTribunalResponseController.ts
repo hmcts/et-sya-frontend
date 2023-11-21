@@ -50,11 +50,11 @@ export default class RespondToTribunalResponseController {
         isPageHeading: true,
         values: [
           {
-            label: (l: AnyRecord): string => l.yes,
+            label: (l: AnyRecord): string => l.supportingMaterialYesNo.yes,
             value: YesOrNo.YES,
           },
           {
-            label: (l: AnyRecord): string => l.no,
+            label: (l: AnyRecord): string => l.supportingMaterialYesNo.no,
             value: YesOrNo.NO,
           },
         ],

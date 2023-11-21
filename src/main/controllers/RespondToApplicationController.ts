@@ -7,11 +7,11 @@ import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import { setUserCase } from './helpers/CaseHelpers';
 import { createDownloadLink, populateDocumentMetadata } from './helpers/DocumentHelpers';
 import { getResponseErrors as getApplicationResponseError } from './helpers/ErrorHelpers';
@@ -46,11 +46,11 @@ export default class RespondToApplicationController {
         isPageHeading: true,
         values: [
           {
-            label: (l: AnyRecord): string => l.yes,
+            label: (l: AnyRecord): string => l.supportingMaterialYesNo.yes,
             value: YesOrNo.YES,
           },
           {
-            label: (l: AnyRecord): string => l.no,
+            label: (l: AnyRecord): string => l.supportingMaterialYesNo.no,
             value: YesOrNo.NO,
           },
         ],
@@ -96,6 +96,8 @@ export default class RespondToApplicationController {
 
     const applicationType = translations[selectedApplication.value.type];
     const respondByDate = getApplicationRespondByDate(selectedApplication, translations);
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
+    const applicant = translations[selectedApplication.value.applicant];
     const document = selectedApplication.value?.documentUpload;
 
     if (document) {
@@ -122,13 +124,8 @@ export default class RespondToApplicationController {
       applicationType,
       respondByDate,
       selectedApplication,
-      applicantType: selectedApplication.value.applicant,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      applicantType: applicant,
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
       welshEnabled,
     });
   };

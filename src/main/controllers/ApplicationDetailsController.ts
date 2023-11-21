@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { ErrorPages, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { datesStringToDateInLocale } from '../helper/dateInLocale';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { getCaseApi } from '../services/CaseService';
@@ -11,7 +12,6 @@ import { getCaseApi } from '../services/CaseService';
 import { responseToTribunalRequired } from './helpers/AdminNotificationHelper';
 import { getAllResponses, getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
 import { getNewApplicationStatus } from './helpers/ApplicationStateHelper';
-import { retrieveCurrentLocale } from './helpers/ApplicationTableRecordTranslationHelper';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -47,6 +47,7 @@ export default class ApplicationDetailsController {
     const languageParam = getLanguageParam(req.url);
     const respondRedirectUrl = `/${TranslationKeys.RESPOND_TO_TRIBUNAL_RESPONSE}/${selectedApplication.id}${languageParam}`;
     const accessToken = req.session.user?.accessToken;
+    const applicationDate = datesStringToDateInLocale(selectedApplication.value.date, req.url);
 
     let decisionContent;
     try {
@@ -99,12 +100,7 @@ export default class ApplicationDetailsController {
       ...content,
       header,
       selectedApplication,
-      appContent: getTseApplicationDetails(
-        selectedApplication,
-        translations,
-        downloadLink,
-        retrieveCurrentLocale(req.url)
-      ),
+      appContent: getTseApplicationDetails(selectedApplication, translations, downloadLink, applicationDate),
       isRespondButton: responseToTribunalRequired(selectedApplication),
       respondRedirectUrl,
       allResponses,
