@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { AllDocumentTypes, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -15,7 +16,6 @@ const logger = getLogger('AllDocumentsController');
 export default class AllDocumentsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
-    const docCollection = userCase.documentCollection;
     req.session.documentDownloadPage = PageUrls.ALL_DOCUMENTS;
     const languageParam = getLanguageParam(req.url);
 
@@ -36,19 +36,33 @@ export default class AllDocumentsController {
     let tribunalDocuments = undefined;
     let acasClaimantRespondentTableRows = undefined;
 
-    if (docCollection?.length) {
-      try {
-        await getDocumentsAdditionalInformation(docCollection, req.session.user?.accessToken);
-      } catch (err) {
-        logger.error(err.message);
-        res.redirect('/not-found');
-      }
+    const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
+    const bundlesClaimantDocs = userCase.bundlesClaimantDocs?.length ? userCase.bundlesClaimantDocs : [];
+    const bundlesRespondentDocs = userCase.bundlesRespondentDocs?.length ? userCase.bundlesRespondentDocs : [];
+    const allDocs = [...docCollection, ...bundlesClaimantDocs, ...bundlesRespondentDocs];
 
-      docCollection.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
-      sortedDocuments = createSortedDocumentsMap(docCollection);
-      tribunalDocuments = sortedDocuments.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE);
-      acasClaimantRespondentTableRows = prepareTableRows(sortedDocuments, translations, userCase);
-    }
+    /**
+     * Add meta data and download links for each document
+     */
+    const populateMetaDataAndLink = async (docs: DocumentTypeItem[]) => {
+      if (docs?.length) {
+        try {
+          await getDocumentsAdditionalInformation(docs, req.session.user?.accessToken);
+        } catch (err) {
+          logger.error(err.message);
+          res.redirect('/not-found');
+        }
+        docs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+      }
+    };
+
+    await populateMetaDataAndLink(allDocs);
+
+    sortedDocuments = createSortedDocumentsMap(allDocs);
+
+    tribunalDocuments = sortedDocuments.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE);
+
+    acasClaimantRespondentTableRows = prepareTableRows(sortedDocuments, translations, userCase);
 
     res.render(TranslationKeys.ALL_DOCUMENTS, {
       ...content,

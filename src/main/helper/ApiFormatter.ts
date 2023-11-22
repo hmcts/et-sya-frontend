@@ -7,6 +7,7 @@ import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  HearingBundleType,
   RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
@@ -23,8 +24,10 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
+  AllDocumentTypes,
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
@@ -195,8 +198,32 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
+    bundlesClaimantDocs: mapBundlesDocs(
+      fromApiCaseData.case_data?.bundlesClaimantCollection,
+      AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
+    ),
+    bundlesRespondentDocs: mapBundlesDocs(
+      fromApiCaseData.case_data?.bundlesRespondentCollection,
+      AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
+    ),
   };
 }
+
+export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
+  if (!bundles) {
+    return;
+  }
+  const foundDocuments = bundles.map(item => ({
+    id: '',
+    value: {
+      shortDescription: item.value.formattedSelectedHearing || 'N/A',
+      uploadedDocument: item.value.uploadFile,
+      typeOfDocument: bundleType,
+      creationDate: '',
+    },
+  }));
+  return foundDocuments.length ? foundDocuments : undefined;
+};
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   const updateCaseBody = getUpdateCaseBody(caseItem);

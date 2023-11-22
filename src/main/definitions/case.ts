@@ -192,7 +192,8 @@ export interface Case {
   bundlesRespondentAgreedDocWith?: AgreedDocuments;
   bundlesRespondentAgreedDocWithBut?: string;
   bundlesRespondentAgreedDocWithNo?: string;
-
+  bundlesClaimantDocs?: DocumentTypeItem[];
+  bundlesRespondentDocs?: DocumentTypeItem[];
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];
@@ -200,6 +201,7 @@ export interface Case {
   whoseHearingDocumentsAreYouUploading?: WhoseHearingDocument;
   whatAreTheseDocuments?: WhatAreTheHearingDocuments;
   hearingDocument?: Document;
+  formattedSelectedHearing?: string;
 
   /* Used to save the Rule92 state to render the "Completed" page under various conditions, after submitting the CYA,
   all temporary fields such as copyToOtherPartyYesOrNo, contactApplicationText, etc. are cleared.*/
@@ -319,14 +321,14 @@ export const enum AgreedDocuments {
 }
 
 export const enum WhoseHearingDocument {
-  MINE = 'mine',
-  BOTH_PARTIES = 'bothParties',
+  MINE = 'My hearing documents only',
+  BOTH_PARTIES = 'Both parties’ hearing documents combined',
 }
 
 export const enum WhatAreTheHearingDocuments {
-  ALL = 'allHearingDocs',
-  SUPPLEMENTARY = 'supplementary',
-  WITNESS_STATEMENTS = 'witnessStatements',
+  ALL = 'All hearing documents',
+  SUPPLEMENTARY = 'Supplementary or other documents',
+  WITNESS_STATEMENTS = 'Witness statements only',
 }
 
 export interface Document {
