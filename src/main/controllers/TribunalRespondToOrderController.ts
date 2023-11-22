@@ -7,6 +7,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
@@ -40,16 +41,7 @@ export default class TribunalRespondToOrderController {
         labelSize: 'm',
         hint: l => l.radioButtonHint,
         isPageHeading: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.supportingMaterialYesNo.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.supportingMaterialYesNo.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: SupportingMaterialYesNoRadioValues,
         validator: isFieldFilledIn,
       },
     },
