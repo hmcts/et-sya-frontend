@@ -81,7 +81,7 @@ describe('allDocumentsHelper tests', () => {
   it('map document to table row', () => {
     const result = mapDocumentToTableRow(mockDocumentTypeItem, translationJsons);
     expect(result.date).toEqual('Test date');
-    expect(result.description).toEqual('');
+    expect(result.description).toEqual('Description');
     expect(result.downloadLink).toEqual('mockDownloadLink');
   });
 
