@@ -20,13 +20,7 @@
   "radioButtonLabel": "Supporting material",
   "radioButtonHint": "Do you have any supporting material you want to provide?",
   "tribunal": "Tribunal",
-  "Legal officer": "Legal officer",
-  "Judge": "Judge",
-  "Both parties": "Both parties",
-  "Claimant only": "Claimant only",
-  "Case management order": "Case management order",
   "Yes - view document for details": "Yes - view document for details",
-  "Request": "Request",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Tell us if you also want to upload supporting material?"

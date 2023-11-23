@@ -2,7 +2,7 @@
   "title": "Ymateb i'r tribiwnlys",
   "caption": "Ymateb i'r tribiwnlys",
   "header": "Eich ymateb",
-  "hearing": "Welsh translation required",
+  "hearing": "Gwrandawiad",
   "dateSent": "Dyddiad anfon",
   "sentBy": "Anfonwyd gan",
   "orderOrRequest": "Gorchymyn neu gais rheoli achos?",
@@ -16,17 +16,11 @@
   "fullName": "Enw",
   "sentTo": "Anfonwyd at",
   "textInputLabel": "Beth yw eich ymateb i’r tribiwnlys",
-  "textInputHint": "Welsh translation required",
+  "textInputHint": "Defnyddiwch y blwch hwn i ymateb neu gallwch uwchlwytho deunydd yn y cam nesaf.",
   "radioButtonLabel": "Deunydd ategol",
   "radioButtonHint": "A oes gennych unrhyw ddeunydd ategol yr hoffech ei ddarparu?",
-  "Legal officer": "Welsh translation required",
-  "Judge": "Welsh translation required",
   "tribunal": "Tribiwnlys",
-  "Both parties": "Y ddau barti",
-  "Claimant only": "Hawlydd yn unig",
-  "Case management order": "Welsh translation required",
-  "Request": "Welsh translation required",
-  "Yes - view document for details": "Welsh translation required",
+  "Yes - view document for details": "Oes - gweler y ddogfen am fanylion",
   "errors": {
     "hasSupportingMaterial": {
       "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"
@@ -34,7 +28,7 @@
     "responseText": {
       "required": "Darparu manylion eich ymateb a/neu lwytho deunydd ategol",
       "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
-      "tooLong": "Welsh translation required"
+      "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai. Gallwch ddefnyddio’r opsiwn deunydd ategol i uwchlwytho manylion ychwanegol"
     }
   }
 }

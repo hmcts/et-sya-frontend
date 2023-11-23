@@ -1,6 +1,6 @@
 {
   "title": "Gorchymyn neu gais tribiwnlys",
-  "hearing": "Welsh translation required",
+  "hearing": "Gwrandawiad",
   "dateSent": "Dyddiad anfon",
   "sentBy": "Anfonwyd gan",
   "orderOrRequest": "Gorchymyn neu gais rheoli achos?",
@@ -13,16 +13,10 @@
   "requestMadeBy": "Gwnaethpwyd y cais gan",
   "fullName": "Enw",
   "sentTo": "Anfonwyd at",
-  "eccNotification": "Welsh translation required",
+  "eccNotification": "Beth yw’r hysbysiad ECC?",
   "tips": "Rhaid i chi ymateb i’r tribiwnlys",
   "respond": "Ymateb",
   "tribunal": "Tribiwnlys",
-  "Case management order": "Welsh translation required",
-  "Request": "Welsh translation required",
-  "Both parties": "Y ddau barti",
-  "Claimant only": "Hawlydd yn unig",
-  "Yes - view document for details": "Welsh translation required",
-  "Legal officer": "Welsh translation required",
-  "Judge": "Welsh translation required",
+  "Yes - view document for details": "Oes - gweler y ddogfen am fanylion",
   "Caseworker": "Gweithiwr achos"
 }
