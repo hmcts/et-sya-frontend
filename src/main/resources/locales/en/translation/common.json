@@ -31,10 +31,15 @@
     "month": "Month",
     "year": "Year"
   },
+  "invalidDate": "Invalid Date",
   "yes": "Yes",
   "no": "No",
   "Yes": "Yes",
   "No": "No",
+  "supportingMaterialYesNo": {
+    "yes": "Yes",
+    "no": "No"
+  },
   "notSure": "Not sure",
   "english": "English",
   "welsh": "Welsh",

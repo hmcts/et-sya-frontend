@@ -6,7 +6,7 @@
   "p1a": " wedi gwneud cais i ",
   "p1b": ".",
   "p2": "Os oes gennych unrhyw wrthwynebiadau neu ymatebion i’r cais rhaid i chi eu hanfon i’r tribiwnlys cyn gynted â phosibl ac erbyn ",
-  "p2a": " 2023 fan bellaf.",
+  "p2a": " fan bellaf.",
   "p3": "Os oes angen mwy o amser arnoch i ymateb, gallwch ofyn am fwy o amser gan y tribiwnlys. Os na fyddwch yn ymateb neu’n gofyn am fwy o amser i ymateb, bydd y tribiwnlys yn ystyried y cais heb eich ymateb.",
   "p4": "Ystyriwch yn eich ymateb:",
   "bullets": {
@@ -28,7 +28,7 @@
   "respond": "Welsh Translation required",
   "supportingMaterial": "Deunydd ategol",
   "copyCorrespondence": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
-  "textInputLabel": "Beth yw eich ymateb i gais yr atebydd?",
+  "textInputLabel": "Beth yw eich ymateb i’r cais?",
   "textInputHint": "Defnyddiwch y blwch hwn i roi eich ateb neu gallwch lwytho deunydd ychwanegol yn y cam nesaf.",
   "radioButtonLabel": "Deunydd ategol",
   "radioButtonHint": "A oes gennych unrhyw ddeunydd ategol yr hoffech ei ddarparu?",
@@ -36,17 +36,17 @@
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
   "Consider a decision afresh": "ystyried penderfyniad o’r newydd",
-  "Contact the tribunal": "gysylltu â’r tribiwnlys",
+  "Contact the tribunal": "cysylltu â’r tribiwnlys",
   "Order other party": "orchymyn i’r parti arall",
   "Order a witness to attend to give evidence": "orchymyn tyst i fod yn bresennol i roi tystiolaeth",
-  "Postpone a hearing": "ohirio gwrandawiad",
+  "Postpone a hearing": "gohirio gwrandawiad",
   "Reconsider judgement": "ailystyried dyfarniad",
   "Restrict publicity": "gyfyngu ar gyhoeddusrwydd",
-  "Strike out all or part of a claim": "ddileu’r hawliad cyfan neu ran o’r hawliad",
+  "Strike out all or part of a claim": "dileu’r hawliad cyfan neu ran o’r hawliad",
   "Vary or revoke an order": "amrywio neu ddiddymu gorchymyn",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol"
+      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol?"
     },
     "responseText": {
       "required": "Darparu manylion eich ymateb a/neu lwytho deunydd ategol",
@@ -55,5 +55,6 @@
     }
   },
   "Yes": "Ydw",
-  "No": "Nac ydw"
+  "No": "Nac ydw",
+  "Respondent": "Atebydd"
 }

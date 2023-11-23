@@ -49,5 +49,8 @@
   "decisionMadeBy": "Decision made by",
   "decisionType": "Type of decision",
   "Yes": "Yes",
-  "No": "No"
+  "No": "No",
+  "Neither": "Neither",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only"
 }
