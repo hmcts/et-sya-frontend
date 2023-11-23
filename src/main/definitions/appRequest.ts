@@ -9,6 +9,7 @@ export interface AppRequest<T = Partial<AnyRecord>> extends Request {
   session: AppSession;
   body: T;
   fileTooLarge?: boolean;
+  fileLargerThan1GB?: boolean;
 }
 
 export interface AppSession extends Session {
@@ -20,6 +21,7 @@ export interface AppSession extends Session {
   user: UserDetails;
   guid: string | undefined;
   fileTooLarge?: boolean;
+  fileLargerThan1GB?: boolean;
   cookies?: string;
   respondentRedirectCheckAnswer?: boolean;
   contactType?: string;
