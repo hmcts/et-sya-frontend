@@ -32,8 +32,13 @@
     "month": "Mis",
     "year": "Blwyddyn"
   },
+  "invalidDate": "Dyddiad ddim yn ddilys",
   "yes": "Do",
   "no": "Naddo",
+  "supportingMaterialYesNo": {
+    "yes": "Oes",
+    "no": "Nac oes"
+  },
   "notSure": "Ddim yn siŵr",
   "english": "Saesneg",
   "welsh": "Cymraeg",

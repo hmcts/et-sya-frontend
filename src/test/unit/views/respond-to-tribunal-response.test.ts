@@ -21,6 +21,7 @@ const titleClass = 'govuk-heading-xl govuk-!-margin-bottom-4';
 const responseHeaderClass = 'govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1';
 const responseLabelClass = 'govuk-label govuk-label--m';
 const responseHint = 'govuk-hint';
+const radioClass = 'govuk-radios__item';
 
 let htmlRes: Document;
 describe('Respond to Tribunal response page', () => {
@@ -130,5 +131,19 @@ describe('Respond to Tribunal response page', () => {
   it('should show supporting material hint', () => {
     const hints = htmlRes.getElementsByClassName(responseHint);
     expect(hints[1].innerHTML).contains('Do you have any supporting material you want to provide?');
+  });
+
+  it('should display 2 radio buttons', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radioClass);
+    expect(radioButtons.length).equal(2, '2 radio buttons not found');
+  });
+
+  it('should display radio buttons with valid text', () => {
+    const radioButtons = htmlRes.getElementsByClassName(radioClass);
+    expect(radioButtons[0].innerHTML).contains(
+      YesOrNo.YES,
+      'Could not find the radio button with label ' + YesOrNo.YES
+    );
+    expect(radioButtons[1].innerHTML).contains(YesOrNo.NO, 'Could not find the radio button with label ' + YesOrNo.NO);
   });
 });
