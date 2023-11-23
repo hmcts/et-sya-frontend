@@ -4,6 +4,7 @@ import JudgmentDetailsController from '../../../main/controllers/JudgmentDetails
 import { CaseWithId } from '../../../main/definitions/case';
 import { SendNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { ErrorPages, PageUrls, ResponseRequired, TranslationKeys } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
 import judgmentDetailsRaw from '../../../main/resources/locales/en/translation/judgment-details.json';
 import * as caseService from '../../../main/services/CaseService';
@@ -21,6 +22,8 @@ const api = new CaseApi(mockedAxios);
 const documentRejection = Promise.reject(new Error('Mocked failure to get document metadata'));
 
 describe('Judgment Details Controller', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   getCaseApiMock.mockReturnValue(api);
   const translationJsons = { ...judgmentDetailsRaw, ...commonRaw };
 

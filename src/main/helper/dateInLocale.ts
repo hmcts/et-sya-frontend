@@ -1,8 +1,15 @@
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { languages } from '../definitions/constants';
 
 // returns Welsh or English representation of a Date instance in long format based on param in url
 export const dateInLocale = (dateToTransform: Date, url: string): string => {
-  return new Date(dateToTransform).toLocaleDateString(retrieveCurrentLocale(url), {
+  const date = new Date(dateToTransform);
+
+  if (isNaN(date.getTime())) {
+    return url.includes(languages.WELSH_URL_PARAMETER) ? 'Dyddiad ddim yn ddilys' : 'Invalid Date';
+  }
+
+  return date.toLocaleDateString(retrieveCurrentLocale(url), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

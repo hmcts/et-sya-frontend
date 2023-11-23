@@ -2,6 +2,7 @@ import AllJudgmentsController from '../../../main/controllers/AllJudgmentsContro
 import { CaseWithId } from '../../../main/definitions/case';
 import { SendNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { PageUrls, ResponseRequired } from '../../../main/definitions/constants';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import allJudgmentsRaw from '../../../main/resources/locales/en/translation/all-judgments.json';
 import commonRaw from '../../../main/resources/locales/en/translation/common.json';
 import { mockRequestWithTranslation } from '../mocks/mockRequest';
@@ -9,8 +10,10 @@ import { mockResponse } from '../mocks/mockResponse';
 
 describe('All Judgments Controller', () => {
   const translationJsons = { ...allJudgmentsRaw, ...commonRaw };
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
 
-  it('should get all judgments page', () => {
+  it('should get all judgments page', async () => {
     const userCase: Partial<CaseWithId> = {
       sendNotificationCollection: [
         {
@@ -30,7 +33,7 @@ describe('All Judgments Controller', () => {
     request.params.id = '1';
 
     const controller = new AllJudgmentsController();
-    controller.get(request, response);
+    await controller.get(request, response);
     expect(response.render).toBeDefined();
   });
 });

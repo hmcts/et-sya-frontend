@@ -7,14 +7,16 @@ import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
+import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers';
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -41,16 +43,7 @@ export default class TribunalRespondToOrderController {
         labelSize: 'm',
         hint: l => l.radioButtonHint,
         isPageHeading: true,
-        values: [
-          {
-            label: (l: AnyRecord): string => l.yes,
-            value: YesOrNo.YES,
-          },
-          {
-            label: (l: AnyRecord): string => l.no,
-            value: YesOrNo.NO,
-          },
-        ],
+        values: SupportingMaterialYesNoRadioValues,
         validator: isFieldFilledIn,
       },
     },
@@ -93,6 +86,7 @@ export default class TribunalRespondToOrderController {
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
@@ -117,7 +111,8 @@ export default class TribunalRespondToOrderController {
     res.render(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, {
       ...content,
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
+      orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),
+      welshEnabled,
     });
   };
 }

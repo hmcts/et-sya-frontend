@@ -50,5 +50,8 @@
   "decisionMadeBy": "Gwnaethpwyd y penderfyniad gan",
   "decisionType": "Math o benderfyniad",
   "Yes": "Ydw",
-  "No": "Nac ydw"
+  "No": "Nac ydw",
+  "Neither": "Dim un",
+  "Both parties": "Y ddau barti",
+  "Claimant only": "Hawlydd yn unig"
 }
