@@ -4,12 +4,17 @@ import { AppRequest } from '../definitions/appRequest';
 import { NotificationSubjects, Parties, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
+import { getLanguageParam } from './helpers/RouterHelpers';
+import { populateAllOrdersItemsWithCorrectStatusTranslations } from './helpers/TribunalOrderOrRequestHelper';
 
 export class TribunalOrdersAndRequestsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
+    const languageParam = getLanguageParam(req.url);
     const notifications = userCase?.sendNotificationCollection.filter(
       it =>
         it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
@@ -21,8 +26,10 @@ export class TribunalOrdersAndRequestsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
     };
+    populateAllOrdersItemsWithCorrectStatusTranslations(notifications, translations, req.url);
 
     const content = getPageContent(req, <FormContent>{}, [
+      TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS,
     ]);
@@ -30,6 +37,8 @@ export class TribunalOrdersAndRequestsController {
       ...content,
       notifications,
       translations,
+      languageParam,
+      welshEnabled,
     });
   };
 }

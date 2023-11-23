@@ -18,14 +18,14 @@ export const getTseApplicationDetails = (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   downloadLink: string,
-  url: string
+  applicationDate: string
 ): SummaryListRow[] => {
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
   rows.push(
     addSummaryRow(translations.applicant, translations[application.applicant]),
-    addSummaryRow(translations.requestDate, datesStringToDateInLocale(application.date, url)),
+    addSummaryRow(translations.requestDate, applicationDate),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
@@ -86,18 +86,26 @@ export const getAllResponses = async (
 ): Promise<any> => {
   const allResponses: any[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
+  let responseDate;
   if (!respondCollection?.length) {
     return allResponses;
   }
   for (const response of respondCollection) {
     let responseToAdd;
+    responseDate = datesStringToDateInLocale(response.value.date, req.url);
     if (
       response.value.from === Applicant.CLAIMANT ||
       (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
     ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken);
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
     } else if (isSentToClaimantByTribunal(response)) {
-      responseToAdd = await addAdminResponse(allResponses, translations, response, req.session.user?.accessToken);
+      responseToAdd = await addAdminResponse(
+        allResponses,
+        translations,
+        response,
+        req.session.user?.accessToken,
+        responseDate
+      );
       if (response.value.isResponseRequired !== YesOrNo.YES && response.value.viewedByClaimant !== YesOrNo.YES) {
         await getCaseApi(req.session.user?.accessToken).updateResponseAsViewed(
           req.session.userCase,
@@ -126,7 +134,8 @@ const addAdminResponse = async (
   allResponses: any[],
   translations: AnyRecord,
   response: TseRespondTypeItem,
-  accessToken: string
+  accessToken: string,
+  responseDate: string
 ): Promise<any> => {
   allResponses.push([
     {
@@ -141,7 +150,7 @@ const addAdminResponse = async (
         text: translations.date,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.date },
+      value: { text: responseDate },
     },
     {
       key: {
@@ -155,21 +164,21 @@ const addAdminResponse = async (
         text: translations.orderOrRequest,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.isCmoOrRequest },
+      value: { text: translations[response.value.isCmoOrRequest] },
     },
     {
       key: {
         text: translations.responseDue,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.isResponseRequired },
+      value: { text: translations[response.value.isResponseRequired] },
     },
     {
       key: {
         text: translations.partyToRespond,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.selectPartyRespond },
+      value: { text: translations[response.value.selectPartyRespond] },
     },
     {
       key: {
@@ -203,7 +212,10 @@ const addAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
+        text:
+          response.value.isCmoOrRequest === 'Request'
+            ? translations[response.value.requestMadeBy]
+            : translations[response.value.cmoMadeBy],
       },
     },
     {
@@ -218,7 +230,7 @@ const addAdminResponse = async (
         text: translations.sentTo,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.selectPartyNotify },
+      value: { text: translations[response.value.selectPartyNotify] },
     },
   ]);
 };
@@ -226,7 +238,8 @@ const addAdminResponse = async (
 const addNonAdminResponse = async (
   translations: AnyRecord,
   response: TseRespondTypeItem,
-  accessToken: string
+  accessToken: string,
+  responseDate: string
 ): Promise<any> => {
   return [
     {
@@ -243,7 +256,7 @@ const addNonAdminResponse = async (
         text: translations.responseDate,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.date },
+      value: { text: responseDate },
     },
     {
       key: {
