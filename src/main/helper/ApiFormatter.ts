@@ -198,31 +198,33 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
-    bundlesClaimantDocs: mapBundlesDocs(
-      fromApiCaseData.case_data?.bundlesClaimantCollection,
-      AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
-    ),
-    bundlesRespondentDocs: mapBundlesDocs(
-      fromApiCaseData.case_data?.bundlesRespondentCollection,
-      AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
-    ),
+    bundleDocuments: [
+      ...combineDocuments<DocumentTypeItem>(
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesClaimantCollection,
+          AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
+        ),
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesRespondentCollection,
+          AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
+        )
+      ),
+    ],
   };
 }
 
 export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
-  if (!bundles) {
-    return;
-  }
-  const foundDocuments = bundles.map(item => ({
-    id: '',
-    value: {
-      shortDescription: item.value.formattedSelectedHearing || 'N/A',
-      uploadedDocument: item.value.uploadFile,
-      typeOfDocument: bundleType,
-      creationDate: '',
-    },
-  }));
-  return foundDocuments.length ? foundDocuments : undefined;
+  return !bundles?.length
+    ? undefined
+    : bundles.map(item => ({
+        id: '',
+        value: {
+          shortDescription: item.value.formattedSelectedHearing || bundleType,
+          uploadedDocument: item.value.uploadFile,
+          typeOfDocument: bundleType,
+          creationDate: '',
+        },
+      }));
 };
 
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {

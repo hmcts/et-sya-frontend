@@ -331,8 +331,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingCollection: undefined,
       documentCollection: undefined,
       representatives: undefined,
-      bundlesClaimantDocs: undefined,
-      bundlesRespondentDocs: undefined,
+      bundlesDocuments: undefined,
     });
   });
 

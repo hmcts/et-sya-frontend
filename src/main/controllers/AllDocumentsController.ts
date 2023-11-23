@@ -38,11 +38,8 @@ export default class AllDocumentsController {
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
-    const bundlesClaimantDocs =
-      userCase.bundlesClaimantDocs?.length && bundlesEnabled ? userCase.bundlesClaimantDocs : [];
-    const bundlesRespondentDocs =
-      userCase.bundlesRespondentDocs?.length && bundlesEnabled ? userCase.bundlesRespondentDocs : [];
-    const allDocs = [...docCollection, ...bundlesClaimantDocs, ...bundlesRespondentDocs];
+    const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
+    const allDocs = [...docCollection, ...bundleDocuments];
 
     /**
      * Add meta data and download links for each document
@@ -60,11 +57,8 @@ export default class AllDocumentsController {
     };
 
     await populateMetaDataAndLink(allDocs);
-
     sortedDocuments = createSortedDocumentsMap(allDocs);
-
     tribunalDocuments = sortedDocuments.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE);
-
     acasClaimantRespondentTableRows = prepareTableRows(sortedDocuments, translations, userCase);
 
     res.render(TranslationKeys.ALL_DOCUMENTS, {

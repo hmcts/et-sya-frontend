@@ -192,8 +192,8 @@ export interface Case {
   bundlesRespondentAgreedDocWith?: AgreedDocuments;
   bundlesRespondentAgreedDocWithBut?: string;
   bundlesRespondentAgreedDocWithNo?: string;
-  bundlesClaimantDocs?: DocumentTypeItem[];
-  bundlesRespondentDocs?: DocumentTypeItem[];
+  // bundleDocuments contains both claimant and respondent uploaded bundles submission pdfs
+  bundleDocuments?: DocumentTypeItem[];
   //Created for saving select order or request value;
   selectedRequestOrOrder?: SendNotificationTypeItem;
   hearingCollection?: HearingModel[];

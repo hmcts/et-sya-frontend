@@ -175,12 +175,8 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
 export const isBundlesDoc = (req: AppRequest, docId: string): boolean => {
   if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
     const { userCase } = req.session;
-    const bundlesClaimantDocs = userCase.bundlesClaimantDocs?.length ? userCase.bundlesClaimantDocs : [];
-    const bundlesRespondentDocs = userCase.bundlesRespondentDocs?.length ? userCase.bundlesRespondentDocs : [];
-    return (
-      bundlesClaimantDocs.some(it => getDocId(it.value.uploadedDocument.document_url) === docId) ||
-      bundlesRespondentDocs.some(it => getDocId(it.value.uploadedDocument.document_url) === docId)
-    );
+    const bundleDocuments = userCase.bundleDocuments?.length ? userCase.bundleDocuments : [];
+    return bundleDocuments.some(it => getDocId(it.value.uploadedDocument.document_url) === docId);
   }
   return false;
 };

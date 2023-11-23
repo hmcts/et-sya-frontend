@@ -254,8 +254,7 @@ export default {
       },
     },
   ],
-  bundlesClaimantDocs: undefined,
-  bundlesRespondentDocs: undefined,
+  bundleDocuments: undefined,
   representatives: [
     {
       hasMyHMCTSAccount: YesOrNo.YES,
