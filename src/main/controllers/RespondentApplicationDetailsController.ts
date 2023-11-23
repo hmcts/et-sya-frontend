@@ -48,7 +48,6 @@ export default class RespondentApplicationDetailsController {
       logger.error(e);
       return res.redirect(ErrorPages.NOT_FOUND);
     }
-
     let decisionContent;
     try {
       decisionContent = await getDecisionContent(selectedApplication, translations, accessToken);
