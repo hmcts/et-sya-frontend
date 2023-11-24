@@ -336,7 +336,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingCollection: undefined,
       documentCollection: undefined,
       representatives: undefined,
-      bundlesDocuments: undefined,
+      bundleDocuments: [],
     });
   });
 
@@ -476,6 +476,7 @@ describe('Format Case Data to Frontend Model', () => {
       otherClaim: undefined,
       sendNotificationCollection: undefined,
       genericTseApplicationCollection: undefined,
+      bundleDocuments: [],
       documentCollection: [
         {
           id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',

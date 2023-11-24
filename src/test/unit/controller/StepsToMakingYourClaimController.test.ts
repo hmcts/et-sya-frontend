@@ -179,6 +179,7 @@ describe('Steps to Making your claim Controller', () => {
       workAddressCountry: undefined,
       workAddressPostcode: undefined,
       workAddressTown: undefined,
+      bundleDocuments: [],
     });
     redisClient.quit();
   });
