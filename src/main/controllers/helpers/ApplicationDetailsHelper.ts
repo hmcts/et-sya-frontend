@@ -26,14 +26,14 @@ export const getTseApplicationDetails = (
   rows.push(addSummaryRow(translations.applicant, application.applicant));
 
   if (application.status === TseStatus.STORED_STATE) {
-    rows.push(addSummaryRow(translations.storedDate, application.date));
+    rows.push(addSummaryRow(translations.storedDate, applicationDate));
   } else {
-    rows.push(addSummaryRow(translations.requestDate, application.date));
+    rows.push(addSummaryRow(translations.requestDate, applicationDate));
   }
 
   rows.push(
-    addSummaryRow(translations.applicant, translations[application.applicant]),
-    addSummaryRow(translations.requestDate, applicationDate),
+    // addSummaryRow(translations.applicant, translations[application.applicant]),
+    // addSummaryRow(translations.requestDate, applicationDate),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
@@ -91,8 +91,8 @@ export const getAllResponses = async (
   selectedApplication: GenericTseApplicationTypeItem,
   translations: AnyRecord,
   req: AppRequest
-): Promise<any> => {
-  const allResponses: any[] = [];
+): Promise<TseRespondTypeItem[]> => {
+  const allResponses: TseRespondTypeItem[] = [];
   const respondCollection = selectedApplication.value.respondCollection;
   let responseDate;
   if (!respondCollection?.length) {
@@ -303,5 +303,5 @@ export const getResponseDisplay = async (
   translations: AnyRecord,
   accessToken: string
 ): Promise<SummaryListRow[]> => {
-  return addNonAdminResponse(translations, response, accessToken);
+  return addNonAdminResponse(translations, response, accessToken, Date.now().toString());
 };

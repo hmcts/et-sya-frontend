@@ -84,7 +84,7 @@ describe('Application details', () => {
   });
 
   it('should return expected application details with Stored wordings', () => {
-    const genericTseApplicationType = {
+    const genericTseApplicationType2 = {
       number: '1',
       status: 'Stored',
       type: 'withdraw',
@@ -94,19 +94,24 @@ describe('Application details', () => {
       copyToOtherPartyYesOrNo: YesOrNo.YES,
     } as GenericTseApplicationType;
 
-    const selectedApplication = {
-      value: genericTseApplicationType,
+    const selectedApplication2 = {
+      value: genericTseApplicationType2,
       linkValue: 'withdraw',
     } as GenericTseApplicationTypeItem;
 
-    const translationJsons = { ...applicationDetailsRaw };
-    const req = mockRequestWithTranslation({}, translationJsons);
-    const translations: AnyRecord = {
-      ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
+    const translationJsons2 = { ...applicationDetailsRaw };
+    const req2 = mockRequestWithTranslation({}, translationJsons2);
+    const translations2: AnyRecord = {
+      ...req2.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink');
+    const appContent2 = getTseApplicationDetails(
+      selectedApplication2,
+      translations2,
+      'downloadLink',
+      Date.now().toString()
+    );
 
-    expect(appContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application stored date' });
+    expect(appContent2[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Application stored date' });
   });
 });

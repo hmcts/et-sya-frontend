@@ -101,7 +101,12 @@ export default class StoredToSubmitController {
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
       applicationType: translations.applicationTo + translations[selectedApplication.value.type],
-      appContent: getTseApplicationDetails(selectedApplication, translations, createDownloadLink(document)),
+      appContent: getTseApplicationDetails(
+        selectedApplication,
+        translations,
+        createDownloadLink(document),
+        Date.now().toString()
+      ),
       viewCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
       document,
       viewCorrespondenceFileLink: getDocumentLink(document),

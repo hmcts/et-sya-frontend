@@ -167,8 +167,7 @@ describe('Contact Application Controller', () => {
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
     });
 
-    it('should redirect to copy-to-other-party-not-system-user page when non-type-c application', async () => {
-//    it('should redirect to copy-to-other-party page when non-type-c application - in Welsh language', async () => {
+    it('should redirect to copy-to-other-party page when non-type-c application - in Welsh language', async () => {
       const req = mockRequest({
         body: {
           upload: false,
@@ -179,21 +178,17 @@ describe('Contact Application Controller', () => {
           contactApplicationType: 'withdraw',
         },
       });
-//      req.session.lang = languages.WELSH;
+      req.session.lang = languages.WELSH;
       const res = mockResponse();
 
       await new ContactTheTribunalSelectedController().post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER);
+      expect(res.redirect).toHaveBeenCalledWith(
+        PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.WELSH_URL_PARAMETER
+      );
     });
 
     it('should redirect to CYA page when type-c application', async () => {
-/*
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.WELSH_URL_PARAMETER);
-    });
-
-    it('should redirect to CYA page when type-c application - English language', async () => {
-*/
       const req = mockRequest({
         body: {
           upload: false,

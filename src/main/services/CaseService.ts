@@ -144,6 +144,7 @@ export class CaseApi {
       .catch(function (error) {
         throw new Error('Error submitting stored tse application status: ' + error);
       });
+  };
   submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       const data = {
