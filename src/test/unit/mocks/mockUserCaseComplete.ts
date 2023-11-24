@@ -254,6 +254,7 @@ export default {
       },
     },
   ],
+  bundleDocuments: [],
   representatives: [
     {
       hasMyHMCTSAccount: YesOrNo.YES,

@@ -7,13 +7,13 @@
   "q4": "Welsh Translation required",
   "q5": "Welsh Translation required",
   "whoseHearingDocument": {
-    "mine": "Welsh Translation required",
-    "bothParties": "Welsh Translation required"
+    "My hearing documents only": "Welsh Translation required",
+    "Both parties’ hearing documents combined": "Welsh Translation required"
   },
   "whatAreTheHearingDocuments": {
-    "allHearingDocs": "Welsh Translation required",
-    "supplementary": "Welsh Translation required",
-    "witnessStatements": "Welsh Translation required"
+    "All hearing documents": "Welsh Translation required",
+    "Supplementary or other documents": "Welsh Translation required",
+    "Witness statements only": "Welsh Translation required"
   },
   "important": "Welsh Translation required",
   "paragraphAboutSubmittingDocsInAdvance": "Welsh Translation required",

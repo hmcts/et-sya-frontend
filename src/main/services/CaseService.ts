@@ -120,13 +120,18 @@ export class CaseApi {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         claimant_bundles: {
-          agreedDocWith: caseItem.bundlesRespondentAgreedDocWith || '',
+          agreedDocWith: caseItem.bundlesRespondentAgreedDocWith,
           agreedDocWithBut: caseItem.bundlesRespondentAgreedDocWithBut || '',
           agreedDocWithNo: caseItem.bundlesRespondentAgreedDocWithNo || '',
           hearing: caseItem.hearingDocumentsAreFor,
+          formattedSelectedHearing: caseItem.formattedSelectedHearing,
           whatDocuments: caseItem.whatAreTheseDocuments,
           whoseDocuments: caseItem.whoseHearingDocumentsAreYouUploading,
           uploadFile: caseItem.hearingDocument,
+          uploadDateTime: new Intl.DateTimeFormat('en-GB', {
+            dateStyle: 'long',
+            timeStyle: 'short',
+          }).format(new Date()),
         },
       };
       return await this.axios.put(JavaApiUrls.SUBMIT_BUNDLES, data);

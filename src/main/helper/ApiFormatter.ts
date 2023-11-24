@@ -7,6 +7,7 @@ import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  HearingBundleType,
   RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
@@ -23,8 +24,10 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
+  AllDocumentTypes,
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
@@ -195,6 +198,18 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
+    bundleDocuments: [
+      ...combineDocuments<DocumentTypeItem>(
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesClaimantCollection,
+          AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
+        ),
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesRespondentCollection,
+          AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
+        )
+      ),
+    ],
   };
 }
 
@@ -512,4 +527,18 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   items?.sort(sortByDate);
 
   return items;
+};
+
+export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
+  return !bundles?.length
+    ? undefined
+    : bundles.map(item => ({
+        id: '',
+        value: {
+          shortDescription: item.value.formattedSelectedHearing || bundleType,
+          uploadedDocument: item.value.uploadFile,
+          typeOfDocument: bundleType,
+          creationDate: '',
+        },
+      }));
 };
