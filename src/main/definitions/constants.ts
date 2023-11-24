@@ -611,6 +611,8 @@ export const TseStatus = {
 export const ResponseStatus = {
   OPEN_STATE: 'Open',
   STORED_STATE: 'Stored',
+} as const;
+
 export const FEATURE_FLAGS = {
   WELSH: 'welsh-language',
   BUNDLES: 'bundles',
