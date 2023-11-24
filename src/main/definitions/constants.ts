@@ -526,6 +526,8 @@ export const AllDocumentTypes = {
   ACAS_CERT: 'ACAS Certificate',
   RESPONDENT_CORRESPONDENCE: 'Respondent correspondence',
   TRIBUNAL_CORRESPONDENCE: 'Tribunal correspondence',
+  CLAIMANT_HEARING_DOCUMENT: 'Claimant Hearing Document',
+  RESPONDENT_HEARING_DOCUMENT: 'Respondent Hearing Document',
 } as const;
 
 export const NotificationSubjects = {

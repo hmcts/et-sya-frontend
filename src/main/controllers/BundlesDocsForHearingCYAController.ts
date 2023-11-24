@@ -31,6 +31,7 @@ export default class BundlesDocsForHearingCYAController {
     const downloadLink = createDownloadLinkForHearingDoc(userCase?.hearingDocument);
     const foundHearing = userCase.hearingCollection?.find(hearing => hearing.id === userCase.hearingDocumentsAreFor);
     const formattedSelectedHearing = createLabelForHearing(foundHearing);
+    userCase.formattedSelectedHearing = formattedSelectedHearing;
     const bundlesEnabled = await getFlagValue(FEATURE_FLAGS.BUNDLES, null);
 
     res.render(TranslationKeys.BUNDLES_DOCS_FOR_HEARING_CYA, {

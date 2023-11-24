@@ -5,7 +5,12 @@ import { getDocId } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { isDocFromJudgement, isDocInDocumentCollection, isDocOnApplicationPage } from './helpers/AllDocumentsHelper';
+import {
+  isBundlesDoc,
+  isDocFromJudgement,
+  isDocInDocumentCollection,
+  isDocOnApplicationPage,
+} from './helpers/AllDocumentsHelper';
 import { isRequestDocId } from './helpers/DocumentHelpers';
 
 const logger = getLogger('AttachmentController');
@@ -29,7 +34,8 @@ export default class AttachmentController {
       isDocOnApplicationPage(req, docId) ||
       isRequestDocId(req, docId) ||
       isDocFromJudgement(req, docId) ||
-      isDocInDocumentCollection(req, docId)
+      isDocInDocumentCollection(req, docId) ||
+      isBundlesDoc(req, docId)
     ) {
       try {
         const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
