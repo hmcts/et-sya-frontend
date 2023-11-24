@@ -32,6 +32,19 @@ export const YesNoRadioValues = [
   },
 ];
 
+export const SupportingMaterialYesNoRadioValues = [
+  {
+    label: (l: AnyRecord): string => l.supportingMaterialYesNo.yes,
+    name: 'radioYes',
+    value: YesOrNo.YES,
+  },
+  {
+    label: (l: AnyRecord): string => l.supportingMaterialYesNo.no,
+    name: 'radioNo',
+    value: YesOrNo.NO,
+  },
+];
+
 export const submitButton: SubmitButton = {
   text: (l: AnyRecord): string => l.submit,
   classes: 'govuk-!-margin-right-2',

@@ -62,7 +62,12 @@ describe('Respondent application details', () => {
       ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
     };
 
-    const appContent = getTseApplicationDetails(selectedApplication, translations, 'downloadLink', 'en-GB');
+    const appContent = getTseApplicationDetails(
+      selectedApplication,
+      translations,
+      'downloadLink',
+      genericTseApplicationType.date
+    );
 
     expect(appContent[0].key).toEqual({ classes: summaryListClass, text: 'Applicant' });
     expect(appContent[0].value).toEqual({ text: 'Respondent' });

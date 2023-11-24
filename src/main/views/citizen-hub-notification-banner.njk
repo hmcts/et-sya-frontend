@@ -9,7 +9,7 @@
 
   <p class="govuk-body">
     {{ processClaim }}
-    {{ processingDueDate }}{{ busyPeriod }}
+    {{ dateToLocale(processingDueDate) }}{{ busyPeriod }}
   </p>
 {% endif %}
 
