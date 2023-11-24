@@ -79,10 +79,10 @@ export interface HearingBundleType {
     agreedDocWith: string;
     whatDocuments: string;
     whoseDocuments: string;
-    uploadDateTime: string;
-    agreedDocWithNo: string;
-    formattedSelectedHearing: string;
-    agreedDocWithBut: string;
+    uploadDateTime?: string;
+    agreedDocWithNo?: string;
+    formattedSelectedHearing?: string;
+    agreedDocWithBut?: string;
     hearing: string;
   };
 }

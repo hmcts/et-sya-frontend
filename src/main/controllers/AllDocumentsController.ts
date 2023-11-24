@@ -1,7 +1,6 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { AllDocumentTypes, FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
@@ -41,25 +40,19 @@ export default class AllDocumentsController {
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];
 
-    /**
-     * Add meta data and download links for each document
-     */
-    const populateMetaDataAndLink = async (docs: DocumentTypeItem[]) => {
-      if (docs?.length) {
-        try {
-          await getDocumentsAdditionalInformation(docs, req.session.user?.accessToken);
-        } catch (err) {
-          logger.error(err.message);
-          res.redirect('/not-found');
-        }
-        docs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+    if (allDocs?.length) {
+      try {
+        await getDocumentsAdditionalInformation(allDocs, req.session.user?.accessToken);
+      } catch (err) {
+        logger.error(err.message);
+        res.redirect('/not-found');
       }
-    };
 
-    await populateMetaDataAndLink(allDocs);
-    sortedDocuments = createSortedDocumentsMap(allDocs);
-    tribunalDocuments = sortedDocuments.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE);
-    acasClaimantRespondentTableRows = prepareTableRows(sortedDocuments, translations, userCase);
+      allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
+      sortedDocuments = createSortedDocumentsMap(allDocs);
+      tribunalDocuments = sortedDocuments.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE);
+      acasClaimantRespondentTableRows = prepareTableRows(sortedDocuments, translations, userCase);
+    }
 
     res.render(TranslationKeys.ALL_DOCUMENTS, {
       ...content,

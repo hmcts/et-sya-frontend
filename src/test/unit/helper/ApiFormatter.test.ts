@@ -1,4 +1,8 @@
-import { CaseApiDataResponse, DocumentApiModel } from '../../../main/definitions/api/caseApiResponse';
+import {
+  CaseApiDataResponse,
+  DocumentApiModel,
+  HearingBundleType,
+} from '../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -33,6 +37,7 @@ import {
   getFileExtension,
   isOtherTitle,
   isValidPreferredTitle,
+  mapBundlesDocs,
   parseDateFromString,
   returnPreferredTitle,
   setDocumentValues,
@@ -668,5 +673,55 @@ describe('testDeadlineCalculatingAndFormatting', () => {
     { mockRef: '2022-09-15T08:48:58.613343', expected: '13 October 2022' },
   ])('convert claim served date to respondent deadline', ({ mockRef, expected }) => {
     expect(getDueDate(mockRef, 28)).toEqual(expected);
+  });
+});
+
+const mockBundlesClaimantCollection: HearingBundleType[] = [
+  {
+    id: '123',
+    value: {
+      hearing: '1',
+      uploadFile: {
+        document_url: 'http://documenturl',
+        document_filename: 'AdditionalInfo.pdf',
+        document_binary_url: 'http://documenturl/binary',
+      },
+      agreedDocWith: 'We have agreed but there are some disputed documents',
+      whatDocuments: 'Supplementary or other documents',
+      uploadDateTime: '21 November 2023 at 10:24',
+      whoseDocuments: 'Both parties’ hearing documents combined',
+      agreedDocWithBut: 'We did not agree on some things',
+      formattedSelectedHearing: 'Hearing - Barnstaple - 16 May 2069',
+    },
+  },
+];
+describe('mapBundlesDocs', () => {
+  it('should map bundles documents', () => {
+    const bundlesClaimantCollection = mockBundlesClaimantCollection;
+    const expected = [
+      {
+        id: '',
+        value: {
+          shortDescription: 'Hearing - Barnstaple - 16 May 2069',
+          uploadedDocument: {
+            document_url: 'http://documenturl',
+            document_filename: 'AdditionalInfo.pdf',
+            document_binary_url: 'http://documenturl/binary',
+          },
+          typeOfDocument: 'Claimant Hearing Document',
+          creationDate: '',
+        },
+      },
+    ];
+
+    const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
+    expect(result).toEqual(expected);
+  });
+
+  it('should return undefined when no bundles', () => {
+    const bundlesClaimantCollection: HearingBundleType[] = undefined;
+
+    const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
+    expect(result).toEqual(undefined);
   });
 });

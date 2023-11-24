@@ -213,20 +213,6 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
   };
 }
 
-export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
-  return !bundles?.length
-    ? undefined
-    : bundles.map(item => ({
-        id: '',
-        value: {
-          shortDescription: item.value.formattedSelectedHearing || bundleType,
-          uploadedDocument: item.value.uploadFile,
-          typeOfDocument: bundleType,
-          creationDate: '',
-        },
-      }));
-};
-
 export function toApiFormat(caseItem: CaseWithId): UpdateCaseBody {
   const updateCaseBody = getUpdateCaseBody(caseItem);
   if (updateCaseBody.case_data.triageQuestions !== undefined) {
@@ -541,4 +527,18 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   items?.sort(sortByDate);
 
   return items;
+};
+
+export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
+  return !bundles?.length
+    ? undefined
+    : bundles.map(item => ({
+        id: '',
+        value: {
+          shortDescription: item.value.formattedSelectedHearing || bundleType,
+          uploadedDocument: item.value.uploadFile,
+          typeOfDocument: bundleType,
+          creationDate: '',
+        },
+      }));
 };
