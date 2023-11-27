@@ -94,9 +94,10 @@ def check_json_keys(json_blocks):
 def combine_suppressions_and_vulnerabilities(suppressions, vulnerabilities):
   # comparison logic is based on the ID of the vulnerability - if the ID is the same, we assume it's the same
   # vulnerability
-  list_of_unsuppressed_vulnerabilities = [item for item in vulnerabilities if item not in suppressions]
-  list_of_unneeded_suppressions = [item for item in suppressions if item not in vulnerabilities]
-  return list_of_unsuppressed_vulnerabilities, list_of_unneeded_suppressions
+  unsuppressed_vulnerabilities = [item for item in vulnerabilities if item not in suppressions]
+  unneeded_suppressions = [item for item in suppressions if item not in vulnerabilities]
+  suppressed_active_vulnerabilities = [item for item in vulnerabilities if item in suppressions]
+  return unsuppressed_vulnerabilities, unneeded_suppressions, suppressed_active_vulnerabilities
 
 
 def build_list_of_issues(json_blocks):
@@ -145,13 +146,13 @@ def decide_what_to_print(unsuppressed_vulnerabilities, unneeded_suppressions):
         print_suppressions(unneeded_suppressions)
 
 def build_parent_json_for_cosmosDB(vulnerabilities, suppressions):
-    parent_block = {"vulnerabilities": [v.to_json() for v in vulnerabilities],
-                    "suppressions": [s.to_json() for s in suppressions]}
+    parent_block = {"suppressed_vulnerabilities": [s.to_json() for s in suppressions],
+                    "unsuppressed_vulnerabilities": [v.to_json() for v in vulnerabilities]}
     return json.dumps(parent_block, indent=2)
 
 audit_output, return_code = run_audit_command()
 vulnerabilities = validate_audit_response(audit_output, return_code)
 suppressions = check_yarn_audit_known_issues()
-unsuppressed_vulnerabilities, unneeded_suppressions = combine_suppressions_and_vulnerabilities(suppressions, vulnerabilities)
+unsuppressed_vulnerabilities, unneeded_suppressions, suppressed_active_vulnerabilities = combine_suppressions_and_vulnerabilities(suppressions, vulnerabilities)
 decide_what_to_print(unsuppressed_vulnerabilities, unneeded_suppressions)
-print(build_parent_json_for_cosmosDB(vulnerabilities, suppressions))
+print(build_parent_json_for_cosmosDB(unsuppressed_vulnerabilities, suppressed_active_vulnerabilities))
