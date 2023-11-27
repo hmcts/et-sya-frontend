@@ -147,8 +147,7 @@ def decide_what_to_print(unsuppressed_vulnerabilities, unneeded_suppressions):
 
 def build_parent_json_for_cosmosDB(vulnerabilities, suppressions):
     if os.environ.get('ci') != 'True':
-        print("Not running in CI, skipping parent JSON block")
-        return
+        return "Not running in CI, skipping parent JSON block"
     parent_block = {"suppressed_vulnerabilities": [s.to_json() for s in suppressions],
                     "unsuppressed_vulnerabilities": [v.to_json() for v in vulnerabilities]}
     return json.dumps(parent_block, indent=2)
