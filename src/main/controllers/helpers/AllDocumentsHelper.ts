@@ -48,8 +48,10 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
     case AllDocumentTypes.ACAS_CERT:
       return translations.acasDocs;
     case AllDocumentTypes.CLAIMANT_CORRESPONDENCE:
+    case AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT:
       return translations.claimantDocs;
     case AllDocumentTypes.RESPONDENT_CORRESPONDENCE:
+    case AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT:
       return translations.respondentDocs;
     default:
       return undefined;

@@ -102,7 +102,7 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
 const formatDate = (rawDate: Date): string =>
   new Intl.DateTimeFormat('en-GB', {
     day: 'numeric',
-    month: 'short',
+    month: 'long',
     year: 'numeric',
   }).format(new Date(rawDate));
 
@@ -121,24 +121,21 @@ export const createLabelForHearing = (hearing: HearingModel): string => {
     new Date(a.value.listedDate) > new Date(b.value.listedDate) ? b : a
   );
   const venue = hearing.value?.Hearing_venue_Scotland || hearing.value?.Hearing_venue?.value?.label;
-  return `${hearing.value.Hearing_type} - ${venue} - ${formatDate(earliestDate.value.listedDate)}`;
+  return `${hearing.value.hearingNumber ?? ''} ${hearing.value.Hearing_type ?? ''} - ${venue ?? ''} - ${formatDate(
+    earliestDate.value.listedDate
+  )}`;
 };
 
 export const createRadioBtnsForHearings = (
   hearingCollection: HearingModel[]
 ): { name: string; label: string; value: string }[] | undefined => {
   const filtered = hearingCollection.filter(hearing => !!createLabelForHearing(hearing));
-
   if (!filtered.length) {
     return;
   }
-
-  return filtered.map((hearing, index) => {
-    const label = createLabelForHearing(hearing);
-    return {
-      label: `${index + 1} ${label}`,
-      value: `${hearing.id}`,
-      name: 'hearingDocumentsAreFor',
-    };
-  });
+  return filtered.map(hearing => ({
+    label: createLabelForHearing(hearing),
+    value: hearing.id,
+    name: 'hearingDocumentsAreFor',
+  }));
 };

@@ -530,6 +530,8 @@ export const AllDocumentTypes = {
   RESPONDENT_HEARING_DOCUMENT: 'Respondent Hearing Document',
 } as const;
 
+export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDocumentTypes];
+
 export const NotificationSubjects = {
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',

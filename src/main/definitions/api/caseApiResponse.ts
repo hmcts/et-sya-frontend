@@ -1,3 +1,4 @@
+import { TypeItem } from '../../definitions/util-types';
 import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
@@ -68,24 +69,21 @@ export interface CaseData {
   sendNotificationCollection?: SendNotificationTypeItem[];
   hearingCollection?: HearingModel[];
   repCollection?: RepresentativeApiModel[];
-  bundlesClaimantCollection?: HearingBundleType[];
-  bundlesRespondentCollection?: HearingBundleType[];
+  bundlesClaimantCollection?: TypeItem<HearingBundleType>[];
+  bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
 }
 
-export interface HearingBundleType {
-  id: string;
-  value: {
-    uploadFile: Document;
-    agreedDocWith: string;
-    whatDocuments: string;
-    whoseDocuments: string;
-    uploadDateTime?: string;
-    agreedDocWithNo?: string;
-    formattedSelectedHearing?: string;
-    agreedDocWithBut?: string;
-    hearing: string;
-  };
-}
+export type HearingBundleType = {
+  uploadFile: Document;
+  agreedDocWith: string;
+  whatDocuments: string;
+  whoseDocuments: string;
+  uploadDateTime?: string;
+  agreedDocWithNo?: string;
+  formattedSelectedHearing?: string;
+  agreedDocWithBut?: string;
+  hearing: string;
+};
 
 export interface HearingModel {
   id: string;

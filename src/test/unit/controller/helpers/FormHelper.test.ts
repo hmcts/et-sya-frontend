@@ -23,11 +23,11 @@ describe('createRadioBtnsForHearings - create radio buttons for selecting a hear
 });
 
 describe('createLabelForHearing - produce a formatted label with hearing venue and date', () => {
-  it('should return a label, with hearing type, location and formatted date', () => {
+  it('should return a label, with hearing number, hearing type, location and formatted date', () => {
     const collection = [...mockHearingCollection];
     collection[0].value.hearingDateCollection[0].value.listedDate = new Date('2038-07-04T14:00:00.000');
     const label = createLabelForHearing(collection[0]);
 
-    expect(label).toEqual('Hearing - RCJ - 4 Jul 2038');
+    expect(label).toEqual('3333 Hearing - RCJ - 4 July 2038');
   });
 });
