@@ -44,4 +44,11 @@ describe('createLabelForHearing - produce a formatted label with hearing venue a
     const label = createLabelForHearing(collection[0]);
     expect(label).toEqual('3333 Hearing -  - 4 July 2038');
   });
+  it('should return the earliest date in the furture from the hearing collection', () => {
+    const collection = [...mockHearingCollection];
+    collection[0].value.hearingDateCollection[0].value.listedDate = new Date('2040-07-04T14:00:00.000');
+    collection[0].value.hearingDateCollection[1].value.listedDate = new Date('2042-07-04T14:00:00.000');
+    const label = createLabelForHearing(collection[0]);
+    expect(label).toEqual('3333 Hearing - RCJ - 4 July 2040');
+  });
 });
