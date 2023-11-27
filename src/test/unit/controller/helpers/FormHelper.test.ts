@@ -30,4 +30,18 @@ describe('createLabelForHearing - produce a formatted label with hearing venue a
 
     expect(label).toEqual('3333 Hearing - RCJ - 4 July 2038');
   });
+  it('should not return the hearing number if undefined', () => {
+    const collection = [...mockHearingCollection];
+    collection[0].value.hearingDateCollection[0].value.listedDate = new Date('2038-07-04T14:00:00.000');
+    collection[0].value.hearingNumber = undefined;
+    const label = createLabelForHearing(collection[0]);
+    expect(label).toEqual(' Hearing - RCJ - 4 July 2038');
+  });
+  it('should not return the hearing venue if undefined', () => {
+    const collection = [...mockHearingCollection];
+    collection[0].value.hearingDateCollection[0].value.listedDate = new Date('2038-07-04T14:00:00.000');
+    collection[0].value.Hearing_venue = undefined;
+    const label = createLabelForHearing(collection[0]);
+    expect(label).toEqual('3333 Hearing -  - 4 July 2038');
+  });
 });
