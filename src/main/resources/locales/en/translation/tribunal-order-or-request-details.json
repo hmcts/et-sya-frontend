@@ -15,5 +15,8 @@
   "sentTo": "Sent to",
   "eccNotification": "What is the ECC notification?",
   "tips": "You must respond to the tribunal",
-  "respond": "Respond"
+  "respond": "Respond",
+  "tribunal": "Tribunal",
+  "Yes - view document for details": "Yes - view document for details",
+  "Caseworker": "Caseworker"
 }

@@ -1,4 +1,8 @@
-import { CaseApiDataResponse, DocumentApiModel } from '../../../main/definitions/api/caseApiResponse';
+import {
+  CaseApiDataResponse,
+  DocumentApiModel,
+  HearingBundleType,
+} from '../../../main/definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../../../main/definitions/api/documentApiResponse';
 import { UserDetails } from '../../../main/definitions/appRequest';
 import {
@@ -24,6 +28,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
+import { TypeItem } from '../../../main/definitions/util-types';
 import {
   formatDate,
   fromApiFormat,
@@ -33,6 +38,7 @@ import {
   getFileExtension,
   isOtherTitle,
   isValidPreferredTitle,
+  mapBundlesDocs,
   parseDateFromString,
   returnPreferredTitle,
   setDocumentValues,
@@ -331,6 +337,7 @@ describe('Format Case Data to Frontend Model', () => {
       hearingCollection: undefined,
       documentCollection: undefined,
       representatives: undefined,
+      bundleDocuments: [],
     });
   });
 
@@ -470,6 +477,7 @@ describe('Format Case Data to Frontend Model', () => {
       otherClaim: undefined,
       sendNotificationCollection: undefined,
       genericTseApplicationCollection: undefined,
+      bundleDocuments: [],
       documentCollection: [
         {
           id: 'f78aa088-c223-4ca5-8e0a-42e7c33dffa5',
@@ -667,5 +675,55 @@ describe('testDeadlineCalculatingAndFormatting', () => {
     { mockRef: '2022-09-15T08:48:58.613343', expected: '13 October 2022' },
   ])('convert claim served date to respondent deadline', ({ mockRef, expected }) => {
     expect(getDueDate(mockRef, 28)).toEqual(expected);
+  });
+});
+
+const mockBundlesClaimantCollection: TypeItem<HearingBundleType>[] = [
+  {
+    id: '123',
+    value: {
+      hearing: '1',
+      uploadFile: {
+        document_url: 'http://documenturl',
+        document_filename: 'AdditionalInfo.pdf',
+        document_binary_url: 'http://documenturl/binary',
+      },
+      agreedDocWith: 'We have agreed but there are some disputed documents',
+      whatDocuments: 'Supplementary or other documents',
+      uploadDateTime: '21 November 2023 at 10:24',
+      whoseDocuments: 'Both parties’ hearing documents combined',
+      agreedDocWithBut: 'We did not agree on some things',
+      formattedSelectedHearing: 'Hearing - Barnstaple - 16 May 2069',
+    },
+  },
+];
+describe('mapBundlesDocs', () => {
+  it('should map bundles documents', () => {
+    const bundlesClaimantCollection = mockBundlesClaimantCollection;
+    const expected = [
+      {
+        id: '',
+        value: {
+          shortDescription: 'Hearing - Barnstaple - 16 May 2069',
+          uploadedDocument: {
+            document_url: 'http://documenturl',
+            document_filename: 'AdditionalInfo.pdf',
+            document_binary_url: 'http://documenturl/binary',
+          },
+          typeOfDocument: 'Claimant Hearing Document',
+          creationDate: '',
+        },
+      },
+    ];
+
+    const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
+    expect(result).toEqual(expected);
+  });
+
+  it('should return undefined when no bundles', () => {
+    const bundlesClaimantCollection: TypeItem<HearingBundleType>[] = undefined;
+
+    const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
+    expect(result).toEqual(undefined);
   });
 });

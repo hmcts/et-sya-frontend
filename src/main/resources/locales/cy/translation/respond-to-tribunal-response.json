@@ -2,10 +2,10 @@
   "title": "Ymateb i gais",
   "caption": "Ymateb i gais",
   "h1": "Eich ymateb",
-  "textInputLabel": "Welsh Translation required",
-  "textInputHint": "Welsh Translation required.",
+  "textInputLabel": "Beth yw eich ymateb i’r tribiwnlys",
+  "textInputHint": "Defnyddiwch y blwch hwn i ymateb neu gallwch uwchlwytho deunydd yn y cam nesaf.",
   "radioButtonLabel": "Ddeunydd ategol",
-  "radioButtonHint": "Welsh Translation required?",
+  "radioButtonHint": "A oes gennych unrhyw ddeunydd ategol yr hoffech ei ddarparu?",
   "responseItem": "Ymateb",
   "contact": "Cysylltu",
   "errors": {

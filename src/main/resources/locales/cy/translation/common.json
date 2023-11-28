@@ -35,6 +35,8 @@
   "invalidDate": "Dyddiad ddim yn ddilys",
   "yes": "Do",
   "no": "Naddo",
+  "Yes": "Do",
+  "No": "Naddo",
   "supportingMaterialYesNo": {
     "yes": "Oes",
     "no": "Nac oes"
@@ -121,5 +123,11 @@
   "respondentPostcodeEnterTitle": "Rhowch god post yr ymatebydd",
   "respondentPostcodeSelectTitle": "Dewis cod post yr ymatebydd",
   "updateDraftErrorMessage": "Mae gwall wrth ddiweddaru eich achos. Cliciwch y neges gwall hon i fynd yn ôl i'r camau i wneud eich cais ac ailgyflwyno'r manylion.",
-  "beta": "beta"
+  "beta": "beta",
+  "Legal officer": "Swyddog Cyfreithiol",
+  "Judge": "Barnwr",
+  "Both parties": "Y ddau barti",
+  "Claimant only": "Hawlydd yn unig",
+  "Case management order": "Gorchymyn rheoli achos",
+  "Request": "Cais"
 }

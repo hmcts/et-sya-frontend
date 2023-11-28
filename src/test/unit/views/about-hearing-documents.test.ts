@@ -9,7 +9,7 @@ const buttonClass = 'govuk-button';
 const expectedTitle = 'About your hearing documents';
 const radioButtonQuestion = 'govuk-radios govuk-radios';
 const inputs = 'govuk-label govuk-radios__label';
-const expectedRadioButton = '1 Hearing - RCJ - 4 Jul 2223';
+const expectedRadioButton = '3333 Hearing - RCJ - 4 July 2223';
 let htmlRes: Document;
 
 describe('About hearing documents page', () => {
@@ -161,7 +161,7 @@ describe('About hearing documents page', () => {
     const radios = question1.getElementsByClassName(inputs);
     expect(radios.length).equal(1, `only ${radios.length} found`);
   });
-  it('first radio button of first question should display the numbered hearing with location and formatted date', () => {
+  it('first radio button of first question should display -hearing number -hearing type -hearing venue and -formatted date', () => {
     const allQuestions = htmlRes.getElementsByClassName(radioButtonQuestion);
     const question1 = allQuestions[0];
     const radios = question1.getElementsByClassName(inputs);

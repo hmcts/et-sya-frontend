@@ -7,13 +7,13 @@
   "q4": "What is this document?",
   "q5": "Your documents",
   "whoseHearingDocument": {
-    "mine": "My hearing documents only",
-    "bothParties": "Both parties’ hearing documents combined"
+    "My hearing documents only": "My hearing documents only",
+    "Both parties’ hearing documents combined": "Both parties’ hearing documents combined"
   },
   "whatAreTheHearingDocuments": {
-    "allHearingDocs": "All hearing documents",
-    "supplementary": "Supplementary or other documents",
-    "witnessStatements": "Witness statements only"
+    "All hearing documents": "All hearing documents",
+    "Supplementary or other documents": "Supplementary or other documents",
+    "Witness statements only": "Witness statements only"
   },
   "important": "Important:",
   "paragraphAboutSubmittingDocsInAdvance": "You will not be able to change this one you select ‘Submit’. If you need to submit further documents later, you must do so in advance of the hearing date. It wil be up to the tribunal whether they can be included in the hearing agenda. This document will also be sent to the other parties. ",

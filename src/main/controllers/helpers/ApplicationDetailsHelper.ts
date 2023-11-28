@@ -171,14 +171,14 @@ const addAdminResponse = async (
         text: translations.responseDue,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.isResponseRequired },
+      value: { text: translations[response.value.isResponseRequired] },
     },
     {
       key: {
         text: translations.partyToRespond,
         classes: 'govuk-!-font-weight-regular-m',
       },
-      value: { text: response.value.selectPartyRespond },
+      value: { text: translations[response.value.selectPartyRespond] },
     },
     {
       key: {
@@ -212,7 +212,10 @@ const addAdminResponse = async (
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: {
-        text: response.value.isCmoOrRequest === 'Request' ? response.value.requestMadeBy : response.value.cmoMadeBy,
+        text:
+          response.value.isCmoOrRequest === 'Request'
+            ? translations[response.value.requestMadeBy]
+            : translations[response.value.cmoMadeBy],
       },
     },
     {

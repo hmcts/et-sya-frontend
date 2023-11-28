@@ -12,6 +12,7 @@ import { DecisionAndApplicationDetails } from '../../definitions/definition';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, statusColorMap } from '../../definitions/hub';
 import { AnyRecord } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink, getDocumentsAdditionalInformation } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
@@ -90,14 +91,15 @@ export const getDecisionAttachments = async (
 export const getJudgmentDetails = (
   selectedJudgment: SendNotificationTypeItem,
   judgmentAttachments: DocumentTypeItem[],
-  translations: AnyRecord
+  translations: AnyRecord,
+  url: string
 ): SummaryListRow[] => {
   const judgmentDetails = [];
 
   judgmentDetails.push(
-    addSummaryRow(translations.decision, selectedJudgment.value.sendNotificationDecision),
-    addSummaryRow(translations.dateSent, selectedJudgment.value.date),
-    addSummaryRow(translations.sentBy, selectedJudgment.value.sendNotificationSentBy)
+    addSummaryRow(translations.decision, translations[selectedJudgment.value.sendNotificationDecision]),
+    addSummaryRow(translations.dateSent, datesStringToDateInLocale(selectedJudgment.value.date, url)),
+    addSummaryRow(translations.sentBy, translations[selectedJudgment.value.sendNotificationSentBy])
   );
 
   if (selectedJudgment.value.sendNotificationAdditionalInfo) {
@@ -116,9 +118,9 @@ export const getJudgmentDetails = (
   }
 
   judgmentDetails.push(
-    addSummaryRow(translations.judgmentMadeBy, selectedJudgment.value.sendNotificationWhoMadeJudgement),
+    addSummaryRow(translations.judgmentMadeBy, translations[selectedJudgment.value.sendNotificationWhoMadeJudgement]),
     addSummaryRow(translations.name, selectedJudgment.value.sendNotificationFullName2),
-    addSummaryRow(translations.sentTo, selectedJudgment.value.sendNotificationNotify)
+    addSummaryRow(translations.sentTo, translations[selectedJudgment.value.sendNotificationNotify])
   );
   return judgmentDetails;
 };

@@ -363,15 +363,31 @@ export const aboutHearingDocumentsErrors = (req: AppRequest): FormError[] => {
 
 export const agreeingDocumentsForHearingErrors = (req: AppRequest): FormError[] => {
   const errors: FormError[] = [];
-  const radioButtons = req.body.bundlesRespondentAgreedDocWith;
+  const {
+    bundlesRespondentAgreedDocWith: radioButtons,
+    bundlesRespondentAgreedDocWithBut: agreedButText,
+    bundlesRespondentAgreedDocWithNo: notAgreedText,
+  } = req.body;
+
   if (!radioButtons) {
     errors.push({ propertyName: 'bundlesRespondentAgreedDocWith', errorType: 'required' });
+  } else {
+    const checkTextLength = (text: string, propertyName: string) => {
+      if (!text) {
+        errors.push({ propertyName, errorType: 'required' });
+      } else if (text.length > 2500) {
+        errors.push({ propertyName, errorType: 'exceeded' });
+      }
+    };
+
+    if (radioButtons === AgreedDocuments.AGREEDBUT) {
+      checkTextLength(agreedButText, 'bundlesRespondentAgreedDocWithBut');
+    }
+
+    if (radioButtons === AgreedDocuments.NOTAGREED) {
+      checkTextLength(notAgreedText, 'bundlesRespondentAgreedDocWithNo');
+    }
   }
-  if (radioButtons === AgreedDocuments.AGREEDBUT && !req.body.bundlesRespondentAgreedDocWithBut) {
-    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithBut', errorType: 'required' });
-  }
-  if (radioButtons === AgreedDocuments.NOTAGREED && !req.body.bundlesRespondentAgreedDocWithNo) {
-    errors.push({ propertyName: 'bundlesRespondentAgreedDocWithNo', errorType: 'required' });
-  }
+
   return errors;
 };

@@ -59,7 +59,7 @@ describe('All judgments page', () => {
 
   it('should display the judgment', () => {
     const cellDataClassData = htmlRes.getElementsByClassName(cellDataClass);
-    expect(cellDataClassData[0].innerHTML).contains('2022-05-05', 'Judgment date does not exist');
+    expect(cellDataClassData[0].innerHTML).contains('5 May 2022', 'Judgment date does not exist');
     expect(cellDataClassData[1].innerHTML).contains(
       '/judgment-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en',
       'Judgment url does not exist'
