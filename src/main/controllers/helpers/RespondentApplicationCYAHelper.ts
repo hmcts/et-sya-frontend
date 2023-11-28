@@ -18,7 +18,7 @@ export const getRespondentCyaContent = (
   responseUrl: string
 ): SummaryListRow[] => {
   const rows: SummaryListRow[] = [];
-  const { legend, supportingMaterial, change } = translations;
+  const { legend, supportingMaterial, change, copyToOtherPartyYesOrNo } = translations;
 
   rows.push(
     addSummaryRow(
@@ -36,8 +36,8 @@ export const getRespondentCyaContent = (
   if (!applicationTypes.claimant.c.includes(userCase.contactApplicationType) && userCase.copyToOtherPartyYesOrNo) {
     rows.push(
       addSummaryRow(
-        translations.copyToOtherPartyYesOrNo,
-        userCase.copyToOtherPartyYesOrNo,
+        copyToOtherPartyYesOrNo,
+        translations[userCase.copyToOtherPartyYesOrNo],
         createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, translations.copyToOtherPartyYesOrNo)
       )
     );
