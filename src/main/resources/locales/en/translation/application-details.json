@@ -6,6 +6,8 @@
   "applicationType": "Application type",
   "legend": "What do you want to tell or ask the tribunal?",
   "supportingMaterial": "Supporting material",
+  "Respondent": "Respondent",
+  "Claimant": "Claimant",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "otherPartyResponse": "Other party response",
   "responder": "Response from",
@@ -17,7 +19,7 @@
   "vary": "vary or revoke an order",
   "reconsider-decision": "consider a decision afresh",
   "amend": "amend my claim",
-  "respondent": "order the respondent",
+  "respondent": "order the respondent to do something",
   "witness": "order a witness to attend",
   "non-compliance": "tell the tribunal the respondent has not complied",
   "publicity": "restrict publicity",
@@ -45,5 +47,10 @@
   "notificationWithSpace": "<br><br>Notification",
   "tableTopWithSpace": "<br><br>",
   "decisionMadeBy": "Decision made by",
-  "decisionType": "Type of decision"
+  "decisionType": "Type of decision",
+  "Yes": "Yes",
+  "No": "No",
+  "Neither": "Neither",
+  "Both parties": "Both parties",
+  "Claimant only": "Claimant only"
 }

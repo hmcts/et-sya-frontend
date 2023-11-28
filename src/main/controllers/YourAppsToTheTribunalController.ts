@@ -4,6 +4,7 @@ import { AppRequest } from '../definitions/appRequest';
 import { TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
@@ -18,7 +19,7 @@ export default class YourAppsToTheTribunalController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
     };
-
+    const welshEnabled = await getFlagValue('welsh-language', null);
     populateAppItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -31,6 +32,7 @@ export default class YourAppsToTheTribunalController {
       ...content,
       tseGenericApps,
       translations,
+      welshEnabled,
     });
   };
 }

@@ -38,7 +38,7 @@ export const prepareTableRows = (
     .map(docSection => {
       return {
         caption: getTableCaption(docSection[0].value.typeOfDocument, translations),
-        rows: docSection.map(it => mapDocumentToTableRow(it)),
+        rows: docSection.map(it => mapDocumentToTableRow(it, translations)),
       };
     });
 };
@@ -48,18 +48,22 @@ export const getTableCaption = (typeOfDoc: string, translations: AnyRecord): str
     case AllDocumentTypes.ACAS_CERT:
       return translations.acasDocs;
     case AllDocumentTypes.CLAIMANT_CORRESPONDENCE:
+    case AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT:
       return translations.claimantDocs;
     case AllDocumentTypes.RESPONDENT_CORRESPONDENCE:
+    case AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT:
       return translations.respondentDocs;
     default:
       return undefined;
   }
 };
 
-export const mapDocumentToTableRow = (item: DocumentTypeItem): TableRow => {
+export const mapDocumentToTableRow = (item: DocumentTypeItem, translations: AnyRecord): TableRow => {
+  // if there is a short description and a translation exists, use it, otherwise default to short description
+  // bundles will add hearing details as short description caption, we will not have a translation for that
   return {
     date: item.value.uploadedDocument.createdOn,
-    description: item.value.shortDescription,
+    description: translations[item.value.shortDescription] || item.value.shortDescription,
     downloadLink: item.downloadLink,
   };
 };
@@ -76,9 +80,11 @@ export const createSortedDocumentsMap = (docs: DocumentTypeItem[]): Map<string, 
         acasDocs.push(doc);
         break;
       case AllDocumentTypes.CLAIMANT_CORRESPONDENCE:
+      case AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT:
         claimantDocs.push(doc);
         break;
       case AllDocumentTypes.RESPONDENT_CORRESPONDENCE:
+      case AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT:
         respondentDocs.push(doc);
         break;
       default:
@@ -164,6 +170,15 @@ export const isDocInDocumentCollection = (req: AppRequest, docId: string): boole
     if (docId === allDocsSelectedFileId) {
       return true;
     }
+  }
+  return false;
+};
+
+export const isBundlesDoc = (req: AppRequest, docId: string): boolean => {
+  if (req.session.documentDownloadPage === PageUrls.ALL_DOCUMENTS) {
+    const { userCase } = req.session;
+    const bundleDocuments = userCase.bundleDocuments?.length ? userCase.bundleDocuments : [];
+    return bundleDocuments.some(it => getDocId(it.value.uploadedDocument.document_url) === docId);
   }
   return false;
 };

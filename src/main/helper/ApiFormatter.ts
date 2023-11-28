@@ -1,11 +1,13 @@
 import { isDateEmpty } from '../components/form/dateValidators';
 import { retrieveCurrentLocale } from '../controllers/helpers/ApplicationTableRecordTranslationHelper';
+import { returnTranslatedDateString } from '../controllers/helpers/DateHelper';
 import { combineDocuments } from '../controllers/helpers/DocumentHelpers';
 import { CreateCaseBody, RespondentRequestBody, UpdateCaseBody } from '../definitions/api/caseApiBody';
 import {
   CaseApiDataResponse,
   CaseData,
   DocumentApiModel,
+  HearingBundleType,
   RepresentativeApiModel,
   RespondentApiModel,
 } from '../definitions/api/caseApiResponse';
@@ -22,8 +24,11 @@ import {
   YesOrNo,
   ccdPreferredTitle,
 } from '../definitions/case';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
+  AllDocumentTypeValue,
+  AllDocumentTypes,
   CcdDataModel,
   TYPE_OF_CLAIMANT,
   acceptanceDocTypes,
@@ -35,6 +40,7 @@ import {
   responseRejectedDocTypes,
 } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
+import { TypeItem } from '../definitions/util-types';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -191,8 +197,21 @@ export function fromApiFormat(fromApiCaseData: CaseApiDataResponse, req?: AppReq
     ],
     genericTseApplicationCollection: sortApplicationByDate(fromApiCaseData.case_data?.genericTseApplicationCollection),
     sendNotificationCollection: fromApiCaseData.case_data?.sendNotificationCollection,
+    hearingCollection: fromApiCaseData?.case_data?.hearingCollection,
     documentCollection: fromApiCaseData.case_data?.documentCollection,
     representatives: mapRepresentatives(fromApiCaseData.case_data?.repCollection),
+    bundleDocuments: [
+      ...combineDocuments<DocumentTypeItem>(
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesClaimantCollection,
+          AllDocumentTypes.CLAIMANT_HEARING_DOCUMENT
+        ),
+        mapBundlesDocs(
+          fromApiCaseData.case_data?.bundlesRespondentCollection,
+          AllDocumentTypes.RESPONDENT_HEARING_DOCUMENT
+        )
+      ),
+    ],
   };
 }
 
@@ -372,11 +391,7 @@ export const returnPreferredTitle = (preferredTitle?: string, otherTitle?: strin
 
 function convertFromTimestampString(responseDate: string, req: AppRequest) {
   const dateComponent = responseDate.substring(0, responseDate.indexOf('T'));
-  return new Date(dateComponent).toLocaleDateString(retrieveCurrentLocale(req?.url), {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  return returnTranslatedDateString(dateComponent, retrieveCurrentLocale(req?.url));
 }
 
 export const getDueDate = (date: string, daysUntilDue: number): string => {
@@ -512,5 +527,23 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   }
 
   items?.sort(sortByDate);
+
   return items;
+};
+
+export const mapBundlesDocs = (
+  bundles: TypeItem<HearingBundleType>[],
+  bundleType: AllDocumentTypeValue
+): DocumentTypeItem[] | undefined => {
+  return !bundles?.length
+    ? undefined
+    : bundles.map<DocumentTypeItem>(item => ({
+        id: '',
+        value: {
+          shortDescription: item.value.formattedSelectedHearing || bundleType,
+          uploadedDocument: item.value.uploadFile,
+          typeOfDocument: bundleType,
+          creationDate: '',
+        },
+      }));
 };

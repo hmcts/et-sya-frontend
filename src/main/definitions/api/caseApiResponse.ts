@@ -1,4 +1,5 @@
-import { CaseType, CaseTypeId, YesOrNo } from '../case';
+import { TypeItem } from '../../definitions/util-types';
+import { CaseType, CaseTypeId, Document, YesOrNo } from '../case';
 import { ClaimantCorrespondence } from '../complexTypes/claimantCorrespondence';
 import { ClaimantEmploymentDetails } from '../complexTypes/claimantEmploymentDetails';
 import { ClaimantHearingPreference } from '../complexTypes/claimantHearingPreference';
@@ -66,6 +67,77 @@ export interface CaseData {
   claimServedDate?: string;
   genericTseApplicationCollection?: GenericTseApplicationTypeItem[];
   sendNotificationCollection?: SendNotificationTypeItem[];
+  hearingCollection?: HearingModel[];
+  repCollection?: RepresentativeApiModel[];
+  bundlesClaimantCollection?: TypeItem<HearingBundleType>[];
+  bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
+}
+
+export type HearingBundleType = {
+  uploadFile: Document;
+  agreedDocWith: string;
+  whatDocuments: string;
+  whoseDocuments: string;
+  uploadDateTime?: string;
+  agreedDocWithNo?: string;
+  formattedSelectedHearing?: string;
+  agreedDocWithBut?: string;
+  hearing: string;
+};
+
+export interface HearingModel {
+  id: string;
+  value: {
+    Est_Hearing?: {
+      fromDays: string;
+      fromHours: string;
+      fromMinues: string;
+    };
+    Hearing_stage?: string;
+    hearingFormat: string[];
+    Hearing_type?: string;
+    hearingNumber: string;
+    hearingSitAlone: string;
+    judicialMediation: string;
+    hearingEstLengthNum: number;
+    hearingPublicPrivate: string;
+    Hearing_notes?: string;
+    Hearing_date_start?: Date;
+    Hearing_judge_name?: string;
+    Hearing_venue_Scotland?: string;
+    Hearing_venue?: {
+      value: HearingVenueItem;
+      list_items: HearingVenueItem[];
+      selectedCode: string;
+      selectedLabel: string;
+    };
+    hearingDateCollection: {
+      id: string;
+      value: {
+        listedDate: Date;
+        Hearing_status: string;
+        hearingVenueDay?: {
+          value: {
+            code: string;
+            label: string;
+          };
+          list_items: {
+            code: string;
+            label: string;
+          }[];
+          selectedCode: string;
+          selectedLabel: string;
+        };
+        hearingTimingStart?: Date;
+        hearingTimingFinish?: Date;
+      };
+    }[];
+  };
+}
+
+export interface HearingVenueItem {
+  code: string;
+  label: string;
   repCollection?: RepresentativeApiModel[];
 }
 

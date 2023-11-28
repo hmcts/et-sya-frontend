@@ -5,16 +5,18 @@ import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from 
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getRepondentOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     req.session.documentDownloadPage = PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS;
@@ -47,6 +49,7 @@ export default class TribunalOrderOrRequestDetailsController {
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -58,9 +61,10 @@ export default class TribunalOrderOrRequestDetailsController {
     res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
       ...content,
       respondButton,
-      orderOrRequestContent: getRepondentOrderOrRequestDetails(translations, selectedRequestOrOrder),
+      orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),
       redirectUrl,
       header: selectedRequestOrOrder.value.sendNotificationTitle,
+      welshEnabled,
     });
   };
 }

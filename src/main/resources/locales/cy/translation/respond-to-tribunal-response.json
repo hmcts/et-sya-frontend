@@ -1,21 +1,23 @@
 {
-  "title": "Welsh Translation required",
-  "caption": "Welsh Translation required",
-  "h1": "Welsh Translation required",
-  "textInputLabel": "Welsh Translation required",
-  "textInputHint": "Welsh Translation required.",
-  "radioButtonLabel": "Welsh Translation required",
-  "radioButtonHint": "Welsh Translation required?",
-  "responseItem": "Welsh Translation required",
-  "contact": "Welsh Translation required",
+  "title": "Ymateb i gais",
+  "caption": "Ymateb i gais",
+  "h1": "Eich ymateb",
+  "textInputLabel": "Beth yw eich ymateb i’r tribiwnlys",
+  "textInputHint": "Defnyddiwch y blwch hwn i ymateb neu gallwch uwchlwytho deunydd yn y cam nesaf.",
+  "radioButtonLabel": "Ddeunydd ategol",
+  "radioButtonHint": "A oes gennych unrhyw ddeunydd ategol yr hoffech ei ddarparu?",
+  "responseItem": "Ymateb",
+  "contact": "Cysylltu",
   "errors": {
     "hasSupportingMaterial": {
-      "required": "Welsh Translation required"
+      "required": "Dywedwch wrthym os ydych eisiau llwytho deunydd ategol hefyd"
     },
     "responseText": {
-      "required": "Welsh Translation required",
-      "requiredFile": "Welsh Translation required",
-      "tooLong": "Welsh Translation required"
+      "required": "Darparwch fanylion eich ymateb a/neu llwythwch ddeunydd ategol",
+      "requiredFile": "Darparwch fanylion eich ymateb a/neu llwythwch ffeil",
+      "tooLong": "Rhaid i’r ymateb fod yn 2500 nod neu lai"
     }
-  }
+  },
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

@@ -1,10 +1,15 @@
 import ContactTheTribunalFileController from '../../../main/controllers/ContactTheTribunalFileController';
 import { getLanguageParam } from '../../../main/controllers/helpers/RouterHelpers';
+import * as routerHelpers from '../../../main/controllers/helpers/RouterHelpers';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
+import { safeUrlMock } from '../mocks/mockUrl';
 
 describe('Contact the tribunal file controller', () => {
+  const urlMock = safeUrlMock;
+  jest.spyOn(routerHelpers, 'getParsedUrl').mockReturnValue(urlMock);
+
   it('should remove uploaded file and refresh the page', () => {
     const controller = new ContactTheTribunalFileController();
     const req = mockRequest({});

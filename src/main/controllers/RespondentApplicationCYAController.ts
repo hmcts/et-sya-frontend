@@ -4,13 +4,13 @@ import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { createDownloadLink } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
 import { getRespondentCyaContent } from './helpers/RespondentApplicationCYAHelper';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 export default class RespondentApplicationCYAController {
   public async get(req: AppRequest, res: Response): Promise<void> {

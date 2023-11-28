@@ -1,6 +1,10 @@
 {
   "title": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "h1": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
+  "showAllSections": "Cuddio pob adran",
+  "hideAllSections": "Dangos pob adran",
+  "showSection": "Cuddio",
+  "hideSection": "Dangos",
   "landing_text": {
     "p1": "Defnyddiwch y ffurflen briodol i gyfathrebu â'r tribiwnlys.",
     "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at yr atebydd a fydd yn cael cyfle i ymateb.",
@@ -75,7 +79,8 @@
     },
     "documents": {
       "label": "Cyflwyno dogfennau ar gyfer gwrandawiad",
-      "body": "Defnyddiwch y ffurflen hon os yw'r tribiwnlys wedi gorchymyn i chi ddarparu dogfennau ar gyfer gwrandawiad. Gallai hyn gynnwys yr holl ddogfennau gan gynnwys datganiadau tystion neu ddogfennau atodol."
+      "body": "Defnyddiwch y ffurflen hon os yw'r tribiwnlys wedi gorchymyn i chi ddarparu dogfennau ar gyfer gwrandawiad. Gallai hyn gynnwys yr holl ddogfennau gan gynnwys datganiadau tystion neu ddogfennau atodol.",
+      "link": "Welsh translation required"
     }
   },
   "call": {

@@ -2,7 +2,7 @@ import axiosService, { AxiosInstance, AxiosResponse } from 'axios';
 import config from 'config';
 import FormData from 'form-data';
 
-import { CaseApiDataResponse } from '../definitions/api/caseApiResponse';
+import { CaseApiDataResponse, HearingBundleType } from '../definitions/api/caseApiResponse';
 import { DocumentUploadResponse } from '../definitions/api/documentApiResponse';
 import { DocumentDetailsResponse } from '../definitions/api/documentDetailsResponse';
 import { UserDetails } from '../definitions/appRequest';
@@ -111,6 +111,36 @@ export class CaseApi {
       });
     } catch (error) {
       throw new Error('Error submitting claimant tse application: ' + axiosErrorDetails(error));
+    }
+  };
+
+  submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+    const hearingBundle: HearingBundleType = {
+      agreedDocWith: caseItem.bundlesRespondentAgreedDocWith,
+      agreedDocWithBut: caseItem.bundlesRespondentAgreedDocWithBut || '',
+      agreedDocWithNo: caseItem.bundlesRespondentAgreedDocWithNo || '',
+      hearing: caseItem.hearingDocumentsAreFor,
+      formattedSelectedHearing: caseItem.formattedSelectedHearing,
+      whatDocuments: caseItem.whatAreTheseDocuments,
+      whoseDocuments: caseItem.whoseHearingDocumentsAreYouUploading,
+      uploadFile: caseItem.hearingDocument,
+      uploadDateTime: new Intl.DateTimeFormat('en-GB', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+      })
+        .format(new Date())
+        .replace(' at', ''),
+    };
+
+    try {
+      const data = {
+        case_id: caseItem.id,
+        case_type_id: caseItem.caseTypeId,
+        claimant_bundles: hearingBundle,
+      };
+      return await this.axios.put(JavaApiUrls.SUBMIT_BUNDLES, data);
+    } catch (error) {
+      throw new Error('Error submitting bundles: ' + axiosErrorDetails(error));
     }
   };
 

@@ -3,12 +3,14 @@ import {
   documentHasToBeFiltered,
   filterRespondentsDocuments,
   getTableCaption,
+  isBundlesDoc,
   mapDocumentToTableRow,
   prepareTableRows,
 } from '../../../../main/controllers/helpers/AllDocumentsHelper';
 import { DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import { AllDocumentTypes } from '../../../../main/definitions/constants';
 import allDocsRaw from '../../../../main/resources/locales/en/translation/all-documents.json';
+import { mockRequest } from '../../mocks/mockRequest';
 import {
   caseWithGenericTseApplications,
   uploadedDoc,
@@ -19,7 +21,7 @@ describe('allDocumentsHelper tests', () => {
   const mockDocumentTypeItem: DocumentTypeItem = {
     id: 'mockId',
     value: {
-      shortDescription: 'short description',
+      shortDescription: 'Description',
       uploadedDocument: uploadedDoc,
     },
     downloadLink: 'mockDownloadLink',
@@ -60,6 +62,22 @@ describe('allDocumentsHelper tests', () => {
     },
   ];
 
+  const bundleDocuments: DocumentTypeItem[] = [
+    {
+      id: '',
+      value: {
+        typeOfDocument: 'Claimant Hearing Document',
+        shortDescription: 'Claimant Hearing Document',
+        uploadedDocument: {
+          document_url: 'http://address/documents/123',
+          document_filename: 'mockTypeOfDocument',
+          document_binary_url: 'mockCreationDate',
+          createdOn: 'Test date',
+        },
+      },
+    },
+  ];
+
   const translationJsons = { ...allDocsRaw };
   const sortedMap = createSortedDocumentsMap(docs);
 
@@ -79,9 +97,9 @@ describe('allDocumentsHelper tests', () => {
   });
 
   it('map document to table row', () => {
-    const result = mapDocumentToTableRow(mockDocumentTypeItem);
+    const result = mapDocumentToTableRow(mockDocumentTypeItem, translationJsons);
     expect(result.date).toEqual('Test date');
-    expect(result.description).toEqual('short description');
+    expect(result.description).toEqual('Description');
     expect(result.downloadLink).toEqual('mockDownloadLink');
   });
 
@@ -122,8 +140,37 @@ describe('allDocumentsHelper tests', () => {
   it('should prepare table rows', () => {
     const tableRows = prepareTableRows(sortedMap, translationJsons, caseWithGenericTseApplications);
     expect(tableRows).toHaveLength(3);
-    expect(tableRows[0].rows[0].description).toEqual('ACAS Certificate');
-    expect(tableRows[1].rows[0].description).toEqual('Claimant correspondence');
-    expect(tableRows[2].rows[0].description).toEqual('Respondent correspondence');
+    expect(tableRows[0].caption).toEqual('Acas documents');
+    expect(tableRows[1].caption).toEqual('Claimant documents');
+    expect(tableRows[2].caption).toEqual('Respondent documents');
+  });
+
+  it('isBundlesDoc should returns true when id matches an existing bundle doc', () => {
+    const request = mockRequest({});
+    request.session.userCase.bundleDocuments = bundleDocuments;
+    request.session.documentDownloadPage = '/all-documents';
+    const result = isBundlesDoc(request, '123');
+    expect(result).toBe(true);
+  });
+  it('isBundlesDoc should return false when id not found', () => {
+    const request = mockRequest({});
+    request.session.userCase.bundleDocuments = bundleDocuments;
+    request.session.documentDownloadPage = '/all-documents';
+    const result = isBundlesDoc(request, '321');
+    expect(result).toBe(false);
+  });
+  it('isBundlesDoc should return false when not on the all documents page', () => {
+    const request = mockRequest({});
+    request.session.userCase.bundleDocuments = bundleDocuments;
+    request.session.documentDownloadPage = '/another-url';
+    const result = isBundlesDoc(request, '123');
+    expect(result).toBe(false);
+  });
+  it('isBundlesDoc should return false when bundles documents are undefined', () => {
+    const request = mockRequest({});
+    request.session.userCase.bundleDocuments = undefined;
+    request.session.documentDownloadPage = '/all-documents';
+    const result = isBundlesDoc(request, '123');
+    expect(result).toBe(false);
   });
 });

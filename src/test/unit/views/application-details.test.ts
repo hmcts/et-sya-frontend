@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import request from 'supertest';
 
 import { YesOrNo } from '../../../main/definitions/case';
+import * as LaunchDarkly from '../../../main/modules/featureFlag/launchDarkly';
 import { mockApp } from '../mocks/mockApp';
 
 const applicationDetailsJSONRaw = fs.readFileSync(
@@ -29,6 +30,8 @@ const expectedRowHeader6 = applicationDetailsJSON.copyCorrespondence;
 let htmlRes: Document;
 
 describe('Application details page', () => {
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
   beforeAll(async () => {
     await request(
       mockApp({
@@ -41,7 +44,7 @@ describe('Application details page', () => {
                 type: 'amend',
                 status: 'notStartedYet',
                 number: '1',
-                applicant: 'Applicant',
+                applicant: 'Claimant',
                 details: 'Test text',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,
               },
@@ -53,7 +56,7 @@ describe('Application details page', () => {
                 type: 'Restrict publicity',
                 status: 'notStartedYet',
                 number: '2',
-                applicant: 'Applicant',
+                applicant: 'Claimant',
                 details: 'Testing',
                 copyToOtherPartyYesOrNo: YesOrNo.YES,
               },
@@ -85,10 +88,10 @@ describe('Application details page', () => {
 
   it('should display application details', () => {
     const summaryListData = htmlRes.getElementsByClassName(summaryListClass);
-    expect(summaryListData[0].innerHTML).contains('Applicant', 'Application date does not exist');
+    expect(summaryListData[0].innerHTML).contains('Claimant', 'Application date does not exist');
     expect(summaryListData[1].innerHTML).contains('7 March 2023', ' Application type does not exist');
     expect(summaryListData[3].innerHTML).contains('Test text', ' Application type does not exist');
     expect(summaryListData[4].innerHTML).contains('', ' Application type does not exist');
-    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application type does not exist');
+    expect(summaryListData[5].innerHTML).contains(YesOrNo.YES, ' Application copyToOtherPartyYesOrNo does not exist');
   });
 });

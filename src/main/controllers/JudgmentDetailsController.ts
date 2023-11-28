@@ -11,6 +11,7 @@ import { FormContent } from '../definitions/form';
 import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
+import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { updateDecisionState, updateJudgmentNotificationState } from './helpers/CaseHelpers';
 import { getPageContent } from './helpers/FormHelpers';
@@ -29,6 +30,7 @@ import { getApplicationDocDownloadLink, getResponseDocDownloadLink } from './hel
 const logger = getLogger('JudgmentDetailsController');
 export default class JudgmentDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
+    const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session.userCase;
     req.session.documentDownloadPage = PageUrls.JUDGMENT_DETAILS;
 
@@ -116,7 +118,7 @@ export default class JudgmentDetailsController {
         return res.redirect(ErrorPages.NOT_FOUND);
       }
 
-      pageContent = getJudgmentDetails(selectedJudgment, judgmentAttachments, translations);
+      pageContent = getJudgmentDetails(selectedJudgment, judgmentAttachments, translations, req.url);
     }
 
     const content = getPageContent(req, <FormContent>{}, [
@@ -132,6 +134,7 @@ export default class JudgmentDetailsController {
       selectedDecision,
       pageContent,
       selectedDecisionApplication,
+      welshEnabled,
     });
   };
 }
