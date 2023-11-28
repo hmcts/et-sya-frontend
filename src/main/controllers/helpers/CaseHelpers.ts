@@ -327,6 +327,7 @@ export const clearBundlesFields = (userCase: CaseWithId): void => {
   userCase.bundlesRespondentAgreedDocWith = undefined;
   userCase.bundlesRespondentAgreedDocWithBut = undefined;
   userCase.bundlesRespondentAgreedDocWithNo = undefined;
+  userCase.formattedSelectedHearing = undefined;
 };
 
 function toTitleCase(str: string): string {

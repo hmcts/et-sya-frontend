@@ -54,7 +54,7 @@ export const getDocumentsAdditionalInformation = async (
 };
 
 // merge arrays but make sure they are not undefined
-export const combineDocuments = (...arrays: DocumentDetail[][]): DocumentDetail[] =>
+export const combineDocuments = <T>(...arrays: T[][]): T[] =>
   [].concat(...arrays.filter(Array.isArray)).filter(doc => doc !== undefined);
 
 export const createDownloadLink = (file: Document): string => {
