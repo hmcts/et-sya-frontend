@@ -28,6 +28,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
+import { TypeItem } from '../../../main/definitions/util-types';
 import {
   formatDate,
   fromApiFormat,
@@ -677,7 +678,7 @@ describe('testDeadlineCalculatingAndFormatting', () => {
   });
 });
 
-const mockBundlesClaimantCollection: HearingBundleType[] = [
+const mockBundlesClaimantCollection: TypeItem<HearingBundleType>[] = [
   {
     id: '123',
     value: {
@@ -720,7 +721,7 @@ describe('mapBundlesDocs', () => {
   });
 
   it('should return undefined when no bundles', () => {
-    const bundlesClaimantCollection: HearingBundleType[] = undefined;
+    const bundlesClaimantCollection: TypeItem<HearingBundleType>[] = undefined;
 
     const result = mapBundlesDocs(bundlesClaimantCollection, 'Claimant Hearing Document');
     expect(result).toEqual(undefined);

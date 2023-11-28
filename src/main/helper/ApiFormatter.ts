@@ -27,6 +27,7 @@ import {
 import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem, sortByDate } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import {
+  AllDocumentTypeValue,
   AllDocumentTypes,
   CcdDataModel,
   TYPE_OF_CLAIMANT,
@@ -39,6 +40,7 @@ import {
   responseRejectedDocTypes,
 } from '../definitions/constants';
 import { DocumentDetail } from '../definitions/definition';
+import { TypeItem } from '../definitions/util-types';
 
 export function toApiFormatCreate(
   userDataMap: Map<CaseDataCacheKey, string>,
@@ -529,10 +531,13 @@ const sortApplicationByDate = (items: GenericTseApplicationTypeItem[]): GenericT
   return items;
 };
 
-export const mapBundlesDocs = (bundles: HearingBundleType[], bundleType: string): DocumentTypeItem[] | undefined => {
+export const mapBundlesDocs = (
+  bundles: TypeItem<HearingBundleType>[],
+  bundleType: AllDocumentTypeValue
+): DocumentTypeItem[] | undefined => {
   return !bundles?.length
     ? undefined
-    : bundles.map(item => ({
+    : bundles.map<DocumentTypeItem>(item => ({
         id: '',
         value: {
           shortDescription: item.value.formattedSelectedHearing || bundleType,
