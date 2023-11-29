@@ -15,11 +15,16 @@ export class HubLinksStatuses {
 
   constructor() {
     Object.values(HubLinkNames).forEach(name => {
-      this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+      if (name === HubLinkNames.Et1ClaimForm) {
+        this[name] = HubLinkStatus.SUBMITTED;
+      } else if (name === HubLinkNames.ContactTribunal) {
+        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+      } else if (name === HubLinkNames.Documents) {
+        this[name] = HubLinkStatus.READY_TO_VIEW;
+      } else {
+        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+      }
     });
-
-    this[HubLinkNames.Et1ClaimForm] = HubLinkStatus.SUBMITTED;
-    this[HubLinkNames.ContactTribunal] = HubLinkStatus.OPTIONAL;
   }
 }
 
