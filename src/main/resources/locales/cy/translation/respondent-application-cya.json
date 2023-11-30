@@ -6,5 +6,7 @@
   "copyToOtherPartyYesOrNo": "Ydych chi eisiau anfon copi o’r ohebiaeth hon at y parti arall i fodloni’r Rheolau Trefniadaeth?",
   "copyToOtherPartyText": "Rheswm dros beidio â hysbysu’r parti arall",
   "submitBtn": "Cadw a pharhau",
-  "cancelLink": "Allgofnodi"
+  "cancelLink": "Allgofnodi",
+  "Yes": "Ydw",
+  "No": "Nac ydw"
 }

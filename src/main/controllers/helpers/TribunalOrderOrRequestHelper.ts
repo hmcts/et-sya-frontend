@@ -8,13 +8,15 @@ import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } 
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
+import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
-export const getRepondentOrderOrRequestDetails = (
+export const getTribunalOrderOrRequestDetails = (
   translations: AnyRecord,
-  item: SendNotificationTypeItem
+  item: SendNotificationTypeItem,
+  url: string
 ): SummaryListRow[] => {
   const respondentRequestOrOrderDetails = [];
 
@@ -25,11 +27,11 @@ export const getRepondentOrderOrRequestDetails = (
   }
 
   respondentRequestOrOrderDetails.push(
-    addSummaryRow(translations.dateSent, item.value.date),
-    addSummaryRow(translations.sentBy, 'Tribunal'),
-    addSummaryRow(translations.orderOrRequest, item.value.sendNotificationCaseManagement),
-    addSummaryRow(translations.responseDue, item.value.sendNotificationResponseTribunal),
-    addSummaryRow(translations.partyToRespond, item.value.sendNotificationSelectParties)
+    addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
+    addSummaryRow(translations.sentBy, translations.tribunal),
+    addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
+    addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal]),
+    addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
   );
 
   if (item.value.sendNotificationAdditionalInfo) {
@@ -50,17 +52,17 @@ export const getRepondentOrderOrRequestDetails = (
 
   if (item.value.sendNotificationWhoCaseOrder) {
     respondentRequestOrOrderDetails.push(
-      addSummaryRow(translations.orderMadeBy, item.value.sendNotificationWhoCaseOrder)
+      addSummaryRow(translations.orderMadeBy, translations[item.value.sendNotificationWhoCaseOrder])
     );
   } else {
     respondentRequestOrOrderDetails.push(
-      addSummaryRow(translations.requestMadeBy, item.value.sendNotificationRequestMadeBy)
+      addSummaryRow(translations.requestMadeBy, translations[item.value.sendNotificationRequestMadeBy])
     );
   }
 
   respondentRequestOrOrderDetails.push(
     addSummaryRow(translations.fullName, item.value.sendNotificationFullName),
-    addSummaryRow(translations.sentTo, item.value.sendNotificationNotify)
+    addSummaryRow(translations.sentTo, translations[item.value.sendNotificationNotify])
   );
 
   return respondentRequestOrOrderDetails;
@@ -124,6 +126,20 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
       setNotificationBannerData(item);
     });
     return notifications;
+  }
+};
+
+export const populateAllOrdersItemsWithCorrectStatusTranslations = (
+  ordersAndRequests: SendNotificationTypeItem[],
+  translations: AnyRecord,
+  url: string
+): SendNotificationTypeItem[] => {
+  if (ordersAndRequests?.length && filterSendNotifications(ordersAndRequests).length) {
+    ordersAndRequests.forEach(item => {
+      item.displayStatus = translations[item.value.notificationState];
+      item.redirectUrl = getRedirectUrlForNotification(item, false, url);
+    });
+    return ordersAndRequests;
   }
 };
 

@@ -82,5 +82,33 @@ describe(`POST ${PageUrls.AGREEING_DOCUMENTS_FOR_HEARING}`, () => {
           expect(res.header['location']).toStrictEqual(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
         });
     });
+
+    test('should reload the page when the We have agreed... radio button is selected and text entered is more than 2500 chars', async () => {
+      const testString = 'a'.repeat(2501);
+      await request(mockApp({}))
+        .post(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING)
+        .send({
+          bundlesRespondentAgreedDocWith: AgreedDocuments.AGREEDBUT,
+          bundlesRespondentAgreedDocWithBut: testString,
+        })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
+        });
+    });
+
+    test('should reload the page when the No, we have not agreed... radio button is selected and text entered is more than 2500 chars', async () => {
+      const testString = 'a'.repeat(2501);
+      await request(mockApp({}))
+        .post(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING)
+        .send({
+          bundlesRespondentAgreedDocWith: AgreedDocuments.NOTAGREED,
+          bundlesRespondentAgreedDocWithNo: testString,
+        })
+        .expect(res => {
+          expect(res.status).toStrictEqual(302);
+          expect(res.header['location']).toStrictEqual(PageUrls.AGREEING_DOCUMENTS_FOR_HEARING);
+        });
+    });
   });
 });

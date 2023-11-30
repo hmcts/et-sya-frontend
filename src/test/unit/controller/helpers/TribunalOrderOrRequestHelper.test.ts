@@ -2,7 +2,8 @@ import {
   activateTribunalOrdersAndRequestsLink,
   filterActionableNotifications,
   filterSendNotifications,
-  getRepondentOrderOrRequestDetails,
+  getTribunalOrderOrRequestDetails,
+  populateAllOrdersItemsWithCorrectStatusTranslations,
   populateNotificationsWithRedirectLinksAndStatusColors,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
@@ -20,6 +21,7 @@ import {
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
+import commonRaw from '../../../../main/resources/locales/en/translation/common.json';
 import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
@@ -34,39 +36,40 @@ import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
 
 describe('Tribunal order or request helper', () => {
-  const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw };
+  const translationJsons = { ...respondentOrderOrRequestRaw, ...citizenHubRaw, ...commonRaw };
   const req = mockRequestWithTranslation({}, translationJsons);
   const notificationItem = mockNotificationItem;
   const notificationItemOther = mockNotificationItemOther;
 
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
+    ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
   };
 
   it('should return expected tribunal order or request details content', () => {
-    const pageContent = getRepondentOrderOrRequestDetails(translations, notificationItem);
+    const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItem, req.url);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
     expect(pageContent[0].value).toEqual({ text: 'Hearing' });
     expect(pageContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
-    expect(pageContent[1].value).toEqual({ text: '2019-05-02' });
+    expect(pageContent[1].value).toEqual({ text: '2 May 2019' });
     expect(pageContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Sent by' });
     expect(pageContent[2].value).toEqual({ text: 'Tribunal' });
     expect(pageContent[3].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Case management order or request?',
     });
-    expect(pageContent[3].value).toEqual({ text: 'Order' });
+    expect(pageContent[3].value).toEqual({ text: 'Case management order' });
     expect(pageContent[4].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Response due',
     });
-    expect(pageContent[4].value).toEqual({ text: 'Required' });
+    expect(pageContent[4].value).toEqual({ text: 'No' });
     expect(pageContent[5].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Party or parties to respond',
     });
-    expect(pageContent[5].value).toEqual({ text: 'Both' });
+    expect(pageContent[5].value).toEqual({ text: undefined });
     expect(pageContent[6].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Additional information',
@@ -98,7 +101,7 @@ describe('Tribunal order or request helper', () => {
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Sent to',
     });
-    expect(pageContent[11].value).toEqual({ text: 'Both' });
+    expect(pageContent[11].value).toEqual({ text: 'Both parties' });
   });
 
   it('should filter only orders, requests or Other (General correspondence)', () => {
@@ -133,6 +136,18 @@ describe('Tribunal order or request helper', () => {
     );
     expect(populatedNotification.statusColor).toEqual('--red');
     expect(populatedNotification.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should populate order/request item with redirect link and status', () => {
+    const populatedOrderOrRequest = populateAllOrdersItemsWithCorrectStatusTranslations(
+      [notificationItem],
+      translations,
+      'url'
+    )[0];
+    expect(populatedOrderOrRequest.redirectUrl).toEqual(
+      '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
+    );
+    expect(populatedOrderOrRequest.displayStatus).toEqual('Not viewed yet');
   });
 
   it('should populate notification with correct status when required to respond and no response exists', () => {
