@@ -18,7 +18,7 @@ export class HubLinksStatuses {
       if (name === HubLinkNames.Et1ClaimForm) {
         this[name] = HubLinkStatus.SUBMITTED;
       } else if (name === HubLinkNames.ContactTribunal) {
-        this[name] = HubLinkStatus.NOT_YET_AVAILABLE;
+        this[name] = HubLinkStatus.OPTIONAL;
       } else if (name === HubLinkNames.Documents) {
         this[name] = HubLinkStatus.READY_TO_VIEW;
       } else {
