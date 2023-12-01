@@ -44,18 +44,22 @@
 
     </div>
 
-    {% set sideBarContent %}
-    {% include "./citizen-hub-sidebar-3rd-width.njk" %}
-    {% endset %}
+    <div class="govuk-grid-column-one-third-from-desktop">
+      {% set sideBarContent %}
+      {% include "./citizen-hub-sidebar.njk" %}
+      {% endset %}
 
-    {{ govukDetails({
-        summaryText: contact,
-        html: sideBarContent
-      }) }}
+      <div class="govuk-!-margin-top-2">
+        {{ govukDetails({
+          summaryText: contact,
+          html: sideBarContent
+        }) }}
+      </div>
+    </div>
+
   </div>
-</div>
 {% endblock %}
 
 {% block footer %}
-{% include "./footer.njk" %}
+  {% include "./footer.njk" %}
 {% endblock %}
