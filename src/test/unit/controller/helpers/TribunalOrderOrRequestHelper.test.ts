@@ -1,6 +1,7 @@
 import {
   activateTribunalOrdersAndRequestsLink,
   filterActionableNotifications,
+  filterECCNotifications,
   filterSendNotifications,
   getTribunalOrderOrRequestDetails,
   populateAllOrdersItemsWithCorrectStatusTranslations,
@@ -20,11 +21,13 @@ import {
 } from '../../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
+import * as LaunchDarkly from '../../../../main/modules/featureFlag/launchDarkly';
 import citizenHubRaw from '../../../../main/resources/locales/en/translation/citizen-hub.json';
 import commonRaw from '../../../../main/resources/locales/en/translation/common.json';
 import respondentOrderOrRequestRaw from '../../../../main/resources/locales/en/translation/tribunal-order-or-request-details.json';
 import mockUserCaseWithCitizenHubLinks from '../../../../main/resources/mocks/mockUserCaseWithCitizenHubLinks';
 import {
+  mockECCNotification,
   mockNotificationItem,
   mockNotificationItemOther,
   mockNotificationRespondOnlyReq,
@@ -40,6 +43,8 @@ describe('Tribunal order or request helper', () => {
   const req = mockRequestWithTranslation({}, translationJsons);
   const notificationItem = mockNotificationItem;
   const notificationItemOther = mockNotificationItemOther;
+  const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+  mockLdClient.mockResolvedValue(true);
 
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
@@ -67,41 +72,36 @@ describe('Tribunal order or request helper', () => {
     expect(pageContent[4].value).toEqual({ text: 'No' });
     expect(pageContent[5].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
-      text: 'Party or parties to respond',
-    });
-    expect(pageContent[5].value).toEqual({ text: undefined });
-    expect(pageContent[6].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
       text: 'Additional information',
     });
-    expect(pageContent[6].value).toEqual({ text: 'Additional info' });
-    expect(pageContent[7].key).toEqual({
+    expect(pageContent[5].value).toEqual({ text: 'Additional info' });
+    expect(pageContent[6].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Description',
     });
-    expect(pageContent[7].value).toEqual({ text: 'Short description' });
-    expect(pageContent[8].key).toEqual({
+    expect(pageContent[6].value).toEqual({ text: 'Short description' });
+    expect(pageContent[7].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Document',
     });
-    expect(pageContent[8].value).toEqual({
+    expect(pageContent[7].value).toEqual({
       html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
-    expect(pageContent[9].key).toEqual({
+    expect(pageContent[8].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Case management order made by',
     });
-    expect(pageContent[9].value).toEqual({ text: 'Judge' });
-    expect(pageContent[10].key).toEqual({
+    expect(pageContent[8].value).toEqual({ text: 'Judge' });
+    expect(pageContent[9].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Name',
     });
-    expect(pageContent[10].value).toEqual({ text: 'Bob' });
-    expect(pageContent[11].key).toEqual({
+    expect(pageContent[9].value).toEqual({ text: 'Bob' });
+    expect(pageContent[10].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Sent to',
     });
-    expect(pageContent[11].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[10].value).toEqual({ text: 'Both parties' });
   });
 
   it('should filter only orders, requests or Other (General correspondence)', () => {
@@ -123,6 +123,24 @@ describe('Tribunal order or request helper', () => {
     expect(filteredNotifications[1].value.sendNotificationSubjectString).toStrictEqual(
       NotificationSubjects.GENERAL_CORRESPONDENCE
     );
+  });
+
+  it('should filter only ECC notifications', async () => {
+    const eccNotifications = await filterECCNotifications([
+      notificationItem,
+      notificationItemOther,
+      mockECCNotification,
+    ]);
+
+    expect(eccNotifications).toHaveLength(1);
+    expect(eccNotifications[0].value.sendNotificationSubjectString).toStrictEqual(NotificationSubjects.ECC);
+  });
+
+  it('should return empty array when no ECC notifications', async () => {
+    mockLdClient.mockResolvedValue(false);
+    const eccNotifications = await filterECCNotifications([notificationItem, notificationItemOther]);
+
+    expect(eccNotifications).toHaveLength(0);
   });
 
   it('should populate notification with redirect link, status and color', () => {
@@ -204,7 +222,7 @@ describe('Tribunal order or request helper', () => {
     expect(populatedNotification.displayStatus).toEqual('Submitted');
   });
 
-  it('should activate tribunal orders and requests section with not-viewed status', () => {
+  it('should activate tribunal orders and requests section with not-viewed status', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -215,11 +233,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_VIEWED);
   });
 
-  it('should activate tribunal orders and requests section with not-started status', () => {
+  it('should activate tribunal orders and requests section with not-started status', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -230,11 +248,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_STARTED_YET);
   });
 
-  it('tribunal orders and requests section should be not started when a response is required', () => {
+  it('tribunal orders and requests section should be not started when a response is required', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -245,11 +263,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_STARTED_YET);
   });
 
-  it('tribunal orders and requests section should be not viewed when not viewed and a response is not required', () => {
+  it('tribunal orders and requests section should be not viewed when not viewed and a response is not required', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -260,11 +278,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_VIEWED);
   });
 
-  it('tribunal orders and requests section should be viewed when viewed and a response is not required', () => {
+  it('tribunal orders and requests section should be viewed when viewed and a response is not required', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -276,11 +294,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
   });
 
-  it('tribunal orders and requests section should be submitted when response is required and has been sent', () => {
+  it('tribunal orders and requests section should be submitted when response is required and has been sent', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationSubmitted = {
       value: {
@@ -299,11 +317,11 @@ describe('Tribunal order or request helper', () => {
         ],
       } as SendNotificationType,
     } as SendNotificationTypeItem;
-    activateTribunalOrdersAndRequestsLink([notificationSubmitted], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationSubmitted], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.SUBMITTED);
   });
 
-  it('tribunal orders and requests section should be not started when a response is required for any notification', () => {
+  it('tribunal orders and requests section should be not started when a response is required for any notification', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationWithOrder = {
       value: {
@@ -323,11 +341,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationWithOrder, notificationNoResponseRequired], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_STARTED_YET);
   });
 
-  it('should be not viewed when any remain not viewed and a response not required for any notification', () => {
+  it('should be not viewed when any remain not viewed and a response not required for any notification', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationSubmitted = {
       value: {
@@ -356,11 +374,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_VIEWED);
   });
 
-  it('tribunal orders and requests section should be submitted when all notifications are viewed or submitted', () => {
+  it('tribunal orders and requests section should be submitted when all notifications are viewed or submitted', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     const notificationSubmitted = {
       value: {
@@ -389,11 +407,11 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], userCase);
+    await activateTribunalOrdersAndRequestsLink([notificationSubmitted, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.SUBMITTED);
   });
 
-  it('should be viewed when all notifications are viewed and they did not require a response', () => {
+  it('should be viewed when all notifications are viewed and they did not require a response', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
 
     const notification = {
@@ -415,19 +433,19 @@ describe('Tribunal order or request helper', () => {
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
-    activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
+    await activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.VIEWED);
   });
 
-  it('tribunal orders and requests section should remain as not yet available when order / request notifications do not exist', () => {
+  it('tribunal orders and requests section should remain as not yet available when order / request notifications do not exist', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_YET_AVAILABLE;
 
-    activateTribunalOrdersAndRequestsLink([], userCase);
+    await activateTribunalOrdersAndRequestsLink([], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 
-  it('tribunal orders and requests section should remain as not yet available request when no response required', () => {
+  it('tribunal orders and requests section should remain as not yet available request when no response required', async () => {
     const userCase = { ...mockUserCaseWithCitizenHubLinks };
 
     const notification = {
@@ -450,7 +468,7 @@ describe('Tribunal order or request helper', () => {
     } as SendNotificationTypeItem;
     userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_YET_AVAILABLE;
 
-    activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
+    await activateTribunalOrdersAndRequestsLink([notification, notificationNoResponseRequired], userCase);
     expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_YET_AVAILABLE);
   });
 

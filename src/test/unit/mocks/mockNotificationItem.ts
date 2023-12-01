@@ -147,6 +147,21 @@ export const notificationSubmitted: SendNotificationType = {
   ],
 };
 
+export const eccNotification = {
+  date: '1 December 2023',
+  number: '1',
+  sendNotificationTitle: 'ECC',
+  sendNotificationSubjectString: 'Employer Contract Claim',
+  notificationState: 'viewed',
+  sendNotificationLetter: YesOrNo.NO,
+  sendNotificationResponsesCount: '0',
+  sendNotificationSubject: ['Employer Contract Claim'],
+  sendNotificationEccQuestion: 'Notice of Employer Contract Claim',
+  sendNotificationSentBy: 'Tribunal',
+  sendNotificationResponseTribunalTable: YesOrNo.YES,
+  sendNotificationNotify: 'Both parties',
+};
+
 export const mockNotificationItem: SendNotificationTypeItem = {
   id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
   value: notificationType,
@@ -175,4 +190,9 @@ export const mockNotificationViewed: SendNotificationTypeItem = {
 export const mockNotificationSubmitted: SendNotificationTypeItem = {
   id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
   value: notificationSubmitted,
+};
+
+export const mockECCNotification: SendNotificationTypeItem = {
+  id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
+  value: eccNotification,
 };

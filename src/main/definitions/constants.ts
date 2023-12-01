@@ -535,6 +535,7 @@ export type AllDocumentTypeValue = (typeof AllDocumentTypes)[keyof typeof AllDoc
 export const NotificationSubjects = {
   GENERAL_CORRESPONDENCE: 'Other (General correspondence)',
   ORDER_OR_REQUEST: 'Case management orders / requests',
+  ECC: 'Employer Contract Claim',
 } as const;
 
 export const DOCUMENT_CONTENT_TYPES = {
@@ -584,4 +585,5 @@ export const DOCUMENT_CONTENT_TYPES = {
 export const FEATURE_FLAGS = {
   WELSH: 'welsh-language',
   BUNDLES: 'bundles',
+  ECC: 'ecc',
 } as const;
