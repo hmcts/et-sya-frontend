@@ -25,7 +25,7 @@
       {% endif %}
     </div>
 
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-one-third-from-desktop">
       <p class="govuk-body">
         <a href="https://www.gov.uk/find-legal-advice" target="_blank">
           {{ findLegalAdvice }}
@@ -33,7 +33,7 @@
       </p>
 
       {% set sideBarContent %}
-      {% include "./citizen-hub-sidebar-3rd-width.njk" %}
+      {% include "./citizen-hub-sidebar.njk" %}
       {% endset %}
 
       {{ govukDetails({
