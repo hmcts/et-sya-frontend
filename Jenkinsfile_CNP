@@ -10,7 +10,6 @@ def component = "sya"
 def branchesToSync = ['perftest', 'demo', 'ithc']
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
-
 def secrets = [
     'et-${env}': [
         secret('test-username', 'TEST_CASE_USERNAME'),
