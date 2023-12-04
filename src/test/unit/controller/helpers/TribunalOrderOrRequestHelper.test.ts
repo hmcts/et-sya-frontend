@@ -52,7 +52,7 @@ describe('Tribunal order or request helper', () => {
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
   };
 
-  it('should return expected tribunal order or request details content', () => {
+  it('should return expected tribunal order details content', () => {
     const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItem, req.url);
     expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
     expect(pageContent[0].value).toEqual({ text: 'Hearing' });
@@ -69,39 +69,63 @@ describe('Tribunal order or request helper', () => {
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Response due',
     });
-    expect(pageContent[4].value).toEqual({ text: 'No' });
+    expect(pageContent[4].value).toEqual({ text: 'Yes' });
     expect(pageContent[5].key).toEqual({
+      classes: 'govuk-!-font-weight-regular-m',
+      text: 'Party or parties to respond',
+    });
+    expect(pageContent[5].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[6].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Additional information',
     });
-    expect(pageContent[5].value).toEqual({ text: 'Additional info' });
-    expect(pageContent[6].key).toEqual({
+    expect(pageContent[6].value).toEqual({ text: 'Additional info' });
+    expect(pageContent[7].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Description',
     });
-    expect(pageContent[6].value).toEqual({ text: 'Short description' });
-    expect(pageContent[7].key).toEqual({
+    expect(pageContent[7].value).toEqual({ text: 'Short description' });
+    expect(pageContent[8].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Document',
     });
-    expect(pageContent[7].value).toEqual({
+    expect(pageContent[8].value).toEqual({
       html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
-    expect(pageContent[8].key).toEqual({
+    expect(pageContent[9].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Case management order made by',
     });
-    expect(pageContent[8].value).toEqual({ text: 'Judge' });
-    expect(pageContent[9].key).toEqual({
+    expect(pageContent[9].value).toEqual({ text: 'Judge' });
+    expect(pageContent[10].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Name',
     });
-    expect(pageContent[9].value).toEqual({ text: 'Bob' });
-    expect(pageContent[10].key).toEqual({
+    expect(pageContent[10].value).toEqual({ text: 'Bob' });
+    expect(pageContent[11].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'Sent to',
     });
-    expect(pageContent[10].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[11].value).toEqual({ text: 'Both parties' });
+  });
+
+  it('should return expected tribunal request details content', () => {
+    notificationItem.value.sendNotificationCaseManagement = 'Request';
+    notificationItem.value.sendNotificationRequestMadeBy = 'Legal officer';
+    notificationItem.value.sendNotificationWhoCaseOrder = undefined;
+    const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItem, req.url);
+
+    expect(pageContent[3].key).toEqual({
+      classes: 'govuk-!-font-weight-regular-m',
+      text: 'Case management order or request?',
+    });
+    expect(pageContent[3].value).toEqual({ text: 'Request' });
+
+    expect(pageContent[9].key).toEqual({
+      classes: 'govuk-!-font-weight-regular-m',
+      text: 'Request made by',
+    });
+    expect(pageContent[9].value).toEqual({ text: 'Legal officer' });
   });
 
   it('should filter only orders, requests or Other (General correspondence)', () => {
@@ -230,6 +254,21 @@ describe('Tribunal order or request helper', () => {
         sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+      } as SendNotificationType,
+    } as SendNotificationTypeItem;
+
+    await activateTribunalOrdersAndRequestsLink([notificationWithOrder], userCase);
+    expect(userCase.hubLinksStatuses[HubLinkNames.TribunalOrders]).toStrictEqual(HubLinkStatus.NOT_VIEWED);
+  });
+
+  it('should activate tribunal orders and requests section with not-viewed status for ECC', async () => {
+    const userCase = { ...mockUserCaseWithCitizenHubLinks };
+    const notificationWithOrder = {
+      value: {
+        sendNotificationCaseManagement: 'Order',
+        sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
+        sendNotificationResponseTribunal: ResponseRequired.YES,
+        sendNotificationSubjectString: NotificationSubjects.ECC,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
