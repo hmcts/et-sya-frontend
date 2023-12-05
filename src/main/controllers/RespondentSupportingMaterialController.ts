@@ -12,11 +12,10 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 import { handleUploadDocument } from './helpers/CaseHelpers';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { setChangeAnswersUrlLanguage, setUrlLanguage } from './helpers/LanguageHelper';
+import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
 import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getFilesRows } from './helpers/RespondentSupportingMaterialHelper';
-import { getLanguageParam } from './helpers/RouterHelpers';
-import { returnSafeRedirectUrl } from './helpers/RouterHelpers';
+import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
 
@@ -88,8 +87,8 @@ export default class RespondentSupportingMaterialController {
       logger
     );
 
-    const supportingMaterialUrl =
-      PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + setChangeAnswersUrlLanguage(req);
+    const baseUrl = PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId);
+    const supportingMaterialUrl = setUrlLanguageFromSessionLanguage(req, baseUrl);
 
     if (supportingMaterialError) {
       req.session.errors.push(supportingMaterialError);
@@ -107,7 +106,7 @@ export default class RespondentSupportingMaterialController {
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
       return res.redirect(supportingMaterialUrl + getLanguageParam(req.url));
-//      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
+      //      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
     req.session.errors = [];
 
@@ -117,13 +116,14 @@ export default class RespondentSupportingMaterialController {
       userCase.selectedRequestOrOrder.value.sendNotificationSubject?.length &&
       userCase.selectedRequestOrOrder.value.sendNotificationSubject.includes('Employer Contract Claim')
     ) {
-      return res.redirect(PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url));
+      return res.redirect(setUrlLanguageFromSessionLanguage(req, PageUrls.TRIBUNAL_RESPONSE_CYA));
     }
-    return res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
+    return res.redirect(setUrlLanguageFromSessionLanguage(req, copyToOtherPartyRedirectUrl(req.session.userCase)));
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const userCase = req.session?.userCase;
+    const languageParam = getLanguageParam(req.url);
     const content = getPageContent(req, this.supportingMaterialContent, [
       TranslationKeys.COMMON,
       TranslationKeys.SIDEBAR_CONTACT_US,
@@ -133,9 +133,14 @@ export default class RespondentSupportingMaterialController {
     (this.supportingMaterialContent.fields as any).inset.subFields.upload.disabled =
       userCase?.supportingMaterialFile !== undefined;
 
-    (this.supportingMaterialContent.fields as any).filesUploaded.rows = getFilesRows(userCase, req.params.appId, {
-      ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
-    });
+    (this.supportingMaterialContent.fields as any).filesUploaded.rows = getFilesRows(
+      languageParam,
+      userCase,
+      req.params.appId,
+      {
+        ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),
+      }
+    );
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.RESPONDENT_SUPPORTING_MATERIAL, { returnObjects: true }),

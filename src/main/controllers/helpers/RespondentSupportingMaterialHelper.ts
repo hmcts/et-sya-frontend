@@ -4,6 +4,7 @@ import { SummaryListRow, addSummaryRow, createChangeAction } from '../../definit
 import { AnyRecord } from '../../definitions/util-types';
 
 export const getFilesRows = (
+  languageParam: string,
   userCase: CaseWithId | undefined,
   appId: string,
   translations: AnyRecord
@@ -23,7 +24,7 @@ export const getFilesRows = (
         userCase.supportingMaterialFile.document_filename,
         '',
         createChangeAction(
-          PageUrls.REMOVE_SUPPORTING_MATERIAL.replace(':appId', appId),
+          PageUrls.REMOVE_SUPPORTING_MATERIAL.replace(':appId', appId) + languageParam,
           translations.remove,
           translations.remove
         )
