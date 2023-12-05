@@ -95,7 +95,7 @@ export default class StoredToSubmitTribunalController {
 
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
-      applicationType: headerTranslations.caption,
+      title: headerTranslations.caption,
       appContent,
       viewCorrespondenceLink: getSendNotificationDetailsLink(req.params.orderId, getLanguageParam(req.url)),
       cancelLink: getCancelLink(req),
