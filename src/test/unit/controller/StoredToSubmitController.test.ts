@@ -47,7 +47,7 @@ describe('Stored to Submit Controller GET', () => {
     expect(res.render).toHaveBeenCalledWith(
       TranslationKeys.STORED_TO_SUBMIT,
       expect.objectContaining({
-        applicationType: 'Application to Amend my claim',
+        title: 'Application to Amend my claim',
         viewCorrespondenceLink: '/application-details/234?lng=en',
         document: undefined,
         viewCorrespondenceFileLink: '',
