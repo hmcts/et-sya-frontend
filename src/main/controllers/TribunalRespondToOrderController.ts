@@ -76,7 +76,7 @@ export default class TribunalRespondToOrderController {
           PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
         )
       : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
-/*
+    /*
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
@@ -91,6 +91,7 @@ export default class TribunalRespondToOrderController {
     req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, this.respondToTribunalOrder, [

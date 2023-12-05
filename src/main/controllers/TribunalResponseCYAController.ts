@@ -19,16 +19,15 @@ export default class TribunalResponseCYAController {
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_RESPONSE_CYA,
     ]);
 
     const cancelPage = setUrlLanguage(req, PageUrls.CITIZEN_HUB.replace(':caseId', userCase.id));
 
     const translations: AnyRecord = {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
-      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
