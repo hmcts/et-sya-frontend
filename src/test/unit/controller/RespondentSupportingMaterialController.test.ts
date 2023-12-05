@@ -51,13 +51,42 @@ describe('Respondent supporting material controller', () => {
     const body = {
       responseText: 'some Text',
     };
+    const userCase = {
+      contactApplicationType: 'withdraw',
+      respondents: [
+        {
+          ccdId: '1',
+        },
+      ],
+      representatives: [
+        {
+          respondentId: '1',
+          hasMyHMCTSAccount: YesOrNo.YES,
+        },
+      ],
+    };
+
+    const request = mockRequestWithTranslation({ t, body, userCase }, translationJsons);
+    const res = mockResponse();
+
+    const controller = new RespondentSupportingMaterialController();
+    await controller.post(request, res);
+    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
+  });
+
+  it('should render Rule 92 non system user page', async () => {
+    const body = {
+      responseText: 'some Text',
+    };
 
     const request = mockRequestWithTranslation({ t, body }, translationJsons);
     const res = mockResponse();
 
     const controller = new RespondentSupportingMaterialController();
     await controller.post(request, res);
-    expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.ENGLISH_URL_PARAMETER);
+    expect(res.redirect).toHaveBeenCalledWith(
+      PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
+    );
   });
 
   it('should render tribunal response CYA page', async () => {
