@@ -283,10 +283,6 @@ export const getPdfUploadError = (
 ): FormError => {
   const fileProvided = file !== undefined;
 
-  if (!fileProvided && !uploadedFile) {
-    return { propertyName, errorType: 'required' };
-  }
-
   if (fileTooLarge) {
     return { propertyName, errorType: 'invalidFileSize' };
   }
@@ -299,6 +295,10 @@ export const getPdfUploadError = (
   const fileNameInvalid = hasInvalidName(file?.originalname);
   if (fileNameInvalid) {
     return { propertyName, errorType: fileNameInvalid };
+  }
+
+  if (!fileProvided && !uploadedFile) {
+    return { propertyName, errorType: 'required' };
   }
 };
 

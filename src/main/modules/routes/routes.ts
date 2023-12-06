@@ -122,15 +122,21 @@ import YourAppsToTheTribunalController from '../../controllers/YourAppsToTheTrib
 import CitizenHubController from '../../controllers/citizen-hub/CitizenHubController';
 import CitizenHubDocumentController from '../../controllers/citizen-hub/CitizenHubDocumentController';
 import { AppRequest } from '../../definitions/appRequest';
-import { FILE_SIZE_LIMIT, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
+import { FILE_SIZE_LIMIT, GB_IN_BYTES, InterceptPaths, PageUrls, Urls } from '../../definitions/constants';
 
 const handleUploads = multer({
   limits: {
-    fileSize: FILE_SIZE_LIMIT,
+    fileSize: GB_IN_BYTES,
   },
+  /*
+    Controls which files are accepted.
+    To reject a file pass `false` to callback like this - callback(null, false)
+  */
   fileFilter: (req: AppRequest, file: Express.Multer.File, callback: FileFilterCallback) => {
     req.fileTooLarge = parseInt(req.headers['content-length']) > FILE_SIZE_LIMIT;
-    return callback(null, !req.fileTooLarge);
+    req.fileLargerThan1GB = parseInt(req.headers['content-length']) > GB_IN_BYTES;
+    const fileSizeIsOkay = req.url?.includes('hearing-document-upload') ? !req.fileLargerThan1GB : !req.fileTooLarge;
+    return callback(null, fileSizeIsOkay);
   },
 });
 
