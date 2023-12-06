@@ -83,6 +83,7 @@ export default class TribunalRespondToOrderController {
     req.session.contactType = Rule92Types.TRIBUNAL;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
     };
 
     const content = getPageContent(req, this.respondToTribunalOrder, [
