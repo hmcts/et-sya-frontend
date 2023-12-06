@@ -5,6 +5,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { PseResponseTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
@@ -121,7 +122,10 @@ export const getAllResponses = async (
   return allResponses;
 };
 
-const getSupportingMaterialDownloadLink = async (responseDoc: Document, accessToken: string): Promise<string> => {
+export const getSupportingMaterialDownloadLink = async (
+  responseDoc: Document,
+  accessToken: string
+): Promise<string> => {
   let responseDocDownload;
   if (responseDoc !== undefined) {
     await populateDocumentMetadata(responseDoc, accessToken);
@@ -235,9 +239,9 @@ const addAdminResponse = async (
   ]);
 };
 
-const addNonAdminResponse = async (
+export const addNonAdminResponse = async (
   translations: AnyRecord,
-  response: TseRespondTypeItem,
+  response: TseRespondTypeItem | PseResponseTypeItem,
   accessToken: string,
   responseDate: string
 ): Promise<any> => {

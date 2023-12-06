@@ -91,6 +91,11 @@ export interface RespondNotificationType {
   isClaimantResponseDue?: string;
 }
 
+export interface RespondNotificationTypeItem {
+  id: string;
+  value: RespondNotificationType;
+}
+
 export interface SendNotificationSelectHearingItem {
   // DynamicFixedListType
   selectedCode?: string;
@@ -105,4 +110,9 @@ export interface PseResponseType {
   response?: string;
   hasSupportingMaterial?: string;
   copyNoGiveDetails?: string;
+}
+
+export interface PseResponseTypeItem {
+  id: string;
+  value: PseResponseType;
 }
