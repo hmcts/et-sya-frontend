@@ -56,7 +56,7 @@ describe('Stored application confirmation page', () => {
 
   it('should display panel title', () => {
     const title = htmlRes.getElementsByClassName(titleClass);
-    expect(title[0].innerHTML).contains(storedAppConfirmationJson.titleText, 'Panel title does not exist');
+    expect(title[0].innerHTML).contains(storedAppConfirmationJson.title, 'Panel title does not exist');
   });
 
   it('should display paragraph header', () => {

@@ -90,7 +90,7 @@ export default class StoredToSubmitResponseController {
 
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
-      applicationType: translations.applicationTo + translations[selectedApplication.value.type],
+      title: translations.applicationTo + translations[selectedApplication.value.type],
       appContent,
       viewCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
       cancelLink: getCancelLink(req),

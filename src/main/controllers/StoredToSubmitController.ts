@@ -100,7 +100,7 @@ export default class StoredToSubmitController {
 
     res.render(TranslationKeys.STORED_TO_SUBMIT, {
       ...content,
-      applicationType: translations.applicationTo + translations[selectedApplication.value.type],
+      title: translations.applicationTo + translations[selectedApplication.value.type],
       appContent: getTseApplicationDetails(
         selectedApplication,
         translations,
