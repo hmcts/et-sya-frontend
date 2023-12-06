@@ -48,7 +48,7 @@ const adminDecisionRowHeader9 = respondentApplicationDetailsJSON.decisionMadeBy;
 const adminDecisionRowHeader10 = respondentApplicationDetailsJSON.name;
 const adminDecisionRowHeader11 = '<br><br>Notification';
 
-const expectedResponseSummaryListHeader = 'Response 1';
+const expectedResponseSummaryListHeader = 'Response';
 
 let htmlRes: Document;
 
