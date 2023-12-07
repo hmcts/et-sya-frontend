@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { NotificationSubjects, Parties, TranslationKeys } from '../definitions/constants';
+import { FEATURE_FLAGS, NotificationSubjects, Parties, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
@@ -15,11 +15,24 @@ export class TribunalOrdersAndRequestsController {
     const welshEnabled = await getFlagValue('welsh-language', null);
     const userCase = req.session?.userCase;
     const languageParam = getLanguageParam(req.url);
-    const notifications = userCase?.sendNotificationCollection.filter(
-      it =>
-        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
-    );
+    const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+
+    let notifications;
+    if (eccFlag) {
+      notifications = userCase?.sendNotificationCollection.filter(
+        it =>
+          (it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+            it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
+          it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+      );
+    } else {
+      notifications = userCase?.sendNotificationCollection.filter(
+        it =>
+          it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+          it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+          !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+      );
+    }
 
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CONTACT_THE_TRIBUNAL, { returnObjects: true }),
