@@ -2,6 +2,7 @@ import { CaseWithId, YesOrNo } from '../../definitions/case';
 import { GenericTseApplicationTypeItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, PageUrls, languages } from '../../definitions/constants';
+import { CaseState } from '../../definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../definitions/hub';
 import { StoreNotification } from '../../definitions/storeNotification';
 
@@ -29,7 +30,11 @@ export const updateHubLinkStatuses = (userCase: CaseWithId, hubLinksStatuses: Hu
 };
 
 export const shouldShowSubmittedAlert = (userCase: CaseWithId): boolean => {
-  return !userCase?.acknowledgementOfClaimLetterDetail?.length && !userCase?.rejectionOfClaimDocumentDetail?.length;
+  return (
+    !userCase?.acknowledgementOfClaimLetterDetail?.length &&
+    !userCase?.rejectionOfClaimDocumentDetail?.length &&
+    userCase?.state === CaseState.SUBMITTED
+  );
 };
 
 export const shouldShowAcknowledgementAlert = (userCase: CaseWithId, hubLinksStatuses: HubLinksStatuses): boolean => {

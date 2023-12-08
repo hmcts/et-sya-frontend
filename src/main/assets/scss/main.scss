@@ -43,6 +43,14 @@ $govuk-blue: #1d70b8;
   }
 }
 
+.multiple-panel {
+  background: lightgray;
+  display: flex;
+  padding-top: 21px;
+  justify-content: center;
+  align-items: center;
+}
+
 .circle {
   background: govuk-colour('black');
   border-radius: 50%;

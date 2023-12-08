@@ -112,6 +112,14 @@
       "link": "Welsh translation required"
     }
   },
+  "multiples": {
+    "leadClaim": "LEAD CLAIM",
+    "stayedCase": "CASE STAYED",
+    "groupClaim": "Your claim is part of a group claim",
+    "designated": "Your individual case is designated the lead case in a group claim.",
+    "stayed": "Your individual claim is stayed. The group claim will progress and you can view updates on the group claim",
+    "viewClaim": "View the group claim"
+  },
   "Change personal details": "newid manylion personol",
   "Claimant not complied": "ddweud wrth y tribiwnlys nad yw’r atebydd wedi cydymffurfio",
   "Consider a decision afresh": "ystyried penderfyniad o’r newydd",

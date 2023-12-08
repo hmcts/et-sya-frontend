@@ -72,6 +72,10 @@ export interface CaseData {
   repCollection?: RepresentativeApiModel[];
   bundlesClaimantCollection?: TypeItem<HearingBundleType>[];
   bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
+  multipleFlag?: YesOrNo;
+  leadClaimant?: YesOrNo;
+  parentMultipleCaseId?: string;
+  multipleReference?: string;
 }
 
 export type HearingBundleType = {
