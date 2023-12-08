@@ -24,4 +24,5 @@ export default {
   lastModified: 'August 19, 2022',
   hubLinksStatuses,
   multipleFlag: YesOrNo.YES,
+  leadClaimant: YesOrNo.YES,
 };

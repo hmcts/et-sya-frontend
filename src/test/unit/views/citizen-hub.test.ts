@@ -224,6 +224,13 @@ describe('Citizen hub page', () => {
       const panel = htmlRes.getElementsByClassName(multiplePanel);
       expect(panel[0].innerHTML).toContain('LEAD CLAIM');
     });
+
+    it('should not render multiple panel when feature off', async () => {
+      const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
+      mockLdClient.mockResolvedValue(false);
+      const panel = htmlRes.getElementsByClassName(multiplePanel);
+      expect(panel[0].innerHTML).toContain('LEAD CLAIM');
+    });
   });
 
   describe('Hub alerts', () => {

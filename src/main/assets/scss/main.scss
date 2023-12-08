@@ -7,6 +7,7 @@
 
 $govuk-grey: #b1b4b6;
 $govuk-blue: #1d70b8;
+$lightgrey-panel: #d3d3d3;
 
 .govuk-phase-banner__text {
   width: 100%;
@@ -44,11 +45,11 @@ $govuk-blue: #1d70b8;
 }
 
 .multiple-panel {
-  background: lightgray;
-  display: flex;
-  padding-top: 21px;
-  justify-content: center;
   align-items: center;
+  background: $lightgrey-panel;
+  display: flex;
+  justify-content: center;
+  padding-top: 21px;
 }
 
 .circle {
