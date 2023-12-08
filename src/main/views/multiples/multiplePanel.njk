@@ -1,0 +1,33 @@
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+
+{% if userCase.multipleFlag == "Yes"%}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <div class="multiple-panel">
+                <h3 class="govuk-heading-s">{{multiplePanelData.banner}}</h3>
+            </div>
+        </div>   
+        <div class="govuk-grid-column-full">
+            <ol class="app-task-list">
+                <li>
+                    <h2 class="app-task-list__section">{{multiples.groupClaim}}</h2>
+                </li>
+                <p class="govuk-body">{{multiplePanelData.text}}</p>
+                <ul class="app-task-list__items">
+                    <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                            <a href="/not-found" class="govuk-link">
+                                {{multiples.viewClaim}}
+                            </a>
+                        </span>  
+
+                        {{govukTag({
+                            text: optional,
+                            classes: "no-text-transform app-task-list__tag govuk-tag govuk-tag--blue"
+                        })}}
+                    </li>
+                </ul>
+            </ol>  
+        </div>
+    </div>
+{% endif %}    

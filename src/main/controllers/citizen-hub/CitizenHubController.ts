@@ -57,6 +57,7 @@ import {
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
+import { getMultiplePanelData } from '../helpers/multiples/MultiplePanelHelper';
 
 const logger = getLogger('CitizenHubController');
 const DAYS_FOR_PROCESSING = 7;
@@ -202,6 +203,7 @@ export default class CitizenHubController {
       eccNotifications: filterActionableNotifications(eccNotifications),
       languageParam: getLanguageParam(req.url),
       welshEnabled,
+      multiplePanelData: getMultiplePanelData(userCase, translations),
     });
   }
 }

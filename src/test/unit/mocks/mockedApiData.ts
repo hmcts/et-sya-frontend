@@ -239,5 +239,7 @@ export const mockedApiData: CaseApiDataResponse = {
         id: '123',
       },
     ],
+    multipleFlag: YesOrNo.YES,
+    leadClaimant: YesOrNo.YES,
   },
 };

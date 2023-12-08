@@ -338,6 +338,8 @@ describe('Format Case Data to Frontend Model', () => {
       documentCollection: undefined,
       representatives: undefined,
       bundleDocuments: [],
+      multipleFlag: undefined,
+      leadClaimant: undefined,
     });
   });
 
