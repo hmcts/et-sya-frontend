@@ -203,7 +203,7 @@ export default class CitizenHubController {
       eccNotifications: filterActionableNotifications(eccNotifications),
       languageParam: getLanguageParam(req.url),
       welshEnabled,
-      multiplePanelData: getMultiplePanelData(userCase, translations),
+      multiplePanelData: await getMultiplePanelData(userCase, translations),
     });
   }
 }
