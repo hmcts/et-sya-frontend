@@ -62,7 +62,7 @@ describe('Hearing Document Upload controller', () => {
       const newFile = mockPdf;
       newFile.originalname = 'file.invalidFileSize';
       const req = mockRequest({ body: {}, file: newFile });
-      req.fileLargerThan1GB = true;
+      req.fileTooLarge = true;
       await new HearingDocumentUploadController().post(req, mockResponse());
 
       expect(req.session.errors).toEqual([{ propertyName: 'hearingDocument', errorType: 'invalidFileSize' }]);

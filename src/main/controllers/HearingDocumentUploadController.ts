@@ -66,7 +66,7 @@ export default class HearingDocumentUploadController {
 
     const hearingDocumentError = getPdfUploadError(
       req.file,
-      req.fileLargerThan1GB,
+      req.fileTooLarge,
       userCase.hearingDocument,
       'hearingDocument'
     );
