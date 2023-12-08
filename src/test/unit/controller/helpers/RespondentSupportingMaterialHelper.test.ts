@@ -1,12 +1,13 @@
 import { getFilesRows } from '../../../../main/controllers/helpers/RespondentSupportingMaterialHelper';
 import { Document } from '../../../../main/definitions/case';
+import { languages } from '../../../../main/definitions/constants';
 import responseSupportingMaterialRaw from '../../../../main/resources/locales/en/translation/respondent-supporting-material.json';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 
 describe('getFilesRows', () => {
   it('should return file row with no file uploaded message', () => {
     const translationJsons = { ...responseSupportingMaterialRaw };
-    const fileRows = getFilesRows(undefined, undefined, translationJsons);
+    const fileRows = getFilesRows(languages.ENGLISH_URL_PARAMETER, undefined, undefined, translationJsons);
     expect(fileRows[0].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       html: '<p class="govuk-body">No files uploaded</p>',
@@ -26,7 +27,7 @@ describe('getFilesRows', () => {
     };
     userCase.supportingMaterialFile = doc;
 
-    const fileRows = getFilesRows(userCase, '1', translationJsons);
+    const fileRows = getFilesRows(languages.ENGLISH_URL_PARAMETER, userCase, '1', translationJsons);
     expect(fileRows[0].key).toEqual({
       classes: 'govuk-!-font-weight-regular-m',
       text: 'test.pdf',
@@ -34,7 +35,7 @@ describe('getFilesRows', () => {
     expect(fileRows[0].actions).toEqual({
       items: [
         {
-          href: '/remove-supporting-material/1',
+          href: '/remove-supporting-material/1?lng=en',
           text: 'Remove',
           visuallyHiddenText: 'Remove',
         },
