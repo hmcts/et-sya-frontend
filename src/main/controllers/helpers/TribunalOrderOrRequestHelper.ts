@@ -4,7 +4,14 @@ import {
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, NotificationSubjects, PageUrls, Parties, ResponseRequired } from '../../definitions/constants';
+import {
+  Applicant,
+  NotificationSubjects,
+  PageUrls,
+  Parties,
+  ResponseRequired,
+  ResponseStatus,
+} from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
@@ -98,12 +105,19 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
         item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
       const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
+      const hasStored =
+        item.value.respondCollection?.some(
+          r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+        ) || false;
       const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
       const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
 
       let hubLinkStatus: HubLinkStatus;
 
       switch (true) {
+        case hasStored:
+          hubLinkStatus = HubLinkStatus.STORED;
+          break;
         case responseRequired && hasResponded:
           hubLinkStatus = HubLinkStatus.SUBMITTED;
           break;
@@ -173,12 +187,21 @@ export const activateTribunalOrdersAndRequestsLink = (
     return item.value.notificationState === HubLinkStatus.VIEWED;
   });
 
+  const anyStoredResponded = notices.some(item => {
+    return item.value.respondCollection?.some(
+      r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+    );
+  });
+
   switch (true) {
     case anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
       break;
     case !allViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+      break;
+    case anyStoredResponded:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
       break;
     case anyRequireResponse && !anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;

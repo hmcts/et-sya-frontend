@@ -69,6 +69,7 @@ export const displayStatusColorMap = new Map<HubLinkStatus, string>([
   [HubLinkStatus.VIEWED, COLORS.GREEN],
   [HubLinkStatus.NOT_VIEWED, COLORS.RED],
   [HubLinkStatus.NOT_STARTED_YET, COLORS.RED],
+  [HubLinkStatus.STORED, COLORS.YELLOW],
 ]);
 
 export const sectionIndexToLinkNames: HubLinkNames[][] = [

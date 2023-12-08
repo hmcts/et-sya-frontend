@@ -14,8 +14,8 @@ import { clearTseFields, handleUploadDocument } from './helpers/CaseHelpers';
 import { getFiles } from './helpers/ContactApplicationHelper';
 import { getFileErrorMessage, getFileUploadAndTextAreaError } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
-import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { setUrlLanguage, setUrlLanguageFromSessionLanguage } from './helpers/LanguageHelper';
+import { copyToOtherPartyRedirectUrl } from './helpers/LinkHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
 
 const logger = getLogger('ContactTheTribunalSelectedController');
