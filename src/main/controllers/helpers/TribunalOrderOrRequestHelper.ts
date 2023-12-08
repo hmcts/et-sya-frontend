@@ -1,4 +1,4 @@
-import { CaseWithId } from '../../definitions/case';
+import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
   RespondNotificationType,
   SendNotificationType,
@@ -6,6 +6,7 @@ import {
 } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import {
   Applicant,
+  FEATURE_FLAGS,
   NotificationSubjects,
   PageUrls,
   Parties,
@@ -16,6 +17,7 @@ import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definiti
 import { HubLinkNames, HubLinkStatus, displayStatusColorMap } from '../../definitions/hub';
 import { AnyRecord, TypeItem } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
+import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
@@ -35,11 +37,20 @@ export const getTribunalOrderOrRequestDetails = (
 
   respondentRequestOrOrderDetails.push(
     addSummaryRow(translations.dateSent, datesStringToDateInLocale(item.value.date, url)),
-    addSummaryRow(translations.sentBy, translations.tribunal),
-    addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
-    addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal]),
-    addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
+    addSummaryRow(translations.sentBy, translations.tribunal)
   );
+
+  if (item.value.sendNotificationCaseManagement) {
+    respondentRequestOrOrderDetails.push(
+      addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
+      addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal])
+    );
+    if (item.value.sendNotificationResponseTribunal === YesOrNo.YES) {
+      respondentRequestOrOrderDetails.push(
+        addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
+      );
+    }
+  }
 
   if (item.value.sendNotificationAdditionalInfo) {
     respondentRequestOrOrderDetails.push(
@@ -59,16 +70,17 @@ export const getTribunalOrderOrRequestDetails = (
 
   if (item.value.sendNotificationWhoCaseOrder) {
     respondentRequestOrOrderDetails.push(
-      addSummaryRow(translations.orderMadeBy, translations[item.value.sendNotificationWhoCaseOrder])
+      addSummaryRow(translations.orderMadeBy, translations[item.value.sendNotificationWhoCaseOrder]),
+      addSummaryRow(translations.fullName, item.value.sendNotificationFullName)
     );
-  } else {
+  } else if (item.value.sendNotificationRequestMadeBy) {
     respondentRequestOrOrderDetails.push(
-      addSummaryRow(translations.requestMadeBy, translations[item.value.sendNotificationRequestMadeBy])
+      addSummaryRow(translations.requestMadeBy, translations[item.value.sendNotificationRequestMadeBy]),
+      addSummaryRow(translations.fullName, item.value.sendNotificationFullName)
     );
   }
 
   respondentRequestOrOrderDetails.push(
-    addSummaryRow(translations.fullName, item.value.sendNotificationFullName),
     addSummaryRow(translations.sentTo, translations[item.value.sendNotificationNotify])
   );
 
@@ -99,7 +111,7 @@ export const populateNotificationsWithRedirectLinksAndStatusColors = (
   url: string,
   translations: AnyRecord
 ): SendNotificationTypeItem[] => {
-  if (notifications?.length && filterSendNotifications(notifications).length) {
+  if (notifications?.length) {
     notifications.forEach(item => {
       const responseRequired =
         item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
@@ -148,7 +160,7 @@ export const populateAllOrdersItemsWithCorrectStatusTranslations = (
   translations: AnyRecord,
   url: string
 ): SendNotificationTypeItem[] => {
-  if (ordersAndRequests?.length && filterSendNotifications(ordersAndRequests).length) {
+  if (ordersAndRequests?.length) {
     ordersAndRequests.forEach(item => {
       item.displayStatus = translations[item.value.notificationState];
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
@@ -157,25 +169,35 @@ export const populateAllOrdersItemsWithCorrectStatusTranslations = (
   }
 };
 
-export const activateTribunalOrdersAndRequestsLink = (
+export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
-): void => {
+): Promise<void> => {
   if (!items?.length) {
     return;
   }
-  const notices = filterSendNotifications(items).filter(
-    notice =>
-      notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
-      notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
-  );
+  let notices = [];
+  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+  console.log(eccFlag);
+
+  if (eccFlag) {
+    notices = items.filter(
+      notice =>
+        (notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+          notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
+        notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+    );
+  } else {
+    notices = items.filter(
+      notice =>
+        notice.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        notice.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)
+    );
+  }
+
   if (!notices?.length) {
     return;
   }
-
-  const responseRequired = (item: SendNotificationTypeItem) =>
-    item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-    item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
 
   const anyRequireResponse = notices.some(responseRequired);
 
@@ -212,12 +234,31 @@ export const activateTribunalOrdersAndRequestsLink = (
   }
 };
 
+const responseRequired = (item: SendNotificationTypeItem) =>
+  item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
+  item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
     it =>
       it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) ||
-      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE)
+      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.GENERAL_CORRESPONDENCE) ||
+      it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
   );
+};
+
+export const filterECCNotifications = async (
+  items: SendNotificationTypeItem[]
+): Promise<SendNotificationTypeItem[]> => {
+  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+  if (eccFlag) {
+    return items?.filter(it => it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
+  }
+  return [];
+};
+
+export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
+  return notifications?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
 };
 
 /**
