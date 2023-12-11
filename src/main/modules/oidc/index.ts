@@ -64,7 +64,7 @@ export class Oidc {
 function handleRedirectUrl(req: Request, res: Response) {
   const parsedUrl = url.parse(req.query.redirectUrl as string);
   if (parsedUrl.host !== req.headers.host && (req.query.redirectUrl as string) !== '/?lng=en') {
-    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href as string);
+    logger.error('Unauthorised External Redirect Attempted to %s', parsedUrl.href);
     return res.redirect(PageUrls.HOME);
   }
   return res.redirect(req.query.redirectUrl as string);
