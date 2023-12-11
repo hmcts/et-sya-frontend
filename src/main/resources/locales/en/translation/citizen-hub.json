@@ -76,6 +76,9 @@
       "p1a": " at the latest.",
       "link": "Respond to the application"
     },
+    "ecc": {
+      "title": "The tribunal has sent you a notification: "
+    },
     "orderOrRequest": {
       "responseRequired": "The tribunal requires some information from you.",
       "noResponseRequired": "The tribunal has sent you a notification",
