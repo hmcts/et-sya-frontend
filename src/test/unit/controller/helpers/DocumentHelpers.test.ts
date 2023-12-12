@@ -11,6 +11,7 @@ import {
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
+  isRequestTribunalResponseDocId,
   isSelectedAppDocId,
   isSelectedAppResponseDocId,
   populateDocumentMetadata,
@@ -736,6 +737,101 @@ describe('getJudgmentDocId', () => {
     req.params.docId = '1a2b3c4d5e6f7g8h';
 
     const result = isJudgmentDocId(req.session.userCase, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    expect(result).toBeFalsy();
+  });
+});
+
+describe('getRequestTribunalResponseDocId', () => {
+  it('should return the correct tribunal response document ID for Tribunal page', () => {
+    const req = mockRequest({
+      session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              respondNotificationTypeCollection: [
+                {
+                  id: '1',
+                  value: {
+                    respondNotificationUploadDocument: [
+                      {
+                        value: {
+                          uploadedDocument: testDoc1,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    const result = isRequestTribunalResponseDocId(req, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
+    expect(result).toBeTruthy();
+  });
+
+  it('should return undefined when no document matches the docId', () => {
+    const req = mockRequest({
+      session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              respondNotificationTypeCollection: [
+                {
+                  id: '1',
+                  value: {
+                    respondNotificationUploadDocument: [
+                      {
+                        value: {
+                          uploadedDocument: testDoc1,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
+    expect(result).toBeFalsy();
+  });
+
+  it('should return undefined when respondNotificationUploadDocument is empty', () => {
+    const req = mockRequest({
+      session: {
+        documentDownloadPage: PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
+        userCase: {
+          selectedRequestOrOrder: {
+            value: {
+              respondNotificationTypeCollection: [
+                {
+                  id: '1',
+                  value: {
+                    respondNotificationUploadDocument: [],
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
+    });
+    req.params.docId = '1a2b3c4d5e6f7g8h';
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
+    expect(result).toBeFalsy();
+  });
+
+  it('should return undefined when session or userCase is undefined', () => {
+    const req = mockRequest({});
+
+    const result = isRequestDocId(req, '1a2b3c4d5e6f7g8h');
     expect(result).toBeFalsy();
   });
 });
