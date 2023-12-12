@@ -217,8 +217,6 @@ export interface Case {
   // Multiples
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
-  parentMultipleCaseId?: string;
-  multipleReference?: string;
 }
 
 export const enum StillWorking {
