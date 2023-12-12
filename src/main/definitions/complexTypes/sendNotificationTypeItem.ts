@@ -110,6 +110,7 @@ export interface PseResponseType {
   response?: string;
   hasSupportingMaterial?: string;
   copyNoGiveDetails?: string;
+  responseState?: string;
 }
 
 export interface PseResponseTypeItem {

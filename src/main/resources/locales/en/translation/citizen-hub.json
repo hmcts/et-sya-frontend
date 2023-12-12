@@ -93,6 +93,16 @@
       "headerClaimant": "The tribunal has made a decision on your application to ",
       "headerRespondent": "The tribunal has made a decision on the respondent's application to ",
       "link": "View the decision"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "You have sent a response to the tribunal and copied it to the respondent.",
+        "rule92No": {
+          "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the respondent.",
+          "p2": "The tribunal will consider your reasons and let you know what happens next."
+        }
+      },
+      "link": "View your response"
     }
   },
   "Change personal details": "change personal details",
