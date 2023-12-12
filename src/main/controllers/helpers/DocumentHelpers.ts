@@ -215,6 +215,37 @@ export function isRequestDocId(req: AppRequest, docId: string): boolean {
   return false;
 }
 
+export function isRequestTribunalResponseDocId(req: AppRequest, docId: string): boolean {
+  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    const requestResponseDoc =
+      req.session?.userCase.selectedRequestOrOrder?.value.respondNotificationTypeCollection?.flatMap(notificationType =>
+        notificationType.value.respondNotificationUploadDocument
+          ? notificationType.value.respondNotificationUploadDocument
+          : []
+      );
+    return (
+      requestResponseDoc?.some(
+        it => it.value.uploadedDocument && getDocId(it.value.uploadedDocument.document_url) === docId
+      ) ?? false
+    );
+  }
+  return false;
+}
+
+export function isRequestResponseDocId(req: AppRequest, docId: string): boolean {
+  if (req.session.documentDownloadPage === PageUrls.TRIBUNAL_ORDER_OR_REQUEST_DETAILS) {
+    const responseDocs = req.session?.userCase.selectedRequestOrOrder?.value.respondCollection?.flatMap(
+      notificationType => (notificationType.value.supportingMaterial ? notificationType.value.supportingMaterial : [])
+    );
+    return (
+      responseDocs?.some(
+        it => it.value.uploadedDocument && getDocId(it.value.uploadedDocument.document_url) === docId
+      ) ?? false
+    );
+  }
+  return false;
+}
+
 export function isJudgmentDocId(userCase: CaseWithId, docId: string): boolean {
   const judgmentDoc = userCase.selectedRequestOrOrder?.value.sendNotificationUploadDocument;
   if (judgmentDoc?.length) {

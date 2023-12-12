@@ -174,7 +174,6 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
   let notices = [];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
-  console.log(eccFlag);
 
   if (eccFlag) {
     notices = items.filter(
@@ -424,7 +423,7 @@ const addAdminResponse = async (
     },
     {
       key: {
-        text: translations.name,
+        text: translations.fullName,
         classes: 'govuk-!-font-weight-regular-m',
       },
       value: { text: response.value.respondNotificationFullName },
@@ -480,3 +479,25 @@ async function addClaimantRespondentResponses(
     }
   }
 }
+
+export const getClaimantTribunalResponseBannerContent = (
+  notifications: SendNotificationTypeItem[],
+  languageParam: string
+): { redirectUrl: string; copyToOtherParty?: string }[] => {
+  if (!notifications?.length) {
+    return [];
+  }
+
+  return notifications.flatMap(
+    notification =>
+      notification.value.respondCollection
+        ?.filter(
+          response =>
+            response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
+        )
+        .map(response => ({
+          redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,
+          copyToOtherParty: response.value.copyToOtherParty,
+        })) ?? []
+  );
+};
