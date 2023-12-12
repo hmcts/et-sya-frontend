@@ -73,8 +73,6 @@ export interface CaseData {
   bundlesRespondentCollection?: TypeItem<HearingBundleType>[];
   multipleFlag?: YesOrNo;
   leadClaimant?: YesOrNo;
-  parentMultipleCaseId?: string;
-  multipleReference?: string;
 }
 
 export type HearingBundleType = {
