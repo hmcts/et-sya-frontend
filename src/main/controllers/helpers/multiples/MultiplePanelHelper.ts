@@ -7,8 +7,10 @@ export const getMultiplePanelData = async (
   translations: AnyRecord
 ): Promise<MultiplePanelData> => {
   const multipleFlag = await getFlagValue('multiples', null);
-  console.log('Multiple flag: ' + multipleFlag);
-  if (userCase?.multipleFlag !== YesOrNo.YES && multipleFlag === false) {
+  if (multipleFlag === false) {
+    return;
+  }
+  if (userCase?.multipleFlag !== YesOrNo.YES) {
     return;
   }
   const data = new MultiplePanelData();
