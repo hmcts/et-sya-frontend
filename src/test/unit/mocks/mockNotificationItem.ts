@@ -4,7 +4,7 @@ import {
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { NotificationSubjects } from '../../../main/definitions/constants';
+import { Applicant, NotificationSubjects, Parties, ResponseRequired } from '../../../main/definitions/constants';
 
 export const doc: Document = {
   document_url: 'uuid',
@@ -148,6 +148,66 @@ export const notificationSubmitted: SendNotificationType = {
   ],
 };
 
+export const notificationWithResponses: SendNotificationType = {
+  number: '1',
+  sendNotificationSelectHearing: {
+    selectedLabel: 'Hearing',
+  },
+  date: '2019-05-02',
+  sentBy: 'Tribunal',
+  sendNotificationCaseManagement: 'Case management order',
+  sendNotificationResponseTribunal: 'Yes',
+  sendNotificationSelectParties: 'Both parties',
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationWhoCaseOrder: 'Judge',
+  sendNotificationFullName: 'Bob',
+  sendNotificationNotify: 'Both parties',
+  notificationState: 'viewed',
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+  respondCollection: [
+    {
+      id: '123-abc-123',
+      value: {
+        from: Applicant.CLAIMANT,
+        copyToOtherParty: YesOrNo.YES,
+        date: '2019-05-02',
+        response: 'Some claimant response text',
+        hasSupportingMaterial: YesOrNo.NO,
+      },
+    },
+    {
+      id: '123-abc-123',
+      value: {
+        from: Applicant.RESPONDENT,
+        copyToOtherParty: YesOrNo.YES,
+        date: '2019-05-10',
+        response: 'Some respondent response text',
+        hasSupportingMaterial: YesOrNo.NO,
+      },
+    },
+  ],
+  respondNotificationTypeCollection: [
+    {
+      id: '1',
+      value: {
+        isClaimantResponseDue: ResponseRequired.YES,
+        respondNotificationAdditionalInfo: 'additional info',
+        respondNotificationCaseManagementMadeBy: 'Legal officer',
+        respondNotificationCmoOrRequest: 'Case management order',
+        respondNotificationDate: '2019-05-03',
+        respondNotificationFullName: 'Judge Dredd',
+        respondNotificationPartyToNotify: Parties.BOTH_PARTIES,
+        respondNotificationRequestMadeBy: 'Legal officer',
+        respondNotificationResponseRequired: ResponseRequired.YES,
+        respondNotificationTitle: 'tribunal response title text',
+        respondNotificationWhoRespond: Parties.BOTH_PARTIES,
+      },
+    },
+  ],
+};
+
 export const eccNotification = {
   date: '1 December 2023',
   number: '1',
@@ -196,4 +256,9 @@ export const mockNotificationSubmitted: SendNotificationTypeItem = {
 export const mockECCNotification: SendNotificationTypeItem = {
   id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
   value: eccNotification,
+};
+
+export const mockNotificationWithResponses: SendNotificationTypeItem = {
+  id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
+  value: notificationWithResponses,
 };

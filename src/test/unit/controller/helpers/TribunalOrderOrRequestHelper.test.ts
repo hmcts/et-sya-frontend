@@ -3,11 +3,13 @@ import {
   filterActionableNotifications,
   filterECCNotifications,
   filterSendNotifications,
+  getNotificationResponses,
   getTribunalOrderOrRequestDetails,
   populateAllOrdersItemsWithCorrectStatusTranslations,
   populateNotificationsWithRedirectLinksAndStatusColors,
   setNotificationBannerData,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
+import { YesOrNo } from '../../../../main/definitions/case';
 import {
   SendNotificationType,
   SendNotificationTypeItem,
@@ -17,6 +19,7 @@ import {
   NotificationSubjects,
   Parties,
   ResponseRequired,
+  Rule92Types,
   TranslationKeys,
 } from '../../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
@@ -34,6 +37,8 @@ import {
   mockNotificationResponseReq,
   mockNotificationSubmitted,
   mockNotificationViewed,
+  mockNotificationWithResponses,
+  notificationWithResponses,
 } from '../../mocks/mockNotificationItem';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
 import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
@@ -43,8 +48,10 @@ describe('Tribunal order or request helper', () => {
   const req = mockRequestWithTranslation({}, translationJsons);
   const notificationItem = mockNotificationItem;
   const notificationItemOther = mockNotificationItemOther;
+  const notificationItemWithResponses = mockNotificationWithResponses;
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');
   mockLdClient.mockResolvedValue(true);
+  const summaryListClass = 'govuk-!-font-weight-regular-m';
 
   const translations: AnyRecord = {
     ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
@@ -52,61 +59,172 @@ describe('Tribunal order or request helper', () => {
     ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
   };
 
-  it('should return expected tribunal order details content', () => {
-    const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItem, req.url);
-    expect(pageContent[0].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Hearing' });
+  it('should return expected tribunal order details content', async () => {
+    const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItemWithResponses, req.url);
+    const responseContent = await getNotificationResponses(notificationWithResponses, translations, req);
+    expect(pageContent[0].key).toEqual({ classes: summaryListClass, text: 'Hearing' });
     expect(pageContent[0].value).toEqual({ text: 'Hearing' });
-    expect(pageContent[1].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Date sent' });
+    expect(pageContent[1].key).toEqual({ classes: summaryListClass, text: 'Date sent' });
     expect(pageContent[1].value).toEqual({ text: '2 May 2019' });
-    expect(pageContent[2].key).toEqual({ classes: 'govuk-!-font-weight-regular-m', text: 'Sent by' });
+    expect(pageContent[2].key).toEqual({ classes: summaryListClass, text: 'Sent by' });
     expect(pageContent[2].value).toEqual({ text: 'Tribunal' });
     expect(pageContent[3].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Case management order or request?',
     });
     expect(pageContent[3].value).toEqual({ text: 'Case management order' });
     expect(pageContent[4].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Response due',
     });
-    expect(pageContent[4].value).toEqual({ text: 'Yes' });
+    expect(pageContent[4].value).toEqual({ text: YesOrNo.YES });
     expect(pageContent[5].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Party or parties to respond',
     });
-    expect(pageContent[5].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[5].value).toEqual({ text: Parties.BOTH_PARTIES });
     expect(pageContent[6].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Additional information',
     });
     expect(pageContent[6].value).toEqual({ text: 'Additional info' });
     expect(pageContent[7].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Description',
     });
     expect(pageContent[7].value).toEqual({ text: 'Short description' });
     expect(pageContent[8].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Document',
     });
     expect(pageContent[8].value).toEqual({
       html: "<a href='/getSupportingMaterial/uuid' target='_blank' class='govuk-link'>test.pdf (pdf, 1000Bytes)</a>",
     });
     expect(pageContent[9].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Case management order made by',
     });
     expect(pageContent[9].value).toEqual({ text: 'Judge' });
     expect(pageContent[10].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Name',
     });
     expect(pageContent[10].value).toEqual({ text: 'Bob' });
     expect(pageContent[11].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Sent to',
     });
-    expect(pageContent[11].value).toEqual({ text: 'Both parties' });
+    expect(pageContent[11].value).toEqual({ text: Parties.BOTH_PARTIES });
+    expect(responseContent[0][0].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response from',
+    });
+    expect(responseContent[0][0].value).toEqual({ text: Applicant.CLAIMANT });
+    expect(responseContent[0][1].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response date',
+    });
+    expect(responseContent[0][1].value).toEqual({ text: '2 May 2019' });
+    expect(responseContent[0][2].key).toEqual({
+      classes: summaryListClass,
+      text: 'What is your response to the tribunal?',
+    });
+    expect(responseContent[0][2].value).toEqual({ text: 'Some claimant response text' });
+    expect(responseContent[0][3].key).toEqual({
+      classes: summaryListClass,
+      text: 'Supporting material',
+    });
+    expect(responseContent[0][3].value).toEqual({ text: undefined });
+    expect(responseContent[0][4].key).toEqual({
+      classes: summaryListClass,
+      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+    });
+    expect(responseContent[0][4].value).toEqual({ text: YesOrNo.YES });
+    expect(responseContent[1][0].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response from',
+    });
+    expect(responseContent[1][0].value).toEqual({ text: Applicant.RESPONDENT });
+    expect(responseContent[1][1].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response date',
+    });
+    expect(responseContent[1][1].value).toEqual({ text: '10 May 2019' });
+    expect(responseContent[1][2].key).toEqual({
+      classes: summaryListClass,
+      text: 'What is your response to the tribunal?',
+    });
+    expect(responseContent[1][2].value).toEqual({ text: 'Some respondent response text' });
+    expect(responseContent[1][3].key).toEqual({
+      classes: summaryListClass,
+      text: 'Supporting material',
+    });
+    expect(responseContent[1][3].value).toEqual({ text: undefined });
+    expect(responseContent[1][4].key).toEqual({
+      classes: summaryListClass,
+      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+    });
+    expect(responseContent[1][4].value).toEqual({ text: YesOrNo.YES });
+    expect(responseContent[2][0].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response',
+    });
+    expect(responseContent[2][0].value).toEqual({ text: 'tribunal response title text' });
+    expect(responseContent[2][1].key).toEqual({
+      classes: summaryListClass,
+      text: 'Date sent',
+    });
+    expect(responseContent[2][1].value).toEqual({ text: '3 May 2019' });
+    expect(responseContent[2][2].key).toEqual({
+      classes: summaryListClass,
+      text: 'Sent by',
+    });
+    expect(responseContent[2][2].value).toEqual({ text: Rule92Types.TRIBUNAL });
+    expect(responseContent[2][3].key).toEqual({
+      classes: summaryListClass,
+      text: 'Case management order or request?',
+    });
+    expect(responseContent[2][3].value).toEqual({ text: 'Case management order' });
+    expect(responseContent[2][4].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response due',
+    });
+    expect(responseContent[2][4].value).toEqual({ text: ResponseRequired.YES });
+    expect(responseContent[2][5].key).toEqual({
+      classes: summaryListClass,
+      text: 'Party or parties to respond',
+    });
+    expect(responseContent[2][5].value).toEqual({ text: Parties.BOTH_PARTIES });
+    expect(responseContent[2][6].key).toEqual({
+      classes: summaryListClass,
+      text: 'Additional information',
+    });
+    expect(responseContent[2][6].value).toEqual({ text: 'additional info' });
+    expect(responseContent[2][7].key).toEqual({
+      classes: summaryListClass,
+      text: 'Description',
+    });
+    expect(responseContent[2][7].value).toEqual({ text: undefined });
+    expect(responseContent[2][8].key).toEqual({
+      classes: summaryListClass,
+      text: 'Document',
+    });
+    expect(responseContent[2][8].value).toEqual({ text: undefined });
+    expect(responseContent[2][9].key).toEqual({
+      classes: summaryListClass,
+      text: 'Request made by',
+    });
+    expect(responseContent[2][9].value).toEqual({ text: 'Legal officer' });
+    expect(responseContent[2][10].key).toEqual({
+      classes: summaryListClass,
+      text: 'Name',
+    });
+    expect(responseContent[2][10].value).toEqual({ text: 'Judge Dredd' });
+    expect(responseContent[2][11].key).toEqual({
+      classes: summaryListClass,
+      text: 'Sent to',
+    });
+    expect(responseContent[2][11].value).toEqual({ text: Parties.BOTH_PARTIES });
   });
 
   it('should return expected tribunal request details content', () => {
@@ -116,13 +234,13 @@ describe('Tribunal order or request helper', () => {
     const pageContent = getTribunalOrderOrRequestDetails(translations, notificationItem, req.url);
 
     expect(pageContent[3].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Case management order or request?',
     });
     expect(pageContent[3].value).toEqual({ text: 'Request' });
 
     expect(pageContent[9].key).toEqual({
-      classes: 'govuk-!-font-weight-regular-m',
+      classes: summaryListClass,
       text: 'Request made by',
     });
     expect(pageContent[9].value).toEqual({ text: 'Legal officer' });
@@ -374,7 +492,7 @@ describe('Tribunal order or request helper', () => {
       value: {
         sendNotificationCaseManagement: 'Order',
         notificationState: 'viewed',
-        sendNotificationNotify: 'Both parties',
+        sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
@@ -407,7 +525,7 @@ describe('Tribunal order or request helper', () => {
       value: {
         sendNotificationCaseManagement: 'Order',
         notificationState: 'something',
-        sendNotificationNotify: 'Both parties',
+        sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
@@ -440,7 +558,7 @@ describe('Tribunal order or request helper', () => {
       value: {
         sendNotificationCaseManagement: 'Order',
         notificationState: 'viewed',
-        sendNotificationNotify: 'Both parties',
+        sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
@@ -457,7 +575,7 @@ describe('Tribunal order or request helper', () => {
       value: {
         sendNotificationCaseManagement: 'Order',
         notificationState: 'viewed',
-        sendNotificationNotify: 'Both parties',
+        sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
@@ -466,7 +584,7 @@ describe('Tribunal order or request helper', () => {
       value: {
         sendNotificationCaseManagement: 'Order',
         notificationState: 'viewed',
-        sendNotificationNotify: 'Both parties',
+        sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
       } as SendNotificationType,
