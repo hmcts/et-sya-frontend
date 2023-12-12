@@ -1,4 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../../definitions/case';
+import { MultiplePanelData } from '../../../definitions/multiples/multiplePanelData';
 import { AnyRecord } from '../../../definitions/util-types';
 import { getFlagValue } from '../../../modules/featureFlag/launchDarkly';
 
@@ -7,10 +8,7 @@ export const getMultiplePanelData = async (
   translations: AnyRecord
 ): Promise<MultiplePanelData> => {
   const multipleFlag = await getFlagValue('multiples', null);
-  if (multipleFlag === false) {
-    return;
-  }
-  if (userCase?.multipleFlag !== YesOrNo.YES) {
+  if (multipleFlag === false || userCase?.multipleFlag !== YesOrNo.YES) {
     return;
   }
   const data = new MultiplePanelData();
@@ -24,8 +22,3 @@ export const getMultiplePanelData = async (
   }
   return data;
 };
-
-export class MultiplePanelData {
-  banner?: string;
-  text?: string;
-}
