@@ -29,6 +29,7 @@ import {
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
   shouldShowAcknowledgementAlert,
+  shouldShowClaimantTribunalResponseReceived,
   shouldShowJudgmentReceived,
   shouldShowRejectionAlert,
   shouldShowRespondentAcknolwedgement,
@@ -54,6 +55,7 @@ import {
   filterECCNotifications,
   filterOutEcc,
   filterSendNotifications,
+  getClaimantTribunalResponseBannerContent,
   populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
@@ -167,6 +169,10 @@ export default class CitizenHubController {
 
     let judgmentBannerContent = undefined;
     let decisionBannerContent = undefined;
+    const claimantTribunalResponseBannerContent = getClaimantTribunalResponseBannerContent(
+      notifications,
+      languageParam
+    );
 
     if (userCase.hubLinksStatuses[HubLinkNames.TribunalJudgements] !== HubLinkStatus.NOT_YET_AVAILABLE) {
       judgmentBannerContent = getJudgmentBannerContent(judgments, languageParam);
@@ -184,12 +190,14 @@ export default class CitizenHubController {
       respondentBannerContent,
       judgmentBannerContent,
       decisionBannerContent,
+      claimantTribunalResponseBannerContent,
       hideContactUs: true,
       processingDueDate: getDueDate(formatDate(userCase.submittedDate), DAYS_FOR_PROCESSING),
       showSubmittedAlert: shouldShowSubmittedAlert(userCase),
       showAcknowledgementAlert: shouldShowAcknowledgementAlert(userCase, hubLinksStatuses),
       showRejectionAlert: shouldShowRejectionAlert(userCase, hubLinksStatuses),
       showRespondentResponseReceived: shouldShowRespondentResponseReceived(allApplications),
+      showClaimantTribunalResponseReceived: shouldShowClaimantTribunalResponseReceived(notifications),
       showRespondentApplicationReceived: respAppsReceived,
       showRespondentRejection: shouldShowRespondentRejection(userCase, hubLinksStatuses),
       showRespondentAcknowledgement: shouldShowRespondentAcknolwedgement(userCase, hubLinksStatuses),
