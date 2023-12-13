@@ -40,6 +40,7 @@ import {
   mockNotificationSubmitted,
   mockNotificationViewed,
   mockNotificationWithResponses,
+  mockNotificationWithViewedResponses,
   notificationWithResponses,
 } from '../../mocks/mockNotificationItem';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
@@ -241,6 +242,22 @@ describe('Tribunal order or request helper', () => {
         redirectUrl: '/tribunal-order-or-request-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
       },
     ]);
+  });
+
+  it('should not display a claimant response notification banner if the claimant responses have been viewed', () => {
+    const result = getClaimantTribunalResponseBannerContent(
+      [mockNotificationWithViewedResponses],
+      languages.ENGLISH_URL_PARAMETER
+    );
+    expect(result).toEqual([]);
+  });
+
+  it('should not display a claimant response notification banner if there are no claimant responses', () => {
+    const result = getClaimantTribunalResponseBannerContent(
+      [mockNotificationItemOther],
+      languages.ENGLISH_URL_PARAMETER
+    );
+    expect(result).toEqual([]);
   });
 
   it('should return expected tribunal request details content', () => {

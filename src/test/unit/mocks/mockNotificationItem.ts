@@ -5,6 +5,7 @@ import {
   SendNotificationTypeItem,
 } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, NotificationSubjects, Parties, ResponseRequired } from '../../../main/definitions/constants';
+import { HubLinkStatus } from '../../../main/definitions/hub';
 
 export const doc: Document = {
   document_url: 'uuid',
@@ -209,6 +210,49 @@ export const notificationWithResponses: SendNotificationType = {
   ],
 };
 
+export const notificationWithViewedResponses: SendNotificationType = {
+  number: '1',
+  sendNotificationSelectHearing: {
+    selectedLabel: 'Hearing',
+  },
+  date: '2019-05-02',
+  sentBy: 'Tribunal',
+  sendNotificationCaseManagement: 'Case management order',
+  sendNotificationResponseTribunal: 'Yes',
+  sendNotificationSelectParties: 'Both parties',
+  sendNotificationAdditionalInfo: 'Additional info',
+  sendNotificationUploadDocument: [docItem],
+  sendNotificationWhoCaseOrder: 'Judge',
+  sendNotificationFullName: 'Bob',
+  sendNotificationNotify: 'Both parties',
+  notificationState: 'viewed',
+  sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+  sendNotificationSubject: [NotificationSubjects.ORDER_OR_REQUEST],
+  respondCollection: [
+    {
+      id: '123-abc-123',
+      value: {
+        from: Applicant.CLAIMANT,
+        copyToOtherParty: YesOrNo.YES,
+        date: '2019-05-02',
+        response: 'Some claimant response text',
+        hasSupportingMaterial: YesOrNo.NO,
+        responseState: HubLinkStatus.VIEWED,
+      },
+    },
+    {
+      id: '123-abc-123',
+      value: {
+        from: Applicant.RESPONDENT,
+        copyToOtherParty: YesOrNo.YES,
+        date: '2019-05-10',
+        response: 'Some respondent response text',
+        hasSupportingMaterial: YesOrNo.NO,
+      },
+    },
+  ],
+};
+
 export const eccNotification = {
   date: '1 December 2023',
   number: '1',
@@ -262,4 +306,9 @@ export const mockECCNotification: SendNotificationTypeItem = {
 export const mockNotificationWithResponses: SendNotificationTypeItem = {
   id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
   value: notificationWithResponses,
+};
+
+export const mockNotificationWithViewedResponses: SendNotificationTypeItem = {
+  id: '6423be5b-0b82-462a-af1d-5f1df39686ab',
+  value: notificationWithViewedResponses,
 };
