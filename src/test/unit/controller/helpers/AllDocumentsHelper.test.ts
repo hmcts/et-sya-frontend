@@ -4,11 +4,14 @@ import {
   filterRespondentsDocuments,
   getTableCaption,
   isBundlesDoc,
+  isDocInPseRespondCollection,
   mapDocumentToTableRow,
   prepareTableRows,
 } from '../../../../main/controllers/helpers/AllDocumentsHelper';
+import { YesOrNo } from '../../../../main/definitions/case';
 import { DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
-import { AllDocumentTypes } from '../../../../main/definitions/constants';
+import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import { AllDocumentTypes, Applicant } from '../../../../main/definitions/constants';
 import allDocsRaw from '../../../../main/resources/locales/en/translation/all-documents.json';
 import { mockRequest } from '../../mocks/mockRequest';
 import {
@@ -171,6 +174,80 @@ describe('allDocumentsHelper tests', () => {
     request.session.userCase.bundleDocuments = undefined;
     request.session.documentDownloadPage = '/all-documents';
     const result = isBundlesDoc(request, '123');
+    expect(result).toBe(false);
+  });
+});
+
+describe('isDocInPseRespondCollection tests', () => {
+  const supportingMaterial: DocumentTypeItem[] = [
+    {
+      id: '9490460c-3588-4974-b102-75a91ccc8e0e',
+      value: {
+        uploadedDocument: {
+          document_filename: 'TEST.txt',
+          document_url: 'http://localhost:5005/documents/fd7bdb86-8ba6-4bfc-9c45-9b0679cb155a',
+          document_binary_url: 'http://localhost:5005/documents/fd7bdb86-8ba6-4bfc-9c45-9b0679cb155a/binary',
+        },
+      },
+    },
+  ];
+
+  const sendNotificationTypeItem: SendNotificationTypeItem[] = [
+    {
+      id: '12345',
+      value: {
+        number: '1',
+        respondCollection: [
+          {
+            id: '23456',
+            value: {
+              from: Applicant.CLAIMANT,
+              copyToOtherParty: YesOrNo.YES,
+              supportingMaterial,
+            },
+          },
+        ],
+      },
+    },
+  ];
+
+  const request = mockRequest({});
+  request.session.userCase.sendNotificationCollection = sendNotificationTypeItem;
+
+  it('isDocInPseRespondCollection should return true', () => {
+    const result = isDocInPseRespondCollection(request, 'fd7bdb86-8ba6-4bfc-9c45-9b0679cb155a');
+    expect(result).toBe(true);
+  });
+
+  it('isDocInPseRespondCollection should return false when uploadedDocument undefined', () => {
+    request.session.userCase.sendNotificationCollection[0].value.respondCollection[0].value.supportingMaterial[0].value.uploadedDocument =
+      undefined;
+    const result = isDocInPseRespondCollection(request, '123');
+    expect(result).toBe(false);
+  });
+
+  it('isDocInPseRespondCollection should return false when supportingMaterial undefined', () => {
+    request.session.userCase.sendNotificationCollection[0].value.respondCollection[0].value.supportingMaterial =
+      undefined;
+    const result = isDocInPseRespondCollection(request, '123');
+    expect(result).toBe(false);
+  });
+
+  it('isDocInPseRespondCollection should return false when respondCollection undefined', () => {
+    request.session.userCase.sendNotificationCollection[0].value.respondCollection = undefined;
+    const result = isDocInPseRespondCollection(request, '123');
+    expect(result).toBe(false);
+  });
+
+  it('isDocInPseRespondCollection should return false when sendNotificationCollection undefined', () => {
+    request.session.userCase.sendNotificationCollection = undefined;
+    const result = isDocInPseRespondCollection(request, '123');
+    expect(result).toBe(false);
+  });
+
+  it('isDocInPseRespondCollection should return false when userCase undefined', () => {
+    request.session.userCase = undefined;
+    const result = isDocInPseRespondCollection(request, '123');
     expect(result).toBe(false);
   });
 });
