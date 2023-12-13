@@ -3,6 +3,7 @@ import {
   filterActionableNotifications,
   filterECCNotifications,
   filterSendNotifications,
+  getClaimantTribunalResponseBannerContent,
   getNotificationResponses,
   getTribunalOrderOrRequestDetails,
   populateAllOrdersItemsWithCorrectStatusTranslations,
@@ -21,6 +22,7 @@ import {
   ResponseRequired,
   Rule92Types,
   TranslationKeys,
+  languages,
 } from '../../../../main/definitions/constants';
 import { HubLinkNames, HubLinkStatus } from '../../../../main/definitions/hub';
 import { AnyRecord } from '../../../../main/definitions/util-types';
@@ -225,6 +227,20 @@ describe('Tribunal order or request helper', () => {
       text: 'Sent to',
     });
     expect(responseContent[2][11].value).toEqual({ text: Parties.BOTH_PARTIES });
+  });
+
+  it('should display the correct banner content for claimant response to tribunal request', () => {
+    const result = getClaimantTribunalResponseBannerContent(
+      [notificationItemWithResponses],
+      languages.ENGLISH_URL_PARAMETER
+    );
+
+    expect(result).toEqual([
+      {
+        copyToOtherParty: YesOrNo.YES,
+        redirectUrl: '/tribunal-order-or-request-details/6423be5b-0b82-462a-af1d-5f1df39686ab?lng=en',
+      },
+    ]);
   });
 
   it('should return expected tribunal request details content', () => {

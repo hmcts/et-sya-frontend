@@ -175,6 +175,7 @@ export const notificationWithResponses: SendNotificationType = {
         date: '2019-05-02',
         response: 'Some claimant response text',
         hasSupportingMaterial: YesOrNo.NO,
+        responseState: undefined,
       },
     },
     {
