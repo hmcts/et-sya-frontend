@@ -21,10 +21,11 @@
 
       {# TODO: Remove this when ECC Flag is live #}
 
+      {% set et3FormRows = [] %}
       {% set documentsRows = [] %}
         {% if et3Forms.length %}
          {% for et3Form in et3Forms %}
-           {% set _ = documentsRows.push(
+           {% set _ = et3FormRows.push(
              [
                {
                  text: et3Form.createdOn
@@ -117,6 +118,13 @@
           rows: tableContents
         }) }}
         {% else %}
+          {{ govukTable({
+            caption: et3H2Text,
+            firstCellIsHeader: true,
+            captionClasses: "govuk-table__caption--m",
+            rows: et3FormRows
+          }) }}
+
           {{ govukTable({
             caption: h2,
             firstCellIsHeader: true,
