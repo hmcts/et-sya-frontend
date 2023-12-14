@@ -152,11 +152,11 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
+    let notifications = filterSendNotifications(userCase?.sendNotificationCollection);
     const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
 
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
+    notifications = populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
 

@@ -197,6 +197,10 @@ export const activateTribunalOrdersAndRequestsLink = async (
     return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
   });
 
+  const anyNotViewed = notices.some(item => {
+    return item.value.notificationState === HubLinkStatus.NOT_VIEWED;
+  });
+
   const allViewed = notices.every(item => {
     return item.value.notificationState === HubLinkStatus.VIEWED;
   });
@@ -205,11 +209,11 @@ export const activateTribunalOrdersAndRequestsLink = async (
     case anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
       break;
-    case !allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      break;
-    case anyRequireResponse && !anyRequireResponseAndNotResponded:
+    case anyRequireResponse && !anyRequireResponseAndNotResponded && !anyNotViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+      break;
+    case anyNotViewed:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
       break;
     case allViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;

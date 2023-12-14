@@ -17,16 +17,16 @@ export class TribunalOrdersAndRequestsController {
     const languageParam = getLanguageParam(req.url);
     const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
 
-    let notifications;
+    let ordersAndRequests;
     if (eccFlag) {
-      notifications = userCase?.sendNotificationCollection.filter(
+      ordersAndRequests = userCase?.sendNotificationCollection.filter(
         it =>
           (it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
             it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
           it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
       );
     } else {
-      notifications = userCase?.sendNotificationCollection.filter(
+      ordersAndRequests = userCase?.sendNotificationCollection.filter(
         it =>
           it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
           it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
@@ -39,8 +39,7 @@ export class TribunalOrdersAndRequestsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
     };
-    populateAllOrdersItemsWithCorrectStatusTranslations(notifications, translations, req.url);
-
+    ordersAndRequests = populateAllOrdersItemsWithCorrectStatusTranslations(ordersAndRequests, translations, req.url);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,
@@ -48,7 +47,7 @@ export class TribunalOrdersAndRequestsController {
     ]);
     res.render(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, {
       ...content,
-      notifications,
+      notifications: ordersAndRequests,
       translations,
       languageParam,
       welshEnabled,

@@ -335,7 +335,7 @@ describe('handle respond to application', () => {
 
 describe('update sendNotification state', () => {
   it('should successfully update sendNotification state', () => {
-    caseApi.updateSendNotificationState = jest.fn().mockResolvedValueOnce(
+    caseApi.updateSendNotificationStateToViewed = jest.fn().mockResolvedValueOnce(
       Promise.resolve({
         data: {
           created_date: '2022-08-19T09:19:25.79202',
@@ -351,7 +351,7 @@ describe('update sendNotification state', () => {
   });
 
   it('should catch failure when update sendNotification state', async () => {
-    caseApi.updateSendNotificationState = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+    caseApi.updateSendNotificationStateToViewed = jest.fn().mockRejectedValueOnce({ message: 'test error' });
 
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
     updateSendNotificationState(req, mockLogger);
