@@ -180,13 +180,12 @@ export class CaseApi {
     }
   };
 
-  updateSendNotificationState = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+  updateSendNotificationStateToViewed = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.UPDATE_NOTIFICATION_STATE, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         send_notification_id: caseItem.selectedRequestOrOrder.id,
-        notification_state: HubLinkStatus.VIEWED,
       });
     } catch (error) {
       throw new Error('Error updating sendNotification state: ' + axiosErrorDetails(error));

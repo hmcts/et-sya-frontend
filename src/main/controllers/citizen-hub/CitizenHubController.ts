@@ -54,9 +54,8 @@ import {
   filterActionableNotifications,
   filterECCNotifications,
   filterOutEcc,
-  filterSendNotifications,
+  getAndPopulateNotifications,
   getClaimantTribunalResponseBannerContent,
-  populateNotificationsWithRedirectLinksAndStatusColors,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 
@@ -154,11 +153,9 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = filterSendNotifications(userCase?.sendNotificationCollection);
+    const notifications = getAndPopulateNotifications(userCase?.sendNotificationCollection, req.url, translations);
     const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
-
-    populateNotificationsWithRedirectLinksAndStatusColors(notifications, req.url, translations);
 
     let respondentBannerContent = undefined;
 

@@ -200,6 +200,10 @@ export const activateTribunalOrdersAndRequestsLink = async (
     return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
   });
 
+  const anyNotViewed = notices.some(item => {
+    return item.value.notificationState === HubLinkStatus.NOT_VIEWED;
+  });
+
   const allViewed = notices.every(item => {
     return item.value.notificationState === HubLinkStatus.VIEWED;
   });
@@ -208,11 +212,11 @@ export const activateTribunalOrdersAndRequestsLink = async (
     case anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
       break;
-    case !allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      break;
-    case anyRequireResponse && !anyRequireResponseAndNotResponded:
+    case anyRequireResponse && !anyRequireResponseAndNotResponded && !anyNotViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+      break;
+    case anyNotViewed:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
       break;
     case allViewed:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
@@ -223,6 +227,16 @@ export const activateTribunalOrdersAndRequestsLink = async (
 const responseRequired = (item: SendNotificationTypeItem) =>
   item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
   item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
+
+export const getAndPopulateNotifications = (
+  items: SendNotificationTypeItem[],
+  url: string,
+  translations: AnyRecord
+): SendNotificationTypeItem[] => {
+  const notifications = filterSendNotifications(items);
+
+  return populateNotificationsWithRedirectLinksAndStatusColors(notifications, url, translations);
+};
 
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(

@@ -39,8 +39,7 @@ export class TribunalOrdersAndRequestsController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_ORDERS_AND_REQUESTS, { returnObjects: true }),
     };
-    populateAllOrdersItemsWithCorrectStatusTranslations(notifications, translations, req.url);
-
+    notifications = populateAllOrdersItemsWithCorrectStatusTranslations(notifications, translations, req.url);
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
       TranslationKeys.COMMON,

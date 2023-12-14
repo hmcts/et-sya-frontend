@@ -615,7 +615,7 @@ describe('Rethrowing errors when axios requests fail', () => {
       errorMessage: 'Error changing tse application status: ' + error.message,
     },
     {
-      serviceMethod: api.updateSendNotificationState,
+      serviceMethod: api.updateSendNotificationStateToViewed,
       parameters: [caseItem],
       errorMessage: 'Error updating sendNotification state: ' + error.message,
     },

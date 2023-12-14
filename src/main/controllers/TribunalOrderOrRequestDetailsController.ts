@@ -3,11 +3,12 @@ import { Response } from 'express';
 import { AppRequest } from '../definitions/appRequest';
 import { Applicant, PageUrls, Parties, ResponseRequired, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
+import { HubLinkStatus } from '../definitions/hub';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { updateSendNotificationState } from './helpers/CaseHelpers';
+import { updateSendNotificationState as setNotificationStateAsViewed } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -23,10 +24,12 @@ export default class TribunalOrderOrRequestDetailsController {
 
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
-    try {
-      await updateSendNotificationState(req, logger);
-    } catch (error) {
-      logger.info(error.message);
+    if (selectedRequestOrOrder.value.notificationState === HubLinkStatus.NOT_VIEWED) {
+      try {
+        await setNotificationStateAsViewed(req, logger);
+      } catch (error) {
+        logger.info(error.message);
+      }
     }
 
     const redirectUrl =
