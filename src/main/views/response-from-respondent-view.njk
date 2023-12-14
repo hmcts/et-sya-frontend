@@ -19,10 +19,12 @@
         {{h1}}
       </h1>
 
-      {% set et3FormRows = [] %}
-       {% if et3Forms.length %}
+      {# TODO: Remove this when ECC Flag is live #}
+
+      {% set documentsRows = [] %}
+        {% if et3Forms.length %}
          {% for et3Form in et3Forms %}
-           {% set _ = et3FormRows.push(
+           {% set _ = documentsRows.push(
              [
                {
                  text: et3Form.createdOn
@@ -38,14 +40,21 @@
          {% endfor %}
        {% endif %}
 
-       {{ govukTable({
-         caption: et3H2Text,
-         firstCellIsHeader: true,
-         captionClasses: "govuk-table__caption--m",
-         rows: et3FormRows
-       }) }}
-
-      {% set documentsRows = [] %}
+      {% if et3Attachments.length %}
+        {% for et3Attachment in et3Attachments %}
+          {% set _ = documentsRows.push(
+            [
+              {text: et3Attachment.createdOn},
+              {
+                text: et3AttachmentText
+              },
+              {
+                html: "<a href=\"/getCaseDocument/" + et3Attachment.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Attachment.originalDocumentName + "</a>"
+              }
+            ]
+          ) %}
+        {% endfor %}
+      {% endif %}
       {% if et3AcceptedDocs.length %}
         {% for et3AcceptedDoc in et3AcceptedDocs %}
           {% set _ = documentsRows.push(
@@ -82,22 +91,6 @@
         {% endfor %}
       {% endif %}
 
-      {% if et3Attachments.length and not et3RejectionDocs.length %}
-        {% for et3Attachment in et3Attachments %}
-          {% set _ = documentsRows.push(
-            [
-              {text: ""},
-              {
-                text: et3AttachmentText
-              },
-              {
-                html: "<a href=\"/getCaseDocument/" + et3Attachment.id + "\" target=\"_blank\" class=\"govuk-link\">" + et3Attachment.originalDocumentName + "</a>"
-              }
-            ]
-          ) %}
-        {% endfor %}
-      {% endif %}
-
       {% if et3SupportingDocs.length and not et3RejectionDocs.length %}
         {% for et3SupportingDoc in et3SupportingDocs %}
           {% set _ = documentsRows.push(
@@ -114,12 +107,23 @@
         {% endfor %}
       {% endif %}
 
-      {{ govukTable({
-        caption: h2,
-        firstCellIsHeader: true,
-        captionClasses: "govuk-table__caption--m",
-        rows: documentsRows
-      }) }}
+      {# END TODO #}
+
+      {% if eccFlag %}
+        {{ govukTable({
+          caption: h2,
+          firstCellIsHeader: true,
+          captionClasses: "govuk-table__caption--m",
+          rows: tableContents
+        }) }}
+        {% else %}
+          {{ govukTable({
+            caption: h2,
+            firstCellIsHeader: true,
+            captionClasses: "govuk-table__caption--m",
+            rows: documentsRows
+          }) }}
+      {% endif %}
 
     </div>
 
