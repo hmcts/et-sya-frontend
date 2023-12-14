@@ -9,6 +9,7 @@ import {
   isBundlesDoc,
   isDocFromJudgement,
   isDocInDocumentCollection,
+  isDocInPseRespondCollection,
   isDocOnApplicationPage,
 } from './helpers/AllDocumentsHelper';
 import { isRequestDocId } from './helpers/DocumentHelpers';
@@ -35,7 +36,8 @@ export default class AttachmentController {
       isRequestDocId(req, docId) ||
       isDocFromJudgement(req, docId) ||
       isDocInDocumentCollection(req, docId) ||
-      isBundlesDoc(req, docId)
+      isBundlesDoc(req, docId) ||
+      isDocInPseRespondCollection(req, docId)
     ) {
       try {
         const document = await getCaseApi(req.session.user?.accessToken).getCaseDocument(docId);
