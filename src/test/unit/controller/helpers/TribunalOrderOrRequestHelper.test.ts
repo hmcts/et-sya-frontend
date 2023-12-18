@@ -467,6 +467,7 @@ describe('Tribunal order or request helper', () => {
         sendNotificationSelectParties: Parties.RESPONDENT_ONLY,
         sendNotificationResponseTribunal: ResponseRequired.YES,
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
+        notificationState: HubLinkStatus.NOT_VIEWED,
       } as SendNotificationType,
     } as SendNotificationTypeItem;
 
@@ -559,7 +560,7 @@ describe('Tribunal order or request helper', () => {
     const notificationNoResponseRequired = {
       value: {
         sendNotificationCaseManagement: 'Order',
-        notificationState: 'something',
+        notificationState: HubLinkStatus.NOT_VIEWED,
         sendNotificationNotify: Parties.BOTH_PARTIES,
         sendNotificationResponseTribunal: 'No',
         sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
