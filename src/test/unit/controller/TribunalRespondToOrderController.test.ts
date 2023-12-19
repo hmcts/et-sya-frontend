@@ -18,7 +18,7 @@ const caseApi = new CaseService.CaseApi(axios as jest.Mocked<typeof axios>);
 
 const mockClient = jest.spyOn(CaseService, 'getCaseApi');
 mockClient.mockReturnValue(caseApi);
-caseApi.updateSendNotificationStateToViewed = jest.fn().mockResolvedValue({});
+caseApi.updateSendNotificationState = jest.fn().mockResolvedValue({});
 
 describe('Tribunal Respond to Order Controller', () => {
   const mockLdClient = jest.spyOn(LaunchDarkly, 'getFlagValue');

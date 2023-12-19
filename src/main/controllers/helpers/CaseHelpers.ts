@@ -128,7 +128,7 @@ export const respondToApplication = async (req: AppRequest, logger: Logger): Pro
 
 export const updateSendNotificationState = async (req: AppRequest, logger: Logger): Promise<void> => {
   try {
-    await getCaseApi(req.session.user?.accessToken).updateSendNotificationStateToViewed(req.session.userCase);
+    await getCaseApi(req.session.user?.accessToken).updateSendNotificationState(req.session.userCase);
     logger.info(`Updated state for selectedRequestOrOrder: ${req.session.userCase.selectedRequestOrOrder.id}`);
   } catch (error) {
     logger.error(error.message);

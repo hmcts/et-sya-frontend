@@ -180,7 +180,7 @@ export class CaseApi {
     }
   };
 
-  updateSendNotificationStateToViewed = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
+  updateSendNotificationState = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     try {
       return await this.axios.put(JavaApiUrls.UPDATE_NOTIFICATION_STATE, {
         case_id: caseItem.id,

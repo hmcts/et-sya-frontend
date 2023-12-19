@@ -7,7 +7,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { updateSendNotificationState as setNotificationStateAsViewed } from './helpers/CaseHelpers';
+import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -24,7 +24,7 @@ export default class TribunalOrderOrRequestDetailsController {
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
     try {
-      await setNotificationStateAsViewed(req, logger);
+      await updateSendNotificationState(req, logger);
     } catch (error) {
       logger.info(error.message);
     }
