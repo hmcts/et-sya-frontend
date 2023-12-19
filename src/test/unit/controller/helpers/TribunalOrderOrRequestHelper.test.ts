@@ -667,7 +667,7 @@ describe('Tribunal order or request helper', () => {
 
   describe('filterActionableNotifications', () => {
     const makeUnviewedNotification = (): SendNotificationType => {
-      return { ...selectedRequestOrOrder.value, notificationState: undefined };
+      return { ...selectedRequestOrOrder.value };
     };
 
     test('should show unviewed notification', async () => {
@@ -739,12 +739,12 @@ describe('Tribunal order or request helper', () => {
       expect(notification.needsResponse).toBeFalsy();
     });
 
-    test('should show viewed notification that requires a claimant response and has none', async () => {
+    test('should show notification that requires a claimant response and has none', async () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
           ...makeUnviewedNotification(),
-          notificationState: HubLinkStatus.VIEWED,
+          notificationState: HubLinkStatus.NOT_STARTED_YET,
           sendNotificationResponseTribunal: ResponseRequired.YES,
         },
       };
@@ -757,12 +757,12 @@ describe('Tribunal order or request helper', () => {
       expect(notification.needsResponse).toBeTruthy();
     });
 
-    test('should not show viewed notification that requires a claimant response and has one', async () => {
+    test('should not show notification that requires a claimant response and has one', async () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
           ...makeUnviewedNotification(),
-          notificationState: HubLinkStatus.VIEWED,
+          notificationState: HubLinkStatus.SUBMITTED,
           sendNotificationResponseTribunal: ResponseRequired.YES,
           respondCollection: [{ id: '1', value: { from: Applicant.CLAIMANT } }],
         },
@@ -776,30 +776,12 @@ describe('Tribunal order or request helper', () => {
       expect(notification.needsResponse).toBeFalsy();
     });
 
-    test('should show viewed notification with an unviewed tribunal response', () => {
+    test('should show notification which requires a response from claimant and has none', () => {
       const notification: SendNotificationTypeItem = {
         id: '1',
         value: {
           ...makeUnviewedNotification(),
-          notificationState: HubLinkStatus.VIEWED,
-          respondNotificationTypeCollection: [{ id: '1', value: getOrderOrRequestTribunalResponse() }],
-        },
-      };
-
-      const actual = filterActionableNotifications([notification]);
-      expect(actual).toHaveLength(1);
-
-      setNotificationBannerData(notification);
-      expect(notification.showAlert).toBeTruthy();
-      expect(notification.needsResponse).toBeTruthy();
-    });
-
-    test('should show viewed notification when response requires a response from claimant and has none', () => {
-      const notification: SendNotificationTypeItem = {
-        id: '1',
-        value: {
-          ...makeUnviewedNotification(),
-          notificationState: HubLinkStatus.VIEWED,
+          notificationState: HubLinkStatus.NOT_STARTED_YET,
           respondNotificationTypeCollection: [
             { id: '1', value: { ...getOrderOrRequestTribunalResponse(), isClaimantResponseDue: ResponseRequired.YES } },
           ],
@@ -812,32 +794,6 @@ describe('Tribunal order or request helper', () => {
       setNotificationBannerData(notification);
       expect(notification.showAlert).toBeTruthy();
       expect(notification.needsResponse).toBeTruthy();
-    });
-
-    test('should not show viewed notification when claimant has responded', () => {
-      const notification: SendNotificationTypeItem = {
-        id: '1',
-        value: {
-          ...makeUnviewedNotification(),
-          notificationState: HubLinkStatus.VIEWED,
-          respondNotificationTypeCollection: [
-            {
-              id: '1',
-              value: {
-                ...getOrderOrRequestTribunalResponse(),
-                state: HubLinkStatus.VIEWED,
-                isClaimantResponseDue: undefined,
-              },
-            },
-          ],
-        },
-      };
-
-      const actual = filterActionableNotifications([notification]);
-      expect(actual).toHaveLength(0);
-
-      setNotificationBannerData(notification);
-      expect(notification.showAlert).toBeFalsy();
     });
   });
 });

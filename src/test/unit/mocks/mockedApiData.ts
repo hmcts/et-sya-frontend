@@ -20,7 +20,7 @@ import {
   ClaimTypePay,
   TellUsWhatYouWant,
 } from '../../../main/definitions/definition';
-import { HubLinksStatuses } from '../../../main/definitions/hub';
+import { HubLinkStatus, HubLinksStatuses } from '../../../main/definitions/hub';
 
 export const mockedApiData: CaseApiDataResponse = {
   id: '1234',
@@ -227,6 +227,7 @@ export const mockedApiData: CaseApiDataResponse = {
           sendNotificationWhoCaseOrder: 'Legal officer',
           sendNotificationFullName: 'Judge Dredd',
           sendNotificationNotify: 'Both',
+          notificationState: HubLinkStatus.NOT_VIEWED,
         },
       },
     ],

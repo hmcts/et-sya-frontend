@@ -12,7 +12,10 @@ import {
   YesOrNo,
   YesOrNoOrNotSure,
 } from '../../../main/definitions/case';
-import { RespondNotificationType } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
+import {
+  RespondNotificationType,
+  SendNotificationTypeItem,
+} from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, Parties, ResponseRequired } from '../../../main/definitions/constants';
 import {
   CaseState,
@@ -57,7 +60,7 @@ export const getOrderOrRequestTribunalResponse = (): RespondNotificationType => 
   };
 };
 
-export const selectedRequestOrOrder = {
+export const selectedRequestOrOrder: SendNotificationTypeItem = {
   id: '123',
   value: {
     number: '1',
@@ -74,6 +77,7 @@ export const selectedRequestOrOrder = {
     sendNotificationWhoCaseOrder: 'Legal officer',
     sendNotificationFullName: 'Judge Dredd',
     sendNotificationNotify: 'Both',
+    notificationState: 'notViewedYet',
   },
 };
 

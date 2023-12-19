@@ -263,7 +263,7 @@ export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNot
 
 /**
  * Returns a filtered list of notifications where ANY criteria is matched:
- * 1. Notification is not viewed
+ * 1. Notification is not viewed or submitted
  * 2. A response on the notification is not viewed
  * 3. A response on the notification is viewed and requires a response where none has been given yet
  */
@@ -271,8 +271,11 @@ export function filterActionableNotifications(notifications: SendNotificationTyp
   return notifications
     ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
     .filter(o => {
-      if (o.value.notificationState !== HubLinkStatus.VIEWED) {
+      if (o.value.notificationState === HubLinkStatus.NOT_VIEWED) {
         return true;
+      }
+      if (o.value.notificationState === HubLinkStatus.VIEWED || o.value.notificationState === HubLinkStatus.SUBMITTED) {
+        return false;
       }
 
       if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
