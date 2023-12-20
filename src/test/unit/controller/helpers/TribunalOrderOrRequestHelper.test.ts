@@ -45,6 +45,7 @@ import {
   notificationWithResponses,
 } from '../../mocks/mockNotificationItem';
 import { mockRequestWithTranslation } from '../../mocks/mockRequest';
+import { mockTribunalResponse } from '../../mocks/mockTribunalResponse';
 import { getOrderOrRequestTribunalResponse, selectedRequestOrOrder } from '../../mocks/mockUserCaseComplete';
 
 describe('Tribunal order or request helper', () => {
@@ -375,6 +376,21 @@ describe('Tribunal order or request helper', () => {
       const populatedNotification = setNotificationBannerData([mockNotificationSubmitted], 'url')[0];
       expect(populatedNotification.showAlert).toEqual(false);
       expect(populatedNotification.needsResponse).toBeUndefined();
+    });
+
+    it('should populate correct status when tribunal has responded to notification', () => {
+      mockNotificationViewed.value.sendNotificationSelectParties = 'Claimant only';
+      const populatedNotification = setNotificationBannerData([mockNotificationViewed], 'url')[0];
+      expect(populatedNotification.showAlert).toBeTruthy();
+      expect(populatedNotification.needsResponse).toBeTruthy();
+    });
+
+    it('should populate correct status when claimant has replied and tribunal responds', () => {
+      mockNotificationSubmitted.value.sendNotificationSelectParties = 'Claimant only';
+      mockNotificationSubmitted.value.respondNotificationTypeCollection = [mockTribunalResponse];
+      const populatedNotification = setNotificationBannerData([mockNotificationSubmitted], 'url')[0];
+      expect(populatedNotification.showAlert).toBeTruthy();
+      expect(populatedNotification.needsResponse).toBeTruthy();
     });
   });
 
