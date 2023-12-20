@@ -16,7 +16,7 @@ import {
   RespondNotificationType,
   SendNotificationTypeItem,
 } from '../../../main/definitions/complexTypes/sendNotificationTypeItem';
-import { Applicant, Parties, ResponseRequired } from '../../../main/definitions/constants';
+import { Applicant, NotificationSubjects, Parties, ResponseRequired } from '../../../main/definitions/constants';
 import {
   CaseState,
   ClaimTypeDiscrimination,
@@ -65,6 +65,7 @@ export const selectedRequestOrOrder: SendNotificationTypeItem = {
   value: {
     number: '1',
     sendNotificationTitle: 'title',
+    sendNotificationSubjectString: NotificationSubjects.ORDER_OR_REQUEST,
     sendNotificationSelectHearing: {
       selectedLabel: 'Hearing',
     },

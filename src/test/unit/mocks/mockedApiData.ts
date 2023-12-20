@@ -220,6 +220,7 @@ export const mockedApiData: CaseApiDataResponse = {
           },
           date: '2019-05-03',
           sentBy: 'Tribunal',
+          sendNotificationSubjectString: 'Case management orders / requests',
           sendNotificationCaseManagement: 'Order',
           sendNotificationResponseTribunal: 'required',
           sendNotificationSelectParties: 'Both',

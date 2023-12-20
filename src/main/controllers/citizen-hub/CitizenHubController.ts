@@ -51,11 +51,10 @@ import {
 import { getLanguageParam } from '../helpers/RouterHelpers';
 import {
   activateTribunalOrdersAndRequestsLink,
-  filterActionableNotifications,
   filterECCNotifications,
   filterOutEcc,
-  getAndPopulateNotifications,
   getClaimantTribunalResponseBannerContent,
+  setNotificationBannerData,
 } from '../helpers/TribunalOrderOrRequestHelper';
 import { getRespondentApplications, getRespondentBannerContent } from '../helpers/TseRespondentApplicationHelpers';
 
@@ -153,7 +152,7 @@ export default class CitizenHubController {
       };
     });
 
-    const notifications = getAndPopulateNotifications(userCase?.sendNotificationCollection, req.url, translations);
+    const notifications = setNotificationBannerData(userCase?.sendNotificationCollection, req.url);
     const ordersRequestsGeneralNotifications = filterOutEcc(notifications);
     const eccNotifications = await filterECCNotifications(notifications);
 
@@ -203,8 +202,8 @@ export default class CitizenHubController {
       showOrderOrRequestReceived: notifications?.length,
       respondentIsSystemUser: isRespondentSystemUser,
       adminNotifications: getApplicationsWithTribunalOrderOrRequest(allApplications, translations, languageParam),
-      notifications: filterActionableNotifications(ordersRequestsGeneralNotifications),
-      eccNotifications: filterActionableNotifications(eccNotifications),
+      notifications: ordersRequestsGeneralNotifications,
+      eccNotifications,
       languageParam: getLanguageParam(req.url),
       welshEnabled,
     });

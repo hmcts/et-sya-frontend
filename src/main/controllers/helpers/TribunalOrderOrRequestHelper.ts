@@ -109,45 +109,69 @@ export const getRedirectUrlForNotification = (
   return pageUrl.replace(':orderId', `${notification.id}${getLanguageParam(url)}`);
 };
 
-export const populateNotificationsWithRedirectLinksAndStatusColors = (
-  notifications: SendNotificationTypeItem[],
-  url: string,
-  translations: AnyRecord
+/**
+ * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
+ */
+export const setNotificationBannerData = (
+  items: SendNotificationTypeItem[],
+  url: string
 ): SendNotificationTypeItem[] => {
+  const notifications = filterSendNotifications(items);
   if (notifications?.length) {
     notifications.forEach(item => {
-      const responseRequired =
-        item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-        item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-      const hasResponded = item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT) || false;
-      const isNotViewedYet = item.value.notificationState === HubLinkStatus.NOT_VIEWED;
-      const isViewed = item.value.notificationState === HubLinkStatus.VIEWED;
-
-      let hubLinkStatus: HubLinkStatus;
-
-      switch (true) {
-        case responseRequired && hasResponded:
-          hubLinkStatus = HubLinkStatus.SUBMITTED;
-          break;
-        case responseRequired && !hasResponded:
-          hubLinkStatus = HubLinkStatus.NOT_STARTED_YET;
-          break;
-        case !responseRequired && isNotViewedYet:
-          hubLinkStatus = HubLinkStatus.NOT_VIEWED;
-          break;
-        case !responseRequired && isViewed:
-          hubLinkStatus = HubLinkStatus.VIEWED;
-          break;
-        default:
-          throw new Error(`Illegal order/ request state, title: ${item.value.sendNotificationTitle}, id: ${item.id}`);
+      const actionableNotifications = filterActionableNotifications([item]);
+      if (!actionableNotifications.length) {
+        item.showAlert = false;
+        return;
       }
-      item.displayStatus = translations[hubLinkStatus];
-      item.statusColor = displayStatusColorMap.get(hubLinkStatus);
+      const responseRequired = anyResponseRequired(item);
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
       item.respondUrl = getRedirectUrlForNotification(item, responseRequired, url);
-      setNotificationBannerData(item);
+      item.showAlert = true;
+      item.needsResponse = !!responseRequired;
     });
     return notifications;
+  }
+};
+
+/**
+ * Returns a filtered list of notifications where ANY criteria is matched:
+ * 1. Notification is not viewed or started yet
+ * 2. A response on the notification is not viewed
+ * 3. A response on the notification is viewed and requires a response where none has been given yet
+ */
+function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
+  return notifications
+    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
+    .filter(o => {
+      if (
+        o.value.notificationState === HubLinkStatus.NOT_VIEWED ||
+        o.value.notificationState === HubLinkStatus.NOT_STARTED_YET
+      ) {
+        return true;
+      }
+      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
+        return true;
+      }
+
+      return o.value.respondNotificationTypeCollection?.some(
+        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
+      );
+    });
+}
+
+export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
+  if (responseRequired(sendNotification)) {
+    return true;
+  }
+  if (
+    sendNotification.value?.respondNotificationTypeCollection?.some(
+      response => response.value?.isClaimantResponseDue === YesOrNo.YES
+    )
+  ) {
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -194,49 +218,20 @@ export const activateTribunalOrdersAndRequestsLink = async (
     return;
   }
 
-  const anyRequireResponse = notices.some(responseRequired);
-
-  const anyRequireResponseAndNotResponded = notices.some(item => {
-    return responseRequired(item) && !item.value.respondCollection?.some(r => r.value.from === Applicant.CLAIMANT);
-  });
-
-  const anyNotViewed = notices.some(item => {
-    return item.value.notificationState === HubLinkStatus.NOT_VIEWED;
-  });
-
-  const allViewed = notices.every(item => {
-    return item.value.notificationState === HubLinkStatus.VIEWED;
-  });
-
-  switch (true) {
-    case anyRequireResponseAndNotResponded:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
-      break;
-    case anyRequireResponse && !anyRequireResponseAndNotResponded && !anyNotViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
-      break;
-    case anyNotViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      break;
-    case allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
-      break;
+  if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_STARTED_YET)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.NOT_VIEWED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.SUBMITTED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
+  } else if (notices.some(item => item.value.notificationState === HubLinkStatus.VIEWED)) {
+    userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.VIEWED;
   }
 };
 
 const responseRequired = (item: SendNotificationTypeItem) =>
   item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
   item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-
-export const getAndPopulateNotifications = (
-  items: SendNotificationTypeItem[],
-  url: string,
-  translations: AnyRecord
-): SendNotificationTypeItem[] => {
-  const notifications = filterSendNotifications(items);
-
-  return populateNotificationsWithRedirectLinksAndStatusColors(notifications, url, translations);
-};
 
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
@@ -260,57 +255,6 @@ export const filterECCNotifications = async (
 export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return notifications?.filter(it => !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC));
 };
-
-/**
- * Returns a filtered list of notifications where ANY criteria is matched:
- * 1. Notification is not viewed or started yet
- * 2. A response on the notification is not viewed
- * 3. A response on the notification is viewed and requires a response where none has been given yet
- */
-export function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications
-    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
-    .filter(o => {
-      if (
-        o.value.notificationState === HubLinkStatus.NOT_VIEWED ||
-        o.value.notificationState === HubLinkStatus.NOT_STARTED_YET
-      ) {
-        return true;
-      }
-      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
-        return true;
-      }
-
-      return o.value.respondNotificationTypeCollection?.some(
-        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
-      );
-    });
-}
-
-/**
- * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
- * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
- * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is unviewed.
- */
-export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
-  const actionableNotifications = filterActionableNotifications([notification]);
-  if (!actionableNotifications.length) {
-    notification.showAlert = false;
-    return;
-  }
-
-  notification.showAlert = true;
-  notification.needsResponse = false;
-
-  const value = actionableNotifications[0].value;
-  const responses = value.respondNotificationTypeCollection?.filter(claimantRelevant) || [];
-
-  const hasAnyResponsesDue = responses?.some(r => r.value.isClaimantResponseDue);
-
-  if (hasAnyResponsesDue || (requiresResponse(notification.value) && !hasClaimantResponded(notification.value))) {
-    notification.needsResponse = true;
-  }
-}
 
 function requiresResponse(notification: SendNotificationType) {
   return (
@@ -517,3 +461,31 @@ export const getClaimantTribunalResponseBannerContent = (
         })) ?? []
   );
 };
+
+export async function getSendNotifications(
+  sendNotificationCollection: SendNotificationTypeItem[],
+  translations: AnyRecord
+): Promise<SendNotificationTypeItem[]> {
+  let notifications: SendNotificationTypeItem[];
+  const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
+  if (eccFlag) {
+    notifications = sendNotificationCollection?.filter(
+      it =>
+        (it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+          it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST)) ||
+        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+    );
+  } else {
+    notifications = sendNotificationCollection?.filter(
+      it =>
+        it.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY &&
+        it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+        !it.value.sendNotificationSubjectString?.includes(NotificationSubjects.ECC)
+    );
+  }
+  notifications.forEach(item => {
+    item.displayStatus = translations[item.value.notificationState];
+    item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
+  });
+  return notifications;
+}
