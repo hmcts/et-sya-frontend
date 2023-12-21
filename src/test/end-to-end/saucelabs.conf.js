@@ -1,6 +1,6 @@
 const testConfig = require('./config.js');
 const supportedBrowsers = require('./supportedBrowsers');
-const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+const testUrl = process.env.TEST_URL || 'http://localhost:3002';
 
 const waitForTimeout = parseInt(testConfig.saucelabs.waitForTimeout);
 const smartWait = parseInt(testConfig.saucelabs.smartWait);

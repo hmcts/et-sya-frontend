@@ -30,7 +30,7 @@ export const mockRequest = ({
     respondentNumber: '1',
   };
   req.headers = {
-    host: 'http://localhost:3001',
+    host: 'http://localhost:3002',
   };
   req.cookies = {
     i18next: languages.ENGLISH,
@@ -120,7 +120,7 @@ export const mockRequestWithTranslation = (
     appId: '1',
   };
   req.headers = {
-    host: 'http://localhost:3001',
+    host: 'http://localhost:3002',
   };
   req.session = {
     userCase: {
