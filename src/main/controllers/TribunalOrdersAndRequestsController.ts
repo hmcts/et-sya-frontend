@@ -33,7 +33,8 @@ export class TribunalOrdersAndRequestsController {
 
       const notifications: SendNotificationTypeItem[] = await getSendNotifications(
         req.session.userCase?.sendNotificationCollection,
-        translations
+        translations,
+        languageParam
       );
       const content = getPageContent(req, <FormContent>{}, [
         TranslationKeys.SIDEBAR_CONTACT_US,

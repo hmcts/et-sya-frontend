@@ -338,14 +338,14 @@ describe('Tribunal order or request helper', () => {
 
   describe('getSendNotifications', () => {
     it('should populate notification with status and color', async () => {
-      const populatedNotification = await getSendNotifications([notificationItem], translations);
+      const populatedNotification = await getSendNotifications([notificationItem], translations, 'en');
 
       expect(populatedNotification[0].statusColor).toEqual('--red');
       expect(populatedNotification[0].displayStatus).toEqual('Not viewed yet');
     });
 
     it('should populate notification with correct status when required to respond and no response exists', async () => {
-      const populatedNotification = await getSendNotifications([mockNotificationResponseReq], translations);
+      const populatedNotification = await getSendNotifications([mockNotificationResponseReq], translations, 'en');
       expect(populatedNotification[0].statusColor).toEqual('--red');
       expect(populatedNotification[0].displayStatus).toEqual('Not started yet');
     });
@@ -376,13 +376,6 @@ describe('Tribunal order or request helper', () => {
       const populatedNotification = setNotificationBannerData([mockNotificationSubmitted], 'url')[0];
       expect(populatedNotification.showAlert).toEqual(false);
       expect(populatedNotification.needsResponse).toBeUndefined();
-    });
-
-    it('should populate correct status when tribunal has responded to notification', () => {
-      mockNotificationViewed.value.sendNotificationSelectParties = 'Claimant only';
-      const populatedNotification = setNotificationBannerData([mockNotificationViewed], 'url')[0];
-      expect(populatedNotification.showAlert).toBeTruthy();
-      expect(populatedNotification.needsResponse).toBeTruthy();
     });
 
     it('should populate correct status when claimant has replied and tribunal responds', () => {

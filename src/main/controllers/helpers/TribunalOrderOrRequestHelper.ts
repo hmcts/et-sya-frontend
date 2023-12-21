@@ -1,6 +1,10 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
+  instanceOfPseResponse,
+  sortResponsesByDate,
+} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import {
   PseResponseType,
   RespondNotificationType,
   RespondNotificationTypeItem,
@@ -119,8 +123,8 @@ export const setNotificationBannerData = (
   const notifications = filterSendNotifications(items);
   if (notifications?.length) {
     notifications.forEach(item => {
-      const actionableNotifications = filterActionableNotifications([item]);
-      if (!actionableNotifications.length) {
+      const actionableNotification = isActionableNotification(item);
+      if (!actionableNotification) {
         item.showAlert = false;
         return;
       }
@@ -128,7 +132,7 @@ export const setNotificationBannerData = (
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
       item.respondUrl = getRedirectUrlForNotification(item, responseRequired, url);
       item.showAlert = true;
-      item.needsResponse = !!responseRequired;
+      item.needsResponse = responseRequired;
     });
     return notifications;
   }
@@ -138,30 +142,33 @@ export const setNotificationBannerData = (
  * Returns a filtered list of notifications where ANY criteria is matched:
  * 1. Notification is not viewed or started yet
  * 2. A response on the notification is not viewed
- * 3. A response on the notification is viewed and requires a response where none has been given yet
+ * 3. A response on the notification requires a response where none has been given yet
  */
-function filterActionableNotifications(notifications: SendNotificationTypeItem[]): SendNotificationTypeItem[] {
-  return notifications
-    ?.filter(o => o.value.sendNotificationNotify !== Parties.RESPONDENT_ONLY)
-    .filter(o => {
-      if (
-        o.value.notificationState === HubLinkStatus.NOT_VIEWED ||
-        o.value.notificationState === HubLinkStatus.NOT_STARTED_YET
-      ) {
-        return true;
-      }
-      if (requiresResponse(o.value) && !hasClaimantResponded(o.value)) {
-        return true;
-      }
-
-      return o.value.respondNotificationTypeCollection?.some(
-        r => claimantRelevant(r) && (r.value.state !== HubLinkStatus.VIEWED || r.value.isClaimantResponseDue)
-      );
-    });
+function isActionableNotification(notification: SendNotificationTypeItem): boolean {
+  if (notification.value.sendNotificationNotify === Parties.RESPONDENT_ONLY) {
+    return false;
+  }
+  if (
+    notification.value.notificationState === HubLinkStatus.NOT_VIEWED ||
+    notification.value.notificationState === HubLinkStatus.NOT_STARTED_YET
+  ) {
+    return true;
+  }
+  if (requiresResponse(notification.value) && !hasClaimantResponded(notification.value)) {
+    return true;
+  }
+  if (
+    notification.value.respondNotificationTypeCollection?.some(
+      r => claimantRelevant(r) && r.value?.isClaimantResponseDue
+    )
+  ) {
+    return true;
+  }
+  return false;
 }
 
 export const anyResponseRequired = (sendNotification: SendNotificationTypeItem): boolean => {
-  if (responseRequired(sendNotification)) {
+  if (sendNotification.value.notificationState === HubLinkStatus.NOT_STARTED_YET) {
     return true;
   }
   if (
@@ -229,10 +236,6 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
 };
 
-const responseRequired = (item: SendNotificationTypeItem) =>
-  item.value.sendNotificationResponseTribunal === ResponseRequired.YES &&
-  item.value.sendNotificationSelectParties !== Parties.RESPONDENT_ONLY;
-
 export const filterSendNotifications = (items: SendNotificationTypeItem[]): SendNotificationTypeItem[] => {
   return items?.filter(
     it =>
@@ -276,27 +279,41 @@ export const getNotificationResponses = async (
   translations: AnyRecord,
   req: AppRequest
 ): Promise<any> => {
+  const nonAdminRespondCollection = sendNotificationType?.respondCollection
+    ? sendNotificationType.respondCollection
+    : [];
+  const adminResponseCollection = sendNotificationType?.respondNotificationTypeCollection
+    ? sendNotificationType?.respondNotificationTypeCollection
+    : [];
   const allResponses: any[] = [];
-  const respondCollection = sendNotificationType.respondCollection;
-  if (respondCollection?.length) {
-    await addClaimantRespondentResponses(respondCollection, req, translations, allResponses);
-  }
-
-  const adminResponseCollection = sendNotificationType.respondNotificationTypeCollection;
-  if (adminResponseCollection?.length) {
-    await addTribunalResponses(adminResponseCollection, req, allResponses, translations);
+  const combinedResponses = [...nonAdminRespondCollection, ...adminResponseCollection];
+  if (combinedResponses?.length) {
+    combinedResponses.sort(sortResponsesByDate);
+    for (const response of combinedResponses) {
+      let responseToAdd;
+      if (instanceOfPseResponse(response)) {
+        responseToAdd = await getNonAdminResponse(response, req, translations);
+      } else {
+        responseToAdd = await populateAdminResponse(response, req, translations);
+      }
+      if (responseToAdd !== undefined) {
+        allResponses.push(responseToAdd);
+      }
+    }
   }
   return allResponses;
 };
 
-const addAdminResponse = async (
-  allResponses: any[],
-  translations: AnyRecord,
+const populateAdminResponse = async (
   response: RespondNotificationTypeItem,
-  accessToken: string,
-  responseDate: string
+  req: AppRequest<Partial<AnyRecord>>,
+  translations: AnyRecord
 ): Promise<any> => {
-  allResponses.push([
+  if (response.value.respondNotificationPartyToNotify === Parties.RESPONDENT_ONLY) {
+    return;
+  }
+  const responseDate = datesStringToDateInLocale(response.value.respondNotificationDate, req.url);
+  return [
     {
       key: {
         text: translations.responseItem,
@@ -365,7 +382,7 @@ const addAdminResponse = async (
         html: await getSupportingMaterialDownloadLink(
           response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
             .uploadedDocument,
-          accessToken
+          req.session.user?.accessToken
         ),
       },
     },
@@ -395,48 +412,20 @@ const addAdminResponse = async (
       },
       value: { text: translations[response.value.respondNotificationPartyToNotify] },
     },
-  ]);
+  ];
 };
 
-async function addTribunalResponses(
-  adminResponseCollection: TypeItem<RespondNotificationType>[],
+async function getNonAdminResponse(
+  response: TypeItem<PseResponseType>,
   req: AppRequest<Partial<AnyRecord>>,
-  allResponses: any[],
   translations: AnyRecord
 ) {
-  for (const response of adminResponseCollection) {
-    const responseDate = datesStringToDateInLocale(response.value.respondNotificationDate, req.url);
-    const responseToAdd = await addAdminResponse(
-      allResponses,
-      translations,
-      response,
-      req.session.user?.accessToken,
-      responseDate
-    );
-    if (responseToAdd !== undefined) {
-      allResponses.push(responseToAdd);
-    }
-  }
-}
-
-async function addClaimantRespondentResponses(
-  respondCollection: TypeItem<PseResponseType>[],
-  req: AppRequest<Partial<AnyRecord>>,
-  translations: AnyRecord,
-  allResponses: any[]
-) {
-  for (const response of respondCollection) {
-    const responseDate = datesStringToDateInLocale(response.value.date, req.url);
-    let responseToAdd;
-    if (
-      response.value.from === Applicant.CLAIMANT ||
-      (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
-    ) {
-      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
-    }
-    if (responseToAdd !== undefined) {
-      allResponses.push(responseToAdd);
-    }
+  const responseDate = datesStringToDateInLocale(response.value.date, req.url);
+  if (
+    response.value.from === Applicant.CLAIMANT ||
+    (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
+  ) {
+    return addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
   }
 }
 
@@ -464,7 +453,8 @@ export const getClaimantTribunalResponseBannerContent = (
 
 export async function getSendNotifications(
   sendNotificationCollection: SendNotificationTypeItem[],
-  translations: AnyRecord
+  translations: AnyRecord,
+  languageParam: string
 ): Promise<SendNotificationTypeItem[]> {
   let notifications: SendNotificationTypeItem[];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
@@ -484,7 +474,8 @@ export async function getSendNotifications(
     );
   }
   notifications.forEach(item => {
-    item.displayStatus = translations[item.value.notificationState];
+    (item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`),
+      (item.displayStatus = translations[item.value.notificationState]);
     item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
   });
   return notifications;

@@ -15,7 +15,7 @@ import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers'
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import { getNotificationResponses, getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -95,6 +95,8 @@ export default class TribunalRespondToOrderController {
     const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     userCase.selectedRequestOrOrder = selectedRequestOrOrder;
 
+    const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
+
     try {
       await updateSendNotificationState(req, logger);
     } catch (error) {
@@ -106,6 +108,7 @@ export default class TribunalRespondToOrderController {
       cancelLink: `/citizen-hub/${userCase.id}${getLanguageParam(req.url)}`,
       orderOrRequestContent: getTribunalOrderOrRequestDetails(translations, selectedRequestOrOrder, req.url),
       welshEnabled,
+      responses,
     });
   };
 }
