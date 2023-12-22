@@ -120,6 +120,7 @@ describe('Tribunal order or request helper', () => {
       text: 'Sent to',
     });
     expect(pageContent[11].value).toEqual({ text: Parties.BOTH_PARTIES });
+
     expect(responseContent[0][0].key).toEqual({
       classes: summaryListClass,
       text: 'Response from',
@@ -145,91 +146,93 @@ describe('Tribunal order or request helper', () => {
       text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
     });
     expect(responseContent[0][4].value).toEqual({ text: YesOrNo.YES });
+
     expect(responseContent[1][0].key).toEqual({
-      classes: summaryListClass,
-      text: 'Response from',
-    });
-    expect(responseContent[1][0].value).toEqual({ text: Applicant.RESPONDENT });
-    expect(responseContent[1][1].key).toEqual({
-      classes: summaryListClass,
-      text: 'Response date',
-    });
-    expect(responseContent[1][1].value).toEqual({ text: '10 May 2019' });
-    expect(responseContent[1][2].key).toEqual({
-      classes: summaryListClass,
-      text: 'What is your response to the tribunal?',
-    });
-    expect(responseContent[1][2].value).toEqual({ text: 'Some respondent response text' });
-    expect(responseContent[1][3].key).toEqual({
-      classes: summaryListClass,
-      text: 'Supporting material',
-    });
-    expect(responseContent[1][3].value).toEqual({ text: undefined });
-    expect(responseContent[1][4].key).toEqual({
-      classes: summaryListClass,
-      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
-    });
-    expect(responseContent[1][4].value).toEqual({ text: YesOrNo.YES });
-    expect(responseContent[2][0].key).toEqual({
       classes: summaryListClass,
       text: 'Response',
     });
-    expect(responseContent[2][0].value).toEqual({ text: 'tribunal response title text' });
-    expect(responseContent[2][1].key).toEqual({
+    expect(responseContent[1][0].value).toEqual({ text: 'tribunal response title text' });
+    expect(responseContent[1][1].key).toEqual({
       classes: summaryListClass,
       text: 'Date sent',
     });
-    expect(responseContent[2][1].value).toEqual({ text: '3 May 2019' });
-    expect(responseContent[2][2].key).toEqual({
+    expect(responseContent[1][1].value).toEqual({ text: '3 May 2019' });
+    expect(responseContent[1][2].key).toEqual({
       classes: summaryListClass,
       text: 'Sent by',
     });
-    expect(responseContent[2][2].value).toEqual({ text: Rule92Types.TRIBUNAL });
-    expect(responseContent[2][3].key).toEqual({
+    expect(responseContent[1][2].value).toEqual({ text: Rule92Types.TRIBUNAL });
+    expect(responseContent[1][3].key).toEqual({
       classes: summaryListClass,
       text: 'Case management order or request?',
     });
-    expect(responseContent[2][3].value).toEqual({ text: 'Case management order' });
-    expect(responseContent[2][4].key).toEqual({
+    expect(responseContent[1][3].value).toEqual({ text: 'Case management order' });
+    expect(responseContent[1][4].key).toEqual({
       classes: summaryListClass,
       text: 'Response due',
     });
-    expect(responseContent[2][4].value).toEqual({ text: ResponseRequired.YES });
-    expect(responseContent[2][5].key).toEqual({
+    expect(responseContent[1][4].value).toEqual({ text: ResponseRequired.YES });
+    expect(responseContent[1][5].key).toEqual({
       classes: summaryListClass,
       text: 'Party or parties to respond',
     });
-    expect(responseContent[2][5].value).toEqual({ text: Parties.BOTH_PARTIES });
-    expect(responseContent[2][6].key).toEqual({
+    expect(responseContent[1][5].value).toEqual({ text: Parties.BOTH_PARTIES });
+    expect(responseContent[1][6].key).toEqual({
       classes: summaryListClass,
       text: 'Additional information',
     });
-    expect(responseContent[2][6].value).toEqual({ text: 'additional info' });
-    expect(responseContent[2][7].key).toEqual({
+    expect(responseContent[1][6].value).toEqual({ text: 'additional info' });
+    expect(responseContent[1][7].key).toEqual({
       classes: summaryListClass,
       text: 'Description',
     });
-    expect(responseContent[2][7].value).toEqual({ text: undefined });
-    expect(responseContent[2][8].key).toEqual({
+    expect(responseContent[1][7].value).toEqual({ text: undefined });
+    expect(responseContent[1][8].key).toEqual({
       classes: summaryListClass,
       text: 'Document',
     });
-    expect(responseContent[2][8].value).toEqual({ text: undefined });
-    expect(responseContent[2][9].key).toEqual({
+    expect(responseContent[1][8].value).toEqual({ text: undefined });
+    expect(responseContent[1][9].key).toEqual({
       classes: summaryListClass,
       text: 'Request made by',
     });
-    expect(responseContent[2][9].value).toEqual({ text: 'Legal officer' });
-    expect(responseContent[2][10].key).toEqual({
+    expect(responseContent[1][9].value).toEqual({ text: 'Legal officer' });
+    expect(responseContent[1][10].key).toEqual({
       classes: summaryListClass,
       text: 'Name',
     });
-    expect(responseContent[2][10].value).toEqual({ text: 'Judge Dredd' });
-    expect(responseContent[2][11].key).toEqual({
+    expect(responseContent[1][10].value).toEqual({ text: 'Judge Dredd' });
+    expect(responseContent[1][11].key).toEqual({
       classes: summaryListClass,
       text: 'Sent to',
     });
-    expect(responseContent[2][11].value).toEqual({ text: Parties.BOTH_PARTIES });
+    expect(responseContent[1][11].value).toEqual({ text: Parties.BOTH_PARTIES });
+
+    expect(responseContent[2][0].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response from',
+    });
+    expect(responseContent[2][0].value).toEqual({ text: Applicant.RESPONDENT });
+    expect(responseContent[2][1].key).toEqual({
+      classes: summaryListClass,
+      text: 'Response date',
+    });
+    expect(responseContent[2][1].value).toEqual({ text: '10 May 2019' });
+    expect(responseContent[2][2].key).toEqual({
+      classes: summaryListClass,
+      text: 'What is your response to the tribunal?',
+    });
+    expect(responseContent[2][2].value).toEqual({ text: 'Some respondent response text' });
+    expect(responseContent[2][3].key).toEqual({
+      classes: summaryListClass,
+      text: 'Supporting material',
+    });
+    expect(responseContent[2][3].value).toEqual({ text: undefined });
+    expect(responseContent[2][4].key).toEqual({
+      classes: summaryListClass,
+      text: 'Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?',
+    });
+    expect(responseContent[2][4].value).toEqual({ text: YesOrNo.YES });
   });
 
   it('should return expected tribunal request details content', () => {
