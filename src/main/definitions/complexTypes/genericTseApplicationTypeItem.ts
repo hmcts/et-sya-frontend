@@ -1,7 +1,6 @@
 import { Document, YesOrNo } from '../case';
 
 import { DocumentTypeItem } from './documentTypeItem';
-import { PseResponseTypeItem, RespondNotificationTypeItem } from './sendNotificationTypeItem';
 
 export interface GenericTseApplicationTypeItem {
   id?: string;
@@ -96,21 +95,3 @@ export const sortByDate = (a: GenericTseApplicationTypeItem, b: GenericTseApplic
     db = new Date(b.value.date);
   return da.valueOf() - db.valueOf();
 };
-
-export const sortResponsesByDate = (
-  a: PseResponseTypeItem | RespondNotificationTypeItem,
-  b: PseResponseTypeItem | RespondNotificationTypeItem
-): number => {
-  const typeA = instanceOfPseResponse(a);
-  const typeB = instanceOfPseResponse(b);
-  const da = typeA ? new Date(a.value.date) : new Date(a.value.respondNotificationDate);
-  const db = typeB ? new Date(b.value.date) : new Date(b.value.respondNotificationDate);
-
-  return da.valueOf() - db.valueOf();
-};
-
-export function instanceOfPseResponse(
-  object: PseResponseTypeItem | RespondNotificationTypeItem
-): object is PseResponseTypeItem {
-  return 'date' in object.value;
-}

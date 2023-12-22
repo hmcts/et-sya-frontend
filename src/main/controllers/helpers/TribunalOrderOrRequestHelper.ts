@@ -1,11 +1,8 @@
 import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
-  instanceOfPseResponse,
-  sortResponsesByDate,
-} from '../../definitions/complexTypes/genericTseApplicationTypeItem';
-import {
   PseResponseType,
+  PseResponseTypeItem,
   RespondNotificationType,
   RespondNotificationTypeItem,
   SendNotificationType,
@@ -474,9 +471,27 @@ export async function getSendNotifications(
     );
   }
   notifications.forEach(item => {
-    (item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`),
-      (item.displayStatus = translations[item.value.notificationState]);
+    item.redirectUrl = `/tribunal-order-or-request-details/${item.id}${languageParam}`;
+    item.displayStatus = translations[item.value.notificationState];
     item.statusColor = displayStatusColorMap.get(item.value.notificationState as HubLinkStatus);
   });
   return notifications;
+}
+
+const sortResponsesByDate = (
+  a: PseResponseTypeItem | RespondNotificationTypeItem,
+  b: PseResponseTypeItem | RespondNotificationTypeItem
+): number => {
+  const typeA = instanceOfPseResponse(a);
+  const typeB = instanceOfPseResponse(b);
+  const da = typeA ? new Date(a.value.date) : new Date(a.value.respondNotificationDate);
+  const db = typeB ? new Date(b.value.date) : new Date(b.value.respondNotificationDate);
+
+  return da.valueOf() - db.valueOf();
+};
+
+function instanceOfPseResponse(
+  object: PseResponseTypeItem | RespondNotificationTypeItem
+): object is PseResponseTypeItem {
+  return 'date' in object.value;
 }
