@@ -37,8 +37,8 @@ export default class RespondentApplicationDetailsController {
     const accessToken = req.session.user?.accessToken;
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.RESPONDENT_APPLICATION_DETAILS, { returnObjects: true }),
     };
 
     let allResponses;
