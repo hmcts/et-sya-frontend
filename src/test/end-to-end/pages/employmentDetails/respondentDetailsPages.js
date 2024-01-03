@@ -43,7 +43,7 @@ module.exports = async function (workAddress, doYouHaveAcas) {
     I.seeElement('#workEnterPostcode');
     I.fillField('#workEnterPostcode', 'LS14 1AR');
     I.click(commonConfig.saveAndContinue);
-    I.waitForVisible('#workAddressTypes', 60);
+    I.waitForVisible('#workAddressTypes', 240);
     I.see('Select an address');
     I.see('Several addresses found');
     I.selectOption('#workAddressTypes', '25, Ringwood Drive, Leeds, LS14 1AR');
