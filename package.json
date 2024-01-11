@@ -169,7 +169,8 @@
     "jsdom": "^22.1.0",
     "shelljs": "^0.8.5",
     "merge": "^2.1.1",
-    "import-in-the-middle": "^1.4.2"
+    "import-in-the-middle": "^1.4.2",
+    "follow-redirects": "^1.15.4"
   },
   "packageManager": "yarn@3.6.4"
 }
