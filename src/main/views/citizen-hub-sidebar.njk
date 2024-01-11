@@ -4,11 +4,7 @@
 
 <p class='govuk-body'>
   {{contactText}}
-  {% if respondentIsSystemUser %}
-    <a href="{{PageUrls.CONTACT_THE_TRIBUNAL + languageParam}}">
-  {% else %}
-    <a href="{{PageUrls.RULE92_HOLDING_PAGE + languageParam}}">
-  {% endif %}
+  <a href="{{PageUrls.CONTACT_THE_TRIBUNAL + languageParam}}">
     {{contactLink}}
   </a>
 </p>
