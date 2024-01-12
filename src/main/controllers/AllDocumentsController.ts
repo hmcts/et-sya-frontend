@@ -8,7 +8,7 @@ import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
-import { compare } from './helpers/AllDocumentsHelper';
+import { compareUploadDates } from './helpers/AllDocumentsHelper';
 import { createDownloadLink, getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -46,7 +46,7 @@ export default class AllDocumentsController {
       }
       allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
-    const allDocsSorted: DocumentTypeItem[] = allDocs.sort(compare);
+    const allDocsSorted: DocumentTypeItem[] = allDocs.sort(compareUploadDates);
     res.render(TranslationKeys.ALL_DOCUMENTS, {
       ...content,
       translations,

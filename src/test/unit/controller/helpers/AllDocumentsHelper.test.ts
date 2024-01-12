@@ -1,5 +1,5 @@
 import {
-  compare,
+  compareUploadDates,
   createSortedDocumentsMap,
   documentHasToBeFiltered,
   filterRespondentsDocuments,
@@ -122,7 +122,7 @@ describe('allDocumentsHelper tests', () => {
   });
 
   it('returns a sorted array of documents', () => {
-    const sortedDocsArray: DocumentTypeItem[] = docs.sort(compare);
+    const sortedDocsArray: DocumentTypeItem[] = docs.sort(compareUploadDates);
     expect(sortedDocsArray[0].value.uploadedDocument).toEqual(uploadedDoc);
     expect(sortedDocsArray[1].value.uploadedDocument).toEqual(uploadedDoc);
     expect(sortedDocsArray[2].value.uploadedDocument).toEqual(uploadedDoc2);
