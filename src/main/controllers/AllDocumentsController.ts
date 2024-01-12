@@ -45,7 +45,7 @@ export default class AllDocumentsController {
       }
       allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
-    const allDocsSorted: DocumentTypeItem[] = allDocs.sort((a: DocumentTypeItem, b: DocumentTypeItem) => {
+    const allDocsSorted: DocumentTypeItem[] = Array.from(allDocs).sort((a: DocumentTypeItem, b: DocumentTypeItem) => {
       if (a?.value?.uploadedDocument?.createdOn === undefined || b?.value?.uploadedDocument?.createdOn === undefined) {
         return 0;
       }
