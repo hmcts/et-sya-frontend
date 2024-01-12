@@ -16,6 +16,12 @@ export const uploadedDoc2 = {
   createdOn: '05/02/2024',
 };
 
+export const uploadedDoc3 = {
+  document_url: 'uuid2',
+  document_filename: 'mockTypeOfDocument',
+  document_binary_url: 'mockCreationDate',
+};
+
 export const caseWithGenericTseApplications: CaseWithId = {
   id: '1234',
   state: CaseState.SUBMITTED,
