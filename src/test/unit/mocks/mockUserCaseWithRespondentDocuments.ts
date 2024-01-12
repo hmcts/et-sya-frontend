@@ -6,14 +6,14 @@ export const uploadedDoc = {
   document_url: 'uuid1',
   document_filename: 'mockTypeOfDocument',
   document_binary_url: 'mockCreationDate',
-  createdOn: 'Test date',
+  createdOn: '03/01/2024',
 };
 
 export const uploadedDoc2 = {
   document_url: 'uuid2',
   document_filename: 'mockTypeOfDocument',
   document_binary_url: 'mockCreationDate',
-  createdOn: 'Test date',
+  createdOn: '05/02/2024',
 };
 
 export const caseWithGenericTseApplications: CaseWithId = {

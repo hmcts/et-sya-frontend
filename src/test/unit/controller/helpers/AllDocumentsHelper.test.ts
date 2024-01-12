@@ -1,4 +1,5 @@
 import {
+  compare,
   createSortedDocumentsMap,
   documentHasToBeFiltered,
   filterRespondentsDocuments,
@@ -72,7 +73,7 @@ describe('allDocumentsHelper tests', () => {
           document_url: 'http://address/documents/123',
           document_filename: 'mockTypeOfDocument',
           document_binary_url: 'mockCreationDate',
-          createdOn: 'Test date',
+          createdOn: '01/02/2023',
         },
       },
     },
@@ -98,7 +99,7 @@ describe('allDocumentsHelper tests', () => {
 
   it('map document to table row', () => {
     const result = mapDocumentToTableRow(mockDocumentTypeItem, translationJsons);
-    expect(result.date).toEqual('Test date');
+    expect(result.date).toEqual('03/01/2024');
     expect(result.description).toEqual('Description');
     expect(result.downloadLink).toEqual('mockDownloadLink');
   });
@@ -118,6 +119,14 @@ describe('allDocumentsHelper tests', () => {
     expect(sortedMap.get(AllDocumentTypes.ACAS_CERT)).toEqual([docs[1]]);
     expect(sortedMap.get(AllDocumentTypes.RESPONDENT_CORRESPONDENCE)).toEqual([docs[2]]);
     expect(sortedMap.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE)).toEqual([docs[3]]);
+  });
+
+  it('returns a sorted array of documents', () => {
+    const sortedDocsArray: DocumentTypeItem[] = docs.sort(compare);
+    expect(sortedDocsArray[0].value.uploadedDocument).toEqual(uploadedDoc);
+    expect(sortedDocsArray[1].value.uploadedDocument).toEqual(uploadedDoc);
+    expect(sortedDocsArray[2].value.uploadedDocument).toEqual(uploadedDoc2);
+    expect(sortedDocsArray[3].value.uploadedDocument).toEqual(uploadedDoc2);
   });
 
   it('returns an empty map if no documents are provided', () => {

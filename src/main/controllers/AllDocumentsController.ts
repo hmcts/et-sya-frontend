@@ -1,12 +1,14 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
+import { DocumentTypeItem } from '../definitions/complexTypes/documentTypeItem';
 import { FEATURE_FLAGS, PageUrls, TranslationKeys } from '../definitions/constants';
 import { FormContent } from '../definitions/form';
 import { AnyRecord } from '../definitions/util-types';
 import { getLogger } from '../logger';
 import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
+import { compare } from './helpers/AllDocumentsHelper';
 import { createDownloadLink, getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
@@ -35,7 +37,6 @@ export default class AllDocumentsController {
     const docCollection = userCase.documentCollection?.length ? userCase.documentCollection : [];
     const bundleDocuments = userCase.bundleDocuments?.length && bundlesEnabled ? userCase.bundleDocuments : [];
     const allDocs = [...docCollection, ...bundleDocuments];
-
     if (allDocs?.length) {
       try {
         await getDocumentsAdditionalInformation(allDocs, req.session.user?.accessToken);
@@ -43,14 +44,13 @@ export default class AllDocumentsController {
         logger.error(err.message);
         res.redirect('/not-found');
       }
-
       allDocs.forEach(it => (it.downloadLink = createDownloadLink(it.value.uploadedDocument)));
     }
-
+    const allDocsSorted: DocumentTypeItem[] = allDocs.sort(compare);
     res.render(TranslationKeys.ALL_DOCUMENTS, {
       ...content,
       translations,
-      allDocs,
+      allDocsSorted,
       languageParam,
     });
   };

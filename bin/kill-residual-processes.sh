@@ -2,14 +2,14 @@
 
 set -eu
 
-echo "Checking port 3001"
-processId_3001=`lsof -i -n -P | grep LISTEN | grep :3001 | awk '{print $2}'`
+echo "Checking port 3002"
+processId_3002=`lsof -i -n -P | grep LISTEN | grep :3002 | awk '{print $2}'`
 
-if [ ! -z "$processId_3001" ]
+if [ ! -z "$processId_3002" ]
 then
-  echo "killing process with Id $processId_3001"
-  kill -9 "$processId_3001"
+  echo "killing process with Id $processId_3002"
+  kill -9 "$processId_3002"
 else
-  echo "There is no process running on port 3001"
+  echo "There is no process running on port 3002"
 fi
 

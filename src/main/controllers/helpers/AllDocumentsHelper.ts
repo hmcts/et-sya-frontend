@@ -187,6 +187,19 @@ export const isApplicationSummaryPage = (page: string): boolean => {
   return page === PageUrls.RESPONDENT_APPLICATION_DETAILS || page === PageUrls.APPLICATION_DETAILS;
 };
 
+export const compare = (a: DocumentTypeItem, b: DocumentTypeItem): number => {
+  if (a?.value?.uploadedDocument?.createdOn === undefined || b?.value?.uploadedDocument?.createdOn === undefined) {
+    return 0;
+  }
+  if (a?.value?.uploadedDocument?.createdOn < b?.value?.uploadedDocument?.createdOn) {
+    return -1;
+  }
+  if (a?.value?.uploadedDocument?.createdOn < b?.value?.uploadedDocument?.createdOn) {
+    return 1;
+  }
+  return 0;
+};
+
 export interface TableRow {
   date: string;
   description: string;

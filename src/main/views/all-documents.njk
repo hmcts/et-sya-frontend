@@ -15,9 +15,9 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h1>
 
-      {% if allDocs and allDocs.length %}
+      {% if allDocsSorted and allDocsSorted.length %}
         {% set allDocsRows = [] %}
-        {% for doc in allDocs %}
+        {% for doc in allDocsSorted %}
           {% set allDocsRows = (allDocsRows.push(
             [
               {
