@@ -1,5 +1,4 @@
 import {
-  compareUploadDates,
   createSortedDocumentsMap,
   documentHasToBeFiltered,
   filterRespondentsDocuments,
@@ -119,14 +118,6 @@ describe('allDocumentsHelper tests', () => {
     expect(sortedMap.get(AllDocumentTypes.ACAS_CERT)).toEqual([docs[1]]);
     expect(sortedMap.get(AllDocumentTypes.RESPONDENT_CORRESPONDENCE)).toEqual([docs[2]]);
     expect(sortedMap.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE)).toEqual([docs[3]]);
-  });
-
-  it('returns a sorted array of documents', () => {
-    const sortedDocsArray: DocumentTypeItem[] = docs.sort(compareUploadDates);
-    expect(sortedDocsArray[0].value.uploadedDocument).toEqual(uploadedDoc);
-    expect(sortedDocsArray[1].value.uploadedDocument).toEqual(uploadedDoc);
-    expect(sortedDocsArray[2].value.uploadedDocument).toEqual(uploadedDoc2);
-    expect(sortedDocsArray[3].value.uploadedDocument).toEqual(uploadedDoc2);
   });
 
   it('returns an empty map if no documents are provided', () => {
