@@ -7,8 +7,10 @@ import {
   populateAllOrdersItemsWithCorrectStatusTranslations,
   populateNotificationsWithRedirectLinksAndStatusColors,
   setNotificationBannerData,
+  updateStoredRedirectUrl,
 } from '../../../../main/controllers/helpers/TribunalOrderOrRequestHelper';
 import {
+  PseResponseType,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
@@ -190,6 +192,55 @@ describe('Tribunal order or request helper', () => {
       '/tribunal-order-or-request-details/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28?lng=en'
     );
     expect(populatedOrderOrRequest.displayStatus).toEqual('Not viewed yet');
+  });
+
+  it('should keep order/request item with response with redirect link', () => {
+    const pseResponse = {
+      id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
+      value: {
+        from: 'Claimant',
+      },
+    } as PseResponseType;
+
+    const item = {
+      id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
+      value: {
+        respondCollection: [pseResponse],
+      },
+      redirectUrl: 'original-url',
+    } as SendNotificationTypeItem;
+
+    const items = [item];
+
+    updateStoredRedirectUrl(items, 'url');
+
+    expect(items[0].redirectUrl).toEqual('original-url');
+  });
+
+  it('should update order/request item with stored response with redirect link', () => {
+    const pseResponse = {
+      id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
+      value: {
+        from: 'Claimant',
+        status: 'Stored',
+      },
+    } as PseResponseType;
+
+    const item = {
+      id: '2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28',
+      value: {
+        respondCollection: [pseResponse],
+      },
+      redirectUrl: 'original-url',
+    } as SendNotificationTypeItem;
+
+    const items = [item];
+
+    updateStoredRedirectUrl(items, 'url');
+
+    expect(items[0].redirectUrl).toEqual(
+      '/stored-to-submit-tribunal/2c6ae9f6-66cd-4a6b-86fa-0eabcb64bf28/0173ccd0-e20c-41bf-9a1c-37e97c728efc?lng=en'
+    );
   });
 
   it('should populate notification with correct status when required to respond and no response exists', () => {

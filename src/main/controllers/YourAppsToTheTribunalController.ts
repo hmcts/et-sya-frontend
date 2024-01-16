@@ -8,6 +8,7 @@ import { getFlagValue } from '../modules/featureFlag/launchDarkly';
 
 import { getPageContent } from './helpers/FormHelpers';
 import { populateAppItemsWithRedirectLinksCaptionsAndStatusColors } from './helpers/PageContentHelpers';
+import { updateStoredRedirectUrl } from './helpers/YourAppsToTheTribunalHelpers';
 
 export default class YourAppsToTheTribunalController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
@@ -21,6 +22,7 @@ export default class YourAppsToTheTribunalController {
     };
     const welshEnabled = await getFlagValue('welsh-language', null);
     populateAppItemsWithRedirectLinksCaptionsAndStatusColors(tseGenericApps, req.url, translations);
+    updateStoredRedirectUrl(tseGenericApps, req.url);
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
