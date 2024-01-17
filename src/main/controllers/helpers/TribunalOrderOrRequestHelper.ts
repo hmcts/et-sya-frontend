@@ -1,5 +1,6 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
+  PseResponseType,
   RespondNotificationType,
   SendNotificationType,
   SendNotificationTypeItem,
@@ -169,6 +170,34 @@ export const populateAllOrdersItemsWithCorrectStatusTranslations = (
   }
 };
 
+export const updateStoredRedirectUrl = (orderList: SendNotificationTypeItem[], url: string): void => {
+  if (orderList) {
+    for (const order of orderList) {
+      checkAndUpdateSendNotification(order, url);
+    }
+  }
+};
+
+const checkAndUpdateSendNotification = (order: SendNotificationTypeItem, url: string): void => {
+  if (order.value.respondCollection) {
+    for (const respond of order.value.respondCollection) {
+      checkAndUpdateRespondCollection(respond, order, url);
+    }
+  }
+};
+
+const checkAndUpdateRespondCollection = (
+  respond: TypeItem<PseResponseType>,
+  order: SendNotificationTypeItem,
+  url: string
+): void => {
+  if (respond.value.from === Applicant.CLAIMANT && respond.value.status === ResponseStatus.STORED_STATE) {
+    order.redirectUrl =
+      PageUrls.STORED_TO_SUBMIT_TRIBUNAL.replace(':orderId', order.id).replace(':responseId', respond.id) +
+      getLanguageParam(url);
+  }
+};
+
 export const activateTribunalOrdersAndRequestsLink = async (
   items: SendNotificationTypeItem[],
   userCase: CaseWithId
@@ -262,7 +291,7 @@ export const filterOutEcc = (notifications: SendNotificationTypeItem[]): SendNot
 };
 
 /**
- * Returns a filtered list of notifications where ANY criteria is matched:
+ * Returns a filtered list of notifications where ANY criteria are matched:
  * 1. Notification is not viewed
  * 2. A response on the notification is not viewed
  * 3. A response on the notification is viewed and requires a response where none has been given yet
@@ -288,7 +317,7 @@ export function filterActionableNotifications(notifications: SendNotificationTyp
 /**
  * Sets "showAlert" and "needsResponse" for a notification for the notification banner on citizen hub.
  * needsResponse is true if a notification (or tribunal response on it) requires a response where none has been given.
- * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is unviewed.
+ * showAlert is true if needsResponse is set or if a notification (or tribunal response on it) is un-viewed.
  */
 export function setNotificationBannerData(notification: SendNotificationTypeItem): void {
   const actionableNotifications = filterActionableNotifications([notification]);
