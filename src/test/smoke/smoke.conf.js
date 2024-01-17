@@ -1,5 +1,5 @@
 const testHeadlessBrowser = true;
-const testUrl = process.env.TEST_URL || 'http://localhost:3001';
+const testUrl = process.env.TEST_URL || 'http://localhost:3002';
 module.exports = {
   testUrl,
   name: 'et-smoke-test',
