@@ -36,6 +36,8 @@
   "employmentDetails": {
     "header": "Employment details",
     "didYouWorkFor": "Did you work for the organisation or person you're making your claim against?",
+    "didYouWorkForYes": "YES",
+    "didYouWorkForNo": "NO",
     "isStillWorking": "Are you still working for the organisation or person you're making your claim against?",
     "jobTitle": "Job title",
     "startDate": "Employment start date",

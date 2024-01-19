@@ -36,6 +36,8 @@
   "employmentDetails": {
     "header": "Manylion cyflogaeth",
     "didYouWorkFor": "A wnaethoch chi weithio i’r sefydliad neu’r unigolyn rydych yn gwneud hawliad yn ei erbyn?",
+    "didYouWorkForYes": "Do",
+    "didYouWorkForNo": "Naddo",
     "isStillWorking": "A ydych chi’n dal i weithio i’r sefydliad neu’r unigolyn rydych yn gwneud eich hawliad yn ei erbyn?",
     "jobTitle": "Teitl y swydd",
     "startDate": "Dyddiad cychwyn y gyflogaeth",
