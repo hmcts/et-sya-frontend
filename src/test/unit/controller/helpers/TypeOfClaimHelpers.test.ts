@@ -1,6 +1,7 @@
 import config from 'config';
 
 import { getRedirectUrl } from '../../../../main/controllers/helpers/TypeOfClaimHelpers';
+import { PageUrls } from '../../../../main/definitions/constants';
 import { TypesOfClaim } from '../../../../main/definitions/definition';
 import { FormField } from '../../../../main/definitions/form';
 import { mockForm } from '../../mocks/mockForm';
@@ -27,37 +28,46 @@ describe('Type of Claim Helpers tests', () => {
   } as FormField;
   const form = mockForm({ typeOfClaim: formField });
 
-  it('Postcode in Expansion in Scope, selected DISCRIMINATION, returns CLAIM_STEPS', () => {
+  it('Postcode in Expansion, selected DISCRIMINATION, returns CLAIM_STEPS', () => {
     req.session.userCase.workPostcode = 'G2 8GT'; // Glasgow
     req.body = {
-      typeOfClaim: TypesOfClaim.DISCRIMINATION,
+      typeOfClaim: [TypesOfClaim.DISCRIMINATION],
     };
     const actual = getRedirectUrl(req, form);
-    expect(actual).toStrictEqual('/steps-to-making-your-claim');
+    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 
-  it('Postcode in Expansion in Scope, selected BREACH_OF_CONTRACT, returns CLAIM_STEPS', () => {
+  it('Postcode in Expansion, selected BREACH_OF_CONTRACT, returns CLAIM_STEPS', () => {
     req.session.userCase.workPostcode = 'G2 8GT'; // Glasgow
     req.body = {
-      typeOfClaim: TypesOfClaim.BREACH_OF_CONTRACT,
+      typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
     };
     const actual = getRedirectUrl(req, form);
-    expect(actual).toStrictEqual('/steps-to-making-your-claim');
+    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 
-  it('Postcode not in Expansion in Scope, selected DISCRIMINATION, returns CLAIM_STEPS', () => {
+  it('Postcode not in Expansion, selected DISCRIMINATION, returns CLAIM_STEPS', () => {
     req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
     req.body = {
-      typeOfClaim: TypesOfClaim.DISCRIMINATION,
+      typeOfClaim: [TypesOfClaim.DISCRIMINATION],
     };
     const actual = getRedirectUrl(req, form);
-    expect(actual).toStrictEqual('/steps-to-making-your-claim');
+    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 
-  it('Postcode not in Expansion in Scope, selected BREACH_OF_CONTRACT, returns url', () => {
+  it('Postcode not in Expansion, selected both, returns CLAIM_STEPS', () => {
     req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
     req.body = {
-      typeOfClaim: TypesOfClaim.BREACH_OF_CONTRACT,
+      typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.DISCRIMINATION],
+    };
+    const actual = getRedirectUrl(req, form);
+    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
+  });
+
+  it('Postcode not in Expansion, selected BREACH_OF_CONTRACT, returns url', () => {
+    req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
+    req.body = {
+      typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
     };
     const actual = getRedirectUrl(req, form);
     const expected = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
