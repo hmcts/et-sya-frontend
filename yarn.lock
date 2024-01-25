@@ -2993,15 +2993,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/connect-redis@npm:^0.0.20":
-  version: 0.0.20
-  resolution: "@types/connect-redis@npm:0.0.20"
+"@types/connect-redis@npm:^0.0.23":
+  version: 0.0.23
+  resolution: "@types/connect-redis@npm:0.0.23"
   dependencies:
     "@types/express": "*"
     "@types/express-session": "*"
+    "@types/node": "*"
     "@types/redis": ^2.8.0
     ioredis: ^5.3.0
-  checksum: 11e22b06b2338ab651e819902467292765bd24a11a0b0fd251b8226c0e0962c048106e715d2f71ebef53f161709c81df1e7b153c81388e51a9a8ca60b78d8886
+  checksum: 56ae04700217e579e47b14711f3d7ffd21c54ced77ab0ebf3feb8d8903a0c854c6a63bb2f7d27f0eaec3224a7b725b14e52ebfbecd529e38c05b6e6e5947c1dd
   languageName: node
   linkType: hard
 
@@ -7514,7 +7515,7 @@ __metadata:
     "@swc/jest": ^0.2.29
     "@types/chai-as-promised": ^7.1.5
     "@types/config": ^3.3.0
-    "@types/connect-redis": ^0.0.20
+    "@types/connect-redis": ^0.0.23
     "@types/cookie-parser": ^1.4.3
     "@types/csurf": ^1.11.2
     "@types/express": ^4.17.17
