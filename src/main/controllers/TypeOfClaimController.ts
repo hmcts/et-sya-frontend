@@ -1,21 +1,21 @@
-import config from 'config';
 import { Response } from 'express';
 
 import { Form } from '../components/form/form';
 import { atLeastOneFieldIsChecked } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { CaseDataCacheKey } from '../definitions/case';
-import { PageUrls, RedisErrors, TranslationKeys } from '../definitions/constants';
+import { RedisErrors, TranslationKeys } from '../definitions/constants';
 import { TypesOfClaim } from '../definitions/definition';
 import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
 import { cachePreloginCaseData } from '../services/CacheService';
 
-import { handleUpdateDraftCase, isPostcodeExpansionInScope, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
-import { conditionalRedirect, returnNextPage } from './helpers/RouterHelpers';
+import { returnNextPage } from './helpers/RouterHelpers';
+import { getRedirectUrl } from './helpers/TypeOfClaimHelpers';
 
 const logger = getLogger('TypeOfClaimController');
 
@@ -99,18 +99,7 @@ export default class TypeOfClaimController {
     setUserCase(req, this.form);
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
-      let redirectUrl;
-      if (isPostcodeExpansionInScope(req.session.userCase?.workPostcode)) {
-        redirectUrl = PageUrls.CLAIM_STEPS;
-      } else if (
-        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
-        conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
-      ) {
-        redirectUrl = PageUrls.CLAIM_STEPS;
-      } else {
-        const url: string = process.env.ET1_BASE_URL ?? config.get('services.et1Legacy.url');
-        redirectUrl = `${url}`;
-      }
+      let redirectUrl = getRedirectUrl(req, this.form);
       if (req.app?.locals) {
         const redisClient = req.app.locals?.redisClient;
         if (redisClient) {
