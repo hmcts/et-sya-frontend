@@ -7,9 +7,8 @@ import { FormField } from '../../../../main/definitions/form';
 import { mockForm } from '../../mocks/mockForm';
 import { mockRequest } from '../../mocks/mockRequest';
 
-describe('Type of Claim Helpers tests', () => {
+describe('Type of Claim Helpers Test getRedirectUrl', () => {
   const req = mockRequest({});
-
   const formField = {
     id: 'typeOfClaim',
     type: 'checkboxes',
