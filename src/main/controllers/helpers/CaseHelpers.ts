@@ -10,7 +10,7 @@ import { AppRequest } from '../../definitions/appRequest';
 import { CaseDataCacheKey, CaseDate, CaseType, CaseWithId, StillWorking, YesOrNo } from '../../definitions/case';
 import { TseAdminDecisionItem } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
-import { PageUrls, inScopeLocations } from '../../definitions/constants';
+import { PageUrls, inScopeLocations, inScopeLocationsExpansion } from '../../definitions/constants';
 import { TypesOfClaim, sectionStatus } from '../../definitions/definition';
 import { HubLinkStatus } from '../../definitions/hub';
 import { fromApiFormat } from '../../helper/ApiFormatter';
@@ -221,6 +221,23 @@ export const isPostcodeInScope = (postCode: string): boolean => {
   } = parse(postCode);
   for (const location of inScopeLocations) {
     if ((location === outcode || location === area || location === district) && !excludedPostCodes.includes(outcode)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const isPostcodeExpansionInScope = (postCode: string): boolean => {
+  if (!postCode) {
+    return false;
+  }
+  const {
+    outcode, // => "SW1A"
+    area, // => "SW"
+    district, // => "SW1"
+  } = parse(postCode);
+  for (const location of inScopeLocationsExpansion) {
+    if (location === outcode || location === area || location === district) {
       return true;
     }
   }

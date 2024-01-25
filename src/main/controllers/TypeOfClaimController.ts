@@ -11,7 +11,7 @@ import { FormContent, FormFields } from '../definitions/form';
 import { getLogger } from '../logger';
 import { cachePreloginCaseData } from '../services/CacheService';
 
-import { handleUpdateDraftCase, setUserCase } from './helpers/CaseHelpers';
+import { handleUpdateDraftCase, isPostcodeExpansionInScope, setUserCase } from './helpers/CaseHelpers';
 import { handleErrors, returnSessionErrors } from './helpers/ErrorHelpers';
 import { assignFormData, getPageContent } from './helpers/FormHelpers';
 import { setUrlLanguage } from './helpers/LanguageHelper';
@@ -100,7 +100,9 @@ export default class TypeOfClaimController {
     const errors = returnSessionErrors(req, this.form);
     if (errors.length === 0) {
       let redirectUrl;
-      if (
+      if (isPostcodeExpansionInScope(req.session.userCase?.workPostcode)) {
+        redirectUrl = PageUrls.CLAIM_STEPS;
+      } else if (
         conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.DISCRIMINATION]) ||
         conditionalRedirect(req, this.form.getFormFields(), [TypesOfClaim.WHISTLE_BLOWING])
       ) {
@@ -137,9 +139,11 @@ export default class TypeOfClaimController {
           throw err;
         }
       }
-      // Only called when returning from CYA page
+      // Only called when returning from CYA page / Back button from CLAIM_STEPS
       if (req.session.userCase.id) {
+        const workPostcode = req.session.userCase?.workPostcode;
         await handleUpdateDraftCase(req, logger);
+        req.session.userCase.workPostcode = workPostcode;
       }
       redirectUrl = setUrlLanguage(req, redirectUrl);
       returnNextPage(req, res, redirectUrl);
