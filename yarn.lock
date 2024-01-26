@@ -3326,11 +3326,11 @@ __metadata:
   linkType: hard
 
 "@types/redis-mock@npm:^0.17.1":
-  version: 0.17.1
-  resolution: "@types/redis-mock@npm:0.17.1"
+  version: 0.17.3
+  resolution: "@types/redis-mock@npm:0.17.3"
   dependencies:
     "@types/redis": ^2.8.0
-  checksum: b3c61974f5470914b44edb4dc33cb5d4ee8d1d4f433bef8ad1ea07a78b8d90963be17008ecb451d0f005aa927c2ad1b9c31583dbb52e0db6eaa9b8b0fc96df95
+  checksum: 9bf3edb36e07ca3c40ea6e5131638665f79a7388770b9ebc654e3c214ff38c654492df97a50f9e76da15a7eaea14edff42285faf77aab4117d7d37ecb2a0bf20
   languageName: node
   linkType: hard
 
