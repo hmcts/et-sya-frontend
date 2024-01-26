@@ -3100,10 +3100,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/git-rev-sync@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@types/git-rev-sync@npm:2.0.0"
-  checksum: db70d3a58577cfc67431954f00af8fed4f38a1754872624998ffe6b524208c6491c278063ca2cbd08247e3b194bc74c6c85ec3e0e19a1aa8d1de987b50ad122c
+"@types/git-rev-sync@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@types/git-rev-sync@npm:2.0.2"
+  checksum: 24d8e9573cffad57b6809b0e60917f01d70d1577d5cc027ef1fe557ae2968f827e38836750dd9acbe2339ec9d9d7faa05584b8a162665706085943ade2601a7b
   languageName: node
   linkType: hard
 
@@ -7520,7 +7520,7 @@ __metadata:
     "@types/csurf": ^1.11.2
     "@types/express": ^4.17.17
     "@types/express-session": ^1.17.7
-    "@types/git-rev-sync": 2.0.0
+    "@types/git-rev-sync": 2.0.2
     "@types/jest": ^29.5.1
     "@types/lodash": ^4.14.194
     "@types/multer": ^1.4.7
