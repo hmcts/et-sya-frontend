@@ -8,6 +8,7 @@ import {
   findContentTypeByDocumentDetail,
   findDocumentMimeTypeByExtension,
   getDecisionDocId,
+  getDocumentsAdditionalInformation,
   getResponseDocId,
   isJudgmentDocId,
   isRequestDocId,
@@ -16,6 +17,7 @@ import {
   populateDocumentMetadata,
 } from '../../../../main/controllers/helpers/DocumentHelpers';
 import { Document } from '../../../../main/definitions/case';
+import { DocumentType, DocumentTypeItem } from '../../../../main/definitions/complexTypes/documentTypeItem';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
 import { PageUrls } from '../../../../main/definitions/constants';
 import { DecisionAndApplicationDetails, DocumentDetail } from '../../../../main/definitions/definition';
@@ -219,6 +221,28 @@ const testDoc1 = {
   document_binary_url: 'http://dm-store:8080/documents/10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa/binary',
 };
 
+const axiosResponse: AxiosResponse = {
+  data: {
+    classification: 'PUBLIC',
+    size: 10575,
+    mimeType: 'pdf',
+    originalDocumentName: 'sample.pdf',
+    createdOn: '2022-09-08T14:39:32.000+00:00',
+    createdBy: '7',
+    lastModifiedBy: '7',
+    modifiedOn: '2022-09-08T14:40:49.000+00:00',
+    metadata: {
+      jurisdiction: '',
+      case_id: '1',
+      case_type_id: '',
+    },
+  },
+  status: 200,
+  statusText: '',
+  headers: undefined,
+  config: undefined,
+};
+
 it('should combine documents correctly', () => {
   expect(
     combineDocuments(
@@ -261,27 +285,6 @@ it('should update document size and mime type values', async () => {
   };
   const testRawId = 'http://test/qweqweqw-qweqweqwe';
 
-  const axiosResponse: AxiosResponse = {
-    data: {
-      classification: 'PUBLIC',
-      size: 10575,
-      mimeType: 'pdf',
-      originalDocumentName: 'sample.pdf',
-      createdOn: '2022-09-08T14:39:32.000+00:00',
-      createdBy: '7',
-      lastModifiedBy: '7',
-      modifiedOn: '2022-09-08T14:40:49.000+00:00',
-      metadata: {
-        jurisdiction: '',
-        case_id: '1',
-        case_type_id: '',
-      },
-    },
-    status: 200,
-    statusText: '',
-    headers: undefined,
-    config: undefined,
-  };
   const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
   const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
   getCaseApiClientMock.mockReturnValue(caseApi);
@@ -737,5 +740,49 @@ describe('getJudgmentDocId', () => {
 
     const result = isJudgmentDocId(req.session.userCase, '10dbc31c-5bf6-4ecf-9ad7-6bbf58492afa');
     expect(result).toBeFalsy();
+  });
+});
+
+describe('get documents additional information tests', () => {
+  const uploadedDocumentConstant: Document = {
+    document_url: 'test.url',
+    document_filename: 'test.pdf',
+    document_binary_url: 'test.binary.url',
+    document_size: undefined,
+    document_mime_type: undefined,
+  };
+  const documentTypeConstantWithShortDescription: DocumentType = {
+    uploadedDocument: uploadedDocumentConstant,
+    typeOfDocument: 'testType',
+    shortDescription: 'testShortDescription',
+    creationDate: 'testCreationDate',
+  };
+
+  const documentTypeConstantWithoutShortDescription: DocumentType = {
+    uploadedDocument: uploadedDocumentConstant,
+    typeOfDocument: 'testType',
+    creationDate: 'testCreationDate',
+  };
+
+  const documentTypeItem1: DocumentTypeItem = {
+    id: '1',
+    value: documentTypeConstantWithShortDescription,
+  };
+
+  const documentTypeItem2: DocumentTypeItem = {
+    id: '1',
+    value: documentTypeConstantWithoutShortDescription,
+  };
+
+  const getCaseApiClientMock = jest.spyOn(caseService, 'getCaseApi');
+  const caseApi = new CaseApi(axios as jest.Mocked<typeof axios>);
+  getCaseApiClientMock.mockReturnValue(caseApi);
+  caseApi.getDocumentDetails = jest.fn().mockResolvedValue(axiosResponse);
+
+  it('should return additional information of the document for the given document type item', async () => {
+    const docList: DocumentTypeItem[] = [documentTypeItem1, documentTypeItem2];
+    await getDocumentsAdditionalInformation(docList, 'accToken');
+    expect(docList[0].value.shortDescription).toStrictEqual('testShortDescription');
+    expect(docList[1].value.shortDescription).toStrictEqual('testType');
   });
 });
