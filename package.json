@@ -112,7 +112,7 @@
     "@swc/helpers": "^0.5.1",
     "@swc/jest": "^0.2.29",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/git-rev-sync": "2.0.0",
+    "@types/git-rev-sync": "2.0.2",
     "@types/jest": "^29.5.1",
     "@types/redis-mock": "^0.17.1",
     "@types/sinon-chai": "^3.2.9",
