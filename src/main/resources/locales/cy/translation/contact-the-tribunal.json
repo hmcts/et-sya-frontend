@@ -1,10 +1,10 @@
 {
   "title": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "h1": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
-  "showAllSections": "Cuddio pob adran",
-  "hideAllSections": "Dangos pob adran",
-  "showSection": "Cuddio",
-  "hideSection": "Dangos",
+  "showAllSections": "Dangos pob adran",
+  "hideAllSections": "Cuddio pob adran",
+  "showSection": "Dangos",
+  "hideSection": "Cuddio",
   "landing_text": {
     "p1": "Defnyddiwch y ffurflen briodol i gyfathrebu â'r tribiwnlys.",
     "p2": "Bydd y ceisiadau hyn yn cael eu hadolygu gan y tribiwnlys a’u hanfon at yr atebydd a fydd yn cael cyfle i ymateb.",
@@ -19,7 +19,7 @@
     "change-details": {
       "caption": "Newid fy manylion personol",
       "label": "Rwyf eisiau newid fy manylion personol",
-      "body": "Newid y manylion personol a bu i chi eu rhoi wrth wneud eich hawliad."
+      "body": "Newid y manylion personol y bu i chi eu rhoi wrth wneud eich hawliad."
     },
     "postpone": {
       "caption": "Gohirio gwrandawiad",
@@ -37,7 +37,7 @@
       "body": "Os ydych yn anghytuno â dyfarniad neu orchymyn a wnaed gan swyddog cyfreithiol yn eich achos chi, gallwch ofyn i farnwr cyflogaeth edrych ar y penderfyniad hwnnw eto."
     },
     "amend": {
-      "caption": "Diwygio fy hawliad",
+      "caption": "Ddiwygio fy hawliad",
       "label": "Gwneud cais i ddiwygio fy hawliad",
       "body": "Gwneud cais i ddiwygio eich hawliad ET1 - gan gynnwys ychwanegu neu ddileu hawliadau neu fanylion eich hawliad."
     },
