@@ -96,7 +96,7 @@ export default class CitizenHubController {
       ...req.t(TranslationKeys.CITIZEN_HUB, { returnObjects: true }),
     };
 
-    if (!userCase.hubLinksStatuses) {
+    if (!userCase.hubLinksStatuses || userCase.hubLinksStatuses['documents'] === HubLinkStatus.NOT_YET_AVAILABLE) {
       userCase.hubLinksStatuses = new HubLinksStatuses();
       await handleUpdateHubLinksStatuses(req, logger);
     }
@@ -109,7 +109,6 @@ export default class CitizenHubController {
       (userCase?.documentCollection && userCase?.documentCollection.length) ||
       userCaseContainsGeneralCorrespondence(userCase.sendNotificationCollection)
     ) {
-      userCase.hubLinksStatuses[HubLinkNames.Documents] = HubLinkStatus.NOT_YET_AVAILABLE;
       await handleUpdateHubLinksStatuses(req, logger);
     }
 
