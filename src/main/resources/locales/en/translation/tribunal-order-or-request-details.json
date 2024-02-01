@@ -28,5 +28,6 @@
   "supportingMaterial": "Supporting material",
   "copyCorrespondence": "Do you want to copy this correspondence to the other party to satisfy the Rules of Procedure?",
   "date": "Date sent",
-  "additionalInfo": "Additional information"
+  "additionalInfo": "Additional information",
+  "No": "No"
 }

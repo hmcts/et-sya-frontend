@@ -49,8 +49,8 @@ export default class TribunalOrderOrRequestDetailsController {
     }
 
     const translations: AnyRecord = {
-      ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, { returnObjects: true }),
     };
 
     const content = getPageContent(req, <FormContent>{}, [

@@ -5,7 +5,7 @@
   "dateSent": "Dyddiad anfon",
   "sentBy": "Anfonwyd gan",
   "orderOrRequest": "Gorchymyn neu gais rheoli achos?",
-  "responseDue": "Ymateb erbyn",
+  "responseDue": "Ymateb",
   "partyToRespond": "Y parti neu’r partïon sydd i ymateb",
   "addInfo": "Gwybodaeth ychwanegol",
   "description": "Disgrifiad",
@@ -28,5 +28,6 @@
   "supportingMaterial": "Deunydd ategol",
   "copyCorrespondence": "Ydych chi eisiauanfon copi o’r ohebiaeth hon at yParti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
   "date": "Dyddiad anfon",
-  "additionalInfo": "Gwybodaeth ychwanegol"
+  "additionalInfo": "Gwybodaeth ychwanegol",
+  "No": "Na"
 }
