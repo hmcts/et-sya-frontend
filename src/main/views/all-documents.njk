@@ -15,27 +15,26 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ title }}</h1>
 
-      {% if tribunalDocuments and tribunalDocuments.length %}
-        {% set tribunalDocsRows = [] %}
-        {% for tribunalDoc in tribunalDocuments %}
-          {% set tribunalDocsRows = (tribunalDocsRows.push(
+      {% if allDocsSorted and allDocsSorted.length %}
+        {% set allDocsRows = [] %}
+        {% for doc in allDocsSorted %}
+          {% set allDocsRows = (allDocsRows.push(
             [
               {
-                text: dateStringToLocale(tribunalDoc.value.uploadedDocument.createdOn) 
+                text: dateStringToLocale(doc.value.uploadedDocument.createdOn)
               },
               {
-                text: tribunalDoc.value.shortDescription
+                text: doc.value.shortDescription
               },
               {
-                html: tribunalDoc.downloadLink
+                html: doc.downloadLink
               }
             ]
-          ), tribunalDocsRows) %}
+          ), allDocsRows) %}
         {% endfor %}
 
         {{ govukTable({
-          caption: tribunalDocs,
-          captionClasses: "govuk-table__caption--m",
+
           firstCellIsHeader: false,
           head: [
             {
@@ -48,10 +47,10 @@
               text: document
             }
           ],
-          rows: tribunalDocsRows
+          rows: allDocsRows
         }) }}
       {% endif %}
-
+<!--
       <h2 class="app-task-list__section govuk-!-margin-bottom-4">{{ generalCorrespondence }}</h2>
       <ul class="app-task-list__items govuk-!-padding-left-0">
         <li class="app-task-list__item">
@@ -99,7 +98,7 @@
             }) }}
           {% endfor %}
       {% endif %}
-
+-->
     </div>
 
     <div class="govuk-grid-column-one-third-from-desktop">

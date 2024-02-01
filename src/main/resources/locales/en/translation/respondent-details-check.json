@@ -10,7 +10,7 @@
   "unProvided": "Not provided",
   "errors": {
     "hiddenErrorField": {
-      "exceeded": "You can only add up to 5 respondents in this section. If you need to enter the details of more respondents you can do this in the 'Describe what happened to you' section of the service or include the details as part of an attachment. Please ensure you provide an acas certifcate number or valid reason for not having this for each additional respondent."
+      "exceeded": "You can only add up to 5 respondents in this section. If you need to enter the details of more respondents you can do this in the 'Describe what happened to you' section of the service or include the details as part of an attachment. Please ensure you provide an acas certificate number or valid reason for not having this for each additional respondent."
     }
   },
   "noAcasReason": "Why do you not have an Acas Number?",

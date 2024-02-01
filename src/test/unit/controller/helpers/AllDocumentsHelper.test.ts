@@ -1,4 +1,5 @@
 import {
+  compareUploadDates,
   createSortedDocumentsMap,
   documentHasToBeFiltered,
   filterRespondentsDocuments,
@@ -15,6 +16,7 @@ import {
   caseWithGenericTseApplications,
   uploadedDoc,
   uploadedDoc2,
+  uploadedDoc3,
 } from '../../mocks/mockUserCaseWithRespondentDocuments';
 
 describe('allDocumentsHelper tests', () => {
@@ -62,6 +64,49 @@ describe('allDocumentsHelper tests', () => {
     },
   ];
 
+  const docsToTest: DocumentTypeItem[] = [
+    {
+      id: '1',
+      value: {
+        typeOfDocument: 'Claimant correspondence',
+        shortDescription: 'Claimant correspondence',
+        uploadedDocument: uploadedDoc,
+      },
+    },
+    {
+      id: '2',
+      value: {
+        typeOfDocument: 'ACAS Certificate',
+        shortDescription: 'ACAS Certificate',
+        uploadedDocument: uploadedDoc,
+      },
+    },
+    {
+      id: '3',
+      value: {
+        typeOfDocument: 'Respondent correspondence',
+        shortDescription: 'Respondent correspondence',
+        uploadedDocument: uploadedDoc2,
+      },
+    },
+    {
+      id: '4',
+      value: {
+        typeOfDocument: 'Tribunal correspondence',
+        shortDescription: 'Tribunal correspondence',
+        uploadedDocument: uploadedDoc2,
+      },
+    },
+    {
+      id: '5',
+      value: {
+        typeOfDocument: 'Tribunal correspondence',
+        shortDescription: 'Tribunal correspondence',
+        uploadedDocument: uploadedDoc3,
+      },
+    },
+  ];
+
   const bundleDocuments: DocumentTypeItem[] = [
     {
       id: '',
@@ -72,7 +117,7 @@ describe('allDocumentsHelper tests', () => {
           document_url: 'http://address/documents/123',
           document_filename: 'mockTypeOfDocument',
           document_binary_url: 'mockCreationDate',
-          createdOn: 'Test date',
+          createdOn: '01/02/2023',
         },
       },
     },
@@ -98,7 +143,7 @@ describe('allDocumentsHelper tests', () => {
 
   it('map document to table row', () => {
     const result = mapDocumentToTableRow(mockDocumentTypeItem, translationJsons);
-    expect(result.date).toEqual('Test date');
+    expect(result.date).toEqual('03/01/2024');
     expect(result.description).toEqual('Description');
     expect(result.downloadLink).toEqual('mockDownloadLink');
   });
@@ -118,6 +163,15 @@ describe('allDocumentsHelper tests', () => {
     expect(sortedMap.get(AllDocumentTypes.ACAS_CERT)).toEqual([docs[1]]);
     expect(sortedMap.get(AllDocumentTypes.RESPONDENT_CORRESPONDENCE)).toEqual([docs[2]]);
     expect(sortedMap.get(AllDocumentTypes.TRIBUNAL_CORRESPONDENCE)).toEqual([docs[3]]);
+  });
+
+  it('returns a sorted array of documents', () => {
+    const sortedDocsArray: DocumentTypeItem[] = docsToTest.sort(compareUploadDates);
+    expect(sortedDocsArray[0].value.uploadedDocument).toEqual(uploadedDoc);
+    expect(sortedDocsArray[1].value.uploadedDocument).toEqual(uploadedDoc);
+    expect(sortedDocsArray[2].value.uploadedDocument).toEqual(uploadedDoc2);
+    expect(sortedDocsArray[3].value.uploadedDocument).toEqual(uploadedDoc2);
+    expect(sortedDocsArray[4].value.uploadedDocument).toEqual(uploadedDoc3);
   });
 
   it('returns an empty map if no documents are provided', () => {

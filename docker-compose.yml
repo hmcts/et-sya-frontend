@@ -9,4 +9,4 @@ services:
         - https_proxy
         - no_proxy
     ports:
-      - 3001:3001
+      - 3002:3002

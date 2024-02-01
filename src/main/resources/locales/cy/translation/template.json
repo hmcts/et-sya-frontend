@@ -8,6 +8,12 @@
   "termsAndConditions": "Telerau ac amodau",
   "wasanaethau": "Rhestr o Wasanaethau Cymraeg",
   "digitalService": "Gwasanaeth Digidol y Llywodraeth",
+  "licence": {
+    "p1": "Mae’r holl gynnwys ar gael o dan ",
+    "p2": "Drwydded Llywodraeth Agored f3.0",
+    "p3": ", oni bai pan nodir fel arall"
+  },
+  "copyright": "© Hawlfraint y Goron",
   "stage": "Beta",
   "signOut": "Allgofnodi",
   "logIn": "Mewngofnodi",

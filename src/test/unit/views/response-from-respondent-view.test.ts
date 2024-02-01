@@ -19,7 +19,7 @@ const responseFromRespondentJsonRaw = fs.readFileSync(
 );
 const responseFromRespondentJson = JSON.parse(responseFromRespondentJsonRaw);
 const captionClass = 'govuk-table__caption govuk-table__caption--m';
-const expectedCaption = responseFromRespondentJson.et3H2Text;
+const expectedCaption = responseFromRespondentJson.h2;
 const targetUrl = PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT;
 
 let htmlRes: Document;

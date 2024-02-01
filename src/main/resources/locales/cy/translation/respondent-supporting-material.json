@@ -18,7 +18,7 @@
   },
   "errors": {
     "responseText": {
-      "required": "Dywedwch wrthym beth ddigwyddodd i chi",
+      "required": "Defnyddiwch y blwch testun neu’r cyfleuster llwytho ffeil i roi manylion",
       "tooLong": "Rhaid i’r disgrifiad fod yn 2500 llythyren neu lai"
     },
     "supportingMaterialFile": {

@@ -4,7 +4,7 @@
   "dateSent": "Dyddiad anfon",
   "sentBy": "Anfonwyd gan",
   "orderOrRequest": "Gorchymyn neu gais rheoli achos?",
-  "responseDue": "Ymateb erbyn",
+  "responseDue": "Ymateb",
   "partyToRespond": "Y parti neu’r partïon sydd i ymateb",
   "addInfo": "Gwybodaeth ychwanegol",
   "description": "Disgrifiad",
@@ -18,5 +18,6 @@
   "respond": "Ymateb",
   "tribunal": "Tribiwnlys",
   "Yes - view document for details": "Oes - gweler y ddogfen am fanylion",
+  "No": "Na",
   "Caseworker": "Gweithiwr achos"
 }

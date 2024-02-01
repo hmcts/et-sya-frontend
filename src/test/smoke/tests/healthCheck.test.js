@@ -1,4 +1,4 @@
-const frontend = process.env.TEST_URL || 'http://localhost:3001';
+const frontend = process.env.TEST_URL || 'http://localhost:3002';
 const { I } = inject();
 Feature('Health');
 

@@ -27,8 +27,8 @@ export default class ApplicationDetailsController {
   public get = async (req: AppRequest, res: Response): Promise<void> => {
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.YOUR_APPLICATIONS, { returnObjects: true }),
-      ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
       ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
+      ...req.t(TranslationKeys.APPLICATION_DETAILS, { returnObjects: true }),
     };
 
     req.session.documentDownloadPage = PageUrls.APPLICATION_DETAILS;

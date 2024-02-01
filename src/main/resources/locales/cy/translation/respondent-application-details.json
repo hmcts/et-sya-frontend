@@ -25,7 +25,7 @@
   "otherPartyResponseHeader": "Ymateb y parti arall",
   "responseDate": "Dyddiad yr ymateb",
   "responder": "Ymateb gan",
-  "response": "Beth yw eich ymateb i’r cais?",
+  "response": "Beth yw eich ymateb i gais yr atebydd?",
   "decision": "Penderfyniad",
   "notification": "Hysbysiad",
   "notificationWithSpace": "<br><br>Hysbysiad",
@@ -39,7 +39,7 @@
   "name": "Enw",
   "sentTo": "Anfonwyd at",
   "tribunal": "Tribiwnlys",
-  "claimant": "Ceisydd",
+  "claimant": "Hawlydd",
   "responseItem": "Ymateb",
   "orderOrRequest": "Gorchymyn neu gais rheoli achos?",
   "responseDue": "Ymateb erbyn",
@@ -47,6 +47,6 @@
   "description": "Disgrifiag",
   "requestMadeBy": "Gwnaethpwyd y cais gan",
   "mustRespond": "Rhaid i chi ymateb i’r tribiwnlys.",
-  "Yes": "Ydw",
-  "No": "Nac ydw"
+  "Yes": "Oes",
+  "No": "Nac oes"
 }
