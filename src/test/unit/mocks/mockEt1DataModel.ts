@@ -115,7 +115,7 @@ export const mockEt1DataModelUpdate = {
       whistleblowing: YesOrNo.YES,
       whistleblowing_authority: 'Whistleblowing entity name',
       linked_cases: YesOrNo.YES,
-      linked_cases_detail: 'Linked Cases detail',
+      linked_cases_detail: 'Linked Cases Detail',
       claim_description_document: {
         document_url: 'http://dm-store:8080/documents/a0c113ec-eede-472a-a59c-f2614b48177c',
         document_filename: 'document.pdf',
