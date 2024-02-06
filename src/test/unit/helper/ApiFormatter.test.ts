@@ -139,7 +139,7 @@ describe('Should return data in api format', () => {
       whistleblowingClaim: YesOrNo.YES,
       whistleblowingEntityName: 'Whistleblowing entity name',
       linkedCases: YesOrNo.YES,
-      linkedCasesDetail: 'Linked Cases detail',
+      linkedCasesDetail: 'Linked Cases Detail',
       claimDetailsCheck: YesOrNo.YES,
       workAddress1: 'Respondent Address',
       workAddress2: 'That Road',
