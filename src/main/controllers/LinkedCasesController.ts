@@ -24,7 +24,6 @@ export default class LinkedCasesController {
         id: 'linkedCases',
         type: 'radios',
         label: (l: AnyRecord): string => l.legend,
-        labelSize: 'l',
         labelHidden: false,
         values: [
           {
