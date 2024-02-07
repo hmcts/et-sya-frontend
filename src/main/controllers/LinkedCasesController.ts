@@ -65,8 +65,8 @@ export default class LinkedCasesController {
 
   public clearSelection = (req: AppRequest): void => {
     if (req.session.userCase !== undefined) {
-      req.session.userCase.claimantSex = undefined;
-      req.session.userCase.preferredTitle = undefined;
+      req.session.userCase.linkedCases = undefined;
+      req.session.userCase.linkedCasesDetail = undefined;
     }
   };
 

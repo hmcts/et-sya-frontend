@@ -1,5 +1,6 @@
 import LinkedCasesController from '../../../main/controllers/LinkedCasesController';
 import * as CaseHelper from '../../../main/controllers/helpers/CaseHelpers';
+import { YesOrNo } from '../../../main/definitions/case';
 import { PageUrls } from '../../../main/definitions/constants';
 import { mockRequest, mockRequestEmpty } from '../mocks/mockRequest';
 import { mockResponse } from '../mocks/mockResponse';
@@ -34,6 +35,21 @@ describe('Linked Cases Controller', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(PageUrls.CLAIM_DETAILS_CHECK);
     });
+  });
+
+  it('should clear fields', () => {
+    const controller = new LinkedCasesController();
+    const response = mockResponse();
+    const request = mockRequest({});
+    request.session.userCase.linkedCases = YesOrNo.YES;
+    request.session.userCase.linkedCasesDetail = 'Linked Cases Detail';
+
+    request.query = {
+      redirect: 'clearSelection',
+    };
+    controller.get(request, response);
+    expect(request.session.userCase.linkedCases).toStrictEqual(undefined);
+    expect(request.session.userCase.linkedCasesDetail).toStrictEqual(undefined);
   });
 
   it('should add linked cases form value to the userCase', async () => {
