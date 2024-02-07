@@ -63,7 +63,17 @@ export default class LinkedCasesController {
     await handlePostLogic(req, res, this.form, logger, PageUrls.CLAIM_DETAILS_CHECK);
   };
 
+  public clearSelection = (req: AppRequest): void => {
+    if (req.session.userCase !== undefined) {
+      req.session.userCase.claimantSex = undefined;
+      req.session.userCase.preferredTitle = undefined;
+    }
+  };
+
   public get = (req: AppRequest, res: Response): void => {
+    if (req.query !== undefined && req.query.redirect === 'clearSelection') {
+      this.clearSelection(req);
+    }
     const content = getPageContent(req, this.linkedCasesContent, [
       TranslationKeys.COMMON,
       TranslationKeys.LINKED_CASES,
