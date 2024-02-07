@@ -381,7 +381,7 @@ export const CITIZEN_ROLE = 'citizen';
 export const TYPE_OF_CLAIMANT = 'Individual';
 export const FILE_SIZE_LIMIT = 83886500;
 
-export const inScopeLocations = [
+export const postcode_Glasgow = [
   'ZE',
   'TD9',
   'TD8',
@@ -410,18 +410,11 @@ export const inScopeLocations = [
   'DG',
   'DD',
   'AB',
-  'YO',
-  'WF',
-  'S',
-  'OL14',
-  'LS',
-  'HX',
-  'HU',
-  'HG',
-  'HD',
-  'DN',
-  'BD',
-  // Bristol
+];
+
+export const postcode_Leeds = ['YO', 'WF', 'S', 'OL14', 'LS', 'HX', 'HU', 'HG', 'HD', 'DN', 'BD'];
+
+export const postcode_Bristol = [
   'TR',
   'TQ',
   'TA',
@@ -465,7 +458,9 @@ export const inScopeLocations = [
   'BN11',
   'BH',
   'BA',
-  // Midlands East
+];
+
+export const postcode_MidlandsEast = [
   'S81',
   'S80',
   'S45',
@@ -498,6 +493,10 @@ export const inScopeLocations = [
   'DN21',
   'DE',
 ];
+
+export const inScopeLocations = [].concat(postcode_Glasgow, postcode_Leeds, postcode_Bristol, postcode_MidlandsEast);
+
+export const inScopeLocationsExpansion = [].concat(postcode_Glasgow, postcode_Bristol);
 
 export const ET3_FORM = 'ET3';
 
