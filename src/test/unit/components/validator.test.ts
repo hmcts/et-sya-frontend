@@ -318,7 +318,7 @@ describe('Validation', () => {
       { fileName: 'file.xla', expected: undefined },
       { fileName: 'file.xlsx', expected: undefined },
       { fileName: 'file.xltx', expected: undefined },
-      { fileName: 'file.xlsb', expected: undefined },
+      { fileName: 'file.xlsb', expected: 'invalidFileFormat' },
       { fileName: 'file.ppt', expected: undefined },
       { fileName: 'file.pot', expected: undefined },
       { fileName: 'file.pps', expected: undefined },
