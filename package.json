@@ -172,5 +172,5 @@
     "import-in-the-middle": "^1.4.2",
     "follow-redirects": "^1.15.4"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@3.8.0"
 }
