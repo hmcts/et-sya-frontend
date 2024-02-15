@@ -60,6 +60,51 @@ describe('Are you still working controller', () => {
     });
   });
 
+  it('should remove endDate and noticeEnds when isStillWorking = WORKING', async () => {
+    const body = { isStillWorking: StillWorking.WORKING };
+
+    const controller = new StillWorkingController();
+    const req = mockRequestEmpty({ body });
+    const res = mockResponse();
+    req.session.userCase.endDate = { year: '2024', month: '01', day: '01' };
+    req.session.userCase.noticeEnds = { year: '2024', month: '02', day: '02' };
+
+    await controller.post(req, res);
+
+    expect(req.session.userCase.endDate).toStrictEqual(undefined);
+    expect(req.session.userCase.noticeEnds).toStrictEqual(undefined);
+  });
+
+  it('should remove noticeEnds when isStillWorking = NO_LONGER_WORKING', async () => {
+    const body = { isStillWorking: StillWorking.NO_LONGER_WORKING };
+
+    const controller = new StillWorkingController();
+    const req = mockRequestEmpty({ body });
+    const res = mockResponse();
+    req.session.userCase.endDate = { year: '2024', month: '01', day: '01' };
+    req.session.userCase.noticeEnds = { year: '2024', month: '02', day: '02' };
+
+    await controller.post(req, res);
+
+    expect(req.session.userCase.endDate).toStrictEqual({ year: '2024', month: '01', day: '01' });
+    expect(req.session.userCase.noticeEnds).toStrictEqual(undefined);
+  });
+
+  it('should remove endDate when isStillWorking = NOTICE', async () => {
+    const body = { isStillWorking: StillWorking.NOTICE };
+
+    const controller = new StillWorkingController();
+    const req = mockRequestEmpty({ body });
+    const res = mockResponse();
+    req.session.userCase.endDate = { year: '2024', month: '01', day: '01' };
+    req.session.userCase.noticeEnds = { year: '2024', month: '02', day: '02' };
+
+    await controller.post(req, res);
+
+    expect(req.session.userCase.endDate).toStrictEqual(undefined);
+    expect(req.session.userCase.noticeEnds).toStrictEqual({ year: '2024', month: '02', day: '02' });
+  });
+
   it('should redirect to the same screen when errors are present', async () => {
     const errors = [{ propertyName: 'isStillWorking', errorType: 'required' }];
     const body = {
