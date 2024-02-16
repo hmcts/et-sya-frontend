@@ -60,6 +60,7 @@ export function mockSession(
     },
     returnUrl: undefined,
     contactType: 'Respond',
+    idempotencyToken: undefined,
   };
 }
 

@@ -1,16 +1,20 @@
+import { randomUUID } from 'crypto';
+
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
 import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/constants';
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
+import { getLogger } from '../logger';
 
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
-import { getLanguageParam } from './helpers/RouterHelpers';
+import { getLanguageParam, returnNextPage } from './helpers/RouterHelpers';
 import { getYourDetails } from './helpers/YourDetailsAnswersHelper';
 
+const logger = getLogger('CheckYourAnswersController');
 export default class CheckYourAnswersController {
   public get(req: AppRequest, res: Response): void {
     if (!req.session || !req.session.userCase) {
@@ -25,7 +29,8 @@ export default class CheckYourAnswersController {
     }
 
     req.session.respondentRedirectCheckAnswer = undefined;
-
+    const idempotencyToken = randomUUID().toString();
+    req.session.idempotencyToken = idempotencyToken;
     const translations: AnyRecord = {
       ...req.t(TranslationKeys.CHECK_ANSWERS, { returnObjects: true }),
       ...req.t(TranslationKeys.ET1_DETAILS, { returnObjects: true }),
@@ -54,6 +59,17 @@ export default class CheckYourAnswersController {
       errors: req.session.errors,
       languageParam: getLanguageParam(req.url),
       isAddRespondent: newRespondentNum <= 5,
+      idempotencyToken,
     });
   }
+
+  public post = async (req: AppRequest, res: Response): Promise<void> => {
+    if (req.session.idempotencyToken === req.body.idempotency_Token) {
+      const redirectUrl = req.body.saveForLater ? PageUrls.CLAIM_SAVED : InterceptPaths.SUBMIT_CASE;
+      req.session.idempotencyToken = null;
+      await returnNextPage(req, res, redirectUrl);
+    } else {
+      logger.error("Idempotency token hasn't matched.");
+    }
+  };
 }
