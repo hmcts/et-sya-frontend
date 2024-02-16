@@ -18,7 +18,7 @@ describe('Tribunal Response CYA for Non system user Controller', () => {
     request.session.userCase.selectedRequestOrOrder = { id: '1' };
     request.session.userCase.contactApplicationType = 'withdraw';
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.render).toHaveBeenCalledWith(
       'contact-the-tribunal-cya-not-system-user',
@@ -34,7 +34,7 @@ describe('Tribunal Response CYA for Non system user Controller', () => {
     const response = mockResponse();
     const request = mockRequestWithTranslation({}, translationJsons);
 
-    controller.get(request, response);
+    await controller.get(request, response);
 
     expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
   });
