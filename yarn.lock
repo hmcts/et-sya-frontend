@@ -7847,11 +7847,11 @@ __metadata:
   linkType: hard
 
 "express-rate-limit@npm:^6.7.0":
-  version: 6.9.0
-  resolution: "express-rate-limit@npm:6.9.0"
+  version: 6.11.2
+  resolution: "express-rate-limit@npm:6.11.2"
   peerDependencies:
     express: ^4 || ^5
-  checksum: a90662ecc1fb91f9accfcee5de90e4ee7ce486b6f806c22609213675ae0425c7c5d1b288c51907aeb347f1a5a492994032b805839a63f235c91c9235845c75f9
+  checksum: 3cc4032ee2f7063647f45e338e10c9a67d8595a0f9a5a291d6633b6d96aab6201c8943bae74491f824cb6230a59921daec95ef4e22c1112759a766456c0f1f19
   languageName: node
   linkType: hard
 
