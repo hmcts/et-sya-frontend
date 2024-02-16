@@ -346,7 +346,6 @@ export const ALLOWED_FILE_FORMATS = [
   'xla',
   'xlsx',
   'xltx',
-  'xlsb',
   'ppt',
   'pot',
   'pps',
