@@ -115,7 +115,7 @@ if isLoggedIn %}
     {% endif %}
 
     {% set phaseBarHtml = phaseBarHtml + (phaseBanner.languageToggle | replace("{currentUrl}", currentUrl) | replace("{languageFlag}", languageFlag)) %}
-  {% else %}  
+  {% else %}
   {% endif %}
 
   {{ timeoutModal() }}
@@ -149,8 +149,6 @@ if isLoggedIn %}
           {{ mainTelephone }}<br/>
           {{ welshTelephone }}<br/>
           {{ scotlandTelephone }}<br/>
-          {{ englandOrWalesTextPhone }}<br/>
-          {{ scotlandTextPhone }}
           {% if i18n.language == "en" %}
             <table><tr><td>Webchat:</td><td>{{ webChatModal() }}</td><td>({{ scotlandOnly }})</td></tr></table><br/>
           {% else %}

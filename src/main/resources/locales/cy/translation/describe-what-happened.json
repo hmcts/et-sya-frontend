@@ -37,7 +37,7 @@
   },
   "acceptedFormats": {
     "label": "Fformatau derbyniol",
-    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, xlsb, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
+    "p1": "Mae’r canlynol yn fformatau ffeiliau derbyniol:  pdf, doc, docx, txt, dot, jpg, jpeg, bmp, tif, tiff, png, xls, xlt, xla, xlsx, xltx, ppt, pot, pps, ppa, pptx, potx, ppsx, rtf, csv."
   },
   "errors": {
     "claimSummaryText": {
