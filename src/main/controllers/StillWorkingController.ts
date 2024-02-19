@@ -61,10 +61,10 @@ export default class StillWorkingController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    if (req.body.isStillWorking !== StillWorking.NO_LONGER_WORKING && req.session.userCase.endDate !== undefined) {
+    if (req.body.isStillWorking !== StillWorking.NO_LONGER_WORKING) {
       req.session.userCase.endDate = undefined;
     }
-    if (req.body.isStillWorking !== StillWorking.NOTICE && req.session.userCase.noticeEnds !== undefined) {
+    if (req.body.isStillWorking !== StillWorking.NOTICE) {
       req.session.userCase.noticeEnds = undefined;
     }
     await handlePostLogic(req, res, this.form, logger, PageUrls.JOB_TITLE);
