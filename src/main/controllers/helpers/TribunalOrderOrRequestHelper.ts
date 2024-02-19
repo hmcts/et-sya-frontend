@@ -44,7 +44,7 @@ export const getTribunalOrderOrRequestDetails = (
       addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
       addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal])
     );
-    if (item.value.sendNotificationResponseTribunal === YesOrNo.YES) {
+    if (item.value.sendNotificationResponseTribunal.startsWith(YesOrNo.YES)) {
       respondentRequestOrOrderDetails.push(
         addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
       );
