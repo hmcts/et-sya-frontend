@@ -32,8 +32,6 @@ export const getTseApplicationDetails = (
   }
 
   rows.push(
-    // addSummaryRow(translations.applicant, translations[application.applicant]),
-    // addSummaryRow(translations.requestDate, applicationDate),
     addSummaryRow(translations.applicationType, translations[application.type]),
     addSummaryRow(translations.legend, application.details),
     addSummaryHtmlRow(translations.supportingMaterial, downloadLink),
