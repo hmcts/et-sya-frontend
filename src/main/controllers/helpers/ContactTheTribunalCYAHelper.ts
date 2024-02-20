@@ -1,5 +1,5 @@
 import { CaseWithId, YesOrNo } from '../../definitions/case';
-import { CHANGE, PageUrls } from '../../definitions/constants';
+import { PageUrls } from '../../definitions/constants';
 import { applicationTypes } from '../../definitions/contact-applications';
 import {
   SummaryListRow,
@@ -54,9 +54,7 @@ export const getCyaContent = (
       addSummaryRow(
         copyToOtherPartyYesOrNo,
         userCase.copyToOtherPartyYesOrNo === YesOrNo.YES ? yes : no,
-        createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, CHANGE, copyToOtherPartyYesOrNo)
-        // userCase.copyToOtherPartyYesOrNo === YesOrNo.YES ? yes : no,
-        // createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, copyToOtherPartyYesOrNo)
+        createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, change, copyToOtherPartyYesOrNo)
       )
     );
 
@@ -65,8 +63,7 @@ export const getCyaContent = (
         addSummaryRow(
           copyToOtherPartyText,
           userCase.copyToOtherPartyText,
-          createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, CHANGE, copyToOtherPartyText)
-          // createChangeAction(PageUrls.COPY_TO_OTHER_PARTY + languageParam, change, copyToOtherPartyText)
+          createChangeAction(copyToOtherPartyRedirectUrl(userCase) + languageParam, change, copyToOtherPartyText)
         )
       );
     }
