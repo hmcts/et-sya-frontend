@@ -71,18 +71,11 @@ export default class TribunalRespondToOrderController {
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
-    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        )
-      : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
-    /*
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+        : copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
-*/
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
