@@ -105,7 +105,7 @@ export default class StoredToSubmitController {
         selectedApplication,
         translations,
         createDownloadLink(document),
-        Date.now().toString()
+        selectedApplication.value.date
       ),
       viewCorrespondenceLink: getAppDetailsLink(req.params.appId, getLanguageParam(req.url)),
       document,
