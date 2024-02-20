@@ -23,7 +23,7 @@ export const getTseApplicationDetails = (
   const application = selectedApplication.value;
   const rows: SummaryListRow[] = [];
 
-  rows.push(addSummaryRow(translations.applicant, application.applicant));
+  rows.push(addSummaryRow(translations.applicant, translations[application.applicant]));
 
   if (application.status === TseStatus.STORED_STATE) {
     rows.push(addSummaryRow(translations.storedDate, applicationDate));
@@ -301,5 +301,5 @@ export const getResponseDisplay = async (
   translations: AnyRecord,
   accessToken: string
 ): Promise<SummaryListRow[]> => {
-  return addNonAdminResponse(translations, response, accessToken, Date.now().toString());
+  return addNonAdminResponse(translations, response, accessToken, response.value.date);
 };
