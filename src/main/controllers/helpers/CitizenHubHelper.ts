@@ -59,6 +59,16 @@ export const shouldShowRespondentResponseReceived = (applications: GenericTseApp
   });
 };
 
+// Show a notification if there are any claimant responses that have not been viewed yet
+export const shouldShowClaimantTribunalResponseReceived = (notifications: SendNotificationTypeItem[]): boolean => {
+  return notifications?.some(notification => {
+    const responses = notification.value.respondCollection;
+    return responses?.some(
+      response => response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
+    );
+  });
+};
+
 // Only show new respondent applications if there are applications that are not started yet
 // notStartedYet applications can also be ones where the tribunal has asked the claimant for more information.
 // Therefore make sure also that there's a notStartedYet application with no requests for information

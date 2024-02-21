@@ -11,7 +11,7 @@ import { updateSendNotificationState } from './helpers/CaseHelpers';
 import { getDocumentsAdditionalInformation } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
-import { getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import { getNotificationResponses, getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalOrderOrRequestDetailsController');
 export default class TribunalOrderOrRequestDetailsController {
@@ -58,6 +58,8 @@ export default class TribunalOrderOrRequestDetailsController {
       TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS,
     ]);
 
+    const responses = await getNotificationResponses(selectedRequestOrOrder.value, translations, req);
+
     res.render(TranslationKeys.TRIBUNAL_ORDER_OR_REQUEST_DETAILS, {
       ...content,
       respondButton,
@@ -65,6 +67,7 @@ export default class TribunalOrderOrRequestDetailsController {
       redirectUrl,
       header: selectedRequestOrOrder.value.sendNotificationTitle,
       welshEnabled,
+      responses,
     });
   };
 }

@@ -93,6 +93,16 @@
       "headerClaimant": "WMae'r tribiwnlys wedi gwneud penderfyniad ar eich cais i ",
       "headerRespondent": "Mae'r tribiwnlys wedi gwneud penderfyniad ar gais yr atebydd i ",
       "link": "Gweld y penderfyniad"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "Welsh translation required",
+        "rule92No": {
+          "p1": "Welsh translation required",
+          "p2": "Welsh translation required"
+        }
+      },
+      "link": "Welsh translation required"
     }
   },
   "Change personal details": "newid manylion personol",
