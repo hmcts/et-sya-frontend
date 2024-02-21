@@ -11,7 +11,7 @@ import {
   isDocInDocumentCollection,
   isDocOnApplicationPage,
 } from './helpers/AllDocumentsHelper';
-import { isRequestDocId } from './helpers/DocumentHelpers';
+import { isRequestDocId, isRequestResponseDocId, isRequestTribunalResponseDocId } from './helpers/DocumentHelpers';
 
 const logger = getLogger('AttachmentController');
 
@@ -33,6 +33,8 @@ export default class AttachmentController {
       docId === getDocId(userCase.supportingMaterialFile?.document_url) ||
       isDocOnApplicationPage(req, docId) ||
       isRequestDocId(req, docId) ||
+      isRequestTribunalResponseDocId(req, docId) ||
+      isRequestResponseDocId(req, docId) ||
       isDocFromJudgement(req, docId) ||
       isDocInDocumentCollection(req, docId) ||
       isBundlesDoc(req, docId)
