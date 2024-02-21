@@ -5,6 +5,7 @@ import {
   GenericTseApplicationTypeItem,
   TseRespondTypeItem,
 } from '../../definitions/complexTypes/genericTseApplicationTypeItem';
+import { PseResponseTypeItem } from '../../definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, TseStatus } from '../../definitions/constants';
 import { SummaryListRow, addSummaryHtmlRow, addSummaryRow } from '../../definitions/govuk/govukSummaryList';
 import { AnyRecord } from '../../definitions/util-types';
@@ -244,9 +245,9 @@ const addAdminResponse = async (
   ]);
 };
 
-const addNonAdminResponse = async (
+export const addNonAdminResponse = async (
   translations: AnyRecord,
-  response: TseRespondTypeItem,
+  response: TseRespondTypeItem | PseResponseTypeItem,
   accessToken: string,
   responseDate: string
 ): Promise<any> => {

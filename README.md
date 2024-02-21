@@ -198,5 +198,7 @@ $ yarn test:functional
 ```
 
 ### Responsible Team
+
 ## Team
-  Employment Tribunals
+
+Employment Tribunals

@@ -5,6 +5,7 @@ import {
   getHubLinksUrlMap,
   getStoredPendingBannerList,
   shouldHubLinkBeClickable,
+  shouldShowClaimantTribunalResponseReceived,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   updateHubLinkStatuses,
@@ -394,6 +395,96 @@ describe('shouldShowRespondentResponseReceived', () => {
     ],
   ])('for %j should return %s', (applications, expected) => {
     expect(shouldShowRespondentResponseReceived(applications)).toBe(expected);
+  });
+});
+
+describe('shouldShowClaimantTribunalResponseReceived', () => {
+  test.each([
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: HubLinkStatus.VIEWED,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+  ])('for %j should return %s', (applications, expected) => {
+    expect(shouldShowClaimantTribunalResponseReceived(applications as SendNotificationTypeItem[])).toBe(expected);
   });
 });
 

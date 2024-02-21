@@ -100,6 +100,16 @@
       "line1": "You must send a copy of this correspondence and all supporting documents to the other party before you submit it to the tribunal.",
       "line2": "If the other party does respond to your application, they are expected to copy their response to you.",
       "link": "View correspondence"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "You have sent a response to the tribunal and copied it to the respondent.",
+        "rule92No": {
+          "p1": "You have sent a response to the tribunal and given your reasons not to copy it to the respondent.",
+          "p2": "The tribunal will consider your reasons and let you know what happens next."
+        }
+      },
+      "link": "View your response"
     }
   },
   "Change personal details": "change personal details",
