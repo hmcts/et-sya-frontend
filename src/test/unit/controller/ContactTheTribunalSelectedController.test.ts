@@ -176,6 +176,17 @@ describe('Contact Application Controller', () => {
         },
         userCase: {
           contactApplicationType: 'withdraw',
+          respondents: [
+            {
+              ccdId: '1',
+            },
+          ],
+          representatives: [
+            {
+              respondentId: '1',
+              hasMyHMCTSAccount: YesOrNo.YES,
+            },
+          ],
         },
       });
       req.session.lang = languages.WELSH;
@@ -183,12 +194,30 @@ describe('Contact Application Controller', () => {
 
       await new ContactTheTribunalSelectedController().post(req, res);
 
+      expect(res.redirect).toHaveBeenCalledWith(PageUrls.COPY_TO_OTHER_PARTY + languages.WELSH_URL_PARAMETER);
+    });
+
+    it('should redirect to copy-to-other-party-not-system-user page when non-type-c application - English language', async () => {
+      const req = mockRequest({
+        body: {
+          upload: false,
+          contactApplicationText: 'test',
+          contactApplicationFile: mockFile,
+        },
+        userCase: {
+          contactApplicationType: 'withdraw',
+        },
+      });
+      const res = mockResponse();
+
+      await new ContactTheTribunalSelectedController().post(req, res);
+
       expect(res.redirect).toHaveBeenCalledWith(
-        PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.WELSH_URL_PARAMETER
+        PageUrls.COPY_TO_OTHER_PARTY_NOT_SYSTEM_USER + languages.ENGLISH_URL_PARAMETER
       );
     });
 
-    it('should redirect to CYA page when type-c application', async () => {
+    it('should redirect to CYA page when type-c application - English language', async () => {
       const req = mockRequest({
         body: {
           upload: false,

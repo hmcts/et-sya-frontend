@@ -145,6 +145,7 @@ export class CaseApi {
         throw new Error('Error submitting stored tse application status: ' + error);
       });
   };
+
   submitBundlesHearingDoc = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     const hearingBundle: HearingBundleType = {
       agreedDocWith: caseItem.bundlesRespondentAgreedDocWith,

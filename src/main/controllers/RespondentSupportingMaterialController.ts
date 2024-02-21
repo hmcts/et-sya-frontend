@@ -105,8 +105,7 @@ export default class RespondentSupportingMaterialController {
         logger.info(error);
         req.session.errors.push({ propertyName: 'supportingMaterialFile', errorType: 'backEndError' });
       }
-      return res.redirect(supportingMaterialUrl + getLanguageParam(req.url));
-      //      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
+      return res.redirect(returnSafeRedirectUrl(req, supportingMaterialUrl, logger));
     }
     req.session.errors = [];
 

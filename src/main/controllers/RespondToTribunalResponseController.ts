@@ -75,19 +75,12 @@ export default class RespondToTribunalResponseController {
       return res.redirect(returnSafeRedirectUrl(req, pageUrl, logger));
     }
     req.session.errors = [];
-    return req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-      ? res.redirect(
-          PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + getLanguageParam(req.url)
-        )
-      : res.redirect(copyToOtherPartyRedirectUrl(req.session.userCase) + getLanguageParam(req.url));
-    /*
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.appId) + languageParam
-        : PageUrls.COPY_TO_OTHER_PARTY + languageParam;
+        : copyToOtherPartyRedirectUrl(req.session.userCase) + languageParam;
 
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
-    */
   };
 
   public get = async (req: AppRequest, res: Response): Promise<void> => {
