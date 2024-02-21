@@ -244,20 +244,10 @@ export const getHubLinksUrlMap = (isRespondentSystemUser: boolean, languageParam
   return new Map<string, string>([
     [HubLinkNames.Et1ClaimForm, PageUrls.CLAIM_DETAILS + baseUrls[languageParam]],
     [HubLinkNames.RespondentResponse, PageUrls.CITIZEN_HUB_DOCUMENT_RESPONSE_RESPONDENT + baseUrls[languageParam]],
-    [
-      HubLinkNames.ContactTribunal,
-      isRespondentSystemUser
-        ? PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]
-        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
-    ],
+    [HubLinkNames.ContactTribunal, PageUrls.CONTACT_THE_TRIBUNAL + baseUrls[languageParam]],
     [HubLinkNames.RequestsAndApplications, PageUrls.YOUR_APPLICATIONS + baseUrls[languageParam]],
     [HubLinkNames.RespondentApplications, PageUrls.RESPONDENT_APPLICATIONS + baseUrls[languageParam]],
-    [
-      HubLinkNames.TribunalOrders,
-      isRespondentSystemUser
-        ? PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]
-        : PageUrls.RULE92_HOLDING_PAGE + baseUrls[languageParam],
-    ],
+    [HubLinkNames.TribunalOrders, PageUrls.TRIBUNAL_ORDERS_AND_REQUESTS + baseUrls[languageParam]],
     [HubLinkNames.TribunalJudgements, PageUrls.ALL_JUDGMENTS + baseUrls[languageParam]],
     [HubLinkNames.Documents, PageUrls.ALL_DOCUMENTS + baseUrls[languageParam]],
   ]);
