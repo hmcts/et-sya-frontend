@@ -8,7 +8,7 @@ import { fromApiFormat } from '../helper/ApiFormatter';
 import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
-import { clearTseFields } from './helpers/CaseHelpers';
+import { clearTseFields, handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
 
 const logger = getLogger('TribunalResponseStoreController');
@@ -19,7 +19,7 @@ export default class TribunalResponseStoreController {
 
     try {
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);

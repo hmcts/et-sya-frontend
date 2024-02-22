@@ -10,6 +10,7 @@ import { getLogger } from '../logger';
 import { getCaseApi } from '../services/CaseService';
 
 import { getTseApplicationDetails } from './helpers/ApplicationDetailsHelper';
+import { handleUpdateHubLinksStatuses } from './helpers/CaseHelpers';
 import {
   createDownloadLink,
   findSelectedGenericTseApplication,
@@ -46,7 +47,7 @@ export default class StoredToSubmitController {
 
     try {
       userCase.hubLinksStatuses[HubLinkNames.RequestsAndApplications] = HubLinkStatus.IN_PROGRESS;
-      await getCaseApi(req.session.user?.accessToken).updateHubLinksStatuses(req.session.userCase);
+      await handleUpdateHubLinksStatuses(req, logger);
     } catch (error) {
       logger.error(error.message);
       return res.redirect(`${ErrorPages.NOT_FOUND}${languageParam}`);
