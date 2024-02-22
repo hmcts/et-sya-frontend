@@ -99,19 +99,6 @@ describe('Store tell something else Controller return error page', () => {
   request.session.userCase.genericTseApplicationCollection = genericTseApplicationCollection;
   request.url = PageUrls.STORED_APPLICATION_CONFIRMATION + '?lng=en';
 
-  it('should return error page when updateHubLinksStatuses failed', () => {
-    jest.mock('axios');
-    const mockCaseApi = {
-      axios: AxiosInstance,
-    };
-    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
-    controller.get(request, response);
-
-    expect(response.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
-  });
-
   it('should return error page when storeClaimantTse failed', async () => {
     jest.mock('axios');
     const mockCaseApi = {

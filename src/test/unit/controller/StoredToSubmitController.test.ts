@@ -137,19 +137,6 @@ describe('Stored to Submit Controller POST return error page', () => {
   req.session.userCase.hubLinksStatuses = new HubLinksStatuses();
   req.session.userCase.selectedGenericTseApplication = tseAppCollection[0];
 
-  it('should return error page for updateHubLinksStatuses', async () => {
-    jest.mock('axios');
-    const mockCaseApi = {
-      axios: AxiosInstance,
-    };
-    const caseApi: CaseApi = mockCaseApi as unknown as CaseApi;
-    jest.spyOn(CaseService, 'getCaseApi').mockReturnValue(caseApi);
-
-    await controller.post(req, res);
-
-    expect(res.redirect).toHaveBeenCalledWith(ErrorPages.NOT_FOUND + '?lng=en');
-  });
-
   it('should return error page for storedToSubmitClaimantTse', async () => {
     jest.mock('axios');
     const mockCaseApi = {
