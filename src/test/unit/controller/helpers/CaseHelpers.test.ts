@@ -256,13 +256,15 @@ describe('handle submit application', () => {
   });
 
   it('should catch failure to submit application', async () => {
-    caseApi.submitClaimantTse = jest.fn().mockRejectedValueOnce({ message: 'test error' });
+    const errorMessage = 'test error';
+    const testError = new Error(errorMessage);
+
+    caseApi.submitClaimantTse = jest.fn().mockRejectedValueOnce(testError);
 
     const req = mockRequest({ userCase: undefined, session: mockSession([], [], []) });
-    submitClaimantTse(req, mockLogger);
-    await new Promise(nextTick);
+    await expect(submitClaimantTse(req, mockLogger)).rejects.toThrow(testError);
 
-    expect(mockLogger.error).toHaveBeenCalledWith('test error');
+    expect(mockLogger.error).toHaveBeenCalledWith(errorMessage);
   });
 });
 

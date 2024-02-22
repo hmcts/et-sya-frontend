@@ -105,6 +105,7 @@ export const submitClaimantTse = async (req: AppRequest, logger: Logger): Promis
     logger.info(`Submitted claimant tse for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
