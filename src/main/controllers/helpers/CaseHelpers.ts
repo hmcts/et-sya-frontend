@@ -115,6 +115,7 @@ export const submitBundlesHearingDocs = async (req: AppRequest, logger: Logger):
     logger.info(`Submitted bundles hearing doc info for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
@@ -124,6 +125,7 @@ export const respondToApplication = async (req: AppRequest, logger: Logger): Pro
     logger.info(`Responded to application for case: ${req.session.userCase.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
@@ -178,6 +180,7 @@ export const addResponseSendNotification = async (req: AppRequest, logger: Logge
     logger.info(`Responded to sendNotification: ${req.session.userCase.selectedRequestOrOrder.id}`);
   } catch (error) {
     logger.error(error.message);
+    throw error;
   }
 };
 
