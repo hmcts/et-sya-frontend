@@ -16,6 +16,14 @@
         rows: orderOrRequestContent
       }) }}
 
+      {% for response in responses %}
+        <h2 class="govuk-summary-list__key govuk-heading-m govuk-!-margin-top-1">{{ responseItem }} {{ loop.index }}</h2>
+        {{ govukSummaryList({
+          rows: response
+          }) 
+        }}
+      {% endfor %}
+
       {% if respondButton %}
           <p class="govuk-body">{{ tips }}</p>
         {{ govukButton({

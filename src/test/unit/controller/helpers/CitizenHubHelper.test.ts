@@ -4,6 +4,7 @@ import {
   checkIfRespondentIsSystemUser,
   getHubLinksUrlMap,
   shouldHubLinkBeClickable,
+  shouldShowClaimantTribunalResponseReceived,
   shouldShowRespondentApplicationReceived,
   shouldShowRespondentResponseReceived,
   updateHubLinkStatuses,
@@ -11,6 +12,7 @@ import {
 } from '../../../../main/controllers/helpers/CitizenHubHelper';
 import { CaseWithId, YesOrNo } from '../../../../main/definitions/case';
 import { GenericTseApplicationTypeItem } from '../../../../main/definitions/complexTypes/genericTseApplicationTypeItem';
+import { SendNotificationTypeItem } from '../../../../main/definitions/complexTypes/sendNotificationTypeItem';
 import { Applicant, PageUrls, languages } from '../../../../main/definitions/constants';
 import { CaseState } from '../../../../main/definitions/definition';
 import { HubLinkNames, HubLinkStatus, HubLinksStatuses } from '../../../../main/definitions/hub';
@@ -391,6 +393,96 @@ describe('shouldShowRespondentResponseReceived', () => {
     ],
   ])('for %j should return %s', (applications, expected) => {
     expect(shouldShowRespondentResponseReceived(applications)).toBe(expected);
+  });
+});
+
+describe('shouldShowClaimantTribunalResponseReceived', () => {
+  test.each([
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: HubLinkStatus.VIEWED,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      false,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+    [
+      [
+        {
+          value: {
+            respondCollection: [
+              {
+                value: {
+                  from: Applicant.CLAIMANT,
+                  responseState: undefined,
+                },
+              },
+              {
+                value: {
+                  from: Applicant.RESPONDENT,
+                },
+              },
+            ],
+          },
+        },
+      ],
+      true,
+    ],
+  ])('for %j should return %s', (applications, expected) => {
+    expect(shouldShowClaimantTribunalResponseReceived(applications as SendNotificationTypeItem[])).toBe(expected);
   });
 });
 

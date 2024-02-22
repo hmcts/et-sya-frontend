@@ -1,5 +1,6 @@
 {
   "title": "Gorchymyn neu gais tribiwnlys",
+  "responder": "Ymateb gan",
   "hearing": "Gwrandawiad",
   "dateSent": "Dyddiad anfon",
   "sentBy": "Anfonwyd gan",
@@ -18,6 +19,15 @@
   "respond": "Ymateb",
   "tribunal": "Tribiwnlys",
   "Yes - view document for details": "Oes - gweler y ddogfen am fanylion",
-  "No": "Na",
-  "Caseworker": "Gweithiwr achos"
+  "Caseworker": "Gweithiwr achos",
+  "Claimant": "Hawlydd",
+  "Respondent": "Atebydd",
+  "responseItem": "Ymateb",
+  "responseDate": "Dyddiad yr ymateb",
+  "response": "Beth yw eich ymateb i’r tribiwnlys?",
+  "supportingMaterial": "Deunydd ategol",
+  "copyCorrespondence": "Ydych chi eisiauanfon copi o’r ohebiaeth hon at yParti arall er mwyn cydymffurfio â’r Rheolau Trefniadaeth?",
+  "date": "Dyddiad anfon",
+  "additionalInfo": "Gwybodaeth ychwanegol",
+  "No": "Na"
 }
