@@ -276,26 +276,23 @@ export const getNotificationResponses = async (
   translations: AnyRecord,
   req: AppRequest
 ): Promise<any> => {
-  const nonAdminRespondCollection = sendNotificationType?.respondCollection
-    ? sendNotificationType.respondCollection
-    : [];
-  const adminResponseCollection = sendNotificationType?.respondNotificationTypeCollection
-    ? sendNotificationType?.respondNotificationTypeCollection
-    : [];
+  const nonAdminRespondCollection = sendNotificationType?.respondCollection || [];
+  const adminResponseCollection = sendNotificationType?.respondNotificationTypeCollection || [];
   const allResponses: any[] = [];
   const combinedResponses = [...nonAdminRespondCollection, ...adminResponseCollection];
-  if (combinedResponses?.length) {
-    combinedResponses.sort(sortResponsesByDate);
-    for (const response of combinedResponses) {
-      let responseToAdd;
-      if (instanceOfPseResponse(response)) {
-        responseToAdd = await getNonAdminResponse(response, req, translations);
-      } else {
-        responseToAdd = await populateAdminResponse(response, req, translations);
-      }
-      if (responseToAdd !== undefined) {
-        allResponses.push(responseToAdd);
-      }
+  if (!combinedResponses.length) {
+    return [];
+  }
+  combinedResponses.sort(sortResponsesByDate);
+  for (const response of combinedResponses) {
+    let responseToAdd;
+    if (instanceOfPseResponse(response)) {
+      responseToAdd = await getNonAdminResponse(response, req, translations);
+    } else {
+      responseToAdd = await populateAdminResponse(response, req, translations);
+    }
+    if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
     }
   }
   return allResponses;
