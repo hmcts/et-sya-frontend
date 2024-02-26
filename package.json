@@ -62,7 +62,7 @@
     "@types/require-directory": "^2.1.2",
     "@types/serve-favicon": "^2.5.4",
     "@types/session-file-store": "^1.2.2",
-    "applicationinsights": "2.5.1",
+    "applicationinsights": "2.9.4",
     "autobind-decorator": "^2.4.0",
     "axios": "^1.0.0",
     "codeceptjs": "3.4.1",
