@@ -65,7 +65,7 @@
     "applicationinsights": "2.5.1",
     "autobind-decorator": "^2.4.0",
     "axios": "^1.0.0",
-    "codeceptjs": "3.4.1",
+    "codeceptjs": "3.5.14",
     "config": "^3.3.9",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
