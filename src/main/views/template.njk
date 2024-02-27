@@ -55,6 +55,13 @@
     </noscript>
     <!-- End Google Tag Manager (noscript) -->
   {% endif %}
+
+  {% if "aat" in currentHost %}
+    <!-- Dynatrace RUM Script -->
+      <script type="text/javascript" src="https://js-cdn.dynatrace.com/jstag/17177a07246/bf24054dsx/1a4a5be3b17a10d3_complete.js" crossorigin="anonymous"></script>
+    <!-- End Dynatrace RUM Script -->
+  {% endif %}
+
   <!-- Hidden session object for user already logged in check -->
   <input type="hidden" id="isLoggedIn" name="isLoggedIn" value="{{isLoggedIn}}">
   <!-- End of hidden session object for user already logged in check-->
