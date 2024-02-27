@@ -5,7 +5,7 @@ import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
 import { YesOrNo } from '../definitions/case';
-import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { NoticeOfECC, NotificationSubjects, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -57,6 +57,8 @@ export default class TribunalRespondToOrderController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    const userCase = req.session.userCase;
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getResponseErrors(formData);
 
@@ -70,10 +72,17 @@ export default class TribunalRespondToOrderController {
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
+
+    const ECCRedirectUrl =
+      selectedRequestOrOrder?.value?.sendNotificationSubject.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
+      selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC
+        ? PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url)
+        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+
     const redirectUrl =
       req.session.userCase.hasSupportingMaterial === YesOrNo.YES
         ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+        : ECCRedirectUrl;
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
