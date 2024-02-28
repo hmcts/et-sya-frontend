@@ -495,7 +495,12 @@ export const postcode_MidlandsEast = [
 
 export const inScopeLocations = [].concat(postcode_Glasgow, postcode_Leeds, postcode_Bristol, postcode_MidlandsEast);
 
-export const inScopeLocationsExpansion = [].concat(postcode_Glasgow, postcode_Bristol);
+export const inScopeLocationsExpansion = [].concat(
+  postcode_Glasgow,
+  postcode_Leeds,
+  postcode_Bristol,
+  postcode_MidlandsEast
+);
 
 export const ET3_FORM = 'ET3';
 
