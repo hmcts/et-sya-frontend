@@ -33,14 +33,17 @@ export default class TribunalResponseCYAController {
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
 
     let submitRef;
+    let responseUrl;
     let id;
     if (userCase.selectedRequestOrOrder) {
       submitRef = InterceptPaths.TRIBUNAL_RESPONSE_SUBMIT_CYA + getLanguageParam(req.url);
       id = userCase.selectedRequestOrOrder.id;
+      responseUrl = PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', id);
     } else if (userCase.selectedGenericTseApplication) {
       userCase.isRespondingToRequestOrOrder = true;
       submitRef = InterceptPaths.SUBMIT_RESPONDENT_CYA + getLanguageParam(req.url);
       id = userCase.selectedGenericTseApplication.id;
+      responseUrl = PageUrls.RESPOND_TO_TRIBUNAL_RESPONSE.replace(':appId', id);
     }
 
     res.render(TranslationKeys.TRIBUNAL_RESPONSE_CYA, {
@@ -59,7 +62,7 @@ export default class TribunalResponseCYAController {
         getLanguageParam(req.url),
         PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', id),
         downloadLink,
-        PageUrls.TRIBUNAL_RESPOND_TO_ORDER.replace(':orderId', id)
+        responseUrl
       ),
       welshEnabled,
     });
