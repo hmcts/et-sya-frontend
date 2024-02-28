@@ -11,6 +11,7 @@ import {
 import {
   Applicant,
   FEATURE_FLAGS,
+  NoticeOfECC,
   NotificationSubjects,
   PageUrls,
   Parties,
@@ -491,4 +492,20 @@ function instanceOfPseResponse(
   object: PseResponseTypeItem | RespondNotificationTypeItem
 ): object is PseResponseTypeItem {
   return 'date' in object.value;
+}
+
+export function determineRedirectUrlForECC(req: AppRequest, selectedRequestOrOrder: SendNotificationTypeItem): string {
+  if (req.session.userCase.hasSupportingMaterial === YesOrNo.YES) {
+    return PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url);
+  }
+
+  const isOrderOrRequest = selectedRequestOrOrder?.value?.sendNotificationSubject.includes(
+    NotificationSubjects.ORDER_OR_REQUEST
+  );
+  const isNoticeOfECC = selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC;
+
+  if (isOrderOrRequest && isNoticeOfECC) {
+    return PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url);
+  }
+  return PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
 }

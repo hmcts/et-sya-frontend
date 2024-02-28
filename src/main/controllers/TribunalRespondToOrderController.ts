@@ -4,8 +4,7 @@ import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
-import { NoticeOfECC, NotificationSubjects, PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
+import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
 import { AnyRecord } from '../definitions/util-types';
@@ -15,7 +14,11 @@ import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers'
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getNotificationResponses, getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import {
+  determineRedirectUrlForECC,
+  getNotificationResponses,
+  getTribunalOrderOrRequestDetails,
+} from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -73,16 +76,7 @@ export default class TribunalRespondToOrderController {
     }
     req.session.errors = [];
 
-    const ECCRedirectUrl =
-      selectedRequestOrOrder?.value?.sendNotificationSubject.includes(NotificationSubjects.ORDER_OR_REQUEST) &&
-      selectedRequestOrOrder?.value?.sendNotificationEccQuestion === NoticeOfECC
-        ? PageUrls.TRIBUNAL_RESPONSE_CYA + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
-
-    const redirectUrl =
-      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : ECCRedirectUrl;
+    const redirectUrl = determineRedirectUrlForECC(req, selectedRequestOrOrder);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
