@@ -42,6 +42,9 @@ withNightlyPipeline(type, product, component) {
     afterSuccess('crossBrowserTest') {
         steps.archiveArtifacts allowEmptyArchive: true, artifacts: 'functional-output/**/*'
         enableSlackNotifications('#et-builds')
+        sh """
+           yarn playwright install
+        """
     }
 
     afterSuccess('fullFunctionalTest') {

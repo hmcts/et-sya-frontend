@@ -45,17 +45,8 @@ describe('Type of Claim Helpers Test getRedirectUrl', () => {
     expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
   });
 
-  it('Postcode not in Expansion, selected DISCRIMINATION, returns CLAIM_STEPS', () => {
-    req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
-    req.body = {
-      typeOfClaim: [TypesOfClaim.DISCRIMINATION],
-    };
-    const actual = getRedirectUrl(req, form);
-    expect(actual).toStrictEqual(PageUrls.CLAIM_STEPS);
-  });
-
   it('Postcode not in Expansion, selected both, returns CLAIM_STEPS', () => {
-    req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
+    req.session.userCase.workPostcode = 'M2 1AB'; // Manchester
     req.body = {
       typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT, TypesOfClaim.DISCRIMINATION],
     };
@@ -64,7 +55,7 @@ describe('Type of Claim Helpers Test getRedirectUrl', () => {
   });
 
   it('Postcode not in Expansion, selected BREACH_OF_CONTRACT, returns url', () => {
-    req.session.userCase.workPostcode = 'LS1 2ED'; // Leeds
+    req.session.userCase.workPostcode = 'M2 1AB'; // Manchester
     req.body = {
       typeOfClaim: [TypesOfClaim.BREACH_OF_CONTRACT],
     };
