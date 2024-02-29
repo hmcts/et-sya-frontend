@@ -68,7 +68,7 @@ export default class TellUsWhatYouWantController {
     } else if (req.session.userCase.typeOfClaim?.includes(TypesOfClaim.WHISTLE_BLOWING.toString())) {
       redirectUrl = PageUrls.WHISTLEBLOWING_CLAIMS;
     } else {
-      redirectUrl = PageUrls.CLAIM_DETAILS_CHECK;
+      redirectUrl = PageUrls.LINKED_CASES;
     }
     await handlePostLogic(req, res, this.form, logger, redirectUrl);
   };

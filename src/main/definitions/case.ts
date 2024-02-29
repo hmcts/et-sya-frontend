@@ -131,6 +131,8 @@ export interface Case {
   tribunalRecommendationRequest?: string;
   whistleblowingClaim?: YesOrNo;
   whistleblowingEntityName?: string;
+  linkedCases?: YesOrNo;
+  linkedCasesDetail?: string;
   personalDetailsCheck?: YesOrNo;
   claimDetailsCheck?: YesOrNo;
   claimantWorkAddressQuestion?: YesOrNo;

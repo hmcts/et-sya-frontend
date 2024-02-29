@@ -174,6 +174,8 @@ describe('Steps to Making your claim Controller', () => {
       tribunalRecommendationRequest: undefined,
       whistleblowingClaim: undefined,
       whistleblowingEntityName: undefined,
+      linkedCases: undefined,
+      linkedCasesDetail: undefined,
       workAddress1: undefined,
       workAddress2: undefined,
       workAddressCountry: undefined,
