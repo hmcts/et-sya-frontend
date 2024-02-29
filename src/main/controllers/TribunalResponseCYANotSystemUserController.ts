@@ -19,12 +19,13 @@ export default class TribunalResponseCYANotSystemUserController {
 
     const content = getPageContent(req, <FormContent>{}, [
       TranslationKeys.SIDEBAR_CONTACT_US,
-      TranslationKeys.COMMON,
       TranslationKeys.TRIBUNAL_RESPONSE_CYA,
     ]);
 
     const translations: AnyRecord = {
+      ...req.t(TranslationKeys.COMMON, { returnObjects: true }),
       ...req.t(TranslationKeys.TRIBUNAL_RESPONSE_CYA, { returnObjects: true }),
+      ...req.t(TranslationKeys.TRIBUNAL_RESPOND_TO_ORDER, { returnObjects: true }),
     };
 
     const downloadLink = createDownloadLink(userCase?.supportingMaterialFile);
@@ -42,6 +43,7 @@ export default class TribunalResponseCYANotSystemUserController {
 
     res.render(TranslationKeys.CONTACT_THE_TRIBUNAL_CYA_NOT_SYSTEM_USER, {
       ...content,
+      ...translations,
       cancelPage: getCancelLink(req),
       storedUrl,
       cyaContent: getRespondentCyaContent(
