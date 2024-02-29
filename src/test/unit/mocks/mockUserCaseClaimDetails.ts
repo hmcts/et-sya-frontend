@@ -86,6 +86,8 @@ export default {
   compensationAmount: 123,
   tribunalRecommendationRequest: 'Tribunal recommendation request',
   whistleblowingClaim: YesOrNo.YES,
+  linkedCases: YesOrNo.YES,
+  linkedCasesDetail: 'Linked Cases Detail',
   whistleblowingEntityName: 'Whistleblowing entity name',
   claimDetailsCheck: YesOrNo.YES,
   claimantWorkAddressQuestion: YesOrNo.YES,
