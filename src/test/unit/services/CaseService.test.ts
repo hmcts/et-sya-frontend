@@ -187,6 +187,8 @@ describe('update case', () => {
       tribunalRecommendationRequest: 'Tribunal recommendation request',
       whistleblowingClaim: YesOrNo.YES,
       whistleblowingEntityName: 'Whistleblowing entity name',
+      linkedCases: YesOrNo.YES,
+      linkedCasesDetail: 'Linked Cases Detail',
       claimDetailsCheck: YesOrNo.YES,
       workAddress1: 'Respondent Address',
       workAddress2: 'That Road',
@@ -458,6 +460,8 @@ describe('submitCase', () => {
       tribunalRecommendationRequest: 'Tribunal recommendation request',
       whistleblowingClaim: YesOrNo.YES,
       whistleblowingEntityName: 'Whistleblowing entity name',
+      linkedCases: YesOrNo.YES,
+      linkedCasesDetail: 'Linked Cases Detail',
       otherClaim: 'other claim description',
       hubLinksStatuses: undefined,
       claimSummaryFile: {

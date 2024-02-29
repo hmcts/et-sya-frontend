@@ -56,6 +56,7 @@ import HearingDocumentUploadController from '../../controllers/HearingDocumentUp
 import HomeController from '../../controllers/HomeController';
 import JobTitleController from '../../controllers/JobTitleController';
 import JudgmentDetailsController from '../../controllers/JudgmentDetailsController';
+import LinkedCasesController from '../../controllers/LinkedCasesController';
 import LipOrRepController from '../../controllers/LipOrRepController';
 import NewAccountLandingController from '../../controllers/NewAccountLandingController';
 import NewJobController from '../../controllers/NewJobController';
@@ -268,6 +269,8 @@ export class Routes {
     app.post(PageUrls.TRIBUNAL_RECOMMENDATION, new TribunalRecommendationController().post);
     app.get(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().get);
     app.post(PageUrls.WHISTLEBLOWING_CLAIMS, new WhistleblowingClaimsController().post);
+    app.get(PageUrls.LINKED_CASES, new LinkedCasesController().get);
+    app.post(PageUrls.LINKED_CASES, new LinkedCasesController().post);
     app.get(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().get);
     app.post(PageUrls.CLAIM_DETAILS_CHECK, new ClaimDetailsCheckController().post);
     app.get(Urls.DOWNLOAD_CLAIM, new DownloadClaimController().get);

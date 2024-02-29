@@ -56,9 +56,14 @@
      {% endif %}
 
      {% if "/new-job-start-date" in currentUrl %}
-         <p class="govuk-body">
-         <a href="{{PageUrls.NEW_JOB_START_DATE}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
-         </p>
+       <p class="govuk-body">
+       <a href="{{PageUrls.NEW_JOB_START_DATE}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
+       </p>
+     {% endif %}
+     {% if "/linked-cases" in currentUrl %}
+        <p class="govuk-body">
+        <a href="{{PageUrls.LINKED_CASES}}?redirect=clearSelection&{{languageParam}}" class="govuk-link">{{ clearSelection }}</a>
+        </p>
      {% endif %}
   {% endblock %}
 

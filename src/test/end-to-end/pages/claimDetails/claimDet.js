@@ -156,7 +156,23 @@ module.exports = async function (allClaimDetailsPages) {
   await contactUs.verifyContactUs();
 
   I.click('Save and continue');
+  // Linked Cases
+  await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
+  await I.see('Linked cases');
+  I.see('Tell us if there are any existing cases this claim could be linked to.');
+  I.see('This could be:');
+  I.see('a case or cases you have already brought');
+  I.see('a case or cases brought by other people against the same employer with the same or similar circumstances');
+  I.see('This will help the tribunal consider whether the cases should be linked in any way.');
+  I.see('Are there are any existing cases which may be linked to this new claim? (Optional)');
+  I.see('No');
+  I.see('Yes');
 
+  I.checkOption("//input[@id='linkedCases-2']");
+
+  I.click("//span[contains(.,'Contact us')]");
+  await contactUs.verifyContactUs();
+  I.click('Save and continue');
   //Have you completed this Section
   await I.waitForVisible("//span[contains(text(),'Contact us')]", testConfig.TestWaitForVisibilityTimeLimit);
   await I.see('Have you completed this section?');

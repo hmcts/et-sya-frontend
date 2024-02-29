@@ -97,6 +97,9 @@ export const resetValuesIfNeeded = (formData: Partial<CaseWithId>): void => {
     formData.newJobPay = undefined;
     formData.newJobPayInterval = undefined;
   }
+  if (formData.linkedCases === YesOrNo.NO) {
+    formData.linkedCasesDetail = undefined;
+  }
 };
 
 const formatDate = (rawDate: Date): string =>
