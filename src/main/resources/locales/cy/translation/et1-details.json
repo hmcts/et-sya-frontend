@@ -101,7 +101,9 @@
     "forwardClaim": "Ydych chi eisiau i ni anfon eich hawliad chwythu’r chwiban i reoleiddiwr neu gorff perthnasol?",
     "summary": "Crynodeb o’r hawliad",
     "fileUploads": "Ffeiliau sydd wedi cael eu llwytho",
-    "whatYouWant": "Beth rydych chi ei eisiau"
+    "whatYouWant": "Beth rydych chi ei eisiau",
+    "linkedCases": "Achosion cysylltiedig",
+    "linkedCasesDetail": "Manylion achosion cysylltiedig"
   },
   "payClaims": {
     "Arrears": "Ôl-daliadau",

@@ -11,6 +11,8 @@ export interface ClaimantRequests {
   claimant_tribunal_recommendation?: string;
   whistleblowing?: YesOrNo;
   whistleblowing_authority?: string;
+  linked_cases?: YesOrNo;
+  linked_cases_detail?: string;
   claim_description_document?: Document;
   other_claim?: string;
 }
