@@ -1,7 +1,7 @@
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
-import { PageUrls } from '../definitions/constants';
+import { ErrorPages, PageUrls } from '../definitions/constants';
 import { getLogger } from '../logger';
 
 import { clearBundlesFields, submitBundlesHearingDocs } from './helpers/CaseHelpers';
@@ -15,7 +15,8 @@ export default class SubmitBundlesHearingDocsController {
       await submitBundlesHearingDocs(req, logger);
       clearBundlesFields(userCase);
     } catch (error) {
-      logger.info(error.message);
+      logger.error(error.message);
+      return res.redirect(ErrorPages.NOT_FOUND);
     }
     return res.redirect(PageUrls.BUNDLES_COMPLETED);
   };
