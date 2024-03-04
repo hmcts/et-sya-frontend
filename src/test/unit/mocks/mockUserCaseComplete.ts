@@ -150,6 +150,8 @@ export default {
   tribunalRecommendationRequest: 'Tribunal recommendation request',
   whistleblowingClaim: YesOrNo.YES,
   whistleblowingEntityName: 'Whistleblowing entity name',
+  linkedCases: YesOrNo.YES,
+  linkedCasesDetail: 'Linked Cases Detail',
   claimDetailsCheck: YesOrNo.YES,
   claimantWorkAddressQuestion: YesOrNo.YES,
   workAddress1: 'Respondent Address',
