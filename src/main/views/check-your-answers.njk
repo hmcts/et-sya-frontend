@@ -213,6 +213,42 @@
         </dd>
       </div>
     {% endif %}
+
+    {% if showLinkedCases %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+          {{ claimDetails.linkedCases }}
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {{ userCase.linkedCases }}
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link" href="/linked-cases/change?redirect=answers">
+            {{ change }}
+            <span class="govuk-visually-hidden">
+                  {{ claimDetails.linkedCases }}</span>
+          </a>
+        </dd>
+      </div>
+    {% endif %}
+    {% if showLinkedCasesDetail %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key govuk-!-font-weight-regular-m">
+            {{ claimDetails.linkedCasesDetail }}
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ userCase.linkedCasesDetail }}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/linked-cases/change?redirect=answers">
+              {{ change }}
+              <span class="govuk-visually-hidden">
+                    {{ claimDetails.linkedCasesDetail }}</span>
+            </a>
+          </dd>
+        </div>
+    {% endif %}
+
   </dl>
 
   <div class="govuk-form-group">

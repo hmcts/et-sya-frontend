@@ -56,13 +56,7 @@ export default class WhistleblowingClaimsController {
   }
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
-    await handlePostLogic(
-      this.checkWhistleBlowingClaimYesNo(req),
-      res,
-      this.form,
-      logger,
-      PageUrls.CLAIM_DETAILS_CHECK
-    );
+    await handlePostLogic(this.checkWhistleBlowingClaimYesNo(req), res, this.form, logger, PageUrls.LINKED_CASES);
   };
 
   public get = (req: AppRequest, res: Response): void => {
