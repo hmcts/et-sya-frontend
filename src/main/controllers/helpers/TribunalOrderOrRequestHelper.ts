@@ -250,11 +250,11 @@ export const activateTribunalOrdersAndRequestsLink = async (
     case anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_STARTED_YET;
       break;
-    case !allViewed:
-      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
-      break;
     case anyStoredResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.STORED;
+      break;
+    case !allViewed:
+      userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.NOT_VIEWED;
       break;
     case anyRequireResponse && !anyRequireResponseAndNotResponded:
       userCase.hubLinksStatuses[HubLinkNames.TribunalOrders] = HubLinkStatus.SUBMITTED;
