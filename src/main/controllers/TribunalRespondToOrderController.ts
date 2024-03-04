@@ -4,7 +4,6 @@ import { getLogger } from '../../main/logger';
 import { Form } from '../components/form/form';
 import { isFieldFilledIn } from '../components/form/validator';
 import { AppRequest } from '../definitions/appRequest';
-import { YesOrNo } from '../definitions/case';
 import { PageUrls, Rule92Types, TranslationKeys } from '../definitions/constants';
 import { FormContent, FormFields } from '../definitions/form';
 import { SupportingMaterialYesNoRadioValues } from '../definitions/radios';
@@ -15,7 +14,11 @@ import { setUserCase, updateSendNotificationState } from './helpers/CaseHelpers'
 import { getResponseErrors } from './helpers/ErrorHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam, returnSafeRedirectUrl } from './helpers/RouterHelpers';
-import { getNotificationResponses, getTribunalOrderOrRequestDetails } from './helpers/TribunalOrderOrRequestHelper';
+import {
+  determineRedirectUrlForECC,
+  getNotificationResponses,
+  getTribunalOrderOrRequestDetails,
+} from './helpers/TribunalOrderOrRequestHelper';
 
 const logger = getLogger('TribunalRespondToOrderController');
 
@@ -57,6 +60,8 @@ export default class TribunalRespondToOrderController {
 
   public post = async (req: AppRequest, res: Response): Promise<void> => {
     setUserCase(req, this.form);
+    const userCase = req.session.userCase;
+    const selectedRequestOrOrder = userCase.sendNotificationCollection.find(it => it.id === req.params.orderId);
     const formData = this.form.getParsedBody(req.body, this.form.getFormFields());
     const error = getResponseErrors(formData);
 
@@ -70,10 +75,8 @@ export default class TribunalRespondToOrderController {
       return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
     }
     req.session.errors = [];
-    const redirectUrl =
-      req.session.userCase.hasSupportingMaterial === YesOrNo.YES
-        ? PageUrls.RESPONDENT_SUPPORTING_MATERIAL.replace(':appId', req.params.orderId) + getLanguageParam(req.url)
-        : PageUrls.COPY_TO_OTHER_PARTY + getLanguageParam(req.url);
+
+    const redirectUrl = determineRedirectUrlForECC(req, selectedRequestOrOrder);
     return res.redirect(returnSafeRedirectUrl(req, redirectUrl, logger));
   };
 
