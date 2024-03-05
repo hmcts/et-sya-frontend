@@ -32,6 +32,7 @@
   },
   "radio1": "I’m representing myself and making my own claim",
   "radio2": "I’m making a claim for someone else and acting as their representative",
+  "radio3": "I’m a legal representative making a claim for a client",
   "errors": {
     "claimantRepresentedQuestion": {
       "required": "Tell us if you are representing yourself or acting as a representative"

@@ -32,6 +32,7 @@
   },
   "radio1": "Rwy’n fy nghynrychioli fy hun ac yn gwneud fy hawliad fy hun",
   "radio2": "Rwy’n gwneud hawliad ar ran rhywun arall ac rwy’n gweithredu fel eu cynrychiolydd",
+  "radio3": "I’m a legal representative making a claim for a client.",
   "errors": {
     "claimantRepresentedQuestion": {
       "required": "Dywedwch wrthym a ydych yn eich cynrychioli eich hun neu'n gweithredu fel cynrychiolydd"
