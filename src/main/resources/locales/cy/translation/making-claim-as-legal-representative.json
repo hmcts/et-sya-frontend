@@ -1,13 +1,13 @@
 {
-  "title": "Making a claim as a legal representative",
+  "title": "Gwneud hawliad fel cynrychiolydd cyfreithiol",
   "p1": {
-    "start": "You will need to ",
-    "link": "create a My HMCTS account",
-    "end": " first if you do not have one."
+    "start": "Bydd angen i chi ",
+    "link": "greu cyfrif MyHMCTS",
+    "end": " yn gyntaf os nad oes gennych chi un yn barod."
   },
   "p2": {
-    "start": "If you have one already, ",
-    "link": "sign in to MyHMCTS",
-    "end": " to start a claim."
+    "start": "Os oes gennych chi un yn barod, ",
+    "link": "mewngofnodwch i MyHMCTS",
+    "end": " i ddechrau gwneud hawliad."
   }
 }
