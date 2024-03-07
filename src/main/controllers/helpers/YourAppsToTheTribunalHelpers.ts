@@ -29,7 +29,7 @@ const checkAndUpdateRespondCollection = (
   app: GenericTseApplicationTypeItem,
   url: string
 ): void => {
-  if (respond.value.from === Applicant.CLAIMANT && respond.value.status === ResponseStatus.STORED_STATE) {
+  if (respond.value.from === Applicant.CLAIMANT && respond.value.status === ResponseStatus.STORED) {
     app.redirectUrl =
       PageUrls.STORED_TO_SUBMIT_RESPONSE.replace(':appId', app.id).replace(':responseId', respond.id) +
       getLanguageParam(url);

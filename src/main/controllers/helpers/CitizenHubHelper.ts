@@ -282,7 +282,7 @@ const getStoredPendingApplication = (
       storeNotifications.push(storeNotification);
     } else if (app.value.respondCollection) {
       app.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED)
         .forEach(r =>
           storeNotifications.push({
             viewUrl:
@@ -302,7 +302,7 @@ const getStoredPendingNotification = (
   for (const item of items || []) {
     if (item.value.respondCollection) {
       item.value.respondCollection
-        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE)
+        .filter(r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED)
         .forEach(r =>
           storeNotifications.push({
             viewUrl:

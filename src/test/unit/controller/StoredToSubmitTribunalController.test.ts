@@ -24,7 +24,7 @@ const sendNotificationTypeItems: SendNotificationTypeItem[] = [
           id: '567',
           value: {
             from: 'Claimant',
-            status: 'Stored',
+            status: 'stored',
             copyToOtherParty: 'Yes',
             date: '06 Oct 2023',
             response: 'Test response',
