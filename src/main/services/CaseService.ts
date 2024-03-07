@@ -205,7 +205,7 @@ export class CaseApi {
         supportingMaterialFile: caseItem.supportingMaterialFile,
         isRespondingToRequestOrOrder: caseItem.isRespondingToRequestOrOrder,
         response: {
-          status: caseItem.responseStatus,
+          responseStatus: caseItem.responseStatus,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,
@@ -320,7 +320,7 @@ export class CaseApi {
         send_notification_id: caseItem.selectedRequestOrOrder.id,
         supportingMaterialFile: caseItem.supportingMaterialFile,
         pseResponseType: {
-          status: caseItem.responseStatus,
+          responseStatus: caseItem.responseStatus,
           response: caseItem.responseText,
           hasSupportingMaterial: caseItem.hasSupportingMaterial,
           copyToOtherParty: caseItem.copyToOtherPartyYesOrNo,

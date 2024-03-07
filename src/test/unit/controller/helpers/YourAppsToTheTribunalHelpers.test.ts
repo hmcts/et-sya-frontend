@@ -52,7 +52,7 @@ describe('Your Apps To The Tribunal Helper', () => {
       id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
       value: {
         from: 'Claimant',
-        status: 'Open',
+        responseState: 'Open',
       },
     } as TseRespondTypeItem;
 
@@ -81,7 +81,7 @@ describe('Your Apps To The Tribunal Helper', () => {
       id: '0173ccd0-e20c-41bf-9a1c-37e97c728efc',
       value: {
         from: 'Claimant',
-        status: 'Stored',
+        responseState: 'stored',
       },
     } as TseRespondTypeItem;
 

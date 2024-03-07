@@ -26,7 +26,7 @@ export default class TribunalResponseStoreController {
     }
 
     try {
-      req.session.userCase.responseStatus = ResponseStatus.STORED_STATE;
+      req.session.userCase.responseStatus = ResponseStatus.STORED;
       await getCaseApi(req.session.user?.accessToken).storeResponseSendNotification(req.session.userCase);
     } catch (error) {
       logger.error(error.message);

@@ -16,7 +16,7 @@ export default class StoreRespondentController {
     const languageParam = getLanguageParam(req.url);
 
     try {
-      req.session.userCase.responseStatus = ResponseStatus.STORED_STATE;
+      req.session.userCase.responseStatus = ResponseStatus.STORED;
       await getCaseApi(req.session.user?.accessToken).storeRespondToApplication(req.session.userCase);
     } catch (error) {
       logger.error(error.message);
