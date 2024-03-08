@@ -166,11 +166,25 @@ export const populateAllOrdersItemsWithCorrectStatusTranslations = (
 ): SendNotificationTypeItem[] => {
   if (ordersAndRequests?.length) {
     ordersAndRequests.forEach(item => {
-      item.displayStatus = translations[item.value.notificationState];
+      item.displayStatus = getOrdersAndRequestsItemDisplayStatus(item, translations);
       item.redirectUrl = getRedirectUrlForNotification(item, false, url);
     });
     return ordersAndRequests;
   }
+};
+
+const getOrdersAndRequestsItemDisplayStatus = (item: SendNotificationTypeItem, translations: AnyRecord): string => {
+  if (isAnyStoredResponded(item)) {
+    return translations[HubLinkStatus.STORED];
+  } else {
+    return translations[item.value.notificationState];
+  }
+};
+
+const isAnyStoredResponded = (item: SendNotificationTypeItem): boolean => {
+  return item.value.respondCollection?.some(
+    r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
+  );
 };
 
 export const updateStoredRedirectUrl = (orderList: SendNotificationTypeItem[], url: string): void => {
@@ -241,9 +255,7 @@ export const activateTribunalOrdersAndRequestsLink = async (
   });
 
   const anyStoredResponded = notices.some(item => {
-    return item.value.respondCollection?.some(
-      r => r.value.from === Applicant.CLAIMANT && r.value.status === ResponseStatus.STORED_STATE
-    );
+    return isAnyStoredResponded(item);
   });
 
   switch (true) {
@@ -538,7 +550,9 @@ export const getClaimantTribunalResponseBannerContent = (
       notification.value.respondCollection
         ?.filter(
           response =>
-            response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
+            response.value.from === Applicant.CLAIMANT &&
+            response.value.responseState !== HubLinkStatus.VIEWED &&
+            response.value.status !== ResponseStatus.STORED_STATE
         )
         .map(response => ({
           redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,

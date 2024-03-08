@@ -619,7 +619,6 @@ export const TseStatus = {
 } as const;
 
 export const ResponseStatus = {
-  OPEN_STATE: 'Open',
   STORED_STATE: 'Stored',
 } as const;
 
