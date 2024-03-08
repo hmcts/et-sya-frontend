@@ -103,7 +103,9 @@
     "forwardClaim": "Do you want us to forward your whistleblowing claim to a relevant regulation or body?",
     "summary": "Summary of claim",
     "fileUploads": "File uploads",
-    "whatYouWant": "What you want"
+    "whatYouWant": "What you want",
+    "linkedCases": "Linked cases",
+    "linkedCasesDetail": "Linked cases detail"
   },
   "payClaims": {
     "Arrears": "Arrears",

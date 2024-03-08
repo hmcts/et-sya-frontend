@@ -1,6 +1,9 @@
+import { AppRequest } from '../../definitions/appRequest';
 import { CaseWithId, YesOrNo } from '../../definitions/case';
 import {
+  PseResponseType,
   RespondNotificationType,
+  RespondNotificationTypeItem,
   SendNotificationType,
   SendNotificationTypeItem,
 } from '../../definitions/complexTypes/sendNotificationTypeItem';
@@ -18,6 +21,7 @@ import { AnyRecord, TypeItem } from '../../definitions/util-types';
 import { datesStringToDateInLocale } from '../../helper/dateInLocale';
 import { getFlagValue } from '../../modules/featureFlag/launchDarkly';
 
+import { addNonAdminResponse, getSupportingMaterialDownloadLink } from './ApplicationDetailsHelper';
 import { createDownloadLink } from './DocumentHelpers';
 import { getLanguageParam } from './RouterHelpers';
 
@@ -44,7 +48,7 @@ export const getTribunalOrderOrRequestDetails = (
       addSummaryRow(translations.orderOrRequest, translations[item.value.sendNotificationCaseManagement]),
       addSummaryRow(translations.responseDue, translations[item.value.sendNotificationResponseTribunal])
     );
-    if (item.value.sendNotificationResponseTribunal === YesOrNo.YES) {
+    if (item.value.sendNotificationResponseTribunal.startsWith(YesOrNo.YES)) {
       respondentRequestOrOrderDetails.push(
         addSummaryRow(translations.partyToRespond, translations[item.value.sendNotificationSelectParties])
       );
@@ -170,7 +174,6 @@ export const activateTribunalOrdersAndRequestsLink = async (
   }
   let notices = [];
   const eccFlag = await getFlagValue(FEATURE_FLAGS.ECC, null);
-  console.log(eccFlag);
 
   if (eccFlag) {
     notices = items.filter(
@@ -306,4 +309,195 @@ function hasClaimantResponded(notification: SendNotificationType) {
 
 const claimantRelevant = (response: TypeItem<RespondNotificationType>): boolean => {
   return response.value.respondNotificationPartyToNotify !== Parties.RESPONDENT_ONLY;
+};
+
+export const getNotificationResponses = async (
+  sendNotificationType: SendNotificationType,
+  translations: AnyRecord,
+  req: AppRequest
+): Promise<any> => {
+  const allResponses: any[] = [];
+  const respondCollection = sendNotificationType.respondCollection;
+  if (respondCollection?.length) {
+    await addClaimantRespondentResponses(respondCollection, req, translations, allResponses);
+  }
+
+  const adminResponseCollection = sendNotificationType.respondNotificationTypeCollection;
+  if (adminResponseCollection?.length) {
+    await addTribunalResponses(adminResponseCollection, req, allResponses, translations);
+  }
+  return allResponses;
+};
+
+const addAdminResponse = async (
+  allResponses: any[],
+  translations: AnyRecord,
+  response: RespondNotificationTypeItem,
+  accessToken: string,
+  responseDate: string
+): Promise<any> => {
+  allResponses.push([
+    {
+      key: {
+        text: translations.responseItem,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.respondNotificationTitle },
+    },
+    {
+      key: {
+        text: translations.date,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: responseDate },
+    },
+    {
+      key: {
+        text: translations.sentBy,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations.tribunal },
+    },
+    {
+      key: {
+        text: translations.orderOrRequest,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations[response.value.respondNotificationCmoOrRequest] },
+    },
+    {
+      key: {
+        text: translations.responseDue,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations[response.value.respondNotificationResponseRequired] },
+    },
+    {
+      key: {
+        text: translations.partyToRespond,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations[response.value.respondNotificationWhoRespond] },
+    },
+    {
+      key: {
+        text: translations.additionalInfo,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.respondNotificationAdditionalInfo },
+    },
+    {
+      key: {
+        text: translations.description,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text: response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
+          .shortDescription,
+      },
+    },
+    {
+      key: {
+        text: translations.document,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        html: await getSupportingMaterialDownloadLink(
+          response.value.respondNotificationUploadDocument?.find(element => element !== undefined).value
+            .uploadedDocument,
+          accessToken
+        ),
+      },
+    },
+    {
+      key: {
+        text: translations.requestMadeBy,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: {
+        text:
+          response.value.respondNotificationRequestMadeBy === 'Request'
+            ? translations[response.value.respondNotificationRequestMadeBy]
+            : translations[response.value.respondNotificationCaseManagementMadeBy],
+      },
+    },
+    {
+      key: {
+        text: translations.fullName,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: response.value.respondNotificationFullName },
+    },
+    {
+      key: {
+        text: translations.sentTo,
+        classes: 'govuk-!-font-weight-regular-m',
+      },
+      value: { text: translations[response.value.respondNotificationPartyToNotify] },
+    },
+  ]);
+};
+
+async function addTribunalResponses(
+  adminResponseCollection: TypeItem<RespondNotificationType>[],
+  req: AppRequest<Partial<AnyRecord>>,
+  allResponses: any[],
+  translations: AnyRecord
+) {
+  for (const response of adminResponseCollection) {
+    const responseDate = datesStringToDateInLocale(response.value.respondNotificationDate, req.url);
+    const responseToAdd = await addAdminResponse(
+      allResponses,
+      translations,
+      response,
+      req.session.user?.accessToken,
+      responseDate
+    );
+    if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
+    }
+  }
+}
+
+async function addClaimantRespondentResponses(
+  respondCollection: TypeItem<PseResponseType>[],
+  req: AppRequest<Partial<AnyRecord>>,
+  translations: AnyRecord,
+  allResponses: any[]
+) {
+  for (const response of respondCollection) {
+    const responseDate = datesStringToDateInLocale(response.value.date, req.url);
+    let responseToAdd;
+    if (
+      response.value.from === Applicant.CLAIMANT ||
+      (response.value.from === Applicant.RESPONDENT && response.value.copyToOtherParty === YesOrNo.YES)
+    ) {
+      responseToAdd = await addNonAdminResponse(translations, response, req.session.user?.accessToken, responseDate);
+    }
+    if (responseToAdd !== undefined) {
+      allResponses.push(responseToAdd);
+    }
+  }
+}
+
+export const getClaimantTribunalResponseBannerContent = (
+  notifications: SendNotificationTypeItem[],
+  languageParam: string
+): { redirectUrl: string; copyToOtherParty?: string }[] => {
+  if (!notifications?.length) {
+    return [];
+  }
+
+  return notifications.flatMap(
+    notification =>
+      notification.value.respondCollection
+        ?.filter(
+          response =>
+            response.value.from === Applicant.CLAIMANT && response.value.responseState !== HubLinkStatus.VIEWED
+        )
+        .map(response => ({
+          redirectUrl: `/tribunal-order-or-request-details/${notification.id}${languageParam}`,
+          copyToOtherParty: response.value.copyToOtherParty,
+        })) ?? []
+  );
 };

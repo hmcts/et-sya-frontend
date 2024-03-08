@@ -7,7 +7,7 @@
   "details": "Manylion eich gwrandawiad",
   "decision": "Y penderfyniad ar eich hawliad",
   "iWantTo": "Rwyf eisiau...",
-  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "contactTribunalMyCase": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "findLegalAdvice": "Dod o hyd i gyngor cyfreithiol (yn agor mewn tab newydd)",
   "section1": "Eich hawliad",
   "section2": "Yr ymateb",
@@ -21,13 +21,13 @@
   "hearingDetails": "Gweld manylion eich gwrandawiadau",
   "requestsAndApplications": "Eich cais a’ch ceisiadau",
   "respondentApplications": "Ceisiadau’r atebydd",
-  "contactTribunal": "Cysylltu â’r tribiwnlys ynglŷn â’m hachos",
+  "contactTribunal": "Cysylltu â’r tribiwnlys ynglŷn â’ch achos",
   "tribunalOrders": "Pob gorchymyn a phob cais gan y tribiwnlys",
   "tribunalJudgements": "Gweld pob dyfarniad",
   "documents": "Pob dogfen",
   "inProgress": "Yn mynd rhagddo",
   "notViewedYet": "Heb ei weld eto",
-  "notStartedYet": "Heb ddechra u eto",
+  "notStartedYet": "Heb ddechrau eto",
   "notAvailableYet": "Ddim ar gael eto",
   "completed": "Wedi’i gwblhau",
   "submitted": "Wedi'i gyflwyno",
@@ -93,6 +93,16 @@
       "headerClaimant": "WMae'r tribiwnlys wedi gwneud penderfyniad ar eich cais i ",
       "headerRespondent": "Mae'r tribiwnlys wedi gwneud penderfyniad ar gais yr atebydd i ",
       "link": "Gweld y penderfyniad"
+    },
+    "claimantResponseToTribunal": {
+      "title": {
+        "rule92Yes": "Welsh translation required",
+        "rule92No": {
+          "p1": "Welsh translation required",
+          "p2": "Welsh translation required"
+        }
+      },
+      "link": "Welsh translation required"
     }
   },
   "Change personal details": "newid manylion personol",

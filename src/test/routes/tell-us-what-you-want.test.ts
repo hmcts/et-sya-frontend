@@ -76,7 +76,7 @@ describe(`on POST ${PageUrls.TELL_US_WHAT_YOU_WANT}`, () => {
         .post(PageUrls.TELL_US_WHAT_YOU_WANT)
         .expect(res => {
           expect(res.status).toStrictEqual(302);
-          expect(res.header['location']).toStrictEqual(PageUrls.CLAIM_DETAILS_CHECK);
+          expect(res.header['location']).toStrictEqual(PageUrls.LINKED_CASES);
         });
     }
   );
