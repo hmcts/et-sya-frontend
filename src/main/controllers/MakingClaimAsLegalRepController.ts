@@ -1,3 +1,4 @@
+import config from 'config';
 import { Response } from 'express';
 
 import { AppRequest } from '../definitions/appRequest';
@@ -12,10 +13,15 @@ export default class MakingClaimAsLegalRepController {
       TranslationKeys.COMMON,
       TranslationKeys.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE,
     ]);
+
+    const signInLink: string = process.env.MANAGE_CASE_URL ?? config.get('services.manageCase.url');
+    const createLinkBase: string = process.env.MANAGE_ORG_URL ?? config.get('services.manageOrg.url');
+    const createLink: string = createLinkBase + '/register-org-new/register';
+
     res.render(TranslationKeys.MAKING_CLAIM_AS_LEGAL_REPRESENTATIVE, {
       ...content,
-      createLink: '#',
-      signInLink: '#',
+      createLink,
+      signInLink,
     });
   };
 }
