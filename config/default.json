@@ -40,10 +40,10 @@
       "url": "https://et-pet-et1.aat.platform.hmcts.net"
     },
     "manageOrg": {
-      "url": "https://manage-org.att.platform.hmcts.net"
+      "url": "https://manage-org.aat.platform.hmcts.net"
     },
     "manageCase": {
-      "url": "https://manage-case.att.platform.hmcts.net"
+      "url": "https://manage-case.aat.platform.hmcts.net"
     },
     "launchDarkly": {
       "key": "TO BE PICKED UP FROM ENV"
