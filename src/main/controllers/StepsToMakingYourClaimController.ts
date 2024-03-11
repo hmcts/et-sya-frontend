@@ -38,6 +38,10 @@ export default class StepsToMakingYourClaimController {
         req.session.userCase = fromApiFormat(newCase.data);
       }
       setUserCaseWithRedisData(req, caseData);
+    } else {
+      const ccdCase = await getCaseApi(req.session.user?.accessToken).getUserCase(userCase.id);
+      logger.info(`Got Draft Case - ${ccdCase.data.id}`);
+      req.session.userCase = fromApiFormat(ccdCase.data);
     }
 
     const allSectionsCompleted = !!(

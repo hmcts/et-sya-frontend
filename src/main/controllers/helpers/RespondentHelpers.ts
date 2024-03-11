@@ -7,10 +7,11 @@ import { ErrorPages, PageUrls, languages } from '../../definitions/constants';
 
 export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
+  const caseTypeId = req.session.userCase.caseTypeId;
+  const id = req.session.userCase.id;
+
   const selectedRespondentIndex = getRespondentIndex(req);
-  if (!req.session.userCase) {
-    req.session.userCase = {} as CaseWithId;
-  }
+
   let respondent: Respondent;
   if (req.session.userCase.respondents === undefined) {
     req.session.userCase.respondents = [];
@@ -22,8 +23,10 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
     respondent = {
       respondentNumber: selectedRespondentIndex + 1,
     };
-    req.session.userCase.respondents.push(respondent);
   }
+  req.session.userCase = {} as CaseWithId;
+  req.session.userCase.respondents = [];
+  req.session.userCase.respondents.push(respondent);
   if (formData.acasCert !== undefined && formData.acasCert === YesOrNo.NO) {
     formData.acasCertNum = undefined;
   }
@@ -44,6 +47,8 @@ export const setUserCaseForRespondent = (req: AppRequest, form: Form): void => {
   }
 
   Object.assign(req.session.userCase.respondents[selectedRespondentIndex], formData);
+  req.session.userCase.id = id;
+  req.session.userCase.caseTypeId = caseTypeId;
 };
 
 export const getRespondentIndex = (req: AppRequest): number => {

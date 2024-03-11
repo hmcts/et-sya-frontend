@@ -27,12 +27,14 @@ import { returnNextPage } from './RouterHelpers';
 
 export const setUserCase = (req: AppRequest, form: Form): void => {
   const formData = form.getParsedBody(cloneDeep(req.body), form.getFormFields());
-  if (!req.session.userCase) {
-    req.session.userCase = {} as CaseWithId;
-  }
+  const caseTypeId = req.session.userCase?.caseTypeId;
+  const id = req.session.userCase?.id;
+  req.session.userCase = {} as CaseWithId;
   trimFormData(formData);
   resetValuesIfNeeded(formData);
   Object.assign(req.session.userCase, formData);
+  req.session.userCase.id = id;
+  req.session.userCase.caseTypeId = caseTypeId;
 };
 
 export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): void => {
@@ -49,6 +51,7 @@ export const setUserCaseWithRedisData = (req: AppRequest, caseData: string): voi
 
 export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Promise<void> => {
   if (!req.session.errors?.length) {
+    const caseId = req.session.userCase.id;
     try {
       const response = await getCaseApi(req.session.user?.accessToken).updateDraftCase(req.session.userCase);
       logger.info(`Updated draft case id: ${req.session.userCase.id}`);
@@ -80,6 +83,8 @@ export const handleUpdateDraftCase = async (req: AppRequest, logger: Logger): Pr
       req.session.userCase.updateDraftCaseError = undefined;
       req.session.save();
     } catch (error) {
+      const response = await getCaseApi(req.session.user?.accessToken).getUserCase(caseId);
+      req.session.userCase = fromApiFormat(response.data);
       req.session.userCase.updateDraftCaseError = req.url?.includes('lng=cy')
         ? localesCy.updateDraftErrorMessage
         : locales.updateDraftErrorMessage;
