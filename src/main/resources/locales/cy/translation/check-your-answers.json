@@ -28,6 +28,9 @@
     "otherClaim": {
       "required": "Disgrifiwch y math o hawliad",
       "tooLong": "Rhaid i’r disgrifiad fod yn 100 llythyren neu lai"
+    },
+    "endDate": {
+      "required": "Dywedwch wrthym pryd daeth eich cyflogaeth i ben. Er enghraifft, DD MM BBBB"
     }
   }
 }

@@ -6,6 +6,7 @@ import { InterceptPaths, PageUrls, TranslationKeys } from '../definitions/consta
 import { TellUsWhatYouWant, TypesOfClaim } from '../definitions/definition';
 import { AnyRecord } from '../definitions/util-types';
 
+import { checkCyaErrorsList } from './helpers/CheckYourAnswersHelpers';
 import { getEmploymentDetails } from './helpers/EmploymentAnswersHelper';
 import { getRespondentSection } from './helpers/RespondentAnswersHelper';
 import { setNumbersToRespondents } from './helpers/RespondentHelpers';
@@ -18,12 +19,7 @@ export default class CheckYourAnswersController {
       return res.redirect(PageUrls.CLAIMANT_APPLICATIONS);
     }
     const userCase = req.session?.userCase;
-    if (userCase?.typeOfClaim === undefined || userCase?.typeOfClaim.length === 0) {
-      if (req.session.errors === undefined) {
-        req.session.errors = [];
-      }
-      req.session.errors.push({ propertyName: 'typeOfClaim', errorType: 'required' });
-    }
+    checkCyaErrorsList(req);
 
     req.session.respondentRedirectCheckAnswer = undefined;
 
