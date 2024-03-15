@@ -9,7 +9,7 @@ import { UserDetails } from '../definitions/appRequest';
 import { CaseWithId } from '../definitions/case';
 import { TseAdminDecisionItem } from '../definitions/complexTypes/genericTseApplicationTypeItem';
 import { SendNotificationTypeItem } from '../definitions/complexTypes/sendNotificationTypeItem';
-import { JavaApiUrls, YES } from '../definitions/constants';
+import { JavaApiUrls } from '../definitions/constants';
 import { applicationTypes } from '../definitions/contact-applications';
 import { HubLinkStatus } from '../definitions/hub';
 import { toApiFormat, toApiFormatCreate } from '../helper/ApiFormatter';
@@ -116,7 +116,7 @@ export class CaseApi {
 
   storeClaimantTse = async (caseItem: CaseWithId): Promise<AxiosResponse<CaseApiDataResponse>> => {
     return this.axios
-      .put(JavaApiUrls.SUBMIT_CLAIMANT_APPLICATION, {
+      .put(JavaApiUrls.STORE_CLAIMANT_APPLICATION, {
         case_id: caseItem.id,
         case_type_id: caseItem.caseTypeId,
         type_c: applicationTypes.claimant.c.includes(caseItem.contactApplicationType),
@@ -126,7 +126,6 @@ export class CaseApi {
           contactApplicationFile: caseItem.contactApplicationFile,
           copyToOtherPartyYesOrNo: caseItem.copyToOtherPartyYesOrNo,
           copyToOtherPartyText: caseItem.copyToOtherPartyText,
-          storedPending: YES,
         },
       })
       .catch(function (error) {
