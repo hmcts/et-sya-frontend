@@ -32,7 +32,7 @@ export default class AddressDetailsController {
         validator: isValidAddressFirstLine,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 100,
+          maxLength: 150,
         },
       },
       address2: {
