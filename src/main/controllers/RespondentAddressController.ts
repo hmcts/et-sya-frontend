@@ -32,7 +32,7 @@ export default class RespondentAddressController {
         labelSize: null,
         attributes: {
           autocomplete: 'address-line1',
-          maxLength: 100,
+          maxLength: 150,
         },
         validator: isValidAddressFirstLine,
       },

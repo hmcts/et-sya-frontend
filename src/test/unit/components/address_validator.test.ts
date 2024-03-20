@@ -29,7 +29,8 @@ describe('Validation', () => {
       { mockRef: 'a', expected: undefined },
       {
         mockRef:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et al',
+          'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolore.' +
+          'Aenean massa. Cum sociis natoque penatibus et magnis dis pa',
         expected: ValidationErrors.INVALID_VALUE,
       },
       { mockRef: "1 King's Road", expected: undefined },
