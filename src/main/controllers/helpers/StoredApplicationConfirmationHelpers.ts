@@ -9,7 +9,7 @@ export const getLatestApplication = async (
   return filteredItem[filteredItem.length - 1];
 };
 
-export const getFullTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
+export const getAllTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
   const returnCollection: GenericTseApplicationTypeItem[] = [];
   if (userCase.genericTseApplicationCollection !== undefined) {
     returnCollection.push(...userCase.genericTseApplicationCollection);

@@ -19,6 +19,7 @@ import {
 } from './helpers/DocumentHelpers';
 import { getPageContent } from './helpers/FormHelpers';
 import { getLanguageParam } from './helpers/RouterHelpers';
+import { getAllTseApplicationCollection } from './helpers/StoredApplicationConfirmationHelpers';
 import { getDecisionContent } from './helpers/TseRespondentApplicationHelpers';
 
 const logger = getLogger('ApplicationDetailsController');
@@ -35,7 +36,7 @@ export default class ApplicationDetailsController {
 
     const userCase = req.session.userCase;
     const selectedApplication = findSelectedGenericTseApplication(
-      userCase.genericTseApplicationCollection,
+      getAllTseApplicationCollection(userCase),
       req.params.appId
     );
     //Selected Tse application will be saved in the state.State will be cleared if you press 'Back'(to 'claim-details')
