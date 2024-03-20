@@ -52,7 +52,7 @@ export default class StoreTseController {
 
     let latestApplicationId;
     try {
-      const latestApplication = await getLatestApplication(userCase.genericTseApplicationCollection);
+      const latestApplication = await getLatestApplication(userCase.tseApplicationStoredCollection);
       latestApplicationId = latestApplication.id;
     } catch (err) {
       logger.error(err.message);

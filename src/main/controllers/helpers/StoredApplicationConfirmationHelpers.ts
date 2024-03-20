@@ -10,5 +10,12 @@ export const getLatestApplication = async (
 };
 
 export const getFullTseApplicationCollection = (userCase: CaseWithId): GenericTseApplicationTypeItem[] => {
-  return [].concat(userCase.genericTseApplicationCollection, userCase.tseApplicationStoredCollection);
+  const returnCollection: GenericTseApplicationTypeItem[] = [];
+  if (userCase.genericTseApplicationCollection !== undefined) {
+    returnCollection.push(...userCase.genericTseApplicationCollection);
+  }
+  if (userCase.tseApplicationStoredCollection !== undefined) {
+    returnCollection.push(...userCase.tseApplicationStoredCollection);
+  }
+  return returnCollection;
 };
